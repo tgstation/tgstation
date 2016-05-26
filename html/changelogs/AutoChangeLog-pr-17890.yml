@@ -1,8 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Ghosts now have the \"Restore Character Name\" verb, which will set
-their ghost appearance and dead chat name to their character preferences."
-  - bugfix: "Mob spawners now give any generated names to the mind of the
-spawned mob, meaning ghosts will have the name they had in life."
-  - bugfix: "Fixes interaction with envy's knife and lavaland spawns."
