@@ -541,40 +541,43 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1)
-	if(src.is_muzzled())
-		if(message)
-			src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
-		return 0
-	if(stun)
-		Stun(4)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 		if(stun)
 			Weaken(10)
+		return 1
+
+	if(src.is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
+		if(message)
+			visible_message("<span class='danger'>[src] throws up all over \himself!</span>", \
+							"<span class='userdanger'>You throw up all over yourself!</span>")
+		distance = 0
 	else
 		if(message)
-			visible_message("<span class='danger'>[src] throws up!</span>", \
-							"<span class='userdanger'>You throw up!</span>")
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-		var/turf/T = get_turf(src)
-		for(var/i=0 to distance)
-			if(blood)
-				if(T)
-					T.add_blood_floor(src)
-				if(stun)
-					adjustBruteLoss(3)
-			else
-				if(T)
-					T.add_vomit_floor(src)
-				nutrition -= lost_nutrition
-				if(stun)
-					adjustToxLoss(-3)
-			T = get_step(T, dir)
-			if (is_blocked_turf(T))
-				break
+			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+
+	if(stun)
+		Stun(4)
+
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	var/turf/T = get_turf(src)
+	for(var/i=0 to distance)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			if(stun)
+				adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src, 0)//toxic barf looks different
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+		T = get_step(T, dir)
+		if (is_blocked_turf(T))
+			break
 	return 1
 
 
