@@ -73,7 +73,7 @@
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
 	if(src.snares.len <6)
 		var/turf/snare_loc = get_turf(src.loc)
-		var/obj/item/effect/snare/S = new /obj/item/effect/snare(snare_loc)
+		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		src.snares |= S
@@ -91,14 +91,14 @@
 		qdel(picked_snare)
 		src << "<span class='danger'><B>Snare disarmed.</span></B>"
 
-/obj/item/effect/snare
+/obj/effect/snare
 	name = "snare"
 	desc = "You shouldn't be seeing this!"
 	var/mob/living/simple_animal/hostile/guardian/spawner
 	invisibility = INVISIBILITY_ABSTRACT
 
 
-/obj/item/effect/snare/Crossed(AM as mob|obj)
+/obj/effect/snare/Crossed(AM as mob|obj)
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		spawner.summoner << "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>"
 		var/list/guardians = spawner.summoner.hasparasites()

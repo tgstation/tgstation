@@ -370,7 +370,7 @@
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
 
-	var/chatter = FALSE
+	var/chattering = FALSE
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
 
@@ -381,9 +381,9 @@
 /obj/item/organ/tongue/bone/TongueSpeech(var/message)
 	. = message
 
-	if(chatter)
+	if(chattering)
 		//Annoy everyone nearby with your chattering.
-		return
+		chatter(message, phomeme_type, usr)
 
 /obj/item/organ/tongue/bone/get_spans()
 	. = ..()
@@ -396,7 +396,7 @@
 
 /obj/item/organ/tongue/bone/chatter
 	name = "chattering bone \"tongue\""
-	chatter = TRUE
+	chattering = TRUE
 
 /obj/item/organ/appendix
 	name = "appendix"

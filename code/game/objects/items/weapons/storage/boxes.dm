@@ -57,36 +57,44 @@
 	return ..()
 
 
-/obj/item/weapon/storage/box/survival
-
+// Ordinary survival box
 /obj/item/weapon/storage/box/survival/New()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/engineer
+/obj/item/weapon/storage/box/survival/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+// Engineer survival box
 /obj/item/weapon/storage/box/engineer/New()
 	..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 
-/obj/item/weapon/storage/box/syndie
+/obj/item/weapon/storage/box/engineer/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
+// Syndie survival box
 /obj/item/weapon/storage/box/syndie/New()
 	..()
 	new /obj/item/clothing/mask/gas/syndicate(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
 
-/obj/item/weapon/storage/box/security
-
+// Security survival box
 /obj/item/weapon/storage/box/security/New()
 	..()
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/tank/internals/emergency_oxygen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+/obj/item/weapon/storage/box/security/radio/New()
+	..()
+	new /obj/item/device/radio/off(src)
 
 /obj/item/weapon/storage/box/gloves
 	name = "box of latex gloves"

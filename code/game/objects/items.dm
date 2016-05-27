@@ -409,7 +409,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
@@ -575,10 +575,16 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/is_sharp()
 	return sharpness
 
-/obj/item/proc/can_dismember()
-	if((sharpness || damtype == BURN) && w_class >= 3)
-		return 1
-	return 0
+/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+	if(affecting.can_dismember(src))
+		if((sharpness || damtype == BURN) && w_class >= 3)
+			. = force*(w_class-1)
+
+/obj/item/proc/get_dismember_sound()
+	if(damtype == BURN)
+		. = 'sound/weapons/sear.ogg'
+	else
+		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
 /obj/item/proc/open_flame()
 	var/turf/location = loc

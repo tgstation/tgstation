@@ -167,10 +167,18 @@
 	suffix = "lavaland_fountain_hall.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/zombie_gym
-	name = "Zombie Gym"
-	id = "zombie-gym"
-	description = "The patrons at this gym are serious about health, and \
-		making sure people work on their cardio."
-	suffix = "lavaland_gym.dmm"
+/datum/map_template/ruin/lavaland/survivalcapsule
+	name = "Survival Capsule Ruins"
+	id = "survivalcapsule"
+	description = "What was once sanctuary to the common miner, \
+		is now their tomb."
+	suffix = "lavaland_surface_survivalpod.dmm"
+	cost = 5
+
+/datum/map_template/ruin/lavaland/tomb
+	name = "Strange Outpost"
+	id = "tomb"
+	description = "A strange tomb, housing the dead of whatever strange civilization \
+		lived here before. You swear you hear rattling coming from the inside."
+	suffix = "lavaland_surface_tomb.dmm"
 	cost = 10
