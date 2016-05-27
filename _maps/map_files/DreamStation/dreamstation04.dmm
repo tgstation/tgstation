@@ -12173,7 +12173,7 @@
 "ayJ" = (
 /obj/structure/rack,
 /obj/item/weapon/lipstick/jade,
-/obj/item/weapon/wirerod,
+/obj/item/weapon/melee/baton/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
 	name = "3maintenance loot spawner"
@@ -77150,7 +77150,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/item/weapon/wirerod,
+/obj/item/weapon/melee/baton/cattleprod,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "cQP" = (

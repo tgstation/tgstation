@@ -105,7 +105,7 @@ Sorry Giacom. Please don't be mad :(
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
 		var/mob/living/L = M
-		if((L.pulledby && L.restrained()) || L.grabbed_by.len)
+		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
 				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
 			return 1
@@ -118,31 +118,41 @@ Sorry Giacom. Please don't be mad :(
 						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
 					return 1
 
-	//switch our position with M
-	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mobs.len) // mutual brohugs all around!
-		if(loc && !loc.Adjacent(M.loc))
-			return 1
-		now_pushing = 1
-		var/oldloc = loc
-		var/oldMloc = M.loc
-
-
-		var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-		var/src_passmob = (pass_flags & PASSMOB)
-		M.pass_flags |= PASSMOB
-		pass_flags |= PASSMOB
-
-		M.Move(oldloc)
-		Move(oldMloc)
-
-		if(!src_passmob)
-			pass_flags &= ~PASSMOB
-		if(!M_passmob)
-			M.pass_flags &= ~PASSMOB
-
-		now_pushing = 0
+	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
+
+	if(!M.buckled && !M.buckled_mobs.len)
+		var/mob_swap
+		//the puller can always swap with its victim if on grab intent
+		if(M.pulledby == src && a_intent == "grab")
+			mob_swap = 1
+		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+			mob_swap = 1
+		if(mob_swap)
+			//switch our position with M
+			if(loc && !loc.Adjacent(M.loc))
+				return 1
+			now_pushing = 1
+			var/oldloc = loc
+			var/oldMloc = M.loc
+
+
+			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
+			var/src_passmob = (pass_flags & PASSMOB)
+			M.pass_flags |= PASSMOB
+			pass_flags |= PASSMOB
+
+			M.Move(oldloc)
+			Move(oldMloc)
+
+			if(!src_passmob)
+				pass_flags &= ~PASSMOB
+			if(!M_passmob)
+				M.pass_flags &= ~PASSMOB
+
+			now_pushing = 0
+			return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -161,6 +171,8 @@ Sorry Giacom. Please don't be mad :(
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
+		return 1
+	if(moving_diagonally)// no pushing during diagonal moves.
 		return 1
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
@@ -191,7 +203,7 @@ Sorry Giacom. Please don't be mad :(
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
-	if(src.stat || !src.canmove || src.restrained())
+	if(incapacitated())
 		return 0
 	if(src.status_flags & FAKEDEATH)
 		return 0
@@ -546,67 +558,29 @@ Sorry Giacom. Please don't be mad :(
 		else
 			return 0
 
-	if (restrained())
+	var/atom/movable/pullee = pulling
+	if(pullee && get_dist(src, pullee) > 1)
 		stop_pulling()
-
-
-	var/cuff_dragged = 0
-	if (restrained())
-		for(var/mob/living/M in range(1, src))
-			if (M.pulling == src && !M.incapacitated())
-				cuff_dragged = 1
-	if (!cuff_dragged && pulling && !throwing && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!isturf(pulling.loc))
-				stop_pulling()
-				return
-			else
-				if(Debug)
-					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
-					diary <<"REPORT THIS"
-
-		/////
-		if(pulling && pulling.anchored)
+	var/turf/T = loc
+	. = ..()
+	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+		if(pulling.anchored)
 			stop_pulling()
 			return
 
-		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/pull_ok = 1
-					if (M.grabbed_by.len)
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-							qdel(G)
-						else
-							pull_ok = 0
-						if (M.grabbed_by.len)
-							pull_ok = 0
-					if (pull_ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
+		var/pull_dir = get_dir(src, pulling)
+		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
+			if(isliving(pulling))
+				var/mob/living/M = pulling
+				if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
+					makeTrail(T, M)
+			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+				stop_pulling()
 
-						//this is the gay blood on floor shit -- Added back -- Skie
-						if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
-							makeTrail(T, M)
-						pulling.Move(T, get_dir(pulling, T))
-						if(M)
-							M.start_pulling(t)
-				else
-					if (pulling)
-						pulling.Move(T, get_dir(pulling, T))
-	else
-		stop_pulling()
-		. = ..()
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+		pulledby.stop_pulling()
+
 	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
@@ -662,34 +636,15 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time || stat || weakened || stunned || paralysis)
+	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!restrained())
-		var/resisting = 0
-		for(var/obj/O in requests)
-			qdel(O)
-			resisting++
-		for(var/X in grabbed_by)
-			var/obj/item/weapon/grab/G = X
-			resisting++
-			if(G.state == GRAB_PASSIVE)
-				qdel(G)
-			else
-				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(25))
-						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				else
-					if(G.state == GRAB_NECK)
-						if(prob(5))
-							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
-							qdel(G)
-		if(resisting)
-			visible_message("<span class='danger'>[src] resists!</span>")
-			return
+	if(!restrained(ignore_grab = 1) && pulledby)
+		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
+		resist_grab()
+		return
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
@@ -706,6 +661,22 @@ Sorry Giacom. Please don't be mad :(
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
+
+/mob/proc/resist_grab(moving_resist)
+	return 1 //returning 0 means we successfully broke free
+
+/mob/living/resist_grab(moving_resist)
+	. = 1
+	if(pulledby.grab_state)
+		if(prob(30/pulledby.grab_state))
+			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			pulledby.stop_pulling()
+			return 0
+		if(moving_resist && client) //we resisted by trying to move
+			client.move_delay = world.time + 20
+	else
+		pulledby.stop_pulling()
+		return 0
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -840,9 +811,9 @@ Sorry Giacom. Please don't be mad :(
 	// What icon do we use for the attack?
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
-		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
+		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
 	else if(!hand && r_hand) // Attacked with item in right hand.
-		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
+		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
 	else // Attacked with a fist?
 		return
 
@@ -1024,3 +995,22 @@ Sorry Giacom. Please don't be mad :(
 		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
 			return 1
 	return 0
+
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	stop_pulling()
+	. = ..()
+
+// Called when we are hit by a bolt of polymorph and changed
+// Generally the mob we are currently in, is about to be deleted
+/mob/living/proc/wabbajack_act(mob/living/new_mob)
+	if(mind)
+		mind.transfer_to(new_mob)
+	else
+		new_mob.key = key
+
+	for(var/para in hasparasites())
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		G.summoner = new_mob
+		G.Recall()
+		G << "<span class='holoparasite'>Your summoner has changed \
+			form to [new_mob]!</span>"

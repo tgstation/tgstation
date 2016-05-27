@@ -6,7 +6,7 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W" //icon_state decides which tube will be built
 	density = 0
-	layer = 3.1 //same as the built tube
+	layer = ABOVE_OBJ_LAYER //same as the built tube
 	anchored = 0
 
 /obj/structure/c_transit_tube/examine(mob/user)

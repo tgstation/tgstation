@@ -14,7 +14,7 @@
 	var/image/nest_overlay
 
 /obj/structure/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
 	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
@@ -73,7 +73,7 @@
 	if(M in buckled_mobs)
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
-		M.layer = MOB_LAYER - 0.3
+		M.layer = BELOW_MOB_LAYER
 		overlays += nest_overlay
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)

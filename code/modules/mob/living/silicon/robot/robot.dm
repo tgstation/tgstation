@@ -84,7 +84,7 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
+	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 
 	ident = rand(1, 999)
 	update_icons()
@@ -390,8 +390,8 @@
 		if(connected_ai)
 			stat("Master AI:", connected_ai.name)
 
-/mob/living/silicon/robot/restrained()
-	return 0
+/mob/living/silicon/robot/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
@@ -814,21 +814,21 @@
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard"
+				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("toiletbot")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg"
+				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("engiborg")
-				overlays += "eyes-engiborg"
+				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
-				overlays += "eyes-janiborg"
+				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("minerborg")
-				overlays += "eyes-minerborg"
+				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			else

@@ -3,7 +3,7 @@
 	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted." // except it literally never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
 	use_power = 1
@@ -57,18 +57,6 @@
 
 	if(stat) //NOPOWER etc
 		return
-	if(istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
-		if(!user.Adjacent(G.affecting))
-			return
-		var/grabbed = G.affecting
-		if(ismonkey(grabbed))
-			var/mob/living/carbon/monkey/target = grabbed
-			stuff_monkey_in(target, user)
-			user.drop_item()
-			return
-		else
-			user << "<span class='danger'>The machine only accepts monkeys!</span>"
 	else
 		return ..()
 

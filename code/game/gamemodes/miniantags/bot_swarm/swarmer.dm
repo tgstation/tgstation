@@ -319,38 +319,38 @@
 	return
 
 /mob/living/simple_animal/hostile/swarmer/proc/DisperseTarget(var/mob/living/target)
-	if(target != src)
-		src << "<span class='info'>Attempting to remove this being from our presence.</span>"
-		if(src.z != ZLEVEL_STATION)
-			src << "<span class='warning'>Our bluespace transceiver cannot locate a viable bluespace link, our teleportation abilities are useless in this area.</span>"
-			return
-		if(do_mob(src, target, 30))
-			var/cycle
-			for(cycle=0,cycle<100,cycle++)
-				var/random_location = locate(rand(37,202),rand(75,192),ZLEVEL_STATION)//Drunk dial a turf in the general ballpark of the station
-				if(istype(random_location, /turf/open/floor))
-					var/turf/open/floor/F = random_location
-					if(F.air)
-						var/datum/gas_mixture/A = F.air
-						var/list/A_gases = A.gases
-						var/trace_gases
-						for(var/id in A_gases)
-							if(id in hardcoded_gases)
-								continue
-							trace_gases = TRUE
-							break
-						if((A_gases["o2"] && A_gases["o2"][MOLES] >= 16) && !A_gases["plasma"] && (!A_gases["co2"] || A_gases["co2"][MOLES] < 10) && !trace_gases)//Can most things breathe in this location?
-							if((A.temperature > 270) && (A.temperature < 360))//Not too hot, not too cold
-								var/pressure = A.return_pressure()
-								if((pressure > 20) && (pressure < 550))//Account for crushing pressure or vaccuums
-									if(ishuman(target))//If we're getting rid of a human, slap some energy cuffs on them to keep them away from us a little longer
-										var/obj/item/weapon/restraints/handcuffs/energy/used/Z = new /obj/item/weapon/restraints/handcuffs/energy/used(src)
-										var/mob/living/carbon/human/H = target
-										Z.apply_cuffs(H, src)
-									do_teleport(target, F, 0)
-									playsound(src,'sound/effects/sparks4.ogg',50,1)
-									break
-			return
+	if(target == src)
+		return
+
+	if(src.z != ZLEVEL_STATION)
+		src << "<span class='warning'>Our bluespace transceiver cannot \
+			locate a viable bluespace link, our teleportation abilities \
+			are useless in this area.</span>"
+		return
+
+	src << "<span class='info'>Attempting to remove this being from \
+		our presence.</span>"
+
+	if(!do_mob(src, target, 30))
+		return
+
+	var/turf/open/floor/F = find_safe_turf(zlevel=ZLEVEL_STATION)
+	if(!F)
+		return
+	// If we're getting rid of a human, slap some energy cuffs on
+	// them to keep them away from us a little longer
+
+	var/mob/living/carbon/human/H = target
+	if(ishuman(target) && (!H.handcuffed))
+		H.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/used(H)
+		H.update_handcuffed()
+		add_logs(src, H, "handcuffed")
+
+	var/datum/effect_system/spark_spread/S = new
+	S.set_up(4,0,get_turf(target))
+	S.start()
+	playsound(src,'sound/effects/sparks4.ogg',50,1)
+	do_teleport(target, F, 0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/DismantleMachine(var/obj/machinery/target)
 	do_attack_animation(target)
@@ -389,7 +389,7 @@
 
 /obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'
-	layer = MOB_LAYER
+	layer = BELOW_MOB_LAYER
 
 /obj/effect/overlay/temp/swarmer/disintegration
 	icon_state = "disintegrate"
@@ -462,7 +462,6 @@
 		src << "<span class='warning'>There is already a trap here. Aborting.</span>"
 		return
 	Fabricate(/obj/effect/swarmer/destructible/trap, 5)
-	return
 
 /obj/effect/swarmer/destructible/trap
 	name = "swarmer trap"

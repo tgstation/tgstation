@@ -73,6 +73,10 @@ h1.alert, h2.alert		{color: #000000;}
 .holoparasite			{color: #35333a;}
 .holoparasitebold		{color: #35333a;	font-weight: bold;}
 
+.brass					{color: #BE8700;}
+.heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
+.large_brass			{color: #BE8700; font-size: 3;}
+
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}
 .revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
@@ -93,7 +97,7 @@ h1.alert, h2.alert		{color: #000000;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
-.command_headset       {font-weight: bold; font-size: 3; }
+.command_headset       {font-weight: bold; font-size: 3;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .greentext				{color: #00FF00;	font-size: 3;}

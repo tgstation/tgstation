@@ -19,7 +19,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1
-	layer = 2.8
+	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
@@ -97,6 +97,19 @@
 	take_damage(rand(180,280), BRUTE, 0)
 	return 1
 
+/obj/structure/table/attack_hand(mob/living/user)
+	if(user.a_intent == "grab" && user.pulling && isliving(user.pulling))
+		var/mob/living/pushed_mob = user.pulling
+		if(pushed_mob.buckled)
+			user << "<span class='warning'>[pushed_mob] is buckled to [pushed_mob.buckled]!</span>"
+			return
+		if(user.grab_state < GRAB_AGGRESSIVE)
+			user << "<span class='warning'>You need a better grip to do that!</span>"
+			return
+		tablepush(user, pushed_mob)
+		user.stop_pulling()
+	else
+		..()
 
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
@@ -123,39 +136,15 @@
 		var/atom/movable/mover = caller
 		. = . || mover.checkpass(PASSTABLE)
 
-/obj/structure/table/proc/tablepush(obj/item/I, mob/user)
-	if(get_dist(src, user) < 2)
-		var/obj/item/weapon/grab/G = I
-		if(G.affecting.buckled)
-			user << "<span class='warning'>[G.affecting] is buckled to [G.affecting.buckled]!</span>"
-			return 0
-		if(G.state < GRAB_AGGRESSIVE)
-			user << "<span class='warning'>You need a better grip to do that!</span>"
-			return 0
-		if(!G.confirm())
-			return 0
-		G.affecting.forceMove(src.loc)
-		if(istype(src, /obj/structure/table/optable))
-			var/obj/structure/table/optable/OT = src
-			G.affecting.resting = 1
-			G.affecting.update_canmove()
-			visible_message("<span class='notice'>[G.assailant] has laid [G.affecting] on [src].</span>")
-			OT.patient = G.affecting
-			OT.check_patient()
-			qdel(I)
-			return 1
-		G.affecting.Weaken(2)
-		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \
-									"<span class='userdanger'>[G.assailant] pushes [G.affecting] onto [src].</span>")
-		add_logs(G.assailant, G.affecting, "pushed")
-		qdel(I)
-		return 1
-	qdel(I)
+/obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.forceMove(src.loc)
+	pushed_mob.Weaken(2)
+	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
+								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
+	add_logs(user, pushed_mob, "pushed")
+
 
 /obj/structure/table/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/grab))
-		tablepush(I, user)
-		return
 	if(!(flags & NODECONSTRUCT))
 		if(istype(I, /obj/item/weapon/screwdriver) && deconstruction_ready)
 			table_deconstruct(user, 1)
@@ -297,10 +286,12 @@
 /obj/structure/table/glass/proc/table_shatter(mob/M)
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
-	playsound(src.loc, "shatter", 50, 1)
-	for(var/i in debris)
-		var/atom/movable/AM = i
-		AM.loc = get_turf(src)
+	var/turf/T = get_turf(src)
+	playsound(T, "shatter", 50, 1)
+	for(var/I in debris)
+		var/atom/movable/AM = I
+		AM.forceMove(T)
+		debris -= AM
 		if(istype(AM, /obj/item/weapon/shard))
 			AM.throw_impact(M)
 	M.Weaken(5)
@@ -325,7 +316,9 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	burn_state = FLAMMABLE
 	burntime = 20
-	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
+	canSmoothWith = list(/obj/structure/table/wood,
+		/obj/structure/table/wood/poker,
+		/obj/structure/table/wood/bar)
 
 /obj/structure/table/wood/narsie_act()
 	return
@@ -336,7 +329,6 @@
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
 
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)
@@ -399,6 +391,13 @@
 		if(computer)
 			computer.table = src
 			break
+
+/obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.forceMove(src.loc)
+	pushed_mob.resting = 1
+	pushed_mob.update_canmove()
+	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
+	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
 	var/mob/M = locate(/mob/living/carbon/human, loc)
