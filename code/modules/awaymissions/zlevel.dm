@@ -121,7 +121,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	if(!template && possible_ruins.len)
 		template = safepick(possible_ruins)
 	if(!template)
-		return 0
+		return FALSE
 	for(var/i in template.get_affected_turfs(get_turf(src), 1))
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
@@ -129,4 +129,4 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	template.load(get_turf(src),centered = TRUE)
 	template.loaded++
 	qdel(src)
-	return 1
+	return TRUE
