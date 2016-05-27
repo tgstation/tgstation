@@ -737,3 +737,30 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 				I.status &= ~ORGAN_SPLINTED
 				I.status &= ~ORGAN_BLEEDING
 	mind.vampire.nullified = max(0, mind.vampire.nullified - 1)
+
+/datum/mind/proc/make_new_vampire(var/show_message = 1, var/generate_objectives = 1)
+	if(!isvampire(current))
+		ticker.mode.vampires += src
+		ticker.mode.grant_vampire_powers(current)
+		special_role = "Vampire"
+		if(show_message)
+			to_chat(current, "<B><font color='red'>Your powers are awoken. Your lust for blood grows... You are a Vampire!</font></B>")
+			var/wikiroute = role_wiki[ROLE_VAMPIRE]
+			to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
+		if(generate_objectives)
+			ticker.mode.forge_vampire_objectives(src)
+		return 1
+	return 0
+
+/datum/mind/proc/remove_vampire_status(var/show_message = 1)
+	if(isvampire(current))
+		ticker.mode.vampires -= src
+		special_role = null
+		current.remove_vampire_powers()
+		if(vampire)
+			qdel(vampire)
+			vampire = null
+		if(show_message)
+			to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a vampire and are stuck in your current form!</B></FONT>")
+		return 1
+	return 0

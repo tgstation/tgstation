@@ -737,23 +737,11 @@
 		switch(href_list["changeling"])
 			if("clear")
 				if(src in ticker.mode.changelings)
-					ticker.mode.changelings -= src
-					special_role = null
-					current.remove_changeling_powers()
-					current.verbs -= /datum/changeling/proc/EvolutionMenu
-					if(changeling)
-						qdel(changeling)
-						changeling = null
-					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
+					remove_changeling_status()
 					log_admin("[key_name_admin(usr)] has de-changeling'ed [current].")
 			if("changeling")
 				if(!(src in ticker.mode.changelings))
-					ticker.mode.changelings += src
-					ticker.mode.grant_changeling_powers(current)
-					special_role = "Changeling"
-					to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
-					var/wikiroute = role_wiki[ROLE_CHANGELING]
-					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
+					make_new_changeling(1, 0)
 					log_admin("[key_name_admin(usr)] has changeling'ed [current].")
 			if("autoobjectives")
 				ticker.mode.forge_changeling_objectives(src)
@@ -780,22 +768,11 @@
 		switch(href_list["vampire"])
 			if("clear")
 				if(src in ticker.mode.vampires)
-					ticker.mode.vampires -= src
-					special_role = null
-					current.remove_vampire_powers()
-					if(vampire)
-						qdel(vampire)
-						vampire = null
-					to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a vampire and are stuck in your current form!</B></FONT>")
+					remove_vampire_status()
 					log_admin("[key_name_admin(usr)] has de-vampired [current].")
 			if("vampire")
 				if(!(src in ticker.mode.vampires))
-					ticker.mode.vampires += src
-					ticker.mode.grant_vampire_powers(current)
-					special_role = "Vampire"
-					to_chat(current, "<B><font color='red'>Your powers are awoken. Your lust for blood grows... You are a Vampire!</font></B>")
-					var/wikiroute = role_wiki[ROLE_VAMPIRE]
-					to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
+					make_new_vampire(1, 0)
 					log_admin("[key_name_admin(usr)] has vampired [current].")
 			if("autoobjectives")
 				ticker.mode.forge_vampire_objectives(src)

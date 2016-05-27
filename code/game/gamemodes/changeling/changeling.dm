@@ -287,3 +287,31 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			chosen_dna = DNA
 			break
 	return chosen_dna
+
+/datum/mind/proc/make_new_changeling(var/show_message = 1, var/generate_objectives = 1)
+	if(!ischangeling(current))
+		ticker.mode.changelings += src
+		ticker.mode.grant_changeling_powers(current)
+		special_role = "Changeling"
+		if(show_message)
+			to_chat(current, "<B><font color='red'>Your powers are awoken. A flash of memory returns to us...we are a changeling!</font></B>")
+			var/wikiroute = role_wiki[ROLE_CHANGELING]
+			to_chat(current, "<span class='info'><a HREF='?src=\ref[current];getwiki=[wikiroute]'>(Wiki Guide)</a></span>")
+		if(generate_objectives)
+			ticker.mode.forge_changeling_objectives(src)
+		return 1
+	return 0
+
+/datum/mind/proc/remove_changeling_status(var/show_message = 1)
+	if(ischangeling(current))
+		ticker.mode.changelings -= src
+		special_role = null
+		current.remove_changeling_powers()
+		current.verbs -= /datum/changeling/proc/EvolutionMenu
+		if(changeling)
+			qdel(changeling)
+			changeling = null
+		if(show_message)
+			to_chat(current, "<FONT color='red' size = 3><B>You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!</B></FONT>")
+		return 1
+	return 0

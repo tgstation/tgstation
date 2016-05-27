@@ -301,6 +301,14 @@
 				return 0
 	return 1
 
+/datum/reagent/blood/reaction_obj(var/obj/O, var/volume)
+
+	if(..()) return 1
+
+	if(istype(O, /obj/item/clothing/mask/stone))
+		var/obj/item/clothing/mask/stone/S = O
+		S.spikes()
+
 //Data must contain virus type
 /datum/reagent/vaccine
 	name = "Vaccine"
