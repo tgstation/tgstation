@@ -12,7 +12,6 @@
 	w_class = 3
 	materials = list(MAT_METAL=500)
 	origin_tech = "combat=1;plasmatech=1"
-	var/status = 0
 	var/throw_amount = 100
 	var/lit = 0	//on or off
 	var/operating = 0//cooldown
@@ -49,7 +48,7 @@
 /obj/item/weapon/flamethrower/update_icon()
 	overlays.Cut()
 	if(igniter)
-		overlays += "+igniter[status]"
+		overlays += "+igniter1"
 	if(ptank)
 		overlays += "+ptank"
 	if(lit)
@@ -70,41 +69,7 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
-		var/turf/T = get_turf(src)
-		if(weldtool)
-			weldtool.loc = T
-			weldtool = null
-		if(igniter)
-			igniter.loc = T
-			igniter = null
-		if(ptank)
-			ptank.loc = T
-			ptank = null
-		new /obj/item/stack/rods(T)
-		qdel(src)
-		return
-
-	else if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
-		status = !status
-		user << "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>"
-		update_icon()
-		return
-
-	else if(isigniter(W))
-		var/obj/item/device/assembly/igniter/I = W
-		if(I.secured)
-			return
-		if(igniter)
-			return
-		if(!user.unEquip(W))
-			return
-		I.loc = src
-		igniter = I
-		update_icon()
-		return
-
-	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
@@ -145,8 +110,6 @@
 	if(href_list["light"])
 		if(!ptank)
 			return
-		if(!status)
-			return
 		lit = !lit
 		if(lit)
 			SSobj.processing |= src
@@ -174,9 +137,7 @@
 	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
-	weldtool.status = 0
 	igniter.secured = 0
-	status = 1
 	update_icon()
 
 //Called from turf.dm turf/dblclick
@@ -218,11 +179,9 @@
 	..()
 	if(!weldtool)
 		weldtool = new /obj/item/weapon/weldingtool(src)
-	weldtool.status = 0
 	if(!igniter)
 		igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
-	status = 1
 	update_icon()
 
 /obj/item/weapon/flamethrower/full/tank/New(var/loc)

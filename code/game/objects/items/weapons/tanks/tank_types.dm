@@ -93,7 +93,7 @@
 /obj/item/weapon/tank/internals/plasma/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
-		if ((!F.status)||(F.ptank))
+		if(F.ptank)
 			return
 		src.master = F
 		F.ptank = src
