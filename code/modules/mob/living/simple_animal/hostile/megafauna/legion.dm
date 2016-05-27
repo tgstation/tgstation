@@ -79,6 +79,8 @@
 		L.update_transform()
 		update_transform()
 
+		L.target = target
+
 		visible_message("<span class='danger'>[src] splits!</span>")
 	else
 		var/last_legion = TRUE
