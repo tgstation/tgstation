@@ -2,7 +2,7 @@
 	name = "pill"
 	desc = "A tablet or capsule."
 	icon = 'icons/obj/chemical.dmi'
-	//icon_state = "pill"
+	icon_state = "pill"
 	item_state = "pill"
 	possible_transfer_amounts = list()
 	volume = 50
@@ -13,8 +13,6 @@
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
-	if(!icon_state)
-		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && roundstart)
 		name += " ([reagents.total_volume]u)"
 
