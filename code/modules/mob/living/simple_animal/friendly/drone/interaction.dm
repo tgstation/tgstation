@@ -81,10 +81,9 @@
 		drop_r_hand()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
-		DH.contents += src
 		DH.drone = src
 		user.put_in_hands(DH)
-		src.loc = DH
+		forceMove(DH)
 		return
 
 	..()
@@ -154,6 +153,13 @@
 		speed = initial(speed)
 		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
+	updateSeeStaticMobs()
+
+/mob/living/simple_animal/drone/proc/liberate()
+	// F R E E D R O N E
+	laws = "1. You are a Free Drone."
+	src << laws
+	seeStatic = FALSE
 	updateSeeStaticMobs()
 
 /mob/living/simple_animal/drone/proc/update_drone_icon()

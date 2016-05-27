@@ -212,8 +212,11 @@
 	icon_state = "talisman"
 	var/cooldown = 0
 
-/obj/item/device/immortality_talisman/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/item/device/immortality_talisman/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
@@ -250,11 +253,11 @@
 /obj/effect/immortality_talisman/singularity_pull()
 	return 0
 
-/obj/effect/immortality_talisman/Destroy()
-	if(!can_destroy)
+/obj/effect/immortality_talisman/Destroy(force)
+	if(!can_destroy && !force)
 		return QDEL_HINT_LETMELIVE
 	else
-		..()
+		. = ..()
 
 
 //Shared Bag

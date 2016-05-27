@@ -357,8 +357,8 @@ var/list/ai_list = list()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/restrained()
-	return 0
+/mob/living/silicon/ai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))

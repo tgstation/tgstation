@@ -150,8 +150,9 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_TKSTRANGLE 10
 #define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
 //click cooldowns, in tenths of a second
 
 
@@ -396,12 +397,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-//Launching Shuttles to Centcomm
-#define NOLAUNCH -1
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -424,12 +419,15 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-// Shuttle return values
-#define SHUTTLE_ALREADY_DOCKED 7
-
-
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 
 // Evil narsie colour
 #define NARSIE_WINDOW_COLOUR "#7D1919"
 
+// Defib stats
+#define DEFIB_TIME_LIMIT 120
+#define DEFIB_TIME_LOSS 60
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
