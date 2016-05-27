@@ -394,9 +394,7 @@
 	spawn()
 		for(var/i = 0;i < 2;i++)
 			for(var/turf/T in drain_turflist)
-				var/obj/effect/tracker/drain/Tr = getFromPool(/obj/effect/tracker/drain, T)
-				Tr.target = user
-				Tr.icon_state = pick("soul1","soul2","soul3")
+				make_tracker_effects(T, user, 1, "soul", 3, /obj/effect/tracker/drain)
 				sleep(1)
 
 	if(user.bhunger)

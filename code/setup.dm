@@ -1505,3 +1505,5 @@ var/proccalls = 1
 
 #define EVENT_OBJECT_INDEX "o"
 #define EVENT_PROC_INDEX "p"
+
+#define HIGHLANDER "highlander"

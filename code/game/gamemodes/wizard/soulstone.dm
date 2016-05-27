@@ -310,17 +310,9 @@
 	if(add_target && add_target.loc)
 		T2 = get_turf(add_target)
 
-	spawn()
-		for(var/i = 0;i < 10;i++)
-			var/obj/effect/tracker/soul/Tr = getFromPool(/obj/effect/tracker/soul, T1)
-			Tr.target = user
-			Tr.icon_state = pick("soul1","soul2","soul3")
-			if(T2)
-				var/obj/effect/tracker/soul/Tr2 = getFromPool(/obj/effect/tracker/soul, T2)
-				Tr2.target = user
-				Tr2.icon_state = pick("soul1","soul2","soul3")
-			sleep(1)
-
+	make_tracker_effects(T1, user)
+	if(T2)
+		make_tracker_effects(T2, user)
 
 	//Cleaning up the corpse
 	qdel(target)

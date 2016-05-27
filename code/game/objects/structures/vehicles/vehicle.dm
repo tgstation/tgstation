@@ -64,11 +64,6 @@
 	if(empstun < 0)
 		empstun = 0
 
-/obj/structure/bed/chair/vehicle/buckle_mob(mob/M as mob, mob/user as mob)
-	if(isanimal(M)) return //Animals can't buckle
-
-	..()
-
 /obj/structure/bed/chair/vehicle/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -222,6 +217,12 @@
 /obj/structure/bed/chair/vehicle/proc/can_buckle(mob/M, mob/user)
 	if(M != user || !ishuman(user) || !Adjacent(user) || user.restrained() || user.lying || user.stat || user.locked_to || destroyed || occupant)
 		return 0
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.mind && H.mind.special_role == HIGHLANDER)
+			if(user == M)
+				to_chat(user, "<span class='warning'>A true highlander has no need for a mount!</span>")
+			return 0
 	return 1
 
 /obj/structure/bed/chair/vehicle/buckle_mob(mob/M, mob/user)
