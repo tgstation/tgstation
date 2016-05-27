@@ -552,7 +552,7 @@
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
-			visible_message("<span class='danger'>[src] throws up all over \himself!</span>", \
+			visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
 		distance = 0
 	else
