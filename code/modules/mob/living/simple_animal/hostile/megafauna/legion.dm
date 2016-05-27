@@ -76,12 +76,6 @@
 		L.resize = size_multiplier
 		resize = L.resize
 
-		L.pixel_y = L.pixel_y * size_multiplier
-		pixel_y = L.pixel_y
-
-		L.pixel_x = L.pixel_x * size_multiplier
-		pixel_x = L.pixel_x
-
 		L.update_transform()
 		update_transform()
 
