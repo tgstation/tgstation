@@ -27,7 +27,7 @@
 		pinned_target = T
 		T.pinnedLoc = src
 		T.density = 1
-		T.layer = OBJ_LAYER + 0.1
+		T.layer = OBJ_LAYER + 0.01
 		T.loc = loc
 		user << "<span class='notice'>You slide the target into the stake.</span>"
 

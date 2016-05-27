@@ -681,9 +681,9 @@ var/next_mob_id = 0
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
-		if(layer == MOB_LAYER - 0.2)
+		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()

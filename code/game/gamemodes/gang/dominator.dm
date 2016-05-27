@@ -5,7 +5,7 @@
 	icon_state = "dominator"
 	density = 1
 	anchored = 1
-	layer = 3.6
+	layer = HIGH_OBJ_LAYER
 	var/maxhealth = 200
 	var/health = 200
 	var/datum/gang/gang
