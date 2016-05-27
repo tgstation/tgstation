@@ -106,6 +106,7 @@
 				var/list/parts = del_reqs(R, user)
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
+				user.put_in_hands(I)
 				if(send_feedback)
 					feedback_add_details("object_crafted","[I.type]")
 				return 0
