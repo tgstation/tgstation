@@ -39,6 +39,13 @@
 		"tree_6",
 		)
 
+
+	//Trees Z-fight due to being bigger than one tile, so we need to perform serious layer fuckery to hide this obvious defect)
+
+	var/rangevalue = 0.1 //Range over which the values spread. We don't want it to collide with "true" layer differences
+
+	layer += rangevalue * (1 - (y + 0.5 * (x & 1)) / world.maxy)
+
 /obj/structure/flora/tree/examine(mob/user)
 	.=..()
 
@@ -172,6 +179,12 @@
 	..()
 	icon_state = "snowgrassall[rand(1, 3)]"
 
+/obj/structure/flora/grass/white
+	icon_state = "snowgrass3"
+
+/obj/structure/flora/grass/white/New()
+	..()
+	icon_state = "snowgrass_[rand(1, 6)]"
 
 //bushes
 /obj/structure/flora/bush
@@ -355,9 +368,18 @@
 
 /obj/structure/flora/rock/pile
 	name = "rocks"
-	desc = "some rocks"
+	desc = "A bunch of small rocks."
 	icon_state = "rockpile1"
 
 /obj/structure/flora/rock/pile/New()
 	..()
 	icon_state = "rockpile[rand(1,5)]"
+
+/obj/structure/flora/rock/pile/snow
+	name = "rocks"
+	desc = "A bunch of small rocks, these ones are covered in a thick frost layer."
+	icon_state = "srockpile1"
+
+/obj/structure/flora/rock/pile/snow/New()
+	..()
+	icon_state = "srockpile[rand(1,5)]"
