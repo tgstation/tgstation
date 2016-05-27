@@ -246,7 +246,7 @@ var/list/department_radio_keys = list(
 	for (var/atom/movable/listener in listeners)
 		listener.Hear(speech, rendered)
 
-	send_speech_bubble(speech, bubble_type, listeners)
+	send_speech_bubble(speech.message, bubble_type, listeners)
 
 /mob/living/proc/say_test(var/text)
 	var/ending = copytext(text, length(text))
