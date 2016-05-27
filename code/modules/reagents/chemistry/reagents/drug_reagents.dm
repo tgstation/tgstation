@@ -3,6 +3,7 @@
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
+	pill_icon_state = "pill13" //The Standard Pill for all drugs that have not their own set
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/space_drugs
