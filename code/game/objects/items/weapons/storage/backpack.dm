@@ -82,7 +82,7 @@
 		qdel(src)
 		singulo.process()
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)

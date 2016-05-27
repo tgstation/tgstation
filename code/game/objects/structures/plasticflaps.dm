@@ -5,7 +5,7 @@
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
-	layer = 4
+	layer = ABOVE_MOB_LAYER
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(istype(caller, /mob/living))

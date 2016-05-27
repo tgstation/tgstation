@@ -29,7 +29,6 @@
 	faction = list("skeleton")
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
-	layer = MOB_LAYER - 0.1
 	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)

@@ -9,7 +9,7 @@
 	icon_state = "girder"
 	anchored = 1
 	density = 1
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/state = GIRDER_NORMAL
 	var/girderpasschance = 20 // percentage chance that a projectile passes through the girder.
 	var/can_displace = TRUE //If the girder can be moved around by wrenching it
@@ -291,7 +291,6 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
-	layer = 2.45
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"

@@ -7,7 +7,7 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = MOB_LAYER + 0.5
+	layer = ABOVE_ALL_MOB_LAYER
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0

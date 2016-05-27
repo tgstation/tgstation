@@ -201,6 +201,8 @@
 		if(!S.amount)
 			qdel(S)
 		else
+			if(S.pulledby)
+				S.pulledby.stop_pulling()
 			S.loc = src
 
 	orient2hud(usr)
@@ -345,7 +347,7 @@
 
 /obj/item/weapon/storage/bag/tray/handle_item_insertion(obj/item/I, prevent_warning = 0)
 	overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = -1)
-	..()
+	. = ..()
 
 
 /*

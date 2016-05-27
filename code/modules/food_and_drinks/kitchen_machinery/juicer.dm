@@ -3,7 +3,7 @@
 	name = "juicer"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 0
 	use_power = 1
