@@ -53,10 +53,16 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if (!L.len)
+		return 0
+	if (!L[L[1]])
+		generate_type_list_cache(L)
+	return L[A.type]
+
+/proc/generate_type_list_cache(L)
 	for(var/type in L)
-		if(istype(A, type))
-			return 1
-	return 0
+		for(var/T in typesof(type))
+			L[T] = 1
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -135,6 +141,11 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
+
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
@@ -227,13 +238,7 @@
 	return r
 
 // Returns the key based on the index
-/proc/get_key_by_index(list/L, index)
-	var/i = 1
-	for(var/key in L)
-		if(index == i)
-			return key
-		i++
-	return null
+#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
@@ -344,3 +349,16 @@
 	while(L.Remove(null))
 		continue
 	return L
+
+//Copies a list, and all lists inside it recusively
+//Does not copy any other reference type
+/proc/deepCopyList(list/l)
+	if(!islist(l))
+		return l
+	. = l.Copy()
+	for(var/i = 1 to l.len)
+		if(islist(.[i]))
+			.[i] = .(.[i])
+
+//Picks from the list, with some safeties, and returns the "default" arg if it fails
+#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)

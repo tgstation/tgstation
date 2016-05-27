@@ -26,7 +26,9 @@ var/next_mob_id = 0
 
 /atom/proc/prepare_huds()
 	for(var/hud in hud_possible)
-		hud_list[hud] = image('icons/mob/hud.dmi', src, "")
+		var/image/I = image('icons/mob/hud.dmi', src, "")
+		I.appearance_flags = RESET_COLOR
+		hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -177,44 +179,10 @@ var/next_mob_id = 0
 			return r_hand
 	return null
 
-/mob/proc/ret_grab(obj/effect/list_container/mobl/L, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
-		if (!( L ))
-			return null
-		else
-			return L.container
-	else
-		if (!( L ))
-			L = new /obj/effect/list_container/mobl( null )
-			L.container += src
-			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (!( flag ))
-			if (L.master == src)
-				var/list/temp = list(  )
-				temp += L.container
-				//L = null
-				qdel(L)
-				return temp
-			else
-				return L.container
+/mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/restrained()
-	return
-
-/mob/proc/incapacitated()
+/mob/proc/incapacitated(ignore_restraints, ignore_grab)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -233,7 +201,7 @@ var/next_mob_id = 0
 
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_splot()!
+//This is a SAFE proc. Use this instead of equip_to_slot()!
 //set qdel_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
@@ -319,28 +287,26 @@ var/next_mob_id = 0
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
 		return 0
-	if(istype(A, /obj/effect/decal/point))
+	if(istype(A, /obj/effect/overlay/temp/point))
 		return 0
 
 	var/tile = get_turf(A)
 	if (!tile)
 		return 0
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.invisibility = invisibility
-	spawn (20)
-		if(P)
-			qdel(P)
+	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
 
 	return 1
 
 //this and stop_pulling really ought to be /mob/living procs
-/mob/proc/start_pulling(atom/movable/AM)
+/mob/proc/start_pulling(atom/movable/AM, supress_message = 0)
 	if(!AM || !src)
 		return
 	if(AM == src || !isturf(AM.loc))
 		return
-	if(AM.anchored)
+	if(AM.anchored || AM.throwing)
+		return
+	if(throwing || incapacitated())
 		return
 
 	AM.add_fingerprint(src)
@@ -352,13 +318,21 @@ var/next_mob_id = 0
 			return
 		stop_pulling()
 
+	changeNext_move(CLICK_CD_GRABBING)
+
+	if(AM.pulledby)
+		visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+
 	pulling = AM
 	AM.pulledby = src
-
+	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
 		var/mob/M = AM
+		if(!supress_message)
+			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -370,11 +344,15 @@ var/next_mob_id = 0
 
 	if(pulling)
 		pulling.pulledby = null
+		if(ismob(pulling))
+			var/mob/M = pulling
+			M.update_canmove()// mob gets up if it was lyng down in a chokehold
 		pulling = null
+		grab_state = 0
 		update_pull_hud_icon()
 
 /mob/proc/update_pull_hud_icon()
-	if(client && hud_used)
+	if(hud_used)
 		if(hud_used.pull_icon)
 			hud_used.pull_icon.update_icon(src)
 
@@ -587,10 +565,10 @@ var/next_mob_id = 0
 		if (nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-
-		var/ETA = SSshuttle.emergency.getModeStr()
-		if(ETA)
-			stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
+		if(SSshuttle.emergency)
+			var/ETA = SSshuttle.emergency.getModeStr()
+			if(ETA)
+				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
 
 	if(client && client.holder)
@@ -679,22 +657,27 @@ var/next_mob_id = 0
 //Robots, animals and brains have their own version so don't worry about them
 /mob/proc/update_canmove()
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
-	if(ko || resting || stunned)
+	var/has_legs = get_num_legs()
+	var/has_arms = get_num_arms()
+	if(ko || resting || stunned || chokehold)
 		drop_r_hand()
 		drop_l_hand()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
-	else
+	else if(has_legs)
 		lying = 0
-		canmove = 1
+
 	if(buckled)
 		lying = 90*buckle_lying
-	else
-		if((ko || resting) && !lying)
-			fall(ko)
-	canmove = !(ko || resting || stunned || buckled)
+	else if(!lying)
+		if(resting)
+			fall()
+		else if(ko || !has_legs || chokehold)
+			fall(forced = 1)
+	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -757,144 +740,22 @@ var/next_mob_id = 0
 /mob/proc/activate_hand(selhand)
 	return
 
-/mob/proc/Jitter(amount)
-	jitteriness = max(jitteriness,amount,0)
-
-/mob/proc/Dizzy(amount)
-	dizziness = max(dizziness,amount,0)
-
-/mob/proc/Stun(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/SetStunned(amount, updating_canmove = 1) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/AdjustStunned(amount, updating_canmove = 1)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-		if(updating_canmove)
-			update_canmove()
-
-/mob/proc/Weaken(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(max(weakened,amount),0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/SetWeakened(amount, updating_canmove = 1)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/AdjustWeakened(amount, ignore_canweaken = 0, updating_canmove = 1)
-	if((status_flags & CANWEAKEN) || ignore_canweaken)
-		weakened = max(weakened + amount,0)
-		if(updating_canmove)
-			update_canmove()	//updates lying, canmove and icons
-
-/mob/proc/Paralyse(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(max(paralysis,amount),0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/SetParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/AdjustParalysis(amount, updating_stat = 1)
-	if(status_flags & CANPARALYSE)
-		var/old_paralysis = paralysis
-		paralysis = max(paralysis + amount,0)
-		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
-			if(updating_stat)
-				update_stat()
-
-/mob/proc/Sleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(max(sleeping,amount),0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/SetSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/AdjustSleeping(amount, updating_stat = 1)
-	var/old_sleeping = sleeping
-	sleeping = max(sleeping + amount,0)
-	if(!old_sleeping && sleeping)
-		throw_alert("asleep", /obj/screen/alert/asleep)
-		if(updating_stat)
-			update_stat()
-	else if(old_sleeping && !sleeping)
-		clear_alert("asleep")
-		if(updating_stat)
-			update_stat()
-
-/mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
-	update_canmove()
-
-/mob/proc/SetResting(amount)
-	resting = max(amount,0)
-	update_canmove()
-
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
-	update_canmove()
-
 /mob/proc/assess_threat() //For sec bot threat assessment
 	return
 
 /mob/proc/get_ghost(even_if_they_cant_reenter = 0)
 	if(mind)
-		for(var/mob/dead/observer/G in dead_mob_list)
-			if(G.mind == mind)
-				if(G.can_reenter_corpse || even_if_they_cant_reenter)
-					return G
-				break
+		return mind.get_ghost(even_if_they_cant_reenter)
+
+/mob/proc/grab_ghost(force)
+	if(mind)
+		return mind.grab_ghost(force = force)
 
 /mob/proc/notify_ghost_cloning(var/message = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!", var/sound = 'sound/effects/genetics.ogg', var/atom/source = null)
 	var/mob/dead/observer/ghost = get_ghost()
 	if(ghost)
 		ghost.notify_cloning(message, sound, source)
 		return ghost
-
-
-
-/mob/proc/adjustEarDamage()
-	return
-
-/mob/proc/setEarDamage()
-	return
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
@@ -1058,3 +919,10 @@ var/next_mob_id = 0
 			updatehealth()
 		if("resize")
 			update_transform()
+	..()
+
+/mob/proc/is_literate()
+	return 0
+
+/mob/proc/get_idcard()
+	return

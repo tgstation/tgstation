@@ -2,24 +2,14 @@
 	create_reagents(1000)
 	..()
 
-/mob/living/carbon/prepare_huds()
-	..()
-	prepare_data_huds()
-
-/mob/living/carbon/proc/prepare_data_huds()
-	..()
-	med_hud_set_health()
-	med_hud_set_status()
-
-/mob/living/carbon/updatehealth()
-	..()
-	med_hud_set_health()
-
 /mob/living/carbon/Destroy()
 	for(var/atom/movable/guts in internal_organs)
 		qdel(guts)
 	for(var/atom/movable/food in stomach_contents)
 		qdel(food)
+	for(var/BP in bodyparts)
+		qdel(BP)
+	bodyparts = list()
 	remove_from_all_data_huds()
 	if(dna)
 		qdel(dna)
@@ -37,9 +27,9 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_organ("chest")
-					if (istype(organ, /obj/item/organ/limb))
-						var/obj/item/organ/limb/temp = organ
+					var/organ = H.get_bodypart("chest")
+					if (istype(organ, /obj/item/bodypart))
+						var/obj/item/bodypart/temp = organ
 						if(temp.take_damage(d, 0))
 							H.update_damage_overlays(0)
 					H.updatehealth()
@@ -54,23 +44,6 @@
 						A.loc = loc
 						stomach_contents.Remove(A)
 					src.gib()
-
-/mob/living/carbon/gib(animation = 1, var/no_brain = 0)
-	death(1)
-	for(var/obj/item/organ/internal/I in internal_organs)
-		if(no_brain && istype(I, /obj/item/organ/internal/brain))
-			continue
-		if(I)
-			I.Remove(src)
-			I.loc = get_turf(src)
-			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
-
-	for(var/mob/M in src)
-		if(M in stomach_contents)
-			stomach_contents.Remove(M)
-		M.loc = loc
-		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
-	. = ..()
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
@@ -146,11 +119,11 @@
 	if(health >= 0)
 
 		if(lying)
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get \him up!</span>", \
-							"<span class='notice'>You shake [src] trying to get \him up!</span>")
+			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
+							"<span class='notice'>You shake [src] trying to get them up!</span>")
 		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make \him feel better!</span>", \
-						"<span class='notice'>You hug [src] to make \him feel better!</span>")
+			M.visible_message("<span class='notice'>[M] hugs [src] to make them feel better!</span>", \
+						"<span class='notice'>You hug [src] to make them feel better!</span>")
 		AdjustSleeping(-5)
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
@@ -163,6 +136,7 @@
 
 /mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	. = ..()
+
 	var/damage = intensity - check_eye_prot()
 	if(.) // we've been flashed
 		if(visual)
@@ -196,10 +170,15 @@
 						src << "<span class='warning'>You can't see anything!</span>"
 			else
 				src << "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(-500)
 		return 1
 	else if(damage == 0) // just enough protection
 		if(prob(20))
 			src << "<span class='notice'>Something bright flashes in the corner of your vision!</span>"
+		if(has_bane(BANE_LIGHT))
+			mind.disrupt_spells(0)
+
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -229,46 +208,36 @@
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
-	if(istype(target, /obj/screen)) return
+	if(istype(target, /obj/screen))
+		return
 
-	var/atom/movable/item = src.get_active_hand()
+	var/atom/movable/thrown_thing
+	var/obj/item/I = src.get_active_hand()
 
-	if(!item || (item.flags & NODROP)) return
+	if(!I)
+		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
+			var/mob/living/throwable_mob = pulling
+			if(!throwable_mob.buckled)
+				thrown_thing = throwable_mob
+				stop_pulling()
+				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+				var/turf/end_T = get_turf(target)
+				if(start_T && end_T)
+					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
+					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
-	if(istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		item = G.get_mob_if_throwable() //throw the person instead of the grab
-		qdel(G)			//We delete the grab, as it needs to stay around until it's returned.
-		if(ismob(item))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				var/mob/M = item
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+	else if(!(I.flags & (NODROP|ABSTRACT)))
+		thrown_thing = I
+		unEquip(I)
 
-				add_logs(src, M, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(!item) return //Grab processing has a chance of returning null
-
-	if(!ismob(item)) //Honk mobs don't have a dropped() proc honk
-		unEquip(item)
-	if(src.client)
-		src.client.screen -= item
-
-	//actually throw it!
-	if(item)
-		item.layer = initial(item.layer)
-		src.visible_message("<span class='danger'>[src] has thrown [item].</span>")
-
+	if(thrown_thing)
+		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
 		newtonian_move(get_dir(target, src))
+		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
-		item.throw_at(target, item.throw_range, item.throw_speed, src)
-
-/mob/living/carbon/restrained()
-	if (handcuffed)
-		return 1
-	return
+/mob/living/carbon/restrained(ignore_grab)
+	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
@@ -341,7 +310,7 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
-/mob/living/carbon/blob_act()
+/mob/living/carbon/blob_act(obj/effect/blob/B)
 	if (stat == DEAD)
 		return
 	else
@@ -528,13 +497,13 @@
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
 /mob/living/carbon/emp_act(severity)
-	for(var/obj/item/organ/internal/O in internal_organs)
+	for(var/obj/item/organ/O in internal_organs)
 		O.emp_act(severity)
 	..()
 
 /mob/living/carbon/check_eye_prot()
 	var/number = ..()
-	for(var/obj/item/organ/internal/cyberimp/eyes/EFP in internal_organs)
+	for(var/obj/item/organ/cyberimp/eyes/EFP in internal_organs)
 		number += EFP.flash_protect
 	return number
 
@@ -558,7 +527,7 @@
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
-		var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+		var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 		if(vessel)
 			stat(null, "Plasma Stored: [vessel.storedPlasma]/[vessel.max_plasma]")
 		if(locate(/obj/item/device/assembly/health) in src)
@@ -627,7 +596,7 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/internal/cyberimp/eyes/E in internal_organs)
+	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
 		sight |= E.sight_flags
 		if(E.dark_view)
 			see_in_dark = max(see_in_dark,E.dark_view)
@@ -742,7 +711,7 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/internal/brain))
+		if(health<= config.health_threshold_dead || !getorgan(/obj/item/organ/brain))
 			death()
 			return
 		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
@@ -776,7 +745,7 @@
 /mob/living/carbon/fully_heal(admin_revive = 0)
 	if(reagents)
 		reagents.clear_reagents()
-	var/obj/item/organ/internal/brain/B = getorgan(/obj/item/organ/internal/brain)
+	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
 	if(admin_revive)
@@ -793,14 +762,14 @@
 
 /mob/living/carbon/can_be_revived()
 	. = ..()
-	if(!getorgan(/obj/item/organ/internal/brain))
+	if(!getorgan(/obj/item/organ/brain))
 		return 0
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(qdeleted(src))
 		return
 	var/organs_amt = 0
-	for(var/obj/item/organ/internal/O in internal_organs)
+	for(var/obj/item/organ/O in internal_organs)
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)

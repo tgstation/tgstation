@@ -62,8 +62,13 @@
 	var/has_been_powered = 0
 	var/has_reached_emergency = 0
 
+	// For making hugbox supermatter
+	var/takes_damage = 1
+	var/produces_gas = 1
+
 /obj/machinery/power/supermatter_shard/New()
 	. = ..()
+	poi_list |= src
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
@@ -72,6 +77,7 @@
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
 	qdel(radio)
+	poi_list -= src
 	. = ..()
 
 /obj/machinery/power/supermatter_shard/proc/explode()
@@ -126,16 +132,24 @@
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
 
-	//Remove gas from surrounding area
-	var/datum/gas_mixture/removed = env.remove(gasefficency * env.total_moles())
+	var/datum/gas_mixture/removed
+
+	if(produces_gas)
+		//Remove gas from surrounding area
+		removed = env.remove(gasefficency * env.total_moles())
+	else
+		// Pass all the gas related code an empty gas container
+		removed = new()
 
 	if(!removed || !removed.total_moles())
-		damage += max((power-1600)/10, 0)
+		if(takes_damage)
+			damage += max((power-1600)/10, 0)
 		power = min(power, 1600)
 		return 1
 
 	damage_archived = damage
-	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
+	if(takes_damage)
+		damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
 	var/removed_nitrogen = 0
@@ -179,11 +193,14 @@
 
 	removed.gases["o2"][MOLES] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
-	env.merge(removed)
+	if(produces_gas)
+		env.merge(removed)
 
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
-			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1, get_dist(l, src)) ) ) )
+			var/D = sqrt(1 / max(1, get_dist(l, src)))
+			l.hallucination += power * config_hallucination_power * D
+			l.hallucination = Clamp(0, 200, l.hallucination)
 
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
@@ -208,7 +225,7 @@
 			investigate_log("has been powered for the first time.", "supermatter")
 			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
 			has_been_powered = 1
-	else
+	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
 	return 0
 
@@ -222,6 +239,19 @@
 		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
 	qdel(src)
 	return(gain)
+
+/obj/machinery/power/supermatter_shard/blob_act(obj/effect/blob/B)
+	if(B && !istype(loc, /turf/open/space)) //does nothing in space
+		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
+		damage += B.health * 0.5 //take damage equal to 50% of remaining blob health before it tried to eat us
+		if(B.health > 100)
+			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and flinches away!</span>",\
+			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+			B.take_damage(100, BURN, src)
+		else
+			B.visible_message("<span class='danger'>\The [B] strikes at \the [src] and rapidly flashes to ash.</span>",\
+			"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
+			Consume(B)
 
 /obj/machinery/power/supermatter_shard/attack_paw(mob/user)
 	return attack_hand(user)
@@ -260,7 +290,7 @@
 	if(user.drop_item(W))
 		Consume(W)
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
-			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.\"</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
+			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
 
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, 1)
@@ -291,7 +321,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && !istype(AM, /obj/effect))
+	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 
@@ -306,3 +336,9 @@
 				"<span class='danger'>The unearthly ringing subsides and you notice you have new radiation burns.</span>", 2)
 		else
 			L.show_message("<span class='italics'>You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", 2)
+
+// When you wanna make a supermatter shard for the dramatic effect, but
+// don't want it exploding suddenly
+/obj/machinery/power/supermatter_shard/hugbox
+	takes_damage = 0
+	produces_gas = 0

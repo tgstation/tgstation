@@ -58,6 +58,9 @@
 			return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["middle"])
+		ShiftMiddleClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -74,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened || sleeping)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
@@ -264,6 +267,10 @@
 	A.CtrlShiftClick(src)
 	return
 
+/mob/proc/ShiftMiddleClickOn(atom/A)
+	src.pointed(A)
+	return
+
 /atom/proc/CtrlShiftClick(mob/user)
 	return
 
@@ -323,11 +330,19 @@
 			dir = WEST
 
 /obj/screen/click_catcher
-	icon = 'icons/mob/screen_full.dmi'
-	icon_state = "passage0"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
+
+/obj/screen/click_catcher/proc/MakeGreed()
+	. = list()
+	for(var/i = 0, i<15, i++)
+		for(var/j = 0, j<15, j++)
+			var/obj/screen/click_catcher/CC = new()
+			CC.screen_loc = "NORTH-[i],EAST-[j]"
+			. += CC
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -335,7 +350,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
 		if(T)
 			T.Click(location, control, params)
-	return 1
+	. = 1

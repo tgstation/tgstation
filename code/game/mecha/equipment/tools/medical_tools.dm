@@ -264,11 +264,11 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
 	..()
-	flags |= NOREACT
+	create_reagents(max_volume)
+	reagents.set_reacting(FALSE)
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
-	create_reagents(max_volume)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
 	SSobj.processing -= src
@@ -280,8 +280,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
 	..()
-	flags &= ~NOREACT
-	return
+	if(reagents)
+		reagents.set_reacting(TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())
@@ -342,6 +342,7 @@
 								R += num2text(A.volume) + "),"
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
+						mechsyringe.reagents.reaction(M, INJECT)
 						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
 						M.take_organ_damage(2)
 						add_logs(originaloccupant, M, "shot", "syringegun")

@@ -54,7 +54,7 @@
 	sharpness = IS_SHARP
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
-	armour_penetration = 50
+	armour_penetration = 35
 	origin_tech = "magnets=3;syndicate=4"
 	block_chance = 50
 	var/hacked = 0
@@ -156,7 +156,6 @@
 	item_color = "red"
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
-	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
 		if(W == src)
 			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
@@ -187,9 +186,10 @@
 					user.update_inv_r_hand(0)
 				else if(user.l_hand == src)
 					user.update_inv_l_hand(0)
-
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
+	else
+		return ..()
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"

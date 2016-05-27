@@ -60,39 +60,43 @@
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
 	if(!pod_moving)
-		for(var/obj/structure/transit_tube_pod/pod in loc)
-			if(!pod.moving && pod.dir in directions())
-				if(icon_state == "closed")
-					open_animation()
+		if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+			if(icon_state == "open")
+				var/mob/living/GM = user.pulling
+				if(user.grab_state >= GRAB_AGGRESSIVE)
+					if(GM.buckled || GM.buckled_mobs.len)
+						user << "<span class='warning'>[GM] is attached to something!</span>"
+						return
+					for(var/obj/structure/transit_tube_pod/pod in loc)
+						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
+						if(do_after(user, 15, target = src))
+							if(GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.buckled_mobs.len)
+								GM.Weaken(5)
+								src.Bumped(GM)
+						break
+		else
+			for(var/obj/structure/transit_tube_pod/pod in loc)
+				if(!pod.moving && pod.dir in directions())
+					if(icon_state == "closed")
+						open_animation()
 
-				else if(icon_state == "open")
-					if(pod.contents.len && user.loc != pod)
-						user.visible_message("[user] starts emptying [pod]'s contents onto the floor.", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
-						if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
-							if(pod.loc == loc)
-								for(var/atom/movable/AM in pod)
-									AM.loc = get_turf(user)
-									if(ismob(AM))
-										var/mob/M = AM
-										M.Weaken(5)
+					else if(icon_state == "open")
+						if(pod.contents.len && user.loc != pod)
+							user.visible_message("[user] starts emptying [pod]'s contents onto the floor.", "<span class='notice'>You start emptying [pod]'s contents onto the floor...</span>")
+							if(do_after(user, 10, target = src)) //So it doesn't default to close_animation() on fail
+								if(pod.loc == loc)
+									for(var/atom/movable/AM in pod)
+										AM.loc = get_turf(user)
+										if(ismob(AM))
+											var/mob/M = AM
+											M.Weaken(5)
 
-					else
-						close_animation()
-			break
+						else
+							close_animation()
+				break
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/grab) && icon_state == "open")
-		var/obj/item/weapon/grab/G = W
-		if(ismob(G.affecting) && G.state >= GRAB_AGGRESSIVE)
-			var/mob/GM = G.affecting
-			for(var/obj/structure/transit_tube_pod/pod in loc)
-				pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
-				if(do_after(user, 15, target = src) && GM && G && G.affecting == GM)
-					GM.Weaken(5)
-					src.Bumped(GM)
-					qdel(G)
-				break
 	if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
@@ -103,7 +107,8 @@
 			pod.transfer_fingerprints_to(R)
 			R.add_fingerprint(user)
 			qdel(pod)
-	..(W, user)
+	else
+		return ..()
 
 /obj/structure/transit_tube/station/proc/open_animation()
 	if(icon_state == "closed")

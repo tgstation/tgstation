@@ -15,8 +15,7 @@
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
 		if(2)
-			new /obj/item/clothing/suit/space/cult(src)
-			new /obj/item/clothing/head/helmet/space/cult(src)
+			new /obj/item/clothing/suit/space/hardsuit/cult(src)
 		if(3)
 			new /obj/item/device/soulstone/anybody(src)
 		if(4)
@@ -32,20 +31,17 @@
 			new /obj/item/clothing/suit/cultrobes(src)
 			new /obj/item/weapon/bedsheet/cult(src)
 		if(9)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/internal/heart/cursed(src)
+			new /obj/item/organ/heart/cursed(src)
 		if(11)
-			new /obj/item/weapon/reagent_containers/food/drinks/bottle/rum(src)
-			new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus(src)
-			new /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey(src)
-			new /obj/item/weapon/lighter(src)
+			new /obj/item/ship_in_a_bottle(src)
 		if(12)
-			new /obj/item/upgradescroll(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
-			new /obj/item/weapon/nullrod/claymore/darkblade
+			new /obj/item/weapon/nullrod/claymore/darkblade(src)
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
@@ -71,6 +67,7 @@
 			new /obj/item/weapon/spellbook/oneuse/smoke(src)
 
 
+
 //Spooky special loot
 
 /obj/item/device/wisp_lantern
@@ -89,6 +86,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		feedback_add_details("wisp_lantern","F") // freed
 
 	else
 		if(wisp.orbiting)
@@ -102,6 +100,7 @@
 			wisp.loc = src
 			user << "You return the wisp to the latern."
 			icon_state = "lantern-blue"
+			feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
@@ -145,6 +144,7 @@
 
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
+	feedback_add_details("warp_cube","[src.type]")
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
 /obj/item/device/warp_cube/red
@@ -212,11 +212,15 @@
 	icon_state = "talisman"
 	var/cooldown = 0
 
-/obj/item/device/immortality_talisman/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/item/device/immortality_talisman/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
+		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -249,11 +253,11 @@
 /obj/effect/immortality_talisman/singularity_pull()
 	return 0
 
-/obj/effect/immortality_talisman/Destroy()
-	if(!can_destroy)
+/obj/effect/immortality_talisman/Destroy(force)
+	if(!can_destroy && !force)
 		return QDEL_HINT_LETMELIVE
 	else
-		..()
+		. = ..()
 
 
 //Shared Bag
@@ -334,3 +338,72 @@
 						M.put_in_l_hand(src)
 
 			add_fingerprint(usr)
+
+
+//Boat
+
+/obj/vehicle/lavaboat
+	name = "lava boat"
+	desc = "A boat used for traversing lava."
+	icon_state = "goliath_boat"
+	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	keytype = /obj/item/weapon/oar
+	burn_state = LAVA_PROOF
+
+/obj/vehicle/lavaboat/relaymove(mob/user, direction)
+	var/turf/next = get_step(src, direction)
+	var/turf/current = get_turf(src)
+
+	if(istype(next, /turf/open/floor/plating/lava) || istype(current, /turf/open/floor/plating/lava)) //We can move from land to lava, or lava to land, but not from land to land
+		..()
+	else
+		user << "Boats don't go on land!"
+		return 0
+
+/obj/item/weapon/oar
+	name = "oar"
+	icon = 'icons/obj/vehicles.dmi'
+	icon_state = "oar"
+	item_state = "rods"
+	desc = "Not to be confused with the kind Research hassles you for."
+	force = 12
+	w_class = 3
+	burn_state = LAVA_PROOF
+
+/datum/crafting_recipe/oar
+	name = "goliath bone oar"
+	result = /obj/item/weapon/oar
+	reqs = list(/obj/item/stack/sheet/bone = 2)
+	time = 15
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/boat
+	name = "goliath hide boat"
+	result = /obj/vehicle/lavaboat
+	reqs = list(/obj/item/stack/sheet/animalhide/goliath_hide = 3)
+	time = 50
+	category = CAT_PRIMAL
+
+//Dragon Boat
+
+
+/obj/item/ship_in_a_bottle
+	name = "ship in a bottle"
+	desc = "A tiny ship inside a bottle."
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "ship_bottle"
+
+/obj/item/ship_in_a_bottle/attack_self(mob/user)
+	user << "You're not sure how they get the ships in these things, but you're pretty sure you know how to get it out."
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	new /obj/vehicle/lavaboat/dragon(get_turf(src))
+	qdel(src)
+
+/obj/vehicle/lavaboat/dragon
+	name = "mysterious boat"
+	desc = "This boat moves where you will it, without the need for an oar."
+	keytype = null
+	icon_state = "dragon_boat"
+	generic_pixel_y = 2
+	generic_pixel_x = 1
+	vehicle_move_delay = 1

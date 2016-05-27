@@ -245,8 +245,11 @@
 	infra_luminosity = 1
 	anchored = 1
 
-/atom/movable/light/Destroy()
-	return QDEL_HINT_LETMELIVE
+/atom/movable/light/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /atom/movable/light/Move()
 	return 0
@@ -258,7 +261,7 @@
 	var/list/affecting_lights			//not initialised until used (even empty lists reserve a fair bit of memory)
 
 /turf/ChangeTurf(path)
-	if(!path || path == type) //Sucks this is here but it would cause problems otherwise.
+	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
 	for(var/obj/effect/decal/cleanable/decal in src.contents)

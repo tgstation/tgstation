@@ -205,6 +205,13 @@
 		processing = 0
 		SSobj.processing.Remove(src)
 
+/turf/open/floor/plating/lava/GetHeatCapacity()
+	. = 700000
+
+/turf/open/floor/plating/lava/GetTemperature()
+	. = 5000
+
+/turf/open/floor/plating/lava/TakeTemperature(temp)
 
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
@@ -224,8 +231,18 @@
 		else if (istype(thing, /mob/living))
 			. = 1
 			var/mob/living/L = thing
-			if("mining" in L.faction)
+			if("lava" in L.weather_immunities)
 				continue
+			if(L.buckled)
+				if(isobj(L.buckled))
+					var/obj/O = L.buckled
+					if(O.burn_state == LAVA_PROOF)
+						continue
+				if(isliving(L.buckled)) //Goliath riding
+					var/mob/living/live = L.buckled
+					if("lava" in live.weather_immunities)
+						continue
+
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
 				L.adjust_fire_stacks(20)

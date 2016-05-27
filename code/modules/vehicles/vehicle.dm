@@ -109,7 +109,7 @@
 
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	..()
+	. = ..()
 	handle_vehicle_layer()
 	handle_vehicle_offsets()
 
@@ -117,7 +117,8 @@
 /obj/vehicle/attackby(obj/item/I, mob/user, params)
 	if(keytype && istype(I, keytype))
 		user << "Hold [I] in one of your hands while you drive \the [name]."
-
+	else
+		return ..()
 
 /obj/vehicle/Bump(atom/movable/M)
 	. = ..()

@@ -50,6 +50,7 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
+	sharpness = IS_SHARP
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -68,6 +69,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
+	sharpness = IS_SHARP
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
@@ -89,7 +91,6 @@
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
@@ -113,6 +114,8 @@
 		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
+	else
+		return ..()
 
 
 /obj/item/weapon/throwing_star
@@ -157,6 +160,7 @@
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
+		sharpness = IS_SHARP
 	else
 		force = 3
 		w_class = 2
@@ -164,6 +168,7 @@
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/Genhit.ogg'
+		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")

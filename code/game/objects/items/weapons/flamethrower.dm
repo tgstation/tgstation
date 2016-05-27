@@ -66,12 +66,10 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(user.stat || user.restrained() || user.lying)
-		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
@@ -87,13 +85,13 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
+	else if(istype(W, /obj/item/weapon/screwdriver) && igniter && !lit)
 		status = !status
 		user << "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>"
 		update_icon()
 		return
 
-	if(isigniter(W))
+	else if(isigniter(W))
 		var/obj/item/device/assembly/igniter/I = W
 		if(I.secured)
 			return
@@ -106,7 +104,7 @@
 		update_icon()
 		return
 
-	if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
 			return
@@ -117,10 +115,10 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/device/analyzer) && ptank)
+	else if(istype(W, /obj/item/device/analyzer) && ptank)
 		atmosanalyzer_scan(ptank.air_contents, user)
-	..()
-	return
+	else
+		return ..()
 
 
 /obj/item/weapon/flamethrower/attack_self(mob/user)
@@ -172,7 +170,8 @@
 	update_icon()
 	return
 
-/obj/item/weapon/flamethrower/CheckParts()
+/obj/item/weapon/flamethrower/CheckParts(list/parts_list)
+	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
 	weldtool.status = 0

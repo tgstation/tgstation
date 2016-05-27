@@ -19,6 +19,7 @@
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
+	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
@@ -60,6 +61,8 @@
 	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
 		return 1
 	if(health_req && owner.health < health_req)
+		return 1
+	if(limb_req && !owner.get_bodypart(limb_req))
 		return 1
 	owner.dna.mutations.Add(src)
 	if(text_gain_indication)
@@ -120,23 +123,15 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 
-/datum/mutation/human/hulk/New()
-	..()
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_f_s", "layer"=-MUTATIONS_LAYER)
-	visual_indicators |= image("icon"='icons/effects/genetics.dmi', "icon_state"="hulk_m_s", "layer"=-MUTATIONS_LAYER)
-
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	var/status = CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
 	owner.status_flags &= ~status
+	owner.update_body_parts()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return target.attack_hulk(owner)
-
-/datum/mutation/human/hulk/get_visual_indicator(mob/living/carbon/human/owner)
-	var/g = (owner.gender == FEMALE) ? 1 : 2
-	return visual_indicators[g]
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -147,6 +142,7 @@
 	if(..())
 		return
 	owner.status_flags |= CANSTUN | CANWEAKEN | CANPARALYSE | CANPUSH
+	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
@@ -160,6 +156,7 @@
 	get_chance = 20
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
+	limb_req = "head"
 
 /datum/mutation/human/telekinesis/New()
 	..()
@@ -613,6 +610,7 @@
 	dna_block = NON_SCANNABLE
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
+	limb_req = "head"
 
 /datum/mutation/human/laser_eyes/New()
 	..()

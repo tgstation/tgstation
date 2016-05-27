@@ -19,3 +19,5 @@
 			reagents.trans_to(I, 5)
 			user << "<span class='notice'>You wet [I] in [src].</span>"
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
+	else
+		return ..()

@@ -61,7 +61,7 @@
 
 
 	if(ishuman(user))
-		if(stat == DEAD)
+		if(stat == DEAD || status_flags & GODMODE)
 			..()
 			return
 		if(user.get_active_hand())
@@ -81,10 +81,9 @@
 		drop_r_hand()
 		var/obj/item/clothing/head/drone_holder/DH = new /obj/item/clothing/head/drone_holder(src)
 		DH.updateVisualAppearence(src)
-		DH.contents += src
 		DH.drone = src
 		user.put_in_hands(DH)
-		src.loc = DH
+		forceMove(DH)
 		return
 
 	..()
@@ -156,6 +155,13 @@
 	update_drone_icon()
 	updateSeeStaticMobs()
 
+/mob/living/simple_animal/drone/proc/liberate()
+	// F R E E D R O N E
+	laws = "1. You are a Free Drone."
+	src << laws
+	seeStatic = FALSE
+	updateSeeStaticMobs()
+
 /mob/living/simple_animal/drone/proc/update_drone_icon()
 	//Different icons for different hack states
 	if(!hacked)
@@ -179,3 +185,9 @@
 		icon_state = icon_dead
 	else
 		icon_state = icon_living
+
+/datum/action/generic/drone/select_filter
+	name = "Select Vision Filter"
+	button_icon_state = "drone_vision"
+	procname = /mob/living/simple_animal/drone/verb/toggle_statics
+

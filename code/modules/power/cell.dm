@@ -37,6 +37,7 @@
 			SSobj.processing |= src
 		else
 			SSobj.processing -= src
+	..()
 
 /obj/item/weapon/stock_parts/cell/process()
 	if(self_recharge)
@@ -155,7 +156,7 @@
 					corrupt()
 
 
-/obj/item/weapon/stock_parts/cell/blob_act()
+/obj/item/weapon/stock_parts/cell/blob_act(obj/effect/blob/B)
 	ex_act(1)
 
 /obj/item/weapon/stock_parts/cell/proc/get_electrocute_damage()
@@ -250,6 +251,7 @@
 
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
+	desc = "A rechargable transdimensional power cell."
 	origin_tech = "powerstorage=7"
 	icon_state = "bscell"
 	maxcharge = 40000

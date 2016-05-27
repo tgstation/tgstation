@@ -54,14 +54,16 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
+	if(target.hellbound)
+		return
 	if(ismob(target))
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
+			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
-			if(!target.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(target.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
+			target.grab_ghost(force = TRUE) // even suicides
+			target << "<span class='notice'>You rise with a start, \
+				you're alive!!!</span>"
 		else if(target.stat != DEAD)
 			target << "<span class='notice'>You feel great!</span>"
 
@@ -98,6 +100,7 @@
 		/obj/structure/mineral_door/gold,/obj/structure/mineral_door/uranium,/obj/structure/mineral_door/sandstone,/obj/structure/mineral_door/transparent/plasma,\
 		/obj/structure/mineral_door/transparent/diamond)
 
+
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	var/atom/T = target.loc
@@ -105,12 +108,20 @@
 		CreateDoor(target)
 	else if (isturf(T) && T.density)
 		CreateDoor(T)
+	else if(istype(target, /obj/machinery/door))
+		OpenDoor(target)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
-	new door_type(T)
+	var/obj/structure/mineral_door/D = new door_type(T)
 	T.ChangeTurf(/turf/open/floor/plating)
+	D.Open()
 
+/obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		A.locked = 0
+	D.open()
 
 /obj/item/projectile/magic/change
 	name = "bolt of change"
@@ -132,7 +143,7 @@
 			M.canmove = 0
 			M.icon = null
 			M.overlays.Cut()
-			M.invisibility = 101
+			M.invisibility = INVISIBILITY_ABSTRACT
 
 			if(istype(M, /mob/living/silicon/robot))
 				var/mob/living/silicon/robot/Robot = M
@@ -161,7 +172,7 @@
 						if("drone")
 							new_mob = new /mob/living/simple_animal/drone(M.loc)
 							var/mob/living/simple_animal/drone/D = new_mob
-							D.update_drone_hack()
+							D.liberate() // F R E E D R O N E
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
@@ -172,9 +183,10 @@
 						new_mob.languages |= HUMAN
 				if("slime")
 					new_mob = new /mob/living/simple_animal/slime(M.loc)
+					var/mob/living/simple_animal/slime/slimey = new_mob
 					if(prob(50))
-						var/mob/living/simple_animal/slime/Slime = new_mob
-						Slime.is_adult = 1
+						slimey.is_adult = 1
+					slimey.random_colour()
 					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
@@ -183,17 +195,6 @@
 						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 					new_mob.languages |= HUMAN
 
-					/*var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
-					switch(alien_caste)
-						if("Hunter")
-							new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-						if("Sentinel")
-							new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-						if("Drone")
-							new_mob = new /mob/living/carbon/alien/humanoid/drone(M.loc)
-						else
-							new_mob = new /mob/living/carbon/alien/larva(M.loc)
-					new_mob.languages |= HUMAN*/
 				if("animal")
 					if(prob(50))
 						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
@@ -217,7 +218,7 @@
 							if("spiderhunter")
 								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
 							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
 							if("magicarp")
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")
@@ -267,7 +268,7 @@
 						H.real_name = H.dna.species.random_name(H.gender,1)
 					H.update_body()
 					H.update_hair()
-					H.update_mutcolor()
+					H.update_body_parts()
 					H.dna.update_dna_identity()
 				else
 					return
@@ -276,10 +277,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
-			if(M.mind)
-				M.mind.transfer_to(new_mob)
-			else
-				new_mob.key = M.key
+
+			M.wabbajack_act(new_mob)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 

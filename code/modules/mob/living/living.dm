@@ -23,9 +23,18 @@ Sorry Giacom. Please don't be mad :(
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
-
+	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
+	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+
+/mob/living/prepare_huds()
+	..()
+	prepare_data_huds()
+
+/mob/living/proc/prepare_data_huds()
+	med_hud_set_health()
+	med_hud_set_status()
 
 /mob/living/Destroy()
 	..()
@@ -36,12 +45,15 @@ Sorry Giacom. Please don't be mad :(
 			D.client.images.Remove(I)
 			qdel(I)
 	staticOverlays.len = 0
-
+	remove_from_all_data_huds()
 	return QDEL_HINT_HARDDEL_NOW
 
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 /mob/living/proc/generateStaticOverlay()
-	staticOverlays.Add(list("static", "blank", "letter"))
+	staticOverlays.Add(list("static", "blank", "letter", "animal"))
 	var/image/staticOverlay = image(getStaticIcon(new/icon(icon,icon_state)), loc = src)
 	staticOverlay.override = 1
 	staticOverlays["static"] = staticOverlay
@@ -53,6 +65,10 @@ Sorry Giacom. Please don't be mad :(
 	staticOverlay = getLetterImage(src)
 	staticOverlay.override = 1
 	staticOverlays["letter"] = staticOverlay
+
+	staticOverlay = getRandomAnimalImage(src)
+	staticOverlay.override = 1
+	staticOverlays["animal"] = staticOverlay
 
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
@@ -89,7 +105,7 @@ Sorry Giacom. Please don't be mad :(
 	//Should stop you pushing a restrained person out of the way
 	if(isliving(M))
 		var/mob/living/L = M
-		if((L.pulledby && L.restrained()) || L.grabbed_by.len)
+		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
 				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
 			return 1
@@ -102,31 +118,41 @@ Sorry Giacom. Please don't be mad :(
 						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
 					return 1
 
-	//switch our position with M
-	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
-	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mobs.len) // mutual brohugs all around!
-		if(loc && !loc.Adjacent(M.loc))
-			return 1
-		now_pushing = 1
-		var/oldloc = loc
-		var/oldMloc = M.loc
-
-
-		var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-		var/src_passmob = (pass_flags & PASSMOB)
-		M.pass_flags |= PASSMOB
-		pass_flags |= PASSMOB
-
-		M.Move(oldloc)
-		Move(oldMloc)
-
-		if(!src_passmob)
-			pass_flags &= ~PASSMOB
-		if(!M_passmob)
-			M.pass_flags &= ~PASSMOB
-
-		now_pushing = 0
+	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
+
+	if(!M.buckled && !M.buckled_mobs.len)
+		var/mob_swap
+		//the puller can always swap with its victim if on grab intent
+		if(M.pulledby == src && a_intent == "grab")
+			mob_swap = 1
+		//restrained people act if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
+		else if((M.restrained() || M.a_intent == "help") && (restrained() || a_intent == "help"))
+			mob_swap = 1
+		if(mob_swap)
+			//switch our position with M
+			if(loc && !loc.Adjacent(M.loc))
+				return 1
+			now_pushing = 1
+			var/oldloc = loc
+			var/oldMloc = M.loc
+
+
+			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
+			var/src_passmob = (pass_flags & PASSMOB)
+			M.pass_flags |= PASSMOB
+			pass_flags |= PASSMOB
+
+			M.Move(oldloc)
+			Move(oldMloc)
+
+			if(!src_passmob)
+				pass_flags &= ~PASSMOB
+			if(!M_passmob)
+				M.pass_flags &= ~PASSMOB
+
+			now_pushing = 0
+			return 1
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -145,6 +171,8 @@ Sorry Giacom. Please don't be mad :(
 //Called when we want to push an atom/movable
 /mob/living/proc/PushAM(atom/movable/AM)
 	if(now_pushing)
+		return 1
+	if(moving_diagonally)// no pushing during diagonal moves.
 		return 1
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
@@ -175,7 +203,7 @@ Sorry Giacom. Please don't be mad :(
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view())
-	if(src.stat || !src.canmove || src.restrained())
+	if(incapacitated())
 		return 0
 	if(src.status_flags & FAKEDEATH)
 		return 0
@@ -206,7 +234,7 @@ Sorry Giacom. Please don't be mad :(
 		return
 	health = maxHealth - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 	update_stat()
-
+	med_hud_set_health()
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -422,20 +450,8 @@ Sorry Giacom. Please don't be mad :(
 	var/t = shooter.zone_selected
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
-	var/obj/item/organ/limb/def_zone = ran_zone(t)
+	var/def_zone = ran_zone(t)
 	return def_zone
-
-//damage/heal the mob ears and adjust the deaf amount
-/mob/living/adjustEarDamage(damage, deaf)
-	ear_damage = max(0, ear_damage + damage)
-	ear_deaf = max(0, ear_deaf + deaf)
-
-//pass a negative argument to skip one of the variable
-/mob/living/setEarDamage(damage, deaf)
-	if(damage >= 0)
-		ear_damage = damage
-	if(deaf >= 0)
-		ear_deaf = deaf
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_organ_damage(brute, burn, updating_health=1)
@@ -451,14 +467,14 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_health)
 		updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(-brute, updating_health)
 	adjustFireLoss(-burn, updating_health)
 	if(updating_health)
 		updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, updating_health=1)
 	adjustBruteLoss(brute, updating_health)
 	adjustFireLoss(burn, updating_health)
@@ -504,7 +520,7 @@ Sorry Giacom. Please don't be mad :(
 	ear_deaf = 0
 	ear_damage = 0
 	hallucination = 0
-	heal_overall_damage(1000, 1000)
+	heal_overall_damage(100000, 100000)
 	ExtinguishMob()
 	fire_stacks = 0
 	updatehealth()
@@ -542,74 +558,36 @@ Sorry Giacom. Please don't be mad :(
 		else
 			return 0
 
-	if (restrained())
+	var/atom/movable/pullee = pulling
+	if(pullee && get_dist(src, pullee) > 1)
 		stop_pulling()
-
-
-	var/cuff_dragged = 0
-	if (restrained())
-		for(var/mob/living/M in range(1, src))
-			if (M.pulling == src && !M.incapacitated())
-				cuff_dragged = 1
-	if (!cuff_dragged && pulling && !throwing && (get_dist(src, pulling) <= 1 || pulling.loc == loc))
-		var/turf/T = loc
-		. = ..()
-
-		if (pulling && pulling.loc)
-			if(!isturf(pulling.loc))
-				stop_pulling()
-				return
-			else
-				if(Debug)
-					diary <<"pulling disappeared? at [__LINE__] in mob.dm - pulling = [pulling]"
-					diary <<"REPORT THIS"
-
-		/////
-		if(pulling && pulling.anchored)
+	var/turf/T = loc
+	. = ..()
+	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+		if(pulling.anchored)
 			stop_pulling()
 			return
 
-		if (!restrained())
-			var/diag = get_dir(src, pulling)
-			if ((diag - 1) & diag)
-			else
-				diag = null
-			if ((get_dist(src, pulling) > 1 || diag))
-				if (isliving(pulling))
-					var/mob/living/M = pulling
-					var/pull_ok = 1
-					if (M.grabbed_by.len)
-						if (prob(75))
-							var/obj/item/weapon/grab/G = pick(M.grabbed_by)
-							visible_message("<span class='danger'>[src] has pulled [G.affecting] from [G.assailant]'s grip.</span>")
-							qdel(G)
-						else
-							pull_ok = 0
-						if (M.grabbed_by.len)
-							pull_ok = 0
-					if (pull_ok)
-						var/atom/movable/t = M.pulling
-						M.stop_pulling()
+		var/pull_dir = get_dir(src, pulling)
+		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
+			if(isliving(pulling))
+				var/mob/living/M = pulling
+				if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
+					makeTrail(T, M)
+			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
+			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
+				stop_pulling()
 
-						//this is the gay blood on floor shit -- Added back -- Skie
-						if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
-							makeTrail(T, M)
-						pulling.Move(T, get_dir(pulling, T))
-						if(M)
-							M.start_pulling(t)
-				else
-					if (pulling)
-						pulling.Move(T, get_dir(pulling, T))
-	else
-		stop_pulling()
-		. = ..()
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+		pulledby.stop_pulling()
+
 	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
 		// It's ugly. But everything related to inventory/storage is. -- c0
 		s_active.close(src)
 
 /mob/living/movement_delay()
 	. = ..()
-	if(isturf(loc))
+	if(isturf(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -658,34 +636,15 @@ Sorry Giacom. Please don't be mad :(
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time || stat || weakened || stunned || paralysis)
+	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
 	//resisting grabs (as if it helps anyone...)
-	if(!restrained())
-		var/resisting = 0
-		for(var/obj/O in requests)
-			qdel(O)
-			resisting++
-		for(var/X in grabbed_by)
-			var/obj/item/weapon/grab/G = X
-			resisting++
-			if(G.state == GRAB_PASSIVE)
-				qdel(G)
-			else
-				if(G.state == GRAB_AGGRESSIVE)
-					if(prob(25))
-						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
-						qdel(G)
-				else
-					if(G.state == GRAB_NECK)
-						if(prob(5))
-							visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
-							qdel(G)
-		if(resisting)
-			visible_message("<span class='danger'>[src] resists!</span>")
-			return
+	if(!restrained(ignore_grab = 1) && pulledby)
+		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
+		resist_grab()
+		return
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
@@ -702,6 +661,22 @@ Sorry Giacom. Please don't be mad :(
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
+
+/mob/proc/resist_grab(moving_resist)
+	return 1 //returning 0 means we successfully broke free
+
+/mob/living/resist_grab(moving_resist)
+	. = 1
+	if(pulledby.grab_state)
+		if(prob(30/pulledby.grab_state))
+			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			pulledby.stop_pulling()
+			return 0
+		if(moving_resist && client) //we resisted by trying to move
+			client.move_delay = world.time + 20
+	else
+		pulledby.stop_pulling()
+		return 0
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
@@ -995,173 +970,47 @@ Sorry Giacom. Please don't be mad :(
 /mob/proc/update_sight()
 	return
 
-/mob/proc/blind_eyes(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = max(eye_blind, amount)
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+/mob/living/proc/owns_soul()
+	if(mind)
+		return mind.soulOwner == mind
+	return 1
 
-/mob/proc/adjust_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind += amount
-		if(!old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = max(eye_blind+amount, blind_minimum)
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+/mob/living/proc/return_soul()
+	if(mind)
+		mind.soulOwner = mind
 
-/mob/proc/set_blindness(amount)
-	if(amount>0)
-		var/old_eye_blind = eye_blind
-		eye_blind = amount
-		if(client && !old_eye_blind)
-			throw_alert("blind", /obj/screen/alert/blind)
-			overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
-	else if(eye_blind)
-		var/blind_minimum = 0
-		if(stat != CONSCIOUS || (disabilities & BLIND))
-			blind_minimum = 1
-		eye_blind = blind_minimum
-		if(!eye_blind)
-			clear_alert("blind")
-			clear_fullscreen("blind")
+/mob/living/proc/has_bane(banetype)
+	if(mind)
+		if(mind.devilinfo)
+			return mind.devilinfo.bane == banetype
+	return 0
 
-/mob/proc/blur_eyes(amount)
-	if(amount>0)
-		var/old_eye_blurry = eye_blurry
-		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+/mob/living/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(mind && mind.devilinfo)
+		return check_devil_bane_multiplier(weapon, attacker)
+	return 1
 
-/mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
+/mob/living/proc/check_acedia()
+	if(src.mind && src.mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+			return 1
+	return 0
 
-/mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
-	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+	stop_pulling()
+	. = ..()
 
-
-/mob/proc/damage_eyes(amount)
-	return
-
-/mob/living/carbon/damage_eyes(amount)
-	if(amount>0)
-		eye_damage = amount
-		if(eye_damage > 20)
-			if(eye_damage > 30)
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-			else
-				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-
-
-/mob/proc/set_eye_damage(amount)
-	return
-
-/mob/living/carbon/set_eye_damage(amount)
-	eye_damage = max(amount,0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+// Called when we are hit by a bolt of polymorph and changed
+// Generally the mob we are currently in, is about to be deleted
+/mob/living/proc/wabbajack_act(mob/living/new_mob)
+	if(mind)
+		mind.transfer_to(new_mob)
 	else
-		clear_fullscreen("eye_damage")
+		new_mob.key = key
 
-/mob/proc/adjust_eye_damage(amount)
-	return
-
-/mob/living/carbon/adjust_eye_damage(amount)
-	eye_damage = max(eye_damage+amount, 0)
-	if(eye_damage > 20)
-		if(eye_damage > 30)
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 2)
-		else
-			overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("eye_damage")
-
-/mob/proc/adjust_drugginess(amount)
-	return
-
-/mob/living/carbon/adjust_drugginess(amount)
-	var/old_druggy = druggy
-	if(amount>0)
-		druggy += amount
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		druggy = max(druggy+amount, 0)
-		if(!druggy)
-			clear_fullscreen("high")
-			clear_alert("high")
-
-/mob/proc/set_drugginess(amount)
-	return
-
-/mob/living/carbon/set_drugginess(amount)
-	var/old_druggy = druggy
-	druggy = amount
-	if(amount>0)
-		if(!old_druggy)
-			overlay_fullscreen("high", /obj/screen/fullscreen/high)
-			throw_alert("high", /obj/screen/alert/high)
-	else if(old_druggy)
-		clear_fullscreen("high")
-		clear_alert("high")
-
-/mob/proc/cure_blind() //when we want to cure the BLIND disability only.
-	return
-
-/mob/living/carbon/cure_blind()
-	if(disabilities & BLIND)
-		disabilities &= ~BLIND
-		adjust_blindness(-1)
-		return 1
-
-/mob/proc/cure_nearsighted()
-	return
-
-/mob/living/carbon/cure_nearsighted()
-	if(disabilities & NEARSIGHT)
-		disabilities &= ~NEARSIGHT
-		clear_fullscreen("nearsighted")
-		return 1
-
-/mob/proc/become_nearsighted()
-	return
-
-/mob/living/carbon/become_nearsighted()
-	if(!(disabilities & NEARSIGHT))
-		disabilities |= NEARSIGHT
-		overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
-		return 1
-
-/mob/proc/become_blind()
-	return
-
-/mob/living/carbon/become_blind()
-	if(!(disabilities & BLIND))
-		disabilities |= BLIND
-		blind_eyes(1)
-		return 1
+	for(var/para in hasparasites())
+		var/mob/living/simple_animal/hostile/guardian/G = para
+		G.summoner = new_mob
+		G.Recall()
+		G << "<span class='holoparasite'>Your summoner has changed \
+			form to [new_mob]!</span>"

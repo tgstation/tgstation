@@ -4,7 +4,7 @@
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
-	circuit = /obj/item/weapon/circuitboard/aifixer
+	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 
@@ -14,9 +14,8 @@
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
 		else
 			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
-		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())

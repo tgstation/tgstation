@@ -22,12 +22,37 @@
 		playsound(src.loc, "swing_hit", 25, 1)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
-		return
 
-	if(cistern && !open)
+	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/mob/living/GM = user.pulling
+		if(user.grab_state >= GRAB_AGGRESSIVE)
+			if(GM.loc != get_turf(src))
+				user << "<span class='warning'>[GM] needs to be on [src]!</span>"
+				return
+			if(!swirlie)
+				if(open)
+					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
+					swirlie = GM
+					if(do_after(user, 30, 0, target = src))
+						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
+						if(iscarbon(GM))
+							var/mob/living/carbon/C = GM
+							if(!C.internal)
+								C.adjustOxyLoss(5)
+						else
+							GM.adjustOxyLoss(5)
+					swirlie = null
+				else
+					playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
+					GM.adjustBruteLoss(5)
+		else
+			user << "<span class='warning'>You need a tighter grip!</span>"
+
+	else if(cistern && !open)
 		if(!contents.len)
 			user << "<span class='notice'>The cistern is empty.</span>"
-			return
 		else
 			var/obj/item/I = pick(contents)
 			if(ishuman(user))
@@ -36,10 +61,9 @@
 				I.loc = get_turf(src)
 			user << "<span class='notice'>You find [I] in the cistern.</span>"
 			w_items -= I.w_class
-			return
-
-	open = !open
-	update_icon()
+	else
+		open = !open
+		update_icon()
 
 
 /obj/structure/toilet/update_icon()
@@ -54,61 +78,30 @@
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
-			return
 
-	if(istype(I, /obj/item/weapon/reagent_containers))
+	else if(cistern)
+		if(user.a_intent != "harm")
+			if(I.w_class > 3)
+				user << "<span class='warning'>[I] does not fit!</span>"
+				return
+			if(w_items + I.w_class > 5)
+				user << "<span class='warning'>The cistern is full!</span>"
+				return
+			if(!user.drop_item())
+				user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
+				return
+			I.loc = src
+			w_items += I.w_class
+			user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
+
+	else if(istype(I, /obj/item/weapon/reagent_containers))
 		if (!open)
 			return
 		var/obj/item/weapon/reagent_containers/RG = I
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
-		return
-
-	if(istype(I, /obj/item/weapon/grab))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weapon/grab/G = I
-		if(!G.confirm())
-			return
-		if(isliving(G.affecting))
-			var/mob/living/GM = G.affecting
-			if(G.state >= GRAB_AGGRESSIVE)
-				if(GM.loc != get_turf(src))
-					user << "<span class='warning'>[GM] needs to be on [src]!</span>"
-					return
-				if(!swirlie)
-					if(open)
-						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
-						swirlie = GM
-						if(do_after(user, 30, 0, target = src))
-							GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
-							if(iscarbon(GM))
-								var/mob/living/carbon/C = GM
-								if(!C.internal)
-									C.adjustOxyLoss(5)
-							else
-								GM.adjustOxyLoss(5)
-						swirlie = null
-					else
-						playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-						GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
-						GM.adjustBruteLoss(5)
-			else
-				user << "<span class='warning'>You need a tighter grip!</span>"
-
-	if(cistern)
-		if(I.w_class > 3)
-			user << "<span class='warning'>[I] does not fit!</span>"
-			return
-		if(w_items + I.w_class > 5)
-			user << "<span class='warning'>The cistern is full!</span>"
-			return
-		if(!user.drop_item())
-			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot put it in the cistern!</span>"
-			return
-		I.loc = src
-		w_items += I.w_class
-		user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
-		return
+	else
+		return ..()
 
 
 
@@ -121,23 +114,20 @@
 	anchored = 1
 
 
-/obj/structure/urinal/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!G.confirm())
-			return
-		if(isliving(G.affecting))
-			var/mob/living/GM = G.affecting
-			if(G.state >= GRAB_AGGRESSIVE)
-				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
-					return
-				user.changeNext_move(CLICK_CD_MELEE)
-				user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
-				GM.adjustBruteLoss(8)
-			else
-				user << "<span class='warning'>You need a tighter grip!</span>"
-
+/obj/structure/urinal/attack_hand(mob/user)
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		var/mob/living/GM = user.pulling
+		if(user.grab_state >= GRAB_AGGRESSIVE)
+			if(GM.loc != get_turf(src))
+				user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
+				return
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
+			GM.adjustBruteLoss(8)
+		else
+			user << "<span class='warning'>You need a tighter grip!</span>"
+	else
+		..()
 
 /obj/machinery/shower
 	name = "shower"
@@ -177,7 +167,7 @@
 	else
 		if(istype(loc, /turf/open))
 			var/turf/open/tile = loc
-			tile.MakeSlippery()
+			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
@@ -254,6 +244,7 @@
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
+	L.wash_cream()
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	if(iscarbon(L))
@@ -402,6 +393,7 @@
 			var/mob/living/carbon/human/H = user
 			H.lip_style = null //Washes off lipstick
 			H.lip_color = initial(H.lip_color)
+			H.wash_cream()
 			H.regenerate_icons()
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
@@ -418,7 +410,7 @@
 		if(RG.flags & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
-			return
+			return 1
 
 	if(istype(O, /obj/item/weapon/melee/baton))
 		var/obj/item/weapon/melee/baton/B = O
@@ -440,21 +432,32 @@
 		user << "<span class='notice'>You wet [O] in [src].</span>"
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 
-	var/obj/item/I = O
-	if(!I || !istype(I))
-		return
-	if(I.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
+		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/M = O
+		user << "<span class='notice'>You place [src] under a stream of water...</span>"
+		user.drop_item()
+		M.loc = get_turf(src)
+		M.Expand()
 		return
 
-	user << "<span class='notice'>You start washing [I]...</span>"
-	busy = 1
-	if(!do_after(user, 40, target = src))
-		busy = 0
+	if(!istype(O))
 		return
-	busy = 0
-	O.clean_blood()
-	user.visible_message("<span class='notice'>[user] washes [I] using [src].</span>", \
-						"<span class='notice'>You wash [I] using [src].</span>")
+	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+		return
+
+	if(user.a_intent != "harm")
+		user << "<span class='notice'>You start washing [O]...</span>"
+		busy = 1
+		if(!do_after(user, 40, target = src))
+			busy = 0
+			return 1
+		busy = 0
+		O.clean_blood()
+		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
+							"<span class='notice'>You wash [O] using [src].</span>")
+		return 1
+	else
+		return ..()
 
 
 /obj/structure/sink/kitchen
@@ -473,5 +476,5 @@
 
 /obj/structure/sink/puddle/attackby(obj/item/O, mob/user, params)
 	icon_state = "puddle-splash"
-	..()
+	. = ..()
 	icon_state = "puddle"

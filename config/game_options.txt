@@ -40,7 +40,7 @@ EMOJIS
 ## These values get directly added to values and totals ingame.
 ## To speed things up make the number negative, to slow things down, make the number positive.
 
-## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied. 
+## These modify the run/walk speed of all mobs before the mob-specific modifiers are applied.
 RUN_DELAY 1
 WALK_DELAY 4
 
@@ -186,7 +186,7 @@ ALLOW_RANDOM_EVENTS
 ## Set to 0 to make dangerous events avaliable from round start.
 EVENTS_MIN_TIME_MUL 1
 
-## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start. 
+## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
 EVENTS_MIN_PLAYERS_MUL 1
 
@@ -197,9 +197,12 @@ EVENTS_MIN_PLAYERS_MUL 1
 ALLOW_AI
 
 ### Secborg ###
-## Uncomment to prevent the secborg module from being chosen
+## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
+### Peacekeeper Borg ###
+## Uncomment to prevent the peacekeeper cyborg module from being chosen
+#DISABLE_PEACEBORG
 
 ### AWAY MISSIONS ###
 
@@ -309,7 +312,8 @@ ROUNDSTART_RACES plasmaman
 ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
-STARLIGHT
+## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
+#STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
@@ -347,4 +351,9 @@ BOMBCAP 20
 #BOMBCAP 28
 
 
-
+## Lavaland "Budget"
+# Lavaland ruin spawning has an imaginary budget to spend on ruins, where
+# a less lootfilled or smaller or less round effecting ruin costs less to
+# spawn, while the converse is true. Alter this number to affect the amount
+# of ruins.
+LAVALAND_BUDGET 60

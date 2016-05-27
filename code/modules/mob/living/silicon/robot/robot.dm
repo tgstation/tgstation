@@ -116,7 +116,7 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new (src)
-		mmi.brain = new /obj/item/organ/internal/brain(mmi)
+		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
@@ -167,6 +167,8 @@
 		return
 
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_peaceborg)
+		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
@@ -235,6 +237,16 @@
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
+		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			hands.icon_state = "standard"
+			icon_state = "peaceborg"
+			animation_length = 54
+			modtype = "Peace"
+			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			status_flags &= ~CANPUSH
+			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
+
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
@@ -286,6 +298,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
+		src << "<span class='userdanger'>Alert: You are dead.</span>"
 		return //won't work if dead
 	robot_alerts()
 
@@ -352,7 +365,7 @@
 	if(thruster_button)
 		thruster_button.icon_state = "ionpulse[ionpulse_on]"
 
-/mob/living/silicon/robot/blob_act()
+/mob/living/silicon/robot/blob_act(obj/effect/blob/B)
 	if (stat != 2)
 		adjustBruteLoss(60)
 		updatehealth()
@@ -377,8 +390,8 @@
 		if(connected_ai)
 			stat("Master AI:", connected_ai.name)
 
-/mob/living/silicon/robot/restrained()
-	return 0
+/mob/living/silicon/robot/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
@@ -445,9 +458,6 @@
 	return !cleared
 
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/restraints/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
-		return
-
 	if(istype(W, /obj/item/weapon/weldingtool) && (user.a_intent != "harm" || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
@@ -470,6 +480,7 @@
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
@@ -556,7 +567,10 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
@@ -604,11 +618,14 @@
 			toner = tonermax
 			qdel(W)
 			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
-
 	else
-		if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
-			spark_system.start()
 		return ..()
+
+/mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
+	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
+		spark_system.start()
+	..()
+
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user != src)//To prevent syndieborgs from emagging themselves
@@ -621,6 +638,13 @@
 			return
 		if(opened)//Cover is open
 			if((world.time - 100) < emag_cooldown)
+				return
+
+			if(syndicate)
+				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
+				emag_cooldown = world.time
 				return
 
 			var/ai_is_antag = 0
@@ -636,7 +660,7 @@
 				return
 
 			if(wiresexposed)
-				user << "<span class='warning'>You must close the cover first!</span>"
+				user << "<span class='warning'>You must unexpose the wires first!</span>"
 				return
 			else
 				emag_cooldown = world.time
@@ -790,21 +814,21 @@
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard"
+				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("toiletbot")
-				overlays += "eyes-mediborg"
+				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg"
+				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("engiborg")
-				overlays += "eyes-engiborg"
+				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
-				overlays += "eyes-janiborg"
+				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("minerborg")
-				overlays += "eyes-minerborg"
+				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			else
@@ -947,6 +971,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
+							cleaned_human.wash_cream()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 
@@ -972,6 +997,7 @@
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
 	if(src.connected_ai)
+		connected_ai.connected_robots -= src
 		src.connected_ai = null
 	lawupdate = 0
 	lockcharge = 0

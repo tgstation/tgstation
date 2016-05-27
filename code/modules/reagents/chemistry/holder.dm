@@ -17,10 +17,14 @@ var/const/INJECT = 5 //injection
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
+	var/flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-	SSobj.processing |= src
+
+	if(!(flags & REAGENT_NOREACT))
+		SSobj.processing |= src
+
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -56,7 +60,7 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/Destroy()
 	. = ..()
-	SSobj.processing.Remove(src)
+	SSobj.processing -= src
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		qdel(R)
@@ -123,7 +127,7 @@ var/const/INJECT = 5 //injection
 
 	return id
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if(!target )
 		return
 	var/datum/reagents/R
@@ -150,8 +154,9 @@ var/const/INJECT = 5 //injection
 
 	update_total()
 	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+	if(!no_react)
+		R.handle_reactions()
+		src.handle_reactions()
 	return amount
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
@@ -291,12 +296,23 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/process()
-	if(my_atom && (my_atom.flags & NOREACT))
+	if(flags & REAGENT_NOREACT)
+		SSobj.processing -= src
 		return
+
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		R.on_tick()
-	return
+
+/datum/reagents/proc/set_reacting(react = TRUE)
+	if(react)
+		// Order is important, process() can remove from processing if
+		// the flag is present
+		flags &= ~(REAGENT_NOREACT)
+		SSobj.processing |= src
+	else
+		SSobj.processing -= src
+		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	for(var/reagent in reagent_list)
@@ -311,7 +327,8 @@ var/const/INJECT = 5 //injection
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
-	if(my_atom.flags & NOREACT) return //Yup, no reactions here. No siree.
+	if(flags & REAGENT_NOREACT)
+		return //Yup, no reactions here. No siree.
 
 	var/reaction_occured = 0
 	do
@@ -632,6 +649,9 @@ var/const/INJECT = 5 //injection
 		trans_data["viruses"] = v.Copy()
 
 	return trans_data
+
+/datum/reagents/proc/get_reagent(type)
+	. = locate(type) in reagent_list
 
 
 ///////////////////////////////////////////////////////////////////////////////////

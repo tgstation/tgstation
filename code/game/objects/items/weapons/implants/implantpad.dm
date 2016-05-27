@@ -33,17 +33,15 @@
 
 
 /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
-	..()
 	if(istype(C, /obj/item/weapon/implantcase))
 		if(!case)
 			if(!user.unEquip(C))
 				return
 			C.loc = src
 			case = C
+		update_icon()
 	else
-		return
-	update_icon()
-
+		return ..()
 
 /obj/item/weapon/implantpad/attack_self(mob/user)
 	user.set_machine(src)

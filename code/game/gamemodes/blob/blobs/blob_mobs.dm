@@ -29,7 +29,7 @@
 		overmind.blob_mobs -= src
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blob_act()
+/mob/living/simple_animal/hostile/blob/blob_act(obj/effect/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		for(var/i in 1 to 2)
 			var/obj/effect/overlay/temp/heal/H = PoolOrNew(/obj/effect/overlay/temp/heal, get_turf(src)) //hello yes you are being healed
@@ -37,7 +37,7 @@
 				H.color = overmind.blob_reagent_datum.complementary_color
 			else
 				H.color = "#000000"
-		adjustHealth(-maxHealth*0.025)
+		adjustHealth(-maxHealth*0.0125)
 
 /mob/living/simple_animal/hostile/blob/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -89,6 +89,8 @@
 	attacktext = "hits"
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
+	del_on_death = 1
+	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/list/human_overlays = list()
 	var/is_zombie = 0
@@ -134,7 +136,6 @@
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
-	..(1)
 	// On death, create a small smoke of harmful gas (s-Acid)
 	var/datum/effect_system/smoke_spread/chem/S = new
 	var/turf/location = get_turf(src)
@@ -151,9 +152,10 @@
 	S.attach(location)
 	S.set_up(reagents, death_cloud_size, location, silent=1)
 	S.start()
+	if(factory)
+		factory.spore_delay = world.time + factory.spore_cooldown //put the factory on cooldown
 
-	ghostize()
-	qdel(src)
+	..()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Destroy()
 	if(factory)
@@ -210,13 +212,17 @@
 	mob_size = MOB_SIZE_LARGE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/New()
 	..()
-	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+	if(!independent) //no pulling people deep into the blob
+		verbs -= /mob/living/verb/pulled
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		if(independent)
+			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
 		if(!(locate(/obj/effect/blob) in range(2, src)))
 			damagesources++
@@ -269,3 +275,7 @@
 		factory.naut = null //remove this naut from its factory
 		factory.maxhealth = initial(factory.maxhealth)
 	flick("blobbernaut_death", src)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/independent
+	independent = TRUE
+	gold_core_spawnable = 1

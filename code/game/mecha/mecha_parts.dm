@@ -17,8 +17,7 @@
 
 /obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user, params)
 	if(!construct || !construct.action(W, user))
-		..()
-	return
+		return ..()
 
 /obj/item/mecha_parts/chassis/attack_hand()
 	return
@@ -322,7 +321,6 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "electronic"
-	board_type = "other"
 	flags = CONDUCT
 	force = 5
 	w_class = 2

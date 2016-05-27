@@ -51,3 +51,4 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
+

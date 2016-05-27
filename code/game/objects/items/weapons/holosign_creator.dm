@@ -25,7 +25,6 @@
 		var/obj/effect/overlay/holograph/H = locate(holosign_type) in T
 		if(H)
 			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
-			signs.Remove(H)
 			qdel(H)
 		else
 			if(!is_blocked_turf(T)) //can't put holograms on a tile that has dense stuff
@@ -44,8 +43,7 @@
 							return
 						if(is_blocked_turf(T)) //don't try to sneak dense stuff on our tile during the wait.
 							return
-					H = new holosign_type(get_turf(target))
-					signs += H
+					H = new holosign_type(get_turf(target), src)
 					user << "<span class='notice'>You create \a [H] with [src].</span>"
 				else
 					user << "<span class='notice'>[src] is projecting at max capacity!</span>"
@@ -55,10 +53,8 @@
 
 /obj/item/weapon/holosign_creator/attack_self(mob/user)
 	if(signs.len)
-		var/list/L = signs.Copy()
-		for(var/sign in L)
-			qdel(sign)
-			signs -= sign
+		for(var/H in signs)
+			qdel(H)
 		user << "<span class='notice'>You clear all active holograms.</span>"
 
 
@@ -78,50 +74,112 @@
 	creation_time = 30
 	max_signs = 6
 
+/obj/item/weapon/holosign_creator/cyborg
+	name = "Energy Barrier Projector"
+	desc = "A holographic projector that creates fragile energy fields"
+	creation_time = 5
+	max_signs = 9
+	holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+	var/shock = 0
+
+/obj/item/weapon/holosign_creator/cyborg/attack_self(mob/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+
+		if(shock)
+			user <<"<span class='notice'>You clear all active holograms, and reset your projector to normal.</span>"
+			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg
+			creation_time = 5
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+			shock = 0
+			return
+		else if(R.emagged&&!shock)
+			user <<"<span class='warning'>You clear all active holograms, and overload your energy projector!</span>"
+			holosign_type = /obj/effect/overlay/holograph/barrier/cyborg/hacked
+			creation_time = 30
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+			shock = 1
+			return
+		else
+			if(signs.len)
+				for(var/H in signs)
+					qdel(H)
+				user << "<span class='notice'>You clear all active holograms.</span>"
+	if(signs.len)
+		for(var/H in signs)
+			qdel(H)
+		user << "<span class='notice'>You clear all active holograms.</span>"
 
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	var/holo_integrity = 1
+	var/obj/item/weapon/holosign_creator/projector
 
-/obj/effect/overlay/holograph/attackby(obj/item/weapon/W, mob/user, params)
-	if(!W.force || (W.flags & (ABSTRACT|NOBLUDGEON)))
-		return
-	if(W.force >= 10)
-		take_damage(3, user)
-	else
-		take_damage(1, user)
+/obj/effect/overlay/holograph/New(loc, source_projector)
+	if(source_projector)
+		projector = source_projector
+		projector.signs += src
+	..()
 
-/obj/effect/overlay/holograph/blob_act()
+/obj/effect/overlay/holograph/Destroy()
+	if(projector)
+		projector.signs -= src
+		projector = null
+	return ..()
+
+/obj/effect/overlay/holograph/attacked_by(obj/item/I, mob/user)
+	..()
+	take_damage(I.force * 0.5, I.damtype)
+
+/obj/effect/overlay/holograph/blob_act(obj/effect/blob/B)
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_animal(mob/living/simple_animal/M)
-	take_damage(5, M)
+	if(!M.melee_damage_upper)
+		return
+	attack_generic(5, M)
 
 /obj/effect/overlay/holograph/attack_alien(mob/living/carbon/alien/A)
-	take_damage(5, A)
+	attack_generic(5, A)
 
 /obj/effect/overlay/holograph/attack_hand(mob/living/user)
-	take_damage(1, user)
+	attack_generic(1, user)
 
 /obj/effect/overlay/holograph/mech_melee_attack(obj/mecha/M)
+	M.do_attack_animation(src)
 	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 	visible_message("<span class='danger'>[M.name] has hit [src].</span>")
 	qdel(src)
 
 /obj/effect/overlay/holograph/attack_slime(mob/living/simple_animal/slime/S)
 	if(S.is_adult)
-		take_damage(5, S)
+		attack_generic(5, S)
 	else
-		take_damage(2, S)
+		attack_generic(2, S)
 
-/obj/effect/overlay/holograph/proc/take_damage(amount, mob/living/user)
+/obj/effect/overlay/holograph/proc/attack_generic(damage_amount, mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 	user.visible_message("<span class='danger'>[user] hits [src].</span>", \
 						 "<span class='danger'>You hit [src].</span>" )
-	holo_integrity -= amount
+	take_damage(damage_amount)
+
+/obj/effect/overlay/holograph/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage && sound_effect)
+				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+		if(BURN)
+			if(damage && sound_effect)
+				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
+		else
+			return
+	holo_integrity -= damage
 	if(holo_integrity <= 0)
 		qdel(src)
 
@@ -133,16 +191,11 @@
 	else if(isobj(AM))
 		var/obj/item/I = AM
 		tforce = max(1, I.throwforce * 0.2)
-	playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
-	holo_integrity -= tforce
-	if(holo_integrity <= 0)
-		qdel(src)
+	take_damage(tforce)
 
 /obj/effect/overlay/holograph/bullet_act(obj/item/projectile/P)
-	if((P.damage_type == BRUTE || P.damage_type == BURN))
-		holo_integrity -= P.damage * 0.5
-		if(holo_integrity <= 0)
-			qdel(src)
+	. = ..()
+	take_damage(P.damage * 0.5, P.damage_type)
 
 /obj/effect/overlay/holograph/wetsign
 	name = "wet floor sign"
@@ -171,3 +224,36 @@
 
 /obj/effect/overlay/holograph/barrier/engineering
 	icon_state = "holosign_engi"
+
+/obj/effect/overlay/holograph/barrier/cyborg
+	name = "Energy Field"
+	desc = "A fragile energy field that blocks movement"
+	density = 1
+	holo_integrity = 1
+
+/obj/effect/overlay/holograph/barrier/CanPass()
+	return 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked
+	name = "Charged Energy Field"
+	desc = "A powerful energy field that blocks movement. Energy arcs off it"
+	holo_integrity = 3
+	var/shockcd = 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
+	if(!shockcd)
+		if(ismob(user))
+			var/mob/living/M = user
+			M.electrocute_act(15,"Energy Barrier", safety=1)
+			shockcd = 1
+			spawn(10)
+			shockcd = 0
+
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/Bumped(atom/user)
+	if(!shockcd)
+		if(ismob(user))
+			var/mob/living/M = user
+			M.electrocute_act(15,"Energy Barrier", safety=1)
+			shockcd = 1
+			spawn(10)
+			shockcd = 0

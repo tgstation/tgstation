@@ -44,6 +44,8 @@
 			icon_state = "gift[icon_state]"
 		else
 			user << "<span class='warning'>You need more paper!</span>"
+	else
+		return ..()
 
 /obj/structure/bigDelivery/relay_container_resist(mob/living/user, obj/O)
 	if(istype(loc, /atom/movable))
@@ -78,6 +80,20 @@
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
+	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
+	qdel(src)
+
+/obj/item/smallDelivery/attack_self_tk(mob/user)
+	if(ismob(loc))
+		var/mob/M = loc
+		M.unEquip(src)
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			M.put_in_hands(AM)
+	else
+		for(var/X in contents)
+			var/atom/movable/AM = X
+			AM.forceMove(src.loc)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, 1)
 	qdel(src)
 

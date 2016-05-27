@@ -139,7 +139,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 9
+	cost = 7
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
@@ -204,10 +204,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
-	desc = "A short bow mounted across a tiller in miniature. Small enough to fit into a pocket or slip into a bag \
-			unnoticed. It will synthesize and fire bolts tipped with a paralyzing toxin that will \
-			briefly stun targets and cause them to slur as if inebriated. It can produce an infinite amount \
-			of bolts, but must be manually recharged with each shot."
+	desc = "A short bow mounted across a tiller in miniature. Small enough to \
+		fit into a pocket or slip into a bag unnoticed. It will synthesize \
+		and fire bolts tipped with a paralyzing toxin that will briefly stun \
+		targets and cause them to slur as if inebriated. It can produce an \
+		infinite amount of bolts, but takes time to automatically recharge \
+		after each shot."
 	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
@@ -790,7 +792,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			for rapid healing, a medical HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
 	item = /obj/item/weapon/storage/firstaid/tactical
-	cost = 9
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/thermal
@@ -839,15 +841,15 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			during gravitational generator failures. These reverse-engineered knockoffs of Nanotrasen's \
 			'Advanced Magboots' slow you down in simulated-gravity environments much like the standard issue variety."
 	item = /obj/item/clothing/shoes/magboots/syndie
-	cost = 3
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/c4
 	name = "Composition C-4"
-	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls or connect \
-			a signaler to its wiring to make it remotely detonable. It has a modifiable timer with a \
+	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
+			an assembly to it in order to alter the way it detonates. It has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	item = /obj/item/weapon/c4
+	item = /obj/item/weapon/grenade/plastic/c4
 	cost = 1
 
 /datum/uplink_item/device_tools/c4bag
@@ -856,13 +858,20 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/c4
 	cost = 9 //10% discount!
 
+/datum/uplink_item/device_tools/x4bag
+	name = "Bag of X-4 explosives"
+	desc = "Contains 3 X-4 plastic explosives. Similar, but more powerful than C-4. X-4 can be placed on a solid surface, such as a wall or window, and it will \
+			blast through the wall, injuring anything on the opposite side, while being safer to the user. For when you want a wider, deeper, hole."
+	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/x4
+	cost = 4 //
+
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"
 	desc = "When screwed to wiring attached to a power grid and activated, this large device places excessive \
 			load on the grid, causing a stationwide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes."
 	item = /obj/item/device/powersink
-	cost = 10
+	cost = 6
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -901,7 +910,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
 	item = /obj/item/device/rad_laser
-	cost = 5
+	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod
 	name = "Assault Pod Targetting Device"
@@ -995,7 +1004,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		if(findtext(item, /obj/item/organ/internal/cyberimp))
+		if(findtext(item, /obj/item/organ/cyberimp))
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1003,26 +1012,26 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/thermals
 	name = "Thermal Vision Implant"
 	desc = "These cybernetic eyes will give you thermal vision. They must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/eyes/thermals
+	item = /obj/item/organ/cyberimp/eyes/thermals
 	cost = 8
 
 /datum/uplink_item/cyber_implants/xray
 	name = "X-Ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. They must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/eyes/xray
+	item = /obj/item/organ/cyberimp/eyes/xray
 	cost = 10
 
 /datum/uplink_item/cyber_implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. \
 			It must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	item = /obj/item/organ/cyberimp/brain/anti_stun
 	cost = 12
 
 /datum/uplink_item/cyber_implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. It must be implanted via surgery."
-	item = /obj/item/organ/internal/cyberimp/chest/reviver
+	item = /obj/item/organ/cyberimp/chest/reviver
 	cost = 8
 
 /datum/uplink_item/cyber_implants/bundle
@@ -1082,7 +1091,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			but you never know. Contents are sorted to always be worth 50 TC."
 	item = /obj/structure/closet/crate
 	cost = 20
-	player_minimum = 30
+	player_minimum = 25
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)

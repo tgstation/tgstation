@@ -9,6 +9,7 @@
  *		Snap pops
  *		Mech prizes
  *		AI core prizes
+ *		Toy codex gigas
  * 		Skeleton toys
  *		Cards
  *		Toy nuke
@@ -60,28 +61,40 @@
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
 
-/obj/item/toy/balloon/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/glass))
-		if(O.reagents)
-			if(O.reagents.total_volume <= 0)
-				user << "<span class='warning'>[O] is empty.</span>"
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
+		if(I.reagents)
+			if(I.reagents.total_volume <= 0)
+				user << "<span class='warning'>[I] is empty.</span>"
 			else if(reagents.total_volume >= 10)
 				user << "<span class='warning'>[src] is full.</span>"
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
-				user << "<span class='notice'>You fill the balloon with the contents of [O].</span>"
-				O.reagents.trans_to(src, 10)
+				user << "<span class='notice'>You fill the balloon with the contents of [I].</span>"
+				I.reagents.trans_to(src, 10)
 				update_icon()
+	else if(is_sharp(I))
+		balloon_burst()
+	else
+		return ..()
 
 /obj/item/toy/balloon/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
-		if(reagents.total_volume >= 1)
-			visible_message("<span class='danger'>[src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
-			reagents.reaction(get_turf(hit_atom))
-			for(var/atom/A in get_turf(hit_atom))
-				reagents.reaction(A)
-			icon_state = "burst"
-			qdel(src)
+		balloon_burst(hit_atom)
+
+/obj/item/toy/balloon/proc/balloon_burst(atom/AT)
+	if(reagents.total_volume >= 1)
+		var/turf/T
+		if(AT)
+			T = get_turf(AT)
+		else
+			T = get_turf(src)
+		T.visible_message("<span class='danger'>[src] bursts!</span>","<span class='italics'>You hear a pop and a splash.</span>")
+		reagents.reaction(T)
+		for(var/atom/A in T)
+			reagents.reaction(A)
+		icon_state = "burst"
+		qdel(src)
 
 /obj/item/toy/balloon/update_icon()
 	if(src.reagents.total_volume >= 1)
@@ -136,7 +149,7 @@
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
-	if (istype(A, /obj/item/toy/ammo/gun))
+	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
 			user << "<span class='warning'>It's already fully loaded!</span>"
 			return 1
@@ -153,7 +166,8 @@
 			src.bullets = 7
 		A.update_icon()
 		return 1
-	return
+	else
+		return ..()
 
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
 	if (flag)
@@ -221,11 +235,9 @@
 		item_state = "sword0"
 		w_class = 2
 	add_fingerprint(user)
-	return
 
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
-	..()
 	if(istype(W, /obj/item/toy/sword))
 		if(W == src)
 			user << "<span class='warning'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
@@ -259,6 +271,8 @@
 					user.update_inv_l_hand(0)
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
+	else
+		return ..()
 
 /*
  * Foam armblade
@@ -308,223 +322,6 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-
-/*
- * Crayons
- */
-
-/obj/item/toy/crayon
-	name = "crayon"
-	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'icons/obj/crayons.dmi'
-	icon_state = "crayonred"
-	w_class = 1
-	attack_verb = list("attacked", "coloured")
-	var/paint_color = "#FF0000" //RGB
-	var/drawtype = "rune"
-	var/text_buffer = ""
-	var/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","arrow","star","poseur tag")
-	var/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-	var/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
-	var/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
-	var/uses = 30 //-1 or less for unlimited uses
-	var/instant = 0
-	var/colourName = "red" //for updateIcon purposes
-	var/dat
-	var/list/validSurfaces = list(/turf/open/floor)
-	var/gang = 0 //For marking territory
-	var/edible = 1
-
-/obj/item/toy/crayon/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS|OXYLOSS)
-
-/obj/item/toy/crayon/New()
-	..()
-	name = "[colourName] crayon" //Makes crayons identifiable in things like grinders
-	drawtype = pick(pick(graffiti), pick(letters), "rune[rand(1,6)]")
-	if(config)
-		if(config.mutant_races == 1)
-			graffiti |= "antilizard"
-			graffiti |= "prolizard"
-
-/obj/item/toy/crayon/initialize()
-	if(config.mutant_races == 1)
-		graffiti |= "antilizard"
-		graffiti |= "prolizard"
-
-/obj/item/toy/crayon/attack_self(mob/living/user)
-	update_window(user)
-
-/obj/item/toy/crayon/proc/update_window(mob/living/user)
-	dat += "<center><h2>Currently selected: [drawtype]</h2><br>"
-	dat += "<a href='?src=\ref[src];type=random_letter'>Random letter</a><a href='?src=\ref[src];type=letter'>Pick letter/number</a>"
-	dat += "<a href='?src=\ref[src];buffer=1'>Write</a>"
-	dat += "<hr>"
-	dat += "<h3>Runes:</h3><br>"
-	dat += "<a href='?src=\ref[src];type=random_rune'>Random rune</a>"
-	for(var/i = 1; i <= 6; i++)
-		dat += "<a href='?src=\ref[src];type=rune[i]'>Rune[i]</a>"
-		if(!((i + 1) % 3)) //3 buttons in a row
-			dat += "<br>"
-	dat += "<hr>"
-	graffiti.Find()
-	dat += "<h3>Graffiti:</h3><br>"
-	dat += "<a href='?src=\ref[src];type=random_graffiti'>Random graffiti</a>"
-	var/c = 1
-	for(var/T in graffiti)
-		dat += "<a href='?src=\ref[src];type=[T]'>[T]</a>"
-		if(!((c + 1) % 3)) //3 buttons in a row
-			dat += "<br>"
-		c++
-	dat += "<hr>"
-	var/datum/browser/popup = new(user, "crayon", name, 300, 500)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	dat = ""
-
-/obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = char_split(lowertext(text))
-	var/list/out = list()
-	for(var/a in base)
-		if(a in (letters|numerals))
-			out += a
-	return jointext(out,"")
-
-/obj/item/toy/crayon/Topic(href, href_list, hsrc)
-	var/temp = "a"
-	if(href_list["buffer"])
-		text_buffer = crayon_text_strip(stripped_input(usr,"Choose what to write.", "Scribbles",default = text_buffer))
-	if(href_list["type"])
-		switch(href_list["type"])
-			if("random_letter")
-				temp = pick(letters)
-			if("letter")
-				temp = input("Choose what to write.", "Scribbles") in (letters|numerals)
-			if("random_rune")
-				temp = "rune[rand(1,6)]"
-			if("random_graffiti")
-				temp = pick(graffiti)
-			else
-				temp = href_list["type"]
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
-		return
-	drawtype = temp
-	update_window(usr)
-
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
-	if(!proximity || !check_allowed_items(target)) return
-	if(!uses)
-		user << "<span class='warning'>There is no more of [src.name] left!</span>"
-		if(!instant)
-			qdel(src)
-		return
-	if(istype(target, /obj/effect/decal/cleanable))
-		target = target.loc
-	if(is_type_in_list(target,validSurfaces))
-
-		var/temp = "rune"
-		if(letters.Find(drawtype))
-			temp = "letter"
-		else if(graffiti.Find(drawtype))
-			temp = "graffiti"
-		else if(numerals.Find(drawtype))
-			temp = "number"
-
-		////////////////////////// GANG FUNCTIONS
-		var/area/territory
-		var/gangID
-		if(gang)
-			//Determine gang affiliation
-			gangID = user.mind.gang_datum
-
-			//Check area validity. Reject space, player-created areas, and non-station z-levels.
-			if(gangID)
-				territory = get_area(target)
-				if(territory && (territory.z == ZLEVEL_STATION) && territory.valid_territory)
-					//Check if this area is already tagged by a gang
-					if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-						if(territory_claimed(territory, user))
-							return
-					if(locate(/obj/machinery/power/apc) in (user.loc.contents | target.contents))
-						user << "<span class='warning'>You cannot tag here.</span>"
-						return
-				else
-					user << "<span class='warning'>[territory] is unsuitable for tagging.</span>"
-					return
-		/////////////////////////////////////////
-
-		var/graf_rot
-		if(oriented.Find(drawtype))
-			switch(user.dir)
-				if(EAST)
-					graf_rot = 90
-				if(SOUTH)
-					graf_rot = 180
-				if(WEST)
-					graf_rot = 270
-				else
-					graf_rot = 0
-
-		user << "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>"
-		if(instant)
-			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50, target = target))
-
-			if(length(text_buffer))
-				drawtype = copytext(text_buffer,1,2)
-				text_buffer = copytext(text_buffer,2)
-
-			//Gang functions
-			if(gangID)
-				//Delete any old markings on this tile, including other gang tags
-				if(!(locate(/obj/effect/decal/cleanable/crayon/gang) in target)) //Ignore the check if the tile being sprayed has a gang tag
-					if(territory_claimed(territory, user))
-						return
-				for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-					qdel(old_marking)
-				new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",graf_rot)
-				user << "<span class='notice'>You tagged [territory] for your gang!</span>"
-
-			else
-				new /obj/effect/decal/cleanable/crayon(target,paint_color,drawtype,temp,graf_rot)
-
-			user << "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>"
-			if(instant<0)
-				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-			if(uses < 0)
-				return
-			uses = max(0,uses-1)
-			if(!uses)
-				user << "<span class='warning'>There is no more of [src.name] left!</span>"
-				if(!instant)
-					qdel(src)
-	return
-
-/obj/item/toy/crayon/attack(mob/M, mob/user)
-	if(edible && (M == user))
-		user << "You take a bite of the [src.name]. Delicious!"
-		user.nutrition += 5
-		if(uses < 0)
-			return
-		uses = max(0,uses-5)
-		if(!uses)
-			user << "<span class='warning'>There is no more of [src.name] left!</span>"
-			qdel(src)
-	else
-		..()
-
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
-	var/occupying_gang
-	for(var/datum/gang/G in ticker.mode.gangs)
-		if(territory.type in (G.territory|G.territory_new))
-			occupying_gang = G.name
-			break
-	if(occupying_gang)
-		user << "<span class='danger'>[territory] has already been tagged by the [occupying_gang] gang! You must get rid of or spray over the old tag first!</span>"
-		return 1
-	return 0
 
 /*
  * Snap pops
@@ -660,27 +457,6 @@
 	icon_state = "reticenceprize"
 	quiet = 1
 
-/*
- * AI core prizes
- */
-/obj/item/toy/AI
-	name = "toy AI"
-	desc = "A little toy model AI core with real law announcing action!"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "AI"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/AI/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = generate_ion_law()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
-		cooldown = 1
-		spawn(30) cooldown = 0
-		return
-	..()
 
 /obj/item/toy/talking
 	name = "talking action figure"
@@ -688,37 +464,175 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = 2
-	var/cooldown = 0
+	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
 	var/recharge_time = 30
 
+	var/chattering = FALSE
+	var/phomeme
+
+// Talking toys are language universal, and thus all species can use them
+/obj/item/toy/talking/attack_alien(mob/user)
+	. = attack_hand(user)
+
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/message = pick(messages)
-		user << "<span class='notice'>You pull the string on the [src].</span>"
-		toy_talk(user, message)
-		cooldown = 1
-		spawn(recharge_time) cooldown = 0
+		var/list/messages = generate_messages()
+		activation_message(user)
+		playsound(loc, 'sound/machines/click.ogg', 20, 1)
+
+		spawn(0)
+			for(var/message in messages)
+				toy_talk(user, message)
+				sleep(10)
+
+		cooldown = TRUE
+		spawn(recharge_time)
+			cooldown = FALSE
 		return
 	..()
 
-/obj/item/toy/talking/proc/toy_talk(user, message)
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
-	src.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+/obj/item/toy/talking/proc/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] pulls the string on \the [src].</span>",
+		"<span class='notice'>You pull the string on \the [src].</span>",
+		"<span class='notice'>You hear a string being pulled.</span>")
+
+/obj/item/toy/talking/proc/generate_messages()
+	return list(pick(messages))
+
+/obj/item/toy/talking/proc/toy_talk(mob/user, message)
+	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	if(chattering)
+		chatter(message, phomeme, user)
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/talking/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon_state = "AI"
+
+/obj/item/toy/talking/AI/generate_messages()
+	return list(generate_ion_law())
+
+/obj/item/toy/talking/codex_gigas
+	name = "Toy Codex Gigas"
+	desc = "A tool to help you write fictional devils!"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "demonomicon"
+	w_class = 2
+	recharge_time = 60
+
+/obj/item/toy/talking/codex_gigas/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] presses the button on \the [src].</span>",
+		"<span class='notice'>You press the button on \the [src].</span>",
+		"<span class='notice'>You hear a soft click.</span>")
+
+/obj/item/toy/talking/codex_gigas/generate_messages()
+	var/datum/devilinfo/devil = randomDevilInfo()
+	var/list/messages = list()
+	messages += "Some fun facts about: [devil.truename]"
+	messages += "[lawlorify[LORE][devil.bane]]"
+	messages += "[lawlorify[LORE][devil.obligation]]"
+	messages += "[lawlorify[LORE][devil.ban]]"
+	messages += "[lawlorify[LORE][devil.banish]]"
+	return messages
 
 /obj/item/toy/talking/owl
 	name = "owl action figure"
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon_state = "owlprize"
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+	chattering = TRUE
+	phomeme = "owl"
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
+	chattering = TRUE
+	phomeme = "griffin"
 
+/obj/item/toy/talking/skeleton
+	name = "skeleton action figure"
+	desc = "An action figure modeled after 'Oh-cee', the original content \
+		skeleton.\nNot suitable for infants or assistants under 36 months \
+		of age."
+	icon_state = "skeletonprize"
+	attack_verb = list("boned", "dunked on", "worked down to the bone")
+	chattering = TRUE
+
+	var/list/regular_messages = list(
+		"Why was the skeleton such a bad liar? \
+			Because you can see right through him!",
+		"When does a skeleton laugh? When something tickles his funny bone!",
+		"Why couldn't the skeleton win the beauty contest? \
+			 Because he had no body!",
+		"What do you call a skeleton in the winter? A numbskull!",
+		"What did the skeleton say before eating? Bone appetit!",
+		"What type of art do skeletons like? Skulltures!",
+		"What instrument do skeletons play? The trom-bone!",
+		"Why are skeletons always so calm? \
+			Because nothing gets under their skin!",
+		"How did the skeleton know it was going to rain? \
+			He could feel it in his bones.",
+		"Why did the skeleton go to the hospital? \
+			To get his ghoul stones removed.",
+		"Why can't skeletons play music in churches? \
+			Because they have no organs.",
+		"There's a skeleton inside everyone! Except slime people I guess...",
+		"The birds are too busy to notice me acting in the shadows!",
+		"Giraffes have the same number of bones in their necks as humans. \
+			You should never trust a giraffe.",
+		"When I meet a dog in the street, I always offer it a bone!",
+		"In corsetry, a bone is one of the rigid parts of a corset that \
+			forms its frame and gives it rigidity.",
+		"A person who plays the trombone is called a trombonist or \
+			trombone player.",
+		"Remember, compromise is for those without backbones!",
+		"If you go up to the captain and say the word 'bone' repeatedly, \
+			eventually he'll brig you.",
+		"Yo ho ho, shiver me bones!",
+		"So what you're saying is, you only love me for my legs?",
+		"You will never again find socks that match!",
+		"BONES! BONES! BONES!",
+		"Bones absorb x-rays, which is why radiation gives you superpowers.",
+		"Oh-cee! The ORIGINAL CONTENT SKELETON. Suitable for ages 36 months \
+			and up.",
+		"I just don't have the heart to judge you.",
+		"I don't have the stomach for this.",
+		"I'm a fighter, not a liver.",
+		"How can I see without eyeballs?",
+		"Ask your parents about 'boning', before you get pregnant.",
+		"Remember, a dog is for life, not just for christmas.")
+
+/obj/item/toy/talking/skeleton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to commit \
+		suicide with \the [src].</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.set_species(/datum/species/skeleton)
+
+	toy_talk(user, "RATTLE ME BONES")
+
+	user.Stun(5)
+	sleep(20)
+	return OXYLOSS
+
+/obj/item/toy/talking/skeleton/generate_messages()
+	return list(pick(regular_messages))
+
+/obj/item/toy/talking/skeleton/toy_talk(user, message)
+	phomeme = pick("sans", "papyrus")
+
+	span = "danger [phomeme]"
+	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -787,7 +701,6 @@
 		return
 	var/choice = null
 	if(cards.len == 0)
-		src.icon_state = "deck_[deckstyle]_empty"
 		user << "<span class='warning'>There are no more cards to draw!</span>"
 		return
 	var/obj/item/toy/cards/singlecard/H = new/obj/item/toy/cards/singlecard(user.loc)
@@ -802,12 +715,17 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
+
+/obj/item/toy/cards/deck/update_icon()
 	if(cards.len > 26)
-		src.icon_state = "deck_[deckstyle]_full"
+		icon_state = "deck_[deckstyle]_full"
 	else if(cards.len > 10)
-		src.icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 1)
-		src.icon_state = "deck_[deckstyle]_low"
+		icon_state = "deck_[deckstyle]_half"
+	else if(cards.len > 0)
+		icon_state = "deck_[deckstyle]_low"
+	else if(cards.len == 0)
+		icon_state = "deck_[deckstyle]_empty"
 
 /obj/item/toy/cards/deck/attack_self(mob/user)
 	if(cooldown < world.time - 50)
@@ -816,44 +734,33 @@
 		user.visible_message("[user] shuffles the deck.", "<span class='notice'>You shuffle the deck.</span>")
 		cooldown = world.time
 
-/obj/item/toy/cards/deck/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
-	..()
-	if(istype(C))
-		if(C.parentdeck == src)
-			if(!user.unEquip(C))
+/obj/item/toy/cards/deck/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/toy/cards/singlecard))
+		var/obj/item/toy/cards/singlecard/SC = I
+		if(SC.parentdeck == src)
+			if(!user.unEquip(SC))
 				user << "<span class='warning'>The card is stuck to your hand, you can't add it to the deck!</span>"
 				return
-			src.cards += C.cardname
+			cards += SC.cardname
 			user.visible_message("[user] adds a card to the bottom of the deck.","<span class='notice'>You add the card to the bottom of the deck.</span>")
-			qdel(C)
+			qdel(SC)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
-		if(cards.len > 26)
-			src.icon_state = "deck_[deckstyle]_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_[deckstyle]_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_[deckstyle]_low"
-
-
-/obj/item/toy/cards/deck/attackby(obj/item/toy/cards/cardhand/C, mob/living/user, params)
-	..()
-	if(istype(C))
-		if(C.parentdeck == src)
-			if(!user.unEquip(C))
+		update_icon()
+	else if(istype(I, /obj/item/toy/cards/cardhand))
+		var/obj/item/toy/cards/cardhand/CH = I
+		if(CH.parentdeck == src)
+			if(!user.unEquip(CH))
 				user << "<span class='warning'>The hand of cards is stuck to your hand, you can't add it to the deck!</span>"
 				return
-			src.cards += C.currenthand
+			cards += CH.currenthand
 			user.visible_message("[user] puts their hand of cards in the deck.", "<span class='notice'>You put the hand of cards in the deck.</span>")
-			qdel(C)
+			qdel(CH)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
-		if(cards.len > 26)
-			src.icon_state = "deck_[deckstyle]_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_[deckstyle]_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_[deckstyle]_low"
+		update_icon()
+	else
+		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	var/mob/M = usr
@@ -960,6 +867,8 @@
 			qdel(C)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
+	else
+		return ..()
 
 /obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
 	..()
@@ -1049,7 +958,8 @@
 			qdel(src)
 		else
 			user << "<span class='warning'>You can't mix cards from other decks!</span>"
-
+	else
+		return ..()
 
 /obj/item/toy/cards/singlecard/attack_self(mob/user)
 	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())

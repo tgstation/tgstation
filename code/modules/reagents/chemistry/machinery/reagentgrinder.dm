@@ -29,15 +29,6 @@
 				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
-				//Crayons (for overriding colours)
-				/obj/item/toy/crayon/red = list("redcrayonpowder" = 10),
-				/obj/item/toy/crayon/orange = list("orangecrayonpowder" = 10),
-				/obj/item/toy/crayon/yellow = list("yellowcrayonpowder" = 10),
-				/obj/item/toy/crayon/green = list("greencrayonpowder" = 10),
-				/obj/item/toy/crayon/blue = list("bluecrayonpowder" = 10),
-				/obj/item/toy/crayon/purple = list("purplecrayonpowder" = 10),
-				/obj/item/toy/crayon/mime = list("invisiblecrayonpowder" = 50),
-
 				//Blender Stuff
 				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
@@ -104,16 +95,16 @@
 				return
 
 		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
-				if (beaker)
-						return 1
-				else
+				if (!beaker)
 						if(!user.drop_item())
 								return 1
 						beaker =  I
 						beaker.loc = src
 						update_icon()
 						src.updateUsrDialog()
-						return 0
+				else
+						user << "<span class='warning'>There's already a container inside.</span>"
+				return 1 //no afterattack
 
 		if(is_type_in_list(I, dried_items))
 				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
@@ -140,17 +131,20 @@
 						user << "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>"
 
 				src.updateUsrDialog()
-				return 0
-
-		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				user << "<span class='warning'>Cannot refine into a reagent!</span>"
 				return 1
 
-		user.unEquip(I)
-		I.loc = src
-		holdingitems += I
-		src.updateUsrDialog()
-		return 0
+		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
+				if(user.a_intent == "harm")
+						return ..()
+				else
+						user << "<span class='warning'>Cannot refine into a reagent!</span>"
+						return 1
+
+		if(user.drop_item())
+				I.loc = src
+				holdingitems += I
+				src.updateUsrDialog()
+				return 0
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
 		return src.attack_hand(user)
@@ -410,21 +404,6 @@
 						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
 				remove_object(O)
-
-
-		//Crayons
-		//With some input from aranclanos, now 30% less shoddily copypasta
-		for (var/obj/item/toy/crayon/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				var/allowed = get_allowed_by_id(O)
-				for (var/r_id in allowed)
-						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-						var/amount = allowed[r_id]
-						beaker.reagents.add_reagent(r_id,min(amount, space))
-						if (space < amount)
-								break
-						remove_object(O)
 
 		//Everything else - Transfers reagents from it into beaker
 		for (var/obj/item/weapon/reagent_containers/O in holdingitems)

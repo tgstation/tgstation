@@ -89,14 +89,21 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
-	M.adjustOxyLoss(5, 0)
+	. = TRUE
+	var/mob/living/carbon/C
 	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		C.losebreath += 2
-	if(prob(20))
-		M.emote("gasp")
+		C = M
+		CHECK_DNA_AND_SPECIES(C)
+		if(NOBREATH in C.dna.species.specflags)
+			. = FALSE
+
+	if(.)
+		M.adjustOxyLoss(5, 0)
+		if(C)
+			C.losebreath += 2
+		if(prob(20))
+			M.emote("gasp")
 	..()
-	. = 1
 
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
@@ -145,7 +152,7 @@
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/carbon/M)
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5*REM, 0)
-	M.Weaken(5, 0, 0)
+	M.Weaken(5, 0)
 	M.silent = max(M.silent, 5)
 	M.tod = worldtime2text()
 	..()
@@ -174,10 +181,9 @@
 	toxpwr = 1
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
-	if(istype(O,/obj/structure/alien/weeds/))
+	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
-		alien_weeds.healthcheck()
+		alien_weeds.take_damage(rand(15,35), BRUTE, 0) // Kills alien weeds pretty fast
 	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
 	else if(istype(O,/obj/effect/spacevine))
@@ -259,6 +265,20 @@
 			M.Sleeping(2, 0)
 			M.adjustToxLoss((current_cycle - 50)*REM, 0)
 			. = 1
+	..()
+
+/datum/reagent/toxin/chloralhydrate/delayed
+	id = "chloralhydrate2"
+
+/datum/reagent/toxin/chloralhydrate/delayed/on_mob_life(mob/living/M)
+	switch(current_cycle)
+		if(1 to 10)
+			return
+		if(10 to 20)
+			M.confused += 1
+			M.drowsyness += 1
+		if(20 to INFINITY)
+			M.Sleeping(2, 0)
 	..()
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
@@ -493,7 +513,7 @@
 		switch(picked_option)
 			if(1)
 				M.Stun(3, 0)
-				M.Weaken(3, 0, 0)
+				M.Weaken(3, 0)
 				. = 1
 			if(2)
 				M.losebreath += 10
@@ -612,7 +632,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/M)
 	if(current_cycle >= 11)
-		M.Weaken(3, 0, 0)
+		M.Weaken(3, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -695,4 +715,37 @@
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
 	color = "#8E18A9" // rgb: 142, 24, 169
 	toxpwr = 2
-	acidpwr = 20
+	acidpwr = 42.0
+
+/datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/M)
+	M.adjustFireLoss(current_cycle/10, 0) // I rode a tank, held a general's rank
+	. = 1 // When the blitzkrieg raged and the bodies stank
+	..() // Pleased to meet you, hope you guess my name
+
+/datum/reagent/toxin/peaceborg/confuse
+	name = "Dizzying Solution"
+	id = "dizzysolution"
+	description = "Makes the target off balance and dizzy"
+	toxpwr = 0
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/toxin/peaceborg/confuse/on_mob_life(mob/living/M)
+	M.confused += 1
+	M.Dizzy(1)
+	if(prob(20))
+		M << "You feel confused and disorientated."
+	..()
+
+/datum/reagent/toxin/peaceborg/tire
+	name = "Tiring Solution"
+	id = "tiresolution"
+	description = "An extremely weak stamina-toxin that tires out the target. Completely harmless."
+	toxpwr = 0
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+
+/datum/reagent/toxin/peaceborg/tire/on_mob_life(mob/living/M)
+	if(M.staminaloss < 50)
+		M.adjustStaminaLoss(10)
+	if(prob(30))
+		M << "You should sit down and take a rest..."
+	..()

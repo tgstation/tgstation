@@ -20,7 +20,7 @@
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - burst into sparks!
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - burst into sparks!
 		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 		sparks.set_up(1, 1, src)
 		sparks.start()
@@ -51,8 +51,10 @@
 	SpinAnimation()
 
 /obj/item/projectile/energy/net/on_hit(atom/target, blocked = 0)
-	if(isliving(target) && !locate(/obj/effect/nettingportal) in loc)
-		new/obj/effect/nettingportal(get_turf(target))
+	if(isliving(target))
+		var/turf/Tloc = get_turf(target)
+		if(!locate(/obj/effect/nettingportal) in Tloc)
+			new/obj/effect/nettingportal(Tloc)
 	..()
 
 /obj/item/projectile/energy/net/on_range()
@@ -98,7 +100,7 @@
 	range = 4
 
 /obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
-	if(!ismob(target) || blocked >= 2) //Fully blocked by mob or collided with dense object - drop a trap
+	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
 		new/obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(loc))
 	else if(iscarbon(target))
 		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy(get_turf(target))
@@ -109,6 +111,32 @@
 	new/obj/item/weapon/restraints/legcuffs/beartrap/energy(loc)
 	..()
 
+/obj/item/projectile/energy/trap/cyborg
+	name = "Energy Bola"
+	icon_state = "e_snare"
+	nodamage = 1
+	weaken = 0
+	hitsound = 'sound/weapons/taserhit.ogg'
+	range = 10
+
+/obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
+	if(!ismob(target) || blocked >= 100)
+		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		qdel(src)
+	if(iscarbon(target))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(target))
+		B.Crossed(target)
+	spawn(10)
+		qdel(src)
+	..()
+
+/obj/item/projectile/energy/trap/cyborg/on_range()
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(1, 1, src)
+	sparks.start()
+	qdel(src)
 
 /obj/item/projectile/energy/declone
 	name = "radiation beam"
@@ -144,3 +172,20 @@
 
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
+
+/obj/item/projectile/energy/shock_revolver
+	name = "shock bolt"
+	icon_state = "purple_laser"
+	var/chain
+
+/obj/item/ammo_casing/energy/shock_revolver/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	..()
+	var/obj/item/projectile/hook/P = BB
+	spawn(1)
+		P.chain = P.Beam(user,icon_state="purple_lightning",icon = 'icons/effects/effects.dmi',time=1000, maxdistance = 30)
+
+/obj/item/projectile/energy/shock_revolver/on_hit(atom/target)
+	. = ..()
+	if(isliving(target))
+		tesla_zap(src, 3, 10000)
+	qdel(chain)

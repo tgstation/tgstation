@@ -21,6 +21,7 @@
 			new /obj/item/device/rad_laser(src)
 			new /obj/item/device/chameleon(src)
 			new /obj/item/weapon/soap/syndie(src)
+			new /obj/item/clothing/glasses/thermal/syndi(src)
 			return
 
 		if("bond")
@@ -30,6 +31,8 @@
 			new /obj/item/ammo_box/magazine/m10mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/weapon/card/id/syndicate(src)
+			new /obj/item/weapon/reagent_containers/syringe/stimulants(src)
+
 			return
 
 		if("screwed")
@@ -45,7 +48,7 @@
 			new /obj/item/weapon/gun/projectile/revolver(src)
 			new /obj/item/ammo_box/a357(src)
 			new /obj/item/weapon/card/emag(src)
-			new /obj/item/weapon/c4(src)
+			new /obj/item/weapon/grenade/plastic/c4(src)
 			new /obj/item/clothing/gloves/color/latex/nitrile(src)
 			new /obj/item/clothing/mask/gas/clown_hat(src)
 			new /obj/item/clothing/under/suit_jacket/really_black(src)
@@ -83,8 +86,8 @@
 			return
 
 		if("sabotage")
-			new /obj/item/weapon/c4 (src)
-			new /obj/item/weapon/c4 (src)
+			new /obj/item/weapon/grenade/plastic/c4 (src)
+			new /obj/item/weapon/grenade/plastic/c4 (src)
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/doorCharge(src)
 			new /obj/item/device/camera_bug(src)

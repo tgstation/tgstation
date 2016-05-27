@@ -47,19 +47,22 @@
 
 /obj/machinery/autolathe/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/autolathe(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
+	B.apply_default_parts(src)
 
 	wires = new /datum/wires/autolathe(src)
 	files = new /datum/research/autolathe(src)
 	matching_designs = list()
+
+/obj/item/weapon/circuitboard/machine/autolathe
+	name = "circuit board (Autolathe)"
+	build_path = /obj/machinery/autolathe
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 3,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/autolathe/Destroy()
 	qdel(wires)
@@ -89,7 +92,8 @@
 	popup.set_content(dat)
 	popup.open()
 
-	return
+/obj/machinery/autolathe/deconstruction()
+	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
@@ -105,12 +109,15 @@
 
 	if(panel_open)
 		if(istype(O, /obj/item/weapon/crowbar))
-			materials.retrieve_all()
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))
 			wires.interact(user)
 			return 1
+
+	if(user.a_intent == "harm") //so we can hit the machine
+		return ..()
+
 	if(stat)
 		return 1
 
@@ -124,7 +131,10 @@
 			files.AddDesign2Known(D.blueprint)
 
 		busy = 0
-		return
+		return 1
+
+	if(O.flags & HOLOGRAM)
+		return 1
 
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!material_amount)
@@ -153,6 +163,7 @@
 			qdel(O)
 	busy = 0
 	src.updateUsrDialog()
+	return 1
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	if(..())

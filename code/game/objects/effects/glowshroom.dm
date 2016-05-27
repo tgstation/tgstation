@@ -117,10 +117,11 @@ obj/effect/glowshroom/glowcap
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/attackby(obj/item/weapon/W, mob/user, params)
+/obj/effect/glowshroom/attacked_by(obj/item/I, mob/user)
 	..()
-	endurance -= W.force
-	CheckEndurance()
+	if(I.damtype != STAMINA)
+		endurance -= I.force
+		CheckEndurance()
 
 /obj/effect/glowshroom/ex_act(severity, target)
 	switch(severity)

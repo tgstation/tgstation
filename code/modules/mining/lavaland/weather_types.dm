@@ -18,8 +18,13 @@
 	duration_overlay = "lava"
 	overlay_layer = 2 //Covers floors only
 
+	immunity_type = "lava"
+
 
 /datum/weather/floor_is_lava/storm_act(mob/living/L)
+	if(immunity_type in L.weather_immunities)
+		return
+
 	var/turf/F = get_turf(L)
 	for(var/obj/structure/O in F.contents)
 		if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
@@ -56,7 +61,7 @@
 			A.icon = 'icons/effects/weather_effects.dmi'
 			A.icon_state = start_up_overlay
 		else
-			A.invisibility = 100
+			A.invisibility = INVISIBILITY_MAXIMUM
 			A.opacity = 0
 //Ash storms
 
@@ -77,6 +82,8 @@
 	duration_overlay = "ash_storm"
 	overlay_layer = 10
 
+	immunity_type = "ash"
+
 
 /datum/weather/ash_storm/false_alarm //No storm, just light ember fall
 	purely_aesthetic = TRUE
@@ -85,8 +92,9 @@
 	wind_down_message = "The ash fall starts to trail off."
 
 /datum/weather/ash_storm/storm_act(mob/living/L)
-	if("mining" in L.faction)
+	if(immunity_type in L.weather_immunities)
 		return
+
 	if(istype(L.loc, /obj/mecha))
 		return
 	if(ishuman(L))

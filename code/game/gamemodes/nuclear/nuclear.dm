@@ -303,7 +303,7 @@
 	l_pocket = /obj/item/weapon/pinpointer/nukeop
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
 
 	var/tc = 25
 
@@ -338,7 +338,7 @@
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
 		/obj/item/weapon/gun/projectile/automatic/pistol=1)
 
@@ -348,7 +348,5 @@
 
 	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
 	suit.ToggleHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
-	helmet.attack_self(H)
 
 	H.internal = H.r_store

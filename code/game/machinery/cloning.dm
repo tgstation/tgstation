@@ -25,16 +25,8 @@
 
 /obj/machinery/clonepod/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/clonepod(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
+	B.apply_default_parts(src)
 
 /obj/machinery/clonepod/RefreshParts()
 	speed_coeff = 0
@@ -46,6 +38,16 @@
 	heal_level = (efficiency * 15) + 10
 	if(heal_level > 100)
 		heal_level = 100
+
+/obj/item/weapon/circuitboard/machine/clonepod
+	name = "circuit board (Clone Pod)"
+	build_path = /obj/machinery/clonepod
+	origin_tech = "programming=3;biotech=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -82,7 +84,7 @@
 		if ((M.stat != 2) || (!M.client))
 			continue
 		//They need a brain!
-		if (ishuman(M) && !M.getorgan(/obj/item/organ/internal/brain))
+		if (ishuman(M) && !M.getorgan(/obj/item/organ/brain))
 			continue
 
 		if (M.ckey == find_key)
@@ -201,7 +203,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
-		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key || src.occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")
@@ -249,22 +251,23 @@
 	if(exchange_parts(user, W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (!src.check_access(W))
+	if (W.GetID())
+		if (!check_access(W))
 			user << "<span class='danger'>Access Denied.</span>"
 			return
-		if ((!src.locked) || (isnull(src.occupant)))
+		if (!locked || !occupant)
 			return
-		if ((src.occupant.health < -20) && (src.occupant.stat != 2))
-			user << "<span class='danger'>Access Refused.</span>"
+		if (occupant.health < -20 && occupant.stat != DEAD)
+			user << "<span class='danger'>Access Refused. Patient status still unstable.</span>"
 			return
 		else
-			src.locked = 0
+			locked = 0
 			user << "System unlocked."
 	else
-		..()
+		return ..()
 
 /obj/machinery/clonepod/emag_act(mob/user)
 	if (isnull(src.occupant))

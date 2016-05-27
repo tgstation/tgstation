@@ -46,15 +46,19 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/mechfab(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
+	B.apply_default_parts(src)
 	files = new /datum/research(src) //Setup the research data holder.
+
+/obj/item/weapon/circuitboard/machine/mechfab
+	name = "circuit board (Exosuit Fabricator)"
+	build_path = /obj/machinery/mecha_part_fabricator
+	origin_tech = "programming=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -459,6 +463,9 @@
 
 	return result
 
+/obj/machinery/mecha_part_fabricator/deconstruction()
+	for(var/material in resources)
+		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -467,17 +474,13 @@
 	if(exchange_parts(user, W))
 		return
 
-	if(panel_open)
-		if(istype(W, /obj/item/weapon/crowbar))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
-			default_deconstruction_crowbar(W)
-			return 1
-		else
-			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
-			return 1
+	if(default_deconstruction_crowbar(W))
+		return 1
 
 	if(istype(W, /obj/item/stack))
+		if(panel_open)
+			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
+			return 1
 		var/material
 		switch(W.type)
 			if(/obj/item/stack/sheet/mineral/gold)
@@ -519,7 +522,8 @@
 			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
 		else
 			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
-		return
+	else
+		return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)

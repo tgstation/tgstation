@@ -71,7 +71,7 @@
 	materials = list(MAT_METAL = 3000, MAT_PLASMA = 3000, MAT_DIAMOND = 500)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/bluespace
-	category = list("Misc","Medical Designs")
+	category = list("Medical Designs", "Bluespace Designs")
 
 /datum/design/noreactbeaker
 	name = "Cryostasis Beaker"
@@ -82,6 +82,39 @@
 	materials = list(MAT_METAL = 3000)
 	reliability = 76
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
+	category = list("Medical Designs")
+
+/datum/design/bluespacesyringe
+	name = "Bluespace Syringe"
+	desc = "An advanced syringe that can hold 60 units of chemicals"
+	id = "bluespacesyringe"
+	req_tech = list("bluespace" = 3, "materials" = 4, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_PLASMA = 2000, MAT_DIAMOND = 2000)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/bluespace
+	category = list("Medical Designs", "Bluespace Designs")
+
+/datum/design/noreactsyringe
+	name = "Cryo Syringe"
+	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
+	id = "noreactsyringe"
+	req_tech = list("materials" = 2, "combat" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_GOLD = 1000)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/noreact
+	category = list("Medical Designs")
+
+/datum/design/piercesyringe
+	name = "Piercing Syringe"
+	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
+	id = "piercesyringe"
+	req_tech = list("materials" = 3, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
+	reliability = 76
+	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
 	category = list("Medical Designs")
 
 /datum/design/bluespacebodybag
@@ -118,7 +151,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 200, MAT_GLASS = 400)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/shield
+	build_path = /obj/item/organ/cyberimp/eyes/shield
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_breather
@@ -129,7 +162,18 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 35
 	materials = list(MAT_METAL = 200, MAT_GLASS = 250)
-	build_path = /obj/item/organ/internal/cyberimp/mouth/breathing_tube
+	build_path = /obj/item/organ/cyberimp/mouth/breathing_tube
+	category = list("Misc", "Medical Designs")
+
+/datum/design/cyberimp_toolset
+	name = "Toolset Arm implant"
+	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
+	id = "ci-toolset"
+	req_tech = list("materials" = 4, "engineering" = 3, "biotech" = 4, "powerstorage" = 4)
+	build_type = PROTOLATHE | MECHFAB
+	materials = list (MAT_METAL = 2500, MAT_GLASS = 1500, MAT_SILVER = 1500)
+	construction_time = 200
+	build_path = /obj/item/organ/cyberimp/arm/toolset
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_medical_hud
@@ -140,7 +184,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 500)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/medical
+	build_path = /obj/item/organ/cyberimp/eyes/hud/medical
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_security_hud
@@ -151,7 +195,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 750, MAT_GOLD = 750)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/hud/security
+	build_path = /obj/item/organ/cyberimp/eyes/hud/security
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_xray
@@ -162,7 +206,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/xray
+	build_path = /obj/item/organ/cyberimp/eyes/xray
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thermals
@@ -173,7 +217,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/eyes/thermals
+	build_path = /obj/item/organ/cyberimp/eyes/thermals
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antidrop
@@ -184,7 +228,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 400, MAT_GOLD = 400)
-	build_path = /obj/item/organ/internal/cyberimp/brain/anti_drop
+	build_path = /obj/item/organ/cyberimp/brain/anti_drop
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antistun
@@ -195,7 +239,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_SILVER = 500, MAT_GOLD = 1000)
-	build_path = /obj/item/organ/internal/cyberimp/brain/anti_stun
+	build_path = /obj/item/organ/cyberimp/brain/anti_stun
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment
@@ -206,7 +250,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 500)
-	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment
+	build_path = /obj/item/organ/cyberimp/chest/nutriment
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
@@ -217,7 +261,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 750)
-	build_path = /obj/item/organ/internal/cyberimp/chest/nutriment/plus
+	build_path = /obj/item/organ/cyberimp/chest/nutriment/plus
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_reviver
@@ -228,7 +272,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
 	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/organ/internal/cyberimp/chest/reviver
+	build_path = /obj/item/organ/cyberimp/chest/reviver
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thrusters
@@ -239,7 +283,7 @@
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 80
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_SILVER = 1000, MAT_DIAMOND = 1000)
-	build_path = /obj/item/organ/internal/cyberimp/chest/thrusters
+	build_path = /obj/item/organ/cyberimp/chest/thrusters
 	category = list("Misc", "Medical Designs")
 
 

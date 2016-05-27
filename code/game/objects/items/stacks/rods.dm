@@ -53,9 +53,8 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)
-		return
 
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
+	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
 			user << "<span class='warning'>You must use a single rod!</span>"
@@ -64,8 +63,8 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
 			A.initialize_custom_food(src, S, user)
-		return
-	..()
+	else
+		return ..()
 
 /obj/item/stack/rods/cyborg/
 	materials = list()

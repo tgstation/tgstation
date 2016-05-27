@@ -7,7 +7,7 @@
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
 	req_access = list(access_robotics)
-	circuit = /obj/item/weapon/circuitboard/robotics
+	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
@@ -59,8 +59,8 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon) || IsAdminGhost(usr))
-			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(usr)) && !R.emagged)
+		if (istype(user, /mob/living/silicon) || IsAdminGhost(user))
+			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -88,8 +88,10 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					if(R.mind && R.mind.special_role && R.emagged)
+					if(R.syndicate && R.emagged)
 						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
+						if(R.connected_ai)
+							R.connected_ai << "<br><br><span class='alert'>ALERT - Cyborg detonation detected: [R.name]</span><br>"
 						R.ResetSecurityCodes()
 					else
 						message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) detonated [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)!</span>")
@@ -119,10 +121,11 @@
 	else if (href_list["magbot"])
 		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+			if(istype(R) && !R.emagged && ((R.syndicate && R == usr)|| R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
+				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)]. using robotic console!")
 				R.SetEmagged(1)
-				if(R.mind.special_role)
+				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 	src.updateUsrDialog()

@@ -1,19 +1,14 @@
 /turf/open
 	var/slowdown = 0 //negative for faster, positive for slower
 
-	var/oxygen = 0
-	var/carbon_dioxide = 0
-	var/nitrogen = 0
-	var/toxins = 0
-
 	var/wet = 0
+	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
 
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
-	if (blocks_air)
-		return
+
 	current_cycle = times_fired
 
 	//cache some vars
@@ -49,6 +44,15 @@
 				excited = 1
 				SSair.active_turfs |= src
 
+/turf/open/proc/GetHeatCapacity()
+	. = air.heat_capacity()
+
+/turf/open/proc/GetTemperature()
+	. = air.temperature
+
+/turf/open/proc/TakeTemperature(temp)
+	air.temperature += temp
+	air_update_turf()
 
 /turf/open/handle_fall(mob/faller, forced)
 	faller.lying = pick(90, 270)
@@ -69,7 +73,6 @@
 				return 0
 			if(C.m_intent=="walk" && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
-
 		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
@@ -92,7 +95,8 @@
 					C.spin(1,1)
 		return 1
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER) // 1 = Water, 2 = Lube, 3 = Ice
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice
+	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
@@ -102,19 +106,60 @@
 			wet_overlay = null
 		var/turf/open/floor/F = src
 		if(istype(F))
-			wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
+			if(wet_setting == TURF_WET_ICE)
+				wet_overlay = image('icons/turf/overlays.dmi', src, "snowfloor")
+			else
+				wet_overlay = image('icons/effects/water.dmi', src, "wet_floor_static")
 		else
 			wet_overlay = image('icons/effects/water.dmi', src, "wet_static")
 		overlays += wet_overlay
-
-	spawn(rand(790, 820)) // Purely so for visual effect
-		if(!istype(src, /turf)) //Because turfs don't get deleted, they change, adapt, transform, evolve and deform. they are one and they are all.
-			return
-		MakeDry(wet_setting)
+	HandleWet()
 
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
-	if(wet > wet_setting)
+	if(wet > wet_setting || !wet)
 		return
-	wet = TURF_DRY
-	if(wet_overlay)
-		overlays -= wet_overlay
+	spawn(rand(0,20))
+		if(wet == TURF_WET_PERMAFROST)
+			wet = TURF_WET_ICE
+		else
+			wet = TURF_DRY
+			if(wet_overlay)
+				overlays -= wet_overlay
+
+/turf/open/proc/HandleWet()
+	if(!wet)
+		//It's possible for this handler to get called after all the wetness is
+		//cleared, so bail out if that is the case
+		return
+	if(!wet_time && wet < TURF_WET_ICE)
+		MakeDry(TURF_WET_ICE)
+	if(wet_time > MAXIMUM_WET_TIME)
+		wet_time = MAXIMUM_WET_TIME
+	if(wet == TURF_WET_ICE && air.temperature > T0C)
+		MakeDry(TURF_WET_ICE)
+		MakeSlippery(TURF_WET_WATER)
+	switch(air.temperature)
+		if(-INFINITY to T0C)
+			if(wet != TURF_WET_ICE && wet)
+				MakeDry(TURF_WET_ICE)
+				MakeSlippery(TURF_WET_ICE)
+		if(T0C to T20C)
+			wet_time = max(0, wet_time-1)
+		if(T20C to T0C + 40)
+			wet_time = max(0, wet_time-2)
+		if(T0C + 40 to T0C + 60)
+			wet_time = max(0, wet_time-3)
+		if(T0C + 60 to T0C + 80)
+			wet_time = max(0, wet_time-5)
+		if(T0C + 80 to T0C + 100)
+			wet_time = max(0, wet_time-10)
+		if(T0C + 100 to INFINITY)
+			wet_time = 0
+
+	if(wet && wet < TURF_WET_ICE && !wet_time)
+		MakeDry(TURF_WET_ICE)
+	if(!wet && wet_time)
+		wet_time = 0
+	if(wet)
+		addtimer(src, "HandleWet", 15)
+

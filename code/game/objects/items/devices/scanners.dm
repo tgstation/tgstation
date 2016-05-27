@@ -52,7 +52,7 @@ MASS SPECTROMETER
 
 			var/mob/living/L = locate() in O
 
-			if(O.invisibility == 101)
+			if(O.invisibility == INVISIBILITY_MAXIMUM)
 				O.invisibility = 0
 				if(L)
 					flick_sonar(O)
@@ -60,7 +60,7 @@ MASS SPECTROMETER
 					if(O && O.loc)
 						var/turf/U = O.loc
 						if(U.intact)
-							O.invisibility = 101
+							O.invisibility = INVISIBILITY_MAXIMUM
 			else
 				if(L)
 					flick_sonar(O)
@@ -71,7 +71,7 @@ MASS SPECTROMETER
 	icon_state = "health"
 	item_state = "analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 1
@@ -89,7 +89,7 @@ MASS SPECTROMETER
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
 		scanchems = 0
-	return
+
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
@@ -109,8 +109,8 @@ MASS SPECTROMETER
 	else
 		chemscan(user, M)
 
-	src.add_fingerprint(user)
-	return
+	add_fingerprint(user)
+
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/living/user, mob/living/M, mode = 1)
@@ -148,7 +148,7 @@ MASS SPECTROMETER
 		user << "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>"
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
-	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/internal/brain))
+	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
 		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
@@ -158,11 +158,11 @@ MASS SPECTROMETER
 	// Organ damage report
 	if(istype(M, /mob/living/carbon/human) && mode == 1)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_organs(1,1)
+		var/list/damaged = H.get_damaged_bodyparts(1,1)
 		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
 			user << "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>"
-			for(var/obj/item/organ/limb/org in damaged)
-				user << "\t\t<span class='info'>[capitalize(org.getDisplayName())]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]"
+			for(var/obj/item/bodypart/org in damaged)
+				user << "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]"
 
 	// Species and body temperature
 	if(ishuman(M))
@@ -173,6 +173,10 @@ MASS SPECTROMETER
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
+		var/tdelta = world.time - M.timeofdeath
+		if(tdelta < (DEFIB_TIME_LIMIT * 10))
+			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
+				ago, defibrillation may be possible!</span>"
 
 	for(var/datum/disease/D in M.viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
@@ -196,7 +200,7 @@ MASS SPECTROMETER
 				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
 
 		var/implant_detect
-		for(var/obj/item/organ/internal/cyberimp/CI in H.internal_organs)
+		for(var/obj/item/organ/cyberimp/CI in H.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
 				implant_detect += "[H.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
@@ -241,7 +245,7 @@ MASS SPECTROMETER
 	icon_state = "atmos"
 	item_state = "analyzer"
 	w_class = 2
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 0
 	throw_speed = 3
@@ -299,6 +303,7 @@ MASS SPECTROMETER
 			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
 		else
 			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+
 
 		for(var/id in env_gases)
 			if(id in hardcoded_gases)

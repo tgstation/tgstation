@@ -350,15 +350,15 @@ var/list/ai_list = list()
 	SSshuttle.cancelEvac(src)
 	return
 
-/mob/living/silicon/ai/blob_act()
+/mob/living/silicon/ai/blob_act(obj/effect/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/restrained()
-	return 0
+/mob/living/silicon/ai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))
