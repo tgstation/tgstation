@@ -1,5 +1,0 @@
-author: Kurfurst
-delete-after: True
-
-changes: 
-- rscadd: Inject light pink slimes with blood to get a paralysis potion that works on baby and adult domesticated slimes. This makes them able to be picked up for easy transport.
