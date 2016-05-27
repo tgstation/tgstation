@@ -1,9 +1,0 @@
-author: Shadowmech88
-delete-after: True
-changes: 
-- rscadd: A highlander will be fully healed if he decapitates another highlander.
-- rscadd: Highlanders are now perma-hulked, making them immune to stuns.
-- tweak: Plasmamen and vox will now retain the gear that they require to survive when they're made into highlanders.
-- tweak: Upon pressing the highlander button, all silicons will be made into humans so that they can also be highlanders.
-- rscdel: Highlanders can no longer use guns as a result of their hulk power.
-- rscdel: Highlanders can no longer be buckled to vehicles.
