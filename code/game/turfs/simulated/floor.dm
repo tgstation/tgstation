@@ -142,9 +142,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		return 1
 	if(..())
 		return 1
-	if(pryable == 0)
-		return 1
-	if(intact && istype(C, /obj/item/weapon/crowbar))
+	if(intact && pryable && istype(C, /obj/item/weapon/crowbar))
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
