@@ -8,7 +8,7 @@
 #define LATTICE_LAYER 2.2
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_LAYER 2.35
-#define WIRE_LAYER G2.4
+#define WIRE_LAYER 2.4
 #define WIRE_TERMINAL_LAYER 2.45
 #define LOW_OBJ_LAYER 2.5
 
