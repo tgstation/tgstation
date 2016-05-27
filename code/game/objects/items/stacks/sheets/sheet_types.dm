@@ -238,6 +238,12 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 		return
 	return ..()
 
+/obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		return
+	..()
+
 /obj/item/stack/sheet/runed_metal/fifty
 	amount = 50
 

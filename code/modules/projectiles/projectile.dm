@@ -8,6 +8,7 @@
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	pressure_resistance = INFINITY
+	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/obj/item/ammo_casing/ammo_casing = null
@@ -128,7 +129,7 @@
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 			step_towards(src, current)
-			if(original && (original.layer>=2.75) || ismob(original))
+			if(original && (original.layer>=PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(original))
 				if(loc == get_turf(original))
 					if(!(original in permutated))
 						Bump(original, 1)

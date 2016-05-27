@@ -231,7 +231,7 @@
 		else if (istype(thing, /mob/living))
 			. = 1
 			var/mob/living/L = thing
-			if("mining" in L.faction)
+			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)
 				if(isobj(L.buckled))
@@ -239,8 +239,8 @@
 					if(O.burn_state == LAVA_PROOF)
 						continue
 				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/liv = L.buckled
-					if("mining" in liv.faction)
+					var/mob/living/live = L.buckled
+					if("lava" in live.weather_immunities)
 						continue
 
 			L.adjustFireLoss(20)

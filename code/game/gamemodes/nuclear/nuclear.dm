@@ -348,7 +348,5 @@
 
 	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
 	suit.ToggleHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
-	helmet.attack_self(H)
 
 	H.internal = H.r_store

@@ -36,7 +36,6 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -46,6 +45,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 
 
 /**********************Shuttle Computer**************************/
@@ -511,7 +511,7 @@
 /obj/structure/fans/tiny
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
-	layer = TURF_LAYER + 0.8
+	layer = ABOVE_NORMAL_TURF_LAYER
 	density = 0
 	icon_state = "fan_tiny"
 	buildstackamount = 2
@@ -547,6 +547,6 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	name = "tubes"
 	anchored = 1
-	layer = MOB_LAYER - 0.2
+	layer = BELOW_MOB_LAYER
 	density = 0
 

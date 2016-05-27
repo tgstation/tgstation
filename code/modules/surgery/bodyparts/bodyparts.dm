@@ -283,6 +283,10 @@
 
 /obj/item/bodypart/l_arm
 	name = "left arm"
+	desc = "Did you know that the word 'sinister' stems originally from the \
+		Latin 'sinestra' (left hand), because the left hand was supposed to \
+		be possessed by the devil? This arm appears to be possessed by no \
+		one though."
 	icon_state = "l_arm"
 	max_damage = 50
 	body_zone ="l_arm"
@@ -292,6 +296,8 @@
 
 /obj/item/bodypart/r_arm
 	name = "right arm"
+	desc = "Over 87% of humans are right handed. That figure is much lower \
+		among humans missing their right arm."
 	icon_state = "r_arm"
 	max_damage = 50
 	body_zone = "r_arm"
@@ -301,6 +307,8 @@
 
 /obj/item/bodypart/l_leg
 	name = "left leg"
+	desc = "Some athletes prefer to tie their left shoelaces first for good \
+		luck. In this instance, it probably would not have helped."
 	icon_state = "l_leg"
 	max_damage = 50
 	body_zone = "l_leg"
@@ -310,6 +318,10 @@
 
 /obj/item/bodypart/r_leg
 	name = "right leg"
+	desc = "You put your right leg in, your right leg out. In, out, in, out, \
+		shake it all about. And apparently then it detaches.\n\
+		The hokey pokey has certainly changed a lot since space colonisation."
+	// alternative spellings of 'pokey' are availible
 	icon_state = "r_leg"
 	max_damage = 50
 	body_zone = "r_leg"
@@ -322,15 +334,9 @@
 
 /obj/item/severedtail
 	name = "tail"
-	desc = "A severed tail."
+	desc = "A severed tail. Somewhere, no doubt, a lizard hater is very \
+		pleased with themselves."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "severedtail"
 	color = "#161"
 	var/markings = "Smooth"
-
-
-
-
-
-
-

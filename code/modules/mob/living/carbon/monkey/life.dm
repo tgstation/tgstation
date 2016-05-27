@@ -13,7 +13,7 @@
 	..()
 
 	if(!client && stat == CONSCIOUS)
-		if(prob(33) && canmove && isturf(loc) && !pulledby && !grabbed_by.len)
+		if(prob(33) && canmove && isturf(loc) && !pulledby)
 			step(src, pick(cardinal))
 		if(prob(1))
 			emote(pick("scratch","jump","roll","tail"))

@@ -171,6 +171,9 @@
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
 
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
+
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/turf/T = A
@@ -397,9 +400,9 @@
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
 		else if(!del_on_death)
-			visible_message("<span class='danger'>\the [src] stops moving...</span>")
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -557,3 +560,6 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card
