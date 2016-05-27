@@ -550,7 +550,7 @@
 			Weaken(10)
 		return 1
 
-	if(src.is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
+	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
 		if(message)
 			visible_message("<span class='danger'>[src] throws up all over \himself!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
