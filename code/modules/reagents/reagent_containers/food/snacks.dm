@@ -3985,6 +3985,17 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("cream", 2)
+		
+/obj/item/weapon/reagent_containers/food/snacks/ijzerkoekje
+	name = "IJzerkoekje"
+	desc = "Bevat geen ijzer."
+	icon_state = "ijzerkoekje"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 5)
+		reagents.add_reagent("iron", 5)
+		bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/nofruitpie
 	name = "no-fruit pie"
