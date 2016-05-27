@@ -18,11 +18,6 @@
 /obj/item/weapon/reagent_containers/glass/bottle/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/bottle/attack_hand()
-	..()
-	update_icon()
-
-
 /obj/item/weapon/reagent_containers/glass/bottle/update_icon()
 	overlays.Cut()
 	if(reagents.total_volume)
