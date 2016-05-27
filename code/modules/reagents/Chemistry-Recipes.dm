@@ -982,7 +982,6 @@
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/carp/holocarp,
 		/mob/living/simple_animal/hostile/slime,
-		/mob/living/simple_animal/hostile/slime/adult,
 		/mob/living/simple_animal/hostile/mining_drone,
 		/mob/living/simple_animal/hostile/mimic,
 		/mob/living/simple_animal/hostile/mimic/crate,
@@ -1040,7 +1039,6 @@
 		/mob/living/simple_animal/hostile/scarybat/cult,
 		/mob/living/simple_animal/hostile/creature/cult,
 		/mob/living/simple_animal/hostile/slime,
-		/mob/living/simple_animal/hostile/slime/adult,
 		/mob/living/simple_animal/hostile/hivebot/tele, //This thing spawns hostile mobs
 		/mob/living/simple_animal/hostile/mining_drone,
 		) + typesof(/mob/living/simple_animal/hostile/humanoid) + typesof(/mob/living/simple_animal/hostile/asteroid) //Exclusion list for things you don't want the reaction to create.
@@ -1487,9 +1485,6 @@
 	for(var/mob/living/simple_animal/slime/slime in viewers(get_turf(holder.my_atom), null))
 		slime.rabid()
 		holder.my_atom.visible_message("<span class='warning'>\The [slime] is driven into a frenzy!</span>")
-	for(var/mob/living/simple_animal/adultslime/slime in viewers(get_turf(holder.my_atom), null))
-		slime.rabid()
-		holder.my_atom.visible_message("<span class='warning'>\The [slime] is driven into a frenzy!</span>")
 
 //Pink
 /datum/chemical_reaction/slimeppotion
@@ -1588,8 +1583,6 @@
 		S.death(0)
 	for(var/mob/living/simple_animal/slime/S in viewers(get_turf(holder.my_atom), null)) //Kills pet slimes too
 		S.death(0)
-	for(var/mob/living/simple_animal/adultslime/S in viewers(get_turf(holder.my_atom), null)) //No survivors
-		S.death(0)
 
 //Light Pink
 /datum/chemical_reaction/slimepotion2
@@ -1605,6 +1598,19 @@
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	var/obj/item/weapon/slimepotion2/P = new /obj/item/weapon/slimepotion2
 	P.loc = get_turf(holder.my_atom)
+
+/datum/chemical_reaction/slimeparalyze
+	name = "Slime Paralyzer"
+	id = "slimepara"
+	result = null
+	result_amount = 1
+	required_container = /obj/item/slime_extract/lightpink
+	required_reagents = list("blood" = 5)
+	required_other = 1
+
+/datum/chemical_reaction/slimeparalyze/on_reaction(var/datum/reagents/holder)
+	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
+	new /obj/item/weapon/slimeparapotion(get_turf(holder.my_atom))
 
 //Adamantine
 /datum/chemical_reaction/slimegolem

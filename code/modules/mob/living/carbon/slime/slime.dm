@@ -925,7 +925,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		if(M.stat)
 			to_chat(user, "<span class='warning'>The slime is dead!</span>")
 			return..()
-		var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
+		var/mob/living/simple_animal/slime/adult/pet = new /mob/living/simple_animal/slime/adult(M.loc)
 		pet.icon_state = "[M.colour] adult slime"
 		pet.icon_living = "[M.colour] adult slime"
 		pet.icon_dead = "[M.colour] baby slime dead"
@@ -946,7 +946,6 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.name = newname
 		pet.real_name = newname
 		qdel (src)
-
 
 /obj/item/weapon/slimesteroid
 	name = "slime steroid"
