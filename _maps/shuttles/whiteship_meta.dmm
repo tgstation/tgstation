@@ -4,7 +4,7 @@
 "ad" = (/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/abandoned)
 "ae" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/abandoned)
 "af" = (/turf/closed/wall/shuttle{icon_state = "swallc1"; dir = 2},/area/shuttle/abandoned)
-"ag" = (/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 15; id = "whiteship"; launch_status = 0; name = "NT Recovery White-Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 27},/obj/machinery/door/airlock/shuttle{name = "recovery shuttle external airlock"},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/open/floor/plasteel/shuttle,/area/shuttle/abandoned)
+"ag" = (/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 15; id = "whiteship"; launch_status = 0; name = "NT Recovery White-Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 27; timid = 1},/obj/machinery/door/airlock/shuttle{name = "recovery shuttle external airlock"},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/open/floor/plasteel/shuttle,/area/shuttle/abandoned)
 "ah" = (/obj/machinery/door/airlock/shuttle{name = "recovery shuttle external airlock"},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/open/floor/plasteel/shuttle,/area/shuttle/abandoned)
 "ai" = (/turf/closed/wall/shuttle{icon_state = "swallc2"; dir = 2},/area/shuttle/abandoned)
 "aj" = (/turf/closed/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/shuttle/abandoned)

@@ -32,8 +32,6 @@
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
-
 //turf-only flags
 #define NOJAUNT		1
 
@@ -81,3 +79,6 @@
 #define SLIME 16
 #define DRONE 32
 #define SWARMER 64
+
+// Flags for reagents
+#define REAGENT_NOREACT 1

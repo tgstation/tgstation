@@ -325,7 +325,9 @@
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	burn_state = FLAMMABLE
 	burntime = 20
-	canSmoothWith = list(/obj/structure/table/wood, /obj/structure/table/wood/poker)
+	canSmoothWith = list(/obj/structure/table/wood,
+		/obj/structure/table/wood/poker,
+		/obj/structure/table/wood/bar)
 
 /obj/structure/table/wood/narsie_act()
 	return
@@ -336,7 +338,6 @@
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
-	canSmoothWith = list(/obj/structure/table/wood/poker, /obj/structure/table/wood)
 
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)

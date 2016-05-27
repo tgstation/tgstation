@@ -32,13 +32,16 @@
 		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
 		return
 
-	if(mind && mind.name)
-		name = "[mind.name]"
+	var/mob/dead/observer/O = src
+	if(isobserver(src) && O.deadchat_name)
+		name = "[O.deadchat_name]"
 	else
-		name = real_name
-	if(name != real_name)
-		alt_name = " (died as [real_name])"
-
+		if(mind && mind.name)
+			name = "[mind.name]"
+		else
+			name = real_name
+		if(name != real_name)
+			alt_name = " (died as [real_name])"
 
 	var/K
 
