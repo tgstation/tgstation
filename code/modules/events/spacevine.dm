@@ -531,7 +531,6 @@
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
 		SetOpacity(1)
-		layer = 5
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2

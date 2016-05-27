@@ -178,7 +178,7 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = OVERWATCH_LAYER
+		H.layer = ABOVE_HUD_LAYER
 		usr.mapobjs += H
 #else
 
@@ -296,7 +296,7 @@
 
 		H.icon = I
 		qdel(I)
-		H.layer = OVERWATCH_LAYER
+		H.layer = ABOVE_HUD_LAYER
 		usr.mapobjs += H
 
 #endif

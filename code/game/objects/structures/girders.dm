@@ -291,7 +291,6 @@
 	anchored = 0
 	state = GIRDER_DISPLACED
 	girderpasschance = 25
-	layer = BELOW_OBJ_LAYER
 
 /obj/structure/girder/reinforced
 	name = "reinforced girder"
