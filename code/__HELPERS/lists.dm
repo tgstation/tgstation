@@ -58,16 +58,24 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(datum/A, list/L)
-	if (!L.len || !A)
+	if(!L.len || !A)
 		return 0
-	if (!isnum(L[L[1]])) //Has this not been converted to an associative list?
-		generate_type_list_cache(L) //Convert it to an associative list
+
+	if(L[L[1]] != MAX_VALUE) //Is this already a generated typecache
+		if(isnull(L[L[1]])) //It's not a typecache, so now we'll check if its an associative list or not
+			generate_type_list_cache(L) //Convert it to an associative list format for speed in access
+		else //Else this is meant to be an associative list, we can't reformat it
+			for(var/type in L)
+				if(istype(A, type))
+					return 1
+			return 0
+
 	return L[A.type]
 
 /proc/generate_type_list_cache(L)
 	for(var/type in L)
 		for(var/T in typesof(type)) //Gather all possible typepaths into an associative list
-			L[T] = 1 //Set them equal to one
+			L[T] = MAX_VALUE //Set them equal to the max value which is unlikely to collide with any other pregenerated value
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)

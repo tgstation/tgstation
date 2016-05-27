@@ -13,6 +13,7 @@
 #define PROFILE_MACHINES // Disable when not debugging.
 
 #define ARBITRARILY_LARGE_NUMBER 10000 //Used in delays.dm and vehicle.dm. Upper limit on delays
+#define MAX_VALUE 65535
 
 #ifdef PROFILE_MACHINES
 #define CHECK_DISABLED(TYPE) if(disable_##TYPE) return
