@@ -26,7 +26,6 @@
 	var/addiction_stage = 0
 	var/overdosed = 0 // You fucked up and this is now triggering its overdose effects, purge that shit quick.
 	var/pill_icon_state = "pill"
-	var/bottle_icon_state = "bottle"
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()

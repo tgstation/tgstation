@@ -11,7 +11,8 @@
 /obj/item/weapon/reagent_containers/glass/bottle/New()
 	..()
 	if(!icon_state)
-		icon_state = "bottle[rand(1,20)]"
+		icon_state = "bottle"
+		//icon_state = "bottle[rand(1,20)]"
 	update_icon()
 
 

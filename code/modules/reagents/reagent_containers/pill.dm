@@ -104,7 +104,7 @@
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
-	icon_state = "pill18"
+	icon_state = "pill16"
 	list_reagents = list("salbutamol" = 30)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/charcoal
@@ -134,19 +134,19 @@
 /obj/item/weapon/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
-	icon_state = "pill5"
+	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
-	icon_state = "pill5"
+	icon_state = "pill11"
 	list_reagents = list("oxandrolone" = 24)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
-	icon_state = "pill5"
+	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1

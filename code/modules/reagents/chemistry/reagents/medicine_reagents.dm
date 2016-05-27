@@ -9,7 +9,6 @@
 	name = "Medicine"
 	id = "medicine"
 	pill_icon_state = "pill19" //The Standard Pill for all medicine that have not their own set
-	bottle_icon_state = "bottle3" // same as above but for bottles
 
 /datum/reagent/medicine/on_mob_life(mob/living/M)
 	current_cycle++
@@ -215,6 +214,7 @@
 	description = "Stimulates the healing of severe burns. Extremely rapidly heals severe burns and slowly heals minor ones. Overdose will worsen existing burns."
 	reagent_state = LIQUID
 	color = "#f7ffa5"
+	pill_icon_state = "pill11"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
@@ -340,6 +340,7 @@
 	description = "Heals toxin damage as well as slowly removing any other chemicals the patient has in their bloodstream."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill17"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/M)
@@ -431,6 +432,7 @@
 	description = "Stimulates the healing of severe bruises. Extremely rapidly heals severe bruising and slowly heals minor ones. Overdose will worsen existing bruising."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill9"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 25
 
@@ -455,6 +457,7 @@
 	description = "Rapidly restores oxygen deprivation as well as preventing more of it to an extent."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill16"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/M)
@@ -556,6 +559,7 @@
 	description = "A painkiller that allows the patient to move at full speed even in bulky objects. Causes drowsiness and eventually unconsciousness in high doses. Overdose will cause a variety of effects, ranging from minor to lethal."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	addiction_threshold = 25
@@ -686,6 +690,7 @@
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill5"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
@@ -756,6 +761,7 @@
 	id = "mannitol"
 	description = "Efficiently restores brain damage."
 	color = "#C8A5DC"
+	pill_icon_state = "pill17"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-3*REM)
@@ -766,6 +772,7 @@
 	id = "mutadone"
 	description = "Removes jitteriness and restores genetic defects."
 	color = "#C8A5DC"
+	pill_icon_state = "pill20"
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
@@ -797,6 +804,7 @@
 	id = "stimulants"
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
 	color = "#C8A5DC"
+	pill_icon_state = "pill19"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
@@ -866,6 +874,7 @@
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill18"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)
@@ -900,6 +909,7 @@ datum/reagent/medicine/dexalin
 	description = "Restores oxygen loss. Overdose causes it instead."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
+	pill_icon_state = "pill16"
 	overdose_threshold = 30
 
 datum/reagent/medicine/dexalin/on_mob_life(mob/living/M)
