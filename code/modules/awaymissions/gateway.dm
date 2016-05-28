@@ -254,8 +254,17 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		return
 	if(istype(AM, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
-			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
-				AM << "\black The station gate has detected your exile implant and is blocking your entry."
+			AM << "\black The station gate has detected your exile implant and is blocking your entry."
+			return
+	if(istype(AM, /obj/structure/closet))
+		for(var/mob/living/carbon/HU in AM)
+			for(var/obj/item/weapon/implant/exile/E in HU)
+				HU << "\black The station gate has detected your exile implant and is blocking your entry."
+				return
+	if(istype(AM, /obj/vehicle) || istype(AM, /obj/structure/bed/chair/janicart) || istype(AM, /obj/structure/bed/chair/office))
+		if(AM.buckled_mob)
+			for(var/obj/item/weapon/implant/exile/E in AM.buckled_mob)
+				AM.buckled_mob << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.dir = SOUTH
