@@ -145,6 +145,9 @@
 		return
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 50, 1)
+	if(istype(src, /mob/living/carbon))
+		var/mob/living/carbon/C = src
+		C.adjustFireLoss(0.3*fire_stacks)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(3)
