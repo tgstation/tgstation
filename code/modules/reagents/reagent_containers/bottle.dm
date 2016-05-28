@@ -309,3 +309,15 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/traitor_flesh_eating
+	name = "Fournier's necrosis culture bottle"
+	desc = "A small bottle. Contains Fournier's gangrenous necrosis in synthblood medium."
+	icon_state = "bottle3"
+	spawned_disease = /datum/symptom/traitor_flesh_eating
+
+/obj/item/weapon/reagent_containers/glass/bottle/traitorheal
+	name = "Nuclei Apoptosis culture bottle"
+	desc = "A small bottle. Contains Nuclei Apoptosis in synthblood medium."
+	icon_state = "bottle3"
+	spawned_disease = /datum/symptom/traitorheal
