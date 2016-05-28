@@ -80,6 +80,7 @@
 	desc = "A fuel tank."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
+	var/exploded = FALSE //if we've already exploded
 
 /obj/structure/reagent_dispensers/fueltank/New()
 	..()
@@ -94,9 +95,11 @@
 		boom()
 
 /obj/structure/reagent_dispensers/fueltank/proc/boom()
-	explosion(src.loc,0,1,5,7,10, flame_range = 5)
-	if(src)
-		qdel(src)
+	if(!exploded)
+		exploded = TRUE //we've exploded, and thus must not do it again
+		explosion(src.loc,0,1,5,7,10, flame_range = 5)
+		if(src)
+			qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/effect/blob/B)
 	boom()
