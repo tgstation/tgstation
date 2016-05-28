@@ -75,3 +75,10 @@
 /obj/item/weapon/implanter/emp/New()
 	imp = new /obj/item/weapon/implant/emp(src)
 	..()
+
+/obj/item/weapon/implanter/weapons_auth
+	name = "implanter (weapons authentication)"
+	
+/obj/item/weapon/implanter/weapons_auth/New()
+	imp = new /obj/item/weapon/implant/weapons_auth()
+	..()
