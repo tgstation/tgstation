@@ -155,6 +155,19 @@
 		pod_moving = 0
 		pod.mix_air()
 
+/obj/structure/transit_tube/station/MouseDrop(mob/living/target)
+	if(!ishuman(usr) || !usr.canUseTopic(src,BE_CLOSE))
+		return
+	if(!istype(target))
+		return
+	if(target.buckled)
+		return
+	for(var/obj/structure/transit_tube_pod/pod in loc)
+		pod.visible_message("<span class='warning'>[usr] starts putting [target] into the [pod]!</span>")
+		if(do_after(usr, 15, target = src) && !target.buckled)
+			target.Weaken(5)
+			src.Bumped(target)
+
 // Tube station directions are simply 90 to either side of
 //  the exit.
 /obj/structure/transit_tube/station/init_dirs()
