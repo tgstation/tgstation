@@ -384,6 +384,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/allowling = 1
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+	if(used == TRUE)
+		user << "[used_message]"
+		return
+	used = TRUE
+
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>"
@@ -394,7 +399,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	if(used == TRUE)
 		user << "[used_message]"
 		return
-	used = TRUE
 	user << "[use_message]"
 	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
 	var/mob/dead/observer/theghost = null
