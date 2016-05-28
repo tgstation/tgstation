@@ -274,3 +274,103 @@
 		qdel(SS)
 		return
 	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
+
+
+
+/////////////////////////////
+// DOUBLE BARRELED SHOTGUN //
+/////////////////////////////
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel
+	name = "double-barreled shotgun"
+	desc = "A true classic."
+	icon_state = "dshotgun"
+	item_state = "shotgun"
+	w_class = 4
+	force = 10
+	flags = CONDUCT
+	slot_flags = SLOT_BACK
+	origin_tech = "combat=3;materials=1"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual
+	sawn_desc = "Omar's coming!"
+	unique_rename = 1
+	unique_reskin = 1
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/New()
+	..()
+	options["Default"] = "dshotgun"
+	options["Dark Red Finish"] = "dshotgun-d"
+	options["Ash"] = "dshotgun-f"
+	options["Faded Grey"] = "dshotgun-g"
+	options["Maple"] = "dshotgun-l"
+	options["Rosewood"] = "dshotgun-p"
+	options["Cancel"] = null
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
+		chamber_round()
+	if(istype(A, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/W = A
+		if(W.active)
+			sawoff(user)
+	if(istype(A, /obj/item/weapon/circular_saw) || istype(A, /obj/item/weapon/gun/energy/plasmacutter))
+		sawoff(user)
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
+	var/num_unloaded = 0
+	while (get_ammo() > 0)
+		var/obj/item/ammo_casing/CB
+		CB = magazine.get_round(0)
+		chambered = null
+		CB.loc = get_turf(src.loc)
+		CB.update_icon()
+		num_unloaded++
+	if (num_unloaded)
+		user << "<span class='notice'>You break open \the [src] and unload [num_unloaded] shell\s.</span>"
+	else
+		user << "<span class='warning'>[src] is empty!</span>"
+
+
+
+
+// IMPROVISED SHOTGUN //
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	name = "improvised shotgun"
+	desc = "Essentially a tube that aims shotgun shells."
+	icon_state = "ishotgun"
+	item_state = "shotgun"
+	w_class = 4
+	force = 10
+	slot_flags = null
+	origin_tech = "combat=2;materials=2"
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/improvised
+	sawn_desc = "I'm just here for the gasoline."
+	unique_rename = 0
+	unique_reskin = 0
+	var/slung = 0
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
+	..()
+	if(istype(A, /obj/item/stack/cable_coil) && !sawn_state)
+		var/obj/item/stack/cable_coil/C = A
+		if(C.use(10))
+			slot_flags = SLOT_BACK
+			user << "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>"
+			slung = 1
+			update_icon()
+		else
+			user << "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>"
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/update_icon()
+	..()
+	if(slung)
+		icon_state += "sling"
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised/sawoff(mob/user)
+	. = ..()
+	if(. && slung) //sawing off the gun removes the sling
+		new /obj/item/stack/cable_coil(get_turf(src), 10)
+		slung = 0
+		update_icon()
