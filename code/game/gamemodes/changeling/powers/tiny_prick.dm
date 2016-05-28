@@ -240,3 +240,16 @@
 		target.reagents.add_reagent("frostoil", 30)
 	feedback_add_details("changeling_powers","CS")
 	return 1
+
+
+/obj/effect/proc_holder/changeling/sting/para
+	name = "Paralysis Sting"
+	desc = "We sting a human, causing them to be stunned for a long duration."
+	helptext = "This will not mute them, and they will be able to speak and cry for help."
+	sting_icon = "sting_para"
+	chemical_cost = 1
+	dna_cost = 0
+
+/obj/effect/proc_holder/changeling/sting/cryo/sting_action(mob/user, mob/target)
+	target << "<span class='userdanger'>Your muscles painfully tighten!</span>"
+	target.Weaken(1000000000000000000000)
