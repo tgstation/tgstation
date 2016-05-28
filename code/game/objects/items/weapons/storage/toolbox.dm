@@ -5,11 +5,12 @@
 	icon_state = "red"
 	item_state = "toolbox_red"
 	flags = CONDUCT
-	force = 10
-	throwforce = 10
+	force = 15
+	throwforce = 15
 	throw_speed = 2
 	throw_range = 7
 	w_class = 4
+	max_combined_w_class = 28
 	materials = list(MAT_METAL = 500)
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
@@ -73,8 +74,8 @@
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
 	silent = 1
-	force = 15
-	throwforce = 18
+	force = 20
+	throwforce = 20
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
