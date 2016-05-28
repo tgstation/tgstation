@@ -477,21 +477,7 @@ var/global/mulebot_count = 0
 				if(istype( next, /turf))
 					//world << "at ([x],[y]) moving to ([next.x],[next.y])"
 
-					if(bloodiness)
-						var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
-						B.blood_DNA |= blood_DNA.Copy()
-						var/newdir = get_dir(next, loc)
-						if(newdir == dir)
-							B.dir = newdir
-						else
-							newdir = newdir | dir
-							if(newdir == 3)
-								newdir = 1
-							else if(newdir == 12)
-								newdir = 4
-							B.dir = newdir
-						bloodiness--
-
+					blood_trail(next)
 
 					var/oldloc = loc
 					var/moved = step_towards(src, next)	// attempt to move
@@ -642,8 +628,8 @@ var/global/mulebot_count = 0
 				add_logs(src, M, "knocked down")
 				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
-				M.Stun(8)
-				M.Weaken(5)
+				M.Stun(4)
+				M.Weaken(2)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -654,7 +640,8 @@ var/global/mulebot_count = 0
 					"<span class='userdanger'>[src] drives over you!<span>")
 	playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 
-	var/damage = rand(5,15)
+	var/damage = rand(4.1,7.5)
+	// Total damage is between ~25 and 45
 	H.apply_damage(2*damage, BRUTE, "head", run_armor_check("head", "melee"))
 	H.apply_damage(2*damage, BRUTE, "chest", run_armor_check("chest", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "l_leg", run_armor_check("l_leg", "melee"))
@@ -738,6 +725,22 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
+
+/mob/living/simple_animal/bot/mulebot/proc/blood_trail(turf/next)
+	if(bloodiness)
+		var/obj/effect/decal/cleanable/blood/tracks/B = new(loc)
+		B.blood_DNA |= blood_DNA.Copy()
+		var/newdir = get_dir(next, loc)
+		if(newdir == dir)
+			B.dir = newdir
+		else
+			newdir = newdir | dir
+			if(newdir == 3)
+				newdir = 1
+			else if(newdir == 12)
+				newdir = 4
+			B.dir = newdir
+		bloodiness--
 
 #undef SIGH
 #undef ANNOYED
