@@ -123,7 +123,7 @@
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
 	pixel_x = -235
-	pixel_y = -235
+	pixel_y = -248
 	takes_damage = FALSE
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
