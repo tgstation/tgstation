@@ -144,3 +144,10 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/rorschach
+	name = "rorschach mask"
+	desc = "All the clowns and shitcurity will look up and shout 'Save us!' and I'll look down and whisper, 'No.'"
+	icon_state = "rorschach"
+	item_state = "rorschach"
+	flags_inv = HIDEFACE
