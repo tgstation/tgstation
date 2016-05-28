@@ -7,9 +7,31 @@ Sorry Giacom. Please don't be mad :(
 	if(A && A.push_dir)
 		push_mob_back(src, A.push_dir)
 */
+#define DEFCON1		200
+#define DEFCON2  	400
+#define DEFCON3		600
+#define DEFCON4		800
+#define DEFCON5		1000
+
+/mob/living
+	var/static/mobsInNullSpace = 0
 
 /mob/living/New()
 	. = ..()
+	if(isnull(get_turf(loc)))
+		mobsInNullSpace++
+		if(mobsInNullSpace == DEFCON1)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 1.")
+		if(mobsInNullSpace == DEFCON2)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 2.")
+		if(mobsInNullSpace == DEFCON3)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 3.")
+		if(mobsInNullSpace == DEFCON4)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 4.")
+		if(mobsInNullSpace == DEFCON5)
+			message_admins("Alert! There are currently over [mobsInNullSpace] mobs that spawned in nullspace. This is DEFCON 5. It is strongly recommended that the server before forced to restart.")
+		stack_trace("Mob being instantiated in nullspace.")
+		del(src) //There are 1000 kittens in nullspace, let's not clog up the GC with them.
 	generateStaticOverlay()
 	if(staticOverlays.len)
 		for(var/mob/living/simple_animal/drone/D in player_list)
