@@ -4,7 +4,7 @@
 	id = "thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
-	color = rgb(85,0,0)
+	color = "#550000"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
@@ -32,14 +32,14 @@
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
-	color = rgb(255,255,0)
+	color = "#FFFF00"
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
-	color = rgb(255,200,200)
+	color = "#FFC8C8"
 	metabolization_rate = 4
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
@@ -80,21 +80,21 @@
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
-	color = rgb(90,100,200)
+	color = "#5A64C8"
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
-	color = rgb(33,0,33)
+	color = "#210021"
 
 /datum/reagent/blackpowder
 	name = "Black Powder"
 	id = "blackpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
-	color = rgb(0,0,0)
+	color = "#000000"
 	metabolization_rate = 0.05
 
 /datum/reagent/blackpowder/on_ex_act()
@@ -109,28 +109,28 @@
 	id = "flash_powder"
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
-	color = rgb(200,200,200)
+	color = "#C8C8C8"
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
-	color = rgb(200,200,200)
+	color = "#C8C8C8"
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
-	color = rgb(200,200,200)
+	color = "#C8C8C8"
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
-	color = rgb(250,0,175)
+	color = "#FA00AF"
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.IgniteMob()
@@ -148,7 +148,7 @@
 	id = "napalm"
 	description = "Very flammable."
 	reagent_state = LIQUID
-	color = rgb(250,0,175)
+	color = "#FA00AF"
 
 /datum/reagent/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
@@ -163,7 +163,7 @@
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
-	color = rgb(0,0,220)
+	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 
@@ -189,7 +189,7 @@
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
-	color = rgb(100,250,200)
+	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/M)
