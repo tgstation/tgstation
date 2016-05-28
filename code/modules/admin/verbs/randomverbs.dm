@@ -388,7 +388,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					ninja_spawn += L
 			new_character.equip_space_ninja()
 			new_character.internal = new_character.s_store
-			new_character.update_internals_hud_icon(1)
 			if(ninja_spawn.len)
 				var/obj/effect/landmark/ninja_spawn_here = pick(ninja_spawn)
 				new_character.loc = ninja_spawn_here.loc

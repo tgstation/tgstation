@@ -148,7 +148,6 @@ Contents:
 		N.randomize_param()
 
 	Ninja.internal = Ninja.s_store
-	Ninja.update_internals_hud_icon(1)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
 		throw EXCEPTION("Ninja created with incorrect mind")

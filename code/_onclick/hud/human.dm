@@ -246,9 +246,6 @@
 	throw_icon.screen_loc = ui_drop_throw
 	hotkeybuttons += throw_icon
 
-	internals = new /obj/screen/internals()
-	infodisplay += internals
-
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 

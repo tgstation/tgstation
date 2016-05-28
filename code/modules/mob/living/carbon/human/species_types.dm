@@ -495,7 +495,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.r_hand
-	H.update_internals_hud_icon(1)
 	return 0
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
