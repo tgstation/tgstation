@@ -317,8 +317,6 @@
 			var/update = 0
 			switch(M.damtype)
 				if("brute")
-					if(M.force > 20)
-						Paralyse(1)
 					update |= temp.take_damage(rand(M.force/2, M.force), 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 				if("fire")
