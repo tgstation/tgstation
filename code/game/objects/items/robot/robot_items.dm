@@ -312,8 +312,8 @@
 					if(S.check_ear_prot())
 						earsafety = 1
 				if(earsafety)
-					M.confused += 10
-					M.stuttering += 15
+					M.confused += 5
+					M.stuttering += 10
 					M.adjustEarDamage(0, 5)
 					M.Jitter(10)
 					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
@@ -321,8 +321,8 @@
 						"<span class='danger'>You hear a sonic screech and suddenly can't seem to walk straight!")
 				else
 					M.Weaken(2)
-					M.confused += 20
-					M.stuttering += 30
+					M.confused += 10
+					M.stuttering += 15
 					M.adjustEarDamage(0, 20)
 					M.Jitter(25)
 					user.visible_message("<font color='red' size='3'>[user] blares out a sonic screech from its speakers!</font>", \
