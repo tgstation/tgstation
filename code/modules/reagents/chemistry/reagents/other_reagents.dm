@@ -368,6 +368,12 @@
 	..()
 	return
 
+/datum/reagent/scub
+	name = "Scub"
+	id = "scub"
+	description = "A highly controversial cream, its purpose lost in argument."
+	color = "#FFE4B5" //moccasin
+
 /datum/reagent/slimetoxin
 	name = "Mutation Toxin"
 	id = "mutationtoxin"

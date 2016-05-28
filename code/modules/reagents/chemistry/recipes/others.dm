@@ -27,6 +27,12 @@
 	required_reagents = list("orangejuice" = 1, "cornoil" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/scub
+	name = "Scub"
+	id = "scub"
+	required_reagents = list("spraytan" = 1, "liquidgibs" = 1)
+	result_amont = 2
+
 /datum/chemical_reaction/impedrezene
 	name = "Impedrezene"
 	id = "impedrezene"
