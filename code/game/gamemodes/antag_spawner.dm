@@ -218,6 +218,33 @@
 	R.mind.special_role = "syndicate"
 	R.faction = list("syndicate")
 
+/mob/living/silicon/robot/syndicate/verb/syndi_self_destruct() //Used by Syndicate cyborgs to prevent them from falling into enemy hands.
+	set category = "Robot Commands"
+	set name = "Self-Destruct"
+	set desc = "Terminate your own existence by detonating your exoskeleton."
+
+	if(!isrobot(usr))
+		return 0
+	var/mob/living/silicon/robot/user = usr
+	var/confirmation = alert(user,"Initiate self-destruct sequence? This will permanently destroy you!",,"Yes","No")
+	switch(confirmation)
+		if("No")
+			return 0
+		if("Yes")
+			user << "<span class='danger'>Initiating detonation sequence...</span>"
+	user.audible_message("<span class='warning'>[user] begins beeping ominously!</span>")
+	message_admins("[src] ([src.key]) initiated self-destruct as a Syndicate cyborg ([x],[y],[z])",1)
+	for(var/i = 0, i < 3, i++)
+		playsound(user, 'sound/items/timer.ogg', 50, 0)
+		sleep(10)
+	user.visible_message("<span class='warning'>[user] violently explodes!</span>", "<span class='boldannounce'>Self-destruct sequence complete.</span>")
+	user.ghostize()
+	qdel(user.mmi)
+	var/turf/T = get_turf(user)
+	user.gib()
+	explosion(T, 0, 0, 2)
+	feedback_add_details("admin_verb","SD")
+
 
 
 ///////////SLAUGHTER DEMON
