@@ -74,7 +74,7 @@
 	name = "Synaptizine"
 	id = "synaptizine"
 	description = "Increases resistance to stuns as well as reducing drowsiness and hallucinations."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = rgb(255,0,255)
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
@@ -121,7 +121,7 @@
 	name = "Cryoxadone"
 	id = "cryoxadone"
 	description = "A chemical mixture with almost magical healing powers. Its main limitation is that the patient's body temperature must be under 270K for it to metabolise correctly."
-	color = "#0000C8"
+	color = rgb(0,0,200)
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
@@ -654,7 +654,7 @@
 	id = "atropine"
 	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = rgb(0,0,0)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 
@@ -683,7 +683,7 @@
 	id = "epinephrine"
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = rgb(210,255,250)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
@@ -719,7 +719,7 @@
 	id = "strange_reagent"
 	description = "A miracle drug capable of bringing the dead back to life. Only functions if the target has less than 100 brute and burn damage (independent of one another), and causes slight damage to the living."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = rgb(160,232,94)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
@@ -753,7 +753,7 @@
 	name = "Mannitol"
 	id = "mannitol"
 	description = "Efficiently restores brain damage."
-	color = "#C8A5DC"
+	color = rgb(220,220,255)
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-3*REM)
@@ -763,7 +763,7 @@
 	name = "Mutadone"
 	id = "mutadone"
 	description = "Removes jitteriness and restores genetic defects."
-	color = "#C8A5DC"
+	color = rgb(80,150,200)
 
 /datum/reagent/medicine/mutadone/on_mob_life(mob/living/carbon/human/M)
 	M.jitteriness = 0
@@ -775,7 +775,7 @@
 	name = "Antihol"
 	id = "antihol"
 	description = "Purges alcoholic substance from the patient's body and eliminates its side effects."
-	color = "#C8A5DC"
+	color = rgb(0,180,200)
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/M)
 	M.dizziness = 0
@@ -794,7 +794,7 @@
 	name = "Stimulants"
 	id = "stimulants"
 	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Overdose causes weakness and toxin damage."
-	color = "#C8A5DC"
+	color = rgb(120,0,140)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 
@@ -823,8 +823,8 @@
 /datum/reagent/medicine/stimulants/longterm
 	name = "Stimulants"
 	id = "stimulants_longterm"
-	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Higly addictive."
-	color = "#00ff00"
+	description = "Increases stun resistance and movement speed in addition to restoring minor damage and weakness. Highly addictive."
+	color = rgb(120,0,140)
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 0
 	addiction_threshold = 5
@@ -863,7 +863,7 @@
 	id = "insulin"
 	description = "Increases sugar depletion rates."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = rgb(255,255,240)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/insulin/on_mob_life(mob/living/M)

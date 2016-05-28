@@ -25,7 +25,7 @@
 	name = "Unstable mutagen"
 	id = "mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
-	color = "#13BC5E" // rgb: 19, 188, 94
+	color = rgb(0,255,0)
 	toxpwr = 0
 
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
@@ -85,7 +85,7 @@
 	name = "Lexorin"
 	id = "lexorin"
 	description = "A powerful poison used to stop respiration."
-	color = "#C8A5DC" // rgb: 200, 165, 220
+	color = rgb(125,195,160)
 	toxpwr = 0
 
 /datum/reagent/toxin/lexorin/on_mob_life(mob/living/M)
@@ -343,7 +343,7 @@
 	id = "polonium"
 	description = "An extremely radioactive material in liquid form. Ingestion results in fatal irradiation."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(120,120,120)
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -356,7 +356,7 @@
 	id = "histamine"
 	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(250,100,100)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 	toxpwr = 0
@@ -390,7 +390,7 @@
 	id = "formaldehyde"
 	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine.."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(180,0,75)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 1
 
@@ -406,7 +406,7 @@
 	id = "venom"
 	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin damage and bruising depending and dosage. Often decays into Histamine."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(240,255,240)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -425,7 +425,7 @@
 	id = "neurotoxin2"
 	description = "Neurotoxin will inhibit brain function and cause toxin damage before eventually knocking out its victim."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(100,145,110)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -444,7 +444,7 @@
 	id = "cyanide"
 	description = "An infamous poison known for its use in assassination. Causes small amounts of toxin damage with a small chance of oxygen damage or a stun."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(0,180,255)
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1.25
 
@@ -462,7 +462,7 @@
 	id = "????"
 	description = "????"
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = "#d6d6d8"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
@@ -471,7 +471,7 @@
 	id = "itching_powder"
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(200,200,200)
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -503,7 +503,7 @@
 	id = "initropidril"
 	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(127,16,192)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 2.5
 
@@ -537,7 +537,7 @@
 	id = "pancuronium"
 	description = "An undetectable toxin that swiftly incapacitates its victim. May also cause breathing failure."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(45,80,150)
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -554,7 +554,7 @@
 	id = "sodium_thiopental"
 	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(100,150,250)
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	toxpwr = 0
 
@@ -570,7 +570,7 @@
 	id = "sulfonal"
 	description = "A stealthy poison that deals minor toxin damage and eventually puts the target to sleep."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(125,195,160)
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
@@ -584,7 +584,7 @@
 	id = "amanitin"
 	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(255,255,255)
 	toxpwr = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
@@ -597,7 +597,7 @@
 	id = "lipolicide"
 	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. More deadly to those without nutriment in their body."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(240,255,240)
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0.5
 
@@ -613,7 +613,7 @@
 	id = "coniine"
 	description = "Coniine metabolizes extremely slowly, but deals high amounts of toxin damage and stops breathing."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(125,195,160)
 	metabolization_rate = 0.06 * REAGENTS_METABOLISM
 	toxpwr = 1.75
 
@@ -626,7 +626,7 @@
 	id = "curare"
 	description = "Causes slight toxin damage followed by chain-stunning and oxygen damage."
 	reagent_state = LIQUID
-	color = "#CF3600"
+	color = rgb(25,25,25)
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	toxpwr = 1
 
@@ -680,7 +680,7 @@
 	name = "Sulphuric acid"
 	id = "sacid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
-	color = "#DB5008" // rgb: 219, 80, 8
+	color = rgb(0,255,50)
 	toxpwr = 1
 	var/acidpwr = 10 //the amount of protection removed from the armour
 
@@ -713,7 +713,7 @@
 	name = "Fluorosulfuric acid"
 	id = "facid"
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
-	color = "#8E18A9" // rgb: 142, 24, 169
+	color = rgn(80,80,255)
 	toxpwr = 2
 	acidpwr = 42.0
 
