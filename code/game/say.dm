@@ -32,6 +32,7 @@ var/list/freqtospan = list(
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
 	var/rendered = compose_message(src, languages, message, , spans)
+	rendered = emoji_parse(rendered)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, languages, message, , spans)
 
