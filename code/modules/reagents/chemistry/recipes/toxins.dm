@@ -110,3 +110,12 @@
 	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
 	result_amount = 4
 	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
+
+/datum/chemical_reaction/poison
+	name = "poison"
+	id = "Poison"
+	result = "poison"
+	required_reagents = list("ethanol" = 1, "welding_fuel" = 1, "chlorine" = 1)
+	result_amount = 2
+	required_temp = 200
+	mix_message = "<span class='danger'>The mixture reeks of death.</span>""
