@@ -85,7 +85,7 @@
 		qdel(src)
 		singulo.process()
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
 	if (prob(src.reliability)) return 1 //No failure
@@ -128,6 +128,12 @@
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 	item_state = "clownpack"
+
+/obj/item/weapon/storage/backpack/explorer
+	name = "explorer bag"
+	desc = "A robust backpack for stashing your loot."
+	icon_state = "explorerpack"
+	item_state = "explorerpack"
 
 /obj/item/weapon/storage/backpack/mime
 	name = "Parcel Parceaux"
@@ -260,6 +266,12 @@
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
+	item_state = "securitypack"
+
+/obj/item/weapon/storage/backpack/satchel_explorer
+	name = "explorer satchel"
+	desc = "A robust satchel for stashing your loot."
+	icon_state = "satchel-explorer"
 	item_state = "securitypack"
 
 /obj/item/weapon/storage/backpack/satchel_cap

@@ -16,10 +16,15 @@
 
 	start_up_overlay = "lava"
 	duration_overlay = "lava"
-	overlay_layer = 2 //Covers floors only
+	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
+
+	immunity_type = "lava"
 
 
 /datum/weather/floor_is_lava/storm_act(mob/living/L)
+	if(immunity_type in L.weather_immunities)
+		return
+
 	var/turf/F = get_turf(L)
 	for(var/obj/structure/O in F.contents)
 		if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
@@ -45,7 +50,7 @@
 
 	start_up_overlay = ""
 	duration_overlay = ""
-	overlay_layer = 10
+	overlay_layer = AREA_LAYER
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/area/A in impacted_areas)
@@ -75,7 +80,9 @@
 
 	start_up_overlay = "light_ash"
 	duration_overlay = "ash_storm"
-	overlay_layer = 10
+	overlay_layer = AREA_LAYER
+
+	immunity_type = "ash"
 
 
 /datum/weather/ash_storm/false_alarm //No storm, just light ember fall
@@ -85,8 +92,9 @@
 	wind_down_message = "The ash fall starts to trail off."
 
 /datum/weather/ash_storm/storm_act(mob/living/L)
-	if("mining" in L.faction)
+	if(immunity_type in L.weather_immunities)
 		return
+
 	if(istype(L.loc, /obj/mecha))
 		return
 	if(ishuman(L))

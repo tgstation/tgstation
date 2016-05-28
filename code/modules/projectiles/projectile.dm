@@ -11,6 +11,7 @@
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 	pressure_resistance = INFINITY
+	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
 	var/obj/item/ammo_casing/ammo_casing = null

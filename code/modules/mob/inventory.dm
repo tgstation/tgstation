@@ -29,10 +29,10 @@
 	if(!l_hand)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
+		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.equipped(src,slot_l_hand)
-		if(pulling == W)
-			stop_pulling()
+		if(W.pulledby)
+			W.pulledby.stop_pulling()
 		update_inv_l_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
@@ -47,10 +47,10 @@
 	if(!r_hand)
 		W.loc = src
 		r_hand = W
-		W.layer = 20
+		W.layer = ABOVE_HUD_LAYER
 		W.equipped(src,slot_r_hand)
-		if(pulling == W)
-			stop_pulling()
+		if(W.pulledby)
+			W.pulledby.stop_pulling()
 		update_inv_r_hand()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)

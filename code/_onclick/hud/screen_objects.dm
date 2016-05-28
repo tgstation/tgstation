@@ -9,7 +9,7 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen_gen.dmi'
-	layer = 20
+	layer = ABOVE_HUD_LAYER
 	unacidable = 1
 	appearance_flags = APPEARANCE_UI
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
@@ -29,7 +29,7 @@
 	maptext_width = 480
 
 /obj/screen/swap_hand
-	layer = 19
+	layer = HUD_LAYER
 	name = "swap hand"
 
 /obj/screen/swap_hand/Click()
@@ -60,7 +60,7 @@
 	var/slot_id	// The indentifier for the slot. It has nothing to do with ID cards.
 	var/icon_empty // Icon when empty. For now used only by humans.
 	var/icon_full  // Icon when contains an item. For now used only by humans.
-	layer = 19
+	layer = HUD_LAYER
 
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -154,24 +154,10 @@
 	name = "drop"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_drop"
-	layer = 19
+	layer = HUD_LAYER
 
 /obj/screen/drop/Click()
 	usr.drop_item_v()
-
-/obj/screen/grab
-	name = "grab"
-
-/obj/screen/grab/Click()
-	var/obj/item/weapon/grab/G = master
-	G.s_click(src)
-	return 1
-
-/obj/screen/grab/attack_hand()
-	return
-
-/obj/screen/grab/attackby()
-	return
 
 /obj/screen/act_intent
 	name = "intent"
@@ -303,7 +289,7 @@
 	name = "resist"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "act_resist"
-	layer = 19
+	layer = HUD_LAYER
 
 /obj/screen/resist/Click()
 	if(isliving(usr))
@@ -417,7 +403,7 @@
 	icon_state = "blank"
 	blend_mode = BLEND_ADD
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	layer = 17
+	layer = FLASH_LAYER
 
 /obj/screen/damageoverlay
 	icon = 'icons/mob/screen_full.dmi'
@@ -426,7 +412,7 @@
 	blend_mode = BLEND_MULTIPLY
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = 0
-	layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+	layer = DAMAGE_LAYER
 
 /obj/screen/healths
 	name = "health"

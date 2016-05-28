@@ -15,7 +15,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	anchored = 1
 	density = 1
 	verb_say = "beeps"
@@ -84,7 +84,8 @@
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
 							/obj/machinery/vending/cola = "Robust Softdrinks",
 							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
-							/obj/machinery/vending/autodrobe = "AutoDrobe")
+							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/clothing = "ClothesMate")
 
 /obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))

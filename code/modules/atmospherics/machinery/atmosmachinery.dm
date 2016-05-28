@@ -15,6 +15,7 @@ Pipelines + Other Objects -> Pipe network
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
+	layer = GAS_PIPE_LAYER //under wires
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0

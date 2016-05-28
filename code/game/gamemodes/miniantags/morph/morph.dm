@@ -144,14 +144,18 @@
 		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
 						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
 		restore()
+	barf_contents()
 	..()
 
-/mob/living/simple_animal/hostile/morph/Destroy()
+/mob/living/simple_animal/hostile/morph/proc/barf_contents()
 	for(var/atom/movable/AM in src)
 		AM.loc = loc
 		if(prob(90))
 			step(AM, pick(alldirs))
-	return ..()
+
+/mob/living/simple_animal/hostile/morph/wabbajack_act(mob/living/new_mob)
+	barf_contents()
+	. = ..()
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()

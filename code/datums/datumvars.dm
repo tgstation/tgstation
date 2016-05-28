@@ -927,7 +927,7 @@ body
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna.species.id == "human")
+			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
 					H << "Something is nya~t right."

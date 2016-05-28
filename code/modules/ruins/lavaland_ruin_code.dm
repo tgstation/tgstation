@@ -30,8 +30,11 @@
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
 
-/obj/structure/lavaland_door/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/structure/lavaland_door/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/machinery/lavaland_controller
 	name = "weather control machine"
@@ -50,8 +53,11 @@
 	LAVA.weather_start_up()
 	ongoing_weather = null
 
-/obj/machinery/lavaland_controller/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/machinery/lavaland_controller/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
@@ -223,7 +229,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard
+	mob_species = /datum/species/lizard/ashwalker
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
@@ -237,8 +243,6 @@
 	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
-		H.dna.species.specflags |= NOBREATH
-		H.dna.species.specflags |= NOGUNS
 		H.underwear = "Nude"
 		H.update_body()
 

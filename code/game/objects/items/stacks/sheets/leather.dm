@@ -155,7 +155,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	singular_name = "hide plate"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -165,7 +165,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 	singular_name = "drake plate"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 
 
 //Step one - dehairing.

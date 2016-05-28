@@ -295,7 +295,7 @@
 		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
-		new /datum/data/mining_equipment("Explorer Belt",		/obj/item/weapon/storage/belt/mining,									500),
+		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600),
@@ -429,11 +429,11 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer Belt", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator", "Mining Drone", "Advanced Scanner")
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
-		if("Survival Capsule and Explorer Belt")
+		if("Survival Capsule and Explorer's Webbing")
 			new /obj/item/weapon/storage/belt/mining(src.loc)
 			new /obj/item/weapon/survivalcapsule(src.loc)
 		if("Resonator")
@@ -649,7 +649,7 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
-	layer = 4.1
+	layer = ABOVE_ALL_MOB_LAYER
 	mouse_opacity = 0
 	var/resonance_damage = 20
 
@@ -1035,7 +1035,7 @@
 				var/client/C = user.client
 				for(var/turf/closed/mineral/M in minerals)
 					var/turf/F = get_turf(M)
-					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = 18)
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
 					C.images += I
 					spawn(30)
 						if(C)
@@ -1053,7 +1053,7 @@
 			C.icon_state = M.scan_state
 
 /obj/effect/overlay/temp/mining_overlay
-	layer = 20
+	layer = FLASH_LAYER
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
 	mouse_opacity = 0

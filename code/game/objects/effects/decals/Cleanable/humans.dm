@@ -3,7 +3,7 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -38,7 +38,7 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()
@@ -53,7 +53,7 @@
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")

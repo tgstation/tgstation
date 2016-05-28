@@ -53,85 +53,60 @@
 	},
 /area/ruin/powered)
 "l" = (
-/obj/structure/bodycontainer/morgue{
-	desc = "An oddly modernized tomb, at least compared to where it currently is.";
-	name = "tomb"
-	},
-/obj/effect/mob_spawn/human/skeleton,
-/obj/item/weapon/shovel/cursed,
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"m" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/transparent/diamond,
 /turf/open/floor/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"n" = (
+"m" = (
 /obj/item/weapon/ore/diamond,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"o" = (
+"n" = (
 /turf/open/floor/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"p" = (
+"o" = (
 /obj/item/weapon/ore/gold,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"q" = (
+"p" = (
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/ruin/powered)
-"r" = (
-/obj/structure/bodycontainer/morgue{
-	desc = "An oddly modernized tomb, at least compared to where it currently is.";
-	name = "tomb"
-	},
-/obj/effect/mob_spawn/human/skeleton{
-	helmet = /obj/item/clothing/head/helmet/stahlhelm;
-	name = "german remains";
-	uniform = /obj/item/clothing/under/wwii
-	},
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"s" = (
+"q" = (
 /obj/structure/table,
 /obj/item/weapon/tome,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"t" = (
+"r" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/silver,
 /turf/open/floor/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"u" = (
+"s" = (
 /obj/item/weapon/ore/bananium,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"v" = (
+"t" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/gold,
 /turf/open/floor/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"w" = (
+"u" = (
 /obj/structure/table/optable/abductor{
 	desc = "A strange, alien-like table for cutting up things, like people.";
 	name = "strange alien slab"
@@ -144,14 +119,14 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"x" = (
+"v" = (
 /obj/structure/table,
 /obj/item/weapon/spellbook/oneuse/charge,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"y" = (
+"w" = (
 /obj/structure/bodycontainer/morgue{
 	desc = "An oddly modernized tomb, at least compared to where it currently is.";
 	name = "tomb"
@@ -165,26 +140,26 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"z" = (
+"x" = (
 /obj/item/weapon/ore/uranium,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"A" = (
+"y" = (
 /obj/item/weapon/ore/plasma,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"B" = (
+"z" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/iron,
 /turf/open/floor/vault{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"C" = (
+"A" = (
 /obj/structure/table,
 /obj/item/weapon/twohanded/spear,
 /obj/item/weapon/shield/riot/buckler,
@@ -192,7 +167,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"D" = (
+"B" = (
 /obj/item/weapon/grown/bananapeel,
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plasteel/black{
@@ -324,8 +299,8 @@ h
 j
 k
 j
-x
-y
+v
+w
 g
 b
 b
@@ -375,9 +350,9 @@ g
 g
 g
 g
-t
+r
 g
-t
+r
 g
 g
 g
@@ -399,15 +374,15 @@ g
 g
 g
 g
+m
 n
-o
-o
-o
+n
+n
 i
-o
-o
-o
-z
+n
+n
+n
+x
 g
 g
 b
@@ -426,15 +401,15 @@ h
 i
 j
 g
-o
 n
-o
-o
+m
+n
+n
 i
-o
-o
-z
-o
+n
+n
+x
+n
 g
 g
 g
@@ -453,19 +428,19 @@ i
 k
 i
 g
-o
+n
 i
-q
-q
+p
+p
 i
-q
-q
+p
+p
 i
-o
+n
 g
-C
-C
-C
+A
+A
+A
 g
 b
 b
@@ -480,15 +455,15 @@ i
 i
 i
 g
-o
-q
+n
+p
 i
-q
+p
 i
-q
+p
 i
-q
-o
+p
+n
 g
 i
 i
@@ -506,21 +481,21 @@ g
 j
 i
 i
-m
-o
-q
-q
-o
-u
-o
-q
-q
-o
-B
+l
+n
+p
+p
+n
+s
+n
+p
+p
+n
+z
 i
 j
 i
-D
+B
 b
 b
 "}
@@ -531,15 +506,15 @@ b
 b
 g
 i
-l
+k
 i
 g
 i
 i
 i
+s
 u
-w
-u
+s
 i
 i
 i
@@ -560,21 +535,21 @@ g
 j
 i
 i
-m
-o
-q
-q
-o
-u
-o
-q
-q
-o
-B
+l
+n
+p
+p
+n
+s
+n
+p
+p
+n
+z
 i
 j
 i
-D
+B
 b
 b
 "}
@@ -588,15 +563,15 @@ i
 i
 i
 g
-o
-q
+n
+p
 i
-q
+p
 i
-q
+p
 i
-q
-o
+p
+n
 g
 i
 i
@@ -615,19 +590,19 @@ i
 k
 i
 g
-o
+n
 i
-q
-q
+p
+p
 i
-q
-q
+p
+p
 i
-o
+n
 g
-C
-C
-C
+A
+A
+A
 g
 b
 b
@@ -642,15 +617,15 @@ h
 i
 j
 g
+n
 o
-p
-o
-o
+n
+n
 i
-o
-o
-A
-o
+n
+n
+y
+n
 g
 g
 g
@@ -669,15 +644,15 @@ g
 g
 g
 g
-p
 o
-o
-o
+n
+n
+n
 i
-o
-o
-o
-A
+n
+n
+n
+y
 g
 g
 b
@@ -699,9 +674,9 @@ g
 g
 g
 g
-v
+t
 g
-v
+t
 g
 g
 g
@@ -724,8 +699,8 @@ e
 d
 g
 g
-r
-s
+k
+q
 i
 k
 i

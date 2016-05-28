@@ -318,11 +318,11 @@
 			dat += "Current Game Mode: <B>[ticker.mode.name]</B><BR>"
 		dat += "Round Duration: <B>[round(world.time / 36000)]:[add_zero("[world.time / 600 % 60]", 2)]:[world.time / 100 % 6][world.time / 100 % 10]</B><BR>"
 		dat += "<B>Emergency shuttle</B><BR>"
-		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
+		if(EMERGENCY_IDLE_OR_RECALLED)
 			dat += "<a href='?_src_=holder;call_shuttle=1'>Call Shuttle</a><br>"
 		else
 			var/timeleft = SSshuttle.emergency.timeLeft()
-			if(SSshuttle.emergency.mode < SHUTTLE_DOCKED)
+			if(SSshuttle.emergency.mode == SHUTTLE_CALL)
 				dat += "ETA: <a href='?_src_=holder;edit_shuttle_time=1'>[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</a><BR>"
 				dat += "<a href='?_src_=holder;call_shuttle=2'>Send Back</a><br>"
 			else
@@ -461,6 +461,16 @@
 		if(ticker.mode.cult.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Cultists</B></td><td></td></tr>"
 			for(var/datum/mind/N in ticker.mode.cult)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+			dat += "</table>"
+
+		if(ticker.mode.servants_of_ratvar.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Servants of Ratvar</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.servants_of_ratvar)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

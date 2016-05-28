@@ -65,10 +65,21 @@
 	w_class = 5
 	var/obj/item/weapon/gun/projectile/minigun/gun = null
 	var/armed = 0 //whether the gun is attached, 0 is attached, 1 is the gun is wielded.
+	var/overheat = 0
+	var/overheat_max = 40
+	var/heat_diffusion = 1
 
 /obj/item/weapon/minigunpack/New()
 	gun = new(src)
+	SSobj.processing += src
 	..()
+
+/obj/item/weapon/minigunpack/Destroy()
+	SSobj.processing -= src
+	..()
+
+/obj/item/weapon/minigunpack/process()
+	overheat = max(0, overheat - heat_diffusion)
 
 /obj/item/weapon/minigunpack/attack_hand(var/mob/living/carbon/user)
 	if(src.loc == user)
@@ -166,6 +177,14 @@
 		ammo_pack.attach_gun(user)
 	else
 		qdel(src)
+
+/obj/item/weapon/gun/projectile/minigun/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
+	if(ammo_pack)
+		if(ammo_pack.overheat < ammo_pack.overheat_max)
+			. = ..()
+			ammo_pack.overheat++
+		else
+			user << "The gun's heat sensor locked the trigger to prevent lens damage."
 
 /obj/item/weapon/gun/projectile/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
