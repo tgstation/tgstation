@@ -44,8 +44,6 @@
 		M.Weaken(10)
 	if(!ear_safety)
 		M << sound('sound/weapons/flash_ring.ogg',0,1,0,100)
-		M.Stun(max(10/distance, 3))
-		M.Weaken(max(10/distance, 3))
 		M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))
 		if (M.ear_damage >= 15)
 			M << "<span class='warning'>Your ears start to ring badly!</span>"
