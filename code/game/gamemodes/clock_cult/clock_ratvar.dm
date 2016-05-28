@@ -3,6 +3,14 @@
 	desc = "A very large construction."
 	layer = 10
 
+/obj/structure/clockwork/massive/New()
+	..()
+	poi_list += src
+
+/obj/structure/clockwork/massive/Destroy()
+	poi_list -= src
+	..()
+
 /obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"
 	desc = "A massive, thrumming rip in spacetime."
