@@ -2,6 +2,20 @@
 	name = "glasses"
 	materials = list(MAT_GLASS = 250)
 
+/obj/item/clothing/glasses/dropped(mob/user)
+	remove_tint(user)
+
+/obj/item/clothing/glasses/equipped(mob/user, slot)
+	if(slot != slot_glasses)
+		remove_tint(user)
+	else
+		if(user.client && !user.client.color)
+			user.client.color = color_tint
+
+/obj/item/clothing/glasses/proc/remove_tint(mob/user)
+	if(user.client)
+		user.client.color = null
+
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -30,6 +44,7 @@
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
 	darkness_view = 8
+	color_tint = "#49E20E"
 
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
@@ -64,6 +79,7 @@
 	origin_tech = "magnets=4"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
+	color_tint = "#49E20E"
 
 /obj/item/clothing/glasses/eyepatch
 	name = "eyepatch"
