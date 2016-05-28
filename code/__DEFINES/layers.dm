@@ -47,7 +47,7 @@
 //HUD layer defines
 #define FLASH_LAYER 17.9
 #define FULLSCREEN_LAYER 18
-#define DAMAGE_LAYER 18.1
+#define UI_DAMAGE_LAYER 18.1
 #define BLIND_LAYER 18.2
 #define CRIT_LAYER 18.3
 #define HUD_LAYER 19
