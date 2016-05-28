@@ -22,9 +22,12 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
 
 	//Species

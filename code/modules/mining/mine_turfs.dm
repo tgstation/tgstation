@@ -584,6 +584,8 @@
 			visible_message("[H] falls into [src]!")
 			J.chasm_react(H)
 			return
+		if(H.dna.species && (FLYING in H.dna.species.specflags))
+			return
 	drop(AM)
 
 

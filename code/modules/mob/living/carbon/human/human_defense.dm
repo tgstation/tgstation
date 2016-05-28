@@ -375,3 +375,7 @@
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
 	..()
+
+/mob/living/carbon/human/Stun(amount, updating_canmove = 1)
+	amount = dna.species.spec_stun(src,amount)
+	..()
