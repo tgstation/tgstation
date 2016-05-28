@@ -72,6 +72,8 @@
 			Weaken(3)
 	if(override)
 		return override
+	else if(shock_damage >= 2 * (maxHealth - config.health_threshold_dead))
+		dust()
 	else
 		return shock_damage
 
