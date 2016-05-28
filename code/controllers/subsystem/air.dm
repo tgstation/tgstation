@@ -9,12 +9,11 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air
 	name = "Air"
-	priority = -1
+	init_order = -1
+	priority = 25
 	wait = 5
-	dynamic_wait = 1
-	dwait_upper = 300
-	dwait_delta = 7
-	display = 1
+	flags = SS_BACKGROUND
+	display_order = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -66,7 +65,7 @@ var/datum/subsystem/air/SSair
 	setup_pipenets(zlevel)
 	..()
 
-#define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
+
 /datum/subsystem/air/fire(resumed = 0)
 	var/timer = world.timeofday
 
@@ -132,7 +131,6 @@ var/datum/subsystem/air/SSair
 		resumed = 0
 	currentpart = SSAIR_PIPENETS
 
-#undef MC_AVERAGE
 
 
 /datum/subsystem/air/proc/process_pipenets(resumed = 0)

@@ -2,8 +2,8 @@ var/datum/subsystem/minimap/SSminimap
 
 /datum/subsystem/minimap
 	name = "Minimap"
-	priority = -2
-
+	init_order = -2
+	flags = SS_NO_FIRE
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 

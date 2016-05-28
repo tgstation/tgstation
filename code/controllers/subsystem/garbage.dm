@@ -2,15 +2,10 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 /datum/subsystem/garbage_collector
 	name = "Garbage"
-	priority = -1
+	priority = 15
 	wait = 5
-	dynamic_wait = 1
-	dwait_upper = 50
-	dwait_delta = 10
-	dwait_buffer = 0
-	display = 2
-
-	can_fire = 1 // This needs to fire before round start.
+	display_order = 2
+	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 
 	var/collection_timeout = 300// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
 	var/delslasttick = 0		// number of del()'s we've done this tick

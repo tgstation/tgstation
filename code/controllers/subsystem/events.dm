@@ -2,7 +2,7 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events
 	name = "Events"
-	priority = 6
+	init_order = 6
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event

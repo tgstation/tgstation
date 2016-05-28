@@ -7,7 +7,8 @@ var/datum/subsystem/objects/SSobj
 
 /datum/subsystem/objects
 	name = "Objects"
-	priority = 12
+	init_order = 12
+	priority = 40
 
 	var/list/atom_spawners = list()
 	var/list/processing = list()

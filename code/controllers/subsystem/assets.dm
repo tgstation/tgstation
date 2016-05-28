@@ -2,8 +2,8 @@ var/datum/subsystem/assets/SSasset
 
 /datum/subsystem/assets
 	name = "Assets"
-	priority = -3
-
+	init_order = -3
+	flags = SS_NO_FIRE
 	var/list/cache = list()
 
 /datum/subsystem/assets/New()

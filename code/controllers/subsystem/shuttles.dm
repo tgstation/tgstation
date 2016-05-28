@@ -3,7 +3,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
-	priority = 3
+	init_order = 3
+	flags = SS_KEEP_TIMING
 
 	var/list/mobile = list()
 	var/list/stationary = list()

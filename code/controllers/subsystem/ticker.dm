@@ -4,9 +4,10 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	priority = 0
+	init_order = 0
 
-	can_fire = 1 // This needs to fire before round start.
+	priority = 200
+	flags = SS_FIRE_IN_LOBBY
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -493,3 +494,9 @@ var/datum/subsystem/ticker/ticker
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
 		maprotate()
+
+
+/world/proc/has_round_started()
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE

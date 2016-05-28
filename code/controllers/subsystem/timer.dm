@@ -1,18 +1,31 @@
-var/datum/subsystem/timer/SStimer
+var/datum/subsystem/timer/SStimer = new()
 
 /datum/subsystem/timer
 	name = "Timer"
-	wait = 5
-	priority = 1
-	display = 3
+	wait = 2 //SS_TICKER subsystem, so wait is in ticks
+	init_order = 1
+	display_order = 3
+	can_fire = 0 //start disabled
+	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_POST_FIRE_TIMING|SS_NO_INIT
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
 
+
 /datum/subsystem/timer/New()
-	NEW_SS_GLOBAL(SStimer)
+	//we created a temp one during world init so add_timer works that early, and now we are the real one
+	//	the temp one is extreamly dangerous, and could fire at any time, so we must deal with it
 	processing = list()
 	hashes = list()
+	if (SStimer)
+		processing |= SStimer.processing
+		hashes |= SStimer.hashes
+		SStimer.processing = list()
+		SStimer.hashes = list()
+		SStimer.can_fire = 0
+		qdel(SStimer)
+	NEW_SS_GLOBAL(SStimer)
+
 
 /datum/subsystem/timer/stat_entry(msg)
 	..("P:[processing.len]")
@@ -51,8 +64,6 @@ var/datum/subsystem/timer/SStimer
 	return QDEL_HINT_IWILLGC
 
 /proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
-	if (!SStimer) //can't run timers before the mc has been created
-		return
 	if (!thingToCall || !procToCall || wait <= 0)
 		return
 	if (!SStimer.can_fire)
@@ -63,6 +74,7 @@ var/datum/subsystem/timer/SStimer
 	event.thingToCall = thingToCall
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
+	args[1] = "[thingToCall](\ref[thingToCall])"
 	event.hash = jointext(args, null)
 	if(args.len > 4)
 		event.argList = args.Copy(5)

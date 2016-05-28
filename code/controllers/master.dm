@@ -1,19 +1,21 @@
  /**
-  * CarnMC
+  * StonedMC
   *
-  * Simplified MC; designed to fail fast and respawn.
-  * This ensures Master.process() never doubles up.
-  * It will kill itself and any sleeping procs if needed.
+  * Designed to properly split up a given tick among subsystems
+  * Note: if you read parts of this code and think "why is it doing it that way"
+  * Odds are, there is a reason
   *
-  * All core systems are subsystems.
-  * They are process()'d by this Master Controller.
  **/
-var/global/datum/controller/master/Master = new()
-
+var/datum/controller/master/Master = new()
+var/MC_restart_timeout = 0
+var/MC_restart_count = 0
+//current tick limit, assigned by the queue controller before running a subsystem.
+//used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
+var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 /datum/controller/master
 	name = "Master"
 
-	// are we processing (higher values increase the processing delay)
+	// Are we processing (higher values increase the processing delay)
 	var/processing = 1
 	// The iteration of the MC.
 	var/iteration = 0
@@ -23,15 +25,19 @@ var/global/datum/controller/master/Master = new()
 	var/list/subsystems = list()
 	// The cost of running the subsystems (in deciseconds).
 	var/subsystem_cost = 0
+
+	var/round_started = 0
 	// The type of the last subsystem to be process()'d.
 	var/last_type_processed
 
-	var/list/priority_queue = list() //any time we pause or skip a ss for tick reasons, we run it first next tick
+	var/datum/subsystem/queue_head //Start of queue linked list
+	var/datum/subsystem/queue_tail //End of queue linked list (used for appending to the list)
+	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	if(Master != src)
-		if(istype(Master))
+	if (Master != src)
+		if (istype(Master))
 			Recover()
 			qdel(Master)
 		else
@@ -43,27 +49,47 @@ var/global/datum/controller/master/Master = new()
 	// Tell qdel() to Del() this object.
 	return QDEL_HINT_HARDDEL_NOW
 
+//returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
+//	-1 if we encountered a runtime trying to recreate it
+/proc/Recreate_MC()
+	if (world.time > MC_restart_timeout)
+		return 0
+	. = -1 //so if we runtime, things know we failed
+	MC_restart_timeout = world.time + (50 * ++MC_restart_count)
+	Master.processing = -1 //stop ticking this one
+	try
+		new/datum/controller/master()
+	catch
+		return -1
+	return 1
+
+
 /datum/controller/master/proc/Recover()
 	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
-	for(var/varname in Master.vars)
-		switch(varname)
+	for (var/varname in Master.vars)
+		switch (varname)
 			if("name", "tag", "bestF", "type", "parent_type", "vars", "statclick") // Built-in junk.
 				continue
 			else
 				var/varval = Master.vars[varname]
-				if(istype(varval, /datum)) // Check if it has a type var.
+				if (istype(varval, /datum)) // Check if it has a type var.
 					var/datum/D = varval
-					msg += "\t [varname] = [D.type]\n"
+					msg += "\t [varname] = [D]([D.type])\n"
 				else
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
 
 	subsystems = Master.subsystems
+	spawn (10)
+		Master.startprocessing()
 
+
+//Please don't stuff random bullshit here,
+//make a subsystem, give it the NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/proc/Setup(zlevel)
 	// Per-Z-level subsystems.
-	if(zlevel && zlevel > 0 && zlevel <= world.maxz)
-		for(var/datum/subsystem/SS in subsystems)
+	if (zlevel && zlevel > 0 && zlevel <= world.maxz)
+		for (var/datum/subsystem/SS in subsystems)
 			SS.Initialize(world.timeofday, zlevel)
 			CHECK_TICK
 		return
@@ -73,7 +99,7 @@ var/global/datum/controller/master/Master = new()
 	var/obj/effect/spawner/lootdrop/maintenance/L = new()
 	// Grab it before it gets deleted
 	var/list/loot = L.loot.Copy()
-	for(var/item in loot)
+	for (var/item in loot)
 		tally += loot[item]
 	world.log << "There are [tally] items in the \
 		maintenance loot table."
@@ -84,7 +110,7 @@ var/global/datum/controller/master/Master = new()
 	// Generate mining.
 
 	var/mining_type = MINETYPE
-	if(mining_type == "lavaland")
+	if (mining_type == "lavaland")
 		seedRuins(5, config.lavaland_budget, \
 			/area/lavaland/surface/outdoors, lava_ruins_templates)
 		spawn_rivers()
@@ -99,11 +125,13 @@ var/global/datum/controller/master/Master = new()
 	// Set up Z-level transistions.
 	setup_map_transitions()
 
-	// Sort subsystems by priority, so they initialize in the correct order.
-	sortTim(subsystems, /proc/cmp_subsystem_priority)
+	// Sort subsystems by init_order, so they initialize in the correct order.
+	sortTim(subsystems, /proc/cmp_subsystem_init)
 
 	// Initialize subsystems.
-	for(var/datum/subsystem/SS in subsystems)
+	for (var/datum/subsystem/SS in subsystems)
+		if (SS.flags & SS_NO_INIT)
+			continue
 		SS.Initialize(world.timeofday, zlevel)
 		CHECK_TICK
 
@@ -120,129 +148,270 @@ var/global/datum/controller/master/Master = new()
 	sleep(1)
 
 	// Loop.
-	Master.process()
+	Master.startprocessing()
 
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
+	round_started = 1
 	var/timer = world.time
-	for(var/datum/subsystem/SS in subsystems)
+	for (var/datum/subsystem/SS in subsystems)
+		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
+			continue //already firing
 		timer += world.tick_lag
 		SS.can_fire = 1
 		SS.next_fire = timer + rand(0, SS.wait) // Stagger subsystems.
 
-// Used to smooth out costs to try and avoid oscillation.
-#define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
-#define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
-#define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
+//starts the mc, and sticks around to restart it if the loop ever ends.
+/datum/controller/master/proc/startprocessing()
+	set waitfor = 0
+	var/rtn = loop()
+	if (rtn > 0 || processing < 0)
+		return //this was suppose to happen.
+	//loop ended, restart the mc
+	log_game("MC crashed or runtimed, restarting")
+	message_admins("MC crashed or runtimed, restarting")
+	if (Recreate_MC() <= 0)
+		log_game("Failed to recreate MC, its up to the failsafe now")
+		message_admins("Failed to recreate MC, its up to the failsafe now")
+		Failsafe.defcon = 2
 
-/datum/controller/master/process()
-	if(!Failsafe)
-		new/datum/controller/failsafe() // (re)Start the failsafe.
-	spawn(0)
-		// Schedule the first run of the Subsystems.
-		var/timer = world.time
-		for(var/datum/subsystem/SS in subsystems)
-			if (SS.can_fire)
-				timer += world.tick_lag
-				SS.next_fire = timer
+//main loop.
+/datum/controller/master/proc/loop()
+	. = -1
+	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
+	//	local vars rock
 
-		var/list/subsystemstorun = subsystems.Copy()
-		var/start_time
-		while(1) // More efficient than recursion.
-			if(processing) //are we processing
-				++iteration
-				start_time = world.timeofday
-				if (!subsystemstorun.len)
-					subsystemstorun = subsystems.Copy()
-				var/priorityrunning = 0 //so we know if there are priority queue items
-				//this is a queue for any SS skipped or paused for tick reasons, to be ran first next tick
-				if (priority_queue.len)
-					priorityrunning = priority_queue.len
-					subsystemstorun = priority_queue | subsystemstorun
+	// Schedule the first run of the Subsystems.
+	var/timer = world.time
+	round_started = world.has_round_started()
+	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
+	var/list/tickersubsystems = list()
+	var/list/normalsubsystems = list()
+	var/list/lobbysubsystems = list()
+	for (var/thing in subsystems)
+		var/datum/subsystem/SS = thing
+		if (SS.flags & SS_NO_FIRE)
+			continue
+		SS.queued_time = 0
+		SS.next = null
+		SS.prev = null
+		if (SS.flags & SS_TICKER)
+			tickersubsystems += SS
+			continue
+		if (SS.flags & SS_FIRE_IN_LOBBY)
+			lobbysubsystems += SS
+		normalsubsystems += SS
 
-				var/ran_subsystems = 0
-				while(subsystemstorun.len)
-					var/datum/subsystem/SS = subsystemstorun[1]
-					subsystemstorun.Cut(1, 2)
+	for (var/thing in normalsubsystems|lobbysubsystems)
+		var/datum/subsystem/SS = thing
+		if (round_started || SS.flags & SS_FIRE_IN_LOBBY)
+			timer += world.tick_lag
+			SS.next_fire = timer
+	queue_head = null
+	queue_tail = null
+	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
+	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
+	sortTim(tickersubsystems, /proc/cmp_subsystem_priority)
+	sortTim(normalsubsystems, /proc/cmp_subsystem_priority)
+	sortTim(lobbysubsystems, /proc/cmp_subsystem_priority)
 
-					if (world.tick_usage > TICK_LIMIT_MC)
-						break
-					if(priorityrunning)
-						if(!priority_queue.len || !(SS in priority_queue))
-							priorityrunning = 0 //end of priority queue items
-						else
-							priority_queue -= SS
-					if(SS.can_fire > 0)
-						if(priorityrunning || ((SS.next_fire <= world.time) && (SS.last_fire + (SS.wait * 0.75) <= world.time || SS.paused)))
-							//we can't reset SS.paused after we fire, incase it pauses again, so we cache it and
-							//	send it to SS.fire()
-							var/paused = SS.paused
-							if(!priorityrunning && !paused && (world.tick_usage + SS.tick_usage > TICK_LIMIT_TO_RUN) && (SS.last_fire + (SS.wait*1.25) > world.time))
-								if(!SS.dynamic_wait)
-									priority_queue += SS
-								continue
-							SS.paused = 0
-							ran_subsystems = 1
-							timer = world.timeofday
-							last_type_processed = SS.type
-							if (!paused) //only set this when we aren't resuming
-								SS.last_fire = world.time
-							var/tick_usage = world.tick_usage
-							SS.fire(paused) // Fire the subsystem
+	normalsubsystems += tickersubsystems
+	lobbysubsystems += tickersubsystems
 
-							if(priorityrunning)
-								priorityrunning--
-							var/newusage = max(world.tick_usage - tick_usage, 0)
-							if(newusage < SS.tick_usage)
-								SS.tick_usage = MC_AVERAGE_SLOW(SS.tick_usage,world.tick_usage - tick_usage)
-							else
-								SS.tick_usage = MC_AVERAGE_FAST(SS.tick_usage,world.tick_usage - tick_usage)
-							SS.cost = max(MC_AVERAGE(SS.cost, world.timeofday - timer), 0)
-							if(SS.dynamic_wait) // Adjust wait depending on lag.
-								var/oldwait = SS.wait
-								var/global_delta = (subsystem_cost - (SS.cost / (SS.wait / 10))) - 1
-								var/newwait = (SS.cost - SS.dwait_buffer + global_delta) * SS.dwait_delta
-								newwait = newwait * (world.cpu / 100 + 1)
-								//smooth out wait changes, but only if going down
-								if(newwait < oldwait)
-									newwait = MC_AVERAGE(oldwait, newwait)
-								SS.wait = Clamp(newwait, SS.dwait_lower, SS.dwait_upper)
-								if(SS.paused)
-									SS.next_fire = world.time //run it next tick if we can, but don't priority queue it, as we are a dynamic wait subsystem
-								else //not paused, it ran all the way thru, normal wait time
-									SS.next_fire = SS.last_fire + SS.wait //we use last_fire so that its next fire is based off when it started this fire, not when it finished.
-							else
-								if(!paused)
-									SS.next_fire += SS.wait
-							if(!SS.paused)
-								SS.times_fired++
+	//the actual loop.
+	while (1)
+		if (processing <= 0)
+			sleep(10)
+			continue
 
-				cost = max(MC_AVERAGE(cost, world.timeofday - start_time), 0)
-				if(ran_subsystems)
-					var/oldcost = subsystem_cost
-					var/newcost = 0
-					for(var/datum/subsystem/SS in subsystems)
-						if (!SS.can_fire)
-							continue
-						newcost += SS.cost / (SS.wait / 10)
-						subsystem_cost = MC_AVERAGE(oldcost, newcost)
+		//world << "loop start"
+		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
+			new/datum/controller/failsafe() // (re)Start the failsafe.
+		if (!queue_head || iteration % 2)
+			if (round_started)
+				check_queue(normalsubsystems)
+			else
+				check_queue(lobbysubsystems)
+		else
+			check_queue(tickersubsystems)
+		if (queue_head)
+			run_queue()
+		iteration++
+		sleep((world.tick_lag + (world.tick_lag *0.49)) * processing) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
 
-				var/extrasleep = 0
-				// If we are loading the server too much, sleep a bit extra...
-				if(world.cpu >= 75)
-					extrasleep += (extrasleep + world.tick_lag) * ((world.cpu-50)/10)
-				sleep(world.tick_lag*processing+extrasleep)
+
+
+//this actually decides if something should run.
+/datum/controller/master/proc/check_queue(list/subsystemstocheck)
+	//we create our variables outside of the loops to save on overhead
+	var/datum/subsystem/SS
+	var/SS_priority
+	var/SS_flags
+	//world << "checking queue"
+	var/datum/subsystem/queue_node
+	var/queue_node_priority
+	var/queue_node_flags
+
+	for (var/thing in subsystemstocheck)
+		SS = thing
+		if (SS.queued_time) //already in the queue
+			continue
+		if (SS.can_fire <= 0)
+			continue
+		if (SS.next_fire > world.time)
+			continue
+		SS_flags = SS.flags
+		if (!(SS_flags & SS_TICKER) && SS_flags & SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
+			continue
+
+		//Queue it to run.
+		//	(we loop thru a linked list until we get to the end or find the right point)
+		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
+		SS_priority = SS.priority
+		for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
+			queue_node_priority = queue_node.queued_priority
+			queue_node_flags = queue_node.flags
+
+			if (queue_node_flags & SS_TICKER)
+				if (!(SS_flags & SS_TICKER))
+					continue
+				if (queue_node_priority < SS_priority)
+					break
+
+			else if (queue_node_flags & SS_BACKGROUND)
+				if (!(SS_flags & SS_BACKGROUND))
+					break
+				if (queue_node_priority < SS_priority)
+					break
 
 			else
-				sleep(50)
+				if (SS_flags & SS_BACKGROUND)
+					continue
+				if (SS_flags & SS_TICKER)
+					break
+				if (queue_node_priority < SS_priority)
+					break
 
-#undef MC_AVERAGE_FAST
-#undef MC_AVERAGE
-#undef MC_AVERAGE_SLOW
+		SS.queued_time = world.time
+		SS.queued_priority = SS_priority
+		if (!(SS_flags & SS_BACKGROUND)) //update our running total
+			queue_priority_count += SS_priority
+		SS.next = queue_node
+		if (!queue_node)//we stopped at the end, add to tail
+			SS.prev = queue_tail
+			if (queue_tail)
+				queue_tail.next = SS
+			else //empty queue, we also need to set the head
+				queue_head = SS
+			queue_tail = SS
+
+		else if (queue_node == queue_head)//insert at start of list
+			queue_head.prev = SS
+			queue_head = SS
+			SS.prev = null
+		else
+			queue_node.prev.next = SS
+			SS.prev = queue_node.prev
+			queue_node.prev = SS
+
+
+//run thru the queue of subsystems to run, balancing out their tick precentage
+/datum/controller/master/proc/run_queue()
+	var/datum/subsystem/queue_node
+	var/queue_node_flags
+	var/queue_node_priority
+	var/queue_node_paused
+
+	var/total_tick_budget = queue_priority_count
+	var/tick_precentage
+	var/tick_remaining
+	var/ran_non_ticker = FALSE
+	var/tick_usage
+
+	for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
+		if (world.tick_usage > TICK_LIMIT_RUNNING)
+			break
+		queue_node_flags = queue_node.flags
+		queue_node_priority = queue_node.queued_priority
+
+		//super special case, subsystems where we can't make them pause mid way through
+		//if we can't run them this tick (without going over a tick)
+		//we bump up their priority and attempt to run them next tick
+		//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
+		//	in those cases)
+		if (queue_node_flags & SS_NO_TICK_CHECK)
+			if (queue_node.tick_usage > TICK_LIMIT_TO_RUN - world.tick_usage && ran_non_ticker)
+				queue_node.queued_priority += total_tick_budget * 10
+				queue_priority_count -= queue_node_priority
+				queue_node.queued_priority += queue_node_priority
+				total_tick_budget -= queue_node_priority
+
+		tick_remaining = TICK_LIMIT_RUNNING - world.tick_usage
+		if (total_tick_budget > 0 && queue_node_priority > 0)
+			tick_precentage = tick_remaining - (tick_remaining / (total_tick_budget / queue_node_priority))
+		else
+			tick_precentage = tick_remaining
+
+		if (queue_node_flags & SS_BACKGROUND)
+			CURRENT_TICKLIMIT = tick_precentage + world.tick_usage
+		else
+			CURRENT_TICKLIMIT = TICK_LIMIT_TO_RUN
+
+		if (!(queue_node_flags & SS_TICKER))
+			ran_non_ticker = TRUE
+
+		tick_usage = world.tick_usage
+		queue_node_paused = queue_node.paused
+		queue_node.paused = FALSE
+		queue_node.fire(queue_node_paused)
+		tick_usage = world.tick_usage - tick_usage
+		if (tick_usage < 0)
+			tick_usage = 0
+
+		if (queue_node.paused)
+			queue_node.paused_ticks++
+			queue_node.paused_tick_usage += tick_usage
+			continue
+
+		queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
+		tick_usage += queue_node.paused_tick_usage
+
+		queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
+
+		queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_USAGE_TO_MS(tick_usage))
+		queue_node.paused_ticks = 0
+		queue_node.paused_tick_usage = 0
+
+		if (!(queue_node_flags & SS_BACKGROUND)) //update our running total
+			queue_priority_count -= queue_node_priority
+
+		queue_node.last_fire = world.time
+		queue_node.times_fired++
+
+		if (queue_node_flags & SS_TICKER)
+			queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
+		else if (queue_node_flags & SS_POST_FIRE_TIMING)
+			queue_node.next_fire = world.time + queue_node.wait
+		else if (queue_node_flags & SS_KEEP_TIMING)
+			queue_node.next_fire += queue_node.wait
+		else
+			queue_node.next_fire = queue_node.queued_time + queue_node.wait
+
+		queue_node.queued_time = 0
+
+		//remove from queue
+		if (queue_node.next)
+			queue_node.next.prev = queue_node.prev
+		if (queue_node.prev)
+			queue_node.prev.next = queue_node.next
+		if (queue_node == queue_tail)
+			queue_tail = queue_node.prev
+		if (queue_node == queue_head)
+			queue_head = queue_node.next
 
 /datum/controller/master/proc/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
-	stat("Master Controller:", statclick.update("[round(Master.cost, 0.01)]ds (Iteration:[Master.iteration])"))
+	stat("Master Controller:", statclick.update("[round(Master.cost, 1)]ms (Iteration:[Master.iteration])"))
 

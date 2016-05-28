@@ -4,14 +4,11 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting
 	name = "Lighting"
-	priority = 1
+	init_order = 1
 	wait = 1
-	dynamic_wait = 1
-	dwait_delta = 4
-	dwait_buffer = 0.1
-	dwait_lower = 1
-	dwait_upper = 5
-	display = 5
+	flags = SS_POST_FIRE_TIMING
+	priority = 35
+	display_order = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
@@ -56,9 +53,6 @@ var/datum/subsystem/lighting/SSlighting
 			return
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
-//Does not loop. Should be run prior to process() being called for the first time.
-//Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
-//z-levels with the z_level argument
 /datum/subsystem/lighting/Initialize(timeofday, z_level)
 	for(var/area/A in world)
 		if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)

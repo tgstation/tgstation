@@ -2,8 +2,11 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 
 /datum/subsystem/icon_smooth
 	name = "Icon Smoothing"
-	priority = -5
-	wait = 5
+	init_order = -5
+	wait = 2
+	priority = 30
+	flags = SS_POST_FIRE_TIMING
+
 	var/list/smooth_queue = list()
 
 /datum/subsystem/icon_smooth/New()

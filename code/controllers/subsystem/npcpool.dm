@@ -2,8 +2,10 @@ var/datum/subsystem/npcpool/SSnpc
 
 /datum/subsystem/npcpool
 	name = "NPC Pool"
-	priority = 17
-	display = 6
+	init_order = 17
+	display_order = 6
+	flags = SS_POST_FIRE_TIMING|SS_NO_INIT
+	priority = 25
 
 	var/list/canBeUsed = list()
 	var/list/canBeUsed_non = list()

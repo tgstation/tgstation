@@ -3,10 +3,10 @@ var/datum/subsystem/tgui/SStgui
 /datum/subsystem/tgui
 	name = "tgui"
 	wait = 10
-	priority = 16
-	display = 6
-
-	can_fire = 1 // This needs to fire before round start.
+	init_order = 16
+	display_order = 6
+	flags = SS_NO_INIT|SS_FIRE_IN_LOBBY
+	priority = 110
 
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
 	var/list/processing_uis = list() // A list of processing UIs, ungrouped.

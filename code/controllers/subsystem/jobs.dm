@@ -2,7 +2,8 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	priority = 5
+	init_order = 5
+	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
