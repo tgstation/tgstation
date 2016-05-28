@@ -45,8 +45,8 @@ var/datum/subsystem/machines/SSmachine
 
 	var/seconds = wait * 0.1
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing && thing.process(seconds) != PROCESS_KILL)
 			if(thing:use_power)
 				thing:auto_use_power() //add back the power state

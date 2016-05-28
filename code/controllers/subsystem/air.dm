@@ -139,8 +139,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process()
 		else
@@ -156,8 +156,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/obj/machinery/M = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/obj/machinery/M = currentrun[currentrun.len]
+		currentrun.len--
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
 		if(MC_TICK_CHECK)
@@ -170,8 +170,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/T = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/turf/T = currentrun[currentrun.len]
+		currentrun.len--
 		T.super_conduct()
 		if(MC_TICK_CHECK)
 			return
@@ -182,8 +182,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/obj/effect/hotspot/H = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/obj/effect/hotspot/H = currentrun[currentrun.len]
+		currentrun.len--
 		if (H)
 			H.process()
 		else
@@ -194,8 +194,8 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
 	while (high_pressure_delta.len)
-		var/turf/open/T = high_pressure_delta[1]
-		high_pressure_delta.Cut(1,2)
+		var/turf/open/T = currentrun[currentrun.len]
+		currentrun.len--
 		T.high_pressure_movements()
 		T.pressure_difference = 0
 		if(MC_TICK_CHECK)
@@ -209,8 +209,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/turf/open/T = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/turf/open/T = currentrun[currentrun.len]
+		currentrun.len--
 		if (T)
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
@@ -222,8 +222,8 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/datum/excited_group/EG = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/excited_group/EG = currentrun[currentrun.len]
+		currentrun.len--
 		EG.breakdown_cooldown++
 		EG.dismantle_cooldown++
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)

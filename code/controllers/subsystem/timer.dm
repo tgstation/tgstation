@@ -40,6 +40,8 @@ var/datum/subsystem/timer/SStimer = new()
 		if(event.timeToRun <= world.time)
 			runevent(event)
 			qdel(event)
+		if (MC_TICK_CHECK)
+			return
 
 /datum/subsystem/timer/proc/runevent(datum/timedevent/event)
 	set waitfor = 0

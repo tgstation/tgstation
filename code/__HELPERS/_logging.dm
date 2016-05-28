@@ -13,6 +13,9 @@
 #ifdef TESTING
 	world.log << "## TESTING: [msg]"
 #endif
+/proc/debug_world(msg)
+	if(Debug2)
+		world << "DEBUG: [msg]"
 
 /proc/log_admin(text)
 	admin_log.Add(text)

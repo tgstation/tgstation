@@ -26,8 +26,8 @@ var/datum/subsystem/mobs/SSmob
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/mob/M = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/mob/M = currentrun[currentrun.len]
+		currentrun.len--
 		if(M)
 			M.Life(seconds)
 		else

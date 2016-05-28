@@ -47,8 +47,8 @@ var/datum/subsystem/objects/SSobj
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process(wait)
 		else

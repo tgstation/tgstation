@@ -7,7 +7,7 @@ var/datum/subsystem/ticker/ticker
 	init_order = 0
 
 	priority = 200
-	flags = SS_FIRE_IN_LOBBY
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention

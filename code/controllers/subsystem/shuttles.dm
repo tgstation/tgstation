@@ -4,7 +4,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	name = "Shuttles"
 	wait = 10
 	init_order = 3
-	flags = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
 	var/list/stationary = list()
