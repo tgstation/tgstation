@@ -29,23 +29,21 @@
 	if(M.weakeyes)
 		M.visible_message("<span class='disarm'><b>[M]</b> screams and collapses!</span>")
 		M << "<span class='userdanger'><font size=3>AAAAGH!</font></span>"
-		M.Weaken(15) //hella stunned
-		M.Stun(15)
+		M.Weaken(5) //hella stunned
+		M.Stun(5)
 		M.adjust_eye_damage(8)
 
 	if(M.flash_eyes(affect_silicon = 1))
-		M.Stun(max(10/distance, 3))
-		M.Weaken(max(10/distance, 3))
+		M.Stun(1)
+		M.confused += (max(10/distance, 3))
 
 
 //Bang
 	if((loc == M) || loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection
-		M.Stun(10)
-		M.Weaken(10)
+		M.Stun(5)
+		M.Weaken(5)
 	if(!ear_safety)
 		M << sound('sound/weapons/flash_ring.ogg',0,1,0,100)
-		M.Stun(max(10/distance, 3))
-		M.Weaken(max(10/distance, 3))
 		M.setEarDamage(M.ear_damage + rand(0, 5), max(M.ear_deaf,15))
 		if (M.ear_damage >= 15)
 			M << "<span class='warning'>Your ears start to ring badly!</span>"
