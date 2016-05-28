@@ -125,15 +125,15 @@
 
 		// Clamp all values to MAX_EXPLOSION_RANGE
 		if (round(amount/12) > 0)
-			devastation = min (MAX_EX_DEVESTATION_RANGE, devastation + round(amount/12))
+			devastation = round(amount/12)
 
 		if (round(amount/6) > 0)
-			heavy = min (MAX_EX_HEAVY_RANGE, heavy + round(amount/6))
+			heavy = round(amount/6)
 
 		if (round(amount/3) > 0)
-			light = min (MAX_EX_LIGHT_RANGE, light + round(amount/3))
+			light = round(amount/3)
 
 		if (flashing && flashing_factor)
 			flash += (round(amount/4) * flashing_factor)
 
-		explosion(location, devastation, heavy, light, flash)
+		explosion(location, devastation, heavy, light, flash, 1, 1)
