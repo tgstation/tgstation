@@ -1,3 +1,8 @@
+#define SSTIMER_NONE 0 // or could be TIMER_DEFAULT
+#define SSTIMER_WAIT 1 // Alters the wait of a unique event. Can be called from anywhere to increase or decrease it.
+#define SSTIMER_DATA 2 // Alters the data of a unique event. Can be called from anywhere to modify the arg list.
+#define SSTIMER_FULL 3 // Completely overwrites a unique event. Can be called from anywhere.
+
 var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer
@@ -8,6 +13,7 @@ var/datum/subsystem/timer/SStimer
 
 	var/list/datum/timedevent/processing
 	var/list/hashes
+	var/list/unique
 
 /datum/subsystem/timer/New()
 	NEW_SS_GLOBAL(SStimer)
@@ -48,9 +54,10 @@ var/datum/subsystem/timer/SStimer
 /datum/timedevent/Destroy()
 	SStimer.processing -= src
 	SStimer.hashes -= hash
+	SStimer.unique -= hash
 	return QDEL_HINT_IWILLGC
 
-/proc/addtimer(thingToCall, procToCall, wait, unique = FALSE, ...)
+/proc/addtimer(thingToCall, procToCall, wait, unique = 0, behaviour = SSTIMER_NONE, ...)
 	if (!SStimer) //can't run timers before the mc has been created
 		return
 	if (!thingToCall || !procToCall || wait <= 0)
@@ -63,14 +70,43 @@ var/datum/subsystem/timer/SStimer
 	event.thingToCall = thingToCall
 	event.procToCall = procToCall
 	event.timeToRun = world.time + wait
-	event.hash = jointext(args, null)
-	if(args.len > 4)
-		event.argList = args.Copy(5)
-
-	// Check for dupes if unique = 1.
 	if(unique)
-		if(event.hash in SStimer.hashes)
-			return
+		var/semihash = args.Copy(1,3)
+		semihash += args.Copy(4,5)
+		event.hash = jointext(semihash, null)
+	else
+		event.hash = jointext(args, null)
+	if(args.len > 5)
+		event.argList = args.Copy(6)
+	
+	// Check for dupes if unique = 1.
+	switch(behaviour)
+		if(SSTIMER_NONE) // Never Overwrites unique event.
+			if(event.hash in SStimer.unique)
+				qdel(src)
+				return
+			SStimer.unique[event.hash] = event
+		if(SSTIMER_WAIT) // Overwrites unique event time.
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			if(old)
+				event.argList = old.argList.Copy()
+				SStimer.processing -= old
+				qdel(old)
+			SStimer.unique[event.hash] = event
+		if(SSTIMER_DATA) // Overwrites unique event data.
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			if(old)
+				event.timeToRun = old.timeToRun
+				SStimer.processing -= old
+				qdel(old)
+			SStimer.unique[event.hash] = event
+		if(SSTIMER_FULL) // Completely overwrites unique event.
+			var/datum/timedevent/old = SStimer.unique[event.hash]
+			if(old)
+				SStimer.processing -= old
+				qdel(old)
+			SStimer.unique[event.hash] = event
+
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event
 	SStimer.hashes += event.hash
