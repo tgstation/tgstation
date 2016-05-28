@@ -24,7 +24,7 @@
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell = 1,
+							/obj/item/weapon/stock_parts/cell/high = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/recharge_station/RefreshParts()
@@ -35,7 +35,7 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
 	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
-		recharge_speed *= max((C.maxcharge / 10000), 1)
+		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())
