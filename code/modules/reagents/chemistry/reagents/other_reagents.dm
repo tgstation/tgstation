@@ -727,10 +727,12 @@
 	else
 		if(O)
 			O.clean_blood()
+			O.color = initial(O.color)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.clean_blood()
+		T.color = initial(T.color)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -739,6 +741,7 @@
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
+		M.color = initial(M.color)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(istype(M,/mob/living/carbon/human))
