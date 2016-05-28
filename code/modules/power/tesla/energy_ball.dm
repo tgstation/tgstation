@@ -228,6 +228,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
+		CHECK_TICK
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
