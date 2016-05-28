@@ -210,22 +210,6 @@
 	feedback_add_details("changeling_powers","BS")
 	return 1
 
-/obj/effect/proc_holder/changeling/sting/LSD
-	name = "Hallucination Sting"
-	desc = "Causes terror in the target."
-	helptext = "We evolve the ability to sting a target with a powerful hallucinogenic chemical. The target does not notice they have been stung, and the effect occurs after 30 to 60 seconds."
-	sting_icon = "sting_lsd"
-	chemical_cost = 10
-	dna_cost = 1
-
-/obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
-	add_logs(user, target, "stung", "LSD sting")
-	spawn(rand(300,600))
-		if(target)
-			target.hallucination = max(400, target.hallucination)
-	feedback_add_details("changeling_powers","HS")
-	return 1
-
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"
 	desc = "We silently sting a human with a cocktail of chemicals that freeze them."
