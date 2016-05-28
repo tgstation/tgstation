@@ -53,8 +53,9 @@
 			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
+			<A href='?src=\ref[src];secrets=onlyone'>Highlander</A><BR>
+			<A href='?src=\ref[src];secrets=onlyme'>Multiverse War</A><BR>
+			<A href='?src=\ref[src];secrets=onlyillusion'>Grey Tide Highlander</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
@@ -492,7 +493,6 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
-//				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -500,6 +500,13 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OM")
 			only_me()
+
+		if("onlyillusion")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","OI")
+			usr.client.only_one(0)
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
