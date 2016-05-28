@@ -79,41 +79,44 @@
 
 /obj/item/device/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		user << "The wisp has gone missing!"
+		user << "<span class='warning'>The wisp has gone missing!</span>"
 		return
 	if(wisp.loc == src)
-		user << "You release the wisp. It begins to bob around your head."
+		user << "<span class='notice'>You release the wisp. It begins to \
+			bob around your head.</span>"
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
+		user << "<span class='notice'>You return the wisp to the lantern.\
+			</span>"
+
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "The wisp has returned to it's latern. Your vision returns to normal."
+				M << "<span class='notice'>Your vision returns to \
+					normal.</span>"
 
-			wisp.stop_orbit()
-			wisp.loc = src
-			user << "You return the wisp to the latern."
-			icon_state = "lantern-blue"
-			feedback_add_details("wisp_lantern","R") // returned
+		wisp.stop_orbit()
+		wisp.loc = src
+		icon_state = "lantern-blue"
+		feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
-	var/obj/effect/wisp/W = new(src)
-	wisp = W
-	W.home = src
+	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()
 	if(wisp)
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.home = null //stuck orbiting your head now
+			wisp.visible_message("<span class='notice'>[wisp] has a sad \
+				feeling for a moment, then it passes.</span>")
 	..()
 
 //Wisp Lantern
@@ -122,7 +125,6 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
