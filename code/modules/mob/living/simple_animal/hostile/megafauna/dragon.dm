@@ -248,6 +248,8 @@
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
+	for(var/mob/dead/observer/G in spirits)
+		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
 	SSobj.processing -= src
 	poi_list -= src
