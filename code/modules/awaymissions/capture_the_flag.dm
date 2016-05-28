@@ -116,6 +116,11 @@
 	poi_list.Remove(src)
 	..()
 
+/obj/machinery/capture_the_flag/process()
+	if(ctf_enabled)
+		notify_ghosts(null, null, null, src, null, 1)
+
+
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
