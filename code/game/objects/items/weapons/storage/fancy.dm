@@ -93,7 +93,7 @@
 	throwforce = 0
 	slot_flags = SLOT_BELT
 	storage_slots = 6
-	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/weapon/lighter)
+	can_hold = list(/obj/item/clothing/mask/cigarette, /obj/item/clothing/mask/cigarette/strikeanywhere, /obj/item/weapon/lighter)
 	icon_type = "cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette
 
@@ -147,6 +147,12 @@
 	name = "Uplift Smooth"
 	desc = "Your favorite brand, now menthol flavored."
 	icon_state = "uplift"
+
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_uplift_strike
+	name = "\improper Uplift Strikes packet"
+	desc = "Your favorite brand, now magnesium flavored. Lights as reliably as a rocket!"
+	icon_state = "upliftstrike"
+	spawn_type = /obj/item/clothing/mask/cigarette/strikeanywhere
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_robust
 	name = "Robust"
