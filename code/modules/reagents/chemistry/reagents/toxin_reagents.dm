@@ -713,7 +713,7 @@
 	name = "Fluorosulfuric acid"
 	id = "facid"
 	description = "Fluorosulfuric acid is a an extremely corrosive chemical substance."
-	color = rgn(80,80,255)
+	color = rgb(80,80,255)
 	toxpwr = 2
 	acidpwr = 42.0
 
