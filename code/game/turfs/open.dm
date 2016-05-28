@@ -5,6 +5,19 @@
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
 
+/turf/open/indestructible
+	name = "floor"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "floor"
+
+/turf/open/indestructible/sound
+	name = "squeeky floor"
+	var/sound
+
+/turf/open/indestructible/sound/Entered(var/mob/AM)
+	if(istype(AM))
+		playsound(src,sound,50,1)
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()

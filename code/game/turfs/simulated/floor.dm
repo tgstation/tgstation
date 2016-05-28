@@ -30,7 +30,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	intact = 1
 	var/broken = 0
 	var/burnt = 0
-	var/pryable = 1 //can we pry up tiles?
 	var/floor_tile = null //tile that this floor drops
 	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -142,7 +141,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		return 1
 	if(..())
 		return 1
-	if(intact && pryable && istype(C, /obj/item/weapon/crowbar))
+	if(intact && istype(C, /obj/item/weapon/crowbar))
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
