@@ -226,9 +226,9 @@
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
 			if(C != owner)
-				C.fire_stacks += 8
+				C.fire_stacks += 2
 				C.IgniteMob()
-		owner.fire_stacks = -20
+		owner.fire_stacks = -10
 		return 1
 	return 0
 
@@ -262,7 +262,7 @@
 			if(M == owner)
 				continue
 			owner.Beam(M,icon_state="lightning[rand(1, 12)]",icon='icons/effects/effects.dmi',time=5)
-			M.adjustFireLoss(25)
+			M.adjustFireLoss(10)
 			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 		return 1
 //All of the armor below is mostly unused
