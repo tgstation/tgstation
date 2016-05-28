@@ -172,8 +172,12 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-		qdel(src)
+		var/turf/T = get_turf(src)
+		if(istype(T, /turf/open/floor/plating/asteroid))
+			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+			qdel(src)
+		else
+			visible_message("<span class='danger'>The [src.name] tries to burrow into [T], but fails! It looks confused.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
@@ -487,7 +491,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/OpenFire()
 	var/tturf = get_turf(target)
-	if(!(istype(tturf, /turf)))
+	if(!istype(tturf, /turf/closed/mineral) && !istype(tturf, /turf/open/floor/plating/asteroid))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
@@ -536,7 +540,8 @@
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src,spawndir)
-		new /obj/effect/goliath_tentacle(T)
+		if(istype(T, /turf/closed/mineral) || istype(T, /turf/open/floor/plating/asteroid))
+			new /obj/effect/goliath_tentacle(T)
 	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
