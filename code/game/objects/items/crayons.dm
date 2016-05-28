@@ -342,6 +342,10 @@
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
 		spraying_over = TRUE
 
+	for(var/obj/machinery/power/apc in target)
+		user << "<span class='warning'>You can't tag an APC.</span>"
+		return FALSE
+
 	var/occupying_gang = territory_claimed(A, user)
 	if(occupying_gang && !spraying_over)
 		user << "<span class='danger'>[A] has already been tagged \
