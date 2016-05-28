@@ -613,11 +613,9 @@
 /datum/chemical_reaction/slimestop/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/mob/mob = get_mob_by_key(holder.my_atom.fingerprintslast)
-	var/obj/effect/timestop/T = new /obj/effect/timestop
-	T.loc = get_turf(holder.my_atom)
+	var/obj/effect/timestop/T = new (get_turf(holder.my_atom))
 	T.immune += mob
 	T.timestop()
-
 
 /datum/chemical_reaction/slimecamera
 	name = "Slime Camera"

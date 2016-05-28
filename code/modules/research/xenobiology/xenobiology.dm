@@ -525,13 +525,11 @@
 	for(var/mob/living/M in player_list)
 		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
 			immune |= M
-	timestop()
-
 
 /obj/effect/timestop/proc/timestop()
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
-		for(var/atom/A in orange (freezerange, src.loc))
+		for(var/A in orange (freezerange, src.loc))
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				if(M in immune)
@@ -563,8 +561,6 @@
 	qdel(src)
 	return
 
-
-
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
 	M.AdjustStunned(-10, 1, 1)
 	M.anchored = 0
@@ -572,10 +568,12 @@
 		var/mob/living/simple_animal/hostile/H = M
 		H.AIStatus = initial(H.AIStatus)
 
-
 /obj/effect/timestop/wizard
 	duration = 100
 
+/obj/effect/timestop/wizard/New()
+	..()
+	timestop()
 
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
