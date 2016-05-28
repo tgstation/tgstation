@@ -340,7 +340,6 @@
 
 	var/spraying_over = FALSE
 	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
-		world << "Found [G] in [target]"
 		spraying_over = TRUE
 
 	var/occupying_gang = territory_claimed(A, user)
