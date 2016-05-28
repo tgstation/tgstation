@@ -245,7 +245,7 @@ AI MODULES
 /******************** Reset ********************/
 
 /obj/item/weapon/aiModule/reset
-	name = "\improper 'Reset' AI module"
+	name = "'Reset' AI module"
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
 	origin_tech = "programming=3;materials=4"
