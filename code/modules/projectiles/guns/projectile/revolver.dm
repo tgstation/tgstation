@@ -89,11 +89,10 @@
 	user << "[get_ammo(0,0)] of those are live rounds."
 
 /obj/item/weapon/gun/projectile/revolver/detective
-	name = "\improper .38 Mars Special"
-	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
+	name = "Mars Special"
+	desc = "A cheap Martian knock-off of a classic law enforcement firearm."
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	unique_rename = 1
 	unique_reskin = 1
 
@@ -105,47 +104,6 @@
 	options["Gold Trim"] = "detective_gold"
 	options["The Peacemaker"] = "detective_peacemaker"
 	options["Cancel"] = null
-
-/obj/item/weapon/gun/projectile/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override = "")
-	if(magazine.caliber != initial(magazine.caliber))
-		if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
-			playsound(user, fire_sound, 50, 1)
-			user << "<span class='userdanger'>[src] blows up in your face!</span>"
-			user.take_organ_damage(0,20)
-			user.unEquip(src)
-			return 0
-	..()
-
-/obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/weapon/screwdriver))
-		if(magazine.caliber == "38")
-			user << "<span class='notice'>You begin to reinforce the barrel of [src]...</span>"
-			if(magazine.ammo_count())
-				afterattack(user, user)	//you know the drill
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-				return
-			if(do_after(user, 30/A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					user << "<span class='warning'>You can't modify it!</span>"
-					return
-				magazine.caliber = "357"
-				desc = "The barrel and chamber assembly seems to have been modified."
-				user << "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>"
-		else
-			user << "<span class='notice'>You begin to revert the modifications to [src]...</span>"
-			if(magazine.ammo_count())
-				afterattack(user, user)	//and again
-				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='userdanger'>[src] goes off in your face!</span>")
-				return
-			if(do_after(user, 30/A.toolspeed, target = src))
-				if(magazine.ammo_count())
-					user << "<span class='warning'>You can't modify it!</span>"
-					return
-				magazine.caliber = "38"
-				desc = initial(desc)
-				user << "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>"
-
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
@@ -273,4 +231,4 @@
 	if(!SS.transfer_soul("FORCE", user)) //Something went wrong
 		qdel(SS)
 		return
-	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfiet!</span>")
+	user.visible_message("<span class='danger'>[user.name]'s soul is captured by \the [src]!</span>", "<span class='userdanger'>You've lost the gamble! Your soul is forfeit!</span>")
