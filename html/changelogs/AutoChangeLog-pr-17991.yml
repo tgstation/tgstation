@@ -1,0 +1,6 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Spectral sword is now a point of interest for ghosts."
+  - bugfix: "Clicking the spectral sword action now orbits the sword, instead of
+just teleporting to its location."
