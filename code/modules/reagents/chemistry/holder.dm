@@ -472,10 +472,11 @@ var/const/INJECT = 5 //injection
 
 	return 0
 
-/datum/reagents/proc/clear_reagents()
+/datum/reagents/proc/clear_reagents(exclude_id)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
-		del_reagent(R.id)
+		if(R.id != exclude_id)
+			del_reagent(R.id)
 	return 0
 
 /datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
