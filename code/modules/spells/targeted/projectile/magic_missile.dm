@@ -18,7 +18,7 @@
 
 	hud_state = "wiz_mm"
 
-	amt_paralysis = 3
+	amt_weakened = 3
 	amt_stunned = 3
 
 	amt_dam_fire = 10
