@@ -168,6 +168,4 @@
 		return 1
 	else if(stat == DEAD)
 		src << "You're already dead!"
-	else if(stat == UNCONSCIOUS)
-		src << "You need to be conscious to suicide!"
 	return
