@@ -271,7 +271,7 @@
 	name = "Zero-Point Energy Field Manipulator"
 	desc = "A multi-mode device that blasts Zero-Point Energy bolts that locally distort gravity."
 	id = "gravitygun"
-	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 5, "powerstorage" = 5)
+	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 4, "powerstorage" = 5, "magnets" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 7000, MAT_GOLD = 7000, MAT_URANIUM = 6000, MAT_GLASS = 6000, MAT_METAL = 6000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/weapon/gun/energy/gravity_gun

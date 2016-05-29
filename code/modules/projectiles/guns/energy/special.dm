@@ -363,7 +363,7 @@
 	name = "Zero-Point Energy Field Manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
 	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
-	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=5"
+	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
 	item_state = null
 	icon_state = "gravity_gun"
 	var/power = 4
