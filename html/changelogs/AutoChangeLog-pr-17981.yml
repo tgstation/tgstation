@@ -1,4 +1,0 @@
-author: pudl
-delete-after: True
-changes: 
-  - rscadd: "Chemicals should now have color, instead of just being pink."
