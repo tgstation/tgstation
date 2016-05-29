@@ -63,6 +63,7 @@ This file's folder contains:
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
+	M.faction += "ratvar"
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
@@ -90,6 +91,7 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar -= M.mind
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
+	M.faction -= "ratvar"
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
 	M.verbs -= /mob/living/carbon/human/proc/function_call //Removes any bound Ratvarian spears

@@ -97,9 +97,6 @@
 	usr.verbs -= /mob/living/carbon/human/proc/function_call
 	return 1
 
-/datum/clockwork_cache //The global cache datum, used to link together all tinkerer's caches
-	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
-
 /*
 
 The Ratvarian Language
