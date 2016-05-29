@@ -412,7 +412,7 @@
 	blend_mode = BLEND_MULTIPLY
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = 0
-	layer = DAMAGE_LAYER
+	layer = UI_DAMAGE_LAYER
 
 /obj/screen/healths
 	name = "health"
