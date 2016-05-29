@@ -79,6 +79,9 @@
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
+/turf/open/floor/engine/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
 
