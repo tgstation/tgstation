@@ -94,24 +94,28 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/offline)
 "as" = (
-/turf/open/floor/engine{
+/turf/open/floor/holofloor{
+	icon_state = "engine";
 	name = "Burn-Mix Floor";
 	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
 	},
 /area/holodeck/rec_center/burn)
 "at" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/court)
 "au" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/court)
 "av" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/court)
 "aw" = (
@@ -146,22 +150,25 @@
 /area/holodeck/rec_center/wildlife)
 "aB" = (
 /obj/effect/holodeck_effect/sparks,
-/turf/open/floor/engine{
+/turf/open/floor/holofloor{
+	icon_state = "engine";
 	name = "Burn-Mix Floor";
 	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
 	},
 /area/holodeck/rec_center/burn)
 "aC" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/court)
 "aD" = (
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/court)
 "aE" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/court)
 "aF" = (
@@ -191,13 +198,15 @@
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
 "aJ" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/court)
 "aK" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/court)
 "aL" = (
@@ -250,18 +259,21 @@
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
 "aS" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/court)
 "aT" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/court)
 "aU" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/court)
 "aV" = (
@@ -281,14 +293,16 @@
 "aY" = (
 /obj/structure/table/glass,
 /obj/item/weapon/surgicaldrill,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "aZ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/hemostat,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -298,38 +312,44 @@
 	pixel_y = 10
 	},
 /obj/item/weapon/circular_saw,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "bb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/retractor,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "bc" = (
 /obj/structure/table/glass,
 /obj/item/weapon/cautery,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
 "bd" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "be" = (
 /obj/structure/holohoop,
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bf" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bg" = (
@@ -338,8 +358,9 @@
 "bh" = (
 /obj/structure/table,
 /obj/machinery/readybutton,
-/turf/open/floor/plasteel/red/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bi" = (
@@ -348,59 +369,70 @@
 /obj/item/clothing/suit/armor/tdome/red,
 /obj/item/clothing/under/color/red,
 /obj/item/weapon/holo/esword/red,
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bj" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/red/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bk" = (
 /obj/machinery/readybutton,
-/turf/open/floor/plasteel/red/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bl" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bm" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bn" = (
 /obj/structure/table/glass,
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
 "bo" = (
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "bp" = (
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 4
 	},
 /area/holodeck/rec_center/medical)
 "bq" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "br" = (
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "bs" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bt" = (
@@ -413,64 +445,78 @@
 /turf/open/floor/holofloor/beach,
 /area/holodeck/rec_center/beach)
 "bv" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bw" = (
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/thunderdome)
 "bx" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "by" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bz" = (
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/dodgeball)
 "bA" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bB" = (
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "bC" = (
-/turf/open/floor/plasteel/warnwhite,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
 /area/holodeck/rec_center/medical)
 "bD" = (
 /obj/structure/table/optable,
-/turf/open/floor/plasteel/warnwhite,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
 /area/holodeck/rec_center/medical)
 "bE" = (
 /obj/machinery/computer/operating,
-/turf/open/floor/plasteel/warnwhite,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
 /area/holodeck/rec_center/medical)
 "bF" = (
 /obj/structure/table/glass,
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
 "bG" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bH" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bI" = (
@@ -488,42 +534,53 @@
 /obj/structure/window{
 	dir = 1
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "bK" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "bL" = (
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
 "bM" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/beakers,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "bN" = (
 /obj/machinery/washing_machine,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "bO" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bP" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bQ" = (
-/turf/open/floor/plasteel/red/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/basketball)
 "bR" = (
@@ -533,8 +590,9 @@
 /area/holodeck/rec_center/beach)
 "bS" = (
 /obj/structure/window,
-/turf/open/floor/plasteel/red/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bT" = (
@@ -543,8 +601,9 @@
 /area/holodeck/rec_center/thunderdome)
 "bU" = (
 /obj/structure/window,
-/turf/open/floor/plasteel/red/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/thunderdome)
 "bV" = (
@@ -552,8 +611,9 @@
 	dir = 1
 	},
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/red/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bW" = (
@@ -561,8 +621,9 @@
 	dir = 1
 	},
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/red/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bX" = (
@@ -570,38 +631,47 @@
 	dir = 1
 	},
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/red/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "red"
 	},
 /area/holodeck/rec_center/dodgeball)
 "bY" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "bZ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/syringes,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "ca" = (
 /obj/structure/closet/wardrobe/white,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "cb" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cc" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cd" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "ce" = (
@@ -612,8 +682,9 @@
 /obj/structure/window{
 	dir = 1
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cg" = (
@@ -626,29 +697,33 @@
 /obj/structure/window{
 	dir = 1
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "ci" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/green/side{
-	dir = 9
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cj" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "ck" = (
 /obj/structure/window,
 /obj/item/toy/beach_ball/holoball/dodgeball,
-/turf/open/floor/plasteel/green/side{
-	dir = 5
+/turf/open/floor/holofloor{
+	dir = 5;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cl" = (
@@ -663,11 +738,14 @@
 /area/space)
 "cm" = (
 /obj/structure/window,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "cn" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "co" = (
@@ -675,34 +753,40 @@
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
 "cp" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cq" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cr" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cs" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 8
+/turf/open/floor/holofloor{
+	dir = 8;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "ct" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 4
+/turf/open/floor/holofloor{
+	dir = 4;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cu" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -713,7 +797,8 @@
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -724,33 +809,40 @@
 	},
 /obj/structure/window,
 /obj/machinery/computer/pandemic,
-/turf/open/floor/plasteel/white,
+/turf/open/floor/holofloor{
+	icon_state = "white"
+	},
 /area/holodeck/rec_center/medical)
 "cx" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cy" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 1
+/turf/open/floor/holofloor{
+	dir = 1;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cz" = (
 /obj/machinery/door/window/westleft,
-/turf/open/floor/plasteel/warnwhite/corner{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhitecorner";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
 "cA" = (
 /obj/machinery/door/window/westleft,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
 "cB" = (
 /obj/machinery/door/window/westleft,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -759,7 +851,8 @@
 	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -769,7 +862,8 @@
 "cE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -780,7 +874,9 @@
 	},
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
-/turf/open/floor/plasteel/warnwhite,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
 /area/holodeck/rec_center/medical)
 "cG" = (
 /obj/structure/window{
@@ -791,33 +887,39 @@
 	icon_state = "sleeper-open";
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnwhite,
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite"
+	},
 /area/holodeck/rec_center/medical)
 "cH" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnwhite{
+/turf/open/floor/holofloor{
+	icon_state = "warnwhite";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
 "cI" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cJ" = (
 /obj/structure/holohoop{
 	dir = 1
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cK" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/basketball)
 "cL" = (
@@ -825,8 +927,9 @@
 /area/holodeck/rec_center/beach)
 "cM" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/green/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cN" = (
@@ -835,31 +938,36 @@
 /obj/item/clothing/suit/armor/tdome/green,
 /obj/item/clothing/under/color/green,
 /obj/item/weapon/holo/esword/green,
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cO" = (
 /obj/structure/table,
 /obj/machinery/readybutton,
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/thunderdome)
 "cP" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
+/turf/open/floor/holofloor{
+	dir = 10;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cQ" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 2
+/turf/open/floor/holofloor{
+	dir = 2;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cR" = (
 /obj/machinery/readybutton,
-/turf/open/floor/plasteel/green/side{
-	dir = 6
+/turf/open/floor/holofloor{
+	dir = 6;
+	icon_state = "green"
 	},
 /area/holodeck/rec_center/dodgeball)
 "cS" = (
