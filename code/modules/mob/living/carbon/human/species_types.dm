@@ -245,6 +245,7 @@
 		callforward.Remove(C)
 	if(callback)
 		callback.Remove(C)
+	C.faction -= "slime"
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
@@ -252,6 +253,7 @@
 	if(ishuman(C))
 		slime_split = new
 		slime_split.Grant(C)
+	C.faction |= "slime"
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
@@ -338,6 +340,23 @@
 	nojumpsuit = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	// To prevent golem subtypes from overwhelming the odds when random species
+	// changes, only the Random Golem type can be chosen
+	blacklisted = TRUE
+	dangerous_existence = TRUE
+
+/datum/species/golem/random
+	name = "Random Golem"
+	blacklisted = FALSE
+	dangerous_existence = FALSE
+
+/datum/species/golem/random/New()
+	. = ..()
+	var/list/golem_types = typesof(/datum/species/golem) - src.type
+	var/datum/species/golem/golem_type = pick(golem_types)
+	name = initial(golem_type.name)
+	id = initial(golem_type.id)
+	meat = initial(golem_type.id)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -347,32 +366,22 @@
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma"
-	dangerous_existence = 1
-	blacklisted = 1
 
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
-	blacklisted = 1
-	dangerous_existence = 1
 
 
 /*

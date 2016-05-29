@@ -389,7 +389,6 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		//var/list/blacklisted_species = list(
 		var/list/possible_morphs = list()
 		for(var/type in subtypesof(/datum/species))
 			var/datum/species/S = type
@@ -397,13 +396,9 @@
 				continue
 			possible_morphs += S
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		if(prob(90) && mutation)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
-			if(mutation.id == "slime")
-				H.faction |= "slime"
-			else
-				H.faction -= "slime"
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
