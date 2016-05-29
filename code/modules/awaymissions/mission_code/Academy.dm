@@ -292,8 +292,10 @@
 			S.burnmod *= 0.5
 			S.coldmod *= 0.5
 		if(20)
+			user << "YOU WIN A FREE WIZARD. JKLOL"
 			//Free wizard!
-			user.mind.make_Wizard()
+			//user.mind.make_Wizard()
+			// TODO OH BOY DATUMISE IT
 
 
 /datum/outfit/butler

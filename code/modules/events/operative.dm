@@ -32,7 +32,8 @@
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Lone Operative"
 	Mind.special_role = "Lone Operative"
-	ticker.mode.traitors |= Mind
+	//ticker.mode.traitors |= Mind
+	// TODO make into datum antag
 	Mind.active = 1
 
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in machines

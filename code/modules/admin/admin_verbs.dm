@@ -389,7 +389,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check Antagonists"
 	set category = "Admin"
 	if(holder)
-		holder.check_antagonists()
+		//holder.check_antagonists() TODO FIXME
 		log_admin("[key_name(usr)] checked antagonists.")	//for tsar~
 		if(!isobserver(usr))
 			message_admins("[key_name_admin(usr)] checked antagonists.")

@@ -179,7 +179,8 @@ Contents:
 	var/datum/mind/Mind = new /datum/mind(key)
 	Mind.assigned_role = "Space Ninja"
 	Mind.special_role = "Space Ninja"
-	ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
+	// TODO dddddddddddddddddddd
+	//ticker.mode.traitors |= Mind			//Adds them to current traitor list. Which is really the extra antagonist list.
 	return Mind
 
 

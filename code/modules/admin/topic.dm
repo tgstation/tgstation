@@ -30,109 +30,9 @@
 		if (!ticker.mode)
 			usr << "<span class='danger'>Not until the round starts!</span>"
 			return
-		switch(href_list["makeAntag"])
-			if("1")
-				if(src.makeTraitors())
-					message_admins("[key_name_admin(usr)] created traitors.")
-					log_admin("[key_name(usr)] created traitors.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create traitors.")
-			if("2")
-				if(src.makeChanglings())
-					message_admins("[key_name(usr)] created changelings.")
-					log_admin("[key_name(usr)] created changelings.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create changelings.")
-			if("3")
-				if(src.makeRevs())
-					message_admins("[key_name(usr)] started a revolution.")
-					log_admin("[key_name(usr)] started a revolution.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution.")
-			if("4")
-				if(src.makeCult())
-					message_admins("[key_name(usr)] started a cult.")
-					log_admin("[key_name(usr)] started a cult.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a cult.")
-			if("6")
-				message_admins("[key_name(usr)] is creating a wizard...")
-				if(src.makeWizard())
-					message_admins("[key_name(usr)] created a wizard.")
-					log_admin("[key_name(usr)] created a wizard.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a wizard.")
-			if("7")
-				message_admins("[key_name(usr)] is creating a nuke team...")
-				if(src.makeNukeTeam())
-					message_admins("[key_name(usr)] created a nuke team.")
-					log_admin("[key_name(usr)] created a nuke team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a nuke team.")
-			if("8")
-				message_admins("[key_name(usr)] spawned a ninja.")
-				log_admin("[key_name(usr)] spawned a ninja.")
-				src.makeSpaceNinja()
-			if("9")
-				message_admins("[key_name(usr)] started an alien infestation.")
-				log_admin("[key_name(usr)] started an alien infestation.")
-				src.makeAliens()
-			if("10")
-				message_admins("[key_name(usr)] is creating a death squad...")
-				if(src.makeDeathsquad())
-					message_admins("[key_name(usr)] created a death squad.")
-					log_admin("[key_name(usr)] created a death squad.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a death squad.")
-			if("11")
-				var/strength = input("Set Blob Strength (1=Weak, 2=Strong, 3=Full)","Set Strength",1) as num
-				message_admins("[key_name(usr)] spawned a blob with strength [strength].")
-				log_admin("[key_name(usr)] spawned a blob with strength [strength].")
-				new/datum/round_event/blob(strength)
-			if("12")
-				if(src.makeGangsters())
-					message_admins("[key_name(usr)] created gangs.")
-					log_admin("[key_name(usr)] created gangs.")
-				else
-					message_admins("[key_name(usr)] tried to create gangs. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed create gangs.")
-			if("13")
-				message_admins("[key_name(usr)] is creating a Centcom response team...")
-				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created a Centcom response team.")
-					log_admin("[key_name(usr)] created a Centcom response team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a Centcom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a Centcom response team.")
-			if("14")
-				message_admins("[key_name(usr)] is creating an abductor team...")
-				if(src.makeAbductorTeam())
-					message_admins("[key_name(usr)] created an abductor team.")
-					log_admin("[key_name(usr)] created an abductor team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create an abductor team.")
-			if("15")
-				if(src.makeRevenant())
-					message_admins("[key_name(usr)] created a revenant.")
-					log_admin("[key_name(usr)] created a revenant.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a revenant.")
-			if("16")
-				if(src.makeShadowling())
-					message_admins("[key_name(usr)] created a shadowling.")
-					log_admin("[key_name(usr)] created a shadowling.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a shadowling. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a shadowling.")
+
+		// TODO reimplemnt whatever this is for datum antags
+		usr << "NO MAKING ANTAGS THIS IS DATUM ANTAGS WHEEEE"
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -2229,3 +2129,6 @@
 
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
+
+/proc/check_antagonists()
+	return //TODO WHAT HAVE IA DONE IMPLMENT

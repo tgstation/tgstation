@@ -56,7 +56,8 @@
 	player_mind.transfer_to(revvie)
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
-	ticker.mode.traitors |= player_mind
+	//ticker.mode.traitors |= player_mind
+	// TODO make revenant into a datum antag
 	message_admins("[player_mind.key] has been made into a revenant by an event.")
 	log_game("[player_mind.key] was spawned as a revenant by an event.")
 	spawned_mobs += revvie

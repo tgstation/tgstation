@@ -3,6 +3,9 @@
 	set desc = "Auto-create an antagonist of your choice"
 	set category = "Admin"
 
+	usr << "BUZZ! NOT IMPLMENTED" //TODO reimplement
+
+/*
 	if(holder)
 		holder.one_click_antag()
 	return
@@ -547,3 +550,4 @@
 		candidates.Remove(H)
 		return 1
 	return 0
+*/

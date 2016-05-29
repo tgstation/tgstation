@@ -26,29 +26,3 @@
 #define ROLE_HOG_CULTIST		"hand of god: cultist"
 #define ROLE_DEVIL				"devil"
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
-
-//Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
-//The gamemode specific ones are just so the gamemodes can query whether a player is old enough
-//(in game days played) to play that role
-var/global/list/special_roles = list(
-	ROLE_TRAITOR = /datum/game_mode/traitor,
-	ROLE_OPERATIVE = /datum/game_mode/nuclear,
-	ROLE_CHANGELING = /datum/game_mode/changeling,
-	ROLE_WIZARD = /datum/game_mode/wizard,
-	ROLE_MALF,
-	ROLE_REV = /datum/game_mode/revolution,
-	ROLE_ALIEN,
-	ROLE_PAI,
-	ROLE_CULTIST = /datum/game_mode/cult,
-	ROLE_BLOB = /datum/game_mode/blob,
-	ROLE_NINJA,
-	ROLE_MONKEY = /datum/game_mode/monkey,
-	ROLE_GANG = /datum/game_mode/gang,
-	ROLE_SHADOWLING = /datum/game_mode/shadowling,
-	ROLE_REVENANT,
-	ROLE_ABDUCTOR = /datum/game_mode/abduction,
-	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
-	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,
-	ROLE_DEVIL = /datum/game_mode/devil,
-	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
-)

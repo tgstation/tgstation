@@ -116,59 +116,12 @@ var/datum/subsystem/ticker/ticker
 						world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
-		//Create and announce mode
-	var/list/datum/game_mode/runnable_modes
-	if(master_mode == "random" || master_mode == "secret")
-		runnable_modes = config.get_runnable_modes()
+	mode = new /datum/game_mode/extended
 
-		if(master_mode == "secret")
-			hide_mode = 1
-			if(secret_force_mode != "secret")
-				var/datum/game_mode/smode = config.pick_mode(secret_force_mode)
-				if(!smode.can_start())
-					message_admins("\blue Unable to force secret [secret_force_mode]. [smode.required_players] players and [smode.required_enemies] eligible antagonists needed.")
-				else
-					mode = smode
-
-		if(!mode)
-			if(!runnable_modes.len)
-				world << "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby."
-				return 0
-			mode = pickweight(runnable_modes)
-
-	else
-		mode = config.pick_mode(master_mode)
-		if(!mode.can_start())
-			world << "<B>Unable to start [mode.name].</B> Not enough players, [mode.required_players] players and [mode.required_enemies] eligible antagonists needed. Reverting to pre-game lobby."
-			qdel(mode)
-			mode = null
-			SSjob.ResetOccupations()
-			return 0
-
-	//Configure mode and assign player to special mode stuff
-	var/can_continue = 0
-	can_continue = src.mode.pre_setup()		//Choose antagonists
-	SSjob.DivideOccupations() 				//Distribute jobs
-
-	if(!Debug2)
-		if(!can_continue)
-			qdel(mode)
-			mode = null
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
-			SSjob.ResetOccupations()
-			return 0
-	else
-		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
-
-	if(hide_mode)
-		var/list/modes = new
-		for (var/datum/game_mode/M in runnable_modes)
-			modes += M.name
-		modes = sortList(modes)
-		world << "<B>The current game mode is - Secret!</B>"
-		world << "<B>Possibilities:</B> [english_list(modes)]"
-	else
-		mode.announce()
+	// Choose antagonists
+	SSkingmaker.coronate()
+	// Divide jobs
+	SSjob.DivideOccupations()
 
 	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
@@ -311,9 +264,6 @@ var/datum/subsystem/ticker/ticker
 			qdel(cinematic)		//end the cinematic
 		if(temp_buckle)
 			qdel(temp_buckle)	//release everybody
-	return
-
-
 
 /datum/subsystem/ticker/proc/create_characters()
 	for(var/mob/new_player/player in player_list)
@@ -414,8 +364,6 @@ var/datum/subsystem/ticker/ticker
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
-	mode.declare_completion()//To declare normal completion.
-
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
@@ -455,7 +403,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return

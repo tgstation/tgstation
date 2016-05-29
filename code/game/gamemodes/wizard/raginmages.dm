@@ -125,8 +125,9 @@
 				break
 
 		if(theghost)
-			var/mob/living/carbon/human/new_character= makeBody(theghost)
-			new_character.mind.make_Wizard()
+			//var/mob/living/carbon/human/new_character= makeBody(theghost)
+			//new_character.mind.make_Wizard()
+			// TODO MAKE A WIZARD DATUM ANTAGS WHEEE
 			making_mage = 0
 			return 1
 

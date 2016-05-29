@@ -39,7 +39,8 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Slaughter Demon"
 	player_mind.special_role = "Slaughter Demon"
-	ticker.mode.traitors |= player_mind
+	//ticker.mode.traitors |= player_mind
+	// TODO make slaughter demon into a datum antag
 	S << S.playstyle_string
 	S << "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>"
 	S << 'sound/magic/demon_dies.ogg'

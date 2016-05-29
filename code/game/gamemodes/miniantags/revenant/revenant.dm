@@ -88,7 +88,8 @@
 			objective2.owner = src.mind
 			src.mind.objectives += objective2
 			src << "<b>Objective #2</b>: [objective2.explanation_text]"
-			ticker.mode.traitors |= src.mind //Necessary for announcing
+			//ticker.mode.traitors |= src.mind //Necessary for announcing
+			// TODO REVENENTANT DATUM ANTAGS
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
@@ -388,7 +389,7 @@
 	player_mind.transfer_to(R)
 	player_mind.assigned_role = "revenant"
 	player_mind.special_role = "Revenant"
-	ticker.mode.traitors |= player_mind
+	//ticker.mode.traitors |= player_mind
 	message_admins("[key_of_revenant] has been [client_to_revive ? "re":""]made into a revenant by reforming ectoplasm.")
 	log_game("[key_of_revenant] was [client_to_revive ? "re":""]made as a revenant by reforming ectoplasm.")
 	visible_message("<span class='revenboldnotice'>[src] suddenly rises into the air before fading away.</span>")

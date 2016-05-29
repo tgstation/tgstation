@@ -117,7 +117,8 @@
 	var/datum/mind/choice = input("Choose a follower to make into your prophet","Prophet Uplifting") as null|anything in following
 	if(choice && choice.current && choice.current.stat != DEAD)
 		src << "You choose [choice.current] as your prophet."
-		choice.make_Handofgod_prophet(side)
+		//choice.make_Handofgod_prophet(side)
+		// TODO DATUMISE IT
 		speak2god = new()
 		speak2god.god = src
 		speak2god.Grant(choice.current)

@@ -38,11 +38,12 @@
 	for(var/mob/living/carbon/human/H in mob_list)
 		if(H.mind)
 			var/datum/mind/M = H.mind
-			if(M.assigned_role && !(M in ticker.mode.traitors))
+			if(M.assigned_role)
 				for(var/job in jobs_to_revolt)
 					if(M.assigned_role == job)
 						citizens += H
-						ticker.mode.traitors += M
+						// TODO make seperaist into a datum antag
+						//ticker.mode.traitors += M
 						M.special_role = "separatist"
 						H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a separatist, long live [nation]!</font>"
 						H << "<B>You are a separatist! [nation] forever! Protect the soverignty of your newfound land with your comrades in arms!</B>"

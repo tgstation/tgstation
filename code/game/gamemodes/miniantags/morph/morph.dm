@@ -222,7 +222,8 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
-	ticker.mode.traitors |= player_mind
+	//ticker.mode.traitors |= player_mind
+	// TODO make morphling in a datum antag
 	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'
 	message_admins("[selected.key] has been made into morph by an event.")

@@ -1,3 +1,4 @@
+/*
 /datum/game_mode/traitor/double_agents
 	name = "double agents"
 	config_tag = "double_agents"
@@ -100,3 +101,4 @@
 
 		// If any check fails, remove them from our list
 		late_joining_list -= M
+*/

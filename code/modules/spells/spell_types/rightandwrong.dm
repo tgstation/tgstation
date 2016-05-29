@@ -13,8 +13,9 @@
 		if(H.stat == 2 || !(H.client)) continue
 		if(H.mind)
 			if(H.mind.special_role == "Wizard" || H.mind.special_role == "apprentice" || H.mind.special_role == "survivalist") continue
-		if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
-			ticker.mode.traitors += H.mind
+		if(FALSE)
+		//if(prob(survivor_probability) && !(H.mind in ticker.mode.traitors))
+		//	ticker.mode.traitors += H.mind TODO FIXME XXX DATUM ANTAGS
 			var/datum/objective/summon_guns/guns = new
 			guns.owner = H.mind
 			H.mind.objectives += guns

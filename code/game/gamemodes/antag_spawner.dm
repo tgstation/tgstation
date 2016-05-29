@@ -162,19 +162,22 @@
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
-	var/new_op_code = "Ask your leader!"
+	return
+	/*
+	//var/new_op_code = "Ask your leader!"
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
-	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
-	if(nuke)
-		new_op_code = nuke.r_code
-	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
+	//var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
+	//if(nuke)
+//		new_op_code = nuke.r_code
+	//M.mind.make_Nuke(T, new_op_code, 0, FALSE)
+	// TODO DATOMISE IT
 	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
 	M.mind.name = newname
 	M.real_name = newname
 	M.name = newname
-
+	*/
 
 
 //////SYNDICATE BORG
@@ -254,7 +257,8 @@
 	S.key = C.key
 	S.mind.assigned_role = "Slaughter Demon"
 	S.mind.special_role = "Slaughter Demon"
-	ticker.mode.traitors += S.mind
+	//ticker.mode.traitors += S.mind
+	// TODO SLAUGHTER DEMON DATUM ANTAGS
 	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
 	new_objective.owner = S.mind
 	new_objective.target = usr.mind

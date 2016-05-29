@@ -1,3 +1,4 @@
+/*
 /datum/game_mode/traitor/changeling
 	name = "traitor+changeling"
 	config_tag = "traitorchan"
@@ -73,3 +74,4 @@
 					if(!(character.job in restricted_jobs))
 						character.mind.make_Changling()
 	..()
+*/

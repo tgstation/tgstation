@@ -60,8 +60,8 @@
 /obj/item/weapon/greentext/process()
 	if(new_holder && new_holder.z == ZLEVEL_CENTCOM)//you're winner!
 		new_holder << "<font color='green'>At last it feels like victory is assured!</font>"
-		if(!(new_holder in ticker.mode.traitors))
-			ticker.mode.traitors += new_holder.mind
+		//if(!(new_holder in ticker.mode.traitors))
+	//		ticker.mode.traitors += new_holder.mind
 		new_holder.mind.special_role = "winner"
 		var/datum/objective/O = new /datum/objective("Succeed")
 		O.completed = 1 //YES!
@@ -69,8 +69,7 @@
 		new_holder.mind.objectives += O
 		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
-		burn_state = ON_FIRE
-		qdel(src)
+		qdel(src, force=TRUE)
 
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		last_holder << "<span class='warning'>A sudden wave of failure washes over you...</span>"

@@ -110,7 +110,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, "Syndicate"))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
-						character.mind.make_Changling()
+						//character.mind.make_Changling()
+						return //TODO FIX ME WHY WHY WHY WHY
 
 /datum/game_mode/proc/forge_changeling_objectives(datum/mind/changeling, var/team_mode = 0)
 	//OBJECTIVES - random traitor objectives. Unique objectives "steal brain" and "identity theft".

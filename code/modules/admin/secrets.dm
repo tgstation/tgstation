@@ -309,38 +309,8 @@
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
-			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
-			if(!objective)
-				return
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","TA([objective])")
-			for(var/mob/living/carbon/human/H in player_list)
-				if(H.stat == 2 || !H.client || !H.mind) continue
-				if(is_special_character(H)) continue
-				//traitorize(H, objective, 0)
-				ticker.mode.traitors += H.mind
-				H.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = H
-				new_objective.explanation_text = objective
-				H.mind.objectives += new_objective
-				ticker.mode.greet_traitor(H.mind)
-				//ticker.mode.forge_traitor_objectives(H.mind)
-				ticker.mode.finalize_traitor(H.mind)
-			for(var/mob/living/silicon/A in player_list)
-				if(A.stat == 2 || !A.client || !A.mind) continue
-				if(ispAI(A)) continue
-				else if(is_special_character(A)) continue
-				ticker.mode.traitors += A.mind
-				A.mind.special_role = "traitor"
-				var/datum/objective/new_objective = new
-				new_objective.owner = A
-				new_objective.explanation_text = objective
-				A.mind.objectives += new_objective
-				ticker.mode.greet_traitor(A.mind)
-				ticker.mode.finalize_traitor(A.mind)
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] used everyone is a traitor secret. Objective is [objective]</span>")
-			log_admin("[key_name(usr)] used everyone is a traitor secret. Objective is [objective]")
+			usr << "NO." // TODO reimplment traitor all giving everyone
+			// a single objective or some shit
 
 		if("changebombcap")
 			if(!check_rights(R_FUN))

@@ -147,7 +147,6 @@ var/datum/subsystem/job/SSjob
 			player.mind.special_role = null
 	SetupOccupations()
 	unassigned = list()
-	return
 
 
 //This proc is called before the level loop of DivideOccupations() and will try to select a head, ignoring ALL non-head preferences for every level until
@@ -184,8 +183,6 @@ var/datum/subsystem/job/SSjob
 			continue
 		var/mob/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
-	return
-
 
 /datum/subsystem/job/proc/FillAIPosition()
 	var/ai_selected = 0

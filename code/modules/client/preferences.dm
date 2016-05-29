@@ -408,27 +408,7 @@ var/list/preferences_datums = list()
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>Special Role Settings</h2>"
-
-			if(jobban_isbanned(user, "Syndicate"))
-				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
-				src.be_special = list()
-
-
-			for (var/i in special_roles)
-				if(jobban_isbanned(user, i))
-					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
-				else
-					var/days_remaining = null
-					if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
-						var/mode_path = special_roles[i]
-						var/datum/game_mode/temp_mode = new mode_path
-						days_remaining = temp_mode.get_remaining_days(user.client)
-
-					if(days_remaining)
-						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-					else
-						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
-
+			// TODO ROLE PREFERENCES ARE FOR NERDS, COME BACK LATER
 			dat += "</td></tr></table>"
 
 	dat += "<hr><center>"

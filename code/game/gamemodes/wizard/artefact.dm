@@ -250,7 +250,7 @@ var/global/list/multiverse = list()
 					usr.mind.objectives += hijack_objective
 					hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
 					usr << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
-					ticker.mode.traitors += usr.mind
+					//ticker.mode.traitors += usr.mind TODO
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = TRUE
 				else
@@ -260,7 +260,7 @@ var/global/list/multiverse = list()
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
 					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 					usr.mind.objectives += new_objective
-					ticker.mode.traitors += usr.mind
+					//ticker.mode.traitors += usr.mind TODO
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = FALSE
 		else
