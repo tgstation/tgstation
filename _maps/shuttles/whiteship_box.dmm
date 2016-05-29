@@ -1,7 +1,7 @@
 "aa" = (/turf/open/space,/area/space)
 "ab" = (/turf/closed/wall/shuttle{icon_state = "swall_s6"; dir = 2},/area/shuttle/abandoned)
 "ac" = (/turf/closed/wall/shuttle{icon_state = "swall_s10"; dir = 2},/area/shuttle/abandoned)
-"ad" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship"; launch_status = 0; name = "NT Medical Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 35},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
+"ad" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dheight = 0; dir = 2; dwidth = 11; height = 22; id = "whiteship"; launch_status = 0; name = "NT Medical Ship"; roundstart_move = "whiteship_away"; travelDir = 180; width = 35; timid = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "ae" = (/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/abandoned)
 "af" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "ag" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 4},/turf/open/floor/plating/airless,/area/shuttle/abandoned)

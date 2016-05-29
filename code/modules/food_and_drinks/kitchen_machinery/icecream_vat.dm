@@ -16,8 +16,7 @@
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
-	flags = OPENCONTAINER | NOREACT
-	reagents = new()
+	flags = OPENCONTAINER
 
 /obj/machinery/icecream_vat/proc/get_ingredient_list(type)
 	switch(type)
@@ -55,7 +54,8 @@
 	..()
 	while(product_types.len < 6)
 		product_types.Add(5)
-	reagents.my_atom = src
+	create_reagents()
+	reagents.set_reacting(FALSE)
 	reagents.add_reagent("milk", 5)
 	reagents.add_reagent("flour", 5)
 	reagents.add_reagent("sugar", 5)

@@ -109,7 +109,7 @@
 
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	..()
+	. = ..()
 	handle_vehicle_layer()
 	handle_vehicle_offsets()
 

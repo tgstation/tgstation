@@ -1,10 +1,7 @@
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
-	if (wear_suit && wear_suit.breakouttime)
-		return 1
-	return 0
+/mob/living/carbon/human/restrained(ignore_grab)
+	. = ((wear_suit && wear_suit.breakouttime) || ..())
+
 
 /mob/living/carbon/human/canBeHandcuffed()
 	return 1
@@ -77,7 +74,7 @@
 	return
 
 //gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/proc/get_idcard()
+/mob/living/carbon/human/get_idcard()
 	if(wear_id)
 		return wear_id.GetID()
 

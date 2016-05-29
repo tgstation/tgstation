@@ -157,6 +157,11 @@
 
 /mob/living/proc/canSuicide()
 	if(stat == CONSCIOUS)
+		if(mental_dominator)
+			src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to murder them.</span>"
+			if(mind_control_holder)
+				mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a suicide attempt!</span>"
+			return 0
 		return 1
 	else if(stat == DEAD)
 		src << "You're already dead!"

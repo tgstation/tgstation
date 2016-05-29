@@ -192,14 +192,6 @@
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
-	else if(istype(W,/obj/item/weapon/grab))
-		if(state_open)
-			var/obj/item/weapon/grab/G = W
-			if(iscorgi(G.affecting))
-				has_corgi = 1
-				G.affecting.loc = src
-				qdel(G)
-				update_icon()
 
 	else if(user.a_intent != "harm")
 
@@ -230,6 +222,17 @@
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	if(busy)
 		user << "<span class='warning'>[src] is busy.</span>"
+		return
+
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		var/mob/living/L = user.pulling
+		if(L.buckled || L.buckled_mobs.len)
+			return
+		if(state_open)
+			if(iscorgi(L))
+				has_corgi = 1
+				L.forceMove(src)
+				update_icon()
 		return
 
 	if(!state_open)

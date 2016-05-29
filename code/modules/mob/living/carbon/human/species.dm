@@ -1020,22 +1020,6 @@
 						H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [H.pulling]!</span>")
 						talked = 1
 						H.stop_pulling()
-
-					//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
-					if(istype(H.l_hand, /obj/item/weapon/grab))
-						var/obj/item/weapon/grab/lgrab = H.l_hand
-						if(lgrab.affecting)
-							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [lgrab.affecting]!</span>")
-							talked = 1
-						spawn(1)
-							qdel(lgrab)
-					if(istype(H.r_hand, /obj/item/weapon/grab))
-						var/obj/item/weapon/grab/rgrab = H.r_hand
-						if(rgrab.affecting)
-							H.visible_message("<span class='warning'>[M] has broken [H]'s grip on [rgrab.affecting]!</span>")
-							talked = 1
-						spawn(1)
-							qdel(rgrab)
 					//End BubbleWrap
 
 					if(!talked)	//BubbleWrap
