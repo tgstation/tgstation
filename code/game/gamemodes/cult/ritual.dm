@@ -124,6 +124,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 		attack_hand(M)
 
 /obj/effect/rune/attack_hand(mob/living/user as mob)
+	user.delayNextAttack(5)
 	if(!iscultist(user))
 		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 		return
