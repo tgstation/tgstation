@@ -158,7 +158,7 @@ RSF
 		matter++
 
 /obj/item/weapon/cookiesynth/afterattack(atom/A, mob/user, proximity)
-	if(cooldown)
+	if(cooldown > world.time)
 		return
 	if(!proximity)
 		return
@@ -184,6 +184,4 @@ RSF
 	else
 		matter--
 		desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
-	cooldown = 1
-	spawn(cooldowndelay)
-	cooldown = 0
+	cooldown = world.time + cooldowndelay
