@@ -40,7 +40,12 @@ var/bomb_set
 	core = new /obj/item/nuke_core(src)
 	SSobj.processing -= core
 	update_icon()
+	poi_list |= src
 	previous_level = get_security_level()
+
+/obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
+	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
