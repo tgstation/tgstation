@@ -5,6 +5,7 @@ var/global/list/clockwork_generals_invoked = list("nezbere" = FALSE, "sevtug" = 
 var/global/list/all_clockwork_objects = list() //All clockwork items, structures, and effects in existence
 var/global/list/all_clockwork_mobs = list() //All clockwork SERVANTS (not creatures) in existence
 var/global/list/clockwork_component_cache = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0) //The pool of components that caches draw from
+var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 #define SCRIPTURE_PERIPHERAL 0 //Scripture tiers; peripherals should never be used
 #define SCRIPTURE_DRIVER 1
