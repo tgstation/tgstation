@@ -360,7 +360,7 @@
 	return
 
 
-/obj/item/weapon/gun/energy/xporter
+/obj/item/weapon/gun/energy/exporter
 	name = "x-porter cannon"
 	desc = "An industrial-grade teleporter connected to export scanner. Weapon of a true capitalist."
 	icon_state = "export_cannon"
@@ -369,10 +369,10 @@
 	charge_delay = 1
 	var/emagged = 0
 
-/obj/item/weapon/gun/energy/xporter/can_shoot()
+/obj/item/weapon/gun/energy/exporter/can_shoot()
 	return power_supply.charge >= power_supply.maxcharge
 
-/obj/item/weapon/gun/energy/xporter/update_icon()
+/obj/item/weapon/gun/energy/exporter/update_icon()
 	if(can_shoot())
 		icon_state = "export_cannon"
 	else

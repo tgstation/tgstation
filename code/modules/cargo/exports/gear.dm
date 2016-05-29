@@ -11,7 +11,7 @@
 /datum/export/gear/sec_armor
 	cost = 100
 	unit_name = "armor vest"
-	export_types = list(/obj/item/clothing/suit/armor/vest)
+	export_types = list(/obj/item/clothing/suit/armor/vest, /obj/item/clothing/suit/armor/vest/alt)
 	include_subtypes = FALSE
 
 

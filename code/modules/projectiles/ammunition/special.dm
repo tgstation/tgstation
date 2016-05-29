@@ -53,6 +53,6 @@
 
 /obj/item/ammo_casing/energy/export/newshot()
 	..()
-	if(istype(BB, /obj/item/projectile/beam/sell) && istype(loc, /obj/item/weapon/gun/energy/xporter))
+	if(istype(BB, /obj/item/projectile/beam/sell) && istype(loc, /obj/item/weapon/gun/energy/exporter))
 		var/obj/item/projectile/beam/sell/S = BB
 		S.gun = loc

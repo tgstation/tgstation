@@ -102,6 +102,41 @@
 	export_types = list(/obj/machinery/power/supermatter_shard)
 
 
+// Construction structures
+/datum/export/large/window
+	cost = 5
+	unit_name = "assembled window"
+	export_types = list(/obj/structure/window)
+
+/datum/export/large/window/get_cost(obj/O)
+	var/obj/structure/window/W = O
+	var/cost = ..()
+	if(W.reinf)
+		cost = 8
+	if(W.fulltile)
+		cost *= 2
+	return cost
+
+
+/datum/export/large/grille
+	cost = 5
+	unit_name = "assembled grille"
+	export_types = list(/obj/structure/grille)
+
+/datum/export/large/grille/get_cost(obj/O)
+	var/obj/structure/grille/G = O
+	var/cost = ..()
+	if(W.destroyed)
+		cost /= 2
+	return round(cost)
+
+
+/datum/export/large/girder
+	cost = 10
+	unit_name = "wall girder"
+	export_types = list(/obj/structure/girder)
+
+
 // Misc
 /datum/export/large/iv
 	cost = 300

@@ -245,11 +245,11 @@
 
 /obj/item/projectile/beam/sell
 	name = "export beam"
-	icon_state = "e_netting"
+	icon_state = "xray"
 	damage = 1 // Damage is used to detremine if we are performing an execution
 	nodamage = 1
 	eyeblur = 2
-	var/obj/item/weapon/gun/energy/xporter/gun
+	var/obj/item/weapon/gun/energy/exporter/gun
 	var/obj/docking_port/mobile/supply/supply
 	var/selling = 0
 	var/sell_log = ""
@@ -270,7 +270,18 @@
 				C << "<span class='userdanger'>\The [src] reaches deep inside your body, selling your insides!</span>"
 
 		else if(!istype(gun) || gun.emagged) // Not execution, and overloaded? Sell victim's gear.
-			world << "exporter gear sell"
+			for(var/slot_id in 1 to slots_amt) // Check all the slots
+				var/obj/item/thing = C.get_item_by_slot(slot_id)
+				if(!thing || !can_sell(thing))
+					continue
+
+				if(!C.unEquip(thing))
+					continue
+
+				sell(thing)
+
+			if(sell_log)
+				C << "<span class='userdanger'>\The [src] sells your gear!</span>"
 		else
 			target << "<span class='notice'>\The [src] dissipates harmlessly through your body.</span>"
 

@@ -1111,7 +1111,7 @@
 /datum/supply_pack/misc/exporter
 	name = "X-Porter Cannon"
 	cost = 20000
-	contains = list(/obj/item/weapon/gun/energy/xporter)
+	contains = list(/obj/item/weapon/gun/energy/exporter)
 	crate_name = "religious supplies crate" // money is my god, capitalism is my religion
 	contraband = TRUE
 
