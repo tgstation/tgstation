@@ -270,8 +270,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 	if(!client) //We dun goof
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
 	if(type)
 		if((type & MESSAGE_SEE) && is_blind()) //Vision related //We can't see all those emotes no-one ever does !
 			if(!(alt))
