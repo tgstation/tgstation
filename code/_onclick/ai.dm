@@ -124,7 +124,7 @@
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(emagged)
 		return
-	if(locked)
+	if(locked || bolt_dropping_timer_id)
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
