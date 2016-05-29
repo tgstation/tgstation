@@ -16,7 +16,7 @@
 	icon_state = "table_frame"
 	density = 0
 	anchored = 0
-	layer = 2.8
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 

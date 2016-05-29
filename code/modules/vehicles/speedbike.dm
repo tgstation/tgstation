@@ -2,7 +2,7 @@
 	name = "Speedbike"
 	icon = 'icons/obj/bike.dmi'
 	icon_state = "speedbike_blue"
-	layer = MOB_LAYER - 0.1
+	layer = LYING_MOB_LAYER
 	keytype = null
 	vehicle_move_delay = 0
 	var/overlay_state = "cover_blue"
@@ -11,13 +11,13 @@
 /obj/vehicle/space/speedbike/New()
 	..()
 	overlay = image("icons/obj/bike.dmi", overlay_state)
-	overlay.layer = MOB_LAYER + 0.1
+	overlay.layer = ABOVE_MOB_LAYER
 	overlays += overlay
 
 /obj/effect/overlay/temp/speedbike_trail
 	name = "speedbike trails"
 	icon_state = "ion_fade"
-	layer = MOB_LAYER - 0.2
+	layer = BELOW_MOB_LAYER
 	duration = 10
 	randomdir = 0
 

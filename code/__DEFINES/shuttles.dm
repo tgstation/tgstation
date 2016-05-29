@@ -7,6 +7,10 @@
 #define SHUTTLE_ESCAPE		5
 #define SHUTTLE_ENDGAME		6
 
+#define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
+#define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
+#define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
+
 // Shuttle return values
 #define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
 #define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"

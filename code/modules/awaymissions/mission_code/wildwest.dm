@@ -120,13 +120,9 @@
 	desc = "What is that thing?"
 	density = 1
 	anchored = 1
-	layer = 3
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggered = 0
-
-/obj/effect/meatgrinder/New()
-	icon_state = "blobpod"
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)
 	Bumped(AM)

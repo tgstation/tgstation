@@ -16,7 +16,7 @@
 
 	start_up_overlay = "lava"
 	duration_overlay = "lava"
-	overlay_layer = 2 //Covers floors only
+	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 
 	immunity_type = "lava"
 
@@ -50,7 +50,7 @@
 
 	start_up_overlay = ""
 	duration_overlay = ""
-	overlay_layer = 10
+	overlay_layer = AREA_LAYER
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/area/A in impacted_areas)
@@ -80,7 +80,7 @@
 
 	start_up_overlay = "light_ash"
 	duration_overlay = "ash_storm"
-	overlay_layer = 10
+	overlay_layer = AREA_LAYER
 
 	immunity_type = "ash"
 

@@ -32,7 +32,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = 1
-	layer = MOB_LAYER + 0.25
+	layer = WALL_OBJ_LAYER
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
@@ -131,7 +131,7 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = MOB_LAYER + 0.25
+	layer = WALL_OBJ_LAYER
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20

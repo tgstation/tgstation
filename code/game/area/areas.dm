@@ -26,7 +26,7 @@
 
 /area/New()
 	icon_state = ""
-	layer = 10
+	layer = AREA_LAYER
 	master = src
 	uid = ++global_uid
 	related = list(src)

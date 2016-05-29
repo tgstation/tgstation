@@ -189,7 +189,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/worn_overlays(isinhands)
     . = list()
     if(!isinhands && current_charges)
-        . += image(layer = MOB_LAYER+0.05, icon = 'icons/effects/effects.dmi', icon_state = "shield-cult")
+        . += image(layer = MOB_LAYER+0.01, icon = 'icons/effects/effects.dmi', icon_state = "shield-cult")
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker
 	name = "flagellant's robes"

@@ -661,13 +661,14 @@ var/next_mob_id = 0
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
+	var/ignore_legs = get_leg_ignore()
 	if(ko || resting || stunned || chokehold)
 		drop_r_hand()
 		drop_l_hand()
 		unset_machine()
 		if(pulling)
 			stop_pulling()
-	else if(has_legs)
+	else if(has_legs || ignore_legs)
 		lying = 0
 
 	if(buckled)
@@ -675,15 +676,15 @@ var/next_mob_id = 0
 	else if(!lying)
 		if(resting)
 			fall()
-		else if(ko || !has_legs || chokehold)
+		else if(ko || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !has_arms))
+	canmove = !(ko || resting || stunned || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = MOB_LAYER - 0.2 //so mob lying always appear behind standing mobs
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
-		if(layer == MOB_LAYER - 0.2)
+		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
 	update_action_buttons_icon()

@@ -5,7 +5,7 @@
 	icon_state = "lattice"
 	density = 0
 	anchored = 1
-	layer = 2.3 //under pipes
+	layer = LATTICE_LAYER //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
 	/turf/open/floor,

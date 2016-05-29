@@ -49,7 +49,7 @@
 	unacidable = 1//So you can't melt fire with acid.
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	layer = TURF_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	luminosity = 3
 
 	var/volume = 125
