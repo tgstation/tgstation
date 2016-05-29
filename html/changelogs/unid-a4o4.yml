@@ -1,7 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- rscadd: "Added a 'Load Map Element' admin command that allows admins to spawn any vault, away mission or external map file into the game. Warning: loading large external map files may result in extreme lag."
-- tweak: "Merged 'Jump to Vault' and 'Jump to Away Mission' into one command - 'Jump to Map Element'"
