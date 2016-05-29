@@ -87,6 +87,10 @@
 	suffix = "meta"
 	name = "emergency shuttle (Metastation)"
 
+/datum/map_template/shuttle/emergency/mini
+	suffix = "mini"
+	name = "Mini emergency shuttle"
+
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
 	name = "Shuttle 667"
