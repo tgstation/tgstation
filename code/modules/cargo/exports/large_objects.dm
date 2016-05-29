@@ -126,7 +126,7 @@
 /datum/export/large/grille/get_cost(obj/O)
 	var/obj/structure/grille/G = O
 	var/cost = ..()
-	if(W.destroyed)
+	if(G.destroyed)
 		cost /= 2
 	return round(cost)
 

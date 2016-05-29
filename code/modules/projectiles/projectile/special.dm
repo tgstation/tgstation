@@ -270,14 +270,18 @@
 				C << "<span class='userdanger'>\The [src] reaches deep inside your body, selling your insides!</span>"
 
 		else if(!istype(gun) || gun.emagged) // Not execution, and overloaded? Sell victim's gear.
+			var/list/for_sell = list()
+
 			for(var/slot_id in 1 to slots_amt) // Check all the slots
 				var/obj/item/thing = C.get_item_by_slot(slot_id)
 				if(!thing || !can_sell(thing))
 					continue
+				for_sell += thing
 
+			for(var/i in for_sell)
+				var/obj/item/thing = i
 				if(!C.unEquip(thing))
 					continue
-
 				sell(thing)
 
 			if(sell_log)
@@ -290,6 +294,9 @@
 		var/obj/O = target
 		if(!O.anchored)
 			sell(target)
+
+	if(sell_log)
+		add_logs(firer, target, "sold", src, "SOLD:([sell_log])")
 
 	stop_sell()
 
@@ -342,7 +349,6 @@
 		msg += "Total: [points_change>=0 ? "+" : ""][points_change] credits."
 		firer << "<span class='notice'>[msg]</span>"
 
-	world << sell_log
 	SSshuttle.points += points_change
 	if(istype(gun) && gun.power_supply && points_change-200 > 0)
 		gun.power_supply.use(min(points_change-200, gun.power_supply.charge))
