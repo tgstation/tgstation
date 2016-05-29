@@ -53,7 +53,8 @@
 				M.amount += amt
 				total_amount += amt
 		else
-			for(var/datum/material/M in materials)
+			for(var/i in materials)
+				var/datum/material/M = materials[i]
 				M.amount += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
@@ -135,7 +136,7 @@
 			return TRUE
 	else if(istype(mats))
 		for(var/M in mats)
-			if(materials[M] && mats[M] <= materials[M])
+			if(materials[M] && (mats[M] <= materials[M]))
 				continue
 			else
 				return FALSE
@@ -218,62 +219,47 @@
 
 
 /datum/material
+	var/name
 	var/amount = 0
 	var/material_type = null
 	var/sheet_type = null
 
 /datum/material/metal
-
-/datum/material/metal/New()
-	..()
+	name = "Metal"
 	material_type = MAT_METAL
 	sheet_type = /obj/item/stack/sheet/metal
 
 /datum/material/glass
-
-/datum/material/glass/New()
-	..()
+	name = "Glass"
 	material_type = MAT_GLASS
 	sheet_type = /obj/item/stack/sheet/glass
 
 /datum/material/silver
-
-/datum/material/silver/New()
-	..()
+	name = "Silver"
 	material_type = MAT_SILVER
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 
 /datum/material/gold
-
-/datum/material/gold/New()
-	..()
+	name = "Gold"
 	material_type = MAT_GOLD
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 
 /datum/material/diamond
-
-/datum/material/diamond/New()
-	..()
+	name = "Diamond"
 	material_type = MAT_DIAMOND
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 
 /datum/material/uranium
-
-/datum/material/uranium/New()
-	..()
+	name = "Uranium"
 	material_type = MAT_URANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 
 /datum/material/plasma
-
-/datum/material/plasma/New()
-	..()
+	name = "Solid Plasma"
 	material_type = MAT_PLASMA
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 
 /datum/material/bananium
-
-/datum/material/bananium/New()
-	..()
+	name = "Bananium"
 	material_type = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium

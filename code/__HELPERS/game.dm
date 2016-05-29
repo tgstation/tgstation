@@ -401,7 +401,7 @@
 		if(!G.key || !G.client)
 			continue
 		if(be_special_flag)
-			if(!(G.client.prefs.be_special & be_special_flag))
+			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))

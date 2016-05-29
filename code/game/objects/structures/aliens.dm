@@ -162,7 +162,7 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = 1
 	density = 0
-	layer = TURF_LAYER + 0.09
+	layer = TURF_LAYER
 	icon_state = "weeds"
 	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null

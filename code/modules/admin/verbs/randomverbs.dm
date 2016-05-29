@@ -642,7 +642,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
 	if (!holder)
@@ -667,7 +667,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
 		return
 
-	if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
 	SSshuttle.emergency.cancel()

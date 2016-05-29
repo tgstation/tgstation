@@ -64,7 +64,7 @@
 	return 1
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
-	if(!target)
+	if(!target && AIStatus != AI_OFF && !client)
 		Goto(P.starting, move_to_delay, 3)
 	..()
 

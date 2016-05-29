@@ -32,8 +32,6 @@
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
 
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
-
 //turf-only flags
 #define NOJAUNT		1
 
@@ -68,6 +66,9 @@
 #define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define NODISMEMBER		16
 #define NOHUNGER		17
+#define NOCRITDAMAGE	18
+
+#define FLYING	65536
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -80,3 +81,6 @@
 #define SLIME 16
 #define DRONE 32
 #define SWARMER 64
+
+// Flags for reagents
+#define REAGENT_NOREACT 1

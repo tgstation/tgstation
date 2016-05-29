@@ -24,16 +24,15 @@
 	environment_smash = 1
 	robust_searching = 1
 	stat_attack = 2
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 	faction = list("zombie")
 	var/mob/living/carbon/human/stored_corpse = null
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
-	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
-/mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
+/mob/living/simple_animal/hostile/zombie/darkholme //BOY?NEXT?RUIN
 	desc = "This guy seems to have gotten lost on his way to the leather club."
 	gold_core_spawnable = 0
 
@@ -153,6 +152,7 @@ mob/living/simple_animal/hostile/zombie/gymboss
 	spawn_text = "emerges from"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("zombie")
+	deathmessage = "collapses, stopping the flow of zombies!"
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/spawner/zombie/lesser
@@ -162,11 +162,6 @@ mob/living/simple_animal/hostile/zombie/gymboss
 	spawn_time = 150
 	health = 200
 	maxHealth = 200
-
-/mob/living/simple_animal/hostile/spawner/zombie/New()
-	..()
-	deathmessage = "[src] collapes, stopping the flow of zombies!"
-
 
 /obj/item/weapon/shovel/cursed
 	name = "cursed shovel"

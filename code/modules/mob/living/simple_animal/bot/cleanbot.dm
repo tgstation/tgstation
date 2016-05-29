@@ -104,8 +104,8 @@
 					victim.acid_act(5, 2, 100)
 
 			if(prob(10)) //Wets floors randomly
-				var/turf/open/T = loc
-				T.MakeSlippery()
+				var/turf/open/OT = get_turf(loc)
+				OT.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
 			if(prob(5)) //Spawns foam!
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")

@@ -77,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened || sleeping)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
@@ -87,7 +87,7 @@
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A,src,params)
 
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow

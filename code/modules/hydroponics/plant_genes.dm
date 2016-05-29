@@ -290,15 +290,15 @@
 
 
 /datum/plant_gene/trait/noreact
-	// Makes plant NOREACT until squashed.
+	// Makes plant reagents not react until squashed.
 	name = "Separated Chemicals"
 
 /datum/plant_gene/trait/noreact/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	G.flags |= NOREACT
+	G.reagents.set_reacting(FALSE)
 
 /datum/plant_gene/trait/noreact/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
-	G.flags &= ~NOREACT
+	G.reagents.set_reacting(TRUE)
 	G.reagents.handle_reactions()
 
 

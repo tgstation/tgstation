@@ -99,8 +99,8 @@
 
 /obj/item/weapon/storage/fancy/cigarettes/New()
 	..()
-	flags |= NOREACT
 	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
+	reagents.set_reacting(FALSE)
 	for(var/obj/item/clothing/mask/cigarette/cig in src)
 		cig.desc = "\An [name] brand [cig.name]."
 	name = "\improper [name] packet"

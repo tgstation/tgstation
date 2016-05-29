@@ -41,7 +41,7 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-###Object Oriented code 
+###Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 ###All Byond paths must contain the full path.
@@ -63,7 +63,7 @@ datum
 				code
 			proc2()
 				code
-		
+
 		datum2
 			varname1 = 0
 			proc
@@ -135,9 +135,20 @@ Copying code from one place to another maybe suitable for small short time proje
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
+###Startup/Runtime tradeoffs with lists and the "hidden" init proc
+First, read the comments in this byond thread, starting here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
+
+There are two key points here:
+
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New() and avoid the overhead of a second call (init() and then new())
+
+2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
+
+Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
+
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
-	
+
 ###Control statements:
 (if,while,for,etc)
 
@@ -271,6 +282,9 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
 
+## Banned content
+Do not add any of the following in a Pull Request or risk getting the PR closed:
+ - National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
 
 ##A word on git
 Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.

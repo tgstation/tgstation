@@ -10,7 +10,7 @@
 	use_power = 2
 	idle_power_usage = 5
 	active_power_usage = 10
-	layer = 5
+	layer = WALL_OBJ_LAYER
 
 	var/health = 50
 	var/list/network = list("SS13")

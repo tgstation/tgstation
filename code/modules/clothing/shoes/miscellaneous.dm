@@ -62,6 +62,7 @@
 	var/turf/open/t_loc = get_turf(src)
 	if(istype(t_loc) && t_loc.wet)
 		t_loc.MakeDry(TURF_WET_WATER)
+		t_loc.wet_time = 0
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"

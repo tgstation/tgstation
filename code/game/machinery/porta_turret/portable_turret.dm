@@ -3,7 +3,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "grey_target_prism"
 	anchored = 1
-	layer = 3
+	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
 	use_power = 1				//this turret uses and requires power
@@ -502,7 +502,7 @@
 	if(cover)
 		cover.icon_state = "openTurretCover"
 	raised = 1
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/machinery/porta_turret/proc/popDown()	//pops the turret down
 	if(disabled)
@@ -511,7 +511,7 @@
 		return
 	if(stat & BROKEN)
 		return
-	layer = 3
+	layer = OBJ_LAYER
 	raising = 1
 	if(cover)
 		flick("popdown", cover)

@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
@@ -69,10 +69,9 @@
 	shatter()
 
 /obj/structure/window/narsie_act()
-	var/evil_color = "#7D1919"
-	color = evil_color
+	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
-		shard.color = evil_color
+		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -488,3 +487,6 @@
 
 /obj/structure/window/shuttle/narsie_act()
 	color = "#3C3434"
+
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE

@@ -183,7 +183,7 @@ BLIND     // can't see anything
 		permeability_coefficient = null
 		flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
-		flags_cover &= 0
+		flags_cover = 0
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
@@ -460,10 +460,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		rolldown()

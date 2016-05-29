@@ -20,7 +20,7 @@
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
-	layer = MOB_LAYER - 0.2//icon draw layer
+	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags = HEAR
@@ -397,7 +397,7 @@
 ////////////////////////////
 
 
-/obj/mecha/proc/click_action(atom/target,mob/user)
+/obj/mecha/proc/click_action(atom/target,mob/user,params)
 	if(!occupant || occupant != user )
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
@@ -423,10 +423,10 @@
 			return
 	if(!target.Adjacent(src))
 		if(selected && selected.is_ranged())
-			if(selected.action(target))
+			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(selected.action(target))
+		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
 		if(internal_damage & MECHA_INT_CONTROL_LOST)
