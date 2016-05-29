@@ -92,14 +92,15 @@
 
 	//Check if dancer fulfilled the previous task
 	if(progress_counter > 0)
-		if(dancer.dir != current_dir)
-			return lose()
-
 		switch(current_instruction)
 			if(DDR_STAND)
-				if(dancer.lying == 1) return lose()
+				if(dancer.lying == 1)
+					return lose()
+				if(dancer.dir != current_dir) //Only check for direction if standing. Otherwise the game can't be completed because of a bug
+					return lose()
 			if(DDR_LIE)
-				if(dancer.lying == 0) return lose()
+				if(dancer.lying == 0)
+					return lose()
 
 	//Update counters
 	progress_counter++
