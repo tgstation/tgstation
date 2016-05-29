@@ -171,11 +171,3 @@
 	else if(stat == UNCONSCIOUS)
 		src << "You need to be conscious to suicide!"
 	return
-
-/mob/living/carbon/canSuicide()
-	if(!..())
-		return
-	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
-		return
-	return 1
