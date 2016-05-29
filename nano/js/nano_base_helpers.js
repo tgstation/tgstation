@@ -17,7 +17,7 @@ NanoBaseHelpers = function ()
 			},
             combine: function( arr1, arr2 ) {
                 return arr1 && arr2 ? arr1.concat(arr2) : arr1 || arr2;
-            },  
+            },
             dump: function( arr1 ) {
                 return JSON.stringify(arr1);
             },
@@ -51,7 +51,7 @@ NanoBaseHelpers = function ()
 				return '<div unselectable="on" class="link linkActive ' + iconClass + ' ' + elementClass + '" data-href="' + NanoUtility.generateHref(parameters) + '" ' + elementIdHtml + '>' + iconHtml + text + '</div>';
 			},
 			// Since jsrender breaks the ^ operator
-            xor: function(number,bit) {                               
+            xor: function(number,bit) {
                 return number ^ bit;
             },
             precisionRound: function (value, places) {
@@ -172,7 +172,7 @@ NanoBaseHelpers = function ()
 				var body = $('body'); // We store data in the body tag, it's as good a place as any
 				_urlParameters = body.data('urlParameters');
 				var queryString = '?';
-	
+
 				for (var key in _urlParameters)
 				{
 					if (_urlParameters.hasOwnProperty(key))
@@ -199,7 +199,7 @@ NanoBaseHelpers = function ()
 				return queryString;
 			},
 			// Display DNA Blocks (for the DNA Modifier UI)
-			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey) {
+			displayDNABlocks: function(dnaString, selectedBlock, selectedSubblock, blockSize, paramKey, blockLabels) {
 			    if (!dnaString)
 				{
 					return '<div class="notice">Please place a valid subject into the DNA modifier.</div>';
@@ -207,9 +207,17 @@ NanoBaseHelpers = function ()
 
 				var characters = dnaString.split('');
 
-                var html = '<div class="dnaBlock"><div class="link dnaBlockNumber">1</div>';
-                var block = 1;
+				var block = 1;
                 var subblock = 1;
+				var html;
+				if (paramKey.toUpperCase() == 'SE')
+					{
+						html = '<div class="dnaBlock"><div class="link linkActive dnaBlockNumber" data-href="' + NanoUtility.generateHref({'changeBlockLabel' : block}) + '" title="'+blockLabels[block-1]["name"]+'" style="background:'+blockLabels[0]["color"]+'">1</div>';
+					}
+				else
+					{
+						html = '<div class="dnaBlock"><div class="link dnaBlockNumber">1</div>';
+					}
                 for (index in characters)
                 {
 					if (!characters.hasOwnProperty(index) || typeof characters[index] === 'object')
@@ -240,7 +248,14 @@ NanoBaseHelpers = function ()
                     {
 						block++;
                         subblock = 1;
-                        html += '</div><div class="dnaBlock"><div class="link dnaBlockNumber">' + block + '</div>';
+						if (paramKey.toUpperCase() == 'SE')
+							{
+								html += '</div><div class="dnaBlock"><div class="link linkActive dnaBlockNumber" data-href="' + NanoUtility.generateHref({'changeBlockLabel' : block}) + '" title="'+blockLabels[block-1]["name"]+'" style="background:'+blockLabels[block-1]["color"]+'">' + block + '</div>';
+							}
+						else
+							{
+								html += '</div><div class="dnaBlock"><div class="link dnaBlockNumber">' + block + '</div>';
+							}
                     }
                     else
                     {
@@ -253,7 +268,7 @@ NanoBaseHelpers = function ()
 				return html;
 			}
 		};
-		
+
 	return {
         addHelpers: function ()
 		{
@@ -267,14 +282,7 @@ NanoBaseHelpers = function ()
 				{
 					NanoTemplate.removeHelper(helperKey);
 				}
-			}            
+			}
         }
 	};
 } ();
- 
-
-
-
-
-
-
