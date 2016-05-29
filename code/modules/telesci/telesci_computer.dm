@@ -20,6 +20,7 @@
 	var/rotation = 0
 	var/angle = 45
 	var/power = 5
+	var/theoretical_target = ""
 
 	// Based on the power used
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
@@ -127,6 +128,7 @@
 
 		// Information about the last teleport
 		t += "<BR><div class='statusDisplay'>"
+		t += "Theoretical Target Location: [theoretical_target]"
 		if(!last_tele_data)
 			t += "No teleport data found."
 		else
@@ -135,7 +137,7 @@
 			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
 		t += "</div>"
 
-	var/datum/browser/popup = new(user, "telesci", name, 300, 500)
+	var/datum/browser/popup = new(user, "telesci", name, 350, 600)
 	popup.set_content(t)
 	popup.open()
 	return
@@ -152,6 +154,13 @@
 	sparks()
 	visible_message("<span class='warning'>The telepad weakly fizzles.</span>")
 	return
+
+/obj/machinery/computer/telescience/proc/is_forbidden_location(turf/target, area/A)
+	if(istype(A, /area/ai_monitored/nuke_storage) || istype(A, /area/ai_monitored/security/armory) || istype(A, /area/turret_protected/ai))
+		return 1
+	for(var/obj/effect/blob/B in target)
+		return 1
+	return 0
 
 /obj/machinery/computer/telescience/proc/doteleport(mob/user)
 
@@ -179,6 +188,10 @@
 		var/turf/target = locate(trueX, trueY, z_co)
 		last_target = target
 		var/area/A = get_area(target)
+		if(is_forbidden_location(target,A))
+			telefail()
+			temp_msg = "Something at the target location is blocking the teleportation."
+			return
 		flick("pad-beam", telepad)
 
 		if(spawn_time > 15) // 1.5 seconds
@@ -227,39 +240,21 @@
 			flick("pad-beam", telepad)
 			playsound(telepad.loc, 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in source)
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
-
-							log_msg += "[key_name(L)] (on a chair), "
-						else
-							continue
-					else if(!isobserver(ROI))
+				if(!istype(ROI, /obj/item/device/gps)) //we only accept GPS and mobs.
+					if(!ismob(ROI))
 						continue
-				if(ismob(ROI))
-					var/mob/T = ROI
-					log_msg += "[key_name(T)], "
+					else
+						var/mob/M = ROI
+						if(M.anchored && !isobserver(M))
+							continue
+						if(M.buckled)
+							continue
+						if(isliving(M))
+							M.Stun(5)
+							M.Weaken(5)
+						log_msg += "[key_name(M)], "
 				else
-					log_msg += "[ROI.name]"
-					if (istype(ROI, /obj/structure/closet))
-						var/obj/structure/closet/C = ROI
-						log_msg += " ("
-						for(var/atom/movable/Q as mob|obj in C)
-							if(ismob(Q))
-								log_msg += "[key_name(Q)], "
-							else
-								log_msg += "[Q.name], "
-						if (dd_hassuffix(log_msg, "("))
-							log_msg += "empty)"
-						else
-							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
-							log_msg += ")"
-					log_msg += ", "
+					log_msg +="[ROI.name], "
 				do_teleport(ROI, dest)
 
 			if (dd_hassuffix(log_msg, ", "))
@@ -282,9 +277,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co != 1 && z_co != 5)
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! Sector must be 1 or 5."
 		return
 	if(teles_left > 0)
 		doteleport(user)
@@ -315,12 +310,14 @@
 			return
 		rotation = Clamp(new_rot, -900, 900)
 		rotation = round(rotation, 0.01)
+		calculate_theoretical_target()
 
 	if(href_list["setangle"])
 		var/new_angle = input("Please input desired elevation in degrees.", name, angle) as num
 		if(..())
 			return
 		angle = Clamp(round(new_angle, 0.1), 1, 9999)
+		calculate_theoretical_target()
 
 	if(href_list["setpower"])
 		var/index = href_list["setpower"]
@@ -328,12 +325,13 @@
 		if(index != null && power_options[index])
 			if(crystals.len + telepad.efficiency >= index)
 				power = power_options[index]
+				calculate_theoretical_target()
 
 	if(href_list["setz"])
 		var/new_z = input("Please input desired sector.", name, z_co) as num
 		if(..())
 			return
-		z_co = Clamp(round(new_z), 1, 10)
+		z_co = Clamp(round(new_z), 1, 5)
 
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
@@ -371,3 +369,17 @@
 	//angle_off = rand(-25, 25)
 	power_off = rand(-4, 0)
 	rotation_off = rand(-10, 10)
+
+/obj/machinery/computer/telescience/proc/calculate_theoretical_target()
+	if(!telepad)
+		return
+	var/TheoPower = Clamp(power, 1, 1000)
+	var/TheoRotation = rotation
+	var/TheoAngle = Clamp(angle, 1, 90)
+
+	var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, TheoRotation, TheoAngle, TheoPower)
+
+	var/theoX = Clamp(round(proj_data.dest_x, 1), 1, world.maxx)
+	var/theoY = Clamp(round(proj_data.dest_y, 1), 1, world.maxy)
+	theoretical_target = "([theoX] , [theoY])"
+	updateDialog()
