@@ -622,11 +622,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/obj/item/weapon/implant/loyalty/L in H)
 				if(L.implanted)
 					qdel(L)
-		else if(H.mind.enslaved_to)
-			H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
-			"<span class='userdanger'>The words invoke a horrible fear deep in your being. Your loyalty to [H.mind.enslaved_to.real_name] falls away as you see how weak they truly are.</span>")
-			H.adjustBrainLoss(5)
-			H.mind.enslaved_to = null
 	return 1
 
 //////////////////
