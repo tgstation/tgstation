@@ -308,7 +308,7 @@
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 			return 0
 	else
 		return ..()
@@ -329,7 +329,7 @@
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
 	welded = 0
 	update_icon()
-	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

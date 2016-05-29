@@ -11,6 +11,7 @@
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
@@ -45,6 +46,8 @@
 
 
 /obj/singularity/narsie/process()
+	if(clashing)
+		return 0
 	eat()
 	if(!target || prob(5))
 		pickcultist()
@@ -77,6 +80,12 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
+	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+		if(enemy.z != z)
+			continue
+		acquire(enemy)
+		return
+
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
@@ -108,7 +117,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(mob/food)
+/obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
 	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"

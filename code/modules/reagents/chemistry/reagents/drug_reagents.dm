@@ -52,7 +52,7 @@
 	id = "crank"
 	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FA00C8"
 	overdose_threshold = 20
 	addiction_threshold = 10
 
@@ -99,7 +99,7 @@
 	id = "krokodil"
 	description = "Cools and calms you down. If overdosed it will deal significant Brain and Toxin damage. If addicted it will begin to deal fatal amounts of Brute damage as the subject's skin falls off."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#0064B4"
 	overdose_threshold = 20
 	addiction_threshold = 15
 
@@ -149,7 +149,7 @@
 	id = "methamphetamine"
 	description = "Reduces stun times by about 300%, speeds the user up, and allows the user to quickly recover stamina while dealing a small amount of Brain damage. If overdosed the subject will move randomly, laugh randomly, drop items and suffer from Toxin and Brain damage. If addicted the subject will constantly jitter and drool, before becoming dizzy and losing motor control and eventually suffer heavy toxin damage."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -226,7 +226,7 @@
 	id = "bath_salts"
 	description = "Makes you nearly impervious to stuns and grants a stamina regeneration buff, but you will be a nearly uncontrollable tramp-bearded raving lunatic."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#FAFAFA"
 	overdose_threshold = 20
 	addiction_threshold = 10
 
@@ -315,7 +315,7 @@
 	id = "aranesp"
 	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage.."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#78FFF0"
 
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")

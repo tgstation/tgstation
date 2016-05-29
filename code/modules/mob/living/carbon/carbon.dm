@@ -214,24 +214,20 @@
 	var/atom/movable/thrown_thing
 	var/obj/item/I = src.get_active_hand()
 
-	if(!I || (I.flags & NODROP))
-		return
+	if(!I)
+		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
+			var/mob/living/throwable_mob = pulling
+			if(!throwable_mob.buckled)
+				thrown_thing = throwable_mob
+				stop_pulling()
+				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+				var/turf/end_T = get_turf(target)
+				if(start_T && end_T)
+					var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
+					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		var/mob/throwable_mob = G.get_mob_if_throwable() //throw the person instead of the grab
-		qdel(G)	//We delete the grab.
-		if(throwable_mob)
-			thrown_thing = throwable_mob
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
-
-				add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	else if(!(I.flags & ABSTRACT)) //can't throw abstract items
+	else if(!(I.flags & (NODROP|ABSTRACT)))
 		thrown_thing = I
 		unEquip(I)
 
@@ -240,10 +236,8 @@
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
-/mob/living/carbon/restrained()
-	if (handcuffed)
-		return 1
-	return
+/mob/living/carbon/restrained(ignore_grab)
+	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return 0
@@ -541,40 +535,43 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1)
-	if(src.is_muzzled())
-		if(message)
-			src << "<span class='warning'>The muzzle prevents you from vomiting!</span>"
-		return 0
-	if(stun)
-		Stun(4)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 		if(stun)
 			Weaken(10)
+		return 1
+
+	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
+		if(message)
+			visible_message("<span class='danger'>[src] throws up all over themself!</span>", \
+							"<span class='userdanger'>You throw up all over yourself!</span>")
+		distance = 0
 	else
 		if(message)
-			visible_message("<span class='danger'>[src] throws up!</span>", \
-							"<span class='userdanger'>You throw up!</span>")
-		playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
-		var/turf/T = get_turf(src)
-		for(var/i=0 to distance)
-			if(blood)
-				if(T)
-					T.add_blood_floor(src)
-				if(stun)
-					adjustBruteLoss(3)
-			else
-				if(T)
-					T.add_vomit_floor(src)
-				nutrition -= lost_nutrition
-				if(stun)
-					adjustToxLoss(-3)
-			T = get_step(T, dir)
-			if (is_blocked_turf(T))
-				break
+			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+
+	if(stun)
+		Stun(4)
+
+	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
+	var/turf/T = get_turf(src)
+	for(var/i=0 to distance)
+		if(blood)
+			if(T)
+				T.add_blood_floor(src)
+			if(stun)
+				adjustBruteLoss(3)
+		else
+			if(T)
+				T.add_vomit_floor(src, 0)//toxic barf looks different
+			nutrition -= lost_nutrition
+			adjustToxLoss(-3)
+		T = get_step(T, dir)
+		if (is_blocked_turf(T))
+			break
 	return 1
 
 

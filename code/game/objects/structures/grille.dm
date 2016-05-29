@@ -7,7 +7,7 @@
 	anchored = 1
 	flags = CONDUCT
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/health = 10
 	var/destroyed = 0
 	var/obj/item/stack/rods/stored
@@ -258,3 +258,13 @@
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon_state = "brokengrille"
+	density = 0
+	health = 0
+	destroyed = 1
+
+/obj/structure/grille/broken/New()
+	..()
+	stored.amount = 1

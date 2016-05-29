@@ -83,10 +83,8 @@
 							playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 							visible_message("<span class='danger'>[M] has attempted to disarm [src]!</span>")
 
-/mob/living/carbon/alien/humanoid/restrained()
-	if (handcuffed)
-		return 1
-	return 0
+/mob/living/carbon/alien/humanoid/restrained(ignore_grab)
+	. = handcuffed
 
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
@@ -126,6 +124,12 @@
 /mob/living/carbon/alien/humanoid/cuff_resist(obj/item/I)
 	playsound(src, 'sound/voice/hiss5.ogg', 40, 1, 1)  //Alien roars when starting to break free
 	..(I, cuff_break = 1)
+
+/mob/living/carbon/alien/humanoid/resist_grab(moving_resist)
+	if(pulledby.grab_state)
+		visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+	pulledby.stop_pulling()
+	. = 0
 
 /mob/living/carbon/alien/humanoid/get_standard_pixel_y_offset(lying = 0)
 	if(leaping)
@@ -173,3 +177,9 @@ proc/alien_type_present(var/alienpath)
 	if(breath && breath.total_moles() > 0 && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, 0, -5)
 	..()
+
+/mob/living/carbon/alien/humanoid/grabbedby(mob/living/carbon/user, supress_message = 0)
+	if(user == src && pulling && grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling))
+		devour_mob(pulling, devour_time = 60)
+	else
+		..()

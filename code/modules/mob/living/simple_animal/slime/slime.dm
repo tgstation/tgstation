@@ -1,3 +1,8 @@
+var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
+	"blue", "dark blue", "dark purple", "yellow", "silver", "pink", "red",
+	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
+	"cerulean", "sepia", "black", "pyrite")
+
 /mob/living/simple_animal/slime
 	name = "baby slime"
 	icon = 'icons/mob/slimes.dmi'
@@ -16,10 +21,8 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	emote_see = list("jiggles", "bounces in place")
-	speak_emote = list("chirps")
+	speak_emote = list("telepathically chirps")
 	bubble_icon = "slime"
-
-	layer = 5
 
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
@@ -83,19 +86,26 @@
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
 	create_reagents(100)
-	spawn (0)
-		number = rand(1, 1000)
-		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
-		icon_state = "[colour] [is_adult ? "adult" : "baby"] slime"
-		icon_dead = "[icon_state] dead"
-		real_name = name
-		slime_mutation = mutation_table(colour)
-		var/sanitizedcolour = replacetext(colour, " ", "")
-		coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
+	spawn(0)
+		set_colour(colour)
 	..()
 
+/mob/living/simple_animal/slime/proc/set_colour(new_colour)
+	colour = new_colour
+
+	number = rand(1, 1000)
+	name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
+	real_name = name
+	slime_mutation = mutation_table(colour)
+	var/sanitizedcolour = replacetext(colour, " ", "")
+	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
+	regenerate_icons()
+
+/mob/living/simple_animal/slime/proc/random_colour()
+	set_colour(pick(slime_colours))
+
 /mob/living/simple_animal/slime/regenerate_icons()
-	overlays.len = 0
+	overlays.Cut()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
@@ -107,7 +117,7 @@
 	..()
 
 /mob/living/simple_animal/slime/movement_delay()
-	if(bodytemperature >= 330.23) // 135 F
+	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		return -1	// slimes become supercharged at high temperatures
 
 	. = ..()
@@ -389,7 +399,7 @@
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		canmove = 1
+		update_canmove()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

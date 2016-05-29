@@ -5,8 +5,9 @@
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
-	var/deviation = 0
-	var/shot_delay = 0
+	var/variance = 0
+	var/randomspread = 0 //use random spread for machineguns, instead of shotgun scatter
+	var/projectile_delay = 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
 	if(..())
@@ -15,9 +16,9 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
-	return 1
+	return projectiles_per_shot
 
-/obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target)
+/obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target, params)
 	if(!action_checks(target))
 		return 0
 
@@ -35,18 +36,18 @@
 		A.original = target
 		A.current = curloc
 
-		if(deviation)
-			A.yo = (targloc.y + round(gaussian(0,deviation),1)) - curloc.y
-			A.xo = (targloc.x + round(gaussian(0,deviation),1)) - curloc.x
-		else
-			A.yo = targloc.y - curloc.y
-			A.xo = targloc.x - curloc.x
+		var/spread = 0
+		if(variance)
+			if(randomspread)
+				spread = round((rand() - 0.5) * variance)
+			else
+				spread = round((i / projectiles_per_shot - 0.5) * variance)
+		A.preparePixelProjectile(target, targloc, chassis.occupant, params, spread)
 
 		A.fire()
 		playsound(chassis, fire_sound, 50, 1)
 
-		if(shot_delay)
-			sleep(shot_delay)
+		sleep(max(0, projectile_delay))
 
 	chassis.log_message("Fired from [src.name], targeting [target].")
 	return 1
@@ -159,7 +160,7 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target)
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/AirHorn.ogg', 100, 1)
@@ -266,7 +267,7 @@
 	projectiles = 40
 	projectile_energy_cost = 25
 	projectiles_per_shot = 4
-	deviation = 0.7
+	variance = 25
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
@@ -277,8 +278,9 @@
 	projectiles = 300
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
-	deviation = 0.3
-	shot_delay = 2
+	variance = 6
+	randomspread = 1
+	projectile_delay = 2
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2

@@ -94,7 +94,7 @@ Please contact me on #coderbus IRC. ~Carnie x
 	..("Standing")
 
 /mob/living/carbon/human/proc/update_body_parts()
-	if(!dna.species.has_dismemberment) //Species don't have no dismemberment going for 'em!
+	if(NODISMEMBER in dna.species.specflags) //Species don't have no dismemberment going for 'em!
 		remove_overlay(BODYPARTS_LAYER)
 		return
 
@@ -585,7 +585,7 @@ var/global/list/limb_icon_cache = list()
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
-	. = "[dna.species.id]"
+	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"

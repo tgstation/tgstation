@@ -13,7 +13,7 @@ It is possible to destroy the net by the occupant or someone else.
 	opacity = 0//Can see through.
 	mouse_opacity = 1//So you can hit it with stuff.
 	anchored = 1//Can't drag/grab the trapped mob.
-
+	layer = ABOVE_ALL_MOB_LAYER
 	var/health = 25//How much health it has.
 	var/mob/living/affecting = null//Who it is currently affecting, if anyone.
 	var/mob/living/master = null//Who shot web. Will let this person know if the net was successful or failed.

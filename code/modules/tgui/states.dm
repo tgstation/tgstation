@@ -16,14 +16,22 @@
  **/
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
 	var/src_object = ui_host()
+	. = UI_CLOSE
+	if(!state)
+		return
 
-	if(istype(user, /mob/dead/observer)) // Special-case ghosts.
+	if(istype(user, /mob/dead/observer))
+		// If they turn on ghost AI control, admins can always interact.
 		if(IsAdminGhost(user))
-			return UI_INTERACTIVE // If they turn it on, admins can interact.
+			. = max(., UI_INTERACTIVE)
+
+		// Regular ghosts can always at least view if in range.
 		if(get_dist(src_object, src) < user.client.view)
-			return UI_UPDATE // Regular ghosts can only view.
-		return UI_CLOSE // To keep too many UIs from being opened.
-	return state.can_use_topic(src_object, user) // Check if the state allows interaction.
+			. = max(., UI_UPDATE)
+
+	// Check if the state allows interaction
+	var/result = state.can_use_topic(src_object, user)
+	. = max(., result)
 
  /**
   * private

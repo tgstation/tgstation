@@ -1,7 +1,7 @@
 //Beam
 /obj/effect/ebeam/chain
 	name = "lightning chain"
-	layer = MOB_LAYER - 0.1
+	layer = LYING_MOB_LAYER
 
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 5

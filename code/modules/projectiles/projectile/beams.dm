@@ -5,6 +5,7 @@
 	damage = 20
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 
@@ -65,6 +66,8 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	legacy = 1
+	animate_movement = SLIDE_STEPS
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss

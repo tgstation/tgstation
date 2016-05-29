@@ -18,7 +18,7 @@
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
-	layer = 5
+	layer = GHOST_LAYER
 	healable = 0
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
