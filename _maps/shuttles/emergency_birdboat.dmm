@@ -44,7 +44,7 @@
 "aR" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aS" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "aT" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{name = "pasghetti";pixel_x = 4;pixel_y = 7},/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
-"aU" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0;dir = 8;dwidth = 6;height = 18;travelDir = 90;width = 14;timid = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aU" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0;dir = 8;dwidth = 6;height = 18;travelDir = 90;width = 14;timid = 1;name = "Birdboat emergency escape shuttle"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aV" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "aW" = (/obj/structure/chair{dir = 1},/obj/structure/window/reinforced,/turf/open/floor/plasteel{icon_state = "dark"},/area/shuttle/escape)
 "aX" = (/turf/closed/wall/shuttle{icon_state = "swall2";dir = 2},/area/shuttle/escape)

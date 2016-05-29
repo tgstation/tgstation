@@ -49,6 +49,8 @@
 		qdel(src)
 		return
 	if (istype(M, /atom/movable))
+		if(istype(M, /mob/living/simple_animal/hostile/megafauna))
+			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

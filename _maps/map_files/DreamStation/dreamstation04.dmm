@@ -46217,6 +46217,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
+	name = "Box emergency shuttle";
 	dir = 8
 	},
 /obj/docking_port/stationary{
