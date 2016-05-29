@@ -141,6 +141,13 @@
 			master_ui, state)
 		ui.open()
 
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	if(has_cap)
+		is_capped = !is_capped
+		user << "<span class='notice'>The cap on [src] is now \
+			[is_capped ? "on" : "off"].</span>"
+		update_icon()
+
 /obj/item/toy/crayon/ui_data()
 	var/list/data = list()
 	data["drawables"] = list()
@@ -497,7 +504,8 @@
 	paint_color = null
 
 	item_state = "spraycan"
-	desc = "A metallic container containing tasty paint."
+	desc = "A metallic container containing tasty paint.\n\
+		Alt-click to toggle the cap."
 
 	instant = TRUE
 	edible = FALSE
