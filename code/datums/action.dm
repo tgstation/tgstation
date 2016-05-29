@@ -320,13 +320,9 @@
 	if(!target)
 		return 0
 	var/obj/effect/proc_holder/spell/spell = target
-
-	if(usr)
-		return spell.can_cast(usr)
-	else
-		if(owner)
-			return spell.can_cast(owner)
-	return 1
+	if(owner)
+		return spell.can_cast(owner)
+	return 0
 
 
 /datum/action/spell_action/alien
@@ -335,13 +331,9 @@
 	if(!target)
 		return 0
 	var/obj/effect/proc_holder/alien/ab = target
-
-	if(usr)
-		return ab.cost_check(ab.check_turf,usr,1)
-	else
-		if(owner)
-			return ab.cost_check(ab.check_turf,owner,1)
-	return 1
+	if(owner)
+		return ab.cost_check(ab.check_turf,owner,1)
+	return 0
 
 
 
