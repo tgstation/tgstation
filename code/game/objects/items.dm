@@ -365,7 +365,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			if (total_requirements[type] && total_requirements[W.type])
 				total_requirements[type]--
 				total_requirements[W.type]--
-				if (!total_requirements[W.type] && total_requirements[type])
+				if (!total_requirements[W.type] && !total_requirements[type])
 					user.handcrafting.construct_item(user,R)
 					break
 
