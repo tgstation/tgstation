@@ -811,7 +811,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			if(H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
+			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
 			return

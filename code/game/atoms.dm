@@ -11,7 +11,7 @@
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
-	var/list/image/hud_list = list()
+	var/list/image/hud_list = null
 	//HUD images that this atom can provide.
 	var/list/hud_possible
 

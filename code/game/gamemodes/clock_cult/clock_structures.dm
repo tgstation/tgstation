@@ -461,7 +461,7 @@
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.anchored || L.buckled_mobs.len)
+		if(L.buckled || L.anchored || L.has_buckled_mobs())
 			return 0
 		user.visible_message("<span class='warning'>[user] shoves [L] into [src]!</span>", "<span class='danger'>You shove [L] into [src]!</span>")
 		user.stop_pulling()

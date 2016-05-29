@@ -806,7 +806,7 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mobs.len) //mob attached to us
+	if(user.has_buckled_mobs()) //mob attached to us
 		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
@@ -819,7 +819,7 @@
 			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mobs.len)
+		else if(user.has_buckled_mobs())
 			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)

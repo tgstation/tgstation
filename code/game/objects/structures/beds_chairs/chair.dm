@@ -71,14 +71,14 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		..()
 	else
 		rotate()
 	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.buckled = null //Temporary, so Move() succeeds.
@@ -99,7 +99,7 @@
 /obj/structure/chair/proc/spin()
 	dir = turn(dir, 90)
 	handle_layer()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.dir = dir
@@ -167,7 +167,7 @@
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		overlays += armrest
 	else
 		overlays -= armrest
@@ -215,7 +215,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || buckled_mobs.len || src.flags & NODECONSTRUCT)
+		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
 			usr << "<span class='warning'>You can't do that right now!</span>"

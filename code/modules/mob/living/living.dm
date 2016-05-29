@@ -121,7 +121,7 @@ Sorry Giacom. Please don't be mad :(
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
 
-	if(!M.buckled && !M.buckled_mobs.len)
+	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
 		if(M.pulledby == src && a_intent == "grab")
