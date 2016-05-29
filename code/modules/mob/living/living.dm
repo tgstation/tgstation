@@ -690,14 +690,15 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/get_visible_name()
 	return name
 
-/mob/living/update_gravity(has_gravity)
+/mob/living/update_gravity(has_gravity,override = 0)
 	if(!ticker || !ticker.mode)
 		return
 	if(has_gravity)
 		clear_alert("weightless")
 	else
 		throw_alert("weightless", /obj/screen/alert/weightless)
-	float(!has_gravity)
+	if(!override)
+		float(!has_gravity)
 
 /mob/living/proc/float(on)
 	if(throwing)
@@ -811,9 +812,9 @@ Sorry Giacom. Please don't be mad :(
 	// What icon do we use for the attack?
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
-		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 1)
+		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
 	else if(!hand && r_hand) // Attacked with item in right hand.
-		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 1)
+		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
 	else // Attacked with a fist?
 		return
 

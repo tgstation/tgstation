@@ -53,6 +53,7 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
+					P.Angle = null
 
 				return -1 // complete projectile permutation
 
@@ -374,4 +375,8 @@
 /mob/living/carbon/human/grippedby(mob/living/user)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)
+	..()
+
+/mob/living/carbon/human/Stun(amount, updating_canmove = 1)
+	amount = dna.species.spec_stun(src,amount)
 	..()

@@ -68,6 +68,8 @@
 #define NOHUNGER		17
 #define NOCRITDAMAGE	18
 
+#define FLYING	65536
+
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
 	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.

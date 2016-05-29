@@ -3,7 +3,7 @@
 	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted." // except it literally never does
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
 	use_power = 1

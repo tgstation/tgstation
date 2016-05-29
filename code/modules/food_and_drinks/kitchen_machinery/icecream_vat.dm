@@ -13,6 +13,7 @@
 	density = 1
 	anchored = 0
 	use_power = 0
+	layer = BELOW_OBJ_LAYER
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/flavour_name = "vanilla"
@@ -180,7 +181,6 @@
 	desc = "Delicious waffle cone, but no ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "icecream_cone_waffle" //default for admin-spawned cones, href_list["cone"] should overwrite this all the time
-	layer = 3.1
 	var/ice_creamed = 0
 	var/cone_type
 	bitesize = 3

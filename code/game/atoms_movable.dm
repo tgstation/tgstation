@@ -1,5 +1,5 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0

@@ -174,7 +174,7 @@
 	should_draw_greyscale = FALSE
 
 	var/datum/species/S = H.dna.species
-	species_id = S.id
+	species_id = S.limbs_id
 
 	if(S.use_skintones)
 		skin_tone = H.skin_tone

@@ -58,7 +58,7 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type,)
+/mob/living/say(message, bubble_type,var/list/spans = list())
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if(stat == DEAD)
@@ -92,7 +92,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	if(message_mode != MODE_WHISPER) //whisper() calls treat_message(); double process results in "hisspering"
 		message = treat_message(message)
-	var/spans = list()
 	spans += get_spans()
 
 	if(!message)
@@ -157,7 +156,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", MOB_LAYER+1)
+	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
@@ -219,7 +218,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 							if(1)
 								if(prob(40))
 									M << "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>"
-				return 1 
+				return 1
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
@@ -229,7 +228,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 					else
 						switch(M.lingcheck())
 							if(3)
-								M << msg 
+								M << msg
 							if(2)
 								M << msg
 							if(1)
@@ -289,7 +288,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 			return NOPASS
 	return 0
 
-/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind. 
+/mob/living/lingcheck() //1 is ling w/ no hivemind. 2 is ling w/hivemind. 3 is ling victim being linked into hivemind.
 	if(mind && mind.changeling)
 		if(mind.changeling.changeling_speak)
 			return 2

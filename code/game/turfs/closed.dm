@@ -1,6 +1,6 @@
 /turf/closed
 	var/thermite = 0
-
+	layer = CLOSED_TURF_LAYER
 	opacity = 1
 	density = 1
 	blocks_air = 1
@@ -9,7 +9,6 @@
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
-	layer = TURF_LAYER + 0.05
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"

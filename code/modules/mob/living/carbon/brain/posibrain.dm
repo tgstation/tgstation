@@ -105,6 +105,8 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
 	living_mob_list += brainmob
+	if(clockwork)
+		add_servant_of_ratvar(brainmob, TRUE)
 
 	visible_message(new_mob_message)
 	update_icon()

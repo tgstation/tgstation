@@ -58,7 +58,7 @@
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
-	handcrafting.craft(src)
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -919,7 +919,7 @@
 		for(var/mob/M in viewers(src))
 			if(M.client)
 				viewing += M.client
-		flick_overlay(image(icon,src,"electrocuted_generic",MOB_LAYER+1), viewing, anim_duration)
+		flick_overlay(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), viewing, anim_duration)
 
 /mob/living/carbon/human/canUseTopic(atom/movable/M, be_close = 0)
 	if(incapacitated() || lying )
@@ -1080,3 +1080,7 @@
 
 /mob/living/carbon/human/is_literate()
 	return 1
+
+/mob/living/carbon/human/update_gravity(has_gravity,override = 0)
+	override = dna.species.override_float
+	..()

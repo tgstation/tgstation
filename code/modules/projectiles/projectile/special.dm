@@ -162,7 +162,7 @@
 	name = "kinetic explosion"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
-	layer = 4.1
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/effect/kinetic_blast/New()
 	spawn(4)
@@ -195,13 +195,6 @@
 	if(!gun)
 		qdel(src)
 	gun.create_portal(src)
-
-
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
-	..()
-	explosion(target, -1, 0, 2)
-	return 1
-
 
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"

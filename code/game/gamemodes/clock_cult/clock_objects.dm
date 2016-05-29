@@ -1317,7 +1317,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -30
 	pixel_y = -30
-	layer = 2.01
+	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/effect/clockwork/judicial_marker/New()
 	..()
@@ -1361,12 +1361,6 @@
 		spawn(lifetime)
 			if(src)
 				qdel(src)
-
-/obj/effect/clockwork/spatial_gateway/Destroy()
-	visible_message("<span class='warning'>[src] flickers and closes!</span>")
-	animate(src, transform = matrix() - matrix(), time = 10)
-	spawn(10)
-		..()
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
@@ -1438,7 +1432,7 @@
 	desc = "Some big guy."
 	clockwork_desc = "One of Ratvar's generals."
 	alpha = 200
-	layer = 10
+	layer = MASSIVE_OBJ_LAYER
 
 /obj/effect/clockwork/general_marker/New()
 	..()

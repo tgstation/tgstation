@@ -4,7 +4,7 @@
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
 	var/broken = 0
