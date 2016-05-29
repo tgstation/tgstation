@@ -345,6 +345,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
+		return 
+	if (istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		
+		for(var/thing in crafting_recipes)
+			var/datum/crafting_recipe/R = thing
+			var/list/total_requirements = list()
+			for (var/req in R.reqs)
+				if (total_requirements[req])
+					total_requirements[req] += R.reqs[req]
+				else
+					total_requirements[req] = 1
+			for (var/req in R.tools)
+				if (total_requirements[req])
+					total_requirements[req]++
+				else
+					total_requirements[req] = 1
+			if (total_requirements[type] && total_requirements[W.type])
+				total_requirements[type]--
+				total_requirements[W.type]--
+				if (!total_requirements[W.type] && total_requirements[type])
+					user.handcrafting.construct_item(user,R)
+					break
 
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
