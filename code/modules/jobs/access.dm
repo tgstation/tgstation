@@ -76,6 +76,7 @@
 /var/const/access_cent_storage = 106//Generic storage areas.
 /var/const/access_cent_teleporter = 107//Teleporter.
 /var/const/access_cent_captain = 109//Captain's office/ID comp/AI.
+/var/const/access_cent_bar = 110 // The non-existent Centcom Bar
 
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
@@ -209,6 +210,8 @@
 			return get_ert_access("eng")
 		if("Medical Response Officer")
 			return get_ert_access("med")
+		if("Centcom Bartender")
+			return list(access_cent_general, access_cent_living, access_cent_bar)
 
 /proc/get_all_accesses()
 	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_court,
@@ -427,6 +430,8 @@
 			return "Code Black"
 		if(access_cent_captain)
 			return "Code Gold"
+		if(access_cent_bar)
+			return "Code Scotch"
 
 /proc/get_all_jobs()
 	return list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician",
@@ -438,7 +443,7 @@
 	return get_all_jobs() + list("Prisoner")
 
 /proc/get_all_centcom_jobs()
-	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer")
+	return list("VIP Guest","Custodian","Thunderdome Overseer","Centcom Official","Medical Officer","Death Commando","Research Officer","Special Ops Officer","Admiral","Centcom Commander","Emergency Response Team Commander","Security Response Officer","Engineer Response Officer", "Medical Response Officer","Centcom Bartender")
 
 /obj/item/proc/GetJobName() //Used in secHUD icon generation
 	var/obj/item/weapon/card/id/I = GetID()

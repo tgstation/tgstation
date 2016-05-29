@@ -93876,18 +93876,12 @@
 	},
 /area/chapel/main)
 "cTE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
 	},
-/mob/living/simple_animal/hostile/retaliate/bat{
-	name = "Orlocke";
-	real_name = "Orlocke";
-	turns_per_move = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/chapel/main)
+/area/shuttle/escape)
 "cTF" = (
 /obj/machinery/door/window{
 	dir = 4;
@@ -93927,8 +93921,13 @@
 	},
 /area/chapel/main)
 "cTH" = (
-/obj/structure/bookcase{
-	name = "Holy Bookcase"
+/obj/machinery/camera{
+	c_tag = "Chapel - Port";
+	dir = 4;
+	network = list("SS13")
+	},
+/obj/structure/chair/comfy/black{
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	dir = 8;
@@ -99123,11 +99122,11 @@
 /obj/docking_port/stationary{
 	dheight = 0;
 	dir = 2;
-	dwidth = 5;
-	height = 14;
+	dwidth = 9;
+	height = 25;
 	id = "emergency_home";
-	name = "emergency evac bay";
-	width = 25
+	name = "MetaStation emergency evac bay";
+	width = 29
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
@@ -100611,16 +100610,18 @@
 	icon_state = "warning"
 	},
 /area/hydroponics)
+"dfJ" = (
+/obj/structure/bookcase{
+	name = "Holy Bookcase"
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/chapel/main)
 "dfK" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall2"
-	},
-/area/shuttle/escape)
-"dfJ" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
 	},
 /area/shuttle/escape)
 
@@ -121632,7 +121633,7 @@ cSr
 cSR
 cSQ
 cSr
-cUd
+cUe
 cRQ
 aaa
 aaf
@@ -121886,10 +121887,10 @@ cQW
 cNm
 cRV
 cSr
-cSQ
-cSQ
-cTE
-cUe
+cTJ
+cTn
+cSr
+cTK
 cRQ
 aaa
 aaf
@@ -122144,10 +122145,10 @@ cRz
 cRW
 cSs
 cSS
-cTn
-cSr
-cTK
-cRQ
+cOU
+cTF
+cUf
+cOU
 aaa
 aaf
 aaa
@@ -122402,9 +122403,9 @@ cRX
 cSt
 cST
 cOU
-cTF
-cUf
-cOU
+cTG
+cUg
+cUt
 aaa
 aaf
 aaa
@@ -122659,9 +122660,9 @@ cRY
 cSu
 cXo
 cOU
-cTG
-cUg
-cUt
+cOU
+cOU
+cOU
 aaf
 aaf
 aaa
@@ -122916,9 +122917,9 @@ cOU
 cSv
 cXc
 cOU
+dfJ
 cOU
-cOU
-cOU
+aaa
 aaa
 ddg
 ddg
@@ -123172,11 +123173,11 @@ cNm
 cRZ
 cSw
 cXp
-cOU
 cTH
+cRh
 cOU
 aaa
-dfJ
+cTE
 ddi
 ddi
 ddi
@@ -123429,7 +123430,7 @@ cRB
 cSa
 cSx
 cSX
-cTo
+cSB
 cTI
 cOU
 ddb
@@ -130127,11 +130128,11 @@ aaa
 aaa
 aaa
 aaf
-cTC
-cTC
-cTC
-cTC
-cTC
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaf
@@ -130385,9 +130386,9 @@ cTC
 cTC
 cTC
 cTC
-cVt
-dfw
-cVB
+cTC
+cTC
+cTC
 cTC
 cTC
 cTC
@@ -130642,8 +130643,8 @@ cVt
 dfs
 cVN
 cVo
-cVs
-cVC
+cVt
+dfw
 cVB
 cTC
 cXd
@@ -130900,7 +130901,7 @@ cVC
 cVB
 cVo
 cVs
-cVB
+cVC
 cVB
 cTC
 cXb
@@ -131138,7 +131139,7 @@ cTy
 cTy
 cTy
 cTy
-cTy
+aaa
 aaf
 aaf
 aaa
@@ -131393,9 +131394,9 @@ cTz
 cTA
 dcN
 dcN
-dcN
 dcQ
 cTy
+aaa
 aaa
 aaf
 aaa
@@ -131650,9 +131651,9 @@ cTy
 cTy
 cTy
 cTy
-cTy
 dcW
 cTy
+aaa
 cTO
 cTC
 cTC
@@ -131906,9 +131907,9 @@ bVE
 aaa
 aaf
 aaa
-aaa
 cTy
 dcW
+cTy
 cTy
 cTC
 cTR
@@ -132163,9 +132164,9 @@ bVE
 aaa
 aaf
 aaa
-aaa
 cTy
 dcY
+dcN
 cTB
 cTP
 cTT
@@ -132420,7 +132421,7 @@ bVE
 aaf
 aaf
 aaf
-aaa
+cTy
 cTy
 cTy
 cTy

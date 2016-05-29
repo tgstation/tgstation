@@ -5,6 +5,19 @@
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/image/wet_overlay = null
 
+/turf/open/indestructible
+	name = "floor"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "floor"
+
+/turf/open/indestructible/sound
+	name = "squeeky floor"
+	var/sound
+
+/turf/open/indestructible/sound/Entered(var/mob/AM)
+	if(istype(AM))
+		playsound(src,sound,50,1)
+
 /turf/open/Initalize_Atmos(times_fired)
 	excited = 0
 	update_visuals()
@@ -95,7 +108,7 @@
 					C.spin(1,1)
 		return 1
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
 	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return

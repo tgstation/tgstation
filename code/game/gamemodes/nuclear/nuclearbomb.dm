@@ -48,7 +48,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/machinery/nuclearbomb/syndicate
 
@@ -429,10 +429,16 @@ This is here to make the tiles around the station mininuke change when it's arme
 		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
 		qdel(src)
 
-/obj/item/weapon/disk/nuclear/Destroy()
+/obj/item/weapon/disk/nuclear/Destroy(force)
+	var/turf/diskturf = get_turf(src)
+
+	if(force)
+		message_admins("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]).")
+		log_game("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]).")
+		return ..()
+
 	if(blobstart.len > 0)
 		var/turf/targetturf = get_turf(pick(blobstart))
-		var/turf/diskturf = get_turf(src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.remove_from_mob(src)
@@ -444,4 +450,4 @@ This is here to make the tiles around the station mininuke change when it's arme
 		log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
-	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced

@@ -253,27 +253,16 @@
 		reagents.metabolize(src, can_overdose=1)
 	dna.species.handle_chemicals_in_body(src)
 
+
 /mob/living/carbon/human/handle_random_events()
-	// Puke if toxloss is too high
+	//Puke if toxloss is too high
 	if(!stat)
-		if (getToxLoss() >= 45 && nutrition > 20)
+		if(getToxLoss() >= 45 && nutrition > 20)
 			lastpuke ++
 			if(lastpuke >= 25) // about 25 second delay I guess
-				Stun(5)
-
-				visible_message("<span class='danger'>[src] throws up!</span>", \
-						"<span class='userdanger'>[src] throws up!</span>")
-				playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-
-				var/turf/location = loc
-				if (istype(location, /turf))
-					location.add_vomit_floor(src, 1)
-
-				nutrition -= 20
-				adjustToxLoss(-3)
-
-				// make it so you can only puke so fast
+				vomit(20, 0, 1, 0, 1, 1)
 				lastpuke = 0
+
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
@@ -288,6 +277,8 @@
 	if(NOBREATH in dna.species.specflags)
 		. = 1
 	return .
+
+
 /mob/living/carbon/human/proc/handle_embedded_objects()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
@@ -303,6 +294,7 @@
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>\the [I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+
 
 /mob/living/carbon/human/proc/handle_heart()
 	CHECK_DNA_AND_SPECIES(src)

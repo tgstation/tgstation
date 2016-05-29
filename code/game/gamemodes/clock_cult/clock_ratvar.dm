@@ -1,7 +1,15 @@
 /obj/structure/clockwork/massive //For objects that are typically very large
 	name = "massive construct"
 	desc = "A very large construction."
-	layer = 10
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/structure/clockwork/massive/New()
+	..()
+	poi_list += src
+
+/obj/structure/clockwork/massive/Destroy()
+	poi_list -= src
+	..()
 
 /obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"
@@ -114,10 +122,10 @@
 	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
-	pixel_x = -248
+	pixel_x = -235
 	pixel_y = -248
 	takes_damage = FALSE
-	var/mob/living/prey //Whoever Ratvar is chasing
+	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 
 /obj/structure/clockwork/massive/ratvar/New()
@@ -135,30 +143,34 @@
 	..()
 
 /obj/structure/clockwork/massive/ratvar/process()
+	if(clashing) //I'm a bit occupied right now, thanks
+		return 0
 	for(var/atom/A in range(7, src))
 		A.ratvar_act()
-	if(clashing) //Doesn't move during a clash
-		return 0
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
-		var/list/meals = list()
-		for(var/mob/living/L in living_mob_list)
-			if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
-				meals += L
-		if(meals.len)
-			prey = pick(meals)
-			prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
-			<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
+		for(var/obj/singularity/narsie/N in poi_list)
+			if(N.z == z)
+				prey = N
+				break
+		if(!prey) //In case there's a Nar-Sie
+			var/list/meals = list()
+			for(var/mob/living/L in living_mob_list)
+				if(L.z == z && !is_servant_of_ratvar(L) && L.mind)
+					meals += L
+			if(meals.len)
+				prey = pick(meals)
+				prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
+				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
 	else
-		if(prob(10) || prey.stat == DEAD || is_servant_of_ratvar(prey) || prey.z != z)
+		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
 			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
 			prey = null
 		else
 			if(prob(75))
 				dir_to_step_in = get_dir(src, prey)
-	for(var/i in 1 to 2)
-		loc = get_step(src, dir_to_step_in)
+	forceMove(get_step(src, dir_to_step_in))
 
 /obj/structure/clockwork/massive/ratvar/narsie_act()
 	if(clashing)

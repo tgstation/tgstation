@@ -6,7 +6,7 @@
 "f" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "supply dock loading door"},/turf/open/floor/plating,/area/shuttle/supply)
 "g" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/turf/open/floor/plating,/area/shuttle/supply)
 "h" = (/obj/machinery/button/door{dir = 2; id = "QMLoaddoor2"; name = "Loading Doors"; pixel_x = 24; pixel_y = 8},/obj/machinery/button/door{id = "QMLoaddoor"; name = "Loading Doors"; pixel_x = 24; pixel_y = -8},/turf/open/floor/plasteel/shuttle,/area/shuttle/supply)
-"i" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/obj/docking_port/mobile/supply{dwidth = 5; width = 12},/turf/open/floor/plating,/area/shuttle/supply)
+"i" = (/obj/machinery/door/airlock/shuttle{name = "Supply Shuttle Airlock"; req_access_txt = "31"},/obj/docking_port/mobile/supply{dwidth = 5; width = 12; timid = 1},/turf/open/floor/plating,/area/shuttle/supply)
 "j" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "supply dock loading door"},/turf/open/floor/plating,/area/shuttle/supply)
 "k" = (/turf/closed/wall/shuttle{icon_state = "swall7"; dir = 2},/area/shuttle/supply)
 "l" = (/turf/open/floor/plasteel/shuttle,/turf/closed/wall/shuttle/interior{icon_state = "swall_f10"},/area/shuttle/supply)

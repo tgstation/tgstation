@@ -512,22 +512,33 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
-		if(busy)
-			user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
-			return
-		if(!user.drop_item())
-			return
-		O.loc = src
-		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-		src.visible_message("[src] begins to hum as it warms up its printing drums.")
-		busy = 1
-		sleep(rand(200,400))
-		busy = 0
-		src.visible_message("[src] whirs as it prints and binds a new book.")
-		var/obj/item/weapon/book/b = new(src.loc)
-		b.dat = O:info
-		b.name = "Print Job #" + "[rand(100, 999)]"
-		b.icon_state = "book[rand(1,7)]"
-		qdel(O)
+		bind_book(user, O)
+	else if(default_unfasten_wrench(user, O))
+		return 1
 	else
 		return ..()
+
+/obj/machinery/bookbinder/proc/bind_book(mob/user, obj/item/weapon/paper/P)
+	if(stat)
+		return
+	if(busy)
+		user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
+		return
+	if(!user.drop_item())
+		return
+	P.loc = src
+	user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
+	audible_message("[src] begins to hum as it warms up its printing drums.")
+	busy = 1
+	sleep(rand(200,400))
+	busy = 0
+	if(P)
+		if(!stat)
+			visible_message("[src] whirs as it prints and binds a new book.")
+			var/obj/item/weapon/book/B = new(src.loc)
+			B.dat = P.info
+			B.name = "Print Job #" + "[rand(100, 999)]"
+			B.icon_state = "book[rand(1,7)]"
+			qdel(P)
+		else
+			P.loc = loc
