@@ -24,16 +24,15 @@
 	environment_smash = 1
 	robust_searching = 1
 	stat_attack = 2
-	gold_core_spawnable = 1
+	gold_core_spawnable = 0
 	faction = list("zombie")
 	var/mob/living/carbon/human/stored_corpse = null
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie = 3)
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
-	layer = MOB_LAYER - 0.1
 	var/removingairlock = 0
 
-/mob/living/simple_animal/hostile/zombie/darkholme //BOY♂NEXT♂RUIN
+/mob/living/simple_animal/hostile/zombie/darkholme //BOY?NEXT?RUIN
 	desc = "This guy seems to have gotten lost on his way to the leather club."
 	gold_core_spawnable = 0
 

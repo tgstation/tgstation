@@ -150,19 +150,18 @@
 
 /mob/living/simple_animal/hostile/clockwork_marauder/say(message)
 	if(is_in_host())
-		src << "<span class='warning'>You cannot speak while inside of your host! Used the Linked Minds verb instead.</span>"
-		return 0
+		message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Automatic linked minds
+		src << message
+		host << message
+		return 1
 	..()
 
 /mob/living/simple_animal/hostile/clockwork_marauder/adjustHealth(amount) //Fatigue damage
-	for(var/mob/living/L in range(3, src))
+	for(var/mob/living/L in range(1, src))
 		if(L.null_rod_check()) //Null rods allow direct damage
 			src << "<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>"
-			. = ..()
-			break
-			return 0
-	adjust_fatigue(amount)
-	return 1
+			return ..()
+	return adjust_fatigue(amount)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/AttackingTarget()
 	if(is_in_host())
@@ -172,7 +171,10 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(!ratvar_awakens)
 		fatigue = max(0, min(fatigue + amount, fatigue_recall_threshold))
-	return 1
+		Life() //Immediately runs a life tick to check for recalling
+	else
+		amount = 0
+	return amount
 
 /mob/living/simple_animal/hostile/clockwork_marauder/verb/linked_minds() //Discreet communications between a marauder and its host
 	set name = "Linked Minds"

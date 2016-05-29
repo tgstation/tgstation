@@ -12,7 +12,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	layer = MOB_LAYER + 0.05
+	layer = EDGED_TURF_LAYER
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
@@ -179,7 +179,7 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 4.06)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
 		overlays += I
 		activated_image = I
 		name = "gibtonite deposit"
@@ -212,12 +212,13 @@
 	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
+		stage = 3
 		explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
 		overlays -= activated_image
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 4.06)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
 		overlays += I
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
@@ -233,6 +234,7 @@
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
+		stage = 3
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
@@ -242,6 +244,8 @@
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
+	if(stage == 3)
+		return
 	ChangeTurf(turf_type, defer_change)
 	AfterChange()
 
@@ -583,6 +587,8 @@
 			// To freak out any bystanders
 			visible_message("[H] falls into [src]!")
 			J.chasm_react(H)
+			return
+		if(H.dna.species && (FLYING in H.dna.species.specflags))
 			return
 	drop(AM)
 

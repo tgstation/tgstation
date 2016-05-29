@@ -22,7 +22,7 @@
 /obj/effect/overlay/temp
 	icon_state = "nothing"
 	anchored = 1
-	layer = 4.1
+	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
 	var/duration = 10
 	var/randomdir = 1
@@ -117,7 +117,7 @@
 /obj/effect/overlay/temp/cult/door
 	name = "unholy glow"
 	icon_state = "doorglow"
-	layer = 3.17 //above closed doors
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
 
 /obj/effect/overlay/temp/cult/door/unruned
 	icon_state = "unruneddoorglow"
@@ -125,7 +125,7 @@
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"
 	icon_state = "wallglow"
-	layer = TURF_LAYER + 0.07
+	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/effect/overlay/temp/cult/turf/open/floor
 	icon_state = "floorglow"
@@ -179,7 +179,7 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	density = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	anchored = 1
 
 /obj/effect/overlay/palmtree_l
@@ -187,7 +187,7 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
 	density = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	anchored = 1
 
 /obj/effect/overlay/coconut

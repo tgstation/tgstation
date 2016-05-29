@@ -2,7 +2,7 @@
 	name = "\improper AI liquid dispenser"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
-	layer = 3
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	anchored = 1
 	var/uses = 20
 	var/disabled = 1

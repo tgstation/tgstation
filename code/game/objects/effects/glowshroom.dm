@@ -7,7 +7,7 @@
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
-	layer = 2.1
+	layer = ABOVE_NORMAL_TURF_LAYER
 	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200

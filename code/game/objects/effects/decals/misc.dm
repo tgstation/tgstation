@@ -2,7 +2,7 @@
 	name = "pointer"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "arrow"
-	layer = 16
+	layer = POINT_LAYER
 	duration = 25
 
 /obj/effect/overlay/temp/point/New(atom/target, set_invis = 0)
@@ -12,23 +12,18 @@
 	pixel_y = target.pixel_y
 	invisibility = set_invis
 
-// Used for spray that you spray at walls, tables, hydrovats etc
-/obj/effect/decal/spraystill
-	density = 0
-	layer = 50
-
 //Used by spraybottles.
 /obj/effect/decal/chempuff
 	name = "chemicals"
 	icon = 'icons/obj/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
-	layer = 5
+	layer = FLY_LAYER
 
 /obj/effect/decal/sandeffect
 	name = "sandy tile"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "sandeffect"
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/effect/decal/fakelattice
 	name = "lattice"

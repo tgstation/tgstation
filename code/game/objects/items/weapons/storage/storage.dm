@@ -157,7 +157,7 @@
 	boxes.screen_loc = "[tx]:,[ty] to [mx],[my]"
 	for(var/obj/O in contents)
 		O.screen_loc = "[cx],[cy]"
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		cx++
 		if(cx > mx)
 			cx = tx
@@ -176,7 +176,7 @@
 			ND.sample_object.mouse_opacity = 2
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
-			ND.sample_object.layer = 20
+			ND.sample_object.layer = ABOVE_HUD_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -186,7 +186,7 @@
 			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
-			O.layer = 20
+			O.layer = ABOVE_HUD_LAYER
 			cx++
 			if(cx > (4+cols))
 				cx = 4
@@ -301,6 +301,8 @@
 			return 0
 	if(silent)
 		prevent_warning = 1
+	if(W.pulledby)
+		W.pulledby.stop_pulling()
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -462,11 +464,11 @@
 	boxes.master = src
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
-	boxes.layer = 19
+	boxes.layer = HUD_LAYER
 	closer = new /obj/screen/close()
 	closer.master = src
 	closer.icon_state = "backpack_close"
-	closer.layer = 20
+	closer.layer = ABOVE_HUD_LAYER
 	orient2hud()
 
 

@@ -81,7 +81,7 @@
 	countEggs()
 
 /obj/item/weapon/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	..()
+	. = ..()
 	countEggs()
 
 //Bunny Suit
@@ -205,14 +205,14 @@
 	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	name = "Mämmi"
+	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
 /datum/crafting_recipe/food/mammi
-	name = "Mämmi"
+	name = "Mammi"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,

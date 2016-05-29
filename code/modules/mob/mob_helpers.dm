@@ -272,7 +272,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
-
 /mob/proc/abiotic(full_body = 0)
 	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
 		return 1

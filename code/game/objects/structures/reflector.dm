@@ -5,7 +5,7 @@
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
 	anchored = 0
 	density = 1
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/finished = 0
 	var/admin = 0 //Can't be rotated or deconstructed
 	var/framebuildstacktype = /obj/item/stack/sheet/metal

@@ -104,7 +104,7 @@
 		holder.icon_state = "hudstat"
 
 /mob/living/simple_animal/drone/OpenCraftingMenu()
-	handcrafting.craft(src)
+	handcrafting.ui_interact(src)
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!

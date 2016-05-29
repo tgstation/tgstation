@@ -1,0 +1,11 @@
+{{#each data.shuttles}}
+  <ui-section label='{{name}} ({{id}})'>
+    {{status}}
+    {{#if timer}}
+      ({{timeleft}})
+    {{/if}}
+    <ui-button action='jump_to' params='{"type": "mobile", "id": "{{id}}"}'>
+      Jump To
+    </ui-button>
+  </ui-section>
+{{/each}}

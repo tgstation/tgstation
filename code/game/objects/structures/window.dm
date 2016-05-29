@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
@@ -487,3 +487,6 @@
 
 /obj/structure/window/shuttle/narsie_act()
 	color = "#3C3434"
+
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE
