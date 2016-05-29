@@ -19,7 +19,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1
-	layer = 2.8
+	layer = TABLE_LAYER
 	climbable = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.")
 	var/frame = /obj/structure/table_frame
@@ -286,10 +286,12 @@
 /obj/structure/table/glass/proc/table_shatter(mob/M)
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
-	playsound(src.loc, "shatter", 50, 1)
-	for(var/i in debris)
-		var/atom/movable/AM = i
-		AM.loc = get_turf(src)
+	var/turf/T = get_turf(src)
+	playsound(T, "shatter", 50, 1)
+	for(var/I in debris)
+		var/atom/movable/AM = I
+		AM.forceMove(T)
+		debris -= AM
 		if(istype(AM, /obj/item/weapon/shard))
 			AM.throw_impact(M)
 	M.Weaken(5)

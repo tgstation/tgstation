@@ -278,7 +278,7 @@
 	else
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
 		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][t_growthstate]")
-	I.layer = MOB_LAYER + 0.1
+	I.layer = OBJ_LAYER + 0.01
 	overlays += I
 
 /obj/machinery/hydroponics/proc/update_icon_lights()

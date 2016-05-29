@@ -64,8 +64,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	var/overall_sanity = 100
-
 	var/ruins = potentialRuins.Copy()
+
+	world << "<span class='boldannounce'>Loading ruins...</span>"
 
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
@@ -77,6 +78,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		// If so, try to place it
 		var/sanity = 100
 		// And if we can't fit it anywhere, give up, try again
+
 		while(sanity > 0)
 			sanity--
 			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
@@ -103,6 +105,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	if(!overall_sanity)
 		world.log << "Ruin loader gave up with [budget] left to spend."
 
+
 /obj/effect/ruin_loader
 	name = "random ruin"
 	icon = 'icons/obj/weapons.dmi'
@@ -115,17 +118,15 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		var/datum/map_template/T = potentialRuins[A]
 		if(!T.loaded)
 			possible_ruins += T
-	world << "<span class='boldannounce'>Loading ruins...</span>"
 	if(!template && possible_ruins.len)
 		template = safepick(possible_ruins)
 	if(!template)
-		world << "<span class='boldannounce'>No ruins found.</span>"
-		return
+		return FALSE
 	for(var/i in template.get_affected_turfs(get_turf(src), 1))
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
 			qdel(monster)
 	template.load(get_turf(src),centered = TRUE)
 	template.loaded++
-	world << "<span class='boldannounce'>Ruins loaded.</span>"
 	qdel(src)
+	return TRUE

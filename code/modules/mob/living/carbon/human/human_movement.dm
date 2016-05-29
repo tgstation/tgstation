@@ -22,7 +22,7 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return shoes && shoes.negates_gravity()
+	return ((shoes && shoes.negates_gravity()) || dna.species.negates_gravity())
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
@@ -54,3 +54,8 @@
 
 				S.step_action()
 
+
+/mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
+	if(..())
+		return 1
+	return dna.species.space_move()

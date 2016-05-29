@@ -785,12 +785,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates a shell that can be attached to a tinkerer's cache to grant it passive component creation.
 	name = "Tinkerer's Daemon"
 	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants in a ratio of 5:1."
-	invocations = list("Pbaf'gehpg, Ratvar cnegf...", "...lrg ubyq terngarff!")
+	invocations = list("Pbaf'gehpg Ratvar cnegf...", "...lrg ubyq terngarff!")
 	channel_time = 40
 	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	object_path = /obj/item/clockwork/daemon_shell
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
-	usage_tip = "Vital to increasing component generation."
+	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
 
 //////////////
@@ -975,7 +975,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	call forth Ratvar from his exile after some time."
 	invocations = list("NEZBERE! SEVTUG! NZCRENTR! INATH-NEQ! V PNYY HCBA LBH!!", \
 	"GUR GVZR UNF PBZR SBE BHE ZNFGRE GB OERNX GUR PUNVAF BS RKVYR!!", \
-	"YRAQ HF LBHE NVQ! RATVAR PBZRF!")
+	"YRAQ HF LBHE NVQ! RATVAR PBZRF!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
 	invokers_required = 4

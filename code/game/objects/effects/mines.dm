@@ -3,7 +3,6 @@
 	desc = "Better stay away from that thing."
 	density = 0
 	anchored = 1
-	layer = 3
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = 0
