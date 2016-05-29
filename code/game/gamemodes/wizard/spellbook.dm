@@ -113,6 +113,9 @@
 			<A href='byond://?src=\ref[src];spell_choice=contract'>Contract of Apprenticeship</A><BR>
 			<I>A magical contract binding an apprentice wizard to your service, using it will summon them to your side.</I><BR>
 			<HR>
+			<A href='byond://?src=\ref[src];spell_choice=bundle'>Spellbook Bundle</A><BR>
+			<I>Feeling adventurous? Buy this bundle and recieve seven random spellbooks! Who knows what spells you will get? (Warning, each spell book may only be used once! No refunds).</I><BR>
+			<HR>
 			<A href='byond://?src=\ref[src];spell_choice=scrying'>Scrying Orb</A><BR>
 			<I>An incandescent orb of crackling energy, using it will allow you to ghost while alive, allowing you to spy upon the station with ease. In addition, buying it will permanently grant you x-ray vision.</I><BR>
 			<HR>"}
@@ -151,10 +154,16 @@
 				if(href_list["spell_choice"] == "noclothes")
 					if(uses < 2)
 						return
+				if(href_list["spell_choice"] == "bundle")
+					if(uses < 5)
+						return
 				uses--
-			/*
-			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", lightning = "Lightning", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", frenchcurse = "The French Curse", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge", timestop = "Time Stop",)
+
+				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", lightning = "Lightning", disintegrate = "Disintegrate", disabletech = "Disable Tech",
+				smoke = "Smoke", blind = "Blind", subjugation = "Subjugation", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate",
+				etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", frenchcurse = "The French Curse", summonguns = "Summon Guns", staffchange = "Staff of Change",
+				mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation", noclothes = "No Clothes",
+				fleshtostone = "Flesh to Stone", arsenath = "Butt-Bot's Revenge", timestop = "Time Stop", bundle = "Spellbook Bundle")
 				var/already_knows = 0
 				for(var/spell/aspell in H.spell_list)
 					if(available_spells[href_list["spell_choice"]] == initial(aspell.name))
@@ -377,6 +386,14 @@
 							feedback_add_details("wizard_spell_learned","WM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
 							add_spell(new/spell/aoe_turf/conjure/pontiac,H)
 							temp = "This spell summons a glorious, flaming chariot that can move in space and through walls.  It also has an extremely long cooldown."
+						if("bundle")
+							feedback_add_details("wizard_spell_learned","SB")
+							new /obj/item/weapon/storage/box/spellbook(get_turf(H))
+							temp = "You have purchased the spellbook bundle."
+							uses -= 4
+							max_uses-=5
+
+
 		else
 			if(href_list["temp"])
 				temp = null
@@ -575,3 +592,222 @@
 	..()
 	to_chat(user, "<span class='warning'>[src] suddenly feels very warm!</span>")
 	empulse(src, 1, 1)
+
+/obj/item/weapon/spellbook/oneuse/clown
+	spell = /spell/targeted/equip_item/clowncurse
+	spellname = "clowning"
+	icon_state = "bookclown"
+	desc = "This book is comedy gold!"
+
+/obj/item/weapon/spellbook/oneuse/clown/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		to_chat(user, "<span class ='warning'>You suddenly feel funny!</span>")
+		var/obj/item/clothing/mask/gas/clown_hat/magicclown = new /obj/item/clothing/mask/gas/clown_hat
+		magicclown.canremove = 0
+		magicclown.unacidable = 1
+		user.flash_eyes(visual = 1)
+		user.dna.SetSEState(CLUMSYBLOCK,1)
+		genemutcheck(user,CLUMSYBLOCK,null,MUTCHK_FORCED)
+		user.update_mutations()
+		user.drop_from_inventory(user.wear_mask)
+		user.equip_to_slot_if_possible(magicclown, slot_wear_mask, 1, 1)
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/mime
+	spell = /spell/targeted/equip_item/frenchcurse
+	spellname = "miming"
+	icon_state = "bookmime"
+	desc = "This book is entirely in french."
+
+/obj/item/weapon/spellbook/oneuse/mime/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		to_chat(user, "<span class ='warning'>You suddenly feel very quiet.</span>")
+		var/obj/item/clothing/mask/gas/mime/magicmime = new /obj/item/clothing/mask/gas/mime
+		magicmime.canremove = 0
+		magicmime.unacidable = 1
+		magicmime.muted = 1
+		user.flash_eyes(visual = 1)
+		user.drop_from_inventory(user.wear_mask)
+		user.equip_to_slot_if_possible(magicmime, slot_wear_mask, 1, 1)
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/shoesnatch
+	spell = /spell/targeted/shoesnatch
+	spellname = "shoe snatching"
+	icon_state = "bookshoe"
+	desc = "This book will knock you off your feet."
+
+/obj/item/weapon/spellbook/oneuse/shoesnatch/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/victim = user
+		to_chat(user, "<span class ='warning'>Your feet feel funny!</span>")
+		var/obj/item/clothing/shoes/clown_shoes/magicshoes = new /obj/item/clothing/shoes/clown_shoes
+		magicshoes.canremove = 0
+		magicshoes.wizard_garb = 1
+		magicshoes.unacidable = 1
+		user.flash_eyes(visual = 1)
+		user.drop_from_inventory(victim.shoes)
+		user.equip_to_slot(magicshoes, slot_shoes, 1, 1)
+		qdel(src)
+
+
+/obj/item/weapon/spellbook/oneuse/robesummon
+	spell = /spell/targeted/equip_item/robesummon
+	spellname = "robe summoning"
+	icon_state = "bookrobe"
+	desc = "This book is full of helpful fashion tips for apprentice wizards."
+
+/obj/item/weapon/spellbook/oneuse/robesummon/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/victim = user
+		to_chat(user, "<span class ='warning'>You suddenly feel very restrained!</span>")
+		var/obj/item/clothing/suit/straight_jacket/magicjacket = new/obj/item/clothing/suit/straight_jacket
+		user.drop_from_inventory(victim.wear_suit)
+		user.equip_to_slot(magicjacket, slot_wear_suit, 1, 1)
+		user.flash_eyes(visual = 1)
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/disabletech
+	spell = /spell/aoe_turf/disable_tech
+	spellname = "disable tech"
+	icon_state = "bookdisabletech"
+	desc = "This book was written with luddites in mind."
+
+/obj/item/weapon/spellbook/oneuse/disabletech/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.contract_disease(new /datum/disease/robotic_transformation(0), 1)
+		to_chat(user, "<span class ='warning'>You feel a closer connection to technology...</span>")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/magicmissle
+	spell = /spell/targeted/projectile/magic_missile
+	spellname = "magic missle"
+	icon_state = "bookmm"
+	desc = "This book is a perfect prop for LARPers."
+
+/obj/item/weapon/spellbook/oneuse/magicmissle/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.adjustBrainLoss(100)
+		to_chat(user, "<span class = 'warning'>You can't cast this spell when it isn't your turn! 	You feel very stupid.</span>")
+		qdel(src)
+
+
+/obj/item/weapon/spellbook/oneuse/mutate
+	spell = /spell/targeted/genetic/mutate
+	spellname = "mutating"
+	icon_state = "bookmutate"
+	desc = "All the pages in this book are ripped."
+
+/obj/item/weapon/spellbook/oneuse/mutate/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.dna.SetSEState(HEADACHEBLOCK,1)
+		genemutcheck(user,HEADACHEBLOCK,null,MUTCHK_FORCED)
+		user.update_mutations()
+		to_chat(user, "<span class = 'warning'>You feel like you've been pushing yourself too hard! </span>")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/subjugate
+	spell = /spell/targeted/subjugation
+	spellname = "subjugation"
+	icon_state = "booksubjugate"
+	desc = "This book makes you feel dizzy."
+
+/obj/item/weapon/spellbook/oneuse/subjugate/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.reagents.add_reagent("rum", 200)
+		to_chat(user, "<span class = 'warning'>You feel very drunk all of a sudden.</span>")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/teleport
+	spell = /spell/area_teleport
+	spellname = "teleportation"
+	icon_state = "booktele"
+	desc = "This book will really take you places."
+
+/obj/item/weapon/spellbook/oneuse/teleport/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/h = user
+		user.flash_eyes(visual = 1)
+		for(var/datum/organ/external/l_leg/E in h.organs)
+			E.droplimb(1)
+		for(var/datum/organ/external/r_leg/E in h.organs)
+			E.droplimb(1)
+		to_chat(user, "<span class = 'warning'>Your legs fall off!</span>")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/teleport/blink //sod coding different effects for each teleport spell
+	spell = /spell/aoe_turf/blink
+	spellname = "blinking"
+
+/obj/item/weapon/spellbook/oneuse/teleport/jaunt
+	spell = /spell/targeted/ethereal_jaunt
+	spellname = "jaunting"
+
+/obj/item/weapon/spellbook/oneuse/buttbot
+	spell = /spell/targeted/buttbots_revenge
+	spellname = "ass magic"
+	icon_state = "bookbutt"
+
+/obj/item/weapon/spellbook/oneuse/buttbot/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/C = user
+		if(C.op_stage.butt != 4)
+			var/obj/item/clothing/head/butt/B = new(C.loc)
+			B.transfer_buttdentity(C)
+			C.op_stage.butt = 4
+			to_chat(user, "<span class='warning'>Your ass just blew up!</span>")
+		playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
+		C.apply_damage(40, BRUTE, "groin")
+		C.apply_damage(10, BURN, "groin")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/lightning
+	spell = /spell/lightning
+	spellname = "lightning"
+	icon_state = "booklightning"
+
+/obj/item/weapon/spellbook/oneuse/lightning/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.apply_damage(25, BURN, "l_hand")
+		user.apply_damage(25, BURN, "r_hand")
+		to_chat(user, "<span class = 'warning'>The book heats up and burns your hands!</span>")
+		qdel(src)
+
+/obj/item/weapon/spellbook/oneuse/timestop
+	spell = /spell/aoe_turf/fall
+	spellname = "time stopping"
+	icon_state = "booktimestop"
+	desc = "A rare, vintage copy of 'WizzWizz's Magical Adventures."
+
+/obj/item/weapon/spellbook/oneuse/timestop/recoil(mob/living/carbon/user as mob)
+	if(istype(user, /mob/living/carbon/human))
+		user.stunned = 5
+		user.flash_eyes(visual = 1)
+		to_chat(user, "<span class = 'warning'>You have been turned into a statue!</span>")
+		new /obj/structure/closet/statue(user.loc, user) //makes the statue
+		qdel(src)
+	return
+
+
+/obj/item/weapon/spellbook/oneuse/timestop/statute //recoil effect is same as timestop effect so this is a child
+	spell = /spell/targeted/flesh_to_stone
+	spellname = "sculpting"
+	icon_state = "bookstatue"
+	desc = "This book is as dense as a rock."
+
+// Spell Book Bundles//
+
+/obj/item/weapon/storage/box/spellbook
+	name = "Spellbook Bundle"
+	desc = "High quality discount spells! This bundle is non-refundable. The end user is solely liable for any damages arising from misuse of these products."
+
+/obj/item/weapon/storage/box/spellbook/New()
+	..()
+	var/list/possible_books = typesof(/obj/item/weapon/spellbook/oneuse)
+	possible_books -= /obj/item/weapon/spellbook/oneuse
+	possible_books -= /obj/item/weapon/spellbook/oneuse/charge
+	for(var/i =1; i <= 7; i++)
+		var/randombook = pick(possible_books)
+		var/book = new randombook(src)
+		src.contents += book
+		possible_books -= randombook
