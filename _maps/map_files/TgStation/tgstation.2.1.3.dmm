@@ -470,7 +470,7 @@
 	d2 = 2
 	},
 /obj/machinery/power/tracker,
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxport)
 "abt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -798,7 +798,7 @@
 	d2 = 2
 	},
 /obj/machinery/power/tracker,
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxstarboard)
 "abY" = (
 /obj/structure/grille,
@@ -1239,7 +1239,7 @@
 	id = "auxsolareast";
 	name = "Port Auxiliary Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxport)
 "acW" = (
 /obj/structure/cable,
@@ -1447,7 +1447,7 @@
 	id = "auxsolareast";
 	name = "Port Auxiliary Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxstarboard)
 "adt" = (
 /obj/structure/cable,
@@ -1779,7 +1779,7 @@
 	id = "auxsolareast";
 	name = "Port Auxiliary Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxport)
 "aea" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
@@ -2119,7 +2119,7 @@
 	id = "auxsolareast";
 	name = "Port Auxiliary Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/auxstarboard)
 "aeH" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -39614,19 +39614,19 @@
 /area/toxins/test_area)
 "bIY" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 9
 	},
 /area/toxins/test_area)
 "bIZ" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 5
 	},
 /area/toxins/test_area)
 "bJa" = (
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 1
 	},
 /area/toxins/test_area)
@@ -40228,7 +40228,7 @@
 /turf/open/floor/plating/airless,
 /area/toxins/test_area)
 "bKh" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 9
 	},
 /area/toxins/test_area)
@@ -40236,7 +40236,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 5
 	},
 /area/toxins/test_area)
@@ -40803,12 +40803,12 @@
 	},
 /area/toxins/mixing)
 "bLn" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 4
 	},
 /area/toxins/test_area)
 "bLo" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 8
 	},
 /area/toxins/test_area)
@@ -41374,7 +41374,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bMD" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 10
 	},
 /area/toxins/test_area)
@@ -41382,7 +41382,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 6
 	},
 /area/toxins/test_area)
@@ -41802,7 +41802,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 10
 	},
 /area/toxins/test_area)
@@ -41810,13 +41810,13 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 6
 	},
 /area/toxins/test_area)
 "bNF" = (
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 2
 	},
 /area/toxins/test_area)
@@ -48461,7 +48461,7 @@
 	id = "portsolar";
 	name = "Port Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port)
 "ccb" = (
 /obj/structure/cable{
@@ -48472,7 +48472,7 @@
 	id = "portsolar";
 	name = "Port Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port)
 "ccc" = (
 /obj/structure/cable{
@@ -51115,7 +51115,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port)
 "chK" = (
 /obj/structure/cable{
@@ -55549,7 +55549,7 @@
 	id = "starboardsolar";
 	name = "Starboard Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard)
 "crk" = (
 /obj/structure/lattice/catwalk,
@@ -55848,7 +55848,7 @@
 	id = "starboardsolar";
 	name = "Starboard Solar Array"
 	},
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard)
 "crT" = (
 /obj/structure/grille,
@@ -55905,7 +55905,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csa" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55927,7 +55927,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "csd" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 4
 	},
 /area/engine/engineering)
@@ -56126,7 +56126,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "csC" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 1
 	},
 /area/space/nearstation)
@@ -56166,12 +56166,12 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csH" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 9
 	},
 /area/space/nearstation)
 "csI" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 5
 	},
 /area/space/nearstation)
@@ -56223,7 +56223,7 @@
 /area/space/nearstation)
 "csR" = (
 /obj/machinery/the_singularitygen,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 8
 	},
 /area/space/nearstation)
@@ -56320,7 +56320,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ctf" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 2
 	},
 /area/space/nearstation)
@@ -56377,7 +56377,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ctm" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 10
 	},
 /area/space/nearstation)
@@ -56510,7 +56510,7 @@
 "ctB" = (
 /obj/structure/cable,
 /obj/machinery/power/tracker,
-/turf/open/floor/plasteel/solarpanel,
+/turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/starboard)
 "ctC" = (
 /obj/machinery/camera/emp_proof{
@@ -59309,7 +59309,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "czD" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 6
 	},
 /area/space/nearstation)
@@ -59719,7 +59719,7 @@
 /area/space/nearstation)
 "cAt" = (
 /obj/machinery/the_singularitygen/tesla,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/airless/warnplate{
 	dir = 4
 	},
 /area/space/nearstation)
