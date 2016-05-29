@@ -40,7 +40,7 @@
 	var/area/space = get_space_area
 
 	var/list/list_of_vault_spawners = shuffle(typesof(/area/random_vault) - /area/random_vault)
-	var/list/list_of_vaults = typesof(/datum/vault) - /datum/vault
+	var/list/list_of_vaults = typesof(/datum/map_element/vault) - /datum/map_element/vault
 
 	for(var/vault_path in list_of_vaults) //Turn a list of paths into a list of objects
 		list_of_vaults.Add(new vault_path)
@@ -49,20 +49,20 @@
 	//Start processing the list of vaults
 
 	if(map.only_spawn_map_exclusive_vaults) //If the map spawns only map-exclusive vaults - remove all vaults that aren't exclusive to this map
-		for(var/datum/vault/V in list_of_vaults)
+		for(var/datum/map_element/vault/V in list_of_vaults)
 
 			if(V.exclusive_to_maps.Find(map.nameShort) || V.exclusive_to_maps.Find(map.nameLong))
 				continue
 
 			list_of_vaults.Remove(V)
 	else //Map spawns all vaults - remove all vaults that are exclusive to other maps
-		for(var/datum/vault/V in list_of_vaults)
+		for(var/datum/map_element/vault/V in list_of_vaults)
 
 			if(V.exclusive_to_maps.len)
 				if(!V.exclusive_to_maps.Find(map.nameShort) && !V.exclusive_to_maps.Find(map.nameLong))
 					list_of_vaults.Remove(V)
 
-	for(var/datum/vault/V in list_of_vaults) //Remove all vaults that can't spawn on this map
+	for(var/datum/map_element/vault/V in list_of_vaults) //Remove all vaults that can't spawn on this map
 		if(V.map_blacklist.len)
 			if(V.map_blacklist.Find(map.nameShort) || V.map_blacklist.Find(map.nameLong))
 				list_of_vaults.Remove(V)
@@ -97,21 +97,16 @@
 			vault_y = TURF.y
 			vault_z = TURF.z
 
-			var/datum/vault/new_vault = pick(list_of_vaults) //Pick a random path from list_of_vaults (like /datum/vault/spacegym)
+			var/datum/map_element/vault/new_vault = pick(list_of_vaults) //Pick a random path from list_of_vaults (like /datum/vault/spacegym)
 
 			if(new_vault.only_spawn_once)
 				list_of_vaults.Remove(new_vault)
 
-			var/path_file = "[new_vault.map_directory][new_vault.map_name].dmm"
-
-			if(fexists(path_file))
-				var/list/L = maploader.load_map(file(path_file), vault_z, vault_x, vault_y)
-				new_vault.initialize(L)
-
-				message_admins("<span class='info'>Loaded [path_file]: [formatJumpTo(locate(vault_x, vault_y, vault_z))].")
+			if(new_vault.load(vault_x, vault_y, vault_z))
+				message_admins("<span class='info'>Loaded [new_vault.file_path]: [formatJumpTo(locate(vault_x, vault_y, vault_z))].")
 				successes++
 			else
-				message_admins("<span class='danger'>Can't find [path_file]!</span>")
+				message_admins("<span class='danger'>Can't find [new_vault.file_path]!</span>")
 				failures++
 
 		for(var/turf/TURF in A) //Replace all of the temporary areas with space

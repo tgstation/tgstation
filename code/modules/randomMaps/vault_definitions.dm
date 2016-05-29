@@ -1,22 +1,18 @@
 var/list/existing_vaults = list()
 
-/datum/vault
+/datum/map_element/vault
+	type_abbreviation = "V"
+
 	var/list/exclusive_to_maps = list() //Only spawn on these maps (accepts nameShort and nameLong, for more info see maps/_map.dm). No effect if empty
 	var/list/map_blacklist = list() //Don't spawn on these maps
 
-	var/map_directory = "maps/randomVaults/"
-	var/map_name = "" //Don't include the suffix or "maps/randomVaults/". If the vault is maps/randomVaults/hell.dmm, this should be "hell"
-
 	var/only_spawn_once = 1 //If 0, this vault can spawn multiple times on a single map
 
-	var/turf/location //The first turf from this vault
 	var/base_turf_type = /turf/space //The "default" turf type that surrounds this vault. If it differs from the z-level's base turf type (for example if this vault is loaded on a snow map), all turfs of this type will be replaced with turfs of the z-level's base turf type
 
-/datum/vault/proc/initialize(list/objects)
+/datum/map_element/vault/initialize(list/objects)
+	..(objects)
 	existing_vaults.Add(src)
-
-	location = locate(/turf) in objects
-	if(!location) return
 
 	var/zlevel_base_turf_type = get_base_turf(location.z)
 	if(!zlevel_base_turf_type) zlevel_base_turf_type = /turf/space
@@ -30,41 +26,41 @@ var/list/existing_vaults = list()
 
 //How to create a new vault:
 //1) create a map in maps/randomVaults/
-//2) create a new subtype of /datum/vault/ (look below for an example) and set its map_name to your map's filename (don't include the "dmm" part)
+//2) create a new subtype of /datum/map_element/vault/ (look below for an example) and set its file_path to your map's file path (including the file extension, which is most likely ".dmm")
 //3) if you're an advanced user, feel free to play around with other variables
 
-/datum/vault/icetruck_crash
-	map_name = "icetruck_crash"
+/datum/map_element/vault/icetruck_crash
+	file_path = "maps/randomvaults/icetruck_crash.dmm"
 
-/datum/vault/asteroid_temple
-	map_name = "asteroid_temple"
+/datum/map_element/vault/asteroid_temple
+	file_path = "maps/randomvaults/asteroid_temple.dmm"
 
-/datum/vault/tommyboyasteroid
-	map_name = "tommyboyasteroid"
+/datum/map_element/vault/tommyboyasteroid
+	file_path = "maps/randomvaults/tommyboyasteroid.dmm"
 
-/datum/vault/hivebot_factory
-	map_name = "hivebot_factory"
+/datum/map_element/vault/hivebot_factory
+	file_path = "maps/randomvaults/hivebot_factory.dmm"
 
-/datum/vault/clown_base
-	map_name = "clown_base"
+/datum/map_element/vault/clown_base
+	file_path = "maps/randomvaults/clown_base.dmm"
 
-/datum/vault/rust
-	map_name = "rust"
+/datum/map_element/vault/rust
+	file_path = "maps/randomvaults/rust.dmm"
 
-/datum/vault/dance_revolution
-	map_name = "dance_revolution"
+/datum/map_element/vault/dance_revolution
+	file_path = "maps/randomvaults/dance_revolution.dmm"
 
-/datum/vault/spacegym
-	map_name = "spacegym"
+/datum/map_element/vault/spacegym
+	file_path = "maps/randomvaults/spacegym.dmm"
 
-/datum/vault/oldarmory
-	map_name = "oldarmory"
+/datum/map_element/vault/oldarmory
+	file_path = "maps/randomvaults/oldarmory.dmm"
 
-/datum/vault/spacepond
-	map_name = "spacepond"
+/datum/map_element/vault/spacepond
+	file_path = "maps/randomvaults/spacepond.dmm"
 
-/datum/vault/iou_vault
-	map_name = "iou_fort"
+/datum/map_element/vault/iou_vault
+	file_path = "maps/randomvaults/iou_fort.dmm"
 
-/datum/vault/biodome
-	map_name = "biodome"
+/datum/map_element/vault/biodome
+	file_path = "maps/randomvaults/biodome.dmm"

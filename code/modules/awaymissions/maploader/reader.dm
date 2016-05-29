@@ -174,40 +174,44 @@ var/global/dmm_suite/preloader/_preloader = null
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 
-	//in case of multiples turfs on one tile,
-	//will contains the images of all underlying turfs, to simulate the DMM multiple tiles piling
-	var/list/turfs_underlays = list()
-
 	//first instance the /area and remove it from the members list
 	index = members.len
 	var/atom/instance
 	_preloader = new(members_attributes[index])//preloader for assigning  set variables on atom creation
 
+	//Locate the area object
 	instance = locate(members[index])
-	instance.contents.Add(locate(xcrd,ycrd,zcrd))
+
+	if(!isspace(instance)) //Space is the default area and contains every loaded turf by default
+		instance.contents.Add(locate(xcrd,ycrd,zcrd))
 
 	if(_preloader && instance)
 		_preloader.load(instance)
 
 	members.Remove(members[index])
 
-	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect
+	//then instance the /turf and, if multiple tiles are presents, simulates the DMM underlays piling effect (only the last turf is spawned, other ones are drawn as underlays)
 
 	var/first_turf_index = 1
 	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
 		first_turf_index++
 
-	//instanciate the first /turf
-	var/turf/T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+	var/last_turf_index = first_turf_index
+	while(last_turf_index+1 <= members.len && ispath(members[last_turf_index + 1], /turf))
+		last_turf_index++
 
-	//if others /turf are presents, simulates the underlays piling effect
-	index = first_turf_index + 1
-	while(index <= members.len)
-		turfs_underlays.Insert(1,image(T.icon,null,T.icon_state,T.layer,T.dir))//add the current turf image to the underlays list
-		var/turf/UT = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
-		add_underlying_turf(UT,T,turfs_underlays)//simulates the DMM piling effect
-		T = UT
-		index++
+	//instanciate the last /turf
+	var/turf/T = instance_atom(members[last_turf_index],members_attributes[last_turf_index],xcrd,ycrd,zcrd)
+
+	if(first_turf_index != last_turf_index) //More than one turf is present - go from the lowest turf to the turf before the last one
+		var/turf_index = first_turf_index
+		while(turf_index < last_turf_index)
+			var/turf/underlying_turf = members[turf_index]
+			var/image/new_underlay = image(icon = null) //Because just image() doesn't work, and neither does image(appearance=...)
+
+			new_underlay.appearance = initial(underlying_turf.appearance)
+			T.underlays.Add(new_underlay)
+			turf_index++
 
 	spawned_atoms.Add(T)
 

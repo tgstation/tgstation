@@ -154,6 +154,7 @@
 #include "code\datums\datumvars.dm"
 #include "code\datums\disease.dm"
 #include "code\datums\locking_category.dm"
+#include "code\datums\map_elements.dm"
 #include "code\datums\mind.dm"
 #include "code\datums\mixed.dm"
 #include "code\datums\modules.dm"
