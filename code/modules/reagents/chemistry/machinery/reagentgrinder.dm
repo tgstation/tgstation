@@ -43,7 +43,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
-
+				/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod = list("cocoa" = 10, "nutriment" = 5),
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 				/obj/item/weapon/reagent_containers/pill = list(),
