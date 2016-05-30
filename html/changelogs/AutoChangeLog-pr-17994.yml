@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - bugfix: "Gang tags can again be sprayed over."

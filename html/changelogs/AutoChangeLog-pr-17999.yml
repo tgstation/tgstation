@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - bugfix: "Fixes bug where the wisp was unable to be recalled to the lantern."
