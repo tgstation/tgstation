@@ -263,7 +263,7 @@ var/const/POWER = 8
 	for(var/colour in signallers)
 		if(S == signallers[colour])
 			PulseColour(colour)
-			log_attack("The [GetWireName(wires[colour])] wire of airlock named \"[holder]\" has been pulsed with [S], activated by [key_name(usr)].")
+			log_attack("The [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z] has been pulsed with [S], activated by [key_name(usr)].")
 			break
 
 
