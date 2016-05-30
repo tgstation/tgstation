@@ -453,6 +453,9 @@
 		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 		if(!E)
 			return
+		if(E.welding_proof)
+			usr.simple_message("<span class='notice'>Your eyelenses darken to accomodate for the welder's glow</span>")
+			return
 		if(safety < 2)
 			switch(safety)
 				if(1)
