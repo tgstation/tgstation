@@ -27,8 +27,6 @@
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define issimplezombie(A) (istype(A, /mob/living/simple_animal/hostile/zombie))
-
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
 #define isrobot(A) (istype(A, /mob/living/silicon/robot))
