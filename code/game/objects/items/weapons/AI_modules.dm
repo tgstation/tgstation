@@ -58,11 +58,11 @@ AI MODULES
 
 	var/law2log = src.transmitInstructions(law_datum, user) //Freeforms return something extra we need to log
 	if(law_datum.owner)
-		user << "Upload complete. [law_datum.owner]'s laws have been modified."
+		user << "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>"
 		law_datum.owner.show_laws()
 		law_datum.owner.law_change_counter++
 	else
-		user << "Upload complete."
+		user << "<span class='notice'>Upload complete.</span>"
 
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"

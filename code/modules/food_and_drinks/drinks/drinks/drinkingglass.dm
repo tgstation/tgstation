@@ -613,6 +613,10 @@
 				icon_state = "shotglassred"
 				name = "shot of gibs"
 				desc = "...Let's not talk about this."
+			if ("absinthe")
+				icon_state = "shotglassgreen"
+				name = "shot of absinthe"
+				desc = "I am stuck in the cycles of my guilt..."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"

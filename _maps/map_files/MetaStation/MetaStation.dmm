@@ -99116,7 +99116,7 @@
 	dir = 2;
 	dwidth = 5;
 	height = 14;
-	name = "MetaStation emergency shuttle";
+	name = "Meta emergency shuttle";
 	width = 25
 	},
 /obj/docking_port/stationary{

@@ -235,7 +235,6 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
-	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
 	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
@@ -243,11 +242,15 @@
 	var/list/walltypes = list(/turf/closed/wall/shuttle/survival/pod)
 	var/floor_type = /turf/open/floor/pod
 	var/room
+	var/onshuttle = 0
 
 	//Center the room/spawn it
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
-	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		onshuttle = 1
+	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter", onshuttle)
 
 	start_turf = get_turf(src.loc)
 
@@ -315,20 +318,19 @@
 	threshhold.ChangeTurf(/turf/open/floor/pod)
 	var/turf/open/floor/pod/doorturf = threshhold
 	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-	var/area/ZZ = get_area(threshhold)
-	if(!is_type_in_list(ZZ, blacklist))
+	if(!onshuttle)
 		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
-	for(var/turf/open/floor/A in turfs)
-		A.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-		A.overlays.Cut()
-		var/area/Z = get_area(A)
-		if(!is_type_in_list(Z, blacklist))
-			L.contents += A
+	for(var/turf/open/floor/F in turfs)
+		F.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
+		F.overlays.Cut()
+		if(!onshuttle)
+			L.contents += F
+
 
 //Pod turfs and objects
 

@@ -161,7 +161,10 @@
 ///Checks to see if you are being grabbed and if so attemps to break it
 /client/proc/Process_Grab()
 	if(mob.pulledby)
-		if(mob.restrained(ignore_grab = 1))
+		if(mob.incapacitated(ignore_restraints = 1))
+			move_delay = world.time + 10
+			return 1
+		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
 			src << "<span class='warning'>You're restrained! You can't move!</span>"
 			return 1

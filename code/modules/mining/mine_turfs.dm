@@ -212,6 +212,7 @@
 	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
+		stage = 3
 		explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/closed/mineral/gibtonite/proc/defuse()
@@ -233,6 +234,7 @@
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
+		stage = 3
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
@@ -242,8 +244,11 @@
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
+	if(stage == 3)
+		return
 	ChangeTurf(turf_type, defer_change)
-	AfterChange()
+	spawn(10)
+		AfterChange()
 
 /turf/closed/mineral/gibtonite/volcanic
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -375,7 +380,8 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
-	AfterChange()
+	spawn(10)
+		AfterChange()
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	return
 
@@ -583,6 +589,8 @@
 			// To freak out any bystanders
 			visible_message("[H] falls into [src]!")
 			J.chasm_react(H)
+			return
+		if(H.dna.species && (FLYING in H.dna.species.specflags))
 			return
 	drop(AM)
 

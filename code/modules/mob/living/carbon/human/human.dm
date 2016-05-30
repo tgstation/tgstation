@@ -58,7 +58,7 @@
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
-	handcrafting.craft(src)
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
@@ -1080,3 +1080,7 @@
 
 /mob/living/carbon/human/is_literate()
 	return 1
+
+/mob/living/carbon/human/update_gravity(has_gravity,override = 0)
+	override = dna.species.override_float
+	..()

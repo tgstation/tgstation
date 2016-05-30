@@ -162,7 +162,7 @@
 	w_class = 5
 	materials = list()
 	burst_size = 3
-	automatic = 1
+	automatic = 0
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Laser.ogg'

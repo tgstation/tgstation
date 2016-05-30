@@ -117,7 +117,6 @@ This file's folder contains:
 // GAME MODE //
 ///////////////
 
-var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
@@ -127,7 +126,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
-	config_tag = "clockwork cult"
+	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	required_players = 30
 	required_enemies = 2
@@ -258,9 +257,10 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 		else
 			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
-	text += "<b>Ratvar's servants were:</b>"
-	for(var/datum/mind/M in servants_of_ratvar)
-		text += printplayer(M)
+	if(servants_of_ratvar.len)
+		text += "<b>Ratvar's servants were:</b>"
+		for(var/datum/mind/M in servants_of_ratvar)
+			text += printplayer(M)
 	world << text
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)

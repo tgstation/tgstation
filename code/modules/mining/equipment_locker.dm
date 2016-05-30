@@ -582,6 +582,7 @@
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(istype(M, /obj/effect))
 		return
+
 	if(istype(M, /atom/movable))
 		if(do_teleport(M, target, 6))
 			// KERPLUNK

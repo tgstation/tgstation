@@ -35,7 +35,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
 	if(!posibrain_notif_cooldown)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action=NOTIFY_ATTACK)
 		posibrain_notif_cooldown = 1
 		spawn(askDelay) //Global one minute cooldown to avoid spam.
 			posibrain_notif_cooldown = 0
@@ -105,6 +105,8 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
 	living_mob_list += brainmob
+	if(clockwork)
+		add_servant_of_ratvar(brainmob, TRUE)
 
 	visible_message(new_mob_message)
 	update_icon()

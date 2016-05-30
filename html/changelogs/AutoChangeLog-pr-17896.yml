@@ -1,5 +1,0 @@
-author: phil235
-delete-after: True
-changes: 
-  - tweak: "Pull and Grab are merged together. Pulling stays unchanged. Using an empty hand with grab intent on a mob will pull them. Using an empty hand with grab intent on a mob that you're already pulling will try to upgrade your grip to aggressive grab>neck grab>kill grab. Aggressive grabs no longer stun you, but they act exactly like a handcuff, preventing you from using your hands until you escape the grip. You can break free from the grip by trying to move or using the resist button."
-  - tweak: "Someone pulling a restrained mob now swap position with them instead of getting blocked by the mob, unable to even push them."

@@ -9,6 +9,9 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
+/obj/structure/AIcore/New()
+	..()
+	laws.set_laws_config()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user, params)
 	switch(state)
@@ -182,8 +185,6 @@
 			if(istype(P, /obj/item/weapon/screwdriver))
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user << "<span class='notice'>You connect the monitor.</span>"
-				if(!laws.inherent.len) //If laws isn't set to null but nobody supplied a board, the AI would normally be created lawless. We don't want that.
-					laws = null
 				new /mob/living/silicon/ai (loc, laws, brain)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
