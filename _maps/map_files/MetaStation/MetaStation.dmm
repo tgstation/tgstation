@@ -77420,29 +77420,6 @@
 	},
 /area/medical/surgery)
 "cuz" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	freerange = 0;
@@ -77452,6 +77429,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "cuA" = (
