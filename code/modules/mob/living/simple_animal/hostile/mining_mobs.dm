@@ -77,8 +77,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
+	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -463,7 +463,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -558,7 +558,7 @@
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -629,7 +629,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
-	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
+	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
@@ -705,7 +705,7 @@
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
 
@@ -1005,7 +1005,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	layer = MOB_LAYER-0.1
 	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
 	var/gps = null
@@ -1021,7 +1020,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE

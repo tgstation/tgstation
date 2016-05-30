@@ -4,7 +4,7 @@
 	icon = 'goon/icons/obj/fitness.dmi'
 	icon_state = "punchingbag"
 	anchored = 1
-	layer = MOB_LAYER+1 // TODO LAYER
+	layer = WALL_OBJ_LAYER
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
@@ -69,7 +69,7 @@
 		user.Stun(4)
 		user.loc = src.loc
 		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
-		W.layer = MOB_LAYER+1
+		W.layer = WALL_OBJ_LAYER
 		overlays += W
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")

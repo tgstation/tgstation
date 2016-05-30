@@ -70,7 +70,7 @@
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"
-	layer = 6
+	layer = FLY_LAYER
 	randomdir = 0
 	duration = 10
 	pixel_z = 500
@@ -78,7 +78,7 @@
 /obj/effect/overlay/temp/target
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
-	layer = MOB_LAYER - 0.1
+	layer = BELOW_MOB_LAYER
 	luminosity = 2
 	duration = 10
 
@@ -87,7 +87,7 @@
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "rune_large"
-	layer = MOB_LAYER - 0.1
+	layer = BELOW_MOB_LAYER
 	pixel_x = -32
 	pixel_y = -32
 	color = "#FF0000"

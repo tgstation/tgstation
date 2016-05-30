@@ -172,6 +172,9 @@
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
 
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
+
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/turf/T = A

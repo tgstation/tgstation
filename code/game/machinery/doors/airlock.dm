@@ -986,7 +986,7 @@ var/list/airlock_overlays = list()
 	sleep(5)
 	src.density = 0
 	sleep(9)
-	src.layer = 2.7
+	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
 	SetOpacity(0)
 	operating = 0
@@ -1023,7 +1023,7 @@ var/list/airlock_overlays = list()
 		return 1
 	operating = 1
 	update_icon(AIRLOCK_CLOSING, 1)
-	src.layer = 3.1
+	src.layer = CLOSED_DOOR_LAYER
 	sleep(5)
 	src.density = 1
 	if(!safe)

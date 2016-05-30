@@ -7,7 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1

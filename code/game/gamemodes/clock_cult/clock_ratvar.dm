@@ -1,7 +1,7 @@
 /obj/structure/clockwork/massive //For objects that are typically very large
 	name = "massive construct"
 	desc = "A very large construction."
-	layer = 10
+	layer = MASSIVE_OBJ_LAYER
 
 /obj/structure/clockwork/massive/celestial_gateway //The gateway to Reebe, from which Ratvar emerges
 	name = "Gateway to the Celestial Derelict"

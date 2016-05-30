@@ -50,9 +50,6 @@
 	qdel(user)
 	return
 
-/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	return ..()
-
 /obj/item/weapon/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))
 		if(get_dist(user, dest_object) < 8)
@@ -82,7 +79,7 @@
 		qdel(src)
 		singulo.process()
 		return
-	..()
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
