@@ -182,7 +182,6 @@
 	desc = "Someone seperated our Research Director from his own head!"
 	var/tele_range = 6
 	var/rad_amount= 15
-	var/nospace = 0
 	reactivearmor_cooldown_duration = 100
 
 /obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
@@ -196,8 +195,6 @@
 		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
-			if(istype(T,/turf/open/space)||nospace == 1)
-				continue
 			if(T.density)
 				continue
 			if(T.x>world.maxx-tele_range || T.x<tele_range)
@@ -229,7 +226,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] is still recharging its flame emitters and fails to activate!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its jets!</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -244,14 +241,14 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
-	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm. You can't fight who you can't see."
+	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm. You can't fight what you can't see."
 
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] is still recharging its holographic emitters!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</spawn>")
 			return
 		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
 		E.Copy_Parent(owner, 50)
@@ -276,7 +273,7 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive telsa armor are still recharging and the armor fails to activate and only sparks!</spawn>")
+			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive telsa armor are still recharging! The armor merely emits some sparks.</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
 		for(var/mob/living/M in view(6, owner))
@@ -292,7 +289,6 @@
 	name = "reactive table armor"
 	desc = "If you can't beat the memes, embrace them."
 	var/tele_range = 10
-	var/nospace = 1
 
 /obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
@@ -307,8 +303,6 @@
 		owner.Weaken(2)
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(tele_range, H))
-			if(istype(T,/turf/open/space)||nospace == 1)
-				continue
 			if(T.density)
 				continue
 			if(T.x>world.maxx-tele_range || T.x<tele_range)
