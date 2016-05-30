@@ -990,6 +990,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
+				/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod = list("cocoa" = 10, "nutriment" = 5),
 
 				//Grinder stuff, but only if dry
 				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/arabica = list("coffeepowder" = 0),
