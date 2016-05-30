@@ -5,6 +5,7 @@
 	maxHealth = 1000
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
+	pressure_resistance = INFINITY
 	environment_smash = 4
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
