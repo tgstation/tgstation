@@ -76,6 +76,7 @@
 	if(maxcharge < amount)
 		amount = maxcharge
 	var/power_used = min(maxcharge-charge,amount)
+	charge += power_used
 	return power_used
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
