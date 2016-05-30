@@ -146,7 +146,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	var/active = 0
-	var/reactivearmor_cooldown_duration = 100 //cooldown specific to reactive armor
+	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
 	item_state = "reactiveoff"
@@ -174,6 +174,7 @@
 	active = 0
 	src.icon_state = "reactiveoff"
 	src.item_state = "reactiveoff"
+	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	..()
 
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
@@ -213,10 +214,6 @@
 		return 1
 	return 0
 
-/obj/item/clothing/suit/armor/reactive/teleport/emp_act(severity)
-	..()
-	reactivearmor_cooldown_duration = world.time + 200
-
 /obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armor"
 	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
@@ -226,7 +223,7 @@
 		return 0
 	if(prob(hit_reaction_chance))
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its jets!</spawn>")
+			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out jets of flame!</span>")
 		for(var/mob/living/carbon/C in range(6, owner))
@@ -241,7 +238,7 @@
 
 /obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armor"
-	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm. You can't fight what you can't see."
+	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 
 /obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
@@ -296,9 +293,9 @@
 	if(prob(hit_reaction_chance))
 		var/mob/living/carbon/human/H = owner
 		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive table memes are still on cooldown!</span>")
+			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a freshly fabricated table! The memes are dank!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
 		owner.Weaken(2)
 		var/list/turfs = new/list()
