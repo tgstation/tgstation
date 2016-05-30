@@ -302,7 +302,7 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The reactive table memes are still on cooldown!</span>")
 			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a freshly fabricated tables! The memes are dank!</span>")
+		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a freshly fabricated table! The memes are dank!</span>")
 		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
 		owner.Weaken(2)
 		var/list/turfs = new/list()
