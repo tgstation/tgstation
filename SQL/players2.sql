@@ -106,7 +106,10 @@ CREATE TABLE client (
     warns          INTEGER,
     warnbans       INTEGER,
 	usewmp         INTEGER,
-	usenanoui      INTEGER 
+    usenanoui      INTEGER,
+    space_parallax INTEGER,
+    space_dust     INTEGER,
+    parallax_speed INTEGER
 );
 
 

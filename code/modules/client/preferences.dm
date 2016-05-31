@@ -94,6 +94,9 @@ var/const/MAX_SAVE_SLOTS = 8
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
+	var/space_parallax = 1
+	var/space_dust = 1
+	var/parallax_speed = 2
 	var/special_popup = 0
 
 	//character preferences
@@ -274,6 +277,9 @@ var/const/MAX_SAVE_SLOTS = 8
 /datum/preferences/proc/setup_special(var/dat, var/user)
 	dat += {"<table><tr><td width='340px' height='300px' valign='top'>
 	<h2>General Settings</h2>
+	<b>Space Parallax:</b> <a href='?_src_=prefs;preference=parallax'><b>[space_parallax ? "Enabled" : "Disabled"]</b></a><br>
+	<b>Parallax Speed:</b> <a href='?_src_=prefs;preference=p_speed'><b>[parallax_speed]</b></a><br>
+	<b>Space Dust:</b> <a href='?_src_=prefs;preference=dust'><b>[space_dust ? "Yes" : "No"]</b></a><br>
 	<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>
 	<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>
 	<b>Hear streamed media:</b> <a href='?_src_=prefs;preference=jukebox'><b>[(toggles & SOUND_STREAMING) ? "Yes" : "No"]</b></a><br>
@@ -1421,6 +1427,15 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					var/UI_style_alpha_new = input(user, "Select a new alpha(transparency) parameter for UI, between 50 and 255") as num
 					if(!UI_style_alpha_new | !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50)) return
 					UI_style_alpha = UI_style_alpha_new
+
+				if("parallax")
+					space_parallax = !space_parallax
+
+				if("dust")
+					space_dust = !space_dust
+
+				if("p_speed")
+					parallax_speed = min(max(input(user, "Enter a number between 0 and 5 included (default=2)","Parallax Speed Preferences",parallax_speed),0),5)
 
 				if("name")
 					be_random_name = !be_random_name

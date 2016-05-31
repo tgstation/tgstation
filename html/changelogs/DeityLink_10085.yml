@@ -1,0 +1,8 @@
+author: Deity Link
+delete-after: true
+changes:
+  - rscadd: (PARALLAX) Added space parallax! Spess won't ever be the same again....unless you just disable it in your preferences.
+  - rscadd: (PARALLAX) In your preferences, you can also set the speed at which parallax scrolls by.
+  - rscadd: (PARALLAX) Lastly in your preferences, you can set whether you want to see "space dust" or not.
+  - rscadd: (PARALLAX) Those preferences can be changed from your Preferences tab at anytime during the game.
+  - rscadd: (PARALLAX) Admins can now set the color of the space background. We might decide on a new default color depending on your feedback.
