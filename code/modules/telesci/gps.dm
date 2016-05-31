@@ -32,8 +32,8 @@ var/list/GPS_list = list()
 		overlays += "working"
 
 /obj/item/device/gps/AltClick(mob/user)
-	if(!in_range(src, user))
-		return
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return //user not valid to use gps
 	if(emped)
 		user << "It's busted!"
 	if(tracking)
