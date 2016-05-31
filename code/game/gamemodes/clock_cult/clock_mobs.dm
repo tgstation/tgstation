@@ -335,10 +335,7 @@
 	for(var/i = 9, i > 0, i -= 3)
 		pixel_y += i
 		sleep(2)
-	if(prob(1))
-		maptext = "GOTTA STEP IT UP" //thanks man_shroom
-	else
-		icon_state = "[initial(icon_state)]_charging"
+	icon_state = "[initial(icon_state)]_charging"
 	while(loc != H.loc)
 		if(!H)
 			icon_state = initial(icon_state)
