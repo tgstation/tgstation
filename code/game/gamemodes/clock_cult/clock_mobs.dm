@@ -308,8 +308,8 @@
 
 /mob/living/simple_animal/hostile/clockwork_reclaimer/Life()
 	..()
-	if(isliving(loc))
-		var/mob/living/L = loc
+	if(ishuman(loc))
+		var/mob/living/carbon/human/L = loc
 		if(L.stat || !L.client)
 			loc = get_turf(L)
 			visible_message("<span class='warning'>[src] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
