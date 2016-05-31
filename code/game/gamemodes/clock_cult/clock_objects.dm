@@ -445,6 +445,15 @@
 	w_class = 3
 	armor = list(melee = 65, bullet = 50, laser = -25, energy = 5, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/head/helmet/clockwork/reclaimer //Used when a reclaimer mindjacks someone
+	name = "clockwork reclaimer"
+	desc = "A clockwork spider, hitchhiking like a horrible mechanical parasite."
+	icon_state = "reclaimer"
+	flags = NODROP
+	unacidable = TRUE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
+	flags_cover = HEADCOVERSEYES
+
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
 	desc = "A bulky cuirass made of brass."
@@ -813,6 +822,15 @@
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
 	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
+	w_class = 3
+
+/obj/item/clockwork/component/replicant_alloy/pinion_lock
+	name = "pinion lock"
+	desc = "A dented and scratched gear. It's very heavy."
+	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for replicant alloy."
+	icon_state = "pinion_lock"
+	cultist_message = "The gear grows warm in your hands."
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.")
 	w_class = 3
 
 /obj/item/clockwork/component/hierophant_ansible

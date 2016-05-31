@@ -135,6 +135,9 @@
 	world << "<span class='heavy_brass'><font size=7>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	ratvar_awakens = TRUE
+	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/area/A = get_area(src)
+	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	spawn(50)
 		SSshuttle.emergency.request(null, 0.3)
 
@@ -143,6 +146,13 @@
 	world << "<span class='heavy_brass'><font size=7>\"NO! I will not... be...</font> <font size=6>banished...</font> <font size=5>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()
+
+/obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
+	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !0)
+		return 0
+	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(O))
+	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
+	R.key = O.key
 
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
@@ -238,15 +248,30 @@
 /turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/clockwork)
+/turf/closed/wall/clockwork/ratvar_act()
+	return 0
+
 /turf/open/floor/ratvar_act()
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/clockwork)
+/turf/open/floor/clockwork/ratvar_act()
+	return 0
 
 /obj/structure/window/ratvar_act() //Windows turn yellow
 	color = rgb(75, 53, 0)
 
+/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	qdel(src)
+/obj/machinery/door/airlock/clockwork/ratvar_act()
+	return 0
+
 /mob/living/ratvar_act()
-	add_servant_of_ratvar(src)
+	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+		adjustFireLoss(35)
+		adjust_fire_stacks(1)
+		IgniteMob()
 
 /mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
 	var/old_color = color
