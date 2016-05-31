@@ -1,5 +1,0 @@
-author: CoreOverload
-delete-after: True
-changes: 
-  - rscadd: "Cleanbot software was updated to version 1.2, improving pathfinding and adding two new cleaning options: \"Clean Trash\" and \"Exterminate Pests\"."
-  - experiment: "New cleaning options are still experimental and disabled by default."
