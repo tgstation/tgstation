@@ -26,7 +26,7 @@
 /obj/effect/mine/dnascramble
 	name = "Radiation Mine"
 
-/obj/effect/mine/dnascramble/proc/trigger(mob/living/carbon/AM)
+/obj/effect/mine/dnascramble/trigger(mob/living/carbon/AM)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -38,7 +38,7 @@
 /obj/effect/mine/plasma
 	name = "Plasma Mine"
 
-/obj/effect/mine/plasma/proc/trigger(AM)
+/obj/effect/mine/plasma/trigger(AM)
 	for(var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
 			var/datum/gas_mixture/payload = new
@@ -50,7 +50,7 @@
 /obj/effect/mine/kick
 	name = "Kick Mine"
 
-/obj/effect/mine/kick/proc/trigger(mob/AM)
+/obj/effect/mine/kick/trigger(mob/AM)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
@@ -60,7 +60,7 @@
 /obj/effect/mine/n2o
 	name = "N2O Mine"
 
-/obj/effect/mine/n2o/proc/trigger(AM)
+/obj/effect/mine/n2o/trigger(AM)
 	//example: n2o triggerproc
 	//note: im lazy
 
@@ -80,7 +80,7 @@
 /obj/effect/mine/stun
 	name = "Stun Mine"
 
-/obj/effect/mine/stun/proc/trigger(mob/AM)
+/obj/effect/mine/stun/trigger(mob/AM)
 	if(ismob(AM))
 		AM.Stun(30)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
