@@ -313,6 +313,8 @@
 		if(L.stat || !L.client)
 			loc = get_turf(L)
 			visible_message("<span class='warning'>[src] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
+			L.unEquip(L.head)
+			qdel(L.head)
 
 /mob/living/simple_animal/hostile/clockwork_reclaimer/death()
 	..(1)
