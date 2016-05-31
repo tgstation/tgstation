@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Alt-clicking a spraycan toggles the cap."
