@@ -7,7 +7,10 @@
 	return 0
 
 /mob/living/carbon/human/canBeHandcuffed()
-	return 1
+	if(get_num_arms() >= 2)
+		return 1
+	else
+		return 0
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
