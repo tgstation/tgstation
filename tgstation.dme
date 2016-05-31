@@ -15,6 +15,7 @@
 // BEGIN_INCLUDE
 #include "_maps\__MAP_DEFINES.dm"
 #include "_maps\tgstation2.dm"
+#include "_maps\RandomRuins\LavaRuins\lavaland_surface_wrath.dmm"
 #include "code\_compile_options.dm"
 #include "code\hub.dm"
 #include "code\world.dm"
@@ -46,6 +47,7 @@
 #include "code\__DEFINES\say.dm"
 #include "code\__DEFINES\shuttles.dm"
 #include "code\__DEFINES\sight.dm"
+#include "code\__DEFINES\sins.dm"
 #include "code\__DEFINES\stat.dm"
 #include "code\__DEFINES\tablecrafting.dm"
 #include "code\__DEFINES\tgui.dm"

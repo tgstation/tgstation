@@ -126,6 +126,18 @@
 	cost = 0
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/sin/acedia
+	name = "Ruin of Acedia"
+	id = "acedia"
+	description = "This is wrong, but why is that bad?"
+	suffix = "lavaland_surface_acedia.dmm"
+
+/datum/map_template/ruin/lavaland/sin/wrath
+	name = "Ruin of Wrath"
+	id = "wrath"
+	description = "The all consuming flames of anger"
+	suffix = "lavaland_surface_wrath.dmm"
+
 /datum/map_template/ruin/lavaland/ato
 	name = "Automated Trade Outpost"
 	id = "ato"
