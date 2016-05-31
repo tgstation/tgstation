@@ -384,26 +384,7 @@
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
 		src << "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>"
 		if(do_after(src, breakouttime, 0, target = src))
-			if(I.loc != src || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to remove [I]!</span>")
-			src << "<span class='notice'>You successfully remove [I].</span>"
-
-			if(I == handcuffed)
-				handcuffed.loc = loc
-				handcuffed.dropped(src)
-				handcuffed = null
-				if(buckled && buckled.buckle_requires_restraints)
-					buckled.unbuckle_mob(src)
-				update_handcuffed()
-				return
-			if(I == legcuffed)
-				legcuffed.loc = loc
-				legcuffed.dropped()
-				legcuffed = null
-				update_inv_legcuffed()
-				return
-			return 1
+			clear_cuffs(I, cuff_break)
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
@@ -412,40 +393,12 @@
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
 		if(do_after(src, breakouttime, 0, target = src))
-			if(!I.loc || buckled)
-				return
-			visible_message("<span class='danger'>[src] manages to break [I]!</span>")
-			src << "<span class='notice'>You successfully break [I].</span>"
-			qdel(I)
-
-			if(I == handcuffed)
-				handcuffed = null
-				update_handcuffed()
-				return
-			else if(I == legcuffed)
-				legcuffed = null
-				update_inv_legcuffed()
-				return
-			return 1
+			clear_cuffs(I, cuff_break)
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
-		if(!I.loc || buckled)
-			return
-		visible_message("<span class='danger'>[src] manages to break [I]!</span>")
-		src << "<span class='notice'>You successfully break [I].</span>"
-		qdel(I)
-
-		if(I == handcuffed)
-			handcuffed = null
-			update_handcuffed()
-			return
-		else if(I == legcuffed)
-			legcuffed = null
-			update_inv_legcuffed()
-			return
-		return 1
+		clear_cuffs(I, cuff_break)
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -472,6 +425,41 @@
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
+
+/mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
+	if(!I.loc || buckled)
+		return
+	visible_message("<span class='danger'>[src] manages to [cuff_break ? "break" : "remove"] [I]!</span>")
+	src << "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>"
+
+	if(cuff_break)
+		qdel(I)
+		if(I == handcuffed)
+			handcuffed = null
+			update_handcuffed()
+			return
+		else if(I == legcuffed)
+			legcuffed = null
+			update_inv_legcuffed()
+			return
+		return 1
+
+	else
+		if(I == handcuffed)
+			handcuffed.loc = loc
+			handcuffed.dropped(src)
+			handcuffed = null
+			if(buckled && buckled.buckle_requires_restraints)
+				buckled.unbuckle_mob(src)
+			update_handcuffed()
+			return
+		if(I == legcuffed)
+			legcuffed.loc = loc
+			legcuffed.dropped()
+			legcuffed = null
+			update_inv_legcuffed()
+			return
+		return 1
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
