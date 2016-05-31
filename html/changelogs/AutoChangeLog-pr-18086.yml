@@ -1,0 +1,5 @@
+author: Kor
+delete-after: True
+changes: 
+  - rscadd: "The chaplain has three new weapons: The possessed blade, the extra-dimensional blade, and the nautical energy sword. The former has a new power, the latter two are normal sword reskins."
+  - rscadd: "The chapel mass driver has been buffed."
