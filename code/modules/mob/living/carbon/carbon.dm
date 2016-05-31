@@ -442,7 +442,7 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
-		return 1
+		return TRUE
 
 	else
 		if(I == handcuffed)
@@ -459,7 +459,7 @@
 			legcuffed = null
 			update_inv_legcuffed()
 			return
-		return 1
+		return TRUE
 
 /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
