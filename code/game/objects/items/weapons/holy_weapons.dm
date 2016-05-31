@@ -206,12 +206,14 @@
 		theghost = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
+		S.name = name
 		S.ckey = theghost.ckey
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
 			name = input
 			S.real_name = input
+			S.name = input
 	else
 		user << "The blade is dormant. Maybe you can try again later."
 		possessed = FALSE
