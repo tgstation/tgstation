@@ -429,13 +429,11 @@
 			else
 				if(C.dna.species.id != "human") //implying xenoshumans are holy
 					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
-					playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-					src.used = 1
 				else
 					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
 					C.set_species(/datum/species/angel)
-					playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
 					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
 					C.adjustBruteLoss(20)
 					C.emote("scream")
-					src.used = 1
+				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
+				src.used = 1
