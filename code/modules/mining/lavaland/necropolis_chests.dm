@@ -41,7 +41,7 @@
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
-			new /obj/item/weapon/nullrod/claymore/darkblade(src)
+			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
@@ -64,7 +64,7 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
-			new /obj/item/weapon/spellbook/oneuse/smoke(src)
+			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 
 
 

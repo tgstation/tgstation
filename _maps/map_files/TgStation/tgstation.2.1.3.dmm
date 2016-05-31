@@ -13933,6 +13933,7 @@
 /obj/machinery/mass_driver{
 	dir = 4;
 	id = "chapelgun"
+	name = "Holy Driver"
 	},
 /turf/open/floor/plasteel/warnplate{
 	dir = 8
