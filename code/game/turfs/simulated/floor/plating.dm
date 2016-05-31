@@ -273,3 +273,10 @@
 	)
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/plating/warnplate
+	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate
+	icon_state = "warnplate"
+/turf/open/floor/plating/warnplate/corner
+	icon_state = "warnplatecorner"
