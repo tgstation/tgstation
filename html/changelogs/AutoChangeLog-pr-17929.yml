@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscdel: "Zombies can no longer be butchered"
-  - rscadd: "If you encounter an infectious zombie, be cautious, its claws will infect you, and on death you will rise with them. If you manage to kill the beast, you can remove the corruption from its brain via surgery, or just chop off the head to stop it coming back."
