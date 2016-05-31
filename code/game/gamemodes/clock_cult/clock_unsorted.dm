@@ -13,6 +13,8 @@
 
 /turf/closed/wall/clockwork/New()
 	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
 	SSobj.processing += src
 	clockwork_construction_value += 5
 
@@ -57,6 +59,8 @@
 
 /turf/open/floor/clockwork/New()
 	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
 	SSobj.processing += src
 	clockwork_construction_value++
 
