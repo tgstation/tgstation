@@ -855,12 +855,10 @@ SYNDICATE BLACK OPS
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
 			H << "<span class='notice'>You settle gently back onto the ground...</span>"
-			A.specflags -= FLYING
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
 			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
-			A.specflags += FLYING
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -893,6 +891,7 @@ SYNDICATE BLACK OPS
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
 	if(FLYING in specflags)
+		ToggleFlight(H,0)
 		flyslip(H)
 	. = ..()
 

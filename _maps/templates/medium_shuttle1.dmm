@@ -1,0 +1,43 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/obj/structure/shuttle/engine/propulsion/burst/left{tag = "icon-burst_l (EAST)"; icon_state = "burst_l"; dir = 4},/turf/open/space,/area/ruin/powered{name = "Shuttle"})
+"c" = (/obj/structure/shuttle/engine/heater{tag = "icon-heater (WEST)"; icon_state = "heater"; dir = 8},/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/plating/airless,/area/ruin/powered{name = "Shuttle"})
+"d" = (/turf/closed/indestructible/opshuttle,/area/ruin/powered{name = "Shuttle"})
+"e" = (/turf/open/space,/turf/closed/indestructible/opshuttle{tag = "icon-wall3 (NORTHEAST)"; icon_state = "wall3"; dir = 5},/area/ruin/powered{name = "Shuttle"})
+"f" = (/turf/closed/wall/shuttle/smooth,/turf/closed/indestructible/opshuttle{tag = "icon-wall3 (SOUTHEAST)"; icon_state = "wall3"; dir = 6},/area/ruin/powered{name = "Shuttle"})
+"g" = (/turf/closed/wall/shuttle/smooth,/area/ruin/powered{name = "Shuttle"})
+"h" = (/obj/machinery/door/airlock/glass_external,/turf/open/floor/plating,/area/ruin/powered{name = "Shuttle"})
+"i" = (/turf/closed/wall/shuttle/smooth/overspace,/area/ruin/powered{name = "Shuttle"})
+"j" = (/turf/open/floor/plasteel/black,/area/ruin/powered{name = "Shuttle"})
+"k" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel/black,/area/ruin/powered{name = "Shuttle"})
+"l" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/darkblue,/area/ruin/powered{name = "Shuttle"})
+"m" = (/obj/machinery/sleeper,/turf/open/floor/plasteel/darkblue,/area/ruin/powered{name = "Shuttle"})
+"n" = (/turf/open/floor/plasteel,/area/ruin/powered{name = "Shuttle"})
+"o" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel,/area/ruin/powered{name = "Shuttle"})
+"p" = (/turf/open/floor/plasteel/darkblue,/area/ruin/powered{name = "Shuttle"})
+"q" = (/turf/open/floor/plasteel/darkyellow,/area/ruin/powered{name = "Shuttle"})
+"r" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/darkyellow,/area/ruin/powered{name = "Shuttle"})
+"s" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/ruin/powered{name = "Shuttle"})
+"t" = (/obj/machinery/power/smes/magical,/turf/open/floor/plasteel,/area/ruin/powered{name = "Shuttle"})
+"u" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/ruin/powered{name = "Shuttle"})
+"v" = (/obj/structure/chair/comfy{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/plasteel/darkyellow,/area/ruin/powered{name = "Shuttle"})
+"w" = (/obj/structure/shuttle/engine/propulsion/burst/right{tag = "icon-burst_r (EAST)"; icon_state = "burst_r"; dir = 4},/turf/open/space,/area/ruin/powered{name = "Shuttle"})
+"x" = (/turf/closed/wall/shuttle/smooth,/turf/closed/indestructible/opshuttle{tag = "icon-wall3 (NORTHEAST)"; icon_state = "wall3"; dir = 5},/area/ruin/powered{name = "Shuttle"})
+"y" = (/turf/open/space,/turf/closed/indestructible/opshuttle{tag = "icon-wall3 (SOUTHEAST)"; icon_state = "wall3"; dir = 6},/area/ruin/powered{name = "Shuttle"})
+
+(1,1,1) = {"
+aaabcdddeaaaaaaaaaaaaaa
+aaabcddddeaaaaaaaaaaaaa
+aaabcfgggghhiaaaaaaaaaa
+aaigggjjjgjjgaaaaaaaaaa
+aagjjkjjjgkgggggggiaaaa
+igggkggkggjjglmgjjggggi
+hnonngjjjkjjkppkjjkqqrs
+gngntgjjjguuguuggggqvrs
+hnonngjjjkjjkjjkjjkqqrs
+igggkggkggjjgjjgjjggggi
+aagjjkjjjgkgggggggiaaaa
+aaigggjjjgjjgaaaaaaaaaa
+aaawcxgggghhiaaaaaaaaaa
+aaawcdddyaaaaaaaaaaaaaa
+aaawcddyaaaaaaaaaaaaaaa
+"}

@@ -323,3 +323,9 @@
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"
 	origin_type = /obj/structure/chair/wood/wings
+
+/obj/structure/chair/old
+	name = "strange chair"
+	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
+	icon_state = "chairold"
+	item_chair = null
