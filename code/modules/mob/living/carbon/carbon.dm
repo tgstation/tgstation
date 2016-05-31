@@ -407,7 +407,7 @@
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
-	else
+	else if(cuff_break == 1)
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
@@ -429,6 +429,23 @@
 			return 1
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
+
+	else if(cuff_break == 2)
+		if(!I.loc || buckled)
+			return
+		visible_message("<span class='danger'>[src] manages to break [I]!</span>")
+		src << "<span class='notice'>You successfully break [I].</span>"
+		qdel(I)
+
+		if(I == handcuffed)
+			handcuffed = null
+			update_handcuffed()
+			return
+		else if(I == legcuffed)
+			legcuffed = null
+			update_inv_legcuffed()
+			return
+		return 1
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
