@@ -43,11 +43,6 @@
 	qdel(internal)
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
-	if(swooping)
-		return 0
-	return ..()
-
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
 	if(swooping)
 		return
@@ -58,7 +53,8 @@
 			if(L.stat == DEAD)
 				src.visible_message(
 					"<span class='danger'>[src] devours [L]!</span>",
-					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+					"<span class='userdanger'>You feast on [L], restoring \
+						your health!</span>")
 				adjustBruteLoss(-L.maxHealth)
 				L.gib()
 
@@ -167,7 +163,6 @@
 		swoop_target = target
 	stop_automated_movement = TRUE
 	swooping = 1
-	density = 0
 	icon_state = "swoop"
 	visible_message("<span class='danger'>[src] swoops up high!</span>")
 	if(prob(50))
@@ -185,7 +180,7 @@
 		tturf = get_turf(swoop_target)
 	else
 		tturf = get_turf(src)
-	forceMove(tturf)
+	src.loc = tturf
 	new/obj/effect/overlay/temp/dragon_swoop(tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
