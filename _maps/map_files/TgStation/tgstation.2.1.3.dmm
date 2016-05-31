@@ -2274,13 +2274,14 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "aez" = (
-/obj/machinery/flasher/portable,
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 1
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
-/area/ai_monitored/security/armory)
+/turf/open/floor/plasteel{
+	icon_state = "red";
+	dir = 5
+	},
+/area/security/brig)
 "aeA" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -2983,14 +2984,19 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon_state = "red";
+	dir = 9
+	},
 /area/security/brig)
 "afM" = (
 /turf/open/floor/plasteel,
 /area/security/brig)
 "afN" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel{
+	icon_state = "red"
+	},
 /area/security/brig)
 "afO" = (
 /obj/machinery/door/airlock/command{
@@ -3779,16 +3785,21 @@
 	},
 /area/security/prison)
 "ahr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel{
-	icon_state = "white"
+	icon_state = "red";
+	dir = 8
 	},
 /area/security/brig)
 "ahs" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "whitered"
@@ -3808,7 +3819,7 @@
 	pixel_y = 0
 	},
 /obj/item/weapon/reagent_containers/syringe{
-	name = "\improper the steel point"
+	name = "steel point"
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
@@ -3818,6 +3829,10 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "whitered"
@@ -4195,19 +4210,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "ahU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "red";
-	dir = 9
+	dir = 4
 	},
 /area/security/brig)
 "ahV" = (
@@ -4221,13 +4229,12 @@
 	},
 /area/security/prison)
 "ahW" = (
-/obj/structure/bodycontainer/morgue,
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel{
-	icon_state = "dark"
+	icon_state = "red";
+	dir = 10
 	},
 /area/security/brig)
 "ahX" = (
@@ -4351,12 +4358,12 @@
 	},
 /area/security/warden)
 "aih" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "red";
-	dir = 5
+	dir = 6
 	},
 /area/security/brig)
 "aii" = (
@@ -90080,8 +90087,8 @@ ajv
 ake
 agj
 afL
-afL
-afL
+ahr
+ahW
 aiX
 anz
 aov
@@ -90336,7 +90343,7 @@ acd
 ajy
 akh
 afK
-afM
+ajc
 afM
 afN
 aiX
@@ -90593,9 +90600,9 @@ adF
 ajx
 akg
 agj
-afL
-afL
-afL
+aez
+ahU
+aih
 aiX
 anz
 aov
@@ -91358,7 +91365,7 @@ afH
 agj
 agM
 ahu
-ahW
+aiD
 aiD
 agj
 auj
