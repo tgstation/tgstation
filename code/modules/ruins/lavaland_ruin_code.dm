@@ -206,7 +206,7 @@
 //Wrath
 
 /obj/item/weapon/melee/wrathhand
-	name = "The hand of hatred."
+	name = "The hand of hatred"
 	force = 0
 	hitsound = 'sound/magic/WandODeath.ogg'
 	icon_state = "disintegrate"
@@ -215,6 +215,8 @@
 	unacidable = 1
 
 /obj/item/weapon/melee/wrathhand/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+	if(!proximity)
+		return
 	if(AM == user)
 		user << "<span class='warning'>Surely there is someone you hate more than yourself.</span>"
 	else
@@ -231,7 +233,7 @@
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
 	name = "Altar of wrath"
-	desc = "Lay your hand upon the altar and recieve the power to smite your enemies."
+	desc = "Lay your hand upon the altar and receive the power to smite your enemies."
 	var/used = 0
 
 /obj/structure/wrathaltar/attack_hand(mob/living/user)
