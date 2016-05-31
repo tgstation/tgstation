@@ -336,7 +336,7 @@
 		pixel_y += i
 		sleep(2)
 	if(prob(1))
-		icon_state = "GOTTA_STEP_IT_UP" //thanks, man_shroom
+		maptext = "GOTTA STEP IT UP" //thanks man_shroom
 	else
 		icon_state = "[initial(icon_state)]_charging"
 	while(loc != H.loc)
