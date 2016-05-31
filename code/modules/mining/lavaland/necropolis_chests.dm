@@ -23,7 +23,7 @@
 		if(5)
 			new /obj/item/weapon/dnainjector/xraymut(src)
 		if(6)
-			new /obj/item/seeds/kudzu(src)
+			new /obj/item/weapon/wingpotion(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -409,3 +409,33 @@
 	generic_pixel_y = 2
 	generic_pixel_x = 1
 	vehicle_move_delay = 1
+
+//Potion of Flight
+
+/obj/item/weapon/wingpotion
+	name = "strange elixir"
+	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "potionflask"
+	w_class = 2
+	var/used = 0
+
+/obj/item/weapon/wingpotion/attack_self(mob/living/M)
+	if(used)
+		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+	else
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.wear_mask)
+				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
+			else
+				if(C.dna.species.id != "human") //implying xenoshumans are holy
+					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
+				else
+					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
+					C.set_species(/datum/species/angel)
+					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+					C.adjustBruteLoss(20)
+					C.emote("scream")
+				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
+				src.used = 1
