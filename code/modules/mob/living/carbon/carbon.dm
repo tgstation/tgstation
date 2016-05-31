@@ -407,7 +407,7 @@
 		else
 			src << "<span class='warning'>You fail to remove [I]!</span>"
 
-	else if(cuff_break == 1)
+	else if(cuff_break == FAST_CUFFBREAK)
 		breakouttime = 50
 		visible_message("<span class='warning'>[src] is trying to break [I]!</span>")
 		src << "<span class='notice'>You attempt to break [I]... (This will take around 5 seconds and you need to stand still.)</span>"
@@ -430,7 +430,7 @@
 		else
 			src << "<span class='warning'>You fail to break [I]!</span>"
 
-	else if(cuff_break == 2)
+	else if(cuff_break == INSTANT_CUFFBREAK)
 		if(!I.loc || buckled)
 			return
 		visible_message("<span class='danger'>[src] manages to break [I]!</span>")
