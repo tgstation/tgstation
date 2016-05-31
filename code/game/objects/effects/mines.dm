@@ -1,7 +1,7 @@
 /obj/effect/mine
 	name = "Mine"
 	desc = "I better stay away from that thing."
-	density = 1
+	density = 0
 	anchored = 1
 	w_type=NOT_RECYCLABLE
 	layer = 3
@@ -11,42 +11,56 @@
 	var/triggered = 0
 
 /obj/effect/mine/New()
+	..()
 	icon_state = "uglyminearmed"
 
-/obj/effect/mine/Crossed(AM as mob|obj)
-	Bumped(AM)
+/obj/effect/mine/Crossed(mob/living/carbon/AM)
+	if(istype(AM))
+		visible_message("<font color='red'>[AM] triggered the [bicon(src)] [src]</font>")
+		trigger(AM)
 
-/obj/effect/mine/Bumped(mob/M as mob|obj)
+/obj/effect/mine/proc/trigger(mob/living/carbon/AM)
+	explosion(loc, 0, 1, 2, 3)
+	qdel(src)
 
-	if(triggered) return
+/obj/effect/mine/dnascramble
+	name = "Radiation Mine"
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
-		for(var/mob/O in viewers(world.view, src.loc))
-			to_chat(O, "<font color='red'>[M] triggered the [bicon(src)] [src]</font>")
-		triggered = 1
-		call(src,triggerproc)(M)
-
-/obj/effect/mine/proc/triggerrad(obj)
+/obj/effect/mine/dnascramble/proc/trigger(mob/living/carbon/AM)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	obj:radiation += 50
-	randmutb(obj)
-	domutcheck(obj,null)
-	spawn(0)
-		qdel(src)
+	AM.radiation += 50
+	randmutb(AM)
+	domutcheck(AM,null)
+	qdel(src)
 
-/obj/effect/mine/proc/triggerstun(obj)
-	if(ismob(obj))
-		var/mob/M = obj
-		M.Stun(30)
+/obj/effect/mine/plasma
+	name = "Plasma Mine"
+
+/obj/effect/mine/plasma/proc/trigger(AM)
+	for(var/turf/simulated/floor/target in range(1,src))
+		if(!target.blocks_air)
+			var/datum/gas_mixture/payload = new
+			payload.toxins = 30
+			target.zone.air.merge(payload)
+			target.hotspot_expose(1000, CELL_VOLUME)
+	qdel(src)
+
+/obj/effect/mine/kick
+	name = "Kick Mine"
+
+/obj/effect/mine/kick/proc/trigger(mob/AM)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	spawn(0)
-		qdel(src)
+	del(AM.client)
+	qdel(src)
 
-/obj/effect/mine/proc/triggern2o(obj)
+/obj/effect/mine/n2o
+	name = "N2O Mine"
+
+/obj/effect/mine/n2o/proc/trigger(AM)
 	//example: n2o triggerproc
 	//note: im lazy
 
@@ -61,58 +75,15 @@
 
 			target.zone.air.merge(payload)
 
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/triggerplasma(obj)
-	for (var/turf/simulated/floor/target in range(1,src))
-		if(!target.blocks_air)
-
-			var/datum/gas_mixture/payload = new
-
-			payload.toxins = 30
-
-			target.zone.air.merge(payload)
-
-			target.hotspot_expose(1000, CELL_VOLUME)
-
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/triggerkick(obj)
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(3, 1, src)
-	s.start()
-	qdel(obj:client)
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/proc/explode(obj)
-	explosion(loc, 0, 1, 2, 3)
-	spawn(0)
-		qdel(src)
-
-/obj/effect/mine/dnascramble
-	name = "Radiation Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerrad"
-
-/obj/effect/mine/plasma
-	name = "Plasma Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerplasma"
-
-/obj/effect/mine/kick
-	name = "Kick Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerkick"
-
-/obj/effect/mine/n2o
-	name = "N2O Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggern2o"
+	qdel(src)
 
 /obj/effect/mine/stun
 	name = "Stun Mine"
-	icon_state = "uglymine"
-	triggerproc = "triggerstun"
+
+/obj/effect/mine/stun/proc/trigger(mob/AM)
+	if(ismob(AM))
+		AM.Stun(30)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	qdel(src)
