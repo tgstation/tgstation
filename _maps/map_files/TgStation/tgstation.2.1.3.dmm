@@ -3814,10 +3814,6 @@
 /area/security/brig)
 "ahu" = (
 /obj/item/weapon/storage/box/bodybags,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27;
-	pixel_y = 0
-	},
 /obj/item/weapon/reagent_containers/syringe{
 	name = "steel point"
 	},
