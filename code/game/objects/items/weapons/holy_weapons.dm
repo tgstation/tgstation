@@ -194,8 +194,6 @@
 /obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
-	if(user.mind && (user.mind.assigned_role != "Chaplain"))
-		return
 
 	user << "You attempt to wake the spirit of the blade..."
 
@@ -209,9 +207,9 @@
 		var/mob/living/simple_animal/shade/S = new(src)
 		S.real_name = name
 		S.ckey = theghost.ckey
-		var/input = stripped_input(user,"What do you want to name your blade?", ,"", MAX_NAME_LEN)
+		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
-		if(src && input && user.canUseTopic(src))
+		if(src && input)
 			name = input
 			S.real_name = input
 	else
