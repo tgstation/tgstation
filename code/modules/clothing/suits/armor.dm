@@ -174,7 +174,7 @@
 	active = 0
 	src.icon_state = "reactiveoff"
 	src.item_state = "reactiveoff"
-	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+	reactivearmor_cooldown = world.time + 200
 	..()
 
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
