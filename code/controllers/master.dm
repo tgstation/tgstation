@@ -245,7 +245,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			run_queue()
 		iteration++
 		debug_admins("MC: sleeping [world.time]|[world.timeofday]")
-		sleep((world.tick_lag + (world.tick_lag *0.49)) * processing) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
+		sleep((world.tick_lag * processing) + (world.tick_lag * 0.49)) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
 		debug_admins("MC: end sleeping [world.time]|[world.timeofday]")
 
 
