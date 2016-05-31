@@ -8,7 +8,7 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "clockwork_wall"
 
 /turf/closed/wall/clockwork/New()
@@ -54,7 +54,7 @@
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
 
 /turf/open/floor/clockwork/New()
