@@ -569,11 +569,16 @@
 		if(/turf/closed/wall, /turf/closed/wall/rust)
 			operation_time = 50
 			new_obj_type = /turf/closed/wall/clockwork
-			alloy_cost = 10
+			alloy_cost = 5
 			valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
 		if(/turf/open/floor/plating, /turf/open/floor/plasteel)
 			operation_time = 30
 			new_obj_type = /turf/open/floor/clockwork
+			alloy_cost = 1
+			valid_target = TRUE
+		if(/obj/machinery/door/airlock)
+			operation_time = 40
+			new_obj_type = /obj/machinery/door/airlock/clockwork
 			alloy_cost = 5
 			valid_target = TRUE
 	if(!uses_alloy)
