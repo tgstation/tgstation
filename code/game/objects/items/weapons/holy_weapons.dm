@@ -127,7 +127,7 @@
 
 /obj/item/weapon/nullrod/claymore/multiverse
 	name = "extradimensional blade"
-	desc = "Once the harbringer of a interdimensional war, now a dormant souvenior. Still sharp though."
+	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
 	icon_state = "multiverse"
 	item_state = "multiverse"
 	slot_flags = SLOT_BELT
