@@ -87,5 +87,5 @@
 /datum/wires/syndicatebomb/proc/tell_admins(obj/machinery/syndicatebomb/B)
 	if(istype(B, /obj/machinery/syndicatebomb/training))
 		return
-	log_game("A [B.name] was detonated via boom wire at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[B.x];Y=[B.y];Z=[B.z]'> (JMP)</a>.")
+	log_game("A [B.name] was detonated via boom wire at X=[B.x], Y=[B.y], Z=[B.z].")
 	message_admins("A [B.name] was detonated via boom wire at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[B.x];Y=[B.y];Z=[B.z]'> (JMP)</a>.")
