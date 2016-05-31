@@ -218,6 +218,12 @@
 		user << "The blade is dormant. Maybe you can try again later."
 		possessed = FALSE
 
+/obj/item/weapon/nullrod/scythe/talking/Destroy()
+	for(var/mob/living/simple_animal/shade/S in contents)
+		S << "You were destroyed!"
+		qdel(S)
+	return ..()
+
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"
 	item_state = "hammeron"
