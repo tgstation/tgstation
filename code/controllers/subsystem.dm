@@ -50,7 +50,7 @@
 	. = 1
 	paused = TRUE
 	paused_ticks++
-	//world << "Pausing [src]"
+	debug_admins("MC: Pausing [src]([type])")
 
 //used to initialize the subsystem AFTER the map has loaded
 /datum/subsystem/proc/Initialize(start_timeofday, zlevel)

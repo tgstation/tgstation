@@ -217,11 +217,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	normalsubsystems += tickersubsystems
 	lobbysubsystems += tickersubsystems
-	debug_world("MC: Starting main loop")
+	debug_admins("MC: Starting main loop")
 	//the actual loop.
 	while (1)
 		if (processing <= 0)
-			debug_world("MC: processing disabled, sleeping")
+			debug_admins("MC: processing disabled, sleeping")
 			sleep(10)
 			continue
 
@@ -229,30 +229,30 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 		if (!queue_head || !(iteration % 3))
-			debug_world("MC: checking subsystems")
+			debug_admins("MC: checking subsystems")
 			if (round_started)
-				debug_world("MC: checking normal subsystems")
+				debug_admins("MC: checking normal subsystems")
 				check_queue(normalsubsystems)
 			else
-				debug_world("MC: checking lobby subsystems")
+				debug_admins("MC: checking lobby subsystems")
 				check_queue(lobbysubsystems)
 		else
-			debug_world("MC: not checking subsystems, checking tickers")
+			debug_admins("MC: not checking subsystems, checking tickers")
 			check_queue(tickersubsystems)
-		debug_world("MC: checking to run")
+		debug_admins("MC: checking to run")
 		if (queue_head)
-			debug_world("MC: running queue")
+			debug_admins("MC: running queue")
 			run_queue()
 		iteration++
-		debug_world("MC: sleeping [world.time]|[world.timeofday]")
+		debug_admins("MC: sleeping [world.time]|[world.timeofday]")
 		sleep((world.tick_lag + (world.tick_lag *0.49)) * processing) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
-		debug_world("MC: end sleeping [world.time]|[world.timeofday]")
+		debug_admins("MC: end sleeping [world.time]|[world.timeofday]")
 
 
 
 //this actually decides if something should run.
 /datum/controller/master/proc/check_queue(list/subsystemstocheck)
-	debug_world("MC: checking [subsystemstocheck.len] subsystems")
+	debug_admins("MC: checking [subsystemstocheck.len] subsystems")
 	//we create our variables outside of the loops to save on overhead
 	var/datum/subsystem/SS
 	var/SS_priority
@@ -263,26 +263,26 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_node_flags
 
 	for (var/thing in subsystemstocheck)
-		debug_world("MC: checking [thing]")
+		debug_admins("MC: checking [thing]")
 		SS = thing
 		if (SS.queued_time) //already in the queue
-			debug_world("MC: already queued")
+			debug_admins("MC: already queued")
 			continue
 		if (SS.can_fire <= 0)
-			debug_world("MC: not firing")
+			debug_admins("MC: not firing")
 			continue
 		if (SS.next_fire > world.time)
-			debug_world("MC: not its time")
+			debug_admins("MC: not its time")
 			continue
 		SS_flags = SS.flags
 		if (!(SS_flags & SS_TICKER) && SS_flags & SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
-			debug_world("MC: fired too recently")
+			debug_admins("MC: fired too recently")
 			continue
 
 		//Queue it to run.
 		//	(we loop thru a linked list until we get to the end or find the right point)
 		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
-		debug_world("MC: queuing to run")
+		debug_admins("MC: queuing to run")
 		SS_priority = SS.priority
 		for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
 			queue_node_priority = queue_node.queued_priority
@@ -333,7 +333,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 //run thru the queue of subsystems to run, balancing out their tick precentage
 /datum/controller/master/proc/run_queue()
-	debug_world("MC: queue start")
+	debug_admins("MC: queue start")
 	var/datum/subsystem/queue_node
 	var/queue_node_flags
 	var/queue_node_priority
@@ -348,11 +348,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	while (ran && queue_head && world.tick_usage < TICK_LIMIT_MC)
 		ran = FALSE
-		debug_world("MC: Starting a pass thru thru the queue")
+		debug_admins("MC: Starting a pass thru thru the queue")
 		for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
-			debug_world("MC: processing [queue_node]")
+			debug_admins("MC: processing [queue_node]")
 			if (world.tick_usage > TICK_LIMIT_RUNNING)
-				debug_world("MC: tick limit reached")
+				debug_admins("MC: tick limit reached")
 				return
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
@@ -363,9 +363,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
 			//	in those cases, so we just let them run)
 			if (queue_node_flags & SS_NO_TICK_CHECK)
-				debug_world("MC: no tick check")
+				debug_admins("MC: no tick check")
 				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - world.tick_usage && ran_non_ticker)
-					debug_world("MC: no time to run tick checkless system this tick")
+					debug_admins("MC: no time to run tick checkless system this tick")
 					queue_node.queued_priority += queue_priority_count * 0.10
 					queue_priority_count -= queue_node_priority
 					queue_priority_count += queue_node.queued_priority
@@ -382,14 +382,14 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			else
 				CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
-			debug_world("MC: running [queue_node] until tick_usage of [CURRENT_TICKLIMIT]%, current tick_usage [world.tick_usage] meaning [CURRENT_TICKLIMIT-world.tick_usage]% of a tick")
+			debug_admins("MC: running [queue_node] until tick_usage of [CURRENT_TICKLIMIT]%, current tick_usage [world.tick_usage] meaning [CURRENT_TICKLIMIT-world.tick_usage]% of a tick")
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE
 			ran = TRUE
 			tick_usage = world.tick_usage
 			queue_node_paused = queue_node.paused
 			queue_node.paused = FALSE
-			debug_world("MC: [( queue_node_paused ? "resuming" : "running" )] subsystem [queue_node]")
+			debug_admins("MC: [( queue_node_paused ? "resuming" : "running" )] subsystem [queue_node]")
 			queue_node.fire(queue_node_paused)
 			if (!(queue_node_flags & SS_BACKGROUND))
 				current_tick_budget -= queue_node_priority
@@ -397,9 +397,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 			if (tick_usage < 0)
 				tick_usage = 0
-			debug_world("MC: [queue_node].fire() exit, used [tick_usage]% of a tick")
+			debug_admins("MC: [queue_node].fire() exit, used [tick_usage]% of a tick")
 			if (queue_node.paused)
-				debug_world("MC: [queue_node] paused, moving on")
+				debug_admins("MC: [queue_node] paused, moving on")
 				queue_node.paused_ticks++
 				queue_node.paused_tick_usage += tick_usage
 				continue
