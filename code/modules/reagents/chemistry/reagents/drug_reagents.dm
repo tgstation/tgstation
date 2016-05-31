@@ -1,5 +1,3 @@
-
-
 /datum/reagent/drug
 	name = "Drug"
 	id = "drug"
@@ -136,7 +134,7 @@
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	CHECK_DNA_AND_SPECIES(M)
-	if(istype(M.dna.species, /datum/species/krokodil_addict))
+	if(!istype(M.dna.species, /datum/species/krokodil_addict))
 		M << "<span class='userdanger'>Your skin falls off easily!</span>"
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
 		M.set_species(/datum/species/krokodil_addict)
