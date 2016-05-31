@@ -245,11 +245,6 @@
 				used = 1
 				H.put_in_hands(new /obj/item/weapon/melee/wrathhand())
 
-/obj/structure/cult/examine(mob/user)
-	..()
-	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
-
-
 ///Ash Walkers
 
 /mob/living/simple_animal/hostile/spawner/ash_walker
