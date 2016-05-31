@@ -875,7 +875,7 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(..(I, cuff_break = 1))
+		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
 	else
 		if(..())
