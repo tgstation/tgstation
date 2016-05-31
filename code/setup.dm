@@ -1508,10 +1508,3 @@ var/proccalls = 1
 #define EVENT_PROC_INDEX "p"
 
 #define HIGHLANDER "highlander"
-
-//New planes stuff, currently only used by Space Parallax
-#define PLANE_BASE 0
-#define PLANE_SPACE_PARALLAX -5
-#define PLANE_SPACE_DUST -7
-#define PLANE_SPACE_PARALLAX_DUST -8
-#define PLANE_SPACE_BACKGROUND -10

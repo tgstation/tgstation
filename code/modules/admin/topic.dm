@@ -3131,22 +3131,6 @@
 				var/emag = input("Emag the turret?") in list("Yes", "No")
 				if(emag=="Yes")
 					Turret.emag(usr)
-			if("spacecolor")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","SpaceColor")
-
-				var/newcolor  = input("Set the color of space. This will only affect  players with parallax enabled. (default=#050505)","Space Color") as null|text
-
-				if(newcolor)
-					space_color = newcolor
-
-				for(var/mob/M in player_list)
-					if(M.hud_used)
-						M.hud_used.update_parallax()
-
-				message_admins("[key_name_admin(usr)] changed the color of space. Space is now [newcolor].")
-				log_admin("[key_name_admin(usr)] changed the color of space. Space is now [newcolor].")
-
 			if("hardcore_mode")
 				var/choice = input("Are you sure you want to [ticker.hardcore_mode ? "disable" : "enable"] hardcore mode? Starvation will [ticker.hardcore_mode ? "no longer":""]slowly kill player-controlled humans.", "Admin Abuse") in list("Yes", "No!")
 

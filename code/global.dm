@@ -417,13 +417,3 @@ var/adminblob_beat = 'sound/effects/blob_pulse.ogg'
 #define DEPARTMENT_START_FUNDS 5000
 #define DEPARTMENT_START_WAGE 500
 #define PLAYER_START_WAGE 50
-
-//SPACE PARALLAX
-var/parallax_initialized = 0
-var/space_color = "#050505"
-var/list/space_parallax_0[9]
-var/list/space_parallax_1[9]
-var/list/space_parallax_2[9]
-var/list/space_parallax_dust_0[9]
-var/list/space_parallax_dust_1[9]
-var/list/space_parallax_dust_2[9]

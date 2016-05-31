@@ -179,8 +179,6 @@
 		last_move = 0
 		return
 
-	move_parallax(loc)
-
 	if(tether && can_pull_tether && !tether_pull)
 		tether.follow(src,oldloc)
 		var/datum/chain/tether_datum = tether.chain_datum
@@ -317,19 +315,11 @@
 			var/datum/locking_category/category = locked_atoms[AM]
 			category.update_lock(AM)
 
-		move_parallax(destination)
 
 		// Update on_moved listeners.
 		INVOKE_EVENT(on_moved,list("loc"=loc))
 		return 1
 	return 0
-
-/atom/movable/proc/move_parallax(atom/destination)
-	spawn()
-		for(var/client/C in clients)
-			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
-				C.mob.hud_used.update_parallax()
-
 
 /atom/movable/proc/forceEnter(atom/destination)
 	if(destination)
@@ -344,9 +334,6 @@
 		for(var/atom/movable/AM in locked_atoms)
 			AM.forceMove(loc)
 
-		move_parallax(destination)
-
-		INVOKE_EVENT(on_moved,list("loc"=loc))
 		return 1
 	return 0
 
