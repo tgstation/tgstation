@@ -746,11 +746,8 @@
 	update_hud_handcuffed()
 
 /mob/living/carbon/fully_heal(admin_revive = 0)
-	var/exotic_blood_type = ""
-	if(dna && dna.species && dna.species.exotic_blood)
-		exotic_blood_type = dna.species.exotic_blood
 	if(reagents)
-		reagents.clear_reagents(exotic_blood_type)
+		reagents.clear_reagents()
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
