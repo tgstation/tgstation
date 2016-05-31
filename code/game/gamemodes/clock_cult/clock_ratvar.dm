@@ -148,7 +148,7 @@
 	..()
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
-	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !0)
+	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
 		return 0
 	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(O))
 	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
