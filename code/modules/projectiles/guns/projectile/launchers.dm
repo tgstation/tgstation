@@ -47,7 +47,6 @@
 /obj/item/weapon/gun/projectile/automatic/gyropistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
-	return
 
 /obj/item/weapon/gun/projectile/automatic/speargun
 	name = "kinetic speargun"

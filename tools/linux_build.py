@@ -26,8 +26,14 @@ def stage1():
     wait(p)
     play("sound/misc/compiler-stage1.ogg")
 
-def stage2():
-    p = subprocess.Popen("DreamMaker tgstation.dme", shell=True)
+def stage2(map):
+    if map:
+        txt = "-M{}".format(map)
+    else:
+        txt = ''
+    args = "bash dm.sh {} tgstation.dme".format(txt)
+    print(args)
+    p = subprocess.Popen(args, shell=True)
     wait(p)
 
 def stage3():
@@ -56,6 +62,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-s','---stage',default=1,type=int)
     parser.add_argument('--only',action='store_true')
+    parser.add_argument('-m','--map',type=str)
     args = parser.parse_args()
     stage = args.stage
     assert stage in (1,2,3)
@@ -64,7 +71,7 @@ def main():
         if not args.only:
             stage = 2
     if stage == 2:
-        stage2()
+        stage2(args.map)
         if not args.only:
             stage = 3
     if stage == 3:

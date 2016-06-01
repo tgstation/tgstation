@@ -392,7 +392,6 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		//var/list/blacklisted_species = list(
 		var/list/possible_morphs = list()
 		for(var/type in subtypesof(/datum/species))
 			var/datum/species/S = type
@@ -400,13 +399,9 @@
 				continue
 			possible_morphs += S
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		if(prob(90) && mutation)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
-			if(mutation.id == "slime")
-				H.faction |= "slime"
-			else
-				H.faction -= "slime"
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
@@ -1237,4 +1232,21 @@ datum/reagent/shadowling_blindness_smoke
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	..()
+
+datum/reagent/romerol
+	name = "romerol"
+	// the REAL zombie powder
+	id = "romerol"
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	metabolization_rate = INFINITY
+
+/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+	// Silently add the zombie infection organ to be activated upon death
+	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()

@@ -8,11 +8,15 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
+	canSmoothWith = list(/turf/closed/wall/clockwork)
+	smooth = SMOOTH_MORE
 
 /turf/closed/wall/clockwork/New()
 	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
 	SSobj.processing += src
 	clockwork_construction_value += 5
 
@@ -25,6 +29,7 @@
 	for(var/obj/structure/clockwork/cache/C in range(1, src))
 		if(prob(5))
 			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
+			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 20, 1)
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -52,11 +57,13 @@
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
 
 /turf/open/floor/clockwork/New()
 	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
 	SSobj.processing += src
 	clockwork_construction_value++
 
