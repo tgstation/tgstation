@@ -194,8 +194,8 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_high_pressure_delta(resumed = 0)
 	while (high_pressure_delta.len)
-		var/turf/open/T = currentrun[currentrun.len]
-		currentrun.len--
+		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
+		high_pressure_delta.len--
 		T.high_pressure_movements()
 		T.pressure_difference = 0
 		if(MC_TICK_CHECK)
