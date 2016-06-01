@@ -23,6 +23,18 @@
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
 
+/obj/structure/falsewall/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/falsewall/Destroy()
+	density = 0
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/falsewall/CanAtmosPass(turf/T)
+	return !density
+
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
@@ -46,6 +58,7 @@
 		if(!qdeleted(src))
 			SetOpacity(1)
 			update_icon()
+	air_update_turf(1)
 	opening = 0
 
 /obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
