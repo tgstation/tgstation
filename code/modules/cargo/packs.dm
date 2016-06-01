@@ -703,7 +703,7 @@
 					/obj/item/weapon/reagent_containers/blood/BMinus,
 					/obj/item/weapon/reagent_containers/blood/OPlus,
 					/obj/item/weapon/reagent_containers/blood/OMinus)
-	crate_name = "blood pack crate"
+	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/iv_drip

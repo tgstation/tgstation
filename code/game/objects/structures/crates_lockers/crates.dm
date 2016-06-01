@@ -71,6 +71,22 @@
 	name = "freezer"
 	icon_state = "freezer"
 
+/obj/structure/closet/crate/freezer/blood
+	name = "blood freezer"
+	desc = "A freezer containing packs of blood."
+
+/obj/structure/closet/crate/freezer/blood/New()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/AMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BPlus(src)
+	new /obj/item/weapon/reagent_containers/blood/OMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/OPlus(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/blood/random(src)
+
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."
 	name = "radiation crate"
