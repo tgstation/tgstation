@@ -4,9 +4,6 @@
 	if (!message)
 		return
 
-	var/turf/T = get_turf(src)
-	log_say("[key_name(src)] (@[T.x],[T.y],[T.z]) Ghost: [message]")
-
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
 			to_chat(src, "<span class='warning'>You cannot talk in deadchat (muted).</span>")

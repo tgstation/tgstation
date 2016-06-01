@@ -54,7 +54,10 @@
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
 
+
+	var/turf/T = get_turf(src)
 	message = src.say_quote("\"[html_encode(message)]\"")
+	log_say("[name]/[key_name(src)] (@[T.x],[T.y],[T.z]) Deadsay: [message]")
 	//var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 	var/rendered2 = null//edited
 	for(var/mob/M in player_list)
