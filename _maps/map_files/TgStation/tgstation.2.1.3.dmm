@@ -1636,11 +1636,13 @@
 	},
 /area/ai_monitored/security/armory)
 "adL" = (
-/obj/item/weapon/storage/toolbox/drone,
-/turf/open/floor/plasteel/warning{
-	dir = 10
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
-/area/ai_monitored/security/armory)
+/turf/open/floor/plasteel/red/side{
+	dir = 5
+	},
+/area/security/brig)
 "adM" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2063,12 +2065,13 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "aez" = (
-/obj/machinery/flasher/portable,
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 1
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
-/area/ai_monitored/security/armory)
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/security/brig)
 "aeA" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -2714,14 +2717,16 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/red/side{
+	dir = 9
+	},
 /area/security/brig)
 "afM" = (
 /turf/open/floor/plasteel,
 /area/security/brig)
 "afN" = (
 /obj/machinery/light,
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "afO" = (
 /obj/machinery/door/airlock/command{
@@ -3160,26 +3165,23 @@
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "agM" = (
-/obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 9
 	},
 /area/security/brig)
 "agN" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 26
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /obj/item/weapon/storage/firstaid/regular,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/whitered/side{
-	dir = 10
+	dir = 1
 	},
 /area/security/brig)
 "agO" = (
@@ -3398,12 +3400,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/machinery/iv_drip{
+	density = 0
 	},
-/obj/item/weapon/pen,
+/obj/item/weapon/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -3430,39 +3430,50 @@
 /turf/open/floor/plasteel/black,
 /area/security/prison)
 "ahr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/structure/closet{
+	name = "Evidence Closet"
+	},
+/turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
-/turf/open/floor/plasteel/white,
 /area/security/brig)
 "ahs" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = 24
 	},
-/obj/machinery/airalarm{
-	pixel_y = 28
-	},
+/obj/structure/table/glass,
+/obj/machinery/computer/med_data/laptop,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
 /area/security/brig)
 "aht" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
+/turf/open/floor/plasteel/whitered/corner{
+	tag = "icon-whiteredcorner (WEST)";
+	icon_state = "whiteredcorner";
+	dir = 8
 	},
-/turf/open/floor/plasteel/white,
 /area/security/brig)
 "ahu" = (
-/obj/structure/table,
 /obj/item/weapon/storage/box/bodybags,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/syringe{
+	name = "steel point"
+	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 10
 	},
@@ -3574,14 +3585,11 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/door/window/westleft{
 	base_state = "left";
 	dir = 4;
 	icon_state = "left";
-	name = "Infirmary";
+	name = "Brig Infirmary";
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -3817,18 +3825,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "ahU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel/red/side{
-	dir = 9
+	dir = 10
 	},
 /area/security/brig)
 "ahV" = (
@@ -3841,8 +3842,9 @@
 /area/security/prison)
 "ahW" = (
 /obj/structure/bodycontainer/morgue,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "Brig Infirmary";
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/security/brig)
@@ -3923,7 +3925,6 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "aid" = (
-/obj/machinery/light/small,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 10
 	},
@@ -3957,11 +3958,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "aih" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
 /turf/open/floor/plasteel/red/side{
-	dir = 5
+	dir = 6
 	},
 /area/security/brig)
 "aii" = (
@@ -4114,7 +4115,7 @@
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
-	name = "Infirmary";
+	name = "Brig Infirmary";
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/whitered/side{
@@ -4189,10 +4190,6 @@
 /area/security/prison)
 "aiF" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/obj/machinery/iv_drip{
-	density = 0
-	},
 /obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel/whitered/side,
 /area/security/brig)
@@ -4302,11 +4299,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/device/healthanalyzer{
-	pixel_y = -2
-	},
+/obj/structure/bed,
+/obj/item/clothing/suit/straight_jacket,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 6
 	},
@@ -13932,7 +13926,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 4;
-	id = "chapelgun"
+	id = "chapelgun";
 	name = "Holy Driver"
 	},
 /turf/open/floor/plasteel/warnplate{
@@ -85759,8 +85753,8 @@ ajv
 ake
 agj
 afL
-afL
-afL
+aez
+ahU
 aiX
 anz
 aov
@@ -86015,7 +86009,7 @@ acd
 ajy
 akh
 afK
-afM
+ajc
 afM
 afN
 aiX
@@ -86272,9 +86266,9 @@ adF
 ajx
 akg
 agj
-afL
-afL
-afL
+adL
+ahr
+aih
 aiX
 anz
 aov
@@ -87550,7 +87544,7 @@ aeT
 afH
 agj
 ahs
-ahr
+ahP
 ahP
 aiF
 agj
@@ -88064,7 +88058,7 @@ afC
 agk
 agF
 agP
-ahU
+agP
 agP
 agP
 aiz
@@ -88321,7 +88315,7 @@ afB
 agi
 agD
 agO
-aih
+agO
 agO
 agO
 aiy
