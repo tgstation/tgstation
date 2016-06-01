@@ -272,11 +272,60 @@ var/datum/subsystem/air/SSair
 			continue
 		T.Initalize_Atmos(times_fired)
 
-
 	if(active_turfs.len)
-		warning("There are [active_turfs.len] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
+		var/starting_ats = active_turfs.len
+		sleep(world.tick_lag)
+		var/timer = world.timeofday
+		warning("There are [starting_ats] active turfs at roundstart, this is a mapping error caused by a difference of the air between the adjacent turfs. You can see its coordinates using \"Mapping -> Show roundstart AT list\" verb (debug verbs required)")
 		for(var/turf/T in active_turfs)
 			active_turfs_startlist += text("[T.x], [T.y], [T.z]\n")
+
+		//now lets clear out these active turfs
+		var/list/turfs_to_check = active_turfs.Copy()
+		do
+			var/list/new_turfs_to_check = list()
+			for(var/turf/open/T in turfs_to_check)
+				new_turfs_to_check += T.resolve_active_graph()
+
+			active_turfs += new_turfs_to_check
+			turfs_to_check = new_turfs_to_check
+
+		while (turfs_to_check.len)
+		var/ending_ats = active_turfs.len
+		for(var/thing in excited_groups)
+			var/datum/excited_group/EG = thing
+			EG.self_breakdown(space_is_all_consuming = 1)
+			EG.dismantle()
+
+		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] world start active turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		world << "<span class='boldannounce'>[msg]</span>"
+		warning(msg)
+
+/turf/open/proc/resolve_active_graph()
+	. = list()
+	var/datum/excited_group/EG = excited_group
+	if (blocks_air || !air)
+		return
+	if (!EG)
+		EG = new
+		EG.add_turf(src)
+
+	for (var/turf/open/ET in atmos_adjacent_turfs)
+		if ( ET.blocks_air || !ET.air)
+			continue
+
+		var/ET_EG = ET.excited_group
+		if (ET_EG)
+			if (ET_EG != EG)
+				EG.merge_groups(ET_EG)
+				EG = excited_group //merge_groups() may decide to replace our current EG
+		else
+			EG.add_turf(ET)
+		if (!ET.excited)
+			ET.excited = 1
+			. += ET
+/turf/open/space/resolve_active_graph()
+	return list()
 
 /datum/subsystem/air/proc/setup_atmos_machinery(z_level)
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
