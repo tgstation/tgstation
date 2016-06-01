@@ -1037,28 +1037,28 @@
 			dna.remove_mutation(HM.name)
 	..()
 
-/mob/living/carbon/human/proc/influenceSin()
+/mob/living/carbon/human/proc/influenceSin(sintype = rand(1,7))
 	var/datum/objective/sintouched/O
-	switch(rand(1,7))//traditional seven deadly sins... except lust.
-		if(1) // acedia
+	switch(sintype)//traditional seven deadly sins... except lust.
+		if(ACEDIA) // acedia
 			log_game("[src] was influenced by the sin of Acedia.")
 			O = new /datum/objective/sintouched/acedia
-		if(2) // Gluttony
+		if(GLUTTONY) // Gluttony
 			log_game("[src] was influenced by the sin of gluttony.")
 			O = new /datum/objective/sintouched/gluttony
-		if(3) // Greed
+		if(GREED) // Greed
 			log_game("[src] was influenced by the sin of greed.")
 			O = new /datum/objective/sintouched/greed
-		if(4) // sloth
+		if(SLOTH) // sloth
 			log_game("[src] was influenced by the sin of sloth.")
 			O = new /datum/objective/sintouched/sloth
-		if(5) // Wrath
+		if(WRATH) // Wrath
 			log_game("[src] was influenced by the sin of wrath.")
 			O = new /datum/objective/sintouched/wrath
-		if(6) // Envy
+		if(ENVY) // Envy
 			log_game("[src] was influenced by the sin of envy.")
 			O = new /datum/objective/sintouched/envy
-		if(7) // Pride
+		if(PRIDE) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind

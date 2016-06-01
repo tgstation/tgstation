@@ -83,7 +83,7 @@
 	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
 
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout", "Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.real_name = plant_name
 
 //Greed
@@ -114,6 +114,9 @@
 	if(prob(win_prob))
 		new /obj/item/weapon/dice/d20/fate/one_use(get_turf(src))
 		if(user)
+			if(istype(user, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = user
+				H.influenceSin(GREED)
 			user << "You hear laughter echoing around you as the machine fades away. In it's place...more gambling."
 			qdel(src)
 	else
@@ -138,8 +141,7 @@
 			return 1
 		else
 			H << "<span class='danger'><B>You're not gluttonous enough to pass this barrier!</B></span>"
-	else
-		return 0
+	return 0
 
 //Pride
 
@@ -154,8 +156,23 @@
 	T.ChangeTurf(/turf/open/chasm/straight_down)
 	var/turf/open/chasm/straight_down/C = T
 	C.drop(user)
+	if(istype(user, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		H.influenceSin(PRIDE)
 
-//Sloth - I'll finish this item later
+//Sloth
+
+/obj/item/weapon/paper/sloth
+	name = "note from sloth"
+	var/used = 0
+	desc = "have not gotten around to finishing my cursed item yet sorry - sloth"
+
+/obj/item/weapon/paper/sloth/examine(mob/user)
+	..()
+	if(!used && istype(user, /mob/living/carbon/human))
+		used = 1
+		var/mob/living/carbon/human/H = user
+		H.influenceSin(PRIDE)
 
 //Envy
 
@@ -178,12 +195,57 @@
 		return
 	if(istype(AM, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
+		H.influenceSin(ENVY) //Yes, have it sintouch the TARGET,
 		if(user.real_name != H.dna.real_name)
 			user.real_name = H.dna.real_name
 			H.dna.transfer_identity(user, transfer_SE=1)
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
 			user << "You assume the face of [H]. Are you satisfied?"
+
+//Wrath
+
+/obj/item/weapon/melee/wrathhand
+	name = "The hand of hatred"
+	force = 0
+	hitsound = 'sound/magic/WandODeath.ogg'
+	icon_state = "disintegrate"
+	item_state = "disintegrate"
+	flags = NODROP
+	unacidable = 1
+
+/obj/item/weapon/melee/wrathhand/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+	if(!proximity)
+		return
+	if(AM == user)
+		user << "<span class='warning'>Surely there is someone you hate more than yourself.</span>"
+	else
+		if(istype(AM,/mob/living))
+			var/mob/living/L = AM
+			user << "<span class='warning'>Your hatred is fulfilled.</span>"
+			L.gib()
+			user.gib()
+			qdel(src)
+
+/obj/structure/wrathaltar
+	icon_state = "talismanaltar"
+	density = 1
+	anchored = 1
+	icon = 'icons/obj/cult.dmi'
+	name = "Altar of wrath"
+	desc = "Lay your hand upon the altar and receive the power to smite your enemies."
+	var/used = 0
+
+/obj/structure/wrathaltar/attack_hand(mob/living/user)
+	if (used)
+		user << "<span class='notice'>\The [src]'s power has already been invoked.</span>"
+	else
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.influenceSin(WRATH)
+			if(H.drop_item())
+				used = 1
+				H.put_in_hands(new /obj/item/weapon/melee/wrathhand())
 
 ///Ash Walkers
 
