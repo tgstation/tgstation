@@ -112,10 +112,9 @@
 /obj/machinery/bot/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(flags & INVULNERABLE)
 		return
-	if(isscrewdriver(W) || iscrowbar(W))
-		if(!locked)
-			open = !open
-			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
+	if(!locked && (isscrewdriver(W) || iscrowbar(W)))
+		open = !open
+		to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		if(health < maxhealth)
 			if(open)
