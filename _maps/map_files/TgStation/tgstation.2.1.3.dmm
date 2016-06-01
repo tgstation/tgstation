@@ -1422,11 +1422,10 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "adq" = (
-/obj/machinery/flasher/portable,
-/turf/open/floor/plasteel/vault{
-	dir = 1
-	},
-/area/ai_monitored/security/armory)
+/obj/structure/table/wood,
+/obj/item/device/instrument/guitar,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "adr" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
@@ -10313,10 +10312,10 @@
 /area/crew_quarters/sleep)
 "awp" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/weapon/storage/pill_bottle/dice,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "awq" = (
@@ -10971,7 +10970,7 @@
 /area/crew_quarters/sleep)
 "axN" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
+/obj/item/weapon/storage/crayons,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "axO" = (
@@ -16414,13 +16413,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/item/weapon/gun/projectile/revolver/doublebarrel,
 /obj/structure/table/wood,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/cable_coil,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c100,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aJF" = (
@@ -17977,6 +17971,15 @@
 /area/hallway/primary/central)
 "aND" = (
 /obj/structure/closet/gmcloset,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/cable_coil,
+/obj/item/device/flashlight/lamp,
+/obj/item/device/flashlight/lamp/green,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aNE" = (
@@ -18776,6 +18779,12 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/button/door{
+	id = "barShutters";
+	name = "bar shutters";
+	pixel_x = 4;
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aPx" = (
@@ -19026,14 +19035,19 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aQb" = (
-/obj/structure/table,
-/turf/open/floor/plasteel/bar,
-/area/crew_quarters/bar)
+/obj/structure/window/reinforced,
+/obj/structure/table/wood,
+/obj/item/device/instrument/violin,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "aQc" = (
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aQd" = (
-/obj/structure/table/wood/poker,
+/obj/structure/chair,
+/obj/effect/landmark/start{
+	name = "Assistant"
+	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aQe" = (
@@ -19048,11 +19062,13 @@
 	},
 /area/hydroponics)
 "aQg" = (
-/obj/structure/chair,
-/obj/effect/landmark/start{
-	name = "Assistant"
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/obj/machinery/door/poddoor/preopen{
+	id = "barShutters";
+	name = "privacy shutters"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plating,
 /area/crew_quarters/bar)
 "aQh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -19814,21 +19830,16 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSp" = (
+/obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
-	},
-/obj/structure/chair{
-	dir = 8
 	},
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSq" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -2;
-	pixel_y = 1
+/obj/structure/chair{
+	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSr" = (
@@ -19943,18 +19954,16 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSG" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/weapon/kitchen/fork,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aSH" = (
+/obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
@@ -21091,9 +21100,9 @@
 	},
 /area/hallway/primary/central)
 "aVw" = (
-/obj/structure/chair{
-	dir = 8
-	},
+/obj/structure/table/wood/poker,
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/toy/cards/deck,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aVx" = (
@@ -93988,11 +93997,11 @@ aCr
 aCr
 aJC
 bYP
-aOK
+aQg
 aJC
-aOK
+aQg
 aJC
-aOK
+aQg
 aJC
 aJC
 aHP
@@ -94241,8 +94250,8 @@ aHX
 aBy
 aAh
 aMq
-aMr
-aOH
+adq
+aQb
 aPZ
 aRu
 aQc
@@ -94505,7 +94514,7 @@ aQc
 aRx
 aQc
 aQc
-aRx
+aPY
 aQc
 aZZ
 aJC
@@ -94758,12 +94767,12 @@ aMr
 aMr
 aOH
 aQc
-aQg
-aSq
-aRv
-aUg
+aQd
 aQa
 aRv
+aPY
+aVw
+aPY
 bac
 aJC
 aYV
@@ -95016,10 +95025,10 @@ aNt
 aOH
 aQc
 aQc
-aVw
+aSq
 aQc
 aQc
-aVw
+aPY
 aQc
 bab
 aJC
@@ -95786,9 +95795,9 @@ aMv
 aNH
 aOJ
 aQc
-aUg
+aPY
 aSG
-aRv
+aPY
 aUg
 bFC
 aRw
@@ -96047,7 +96056,7 @@ aKM
 aSp
 aQc
 aQc
-aVw
+aSq
 aQc
 bad
 bby
@@ -96820,7 +96829,7 @@ aSY
 aVy
 aVy
 aYI
-aQc
+bah
 aJC
 aYV
 bdo
@@ -97591,7 +97600,7 @@ aTa
 aQc
 aXk
 aQc
-bah
+aQc
 aJC
 aYV
 aYV
