@@ -875,7 +875,7 @@
 			C.wrapped = W
 			C.install()
 
-	else if (iswirecutter(W) || istype(W, /obj/item/device/multitool))
+	else if (iswiretool(W))
 		if (wiresexposed)
 			wires.Interact(user)
 		else

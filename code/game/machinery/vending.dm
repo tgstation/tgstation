@@ -355,7 +355,7 @@ var/global/num_vending_terminals = 1
 			to_chat(user, "<span class='notice'>You slot some cardboard into the machine into [src].</span>")
 			cardboard = 1
 			src.updateUsrDialog()
-	if(istype(W, /obj/item/device/multitool)||iswirecutter(W))
+	if(iswiretool(W))
 		if(panel_open)
 			attack_hand(user)
 		return

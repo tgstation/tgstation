@@ -793,7 +793,7 @@
 				update_icon()
 				return
 
-			if(wiresexposed && !wires.IsAllCut() && (ismultitool(W) || (iswirecutter(W))))
+			if(wiresexposed && !wires.IsAllCut() && iswiretool(W))
 				return attack_hand(user)
 			else if(wiresexposed && wires.IsAllCut() && iswirecutter(W))
 				buildstage = 1

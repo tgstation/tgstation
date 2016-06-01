@@ -1073,14 +1073,14 @@ About the new airlock wires panel:
 					welded = null
 
 				update_icon()
-	else if (iswirecutter(I))
-		if (!operating && panel_open)
-			wires.Interact(user)
 	else if (ismultitool(I))
 		if (!operating)
 			if(panel_open) wires.Interact(user)
 			else update_multitool_menu(user)
 		attack_hand(user)
+	else if (iswiretool(I))
+		if (!operating && panel_open)
+			wires.Interact(user)
 	else if(iscrowbar(I) || istype(I, /obj/item/weapon/fireaxe) )
 		if(src.busy) return
 		src.busy = 1

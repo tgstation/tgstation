@@ -105,6 +105,8 @@
 
 #define iswirecutter(A) istype(A, /obj/item/weapon/wirecutters)
 
+#define iswiretool(A) (iswirecutter(A) || ismultitool(A) || issignaler(A))
+
 #define isscrewdriver(A) istype(A, /obj/item/weapon/screwdriver)
 
 #define ismultitool(A) istype(A, /obj/item/device/multitool)
