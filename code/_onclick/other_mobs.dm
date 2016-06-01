@@ -42,7 +42,7 @@
 	return 0
 
 //Ranged override abilities for carbons
-/mob/living/carbon/ClickOn(atom/A, params)
+/mob/living/ClickOn(atom/A, params)
 	if(ranged_ability && !stat)
 		ranged_ability.use_ability(A, src, params) //Spit at something, use a fireball, etc.
 	else
