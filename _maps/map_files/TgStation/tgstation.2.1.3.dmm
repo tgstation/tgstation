@@ -1786,7 +1786,7 @@
 "aea" = (
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/security/transfer)
@@ -1802,7 +1802,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/security/transfer)
@@ -2131,7 +2131,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/security/transfer)
@@ -2561,7 +2561,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/security/transfer)
@@ -2589,7 +2589,7 @@
 	name = "Armory";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/security/transfer)
 "afx" = (
 /obj/machinery/light_switch{
@@ -6414,13 +6414,13 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "ano" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/fpmaint2)
 "anp" = (
 /obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/fpmaint2)
@@ -7058,7 +7058,7 @@
 /obj/structure/chair/stool{
 	pixel_y = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/maintenance/fsmaint)
@@ -7068,7 +7068,7 @@
 	name = "Air Out";
 	on = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 5
 	},
 /area/maintenance/fsmaint)
@@ -7340,7 +7340,7 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/maintenance/fsmaint)
@@ -7359,7 +7359,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/maintenance/fsmaint)
@@ -7727,7 +7727,7 @@
 /obj/item/weapon/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/maintenance/fsmaint)
@@ -7736,7 +7736,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/maintenance/fsmaint)
@@ -13929,7 +13929,7 @@
 	id = "chapelgun";
 	name = "Holy Driver"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/chapel/main)
@@ -25085,7 +25085,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/maintenance/disposal)
@@ -25180,7 +25180,7 @@
 	pixel_y = 32
 	},
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/chapel/main)
@@ -26274,7 +26274,7 @@
 	icon_state = "right";
 	layer = 3
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/maintenance/disposal)
@@ -26868,7 +26868,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/disposal)
@@ -26877,7 +26877,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/disposal)
@@ -28289,7 +28289,7 @@
 /obj/machinery/mass_driver{
 	id = "trash"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/disposal)
@@ -30420,7 +30420,7 @@
 	dir = 4;
 	id = "QMLoad2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -33248,7 +33248,7 @@
 	pixel_y = -30;
 	supply_display = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -33257,7 +33257,7 @@
 	dir = 4;
 	id = "QMLoad"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/quartermaster/storage)
@@ -38757,7 +38757,7 @@
 "bHw" = (
 /obj/item/target,
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/toxins/test_area)
@@ -39609,19 +39609,19 @@
 /area/toxins/test_area)
 "bIY" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/toxins/test_area)
 "bIZ" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 5
 	},
 /area/toxins/test_area)
 "bJa" = (
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/toxins/test_area)
@@ -40223,7 +40223,7 @@
 /turf/open/floor/plating/airless,
 /area/toxins/test_area)
 "bKh" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/toxins/test_area)
@@ -40231,7 +40231,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 5
 	},
 /area/toxins/test_area)
@@ -40793,17 +40793,17 @@
 /turf/open/floor/plating,
 /area/toxins/mixing)
 "bLm" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/toxins/mixing)
 "bLn" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
 /area/toxins/test_area)
 "bLo" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/toxins/test_area)
@@ -40833,7 +40833,7 @@
 /obj/item/target/alien{
 	anchored = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4;
 	luminosity = 2;
 	initial_gas_mix = "o2=0.01;n2=0.01"
@@ -41369,7 +41369,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bMD" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 10
 	},
 /area/toxins/test_area)
@@ -41377,7 +41377,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 6
 	},
 /area/toxins/test_area)
@@ -41797,7 +41797,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 10
 	},
 /area/toxins/test_area)
@@ -41805,13 +41805,13 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 6
 	},
 /area/toxins/test_area)
 "bNF" = (
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 2
 	},
 /area/toxins/test_area)
@@ -42266,7 +42266,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/toxins/test_area)
 "bOK" = (
 /obj/structure/barricade/wooden,
@@ -46242,7 +46242,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/paper/range,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/toxins/misc_lab)
@@ -46264,7 +46264,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/toxins/misc_lab)
@@ -47288,7 +47288,7 @@
 	icon_state = "mvalve_map";
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/asmaint)
@@ -47301,7 +47301,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/maintenance/asmaint)
@@ -47309,7 +47309,7 @@
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 5
 	},
 /area/maintenance/asmaint)
@@ -47807,7 +47807,7 @@
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/maintenance/asmaint)
@@ -47821,7 +47821,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/maintenance/asmaint)
@@ -47830,7 +47830,7 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/maintenance/asmaint)
@@ -49664,7 +49664,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/maintenance/asmaint)
 "ceE" = (
 /obj/structure/sign/fire{
@@ -50252,7 +50252,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/maintenance/incinerator)
@@ -51218,7 +51218,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "chV" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/engine/engineering)
@@ -51231,7 +51231,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
@@ -51241,7 +51241,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
@@ -51347,7 +51347,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/engine/engineering)
 "cii" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 5
 	},
 /area/engine/engineering)
@@ -54745,7 +54745,7 @@
 	icon_state = "2-4";
 	tag = ""
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -54790,7 +54790,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/engine/engineering)
@@ -55072,7 +55072,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55093,7 +55093,7 @@
 	pixel_y = 0;
 	req_access_txt = "11"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/engine/engineering)
@@ -55296,7 +55296,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55435,13 +55435,13 @@
 	anchored = 1
 	},
 /obj/structure/cable/yellow,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
 "cqV" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
@@ -55451,7 +55451,7 @@
 	},
 /obj/item/weapon/tank/internals/plasma,
 /obj/structure/cable/yellow,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
@@ -55461,7 +55461,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55484,7 +55484,7 @@
 /area/engine/engineering)
 "crc" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/engine/engineering)
@@ -55524,7 +55524,7 @@
 /obj/structure/transit_tube{
 	icon_state = "Block"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55618,7 +55618,7 @@
 	d1 = 1;
 	d2 = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/engine/engineering)
@@ -55630,13 +55630,13 @@
 	icon_state = "2-8";
 	tag = ""
 	},
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/engine/engineering)
 "cru" = (
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/engine/engineering)
 "crv" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/engine/engineering)
@@ -55670,7 +55670,7 @@
 	reverse_launch = 1
 	},
 /obj/structure/transit_tube_pod,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55774,7 +55774,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warnplate,
+/turf/open/floor/plating/warnplate,
 /area/engine/engineering)
 "crJ" = (
 /obj/structure/cable{
@@ -55833,7 +55833,7 @@
 /obj/structure/transit_tube{
 	icon_state = "N-S"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55900,7 +55900,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csa" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/engine/engineering)
@@ -55922,7 +55922,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "csd" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
 /area/engine/engineering)
@@ -56121,7 +56121,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "csC" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 1
 	},
 /area/space/nearstation)
@@ -56161,12 +56161,12 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "csH" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 9
 	},
 /area/space/nearstation)
 "csI" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 5
 	},
 /area/space/nearstation)
@@ -56218,7 +56218,7 @@
 /area/space/nearstation)
 "csR" = (
 /obj/machinery/the_singularitygen,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 8
 	},
 /area/space/nearstation)
@@ -56240,7 +56240,7 @@
 /turf/open/floor/plating,
 /area/turret_protected/aisat_interior)
 "csV" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/turret_protected/aisat_interior)
@@ -56248,7 +56248,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/turret_protected/aisat_interior)
@@ -56315,7 +56315,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ctf" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 2
 	},
 /area/space/nearstation)
@@ -56372,7 +56372,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "ctm" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 10
 	},
 /area/space/nearstation)
@@ -56851,7 +56851,7 @@
 	dir = 2;
 	name = "Mix to MiniSat"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	icon_plating = "warnplate"
 	},
 /area/turret_protected/AIsatextAS{
@@ -56863,7 +56863,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/warnplate/corner{
+/turf/open/floor/plating/warnplate/corner{
 	tag = "icon-warnplatecorner";
 	dir = 2
 	},
@@ -56885,7 +56885,7 @@
 	pixel_x = -5;
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	icon_plating = "warnplate"
 	},
 /area/turret_protected/AIsatextAS{
@@ -56897,7 +56897,7 @@
 	name = "Air Out";
 	on = 0
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	icon_plating = "warnplate"
 	},
 /area/turret_protected/AIsatextAS{
@@ -56977,14 +56977,14 @@
 	pixel_x = 5;
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	icon_plating = "warnplate"
 	},
 /area/turret_protected/AIsatextFP{
 	name = "AI Satellite Service"
 	})
 "cuw" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	icon_plating = "warnplate"
 	},
 /area/turret_protected/AIsatextFP{
@@ -57007,7 +57007,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/warnplate/corner{
+/turf/open/floor/plating/warnplate/corner{
 	dir = 1
 	},
 /area/turret_protected/AIsatextFP{
@@ -57040,7 +57040,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/space_heater,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/turret_protected/AIsatextAS{
@@ -57200,7 +57200,7 @@
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/device/multitool,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/turret_protected/AIsatextFP{
@@ -57232,7 +57232,7 @@
 	d2 = 4
 	},
 /obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/turret_protected/AIsatextAS{
@@ -57410,7 +57410,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/port_gen/pacman,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/turret_protected/AIsatextFP{
@@ -59304,7 +59304,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "czD" = (
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 6
 	},
 /area/space/nearstation)
@@ -59714,7 +59714,7 @@
 /area/space/nearstation)
 "cAt" = (
 /obj/machinery/the_singularitygen/tesla,
-/turf/open/floor/plasteel/airless/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4
 	},
 /area/space/nearstation)
@@ -59902,7 +59902,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cAP" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/engine/engineering)

@@ -204,13 +204,6 @@
 /turf/open/floor/plasteel/airless/warning/corner
 	icon_state = "warningcorner"
 
-/turf/open/floor/plasteel/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plasteel/airless/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plasteel/warnplate/corner
-	icon_state = "warnplatecorner"
-
 
 /turf/open/floor/plasteel/warnwhite
 	icon_state = "warnwhite"
