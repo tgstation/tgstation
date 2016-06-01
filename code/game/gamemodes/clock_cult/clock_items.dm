@@ -78,7 +78,8 @@
 		user.drop_item()
 		qdel(C)
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
@@ -539,12 +540,13 @@
 		user.drop_item()
 		qdel(I)
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, flag, params)
 	if(!target || !user)
 		return 0
-	if(user.a_intent == "harm" || !user.Adjacent(target))
+	if(user.a_intent == "harm" || !user.Adjacent(target) || !is_servant_of_ratvar(user))
 		return ..()
 	proselytize(target, user)
 
@@ -644,11 +646,12 @@
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
 			S.adjustFireLoss(25)
-	if(iscultist(L))
+	else if(iscultist(L))
 		var/mob/living/M = L
 		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
 		M.adjustFireLoss(10)
-	..()
+	else
+		..()
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	..()

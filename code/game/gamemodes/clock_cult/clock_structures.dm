@@ -59,7 +59,7 @@
 	..()
 	desc = initial(desc)
 
-/obj/structure/clockwork/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/clockwork/attacked_by/(obj/item/I, mob/living/user)
 	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force)
 		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
 		playsound(src, I.hitsound, 50, 1)
@@ -70,7 +70,7 @@
 			destroyed()
 			return 0
 	else
-		..()
+		return ..()
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -99,7 +99,7 @@
 		user.drop_item()
 		qdel(C)
 		return 1
-	if(istype(I, /obj/item/clockwork/slab))
+	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
 		clockwork_component_cache["belligerent_eye"] += S.stored_components["belligerent_eye"]
 		clockwork_component_cache["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
@@ -113,7 +113,7 @@
 		S.stored_components["hierophant_ansible"] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
-	if(istype(I, /obj/item/clockwork/daemon_shell))
+	else if(istype(I, /obj/item/clockwork/daemon_shell))
 		var/component_type
 		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?.", , "Specific Type", "Random Component"))
 			if("Specific Type")
@@ -138,7 +138,8 @@
 		user.drop_item()
 		qdel(I)
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/structure/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
@@ -289,7 +290,8 @@
 		qdel(S)
 		qdel(src)
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/structure/clockwork/interdiction_lens //Interdiction lens: A powerful artifact that can massively disrupt electronics. Five-minute cooldown between uses.
 	name = "interdiction lens"
@@ -399,32 +401,38 @@
 		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
 		toggle()
 		return 0
-	for(var/mob/living/simple_animal/hostile/anima_fragment/F in range(5, src))
-		if(F.health == F.maxHealth || F.stat)
-			continue
-		F.adjustBruteLoss(-15)
-		if(uses_alloy)
-			stored_alloy = max(0, stored_alloy - 2)
-	for(var/mob/living/simple_animal/hostile/clockwork_marauder/M in range(5, src))
-		if(M.health == M.maxHealth || M.stat)
-			continue
-		M.adjustBruteLoss(-M.maxHealth) //Instant because marauders don't usually take health damage
-		M.fatigue = max(0, M.fatigue - 15)
-		if(uses_alloy)
-			stored_alloy = max(0, stored_alloy - 2)
-	for(var/mob/living/silicon/S in range(5, src))
-		if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
-			continue
-		S.adjustBruteLoss(-25)
-		S.adjustFireLoss(-25)
-		if(uses_alloy)
-			stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
-	for(var/obj/structure/clockwork/C in range(5, src))
-		if(C.health == C.max_health)
-			continue
-		C.health = min(C.health + 10, C.max_health)
-		if(uses_alloy)
-			stored_alloy = max(0, stored_alloy - 1)
+	for(var/atom/movable/M in range(5, src))
+		switch(M.type)
+			if(/mob/living/simple_animal/hostile/anima_fragment)
+				var/mob/living/simple_animal/hostile/anima_fragment/F = M
+				if(F.health == F.maxHealth || F.stat)
+					continue
+				F.adjustBruteLoss(-15)
+				if(uses_alloy)
+					stored_alloy = max(0, stored_alloy - 2)
+			if(/mob/living/simple_animal/hostile/clockwork_marauder)
+				var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
+				if(E.health == E.maxHealth || E.stat)
+					continue
+				E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
+				E.fatigue = max(0, E.fatigue - 15)
+				if(uses_alloy)
+					stored_alloy = max(0, stored_alloy - 2)
+			if(/mob/living/silicon)
+				var/mob/living/silicon/S = M
+				if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
+					continue
+				S.adjustBruteLoss(-25)
+				S.adjustFireLoss(-25)
+				if(uses_alloy)
+					stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
+			if(/obj/structure/clockwork)
+				var/obj/structure/clockwork/C = M
+				if(C.health == C.max_health)
+					continue
+				C.health = min(C.health + 10, C.max_health)
+				if(uses_alloy)
+					stored_alloy = max(0, stored_alloy - 1)
 
 
 /obj/structure/clockwork/mending_motor/attack_hand(mob/living/user)
@@ -446,7 +454,8 @@
 		user.drop_item()
 		qdel(I)
 		return 1
-	..()
+	else
+		return ..()
 
 /obj/structure/clockwork/mending_motor/proc/toggle(mob/living/user)
 	active = !active

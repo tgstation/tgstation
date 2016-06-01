@@ -116,13 +116,18 @@
 	opacity = 1
 	hackProof = TRUE
 	aiControlDisabled = TRUE
-	lights = FALSE
 	use_power = FALSE
 	var/construction_state = GEAR_SECURE //Pinion airlocks have custom deconstruction
 
+/obj/machinery/door/airlock/clockwork/New()
+	..()
+	var/turf/T = get_turf(src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
+
 /obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))
-		..()
+		return ..()
 
 /obj/machinery/door/airlock/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))
@@ -163,7 +168,7 @@
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s gear!</span>", "<span class='notice'>[src]'s gear pops off and dangles loosely.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			construction_state = GEAR_SECURE
+			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s gear...</span>", "<span class='notice'>You begin tightening [src]'s gear into place...</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
@@ -171,7 +176,7 @@
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s gear!</span>", "<span class='notice'>You firmly tighten [src]'s gear into place.</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			construction_state = GEAR_LOOSE
+			construction_state = GEAR_UNFASTENED
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
