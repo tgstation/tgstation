@@ -634,3 +634,12 @@
 	icon_state = "hoodieskirt"
 	item_state = "hoodieskirt"
 	_color = "hoodieskirt"
+
+/obj/item/clothing/under/mummy_rags
+	name = "mummy rags"
+	desc = "Ancient rags taken off from some mummy."
+	icon_state = "mummy"
+	item_state = "mummy"
+	_color = "mummy"
+
+	has_sensor = 0

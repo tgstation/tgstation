@@ -116,6 +116,11 @@ Example of the second method:
 	file_path = "maps/RandomZLevels/unused/wildwest.dmm"
 	desc = "An exciting adventure for the toughest adventures your station can offer. Those who defeat all of the final area's guardians will find a wish granter."
 
+/datum/map_element/away_mission/tomb
+	name = "tomb of Rafid"
+	file_path = "maps/RandomZLevels/tomb.dmm"
+	desc = "On a distant planet, an ancient civilization built a great pyramid to bury their leader. After a team of archaeologists disappeared while attempting to unlock the tomb, a gateway was set up and a rescue team requested."
+
 var/static/list/away_mission_subtypes = typesof(/datum/map_element/away_mission) - /datum/map_element/away_mission
 
 //Returns a list containing /datum/map_element/away_mission objects.

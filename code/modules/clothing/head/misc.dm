@@ -395,3 +395,10 @@
 /obj/item/clothing/head/pajamahat/blue
 	icon_state = "pajamahat_blue"
 	item_state = "pajamahat_blue"
+
+/obj/item/clothing/head/mummy_rags
+	name = "mummy rags"
+	desc = "Ancient rags taken off from some mummy."
+	icon_state = "mummy"
+	item_state = "mummy"
+	_color = "mummy"

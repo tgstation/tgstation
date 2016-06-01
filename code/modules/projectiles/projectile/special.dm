@@ -320,3 +320,38 @@ obj/item/projectile/kinetic/New()
 	if(!(locate(/obj/effect/portal) in loc))
 		P.open_portal(setting,loc,A)
 	bullet_die()
+
+
+//Fire breath
+//Fairly simple projectile that doesn't use any atmos calculations. Intended to be used by simple mobs
+/obj/item/projectile/fire_breath
+	name = "fiery breath"
+	icon_state = null
+	damage = 0
+	penetration = -1
+	phase_type = PROJREACT_MOBS|PROJREACT_BLOB|PROJREACT_OBJS
+	bounce_sound = null
+	custom_impact = 1
+	penetration_message = 0
+	grillepasschance = 100
+
+	var/stepped_range = 0
+	var/max_range = 9
+
+	var/fire_damage = 10
+	var/pressure = ONE_ATMOSPHERE * 5
+	var/temperature = T0C + 200
+
+/obj/item/projectile/fire_breath/process_step()
+	..()
+
+	if(stepped_range <= max_range)
+		stepped_range++
+	else
+		bullet_die()
+		return
+
+	var/turf/T = get_turf(src)
+	if(!T) return
+
+	new /obj/effect/fire_blast(T, fire_damage, stepped_range, 1, pressure, temperature)

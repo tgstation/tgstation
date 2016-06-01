@@ -265,3 +265,16 @@
 	if(air_group || !broken)
 		return 0 //Make sure air doesn't drain
 	..()
+
+
+/obj/structure/grille/invulnerable
+	desc = "A reinforced grille made with advanced alloys and techniques. It's impossible to break one without the use of heavy machinery."
+
+/obj/structure/grille/invulnerable/healthcheck(hitsound)
+	return
+
+/obj/structure/grille/invulnerable/ex_act()
+	return
+
+/obj/structure/grille/invulnerable/attackby()
+	return

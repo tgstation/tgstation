@@ -47,3 +47,24 @@
 		return prob(66)
 	else
 		return !density
+
+/mob/living/simple_animal/hostile/viscerator/flying_skull
+	name = "flying skull"
+	desc = "A human skull levitating in the air."
+
+	icon_state = "flying_skull"
+
+	health = 8
+	maxHealth = 8
+
+	melee_damage_lower = 7
+	melee_damage_upper = 12
+	attack_sound = 'sound/weapons/bite.ogg'
+	attacktext = "bites"
+
+	faction = "mummy"
+
+/mob/living/simple_animal/hostile/viscerator/flying_skull/AttackingTarget()
+	flick("flying_skull_bite", src)
+
+	..()
