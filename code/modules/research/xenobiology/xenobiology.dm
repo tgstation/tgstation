@@ -494,6 +494,33 @@
 	G.key = ghost.key
 	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
+
+	var/golem_becomes_antag = FALSE
+	if(iscultist(user)) //If the golem's master is a part of a team antagonist, immediately make the golem one, too
+		ticker.mode.add_cultist(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_gangster(user))
+		ticker.mode.add_gangster(G.mind, user.mind.gang_datum, TRUE)
+		golem_becomes_antag = TRUE
+	else if(is_handofgod_redcultist(user) || is_handofgod_redprophet(user))
+		ticker.mode.add_hog_follower(G.mind, "Red")
+		golem_becomes_antag = TRUE
+	else if(is_handofgod_bluecultist(user) || is_handofgod_blueprophet(user))
+		ticker.mode.add_hog_follower(G.mind, "Blue")
+		golem_becomes_antag = TRUE
+	else if(is_revolutionary_in_general(user))
+		ticker.mode.add_revolutionary(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_shadow_or_thrall(user))
+		ticker.mode.add_thrall(G.mind)
+		golem_becomes_antag = TRUE
+	else if(is_servant_of_ratvar(user))
+		add_servant_of_ratvar(G)
+		golem_becomes_antag = TRUE
+
+	G.mind.enslaved_to = user
+	if(golem_becomes_antag)
+		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
 	if(user.mind.special_role)
 		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")

@@ -266,7 +266,9 @@
 				return
 			var/obj/item/weapon/reagent_containers/P
 			if(condi)
-				P = new/obj/item/weapon/reagent_containers/food/condiment(src.loc)
+				var/obj/item/weapon/reagent_containers/food/condiment/C = new(src.loc)
+				C.originalname = name
+				P = C
 			else
 				P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 

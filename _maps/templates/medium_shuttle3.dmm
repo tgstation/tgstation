@@ -1,0 +1,773 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"c" = (
+/turf/closed/indestructible/opshuttle,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"d" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (NORTH)";
+	icon_state = "heater";
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"e" = (
+/turf/open/space,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"f" = (
+/turf/open/space,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (NORTHEAST)";
+	icon_state = "wall3";
+	dir = 5
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"g" = (
+/turf/closed/wall/shuttle/smooth,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (SOUTHEAST)";
+	icon_state = "wall3";
+	dir = 6
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"h" = (
+/turf/closed/wall/shuttle/smooth,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"i" = (
+/turf/closed/wall/shuttle/smooth,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (SOUTHWEST)";
+	icon_state = "wall3";
+	dir = 10
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"j" = (
+/obj/machinery/door/airlock/glass_external,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"k" = (
+/obj/machinery/power/smes/magical,
+/turf/open/floor/plasteel,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"l" = (
+/turf/open/floor/plasteel,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"m" = (
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"n" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (EAST)";
+	icon_state = "propulsion";
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"o" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (WEST)";
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"p" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"q" = (
+/obj/structure/shuttle/engine/heater{
+	tag = "icon-heater (EAST)";
+	icon_state = "heater";
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"r" = (
+/obj/structure/shuttle/engine/propulsion{
+	tag = "icon-propulsion (WEST)";
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"s" = (
+/turf/closed/wall/shuttle/smooth,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (NORTHEAST)";
+	icon_state = "wall3";
+	dir = 5
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"t" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"u" = (
+/turf/closed/wall/shuttle/smooth,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"v" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"w" = (
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"x" = (
+/obj/structure/chair/comfy{
+	tag = "icon-comfychair (WEST)";
+	icon_state = "comfychair";
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkyellow,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"y" = (
+/turf/open/space,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (SOUTHWEST)";
+	icon_state = "wall3";
+	dir = 10
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"z" = (
+/obj/machinery/sleeper,
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"A" = (
+/turf/open/floor/plasteel/black,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"B" = (
+/turf/open/space,
+/turf/closed/indestructible/opshuttle{
+	tag = "icon-wall3 (SOUTHEAST)";
+	icon_state = "wall3";
+	dir = 6
+	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"C" = (
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"D" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid,
+/turf/open/floor/plasteel/darkblue,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"E" = (
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"F" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/space,
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+n
+a
+a
+a
+a
+n
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+n
+c
+o
+a
+a
+a
+a
+o
+c
+n
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+e
+o
+c
+c
+y
+a
+a
+e
+c
+c
+o
+y
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+e
+c
+c
+c
+c
+c
+a
+a
+c
+c
+c
+c
+c
+y
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+e
+g
+h
+h
+s
+c
+g
+j
+j
+s
+c
+g
+h
+h
+s
+y
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+e
+c
+h
+k
+l
+h
+h
+h
+m
+m
+h
+h
+h
+l
+k
+h
+c
+y
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+d
+c
+h
+l
+l
+l
+l
+p
+l
+l
+p
+l
+l
+l
+l
+h
+c
+E
+F
+a
+"}
+(8,1,1) = {"
+a
+c
+c
+c
+i
+h
+l
+l
+l
+h
+t
+t
+h
+l
+l
+l
+h
+u
+c
+c
+c
+a
+"}
+(9,1,1) = {"
+b
+d
+c
+c
+c
+h
+l
+l
+h
+z
+C
+C
+D
+h
+l
+l
+h
+c
+c
+c
+E
+F
+"}
+(10,1,1) = {"
+a
+a
+f
+c
+g
+h
+p
+h
+v
+h
+C
+C
+h
+A
+h
+p
+h
+s
+c
+B
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+j
+m
+l
+t
+w
+w
+l
+l
+A
+A
+t
+l
+m
+j
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+j
+m
+l
+t
+x
+w
+l
+l
+A
+A
+t
+l
+m
+j
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+e
+c
+i
+h
+p
+h
+w
+h
+A
+A
+h
+A
+h
+p
+h
+u
+c
+y
+a
+a
+"}
+(14,1,1) = {"
+b
+d
+c
+c
+c
+h
+l
+l
+h
+A
+A
+A
+A
+h
+l
+l
+h
+c
+c
+c
+E
+F
+"}
+(15,1,1) = {"
+a
+c
+c
+c
+g
+h
+l
+l
+l
+h
+t
+t
+h
+l
+l
+l
+h
+s
+c
+c
+c
+a
+"}
+(16,1,1) = {"
+a
+b
+d
+c
+h
+l
+l
+l
+l
+p
+l
+l
+p
+l
+l
+l
+l
+h
+c
+E
+F
+a
+"}
+(17,1,1) = {"
+a
+a
+f
+c
+h
+k
+l
+h
+h
+h
+m
+m
+h
+h
+h
+l
+k
+h
+c
+B
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+f
+i
+h
+h
+u
+c
+i
+j
+j
+u
+c
+i
+h
+h
+u
+B
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+f
+c
+c
+c
+c
+c
+a
+a
+c
+c
+c
+c
+c
+B
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+f
+q
+c
+c
+B
+a
+a
+f
+c
+c
+q
+B
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+a
+a
+r
+c
+q
+a
+a
+a
+a
+q
+c
+r
+a
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+r
+a
+a
+a
+a
+r
+a
+a
+a
+a
+a
+a
+a
+a
+"}

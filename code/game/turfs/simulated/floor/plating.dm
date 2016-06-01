@@ -79,6 +79,9 @@
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
+/turf/open/floor/engine/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
 
@@ -172,6 +175,19 @@
 
 /turf/open/floor/plasteel/airless
 	initial_gas_mix = "TEMP=2.7"
+
+// ONE DAY WE WILL HAVE SUBTYPES
+/turf/open/floor/plasteel/airless/shuttle
+	icon_state = "shuttlefloor"
+/turf/open/floor/plasteel/airless/shuttle/red
+	name = "Brig floor"
+	icon_state = "shuttlefloor4"
+/turf/open/floor/plasteel/airless/shuttle/yellow
+	icon_state = "shuttlefloor2"
+/turf/open/floor/plasteel/airless/shuttle/white
+	icon_state = "shuttlefloor3"
+/turf/open/floor/plasteel/airless/shuttle/purple
+	icon_state = "shuttlefloor5"
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
