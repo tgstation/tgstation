@@ -188,25 +188,48 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	plasma_cost = 50
-	action_icon_state = "alien_neurotoxin"
+	action_icon_state = "alien_neurotoxin_0"
+	var/active = 0
 
-/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
+/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
+	if(active)
+		user.ranged_ability = null
+		user << "<span class='notice'>You empty your neurotoxin gland.</span>"
+		active = 0
+	else if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'>You already have another aimed ability readied! Cancel it first."
+	else
+		user.ranged_ability = src
+		active = 1
+		user << "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+
+	action.button_icon_state = "alien_neurotoxin_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/alien/neurotoxin/use_ability(atom/target, mob/living/carbon/alien/user, params)
+	user.face_atom(target)
+	if(user.getPlasma() < 50)
+		user << "<span class='alertalien'>You need at least 50 plasma to spit.</span>"
+		return
 
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
 		return 0
 
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
 	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, get_turf(target), user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
+	user.adjustPlasma(-50)
 
 	return 1
+
+/obj/effect/proc_holder/alien/on_lose(mob/living/carbon/user)
+	if(user.ranged_ability == src)
+		user.ranged_ability = null
 
 
 /obj/effect/proc_holder/alien/resin

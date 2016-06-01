@@ -32,3 +32,5 @@
 	var/tinttotal = 0	// Total level of visualy impairing items
 
 	var/list/bodyparts = list() //Gets filled up in the constructor (New() proc in human.dm and monkey.dm)
+
+	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
