@@ -55,6 +55,8 @@ var/global/datum/interactive_map/camera/adv_camera = new
 /datum/interactive_map/camera/show(mob/mob, z, datum/html_interface/currui)
 	z = text2num(z)
 	if (!z) z = mob.z
+	sendResources(mob.client)
+
 	if (!(z in zlevels))
 		to_chat(mob, "zlevel([z]) good levels: [jointext(zlevels, " ")]")
 		to_chat(mob, "<span class='danger'>Unable to establish a connection: </span>You're too far away from the station!")
@@ -64,11 +66,24 @@ var/global/datum/interactive_map/camera/adv_camera = new
 		var/datum/html_interface/hi
 
 		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Security Cameras", 900, 800, "[MAPHEADER] </script><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"advcamera.js\"></script>")
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Security Cameras", 900, 800, \
+			"[MAPHEADER] </script><script type=\"text/javascript\">\
+			var mapname = [getMinimapShort()]; \
+			var z = [z]; \
+			var tile_size = [world.icon_size]; \
+			var maxx = [world.maxx]; \
+			var maxy = [world.maxy];</script>\
+			<script type=\"text/javascript\" src=\"advcamera.js\"></script>")
 
 			hi = src.interfaces["[z]"]
 
-			hi.updateContent("content", "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a> <a href='byond://?src=\ref[hi]&cancel=1'>Cancel Viewing</a></div> <div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>")
+			hi.updateContent("content", \
+			"<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> \
+			<a href=\"javascript:switchTo(1);\">Switch to text-based</a> \
+			<a href='javascript:changezlevels();'>Change Z-Level</a> \
+			<a href='byond://?src=\ref[hi]&cancel=1'>Cancel Viewing</a></div> \
+			<div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div>\
+			<div id=\"textbased\"></div>")
 
 			src.update(z, TRUE)
 		else
