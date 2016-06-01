@@ -1470,7 +1470,7 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/update_canmove()
 	if (locked_to)
 		var/datum/locking_category/category = locked_to.locked_atoms[src]
-		if (category.flags ^ LOCKED_CAN_LIE_AND_STAND)
+		if (category && category.flags ^ LOCKED_CAN_LIE_AND_STAND)
 			canmove = 0
 			lying = (category.flags & LOCKED_SHOULD_LIE) ? TRUE : FALSE //A lying value that !=1 will break this
 
