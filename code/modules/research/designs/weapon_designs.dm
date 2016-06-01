@@ -268,8 +268,8 @@
 	category = list("Weapons")
 
 /datum/design/gravitygun
-	name = "Zero-Point Energy Field Manipulator"
-	desc = "A multi-mode device that blasts Zero-Point Energy bolts that locally distort gravity."
+	name = "one-point bluespace-gravitational manipulator"
+	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
 	id = "gravitygun"
 	req_tech = list("combat" = 5, "materials" = 6, "bluespace" = 4, "powerstorage" = 5, "magnets" = 6)
 	build_type = PROTOLATHE
