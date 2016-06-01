@@ -30,7 +30,10 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/sign/biohazard,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall8";
+	icon_state = "swall8"
+	},
 /area/shuttle/escape)
 "aj" = (
 /obj/structure/barricade/wooden,
@@ -308,34 +311,21 @@
 /area/shuttle/escape)
 "aW" = (
 /turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
-	dir = 1
-	},
 /area/shuttle/escape)
 "aX" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
-	dir = 5
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (WEST)";
+	icon_state = "wall3";
+	dir = 8
 	},
 /area/shuttle/escape)
 "aY" = (
 /turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
-	dir = 9
-	},
 /area/shuttle/escape)
 "aZ" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
-	dir = 1
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_s9";
+	icon_state = "swall_s9"
 	},
 /area/shuttle/escape)
 "ba" = (
@@ -346,19 +336,16 @@
 /turf/open/floor/plasteel/yellow,
 /area/shuttle/escape)
 "bb" = (
-/turf/open/floor/plasteel/yellow,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
-	dir = 4
+/turf/closed/wall/shuttle{
+	tag = "icon-gwall_space";
+	icon_state = "gwall_space"
 	},
 /area/shuttle/escape)
 "bc" = (
-/turf/open/floor/plasteel/whitered,
-/turf/open/floor/plasteel/warningline{
-	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
-	dir = 8
+/turf/closed/wall/shuttle{
+	tag = "icon-gwall_space (EAST)";
+	icon_state = "gwall_space";
+	dir = 4
 	},
 /area/shuttle/escape)
 "bd" = (
@@ -382,37 +369,128 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"bv" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_s5";
+	icon_state = "swall_s5"
+	},
+/area/shuttle/escape)
+"bu" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall1";
+	icon_state = "swall1"
+	},
+/area/shuttle/escape)
+"bt" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swallc3";
+	icon_state = "swallc3"
+	},
+/area/shuttle/escape)
+"bs" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall2";
+	icon_state = "swall2"
+	},
+/area/shuttle/escape)
+"br" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall11";
+	icon_state = "swall11"
+	},
+/area/shuttle/escape)
+"bq" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall8";
+	icon_state = "swall8"
+	},
+/area/shuttle/escape)
+"bp" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall4";
+	icon_state = "swall4"
+	},
+/area/shuttle/escape)
+"bo" = (
+/obj/structure/sign/biohazard,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall4";
+	icon_state = "swall4"
+	},
+/area/shuttle/escape)
+"bn" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall14";
+	icon_state = "swall14"
+	},
+/area/shuttle/escape)
+"bm" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall12";
+	icon_state = "swall12"
+	},
+/area/shuttle/escape)
+"bl" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall13";
+	icon_state = "swall13"
+	},
+/area/shuttle/escape)
+"bk" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f5";
+	icon_state = "swall_f5"
+	},
+/area/shuttle/escape)
+"bj" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f9";
+	icon_state = "swall_f9"
+	},
+/area/shuttle/escape)
+"bi" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_s10";
+	icon_state = "swall_s10"
+	},
+/area/shuttle/escape)
+"bh" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_s6";
+	icon_state = "swall_s6"
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
 aa
 aa
 aa
-ab
-ab
-ab
+bh
+aH
+aH
 ax
-ab
+bp
 aD
-aH
+bs
 as
 as
 as
-aH
+bt
 aV
 ab
 aV
-ab
-ab
-ab
+bs
+aH
+bv
 aa
 "}
 (2,1,1) = {"
 aa
-ab
-ab
-ab
-ab
+bh
+aH
+aH
+bl
 ak
 at
 al
@@ -422,21 +500,21 @@ aI
 aI
 aI
 aE
-ab
+bm
 aE
 aI
 aW
 ba
 be
-ab
-ab
+aX
+bb
 "}
 (3,1,1) = {"
-ab
-ab
+bh
+bj
 ag
 ae
-ab
+bm
 al
 al
 al
@@ -446,11 +524,11 @@ aE
 aE
 aE
 aE
-ab
+bq
 aE
 aE
-aX
-bb
+aW
+aW
 be
 bf
 bg
@@ -460,7 +538,7 @@ ac
 ad
 ae
 ad
-ab
+bm
 am
 am
 am
@@ -484,17 +562,17 @@ ac
 ae
 ad
 ae
-ab
-ab
-ab
-ab
-ab
+bn
+aH
+aH
+aH
+bl
 aq
 aK
 aN
 aK
 aq
-ab
+bp
 aw
 aw
 aw
@@ -512,17 +590,17 @@ ai
 an
 au
 ay
-ab
+bm
 aq
 aq
 aq
 aq
 aq
-ab
-ab
-ab
-ab
-ab
+bn
+aH
+aH
+aH
+bu
 be
 bf
 bg
@@ -536,7 +614,7 @@ aj
 ao
 au
 az
-ab
+bm
 aF
 aJ
 aq
@@ -556,11 +634,11 @@ ac
 ad
 ae
 ad
-ai
+bo
 ap
 av
 aA
-ab
+bq
 aq
 aL
 aO
@@ -576,11 +654,11 @@ bf
 bg
 "}
 (9,1,1) = {"
-ab
-ab
+bi
+bk
 ah
 ae
-ab
+bm
 aq
 aq
 aq
@@ -594,21 +672,21 @@ as
 av
 aE
 aY
-bc
+aY
 be
 bf
 bg
 "}
 (10,1,1) = {"
 aa
-ab
-ab
-ab
-ab
+bi
+aH
+aH
+bl
 ar
 aw
 aw
-ab
+bp
 aG
 aM
 aQ
@@ -617,33 +695,33 @@ aT
 as
 av
 aE
-aZ
+aY
 bd
 be
-ab
-ab
+aX
+bc
 "}
 (11,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+bi
 as
-ab
+aH
 as
-ab
-ab
-ab
+br
+aH
+aH
 as
 as
 as
-ab
-ab
-ab
+br
+aH
+aH
 as
-ab
-ab
-ab
+aH
+aH
+aZ
 aa
 "}
