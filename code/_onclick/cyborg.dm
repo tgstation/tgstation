@@ -66,47 +66,28 @@
 		W.attack_self(src, params)
 		return
 
-	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
-	if(A == loc || (A in loc) || (A in contents))
-		// No adjacency checks
-		/*if(W.flags&USEDELAY)
+	if(!isturf(loc) && !is_holder_of(src, A)) // Can't touch anything from inside a locker/cyborg recharging station etc, unless it's inside our inventory.
+		return
+
+	if(A.Adjacent(src, MAX_ITEM_DEPTH)) // see adjacent.dm
+		/*next_move = world.time + 10
+		if(W.flags&USEDELAY)
 			next_move += 5
 		*/
-
 		var/resolved = W.preattack(A, src, 1, params)
 		if(!resolved)
 			resolved = A.attackby(W,src,params)
-			if(ismob(A) || istype(A, /obj/mecha) || istype(W, /obj/item/weapon/grab))
+			if(ismob(A) || istype(A, /obj/mecha))
 				delayNextAttack(10)
 			if(!resolved && A && W)
 				W.afterattack(A,src,1,params) // 1 indicates adjacency
 			else
 				delayNextAttack(10)
 		return
-
-
-
-	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
-	if(isturf(A) || isturf(A.loc))
-		if(A.Adjacent(src)) // see adjacent.dm
-			/*next_move = world.time + 10
-			if(W.flags&USEDELAY)
-				next_move += 5
-			*/
-			var/resolved = W.preattack(A, src, 1, params)
-			if(!resolved)
-				resolved = A.attackby(W,src,params)
-				if(ismob(A) || istype(A, /obj/mecha))
-					delayNextAttack(10)
-				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1 indicates adjacency
-				else
-					delayNextAttack(10)
-			return
-		else
-			//next_move = world.time + 10
-			W.afterattack(A, src, 0, params)
-			return
+	else
+		//next_move = world.time + 10
+		W.afterattack(A, src, 0, params)
+		return
 	return
 
 //Middle click cycles through selected modules.

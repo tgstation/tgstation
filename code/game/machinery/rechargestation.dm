@@ -126,39 +126,48 @@
 	attack_hand(user)
 
 /obj/machinery/recharge_station/attack_hand(var/mob/user)
-	if(user == occupant)
-		if(upgrading)
-			to_chat(user, "<span class='notice'>You interrupt the upgrade process.</span>")
+	if(upgrade_holder.len && !upgrading)
+		var/obj/removed = input(user, "Choose an item to remove.",upgrade_holder[1]) as null|anything in upgrade_holder
+		if(!removed || upgrading)
+			return
+		user.put_in_hands(removed)
+		if(removed.loc == src)
+			removed.loc = get_turf(src)
+		upgrade_holder -= removed
+
+/obj/machinery/recharge_station/verb/apply_cell_upgrade()
+	set category = "Object"
+	set name = "Apply Cell Upgrade"
+	set src in range(0)
+
+	var/mob/user = usr
+	if(user != occupant)
+		to_chat(user, "<span class='warning'>You must be inside \the [src] to do this.</span>")
+		return
+	if(upgrading)
+		to_chat(user, "<span class='notice'>You interrupt the upgrade process.</span>")
+		upgrading = 0
+		upgrade_finished = -1
+		return
+	else if(upgrade_holder.len)
+		upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
+		if(!upgrading)
 			upgrading = 0
-			upgrade_finished = -1
-			return 0
-		else if(upgrade_holder.len)
-			upgrading = input(user, "Choose an item to swap out.","Upgradeables") as null|anything in upgrade_holder
-			if(!upgrading)
-				upgrading = 0
-				return
-			if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
-				upgrade_finished = world.timeofday + (600/manipulator_coeff)
-				to_chat(user, "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process.")
-				spawn() do_after(user,src,600/manipulator_coeff,needhand = FALSE)
-				return
-			else
-				upgrading = 0
-				to_chat(user, "You decide not to apply the upgrade")
-				return
-	else if(Adjacent(user))
-		if(upgrade_holder.len)
-			var/obj/removed = input(user, "Choose an item to remove.",upgrade_holder[1]) as null|anything in upgrade_holder
-			if(!removed)
-				return
-			user.put_in_hands(removed)
-			if(removed.loc == src)
-				removed.loc = get_turf(src)
-			upgrade_holder -= removed
+			return
+		if(alert(user, "You have chosen [upgrading], is this correct?", , "Yes", "No") == "Yes")
+			upgrade_finished = world.timeofday + (600/manipulator_coeff)
+			to_chat(user, "The upgrade should complete in approximately [60/manipulator_coeff] seconds, you will be unable to exit \the [src] during this unless you cancel the process.")
+			spawn() do_after(user,src,600/manipulator_coeff,needhand = FALSE)
+			return
+		else
+			upgrading = 0
+			to_chat(user, "You decide not to apply the upgrade")
+			return
+	else
+		to_chat(user, "<span class='warning'>There are no cell upgrades available at this time.</span>")
 
 /obj/machinery/recharge_station/allow_drop()
 	return 0
-
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
 	if(user.stat)
@@ -174,8 +183,6 @@
 		occupant.emp_act(severity)
 		go_out()
 	..(severity)
-
-
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
@@ -294,10 +301,10 @@
 	for(var/obj/O in upgrade_holder)
 		if(istype(O, /obj/item/weapon/cell))
 			if(!R.cell)
-				to_chat(usr, "<big><span class='notice'>Power Cell replacement available.</span></big>")
+				to_chat(usr, "<big><span class='notice'>Power Cell replacement available. You may opt in with the 'Apply Cell Upgrade' verb in the Object tab.</span></big>")
 			else
 				if(O:maxcharge > R.cell.maxcharge)
-					to_chat(usr, "<span class='notice'>Power Cell upgrade available.</span></big>")
+					to_chat(usr, "<span class='notice'>Power Cell upgrade available. You may opt in with the 'Apply Cell Upgrade' verb in the Object tab.</span></big>")
 
 /obj/machinery/recharge_station/togglePanelOpen(var/obj/toggleitem, mob/user)
 	if(occupant)
@@ -310,8 +317,6 @@
 		to_chat(user, "<span class='notice'>You can't do that while this charger is occupied.</span>")
 		return -1
 	return ..()
-
-
 
 /obj/machinery/recharge_station/Bumped(atom/AM as mob|obj)
 	if(!issilicon(AM) || isAI(AM))

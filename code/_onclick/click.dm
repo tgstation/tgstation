@@ -96,7 +96,7 @@
 
 		return
 
-	if(!isturf(loc)) // This is going to stop you from telekinesing from inside a closet, but I don't shed many tears for that
+	if(!isturf(loc) && !is_holder_of(src, A)) // Can't touch anything from inside a locker/sleeper etc, unless it's inside our inventory.
 		return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
