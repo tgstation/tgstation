@@ -281,35 +281,40 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/human/hidden_inventory_update()
+/datum/hud/human/hidden_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
+
+	var/mob/screenmob = H
+	if(viewer)
+		screenmob = viewer
+
 	if(inventory_shown && hud_shown)
 		if(H.shoes)
 			H.shoes.screen_loc = ui_shoes
-			H.client.screen += H.shoes
+			screenmob.client.screen += H.shoes
 		if(H.gloves)
 			H.gloves.screen_loc = ui_gloves
-			H.client.screen += H.gloves
+			screenmob.client.screen += H.gloves
 		if(H.ears)
 			H.ears.screen_loc = ui_ears
-			H.client.screen += H.ears
+			screenmob.client.screen += H.ears
 		if(H.glasses)
 			H.glasses.screen_loc = ui_glasses
-			H.client.screen += H.glasses
+			screenmob.client.screen += H.glasses
 		if(H.w_uniform)
 			H.w_uniform.screen_loc = ui_iclothing
-			H.client.screen += H.w_uniform
+			screenmob.client.screen += H.w_uniform
 		if(H.wear_suit)
 			H.wear_suit.screen_loc = ui_oclothing
-			H.client.screen += H.wear_suit
+			screenmob.client.screen += H.wear_suit
 		if(H.wear_mask)
 			H.wear_mask.screen_loc = ui_mask
-			H.client.screen += H.wear_mask
+			screenmob.client.screen += H.wear_mask
 		if(H.head)
 			H.head.screen_loc = ui_head
-			H.client.screen += H.head
+			screenmob.client.screen += H.head
 	else
 		if(H.shoes)		H.shoes.screen_loc = null
 		if(H.gloves)	H.gloves.screen_loc = null
@@ -320,29 +325,34 @@
 		if(H.wear_mask)	H.wear_mask.screen_loc = null
 		if(H.head)		H.head.screen_loc = null
 
-/datum/hud/human/persistant_inventory_update()
+/datum/hud/human/persistant_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
+
+	var/mob/screenmob = H
+	if(viewer)
+		screenmob = viewer
+
 	if(hud_shown)
 		if(H.s_store)
 			H.s_store.screen_loc = ui_sstore1
-			H.client.screen += H.s_store
+			screenmob.client.screen += H.s_store
 		if(H.wear_id)
 			H.wear_id.screen_loc = ui_id
-			H.client.screen += H.wear_id
+			screenmob.client.screen += H.wear_id
 		if(H.belt)
 			H.belt.screen_loc = ui_belt
-			H.client.screen += H.belt
+			screenmob.client.screen += H.belt
 		if(H.back)
 			H.back.screen_loc = ui_back
-			H.client.screen += H.back
+			screenmob.client.screen += H.back
 		if(H.l_store)
 			H.l_store.screen_loc = ui_storage1
-			H.client.screen += H.l_store
+			screenmob.client.screen += H.l_store
 		if(H.r_store)
 			H.r_store.screen_loc = ui_storage2
-			H.client.screen += H.r_store
+			screenmob.client.screen += H.r_store
 	else
 		if(H.s_store)
 			H.s_store.screen_loc = null
@@ -360,10 +370,10 @@
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(H.r_hand)
 			H.r_hand.screen_loc = ui_rhand
-			H.client.screen += H.r_hand
+			screenmob.client.screen += H.r_hand
 		if(H.l_hand)
 			H.l_hand.screen_loc = ui_lhand
-			H.client.screen += H.l_hand
+			screenmob.client.screen += H.l_hand
 	else
 		if(H.r_hand)
 			H.r_hand.screen_loc = null

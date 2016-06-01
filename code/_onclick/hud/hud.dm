@@ -109,13 +109,18 @@
 		hud_used = new /datum/hud(src)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(version = 0)
+/datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
 		return 0
 
-	mymob.client.screen = list()
+	var/mob/screenmob = mymob
+
+	if(viewmob)
+		screenmob = viewmob
+
+	screenmob.client.screen = list()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -127,15 +132,15 @@
 		if(HUD_STYLE_STANDARD)	//Default HUD
 			hud_shown = 1	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen += static_inventory
+				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && inventory_shown)
-				mymob.client.screen += toggleable_inventory
+				screenmob.client.screen += toggleable_inventory
 			if(hotkeybuttons.len && !hotkey_ui_hidden)
-				mymob.client.screen += hotkeybuttons
+				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen += infodisplay
+				screenmob.client.screen += infodisplay
 
-			mymob.client.screen += hide_actions_toggle
+			screenmob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
@@ -143,44 +148,44 @@
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen -= static_inventory
+				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
-				mymob.client.screen -= toggleable_inventory
+				screenmob.client.screen -= toggleable_inventory
 			if(hotkeybuttons.len)
-				mymob.client.screen -= hotkeybuttons
+				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen += infodisplay
+				screenmob.client.screen += infodisplay
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
 			if(inv_slots[slot_l_hand])
-				mymob.client.screen += inv_slots[slot_l_hand]	//we want the hands to be visible
+				screenmob.client.screen += inv_slots[slot_l_hand]	//we want the hands to be visible
 			if(inv_slots[slot_r_hand])
-				mymob.client.screen += inv_slots[slot_r_hand]	//we want the hands to be visible
+				screenmob.client.screen += inv_slots[slot_r_hand]	//we want the hands to be visible
 			if(action_intent)
-				mymob.client.screen += action_intent		//we want the intent switcher visible
+				screenmob.client.screen += action_intent		//we want the intent switcher visible
 				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
 		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen -= static_inventory
+				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
-				mymob.client.screen -= toggleable_inventory
+				screenmob.client.screen -= toggleable_inventory
 			if(hotkeybuttons.len)
-				mymob.client.screen -= hotkeybuttons
+				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen -= infodisplay
+				screenmob.client.screen -= infodisplay
 
 	hud_version = display_hud_version
-	persistant_inventory_update()
+	persistant_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
 
 
-/datum/hud/human/show_hud(version = 0)
+/datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
-	hidden_inventory_update()
+	hidden_inventory_update(viewmob)
 
 /datum/hud/robot/show_hud(version = 0)
 	..()

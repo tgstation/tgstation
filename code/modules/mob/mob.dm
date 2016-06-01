@@ -261,6 +261,11 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
+/mob/dead/reset_perspective(atom/A)
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -486,6 +491,10 @@ var/next_mob_id = 0
 
 	if(client && mob_eye)
 		client.eye = mob_eye
+		if(isobserver(src))
+			src.client.screen = list()
+			if(mob_eye.hud_used)
+				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"

@@ -261,6 +261,8 @@
 	icon_state = "running"
 
 /obj/screen/mov_intent/Click()
+	if(isobserver(usr))
+		return
 	switch(usr.m_intent)
 		if("run")
 			usr.m_intent = "walk"
@@ -276,6 +278,8 @@
 	icon_state = "pull"
 
 /obj/screen/pull/Click()
+	if(isobserver(usr))
+		return
 	usr.stop_pulling()
 
 /obj/screen/pull/update_icon(mob/mymob)
@@ -329,6 +333,8 @@
 	var/selecting = "chest"
 
 /obj/screen/zone_sel/Click(location, control,params)
+	if(isobserver(usr))
+		return
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
