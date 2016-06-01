@@ -54,7 +54,7 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(ismob(target) && istype(target, /mob/living))
+	if(isliving(target))
 		if(target.hellbound)
 			return
 		if(iscarbon(target))
