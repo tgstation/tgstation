@@ -86,6 +86,7 @@
 	name = "pizza spawner"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -187,6 +188,7 @@
 "y" = (
 /obj/structure/table/wood,
 /obj/effect/glowshroom/single,
+/obj/item/weapon/a_gift,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -320,6 +322,26 @@
 /area/ruin/unpowered)
 "O" = (
 /turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/a_gift,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/chair/wood/wings,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/festive{
+	desc = "A festive party hat with the name 'timmy' scribbled on the front.";
+	name = "party hat"
+	},
+/turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
@@ -470,7 +492,7 @@ h
 h
 c
 e
-h
+Q
 e
 c
 b
@@ -514,7 +536,7 @@ q
 w
 C
 J
-h
+Q
 d
 b
 b
@@ -532,7 +554,7 @@ c
 e
 i
 h
-r
+P
 x
 D
 h
