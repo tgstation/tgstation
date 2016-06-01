@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "You can only be damaged once by a shuttle's arrival. It is still
+unpleasant to be in the path of one though; try to avoid it."
