@@ -34,7 +34,7 @@
 	for(var/obj/item/weapon/stock_parts/scanning_module/S in component_parts)
 		efficiency += S.rating
 	for(var/obj/item/weapon/stock_parts/manipulator/P in component_parts)
-		speed_coeff += P.rating
+		speed_coeff += (P.rating * 2)
 	heal_level = (efficiency * 15) + 10
 	if(heal_level > 100)
 		heal_level = 100
