@@ -27,11 +27,11 @@
 
 /turf/closed/wall/clockwork/process()
 	if(prob(2))
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1,5), 1, 3, 1, 1)
+		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1,5), 1, -4, 1, 1)
 	for(var/obj/structure/clockwork/cache/C in range(1, src))
 		if(prob(5))
 			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
-			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, 4, 1, 1)
+			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
