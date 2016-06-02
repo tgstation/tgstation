@@ -11,6 +11,10 @@
 	name = "Holodeck Projector Floor"
 	icon_state = "engine"
 
+/turf/open/floor/holofloor/plating/burnmix
+	name = "Burn-mix Floor"
+	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
+
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
 	name = "lush grass"
@@ -83,3 +87,18 @@
 		return 0
 	if(intact)
 		queue_smooth(src)
+
+/turf/open/floor/holofloor/snow
+	name = "snow"
+	desc = "Looks cold."
+	icon = 'icons/turf/snow.dmi'
+	icon_state = "snow"
+	slowdown = 2
+
+/turf/open/floor/holofloor/snow/cold
+	temperature = 180
+
+/turf/open/floor/holofloor/asteroid
+	name = "asteroid sand"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"
