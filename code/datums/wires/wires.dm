@@ -120,6 +120,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				if(iswirecutter(I))
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
+					log_attack("[key_name(usr)] has [IsColourCut(colour) ? "cut" : "mended"] the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
 				else
 					to_chat(L, "<span class='error'>You need wirecutters!</span>")
 
@@ -127,6 +128,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
+					log_attack("[key_name(usr)] has pulsed the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
 				else
 					to_chat(L, "<span class='error'>You need a multitool!</span>")
 
@@ -137,12 +139,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					var/obj/item/O = Detach(colour)
 					if(O)
 						L.put_in_hands(O)
+						log_attack("[key_name(usr)] has detached the remote signaler on the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
 
 				// Attach
 				else
 					if(istype(I, /obj/item/device/assembly/signaler))
 						if(L.drop_item(I))
 							Attach(colour, I)
+							log_attack("[key_name(usr)] has attached a remote signaler on the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
 					else
 						to_chat(L, "<span class='error'>You need a remote signaller!</span>")
 
@@ -256,11 +260,10 @@ var/const/POWER = 8
 
 
 /datum/wires/proc/Pulse(var/obj/item/device/assembly/signaler/S)
-
-
 	for(var/colour in signallers)
 		if(S == signallers[colour])
 			PulseColour(colour)
+			log_attack("The [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z] has been pulsed with [S], activated by [key_name(usr)].")
 			break
 
 

@@ -147,7 +147,7 @@
 			emagged = !emagged
 			if(emagged)
 				message_admins("[key_name_admin(usr)] overrode the holodeck's safeties")
-				log_game("[key_name(usr)] overrided the holodeck's safeties")
+				log_game("[key_name(usr)] overrode the holodeck's safeties")
 				visible_message("<span class='warning'>Warning: Holodeck safeties overriden. Please contact Nanotrasen maintenance and cease all operation if you are not source of that command.</span>")
 			else
 				message_admins("[key_name_admin(usr)] restored the holodeck's safeties")
