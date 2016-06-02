@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Closed false walls will block air."
