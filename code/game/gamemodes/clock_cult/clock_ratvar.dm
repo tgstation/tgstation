@@ -258,8 +258,13 @@
 /turf/open/floor/clockwork/ratvar_act()
 	return 0
 
-/obj/structure/window/ratvar_act() //Windows turn yellow
-	color = rgb(75, 53, 0)
+/obj/structure/window/ratvar_act() //Windows turn into Ratvarian windows
+	var/obj/structure/window/reinforced/clockwork/C = new(get_turf(src))
+	C.dir = dir
+	C.fulltile = fulltile
+	qdel(src)
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	return 0
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
 	new/obj/machinery/door/airlock/clockwork(get_turf(src))

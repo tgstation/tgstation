@@ -39,7 +39,7 @@
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/proc/damaged(user, amount, type)
+/obj/structure/clockwork/proc/damaged(mob/living/user, obj/item/I, amount, type)
 	if(!amount || !type || !type in list(BRUTE, BURN))
 		return 0
 	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force && takes_damage)
@@ -74,7 +74,7 @@
 
 /obj/structure/clockwork/attacked_by/(obj/item/I, mob/living/user)
 	if(user.a_intent == "harm" && user.Adjacent(I) && I.force && takes_damage)
-		damaged(user, I.force, I.damtype)
+		damaged(user, I, I.force, I.damtype)
 	else
 		return ..()
 

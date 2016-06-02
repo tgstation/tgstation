@@ -200,6 +200,22 @@
 #undef GEAR_UNFASTENED
 #undef GEAR_LOOSE
 
+/obj/structure/window/reinforced/clockwork
+	name = "ratvarian window"
+	desc = "A reinforced yellow-glass window, gently luminous."
+	icon = 'icons/obj/clockwork_objects.dmi'
+
+/obj/structure/window/reinforced/clockwork/New()
+	..()
+	spawn(1)
+		if(!fulltile)
+			var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+			E.dir = dir
+			icon_state = "clockwork_window_single"
+		else
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+			icon_state = "clockwork_window"
+
 /*
 
 The Ratvarian Language
