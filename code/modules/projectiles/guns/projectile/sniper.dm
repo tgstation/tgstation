@@ -8,6 +8,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
+	burst_size = 1
 	origin_tech = "combat=7"
 	can_unsuppress = 1
 	can_suppress = 1
@@ -15,6 +16,7 @@
 	zoomable = TRUE
 	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
 	slot_flags = SLOT_BACK
+	actions_types = list()
 
 
 /obj/item/weapon/gun/projectile/automatic/sniper_rifle/update_icon()
