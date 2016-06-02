@@ -290,9 +290,6 @@
 	flags = 2
 	invis_view = SEE_INVISIBLE_MINIMUM
 
-
-
-
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
 	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
 
