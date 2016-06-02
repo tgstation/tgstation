@@ -26635,7 +26635,7 @@
 	verted = 1
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/disposal)
 "aVv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
