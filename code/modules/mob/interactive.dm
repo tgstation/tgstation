@@ -581,12 +581,11 @@
 			update_icons()
 		update_hands = 0
 
-	if(grabbed_by.len > 0)
-		for(var/obj/item/weapon/grab/G in grabbed_by)
-			if(Adjacent(G))
-				a_intent = "disarm"
-				G.assailant.attack_hand(src)
-				inactivity_period = 10
+	if(pulledby)
+		if(Adjacent(pulledby))
+			a_intent = "disarm"
+			pulledby.attack_hand(src)
+			inactivity_period = 10
 
 	if(buckled)
 		resist()

@@ -1,6 +1,7 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health but high melee power. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
+	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "anime_fragment"
 	health = 75 //Glass cannon
@@ -33,6 +34,8 @@
 	new/obj/item/device/mmi/posibrain/soul_vessel(get_turf(src)) //Notice the lack of transfer - it's a standard soul vessel with no mind in it!
 	qdel(src)
 	return 1
+
+
 
 /mob/living/simple_animal/hostile/clockwork_marauder //Clockwork marauder: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 	name = "clockwork marauder"
@@ -150,19 +153,18 @@
 
 /mob/living/simple_animal/hostile/clockwork_marauder/say(message)
 	if(is_in_host())
-		src << "<span class='warning'>You cannot speak while inside of your host! Used the Linked Minds verb instead.</span>"
-		return 0
+		message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Automatic linked minds
+		src << message
+		host << message
+		return 1
 	..()
 
 /mob/living/simple_animal/hostile/clockwork_marauder/adjustHealth(amount) //Fatigue damage
-	for(var/mob/living/L in range(3, src))
+	for(var/mob/living/L in range(1, src))
 		if(L.null_rod_check()) //Null rods allow direct damage
 			src << "<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>"
-			. = ..()
-			break
-			return 0
-	adjust_fatigue(amount)
-	return 1
+			return ..()
+	return adjust_fatigue(amount)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/AttackingTarget()
 	if(is_in_host())
@@ -172,7 +174,10 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(!ratvar_awakens)
 		fatigue = max(0, min(fatigue + amount, fatigue_recall_threshold))
-	return 1
+		Life() //Immediately runs a life tick to check for recalling
+	else
+		amount = 0
+	return amount
 
 /mob/living/simple_animal/hostile/clockwork_marauder/verb/linked_minds() //Discreet communications between a marauder and its host
 	set name = "Linked Minds"
@@ -268,6 +273,8 @@
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
 	return host && loc == host
+
+
 
 /mob/living/mind_control_holder
 	name = "imprisoned mind"

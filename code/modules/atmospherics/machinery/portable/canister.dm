@@ -212,6 +212,10 @@
 /obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
 	take_damage(100, BRUTE, 0)
 
+/obj/machinery/portable_atmospherics/canister/burn()
+	take_damage(health, BURN, 1)
+	..()
+
 /obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/P)
 	. = ..()
 	take_damage(P.damage / 2, P.damage_type, 0)

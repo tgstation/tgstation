@@ -1,5 +1,5 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	var/last_move = null
 	var/anchored = 0
 	var/throwing = 0
@@ -13,8 +13,10 @@
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/pass_flags = 0
+	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	glide_size = 8
 	appearance_flags = TILE_BOUND
+
 
 
 /atom/movable/Move(atom/newloc, direct = 0)
@@ -25,28 +27,38 @@
 		if (!(direct & (direct - 1))) //Cardinal move
 			. = ..()
 		else //Diagonal move, split it into cardinal moves
+			moving_diagonally = FIRST_DIAG_STEP
 			if (direct & 1)
 				if (direct & 4)
 					if (step(src, NORTH))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 				else if (direct & 8)
 					if (step(src, NORTH))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, NORTH)
 			else if (direct & 2)
 				if (direct & 4)
 					if (step(src, SOUTH))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, EAST)
 					else if (step(src, EAST))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 				else if (direct & 8)
 					if (step(src, SOUTH))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, WEST)
 					else if (step(src, WEST))
+						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
+			moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
@@ -80,10 +92,8 @@
 		qdel(AM)
 	loc = null
 	invisibility = INVISIBILITY_ABSTRACT
-	if (pulledby)
-		if (pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
+	if(pulledby)
+		pulledby.stop_pulling()
 
 
 // Previously known as HasEntered()
@@ -104,6 +114,8 @@
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
+		if(pulledby)
+			pulledby.stop_pulling()
 		var/atom/oldloc = loc
 		if(oldloc)
 			oldloc.Exited(src, destination)
@@ -123,8 +135,6 @@
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()
-	if(pulledby)
-		pulledby.stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	if(buckled_mobs.len)
@@ -198,6 +208,9 @@
 	if(!target || !src || (flags & NODROP))
 		return 0
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
+
+	if(pulledby)
+		pulledby.stop_pulling()
 
 	throwing = 1
 	if(spin) //if we don't want the /atom/movable to spin.

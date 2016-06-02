@@ -155,14 +155,14 @@
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"
-	origin_tech = null
+	origin_tech = "combat=6;powerstorage=5;magnets=4"
 	flags = CONDUCT | HANDSLOW
 	slowdown = 1
 	slot_flags = null
 	w_class = 5
 	materials = list()
 	burst_size = 3
-	automatic = 1
+	automatic = 0
 	fire_delay = 1
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/Laser.ogg'

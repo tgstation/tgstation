@@ -36,7 +36,6 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
@@ -46,6 +45,7 @@
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 
 
 /**********************Shuttle Computer**************************/
@@ -73,7 +73,7 @@
 	materials = list(MAT_METAL=2000) //one sheet, but where can you make them?
 	var/digspeed = 40
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
@@ -84,7 +84,7 @@
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
 	digspeed = 20 //mines faster than a normal pickaxe, bought from mining vendor
-	origin_tech = "materials=3;engineering=2"
+	origin_tech = "materials=3;engineering=4"
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
 
@@ -93,7 +93,7 @@
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
 	digspeed = 14
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = "materials=5;engineering=4"
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
 
@@ -105,7 +105,7 @@
 	digspeed = 25 //available from roundstart, faster than a pickaxe.
 	digsound = list('sound/weapons/drill.ogg')
 	hitsound = 'sound/weapons/drill.ogg'
-	origin_tech = "materials=2;powerstorage=3;engineering=2"
+	origin_tech = "materials=2;powerstorage=2;engineering=3"
 	desc = "An electric mining drill for the especially scrawny."
 
 /obj/item/weapon/pickaxe/drill/cyborg
@@ -117,7 +117,7 @@
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	digspeed = 7
-	origin_tech = "materials=6;powerstorage=4;engineering=5"
+	origin_tech = "materials=6;powerstorage=4;engineering=4"
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
@@ -130,7 +130,7 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	digspeed = 5 //the epitome of powertools. extremely fast mining, laughs at puny walls
-	origin_tech = "materials=3;powerstorage=2;engineering=2"
+	origin_tech = "materials=6;powerstorage=4;engineering=5;magnets=4"
 	digsound = list('sound/weapons/sonic_jackhammer.ogg')
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
@@ -150,7 +150,7 @@
 	item_state = "shovel"
 	w_class = 3
 	materials = list(MAT_METAL=50)
-	origin_tech = "materials=1;engineering=1"
+	origin_tech = "materials=2;engineering=2"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
 	sharpness = IS_SHARP
 
@@ -204,6 +204,7 @@
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
 	w_class = 1
+	origin_tech = "engineering=3;bluespace=3"
 	var/used = FALSE
 
 /obj/item/weapon/survivalcapsule/attack_self()
@@ -234,7 +235,6 @@
 		qdel(src)
 
 /obj/item/weapon/survivalcapsule/proc/load()
-	var/list/blacklist = list(/area/shuttle) //Shuttles move based on area, and we'd like not to break them
 	var/turf/start_turf = get_turf(src.loc)
 	var/turf/cur_turf
 	var/x_size = 5
@@ -242,11 +242,15 @@
 	var/list/walltypes = list(/turf/closed/wall/shuttle/survival/pod)
 	var/floor_type = /turf/open/floor/pod
 	var/room
+	var/onshuttle = 0
 
 	//Center the room/spawn it
 	start_turf = locate(start_turf.x -2, start_turf.y - 2, start_turf.z)
 
-	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter")
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		onshuttle = 1
+	room = spawn_room(start_turf, x_size, y_size, walltypes, floor_type, "Emergency Shelter", onshuttle)
 
 	start_turf = get_turf(src.loc)
 
@@ -314,20 +318,19 @@
 	threshhold.ChangeTurf(/turf/open/floor/pod)
 	var/turf/open/floor/pod/doorturf = threshhold
 	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-	var/area/ZZ = get_area(threshhold)
-	if(!is_type_in_list(ZZ, blacklist))
+	if(!onshuttle)
 		L.contents += threshhold
 	threshhold.overlays.Cut()
 
 	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
-	for(var/turf/open/floor/A in turfs)
-		A.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-		A.overlays.Cut()
-		var/area/Z = get_area(A)
-		if(!is_type_in_list(Z, blacklist))
-			L.contents += A
+	for(var/turf/open/floor/F in turfs)
+		F.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
+		F.overlays.Cut()
+		if(!onshuttle)
+			L.contents += F
+
 
 //Pod turfs and objects
 
@@ -511,7 +514,7 @@
 /obj/structure/fans/tiny
 	name = "tiny fan"
 	desc = "A tiny fan, releasing a thin gust of air."
-	layer = TURF_LAYER + 0.8
+	layer = ABOVE_NORMAL_TURF_LAYER
 	density = 0
 	icon_state = "fan_tiny"
 	buildstackamount = 2
@@ -547,6 +550,5 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	name = "tubes"
 	anchored = 1
-	layer = MOB_LAYER - 0.2
+	layer = BELOW_MOB_LAYER
 	density = 0
-

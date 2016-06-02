@@ -18,7 +18,7 @@
 	glass = 1
 	var/nextstate = null
 	sub_door = 1
-	closingLayer = 3.11
+	closingLayer = CLOSED_FIREDOOR_LAYER
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)

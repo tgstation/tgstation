@@ -48,11 +48,11 @@
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
-	name = "emergency shuttle (Birdboat)"
+	name = "Birdboat emergency shuttle"
 
 /datum/map_template/shuttle/emergency/box
 	suffix = "box"
-	name = "emergency shuttle (Box)"
+	name = "Box emergency shuttle"
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
@@ -85,7 +85,11 @@
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
-	name = "emergency shuttle (Metastation)"
+	name = "Meta emergency shuttle"
+
+/datum/map_template/shuttle/emergency/mini
+	suffix = "mini"
+	name = "Mini emergency shuttle"
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"

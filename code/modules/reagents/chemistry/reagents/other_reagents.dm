@@ -198,14 +198,17 @@
 					"You can't save him. Nothing can save him now.", "It seems that Nar-Sie will triumph after all.")]</b></span>"
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")]</span>")
-	if(data >= 75 && prob(33))	// 30 units, 135 seconds
+	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
 		M.confused += 3
-		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)) || is_servant_of_ratvar(M))
-			ticker.mode.remove_cultist(M.mind, 1, 1)
-			ticker.mode.remove_hog_follower(M.mind)
-			remove_servant_of_ratvar(M.mind)
+		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
+			if(iscultist(M))
+				ticker.mode.remove_cultist(M.mind, 1, 1)
+			else if(is_handofgod_cultist(M) || is_handofgod_prophet(M))
+				ticker.mode.remove_hog_follower(M.mind)
+			else if(is_servant_of_ratvar(M))
+				remove_servant_of_ratvar(M)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
@@ -389,7 +392,6 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		//var/list/blacklisted_species = list(
 		var/list/possible_morphs = list()
 		for(var/type in subtypesof(/datum/species))
 			var/datum/species/S = type
@@ -397,13 +399,9 @@
 				continue
 			possible_morphs += S
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		if(prob(90) && mutation)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
-			if(mutation.id == "slime")
-				H.faction |= "slime"
-			else
-				H.faction -= "slime"
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
@@ -1234,4 +1232,21 @@ datum/reagent/shadowling_blindness_smoke
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	..()
+
+datum/reagent/romerol
+	name = "romerol"
+	// the REAL zombie powder
+	id = "romerol"
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	metabolization_rate = INFINITY
+
+/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+	// Silently add the zombie infection organ to be activated upon death
+	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()

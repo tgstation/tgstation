@@ -62,6 +62,8 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
+	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src

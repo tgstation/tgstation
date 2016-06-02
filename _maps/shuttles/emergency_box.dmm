@@ -39,7 +39,7 @@
 "aM" = (/obj/structure/table,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "aN" = (/turf/closed/wall/shuttle{icon_state = "swall7";dir = 2},/area/shuttle/escape)
 "aO" = (/turf/closed/wall/shuttle{icon_state = "swallc4";dir = 2},/area/shuttle/escape)
-"aP" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"aP" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{timid = 1; name = "Box emergency shuttle"},/turf/open/floor/plating,/area/shuttle/escape)
 "aQ" = (/obj/structure/extinguisher_cabinet{pixel_x = -5;pixel_y = 30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aR" = (/obj/structure/extinguisher_cabinet{pixel_x = 27;pixel_y = 0},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aS" = (/obj/structure/chair{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)

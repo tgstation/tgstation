@@ -95,8 +95,8 @@
 /mob/living/silicon/pai/blob_act(obj/effect/blob/B)
 	return 0
 
-/mob/living/silicon/pai/restrained()
-	return 0
+/mob/living/silicon/pai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/pai/emp_act(severity)
 	// 20% chance to kill

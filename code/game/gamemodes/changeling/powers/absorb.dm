@@ -15,23 +15,21 @@
 		user << "<span class='warning'>We are already absorbing!</span>"
 		return
 
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	if(!istype(G))
-		user << "<span class='warning'>We must be grabbing a creature in our active hand to absorb them!</span>"
+	if(!user.pulling || !iscarbon(user.pulling))
+		user << "<span class='warning'>We must be grabbing a creature to absorb them!</span>"
 		return
-	if(G.state <= GRAB_NECK)
+	if(user.grab_state <= GRAB_NECK)
 		user << "<span class='warning'>We must have a tighter grip to absorb this creature!</span>"
 		return
 
-	var/mob/living/carbon/target = G.affecting
+	var/mob/living/carbon/target = user.pulling
 	return changeling.can_absorb_dna(user,target)
 
 
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	var/mob/living/carbon/human/target = G.affecting
+	var/mob/living/carbon/human/target = user.pulling
 	changeling.isabsorbing = 1
 	for(var/stage = 1, stage<=3, stage++)
 		switch(stage)
@@ -122,11 +120,10 @@
 /obj/effect/proc_holder/changeling/swap_form/can_sting(mob/living/carbon/user)
 	if(!..())
 		return
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	if(!istype(G) || (G.state < GRAB_AGGRESSIVE))
-		user << "<span class='warning'>We must have an aggressive grab on creature in our active hand to do this!</span>"
+	if(!user.pulling || !iscarbon(user.pulling) || user.grab_state < GRAB_AGGRESSIVE)
+		user << "<span class='warning'>We must have an aggressive grab on creature to do this!</span>"
 		return
-	var/mob/living/carbon/target = G.affecting
+	var/mob/living/carbon/target = user.pulling
 	if((target.disabilities & NOCLONE) || (target.disabilities & HUSK))
 		user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
 		return
@@ -137,8 +134,7 @@
 
 
 /obj/effect/proc_holder/changeling/swap_form/sting_action(mob/living/carbon/user)
-	var/obj/item/weapon/grab/G = user.get_active_hand()
-	var/mob/living/carbon/target = G.affecting
+	var/mob/living/carbon/target = user.pulling
 	var/datum/changeling/changeling = user.mind.changeling
 
 	user << "<span class='notice'>We tighen our grip. We must hold still....</span>"

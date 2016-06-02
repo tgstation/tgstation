@@ -212,7 +212,7 @@
 /datum/objective/hijack/check_completion()
 	if(!owner.current || owner.current.stat)
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 	if(issilicon(owner.current))
 		return 0
@@ -243,7 +243,7 @@
 /datum/objective/hijackclone/check_completion()
 	if(!owner.current)
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -283,7 +283,7 @@
 /datum/objective/block/check_completion()
 	if(!istype(owner.current, /mob/living/silicon))
 		return 0
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -305,7 +305,7 @@
 	martyr_compatible = 1
 
 /datum/objective/purge/check_completion()
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 1
 
 	var/area/A = SSshuttle.emergency.areaInstance
@@ -354,7 +354,7 @@
 		return 1
 	if(ticker.mode.station_was_nuked) //If they escaped the blast somehow, let them win
 		return 1
-	if(SSshuttle.emergency.mode < SHUTTLE_ENDGAME)
+	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return 0
 	var/turf/location = get_turf(owner.current)
 	if(!location)

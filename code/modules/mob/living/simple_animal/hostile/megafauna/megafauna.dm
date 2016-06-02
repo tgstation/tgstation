@@ -12,7 +12,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	layer = MOB_LAYER + 0.5 //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
@@ -33,3 +33,13 @@
 	else
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/onShuttleMove()
+	var/turf/oldloc = loc
+	. = ..()
+	if(!.)
+		return
+	var/turf/newloc = loc
+	message_admins("Megafauna [src] \
+		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
+		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
+		([newloc.x],[newloc.y],[newloc.z])")

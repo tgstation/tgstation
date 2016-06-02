@@ -236,6 +236,9 @@
 		msg += "[t_He] looks a little soaked.\n"
 
 
+	if(pulledby && pulledby.grab_state)
+		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
+
 	if(nutrition < NUTRITION_LEVEL_STARVING - 50)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= NUTRITION_LEVEL_FAT)

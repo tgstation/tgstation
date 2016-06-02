@@ -32,7 +32,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
 
@@ -46,9 +46,9 @@
 
 
 /obj/singularity/narsie/process()
-	eat()
 	if(clashing)
 		return 0
+	eat()
 	if(!target || prob(5))
 		pickcultist()
 	move()
@@ -80,6 +80,12 @@
 /obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
+	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+		if(enemy.z != z)
+			continue
+		acquire(enemy)
+		return
+
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
@@ -111,7 +117,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(mob/food)
+/obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
 	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"

@@ -34,9 +34,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
 		slab.busy = "Invocation ([name]) in progress"
-		if(recital() && check_special_requirements())
+		if(check_special_requirements() && recital())
 			slab.busy = null
-			if(scripture_effects() && check_special_requirements() && (!ratvar_awakens && !slab.no_cost))
+			if(check_special_requirements() && scripture_effects() && (!ratvar_awakens && !slab.no_cost))
 				for(var/i in required_components)
 					if(tier <= SCRIPTURE_DRIVER || consumed_component_override)
 						if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
@@ -67,7 +67,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(multiple_invokers_used && !multiple_invokers_optional)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
-			nearby_servants++
+			if(is_servant_of_ratvar(L))
+				nearby_servants++
 		if(nearby_servants < invokers_required)
 			invoker << "<span class='warning'>There aren't enough servants nearby ([nearby_servants]/[invokers_required])!</span>"
 			return 0
@@ -513,7 +514,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
-	if(!invoker.verbs & /mob/living/carbon/human/proc/function_call)
+	if(invoker.verbs.Find(/mob/living/carbon/human/proc/function_call))
 		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
 		return 0
 	return ishuman(invoker)
@@ -610,16 +611,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Extremely fast invocation time."
 	tier = SCRIPTURE_SCRIPT
 
-/datum/clockwork_scripture/scripture_effects()
+/datum/clockwork_scripture/break_will/scripture_effects()
 	for(var/mob/living/carbon/human/H in range(1, invoker))
-		if(is_servant_of_ratvar(H) || !isloyal(H))
+		if(is_servant_of_ratvar(H))
 			continue
-		H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
-		"<span class='userdanger'>The words invoke a horrible fear deep in your being. Your loyalty to Nanotrasen falls away as you see how weak they truly are.</span>")
-		H.adjustBrainLoss(5)
-		for(var/obj/item/weapon/implant/loyalty/L in H)
-			if(L.implanted)
-				qdel(L)
+		if(isloyal(H))
+			H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
+			"<span class='userdanger'>The words invoke a horrible fear deep in your being. Your loyalty to Nanotrasen falls away as you see how weak they truly are.</span>")
+			H.adjustBrainLoss(5)
+			for(var/obj/item/weapon/implant/loyalty/L in H)
+				if(L.implanted)
+					qdel(L)
+	return 1
 
 //////////////////
 // APPLICATIONS //
@@ -785,12 +788,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/create_object/tinkerers_daemon //Tinkerer's Daemon: Creates a shell that can be attached to a tinkerer's cache to grant it passive component creation.
 	name = "Tinkerer's Daemon"
 	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants in a ratio of 5:1."
-	invocations = list("Pbaf'gehpg, Ratvar cnegf...", "...lrg ubyq terngarff!")
+	invocations = list("Pbaf'gehpg Ratvar cnegf...", "...lrg ubyq terngarff!")
 	channel_time = 40
 	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	object_path = /obj/item/clockwork/daemon_shell
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
-	usage_tip = "Vital to increasing component generation."
+	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
 
 //////////////
@@ -975,7 +978,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	call forth Ratvar from his exile after some time."
 	invocations = list("NEZBERE! SEVTUG! NZCRENTR! INATH-NEQ! V PNYY HCBA LBH!!", \
 	"GUR GVZR UNF PBZR SBE BHE ZNFGRE GB OERNX GUR PUNVAF BS RKVYR!!", \
-	"YRAQ HF LBHE NVQ! RATVAR PBZRF!")
+	"YRAQ HF LBHE NVQ! RATVAR PBZRF!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
 	invokers_required = 4
