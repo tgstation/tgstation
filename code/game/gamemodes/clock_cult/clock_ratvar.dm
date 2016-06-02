@@ -164,6 +164,7 @@
 				prey = pick(meals)
 				prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
 				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
+				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\

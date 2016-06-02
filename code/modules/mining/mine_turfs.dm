@@ -244,8 +244,7 @@
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
-	if(stage == 3)
-		return
+
 	ChangeTurf(turf_type, defer_change)
 	spawn(10)
 		AfterChange()

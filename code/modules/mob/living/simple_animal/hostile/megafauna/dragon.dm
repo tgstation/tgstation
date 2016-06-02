@@ -157,7 +157,7 @@
 				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
-	if(stat)
+	if(stat || swooping)
 		return
 	swoop_cooldown = world.time + 200
 	var/swoop_target
