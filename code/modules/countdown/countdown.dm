@@ -84,24 +84,25 @@
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
 	text_color = "#0C479D"
-	text_size = 2
+	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()
 	var/obj/machinery/clonepod/C = attached_to
 	if(!istype(C))
 		return
-	if(C.occupant)
+	else if(C.occupant)
 		var/completion = round(C.get_completion())
 		return completion
 
 /obj/effect/countdown/dominator
 	name = "dominator countdown"
-	text_size = 2
+	text_size = 1
 	text_color = "#ff00ff" // Overwritten when the dominator starts
 
-/obj/effect/countdown/clonepod/get_value()
+/obj/effect/countdown/dominator/get_value()
 	var/obj/machinery/dominator/D = attached_to
 	if(!istype(D))
 		return
-	if(D.gang && D.gang.dom_timer)
-		return D.gang.dom_timer
+	else if(D.gang && D.gang.dom_timer)
+		var/timer = D.gang.dom_timer
+		return timer
