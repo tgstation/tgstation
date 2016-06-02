@@ -26630,12 +26630,12 @@
 /area/maintenance/disposal)
 "aVu" = (
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 6;
 	id = "garbage";
-	verted = -1
+	verted = 1
 	},
 /turf/open/floor/plating,
-/area/maintenance/disposal)
+/area/space)
 "aVv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
