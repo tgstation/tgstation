@@ -1148,8 +1148,7 @@ var/list/airlock_overlays = list()
 						"<span class='warning'>You hear groaning metal...</span>")
 	var/time_to_open = 5
 	if(hasPower())
-		time_to_open = 50 //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+		time_to_open = 50 //Powered airlocks take longer to open
 
 
 	if(do_after(user, time_to_open, target = src))
