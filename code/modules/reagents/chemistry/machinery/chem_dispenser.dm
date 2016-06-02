@@ -43,6 +43,13 @@
 		"bromine",
 		"stable_plasma"
 	)
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"morphine",
+		"carpotoxin",
+		"regenerative_materia",
+		"toxin"
+	)
 
 /obj/machinery/chem_dispenser/New()
 	..()
@@ -64,6 +71,11 @@
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
 		use_power(2500)
+
+/obj/machinery/chem_dispenser/emag_act(mob/user)
+	if(!emagged && emagged_reagents)
+		user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+		dispensable_reagents |= emagged_reagents
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -296,6 +308,12 @@
 		"tomatojuice",
 		"lemonjuice"
 	)
+	emagged_reagents = list(
+		"thirteenloko",
+		"whiskeycola",
+		"morphine"
+	)
+
 
 
 /obj/machinery/chem_dispenser/drinks/beer
@@ -318,8 +336,15 @@
 		"ale",
 		"absinthe"
 	)
+	emagged_reagents = list(
+		"ethanol",
+		"iron",
+		"minttoxin"
+	)
+
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	emagged_reagents = list("plasma")
