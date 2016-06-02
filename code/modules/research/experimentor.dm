@@ -422,12 +422,12 @@
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_OBLITERATE)
 		visible_message("<span class='warning'>[exp_on] activates the crushing mechanism, [exp_on] is destroyed!</span>")
+		if(linked_console.linked_lathe)
+			for(var/material in exp_on.materials)
+				linked_console.linked_lathe.materials.insert_amount( min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (exp_on.materials[material])), material)
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s crushing mechanism slowly and smoothly descends, flattening the [exp_on]!</span>")
 			new /obj/item/stack/sheet/plasteel(get_turf(pick(oview(1,src))))
-		else if(linked_console.linked_lathe)
-			for(var/material in exp_on.materials)
-				linked_console.linked_lathe.materials.insert_amount( min((linked_console.linked_lathe.materials.max_amount - linked_console.linked_lathe.materials.total_amount), (exp_on.materials[material])), material)
 		else if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes way too many levels too high, crushing right through space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
@@ -435,7 +435,6 @@
 			for(var/atom/movable/AM in oview(7,src))
 				if(!AM.anchored)
 					AM.throw_at_fast(src,10,1)
-
 		else if(prob(EFFECT_PROB_LOW-badThingCoeff))
 			visible_message("<span class='danger'>[src]'s crusher goes one level too high, crushing right into space-time!</span>")
 			playsound(src.loc, 'sound/effects/supermatter.ogg', 50, 1, -3)
@@ -463,7 +462,7 @@
 		ejectItem()
 
 	//Global reactions
-	if(prob(EFFECT_PROB_VERYLOW-badThingCoeff))
+	if(prob(EFFECT_PROB_VERYLOW-badThingCoeff) && loaded_item)
 		var/globalMalf = rand(1,100)
 		if(globalMalf < 15)
 			visible_message("<span class='warning'>[src]'s onboard detection system has malfunctioned!</span>")
