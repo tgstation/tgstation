@@ -31,10 +31,14 @@
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
 
+	var/obj/effect/countdown/clonepod/countdown
+
 /obj/machinery/clonepod/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonepod(null)
 	B.apply_default_parts(src)
+
+	countdown = new(src)
 
 	radio = new(src)
 	radio.keyslot = new radio_key
@@ -44,6 +48,9 @@
 
 /obj/machinery/clonepod/Destroy()
 	qdel(radio)
+	radio = null
+	qdel(countdown)
+	countdown = null
 	. = ..()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -114,11 +121,13 @@
 	if (isnull(occupant) || !is_operational())
 		return
 	if ((!isnull(occupant)) && (occupant.stat != DEAD))
-		var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
-		user << "Current clone cycle is [round(completion)]% complete."
+		user << "Current clone cycle is [round(get_completion())]% complete."
 	else if(mess)
 		user << "It's filled with blood and vicerea. You swear you can see \
 			it moving..."
+
+/obj/machinery/clonepod/proc/get_completion()
+	. = (100 * ((occupant.health + 100) / (heal_level + 100)))
 
 /obj/machinery/clonepod/attack_ai(mob/user)
 	return examine(user)
@@ -145,6 +154,7 @@
 
 	attempting = TRUE //One at a time!!
 	locked = TRUE
+	countdown.start()
 
 	eject_wait = TRUE
 	spawn(30)
@@ -301,6 +311,7 @@
 /obj/machinery/clonepod/proc/go_out()
 	if (locked)
 		return
+	countdown.stop()
 
 	if (mess) //Clean that mess and dump those gibs!
 		mess = 0
@@ -322,7 +333,7 @@
 	var/turf/T = get_turf(src)
 	occupant.forceMove(T)
 	icon_state = "pod_0"
-	eject_wait = 0 //If it's still set somehow.
+	eject_wait = FALSE //If it's still set somehow.
 	occupant.domutcheck() //Waiting until they're out before possible monkeyizing.
 	occupant = null
 

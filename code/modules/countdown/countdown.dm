@@ -5,10 +5,11 @@
 		And maybe we'll come back\n\
 		To earth, who can tell?"
 
-	var/last_displayed
+	var/displayed_text
 	var/atom/attached_to
 	var/text_color = "#ff0000"
-	var/text_size = 5
+	var/text_size = 4
+	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
 	layer = GHOST_LAYER
 
@@ -19,7 +20,17 @@
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
 	loc = get_turf(A)
-	SSfastprocess.processing |= src
+
+/obj/effect/countdown/proc/start()
+	if(!started)
+		SSfastprocess.processing |= src
+		started = TRUE
+
+/obj/effect/countdown/proc/stop()
+	if(started)
+		overlays.Cut()
+		SSfastprocess.processing -= src
+		started = FALSE
 
 /obj/effect/countdown/proc/get_value()
 	// Get the value from our atom
@@ -29,13 +40,14 @@
 	if(!attached_to || qdeleted(attached_to))
 		qdel(src)
 	var/new_val = get_value()
-	if(new_val == last_displayed)
+	if(new_val == displayed_text)
 		return
-	last_displayed = new_val
-	if(new_val)
+	displayed_text = new_val
+
+	if(displayed_text)
 		var/image/text_image = new(loc = src)
 		//text_image.maptext = "<font size=[text_size]>[new_val]</font>"
-		text_image.maptext = "<font size = 4>[new_val]</font>"
+		text_image.maptext = "<font size = [text_size]>[displayed_text]</font>"
 		text_image.color = text_color
 
 		overlays.Cut()
@@ -68,3 +80,28 @@
 		return
 	else if(N.timing)
 		return N.timeleft
+
+/obj/effect/countdown/clonepod
+	name = "cloning pod countdown"
+	text_color = "#0C479D"
+	text_size = 2
+
+/obj/effect/countdown/clonepod/get_value()
+	var/obj/machinery/clonepod/C = attached_to
+	if(!istype(C))
+		return
+	if(C.occupant)
+		var/completion = round(C.get_completion())
+		return completion
+
+/obj/effect/countdown/dominator
+	name = "dominator countdown"
+	text_size = 2
+	text_color = "#ff00ff" // Overwritten when the dominator starts
+
+/obj/effect/countdown/clonepod/get_value()
+	var/obj/machinery/dominator/D = attached_to
+	if(!istype(D))
+		return
+	if(D.gang && D.gang.dom_timer)
+		return D.gang.dom_timer
