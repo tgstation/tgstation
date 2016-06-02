@@ -27,7 +27,7 @@
 		var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
 		var/obj/item/clothing/accessory/medal/gold/captain/medal = new
 		U.accessories += medal
-		medal.on_attached(null, U)
+		medal.on_attached(U, null)
 		H.equip_or_collect(U, slot_w_uniform)
 		//H.equip_or_collect(new /obj/item/device/pda/captain(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
