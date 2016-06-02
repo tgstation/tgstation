@@ -453,16 +453,19 @@
 		var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
 		if(!E)
 			return
+		if(E.welding_proof)
+			user.simple_message("<span class='notice'>Your eyelenses darken to accommodate for the welder's glow.</span>")
+			return
 		if(safety < 2)
 			switch(safety)
 				if(1)
-					usr.simple_message("<span class='warning'>Your eyes sting a little.</span>",\
+					user.simple_message("<span class='warning'>Your eyes sting a little.</span>",\
 						"<span class='warning'>You shed a tear.</span>")
 					E.damage += rand(1, 2)
 					if(E.damage > 12)
 						user.eye_blurry += rand(3,6)
 				if(0)
-					usr.simple_message("<span class='warning'>Your eyes burn.</span>",\
+					user.simple_message("<span class='warning'>Your eyes burn.</span>",\
 						"<span class='warning'>Some tears fall down from your eyes.</span>")
 					E.damage += rand(2, 4)
 					if(E.damage > 10)
@@ -471,7 +474,7 @@
 					var/obj/item/clothing/to_blame = H.head //blame the hat
 					if(!to_blame || (istype(to_blame) && H.glasses && H.glasses.eyeprot < to_blame.eyeprot)) //if we don't have a hat, the issue is the glasses. Otherwise, if the glasses are worse, blame the glasses
 						to_blame = H.glasses
-					usr.simple_message("<span class='warning'>Your [to_blame] intensifies the welder's glow. Your eyes itch and burn severely.</span>",\
+					user.simple_message("<span class='warning'>Your [to_blame] intensifies the welder's glow. Your eyes itch and burn severely.</span>",\
 						"<span class='warning'>Somebody's cutting onions.</span>")
 					user.eye_blurry += rand(12,20)
 					E.damage += rand(12, 16)
