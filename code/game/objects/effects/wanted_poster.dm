@@ -8,12 +8,7 @@
 	desc = "A wanted poster for [wanted_name]."
 	poster_desc = description
 	qdel(resulting_poster)
-	if(person_icon)
-		var/obj/item/weapon/photo/photo = new()
-		photo.photocreate(null, icon(person_icon, dir = SOUTH))//copy this to prevent the cropping from happening to all the other images. There's probably a better way to copy an icon, but this works, so whatever.
-		resulting_poster = new /obj/structure/sign/poster/wanted(person_icon, wanted_name, poster_desc)
-		if(!resulting_poster || qdeleted(resulting_poster))
-			qdel(src)
+	resulting_poster = new /obj/structure/sign/poster/wanted(person_icon, wanted_name, poster_desc)
 
 /obj/structure/sign/poster/wanted
 	var/wanted_name
@@ -26,10 +21,7 @@
 	wanted_name = person_name
 	desc = description
 
-	var/obj/item/weapon/photo/photo = new /obj/item/weapon/photo()
-	photo.photocreate(null, icon(person_icon, dir = SOUTH))//copy the image so we don't mess with the one in the record.
-	person_icon = photo.img
-	qdel(photo)
+	person_icon = icon(person_icon, dir = SOUTH)//copy the image so we don't mess with the one in the record.
 	var/icon/the_icon = icon("icon" = 'icons/obj/poster_wanted.dmi', "icon_state" = "wanted_background")
 	var/icon/icon_foreground = icon("icon" = 'icons/obj/poster_wanted.dmi', "icon_state" = "wanted_foreground")
 	person_icon.Shift(SOUTH, 7)
