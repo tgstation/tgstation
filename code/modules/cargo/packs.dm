@@ -789,6 +789,15 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/science/transfer_valves
+	name = "Safe Tank Transfer Valves Crate"
+	cost = 1000
+	access = access_tox
+	contains = list(/obj/item/device/transfer_valve/safe,
+					/obj/item/device/transfer_valve/safe)
+	crate_name = "safe tank transfer valves crate"
+	crate_type = /obj/structure/closet/crate/secure
+	dangerous = TRUE // you can still emag them to remove the safeties
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"

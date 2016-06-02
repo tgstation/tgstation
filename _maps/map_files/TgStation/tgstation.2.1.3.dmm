@@ -40089,22 +40089,22 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/mixing)
 "bJW" = (
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = -5
 	},
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = 0
 	},
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = 0
 	},
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = 5
 	},
-/obj/item/device/transfer_valve{
+/obj/item/device/transfer_valve/safe{
 	pixel_x = 5
 	},
 /obj/machinery/requests_console{
