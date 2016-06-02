@@ -1,4 +1,4 @@
-//This is realisation of the working torus-looping randomized-per-round space map, this kills the cube
+//This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
 
 #define Z_LEVEL_NORTH 		"1"
 #define Z_LEVEL_SOUTH 		"2"

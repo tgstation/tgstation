@@ -1,0 +1,88 @@
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"ac" = (/obj/machinery/power/solar/fake,/turf/open/floor/plasteel/airless/solarpanel,/area/space)
+"ad" = (/turf/open/floor/plating/airless,/area/space)
+"ae" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"af" = (/turf/closed/wall,/area/space)
+"ag" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/space)
+"ah" = (/turf/open/floor/plating,/area/space)
+"ai" = (/obj/machinery/telecomms/relay/preset/ruskie,/obj/machinery/light{dir = 1},/turf/open/floor/plating,/area/space)
+"aj" = (/obj/machinery/power/terminal,/turf/open/floor/plating,/area/space)
+"ak" = (/obj/item/device/multitool,/turf/open/floor/plating,/area/space)
+"al" = (/obj/item/weapon/storage/toolbox/mechanical{pixel_x = -2; pixel_y = -1},/turf/open/floor/plating,/area/space)
+"am" = (/obj/item/weapon/extinguisher,/turf/open/floor/plating,/area/space)
+"an" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/power/smes/magical{desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."; name = "power storage unit"},/turf/open/floor/plating,/area/space)
+"ao" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plating,/area/space)
+"ap" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/apc{dir = 0; name = "Worn-out APC"; pixel_y = -24},/turf/open/floor/plating,/area/space)
+"aq" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/item/weapon/storage/box/lights/mixed,/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"; pixel_x = 0; pixel_y = -32},/turf/open/floor/plating,/area/space)
+"ar" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/open/floor/plating,/area/space)
+"as" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate/orange,/obj/item/clothing/head/helmet/space/syndicate/orange,/obj/item/clothing/mask/breath,/turf/open/floor/plating,/area/space)
+"at" = (/obj/machinery/door/airlock/maintenance_hatch,/turf/open/floor/plating,/area/space)
+"au" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/cafeteria,/area/space)
+"av" = (/obj/machinery/vending/snack,/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aw" = (/turf/open/floor/plasteel/cafeteria,/area/space)
+"ax" = (/obj/machinery/light_switch{pixel_y = 28},/turf/open/floor/plasteel/cafeteria,/area/space)
+"ay" = (/obj/machinery/newscaster{pixel_y = 32},/turf/open/floor/plasteel/cafeteria,/area/space)
+"az" = (/obj/structure/table,/obj/machinery/cell_charger,/turf/open/floor/plasteel/bar,/area/space)
+"aA" = (/turf/open/floor/plasteel/bar,/area/space)
+"aB" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/open/floor/plasteel/grimy,/area/space)
+"aC" = (/obj/machinery/light_switch{pixel_y = 28},/turf/open/floor/plasteel/grimy,/area/space)
+"aD" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/turf/open/floor/plasteel/grimy,/area/space)
+"aE" = (/obj/structure/table,/obj/item/device/flashlight/lamp,/turf/open/floor/plasteel/grimy,/area/space)
+"aF" = (/obj/structure/table,/obj/machinery/microwave{pixel_y = 8},/turf/open/floor/plasteel/bar,/area/space)
+"aG" = (/obj/machinery/door/airlock/glass{name = "Kitchen"},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aH" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 0; dir = 8; freerange = 1; listening = 1; name = "Pirate Radio Listening Channel"; pixel_x = 0},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aI" = (/obj/structure/chair/office/light,/turf/open/floor/plasteel/cafeteria,/area/space)
+"aJ" = (/obj/machinery/door/airlock/glass{name = "Rest Room"},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aK" = (/turf/open/floor/plasteel/grimy,/area/space)
+"aL" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor/plasteel/grimy,/area/space)
+"aM" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/open/floor/plasteel/bar,/area/space)
+"aN" = (/obj/machinery/light/small,/turf/open/floor/plasteel/bar,/area/space)
+"aO" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/bar,/area/space)
+"aP" = (/obj/structure/table,/obj/effect/spawner/lootdrop/maintenance,/turf/open/floor/plasteel/cafeteria,/area/space)
+"aQ" = (/obj/structure/table,/obj/item/device/radio/intercom{broadcasting = 1; dir = 8; freerange = 1; listening = 0; name = "Pirate Radio Broadcast Channel"; pixel_x = 0},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aR" = (/obj/structure/table,/obj/item/weapon/paper/djstation,/turf/open/floor/plasteel/cafeteria,/area/space)
+"aS" = (/obj/structure/frame/computer{anchored = 1},/turf/open/floor/plasteel/grimy,/area/space)
+"aT" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/grimy,/area/space)
+"aU" = (/obj/machinery/light/small,/turf/open/floor/plasteel/grimy,/area/space)
+"aV" = (/obj/structure/closet,/turf/open/floor/plasteel/grimy,/area/space)
+"aW" = (/obj/structure/disposalpipe/segment,/turf/closed/wall,/area/space)
+"aX" = (/obj/machinery/door/airlock/hatch{name = "Washroom"},/turf/open/floor/plasteel/freezer,/area/space)
+"aY" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/cafeteria,/area/space)
+"aZ" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plating/airless,/area/space)
+"ba" = (/turf/open/floor/plasteel/freezer,/area/space)
+"bb" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/cafeteria,/area/space)
+"bc" = (/obj/structure/window/reinforced{dir = 1},/obj/machinery/space_heater,/turf/open/floor/plasteel/cafeteria,/area/space)
+"bd" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/rack{dir = 4},/obj/item/clothing/under/soviet,/obj/item/clothing/head/ushanka,/turf/open/floor/plasteel/cafeteria,/area/space)
+"be" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/obj/machinery/light/small,/turf/open/floor/plasteel/freezer,/area/space)
+"bf" = (/obj/structure/toilet{pixel_y = 8},/turf/open/floor/plasteel/freezer,/area/space)
+"bg" = (/obj/structure/table,/obj/item/weapon/paper_bin{pixel_x = 1; pixel_y = 9},/obj/item/weapon/pen,/turf/open/floor/plasteel/cafeteria,/area/space)
+"bh" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"; pixel_x = 0; pixel_y = -32},/turf/open/floor/plasteel/cafeteria,/area/space)
+"bi" = (/obj/machinery/door/airlock/external{name = "Ruskie DJ Station"; req_access = null; req_access_txt = "0"},/turf/open/floor/plating,/area/space)
+"bj" = (/obj/structure/disposalpipe/trunk{dir = 1},/obj/structure/disposaloutlet,/turf/open/floor/plating/airless,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaabababababababaaaaaaaaaaaa
+aaaaaaaaaaabacadacadacabaaaaaaaaaaaa
+aaaaaaaaaaabacadacadacabaeaaaaaaaaaa
+aaaaaaaaaeabacadacadacabaeaaaaaaaaaa
+aaaaaaaeaeabacadacadacabaeaeaeaaaaaa
+abababababafagagafagagafabababababaa
+abacacacacagahahaiahahagacacacacabaa
+abadadadadagahahahahahagadadadadabaa
+abacacacacafahahajakalafacacacacabaa
+abadadadadagamahanahahagadadadadabaa
+abacacacacagahahaoahahagacacacacabae
+abababababafapaqarahasafabababababae
+aaaaaaaaaaafafafatafafafaaaaaaaaaaaa
+afafafafafafauavawaxayafafafafafafae
+agazaAaAaAagawawawawawagaBaCaDaEagaa
+agaFaAaAaAaGawaHaIaHawaJaKaKaKaLagaa
+agaMaNaOaAagawaPaQaRawagaSaTaUaVagae
+afaWafafaXafawawawawaYafafafafafafaa
+aaaZaeafbaafafbbawbcbdafaaaaaeaaaaaa
+aeaZaeafbebfafbgawbhawafaaaaaeaaaaaa
+aaaZaaafafafafafafafbiafaaaaaaaaaaaa
+aabjaaaaaaaaaaaaaaafahafaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaafbiafaaaaaaaaaaaa
+"}
