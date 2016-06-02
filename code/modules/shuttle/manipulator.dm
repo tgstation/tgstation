@@ -55,6 +55,8 @@
 			. = "docked"
 		if(SHUTTLE_STRANDED)
 			. = "stranded"
+		if(SHUTTLE_ESCAPE)
+			. = "escape"
 		if(SHUTTLE_ENDGAME)
 			. = "endgame"
 	if(!.)
@@ -105,6 +107,10 @@
 		L["id"] = M.id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
+		var/can_fast_travel = FALSE
+		if(M.timer && M.timeLeft() >= 50)
+			can_fast_travel = TRUE
+		L["can_fast_travel"] = can_fast_travel
 		L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getStatusText()
 		if(M == existing_shuttle)
@@ -132,12 +138,23 @@
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
-				. = TRUE
 				for(var/i in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = i
 					if(M.id == params["id"])
 						user.forceMove(get_turf(M))
+						. = TRUE
 						break
+		if("fast_travel")
+			for(var/i in SSshuttle.mobile)
+				var/obj/docking_port/mobile/M = i
+				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
+					M.setTimer(50)
+					. = TRUE
+					message_admins("[key_name_admin(usr)] fast travelled \
+						[M]")
+					log_admin("[key_name(usr)] fast travelled [M]")
+					feedback_add_details("shuttle_fasttravel", M.name)
+					break
 
 		if("preview")
 			if(S)
