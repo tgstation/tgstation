@@ -1,5 +1,8 @@
 /obj/structure/closet/secure_closet/freezer
 
+	var/icon_exploded = "fridge_exploded"
+	var/exploded = 0
+
 /obj/structure/closet/secure_closet/freezer/update_icon()
 	overlays.len = 0
 	if(broken)
@@ -13,17 +16,42 @@
 			if(welded)
 				overlays += "welded"
 		else
+			if(exploded)
+				icon_state = icon_exploded
+				return
 			icon_state = icon_opened
 
+//Fridges cannot be destroyed by explosions (a reference to Indiana Jones if you don't know)
+//However, the door will be blown off its hinges, permanently breaking the fridge
+//And of course, if the bomb is IN the fridge, you're fucked
 /obj/structure/closet/secure_closet/freezer/ex_act(var/severity)
-	// IF INDIANA JONES CAN DO IT SO CAN YOU
 
-	// Bomb in here? (using same search as space transits searching for nuke disk)
+	//Bomb in here? (using same search as space transits searching for nuke disk)
 	var/list/bombs = search_contents_for(/obj/item/device/transfer_valve)
 	if(!isemptylist(bombs)) // You're fucked.
 		..(severity)
 
+	if(severity == 1)
+		//If it's not open, we need to override the normal open proc and set everything ourselves
+		//Otherwise, you can cheese this by simply welding it shut, or if the lock is engaged
+		if(!opened)
+			opened = 1
+			density = 0
+			dump_contents()
+
+		//Now, set our special variables
+		exploded = 1
+		update_icon()
+
 	return
+
+/obj/structure/closet/secure_closet/freezer/can_close()
+	if(exploded) //Door blew off, can't close it anymore
+		return 0
+	for(var/obj/structure/closet/closet in get_turf(src))
+		if(closet != src && !closet.wall_mounted)
+			return 0
+	return 1
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
