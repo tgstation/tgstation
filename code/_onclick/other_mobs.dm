@@ -41,14 +41,6 @@
 /mob/living/carbon/RestrainedClickOn(atom/A)
 	return 0
 
-//Ranged override abilities for carbons
-/mob/living/ClickOn(atom/A, params)
-	if(ranged_ability && !stat)
-		ranged_ability.use_ability(A, src, params) //Spit at something, use a fireball, etc.
-	else
-		return ..(A, params)
-
-
 /mob/living/carbon/human/RangedAttack(atom/A)
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves

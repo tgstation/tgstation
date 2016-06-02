@@ -198,18 +198,23 @@ Doesn't work on other aliens/AI.*/
 		active = 0
 	else if(user.ranged_ability && user.ranged_ability != src)
 		user << "<span class='warning'>You already have another aimed ability readied! Cancel it first."
+		return
 	else
 		user.ranged_ability = src
 		active = 1
 		user << "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
 
+	user.client.click_intercept = user.ranged_ability
 	action.button_icon_state = "alien_neurotoxin_[active]"
 	action.UpdateButtonIcon()
 
-/obj/effect/proc_holder/alien/neurotoxin/use_ability(atom/target, mob/living/carbon/alien/user, params)
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	var/p_cost = 50
+	if(!iscarbon(user) || user.lying || user.stat)
+		return
 	user.face_atom(target)
-	if(user.getPlasma() < 50)
-		user << "<span class='alertalien'>You need at least 50 plasma to spit.</span>"
+	if(user.getPlasma() < p_cost)
+		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
 		return
 
 	var/turf/T = user.loc
@@ -223,7 +228,7 @@ Doesn't work on other aliens/AI.*/
 	A.preparePixelProjectile(target, get_turf(target), user, params)
 	A.fire()
 	user.newtonian_move(get_dir(U, T))
-	user.adjustPlasma(-50)
+	user.adjustPlasma(-p_cost)
 
 	return 1
 

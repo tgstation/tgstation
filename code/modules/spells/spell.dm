@@ -6,8 +6,9 @@
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
-/obj/effect/proc_holder/proc/use_ability(atom/A)
+/obj/effect/proc_holder/proc/InterceptClickOn(mob/user, params, atom/A)
 	return
+
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
