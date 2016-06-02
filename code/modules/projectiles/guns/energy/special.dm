@@ -31,7 +31,7 @@
 	charge_cost = 100
 	projectile_type = "/obj/item/projectile/energy/declone"
 
-var/available_staff_transforms=list("monkey","robot","slime","xeno","human","furry")
+var/available_staff_transforms=list("monkey","robot","slime","xeno","human","furry","frankenstein")
 #define SOC_CHANGETYPE_COOLDOWN 2 MINUTES
 
 /obj/item/weapon/gun/energy/staff
