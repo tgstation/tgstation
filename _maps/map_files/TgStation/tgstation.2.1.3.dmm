@@ -4747,9 +4747,7 @@
 /area/crew_quarters/courtroom)
 "ajR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gavelblock{
-	anchored = 1
-	},
+/obj/item/weapon/gavelblock,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 1
 	},
