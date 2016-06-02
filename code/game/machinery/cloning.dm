@@ -199,6 +199,7 @@
 		if (occupant)
 			locked = FALSE
 			go_out()
+			connected_message("Clone Ejected: Loss of power.")
 
 	else if((occupant) && (occupant.loc == src))
 		if((occupant.stat == DEAD) || (occupant.suiciding) || !occupant.key || occupant.hellbound)  //Autoeject corpses and suiciding dudes.
