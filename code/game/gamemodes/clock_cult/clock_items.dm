@@ -332,14 +332,14 @@
 	if(user.disabilities & BLIND)
 		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
 		return 0
-	if(iscultist(user)) //Dummy
+	if(iscultist(user)) //Cultists instantly go blind
 		user << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
 		user << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
 		user.emote("scream")
 		user.become_blind()
 		user.adjust_blurriness(30)
 		user.adjust_blindness(30)
-		return 1
+		return 0
 	user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? " Your eyes begin to itch - you cannot do this for long." : ""]</span>"
 	return 1
 
@@ -387,9 +387,14 @@
 		if(flame)
 			qdel(flame)
 		return 0
-	if(!is_servant_of_ratvar(user))
-		return 0
-	update_status(TRUE)
+	if(is_servant_of_ratvar(user))
+		update_status(TRUE)
+	else if(iscultist(user)) //Cultists spontaneously combust
+		user << "<span class='heavy_brass'>Consider yourself judged, whelp.</span>"
+		user << "<span class='userdanger'>You suddenly catch fire!</span>"
+		user.adjust_fire_stacks(5)
+		user.IgniteMob()
+	return 1
 
 /obj/item/clothing/glasses/judicial_visor/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/ratvars_flame))
@@ -487,8 +492,11 @@
 	if(!visor || (visor && visor.cooldown))
 		qdel(src)
 	if(user.a_intent != "harm")
-		..()
-		return 0
+		if(isliving(target))
+			var/mob/living/L = target
+			if(iscultist(L))
+				L.adjustFireLoss(10) //Cultists take extra damage
+		return ..()
 	visor.recharging = TRUE
 	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
 		if(V == visor)
@@ -563,22 +571,21 @@
 	var/new_obj_type //The path of the new type of object to replace the old
 	var/alloy_cost = 0
 	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	switch(target.type)
-		if(/turf/closed/wall, /turf/closed/wall/rust)
-			operation_time = 50
-			new_obj_type = /turf/closed/wall/clockwork
-			alloy_cost = 5
-			valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
-		if(/turf/open/floor/plating, /turf/open/floor/plasteel)
-			operation_time = 30
-			new_obj_type = /turf/open/floor/clockwork
-			alloy_cost = 1
-			valid_target = TRUE
-		if(/obj/machinery/door/airlock)
-			operation_time = 40
-			new_obj_type = /obj/machinery/door/airlock/clockwork
-			alloy_cost = 5
-			valid_target = TRUE
+	if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/reinforced))
+		operation_time = 50
+		new_obj_type = /turf/closed/wall/clockwork
+		alloy_cost = 5
+		valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
+	else if(istype(src, /turf/open/floor/plating))
+		operation_time = 30
+		new_obj_type = /turf/open/floor/clockwork
+		alloy_cost = 1
+		valid_target = TRUE
+	else if(istype(src, /obj/machinery/door/airlock) && !istype(src, /obj/machinery/door/airlock/clockwork))
+		operation_time = 40
+		new_obj_type = /obj/machinery/door/airlock/clockwork
+		alloy_cost = 5
+		valid_target = TRUE
 	if(!uses_alloy)
 		alloy_cost = 0
 	if(!valid_target)
@@ -646,7 +653,7 @@
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
 			S.adjustFireLoss(25)
-	else if(iscultist(L))
+	else if(iscultist(L)) //Cultists take extra fire damage
 		var/mob/living/M = L
 		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
 		M.adjustFireLoss(10)

@@ -153,7 +153,7 @@
 				return 1
 			user.visible_message("<span class='notice'>[user] fastens [src]'s gear!</span>", "<span class='notice'>[src]'s gear shifts back into place.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			construction_state = GEAR_UNFASTENED
+			construction_state = GEAR_SECURE
 		else if(construction_state == GEAR_LOOSE)
 			user << "<span class='warning'>The gear isn't secure enough to fasten!</span>"
 		return 1

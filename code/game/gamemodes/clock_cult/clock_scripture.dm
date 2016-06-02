@@ -201,12 +201,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
 				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
-				L.m_intent = "walk"
-			else
+			else //Cultists take extra burn damage
 				L << "<span class='warning'>Your legs burn with pain!</span>"
-				L.m_intent = "walk"
 				L.apply_damage(5, BURN, "l_leg")
 				L.apply_damage(5, BURN, "r_leg")
+			L.m_intent = "walk"
 
 
 

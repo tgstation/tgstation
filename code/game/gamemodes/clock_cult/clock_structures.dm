@@ -39,6 +39,19 @@
 	qdel(src)
 	return 1
 
+/obj/structure/clockwork/proc/damaged(user, amount, type)
+	if(!amount || !type || !type in list(BRUTE, BURN))
+		return 0
+	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force && takes_damage)
+		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
+		playsound(src, I.hitsound, 50, 1)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		health = max(0, health - I.force)
+		if(!health)
+			destroyed()
+	return 1
+
 /obj/structure/clockwork/ex_act(severity)
 	if(takes_damage)
 		switch(severity)
@@ -60,15 +73,8 @@
 	desc = initial(desc)
 
 /obj/structure/clockwork/attacked_by/(obj/item/I, mob/living/user)
-	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force)
-		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
-		playsound(src, I.hitsound, 50, 1)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		health = max(0, health - I.force)
-		if(!health)
-			destroyed()
-			return 0
+	if(user.a_intent == "harm" && user.Adjacent(I) && I.force && takes_damage)
+		damaged(user, I.force, I.damtype)
 	else
 		return ..()
 
@@ -90,8 +96,7 @@
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
-		..()
-		return 0
+		return ..()
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
 		clockwork_component_cache[C.component_id]++
@@ -402,38 +407,37 @@
 		toggle()
 		return 0
 	for(var/atom/movable/M in range(5, src))
-		switch(M.type)
-			if(/mob/living/simple_animal/hostile/anima_fragment)
-				var/mob/living/simple_animal/hostile/anima_fragment/F = M
-				if(F.health == F.maxHealth || F.stat)
-					continue
-				F.adjustBruteLoss(-15)
-				if(uses_alloy)
-					stored_alloy = max(0, stored_alloy - 2)
-			if(/mob/living/simple_animal/hostile/clockwork_marauder)
-				var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
-				if(E.health == E.maxHealth || E.stat)
-					continue
-				E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
-				E.fatigue = max(0, E.fatigue - 15)
-				if(uses_alloy)
-					stored_alloy = max(0, stored_alloy - 2)
-			if(/mob/living/silicon)
-				var/mob/living/silicon/S = M
-				if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
-					continue
-				S.adjustBruteLoss(-25)
-				S.adjustFireLoss(-25)
-				if(uses_alloy)
-					stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
-			if(/obj/structure/clockwork)
-				var/obj/structure/clockwork/C = M
-				if(C.health == C.max_health)
-					continue
-				C.health = min(C.health + 10, C.max_health)
-				if(uses_alloy)
-					stored_alloy = max(0, stored_alloy - 1)
-
+		if(istype(M, /mob/living/simple_animal/hostile/anima_fragment))
+			var/mob/living/simple_animal/hostile/anima_fragment/F = M
+			if(F.health == F.maxHealth || F.stat)
+				continue
+			F.adjustBruteLoss(-15)
+			if(uses_alloy)
+				stored_alloy = max(0, stored_alloy - 2)
+		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
+			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
+			if(E.health == E.maxHealth || E.stat)
+				continue
+			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
+			E.fatigue = max(0, E.fatigue - 15)
+			if(uses_alloy)
+				stored_alloy = max(0, stored_alloy - 2)
+		else if(istype(M, /mob/living/silicon))
+			var/mob/living/silicon/S = M
+			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
+				continue
+			S.adjustBruteLoss(-25)
+			S.adjustFireLoss(-25)
+			if(uses_alloy)
+				stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
+		else if(istype(M, /obj/structure/clockwork))
+			var/obj/structure/clockwork/C = M
+			if(C.health == C.max_health)
+				continue
+			C.health = min(C.health + 10, C.max_health)
+			if(uses_alloy)
+				stored_alloy = max(0, stored_alloy - 1)
+	return 1
 
 /obj/structure/clockwork/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src)) //Unnecessary?
