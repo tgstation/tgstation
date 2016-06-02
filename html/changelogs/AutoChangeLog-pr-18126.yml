@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscdel: "The Chaplain soulshard can only turn a body into a shade once.
-A released shade can still be reabsorbed by the stone to heal it."

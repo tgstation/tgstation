@@ -1,4 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Adds Asteroid emergency shuttle to shuttle templates. It is a very oddly shaped one though, it might not be compatible with all stations."
