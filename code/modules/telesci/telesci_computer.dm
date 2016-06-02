@@ -356,11 +356,13 @@ var/global/list/telesci_warnings = list(/obj/machinery/power/supermatter,
 	return
 
 /obj/machinery/computer/telescience/Topic(href, href_list)
-	if(stat & (NOPOWER|BROKEN))
-		return 0
 	if(href_list["close"])
 		if(usr.machine == src) usr.unset_machine()
 		return 1
+
+	if(..())
+		return 1
+
 	if(href_list["setPOffsetX"])
 		var/new_x = input("Please input desired X offset.", name, x_player_off) as num
 		if(new_x < -10 || new_x > 10)
