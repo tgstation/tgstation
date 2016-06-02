@@ -134,8 +134,15 @@
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
-	// HOT. PINK.
-	//color = "#FF69B4"
+/mob/living/simple_animal/slaughter/laughter/Destroy()
+	// You know, if there's ANYONE LEFT.
+	release_friends()
+	. = ..()
+
+/mob/living/simple_animal/slaughter/laughter/ex_act(severity)
+	if(severity == 1)
+		release_friends() // ABANDON SHIP
+	. = ..()
 
 /mob/living/simple_animal/slaughter/laughter/death()
 	release_friends()
@@ -150,9 +157,15 @@
 		return
 
 	for(var/mob/living/M in consumed_mobs)
-		M.loc = get_turf(src)
-		if(M.revive(full_heal = 1))
-			M.grab_ghost(force = FALSE)
+		if(!M)
+			continue
+		var/turf/T = find_safe_turf()
+		if(!T)
+			T = get_turf(src)
+		M.forceMove(T)
+		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
+			M.grab_ghost(force = TRUE)
+			playsound(T, feast_sound, 50, 1, -1)
 			M << "<span class='clown'>You leave the [src]'s warm embrace, \
 				and feel ready to take on the world.</span>"
 
