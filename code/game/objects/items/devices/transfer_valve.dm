@@ -3,16 +3,17 @@
 	name = "tank transfer valve"
 	icon_state = "valve_1"
 	item_state = "ttv"
-	desc = "Regulates the transfer of air between two tanks"
+	desc = "Regulates the transfer of air between two tanks."
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
 	var/mob/attacher = null
-	var/valve_open = 0
-	var/toggle = 1
+	var/valve_open = FALSE
+	var/toggle = TRUE
+	var/safe_mode = FALSE
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
-	return 1
+	return TRUE
 
 /obj/item/device/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/weapon/tank))
@@ -58,7 +59,6 @@
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
 		attacher = user
-	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)
 	user.set_machine(src)
@@ -71,7 +71,6 @@
 	var/datum/browser/popup = new(user, "trans_valve", name)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()
@@ -80,7 +79,7 @@
 	if (src.loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_one.loc = get_turf(src)
 			tank_one = null
 			update_icon()
@@ -88,7 +87,7 @@
 				w_class = 3
 		else if(tank_two && href_list["tanktwo"])
 			split_gases()
-			valve_open = 0
+			valve_open = FALSE
 			tank_two.loc = get_turf(src)
 			tank_two = null
 			update_icon()
@@ -107,15 +106,13 @@
 
 		src.attack_self(usr)
 		src.add_fingerprint(usr)
-		return
-	return
 
 /obj/item/device/transfer_valve/proc/process_activation(obj/item/device/D)
 	if(toggle)
-		toggle = 0
+		toggle = FALSE
 		toggle_valve()
 		spawn(50) // To stop a signal being spammed from a proxy sensor constantly going off or whatever
-			toggle = 1
+			toggle = TRUE
 
 /obj/item/device/transfer_valve/update_icon()
 	overlays.Cut()
@@ -156,6 +153,17 @@
 	*/
 
 /obj/item/device/transfer_valve/proc/toggle_valve()
+	if(safe_mode)
+		var/area/A = get_area(src)
+		if(!istype(A, /area/toxins/test_area))
+			// Weee wooo! NO FUN ALLOWED
+			visible_message("<span class='warning'>[src] makes an unhappy \
+				beeping sound.</span>", 3, "<span class='italics'>You hear \
+				an unhappy beeping sound.</span>", 2)
+			// this audio path is not a typo, that is literally its filename
+			playsound(src.loc, 'sound/machines/defib_saftyOff.ogg', 50, 1, -1)
+			return
+
 	if(!valve_open && tank_one && tank_two)
 		valve_open = 1
 		var/turf/bombturf = get_turf(src)
@@ -210,3 +218,30 @@
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/device/transfer_valve/proc/c_state()
 	return
+
+/obj/item/device/transfer_valve/safe
+	name = "safe tank transfer valve"
+	desc = "Regulates the transfer of air between two tanks.\n\
+		This one has built-in safety electronics that prevents it from \
+		detonating outside the testing range."
+	safe_mode = TRUE
+
+/obj/item/device/transfer_valve/safe/examine(mob/user)
+	. = ..()
+	if(!safe_mode)
+		user << "The safeties appear blackened and damaged."
+
+/obj/item/device/transfer_valve/safe/emp_act(severity)
+	visible_message("<span class='warning'>A spark and some smoke escapes \
+		from the circuitry on [src]!</span>", "<span class='italics'>You \
+		hear and smell a faint ozone hiss of electrical circuitry sparking.\
+		</span>")
+	safe_mode = FALSE
+
+/obj/item/device/transfer_valve/safe/emag_act(mob/user)
+	user.visible_message("<span class='warning'>[user] holds up some sort of \
+		card to [src].</span>", "<span class='notice'>You start overloading \
+		the safety circuits.</span>")
+	// because emags have POLORIZING MAGNETS THAT OVERLOAD CIRCUITRY woowoo
+	if(do_after(user, 10, 0, src))
+		emp_act(1)
