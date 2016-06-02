@@ -53,17 +53,6 @@
 	desc = "Fires an energy snare that slows the target down"
 	ammo_type = list(/obj/item/ammo_casing/energy/trap)
 
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg
-	can_charge = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/trap/cyborg)
-
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/newshot()
-	..()
-	robocharge()
-
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/emp_act()
-	return
-
 /obj/item/weapon/gun/energy/gun/turret
 	name = "hybrid turret gun"
 	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
