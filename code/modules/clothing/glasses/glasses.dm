@@ -279,6 +279,19 @@
 	icon_state = "redglasses"
 	item_state = "redglasses"
 
+/obj/item/clothing/glasses/godeye
+	name = "eye of god"
+	desc = "A strange eye, said to have been torn from an omniscient creature that used to roam the wastes."
+	icon_state = "godeye"
+	item_state = "godeye"
+	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	darkness_view = 8
+	scan_reagents = 1
+	flags = 2
+	invis_view = SEE_INVISIBLE_MINIMUM
+
+
+
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
 	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")
