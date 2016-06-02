@@ -17,11 +17,23 @@
 	/turf/closed/wall,
 	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
 	can_be_unanchored = 0
+
+/obj/structure/falsewall/New(loc)
+	..()
+	air_update_turf(1)
+
+/obj/structure/falsewall/Destroy()
+	density = 0
+	air_update_turf(1)
+	return ..()
+
+/obj/structure/falsewall/CanAtmosPass(turf/T)
+	return !density
 
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
@@ -46,6 +58,7 @@
 		if(!qdeleted(src))
 			SetOpacity(1)
 			update_icon()
+	air_update_turf(1)
 	opening = 0
 
 /obj/structure/falsewall/attack_animal(mob/living/simple_animal/user)
@@ -68,7 +81,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		queue_smooth(src)
-		icon_state = ""
+		icon_state = "wall"
 	else
 		icon_state = "fwall_open"
 
