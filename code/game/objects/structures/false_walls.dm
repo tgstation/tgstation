@@ -17,7 +17,7 @@
 	/turf/closed/wall,
 	/turf/closed/wall/r_wall,
 	/obj/structure/falsewall,
-	/obj/structure/falsewall/reinforced,  // WHY DO WE SMOOTH WITH FALSE R-WALLS WHEN WE DON'T SMOOTH WITH REAL R-WALLS.
+	/obj/structure/falsewall/reinforced,
 	/turf/closed/wall/rust,
 	/turf/closed/wall/r_wall/rust)
 	smooth = SMOOTH_TRUE
@@ -81,7 +81,7 @@
 	if(density)
 		smooth = SMOOTH_TRUE
 		queue_smooth(src)
-		icon_state = ""
+		icon_state = "wall"
 	else
 		icon_state = "fwall_open"
 
