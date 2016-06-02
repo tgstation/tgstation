@@ -8,7 +8,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
-	origin_tech = "combat=8"
+	origin_tech = "combat=7"
 	can_unsuppress = 1
 	can_suppress = 1
 	w_class = 3
@@ -28,7 +28,7 @@
 	name = "syndicate sniper rifle"
 	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=8;syndicate=4"
+	origin_tech = "combat=7;syndicate=6"
 
 
 
@@ -108,7 +108,6 @@
 	name = "sniper rounds (Bleed)"
 	desc = "Haemorrhage sniper rounds, leaves your target in a pool of crimson pain"
 	icon_state = "haemorrhage"
-	origin_tech = "combat=7;syndicate=5"
 	ammo_type = /obj/item/ammo_casing/haemorrhage
 	max_ammo = 5
 	caliber = ".50"
@@ -139,6 +138,7 @@
 	name = "sniper rounds (penetrator)"
 	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
 	ammo_type = /obj/item/ammo_casing/penetrator
+	origin_tech = "combat=6;syndicate=3"
 	max_ammo = 5
 
 /obj/item/ammo_casing/penetrator

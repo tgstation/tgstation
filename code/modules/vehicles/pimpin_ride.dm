@@ -1,5 +1,3 @@
-
-
 //PIMP-CART
 /obj/vehicle/janicart
 	name = "janicart (pimpin' ride)"
@@ -40,6 +38,7 @@
 	desc = "An upgrade for mobile janicarts."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
+	origin_tech = "materials=3;engineering=4"
 
 
 /obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
@@ -91,4 +90,3 @@
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
-
