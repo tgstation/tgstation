@@ -5224,9 +5224,7 @@
 /area/crew_quarters/courtroom)
 "ajR" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gavelblock{
-	anchored = 0
-	},
+/obj/item/weapon/gavelblock,
 /turf/open/floor/plasteel{
 	icon_state = "neutral";
 	dir = 1
