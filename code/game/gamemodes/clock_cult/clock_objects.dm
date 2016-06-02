@@ -194,7 +194,7 @@
 	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
-	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
+	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehÂ’guf naq ubabe Ratvar.</center></b></font><br><br>\
 	\
 	First and foremost, you serve Ratvar, the Clockwork Justiciar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 	scale of things than your life. Through foul and unholy magics was the Celestial Derelict formed, and fouler still those which trapped your master within it for all eternity. The Justiciar \
@@ -556,17 +556,16 @@
 	var/new_obj_type //The path of the new type of object to replace the old
 	var/alloy_cost = 0
 	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	switch(target.type)
-		if(/turf/closed/wall, /turf/closed/wall/rust)
-			operation_time = 50
-			new_obj_type = /turf/closed/wall/clockwork
-			alloy_cost = 10
-			valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
-		if(/turf/open/floor/plating, /turf/open/floor/plasteel)
-			operation_time = 30
-			new_obj_type = /turf/open/floor/clockwork
-			alloy_cost = 5
-			valid_target = TRUE
+	if(istype(target, /turf/closed/wall))
+		operation_time = 50
+		new_obj_type = /turf/closed/wall/clockwork
+		alloy_cost = 10
+		valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
+	if(istype(target, /turf/open/floor/plating) || istype(target, /turf/open/floor/plasteel))
+		operation_time = 30
+		new_obj_type = /turf/open/floor/clockwork
+		alloy_cost = 5
+		valid_target = TRUE
 	if(!uses_alloy)
 		alloy_cost = 0
 	if(!valid_target)
