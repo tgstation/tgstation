@@ -33,9 +33,11 @@ var/bomb_set
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
+	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
+	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	SSobj.processing -= core
@@ -45,6 +47,9 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/Destroy()
 	poi_list -= src
+	nuke_list -= src
+	qdel(countdown)
+	countdown = null
 	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct

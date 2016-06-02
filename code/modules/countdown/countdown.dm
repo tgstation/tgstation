@@ -8,9 +8,9 @@
 	var/last_displayed
 	var/atom/attached_to
 	var/text_color = "#ff0000"
+	var/text_size = 5
 	invisibility = INVISIBILITY_OBSERVER
 	layer = GHOST_LAYER
-	alpha = 100
 
 /obj/effect/countdown/New(atom/A)
 	. = ..()
@@ -34,7 +34,8 @@
 	last_displayed = new_val
 	if(new_val)
 		var/image/text_image = new(loc = src)
-		text_image.maptext = "<font size=4>[new_val]</font>"
+		//text_image.maptext = "<font size=[text_size]>[new_val]</font>"
+		text_image.maptext = "<font size = 4>[new_val]</font>"
 		text_image.color = text_color
 
 		overlays.Cut()
@@ -47,9 +48,23 @@
 	SSfastprocess.processing -= src
 	. = ..()
 
+/obj/effect/countdown/syndicatebomb
+	name = "syndicate bomb countdown"
+
 /obj/effect/countdown/syndicatebomb/get_value()
 	var/obj/machinery/syndicatebomb/S = attached_to
 	if(!istype(S))
 		return
 	else if(S.active)
 		return S.timer
+
+/obj/effect/countdown/nuclearbomb
+	name = "nuclear bomb countdown"
+	text_color = "#81FF14"
+
+/obj/effect/countdown/nuclearbomb/get_value()
+	var/obj/machinery/nuclearbomb/N = attached_to
+	if(!istype(N))
+		return
+	else if(N.timing)
+		return N.timeleft
