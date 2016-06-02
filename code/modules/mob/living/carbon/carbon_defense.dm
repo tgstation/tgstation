@@ -5,10 +5,13 @@
 				if(istype(AM, /obj/item))
 					var/obj/item/I = AM
 					if(isturf(I.loc))
-						put_in_active_hand(I)
-						visible_message("<span class='warning'>[src] catches [I]!</span>")
-						throw_mode_off()
-						return 1
+						if(istype(I, /obj/item/weapon/twohanded))
+						var/obj/item/weapon/twohanded/TH = I
+							if(!TH.wielded)
+								put_in_active_hand(I)
+								visible_message("<span class='warning'>[src] catches [I]!</span>")
+								throw_mode_off()
+								return 1
 	..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom)
