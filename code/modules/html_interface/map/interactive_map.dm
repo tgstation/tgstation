@@ -1,5 +1,18 @@
-#define MAPHEADER "<script type=\"text/javascript\" src=\"3-jquery.timers.js\"></script><script type=\"text/javascript\" src=\"libraries.min.js\"></script><link rel=\"stylesheet\" type=\"text/css\" href=\"html_interface_icons.css\" /><link rel=\"stylesheet\" type=\"text/css\" href=\"map_shared.css\" /><script type=\"text/javascript\" src=\"map_shared.js\">"
-#define MAPCONTENT "<div id='switches'><a href=\"javascript:switchTo(0);\">Switch to mini map</a> <a href=\"javascript:switchTo(1);\">Switch to text-based</a> <a href='javascript:changezlevels();'>Change Z-Level</a> </div><div id=\"uiMapContainer\"><div id=\"uiMap\" unselectable=\"on\"></div></div><div id=\"textbased\"></div>"
+#define MAPHEADER \
+"<script type=\"text/javascript\" src=\"3-jquery.timers.js\"></script>\
+<script type=\"text/javascript\" src=\"libraries.min.js\"></script>\
+<link rel=\"stylesheet\" type=\"text/css\" href=\"html_interface_icons.css\" />\
+<link rel=\"stylesheet\" type=\"text/css\" href=\"map_shared.css\" />\
+<script type=\"text/javascript\" src=\"map_shared.js\">"
+
+#define MAPCONTENT \
+"<div id='switches'>\
+<a href=\"javascript:switchTo(0);\">Switch to mini map</a> \
+<a href=\"javascript:switchTo(1);\">Switch to text-based</a> \
+<a href='javascript:changezlevels();'>Change Z-Level</a> </div>\
+<div id=\"uiMapContainer\">\
+<div id=\"uiMap\" unselectable=\"on\"></div></div>\
+<div id=\"textbased\"></div>"
 // Base datum for html_interface interactive maps.
 var/const/MAX_ICON_DIMENSION = 2000
 var/const/ICON_SIZE = 4
@@ -16,7 +29,7 @@ var/const/ALLOW_CENTCOMM = FALSE
 /datum/interactive_map/Destroy()
 	if (src.interfaces)
 		for (var/datum/html_interface/hi in interfaces)
-			Destroy(hi)
+			qdel(hi)
 		src.interfaces = null
 
 	return ..()
@@ -75,10 +88,13 @@ var/const/ALLOW_CENTCOMM = FALSE
 	C << browse_rsc('map_shared.css')
 	for (var/z = 1 to world.maxz)
 		if(z == CENTCOMM_Z) continue
-		C << browse_rsc(file("[getMinimapFile(z)].png"), "minimap_[z].png")
+		C << browse_rsc(file("[getMinimapFile(z)].png"), "[getMinimapFile(z)].png")
 
 /proc/getMinimapFile(z)
-	return "data/minimaps/map_[map.nameLong][z]"
+	return "[getMinimapShort()][z]"
+
+/proc/getMinimapShort()
+	return "data/minimaps/map_[map.nameLong]" //Missing only z
 
 // Activate this to debug tile mismatches in the minimap.
 // This will store the full information on each tile and compare it the next time you run the minimap.

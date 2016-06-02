@@ -97,12 +97,21 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 /datum/interactive_map/crewmonitor/show(mob/mob, z, datum/html_interface/currui = null)
 	if (!z) z = mob.z
 	if (z == CENTCOMM_Z) return
+	sendResources(mob.client)
 
 	if (z > 0 && src.interfaces)
 		var/datum/html_interface/hi
 
 		if (!src.interfaces["[z]"])
-			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 800, "[MAPHEADER] <link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /></script><script type=\"text/javascript\">var z = [z]; var tile_size = [world.icon_size]; var maxx = [world.maxx]; var maxy = [world.maxy];</script><script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
+			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 800, "[MAPHEADER] \
+			<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /></script>\
+			<script type=\"text/javascript\">\
+			var mapname = [getMinimapShort()]; \
+			var z = [z]; \
+			var tile_size = [world.icon_size]; \
+			var maxx = [world.maxx]; \
+			var maxy = [world.maxy];</script>\
+			<script type=\"text/javascript\" src=\"crewmonitor.js\"></script>")
 
 			hi = src.interfaces["[z]"]
 
