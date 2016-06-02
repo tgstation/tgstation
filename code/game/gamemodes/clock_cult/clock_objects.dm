@@ -194,7 +194,7 @@
 	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
-	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
+	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehÂ’guf naq ubabe Ratvar.</center></b></font><br><br>\
 	\
 	First and foremost, you serve Ratvar, the Clockwork Justiciar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 	scale of things than your life. Through foul and unholy magics was the Celestial Derelict formed, and fouler still those which trapped your master within it for all eternity. The Justiciar \
@@ -538,6 +538,8 @@
 
 /obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, flag, params)
 	if(!target || !user)
+		return 0
+	if(!is_servant_of_ratvar(user))
 		return 0
 	if(user.a_intent == "harm" || !user.Adjacent(target))
 		return ..()
