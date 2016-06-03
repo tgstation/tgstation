@@ -39,8 +39,8 @@
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/proc/damaged(mob/living/user, obj/item/I, amount, type)
-	if(!amount || !type || !type in list(BRUTE, BURN))
+/obj/structure/clockwork/proc/damaged(mob/living/user, obj/item/I, amount, taip)
+	if(!amount || !taip || !taip in list(BRUTE, BURN))
 		return 0
 	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force && takes_damage)
 		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
@@ -72,7 +72,7 @@
 	..()
 	desc = initial(desc)
 
-/obj/structure/clockwork/attacked_by/(obj/item/I, mob/living/user)
+/obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	if(user.a_intent == "harm" && user.Adjacent(I) && I.force && takes_damage)
 		damaged(user, I, I.force, I.damtype)
 	else
@@ -465,7 +465,7 @@
 	if(user)
 		if(!is_servant_of_ratvar(user))
 			return 0
-		user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
+		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
 	active = !active
 	if(active)
 		icon_state = initial(icon_state)
