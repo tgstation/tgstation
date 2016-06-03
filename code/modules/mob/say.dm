@@ -62,7 +62,8 @@
 		if(K && M.client && K in M.client.prefs.ignoring)
 			continue
 		if(istype(M, /mob/dead/observer))
-			M << "<a href=?src=\ref[M];follow=\ref[src]>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 		else
 			M << "[rendered]"
 

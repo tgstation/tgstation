@@ -91,10 +91,12 @@ Doesn't work on other aliens/AI.*/
 		for(var/ded in dead_mob_list)
 			if(!isobserver(ded))
 				continue
-			ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
+			var/follow_link_user = FOLLOW_LINK(ded, user)
+			var/follow_link_whispee = FOLLOW_LINK(ded, M)
+			ded << "[follow_link_user] \
 				<span class='name'>[user]</span> \
 				<span class='alertalien'>Alien Whisper --> </span> \
-				<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
+				[follow_link_whispee] \
 				<span class='name'>[M]</span> \
 				<span class='noticealien'>[msg]</span>"
 	else
