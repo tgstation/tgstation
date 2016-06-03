@@ -183,8 +183,8 @@
 /obj/machinery/door_timer/proc/set_picture(state)
 	if(maptext)
 		maptext = ""
-	overlays.Cut()
-	overlays += image('icons/obj/status_display.dmi', icon_state=state)
+	cut_overlays()
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=state))
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display

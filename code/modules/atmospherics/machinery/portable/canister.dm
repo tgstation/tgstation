@@ -109,7 +109,7 @@
 #define DANGER 32
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
-		overlays.Cut()
+		cut_overlays()
 		icon_state = "[initial(icon_state)]-1"
 		return
 
@@ -133,19 +133,19 @@
 	if(update == last_update)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 	if(update & HOLDING)
-		overlays += "can-open"
+		add_overlay("can-open")
 	if(update & CONNECTED)
-		overlays += "can-connector"
+		add_overlay("can-connector")
 	if(update & EMPTY)
-		overlays += "can-o0"
+		add_overlay("can-o0")
 	else if(update & LOW)
-		overlays += "can-o1"
+		add_overlay("can-o1")
 	else if(update & FULL)
-		overlays += "can-o2"
+		add_overlay("can-o2")
 	else if(update & DANGER)
-		overlays += "can-o3"
+		add_overlay("can-o3")
 #undef HOLDING
 #undef CONNECTED
 #undef EMPTY

@@ -1302,7 +1302,7 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I, 0, 1)
 	sleep(duration)
 	A.overlays -= I
 

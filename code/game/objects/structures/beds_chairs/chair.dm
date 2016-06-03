@@ -168,7 +168,7 @@
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mobs.len)
-		overlays += armrest
+		add_overlay(armrest)
 	else
 		overlays -= armrest
 

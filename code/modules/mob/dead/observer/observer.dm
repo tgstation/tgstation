@@ -165,7 +165,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
-				overlays += facial_hair_image
+				add_overlay(facial_hair_image)
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
@@ -174,7 +174,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
-				overlays += hair_image
+				add_overlay(hair_image)
 				ghostimage.overlays += hair_image
 
 /*
@@ -314,7 +314,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.desc = message
 				var/old_layer = source.layer
 				source.layer = FLOAT_LAYER
-				A.overlays += source
+				A.add_overlay(source)
 				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)

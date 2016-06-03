@@ -47,7 +47,7 @@
 
 /obj/machinery/gibber/New()
 	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+	src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
 	B.apply_default_parts(src)
 
@@ -70,17 +70,17 @@
 			ignore_clothing = 1
 
 /obj/machinery/gibber/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if (dirty)
-		src.overlays += image('icons/obj/kitchen.dmi', "grbloody")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.overlays += image('icons/obj/kitchen.dmi', "gruse")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
+		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)

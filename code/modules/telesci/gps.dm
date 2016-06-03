@@ -16,7 +16,7 @@ var/list/GPS_list = list()
 	..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
-	overlays += "working"
+	add_overlay("working")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -25,11 +25,11 @@ var/list/GPS_list = list()
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
 	overlays -= "working"
-	overlays += "emp"
+	add_overlay("emp")
 	spawn(300)
 		emped = 0
 		overlays -= "emp"
-		overlays += "working"
+		add_overlay("working")
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))
@@ -41,7 +41,7 @@ var/list/GPS_list = list()
 		user << "[src] is no longer tracking, or visible to other GPS devices."
 		tracking = FALSE
 	else
-		overlays += "working"
+		add_overlay("working")
 		user << "[src] is now tracking, and visible to other GPS devices."
 		tracking = TRUE
 

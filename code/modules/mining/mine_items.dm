@@ -320,14 +320,14 @@
 	doorturf.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
 	if(!onshuttle)
 		L.contents += threshhold
-	threshhold.overlays.Cut()
+	threshhold.cut_overlays()
 
 	new /obj/structure/fans/tiny(threshhold) //a tiny fan, to keep the air in.
 
 	var/list/turfs = room["floors"]
 	for(var/turf/open/floor/F in turfs)
 		F.air.parse_gas_string("o2=21;n2=82;TEMP=293.15")
-		F.overlays.Cut()
+		F.cut_overlays()
 		if(!onshuttle)
 			L.contents += F
 
@@ -418,9 +418,9 @@
 
 /obj/machinery/sleeper/survival_pod/update_icon()
 	if(state_open)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "sleeper_cover"
+		add_overlay("sleeper_cover")
 
 //Computer
 /obj/item/device/gps/computer

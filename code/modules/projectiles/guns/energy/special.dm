@@ -40,7 +40,7 @@
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge > shot.e_cost)
-		overlays += "decloner_spin"
+		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"

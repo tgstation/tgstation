@@ -52,19 +52,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
+		add_overlay(greenlight, 0, 1)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		overlays |= pinklight
+		add_overlay(pinklight, 0, 1)
 	else
 		overlays -= pinklight
 
 	if(broken)
-		overlays |= errorlight
+		add_overlay(errorlight, 0, 1)
 	else
 		overlays -= errorlight
 

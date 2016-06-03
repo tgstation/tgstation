@@ -31,9 +31,9 @@
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(manifest)
-		overlays += "manifest"
+		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)

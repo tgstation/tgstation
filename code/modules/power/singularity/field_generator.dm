@@ -41,13 +41,13 @@ field_generator power level display
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
-		overlays += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(fields.len)
-		overlays += "+on"
+		add_overlay("+on")
 	if(power_level)
-		overlays += "+p[power_level]"
+		add_overlay("+p[power_level]")
 
 
 /obj/machinery/field/generator/New()
