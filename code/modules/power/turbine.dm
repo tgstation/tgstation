@@ -76,7 +76,7 @@
 /obj/item/weapon/circuitboard/machine/power_compressor
 	name = "circuit board (Power Compressor)"
 	build_path = /obj/machinery/power/compressor
-	origin_tech = "programming=4;powerstorage=5;engineering=4"
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/manipulator = 6)
@@ -195,7 +195,7 @@
 /obj/item/weapon/circuitboard/machine/power_turbine
 	name = "circuit board (Power Turbine)"
 	build_path = /obj/machinery/power/turbine
-	origin_tech = "programming=4;powerstorage=4;engineering=5"
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/capacitor = 6)

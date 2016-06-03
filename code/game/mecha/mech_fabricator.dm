@@ -10,6 +10,7 @@
 	active_power_usage = 5000
 	req_access = list(access_robotics)
 	var/time_coeff = 1
+	var/component_coeff = 1
 	var/list/resources = list(
 								MAT_METAL=0,
 								MAT_GLASS=0,
@@ -53,7 +54,7 @@
 /obj/item/weapon/circuitboard/machine/mechfab
 	name = "circuit board (Exosuit Fabricator)"
 	build_path = /obj/machinery/mecha_part_fabricator
-	origin_tech = "programming=3;engineering=3"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 1,
@@ -67,6 +68,12 @@
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	res_max_amount = (187000+(T * 37500))
+
+	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
+	T = 1.15
+	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+		T -= Ma.rating*0.15
+	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
@@ -266,7 +273,7 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
-	return round(D.materials[resource], roundto)
+	return round(D.materials[resource]*component_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)

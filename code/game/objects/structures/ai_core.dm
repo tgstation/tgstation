@@ -251,4 +251,4 @@ atom/proc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/
 
 /obj/item/weapon/circuitboard/aicore
 	name = "circuit board (AI core)"
-	origin_tech = "programming=4;biotech=2"
+	origin_tech = "programming=3"

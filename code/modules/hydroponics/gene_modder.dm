@@ -29,7 +29,7 @@
 /obj/item/weapon/circuitboard/machine/plantgenes
 	name = "circuit board (Plant DNA Manipulator)"
 	build_path = /obj/machinery/plantgenes
-	origin_tech = "programming=2;biotech=3"
+	origin_tech = "programming=3;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
