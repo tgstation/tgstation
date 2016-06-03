@@ -51,3 +51,6 @@ players2.sqlite
 
 # Runtime condenser I/O files.
 /tools/Runtime\ Condenser/*.txt
+
+# Investigate logs that have an annoying tendency to generate during testing
+/data/investigate/*
