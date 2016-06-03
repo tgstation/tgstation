@@ -416,7 +416,7 @@
 				stored_alloy = max(0, stored_alloy - 2)
 		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
 			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
-			if(E.health == E.maxHealth || E.stat || !E.fatigue)
+			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
 				continue
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
@@ -462,9 +462,10 @@
 		return ..()
 
 /obj/structure/clockwork/mending_motor/proc/toggle(mob/living/user)
+	if(!user || !is_servant_of_ratvar(user))
+		return 0
+	user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
 	active = !active
-	if(user && is_servant_of_ratvar(user))
-		user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
 	if(active)
 		icon_state = initial(icon_state)
 	else
