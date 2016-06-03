@@ -36,6 +36,9 @@ players2.sqlite
 # New CMC Minimap images.
 /data/minimaps/*
 
+# Map rendering
+/maprendering/renderoutput/*
+
 # Backup maps created by maptools
 *.dmm.backup
 

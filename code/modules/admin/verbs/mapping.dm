@@ -167,6 +167,7 @@ var/intercom_range_display_status = 0
 	src.verbs += /client/proc/check_sim_unsim
 	src.verbs += /client/proc/nanomapgen_DumpImage
 	src.verbs += /client/proc/nanomapgen_DumpImageAll
+	src.verbs += /client/proc/maprender
 	//src.verbs += /client/proc/cmd_admin_rejuvenate
 
 	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

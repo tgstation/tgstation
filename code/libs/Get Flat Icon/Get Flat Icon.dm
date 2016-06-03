@@ -26,7 +26,7 @@ var/list/directional = list(
 	/obj/machinery/door/window,
 	/obj/machinery/power/emitter,
 	/obj/structure/disposalpipe,
-	/obj/machinery/atmospherics/pipe,
+	/obj/machinery/atmospherics,
 	/obj/structure/window,
 	/obj/structure/window/full,
 	/obj/structure/bed/chair,
@@ -38,12 +38,26 @@ var/list/directional = list(
 	/obj/machinery/door/firedoor/border_only,
 	/obj/item/projectile,
 	/obj/effect/beam/emitter,
-	/obj/machinery/conveyor
+	/obj/machinery/conveyor,
+	/obj/machinery/gateway,
+	/obj/structure/shuttle/engine,
+	/obj/machinery/power/terminal,
+	/obj/machinery/power/generator,
+	/obj/structure/particle_accelerator,
+	/obj/structure/hanging_lantern,
+	/turf/simulated/shuttle/wall
 	)
 
 var/list/exception = list(
-	/obj/structure/window/full
+	/obj/structure/window/full,
+	/obj/machinery/atmospherics/unary/tank
 	)
+
+/client/verb/testflaticon(atom/A as mob|obj|turf)
+	set name = "hey"
+	var/dir = input("Hello here is the dir", "Dir") as num
+	var/icon/I = getFlatIcon(A, dir)
+	usr << browse(bicon(I), "window=hi")
 
 proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override cache, 0 = ignore cache	//exact = 1 means the atom won't be rotated if it's a lying mob/living/carbon
 
@@ -65,11 +79,14 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 		else
 			dir = 2//ugly fix for atoms showing invisible on pictures if they don't have a 4-directional icon_state sprite and their dir isn't south(2)
 
+	var/list/initialimage = list()
 	// Add the atom's icon itself
 	if(A.icon)
 		// Make a copy without pixel_x/y settings
+		if(A.pixel_x || A.pixel_y) //Lets assume any pixel shifted icon is directional
+			dir = A.dir
 		var/image/copy = image(icon=A.icon,icon_state=A.icon_state,layer=A.layer,dir=dir)
-		layers[copy] = A.layer
+		initialimage[copy] = A.layer
 
 
 	// Loop through the underlays, then overlays, sorting them into the layers list
@@ -83,8 +100,13 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 	var/compareOverlay // The overlay that the current overlay is being compared against
 	var/compareIndex // The index in the layers list of 'compare'
 
+	var/list/underlaysort = list()
+	var/list/overlaysort = list()
+	var/list/sorting = underlaysort
+
 	while(TRUE)
 		if(currentIndex<=process.len)
+			//All this does is find the appropriate layer and image
 			currentOverlay = process[currentIndex]
 			currentLayer = currentOverlay:layer
 			if(currentLayer<0) // Special case for FLY_LAYER
@@ -94,15 +116,20 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 				else // Overlay
 					currentLayer = A.layer+(1000+currentLayer)/1000
 
-			// Sort add into layers list
-			for(compareIndex=1,compareIndex<=layers.len,compareIndex++)
-				compareOverlay = layers[compareIndex]
-				if(currentLayer < layers[compareOverlay]) // Associated value is the calculated layer
-					layers.Insert(compareIndex,currentOverlay)
-					layers[currentOverlay] = currentLayer
+			//Next is a simple sort algorithm to place the overlay by layer
+			if(!sorting.len)
+				sorting[currentOverlay] = currentLayer
+				currentIndex++
+				continue
+
+			for(compareIndex=1,compareIndex<=sorting.len,compareIndex++)
+				compareOverlay = sorting[compareIndex]
+				if(currentLayer < sorting[compareOverlay]) // Associated value is the calculated layer
+					sorting.Insert(compareIndex,currentOverlay)
+					sorting[currentOverlay] = currentLayer
 					break
-			if(compareIndex>layers.len) // Reached end of list without inserting
-				layers[currentOverlay]=currentLayer // Place at end
+			if(compareIndex>sorting.len) // Reached end of list without inserting
+				sorting[currentOverlay]=currentLayer // Place at end
 
 			currentIndex++
 
@@ -111,8 +138,15 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 				currentIndex = 1
 				processSubset = 1
 				process = A.overlays
+				sorting = overlaysort
 			else // All done
 				break
+
+	//Get flat icon previously understood layers as interspersing
+	//and could render overlays above the atom's icon before this following modification
+	layers = underlaysort
+	layers += initialimage
+	layers += overlaysort
 
 	if(cache!=0) // If cache is NOT disabled
 		// Create a hash value to represent this specific flattened icon
@@ -142,10 +176,13 @@ proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override c
 	var/addY2
 
 	for(var/I in layers)
+		var/layerdir = I:dir //We want overlays/underlays to use their correct directional icon state
+		if(I == A || !layerdir)
+			layerdir = dir
 
 		add = icon(I:icon || A.icon
 		         , I:icon_state || (I:icon && (A.icon_state in icon_states(I:icon)) && A.icon_state)
-		         , dir
+		         , layerdir
 		         , 1
 		         , 0)
 
