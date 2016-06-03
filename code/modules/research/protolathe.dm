@@ -60,10 +60,10 @@ Note: Must be placed west/left of and R&D console to function.
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	materials.max_amount = T * 75000
-	T = 0
+	T = 1.2
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		T += (M.rating/3)
-	efficiency_coeff = max(T, 1)
+		T -= M.rating/10
+	efficiency_coeff = min(max(0, T), 1)
 
 /obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/A = materials.amount(M)
@@ -90,7 +90,7 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if(istype(O,/obj/item/stack/sheet))
 		. = 1
-		if(!is_insertion_ready(user))
+		if(!is_insertion_ready(user) || busy)
 			return
 		if(!materials.has_space( materials.get_item_material_amount(O) ))
 			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"

@@ -132,6 +132,29 @@
 	duration = 5
 
 
+/obj/effect/overlay/temp/ratvar
+	name = "ratvar's light"
+	duration = 8
+	randomdir = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/overlay/temp/ratvar/door
+	icon_state = "ratvardoorglow"
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+
+/obj/effect/overlay/temp/ratvar/beam
+	icon_state = "ratvarbeamglow"
+
+/obj/effect/overlay/temp/ratvar/beam/door
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+
+/obj/effect/overlay/temp/ratvar/wall
+	icon_state = "ratvarwallglow"
+
+/obj/effect/overlay/temp/ratvar/floor
+	icon_state = "ratvarfloorglow"
+
+
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"

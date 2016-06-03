@@ -250,7 +250,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, attack_not_jump = 1)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 //Wishgranter Exile
 
@@ -356,7 +356,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, attack_not_jump = 1)
+		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	var/golem_surname = pick(golem_names)

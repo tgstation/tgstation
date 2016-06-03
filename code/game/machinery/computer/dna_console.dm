@@ -398,11 +398,17 @@
 						if("se")
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
+								var/powers = 0
 								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
 										I.add_mutations.Add(HM)
+										if(HM in good_mutations)
+											powers += 1
+										if(HM in bad_mutations + not_good_mutations)
+											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
+								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)

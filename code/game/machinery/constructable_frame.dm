@@ -62,9 +62,6 @@
 	return amt
 
 /obj/structure/frame/machine/attackby(obj/item/P, mob/user, params)
-	if(P.crit_fail)
-		user << "<span class='warning'>This part is faulty, you cannot add this to the machine!</span>"
-		return
 	switch(state)
 		if(1)
 			if(istype(P, /obj/item/weapon/circuitboard/machine))
@@ -193,11 +190,10 @@
 				for(var/path in req_components)
 					while(req_components[path] > 0 && (locate(path) in part_list))
 						var/obj/item/part = (locate(path) in part_list)
-						if(!part.crit_fail)
-							added_components[part] = path
-							replacer.remove_from_storage(part, src)
-							req_components[path]--
-							part_list -= part
+						added_components[part] = path
+						replacer.remove_from_storage(part, src)
+						req_components[path]--
+						part_list -= part
 
 				for(var/obj/item/weapon/stock_parts/part in added_components)
 					components += part
@@ -268,7 +264,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/smes
 	name = "circuit board (SMES)"
 	build_path = /obj/machinery/power/smes
-	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/cell = 5,
@@ -277,7 +273,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/teleporter_hub
 	name = "circuit board (Teleporter Hub)"
 	build_path = /obj/machinery/teleport/hub
-	origin_tech = "programming=3;engineering=5;bluespace=5;materials=4"
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
 							/obj/item/weapon/ore/bluespace_crystal = 3,
 							/obj/item/weapon/stock_parts/matter_bin = 1)
@@ -285,7 +281,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/teleporter_station
 	name = "circuit board (Teleporter Station)"
 	build_path = /obj/machinery/teleport/station
-	origin_tech = "programming=4;engineering=4;bluespace=4"
+	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 2,
@@ -294,7 +290,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/chem_dispenser
 	name = "circuit board (Portable Chem Dispenser)"
 	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;engineering=4;programming=4;plasmatech=3;biotech=3"
+	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
@@ -305,7 +301,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 /obj/item/weapon/circuitboard/machine/telesci_pad
 	name = "circuit board (Telepad)"
 	build_path = /obj/machinery/telepad
-	origin_tech = "programming=4;engineering=3;materials=3;bluespace=4"
+	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
 	req_components = list(
 							/obj/item/weapon/ore/bluespace_crystal = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,

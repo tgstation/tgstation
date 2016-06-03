@@ -23,6 +23,7 @@
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
 
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Summon Cult Wall"
 	desc = "This spell constructs a cult wall"
@@ -37,6 +38,7 @@
 	action_background_icon_state = "bg_cult"
 
 	summon_type = list(/turf/closed/wall/mineral/cult/artificer) //we don't want artificer-based runed metal farms
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"

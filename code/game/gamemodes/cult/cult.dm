@@ -29,6 +29,8 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
+	if(mind.enslaved_to)
+		return 0
 	return 1
 
 /datum/game_mode/cult

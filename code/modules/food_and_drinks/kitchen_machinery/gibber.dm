@@ -54,7 +54,7 @@
 /obj/item/weapon/circuitboard/machine/gibber
 	name = "circuit board (Gibber)"
 	build_path = /obj/machinery/gibber
-	origin_tech = "programming=1"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -235,5 +235,3 @@
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		src.operating = 0
 		update_icon()
-
-

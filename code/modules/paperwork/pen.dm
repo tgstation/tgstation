@@ -82,7 +82,7 @@
  * Sleepypens
  */
 /obj/item/weapon/pen/sleepy
-	origin_tech = "materials=2;syndicate=5"
+	origin_tech = "engineering=4;syndicate=2"
 	flags = OPENCONTAINER
 
 
@@ -107,7 +107,7 @@
  * (Alan) Edaggers
  */
 /obj/item/weapon/pen/edagger
-	origin_tech = "combat=3;syndicate=5"
+	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = 0
 

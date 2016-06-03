@@ -231,6 +231,15 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
+/proc/is_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+
+/proc/is_head_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+
+/proc/is_revolutionary_in_general(mob/M)
+	return is_revolutionary(M) || is_head_revolutionary(M)
+
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0
