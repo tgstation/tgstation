@@ -554,31 +554,32 @@
 		for(var/atom/movable/AM in T)
 			if(isliving(AM) && (!(AM in hurt_mobs)))
 				hurt_mobs |= AM
-				if(ishuman(AM))
-					var/mob/living/M = AM
-					M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple and thrown clear!</span>",
+				var/mob/living/M = AM
+				if(M.buckled)
+					M.bucked.unbuckle_mob(M, 1)
+				if(M.pulledby)
+					M.pulledby.stop_pulling()
+				M.stop_pulling()
+				M.visible_message("<span class='warning'>[M] is hit by \
+						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
-						crushing pressure as the space around you ripples.\
-						</span>")
-
+						crushing pressure as the space around you ripples.</span>")
+				if(iscarbon(M))
 					M.Paralyse(10)
-					M.apply_damage(60, BRUTE, "chest")
-					M.apply_damage(60, BRUTE, "head")
-					M.anchored = 0
+					M.apply_damage(40, BRUTE, "chest")
+					M.apply_damage(40, BRUTE, "head")
+					M.apply_damage(10, BRUTE, "l_leg")
+					M.apply_damage(10, BRUTE, "r_leg")
+					M.apply_damage(10, BRUTE, "l_arm")
+					M.apply_damage(10, BRUTE, "r_arm")
 				else
-					var/mob/M = AM
-					M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple and is torn into pieces!</span>",
-						"<span class='userdanger'>You are torn into pieces by \
-						bluespace churn.</span>")
-					M.gib()
-					continue
+					M.ex_act(1)
 
-			if(!AM.anchored)
-				step(AM, dir)
-			else
-				qdel(AM)
+			if(AM)
+				if(!AM.anchored)
+					step(AM, dir)
+				else
+					qdel(AM)
 /*
 //used to check if atom/A is within the shuttle's bounding box
 /obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
