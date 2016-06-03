@@ -117,7 +117,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/hydroponics/soil,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/camera{
 	c_tag = "Prison Common Room";
 	network = list("SS13","Prison")
@@ -14595,7 +14595,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/hatchet,
 /obj/item/weapon/crowbar,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
@@ -16092,7 +16092,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -16106,7 +16106,7 @@
 "aIT" = (
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/structure/table/glass,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -35566,7 +35566,7 @@
 /area/maintenance/aft)
 "bAL" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /turf/open/floor/plating,
 /area/storage/tech)
