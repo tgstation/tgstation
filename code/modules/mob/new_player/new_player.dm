@@ -29,7 +29,7 @@
 
 	if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 		if(ready)
-			output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+			output += "<p>\[ <bjoined_player_list>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
 		else
 			output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
 
@@ -317,7 +317,7 @@
 	else
 		character.Robotize()
 
-	joined_player_list += character.ckey
+	joined_player_list += character.mind
 
 	if(config.allow_latejoin_antagonists)
 		switch(SSshuttle.emergency.mode)
