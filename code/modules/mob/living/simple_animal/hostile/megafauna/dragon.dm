@@ -382,7 +382,8 @@
 	..()
 	if(lava_cooldown > world.time)
 		return
-	if(target && istype(target, /turf/open) && target in view(7,user))
+	var/turf/T = get_turf(user)
+	if(target && istype(target, /turf/open) && target in view(7,T))
 		var/turf/open/O = target
 		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
 		O.ChangeTurf(/turf/open/floor/plating/lava/smooth)
