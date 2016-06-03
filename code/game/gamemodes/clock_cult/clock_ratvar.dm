@@ -2,6 +2,7 @@
 	name = "massive construct"
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
+	density = FALSE
 
 /obj/structure/clockwork/massive/New()
 	..()
@@ -259,9 +260,10 @@
 	return 0
 
 /obj/structure/window/ratvar_act() //Windows turn into Ratvarian windows
-	var/obj/structure/window/reinforced/clockwork/C = new(get_turf(src))
-	C.dir = dir
-	C.fulltile = fulltile
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
 	qdel(src)
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	return 0

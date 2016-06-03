@@ -776,7 +776,7 @@ Sorry Giacom. Please don't be mad :(
 	if(is_servant_of_ratvar(src) && !stat)
 		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
 		adjustBruteLoss(35)
-		if(reagents)
+		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return 0
 	if(client)

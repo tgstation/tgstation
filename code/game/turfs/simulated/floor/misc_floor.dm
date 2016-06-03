@@ -111,3 +111,39 @@
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
+
+//Clockwork floor: Slowly heals conventional damage on nearby servants.
+/turf/open/floor/clockwork
+	name = "clockwork floor"
+	desc = "Tightly-pressed brass tiles. They emit minute vibration."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clockwork_floor"
+
+/turf/open/floor/clockwork/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	SSobj.processing += src
+	clockwork_construction_value++
+
+/turf/open/floor/clockwork/Destroy()
+	SSobj.processing -= src
+	clockwork_construction_value--
+	..()
+
+/turf/open/floor/clockwork/process()
+	for(var/mob/living/L in src)
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+			continue
+		L.adjustBruteLoss(-1)
+		L.adjustFireLoss(-1)
+
+/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		if(!do_after(user, 70 / I.toolspeed, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
+		make_plating()
+		return 1
+	..()

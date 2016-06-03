@@ -490,3 +490,27 @@
 
 /obj/structure/window/shuttle/tinted
 	opacity = TRUE
+
+/obj/structure/window/reinforced/clockwork
+	name = "ratvarian window"
+	desc = "A paper-thin pane of translucent yet reinforced brass."
+	icon = 'icons/obj/clockwork_objects.dmi'
+	icon_state = "clockwork_window_single"
+	debris = list(/obj/item/clockwork/component/vanguard_cogwheel)
+
+/obj/structure/window/reinforced/clockwork/New(loc, direct)
+	..()
+	if(!fulltile)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		if(direct)
+			dir = direct
+			E.dir = direct
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+
+/obj/structure/window/reinforced/clockwork/fulltile
+	icon_state = "clockwork_window"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	fulltile = 1
+	dir = 5
