@@ -53,12 +53,6 @@ var/list/exception = list(
 	/obj/machinery/atmospherics/unary/tank
 	)
 
-/client/verb/testflaticon(atom/A as mob|obj|turf)
-	set name = "hey"
-	var/dir = input("Hello here is the dir", "Dir") as num
-	var/icon/I = getFlatIcon(A, dir)
-	usr << browse(bicon(I), "window=hi")
-
 proc/getFlatIcon(atom/A, dir, cache=1, exact=0) // 1 = use cache, 2 = override cache, 0 = ignore cache	//exact = 1 means the atom won't be rotated if it's a lying mob/living/carbon
 
 
