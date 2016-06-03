@@ -425,7 +425,7 @@
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
-	suit = /obj/item/clothing/suit/armor
+	suit = /obj/item/clothing/suit/armor/bulletproof
 	radio = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
