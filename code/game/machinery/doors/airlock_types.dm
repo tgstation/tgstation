@@ -337,11 +337,7 @@
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
-		if(M.client)
-			var/old_color = M.client.color
-			M.client.color = "#960000"
-			spawn(0)//animate is a delay, avoid delay, etc
-				animate(M.client,color = old_color, time = 20)
+		flash_color(M, color="#960000", time=20)
 		M.Weaken(2)
 		M.throw_at_fast(throwtarget, 5, 1,src)
 		return 0
