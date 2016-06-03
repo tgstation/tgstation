@@ -54,17 +54,17 @@ var/list/announcement_systems = list()
 
 	cut_overlays()
 	if(arrivalToggle)
-		add_overlay(greenlight, 0, 1)
+		add_overlay(greenlight)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		add_overlay(pinklight, 0, 1)
+		add_overlay(pinklight)
 	else
 		overlays -= pinklight
 
 	if(broken)
-		add_overlay(errorlight, 0, 1)
+		add_overlay(errorlight)
 	else
 		overlays -= errorlight
 

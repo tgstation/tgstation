@@ -947,16 +947,18 @@ var/global/list/friendly_animal_types = list()
 	overlays.Cut()
 	overlays += priority_overlays
 
-/atom/proc/add_overlay(image, priority = 0, paranoid = 0)
-	if(paranoid && (image in overlays))
+/atom/proc/add_overlay(image, priority = 0)
+	if(image in overlays)
 		return
+	var/list/new_overlays = overlays.Copy()
 	if(priority)
 		priority_overlays += image
-		overlays += image
+		new_overlays += image
 	else
-		overlays -= priority_overlays
-		overlays += image
-		overlays += priority_overlays
+		new_overlays -= priority_overlays
+		new_overlays += image
+		new_overlays += priority_overlays
+	overlays = new_overlays
 
 var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals

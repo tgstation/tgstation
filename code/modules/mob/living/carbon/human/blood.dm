@@ -300,7 +300,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/obj/effect/decal/cleanable/blood/drip/drop = B
 	if(istype(drop) && drips && drips.len && !large)
-		drop.add_overlay(drips, 0, 1)
+		drop.add_overlay(drips)
 		drop.drips |= drips
 
 	// If there's no data to copy, call it quits here.
