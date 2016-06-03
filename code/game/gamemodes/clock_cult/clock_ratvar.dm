@@ -278,8 +278,9 @@
 	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
 		adjustFireLoss(35)
-		adjust_fire_stacks(1)
-		IgniteMob()
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
 
 /mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
 	var/old_color = color
