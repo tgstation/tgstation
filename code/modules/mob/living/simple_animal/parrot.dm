@@ -943,7 +943,12 @@
 	status_flags = GODMODE
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
-
+	
 /mob/living/simple_animal/parrot/Poly/ghost/New()
 	memory_saved = 1 //At this point nothing is saved
+	..()
+
+/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_movement()
+	isliving(parrot_interest)
+		parrot_interest = null
 	..()
