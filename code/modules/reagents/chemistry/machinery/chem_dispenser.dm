@@ -47,7 +47,7 @@
 		"space_drugs",
 		"morphine",
 		"carpotoxin",
-		"regenerative_materia",
+		"mine_salve",
 		"toxin"
 	)
 
@@ -73,9 +73,11 @@
 		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
-	if(!emagged && emagged_reagents)
-		user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
-		dispensable_reagents |= emagged_reagents
+	if(emagged || !emagged_reagents)
+		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		return
+	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -177,7 +179,7 @@
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		overlays += icon_beaker
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
@@ -311,7 +313,8 @@
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
-		"morphine"
+		"mindbreaker",
+		"tirizene"
 	)
 
 
@@ -339,7 +342,8 @@
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
-		"minttoxin"
+		"minttoxin",
+		"atomicbomb"
 	)
 
 
