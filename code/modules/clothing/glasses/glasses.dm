@@ -287,7 +287,7 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = 1
-	flags = 2
+	flags = NODROP
 	invis_view = SEE_INVISIBLE_MINIMUM
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
