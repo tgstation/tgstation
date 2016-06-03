@@ -75,6 +75,16 @@
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/watertank/high
+	name = "high-capacity water tank"
+	desc = "A specialised high-pressure water tank for holding large amounts of water."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "hightank"
+
+/obj/structure/reagent_dispensers/watertank/high/New()
+	..()
+	reagents.add_reagent("water",100000)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A fuel tank."
