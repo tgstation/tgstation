@@ -63,7 +63,7 @@
 	return
 
 /obj/effect/mob_spawn/proc/create(ckey)
-	var/mob/living/M = new mob_type(loc) //living mobs only
+	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
 		M.gender = mob_gender
@@ -96,6 +96,8 @@
 	//Human specific stuff.
 	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/r_hand = null
+	var/l_hand = null
 	var/suit = null
 	var/shoes = null
 	var/gloves = null
@@ -146,6 +148,10 @@
 		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
 	if(back)
 		H.equip_to_slot_or_del(new back(H), slot_back)
+	if(l_hand)
+		H.equip_to_slot_or_del(new l_hand(H), slot_l_hand)
+	if(r_hand)
+		H.equip_to_slot_or_del(new r_hand(H), slot_r_hand)
 	if(has_id)
 		var/obj/item/weapon/card/id/W = new(H)
 		if(id_icon)
@@ -216,7 +222,6 @@
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 
-
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
 	mob_type = 	/mob/living/simple_animal/mouse
@@ -233,8 +238,6 @@
 	mob_gender = FEMALE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-
-
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
@@ -524,7 +527,6 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")
