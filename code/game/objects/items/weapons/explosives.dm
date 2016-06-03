@@ -91,9 +91,14 @@
 		log_game("[key_name(user)] planted [src.name] on [target.name] at ([target.x],[target.y],[target.z]) with [timer] second fuse")
 
 		target.overlays += image_overlay
+		SSobj.processing |= src
 		user << "<span class='notice'>You plant the bomb. Timer counting down from [timer].</span>"
 		spawn(timer*10)
 			explode()
+
+/obj/item/weapon/c4/process()
+	if(target && !(image_overlay in target.overlays))
+		target.overlays += image_overlay
 
 /obj/item/weapon/c4/proc/explode()
 	if(qdeleted(src))
