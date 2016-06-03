@@ -31,7 +31,7 @@
 "aE" = (/obj/machinery/gateway{dir = 5},/turf/simulated/floor/plating,/area)
 "aF" = (/obj/effect/landmark/corpse/mummy,/turf/simulated/floor/plating,/area/awaymission/tomb/tomb_of_rafid)
 "aG" = (/obj/machinery/gateway{dir = 8},/turf/simulated/floor/plating{tag = "icon-warnplate (WEST)"; icon_state = "warnplate"; dir = 8},/area)
-"aH" = (/obj/machinery/gateway/centeraway{calibrated = 0},/turf/simulated/floor/plating,/area)
+"aH" = (/obj/machinery/gateway/centeraway,/turf/simulated/floor/plating,/area)
 "aI" = (/obj/machinery/gateway{dir = 4},/turf/simulated/floor/plating,/area)
 "aJ" = (/mob/living/simple_animal/hostile/giant_spider/hunter,/turf/unsimulated/floor{icon_state = "asteroid"; name = "sand"},/area/awaymission/tomb/spider_cave)
 "aK" = (/turf/unsimulated/floor{dir = 6; icon_state = "asteroid2"; name = "sand"},/area/awaymission/tomb/spider_cave)
