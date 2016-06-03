@@ -1315,8 +1315,8 @@
 	desc = "You get the feeling that you shouldn't be standing here."
 	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
 	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -30
+	pixel_y = -30
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/effect/clockwork/judicial_marker/New()
