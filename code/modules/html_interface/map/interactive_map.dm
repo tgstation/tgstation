@@ -88,13 +88,10 @@ var/const/ALLOW_CENTCOMM = FALSE
 	C << browse_rsc('map_shared.css')
 	for (var/z = 1 to world.maxz)
 		if(z == CENTCOMM_Z) continue
-		C << browse_rsc(file("[getMinimapFile(z)].png"), "[getMinimapFile(z)].png")
+		C << browse_rsc(file("[getMinimapFile(z)].png"), "[map.nameShort][z].png")
 
 /proc/getMinimapFile(z)
-	return "[getMinimapShort()][z]"
-
-/proc/getMinimapShort()
-	return "data/minimaps/map_[map.nameLong]" //Missing only z
+	return "data/minimaps/map_[map.nameLong][z]"
 
 // Activate this to debug tile mismatches in the minimap.
 // This will store the full information on each tile and compare it the next time you run the minimap.
