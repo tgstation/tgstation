@@ -52,3 +52,4 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	filling_color = "#FFD700"
+	origin_tech = "biotech=4;materials=5"

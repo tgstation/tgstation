@@ -309,18 +309,19 @@ var/bomb_set
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
 	if(safety)
+		if(timing)
+			set_security_level(previous_level)
 		timing = 0
 		bomb_set = 0
-		set_security_level(previous_level)
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety)
+	if(safety && !bomb_set)
 		usr << "<span class='danger'>The safety is still on.</span>"
 		return
 	timing = !timing
-	previous_level = get_security_level()
 	if(timing)
+		previous_level = get_security_level()
 		bomb_set = 1
 		set_security_level("delta")
 	else

@@ -18,7 +18,7 @@
 	throw_range = 7
 	throw_speed = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
-	origin_tech = "magnets=1;engineering=1"
+	origin_tech = "magnets=1;engineering=2"
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	hitsound = 'sound/weapons/tap.ogg'
 	toolspeed = 1
@@ -33,6 +33,7 @@
 	var/detect_state = PROXIMITY_NONE
 	var/rangealert = 8	//Glows red when inside
 	var/rangewarning = 20 //Glows yellow when inside
+	origin_tech = "magnets=1;engineering=2;syndicate=1"
 
 /obj/item/device/multitool/ai_detect/New()
 	..()
