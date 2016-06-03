@@ -571,7 +571,7 @@
 	var/new_obj_type //The path of the new type of object to replace the old
 	var/alloy_cost = 0
 	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	if(istype(target, /turf/closed/wall) && !target.type in list(/turf/closed/wall/r_wall, /turf/closed/wall/clockwork))
+	if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall) && !istype(target, /turf/closed/wall/clockwork)) //This looks sloppy, but it's the only way
 		operation_time = 50
 		new_obj_type = /turf/closed/wall/clockwork
 		alloy_cost = 5

@@ -146,4 +146,4 @@
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
 		make_plating()
 		return 1
-	..()
+	return ..()

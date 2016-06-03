@@ -72,7 +72,7 @@
 		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
 		break_wall()
 		return 1
-	..()
+	return ..()
 
 /turf/closed/wall/clockwork/break_wall()
 	new/obj/item/clockwork/component/replicant_alloy(get_turf(src))

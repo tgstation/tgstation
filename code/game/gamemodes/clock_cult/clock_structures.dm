@@ -164,7 +164,7 @@
 		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 	var/component_to_withdraw = input(user, "Choose a component to withdraw.", name) as null|anything in possible_components
-	if(!user || !user.canUseTopic(src) || !component_to_withdraw)
+	if(!user || !user.canUseTopic(src) || !component_to_withdraw || !)
 		return 0
 	var/obj/item/clockwork/component/the_component
 	switch(component_to_withdraw)
@@ -229,11 +229,11 @@
 		damage_per_tick = 10
 		sight_range = 5
 	if(target)
-		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range)
+		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range || is_servant_of_ratvar(target))
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
-			if(ratvar_awakens)
+			if(ratvar_awakens && target)
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
 			dir = get_dir(get_turf(src), get_turf(target))
@@ -416,7 +416,7 @@
 				stored_alloy = max(0, stored_alloy - 2)
 		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
 			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
-			if(E.health == E.maxHealth || E.stat)
+			if(E.health == E.maxHealth || E.stat || !E.fatigue)
 				continue
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
@@ -503,8 +503,8 @@
 	desc = "You get the feeling that you shouldn't be standing here."
 	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
 	icon = 'icons/effects/96x96.dmi'
-	pixel_x = -30
-	pixel_y = -30
+	pixel_x = -32
+	pixel_y = -32
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/effect/clockwork/judicial_marker/New()
@@ -602,11 +602,7 @@
 	animate(src, transform = matrix() / 1.5, time = 10)
 	linked_gateway.transform = matrix() * 1.5
 	animate(linked_gateway, transform = matrix() / 1.5, time = 10)
-	if(ismob(A))
-		var/mob/M = A
-		M.forceMove(get_turf(linked_gateway))
-	else
-		A.loc = get_turf(linked_gateway)
+	A.forceMove(get_turf(linked_gateway))
 	uses = max(0, uses - 1)
 	linked_gateway.uses = max(0, uses - 1)
 	spawn(10)

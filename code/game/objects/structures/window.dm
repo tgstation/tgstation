@@ -496,7 +496,6 @@
 	desc = "A paper-thin pane of translucent yet reinforced brass."
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_window_single"
-	debris = list(/obj/item/clockwork/component/vanguard_cogwheel)
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
 	..()
@@ -507,6 +506,10 @@
 			E.dir = direct
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
 
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
