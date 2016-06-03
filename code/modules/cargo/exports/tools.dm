@@ -99,20 +99,3 @@
 	cost = 5
 	unit_name = "radio"
 	export_types = list(/obj/item/device/radio)
-
-
-// High-tech tools.
-/datum/export/rcd
-	cost = 1000
-	unit_name = "rapid construction device"
-	export_types = list(/obj/item/weapon/rcd)
-
-/datum/export/rcd_ammo
-	cost = 30
-	unit_name = "compressed matter cardridge"
-	export_types = list(/datum/design/rcd_ammo)
-
-/datum/export/rpd
-	cost = 1000
-	unit_name = "rapid piping device"
-	export_types = list(/obj/item/weapon/pipe_dispenser)
