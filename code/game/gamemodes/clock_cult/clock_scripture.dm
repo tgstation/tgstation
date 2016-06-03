@@ -67,10 +67,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(multiple_invokers_used && !multiple_invokers_optional)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
-			if(is_servant_of_ratvar(L))
+			if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 				nearby_servants++
 		if(nearby_servants < invokers_required)
-			invoker << "<span class='warning'>There aren't enough servants nearby ([nearby_servants]/[invokers_required])!</span>"
+			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
 			return 0
 	return 1
 
@@ -201,12 +201,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
 				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
-				L.m_intent = "walk"
-			else
+			else //Cultists take extra burn damage
 				L << "<span class='warning'>Your legs burn with pain!</span>"
-				L.m_intent = "walk"
 				L.apply_damage(5, BURN, "l_leg")
 				L.apply_damage(5, BURN, "r_leg")
+			L.m_intent = "walk"
 
 
 
