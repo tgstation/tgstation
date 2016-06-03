@@ -556,7 +556,7 @@
 				hurt_mobs |= AM
 				var/mob/living/M = AM
 				if(M.buckled)
-					M.bucked.unbuckle_mob(M, 1)
+					M.buckled.unbuckle_mob(M, 1)
 				if(M.pulledby)
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
@@ -564,22 +564,18 @@
 						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
 						crushing pressure as the space around you ripples.</span>")
-				if(iscarbon(M))
+				if(M.anchored)
+					M.gib()
+				else
 					M.Paralyse(10)
-					M.apply_damage(40, BRUTE, "chest")
-					M.apply_damage(40, BRUTE, "head")
-					M.apply_damage(10, BRUTE, "l_leg")
-					M.apply_damage(10, BRUTE, "r_leg")
-					M.apply_damage(10, BRUTE, "l_arm")
-					M.apply_damage(10, BRUTE, "r_arm")
-				else
-					M.ex_act(1)
+					M.ex_act(2)
+					step(M, dir)
+				continue
 
-			if(AM)
-				if(!AM.anchored)
-					step(AM, dir)
-				else
-					qdel(AM)
+			if(!AM.anchored)
+				step(AM, dir)
+			else
+				qdel(AM)
 /*
 //used to check if atom/A is within the shuttle's bounding box
 /obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
