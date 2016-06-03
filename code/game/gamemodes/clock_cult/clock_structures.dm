@@ -164,7 +164,7 @@
 		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
 	var/component_to_withdraw = input(user, "Choose a component to withdraw.", name) as null|anything in possible_components
-	if(!user || !user.canUseTopic(src) || !component_to_withdraw || !)
+	if(!user || !user.canUseTopic(src) || !component_to_withdraw)
 		return 0
 	var/obj/item/clockwork/component/the_component
 	switch(component_to_withdraw)
