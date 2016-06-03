@@ -462,9 +462,10 @@
 		return ..()
 
 /obj/structure/clockwork/mending_motor/proc/toggle(mob/living/user)
-	if(!user || !is_servant_of_ratvar(user))
-		return 0
-	user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
+	if(user)
+		if(!is_servant_of_ratvar(user))
+			return 0
+		user.visible_message("<span class='notice'>[user] [active ? "en" : "dis"]ables [src].</span>", "<span class='brass'>You [active ? "en" : "dis"]able [src].</span>")
 	active = !active
 	if(active)
 		icon_state = initial(icon_state)
