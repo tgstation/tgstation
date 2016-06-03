@@ -173,6 +173,8 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
 	burn_state = FLAMMABLE
+	force = 0
+	throwforce = 0
 
 /obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
 	recipes = cloth_recipes
