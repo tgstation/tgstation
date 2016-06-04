@@ -108,11 +108,8 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/golden
-	name = "golden screwdriver"
-	desc = "Some folks are born, golden screwdriver in hand."
-	icon_state = "g_screwdriver"
-	item_state = "g_screwdriver"
-	toolspeed = 3
+	name = "high-speed screwdriver"
+	toolspeed = 2.5
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
 	if(!icon_state)
