@@ -214,6 +214,10 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
+			var/area/AR = get_area(user)
+			if(initial(AR.name) == "Space" || istype(Turf, /turf/open/space) || user.z != ZLEVEL_STATION)
+				user << "<span class='warning'>The rune cannot be scribed this far from the station!</span>"
+				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
 				user << "<span class='cult'>You decide to prepare further before scribing the rune.</span>"
@@ -224,8 +228,8 @@ This file contains the arcane tome files.
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
 				var/obj/machinery/shield/N = new(T)
-				N.name = "Rune-Scriber's Shield"
-				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
+				N.name = "sanguine shield"
+				N.desc = "A potent shield summoned by cultists to defend their rites."
 				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
