@@ -192,7 +192,7 @@
 	while(TRUE)
 		world << 'sound/magic/clockwork/ratvar_attack.ogg'
 		sleep(5.2)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
 				M.client.color = rgb(150, 100, 0)
 				spawn(1)
@@ -206,7 +206,7 @@
 		sleep(rand(2,5))
 		world << 'sound/magic/clockwork/narsie_attack.ogg'
 		sleep(7.4)
-		for(var/mob/M in mob_list)
+		for(var/mob/M in player_list)
 			if(M.client)
 				M.client.color = rgb(200, 0, 0)
 				spawn(1)
