@@ -645,7 +645,6 @@
 		alloy_cost = 7
 		valid_target = TRUE
 	else if(istype(target, /obj/item/clockwork/component/replicant_alloy))
-		operation_time = 30
 		new_obj_type = /obj/effect/overlay/temp/ratvar/beam/itemconsume
 		alloy_cost = -10
 		valid_target = TRUE
@@ -667,7 +666,7 @@
 		operation_time *= 0.5
 	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
-	if(!do_after(user, operation_time, target = target))
+	if(operation_time && !do_after(user, operation_time, target = target))
 		return 0
 	if(stored_alloy - alloy_cost < 0) //Check again to prevent bypassing via spamclick
 		return 0
