@@ -49,6 +49,12 @@
 		return 1
 	return 0
 
+/obj/structure/clockwork/narsie_act()
+	if(take_damage(25, BRUTE) && src) //if we still exist
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
 /obj/structure/clockwork/ex_act(severity)
 	var/damage = 0
 	switch(severity)
