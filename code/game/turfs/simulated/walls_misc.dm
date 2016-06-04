@@ -47,6 +47,7 @@
 	icon_state = "clockwork_wall"
 	canSmoothWith = list(/turf/closed/wall/clockwork)
 	smooth = SMOOTH_MORE
+	explosion_block = 2
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -100,11 +101,11 @@
 	else
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		var/newgirder = break_wall()
-		if(newgirder) //maybe we don't /want/ a girder!
+		if(newgirder) //maybe we want a gear!
 			transfer_fingerprints_to(newgirder)
 		ChangeTurf(/turf/open/floor/clockwork)
 
-	for(var/obj/O in src.contents) //Eject contents!
+	for(var/obj/O in src) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)

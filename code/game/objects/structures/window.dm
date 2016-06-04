@@ -74,11 +74,12 @@
 		shard.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/window/ratvar_act()
-	if(!fulltile)
-		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-	else
-		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-	qdel(src)
+	if(prob(20))
+		if(!fulltile)
+			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+		else
+			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+		qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -504,6 +505,7 @@
 	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
 	maxhealth = 100
+	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
 	..()
@@ -525,7 +527,7 @@
 	return 0
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
-	take_damage(rand(15, 45), BURN)
+	take_damage(rand(25, 75), BRUTE)
 	if(src)
 		var/previouscolor = color
 		color = "#960000"

@@ -142,6 +142,9 @@
 	icon_state = "ratvardoorglow"
 	layer = CLOSED_FIREDOOR_LAYER //above closed doors
 
+/obj/effect/overlay/temp/ratvar/door/window
+	icon_state = "ratvarwindoorglow"
+
 /obj/effect/overlay/temp/ratvar/beam
 	icon_state = "ratvarbeamglow"
 

@@ -345,6 +345,13 @@
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
 
+/obj/machinery/door/airlock/cult/ratvar_act()
+	..()
+	if(src)
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
 
@@ -397,6 +404,13 @@
 
 /obj/machinery/door/airlock/clockwork/ratvar_act()
 	return 0
+
+/obj/machinery/door/airlock/clockwork/narsie_act()
+	..()
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
 
 /obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))

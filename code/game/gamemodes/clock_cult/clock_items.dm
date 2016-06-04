@@ -560,9 +560,9 @@
 	proselytize(target, user)
 
 /obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	if(ratvar_awakens) //Summoning Ratvar doesn't make it free, but it might as well
-		amount = 1
-	stored_alloy = max(0, min(max_alloy, stored_alloy + amount))
+	if(ratvar_awakens) //Ratvar makes it free
+		amount = 0
+	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
 	return 1
 
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
@@ -571,14 +571,17 @@
 	var/operation_time = 0 //In deciseconds, how long the proselytization will take
 	var/new_obj_type //The path of the new type of object to replace the old
 	var/alloy_cost = 0
+	var/spawn_dir = 2
+	var/dir_in_new = FALSE
 	var/valid_target = FALSE //If the proselytizer will actually function on the object
+	var/target_type = target.type
 	if(istype(target, /turf/closed/wall/clockwork))
 		operation_time = 80
 		new_obj_type = /turf/open/floor/clockwork
 		alloy_cost = -4
 		valid_target = TRUE
 	else if(istype(target, /turf/open/floor/clockwork))
-		operation_time = 80
+		operation_time = 100
 		new_obj_type = /turf/closed/wall/clockwork
 		alloy_cost = 4
 		valid_target = TRUE
@@ -605,28 +608,46 @@
 		var/obj/structure/window/W = target
 		if(W.fulltile)
 			new_obj_type = /obj/structure/window/reinforced/clockwork/fulltile
-			operation_time = 20
-			alloy_cost = 5
-			valid_target = TRUE
+			operation_time = 30
+		else
+			new_obj_type = /obj/structure/window/reinforced/clockwork
+			spawn_dir = W.dir
+			dir_in_new = TRUE
+			operation_time = 15
+		alloy_cost = 5
+		valid_target = TRUE
+	else if(istype(target, /obj/machinery/door/window) && !istype(target, /obj/machinery/door/window/clockwork))
+		var/obj/machinery/door/window/C = target
+		new_obj_type = /obj/machinery/door/window/clockwork
+		spawn_dir = C.dir
+		dir_in_new = TRUE
+		operation_time = 30
+		alloy_cost = 5
+		valid_target = TRUE
 	else if(istype(target, /obj/structure/grille) && !istype(target, /obj/structure/grille/ratvar))
 		var/obj/structure/grille/G = target
 		if(G.destroyed)
 			new_obj_type = /obj/structure/grille/ratvar/broken
-			operation_time = 10
+			operation_time = 5
 		else
 			new_obj_type = /obj/structure/grille/ratvar
 			operation_time = 15
 		alloy_cost = 0
 		valid_target = TRUE
 	else if(istype(target, /obj/structure/clockwork/wall_gear))
-		operation_time = 30
+		operation_time = 20
 		new_obj_type = /obj/item/clockwork/component/replicant_alloy
 		alloy_cost = 6
 		valid_target = TRUE
 	else if(istype(target, /obj/item/clockwork/alloy_shards))
-		operation_time = 30
+		operation_time = 10
 		new_obj_type = /obj/item/clockwork/component/replicant_alloy
 		alloy_cost = 7
+		valid_target = TRUE
+	else if(istype(target, /obj/item/clockwork/component/replicant_alloy))
+		operation_time = 30
+		new_obj_type = /obj/effect/overlay/temp/ratvar/beam/itemconsume
+		alloy_cost = -10
 		valid_target = TRUE
 	if(!uses_alloy)
 		alloy_cost = 0
@@ -642,6 +663,8 @@
 	if(stored_alloy - alloy_cost > 100)
 		user << "<span class='warning'>You have too much replicant alloy stored to proselytize [target]!</span>"
 		return 0
+	if(ratvar_awakens) //Ratvar makes it faster
+		operation_time *= 0.5
 	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(!do_after(user, operation_time, target = target))
@@ -650,6 +673,8 @@
 		return 0
 	if(stored_alloy - alloy_cost > 100)
 		return 0
+	if(!target || target.type != target_type)
+		return 0
 	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
 	"<span class='brass'>You proselytize [target].</span>")
 	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -657,7 +682,11 @@
 		var/turf/T = target
 		T.ChangeTurf(new_obj_type)
 	else
-		new new_obj_type(get_turf(target))
+		if(dir_in_new)
+			new new_obj_type(get_turf(target), spawn_dir)
+		else
+			var/atom/A = new new_obj_type(get_turf(target))
+			A.dir = spawn_dir
 		qdel(target)
 	modify_stored_alloy(-alloy_cost)
 	return 1

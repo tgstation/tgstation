@@ -129,11 +129,13 @@
 	takes_damage = FALSE
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
+	var/proselytize_range = 10
+
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
 	SSobj.processing += src
-	world << "<span class='heavy_brass'><font size=7>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	ratvar_awakens = TRUE
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
@@ -142,11 +144,13 @@
 	spawn(50)
 		SSshuttle.emergency.request(null, 0.3)
 
+
 /obj/structure/clockwork/massive/ratvar/Destroy()
 	SSobj.processing -= src
-	world << "<span class='heavy_brass'><font size=7>\"NO! I will not... be...</font> <font size=6>banished...</font> <font size=5>again...\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()
+
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
@@ -155,10 +159,20 @@
 	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
 	R.key = O.key
 
+
+/obj/structure/clockwork/massive/ratvar/Bump(atom/A)
+	forceMove(get_turf(A))
+	A.ratvar_act()
+
+
+/obj/structure/clockwork/massive/ratvar/Process_Spacemove()
+	return clashing
+
+
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
-		return 0
-	for(var/atom/A in range(7, src))
+		return
+	for(var/atom/A in range(proselytize_range, src))
 		A.ratvar_act()
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
@@ -183,7 +197,7 @@
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
-	forceMove(get_step(src, dir_to_step_in))
+	step(src, dir_to_step_in)
 
 /obj/structure/clockwork/massive/ratvar/narsie_act()
 	if(clashing)

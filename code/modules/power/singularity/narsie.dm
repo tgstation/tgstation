@@ -20,7 +20,6 @@
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
-	move_self = 1 //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
@@ -47,13 +46,20 @@
 
 /obj/singularity/narsie/process()
 	if(clashing)
-		return 0
+		return
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	move()
+	if(istype(target, /obj/structure/clockwork/massive/ratvar)
+		move(get_dir(src,target)) //Oh, it's you again.
+	else
+		move()
 	if(prob(25))
 		mezzer()
+
+
+/obj/singularity/narsie/Process_Spacemove()
+	return clashing
 
 
 /obj/singularity/narsie/Bump(atom/A)
