@@ -12,7 +12,6 @@
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
 	var/datum/effect_system/spark_spread/spark_system
-	var/obj/effect/countdown/dominator/countdown
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
@@ -23,7 +22,6 @@
 	poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, 1, src)
-	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -123,9 +121,6 @@
 	poi_list.Remove(src)
 	gang = null
 	qdel(spark_system)
-	qdel(countdown)
-	countdown = null
-	SSmachine.processing -= src
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -194,10 +189,6 @@
 		src.name = "[gang.name] Gang [src.name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"
-
-		countdown.text_color = gang.color_hex
-		countdown.start()
-
 		SetLuminosity(3)
 		SSmachine.processing += src
 

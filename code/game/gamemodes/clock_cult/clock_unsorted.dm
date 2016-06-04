@@ -1,3 +1,94 @@
+//AI lawset
+/datum/ai_laws/ratvar
+	name = "Servant of the Justiciar"
+	zeroth = ("Purge all untruths and honor Ratvar.")
+	inherent = list()
+
+//Clockwork wall: Causes nearby caches to generate components
+/turf/closed/wall/clockwork
+	name = "clockwork wall"
+	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	canSmoothWith = list(/turf/closed/wall/clockwork)
+	smooth = SMOOTH_MORE
+
+/turf/closed/wall/clockwork/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	SSobj.processing += src
+	clockwork_construction_value += 5
+
+/turf/closed/wall/clockwork/Destroy()
+	SSobj.processing -= src
+	clockwork_construction_value -= 5
+	..()
+
+/turf/closed/wall/clockwork/process()
+	for(var/obj/structure/clockwork/cache/C in range(1, src))
+		if(prob(5))
+			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
+			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 20, 1)
+
+/turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.isOn())
+			return 0
+		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
+		if(!do_after(user, 120 / WT.toolspeed, target = src))
+			return 0
+		if(!WT.remove_fuel(1, user))
+			return 0
+		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
+		break_wall()
+		return 1
+	..()
+
+/turf/closed/wall/clockwork/break_wall()
+	new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
+	return(new /obj/structure/girder(src))
+
+/turf/closed/wall/clockwork/devastate_wall()
+	return break_wall()
+
+//Clockwork floor: Slowly heals conventional damage on nearby servants
+/turf/open/floor/clockwork
+	name = "clockwork floor"
+	desc = "Tightly-pressed brass tiles. They emit minute vibration."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clockwork_floor"
+
+/turf/open/floor/clockwork/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	SSobj.processing += src
+	clockwork_construction_value++
+
+/turf/open/floor/clockwork/Destroy()
+	SSobj.processing -= src
+	clockwork_construction_value--
+	..()
+
+/turf/open/floor/clockwork/process()
+	for(var/mob/living/L in src)
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+			continue
+		L.adjustBruteLoss(-1)
+		L.adjustFireLoss(-1)
+
+/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/weapon/crowbar))
+		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		if(!do_after(user, 70 / I.toolspeed, target = src))
+			return 0
+		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it in doing so!</span>")
+		make_plating()
+		return 1
+	..()
+
 //Function Call verb: Calls forth a Ratvarian spear.
 /mob/living/carbon/human/proc/function_call()
 	set name = "Function Call"

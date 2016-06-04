@@ -95,6 +95,17 @@
 						i++
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
+	if (!powered())
+		return
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		if(istype(I) && !istype(inserted_id))
+			if(!user.drop_item())
+				return
+			I.loc = src
+			inserted_id = I
+			interact(user)
+		return
 	if(exchange_parts(user, W))
 		return
 
@@ -109,17 +120,6 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-	if (!powered())
-		return
-	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_hand()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
-				return
-			I.loc = src
-			inserted_id = I
-			interact(user)
-		return
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/deconstruction()

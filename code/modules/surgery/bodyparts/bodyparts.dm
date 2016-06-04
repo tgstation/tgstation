@@ -288,7 +288,6 @@
 		be possessed by the devil? This arm appears to be possessed by no \
 		one though."
 	icon_state = "l_arm"
-	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
@@ -300,7 +299,6 @@
 	desc = "Over 87% of humans are right handed. That figure is much lower \
 		among humans missing their right arm."
 	icon_state = "r_arm"
-	attack_verb = list("slapped", "punched")
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
@@ -312,7 +310,6 @@
 	desc = "Some athletes prefer to tie their left shoelaces first for good \
 		luck. In this instance, it probably would not have helped."
 	icon_state = "l_leg"
-	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "l_leg"
 	body_part = LEG_LEFT
@@ -326,7 +323,6 @@
 		The hokey pokey has certainly changed a lot since space colonisation."
 	// alternative spellings of 'pokey' are availible
 	icon_state = "r_leg"
-	attack_verb = list("kicked", "stomped")
 	max_damage = 50
 	body_zone = "r_leg"
 	body_part = LEG_RIGHT

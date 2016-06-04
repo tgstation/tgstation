@@ -154,12 +154,6 @@
 /obj/effect/overlay/temp/ratvar/floor
 	icon_state = "ratvarfloorglow"
 
-/obj/effect/overlay/temp/ratvar/window
-	icon_state = "ratvarwindowglow"
-	layer = ABOVE_OBJ_LAYER //To be above the window it creates
-
-/obj/effect/overlay/temp/ratvar/window/single
-	icon_state = "ratvarwindowglow_s"
 
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"

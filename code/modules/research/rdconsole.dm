@@ -426,7 +426,7 @@ proc/CallMaterialName(ID)
 		var/coeff = linked_imprinter.efficiency_coeff
 		var/g2g = 1
 		if(linked_imprinter)
-			if(linked_imprinter.busy)
+			if(linked_lathe.busy)
 				usr << "<span class='danger'>Circuit Imprinter is busy at the moment.</span>"
 				return
 			var/datum/design/being_built = files.known_designs[href_list["imprint"]]

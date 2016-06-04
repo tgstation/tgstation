@@ -18,7 +18,6 @@
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
 	var/delayedlittle  = FALSE	//activation wire pulsed?
-	var/obj/effect/countdown/syndicatebomb/countdown
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -42,7 +41,6 @@
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
-	countdown = new(src)
 	..()
 
 /obj/machinery/syndicatebomb/Destroy()

@@ -33,11 +33,9 @@ var/bomb_set
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
-	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
-	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	SSobj.processing -= core
@@ -47,9 +45,6 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/Destroy()
 	poi_list -= src
-	nuke_list -= src
-	qdel(countdown)
-	countdown = null
 	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct
@@ -210,7 +205,6 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
-		countdown.start()
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -221,8 +215,7 @@ var/bomb_set
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				attack_hand(M)
-	else
-		countdown.stop()
+	return
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
