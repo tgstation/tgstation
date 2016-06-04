@@ -42,17 +42,14 @@
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
 
-		if(prob(50))
-			if(health < maxHealth/3)
-				double_spiral()
-			else
-				visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
-				if(prob(50))
-					spiral_shoot()
-				else
-					spiral_shoot(1)
+		if(health < maxHealth/3)
+			double_spiral()
 		else
-			seeking_laser()
+			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
+			if(prob(50))
+				spiral_shoot()
+			else
+				spiral_shoot(1)
 
 	else if(prob(20))
 		random_shots()
