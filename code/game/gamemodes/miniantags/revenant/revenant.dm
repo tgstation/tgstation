@@ -149,7 +149,8 @@
 		if(istype(M, /mob/living/simple_animal/revenant))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 	return
 
 

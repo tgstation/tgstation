@@ -1,0 +1,6 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Clicking the (F) link when an AI talks in binary chat will
+follow its camera eye, the same as when (F) is clicked for its radio
+chat."
