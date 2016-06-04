@@ -98,7 +98,3 @@
 		freq_listening |= i
 	..()
 
-/obj/machinery/telecomms/bus/preset_one/birdstation
-	name = "Bus"
-	autolinkers = list("processor1", "common")
-	freq_listening = list()

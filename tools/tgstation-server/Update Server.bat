@@ -41,7 +41,7 @@ if defined PUSHCHANGELOGTOGIT (
 		echo pushing compiled changelog to server
 		git add -u html/changelog.html
 		git add -u html/changelogs
-		git commit -m "Automatic changelog compile, [ci skip]"
+		git commit -m "Automatic changelog compile"
 		if %ERRORLEVEL% == 0 (
 			git push
 		)

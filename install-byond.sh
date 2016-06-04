@@ -1,15 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 set -e
-
-#If this is the build tools step, we do not bother to install/build byond
-if [ "$BUILD_TOOLS" = true ]; then
-  exit 0
-fi;
-
 if [ -d "$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin" ];
 then
   echo "Using cached directory."
-  exit 0
 else
   echo "Setting up BYOND."
   mkdir -p "$HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}"
@@ -18,9 +11,4 @@ else
   unzip byond.zip
   cd byond
   make here
-  cd ~/
-  exit 0
 fi
-
-#some variable not set correctly, panic
-exit 1

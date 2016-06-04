@@ -76,7 +76,6 @@
 	plant_type = PLANT_MUSHROOM
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
-	origin_tech = "biotech=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel
 	seed = /obj/item/seeds/angel
@@ -159,7 +158,6 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	filling_color = "#9370DB"
-	origin_tech = "biotech=4;programming=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/open/space))
@@ -230,7 +228,6 @@
 	icon_state = "glowshroom"
 	filling_color = "#00FA9A"
 	var/effect_path = /obj/effect/glowshroom
-	origin_tech = "biotech=4;plasmatech=6"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(istype(user.loc,/turf/open/space))
@@ -267,4 +264,3 @@
 	icon_state = "glowcap"
 	filling_color = "#00FA9A"
 	effect_path = /obj/effect/glowshroom/glowcap
-	origin_tech = "biotech=4;powerstorage=6;plasmatech=4"

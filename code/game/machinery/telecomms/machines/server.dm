@@ -186,6 +186,5 @@
 	freq_listening = list(SEC_FREQ)
 	autolinkers = list("security")
 
-/obj/machinery/telecomms/server/presets/common/birdstation/New()
-	..()
-	freq_listening = list()
+
+

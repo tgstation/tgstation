@@ -15840,7 +15840,6 @@
 	dir = 8;
 	dwidth = 8;
 	height = 9;
-	name = "Mini emergency shuttle";
 	width = 21
 	},
 /obj/docking_port/stationary{

@@ -20,7 +20,7 @@
 
 
 
-// Sell designs
+// Sell max reliablity designs
 /datum/export/design
 	cost = 2500
 	unit_name = "design data disk"
@@ -34,7 +34,9 @@
 	var/datum/design/design = disk.blueprint
 	if(design.id in researchDesigns)
 		return 0
-	return ..()
+	if(initial(design.reliability) < 100 && design.reliability >= 100)
+		return ..()
+	return 0
 
 /datum/export/design/sell_object(obj/O)
 	..()

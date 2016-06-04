@@ -106,8 +106,3 @@
 
 /turf/open/floor/noslip/MakeSlippery()
 	return
-
-/turf/open/floor/oldshuttle
-	icon = 'icons/turf/shuttleold.dmi'
-	icon_state = "floor"
-	floor_tile = /obj/item/stack/tile/plasteel

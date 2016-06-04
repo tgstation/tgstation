@@ -352,6 +352,8 @@ Class Procs:
 		M.state = 2
 		M.icon_state = "box_1"
 		for(var/obj/item/I in component_parts)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
 			I.loc = loc
 		qdel(src)
 
@@ -389,12 +391,10 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(!istype(W))
-		return
-	if((flags & NODECONSTRUCT) && !W.works_from_distance)
+	if(flags & NODECONSTRUCT)
 		return
 	var/shouldplaysound = 0
-	if(component_parts)
+	if(istype(W) && component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/weapon/circuitboard/machine/CB = locate(/obj/item/weapon/circuitboard/machine) in component_parts
 			var/P

@@ -14,8 +14,6 @@
 
 /turf/open/floor/plasteel/black
 	icon_state = "dark"
-/turf/open/floor/plasteel/airless/black
-	icon_state = "dark"
 /turf/open/floor/plasteel/black/side
 	icon_state = "black" //NOTICE ME SEMPAI: floors.dmi contains two sprites named black, remove the incorrect one
 /turf/open/floor/plasteel/black/corner
@@ -23,8 +21,6 @@
 
 
 /turf/open/floor/plasteel/white
-	icon_state = "white"
-/turf/open/floor/plasteel/airless/white
 	icon_state = "white"
 /turf/open/floor/plasteel/white/side
 	icon_state = "whitehall"
@@ -197,12 +193,14 @@
 
 /turf/open/floor/plasteel/warning
 	icon_state = "warning"
-/turf/open/floor/plasteel/airless/warning
-	icon_state = "warning"
 /turf/open/floor/plasteel/warning/corner
 	icon_state = "warningcorner"
-/turf/open/floor/plasteel/airless/warning/corner
-	icon_state = "warningcorner"
+
+
+/turf/open/floor/plasteel/warnplate
+	icon_state = "warnplate"
+/turf/open/floor/plasteel/warnplate/corner
+	icon_state = "warnplatecorner"
 
 
 /turf/open/floor/plasteel/warnwhite
@@ -280,14 +278,10 @@
 
 /turf/open/floor/plasteel/circuit
 	icon_state = "bcircuit"
-/turf/open/floor/plasteel/airless/circuit
-	icon_state = "bcircuit"
 /turf/open/floor/plasteel/circuit/off
 	icon_state = "bcircuitoff"
 
 /turf/open/floor/plasteel/circuit/gcircuit
-	icon_state = "gcircuit"
-/turf/open/floor/plasteel/airless/circuit/gcircuit
 	icon_state = "gcircuit"
 /turf/open/floor/plasteel/circuit/gcircuit/off
 	icon_state = "gcircuitoff"
@@ -324,11 +318,7 @@
 
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"
-/turf/open/floor/plasteel/airless/asteroid
-	icon_state = "asteroidfloor"
 /turf/open/floor/plasteel/asteroid/warning
-	icon_state = "asteroidwarning"
-/turf/open/floor/plasteel/airless/asteroid/warning
 	icon_state = "asteroidwarning"
 
 
@@ -346,12 +336,8 @@
 
 /turf/open/floor/plasteel/floorgrime
 	icon_state = "floorgrime"
-/turf/open/floor/plasteel/airless/floorgrime
-	icon_state = "floorgrime"
 
 /turf/open/floor/plasteel/solarpanel
-	icon_state = "solarpanel"
-/turf/open/floor/plasteel/airless/solarpanel
 	icon_state = "solarpanel"
 
 /turf/open/floor/plasteel/cmo

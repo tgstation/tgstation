@@ -4,7 +4,6 @@
 	icon_state = "taser"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
-	origin_tech = "combat=3"
 	ammo_x_offset = 3
 
 /obj/item/weapon/gun/energy/shock_revolver
@@ -13,7 +12,6 @@
 	icon_state = "tesla"
 	item_state = "tesla"
 	ammo_type = list(/obj/item/ammo_casing/energy/shock_revolver)
-	origin_tech = "combat=4;materials=4;powerstorage=4"
 	can_flashlight = 0
 	pin = null
 	shaded_charge = 1
@@ -23,7 +21,7 @@
 	desc = "A dual-mode taser designed to fire both short-range high-power electrodes and long-range disabler beams."
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
-	origin_tech = "combat=4"
+	origin_tech = null
 	ammo_x_offset = 2
 
 /obj/item/weapon/gun/energy/gun/advtaser/cyborg
@@ -40,7 +38,7 @@
 	name = "disabler"
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
-	item_state = "combat=3"
+	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 3
 

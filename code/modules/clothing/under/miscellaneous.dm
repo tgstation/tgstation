@@ -566,7 +566,6 @@
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
-	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"

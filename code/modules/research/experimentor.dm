@@ -129,6 +129,9 @@
 		if (temp_tech.len == 0)
 			user << "<span class='warning'>You cannot experiment on this item!</span>"
 			return
+		if(O.reliability < 90 && O.crit_fail == 0)
+			usr << "<span class='warning'>Item is neither reliable enough or broken enough to learn from.</span>"
+			return
 		if(!user.drop_item())
 			return
 		loaded_item = O
@@ -481,11 +484,16 @@
 				investigate_log("Experimentor has spawned a new corgi.", "experimentor")
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
-			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
+			visible_message("<span class='warning'>[src] improves [exp_on], drawing the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
 				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
 				m.apply_damage(50,"brute","chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
+			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
+			for(var/T in reqs)
+				reqs[T] = reqs[T] + 1
+			exp_on.origin_tech = list2params(reqs)
+			investigate_log("Experimentor has set the origin tech of [exp_on] to [exp_on.origin_tech]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
 			throwSmoke(src.loc)
@@ -549,6 +557,7 @@
 				var/list/temp_tech = ConvertReqString2List(process.origin_tech)
 				for(var/T in temp_tech)
 					linked_console.files.UpdateTech(T, temp_tech[T])
+				linked_console.files.UpdateDesigns(process,temp_tech)
 	src.updateUsrDialog()
 	return
 
@@ -600,7 +609,6 @@
 	name = realName
 	cooldownMax = rand(60,300)
 	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
-	origin_tech = pick("engineering=[rand(2,5)]","magnets=[rand(2,5)]","plasmatech=[rand(2,5)]","programming=[rand(2,5)]","powerstorage=[rand(2,5)]")
 
 /obj/item/weapon/relic/attack_self(mob/user)
 	if(revealed)

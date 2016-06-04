@@ -1,7 +1,6 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health but high melee power. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
-	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "anime_fragment"
 	health = 75 //Glass cannon
@@ -34,8 +33,6 @@
 	new/obj/item/device/mmi/posibrain/soul_vessel(get_turf(src)) //Notice the lack of transfer - it's a standard soul vessel with no mind in it!
 	qdel(src)
 	return 1
-
-
 
 /mob/living/simple_animal/hostile/clockwork_marauder //Clockwork marauder: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 	name = "clockwork marauder"
@@ -273,8 +270,6 @@
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
 	return host && loc == host
-
-
 
 /mob/living/mind_control_holder
 	name = "imprisoned mind"

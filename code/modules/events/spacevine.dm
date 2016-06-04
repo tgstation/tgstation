@@ -434,8 +434,7 @@
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
 
-/obj/effect/spacevine/attack_alien(mob/living/user)
-	eat(user)
+
 
 /obj/effect/spacevine_controller
 	invisibility = INVISIBILITY_ABSTRACT

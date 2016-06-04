@@ -120,8 +120,6 @@ RSF
 	icon_state = "rcd"
 	var/matter = 10
 	var/toxin = 0
-	var/cooldown = 0
-	var/cooldowndelay = 10
 	var/emagged = 0
 	w_class = 3
 
@@ -158,8 +156,6 @@ RSF
 		matter++
 
 /obj/item/weapon/cookiesynth/afterattack(atom/A, mob/user, proximity)
-	if(cooldown > world.time)
-		return
 	if(!proximity)
 		return
 	if (!(istype(A, /obj/structure/table) || istype(A, /turf/open/floor)))
@@ -184,4 +180,3 @@ RSF
 	else
 		matter--
 		desc = "A self recharging cookie fabricator. It currently holds [matter]/10 cookie-units."
-	cooldown = world.time + cooldowndelay

@@ -117,6 +117,7 @@ This file's folder contains:
 // GAME MODE //
 ///////////////
 
+var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable

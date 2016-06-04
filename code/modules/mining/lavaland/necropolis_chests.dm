@@ -23,7 +23,7 @@
 		if(5)
 			new /obj/item/weapon/dnainjector/xraymut(src)
 		if(6)
-			new /obj/item/weapon/wingpotion(src)
+			new /obj/item/seeds/kudzu(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -41,7 +41,7 @@
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
-			new /obj/item/weapon/nullrod/scythe/talking(src)
+			new /obj/item/weapon/nullrod/claymore/darkblade(src)
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
@@ -64,7 +64,7 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
-			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+			new /obj/item/weapon/spellbook/oneuse/smoke(src)
 
 
 
@@ -79,44 +79,41 @@
 
 /obj/item/device/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		user << "<span class='warning'>The wisp has gone missing!</span>"
+		user << "The wisp has gone missing!"
 		return
 	if(wisp.loc == src)
-		user << "<span class='notice'>You release the wisp. It begins to \
-			bob around your head.</span>"
+		user << "You release the wisp. It begins to bob around your head."
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
-		user << "<span class='notice'>You return the wisp to the lantern.\
-			</span>"
-
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "<span class='notice'>Your vision returns to \
-					normal.</span>"
+				M << "The wisp has returned to it's latern. Your vision returns to normal."
 
-		wisp.stop_orbit()
-		wisp.loc = src
-		icon_state = "lantern-blue"
-		feedback_add_details("wisp_lantern","R") // returned
+			wisp.stop_orbit()
+			wisp.loc = src
+			user << "You return the wisp to the latern."
+			icon_state = "lantern-blue"
+			feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
-	wisp = new(src)
+	var/obj/effect/wisp/W = new(src)
+	wisp = W
+	W.home = src
 
 /obj/item/device/wisp_lantern/Destroy()
 	if(wisp)
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.visible_message("<span class='notice'>[wisp] has a sad \
-				feeling for a moment, then it passes.</span>")
+			wisp.home = null //stuck orbiting your head now
 	..()
 
 //Wisp Lantern
@@ -125,6 +122,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
+	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
@@ -409,33 +407,3 @@
 	generic_pixel_y = 2
 	generic_pixel_x = 1
 	vehicle_move_delay = 1
-
-//Potion of Flight
-
-/obj/item/weapon/wingpotion
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
-	icon = 'icons/obj/lavaland/artefacts.dmi'
-	icon_state = "potionflask"
-	w_class = 2
-	var/used = 0
-
-/obj/item/weapon/wingpotion/attack_self(mob/living/M)
-	if(used)
-		M << "<span class='notice'>The flask is empty, what a shame.</span>"
-	else
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(C.wear_mask)
-				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
-			else
-				if(C.dna.species.id != "human") //implying xenoshumans are holy
-					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
-				else
-					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
-					C.set_species(/datum/species/angel)
-					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-					C.adjustBruteLoss(20)
-					C.emote("scream")
-				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-				src.used = 1

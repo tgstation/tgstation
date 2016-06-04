@@ -549,11 +549,9 @@
 				Door.close()
 
 /obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
-	var/list/hurt_mobs = list()
 	for(var/turf/T in L)
 		for(var/atom/movable/AM in T)
-			if(isliving(AM) && (!(AM in hurt_mobs)))
-				hurt_mobs |= AM
+			if(isliving(AM))
 				if(ishuman(AM))
 					var/mob/living/M = AM
 					M.visible_message("<span class='warning'>[M] is hit by \

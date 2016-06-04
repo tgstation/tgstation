@@ -34,7 +34,7 @@
 	w_class_on = 5
 	flags = CONDUCT
 	armour_penetration = 100
-	origin_tech = "combat=4;magnets=3"
+	origin_tech = "combat=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
 
@@ -55,7 +55,7 @@
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
-	origin_tech = "combat=3;magnets=4;syndicate=4"
+	origin_tech = "magnets=3;syndicate=4"
 	block_chance = 50
 	var/hacked = 0
 
@@ -124,6 +124,7 @@
 	force_on = 30
 	force = 18 //About as much as a spear
 	hitsound = 'sound/weapons/circsawhit.ogg'
+	origin_tech = "materials=3;biotech=3;syndicate=3"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
 	icon_state_on = "esaw_1"

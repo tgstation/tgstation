@@ -324,9 +324,10 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=150, MAT_GLASS=100)
-	origin_tech = "magnets=2;biotech=1;plasmatech=2"
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
+	origin_tech = "magnets=2;biotech=2"
 	var/details = 0
+	var/recent_fail = 0
 
 /obj/item/device/mass_spectrometer/New()
 	..()
@@ -340,6 +341,9 @@ MASS SPECTROMETER
 
 /obj/item/device/mass_spectrometer/attack_self(mob/user)
 	if (user.stat || user.eye_blind)
+		return
+	if (crit_fail)
+		user << "<span class='warning'>This device has critically failed and is no longer functional!</span>"
 		return
 	if (!user.IsAdvancedToolUser())
 		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
@@ -359,9 +363,20 @@ MASS SPECTROMETER
 			dat += "<br>None"
 		else
 			for(var/R in blood_traces)
-				dat += "<br>[chemical_reagents_list[R]]"
-				if(details)
-					dat += " ([blood_traces[R]] units)"
+				if(prob(reliability))
+					dat += "<br>[chemical_reagents_list[R]]"
+
+					if(details)
+						dat += " ([blood_traces[R]] units)"
+
+					recent_fail = 0
+				else
+					if(recent_fail)
+						crit_fail = 1
+						reagents.clear_reagents()
+						return
+					else
+						recent_fail = 1
 		dat += "</i>"
 		user << dat
 		reagents.clear_reagents()
@@ -371,14 +386,14 @@ MASS SPECTROMETER
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
 	details = 1
-	origin_tech = "magnets=4;biotech=3;plasmatech=3"
+	origin_tech = "magnets=4;biotech=2"
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
-	origin_tech = "biotech=2"
+	origin_tech = "biotech=1"
 	w_class = 2
 	flags = CONDUCT
 	throwforce = 0

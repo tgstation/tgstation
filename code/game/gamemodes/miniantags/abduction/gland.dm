@@ -6,7 +6,7 @@
 	slot = "gland"
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
-	origin_tech = "materials=4;biotech=7;abductor=3"
+	origin_tech = "materials=4;biotech=5;abductor=3"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
@@ -54,6 +54,7 @@
 	return
 
 /obj/item/organ/gland/heals
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -66,6 +67,7 @@
 	owner.adjustFireLoss(-20)
 
 /obj/item/organ/gland/slime
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
@@ -80,7 +82,7 @@
 	Slime.Leader = owner
 
 /obj/item/organ/gland/mindshock
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
+	origin_tech = "materials=4;biotech=5;magnets=3;abductor=3"
 	cooldown_low = 300
 	cooldown_high = 300
 	uses = -1
@@ -97,6 +99,7 @@
 		H.confused += 20
 
 /obj/item/organ/gland/pop
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = 6
@@ -109,7 +112,7 @@
 	owner.set_species(species)
 
 /obj/item/organ/gland/ventcrawling
-	origin_tech = "materials=4;biotech=5;bluespace=4;abductor=3"
+	origin_tech = "materials=4;biotech=5;bluespace=3;abductor=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -122,6 +125,7 @@
 
 
 /obj/item/organ/gland/viral
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -139,7 +143,7 @@
 
 
 /obj/item/organ/gland/emp //TODO : Replace with something more interesting
-	origin_tech = "materials=4;biotech=4;magnets=6;abductor=3"
+	origin_tech = "materials=4;biotech=5;magnets=3;abductor=3"
 	cooldown_low = 900
 	cooldown_high = 1600
 	uses = 10
@@ -150,6 +154,7 @@
 	empulse(get_turf(owner), 2, 5, 1)
 
 /obj/item/organ/gland/spiderman
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = 10
@@ -161,6 +166,7 @@
 	new /obj/effect/spider/spiderling(owner.loc)
 
 /obj/item/organ/gland/egg
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
@@ -173,6 +179,7 @@
 	egg.desc += " It smells bad."
 
 /obj/item/organ/gland/bloody
+	origin_tech = "materials=4;biotech=6;abductor=3"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -194,6 +201,7 @@
 			H.update_inv_w_uniform(0)
 
 /obj/item/organ/gland/bodysnatch
+	origin_tech = "materials=4;biotech=7;abductor=3"
 	cooldown_low = 600
 	cooldown_high = 600
 	human_only = 1
@@ -247,7 +255,7 @@
 /obj/item/organ/gland/plasma
 	cooldown_low = 2400
 	cooldown_high = 3000
-	origin_tech = "materials=4;biotech=4;plasmatech=6;abductor=3"
+	origin_tech = "materials=4;biotech=5;plasmatech=3;abductor=3"
 	uses = 1
 
 /obj/item/organ/gland/plasma/activate()

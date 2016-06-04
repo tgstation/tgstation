@@ -318,28 +318,25 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/alert/notify_action
+/obj/screen/alert/notify_jump
 	name = "Body created"
 	desc = "A body was created. You can enter it."
 	icon_state = "template"
 	timeout = 300
-	var/atom/target = null
-	var/action = NOTIFY_JUMP
+	var/atom/jump_target = null
+	var/attack_not_jump = null
 
-/obj/screen/alert/notify_action/Click()
+/obj/screen/alert/notify_jump/Click()
 	if(!usr || !usr.client) return
-	if(!target) return
+	if(!jump_target) return
 	var/mob/dead/observer/G = usr
 	if(!istype(G)) return
-	switch(action)
-		if(NOTIFY_ATTACK)
-			target.attack_ghost(G)
-		if(NOTIFY_JUMP)
-			var/turf/T = get_turf(target)
-			if(T && isturf(T))
-				G.loc = T
-		if(NOTIFY_ORBIT)
-			G.ManualFollow(target)
+	if(attack_not_jump)
+		jump_target.attack_ghost(G)
+	else
+		var/turf/T = get_turf(jump_target)
+		if(T && isturf(T))
+			G.loc = T
 
 //OBJECT-BASED
 

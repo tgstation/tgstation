@@ -13,6 +13,7 @@
 	singular_name = "uranium floor tile"
 	desc = "A tile made out of uranium. You feel a bit woozy."
 	icon_state = "tile_uranium"
+	origin_tech = "materials=1"
 	turf_type = /turf/open/floor/mineral/uranium
 	mineralType = "uranium"
 	materials = list(MAT_URANIUM=500)
@@ -22,6 +23,7 @@
 	singular_name = "gold floor tile"
 	desc = "A tile made out of gold, the swag seems strong here."
 	icon_state = "tile_gold"
+	origin_tech = "materials=1"
 	turf_type = /turf/open/floor/mineral/gold
 	mineralType = "gold"
 	materials = list(MAT_GOLD=500)
@@ -31,6 +33,7 @@
 	singular_name = "silver floor tile"
 	desc = "A tile made out of silver, the light shining from it is blinding."
 	icon_state = "tile_silver"
+	origin_tech = "materials=1"
 	turf_type = /turf/open/floor/mineral/silver
 	mineralType = "silver"
 	materials = list(MAT_SILVER=500)
@@ -50,6 +53,7 @@
 	singular_name = "bananium floor tile"
 	desc = "A tile made out of bananium, HOOOOOOOOONK!"
 	icon_state = "tile_bananium"
+	origin_tech = "materials=1"
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
 	materials = list(MAT_BANANIUM=500)

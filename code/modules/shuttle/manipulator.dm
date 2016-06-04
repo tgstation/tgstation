@@ -55,8 +55,6 @@
 			. = "docked"
 		if(SHUTTLE_STRANDED)
 			. = "stranded"
-		if(SHUTTLE_ESCAPE)
-			. = "escape"
 		if(SHUTTLE_ENDGAME)
 			. = "endgame"
 	if(!.)
@@ -107,10 +105,6 @@
 		L["id"] = M.id
 		L["timer"] = M.timer
 		L["timeleft"] = M.getTimerStr()
-		var/can_fast_travel = FALSE
-		if(M.timer && M.timeLeft() >= 50)
-			can_fast_travel = TRUE
-		L["can_fast_travel"] = can_fast_travel
 		L["mode"] = capitalize(shuttlemode2str(M.mode))
 		L["status"] = M.getStatusText()
 		if(M == existing_shuttle)
@@ -138,23 +132,12 @@
 				. = TRUE
 		if("jump_to")
 			if(params["type"] == "mobile")
+				. = TRUE
 				for(var/i in SSshuttle.mobile)
 					var/obj/docking_port/mobile/M = i
 					if(M.id == params["id"])
 						user.forceMove(get_turf(M))
-						. = TRUE
 						break
-		if("fast_travel")
-			for(var/i in SSshuttle.mobile)
-				var/obj/docking_port/mobile/M = i
-				if(M.id == params["id"] && M.timer && M.timeLeft() >= 50)
-					M.setTimer(50)
-					. = TRUE
-					message_admins("[key_name_admin(usr)] fast travelled \
-						[M]")
-					log_admin("[key_name(usr)] fast travelled [M]")
-					feedback_add_details("shuttle_fasttravel", M.name)
-					break
 
 		if("preview")
 			if(S)
@@ -173,14 +156,9 @@
 			else if(S)
 				. = TRUE
 				// If successful, returns the mobile docking port
-				var/obj/docking_port/mobile/mdp = action_load(S)
+				var/mdp = action_load(S)
 				if(mdp)
 					user.forceMove(get_turf(mdp))
-					message_admins("[key_name_admin(usr)] loaded [mdp] \
-						with the shuttle manipulator.")
-					log_admin("[key_name(usr)] loaded [mdp] with the \
-						shuttle manipulator.</span>")
-					feedback_add_details("shuttle_manipulator", mdp.name)
 
 	update_icon()
 
@@ -240,6 +218,8 @@
 	preview_template = null
 	existing_shuttle = null
 	selected = null
+
+	return preview_shuttle
 
 /obj/machinery/shuttle_manipulator/proc/load_template(
 	datum/map_template/shuttle/S)

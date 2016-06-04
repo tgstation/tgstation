@@ -164,6 +164,7 @@
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
+				E.reliability = round(rand(E.reliability/3,E.reliability))
 			else
 				E.detach(loc)
 				qdel(E)

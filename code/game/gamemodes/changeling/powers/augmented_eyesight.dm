@@ -37,6 +37,7 @@
 	icon_state = "ling_eyeshield"
 	eye_color = null
 	implant_overlay = null
+	origin_tech = "biotech=4"
 	slot = "eye_ling"
 	status = ORGAN_ORGANIC
 
@@ -57,6 +58,7 @@
 	icon_state = "ling_thermal"
 	eye_color = null
 	implant_overlay = null
+	origin_tech = "biotech=5;magnets=5"
 	slot = "eye_ling"
 	status = ORGAN_ORGANIC
 	aug_message = "You feel a minute twitch in our eyes, and darkness creeps away."
