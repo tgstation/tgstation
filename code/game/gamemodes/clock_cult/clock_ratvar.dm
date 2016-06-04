@@ -18,8 +18,8 @@
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
-	pixel_x = -30
-	pixel_y = -30
+	pixel_x = -32
+	pixel_y = -32
 	alpha = 175
 	health = 1000
 	max_health = 1000
