@@ -39,7 +39,7 @@
 	desc = "Destroying one of these makes fat neckbeards around the galaxy cry."
 	icon_state = "g_wrench"
 	item_state = "g_wrench"
-	toolspeed = 4
+	toolspeed = 3
 
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
@@ -115,7 +115,7 @@
 	desc = "Some folks are born, golden screwdriver in hand."
 	icon_state = "g_screwdriver"
 	item_state = "g_screwdriver"
-	toolspeed = 4
+	toolspeed = 3
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
 	if(!icon_state)
@@ -192,7 +192,7 @@
 	desc = "You see no safety issues with this."
 	icon_state = "g_wirecutters"
 	item_state = "g_wirecutters"
-	toolspeed = 4
+	toolspeed = 3
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -447,8 +447,8 @@
 	desc = "Heat-proof gold is a rare and valuable asset."
 	icon_state = "g_welder"
 	item_state = "g_welder"
-	max_fuel = 420
-	toolspeed = 4
+	max_fuel = 80
+	toolspeed = 3
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
@@ -551,7 +551,7 @@
 	desc = "The rich man's floor tile remover."
 	icon_state = "g_crowbar"
 	item_state = "g_crowbar"
-	toolspeed = 4
+	toolspeed = 3
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
