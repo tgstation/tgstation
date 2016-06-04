@@ -32,25 +32,22 @@
 /obj/structure/clockwork/proc/destroyed()
 	if(!takes_damage)
 		return 0
-	for(var/obj/item/I in debris)
+	for(var/I in debris)
 		new I (get_turf(src))
 	visible_message(break_message)
 	playsound(src, break_sound, 50, 1)
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/proc/damaged(mob/living/user, obj/item/I, amount, taip)
-	if(!amount || !taip || !taip in list(BRUTE, BURN))
+/obj/structure/clockwork/proc/damaged(mob/living/user, amount, damage_type)
+	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
 		return 0
-	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force && takes_damage)
-		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
-		playsound(src, I.hitsound, 50, 1)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		health = max(0, health - I.force)
+	if(takes_damage)
+		health = max(0, health - amount)
 		if(!health)
 			destroyed()
-	return 1
+		return 1
+	return 0
 
 /obj/structure/clockwork/ex_act(severity)
 	if(takes_damage)
@@ -72,11 +69,34 @@
 	..()
 	desc = initial(desc)
 
+/obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+	take_damage(damage, damage_type)
+
+/obj/structure/clockwork/attack_alien(mob/living/user)
+	attack_generic(user, 15)
+
+/obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
+	if(!M.melee_damage_upper)
+		return
+	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
+
+/obj/structure/clockwork/attack_slime(mob/living/simple_animal/slime/user)
+	if(!user.is_adult)
+		return
+	attack_generic(user, rand(10, 15))
+
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
-	if(user.a_intent == "harm" && user.Adjacent(I) && I.force && takes_damage)
-		damaged(user, I, I.force, I.damtype)
-	else
-		return ..()
+	if(I.force && takes_damage)
+		damaged(user, I.force, I.damtype)
+		playsound(src, I.hitsound, 50, 1)
+	return ..()
+
+/obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
+	if(..())
+		take_damage(M.force, M.damtype)
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -207,7 +227,7 @@
 	max_health = 25
 	construction_value = 15
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
-	debris = list(/obj/item/clockwork/component/replicant_alloy/blind_eye)
+	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
@@ -472,6 +492,23 @@
 	else
 		icon_state = "[initial(icon_state)]_inactive"
 
+/obj/structure/clockwork/wall_gear
+	name = "massive gear"
+	icon_state = "wall_gear"
+	climbable = TRUE
+	desc = "A massive brass gear."
+	clockwork_desc = "A massive brass gear that could possibly be proselytized into replicant alloy."
+	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards)
+
+/obj/structure/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		anchored = !anchored
+		user.visible_message("<span class='notice'>[user] [anchored ? "":"un"]anchors [src] from the floor.</span>", \
+		"<span class='notice'>You [anchored ? "":"un"]anchors [src] from the floor.</span>")
+		return 1
+	return ..()
+
 ///////////////////////
 // CLOCKWORK EFFECTS //
 ///////////////////////
@@ -672,7 +709,7 @@
 	desc = "A strange set of markings drawn on the ground."
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
-	alpha = 25
+	alpha = 30
 	var/affects_servants = FALSE
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
@@ -698,6 +735,7 @@
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
 	clockwork_desc = "A sigil that will stun the first non-servant to cross it. Nar-Sie's dogs will be knocked down."
+	icon_state = "sigildull"
 	color = rgb(255, 255, 0)
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
@@ -712,6 +750,7 @@
 		L.adjustBruteLoss(10)
 		L.Weaken(5)
 	L.Stun(5)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/transgression, get_turf(src))
 	qdel(src)
 	return 1
 
@@ -719,8 +758,9 @@
 	name = "ominous sigil"
 	desc = "A brilliant golden sigil. Something about it really bothers you."
 	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they do not move and they stand still for a brief time."
+	icon_state = "sigilsubmission"
 	color = rgb(255, 255, 0)
-	alpha = 75
+	alpha = 100
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
@@ -746,8 +786,9 @@
 	name = "suspicious sigil"
 	desc = "A barely-visible sigil. Things seem a bit quieter around it."
 	clockwork_desc = "A sigil that will listen for and transmit anything it hears."
+	icon_state = "sigiltransmission"
 	color = rgb(75, 75, 75)
-	alpha = 50
+	alpha = 60
 	flags = HEAR
 	languages = ALL
 

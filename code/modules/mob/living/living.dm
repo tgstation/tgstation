@@ -787,6 +787,13 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return
 
+/mob/living/ratvar_act()
+	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+		adjustFireLoss(35)
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
 
 /atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0

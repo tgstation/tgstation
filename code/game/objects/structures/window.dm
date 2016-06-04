@@ -73,6 +73,13 @@
 	for(var/obj/item/weapon/shard/shard in debris)
 		shard.color = NARSIE_WINDOW_COLOUR
 
+/obj/structure/window/ratvar_act()
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
+
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		shatter()
@@ -492,10 +499,11 @@
 	opacity = TRUE
 
 /obj/structure/window/reinforced/clockwork
-	name = "ratvarian window"
+	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window_single"
+	maxhealth = 100
 
 /obj/structure/window/reinforced/clockwork/New(loc, direct)
 	..()
@@ -511,9 +519,22 @@
 		qdel(I)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
 
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	health = maxhealth
+	update_icon()
+	return 0
+
+/obj/structure/window/reinforced/clockwork/narsie_act()
+	take_damage(rand(15, 45), BURN)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
 /obj/structure/window/reinforced/clockwork/fulltile
 	icon_state = "clockwork_window"
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
 	dir = 5
+	maxhealth = 150

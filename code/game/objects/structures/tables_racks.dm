@@ -61,6 +61,10 @@
 	if(prob(20))
 		new /obj/structure/table/wood(src.loc)
 
+/obj/structure/table/ratvar_act()
+	if(prob(20))
+		new /obj/structure/table/reinforced/brass(src.loc)
+
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
 	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
@@ -366,6 +370,27 @@
 	else
 		return ..()
 
+/obj/structure/table/reinforced/brass
+	name = "brass table"
+	desc = "A solid, slightly beveled brass table."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	frame = /obj/structure/table_frame/brass
+	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+
+/obj/structure/table/reinforced/brass/table_destroy()
+	qdel(src)
+
+/obj/structure/table/reinforced/brass/narsie_act()
+	..()
+	if(src) //do we still exist?
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/table/reinforced/brass/ratvar_act()
+	health = initial(health)
+	return
 
 /*
  * Surgery Tables

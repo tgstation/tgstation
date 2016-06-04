@@ -186,6 +186,9 @@
 /obj/machinery/door/window/narsie_act()
 	color = "#7D1919"
 
+/obj/machinery/door/window/ratvar_act()
+	qdel(src) //TODO clockwork windoors
+
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
 	. = ..()
 	take_damage(round(P.damage / 2), P.damage_type, 0)

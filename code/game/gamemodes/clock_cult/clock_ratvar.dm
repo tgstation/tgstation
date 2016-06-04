@@ -151,7 +151,7 @@
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
 		return 0
-	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(O))
+	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(src))
 	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
 	R.key = O.key
 
@@ -192,8 +192,10 @@
 	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
 	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
 	for(var/obj/singularity/narsie/N in range(15, src))
-		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
+		if(N.clashing)
+			continue
 		N.clashing = TRUE
+		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		break
 	return 1
 
@@ -243,46 +245,3 @@
 			narsie.clashing = FALSE
 			qdel(src)
 			return 1
-
-/atom/proc/ratvar_act() //Called on everything near Ratvar
-	return
-
-/turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
-	if(prob(20))
-		ChangeTurf(/turf/closed/wall/clockwork)
-/turf/closed/wall/clockwork/ratvar_act()
-	return 0
-
-/turf/open/floor/ratvar_act()
-	if(prob(20))
-		ChangeTurf(/turf/open/floor/clockwork)
-/turf/open/floor/clockwork/ratvar_act()
-	return 0
-
-/obj/structure/window/ratvar_act() //Windows turn into Ratvarian windows
-	if(!fulltile)
-		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
-	else
-		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
-	qdel(src)
-/obj/structure/window/reinforced/clockwork/ratvar_act()
-	return 0
-
-/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	new/obj/machinery/door/airlock/clockwork(get_turf(src))
-	qdel(src)
-/obj/machinery/door/airlock/clockwork/ratvar_act()
-	return 0
-
-/mob/living/ratvar_act()
-	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
-		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
-		adjustFireLoss(35)
-		if(src)
-			adjust_fire_stacks(1)
-			IgniteMob()
-
-/mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
-	var/old_color = color
-	color = rgb(75, 53, 0)
-	animate(src, color = old_color, time = 10)
