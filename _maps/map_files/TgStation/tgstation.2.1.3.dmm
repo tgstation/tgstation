@@ -3453,7 +3453,6 @@
 "aht" = (
 /turf/open/floor/plasteel/whitered/corner{
 	tag = "icon-whiteredcorner (WEST)";
-	icon_state = "whiteredcorner";
 	dir = 8
 	},
 /area/security/brig)
