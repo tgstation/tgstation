@@ -266,3 +266,13 @@
 	materials = list(MAT_METAL = 2000, MAT_SILVER = 500)
 	build_path = /obj/item/weapon/suppressor
 	category = list("Weapons")
+
+/datum/design/gravitygun
+	name = "one-point bluespace-gravitational manipulator"
+	desc = "A multi-mode device that blasts one-point bluespace-gravitational bolts that locally distort gravity."
+	id = "gravitygun"
+	req_tech = list("combat" = 4, "materials" = 5, "bluespace" = 4, "powerstorage" = 4, "magnets" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_SILVER = 7000, MAT_GOLD = 7000, MAT_URANIUM = 6000, MAT_GLASS = 6000, MAT_METAL = 6000, MAT_DIAMOND = 3000)
+	build_path = /obj/item/weapon/gun/energy/gravity_gun
+	category = list("Weapons")
