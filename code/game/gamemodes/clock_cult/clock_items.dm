@@ -712,10 +712,11 @@
 		if(isliving(loc))
 			var/mob/living/L = loc
 			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		spawn(300) //5 minutes
+		spawn(3000) //5 minutes
 			if(src)
-				visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
-				PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(src))
+				var/turf/T = get_turf(src)
+				T.visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
+				PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
 				qdel(src)
 
 /obj/item/clockwork/ratvarian_spear/afterattack(atom/target, mob/living/user, flag, params)
@@ -737,15 +738,15 @@
 		..()
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
-	..()
-	if(!ismob(target))
-		return 0
+	var/turf/T = get_turf(target)
+	if(..() || !isliving(hit_atom))
+		return
 	var/mob/living/L = target
 	if(issilicon(L) || iscultist(L))
 		L.Stun(3)
 		L.Weaken(3)
-	visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(L))
+	T.visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(T))
 	qdel(src)
 
 /obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
