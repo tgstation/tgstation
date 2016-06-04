@@ -340,9 +340,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	if(drunkenness)
 		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
+			drunkenness = max(drunkenness - (drunkenness / 10), 0)
 		else
-			drunkenness = max(drunkenness - 0.2, 0)
+			drunkenness = max(drunkenness - (drunkenness / 25), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))
