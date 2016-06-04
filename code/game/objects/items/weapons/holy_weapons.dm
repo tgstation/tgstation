@@ -125,6 +125,13 @@
 	item_state = "katana"
 	slot_flags = SLOT_BELT | SLOT_BACK
 
+/obj/item/weapon/nullrod/claymore/multiverse
+	name = "extradimensional blade"
+	desc = "Once the harbringer of a interdimensional war, now a dormant souvenir. Still sharp though."
+	icon_state = "multiverse"
+	item_state = "multiverse"
+	slot_flags = SLOT_BELT
+
 /obj/item/weapon/nullrod/claymore/saber
 	name = "light energy sword"
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -138,6 +145,12 @@
 	icon_state = "swordred"
 	item_state = "swordred"
 	desc = "Woefully ineffective when used on steep terrain."
+
+/obj/item/weapon/nullrod/claymore/saber/pirate
+	name = "nautical energy sword"
+	icon_state = "cutlass1"
+	item_state = "cutlass1"
+	desc = "Convincing HR that your religion involved piracy was no mean feat."
 
 /obj/item/weapon/nullrod/sord
 	name = "\improper UNREAL SORD"
@@ -168,6 +181,48 @@
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/nullrod/scythe/talking
+	icon_state = "talking_sword"
+	item_state = "talking_sword"
+	name = "possessed blade"
+	desc = "When the station falls into chaos, it's nice to have a friend by your side."
+	attack_verb = list("chopped", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/possessed = FALSE
+
+/obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
+	if(possessed)
+		return
+
+	user << "You attempt to wake the spirit of the blade..."
+
+	possessed = TRUE
+
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the spirit of [user.real_name]'s blade?", ROLE_PAI, null, FALSE, 100)
+	var/mob/dead/observer/theghost = null
+
+	if(candidates.len)
+		theghost = pick(candidates)
+		var/mob/living/simple_animal/shade/S = new(src)
+		S.real_name = name
+		S.name = name
+		S.ckey = theghost.ckey
+		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
+
+		if(src && input)
+			name = input
+			S.real_name = input
+			S.name = input
+	else
+		user << "The blade is dormant. Maybe you can try again later."
+		possessed = FALSE
+
+/obj/item/weapon/nullrod/scythe/talking/Destroy()
+	for(var/mob/living/simple_animal/shade/S in contents)
+		S << "You were destroyed!"
+		qdel(S)
+	return ..()
 
 /obj/item/weapon/nullrod/hammmer
 	icon_state = "hammeron"

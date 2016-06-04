@@ -4,7 +4,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=2"
+	origin_tech = "biotech=3"
 	force = 1
 	w_class = 2
 	throwforce = 0
@@ -105,7 +105,7 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = "heart"
-	origin_tech = "biotech=3"
+	origin_tech = "biotech=5"
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
@@ -168,7 +168,7 @@
 	desc = "it needs to be pumped..."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -437,7 +437,7 @@
 	name = "black tumor"
 	desc = "A tiny black mass with red tendrils trailing from it. It seems to shrivel in the light."
 	icon_state = "blacktumor"
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=5"
 	w_class = 1
 	zone = "head"
 	slot = "brain_tumor"

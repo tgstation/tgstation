@@ -33,7 +33,7 @@
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
-	origin_tech = "bluespace=4"
+	origin_tech = "bluespace=5"
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
@@ -50,12 +50,6 @@
 	qdel(user)
 	return
 
-/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(crit_fail)
-		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
-		return
-	return ..()
-
 /obj/item/weapon/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))
 		if(get_dist(user, dest_object) < 8)
@@ -71,7 +65,7 @@
 	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)) && !W.crit_fail)
+	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)))
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
@@ -86,17 +80,6 @@
 		singulo.process()
 		return
 	. = ..()
-
-/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
-		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
-	else
-		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
-		for (var/obj/O in src.contents) //it broke, delete what was in it
-			qdel(O)
-		crit_fail = 1
-		icon_state = "brokenpack"
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)

@@ -173,6 +173,8 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
 	burn_state = FLAMMABLE
+	force = 0
+	throwforce = 0
 
 /obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
 	recipes = cloth_recipes
@@ -264,7 +266,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
-	origin_tech = "materials=8"
+	origin_tech = "materials=7"
 
 	/*
  * Bones
@@ -280,4 +282,4 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	w_class = 3
 	throw_speed = 1
 	throw_range = 3
-	origin_tech = "materials=2;bio=2"
+	origin_tech = "materials=2;biotech=2"

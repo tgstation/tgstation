@@ -49,8 +49,8 @@ research holder datum.
 											//Datum/tech go here.
 	var/list/possible_tech = list()			//List of all tech in the game that players have access to (barring special events).
 	var/list/known_tech = list()			//List of locally known tech.
-	var/list/possible_designs = list()		//List of all designs (at base reliability).
-	var/list/known_designs = list()			//List of available designs (at base reliability).
+	var/list/possible_designs = list()		//List of all designs.
+	var/list/known_designs = list()			//List of available designs.
 
 /datum/research/New()		//Insert techs into possible_tech here. Known_tech automatically updated.
 	for(var/T in subtypesof(/datum/tech))
@@ -93,13 +93,10 @@ research holder datum.
 
 /datum/research/proc/AddDesign2Known(datum/design/D)
 	if(known_designs[D.id])
-		var/datum/design/known = known_designs[D.id]
-		if(D.reliability > known.reliability)
-			known.reliability = D.reliability
 		return
 	known_designs[D.id] = D
 
-//Refreshes known_tech and known_designs list. Then updates the reliability vars of the designs in the known_designs list.
+//Refreshes known_tech and known_designs list.
 //Input/Output: n/a
 /datum/research/proc/RefreshResearch()
 	for(var/datum/tech/PT in possible_tech)
@@ -113,10 +110,6 @@ research holder datum.
 	for(var/v in known_tech)
 		var/datum/tech/T = known_tech[v]
 		T.level = Clamp(T.level, 0, 20)
-
-	for(var/v in known_designs)
-		var/datum/design/D = known_designs[v]
-		D.CalcReliability(known_tech)
 	return
 
 //Refreshes the levels of a given tech.
@@ -125,18 +118,17 @@ research holder datum.
 	var/datum/tech/KT = known_tech[ID]
 	if(KT)
 		if(KT.level <= level)
-			KT.level = max((KT.level + 1), (level - 1))
+			KT.level = KT.level + 1
 
-/datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
-	for(var/v in known_designs)
-		var/datum/design/D = known_designs[v]
-		var/shared_tech = length(temp_tech & D.req_tech)
-		if(shared_tech)
-			D.reliability = min(100, D.reliability + shared_tech)
-			if(D.build_path == I.type)
-				D.reliability = min(100, D.reliability + shared_tech * rand(1,3))
-				if(I.crit_fail)
-					D.reliability = min(100, D.reliability + shared_tech * rand(3, 5))
+//Checks if the origin level can raise current tech levels
+//Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
+/datum/research/proc/IsTechHigher(ID, level)
+	var/datum/tech/KT = known_tech[ID]
+	if(KT)
+		if(KT.level <= level)
+			return TRUE
+		else
+			return FALSE
 
 /datum/research/proc/FindDesignByID(id)
 	return known_designs[id]

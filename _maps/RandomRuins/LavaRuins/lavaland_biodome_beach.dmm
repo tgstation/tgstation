@@ -90,6 +90,9 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/sandeffect,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

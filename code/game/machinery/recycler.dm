@@ -28,7 +28,7 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/item/weapon/circuitboard/machine/recycler
 	name = "circuit board (Recycler)"
 	build_path = /obj/machinery/recycler
-	origin_tech = "programming=1"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)

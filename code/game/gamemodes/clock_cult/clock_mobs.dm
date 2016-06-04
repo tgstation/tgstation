@@ -1,11 +1,11 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health but high melee power. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
+	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "anime_fragment"
 	health = 75 //Glass cannon
 	maxHealth = 75
-	wander = FALSE
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
 	healable = FALSE
@@ -34,14 +34,16 @@
 	qdel(src)
 	return 1
 
+
+
 /mob/living/simple_animal/hostile/clockwork_marauder //Clockwork marauder: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
 	name = "clockwork marauder"
 	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
+	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "clockwork_marauder"
 	health = 25 //Health is governed by fatigue, but can be directly reduced by the presence of certain objects
 	maxHealth = 25
-	wander = FALSE
 	speed = 1
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -50,6 +52,7 @@
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	environment_smash = 1
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
 	var/fatigue = 0 //Essentially what determines the marauder's power
@@ -271,11 +274,102 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
 	return host && loc == host
 
+
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer
+	name = "clockwork reclaimer"
+	desc = "A tiny clockwork arachnid with a single cogwheel spinning quickly in its head. Its legs blur, too fast to be seen clearly."
+	faction = list("ratvar")
+	icon = 'icons/mob/clockwork_mobs.dmi'
+	icon_state = "clockwork_reclaimer"
+	health = 50
+	maxHealth = 50
+	minbodytemp = 0
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
+	healable = FALSE
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	attacktext = "slams into"
+	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
+	ventcrawler = 2
+	var/playstyle_string = "<span class='heavy_brass'>You are a clockwork reclaimer</span><b>, a harbringer of the Justiciar's light. You can crawl through vents to move more swiftly. Your \
+	goal: purge all untruths and honor Ratvar. You may alt-click a valid target to break yourself apart and convert the target to a servant of Ratvar.</b>"
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/New()
+	..()
+	if(prob(1))
+		real_name = "jehovah's witness"
+		name = real_name
+	spawn(1)
+		if(mind)
+			mind.special_role = null
+		add_servant_of_ratvar(src, TRUE)
+		src << playstyle_string
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/Life()
+	..()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/L = loc
+		if(L.stat || !L.client)
+			loc = get_turf(L)
+			visible_message("<span class='warning'>[src] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
+			status_flags -= GODMODE
+			remove_servant_of_ratvar(L)
+			L.unEquip(L.head)
+			qdel(L.head)
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/death()
+	..(1)
+	visible_message("<span class='warning'>[src] bursts into deadly shrapnel!</span>")
+	for(var/mob/living/carbon/C in range(2, src))
+		C.adjustBruteLoss(rand(3, 5))
+	qdel(src)
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/AltClickOn(atom/movable/A)
+	if(!ishuman(A))
+		return ..()
+	var/mob/living/carbon/human/H = A
+	if(is_servant_of_ratvar(H) || H.stat || (H.mind && !H.client))
+		src << "<span class='warning'>[H] isn't a valid target! Valid targets are conscious non-servants.</span>"
+		return 0
+	if(get_dist(src, H) > 3)
+		src << "<span class='warning'>You need to be closer to dominate [H]!</span>"
+		return 0
+	visible_message("<span class='warning'>[src] rockets with blinding speed towards [H]!</span>", "<span class='heavy_brass'>You leap with blinding speed towards [H]'s head!</span>")
+	for(var/i = 9, i > 0, i -= 3)
+		pixel_y += i
+		sleep(2)
+	icon_state = "[initial(icon_state)]_charging"
+	while(loc != H.loc)
+		if(!H)
+			icon_state = initial(icon_state)
+			return 0
+		sleep(3)
+		forceMove(get_step(src, get_dir(src, H)))
+	if(H.head)
+		H.visible_message("<span class='warning'>[src] tears apart [H]'s [H.name]!</span>")
+		H.unEquip(H.head)
+		qdel(H.head)
+	H.visible_message("<span class='warning'>[src] latches onto [H]'s head and digs its claws in!</span>", "<span class='userdanger'>[src] leaps onto your head and impales its claws deep!</span>")
+	add_servant_of_ratvar(H)
+	H.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork/reclaimer(null), slot_head)
+	loc = H
+	icon_state = initial(icon_state)
+	status_flags += GODMODE
+	src << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
+	H << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
+	H.say("ASSIMILATION SUCCESSFUL.")
+	if(!H.mind)
+		mind.transfer_to(H)
+	return 1
+
+
+
 /mob/living/mind_control_holder
 	name = "imprisoned mind"
 	desc = "A helpless mind, imprisoned in its own body."
 	stat = 0
-	flags = GODMODE
+	status_flags = GODMODE
 
 /mob/living/mind_control_holder/say()
 	return 0

@@ -2,6 +2,7 @@
 	name = "massive construct"
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
+	density = FALSE
 
 /obj/structure/clockwork/massive/New()
 	..()
@@ -52,7 +53,6 @@
 	icon_state = "clockwork_gateway_disrupted"
 	takes_damage = FALSE
 	sleep(27)
-	animate(src, transform = matrix() * 2, time = 2)
 	explosion(src, 1, 3, 8, 8)
 	qdel(src)
 	return 1
@@ -66,7 +66,7 @@
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!health)
 		return 0
-	progress_in_seconds++
+	progress_in_seconds += GATEWAY_SUMMON_RATE
 	switch(progress_in_seconds)
 		if(-INFINITY to 100)
 			if(!first_sound_played)
@@ -87,9 +87,11 @@
 			if(!purpose_fulfilled)
 				takes_damage = FALSE
 				purpose_fulfilled = TRUE
-				animate(src, transform = matrix() * 1.5, time = 136)
+				animate(src, transform = matrix() * 1.5, alpha = 255, time = 126)
 				world << sound('sound/effects/ratvar_rises.ogg', 0, channel = 8) //End the sounds
-				sleep(136)
+				sleep(131)
+				animate(src, transform = matrix() * 3, alpha = 0, time = 5)
+				sleep(5)
 				new/obj/structure/clockwork/massive/ratvar(get_turf(src))
 				qdel(src)
 
@@ -98,8 +100,8 @@
 	if(is_servant_of_ratvar(user))
 		var/arrival_text = "IMMINENT"
 		if(300 - progress_in_seconds > 0)
-			arrival_text = "[max(300 - progress_in_seconds, 0)]s"
-		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]</span>"
+			arrival_text = "[max((300 - progress_in_seconds) / GATEWAY_SUMMON_RATE, 0)]"
+		user << "<span class='big'><b>Seconds until Ratvar's arrival:</b> [arrival_text]s</span>"
 		switch(progress_in_seconds)
 			if(-INFINITY to 100)
 				user << "<span class='heavy_brass'>It's still opening.</span>"
@@ -131,8 +133,12 @@
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
 	SSobj.processing += src
-	world << "<span class='heavy_brass'><font size=15>\"I AM FREE!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=7>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	world << 'sound/effects/ratvar_reveal.ogg'
 	ratvar_awakens = TRUE
+	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/area/A = get_area(src)
+	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	spawn(50)
 		SSshuttle.emergency.request(null, 0.3)
 
@@ -141,6 +147,13 @@
 	world << "<span class='heavy_brass'><font size=7>\"NO! I will not... be...</font> <font size=6>banished...</font> <font size=5>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()
+
+/obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
+	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
+		return 0
+	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(O))
+	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
+	R.key = O.key
 
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
@@ -162,14 +175,14 @@
 				prey = pick(meals)
 				prey << "<span class='heavy_brass'><font size=5>\"You will do.\"</font></span>\n\
 				<span class='userdanger'>Something very large and very malevolent begins lumbering its way towards you...</span>"
+				prey << 'sound/effects/ratvar_reveal.ogg'
 	else
 		if(prob(10) || is_servant_of_ratvar(prey) || prey.z != z)
 			prey << "<span class='heavy_brass'><font size=5>\"How dull. Leave me.\"</font></span>\n\
 			<span class='userdanger'>You feel tremendous relief as a set of horrible eyes loses sight of you...</span>"
 			prey = null
 		else
-			if(prob(75))
-				dir_to_step_in = get_dir(src, prey)
+			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
 	forceMove(get_step(src, dir_to_step_in))
 
 /obj/structure/clockwork/massive/ratvar/narsie_act()
@@ -178,13 +191,13 @@
 	clashing = TRUE
 	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
 	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
-	for(var/obj/singularity/narsie/N in range(7, src))
+	for(var/obj/singularity/narsie/N in range(15, src))
 		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		N.clashing = TRUE
 		break
 	return 1
 
-/obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie) //IT'S TIME FOR A BATTLE OF THE ELDER GODS
+/obj/structure/clockwork/massive/ratvar/proc/clash_of_the_titans(obj/singularity/narsie/narsie)
 	var/winner = "Undeclared"
 	var/base_victory_chance = 0
 	while(TRUE)
@@ -237,17 +250,39 @@
 /turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/clockwork)
+/turf/closed/wall/clockwork/ratvar_act()
+	return 0
+
 /turf/open/floor/ratvar_act()
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/clockwork)
+/turf/open/floor/clockwork/ratvar_act()
+	return 0
 
-/obj/structure/window/ratvar_act() //Windows turn yellow
-	color = rgb(75, 53, 0)
+/obj/structure/window/ratvar_act() //Windows turn into Ratvarian windows
+	if(!fulltile)
+		new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+	else
+		new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+	qdel(src)
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	return 0
+
+/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	qdel(src)
+/obj/machinery/door/airlock/clockwork/ratvar_act()
+	return 0
 
 /mob/living/ratvar_act()
-	add_servant_of_ratvar(src)
+	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+		adjustFireLoss(35)
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
 
 /mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
 	var/old_color = color
-	color = rgb(75, 53, 0) //A nice brassy yellow
+	color = rgb(75, 53, 0)
 	animate(src, color = old_color, time = 10)

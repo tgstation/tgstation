@@ -246,6 +246,7 @@
 		callforward.Remove(C)
 	if(callback)
 		callback.Remove(C)
+	C.faction -= "slime"
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
@@ -254,6 +255,7 @@
 	if(ishuman(C))
 		slime_split = new
 		slime_split.Grant(C)
+	C.faction |= "slime"
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -338,6 +340,23 @@
 	nojumpsuit = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	// To prevent golem subtypes from overwhelming the odds when random species
+	// changes, only the Random Golem type can be chosen
+	blacklisted = TRUE
+	dangerous_existence = TRUE
+
+/datum/species/golem/random
+	name = "Random Golem"
+	blacklisted = FALSE
+	dangerous_existence = FALSE
+
+/datum/species/golem/random/New()
+	. = ..()
+	var/list/golem_types = typesof(/datum/species/golem) - src.type
+	var/datum/species/golem/golem_type = pick(golem_types)
+	name = initial(golem_type.name)
+	id = initial(golem_type.id)
+	meat = initial(golem_type.id)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -347,32 +366,22 @@
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma"
-	dangerous_existence = 1
-	blacklisted = 1
 
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
-	blacklisted = 1
-	dangerous_existence = 1
 
 
 /*
@@ -426,21 +435,61 @@
 
 /datum/species/zombie
 	// 1spooky
-	name = "Brain-Munching Zombie"
+	name = "High Functioning Zombie"
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	speedmod = 2
 
-/datum/species/cosmetic_zombie
+/datum/species/zombie/infectious
+	name = "Infectious Zombie"
+	no_equip = list(slot_wear_mask, slot_head)
+	armor = 20 // 120 damage to KO a zombie, which kills it
+
+/datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
+	. = ..()
+	C.a_intent = "harm" // THE SUFFERING MUST FLOW
+	if(C.InCritical())
+		C.death()
+		// Zombies only move around when not in crit, they instantly
+		// succumb otherwise, and will standup again soon
+
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	// Drop items in hands
+	// If you're a zombie lucky enough to have a NODROP item, then it stays.
+	if(C.unEquip(C.l_hand))
+		C.put_in_l_hand(new /obj/item/zombie_hand(C))
+	if(C.unEquip(C.r_hand))
+		C.put_in_r_hand(new /obj/item/zombie_hand(C))
+
+	// Next, deal with the source of this zombie corruption
+	var/obj/item/organ/body_egg/zombie_infection/infection
+	infection = C.getorganslot("zombie_infection")
+	if(!infection)
+		infection = new(C)
+
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	var/obj/item/zombie_hand/left = C.l_hand
+	var/obj/item/zombie_hand/right = C.r_hand
+	// Deletion of the hands is handled in the items dropped()
+	if(istype(left))
+		C.unEquip(left, TRUE)
+	if(istype(right))
+		C.unEquip(right, TRUE)
+
+// Your skin falls off
+/datum/species/krokodil_addict
 	name = "Human"
 	id = "zombie"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-
+	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/abductor
 	name = "Abductor"
@@ -806,12 +855,10 @@ SYNDICATE BLACK OPS
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
 			H << "<span class='notice'>You settle gently back onto the ground...</span>"
-			A.specflags -= FLYING
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
 			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
-			A.specflags += FLYING
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -844,6 +891,7 @@ SYNDICATE BLACK OPS
 
 /datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
 	if(FLYING in specflags)
+		ToggleFlight(H,0)
 		flyslip(H)
 	. = ..()
 

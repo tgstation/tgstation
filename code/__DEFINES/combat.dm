@@ -74,7 +74,6 @@
 //Gun Stuff
  #define SAWN_INTACT  0
  #define SAWN_OFF     1
- #define SAWN_SAWING -1
 
  #define WEAPON_LIGHT 0
  #define WEAPON_MEDIUM 1
