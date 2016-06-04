@@ -212,7 +212,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated() || rune_in_use || !talisman_type)
 		return
 	..()
-	visible_message("<span class='warning'>Dark power begins to channel into the paper!.</span>")
+	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
 	if(!do_after(user, 100, target = get_turf(user)))
 		rune_in_use = 0
