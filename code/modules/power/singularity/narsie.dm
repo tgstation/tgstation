@@ -50,8 +50,8 @@
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	if(istype(target, /obj/structure/clockwork/massive/ratvar)
-		move(get_dir(src,target)) //Oh, it's you again.
+	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+		move(get_dir(src, target)) //Oh, it's you again.
 	else
 		move()
 	if(prob(25))
@@ -68,7 +68,7 @@
 
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"

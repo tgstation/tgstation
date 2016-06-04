@@ -241,13 +241,13 @@
 		var/turf/T = tile
 		if(!T)
 			continue
-		if(get_dist(T, src) > consume_range)
+		if(isturf(loc) && get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
 		else
 			consume(T)
 		for(var/thing in T)
 			var/atom/movable/X = thing
-			if(get_dist(X, src) > consume_range)
+			if(isturf(loc) && get_dist(X, src) > consume_range)
 				X.singularity_pull(src, current_size)
 			else
 				consume(X)

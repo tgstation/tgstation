@@ -716,7 +716,7 @@
 	desc = "A strange set of markings drawn on the ground."
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
-	alpha = 30
+	alpha = 50
 	var/affects_servants = FALSE
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
@@ -727,13 +727,13 @@
 	..()
 
 /obj/effect/clockwork/sigil/Crossed(atom/movable/AM)
+	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.stat)
 			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
 				sigil_effects(L)
 			return 1
-	..()
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
@@ -743,15 +743,15 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	clockwork_desc = "A sigil that will stun the first non-servant to cross it. Nar-Sie's dogs will be knocked down."
 	icon_state = "sigildull"
-	color = rgb(255, 255, 0)
+	color = "#FAE48C"
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
-	visible_message("<span class='warning'>[src] appears in a burst of light!</span>")
+	var/target_flashed = L.flash_eyes()
 	for(var/mob/living/M in viewers(5, src))
-		if(!is_servant_of_ratvar(M))
+		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
 	if(!iscultist(L))
-		L << "<span class='userdanger'>An unseen force holds you in place!</span>"
+		L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", "<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	else
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
@@ -764,19 +764,24 @@
 /obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
 	desc = "A brilliant golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they do not move and they stand still for a brief time."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for three seconds."
 	icon_state = "sigilsubmission"
-	color = rgb(255, 255, 0)
-	alpha = 100
+	color = "#FAE48C"
+	alpha = 125
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
-	animate(src, color = rgb(255, 0, 150), time = 30)
-	sleep(30)
+	animate(src, color = "#EE54DE", time = 30)
+	var/I = 0
+	while(I < 30 && get_turf(L) == get_turf(src))
+		I++
+		sleep(1)
 	if(get_turf(L) != get_turf(src))
 		animate(src, color = initial(color), time = 30)
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
-	L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
+	if(is_eligible_servant(L))
+		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
 	L.Weaken(5) //Completely defenseless for a few seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(5)
@@ -794,8 +799,8 @@
 	desc = "A barely-visible sigil. Things seem a bit quieter around it."
 	clockwork_desc = "A sigil that will listen for and transmit anything it hears."
 	icon_state = "sigiltransmission"
-	color = rgb(75, 75, 75)
-	alpha = 60
+	color = "#6F6E5F"
+	alpha = 75
 	flags = HEAR
 	languages = ALL
 

@@ -111,7 +111,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/narsie_act()
 	var/old_color = color
-	color = "#96000"
+	color = "#960000"
 	animate(src, color = old_color, time = 10)
 
 /mob/dead/observer/ratvar_act()
