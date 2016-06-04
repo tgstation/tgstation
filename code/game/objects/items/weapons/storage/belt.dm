@@ -44,6 +44,16 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
+/obj/item/weapon/storage/belt/utility/golden/New()
+	..()
+	new /obj/item/weapon/screwdriver/golden(src)
+	new /obj/item/weapon/wrench/golden(src)
+	new /obj/item/weapon/weldingtool/golden(src)
+	new /obj/item/weapon/crowbar/golden(src)
+	new /obj/item/weapon/wirecutters/golden(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src,30,"yellow")
+
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
 	..()
