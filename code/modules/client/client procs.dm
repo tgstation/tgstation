@@ -136,8 +136,10 @@
 		admins += src
 		holder.owner = src
 
-	if(connection != "seeker")					//Invalid connection type.
-		return null
+	if(connection != "seeker")			//Invalid connection type.
+		if(connection == "web")
+			if(!holder) return null
+		else return null
 
 	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
 		message_admins("[key]/[ckey] has connected with an out of date client! Their version: [byond_version]. They will be kicked shortly.")

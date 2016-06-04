@@ -1,2 +1,6 @@
 author: Ririchiyo
-changes: []
+
+delete-after: True
+
+changes:
+- rscadd: Re-enabled the webclient specifically for admins.
