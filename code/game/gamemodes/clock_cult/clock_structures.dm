@@ -716,6 +716,7 @@
 	desc = "A strange set of markings drawn on the ground."
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
+	layer = LOW_OBJ_LAYER
 	alpha = 50
 	var/affects_servants = FALSE
 
