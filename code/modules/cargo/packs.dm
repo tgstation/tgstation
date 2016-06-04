@@ -789,7 +789,6 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	cost = 6000
@@ -799,6 +798,14 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
+
+/datum/supply_pack/science/research
+	name = "Machine Prototype Crate"
+	cost = 5000
+	access = access_research
+	contains = list(/obj/item/device/machineprototype)
+	crate_name = "machine prototype crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
