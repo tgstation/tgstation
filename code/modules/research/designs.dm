@@ -482,7 +482,7 @@ datum/design/diagnostic_hud_night
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
-	req_tech = list("magnets" = 3, "programming" = 3)
+	req_tech = list("programming" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
