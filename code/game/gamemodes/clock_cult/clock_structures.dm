@@ -506,9 +506,7 @@
 
 /obj/structure/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
-		anchored = !anchored
-		user.visible_message("<span class='notice'>[user] [anchored ? "":"un"]anchors [src] from the floor.</span>", \
-		"<span class='notice'>You [anchored ? "":"un"]anchors [src] from the floor.</span>")
+		default_unfasten_wrench(user, I, 10)
 		return 1
 	return ..()
 
