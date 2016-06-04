@@ -70,6 +70,51 @@
 			else if(!(key in C.prefs.ignoring))
 				C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
 
+/client/verb/local_ooc(msg as text) //Like OOC, but only shows to everyone on your screen. Shares a preference with normal OOC.
+	set name = "LOOC" //Maybe change this to "Local OOC"?
+	set category = "OOC"
+
+	if(say_disabled)
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+	if(!mob)
+		return
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	if(!msg)
+		return
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		src << "<span class='danger'>You have OOC muted.</span>"
+		return
+	if(!holder)
+		if(!ooc_allowed)
+			src << "<span class='danger'>OOC is globally muted.</span>"
+			return
+		if(!dooc_allowed && (mob.stat == DEAD))
+			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
+			return
+		if(prefs.muted & MUTE_OOC)
+			src << "<span class='danger'>You cannot use OOC (muted).</span>"
+			return
+		if(src.mob)
+			if(jobban_isbanned(src.mob, "OOC"))
+				src << "<span class='danger'>You have been banned from OOC.</span>"
+				return
+			if(src.mob.stat)
+				src << "<span class='danger'>You cannot use LOOC while dead or unconscious.</span>"
+				return
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			src << "<B>Advertising other servers is not allowed.</B>"
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
+	for(var/mob/M in range(7, usr))
+		if(M.client in admins)
+			continue
+		M << "<font color='#008C8C'><b>LOOC: [key] ([mob]): [msg]</b></font>"
+	admins << "<font color='#008C8C'><b>LOOC: [key] ([mob] at \[[mob.x], [mob.y], [mob.z]\] <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[mob.x];Y=[mob.y];Z=[mob.z]'>(JMP)</a>): [msg]</b></font>"
+
 /proc/toggle_ooc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
 		if(toggle != ooc_allowed)
