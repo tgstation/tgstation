@@ -434,7 +434,7 @@
 /area/security/prison)
 "aaV" = (
 /obj/machinery/hydroponics/constructable,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -23135,7 +23135,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel{
 	icon_state = "warning"
@@ -27868,7 +27868,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "warning"
@@ -27912,7 +27912,7 @@
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "warning"
@@ -35559,7 +35559,7 @@
 /area/storage/tech)
 "bfG" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -65262,7 +65262,7 @@
 "cbE" = (
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel{
@@ -91385,7 +91385,7 @@
 "cPw" = (
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/cultivator,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/rack{
@@ -91437,7 +91437,7 @@
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
 	},
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -98728,7 +98728,7 @@
 	name = "dust"
 	},
 /obj/item/weapon/wirecutters,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
