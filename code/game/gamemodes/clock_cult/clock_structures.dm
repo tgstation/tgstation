@@ -39,7 +39,7 @@
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/proc/damaged(mob/living/user, amount, damage_type)
+/obj/structure/clockwork/proc/take_damage(amount, damage_type)
 	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
 		return 0
 	if(takes_damage)
@@ -50,24 +50,27 @@
 	return 0
 
 /obj/structure/clockwork/ex_act(severity)
-	if(takes_damage)
-		switch(severity)
-			if(1)
-				health -= max_health * 0.7 //70% max health lost
-			if(2)
-				health -= max_health * 0.4 //40% max health lost
-			if(3)
-				if(prob(50))
-					health -= max_health * 0.1 //10% max health lost
-		if(health <= max_health * 0.1) //If there's less than 10% max health left, destroy it
-			destroyed()
-			qdel(src)
+	var/damage = 0
+	switch(severity)
+		if(1)
+			damage = max_health * 0.7 //70% max health lost
+		if(2)
+			damage = max_health * 0.4 //40% max health lost
+		if(3)
+			if(prob(50))
+				damage = max_health * 0.1 //10% max health lost
+	if(damage)
+		take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
+
+/obj/structure/clockwork/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
 	user.do_attack_animation(src)
@@ -90,7 +93,7 @@
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	if(I.force && takes_damage)
-		damaged(user, I.force, I.damtype)
+		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
 	return ..()
 
