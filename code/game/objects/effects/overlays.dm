@@ -177,6 +177,7 @@
 /obj/effect/overlay/temp/ratvar/spearbreak
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "ratvarspearbreak"
+	layer = BELOW_MOB_LAYER
 	pixel_y = -16
 	pixel_x = -16
 
@@ -184,6 +185,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "sigildull"
 	color = "#FAE48C"
+	layer = ABOVE_MOB_LAYER
 	duration = 40
 
 /obj/effect/overlay/temp/ratvar/transgression/New()
@@ -191,6 +193,7 @@
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 25)
+
 
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"
