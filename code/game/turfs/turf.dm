@@ -57,8 +57,6 @@
 
 	var/explosion_block = 0
 
-	var/dynamic_lighting = 1
-
 	//For shuttles - if 1, the turf's underlay will never be changed when moved
 	//See code/datums/shuttle.dm @ 544
 	var/preserve_underlay = 0
@@ -85,10 +83,6 @@
 		spawn( 0 )
 			src.Entered(AM)
 			return
-
-	var/area/A = loc
-	if(!dynamic_lighting || !A.lighting_use_dynamic)
-		luminosity = 1
 
 /turf/proc/initialize()
 	return
@@ -348,10 +342,19 @@
 
 	var/datum/gas_mixture/env
 
+	if (!lighting_corners_initialised)
+		for (var/i = 1 to 4)
+			if (corners[i]) // Already have a corner on this direction.
+				continue
+
+			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
-	var/list/old_affecting_lights = affecting_lights
+	var/old_affecting_lights = affecting_lights
 	var/old_lighting_overlay = lighting_overlay
+	var/old_corners = corners
+
 	var/old_holomap = holomap_data
 //	to_chat(world, "Replacing [src.type] with [N]")
 
@@ -414,15 +417,18 @@
 
 		. = W
 
+	lighting_corners_initialised = TRUE
+	recalc_atom_opacity()
 	lighting_overlay = old_lighting_overlay
 	affecting_lights = old_affecting_lights
+	corners = old_corners
 	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
 		reconsider_lights()
 	if(dynamic_lighting != old_dynamic_lighting)
 		if(dynamic_lighting)
-			lighting_build_overlays()
+			lighting_build_overlay()
 		else
-			lighting_clear_overlays()
+			lighting_clear_overlay()
 
 	holomap_data = old_holomap // Holomap persists through everything.
 
@@ -647,9 +653,6 @@
 
 /turf/proc/dismantle_wall()
 	return
-
-/turf/change_area(oldarea, newarea)
-	lighting_build_overlays()
 
 /////////////////////////////////////////////////////
 

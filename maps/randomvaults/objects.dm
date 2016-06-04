@@ -3,7 +3,7 @@
 	name = "mysterious structure"
 	requires_power = 0
 	icon_state = "firingrange"
-	lighting_use_dynamic = 1
+	dynamic_lighting = 1
 
 /area/vault/icetruck
 
