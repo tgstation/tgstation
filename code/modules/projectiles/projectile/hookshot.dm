@@ -6,6 +6,7 @@
 	nodamage = 1
 	var/length = 1
 	kill_count = 15
+	grillepasschance = 0
 	var/obj/effect/overlay/hookchain/last_link = null
 
 /obj/item/projectile/hookshot/process_step()

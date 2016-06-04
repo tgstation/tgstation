@@ -117,8 +117,8 @@
 	var/rapid_ammo_count = 5
 	var/flare_ammo_type = "/obj/item/ammo_casing/shotgun/flare"
 	var/flare_ammo_count = 5
-	var/hi_ex_ammo_type = "/obj/item/ammo_casing/a75"
-	var/hi_ex_ammo_count = 5
+	var/ricochet_ammo_type = "/obj/item/ammo_casing/a75"
+	var/ricochet_ammo_count = 5
 
 /obj/item/ammo_storage/magazine/lawgiver/New()
 	..()
@@ -126,11 +126,11 @@
 
 /obj/item/ammo_storage/magazine/lawgiver/examine(mob/user)
 	..()
-	to_chat(user, "<span class='info'>It has enough energy for [stuncharge/20] stun shot\s remaining.</span>")
-	to_chat(user, "<span class='info'>It has enough energy for [lasercharge/20] laser shot\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has enough energy for [stuncharge/20] stun shot\s left.</span>")
+	to_chat(user, "<span class='info'>It has enough energy for [lasercharge/20] laser shot\s left.</span>")
 	to_chat(user, "<span class='info'>It has [rapid_ammo_count] rapid fire round\s remaining.</span>")
-	to_chat(user, "<span class='info'>It has [flare_ammo_count] flare round\s remaining.</span>")
-	to_chat(user, "<span class='info'>It has [hi_ex_ammo_count] hi-EX round\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has [flare_ammo_count] [istype(src, /obj/item/ammo_storage/magazine/lawgiver/demolition) ? "hi-EX" : "flare"] round\s remaining.</span>")
+	to_chat(user, "<span class='info'>It has [ricochet_ammo_count] ricochet round\s remaining.</span>")
 
 /obj/item/ammo_storage/magazine/lawgiver/update_icon()
 	overlays.len = 0
@@ -146,12 +146,16 @@
 	if(flare_ammo_count > 0)
 		var/image/flare_ammo_overlay = image('icons/obj/ammo.dmi', src, "[initial(icon_state)]-flare-[flare_ammo_count]")
 		overlays += flare_ammo_overlay
-	if(hi_ex_ammo_count > 0)
-		var/image/hi_ex_ammo_overlay = image('icons/obj/ammo.dmi', src, "[initial(icon_state)]-hiEX-[hi_ex_ammo_count]")
-		overlays += hi_ex_ammo_overlay
+	if(ricochet_ammo_count > 0)
+		var/image/ricochet_ammo_overlay = image('icons/obj/ammo.dmi', src, "[initial(icon_state)]-ricochet-[ricochet_ammo_count]")
+		overlays += ricochet_ammo_overlay
 
 /obj/item/ammo_storage/magazine/lawgiver/proc/isFull()
-	if (stuncharge == 100 && lasercharge == 100 && rapid_ammo_count == 5 && flare_ammo_count == 5 && hi_ex_ammo_count == 5)
+	if (stuncharge == 100 && lasercharge == 100 && rapid_ammo_count == 5 && flare_ammo_count == 5 && ricochet_ammo_count == 5)
 		return 1
 	else
 		return 0
+
+/obj/item/ammo_storage/magazine/lawgiver/demolition
+	desc = "State-of-the-art bluespace technology allows this magazine to generate new rounds from energy, requiring only a power source to refill the full suite of ammunition types. This model is outfitted with high-explosive rounds."
+	flare_ammo_type = "/obj/item/ammo_casing/a75"

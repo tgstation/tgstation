@@ -1,4 +1,4 @@
-#define HI_EX "hi-EX"
+#define RICOCHET "ricochet"
 #define RAPID "rapid"
 #define FLARE "flare"
 #define STUN "stun"
@@ -17,7 +17,6 @@
 	recoil = 0
 	flags = HEAR | FPRINT
 	var/obj/item/ammo_storage/magazine/stored_magazine = null
-	var/obj/item/ammo_casing/chambered = null
 	var/firing_mode = STUN
 	fire_delay = 0
 	var/projectile_type = "/obj/item/projectile/energy/electrode"
@@ -25,17 +24,26 @@
 	var/magazine = null
 	var/dna_profile = null
 	var/rapidFirecheck = 0
-	var/rapidFirechamber = 0
-	var/rapidFirestop = 0
-	var/rapid_message = 0
 	var/damage_multiplier = 1
 	var/has_played_alert = 0
 
 /obj/item/weapon/gun/lawgiver/New()
 	..()
-	magazine = new /obj/item/ammo_storage/magazine/lawgiver
+	if(istype(src, /obj/item/weapon/gun/lawgiver/demolition))
+		magazine = new /obj/item/ammo_storage/magazine/lawgiver/demolition(src)
+	else
+		magazine = new /obj/item/ammo_storage/magazine/lawgiver(src)
 	verbs -= /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample
 	update_icon()
+
+/obj/item/weapon/gun/lawgiver/Destroy()
+	if(magazine)
+		qdel(magazine)
+		magazine = null
+	if(in_chamber)
+		qdel(in_chamber)
+		in_chamber = null
+	..()
 
 /obj/item/weapon/gun/lawgiver/GetVoice()
 	var/the_name = "The [name]"
@@ -59,8 +67,8 @@
 			ammo_overlay = image('icons/obj/gun.dmi', src, "[initial(icon_state)][L.rapid_ammo_count]")
 		if(firing_mode == FLARE && L.flare_ammo_count)
 			ammo_overlay = image('icons/obj/gun.dmi', src, "[initial(icon_state)][L.flare_ammo_count]")
-		if(firing_mode == HI_EX && L.hi_ex_ammo_count)
-			ammo_overlay = image('icons/obj/gun.dmi', src, "[initial(icon_state)][L.hi_ex_ammo_count]")
+		if(firing_mode == RICOCHET && L.ricochet_ammo_count)
+			ammo_overlay = image('icons/obj/gun.dmi', src, "[initial(icon_state)][L.ricochet_ammo_count]")
 		overlays += magazine_overlay
 		overlays += ammo_overlay
 	else
@@ -92,6 +100,13 @@
 		to_chat(usr, "<span class='notice'>You submit a DNA sample to \the [src].</span>")
 		verbs += /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample
 		verbs -= /obj/item/weapon/gun/lawgiver/verb/submit_DNA_sample
+		update_icon()
+		return 1
+
+/obj/item/weapon/gun/lawgiver/AltClick()
+	if(submit_DNA_sample())
+		return
+	return ..()
 
 /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample()
 	set name = "Erase DNA sample"
@@ -106,6 +121,7 @@
 			to_chat(usr, "<span class='notice'>You erase the DNA profile from \the [src].</span>")
 			verbs += /obj/item/weapon/gun/lawgiver/verb/submit_DNA_sample
 			verbs -= /obj/item/weapon/gun/lawgiver/verb/erase_DNA_sample
+			update_icon()
 		else
 			self_destruct(H)
 
@@ -138,7 +154,7 @@
 		L.loc = get_turf(src.loc)
 		if(user)
 			user.put_in_hands(L)
-			to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+			to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 		L.update_icon()
 		magazine = null
 		update_icon()
@@ -159,8 +175,8 @@
 				say("STUN")
 			else if((findtext(speech.message, "laser")) || (findtext(speech.message, "lethal")) || (findtext(speech.message, "beam")))
 				firing_mode = LASER
-				fire_sound = 'sound/weapons/lasercannonfire.ogg'
-				projectile_type = "/obj/item/projectile/beam/heavylaser"
+				fire_sound = 'sound/weapons/Laser.ogg'
+				projectile_type = "/obj/item/projectile/beam"
 				fire_delay = 5
 				sleep(3)
 				say("LASER")
@@ -169,7 +185,6 @@
 				fire_sound = 'sound/weapons/Gunshot_c20.ogg'
 				projectile_type = "/obj/item/projectile/bullet/midbullet/lawgiver"
 				fire_delay = 0
-				rapid_message = 0
 				recoil = 1
 				sleep(3)
 				say("RAPID FIRE")
@@ -181,188 +196,45 @@
 				recoil = 1
 				sleep(3)
 				say("FLARE")
-			else if((findtext(speech.message, "hi ex")) || (findtext(speech.message, "hi-ex")) || (findtext(speech.message, "explosive")) || (findtext(speech.message, "rocket")))
-				firing_mode = HI_EX
-				fire_sound = 'sound/weapons/elecfire.ogg'
-				projectile_type = "/obj/item/projectile/bullet/gyro"
-				fire_delay = 4
+			else if((findtext(speech.message, "ricochet")) || (findtext(speech.message, "bounce")))
+				firing_mode = RICOCHET
+				fire_sound = 'sound/weapons/gatling_fire.ogg'
+				projectile_type = "/obj/item/projectile/bullet/midbullet/bouncebullet/lawgiver"
+				fire_delay = 5
 				recoil = 1
 				sleep(3)
-				say("HI-EX")
+				say("RICOCHET")
 			update_icon()
 
-/obj/item/weapon/gun/lawgiver/proc/rapidFire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0) //Burst fires don't work well except by calling Fire() multiple times
+/obj/item/weapon/gun/lawgiver/process_chambered()
+	return 1
+
+/obj/item/weapon/gun/lawgiver/proc/rapidFire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, struggle = 0) //Burst fires don't work well except by calling Fire() multiple times
 	rapidFirecheck = 1
+	recoil = 1
 	for (var/i = 1; i <= 3; i++)
-		if(!rapidFirestop)
-			Fire(target, user, params, reflex, struggle)
+		if(i>1 && !in_chamber)
+			in_chamber = new projectile_type(src)
+		Fire(target, user, params, struggle)
+		recoil = 0
+		silenced = 1
+		fire_volume *= 5
+	recoil = 1
+	silenced = 0
+	fire_volume /= 5
 	rapidFirecheck = 0
-	rapidFirechamber = 0
-	rapidFirestop = 0
-	rapid_message = 0
 
 /obj/item/weapon/gun/lawgiver/Fire(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, params, reflex = 0, struggle = 0) //Overriding this due to introducing the DNA check, and the fact that the round is to be chambered only just before it is fired
-	if(dna_profile)
-		if(dna_profile != user.dna.unique_enzymes)
-			self_destruct(user)
-			return
-	else
-		click_empty(user)
-		say("PLEASE REGISTER A DNA SAMPLE")
-		return
-
-	if(firing_mode == RAPID && !rapidFirecheck)
-		rapidFire(target, user, params, reflex, struggle)
-		return
-
-	//Christ Almighty is there no OOP way to do this?
-	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
-			to_chat(user, "<span class='warning'>[src] is not ready to fire again!")
-		return
-
-	if(firing_mode == RAPID && !rapidFirechamber)
-		in_chamber = null
-		if(!chamber_round())
-			rapidFirestop = 1
-			return click_empty(user)
-		rapidFirechamber = 1
-
-	else if(firing_mode == RAPID && rapidFirechamber)
-		in_chamber = new projectile_type(src)
-
-	else if(firing_mode != RAPID)
-		in_chamber = null
-		if(!chamber_round())
-			return click_empty(user)
-
-	if(clumsy_check)
-		if(istype(user, /mob/living))
-			var/mob/living/M = user
-			if ((M_CLUMSY in M.mutations) && prob(50))
-				to_chat(M, "<span class='danger'>[src] blows up in your face.</span>")
-				M.take_organ_damage(0,20)
-				M.drop_item(src, force_drop = 1)
-				qdel(src)
-				return
-
-	if (!user.IsAdvancedToolUser() || isMoMMI(user) || istype(user, /mob/living/carbon/monkey/diona))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
-	if(istype(user, /mob/living))
-		var/mob/living/M = user
-		if (M_HULK in M.mutations)
-			to_chat(M, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
-			return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H=user
-		if(user.dna && (user.dna.mutantrace == "adamantine" || user.dna.mutantrace=="coalgolem"))
-			to_chat(user, "<span class='warning'>Your fat fingers don't fit in the trigger guard!</span>")
-			return
-		var/datum/organ/external/a_hand = H.get_active_hand_organ()
-		if(!a_hand.can_use_advanced_tools())
-			to_chat(user, "<span class='warning'>Your [a_hand] doesn't have the dexterity to do this!</span>")
-			return
-
-	in_chamber.damage *= damage_multiplier
-
-	add_fingerprint(user)
-
-	var/turf/curloc = get_turf(user)
-	var/turf/targloc = get_turf(target)
-	if (!istype(targloc) || !istype(curloc))
-		return
-
-	if(!special_check(user))
-		return
-
-	if(!in_chamber)
-		return
-	log_attack("[user.name] ([user.ckey]) fired \the [src] (proj:[in_chamber.name]) at [target] [ismob(target) ? "([target:ckey])" : ""] ([target.x],[target.y],[target.z])[struggle ? " due to being disarmed." :""]" )
-	in_chamber.firer = user
-	in_chamber.def_zone = user.zone_sel.selecting
-	if(targloc == curloc)
-		user.bullet_act(in_chamber)
-		qdel(in_chamber)
-		in_chamber = null
-		update_icon()
-		return
-
-	if((firing_mode == RAPID && !rapid_message) || (firing_mode != RAPID)) //On rapid mode, only shake once per burst.
-		if(recoil)
-			spawn()
-				shake_camera(user, recoil + 1, recoil)
-			if(user.locked_to && isobj(user.locked_to) && !user.locked_to.anchored )
-				var/direction = get_dir(user,target)
-				spawn()
-					var/obj/B = user.locked_to
-					var/movementdirection = turn(direction,180)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(1)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(1)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(1)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(2)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(2)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(3)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(3)
-					B.Move(get_step(user,movementdirection), movementdirection)
-					sleep(3)
-					B.Move(get_step(user,movementdirection), movementdirection)
-			if((istype(user.loc, /turf/space)) || (user.areaMaster.has_gravity == 0))
-				user.inertia_dir = get_dir(target, user)
-				step(user, user.inertia_dir)
-
-	playsound(user, fire_sound, 50, 1)
-	if(!rapid_message)
-		user.visible_message("<span class='warning'>[user] fires [src][reflex ? " by reflex":""]!</span>", \
-		"<span class='warning'>You fire [src][reflex ? "by reflex":""]!</span>", \
-		"You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-		if(firing_mode == RAPID)
-			rapid_message = 1
-
-	in_chamber.original = target
-	in_chamber.loc = get_turf(user)
-	in_chamber.starting = get_turf(user)
-	in_chamber.shot_from = src
-	user.delayNextAttack(fire_delay)
-	in_chamber.silenced = silenced
-	in_chamber.current = curloc
-	in_chamber.OnFired()
-	in_chamber.yo = targloc.y - curloc.y
-	in_chamber.xo = targloc.x - curloc.x
-	in_chamber.inaccurate = (istype(user.locked_to, /obj/structure/bed/chair/vehicle))
-
-	if(params)
-		var/list/mouse_control = params2list(params)
-		if(mouse_control["icon-x"])
-			in_chamber.p_x = text2num(mouse_control["icon-x"])
-		if(mouse_control["icon-y"])
-			in_chamber.p_y = text2num(mouse_control["icon-y"])
-
-	spawn()
-		if(in_chamber)
-			in_chamber.process()
-	sleep(1)
-	in_chamber = null
-
-	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
-
+	..()
 	if(firing_mode == RAPID)
 		var/obj/item/ammo_casing/a12mm/A = new /obj/item/ammo_casing/a12mm(user.loc)
 		A.BB = null
 		A.update_icon()
-	if(firing_mode == HI_EX)
+	if(firing_mode == RICOCHET)
+		var/obj/item/ammo_casing/a12mm/bounce/A = new /obj/item/ammo_casing/a12mm/bounce(user.loc)
+		A.BB = null
+		A.update_icon()
+	if(istype(src, /obj/item/weapon/gun/lawgiver/demolition) && firing_mode == FLARE)
 		var/obj/item/ammo_casing/a75/A = new /obj/item/ammo_casing/a75(user.loc)
 		A.BB = null
 		A.update_icon()
@@ -466,12 +338,12 @@
 					return 1
 				else
 					return 0
-			if(HI_EX)
-				if(L.hi_ex_ammo_count >= 1)
+			if(RICOCHET)
+				if(L.ricochet_ammo_count >= 1)
 					if(in_chamber)	return 1
 					if(!projectile_type)	return 0
 					in_chamber = new projectile_type(src)
-					L.hi_ex_ammo_count -= 1
+					L.ricochet_ammo_count -= 1
 					return 1
 				else
 					return 0
@@ -511,8 +383,8 @@
 					return 1
 				else
 					return 0
-			if(HI_EX)
-				if(L.hi_ex_ammo_count >= 1)
+			if(RICOCHET)
+				if(L.ricochet_ammo_count >= 1)
 					if(in_chamber)	return 1
 					if(!projectile_type)	return 0
 					return 1
@@ -522,13 +394,21 @@
 
 /obj/item/weapon/gun/lawgiver/attackby(var/obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/ammo_storage/magazine/lawgiver))
+		if(!check_mag_type(A, user))
+			return
 		var/obj/item/ammo_storage/magazine/lawgiver/AM = A
 		if(!magazine)
 			LoadMag(AM, user)
 		else
-			to_chat(user, "<span class='rose'>There is already a magazine loaded in \the [src]!</span>")
+			to_chat(user, "<span class='warning'>There is already a magazine loaded in \the [src]!</span>")
 	else if (istype(A, /obj/item/ammo_storage/magazine))
-		to_chat(user, "<span class='rose'>You can't load \the [src] with that kind of magazine!</span>")
+		to_chat(user, "<span class='warning'>You can't load \the [src] with that kind of magazine!</span>")
+
+/obj/item/weapon/gun/lawgiver/proc/check_mag_type(obj/item/I, mob/user)
+	if(istype(I, /obj/item/ammo_storage/magazine/lawgiver/demolition))
+		to_chat(user, "<span class='warning'>You can't load a demolition-model magazine into this [src.name]!</span>")
+		return 0
+	return 1
 
 /obj/item/weapon/gun/lawgiver/attack_self(mob/user as mob)
 	if (target)
@@ -538,37 +418,134 @@
 	else
 		to_chat(user, "<span class='warning'>There's no magazine loaded in \the [src]!</span>")
 
-/obj/item/weapon/gun/lawgiver/afterattack(atom/target as mob|obj|turf|area, mob/living/user as mob|obj, flag, struggle = 0)
-	..()
+/obj/item/weapon/gun/lawgiver/special_check()
+	if(world.time >= last_fired + fire_delay)
+		return 1
+	else
+		return 0
+
+/obj/item/weapon/gun/lawgiver/afterattack(atom/A as mob|obj|turf|area, mob/living/user as mob|obj, flag, params, struggle = 0)
+	if(flag)	return //we're placing gun on a table or in backpack
+	if(harm_labeled >= min_harm_label)
+		to_chat(user, "<span class='warning'>A label sticks the trigger to the trigger guard!</span>")//Such a new feature, the player might not know what's wrong if it doesn't tell them.
+
+		return
+	if(istype(A, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
+
+	if(dna_profile)
+		if(dna_profile != user.dna.unique_enzymes)
+			self_destruct(user)
+			return
+	else
+		click_empty(user)
+		say("PLEASE REGISTER A DNA SAMPLE")
+		return
+
+	if(in_chamber)
+		qdel(in_chamber)
+		in_chamber = null
+	if(!special_check())
+		return
+	if(!chamber_round())
+		return click_empty(user)
+
+	in_chamber.damage *= damage_multiplier
+
+	if(firing_mode == RAPID && !rapidFirecheck)
+		rapidFire(A, user, params, struggle)
+		return
+
+	else if(firing_mode == RAPID && rapidFirecheck)
+		return
+
+	if(user && user.client && user.client.gun_mode && !(A in target))
+		PreFire(A,user,params, "struggle" = struggle) //They're using the new gun system, locate what they're aiming at.
+	else
+		Fire(A,user,params, "struggle" = struggle) //Otherwise, fire normally.
+
 	if(magazine)
 		var/obj/item/ammo_storage/magazine/lawgiver/L = magazine
-		if(magazine && !countAmmo(L) && !has_played_alert)
+		if(!countAmmo(L) && !has_played_alert)
 			playsound(user, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 			has_played_alert = 1
-	return
+			return
 
 /obj/item/weapon/gun/lawgiver/examine(mob/user)
 	..()
 	getAmmo(user)
 
 /obj/item/weapon/gun/lawgiver/proc/getAmmo(mob/user)
-	if (magazine)
+	if(magazine)
 		var/obj/item/ammo_storage/magazine/lawgiver/L = magazine
 		to_chat(user, "<span class='info'>It has enough energy for [L.stuncharge/20] stun shot\s left.</span>")
 		to_chat(user, "<span class='info'>It has enough energy for [L.lasercharge/20] laser shot\s left.</span>")
 		to_chat(user, "<span class='info'>It has [L.rapid_ammo_count] rapid fire round\s remaining.</span>")
-		to_chat(user, "<span class='info'>It has [L.flare_ammo_count] flare round\s remaining.</span>")
-		to_chat(user, "<span class='info'>It has [L.hi_ex_ammo_count] hi-EX round\s remaining.</span>")
+		to_chat(user, "<span class='info'>It has [L.flare_ammo_count] [istype(L, /obj/item/ammo_storage/magazine/lawgiver/demolition) ? "hi-EX" : "flare"] round\s remaining.</span>")
+		to_chat(user, "<span class='info'>It has [L.ricochet_ammo_count] ricochet round\s remaining.</span>")
 
 /obj/item/weapon/gun/lawgiver/proc/countAmmo(var/obj/item/A)
 	var/obj/item/ammo_storage/magazine/lawgiver/L = A
-	if (L.stuncharge == 0 && L.lasercharge == 0 && L.rapid_ammo_count == 0 && L.flare_ammo_count == 0 && L.hi_ex_ammo_count == 0)
+	if (L.stuncharge == 0 && L.lasercharge == 0 && L.rapid_ammo_count == 0 && L.flare_ammo_count == 0 && L.ricochet_ammo_count == 0)
 		return 0
 	else
 		has_played_alert = 0
 		return 1
 
-#undef HI_EX
+/obj/item/weapon/gun/lawgiver/demolition
+	desc = "The Lawgiver II. A twenty-five round sidearm with mission-variable voice-programmed ammunition. This model is equipped to handle firing high-explosive rounds."
+
+/obj/item/weapon/gun/lawgiver/demolition/Hear(var/datum/speech/speech, var/rendered_speech="")
+	if(speech.speaker == loc && !speech.frequency && dna_profile)
+		var/mob/living/carbon/human/H = loc
+		if(dna_profile == H.dna.unique_enzymes)
+			recoil = 0
+			if((findtext(speech.message, "stun")) || (findtext(speech.message, "taser")))
+				firing_mode = STUN
+				fire_sound = 'sound/weapons/Taser.ogg'
+				projectile_type = "/obj/item/projectile/energy/electrode"
+				fire_delay = 0
+				sleep(3)
+				say("STUN")
+			else if((findtext(speech.message, "laser")) || (findtext(speech.message, "lethal")) || (findtext(speech.message, "beam")))
+				firing_mode = LASER
+				fire_sound = 'sound/weapons/lasercannonfire.ogg'
+				projectile_type = "/obj/item/projectile/beam/heavylaser"
+				fire_delay = 5
+				sleep(3)
+				say("LASER")
+			else if((findtext(speech.message, "rapid")) || (findtext(speech.message, "automatic")))
+				firing_mode = RAPID
+				fire_sound = 'sound/weapons/Gunshot_c20.ogg'
+				projectile_type = "/obj/item/projectile/bullet/midbullet/lawgiver"
+				fire_delay = 0
+				recoil = 1
+				sleep(3)
+				say("RAPID FIRE")
+			else if((findtext(speech.message, "hi ex")) || (findtext(speech.message, "hi-ex")) || (findtext(speech.message, "explosive")) || (findtext(speech.message, "rocket")))
+				firing_mode = FLARE
+				fire_sound = 'sound/weapons/elecfire.ogg'
+				projectile_type = "/obj/item/projectile/bullet/gyro"
+				fire_delay = 5
+				recoil = 1
+				sleep(3)
+				say("HI-EX")
+			else if((findtext(speech.message, "ricochet")) || (findtext(speech.message, "bounce")))
+				firing_mode = RICOCHET
+				fire_sound = 'sound/weapons/gatling_fire.ogg'
+				projectile_type = "/obj/item/projectile/bullet/midbullet/bouncebullet/lawgiver"
+				fire_delay = 5
+				recoil = 1
+				sleep(3)
+				say("RICOCHET")
+			update_icon()
+
+/obj/item/weapon/gun/lawgiver/demolition/check_mag_type(obj/item/I, mob/user)
+	if(!istype(I, /obj/item/ammo_storage/magazine/lawgiver/demolition))
+		to_chat(user, "<span class='warning'>This demolition-model [src.name] can't take a standard lawgiver magazine!</span>")
+		return 0
+	return 1
+
+#undef RICOCHET
 #undef RAPID
 #undef FLARE
 #undef STUN

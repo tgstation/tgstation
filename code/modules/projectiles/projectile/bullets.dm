@@ -65,9 +65,19 @@
 	damage = 10
 	stun = 0
 	weaken = 0
+	superspeed = 1
 
 /obj/item/projectile/bullet/midbullet2
 	damage = 25
+
+/obj/item/projectile/bullet/midbullet/bouncebullet
+	bounce_type = PROJREACT_WALLS|PROJREACT_WINDOWS
+	bounces = -1
+
+/obj/item/projectile/bullet/midbullet/bouncebullet/lawgiver
+	damage = 30
+	stun = 0
+	weaken = 0
 
 /obj/item/projectile/bullet/suffocationbullet//How does this even work?
 	name = "CO2 bullet"
@@ -250,7 +260,7 @@
 	stutter = 5
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
 	penetration = 20//can hit 3 mobs at once, or go through a wall and hit 2 more mobs, or go through an rwall/blast door and hit 1 mob
-	var/superspeed = 1
+	superspeed = 1
 	fire_sound = 'sound/weapons/hecate_fire.ogg'
 
 /obj/item/projectile/bullet/hecate/OnFired()
@@ -267,17 +277,6 @@
 			H.ear_damage += rand(3, 5)
 			H.ear_deaf = max(H.ear_deaf,15)
 			to_chat(H, "<span class='warning'>Your ears ring!</span>")
-
-/obj/item/projectile/bullet/hecate/bresenham_step(var/distA, var/distB, var/dA, var/dB)
-	if(..())
-		if(superspeed)
-			superspeed = 0
-			return 1
-		else
-			superspeed = 1
-			return 0
-	else
-		return 0
 
 /obj/item/projectile/bullet/a762x55
 	name = "a762x55 round"
@@ -338,7 +337,6 @@
 	stutter = 0
 	phase_type = PROJREACT_WALLS|PROJREACT_WINDOWS|PROJREACT_OBJS|PROJREACT_MOBS|PROJREACT_BLOB
 	penetration = 0 //By default. Higher-power shots will have penetration.
-	var/superspeed = 0
 
 /obj/item/projectile/bullet/APS/on_hit(var/atom/atarget, var/blocked = 0)
 	if(istype(atarget, /mob/living) && damage == 200)
@@ -350,6 +348,7 @@
 	..()
 	if(damage >= 100)
 		superspeed = 1
+		super_speed = 1
 		for (var/mob/M in player_list)
 			if(M && M.client)
 				var/turf/M_turf = get_turf(M)
@@ -359,17 +358,6 @@
 /obj/item/projectile/bullet/APS/OnDeath()
 	var/turf/T = get_turf(src)
 	new /obj/item/stack/rods(T)
-
-/obj/item/projectile/bullet/APS/bresenham_step(var/distA, var/distB, var/dA, var/dB)
-	if(..())
-		if(superspeed)
-			superspeed = 0
-			return 1
-		else
-			superspeed = 1
-			return 0
-	else
-		return 0
 
 /obj/item/projectile/bullet/stinger
 	name = "alien stinger"

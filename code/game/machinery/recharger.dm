@@ -154,8 +154,8 @@
 					L.rapid_ammo_count++
 				else if(L.flare_ammo_count != 5)
 					L.flare_ammo_count++
-				else if(L.hi_ex_ammo_count != 5)
-					L.hi_ex_ammo_count++
+				else if(L.ricochet_ammo_count != 5)
+					L.ricochet_ammo_count++
 				icon_state = "recharger1"
 				if(!self_powered)
 					use_power(200)

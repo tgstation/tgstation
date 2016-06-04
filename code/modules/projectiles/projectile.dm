@@ -104,11 +104,20 @@ var/list/impact_master = list()
 	var/penetration_message = 1 //Message that is shown when a projectile penetrates an object
 	var/fire_sound = 'sound/weapons/Gunshot.ogg' //sound that plays when the projectile is fired
 	var/rotate = 1 //whether the projectile is rotated based on angle or not
+	var/superspeed = 0 //When set to 1, the projectile will travel at twice the normal speed
+	var/super_speed = 0 //This exists just for proper functionality
 
 /obj/item/projectile/New()
 	..()
 	initial_pixel_x = pixel_x
 	initial_pixel_y = pixel_y
+	if(superspeed)
+		super_speed = 1
+
+/obj/item/projectile/New()
+	..()
+	if(superspeed)
+		super_speed = 1
 
 /obj/item/projectile/proc/on_hit(var/atom/atarget, var/blocked = 0)
 	if(blocked >= 2)		return 0//Full block
@@ -413,6 +422,20 @@ var/list/impact_master = list()
 
 
 /obj/item/projectile/proc/bresenham_step(var/distA, var/distB, var/dA, var/dB)
+	if(!superspeed)
+		return make_bresenham_step(distA, distB, dA, dB)
+	else
+		if(make_bresenham_step(distA, distB, dA, dB))
+			if(super_speed)
+				super_speed = 0
+				return 1
+			else
+				super_speed = 1
+				return 0
+		else
+			return 0
+
+/obj/item/projectile/proc/make_bresenham_step(var/distA, var/distB, var/dA, var/dB)
 	if(step_delay)
 		sleep(step_delay)
 	if(kill_count < 1)
