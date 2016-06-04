@@ -77,6 +77,8 @@
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 
+#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
+
 // ASSEMBLY HELPERS
 
 #define isassembly(O) (istype(O, /obj/item/device/assembly))

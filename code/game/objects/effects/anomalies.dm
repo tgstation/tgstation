@@ -58,7 +58,7 @@
 
 /obj/effect/anomaly/grav/New()
 	..()
-	aSignal.origin_tech = "magnets=5;powerstorage=4"
+	aSignal.origin_tech = "magnets=7"
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -104,7 +104,7 @@
 
 /obj/effect/anomaly/flux/New()
 	..()
-	aSignal.origin_tech = "powerstorage=6;programming=4;plasmatech=4"
+	aSignal.origin_tech = "powerstorage=7"
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -146,7 +146,7 @@
 
 /obj/effect/anomaly/bluespace/New()
 	..()
-	aSignal.origin_tech = "bluespace=5;magnets=5;powerstorage=3"
+	aSignal.origin_tech = "bluespace=7"
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -166,7 +166,7 @@
 
 /obj/effect/anomaly/pyro/New()
 	..()
-	aSignal.origin_tech = "plasmatech=5;powerstorage=4;biotech=6"
+	aSignal.origin_tech = "plasmatech=7"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -183,7 +183,7 @@
 
 /obj/effect/anomaly/bhole/New()
 	..()
-	aSignal.origin_tech = "materials=5;combat=4;engineering=4"
+	aSignal.origin_tech = "engineering=7"
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

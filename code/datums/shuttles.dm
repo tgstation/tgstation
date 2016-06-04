@@ -37,6 +37,10 @@
 		shuttle.\n\
 		In case of emergency: Break glass."
 
+/datum/map_template/shuttle/emergency/asteroid
+	suffix = "asteroid"
+	name = "Asteroid emergency shuttle"
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
