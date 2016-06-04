@@ -21,7 +21,7 @@
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
-			new /obj/item/weapon/dnainjector/xraymut(src)
+			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
 			new /obj/item/weapon/wingpotion(src)
 		if(7)
