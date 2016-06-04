@@ -239,6 +239,7 @@
 /turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
 	if(prob(20))
 		ChangeTurf(/turf/closed/wall/clockwork)
+
 /turf/open/floor/ratvar_act()
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/clockwork)
