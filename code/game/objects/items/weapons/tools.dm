@@ -35,11 +35,8 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/wrench/golden
-	name = "golden wrench"
-	desc = "Destroying one of these makes fat neckbeards around the galaxy cry."
-	icon_state = "g_wrench"
-	item_state = "g_wrench"
-	toolspeed = 3
+	name = "high-speed wrench"
+	toolspeed = 2.5
 
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
@@ -188,11 +185,8 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/wirecutters/golden
-	name = "golden wirecutters"
-	desc = "You see no safety issues with this."
-	icon_state = "g_wirecutters"
-	item_state = "g_wirecutters"
-	toolspeed = 3
+	name = "high-speed wirecutters"
+	toolspeed = 2.5
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -443,12 +437,9 @@
 			return
 
 /obj/item/weapon/weldingtool/golden
-	name = "golden welding tool"
-	desc = "Heat-proof gold is a rare and valuable asset."
-	icon_state = "g_welder"
-	item_state = "g_welder"
+	name = "high-speed welding tool"
 	max_fuel = 80
-	toolspeed = 3
+	toolspeed = 2.5
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
@@ -547,11 +538,8 @@
 	return (BRUTELOSS)
 
 /obj/item/weapon/crowbar/golden
-	name = "golden crowbar"
-	desc = "The rich man's floor tile remover."
-	icon_state = "g_crowbar"
-	item_state = "g_crowbar"
-	toolspeed = 3
+	name = "high-speed crowbar"
+	toolspeed = 2.5
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
