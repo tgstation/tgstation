@@ -244,7 +244,7 @@
 
 
 /obj/item/projectile/gravipulse
-	name = "zero-point energy bolt"
+	name = "one-point energy bolt"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
 	hitsound = "sound/weapons/wave.ogg"
