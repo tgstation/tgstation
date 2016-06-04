@@ -86,7 +86,7 @@
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "rune_large"
+	icon_state = "landing"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -32
 	pixel_y = -32
