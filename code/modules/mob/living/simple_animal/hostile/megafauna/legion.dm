@@ -4,7 +4,7 @@
 	maxHealth = 800
 	icon_state = "legion"
 	icon_living = "legion"
-	desc = "One of many."
+	desc = "One of many. One of many. One of many. One of many. One of many."
 	icon = 'icons/mob/lavaland/legion.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -32,6 +32,13 @@
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
 	new/obj/item/device/gps/internal/legion(src)
+	for(var/mob/M in mob_list - src)
+		if(M.z == z)
+			M << "<span class='userdanger'>Discordant whispers flood your mind. Something terrible has come.</span>"
+			M << 'sound/creatures/legion_spawn.ogg'
+			if(M.client)
+				M.client.color = rgb(255, 0, 0)
+				animate(M.client, color = rgb(255, 255, 255), time = 50)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
@@ -42,7 +49,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0

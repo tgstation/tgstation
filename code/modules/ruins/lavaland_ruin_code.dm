@@ -1,31 +1,49 @@
 /obj/structure/lavaland_door
 	name = "necropolis gate"
-	desc = "An imposing, seemingly impenetrable door."
+	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "door"
 	anchored = 1
 	density = 1
+	opacity = 1
 	bound_width = 96
 	bound_height = 96
+	pixel_x = -32
+	bound_x = -32
 	burn_state = LAVA_PROOF
 	luminosity = 1
 	var/boss = FALSE
+	var/is_anyone_home = FALSE
 
 /obj/structure/lavaland_door/attack_hand(mob/user)
-	if(boss)
-		return
 	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
 		return
-	var/safety = alert(user, "Are you sure you want to do this? You and everyone else on lavaland will likely die.", "Knock on the door?", "Proceed", "Abort")
-	if(safety == "Abort" || !in_range(src, user) || !src || boss || user.incapacitated())
+	if(is_anyone_home)
 		return
+	var/safety = alert(user, "You think this might be a bad idea...", "Knock on the door?", "Proceed", "Abort")
+	if(safety == "Abort" || !in_range(src, user) || !src || is_anyone_home || user.incapacitated())
+		return
+	user.visible_message("<span class='warning'>[user] knocks on [src]...</span>", "<span class='userdanger'>You reach out and rap on [src] three times...</span>")
+	playsound(user.loc, 'sound/effects/shieldbash.ogg', 100, 1)
+	is_anyone_home = TRUE
+	sleep(50)
+	if(boss)
+		user << "<span class='notice'>There's no response.</span>"
+		is_anyone_home = FALSE
+		return 0
 	boss = TRUE
-	user << "You knock on the door."
-	playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
-	visible_message("<span class='danger'>Legion emerges from the Necropolis!</span>")
-	message_admins("[key_name_admin(user)] has summoned Legion.")
+	visible_message("<span class='warning'>Locks along the door begin clicking open from within...</span>")
+	var/volume = 60
+	for(var/i in 1 to 3)
+		playsound(src, 'sound/items/Deconstruct.ogg', volume, 0)
+		volume += 20
+		sleep(10)
+	sleep(10)
+	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
+	message_admins("[key_name_admin(user)] has summoned Legion!")
 	log_game("[key_name(user)] summoned Legion.")
-	new /mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
+	is_anyone_home = FALSE
+	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
 /obj/structure/lavaland_door/singularity_pull()
 	return 0

@@ -50,48 +50,5 @@
 		icon_state = "fitnesslifter"
 		user << finishmessage
 
-/obj/structure/weightlifter
-	name = "Weight Machine"
-	desc = "Just looking at this thing makes you feel tired."
-	icon = 'goon/icons/obj/fitness.dmi'
+/obj/structure/stacklifter/weightlifter
 	icon_state = "fitnessweight"
-	density = 1
-	anchored = 1
-
-/obj/structure/weightlifter/attack_hand(mob/user as mob)
-	if(in_use)
-		user << "Its already in use - wait a bit."
-		return
-	else
-		in_use = 1
-		icon_state = "fitnessweight-c"
-		user.dir = SOUTH
-		user.Stun(4)
-		user.loc = src.loc
-		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
-		W.layer = WALL_OBJ_LAYER
-		overlays += W
-		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-		user.visible_message("<B>[user] is [bragmessage]!</B>")
-		var/reps = 0
-		user.pixel_y = 5
-		while (reps++ < 6)
-			if (user.loc != src.loc)
-				break
-
-			for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)
-				sleep(3)
-				animate(user, pixel_y = (user.pixel_y == 3) ? 5 : 3, time = 3)
-
-			playsound(user, 'goon/sound/effects/spring.ogg', 60, 1)
-
-		sleep(3)
-		animate(user, pixel_y = 2, time = 3)
-		sleep(3)
-		playsound(user, 'sound/machines/click.ogg', 60, 1)
-		in_use = 0
-		animate(user, pixel_y = 0, time = 3)
-		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
-		icon_state = "fitnessweight"
-		overlays -= W
-		user << "[finishmessage]"
