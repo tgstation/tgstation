@@ -5,7 +5,7 @@
 "ae" = (/turf/closed/wall/shuttle{icon_state = "swall12";dir = 2},/area/shuttle/escape)
 "af" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "ag" = (/obj/structure/sign/nosmoking_2,/turf/closed/wall/shuttle{icon_state = "swall12";dir = 2},/area/shuttle/escape)
-"ah" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 2;dwidth = 5;height = 14;name = "MetaStation emergency shuttle";width = 25;timid = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"ah" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 2;dwidth = 5;height = 14;name = "Meta emergency shuttle";width = 25;timid = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "ai" = (/turf/closed/wall/shuttle{icon_state = "swall_s10";dir = 2},/area/shuttle/escape)
 "aj" = (/turf/closed/wall/shuttle{tag = "icon-wall3 (NORTHWEST)";icon_state = "wall3";dir = 9},/area/shuttle/escape)
 "ak" = (/turf/closed/wall/shuttle{icon_state = "swall3";dir = 2},/area/shuttle/escape)

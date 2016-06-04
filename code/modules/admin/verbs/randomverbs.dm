@@ -439,8 +439,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/show_log = alert(src, "Show ion message?", "Message", "Yes", "No")
 	var/announce_ion_laws = (show_log == "Yes" ? 1 : -1)
 
-	new /datum/round_event/ion_storm(0, announce_ion_laws, input)
-
+	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
+	ion.start()
+	
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
@@ -983,3 +984,11 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	log_admin("[key_name(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	feedback_add_details("admin_verb","TAH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/open_shuttle_manipulator()
+	set category = "Admin"
+	set name = "Shuttle Manipulator"
+	set desc = "Opens the shuttle manipulator UI."
+
+	for(var/obj/machinery/shuttle_manipulator/M in machines)
+		M.ui_interact(usr)

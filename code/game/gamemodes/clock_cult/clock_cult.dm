@@ -24,7 +24,8 @@ This file's folder contains:
 	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
 	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_objects.dm: Items and structures.
+	clock_items.dm: Items
+	clock_structures.dm: Structures and effects
 	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
 	clock_scripture.dm: Scripture and rites.
 	clock_unsorted.dm: Anything else with no place to be
@@ -117,7 +118,6 @@ This file's folder contains:
 // GAME MODE //
 ///////////////
 
-var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 /datum/game_mode
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable

@@ -434,7 +434,7 @@
 /area/security/prison)
 "aaV" = (
 /obj/machinery/hydroponics/constructable,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -23135,7 +23135,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel{
 	icon_state = "warning"
@@ -27868,7 +27868,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "warning"
@@ -27912,7 +27912,7 @@
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/structure/table,
 /obj/machinery/light,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "warning"
@@ -35559,7 +35559,7 @@
 /area/storage/tech)
 "bfG" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -65262,7 +65262,7 @@
 "cbE" = (
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel{
@@ -77420,29 +77420,6 @@
 	},
 /area/medical/surgery)
 "cuz" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
 	freerange = 0;
@@ -77452,6 +77429,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel,
 /area/medical/surgery)
 "cuA" = (
@@ -91407,7 +91385,7 @@
 "cPw" = (
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/cultivator,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/structure/rack{
@@ -91459,7 +91437,7 @@
 /obj/machinery/hydroponics/soil{
 	pixel_y = 8
 	},
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plating{
 	icon_state = "warnplate"
 	},
@@ -98750,7 +98728,7 @@
 	name = "dust"
 	},
 /obj/item/weapon/wirecutters,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
@@ -99116,7 +99094,7 @@
 	dir = 2;
 	dwidth = 5;
 	height = 14;
-	name = "MetaStation emergency shuttle";
+	name = "Meta emergency shuttle";
 	width = 25
 	},
 /obj/docking_port/stationary{

@@ -17,10 +17,11 @@
 
 /obj/item/weapon/gun/projectile/update_icon()
 	..()
-	if(reskinned && current_skin)
-		icon_state = "[current_skin][suppressed ? "-suppressed" : ""]"
+	if(current_skin)
+		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 	else
-		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""]"
+		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
+
 
 /obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
 //	if(in_chamber)
@@ -151,6 +152,43 @@
 		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
+
+
+
+/obj/item/weapon/gun/projectile/proc/sawoff(mob/user)
+	if(sawn_state == SAWN_OFF)
+		user << "<span class='warning'>\The [src] is already shortened!</span>"
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")
+
+	//if there's any live ammo inside the gun, makes it go off
+	if(blow_up(user))
+		user.visible_message("<span class='danger'>\The [src] goes off!</span>", "<span class='danger'>\The [src] goes off in your face!</span>")
+		return
+
+	if(do_after(user, 30, target = src))
+		if(sawn_state == SAWN_OFF)
+			return
+		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
+		name = "sawn-off [src.name]"
+		desc = sawn_desc
+		w_class = 3
+		item_state = "gun"//phil235 is it different with different skin?
+		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
+		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		sawn_state = SAWN_OFF
+		update_icon()
+		return 1
+
+// Sawing guns related proc
+/obj/item/weapon/gun/projectile/proc/blow_up(mob/user)
+	. = 0
+	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
+		if(AC.BB)
+			process_fire(user, user,0)
+			. = 1
+
 
 /obj/item/weapon/suppressor
 	name = "suppressor"

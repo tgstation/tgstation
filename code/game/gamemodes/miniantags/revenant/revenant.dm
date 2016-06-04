@@ -172,6 +172,7 @@
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
+	. = ..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
@@ -181,8 +182,6 @@
 		spawn(30)
 			inhibited = 0
 			update_action_buttons_icon()
-	else
-		return ..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)

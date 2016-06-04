@@ -4,6 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "firing_pin"
 	item_state = "pen"
+	origin_tech = "materials=2;combat=4"
 	flags = CONDUCT
 	w_class = 1
 	attack_verb = list("poked")
@@ -78,6 +79,7 @@
 	desc = "This safety firing pin allows weapons to be fired within proximity to a firing range."
 	fail_message = "<span class='warning'>TEST RANGE CHECK FAILED.</span>"
 	pin_removeable = 1
+	origin_tech = "combat=2;materials=2"
 
 /obj/item/device/firing_pin/test_range/pin_auth(mob/living/user)
 	for(var/obj/machinery/magnetic_controller/M in range(user, 3))

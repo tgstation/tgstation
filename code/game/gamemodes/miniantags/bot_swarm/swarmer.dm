@@ -10,7 +10,7 @@
 
 /obj/item/device/unactivated_swarmer/New()
 	if(!crit_fail)
-		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	..()
 
 /obj/item/device/unactivated_swarmer/Topic(href, href_list)

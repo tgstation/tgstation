@@ -183,6 +183,7 @@ obj/item/ammo_casing/energy/net
 	e_cost = 200
 	select_name = "stun"
 	projectile_type = /obj/item/projectile/energy/shock_revolver
+<<<<<<< HEAD
 
 
 /obj/item/ammo_casing/energy/gravipulse
@@ -199,3 +200,5 @@ obj/item/ammo_casing/energy/net
 /obj/item/ammo_casing/energy/gravipulse/alt
 	projectile_type = /obj/item/projectile/gravipulse/alt
 	select_name = "attract"
+=======
+>>>>>>> refs/remotes/tgstation/master

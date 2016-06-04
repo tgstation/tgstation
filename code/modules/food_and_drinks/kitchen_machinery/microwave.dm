@@ -30,7 +30,7 @@
 /obj/item/weapon/circuitboard/machine/microwave
 	name = "circuit board (Microwave)"
 	build_path = /obj/machinery/microwave
-	origin_tech = "programming=1;magnets=1"
+	origin_tech = "programming=2;magnets=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
