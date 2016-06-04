@@ -773,6 +773,12 @@ Sorry Giacom. Please don't be mad :(
 		step_towards(src,S)
 
 /mob/living/narsie_act()
+	if(is_servant_of_ratvar(src) && !stat)
+		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
+		adjustBruteLoss(35)
+		if(src && reagents)
+			reagents.add_reagent("heparin", 5)
+		return 0
 	if(client)
 		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	else
