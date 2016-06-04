@@ -739,7 +739,7 @@
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
-	if(..() || !isliving(hit_atom))
+	if(..() || !isliving(target))
 		return
 	var/mob/living/L = target
 	if(issilicon(L) || iscultist(L))
