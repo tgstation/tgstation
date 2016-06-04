@@ -198,7 +198,6 @@
 
 	msg = say_quote(msg, get_spans())
 	var/rendered = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
-
 	src << rendered
 
 	for(var/mob/M in mob_list)
