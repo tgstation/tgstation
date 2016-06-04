@@ -441,7 +441,7 @@
 	name = "dust"
 	},
 /obj/item/weapon/wirecutters,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/shuttle{
@@ -3196,10 +3196,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -4878,10 +4875,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -5357,7 +5351,7 @@
 	name = "xeno_spawn";
 	pixel_x = -1
 	},
-/obj/effect/spawner/lootdrop{
+/obj/effect/spawner/lootdrop/grille_or_trash{
 	loot = list(/obj/effect/decal/remains/xeno = 49, /obj/structure/alien/egg = 1);
 	name = "2% chance xeno egg spawner"
 	},
@@ -6813,10 +6807,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7327,10 +7318,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -7399,10 +7387,7 @@
 "amT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/robot_debris,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -7532,10 +7517,7 @@
 /obj/effect/decal/cleanable/robot_debris{
 	icon_state = "gib3"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -7607,10 +7589,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/oil,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -8323,13 +8302,11 @@
 	name = "Medical Maintenance"
 	})
 "aok" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -9267,10 +9244,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -9332,10 +9306,7 @@
 "apQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apR" = (
@@ -9907,6 +9878,9 @@
 	})
 "aqV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -11474,15 +11448,11 @@
 	icon_state = "shock";
 	name = "HIGH VOLTAGE"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/auxsolarport)
 "atQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
 	lootcount = 3;
@@ -11493,19 +11463,16 @@
 	name = "Medical Maintenance"
 	})
 "atR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plasteel{
+	icon_state = "whitepurplecorner"
 	},
-/obj/structure/chair/stool{
-	pixel_y = 8
-	},
-/turf/open/floor/plating,
-/area/maintenance/fpmaint{
-	name = "Medical Maintenance"
+/area/medical/research{
+	name = "Research Division"
 	})
 "atS" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+/obj/structure/chair/stool{
+	pixel_y = 8
 	},
 /turf/open/floor/plating{
 	burnt = 1;
@@ -11779,7 +11746,12 @@
 	},
 /area/toxins/xenobiology)
 "aup" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/table,
+/obj/item/weapon/storage/box/syringes{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/beakers,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
@@ -11951,10 +11923,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "auC" = (
@@ -12185,10 +12154,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg2"
@@ -12343,23 +12309,19 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
 "avp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -12398,18 +12360,6 @@
 	name = "Medical Maintenance"
 	})
 "avs" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/effect/decal/cleanable/robot_debris,
 /obj/item/stack/rods,
 /turf/open/floor/plating,
@@ -12518,10 +12468,7 @@
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg2"
@@ -14106,10 +14053,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ayr" = (
@@ -14160,41 +14104,19 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ayx" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/item/stack/sheet/cardboard,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
 	})
 "ayy" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/obj/structure/sink{
+	pixel_y = 26
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/turf/open/floor/plasteel{
+	icon_state = "dark"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating{
-	burnt = 1;
-	icon_state = "panelscorched"
-	},
-/area/maintenance/fpmaint{
-	name = "Medical Maintenance"
-	})
+/area/bridge)
 "ayz" = (
 /obj/structure/chair/stool,
 /obj/structure/disposalpipe/segment{
@@ -14406,10 +14328,7 @@
 	name = "Medbay Central"
 	})
 "ayT" = (
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -15046,10 +14965,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
@@ -17067,10 +16983,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aDC" = (
@@ -17243,10 +17156,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -20453,10 +20363,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Medical Maintenance"
@@ -21720,10 +21627,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aMe" = (
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aMf" = (
@@ -23141,10 +23045,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aOH" = (
@@ -26630,9 +26531,9 @@
 /area/maintenance/disposal)
 "aVu" = (
 /obj/machinery/conveyor{
-	dir = 9;
+	dir = 6;
 	id = "garbage";
-	verted = -1
+	verted = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -26995,10 +26896,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -30786,10 +30684,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -33267,10 +33162,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg2"
@@ -34411,10 +34303,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bkG" = (
@@ -34814,10 +34703,7 @@
 	})
 "blr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
@@ -35337,10 +35223,7 @@
 	},
 /area/maintenance/starboard)
 "bms" = (
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmt" = (
@@ -35672,10 +35555,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -37578,10 +37458,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bqK" = (
@@ -38389,10 +38266,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bsj" = (
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bsk" = (
@@ -39915,10 +39789,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -40283,10 +40154,7 @@
 /area/maintenance/starboard)
 "bvL" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bvM" = (
@@ -41299,10 +41167,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "bxO" = (
@@ -43586,10 +43451,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bBX" = (
@@ -45207,10 +45069,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port{
@@ -45940,10 +45799,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -46900,10 +46756,7 @@
 	})
 "bHU" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -48748,10 +48601,7 @@
 /obj/machinery/light_construct/small{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bLd" = (
@@ -48773,10 +48623,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bLg" = (
@@ -50076,10 +49923,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -50799,10 +50643,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bOP" = (
@@ -50937,10 +50778,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -51467,10 +51305,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bQa" = (
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
@@ -52781,10 +52616,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -53283,10 +53115,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bTE" = (
@@ -54570,10 +54399,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/effect/spawner/lootdrop{
-	loot = list("/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/structure/grille","/obj/item/weapon/cigbutt","/obj/item/trash/cheesie","/obj/item/trash/candy","/obj/item/trash/chips","/obj/item/trash/deadmouse","/obj/item/trash/pistachios","/obj/item/trash/plate","/obj/item/trash/popcorn","/obj/item/trash/raisins","/obj/item/trash/sosjerky","/obj/item/trash/syndi_cakes");
-	name = "maint grille or trash spawner"
-	},
+/obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
@@ -55710,7 +55536,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
 	},
-/area/chapel/main)
+/area/medical/virology)
 "bYn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57796,7 +57622,7 @@
 /area/security/prison)
 "ccf" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ccg" = (
@@ -59647,11 +59473,11 @@
 	},
 /obj/docking_port/stationary{
 	dir = 2;
-	dwidth = 9;
-	height = 11;
+	dwidth = 14;
+	height = 25;
 	id = "emergency_home";
 	name = "emergency evac bay";
-	width = 22
+	width = 32
 	},
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
@@ -61714,6 +61540,133 @@
 	icon_state = "floorgrime"
 	},
 /area/toxins/storage)
+"ckw" = (
+/obj/structure/window,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/maintenance/fpmaint{
+	name = "Medical Maintenance"
+	})
+"ckv" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/fpmaint{
+	name = "Medical Maintenance"
+	})
+"cku" = (
+/obj/structure/flora/kirbyplants,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
+"ckt" = (
+/obj/structure/closet/cardboard,
+/turf/open/floor/plating,
+/area/maintenance/fpmaint{
+	name = "Medical Maintenance"
+	})
+"cks" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/virology)
+"ckr" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/fpmaint{
+	name = "Medical Maintenance"
+	})
+"ckq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock{
+	name = "Private Restroom";
+	req_access_txt = "56"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"ckp" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"cko" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"ckn" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"ckm" = (
+/obj/machinery/door/window{
+	base_state = "left";
+	dir = 2;
+	icon_state = "right";
+	name = "Private Shower";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"ckl" = (
+/obj/structure/window/reinforced,
+/obj/machinery/shower{
+	dir = 4
+	},
+/obj/item/weapon/soap,
+/turf/open/floor/plasteel{
+	icon_state = "freezerfloor"
+	},
+/area/medical/virology)
+"ckk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/fpmaint{
+	name = "Medical Maintenance"
+	})
 
 (1,1,1) = {"
 aaa
@@ -79276,7 +79229,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -79533,8 +79486,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+aab
+aab
 aaa
 aaa
 aaa
@@ -79791,9 +79744,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aab
+aab
+aab
 aaa
 aaa
 aaa
@@ -80048,17 +80001,17 @@ aaa
 aaa
 aaa
 aaa
+aab
+aaa
+aab
+aab
+aab
+aab
+aab
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
 aaa
 aaa
 asB
@@ -80305,17 +80258,17 @@ aaa
 aaa
 aaa
 aaa
+aab
+aaa
+aaa
+aab
+aab
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aab
 aaa
 aaa
 asC
@@ -80562,7 +80515,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aaa
 aaa
@@ -80572,7 +80525,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aab
 aaa
 aab
 asC
@@ -80819,19 +80772,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aab
 aab
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aab
-aab
+aea
+aea
+aea
+aea
+aea
+aea
+aea
+aea
+aea
+aea
 asC
 atO
 avn
@@ -81076,20 +81029,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 aab
 aaa
 aaa
-aab
-aaa
-aaa
-aaa
-aab
-aab
-aab
-asC
+aea
+alj
+amJ
+amg
+aoi
+aph
+aph
+aqU
+arM
+asD
+awD
 atP
 avo
 awD
@@ -81332,22 +81285,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 aab
 aab
 aab
-aaa
 aab
-aaa
-aab
-aab
-aab
-aaa
-aaa
 aea
-atQ
+alm
+afr
+ans
+aoj
+agd
+aiB
+agd
+agd
+agd
+ckv
+ckv
 avp
 awE
 axC
@@ -81594,18 +81547,18 @@ aaa
 aaa
 aab
 aea
-aea
-aea
-aea
-aea
-aea
-aea
-aea
-aea
-aea
-aea
-atR
-ayy
+alm
+afs
+alY
+alY
+alY
+alY
+alY
+ckr
+ckt
+ckw
+aex
+aUr
 awF
 axD
 ayI
@@ -81851,16 +81804,16 @@ aaa
 aaa
 aaa
 aea
-alj
-alR
-amJ
-amg
-aoi
-aph
-aph
-aqU
-arM
-asD
+alm
+ckk
+alY
+ckl
+ckn
+ckp
+alY
+alY
+alY
+alY
 atS
 ayx
 awF
@@ -82109,16 +82062,16 @@ aaa
 aaa
 aea
 alk
-afr
-agd
-ans
-aoj
-agd
-aiB
-agd
-agd
-agd
-anK
+afs
+alY
+ckm
+cko
+apj
+ckq
+aqW
+cku
+alY
+atQ
 avs
 awF
 axF
@@ -82368,12 +82321,12 @@ aea
 all
 afs
 alY
-alY
-alY
-alY
-alY
-alY
-alY
+aqc
+arV
+aqc
+aqc
+aqX
+aua
 alY
 alY
 alY
@@ -82886,7 +82839,7 @@ anu
 aol
 apj
 apX
-aqW
+cks
 arO
 asF
 atT
@@ -90603,7 +90556,7 @@ ajS
 avO
 awW
 akn
-apE
+atR
 aAA
 apE
 apE
@@ -94264,7 +94217,7 @@ bQR
 bSb
 bSb
 bQR
-bOo
+ayy
 bWM
 bXJ
 bYD

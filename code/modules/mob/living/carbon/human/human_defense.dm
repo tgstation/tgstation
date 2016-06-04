@@ -346,7 +346,9 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
+			return ..()
+	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1

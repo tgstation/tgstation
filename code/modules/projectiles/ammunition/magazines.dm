@@ -234,6 +234,10 @@
 	caliber = "9mm"
 	max_ammo = 21
 
+/obj/item/ammo_box/magazine/smgm9mm/update_icon()
+	..()
+	icon_state = "smg9mm-[ammo_count() ? "42" : "0"]"
+
 /obj/item/ammo_box/magazine/smgm9mm/ap
 	name = "SMG magazine (Armour Piercing 9mm)"
 	ammo_type = /obj/item/ammo_casing/c9mmap

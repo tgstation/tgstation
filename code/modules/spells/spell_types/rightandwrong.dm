@@ -112,7 +112,7 @@
 				if("goldenrevolver")
 					G = new /obj/item/weapon/gun/projectile/revolver/golden(get_turf(H))
 				if("sniper")
-					G = new /obj/item/weapon/gun/projectile/sniper_rifle(get_turf(H))
+					G = new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(get_turf(H))
 				if("medibeam")
 					G = new /obj/item/weapon/gun/medbeam(get_turf(H))
 				if("scatterbeam")

@@ -6056,7 +6056,7 @@
 /area/storage/tech)
 "amV" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	 maxcharge = 15000
@@ -16339,7 +16339,7 @@
 "aHe" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/bag/plants/portaseeder,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction{
 	name = "Fore Central Hallway"
@@ -27393,7 +27393,7 @@
 	},
 /area/security/prison)
 "bdD" = (
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/structure/table,
 /obj/item/seeds/wheat,
 /obj/structure/window/reinforced{
