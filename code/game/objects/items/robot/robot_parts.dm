@@ -1,6 +1,8 @@
 /obj/item/robot_parts
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
+	force = 4
+	throwforce = 4
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
@@ -10,24 +12,28 @@
 /obj/item/robot_parts/l_arm
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "l_arm"
 	body_zone = "l_arm"
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "r_arm"
 	body_zone = "r_arm"
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "l_leg"
 	body_zone = "l_leg"
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "r_leg"
 	body_zone = "r_leg"
 

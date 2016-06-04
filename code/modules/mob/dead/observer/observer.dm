@@ -110,11 +110,19 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	..()
 
 /mob/dead/observer/Destroy()
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
+	ghost_images_full -= ghostimage
+	qdel(ghostimage)
+	ghostimage = null
+	
+	ghost_images_default -= ghostimage_default
+	qdel(ghostimage_default)
+	ghostimage_default = null
+	
+	ghost_images_simple -= ghostimage_simple
+	qdel(ghostimage_simple)
+	ghostimage_simple = null
+	
+	updateallghostimages()
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)

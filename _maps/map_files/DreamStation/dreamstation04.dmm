@@ -27174,7 +27174,7 @@
 /area/hallway/secondary/entry)
 "bcf" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /turf/open/floor/plating,
 /area/storage/tech)
@@ -39032,7 +39032,7 @@
 "byo" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/coffee/robusta,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
