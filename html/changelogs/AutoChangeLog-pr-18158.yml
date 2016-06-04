@@ -1,4 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "fixes see_darkness improperly hiding ghosts in certain cases."
