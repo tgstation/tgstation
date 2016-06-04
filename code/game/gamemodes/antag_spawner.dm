@@ -228,12 +228,12 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
 
-	var/shatter_msg = "<span class='notice'>You shatter the bottle, no
+	var/shatter_msg = "<span class='notice'>You shatter the bottle, no \
 		turning back now!</span>"
 	var/veil_msg = "<span class='warning'>You sense a dark presence lurking \
 		just beyond the veil...</span>"
 	var/objective_verb = "Kill"
-	var/demon_type = /mob/living/simple_animal/slaughter
+	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -288,8 +288,6 @@
 	icon_state = "vial"
 	color = "#FF69B4" // HOT PINK
 
-	shatter_msg = "<span class='notice'>You shatter the bottle, no
-		turning back now!</span>"
 	veil_msg = "<span class='warning'>You sense an adorable presence \
 		lurking just beyond the veil...</span>"
 	objective_verb = "Hug and Tickle"
