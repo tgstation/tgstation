@@ -6,7 +6,7 @@ var/list/GPS_list = list()
 	icon_state = "gps-c"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=2;magnets=3;bluespace=3"
+	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
