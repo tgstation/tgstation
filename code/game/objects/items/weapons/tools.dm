@@ -34,6 +34,13 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wrench/golden
+	name = "golden wrench"
+	desc = "Destroying one of these makes fat neckbeards around the galaxy cry."
+	icon_state = "g_wrench"
+	item_state = "g_wrench"
+	toolspeed = 3
+
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
@@ -102,6 +109,13 @@
 	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/golden
+	name = "golden screwdriver"
+	desc = "Some folks are born, golden screwdriver in hand."
+	icon_state = "g_screwdriver"
+	item_state = "g_screwdriver"
+	toolspeed = 3
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
 	if(!icon_state)
@@ -173,6 +187,12 @@
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wirecutters/golden
+	name = "golden wirecutters"
+	desc = "You see no safety issues with this."
+	icon_state = "g_wirecutters"
+	item_state = "g_wirecutters"
+	toolspeed = 3
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -422,6 +442,14 @@
 			user << "<span class='warning'>You need one rod to start building a flamethrower!</span>"
 			return
 
+/obj/item/weapon/weldingtool/golden
+	name = "golden welding tool"
+	desc = "Heat-proof gold is a rare and valuable asset."
+	icon_state = "g_welder"
+	item_state = "g_welder"
+	max_fuel = 80
+	toolspeed = 3
+
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
@@ -517,6 +545,13 @@
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/weapon/crowbar/golden
+	name = "golden crowbar"
+	desc = "The rich man's floor tile remover."
+	icon_state = "g_crowbar"
+	item_state = "g_crowbar"
+	toolspeed = 3
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
