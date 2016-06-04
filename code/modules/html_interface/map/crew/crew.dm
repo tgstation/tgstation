@@ -106,7 +106,7 @@ var/global/datum/interactive_map/crewmonitor/crewmonitor = new
 			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Crew Monitoring", 900, 800, "[MAPHEADER] \
 			<link rel=\"stylesheet\" type=\"text/css\" href=\"crewmonitor.css\" /></script>\
 			<script type=\"text/javascript\">\
-			var mapname = [map.nameShort]; \
+			var mapname = \"[map.nameShort]\"; \
 			var z = [z]; \
 			var tile_size = [world.icon_size]; \
 			var maxx = [world.maxx]; \

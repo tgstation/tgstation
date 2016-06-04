@@ -68,7 +68,7 @@ var/global/datum/interactive_map/camera/adv_camera = new
 		if (!src.interfaces["[z]"])
 			src.interfaces["[z]"] = new/datum/html_interface/nanotrasen(src, "Security Cameras", 900, 800, \
 			"[MAPHEADER] </script><script type=\"text/javascript\">\
-			var mapname = [map.nameShort]; \
+			var mapname = \"[map.nameShort]\"; \
 			var z = [z]; \
 			var tile_size = [world.icon_size]; \
 			var maxx = [world.maxx]; \
