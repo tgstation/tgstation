@@ -236,7 +236,7 @@ other types of metals and chemistry for reagents).
 	name = "GPS Device"
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
-	req_tech = list("materials" = 2, "magnets" = 3, "bluespace" = 3)
+	req_tech = list("materials" = 2, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	build_path = /obj/item/device/gps
