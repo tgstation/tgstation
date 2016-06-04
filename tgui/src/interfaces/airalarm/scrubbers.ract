@@ -25,6 +25,8 @@
           action='n2o_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_n2o}}}'>N2O</ui-button>
         <ui-button icon='{{filter_toxins ? "check-square-o" : "square-o"}}' style='{{filter_toxins ? "selected" : null}}'
           action='tox_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_toxins}}}'>Plasma</ui-button>
+		<ui-button icon='{{filter_bz ? "check-square-o" : "square-o"}}' style='{{filter_bz ? "selected" : null}}'
+		  action='bz_scrub' params='{"id_tag": "{{id_tag}}", "val": {{+!filter_bz}}}'>BZ</ui-button>
       </ui-section>
     </ui-subdisplay>
   {{else}}
