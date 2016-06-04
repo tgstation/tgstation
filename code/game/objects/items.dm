@@ -511,7 +511,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	. = ..()
 	if(.)
 		transfer_blood = 0
-		bloody_hands_mob = null
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)

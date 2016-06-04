@@ -220,5 +220,5 @@
 	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
 
-/obj/item/weapon/melee/supermatter_sword/add_blood()
+/obj/item/weapon/melee/supermatter_sword/add_mob_blood()
 	return
