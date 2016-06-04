@@ -208,7 +208,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
-						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+						var/link = FOLLOW_LINK(M, src)
+						M << "[link] [msg]"
 					else
 						switch(M.lingcheck())
 							if(3)
@@ -224,7 +225,8 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
-						M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+						var/link = FOLLOW_LINK(M, src)
+						M << "[link] [msg]"
 					else
 						switch(M.lingcheck())
 							if(3)

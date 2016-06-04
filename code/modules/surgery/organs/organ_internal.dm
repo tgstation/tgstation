@@ -1,4 +1,3 @@
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
@@ -326,7 +325,8 @@
 				continue
 		H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
+		var/link = FOLLOW_LINK(M, user)
+		M << "[link] [rendered]"
 	return ""
 
 /obj/item/organ/tongue/zombie

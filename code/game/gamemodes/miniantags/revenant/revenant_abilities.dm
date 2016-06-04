@@ -121,10 +121,12 @@
 			for(var/ded in dead_mob_list)
 				if(!isobserver(ded))
 					continue
-				ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
+				var/follow_rev = FOLLOW_LINK(ded, user)
+				var/follow_whispee = FOLLOW_LINK(ded, M)
+				ded << "[follow_rev] \
 					<span class='name'>[user]</span> \
 					<span class='revenboldnotice'>Revenant Transmit --></span> \
-					<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
+					[follow_whispee] \
 					<span class='name'>[M]</span> \
 					<span class='revennotice'>[msg]</span>"
 
