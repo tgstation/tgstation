@@ -811,9 +811,13 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	for(var/mob/living/M in living_mob_list - L)
-		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='heavy_brass'>Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "" : "un"]successfully converted [L.real_name]!</span>"
+	var/partial_message = "Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]"
+	for(var/M in mob_list - L)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, L)
+			M <<  "<span class='heavy_brass'>[partial_message] [link] [L.real_name]!</span>"
+		else if(is_servant_of_ratvar(M))
+			M << "<span class='heavy_brass'>[partial_message] [L.real_name]!</span>"
 	qdel(src)
 	return 1
 
@@ -837,6 +841,9 @@
 	if(!message || !speaker)
 		return 0
 	var/parsed_message = "<span class='heavy_brass'>(Sigil of Tranmission in [get_area(src)]): </span><span class='brass'>[message]</span>"
-	for(var/mob/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, speaker)
+			M << "[link] [parsed_message]"
+		else if(is_servant_of_ratvar(M))
 			M << parsed_message
