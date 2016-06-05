@@ -308,7 +308,7 @@
 	},
 /area/ruin/powered)
 "bb" = (
-/obj/structure/weightlifter,
+/obj/structure/stacklifter/weightlifter,
 /turf/open/floor/plating/beach/sand,
 /area/ruin/powered)
 "bc" = (

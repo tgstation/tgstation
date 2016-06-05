@@ -8,9 +8,9 @@
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
-/obj/structure/punching_bag/attack_hand(mob/user as mob)
-		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+/obj/structure/punching_bag/attack_hand(mob/living/user)
+	flick("[icon_state]2", src)
+	playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
 
 /obj/structure/stacklifter
 	name = "Weight Machine"
@@ -20,7 +20,7 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/stacklifter/attack_hand(mob/user as mob)
+/obj/structure/stacklifter/attack_hand(mob/living/user)
 	if(in_use)
 		user << "Its already in use - wait a bit."
 		return
@@ -50,15 +50,10 @@
 		icon_state = "fitnesslifter"
 		user << finishmessage
 
-/obj/structure/weightlifter
-	name = "Weight Machine"
-	desc = "Just looking at this thing makes you feel tired."
-	icon = 'goon/icons/obj/fitness.dmi'
+/obj/structure/stacklifter/weightlifter
 	icon_state = "fitnessweight"
-	density = 1
-	anchored = 1
 
-/obj/structure/weightlifter/attack_hand(mob/user as mob)
+/obj/structure/stacklifter/weightlifter/attack_hand(mob/living/user)
 	if(in_use)
 		user << "Its already in use - wait a bit."
 		return
