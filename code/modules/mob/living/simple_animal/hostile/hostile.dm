@@ -316,7 +316,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
+				if(istype(A, /obj/structure))
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
