@@ -1,35 +1,3 @@
-
-/datum/chemical_reaction/formaldehyde
-	name = "formaldehyde"
-	id = "Formaldehyde"
-	result = "formaldehyde"
-	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
-	result_amount = 3
-	required_temp = 420
-
-/datum/chemical_reaction/neurotoxin2
-	name = "neurotoxin2"
-	id = "neurotoxin2"
-	result = "neurotoxin2"
-	required_reagents = list("space_drugs" = 1)
-	result_amount = 1
-	required_temp = 674
-
-/datum/chemical_reaction/cyanide
-	name = "Cyanide"
-	id = "cyanide"
-	result = "cyanide"
-	required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1)
-	result_amount = 3
-	required_temp = 380
-
-/datum/chemical_reaction/itching_powder
-	name = "Itching Powder"
-	id = "itching_powder"
-	result = "itching_powder"
-	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
-	result_amount = 3
-
 /datum/chemical_reaction/facid
 	name = "Fluorosulfuric acid"
 	id = "facid"
@@ -37,20 +5,6 @@
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
 	result_amount = 4
 	required_temp = 380
-
-/datum/chemical_reaction/sulfonal
-	name = "sulfonal"
-	id = "sulfonal"
-	result = "sulfonal"
-	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/lipolicide
-	name = "lipolicide"
-	id = "lipolicide"
-	result = "lipolicide"
-	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
-	result_amount = 3
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"

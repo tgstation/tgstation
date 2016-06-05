@@ -401,61 +401,6 @@
 
 //////////////////////////////////// Other goon stuff ///////////////////////////////////////////
 
-/datum/chemical_reaction/acetone
-	name = "acetone"
-	id = "acetone"
-	result = "acetone"
-	required_reagents = list("oil" = 1, "welding_fuel" = 1, "oxygen" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/carpet
-	name = "carpet"
-	id = "carpet"
-	result = "carpet"
-	required_reagents = list("space_drugs" = 1, "blood" = 1)
-	result_amount = 2
-
-
-/datum/chemical_reaction/oil
-	name = "Oil"
-	id = "oil"
-	result = "oil"
-	required_reagents = list("welding_fuel" = 1, "carbon" = 1, "hydrogen" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/phenol
-	name = "phenol"
-	id = "phenol"
-	result = "phenol"
-	required_reagents = list("water" = 1, "chlorine" = 1, "oil" = 1)
-	result_amount = 3
-
-/datum/chemical_reaction/ash
-	name = "Ash"
-	id = "ash"
-	result = "ash"
-	required_reagents = list("oil" = 1)
-	result_amount = 1
-	required_temp = 480
-
-/datum/chemical_reaction/colorful_reagent
-	name = "colorful_reagent"
-	id = "colorful_reagent"
-	result = "colorful_reagent"
-	required_reagents = list("stable_plasma" = 1, "radium" = 1, "space_drugs" = 1, "cryoxadone" = 1, "triple_citrus" = 1)
-	result_amount = 5
-
-/datum/chemical_reaction/life
-	name = "Life"
-	id = "life"
-	result = null
-	required_reagents = list("strange_reagent" = 1, "synthflesh" = 1, "blood" = 1)
-	result_amount = 1
-	required_temp = 374
-
-/datum/chemical_reaction/life/on_reaction(datum/reagents/holder, created_volume)
-	chemical_mob_spawn(holder, 1, "Life")
-
 /datum/chemical_reaction/corgium
 	name = "corgium"
 	id = "corgium"
@@ -468,34 +413,6 @@
 	var/location = get_turf(holder.my_atom)
 	new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
-
-/datum/chemical_reaction/hair_dye
-	name = "hair_dye"
-	id = "hair_dye"
-	result = "hair_dye"
-	required_reagents = list("colorful_reagent" = 1, "radium" = 1, "space_drugs" = 1)
-	result_amount = 5
-
-/datum/chemical_reaction/barbers_aid
-	name = "barbers_aid"
-	id = "barbers_aid"
-	result = "barbers_aid"
-	required_reagents = list("carpet" = 1, "radium" = 1, "space_drugs" = 1)
-	result_amount = 5
-
-/datum/chemical_reaction/concentrated_barbers_aid
-	name = "concentrated_barbers_aid"
-	id = "concentrated_barbers_aid"
-	result = "concentrated_barbers_aid"
-	required_reagents = list("barbers_aid" = 1, "mutagen" = 1)
-	result_amount = 2
-
-/datum/chemical_reaction/saltpetre
-	name = "saltpetre"
-	id = "saltpetre"
-	result = "saltpetre"
-	required_reagents = list("potassium" = 1, "nitrogen" = 1, "oxygen" = 3)
-	result_amount = 3
 
 /datum/chemical_reaction/lye
 	name = "lye"
