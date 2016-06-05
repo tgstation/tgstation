@@ -388,6 +388,9 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			to_chat(src, "<span class='warning'>Not a drop of blood here</span>")
 			src.mind.vampire.draining = null
 			return 0
+		if (!H.mind)
+			to_chat(src, "<span class='warning'>This blood is lifeless and has no power.</span>")
+			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
 		if(!H.vessel.get_reagent_amount("blood"))
