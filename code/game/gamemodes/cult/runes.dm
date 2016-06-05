@@ -457,27 +457,11 @@ var/list/teleport_runes = list()
 
 /obj/effect/rune/narsie/New()
 	. = ..()
-	SSobj.processing += src
 	poi_list |= src
 
 /obj/effect/rune/narsie/Destroy()
-	SSobj.processing -= src
 	poi_list -= src
 	. = ..()
-
-/obj/effect/rune/narsie/process()
-	// Automatically attempt a summoning, once per process
-	var/list/invokers = can_invoke()
-	if(invokers.len >= req_cultists)
-		invoke(invokers)
-	else
-		fail_invoke(message=FALSE)
-	// Automatically disappear if for some reason it's not present on station
-	if(loc.z != ZLEVEL_STATION)
-		visible_message("<span class='cultitalic'>[src] disappears in \
-			disgust. The Geometer is not interested in lesser locations.\
-			</span>")
-		qdel(src)
 
 /obj/effect/rune/narsie/talismanhide() //can't hide this, and you wouldn't want to
 	return
@@ -546,7 +530,7 @@ var/list/teleport_runes = list()
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
 		log_game("Raise Dead rune failed - no catalyst corpses")
-		fail_invoke()
+		fail_invoke(message = FALSE)
 		return
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
@@ -554,7 +538,7 @@ var/list/teleport_runes = list()
 	if(!potential_revive_mobs.len)
 		user << "<span class='cultitalic'>There is no eligible revival target on the rune!</span>"
 		log_game("Raise Dead rune failed - no corpses to revive")
-		fail_invoke()
+		fail_invoke(message = FALSE)
 		return
 	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
 	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
@@ -579,11 +563,12 @@ var/list/teleport_runes = list()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
 		visible_message("<span class='warning'>The glowing tendril snaps against the rune with a shocking crack.</span>")
 		rune_in_use = 0
-		fail_invoke()
+		fail_invoke(message = FALSE)
 		return
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones.</span>")
 	mob_to_sacrifice.dust()
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
+	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
