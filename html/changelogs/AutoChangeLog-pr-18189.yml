@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - bugfix: "Laughter demons should now always let their friends go when
+asked correctly."
