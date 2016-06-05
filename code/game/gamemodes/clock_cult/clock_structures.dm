@@ -591,14 +591,15 @@
 			qdel(src)
 			return 0
 		if(both_ways)
-			clockwork_desc = "A gateway in reality. It can [both_ways ? "both send and receive":"only [sender ? "send" : "receive"]"] objects."
+			clockwork_desc = "A gateway in reality. It can both send and receive objects."
 		else
+			clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
 		spawn(lifetime)
 			if(src)
 				qdel(src)
 
 //set up a gateway with another gateway
-/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, duration, uses, two_way)
+/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, uses, two_way)
 	if(!gatewayB || !duration || !uses)
 		return 0
 	linked_gateway = gatewayB
@@ -609,10 +610,10 @@
 	else
 		sender = TRUE
 		gatewayB.sender = FALSE
-	lifetime = duration
-	gatewayB.lifetime = duration
-	uses = portal_uses
-	gatewayB.uses = portal_uses
+	lifetime = set_duration
+	gatewayB.lifetime = set_duration
+	uses = uses
+	gatewayB.uses = uses
 	return 1
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
