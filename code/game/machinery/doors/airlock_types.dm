@@ -481,6 +481,7 @@
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \
 			apart!</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			new/obj/item/clockwork/alloy_shards(get_turf(src))
 			new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(get_turf(src))
 			qdel(src)
 		return 1
