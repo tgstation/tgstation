@@ -390,17 +390,14 @@
 		return 0
 	flick("[initial(icon_state)]_discharged", src)
 	icon_state = "[initial(icon_state)]_recharging"
-	addtimer(src, "recharge", 3000) // 5 minutes
+	spawn(3000) //5 minutes
+		if(!src)
+			return 0
+		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power.</span>")
+		flick("[initial(icon_state)]_recharged", src)
+		icon_state = initial(icon_state)
+		recharging = FALSE
 	return 1
-
-/obj/structure/clockwork/interdiction_lens/proc/recharge()
-	if(!src)
-		return 0
-	visible_message("<span class='warning'>The writhing tendrils return \
-		to the gemstone, which begins to glow with power.</span>")
-	flick("[initial(icon_state)]_recharged", src)
-	icon_state = initial(icon_state)
-	recharging = FALSE
 
 /obj/structure/clockwork/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
 	name = "mending motor"
