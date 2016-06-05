@@ -338,7 +338,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered]W of power.</span>"
+		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "infinite":"[powered]"]W of power.</span>"
 
 /obj/structure/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -452,7 +452,8 @@
 
 /obj/structure/clockwork/powered/mending_motor/total_accessable_power()
 	. = ..()
-	. += accessable_alloy_power()
+	if(. != INFINITY)
+		. += accessable_alloy_power()
 
 /obj/structure/clockwork/powered/mending_motor/proc/accessable_alloy_power()
 	return stored_alloy
@@ -510,7 +511,7 @@
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, be_close = 1))
-		if(!total_accessable_power() < 300)
+		if(!total_accessable_power() >= 300)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
 		toggle(0, user)
@@ -622,7 +623,7 @@
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, be_close = 1))
-		if(!total_accessable_power() < mania_cost)
+		if(!total_accessable_power() >= mania_cost)
 			user << "<span class='warning'>[src] needs more power to function!</span>"
 			return 0
 		toggle(0, user)
@@ -659,7 +660,7 @@
 /obj/structure/clockwork/powered/interdiction_lens/proc/disrupt(mob/living/user)
 	if(!user || !is_servant_of_ratvar(user))
 		return 0
-	if(!total_accessable_power() < disrupt_cost)
+	if(!total_accessable_power() >= disrupt_cost)
 		user << "<span class='warning'>[src] needs more power to function!</span>"
 		return 0
 	if(active || recharging >= world.time)
@@ -733,7 +734,7 @@
 		density = 1
 
 /obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!total_accessable_power() < hierophant_cost)
+	if(!total_accessable_power() >= hierophant_cost)
 		user <<  "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spacial Gateway","Cancel")
