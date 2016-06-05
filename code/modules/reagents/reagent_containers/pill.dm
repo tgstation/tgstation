@@ -13,6 +13,8 @@
 
 /obj/item/weapon/reagent_containers/pill/New()
 	..()
+	if(!icon_state)
+		icon_state = "pill[rand(1,20)]"
 	if(reagents.total_volume && roundstart)
 		name += " ([reagents.total_volume]u)"
 

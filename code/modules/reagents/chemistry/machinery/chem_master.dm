@@ -224,13 +224,6 @@
 					P.name = trim("[name] pill")
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
-
-					P.overlays.Cut()
-					if(reagents.total_volume)
-						var/image/filling = image('icons/obj/reagentfillings.dmi', src, "pill")
-						filling.color = mix_color_from_reagents(reagents.reagent_list)
-						P.overlays += filling
-						P.icon_state = "pill0"
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
