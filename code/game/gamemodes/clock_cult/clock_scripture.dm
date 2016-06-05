@@ -424,7 +424,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/volt_void //Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
-	desc = "Drains energy from nearby power sources, dealing if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
+	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
 	chant_invocation = "Qenj punetr gb guv’f furyy!"
 	chant_amount = 30
 	chant_interval = 10
@@ -432,8 +432,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
 	var/total_power_drained = 0
-	var/power_damage_threshhold = 2000
-	var/augument_damage_threshhold = 5000
+	var/power_damage_threshhold = 3000
+	var/augument_damage_threshhold = 6000
 
 /datum/clockwork_scripture/channeled/volt_void/chant_effects()
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
