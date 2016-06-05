@@ -46,7 +46,7 @@
 				possible_targets[resultkey] = L
 
 	if(!possible_targets.len)
-		invoker << "<span class='warning'>There are no other eligible targets for a Spacial Gateway!</span>"
+		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]

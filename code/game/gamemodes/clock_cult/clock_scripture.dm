@@ -821,12 +821,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/clockwork_obelisk //Clockwork Obelisk: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
 	name = "Clockwork Obelisk"
-	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spacial Gateway to any living servant or clockwork obelisk."
+	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
 	invocations = list("Znl guvf boryvfx...", "...gnxr hf gb nyy cynprf!")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	object_path = /obj/structure/clockwork/powered/clockwork_obelisk
-	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spacial Gateways.</span>"
+	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
 	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE

@@ -419,7 +419,7 @@
 	if(!total_accessable_power() >= hierophant_cost)
 		user <<  "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return
-	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spacial Gateway","Cancel")
+	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)
 		if("Hierophant Broadcast")
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
@@ -428,7 +428,7 @@
 					send_hierophant_message(user, input, 1)
 				else
 					user <<  "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
-		if("Spacial Gateway")
+		if("Spatial Gateway")
 			if(total_accessable_power() >= gateway_cost)
 				if(procure_gateway(user, 100, 5, 1))
 					user.say("Fcnpvny tngrjnl, npgvingr!")
