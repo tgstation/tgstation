@@ -59,6 +59,10 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+
+/obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
+	invisibility = INVISIBILITY_ABSTRACT
+
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
 

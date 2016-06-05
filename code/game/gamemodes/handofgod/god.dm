@@ -203,7 +203,8 @@
 		if(is_handofgod_god(M) || is_handofgod_myfollowers(M))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 
 
 /mob/camera/god/emote(act,m_type = 1 ,msg = null)
