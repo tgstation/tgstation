@@ -160,7 +160,7 @@ var/list/airlock_overlays = list()
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/proc/canAIControl()
+/obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != 1) && (!isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/canAIHack()
@@ -389,7 +389,7 @@ var/list/airlock_overlays = list()
 		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-	if(!src.canAIControl())
+	if(!src.canAIControl(user))
 		if(src.canAIHack())
 			src.hack(user)
 			return
@@ -513,7 +513,7 @@ var/list/airlock_overlays = list()
 		src.aiHacking = 1
 		user << "Airlock AI control has been blocked. Beginning fault-detection."
 		sleep(50)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -525,7 +525,7 @@ var/list/airlock_overlays = list()
 		sleep(20)
 		user << "Attempting to hack into airlock. This may take some time."
 		sleep(200)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -535,7 +535,7 @@ var/list/airlock_overlays = list()
 			return
 		user << "Upload access confirmed. Loading control program into airlock software."
 		sleep(170)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -605,7 +605,7 @@ var/list/airlock_overlays = list()
 
 
 
-	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
+	if((istype(usr, /mob/living/silicon) && src.canAIControl(usr)) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access

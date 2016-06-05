@@ -406,6 +406,9 @@
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
 
+/obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
+	return (is_servant_of_ratvar(user) && !isAllPowerCut())
+
 /obj/machinery/door/airlock/clockwork/ratvar_act()
 	return 0
 
