@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Cloning pods now grab the clone's mind when the body is ejected,
-rather than when it starts cloning."
