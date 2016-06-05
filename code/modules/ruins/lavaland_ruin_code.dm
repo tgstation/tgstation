@@ -61,7 +61,7 @@
 
 
 /obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
