@@ -600,7 +600,7 @@
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, uses, two_way)
-	if(!gatewayB || !duration || !uses)
+	if(!gatewayB || !set_duration || !uses)
 		return 0
 	linked_gateway = gatewayB
 	gatewayB.linked_gateway = src
