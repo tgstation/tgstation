@@ -32,6 +32,7 @@
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
+	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
 	var/list/no_equip = list()	// slots the race can't equip stuff to
@@ -167,9 +168,13 @@
 		var/obj/item/organ/I = new path()
 		I.Insert(C)
 
+	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
+		C.dna.blood_type = exotic_bloodtype
+
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
-	if(C.dna.species && C.dna.species.exotic_blood)
-		C.reagents.del_reagent(C.dna.species.exotic_blood)
+	if(C.dna.species.exotic_bloodtype)
+		C.dna.blood_type = random_blood_type()
 
 /datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
 	if(H.disabilities & HUSK)

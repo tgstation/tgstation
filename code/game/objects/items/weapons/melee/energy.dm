@@ -13,7 +13,7 @@
 						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/melee/energy/add_mob_blood(mob/living/carbon/M)
+/obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
 /obj/item/weapon/melee/energy/is_sharp()

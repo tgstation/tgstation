@@ -63,6 +63,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	exotic_bloodtype = "L"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -74,13 +75,6 @@
 		randname += " [lastname]"
 
 	return randname
-
-/datum/species/lizard/on_species_gain(mob/living/carbon/C)
-	if(C.dna.blood_type != "L")
-		C.dna.blood_type = "L"
-
-/datum/species/lizard/on_species_loss(mob/living/carbon/C)
-	C.dna.blood_type = random_blood_type()
 
 //I wag in death
 /datum/species/lizard/spec_death(gibbed, mob/living/carbon/human/H)

@@ -44,7 +44,7 @@
 			icon_state = "full"
 
 /obj/item/weapon/reagent_containers/blood/random/New()
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-")
+	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
 	..()
 
 /obj/item/weapon/reagent_containers/blood/APlus
