@@ -80,7 +80,7 @@
 	if(istype(location, /mob/))
 		var/mob/living/carbon/human/M = location
 		if(istype(M))
-			if(M.l_hand == src || M.r_hand == src || M.head == src)
+			if(M.head == src || M.is_holding_item(src))
 				location = M.loc
 		else
 			return

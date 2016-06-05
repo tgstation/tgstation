@@ -59,8 +59,7 @@
 	if (istype(loc,/mob/living/carbon))
 		var/mob/living/carbon/M = loc
 		M.update_inv_back()
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
+		M.update_inv_hands()
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()

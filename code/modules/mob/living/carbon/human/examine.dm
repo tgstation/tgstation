@@ -109,19 +109,12 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
-	//left hand
-	if(l_hand)
-		if(l_hand.blood_DNA && l_hand.blood_DNA.len)
-			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in [t_his] left hand!</span>\n"
+	//hands
+	for(var/obj/item/I in held_items)
+		if(I.blood_DNA && I.blood_DNA.len)
+			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(I)] [I.gender==PLURAL?"some":"a"] blood_stained [I.name] in [t_his] [get_index_limb_name(is_holding_item(I))]!</span>\n"
 		else
-			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
-
-	//right hand
-	if(r_hand)
-		if(r_hand.blood_DNA && r_hand.blood_DNA.len)
-			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in [t_his] right hand!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
+			msg += "[t_He] [t_is] holding [bicon(I)] \a [I] in [t_his] [get_index_limb_name(is_holding_item(I))].\n"
 
 	//gloves
 	if(gloves && !(slot_gloves in obscured))

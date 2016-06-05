@@ -333,33 +333,27 @@
 	if(locked_atoms.len)
 		var/mob/living/M = locked_atoms[1]
 		if(iscarbon(M))
-			if(!M.r_hand)
-				var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(M)
-				spawnedbombs += B
-				M.equip_to_slot_or_del(B, slot_r_hand)
-				to_chat(M, "<span class='warning'>Lit and throw!</span>")
-				M.update_inv_r_hand()
-			else if(!M.l_hand)
-				var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(M)
-				spawnedbombs += B
-				M.equip_to_slot_or_del(B, slot_l_hand)
-				to_chat(M, "<span class='warning'>Lit and throw!</span>")
-				M.update_inv_l_hand()
+			for(var/i = 1 to M.held_items.len)
+				if(M.held_items[i] == null)
+					var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(M)
+					spawnedbombs += B
+					if(!M.put_in_hands(B))
+						qdel(B)
+
+					to_chat(M, "<span class='warning'>Lit and throw!</span>")
+					break
+
 	for(var/mob/living/carbon/C in passengers)
-		if(!C.r_hand)
-			var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(C)
-			spawnedbombs += B
-			C.equip_to_slot_or_del(B, slot_r_hand)
-			to_chat(C, "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>")
-			distributed++
-			C.update_inv_r_hand()
-		else if(!C.l_hand)
-			var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(C)
-			spawnedbombs += B
-			C.equip_to_slot_or_del(B, slot_l_hand)
-			to_chat(C, "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>")
-			distributed++
-			C.update_inv_l_hand()
+		for(var/i = 1 to C.held_items.len)
+			if(C.held_items[i] == null)
+				var/obj/item/device/fuse_bomb/admin/B = new /obj/item/device/fuse_bomb/admin(C)
+				spawnedbombs += B
+				if(!C.put_in_hands(B))
+					qdel(B)
+
+				to_chat(C, "<span class='warning'>Our benefactors have provided you with a bomb. Lit and throw!</span>")
+				distributed++
+				break
 
 	update_rearview()
 	to_chat(bususer, "[distributed] bombs distributed to passengers.</span>")
@@ -401,34 +395,23 @@
 	if(locked_atoms.len)
 		var/mob/living/M = locked_atoms[1]
 		if(iscarbon(M))
-			if(!M.r_hand)
-				var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(M)
+			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(M)
+
+			if(M.put_in_hands(L))
 				spawnedlasers += L
-				M.equip_to_slot_or_del(L, slot_r_hand)
 				to_chat(M, "<span class='warning'>Spray and /pray!</span>")
-				M.update_inv_r_hand()
-			else if(!M.l_hand)
-				var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(M)
-				spawnedlasers += L
-				M.equip_to_slot_or_del(L, slot_l_hand)
-				to_chat(M, "<span class='warning'>Spray and /pray!</span>")
-				M.update_inv_l_hand()
+			else
+				qdel(L)
 
 	for(var/mob/living/carbon/C in passengers)
-		if(!(C.r_hand))
-			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
+		var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
+
+		if(C.put_in_hands(L))
 			spawnedlasers += L
-			C.equip_to_slot_or_del(L, slot_r_hand)
 			to_chat(C, "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>")
 			distributed++
-			C.update_inv_r_hand()
-		else if(!(C.l_hand))
-			var/obj/item/weapon/gun/energy/laser/admin/L = new /obj/item/weapon/gun/energy/laser/admin(C)
-			spawnedlasers += L
-			C.equip_to_slot_or_del(L, slot_l_hand)
-			to_chat(C, "<span class='warning'>Our benefactors have provided you with an infinite laser gun. Spray and /pray!</span>")
-			distributed++
-			C.update_inv_l_hand()
+		else
+			qdel(L)
 
 	update_rearview()
 	to_chat(bususer, "[distributed] infinite laser guns distributed to passengers.</span>")
@@ -755,8 +738,8 @@
 						oldhat = K.hat
 						K.hat = null
 						oldhat.loc = pack
-					K.equip_to_slot_or_del(ident, slot_r_hand)
-					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(K), slot_l_hand)
+					K.put_in_hands(ident)
+					K.put_in_hands(new /obj/item/weapon/storage/belt/thunderdome/green(K))
 					K.regenerate_icons()
 
 			if("Red")
@@ -782,8 +765,8 @@
 						oldhat = K.hat
 						K.hat = null
 						oldhat.loc = pack
-					K.equip_to_slot_or_del(ident, slot_r_hand)
-					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(K), slot_l_hand)
+					K.put_in_hands(ident)
+					K.put_in_hands(new /obj/item/weapon/storage/belt/thunderdome/red(K))
 					K.regenerate_icons()
 
 		if(pack.contents.len == 0)

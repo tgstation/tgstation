@@ -20,6 +20,9 @@
 	if(M_NOIR in mutations)
 		return NOIRMATRIX
 
+/mob/proc/can_wield()
+	return 0
+
 /mob/dead/observer/get_screen_colour()
 	return default_colour_matrix
 
@@ -336,10 +339,12 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 
 /mob/proc/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
+	for(var/obj/item/I in held_items)
+		if(I.abstract) continue
+
 		return 1
 
-	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
+	if(full_body && (src.back || src.wear_mask))
 		return 1
 
 	return 0

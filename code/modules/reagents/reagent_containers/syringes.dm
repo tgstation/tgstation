@@ -193,7 +193,7 @@
 		to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
 
-	if (istype(target, /obj/item/clothing/mask/facehugger/lamarr) && (user.l_hand != target && user.r_hand != target))
+	if (istype(target, /obj/item/clothing/mask/facehugger/lamarr) && !user.is_holding_item(target))
 		to_chat(user, "<span class='warning'>\The [target] is squirming around too much. She needs to be held still.</span>")
 		return
 

@@ -353,12 +353,10 @@
 /client/proc/Process_Grab()
 	if(locate(/obj/item/weapon/grab, locate(/obj/item/weapon/grab, mob.grabbed_by.len)))
 		var/list/grabbing = list()
-		if(istype(mob.l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.l_hand
+
+		for(var/obj/item/weapon/grab/G in mob.held_items)
 			grabbing += G.affecting
-		if(istype(mob.r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = mob.r_hand
-			grabbing += G.affecting
+
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			if((G.state == GRAB_PASSIVE)&&(!grabbing.Find(G.assailant)))	del(G)
 			if(G.state == GRAB_AGGRESSIVE)

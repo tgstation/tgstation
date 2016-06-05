@@ -689,10 +689,9 @@
 						"backpack" = slot_in_backpack,
 						"left pocket" = slot_l_store,
 						"right pocket" = slot_r_store,
-						"left hand" = slot_l_hand,
-						"right hand" = slot_r_hand,
 					)
-					var/where = H.equip_in_one_of_slots(T, slots)
+					var/where = H.equip_in_one_of_slots(T, slots,  )
+
 					if (!where)
 						to_chat(usr, "<span class='warning'>Spawning tome failed!</span>")
 					else
@@ -1202,12 +1201,10 @@ proc/clear_memory(var/silent = 1)
 			"backpack" = slot_in_backpack,
 			"left pocket" = slot_l_store,
 			"right pocket" = slot_r_store,
-			"left hand" = slot_l_hand,
-			"right hand" = slot_r_hand,
 		)
-		var/where = H.equip_in_one_of_slots(T, slots)
-		if (!where)
-		else
+		var/where = H.equip_in_one_of_slots(T, slots, put_in_hand_if_fail = 1)
+
+		if(where)
 			to_chat(H, "A tome, a message from your new master, appears in your [where].")
 
 	if (!ticker.mode.equip_cultist(current))

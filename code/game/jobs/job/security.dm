@@ -38,7 +38,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/armor/hos/jensen(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 			H.equip_or_collect(new /obj/item/weapon/handcuffs(H), slot_l_store)
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
@@ -85,8 +85,8 @@
 //		H.equip_or_collect(new /obj/item/clothing/mask/gas(H), slot_wear_mask) //Grab one from the armory you donk
 		H.equip_or_collect(new /obj/item/device/flash(H), slot_l_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
-			H.equip_or_collect(new /obj/item/weapon/handcuffs(H), slot_l_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
+			H.put_in_hand(GRASP_LEFT_HAND, new /obj/item/weapon/handcuffs(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
@@ -152,8 +152,8 @@
 		H.equip_or_collect(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 		if(H.backbag == 1)//Why cant some of these things spawn in his office?
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
+			H.put_in_r_hand(new H.species.survival_gear(H))
+			H.put_in_l_hand(new /obj/item/weapon/storage/box/evidence(H))
 			H.equip_or_collect(new /obj/item/device/detective_scanner(H), slot_r_store)
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
@@ -204,7 +204,7 @@
 		H.equip_or_collect(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/device/flash(H), slot_l_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_r_hand(new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)

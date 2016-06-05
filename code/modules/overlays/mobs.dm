@@ -59,11 +59,9 @@
 /obj/Overlays/legcuff_layer
 	layer = FLOAT_LAYER - (TOTAL_LAYERS - LEGCUFF_LAYER)
 
-/obj/Overlays/l_hand_layer
-	layer = FLOAT_LAYER - (TOTAL_LAYERS - L_HAND_LAYER)
-
-/obj/Overlays/r_hand_layer
-	layer = FLOAT_LAYER - (TOTAL_LAYERS - R_HAND_LAYER)
+/obj/Overlays/hand_layer //This overlays object contains all held items
+	layer = FLOAT_LAYER - (TOTAL_LAYERS - HAND_LAYER)
+	var/list/hands_overlays = list()
 
 /obj/Overlays/tail_layer
 	layer = FLOAT_LAYER - (TOTAL_LAYERS - TAIL_LAYER)

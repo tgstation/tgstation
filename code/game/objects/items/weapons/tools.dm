@@ -265,10 +265,9 @@
 		F.weldtool = src
 		if (user.client)
 			user.client.screen -= src
-		if (user.r_hand == src)
-			user.u_equip(src,0)
-		else
-			user.u_equip(src,0)
+
+		user.u_equip(src,0)
+
 		src.master = F
 		src.layer = initial(src.layer)
 		user.u_equip(src,0)
@@ -316,7 +315,7 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.is_holding_item(src))
 			location = get_turf(M)
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 5,surfaces=istype(loc,/turf))

@@ -55,10 +55,10 @@
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60 || (M_CLUMSY in user.mutations)) && prob(50)))
-			var/which_hand = "l_hand"
-			if(!user.hand)
-				which_hand = "r_hand"
-			triggered(user, which_hand)
+
+			var/datum/organ/external/OE = user.get_active_hand_organ()
+
+			triggered(user, OE.name)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -71,10 +71,8 @@
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user as mob)
 	if(armed)
 		if(((user.getBrainLoss() >= 60 || M_CLUMSY in user.mutations)) && prob(50))
-			var/which_hand = "l_hand"
-			if(!user.hand)
-				which_hand = "r_hand"
-			triggered(user, which_hand)
+			var/datum/organ/external/OE = user.get_active_hand_organ()
+			triggered(user, OE.name)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -98,7 +96,9 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? "l_hand" : "r_hand")
+
+		var/datum/organ/external/OE = finder.get_active_hand_organ()
+		triggered(finder, OE.name)
 		return 1	//end the search!
 	return 0
 

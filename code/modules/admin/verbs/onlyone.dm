@@ -64,7 +64,7 @@
 		H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
 		if(!isplasmaman(H)) //Plasmamen don't get a beret since they need their helmet to not burn to death.
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/beret(H), slot_head)
-		H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_l_hand)
+		H.put_in_hands(new /obj/item/weapon/claymore(H))
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), slot_l_store)
 

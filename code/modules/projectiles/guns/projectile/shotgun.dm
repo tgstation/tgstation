@@ -137,5 +137,4 @@
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
 			if(istype(user, /mob/living/carbon/human) && src.loc == user)
 				var/mob/living/carbon/human/H = user
-				H.update_inv_r_hand()
-				H.update_inv_l_hand()
+				H.update_inv_hands()

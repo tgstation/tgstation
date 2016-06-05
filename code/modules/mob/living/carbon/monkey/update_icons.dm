@@ -23,8 +23,7 @@
 	update_inv_back(0)
 	update_inv_glasses(0)
 	update_inv_hat(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
+	update_inv_hands(0)
 	update_inv_handcuffed(0)
 	update_fire()
 	update_icons()
@@ -119,33 +118,40 @@
 		overlays_standing[M_MASK_LAYER]	= null
 	if(update_icons)		update_icons()
 
+/mob/living/carbon/monkey/update_inv_hand(index, var/update_icons = 1)
+	switch(index)
+		if(GRASP_LEFT_HAND)
+			return update_inv_l_hand(update_icons)
+		if(GRASP_RIGHT_HAND)
+			return update_inv_r_hand(update_icons)
+
 /mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
-	if(r_hand)
-		var/t_state = r_hand.item_state
-		var/t_inhand_states = r_hand.inhand_states["right_hand"]
-		if(!t_state)	t_state = r_hand.icon_state
+	var/obj/item/I = get_held_item_by_index(GRASP_RIGHT_HAND)
+	if(I)
+		var/t_state = I.item_state
+		var/t_inhand_states = I.inhand_states["right_hand"]
+		if(!t_state)	t_state = I.icon_state
 		overlays_standing[M_R_HAND_LAYER]	= image("icon" = t_inhand_states, "icon_state" = t_state)
-		r_hand.screen_loc = ui_rhand
+		I.screen_loc = ui_rhand
 		if (handcuffed)
-			drop_item(r_hand)
+			drop_item(I)
 	else
 		overlays_standing[M_R_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
 
-
 /mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
-	if(l_hand)
-		var/t_state = l_hand.item_state
-		var/t_inhand_state = l_hand.inhand_states["left_hand"]
-		if(!t_state)	 t_state = l_hand.icon_state
-		overlays_standing[M_L_HAND_LAYER]	= image("icon" = t_inhand_state, "icon_state" = t_state)
-		l_hand.screen_loc = ui_lhand
+	var/obj/item/I = get_held_item_by_index(GRASP_LEFT_HAND)
+	if(I)
+		var/t_state = I.item_state
+		var/t_inhand_states = I.inhand_states["right_hand"]
+		if(!t_state)	t_state = I.icon_state
+		overlays_standing[M_L_HAND_LAYER]	= image("icon" = t_inhand_states, "icon_state" = t_state)
+		I.screen_loc = ui_lhand
 		if (handcuffed)
-			drop_item(l_hand)
+			drop_item(I)
 	else
-		overlays_standing[M_L_HAND_LAYER]	= null
+		overlays_standing[M_R_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
-
 
 /mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
 	if(back)

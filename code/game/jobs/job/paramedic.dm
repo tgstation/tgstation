@@ -26,8 +26,8 @@
 		H.equip_or_collect(new /obj/item/clothing/head/soft/paramedic(H), slot_head)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H), slot_r_hand)
-			H.equip_or_collect(new /obj/item/device/healthanalyzer(H), slot_l_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/survival/engineer(H))
+			H.put_in_hand(GRASP_LEFT_HAND, new /obj/item/device/healthanalyzer(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/device/healthanalyzer(H.back), slot_in_backpack)

@@ -26,15 +26,14 @@
 /obj/item/weapon/paper_bin/MouseDrop(over_object)
 	if(!usr.incapacitated() && (usr.contents.Find(src) || Adjacent(usr)))
 		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
-			if(istype(over_object,/obj/screen)) //We're being dragged into the user's UI...
-				var/obj/screen/O = over_object
-				switch(O.name)
-					if("r_hand") //We're dragging and dropping over the user's hand slot!
-						usr.u_equip(src,0)
-						usr.put_in_r_hand(src)
-					if("l_hand")
-						usr.u_equip(src,0)
-						usr.put_in_l_hand(src)
+			if(istype(over_object,/obj/screen/inventory)) //We're being dragged into the user's UI...
+				var/obj/screen/inventory/OI = over_object
+
+				if(OI.hand_index)
+					usr.u_equip(src, 0)
+					usr.put_in_hand(OI.hand_index, src)
+					src.add_fingerprint(usr)
+
 			else if(istype(over_object,/mob/living)) //We're being dragged on a living mob's sprite...
 				if(usr == over_object) //It's the user!
 					if( !usr.get_active_hand() )		//if active hand is empty

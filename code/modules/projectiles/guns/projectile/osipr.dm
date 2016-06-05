@@ -78,7 +78,7 @@
 		..()
 
 /obj/item/weapon/gun/osipr/attack_hand(mob/user)
-	if(((src == user.r_hand) || (src == user.l_hand)) && magazine)
+	if((user.is_holding_item(src)) && magazine)
 		magazine.update_icon()
 		user.put_in_hands(magazine)
 		magazine = null

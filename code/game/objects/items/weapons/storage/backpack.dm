@@ -76,8 +76,7 @@
 	item_state = "cultpack_[skulls]skull"
 	if(istype(user))
 		user.update_inv_back()
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 
 /obj/item/weapon/storage/backpack/cultify()
 	new /obj/item/weapon/storage/backpack/cultpack(loc)

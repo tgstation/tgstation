@@ -87,7 +87,7 @@
 				to_chat(src, "<span class='warning'>It becomes hard to see for some reason.</span>")
 				eye_blurry = 10
 		if(getBrainLoss() >= 35)
-			if(7 <= rn && rn <= 9) if(hand && get_active_hand())
+			if(7 <= rn && rn <= 9) if(get_active_hand())
 				to_chat(src, "<span class='warning'>Your hand won't respond properly, you drop what you're holding.</span>")
 				drop_item()
 		if(getBrainLoss() >= 50)

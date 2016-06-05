@@ -347,13 +347,16 @@
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
+		for(var/obj/item/I in A.held_items)
+			var/item_count = 0
+
+			switch(item_count)
+				if(0)
+					holding = "They are holding \a [I]"
 				else
-					holding = "They are holding \a [A.r_hand]"
+					holding += " and \a [I]"
+
+			item_count++
 
 		if(!mob_detail)
 			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
@@ -378,13 +381,16 @@
 	var/mob_detail
 	for(var/mob/living/carbon/A in the_turf)
 		var/holding = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
+		for(var/obj/item/I in A.held_items)
+			var/item_count = 0
+
+			switch(item_count)
+				if(0)
+					holding = "They are holding \a [I]"
 				else
-					holding = "They are holding \a [A.r_hand]"
+					holding += " and \a [I]"
+
+			item_count++
 
 		if(!mob_detail)
 			mob_detail = "You can see [A] on the photo[A.health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "

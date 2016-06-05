@@ -34,8 +34,8 @@
 		H.equip_or_collect(new /obj/item/clothing/head/caphat(H), slot_head)
 		H.equip_or_collect(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
-			H.equip_or_collect(new /obj/item/weapon/gun/energy/gun(H), slot_l_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/ids(H))
+			H.put_in_hand(GRASP_LEFT_HAND, new /obj/item/weapon/gun/energy/gun(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 			H.equip_or_collect(new /obj/item/weapon/gun/energy/gun(H), slot_in_backpack)
@@ -92,7 +92,7 @@
 		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/heads/hop(H), slot_belt)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/ids(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 		var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)

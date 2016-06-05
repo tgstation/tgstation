@@ -1580,10 +1580,10 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.r_hand)
-			C.r_hand.clean_blood()
-		if(C.l_hand)
-			C.l_hand.clean_blood()
+
+		for(var/obj/item/I in C.held_items)
+			I.clean_blood()
+
 		if(C.wear_mask)
 			if(C.wear_mask.clean_blood())
 				C.update_inv_wear_mask(0)

@@ -116,26 +116,23 @@
 			if(lhand.alpha >= 150)
 				lhand.alpha -= 100
 
-			dynamic_overlay["[L_HAND_LAYER]"] = lhand
-			dynamic_overlay["[R_HAND_LAYER]"] = rhand
+			dynamic_overlay["[HAND_LAYER]-[GRASP_LEFT_HAND]"] = lhand
+			dynamic_overlay["[HAND_LAYER]-[GRASP_RIGHT_HAND]"] = rhand
 
 			overlays += inventory
 			if (istype(loc, /mob/living/carbon/human)) //Needs to always update its own overlay, but only update mob overlays if it's actually on a mob.
-				H.update_inv_r_hand()
-				H.update_inv_l_hand()
+				H.update_inv_hands()
 		else
-			dynamic_overlay["[L_HAND_LAYER]"] = null
-			dynamic_overlay["[R_HAND_LAYER]"] = null
+			dynamic_overlay["[HAND_LAYER]-[GRASP_LEFT_HAND]"] = null
+			dynamic_overlay["[HAND_LAYER]-[GRASP_RIGHT_HAND]"] = null
 			if (istype(loc, /mob/living/carbon/human))
-				H.update_inv_r_hand()
-				H.update_inv_l_hand()
+				H.update_inv_hands()
 
 	else
-		dynamic_overlay["[L_HAND_LAYER]"] = null
-		dynamic_overlay["[R_HAND_LAYER]"] = null
+		dynamic_overlay["[HAND_LAYER]-[GRASP_LEFT_HAND]"] = null
+		dynamic_overlay["[HAND_LAYER]-[GRASP_RIGHT_HAND]"] = null
 		if (istype(loc, /mob/living/carbon/human))
-			H.update_inv_r_hand()
-			H.update_inv_l_hand()
+			H.update_inv_hands()
 
 /obj/item/weapon/sword/venom/attack_self(mob/user as mob)
 	if(!beaker)
@@ -255,8 +252,7 @@
 				complete = 1
 				if (istype(loc,/mob/living/carbon/human))
 					var/mob/living/carbon/human/H = loc
-					H.update_inv_r_hand()
-					H.update_inv_l_hand()
+					H.update_inv_hands()
 					H.update_inv_back()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")

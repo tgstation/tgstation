@@ -19,11 +19,18 @@
 /mob/proc/update_inv_back()
 	return
 
-/mob/proc/update_inv_l_hand()
+/mob/proc/update_inv_hand(index)
 	return
 
+/mob/proc/update_inv_l_hand()
+	return update_inv_hand(GRASP_LEFT_HAND)
+
 /mob/proc/update_inv_r_hand()
-	return
+	return update_inv_hand(GRASP_RIGHT_HAND)
+
+/mob/proc/update_inv_hands(update_icons = 1)
+	for(var/i = 1 to held_items.len)
+		update_inv_hand(i, update_icons)
 
 /mob/proc/update_inv_wear_mask()
 	return

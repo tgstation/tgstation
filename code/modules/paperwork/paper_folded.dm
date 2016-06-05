@@ -70,7 +70,7 @@
 	if(user.stat || user.restrained())
 		to_chat(user, "<span class='notice'>You can't do that while restrained.</span>")
 		return 0
-	if(user.l_hand != P && user.r_hand != P)
+	if(!user.is_holding_item(P))
 		to_chat(user, "<span class='notice'>You'll need \the [src] in your hands to do that.</span>")
 		return 0
 	return 1

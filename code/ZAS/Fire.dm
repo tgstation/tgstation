@@ -446,8 +446,7 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 	//Get heat transfer coefficients for clothing.
 
 	for(var/obj/item/clothing/C in src)
-		if(l_hand == C || r_hand == C)
-			continue
+		if(is_holding_item(C)) continue
 
 		if( C.max_heat_protection_temperature >= last_temperature )
 			if(!is_slot_hidden(C.body_parts_covered,FULL_HEAD))

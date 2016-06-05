@@ -29,12 +29,14 @@
 		var/obj/item/projectile/beam/lightning/L = getFromPool(/obj/item/projectile/beam/lightning, T)
 		if(PN)
 			L.damage = PN.get_electrocute_damage()
+			var/datum/organ/external/OE = user.get_active_hand_organ()
+
 			if(L.damage >= 200)
-				user.apply_damage(15, BURN, (user.hand ? "l_hand" : "r_hand"))
+				user.apply_damage(15, BURN, OE.name)
 				time = 200
 				to_chat(user, "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!")
 			else if(L.damage >= 100)
-				user.apply_damage(5, BURN, (user.hand ? "l_hand" : "r_hand"))
+				user.apply_damage(5, BURN, OE.name)
 				time = 150
 				to_chat(user, "<span class='warning'>[src] overload\s from the massive current, shocking you in the process!")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

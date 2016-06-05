@@ -90,8 +90,8 @@ var/const/tk_maxrange = 15
 
 
 	//stops TK grabs being equipped anywhere but into hands
-	equipped(var/mob/user, var/slot)
-		if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
+	equipped(var/mob/user, var/slot, hand_index)
+		if(!hand_index)	return
 		qdel(src)
 		return
 

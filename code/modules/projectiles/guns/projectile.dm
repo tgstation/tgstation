@@ -49,8 +49,7 @@
 		update_icon()
 
 		if(user)
-			user.update_inv_r_hand()
-			user.update_inv_l_hand()
+			user.update_inv_hands()
 		return 1
 	return 0
 
@@ -64,8 +63,7 @@
 		stored_magazine = null
 		update_icon()
 		if(user)
-			user.update_inv_r_hand()
-			user.update_inv_l_hand()
+			user.update_inv_hands()
 		return 1
 	return 0
 
@@ -121,7 +119,7 @@
 
 /obj/item/weapon/gun/projectile/attackby(var/obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/gun_part/silencer) && src.gun_flags &SILENCECOMP)
-		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
+		if(!user.is_holding_item(src))	//if we're not in his hands
 			to_chat(user, "<span class='notice'>You'll need [src] in your hands to do that.</span>")
 			return
 
@@ -190,7 +188,7 @@
 			update_icon()
 			return
 		if(silenced)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.is_holding_item(src))
 				..()
 				return
 			to_chat(user, "<span class='notice'>You unscrew [silenced] from [src].</span>")

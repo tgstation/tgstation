@@ -1184,14 +1184,12 @@ default behaviour is:
 					to_chat(src, "<span class='danger'>You fail to push [tmob]'s fat ass out of the way.</span>")
 					now_pushing = 0
 					return
-			if(tmob.r_hand && istype(tmob.r_hand, /obj/item/weapon/shield/riot))
+
+			for(var/obj/item/weapon/shield/riot/R in tmob.held_items)
 				if(prob(99))
 					now_pushing = 0
 					return
-			if(tmob.l_hand && istype(tmob.l_hand, /obj/item/weapon/shield/riot))
-				if(prob(99))
-					now_pushing = 0
-					return
+
 			if(!(tmob.status_flags & CANPUSH))
 				now_pushing = 0
 				return

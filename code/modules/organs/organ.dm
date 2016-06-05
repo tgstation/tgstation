@@ -80,10 +80,11 @@
 /mob/living/carbon/human/var/list/organs = list()
 /mob/living/carbon/human/var/list/organs_by_name = list() //Map organ names to organs
 /mob/living/carbon/human/var/list/internal_organs_by_name = list() //So internal organs have less ickiness too
+/mob/living/carbon/human/var/list/grasp_organs = list()
 
-/mob/living/carbon/human/proc/can_use_hand(var/this_hand = hand)
+/mob/living/carbon/human/proc/can_use_hand(var/this_hand = active_hand)
 	if(hasorgans(src))
-		var/datum/organ/external/temp = src.organs_by_name[(this_hand ? "l_hand" : "r_hand")]
+		var/datum/organ/external/temp = src.find_organ_by_grasp_index(this_hand)
 		if(temp && !temp.is_usable())
 			return
 		else if (!temp)
@@ -151,14 +152,8 @@
 
 			//Special effects for arms and hands
 			//is_usable() is here for sanity, in case we somehow get an item in an unusable hand
-			if(E.name in list("l_hand","l_arm","r_hand", "r_arm") && (E.is_broken() || E.is_malfunctioning()))
-				var/obj/item/c_hand	//Getting what's in this hand
-				if(E.name == "l_hand" || E.name == "l_arm")
-					c_hand = l_hand
-				if(E.name == "r_hand" || E.name == "r_arm")
-					c_hand = r_hand
-
-				E.process_grasp(c_hand, E.name) //See organ_external.dm for helper proc
+			if(E.grasp_id && (E.is_broken() || E.is_malfunctioning()))
+				E.process_grasp(held_items[E.grasp_id], get_index_limb_name(E.grasp_id))
 
 			//Special effects for legs and foot
 			else if(E.name in list("l_leg", "l_foot", "r_leg", "r_foot") && !lying)

@@ -159,22 +159,14 @@
 			if(N == Q.cardname)
 				C = Q
 		var/mob/living/M = usr
-		if(M.r_hand == src)
-			if(M.l_hand)
-				to_chat(usr, "<span class = 'warning'>Your other hand is full.</span>")
-				return
-			else
-				src.cards -= C
-				C.Flip()
-				usr.put_in_l_hand(C)
-		else if(M.l_hand == src)
-			if(M.r_hand)
-				to_chat(usr, "<span class = 'warning'>Your other hand is full.</span>")
-				return
-			else
-				src.cards -= C
-				C.Flip()
-				usr.put_in_r_hand(C)
+		if(!M.find_empty_hand_index())
+			to_chat(usr, "<span class = 'warning'>Your other hand is full.</span>")
+			return
+
+		src.cards -= C
+		C.Flip()
+		usr.put_in_hands(C)
+
 		usr.visible_message("<span class = 'notice'>[usr] draws a specific card from the deck.</span>",
 							"<span class = 'notice'>You draw the [N] from the deck.")
 		update_icon()
@@ -187,16 +179,16 @@
 		if(over_object == M)
 			M.put_in_hands(src)
 			to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
-		else if(istype(over_object, /obj/screen))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src, 0)
-					M.put_in_r_hand(src)
-					to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
-				if("l_hand")
-					M.u_equip(src, 0)
-					M.put_in_l_hand(src)
-					to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
+		else if(istype(over_object, /obj/screen/inventory))
+			var/obj/screen/inventory/OI = over_object
+
+			if(OI.hand_index)
+				M.u_equip(src, 0)
+				M.put_in_hand(OI.hand_index, src)
+				src.add_fingerprint(usr)
+				to_chat(usr, "<span class = 'notice'>You pick up the deck.</span>")
+
+			return
 	else
 		to_chat(usr, "<span class = 'warning'>You can't reach it from here.</span>")
 
@@ -336,7 +328,7 @@
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/cardUser = user
-		if(cardUser.get_item_by_slot(slot_l_hand) == src || cardUser.get_item_by_slot(slot_r_hand) == src)
+		if(cardUser.is_holding_item(src))
 			cardUser.visible_message("<span class = 'notice'>[cardUser] checks \his card.",
 									 "<span class = 'notice'>The card reads: [src.name]</span>")
 		else

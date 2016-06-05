@@ -478,11 +478,6 @@ var/global/obj/screen/fuckstat/FUCK = new
 			del(riftimage)
 
 /mob/proc/get_item_by_slot(slot_id)
-	switch(slot_id)
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 
@@ -491,20 +486,21 @@ var/global/obj/screen/fuckstat/FUCK = new
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
-/mob/proc/attack_ui(slot)
+/mob/proc/attack_ui(slot, hand_index)
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
-		equip_to_slot_if_possible(W, slot)
+		if(slot)
+			equip_to_slot_if_possible(W, slot)
+		else if(hand_index)
+			put_in_hand(hand_index, W)
+
 	if(ishuman(src) && W == src:head)
 		src:update_hair()
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, act_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, slot_l_hand, act_on_fail, disable_warning, redraw_mob))
-		update_inv_l_hand()
-		return 1
-	else if(equip_to_slot_if_possible(W, slot_r_hand, act_on_fail, disable_warning, redraw_mob))
-		update_inv_r_hand()
-		return 1
+/mob/proc/put_in_any_hand_if_possible(obj/item/W as obj)
+	for(var/index = 1 to held_items.len)
+		if(put_in_hand(index, W))
+			return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_splot()!
@@ -531,7 +527,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 			if(1)
 				equip_to_slot(W, slot, redraw_mob)
 			if(2)
-				var/in_the_hand = (src.get_active_hand() == W || src.get_inactive_hand() == W)
+				var/in_the_hand = (is_holding_item(W))
 				var/obj/item/wearing = get_item_by_slot(slot)
 				if(wearing)
 					if(!in_the_hand) //if we aren't holding it, the proc is abstract so get rid of it
@@ -599,7 +595,9 @@ var/global/obj/screen/fuckstat/FUCK = new
 
 		// Do I have a plastic bag?
 		if(!B)
-			B=is_in_hands(/obj/item/weapon/storage/bag/plasticbag)
+			var/index = find_held_item_by_type(/obj/item/weapon/storage/bag/plasticbag)
+			if(index)
+				B = held_items[index]
 
 		if(!B)
 			// Gimme one.
@@ -654,14 +652,6 @@ var/list/slot_equipment_priority = list( \
 		var/mob/living/carbon/human/H = M
 
 		switch(slot)
-			if(slot_l_hand)
-				if(H.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(H.r_hand)
-					return 0
-				return 1
 			if(slot_wear_mask)
 				if( !(slot_flags & SLOT_MASK) )
 					return 0
@@ -868,9 +858,13 @@ var/list/slot_equipment_priority = list( \
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
+	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>"}
+
+	for(var/i = 1 to held_items.len) //Hands
+		var/obj/item/I = held_items[i]
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
+
+	dat += {"
 	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
@@ -882,7 +876,7 @@ var/list/slot_equipment_priority = list( \
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
+	if (!find_held_item_by_type(/obj/item/weapon/grab)) //No grab in hands
 		if (!( L ))
 			return null
 		else
@@ -892,14 +886,10 @@ var/list/slot_equipment_priority = list( \
 			L = new /obj/effect/list_container/mobl( null )
 			L.container += src
 			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
+
+		var/grab_in_hands = find_held_item_by_type(/obj/item/weapon/grab)
+		if(grab_in_hands)
+			var/obj/item/weapon/grab/G = held_items[grab_in_hands]
 			if (!( L.container.Find(G.affecting) ))
 				L.container += G.affecting
 				if (G.affecting)
@@ -996,20 +986,11 @@ var/list/slot_equipment_priority = list( \
 	if(isVentCrawling())
 		to_chat(src, "<span class='danger'>Not while we're vent crawling!</span>")
 		return
-
-	if(hand)
-		var/obj/item/W = l_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_r_hand()
-	//if(next_move < world.time)
-	//	next_move = world.time + 2
-	return
+	
+	var/obj/item/W = get_held_item_by_index(active_hand)
+	if(W)
+		W.attack_self(src)
+		update_inv_hand(active_hand)
 
 /*
 /mob/verb/dump_source()

@@ -320,12 +320,10 @@
 
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
-		if(M.r_hand && prob(CLEAN_PROB))
-			M.r_hand.clean_blood()
-			M.update_inv_r_hand()
-		if(M.l_hand && prob(CLEAN_PROB))
-			M.l_hand.clean_blood()
-			M.update_inv_l_hand()
+		for(var/obj/item/I in M.held_items)
+			if(prob(CLEAN_PROB))
+				I.clean_blood()
+				M.update_inv_hand(M.is_holding_item(I))
 		if(M.back && prob(CLEAN_PROB))
 			if(M.back.clean_blood())
 				M.update_inv_back(0)

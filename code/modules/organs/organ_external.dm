@@ -51,6 +51,9 @@
 
 	var/has_fat = 0 //Has a _fat variant
 
+	var/grasp_id = 0 //Does this organ affect other grasping organs?
+	var/can_grasp = 0 //Can this organ actually grasp something?
+
 
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
@@ -335,6 +338,9 @@
 		perma_injury = 0
 
 	update_germs()
+
+	if(grasp_id)
+		process_grasp(owner.held_items[grasp_id], owner.get_index_limb_name(grasp_id))
 
 //Cancer growth for external organs is simple, it grows, hurts, damages, and suddenly grows out of control
 //Limb cancer is relatively benign until it grows large, then it cripples you and metastases
@@ -648,6 +654,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(slots_to_drop && slots_to_drop.len)
 			for(var/slot_id in slots_to_drop)
 				owner.u_equip(owner.get_item_by_slot(slot_id), 1)
+		if(grasp_id && can_grasp)
+			if(owner.held_items[grasp_id])
+				owner.u_equip(owner.held_items[grasp_id], 1)
 
 		destspawn = 1
 		//Robotic limbs explode if sabotaged.
@@ -950,9 +959,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	body_part = ARM_LEFT
 
-/datum/organ/external/l_arm/process()
-	..()
-	process_grasp(owner.l_hand, "left hand")
+	grasp_id = GRASP_LEFT_HAND
 
 /datum/organ/external/l_arm/generate_dropped_organ(current_organ)
 	if(status & ORGAN_PEG) current_organ = new /obj/item/stack/sheet/wood(owner.loc)
@@ -990,9 +997,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	body_part = ARM_RIGHT
 
-/datum/organ/external/r_arm/process()
-	..()
-	process_grasp(owner.r_hand, "right hand")
+	grasp_id = GRASP_RIGHT_HAND
 
 /datum/organ/external/r_arm/generate_dropped_organ(current_organ)
 	if(is_peg())
@@ -1068,12 +1073,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = HAND_RIGHT
+	grasp_id = GRASP_RIGHT_HAND
+	can_grasp = 1
 
-	slots_to_drop = list(slot_gloves, slot_r_hand, slot_handcuffed)
-
-/datum/organ/external/r_hand/process()
-	..()
-	process_grasp(owner.r_hand, "right hand")
+	slots_to_drop = list(slot_gloves, slot_handcuffed)
 
 /datum/organ/external/r_hand/generate_dropped_organ(current_organ)
 	if(is_peg())
@@ -1090,12 +1093,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 40
 	min_broken_damage = 15
 	body_part = HAND_LEFT
+	grasp_id = GRASP_LEFT_HAND
+	can_grasp = 1
 
-	slots_to_drop = list(slot_gloves, slot_l_hand, slot_handcuffed)
-
-/datum/organ/external/l_hand/process()
-	..()
-	process_grasp(owner.l_hand, "left hand")
+	slots_to_drop = list(slot_gloves, slot_handcuffed)
 
 /datum/organ/external/l_hand/generate_dropped_organ(current_organ)
 	if(is_peg())
@@ -1468,3 +1469,9 @@ obj/item/weapon/organ/head/Destroy()
 		origin_body.decapitated = null
 		origin_body = null
 	..()
+
+/mob/living/carbon/human/find_organ_by_grasp_index(index)
+	for(var/datum/organ/external/OE in grasp_organs)
+		if(OE.grasp_id == index && OE.can_grasp)
+			return OE
+	return null

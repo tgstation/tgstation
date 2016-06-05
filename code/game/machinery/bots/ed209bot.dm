@@ -728,12 +728,8 @@ Auto Patrol: []"},
 	if(!src.allowed(perp)) //cops can do no wrong, unless set to arrest.
 
 		if(weaponscheck && !wpermit(perp))
-			if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-				if(!(perp.l_hand.type in safe_weapons))
-					threatcount += 4
-
-			if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-				if(!(perp.r_hand.type in safe_weapons))
+			for(var/obj/item/W in perp.held_items)
+				if(check_for_weapons(W))
 					threatcount += 4
 
 			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
@@ -760,7 +756,7 @@ Auto Patrol: []"},
 		threatcount = 0//They will not, however shoot at people who have guns, because it gets really fucking annoying
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
-		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+		if(perp.find_held_item_by_type(/obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 4
 		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
@@ -769,7 +765,7 @@ Auto Patrol: []"},
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+		if(perp.find_held_item_by_type(/obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 4
 		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2

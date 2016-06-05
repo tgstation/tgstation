@@ -415,10 +415,16 @@
 		if ("signal")
 			if (!src.restrained())
 				var/t1 = round(text2num(param))
+
+				var/maximum_finger_amount = 0
+				for(var/datum/organ/external/OE in list(organs_by_name["l_hand"], organs_by_name["r_hand"]))
+					if(OE.is_usable())
+						maximum_finger_amount += 5
+
 				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
-						message = "<B>[src]</B> raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
+					t1 = Clamp(t1, 0, maximum_finger_amount)
+
+					if(t1 > 0)
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = VISIBLE
 
@@ -523,7 +529,7 @@
 
 		if ("handshake")
 			m_type = VISIBLE
-			if (!src.restrained() && !src.r_hand)
+			if (!src.restrained() && !get_held_item_by_index(GRASP_RIGHT_HAND))
 				var/mob/M = null
 				if (param)
 					for (var/mob/A in view(1, null))
@@ -534,7 +540,7 @@
 					M = null
 
 				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
+					if (M.canmove && !M.get_held_item_by_index(GRASP_RIGHT_HAND) && !M.restrained())
 						message = "<B>[src]</B> shakes hands with [M]."
 					else
 						message = "<B>[src]</B> holds out \his hand to [M]."

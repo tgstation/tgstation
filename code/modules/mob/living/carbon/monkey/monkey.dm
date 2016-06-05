@@ -42,7 +42,12 @@
 	glasses = null
 
 /mob/living/carbon/monkey/abiotic()
-	return (wear_mask || l_hand || r_hand || back || uniform || hat)
+	for(var/obj/item/I in held_items)
+		if(I.abstract) continue
+
+		return 1
+
+	return (wear_mask || back || uniform || hat)
 
 /mob/living/carbon/monkey/tajara
 	name = "farwa"
@@ -143,10 +148,11 @@
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
 
-	var/dat = {"
-	<B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>		[(l_hand && !( src.l_hand.abstract ))		? l_hand	: "<font color=grey>Empty</font>"]</A><BR>
-	<B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>		[(r_hand && !( src.r_hand.abstract ))		? r_hand	: "<font color=grey>Empty</font>"]</A><BR>
-	"}
+	var/dat
+
+	for(var/i = 1 to held_items.len) //Hands
+		var/obj/item/I = held_items[i]
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
 	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
@@ -715,21 +721,20 @@
 	//Lasertag bullshit
 	if(lasercolor)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+			if(find_held_item_by_type(/obj/item/weapon/gun/energy/laser/redtag))
 				threatcount += 4
 
 		if(lasercolor == "r")
-			if((istype(r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+			if(find_held_item_by_type(/obj/item/weapon/gun/energy/laser/bluetag))
 				threatcount += 4
 
 		return threatcount
 
 	//Check for weapons
 	if(judgebot.weaponscheck)
-		if(judgebot.check_for_weapons(l_hand))
-			threatcount += 4
-		if(judgebot.check_for_weapons(r_hand))
-			threatcount += 4
+		for(var/obj/item/I in held_items)
+			if(judgebot.check_for_weapons(I))
+				threatcount += 4
 
 	//Loyalty implants imply trustworthyness
 	if(isloyal(src))

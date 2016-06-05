@@ -646,10 +646,13 @@ Status: []<BR>"},
 			if((src.allowed(perp)) && !(src.lasercolor)) // if the perp has security access, return 0
 				return 0
 
-			if((istype(perp.l_hand, /obj/item/weapon/gun) && !istype(perp.l_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.l_hand, /obj/item/weapon/melee/baton))
-				threatcount += 4
+			for(var/obj/item/G in perp.held_items)
+				if(istype(G, /obj/item/weapon/gun))
+					if(istype(G, /obj/item/weapon/gun/projectile/shotgun)) continue
+				else if(!istype(G, /obj/item/weapon/melee/baton))
+					continue
+				//Scan for guns and stun batons. Bartender's shotgun doesn't trigger the turret
 
-			if((istype(perp.r_hand, /obj/item/weapon/gun) && !istype(perp.r_hand, /obj/item/weapon/gun/projectile/shotgun)) || istype(perp.r_hand, /obj/item/weapon/melee/baton))
 				threatcount += 4
 
 			if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee/baton))
@@ -659,7 +662,7 @@ Status: []<BR>"},
 		threatcount = 0//But does not target anyone else
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/redtag))
 			threatcount += 4
-		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/redtag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/redtag)))
+		if(perp.find_held_item_by_type(/obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 4
 		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/redtag))
 			threatcount += 2
@@ -668,7 +671,7 @@ Status: []<BR>"},
 		threatcount = 0
 		if(istype(perp.wear_suit, /obj/item/clothing/suit/bluetag))
 			threatcount += 4
-		if((istype(perp.r_hand,/obj/item/weapon/gun/energy/laser/bluetag)) || (istype(perp.l_hand,/obj/item/weapon/gun/energy/laser/bluetag)))
+		if(perp.find_held_item_by_type(/obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 4
 		if(istype(perp.belt, /obj/item/weapon/gun/energy/laser/bluetag))
 			threatcount += 2

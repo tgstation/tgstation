@@ -100,13 +100,7 @@ emp_act
 
 
 /mob/living/carbon/human/proc/check_shields(var/damage = 0, var/attack_text = "the attack")
-	if(istype(l_hand, /obj/item/weapon)) //Check left hand
-		var/obj/item/weapon/I = l_hand
-		if(I.IsShield() && I.on_block(damage, attack_text))
-			return 1
-
-	if(istype(r_hand, /obj/item/weapon)) //Check right hand
-		var/obj/item/weapon/I = r_hand
+	for(var/obj/item/weapon/I in held_items)
 		if(I.IsShield() && I.on_block(damage, attack_text))
 			return 1
 

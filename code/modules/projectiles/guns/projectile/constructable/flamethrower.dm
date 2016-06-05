@@ -55,7 +55,7 @@
 	var/turf/location = loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.is_holding_item(src))
 			location = M.loc
 	if(isturf(location)) //start a fire if possible
 		location.hotspot_expose(700, 2,surfaces=istype(loc,/turf))
@@ -226,8 +226,7 @@
 	update_icon()
 	if(istype(loc, /mob/living/carbon))
 		var/mob/living/carbon/C = loc
-		C.update_inv_r_hand()
-		C.update_inv_l_hand()
+		C.update_inv_hands()
 	return
 
 /obj/item/weapon/gun/projectile/flamethrower/full/New(var/loc)

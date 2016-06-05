@@ -361,7 +361,7 @@
 	stage = 4
 /datum/disease2/effect/orbweapon/activate(var/mob/living/carbon/mob,var/multiplier)
 	var/obj/item/toy/snappop/virus/virus = new /obj/item/toy/snappop/virus
-	mob.equip_to_slot_or_drop(virus, slot_l_hand)
+	mob.put_in_hands(virus)
 
 /obj/item/clothing/mask/gas/virusclown_hat
 
@@ -369,8 +369,8 @@
 	canremove = 1
 	..()
 
-/obj/item/clothing/mask/gas/virusclown_hat/equipped(var/mob/user, var/slot)
-	if (slot == slot_l_hand)
+/obj/item/clothing/mask/gas/virusclown_hat/equipped(var/mob/user, var/slot, hand_index)
+	if(hand_index == GRASP_LEFT_HAND) //what the heck
 		canremove = 1		//curses!
 	..()
 

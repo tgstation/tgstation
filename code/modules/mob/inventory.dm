@@ -1,72 +1,158 @@
+#define is_valid_hand_index(index) ((index > 0) && (index <= held_items.len))
+
 //These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 //Returns the thing in our active hand
+/mob/proc/get_held_item_by_index(index)
+	if(!is_valid_hand_index(index)) return null
+
+	return held_items[index]
+
+/mob/proc/find_held_item_by_type(type) //Returns the list index
+	if(!held_items.len) return 0
+
+	for(var/i = 1 to held_items.len)
+		if(istype(held_items[i], type))
+			return i
+
+	return 0
+
+/mob/proc/is_holding_item(item)
+	return held_items.Find(item)
+
+/mob/proc/find_empty_hand_index()
+	for(var/i = 1 to held_items.len)
+		if(!held_items[i])
+			return i
+
+	return 0
+
+/mob/proc/empty_hand_indexes_amount()
+	. = 0
+
+	for(var/i = 1 to held_items.len) //Go through all hand slots, increase return value by 1 for each empty slot
+		if(!held_items[i])
+			.++
+
 /mob/proc/get_active_hand()
-	if(hand)	return l_hand
-	else		return r_hand
+	return get_held_item_by_index(active_hand)
+
+/mob/proc/get_held_item_ui_location(index)
+	if(!is_valid_hand_index(index)) return
+
+	var/x_offset = -(index % 2) //Index is 1 -> one unit to the left
+	var/y_offset = round((index-1) / 2) //Two slots per row, then go higher. Rounded down
+
+	return "CENTER[x_offset ? x_offset : ""]:16,SOUTH[y_offset ? "+[y_offset]" : ""]:5"
+
+	/*
+	switch(index)
+		if(1) return "CENTER-1:16,SOUTH:5"
+		if(2)return "CENTER:16,SOUTH:5"
+		if(3) return "CENTER-1:16,SOUTH+1:5"
+		if(4) return "CENTER:16,SOUTH+1:5"
+	*/
+
+/mob/proc/get_direction_by_index(index)
+	if(index % 2 == GRASP_RIGHT_HAND)
+		return "right_hand"
+	else
+		return "left_hand"
+
+/mob/proc/get_index_limb_name(var/index)
+	if(!index) index = active_hand
+
+	switch(index)
+		if(GRASP_LEFT_HAND) return "left hand"
+		if(GRASP_RIGHT_HAND) return "right hand"
+		else return "hand"
+
+/mob/proc/get_item_offset_by_index(index) //Return a list with x and y offsets depending on index. Example: list("x"=5, "y"=4)
+	return list()
 
 // Get the organ of the active hand
 /mob/proc/get_active_hand_organ()
 	if(!istype(src, /mob/living/carbon)) return
 	if (hasorgans(src))
-		var/datum/organ/external/temp = src:organs_by_name["r_hand"]
-		if (hand)
-			temp = src:organs_by_name["l_hand"]
+		var/datum/organ/external/temp = find_organ_by_grasp_index(active_hand)
 		return temp
+
+/mob/proc/find_organ_by_grasp_index(index)
+	return
 
 //Returns the thing in our inactive hand
 /mob/proc/get_inactive_hand()
-	if(hand)	return r_hand
-	else		return l_hand
+	return get_held_item_by_index(get_inactive_hand_index())
 
 // Because there's several different places it's stored.
 /mob/proc/get_multitool(var/if_active=0)
 	return null
 
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(var/obj/item/W)
-	if(!put_in_hand_check(W, hand))
+/mob/proc/get_inactive_hand_index()
+	var/new_index = active_hand - 1
+
+	if(new_index < 1)
+		new_index = held_items.len
+
+	return new_index
+
+/mob/proc/swap_hand()
+	if(++active_hand > held_items.len)
+		active_hand = 1
+
+	if(!hud_used) return
+
+	for(var/obj/screen/inventory/hand_hud_object in hud_used.hand_hud_objects)
+		if(active_hand == hand_hud_object.hand_index)
+			hand_hud_object.icon_state = "hand_active"
+		else
+			hand_hud_object.icon_state = "hand_inactive"
+
+	return
+
+/mob/proc/activate_hand(var/selhand)
+	active_hand = selhand
+
+	if(!hud_used) return
+
+	for(var/obj/screen/inventory/hand_hud_object in hud_used.hand_hud_objects)
+		if(active_hand == hand_hud_object.hand_index)
+			hand_hud_object.icon_state = "hand_active"
+		else
+			hand_hud_object.icon_state = "hand_inactive"
+
+/mob/proc/put_in_hand(index, obj/item/W)
+	if(!is_valid_hand_index(index) || !is_valid_hand_index(active_hand))
 		return 0
 
-	if(!l_hand)
-		if(W.prepickup(src))
-			return 0
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-//		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		update_inv_l_hand()
-		W.pickup(src)
-		return 1
-	return 0
-
-//Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(var/obj/item/W)
-	if(!put_in_hand_check(W, hand))
+	if(!put_in_hand_check(W, index))
 		return 0
 
-	if(!r_hand)
+	if(!held_items[index])
 		if(W.prepickup(src))
 			return 0
 		W.loc = src
-		r_hand = W
+		held_items[index] = W
 		W.layer = 20
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
-//		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
+		W.equipped(src, null, index)
+
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_r_hand()
+
+		update_inv_hand(index)
 		W.pickup(src)
 		return 1
-	return 0
+
+//Puts the item into your left hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_l_hand(var/obj/item/W)
+	return put_in_hand(GRASP_LEFT_HAND, W)
+
+//Puts the item into your right hand if possible and calls all necessary triggers/updates. returns 1 on success.
+/mob/proc/put_in_r_hand(var/obj/item/W)
+	return put_in_hand(GRASP_RIGHT_HAND, W)
 
 /mob/proc/put_in_hand_check(var/obj/item/W)
 	if(lying) //&& !(W.flags & ABSTRACT))
@@ -84,13 +170,11 @@
 
 //Puts the item into our active hand if possible. returns 1 on success.
 /mob/proc/put_in_active_hand(var/obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
+	return put_in_hand(active_hand, W)
 
 //Puts the item into our inactive hand if possible. returns 1 on success.
 /mob/proc/put_in_inactive_hand(var/obj/item/W)
-	if(hand)	return put_in_r_hand(W)
-	else		return put_in_l_hand(W)
+	return put_in_hand(get_inactive_hand_index(), W)
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
@@ -98,12 +182,8 @@
 /mob/proc/put_in_hands(var/obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else if(put_in_inactive_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else
 		W.loc = get_turf(src)
@@ -111,7 +191,20 @@
 		W.dropped()
 		return 0
 
+/mob/proc/set_hand_amount(new_amount)
+	if(new_amount < held_items.len) //Decrease hand amount - drop items held in hands which will no longer exist!
+		for(var/i = (new_amount+1) to held_items.len)
+			var/obj/item/I = held_items[i]
 
+			if(I)
+				drop_item(I, force_drop = 1)
+	if(new_amount < active_hand)
+		active_hand = new_amount //Don't update the HUD - it'll be redrawn anyways
+
+	held_items.len = new_amount
+
+	if(hud_used)
+		hud_used.update_hand_icons()
 
 /mob/proc/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
@@ -176,8 +269,8 @@
 	return 0
 
 /mob/proc/drop_hands(var/atom/Target, force_drop = 0) //drops both items
-	drop_item(get_active_hand(), Target, force_drop)
-	drop_item(get_inactive_hand(), Target, force_drop)
+	for(var/obj/item/I in held_items)
+		drop_item(I, Target, force_drop = force_drop)
 
 //TODO: phase out this proc
 /mob/proc/before_take_item(var/obj/item/W)	//TODO: what is this?
@@ -191,14 +284,12 @@
 /mob/proc/u_equip(var/obj/item/W as obj, dropped = 1)
 	if(!W) return 0
 	var/success = 0
-	if (W == r_hand)
-		r_hand = null
+
+	var/index = is_holding_item(W)
+	if(index)
+		held_items[index] = null
 		success = 1
-		update_inv_r_hand()
-	else if (W == l_hand)
-		l_hand = null
-		success = 1
-		update_inv_l_hand()
+		update_inv_hand(index)
 	else if (W == back)
 		back = null
 		success = 1
@@ -232,7 +323,7 @@
 	return 1
 
 /mob/proc/get_all_slots()
-	return list(wear_mask, back, l_hand, r_hand)
+	return list(wear_mask, back) + held_items
 
 //everything on the mob that it isn't holding
 /mob/proc/get_equipped_items()
@@ -261,14 +352,6 @@
 		if(slot_handcuffed)
 			if(!src.handcuffed)
 				src.handcuffed = W
-				equipped = 1
-		if(slot_l_hand)
-			if(!src.l_hand)
-				src.l_hand = W
-				equipped = 1
-		if(slot_r_hand)
-			if(!src.r_hand)
-				src.r_hand = W
 				equipped = 1
 		if(slot_belt)
 			if(!src.belt && src.w_uniform)

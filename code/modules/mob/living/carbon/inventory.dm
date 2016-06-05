@@ -8,19 +8,13 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 	return null
 
 /mob/living/carbon/get_all_slots()
-	return list(l_hand,
-				r_hand,
-				handcuffed,
+	return list(handcuffed,
 				legcuffed,
 				back,
-				wear_mask)
+				wear_mask) + held_items
 
 //everything on the mob that is not in its pockets, hands belt, etc.
 /mob/living/carbon/get_clothing_items()

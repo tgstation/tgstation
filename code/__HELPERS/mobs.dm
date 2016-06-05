@@ -207,10 +207,6 @@ proc/add_ghostlogs(var/mob/user, var/obj/target, var/what_done, var/admin=1, var
 			L = list("chest", "groin", "l_arm", "r_arm", "l_leg", "r_leg")
 		if(slot_gloves, slot_handcuffed) //Gloves
 			L = list("l_hand", "r_hand")
-		if(slot_l_hand)
-			L = list("l_hand")
-		if(slot_r_hand)
-			L = list("r_hand")
 		if(slot_wear_mask, slot_ears, slot_glasses, slot_head)
 			L = list("head")
 		if(slot_shoes)

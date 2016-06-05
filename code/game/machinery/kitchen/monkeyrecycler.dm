@@ -47,7 +47,7 @@
 			var/mob/living/carbon/monkey/target = grabbed
 			if(target.stat == 0 || can_recycle_live)
 				to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
-			if(target.wear_mask || target.l_hand || target.r_hand || target.back || target.uniform || target.hat)
+			if(target.abiotic())
 				to_chat(user, "<span class='warning'>The monkey may not have abiotic items on.</span>")
 			else
 				user.drop_item(G, force_drop = 1)
@@ -64,7 +64,7 @@
 		var/mob/living/carbon/monkey/target = O
 		if(target.stat == 0)
 			to_chat(user, "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>")
-		if(target.wear_mask || target.l_hand || target.r_hand || target.back || target.uniform || target.hat)
+		if(target.abiotic())
 			to_chat(user, "<span class='warning'>The monkey may not have abiotic items on.</span>")
 		else
 			qdel(target)

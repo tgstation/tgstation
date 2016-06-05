@@ -7,12 +7,8 @@
 				if (!( target.wear_mask ))
 					qdel(src)
 					return
-			if("l_hand")
-				if (!( target.l_hand ))
-					qdel(src)
-					return
-			if("r_hand")
-				if (!( target.r_hand ))
+			if("hand")
+				if (!( target.held_items[hand_index] ))
 					qdel(src)
 					return
 			if("back")
@@ -45,10 +41,8 @@
 					message = text("<span class='danger'>[] fails to take off \a [] from []'s body!</span>", source, target.wear_mask, target)
 				else
 					message = text("<span class='danger'>[] is trying to take off \a [] from []'s head!</span>", source, target.wear_mask, target)
-			if("l_hand")
-				message = text("<span class='danger'>[] is trying to take off a [] from []'s left hand!</span>", source, target.l_hand, target)
-			if("r_hand")
-				message = text("<span class='danger'>[] is trying to take off a [] from []'s right hand!</span>", source, target.r_hand, target)
+			if("hand")
+				message = text("<span class='danger'>[] is trying to take off a [] from []'s []!</span>", source, target.held_items[hand_index], target, target.get_index_limb_name(hand_index))
 			if("back")
 				message = text("<span class='danger'>[] is trying to take off a [] from []'s back!</span>", source, target.back, target)
 			if("handcuff")
@@ -94,9 +88,9 @@
 					item.layer = 20
 					target.wear_mask = item
 					item.loc = target
-		if("l_hand")
-			if (target.l_hand)
-				var/obj/item/W = target.l_hand
+		if("hand")
+			if (target.held_items[hand_index])
+				var/obj/item/W = target.held_items[hand_index]
 				target.u_equip(W,1)
 				if (target.client)
 					target.client.screen -= W
@@ -108,32 +102,9 @@
 			else
 				if (istype(item, /obj/item))
 					source.drop_item(item, force_drop = 1)
+					target.put_in_hand(hand_index, item)
 					loc = target
-					item.layer = 20
-					target.l_hand = item
-					item.loc = target
 					item.dropped(source)
-					item.equipped(target,target.l_hand)
-		if("r_hand")
-			if (target.r_hand)
-				var/obj/item/W = target.r_hand
-				target.u_equip(W,1)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.layer = initial(W.layer)
-					//W.dropped(target)
-				W.add_fingerprint(source)
-			else
-				if (istype(item, /obj/item))
-					source.drop_item(item, force_drop = 1)
-					loc = target
-					item.layer = 20
-					target.r_hand = item
-					item.loc = target
-					item.dropped(source)
-					item.equipped(target,target.r_hand)
 		if("back")
 			if (target.back)
 				var/obj/item/W = target.back
@@ -217,14 +188,6 @@
 			src.legcuffed = W
 			W.equipped(src, slot)
 			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
-			src.l_hand = W
-			W.equipped(src, slot)
-			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
-			src.r_hand = W
-			W.equipped(src, slot)
-			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
 			W.loc = src.back
 		else

@@ -51,7 +51,7 @@
 		user.reset_view(0)
 		return
 
-	if(istype(user.l_hand, /obj/item/tk_grab) || istype(user.r_hand, /obj/item/tk_grab/))
+	if(user.find_held_item_by_type(/obj/item/tk_grab))
 		to_chat(user, "<span class='warning'>Your mind is too busy with that telekinetic grab.</span>")
 		user.remoteview_target = null
 		user.reset_view(0)

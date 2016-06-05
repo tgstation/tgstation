@@ -45,8 +45,7 @@
 
 	update_inv_head(0)
 	update_inv_wear_suit(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
+	update_inv_hands(0)
 	update_inv_pockets(0)
 	update_hud()
 	update_icons()
@@ -112,14 +111,22 @@
 	if(r_store)		r_store.screen_loc = ui_storage2
 	if(update_icons)	update_icons()
 
+/mob/living/carbon/alien/humanoid/update_inv_hand(index, var/update_icons = 1)
+	switch(index)
+		if(GRASP_LEFT_HAND)
+			return update_inv_l_hand(update_icons)
+		if(GRASP_RIGHT_HAND)
+			return update_inv_r_hand(update_icons)
 
 /mob/living/carbon/alien/humanoid/update_inv_r_hand(var/update_icons=1)
 	overlays -= overlays_standing[X_R_HAND_LAYER]
-	if(r_hand)
-		var/t_state = r_hand.item_state
-		var/t_inhand_state = r_hand.inhand_states["right_hand"]
-		if(!t_state)	t_state = r_hand.icon_state
-		r_hand.screen_loc = ui_rhand
+	var/obj/item/I = get_held_item_by_index(GRASP_RIGHT_HAND)
+
+	if(I)
+		var/t_state = I.item_state
+		var/t_inhand_state = I.inhand_states["right_hand"]
+		if(!t_state)	t_state = I.icon_state
+		I.screen_loc = ui_rhand
 		overlays_standing[X_R_HAND_LAYER]	= image("icon" = t_inhand_state, "icon_state" = t_state)
 	else
 		overlays_standing[X_R_HAND_LAYER]	= null
@@ -127,11 +134,13 @@
 
 /mob/living/carbon/alien/humanoid/update_inv_l_hand(var/update_icons=1)
 	overlays -= overlays_standing[X_L_HAND_LAYER]
-	if(l_hand)
-		var/t_state = l_hand.item_state
-		var/t_inhand_state = l_hand.inhand_states["left_hand"] //this is a file
-		if(!t_state)	t_state = l_hand.icon_state
-		l_hand.screen_loc = ui_lhand
+	var/obj/item/I = get_held_item_by_index(GRASP_LEFT_HAND)
+
+	if(I)
+		var/t_state = I.item_state
+		var/t_inhand_state = I.inhand_states["left_hand"] //this is a file
+		if(!t_state)	t_state = I.icon_state
+		I.screen_loc = ui_lhand
 		overlays_standing[X_L_HAND_LAYER]	= image("icon" = t_inhand_state, "icon_state" = t_state)
 	else
 		overlays_standing[X_L_HAND_LAYER]	= null

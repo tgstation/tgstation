@@ -146,7 +146,7 @@
 	else
 		pronoun = "It is"
 	..(user, " [pronoun] a [size] item.")
-	if((cant_drop > 0) && ((src==user.l_hand) || (src==user.r_hand))) //Item can't be dropped, and is either in left or right hand!
+	if((cant_drop > 0) && user.is_holding_item(src)) //Item can't be dropped, and is either in left or right hand!
 		user << "<span class='danger'>It's stuck to your hands!</span>"
 
 
@@ -269,10 +269,10 @@
 // slot uses the slot_X defines found in setup.dm
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
-/obj/item/proc/equipped(var/mob/user, var/slot)
+/obj/item/proc/equipped(var/mob/user, var/slot, hand_index = 0)
 	if(cant_drop) //Item can't be dropped
-		if(slot in list(slot_r_hand, slot_l_hand)) //Item was equipped in a hand slot
-			user << "<span class='notice'>\The [src] sticks to your hand!</span>"
+		if(hand_index) //Item was equipped in a hand slot
+			to_chat(user, "<span class='notice'>\The [src] sticks to your hand!</span>")
 
 	return
 
@@ -323,14 +323,6 @@
 						return 0
 
 		switch(slot)
-			if(slot_l_hand)
-				if(H.l_hand || H.handcuffed)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(H.r_hand || H.handcuffed)
-					return 0
-				return 1
 			if(slot_wear_mask)
 				if( !(slot_flags & SLOT_MASK) )
 					return 0
@@ -642,14 +634,6 @@
 		//START MONKEY
 		var/mob/living/carbon/monkey/MO = M
 		switch(slot)
-			if(slot_l_hand)
-				if(MO.l_hand)
-					return 0
-				return 1
-			if(slot_r_hand)
-				if(MO.r_hand)
-					return 0
-				return 1
 			if(slot_wear_mask)
 				if(MO.wear_mask)
 					return 0
@@ -698,12 +682,11 @@
 
 	if(!can_pickup(user))
 		return 0
-	if(!user.hand && user.r_hand) //Right hand is not full
-		to_chat(user, "<span class='warning'>Your right hand is full.</span>")
+
+	if(user.get_active_hand())
+		to_chat(user, "<span class='warning'>Your [user.get_index_limb_name(user.active_hand)] is full.</span>")
 		return
-	if(user.hand && user.l_hand && !isMoMMI(user)) //Left hand is not full
-		to_chat(user, "<span class='warning'>Your left hand is full.</span>")
-		return
+
 	//All checks are done, time to pick it up!
 	if(isMoMMI(user))
 		// Otherwise, we get MoMMIs changing their own laws.
@@ -733,7 +716,7 @@
 
 //Used in twohanding
 /obj/item/proc/wield(mob/user, var/inactive = 0)
-	if(!ishuman(user))
+	if(!user.can_wield())
 		user.show_message("You can't wield \the [src] as it's too heavy.")
 		return
 
@@ -747,10 +730,17 @@
 		//(user.get_active_hand() in list(null, src)) is the part which checks whether the ACTIVE hand is either nothing, or the wielded item. Otherwise, abort!
 
 		//The second half is the same, except that the proc assumes that the wielded item is held in the INACTIVE hand. So the INACTIVE hand is checked for holding either nothing or wielded item.
-		if(((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded)) || (!inactive && ((user.get_inactive_hand() in list(null, src)) && user.put_in_active_hand(wielded))))
-			wielded.attach_to(src)
-			update_wield(user)
-			return 1
+		//if(((user.get_active_hand() in list(null, src)) && user.put_in_inactive_hand(wielded)) || (!inactive && ((user.get_inactive_hand() in list(null, src)) && user.put_in_active_hand(wielded))))
+
+		for(var/i = 1 to user.held_items.len)
+			if(user.held_items[i]) continue
+			if(user.active_hand == i) continue
+
+			if(user.put_in_hand(i, wielded))
+				wielded.attach_to(src)
+				update_wield(user)
+				return 1
+
 		unwield(user)
 		return
 

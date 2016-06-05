@@ -9,10 +9,7 @@
 			to_chat(H, "<span class='notice'>You are not holding anything to equip.</span>")
 			return
 		if(H.equip_to_appropriate_slot(I))
-			if(hand)
-				update_inv_l_hand(0)
-			else
-				update_inv_r_hand(0)
+			update_inv_hand(active_hand)
 		else
 			to_chat(H, "<span class='warning'>You are unable to equip that.</span>")
 
@@ -22,8 +19,6 @@
 /mob/living/carbon/human/proc/get_body_slots()
 	return list(
 //ordered body items by which would appear on top
-		l_hand,
-		r_hand,
 		back,
 		s_store,
 		handcuffed,
@@ -55,8 +50,6 @@
 				legcuffed,
 				belt,
 				wear_id,
-				l_hand,
-				r_hand,
 				l_store,
 				r_store,
 				s_store)
@@ -107,10 +100,14 @@
 		else if(is_slot_hidden(equipped.body_parts_covered,hidden_flags,ignore_slot))
 			return 1
 
-/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1)
+/mob/living/carbon/human/proc/equip_in_one_of_slots(obj/item/W, list/slots, act_on_fail = 1, put_in_hand_if_fail = 0)
 	for (var/slot in slots)
 		if (equip_to_slot_if_possible(W, slots[slot], 0))
 			return slot
+	if(put_in_hand_if_fail)
+		if (put_in_hands(W))
+			return "hand"
+
 	switch (act_on_fail)
 		if(EQUIP_FAILACTION_DELETE)
 			qdel(W)
@@ -121,13 +118,6 @@
 
 /mob/living/carbon/human/proc/is_on_ears(var/typepath)
 	return istype(ears,typepath)
-
-/mob/living/carbon/human/proc/is_in_hands(var/typepath)
-	if(istype(l_hand,typepath))
-		return l_hand
-	if(istype(r_hand,typepath))
-		return r_hand
-	return 0
 
 /mob/living/carbon/human/put_in_hand_check(obj/item/I, this_hand)
 	if(!src.can_use_hand(this_hand))
@@ -146,10 +136,6 @@
 			return handcuffed
 		if(slot_legcuffed)
 			return legcuffed
-		if(slot_l_hand)
-			return l_hand
-		if(slot_r_hand)
-			return r_hand
 		if(slot_belt)
 			return belt
 		if(slot_wear_id)
@@ -191,10 +177,6 @@
 			return has_organ("l_hand") && has_organ("r_hand")
 		if(slot_legcuffed)
 			return has_organ("l_leg") && has_organ("r_leg")
-		if(slot_l_hand)
-			return has_organ("l_hand")
-		if(slot_r_hand)
-			return has_organ("r_hand")
 		if(slot_belt)
 			return has_organ("chest")
 		if(slot_wear_id)
@@ -228,7 +210,12 @@
 
 	var/success
 
-	if (W == wear_suit)
+	var/index = is_holding_item(W)
+	if(index)
+		held_items[index] = null
+		success = 1
+		update_inv_hand(index)
+	else if (W == wear_suit)
 		if(s_store)
 			u_equip(s_store, 1)
 		success = 1
@@ -305,21 +292,12 @@
 		legcuffed = null
 		success = 1
 		update_inv_legcuffed()
-	else if (W == r_hand)
-		r_hand = null
-		success = 1
-		update_inv_r_hand()
-	else if (W == l_hand)
-		l_hand = null
-		success = 1
-		update_inv_l_hand()
 	else
 		return 0
 
 	if(success)
 		update_hidden_item_icons(W)
 
-	if(success)
 		if (W)
 			if (client)
 				client.screen -= W
@@ -340,12 +318,8 @@
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
 
-	if(W == src.l_hand)
-		src.l_hand = null
-		update_inv_l_hand() //So items actually disappear from hands.
-	else if(W == src.r_hand)
-		src.r_hand = null
-		update_inv_r_hand()
+	if(src.is_holding_item(W))
+		src.u_equip(W)
 
 	switch(slot)
 		if(slot_back)
@@ -360,12 +334,6 @@
 		if(slot_legcuffed)
 			src.legcuffed = W
 			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
-			src.l_hand = W
-			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
-			src.r_hand = W
-			update_inv_r_hand(redraw_mob)
 		if(slot_belt)
 			src.belt = W
 			update_inv_belt(redraw_mob)
@@ -421,6 +389,7 @@
 	W.layer = 20
 	W.equipped(src, slot)
 	W.loc = src
+	if(client) client.screen |= W
 
 
 /obj/effect/equip_e
@@ -429,7 +398,10 @@
 	var/s_loc = null	//source location
 	var/t_loc = null	//target location
 	var/obj/item/item = null
+
 	var/place = null
+	var/hand_index = 1
+
 	var/pickpocket = null
 
 /obj/effect/equip_e/human
@@ -473,11 +445,8 @@
 			if("mask")
 				if (!( target.wear_mask ))
 					qdel(src)
-			if("l_hand")
-				if (!( target.l_hand ))
-					qdel(src)
-			if("r_hand")
-				if (!( target.r_hand ))
+			if("hand")
+				if (!( target.held_items[hand_index] ))
 					qdel(src)
 			if("suit")
 				if (!( target.wear_suit ))
@@ -555,14 +524,10 @@
 					return
 				else
 					message = "<span class='danger'>[source] is trying to take off \a [target.wear_mask] from [target]'s head!</span>"
-			if("l_hand")
-				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their left hand item ([target.l_hand]) removed by [source.name] ([source.ckey])</font>")
-				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) left hand item ([target.l_hand])</font>")
-				message = "<span class='danger'>[source] is trying to take off \a [target.l_hand] from [target]'s left hand!</span>"
-			if("r_hand")
-				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their right hand item ([target.r_hand]) removed by [source.name] ([source.ckey])</font>")
-				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) right hand item ([target.r_hand])</font>")
-				message = "<span class='danger'>[source] is trying to take off \a [target.r_hand] from [target]'s right hand!</span>"
+			if("hand")
+				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their [target.get_index_limb_name(hand_index)] item ([target.held_items[hand_index]]) removed by [source.name] ([source.ckey])</font>")
+				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) [target.get_index_limb_name(hand_index)] item ([target.held_items[hand_index]])</font>")
+				message = "<span class='danger'>[source] is trying to take off \a [target.held_items[hand_index]] from [target]'s [target.get_index_limb_name(hand_index)]!</span>"
 			if("gloves")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their gloves ([target.gloves]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) gloves ([target.gloves])</font>")
@@ -756,18 +721,14 @@ It can still be worn/put on as normal.
 			slot_to_process = slot_shoes
 			if (target.shoes && target.shoes.canremove)
 				strip_item = target.shoes
-		if("l_hand")
+		if("hand")
 			if (istype(target, /obj/item/clothing/suit/straight_jacket))
 				qdel(src)
-			slot_to_process = slot_l_hand
-			if (target.l_hand)
-				strip_item = target.l_hand
-		if("r_hand")
-			if (istype(target, /obj/item/clothing/suit/straight_jacket))
-				qdel(src)
-			slot_to_process = slot_r_hand
-			if (target.r_hand)
-				strip_item = target.r_hand
+				return
+
+			slot_to_process = null
+			if (target.held_items[hand_index])
+				strip_item = target.held_items[hand_index]
 		if("uniform")
 			slot_to_process = slot_w_uniform
 			if(target.w_uniform && target.w_uniform.canremove)
@@ -895,35 +856,36 @@ It can still be worn/put on as normal.
 						if (target.internals)
 							target.internals.icon_state = "internal1"
 
-	if(slot_to_process)
-		if(strip_item) //Stripping an item from the mob
+	if(strip_item) //Stripping an item from the mob
 
-			var/obj/item/W = strip_item
-			if((W.cant_drop > 0) && ((target.r_hand == W) || (target.l_hand == W))) //If item we're trying to take off can't be dropped AND is in target's hand(s):
-				source << "<span class='notice'>\The [W] is stuck to \the [target]!</span>"
-				return
+		var/obj/item/W = strip_item
+		if((W.cant_drop > 0) && (target.is_holding_item(W))) //If item we're trying to take off can't be dropped AND is in target's hand(s):
+			to_chat(source, "<span class='notice'>\The [W] is stuck to \the [target]!</span>")
+			return
 
-			target.u_equip(W,1)
-			if (target.client)
-				target.client.screen -= W
-			if (W)
-				W.loc = target.loc
-				W.layer = initial(W.layer)
-				//W.dropped(target)
-			W.stripped(target,source)
-			W.add_fingerprint(source)
-			if(slot_to_process == slot_l_store) //pockets! Needs to process the other one too. Snowflake code, wooo! It's not like anyone will rewrite this anytime soon. If I'm wrong then... CONGRATULATIONS! ;)
-				if(target.r_store)
-					target.u_equip(target.r_store,0) //At this stage l_store is already processed by the code above, we only need to process r_store.
-		else
-			if(item && target.has_organ_for_slot(slot_to_process)) //Placing an item on the mob
+		target.u_equip(W,1)
+		if (target.client)
+			target.client.screen -= W
+		if (W)
+			W.loc = target.loc
+			W.layer = initial(W.layer)
+			//W.dropped(target)
+		W.stripped(target,source)
+		W.add_fingerprint(source)
+
+	else //Putting an item on the mob
+
+		if(slot_to_process) //Putting on an equipment slot
+			if(item && target.has_organ_for_slot(slot_to_process))
 				if(item.mob_can_equip(target, slot_to_process, 0))
 					source.u_equip(item,1)
-					//if(item)
-						//item.dropped(source)
+
 					target.equip_to_slot_if_possible(item, slot_to_process, 0, 1, 1)
 					source.update_icons()
 					target.update_icons()
+		else if(hand_index) //Putting in hand
+			if(target.put_in_hand(hand_index, item))
+				source.u_equip(item)
 
 	if(source && target)
 		if(source.machine == target)

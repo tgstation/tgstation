@@ -80,7 +80,6 @@
 	var/atom/movable/pulling = null
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
-	var/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
@@ -149,8 +148,10 @@
 	var/m_int = null//Living
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
-	var/obj/item/l_hand = null//Living
-	var/obj/item/r_hand = null//Living
+
+	var/active_hand = 1 //Current active hand. Contains an index of the held_items list
+	var/list/obj/item/held_items = list(null, null) //Contains items held in hands
+
 	var/obj/item/weapon/back = null//Human/Monkey
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon

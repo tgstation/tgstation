@@ -136,6 +136,10 @@ var/global/floorIsLava = 0
 			else
 				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
 
+			//Hands
+			if(ishuman(M))
+				body += "<A href='?src=\ref[src];changehands=\ref[M]'>Change amount of hands (current: [M.held_items.len])</A> | "
+
 			// DNA2 - Admin Hax
 			if(iscarbon(M) && !isbrain(M) && !isalien(M))
 				body += "<br><br>"

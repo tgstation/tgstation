@@ -231,7 +231,6 @@
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob)
 	var/radio_freq = SYND_FREQ
-	var/tank_slot = slot_r_hand
 
 	if(synd_mob.overeatduration) //We need to do this here and now, otherwise a lot of gear will fail to spawn
 		to_chat(synd_mob, "<span class='notice'>Your intensive physical training to become a Nuclear Operative has paid off and made you fit again!</span>")
@@ -268,11 +267,15 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/prescription(synd_mob), slot_glasses)//changed to prescription sunglasses so near-sighted players aren't screwed if there aren't any admins online
 	if(istype(synd_mob.species, /datum/species/vox))
 		synd_mob.equip_or_collect(new /obj/item/clothing/mask/breath/vox(synd_mob), slot_wear_mask)
-		synd_mob.equip_to_slot_or_del(new/obj/item/weapon/tank/nitrogen(synd_mob), slot_r_hand)
-		to_chat(synd_mob, "<span class='notice'>You are now running on nitrogen internals from the [slot_r_hand] in your right hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only.</span>")
-		synd_mob.internal = synd_mob.get_item_by_slot(tank_slot)
+
+		var/obj/item/weapon/tank/nitrogen/TN = new(synd_mob)
+		synd_mob.put_in_hands(TN)
+		to_chat(synd_mob, "<span class='notice'>You are now running on nitrogen internals from the [TN] in your hand. Your species finds oxygen toxic, so you must breathe nitrogen (AKA N<sub>2</sub>) only.</span>")
+		synd_mob.internal = TN
+
 		if (synd_mob.internals)
 			synd_mob.internals.icon_state = "internal1"
+
 	synd_mob.equip_to_slot_or_del(new /obj/item/weapon/card/id/syndicate(synd_mob), slot_wear_id)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(synd_mob), slot_back)
 	if(synd_mob.backbag == 3 || synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(synd_mob), slot_back)

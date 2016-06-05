@@ -2,7 +2,12 @@
 /mob/living/carbon/alien/humanoid/u_equip(obj/item/W as obj, dropped = 1)
 	if(!W) return 0
 	var/success = 0
-	if (W == wear_suit)
+	var/index = is_holding_item(W)
+	if(index)
+		held_items[index] = null
+		success = 1
+		update_inv_hand(index)
+	else if (W == wear_suit)
 		wear_suit = null
 		success = 1
 		update_inv_wear_suit(0)
@@ -18,14 +23,6 @@
 		l_store = null
 		success = 1
 		update_inv_pockets(0)
-	else if (W == r_hand)
-		r_hand = null
-		success = 1
-		update_inv_r_hand(0)
-	else if (W == l_hand)
-		l_hand = null
-		success = 1
-		update_inv_l_hand(0)
 	else
 		return 0
 

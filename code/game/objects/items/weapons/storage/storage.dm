@@ -37,20 +37,22 @@
 			var/mob/living/L = usr
 			if(istype(L) && !(L.incapacitated() || L.lying))
 				empty_contents_to(over_object)
-		if(!( istype(over_object, /obj/screen) ))
+
+		if(!( istype(over_object, /obj/screen/inventory) ))
 			return ..()
+
 		if(!(src.loc == usr) || (src.loc && src.loc.loc == usr))
 			return
+
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if(!( M.restrained() ) && !( M.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src,0)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src,0)
-					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			var/obj/screen/inventory/OI = over_object
+
+			if(OI.hand_index)
+				M.u_equip(src, 0)
+				M.put_in_hand(OI.hand_index, src)
+				src.add_fingerprint(usr)
+
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if (usr.s_active)

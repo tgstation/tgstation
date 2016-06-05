@@ -37,7 +37,7 @@
 		H.equip_or_collect(new /obj/item/weapon/storage/belt/utility/full(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/survival/engineer(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H.back), slot_in_backpack)
 		return 1
@@ -84,7 +84,7 @@
 		H.equip_or_collect(new /obj/item/device/t_scanner(H), slot_r_store)
 		//H.equip_or_collect(new /obj/item/device/pda/engineering(H), slot_l_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/survival/engineer(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H.back), slot_in_backpack)
 		return 1
@@ -120,7 +120,7 @@
 		//H.equip_or_collect(new /obj/item/device/pda/atmos(H), slot_l_store)
 		H.equip_or_collect(new /obj/item/weapon/storage/belt/utility/atmostech(H), slot_belt)
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/survival/engineer(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H.back), slot_in_backpack)
 		return 1
@@ -163,7 +163,7 @@
 			H.equip_or_collect(W, slot_head)
 			W.toggle()
 		if(H.backbag == 1)
-			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new /obj/item/weapon/storage/box/survival/engineer(H))
 		else
 			H.equip_or_collect(new /obj/item/weapon/storage/box/survival/engineer(H.back), slot_in_backpack)
 		return 1

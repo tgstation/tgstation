@@ -74,8 +74,7 @@
 	item_state = "fireaxe[wielded ? 1 : 0]"
 	force = wielded ? 40 : initial(force)
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 
 /obj/item/weapon/fireaxe/suicide_act(mob/user)
 		to_chat(viewers(user), "<span class='danger'>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</span>")
@@ -121,8 +120,7 @@
 	force = wielded ? 30 : 3
 	w_class = wielded ? 5 : 2
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 	playsound(get_turf(src), wielded ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 50, 1)
 	return
 
@@ -166,8 +164,7 @@
 	force = wielded ? 30 : 3
 	w_class = wielded ? 5 : 2
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 	playsound(get_turf(src), wielded ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 50, 1)
 	return
 
@@ -219,8 +216,7 @@
 	force = wielded ? 200 : 50
 	sharpness = wielded ? 100 : 2
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 	return
 
 /obj/item/weapon/katana/hfrequency/IsShield()
@@ -255,8 +251,7 @@
 	if(wielded) force += 8
 
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 	return
 
 /obj/item/weapon/spear/wooden

@@ -71,8 +71,7 @@
 	item_state = "fireaxe[wielded ? 1 : 0]"
 	force = wielded ? 40 : 10
 	if(user)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+		user.update_inv_hands()
 
 /obj/item/weapon/melee/defibrillator/attackby(obj/item/weapon/W,mob/user)
 	if(istype(W,/obj/item/weapon/card/emag))

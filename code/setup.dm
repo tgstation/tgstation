@@ -304,23 +304,21 @@ var/MAX_EXPLOSION_RANGE = 14
 #define slot_back 1
 #define slot_wear_mask 2
 #define slot_handcuffed 3
-#define slot_l_hand 4
-#define slot_r_hand 5
-#define slot_belt 6
-#define slot_wear_id 7
-#define slot_ears 8
-#define slot_glasses 9
-#define slot_gloves 10
-#define slot_head 11
-#define slot_shoes 12
-#define slot_wear_suit 13
-#define slot_w_uniform 14
-#define slot_l_store 15
-#define slot_r_store 16
-#define slot_s_store 17
-#define slot_in_backpack 18
-#define slot_legcuffed 19
-#define slot_legs 21
+#define slot_belt 4
+#define slot_wear_id 5
+#define slot_ears 6
+#define slot_glasses 7
+#define slot_gloves 8
+#define slot_head 9
+#define slot_shoes 10
+#define slot_wear_suit 11
+#define slot_w_uniform 12
+#define slot_l_store 13
+#define slot_r_store 14
+#define slot_s_store 15
+#define slot_in_backpack 16
+#define slot_legcuffed 17
+#define slot_legs 18
 
 //Cant seem to find a mob bitflags area other than the powers one
 
@@ -1173,11 +1171,10 @@ var/default_colour_matrix = list(1,0,0,0,\
 #define ID_LAYER				18		//IDs should be visible above suits and backpacks
 #define HANDCUFF_LAYER			19
 #define LEGCUFF_LAYER			20
-#define L_HAND_LAYER			21
-#define R_HAND_LAYER			22
-#define TAIL_LAYER				23		//bs12 specific. this hack is probably gonna come back to haunt me
-#define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
-#define TOTAL_LAYERS			25
+#define HAND_LAYER				21
+#define TAIL_LAYER				22		//bs12 specific. this hack is probably gonna come back to haunt me
+#define TARGETED_LAYER			23		//BS12: Layer for the target overlay from weapon targeting system
+#define TOTAL_LAYERS			23
 //////////////////////////////////
 
 
@@ -1472,3 +1469,7 @@ var/proccalls = 1
 #define EVENT_PROC_INDEX "p"
 
 #define HIGHLANDER "highlander"
+
+//Grasp indexes
+#define GRASP_RIGHT_HAND 1
+#define GRASP_LEFT_HAND 2

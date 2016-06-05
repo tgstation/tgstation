@@ -164,6 +164,8 @@ var/global/list/whitelisted_species = list("Human")
 		H.organs_by_name.len=0
 	if(H.internal_organs_by_name)
 		H.internal_organs_by_name.len=0
+	if(H.grasp_organs)
+		H.grasp_organs.len = 0
 
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
@@ -192,7 +194,11 @@ var/global/list/whitelisted_species = list("Human")
 			O.Insert(H)
 
 	for(var/name in H.organs_by_name)
-		H.organs += H.organs_by_name[name]
+		var/datum/organ/external/OE = H.organs_by_name[name]
+
+		H.organs += OE
+		if(OE.grasp_id)
+			H.grasp_organs += OE
 
 	for(var/datum/organ/external/O in H.organs)
 		O.owner = H
@@ -628,7 +634,7 @@ var/global/list/whitelisted_species = list("Human")
 			helm=/obj/item/clothing/head/helmet/space/vox/civ/security
 
 		if("Clown","Mime")
-			tank_slot=slot_r_hand
+			tank_slot=null
 			tank_slot_name = "hand"
 		if("Trader")
 			suit = /obj/item/clothing/suit/space/vox/pressure
@@ -639,13 +645,16 @@ var/global/list/whitelisted_species = list("Human")
 				if("Wizard")
 					suit = null
 					helm = null
-					tank_slot = slot_l_hand
+					tank_slot = null
 					tank_slot_name = "hand"
 	if(suit)
 		H.equip_or_collect(new suit(H), slot_wear_suit)
 	if(helm)
 		H.equip_or_collect(new helm(H), slot_head)
-	H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
+	if(tank_slot)
+		H.equip_or_collect(new/obj/item/weapon/tank/nitrogen(H), tank_slot)
+	else
+		H.put_in_hands(new/obj/item/weapon/tank/nitrogen(H))
 	to_chat(H, "<span class='info'>You are now running on nitrogen internals from the [H.s_store] in your [tank_slot_name]. Your species finds oxygen toxic, so <b>you must breathe nitrogen (AKA N<sub>2</sub>) only</b>.</span>")
 	H.internal = H.get_item_by_slot(tank_slot)
 	if (H.internals)

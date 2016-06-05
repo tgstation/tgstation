@@ -727,8 +727,8 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/thunderdome(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
+			M.put_in_hands(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M))
+			M.put_in_hands(new /obj/item/weapon/kitchen/utensil/knife/large(M))
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
 
 
@@ -742,7 +742,7 @@ Pressure: [env.return_pressure()]"}
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/cloaking_device(M), slot_r_store)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile(M), slot_r_hand)
+			M.put_in_hands(new /obj/item/weapon/gun/projectile(M))
 			M.equip_to_slot_or_del(new /obj/item/ammo_storage/box/a357(M), slot_l_store)
 
 		if ("tournament chef") //Steven Seagal FTW
@@ -751,8 +751,8 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/chefhat(M), slot_head)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/rollingpin(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_l_hand)
+			M.put_in_hands(new /obj/item/weapon/kitchen/rollingpin(M))
+			M.put_in_hands(new /obj/item/weapon/kitchen/utensil/knife/large(M))
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchen/utensil/knife/large(M), slot_s_store)
 
@@ -764,10 +764,10 @@ Pressure: [env.return_pressure()]"}
 				del(I)
 			M.equip_to_slot_or_del(backpack, slot_back)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/mop(M), slot_r_hand)
+			M.put_in_hands(new /obj/item/weapon/mop(M))
 			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
 			bucket.reagents.add_reagent("water", 70)
-			M.equip_to_slot_or_del(bucket, slot_l_hand)
+			M.put_in_hands(bucket)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/chem_grenade/cleaner(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/chem_grenade/cleaner(M), slot_l_store)
@@ -784,7 +784,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/bandana(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
-			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), slot_r_hand)
+			M.put_in_hands(new /obj/item/weapon/melee/energy/sword/pirate(M))
 
 		if ("space pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
@@ -793,7 +793,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/pirate(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(M), slot_glasses)
 
-			M.equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(M), slot_r_hand)
+			M.put_in_hands(new /obj/item/weapon/melee/energy/sword/pirate(M))
 
 		if ("soviet soldier")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
@@ -820,7 +820,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
 			var/obj/item/weapon/fire_axe = new(M)
-			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
+			M.put_in_hands(fire_axe)
 
 		if("masked killer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/overalls(M), slot_w_uniform)
@@ -835,7 +835,7 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/weapon/scalpel(M), slot_r_store)
 
 			var/obj/item/weapon/fire_axe = new(M)
-			M.equip_to_slot_or_del(fire_axe, slot_r_hand)
+			M.put_in_hands(fire_axe)
 
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
@@ -860,7 +860,7 @@ Pressure: [env.return_pressure()]"}
 			sec_briefcase.contents += new /obj/item/weapon/gun/projectile/mateba
 			sec_briefcase.contents += new /obj/item/ammo_storage/box/a357
 			sec_briefcase.contents += new /obj/item/weapon/plastique
-			M.equip_to_slot_or_del(sec_briefcase, slot_l_hand)
+			M.put_in_hands(sec_briefcase)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -1003,8 +1003,8 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
+			M.put_in_hands(new /obj/item/weapon/spellbook(M))
+			M.put_in_hands(new /obj/item/weapon/staff(M))
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 
@@ -1015,8 +1015,8 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
+			M.put_in_hands(new /obj/item/weapon/spellbook(M))
+			M.put_in_hands(new /obj/item/weapon/staff(M))
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 
@@ -1027,8 +1027,8 @@ Pressure: [env.return_pressure()]"}
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/marisa(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(M), slot_r_store)
-			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_r_hand)
-			M.equip_to_slot_or_del(new /obj/item/weapon/staff(M), slot_l_hand)
+			M.put_in_hands(new /obj/item/weapon/spellbook(M))
+			M.put_in_hands(new /obj/item/weapon/staff(M))
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box(M), slot_in_backpack)
 		if("soviet admiral")

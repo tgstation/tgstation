@@ -33,8 +33,7 @@ There are several things that need to be remembered:
 		update_inv_shoes()
 		update_inv_w_uniform()
 		update_inv_glasse()
-		update_inv_l_hand()
-		update_inv_r_hand()
+		update_inv_hand()
 		update_inv_belt()
 		update_inv_wear_id()
 		update_inv_ears()
@@ -488,8 +487,7 @@ var/global/list/damage_icon_parts = list()
 	update_inv_back(0)
 	update_inv_wear_suit(0)
 	update_inv_wear_id(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
+	update_inv_hands(0)
 	update_inv_handcuffed(0)
 	update_inv_legcuffed(0)
 	update_inv_pockets(0)
@@ -1044,61 +1042,63 @@ var/global/list/damage_icon_parts = list()
 		//overlays_standing[LEGCUFF_LAYER]	= null
 	if(update_icons)   update_icons()
 
+/mob/living/carbon/human/update_inv_hand(index, var/update_icons = 1)
+	var/obj/Overlays/hand_layer/O = obj_overlays[HAND_LAYER]
+	overlays.Remove(O)
+
+	var/obj/Overlays/new_item_overlay
+
+	for(var/obj/Overlays/OV in O.hands_overlays) //Go through all item overlays and remove those with the same index
+		if(OV.name == "[index]")
+			O.overlays.Remove(OV)
+			new_item_overlay = OV
+
+	var/obj/item/I = get_held_item_by_index(index)
+
+	if(I)
+		var/t_state = I.item_state
+		var/t_inhand_state = I.inhand_states[get_direction_by_index(index)]
+		var/icon/check_dimensions = new(t_inhand_state)
+		if(!t_state)	t_state = I.icon_state
+
+		if(!new_item_overlay)
+			new_item_overlay = new()
+
+			if(!istype(O.hands_overlays, /list)) O.hands_overlays = list()
+			O.hands_overlays.Add(new_item_overlay)
+
+		new_item_overlay.name = "[index]"
+		new_item_overlay.icon = t_inhand_state
+		new_item_overlay.icon_state = t_state
+		new_item_overlay.pixel_x = -1*(check_dimensions.Width() - 32)/2
+		new_item_overlay.pixel_y = -1*(check_dimensions.Height() - 32)/2
+		new_item_overlay.layer = O.layer
+
+		var/list/offsets = get_item_offset_by_index(index)
+
+		new_item_overlay.pixel_x = offsets["x"]
+		new_item_overlay.pixel_y = offsets["y"]
+
+		if(I.dynamic_overlay && I.dynamic_overlay["[HAND_LAYER]-[index]"])
+			var/image/dyn_overlay = I.dynamic_overlay["[HAND_LAYER]-[index]"]
+			new_item_overlay.overlays.Add(dyn_overlay)
+		I.screen_loc = get_held_item_ui_location(index)
+
+		O.overlays.Add(new_item_overlay)
+
+		if(handcuffed)
+			drop_item(I)
+
+	overlays.Add(O)
+
+	if(update_icons)
+		update_icons()
 
 /mob/living/carbon/human/update_inv_r_hand(var/update_icons=1)
-	overlays -= obj_overlays[R_HAND_LAYER]
-	if(r_hand)
-		r_hand.screen_loc = ui_rhand	//TODO
-		var/t_state = r_hand.item_state
-		var/t_inhand_state = r_hand.inhand_states["right_hand"]
-		var/icon/check_dimensions = new(t_inhand_state)
-		if(!t_state)	t_state = r_hand.icon_state
-		var/obj/Overlays/O = obj_overlays[R_HAND_LAYER]
-		O.icon = t_inhand_state
-		O.icon_state = t_state
-		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
-		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
-		O.overlays.len = 0
-		if(r_hand.dynamic_overlay)
-			if(r_hand.dynamic_overlay["[R_HAND_LAYER]"])
-				var/image/dyn_overlay = r_hand.dynamic_overlay["[R_HAND_LAYER]"]
-				O.overlays += dyn_overlay
-		overlays += O
-		obj_overlays[R_HAND_LAYER] = O
-		//overlays_standing[R_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
-		if (handcuffed)
-			drop_item(r_hand)
-	//else
-		//overlays_standing[R_HAND_LAYER] = null
-	if(update_icons)   update_icons()
-
+	return update_inv_hand(GRASP_RIGHT_HAND, update_icons)
 
 /mob/living/carbon/human/update_inv_l_hand(var/update_icons=1)
-	overlays -= obj_overlays[L_HAND_LAYER]
-	if(l_hand)
-		l_hand.screen_loc = ui_lhand	//TODO
-		var/t_state = l_hand.item_state
-		var/icon/t_inhand_state = l_hand.inhand_states["left_hand"]
-		var/icon/check_dimensions = new(t_inhand_state)
-		if(!t_state)	t_state = l_hand.icon_state
-		var/obj/Overlays/O = obj_overlays[L_HAND_LAYER]
-		O.icon = t_inhand_state
-		O.icon_state = t_state
-		O.pixel_x = -1*(check_dimensions.Width() - 32)/2
-		O.pixel_y = -1*(check_dimensions.Height() - 32)/2
-		O.overlays.len = 0
-		if(l_hand.dynamic_overlay)
-			if(l_hand.dynamic_overlay["[L_HAND_LAYER]"])
-				var/image/dyn_overlay = l_hand.dynamic_overlay["[L_HAND_LAYER]"]
-				O.overlays += dyn_overlay
-		overlays += O
-		obj_overlays[L_HAND_LAYER] = O
-		//overlays_standing[L_HAND_LAYER] = image("icon" = t_inhand_state, "icon_state" = "[t_state]")
-		if (handcuffed)
-			drop_item(l_hand)
-	//else
-		//overlays_standing[L_HAND_LAYER] = null
-	if(update_icons)   update_icons()
+	return update_inv_hand(GRASP_LEFT_HAND, update_icons)
 
 /mob/living/carbon/human/proc/update_tail_showing(var/update_icons=1)
 	//overlays_standing[TAIL_LAYER] = null

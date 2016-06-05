@@ -20,9 +20,8 @@
 	else
 		user.Paralyse(5)
 		to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")
-		var/organ = ((user.hand ? "l_":"r_") + "arm")
-		var/datum/organ/external/affecting = user.get_organ(organ)
-		if(affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
+		var/datum/organ/external/affecting = user.get_active_hand_organ()
+		if(affecting && affecting.take_damage(rand(force/2, force))) //random amount of damage between half of the blade's force and the full force of the blade.
 			user.UpdateDamageIcon()
 	return
 

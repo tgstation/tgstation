@@ -160,24 +160,18 @@
 /obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
 	if(ishuman(usr))
 		var/mob/living/carbon/human/M = usr
-		if (!( istype(over_object, /obj/screen) ))
+		if (!( istype(over_object, /obj/screen/inventory) ))
 			return ..()
 		playsound(get_turf(src), "rustle", 50, 1, -5)
 		if (M.wear_suit == src && !M.incapacitated())
-			if (over_object.name == "r_hand")
-				M.u_equip(src,0)
-				M.put_in_r_hand(src)
-			//	if (!( M.r_hand ))
-			//		M.u_equip(src)
-			//		M.r_hand = src
-			else if (over_object.name == "l_hand")
-				M.u_equip(src,0)
-				M.put_in_l_hand(src)
-				//	if (!( M.l_hand ))
-				//		M.u_equip(src)
-				//		M.l_hand = src
-			M.update_inv_wear_suit()
-			src.add_fingerprint(usr)
+			var/obj/screen/inventory/OI = over_object
+
+			if(OI.hand_index)
+				M.u_equip(src, 1)
+				M.put_in_hand(OI.hand_index, src)
+				M.update_inv_wear_suit()
+				src.add_fingerprint(usr)
+
 			return
 		if( (over_object == usr && in_range(src, usr) || usr.contents.Find(src)) && usr.s_active)
 			usr.s_active.close(usr)

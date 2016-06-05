@@ -265,7 +265,10 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(pack, slot_in_backpack)
 				M.equip_to_slot_or_del(T, slot_in_backpack)
 				M.equip_to_slot_or_del(A, slot_in_backpack)
-				M.equip_to_slot_or_del(new /obj/item/weapon/melee/cultblade, slot_r_hand)
+
+				var/obj/item/weapon/melee/cultblade/cultblade = new
+				if(!M.put_in_hands(cultblade))
+					qdel(cultblade)
 			else if(istype(M, /mob/living/carbon/monkey))
 				var/mob/living/carbon/monkey/K = M
 				var/obj/item/weapon/storage/backpack/cultpack/P = new/obj/item/weapon/storage/backpack/cultpack(K)
@@ -274,7 +277,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				pack.loc = P
 				T.loc = P
 				A.loc = P
-				K.equip_to_slot_or_del(new /obj/item/weapon/melee/cultblade(K), slot_r_hand)
+				K.put_in_hands(new /obj/item/weapon/melee/cultblade(K))
 				var/obj/item/clothing/monkeyclothes/cultrobes/JS = new /obj/item/clothing/monkeyclothes/cultrobes(K)
 				var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(K)
 				var/obj/item/clothing/monkeyclothes/olduniform = null
@@ -488,7 +491,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(new/obj/item/clothing/shoes/sandal, slot_shoes)
 				M.equip_to_slot_or_del(new/obj/item/clothing/head/wizard, slot_head)
 				M.equip_to_slot_or_del(new/obj/item/clothing/suit/wizrobe, slot_wear_suit)
-				M.equip_to_slot_or_del(new/obj/item/weapon/staff, slot_l_hand)
+				M.put_in_hand(new/obj/item/weapon/staff)
 
 				M.r_eyes = 102
 				M.g_eyes = 51
@@ -509,7 +512,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 				M.equip_to_slot_or_del(new/obj/item/clothing/shoes/sandal/marisa, slot_shoes)
 				M.equip_to_slot_or_del(new/obj/item/clothing/head/wizard/marisa, slot_head)
 				M.equip_to_slot_or_del(new/obj/item/clothing/suit/wizrobe/marisa, slot_wear_suit)
-				M.equip_to_slot_or_del(new/obj/item/weapon/staff/broom, slot_l_hand)
+				M.put_in_hands(new/obj/item/weapon/staff/broom)
 
 				M.r_eyes = 153
 				M.g_eyes = 102
@@ -535,7 +538,7 @@ client/proc/antag_madness(var/mob/M in mob_list)
 			var/obj/item/weapon/spellbook/S = new/obj/item/weapon/spellbook(M)
 			S.uses = 30
 			S.op = 0
-			M.equip_to_slot_or_del(S, slot_r_hand)
+			M.put_in_hands(S)
 
 			var/obj/item/weapon/teleportation_scroll/T = new/obj/item/weapon/teleportation_scroll(M)
 			T.uses = 10

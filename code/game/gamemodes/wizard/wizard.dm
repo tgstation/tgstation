@@ -182,9 +182,11 @@
 	qdel(wizard_mob.wear_suit)
 	qdel(wizard_mob.head)
 	qdel(wizard_mob.shoes)
-	qdel(wizard_mob.r_hand)
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)
+
+	if(!wizard_mob.find_empty_hand_index())
+		wizard_mob.u_equip(wizard_mob.held_items[GRASP_LEFT_HAND])
 
 	wizard_mob.equip_to_slot_or_del(new /obj/item/device/radio/headset(wizard_mob), slot_ears)
 	wizard_mob.equip_to_slot_or_del(new /obj/item/clothing/under/lightpurple(wizard_mob), slot_w_uniform)
@@ -197,7 +199,7 @@
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/box(wizard_mob), slot_in_backpack)
 //	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/scrying_gem(wizard_mob), slot_l_store) For scrying gem.
 	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll(wizard_mob), slot_r_store)
-	wizard_mob.equip_to_slot_or_del(new /obj/item/weapon/spellbook(wizard_mob), slot_r_hand)
+	wizard_mob.put_in_hands(new /obj/item/weapon/spellbook(wizard_mob))
 
 	wizard_mob.make_all_robot_parts_organic()
 

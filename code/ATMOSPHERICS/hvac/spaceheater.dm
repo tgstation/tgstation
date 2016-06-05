@@ -219,7 +219,8 @@
 			var/mob/living/M = user
 			if ((M_CLUMSY in M.mutations) && (prob(50)))
 				user.visible_message("<span class='danger'>[user] slides \his hands straight into \the [src]!</span>", "<span class='danger'>You accidentally slide your hands into \the [src]!</span>")
-				M.apply_damage(10,BURN,(pick("l_hand", "r_hand")))
+
+				M.apply_damage(10,BURN,pick("l_hand", "r_hand"))
 			else
 				user.visible_message("<span class='notice'>[user] warms \his hands around \the [src].</span>", "<span class='notice'>You warm your hands around \the [src].</span>")
 			M.bodytemperature += 2

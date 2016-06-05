@@ -51,10 +51,7 @@
 //This makes sure that the grab screen object is displayed in the correct hand.
 /obj/item/weapon/grab/proc/synch()
 	if(affecting)
-		if(assailant.r_hand == src)
-			hud.screen_loc = ui_rhand
-		else
-			hud.screen_loc = ui_lhand
+		hud.screen_loc = assailant.get_held_item_ui_location(assailant.is_holding_item(src))
 
 
 /obj/item/weapon/grab/process()
@@ -74,14 +71,12 @@
 
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
-		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.l_hand
+
+		for(var/obj/item/weapon/grab/G in assailant.held_items)
+			if(G == src) continue
 			if(G.affecting != affecting)
 				allow_upgrade = 0
-		if((assailant.r_hand && assailant.r_hand != src && istype(assailant.r_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.r_hand
-			if(G.affecting != affecting)
-				allow_upgrade = 0
+
 		if(state == GRAB_AGGRESSIVE)
 			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if(G == src) continue

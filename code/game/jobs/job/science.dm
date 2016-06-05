@@ -28,9 +28,9 @@
 	H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_or_collect(new /obj/item/clothing/under/rank/research_director(H), slot_w_uniform)
 	H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
-	H.equip_or_collect(new /obj/item/weapon/clipboard(H), slot_l_hand)
+	H.put_in_hands(new /obj/item/weapon/clipboard(H))
 	if(H.backbag == 1)
-		H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+		H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 	else
 		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 	return 1
@@ -80,7 +80,7 @@
 	H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/science(H), slot_wear_suit)
 	if(H.backbag == 1)
-		H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+		H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 	else
 		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 	return 1
@@ -117,9 +117,9 @@
 	H.equip_or_collect(new /obj/item/clothing/shoes/black(H), slot_shoes)
 	H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
 //	H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_or_collect(new /obj/item/weapon/storage/toolbox/mechanical(H), slot_l_hand)
+	H.put_in_hands(new /obj/item/weapon/storage/toolbox/mechanical(H))
 	if(H.backbag == 1)
-		H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+		H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 	else
 		H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 	return 1

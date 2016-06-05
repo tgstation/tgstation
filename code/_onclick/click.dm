@@ -89,10 +89,7 @@
 		if(W.flags&USEDELAY)
 			next_move += 5*/
 		W.attack_self(src, params)
-		if(hand)
-			update_inv_l_hand(0)
-		else
-			update_inv_r_hand(0)
+		update_inv_hand(active_hand)
 
 		return
 

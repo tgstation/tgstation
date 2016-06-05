@@ -25,8 +25,8 @@
 		user.client.remove_gun_icons()
 	return ..()
 
-/obj/item/weapon/gun/equipped(var/mob/user, var/slot)
-	if (slot != slot_l_hand && slot != slot_r_hand)
+/obj/item/weapon/gun/equipped(var/mob/user, var/slot, hand_index)
+	if(!hand_index)
 		stop_aim()
 		if (user.client)
 			user.client.remove_gun_icons()

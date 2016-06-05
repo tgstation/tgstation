@@ -648,8 +648,10 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL) || (C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL))
-				return C
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= W_CLASS_SMALL)
+					return C
+
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
@@ -677,8 +679,10 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL || C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL)
-				return C
+
+			for(var/obj/item/I in C.held_items)
+				if(I.w_class <= W_CLASS_SMALL)
+					return C
 	return null
 
 
@@ -733,11 +737,10 @@
 		if(!Adjacent(C))
 			continue
 
-		if(C.l_hand && C.l_hand.w_class <= W_CLASS_SMALL)
-			stolen_item = C.l_hand
+		for(var/obj/item/I in C.held_items)
+			if(I.w_class > W_CLASS_SMALL) continue
 
-		if(C.r_hand && C.r_hand.w_class <= W_CLASS_SMALL)
-			stolen_item = C.r_hand
+			stolen_item = I
 
 		if(stolen_item)
 			C.u_equip(stolen_item)

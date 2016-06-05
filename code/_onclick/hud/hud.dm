@@ -20,8 +20,7 @@ var/global/obj/screen/clicker/catcher = new()
 
 	var/obj/screen/lingchemdisplay
 	var/obj/screen/vampire_blood_display // /vg/
-	var/obj/screen/r_hand_hud_object
-	var/obj/screen/l_hand_hud_object
+	var/list/obj/screen/hand_hud_objects = list()
 	var/obj/screen/action_intent
 	var/obj/screen/move_intent
 
@@ -44,8 +43,7 @@ var/global/obj/screen/clicker/catcher = new()
 	help_intent = null
 	lingchemdisplay = null
 	vampire_blood_display = null
-	r_hand_hud_object = null
-	l_hand_hud_object = null
+	hand_hud_objects = null
 	action_intent = null
 	move_intent = null
 	adding = null
@@ -102,6 +100,52 @@ var/global/obj/screen/clicker/catcher = new()
 			if(H.l_store)	H.l_store.screen_loc = null
 			if(H.r_store)	H.r_store.screen_loc = null
 
+/datum/hud/proc/init_hand_icons(var/new_icon, var/new_color, var/new_alpha)
+	for(var/i = 1 to mymob.held_items.len) //Hands
+		var/obj/screen/inventory/inv_box = getFromPool(/obj/screen/inventory)
+		inv_box.name = "[mymob.get_index_limb_name(i)]"
+
+		if(mymob.get_direction_by_index(i) == "right_hand")
+			inv_box.dir = WEST
+		else
+			inv_box.dir = EAST
+
+		inv_box.icon = new_icon ? new_icon : 'icons/mob/screen1_White.dmi'
+		inv_box.icon_state = "hand_inactive"
+		if(mymob && mymob.active_hand == i)
+			inv_box.icon_state = "hand_active"
+		inv_box.screen_loc = mymob.get_held_item_ui_location(i)
+		inv_box.slot_id = null
+		inv_box.hand_index = i
+		inv_box.layer = UI_HAND_LAYER
+		inv_box.color = new_color ? new_color : inv_box.color
+		inv_box.alpha = new_alpha ? new_alpha : inv_box.alpha
+		src.hand_hud_objects += inv_box
+		src.adding += inv_box
+
+/datum/hud/proc/update_hand_icons()
+	var/obj/screen/inventory/example = locate(/obj/screen/inventory) in hand_hud_objects
+
+	var/new_icon = 'icons/mob/screen1_White.dmi'
+	var/new_color = null
+	var/new_alpha = 255
+
+	if(example)
+		new_icon = example.icon
+		new_color = example.color
+		new_alpha = example.alpha
+
+	for(var/obj/screen/inventory/IN in hand_hud_objects)
+		if(mymob.client)
+			adding -= IN
+			mymob.client.screen -= IN
+
+		returnToPool(IN)
+
+	if(mymob.client)
+		adding = list()
+		init_hand_icons(new_icon, new_color, new_alpha)
+		mymob.client.screen += adding
 
 /datum/hud/proc/instantiate()
 	if(!ismob(mymob))
@@ -148,6 +192,7 @@ var/global/obj/screen/clicker/catcher = new()
 		construct_hud()
 	else if(isobserver(mymob))
 		ghost_hud()
+
 	if(isliving(mymob))
 		var/obj/screen/using
 		using = getFromPool(/obj/screen)
@@ -182,8 +227,7 @@ var/global/obj/screen/clicker/catcher = new()
 
 				//Due to some poor coding some things need special treatment:
 				//These ones are a part of 'adding', 'other' or 'hotkeybuttons' but we want them to stay
-				src.client.screen += src.hud_used.l_hand_hud_object	//we want the hands to be visible
-				src.client.screen += src.hud_used.r_hand_hud_object	//we want the hands to be visible
+				src.client.screen += src.hud_used.hand_hud_objects
 				src.client.screen += src.hud_used.action_intent		//we want the intent swticher visible
 				src.hud_used.action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
@@ -225,16 +269,12 @@ var/global/obj/screen/clicker/catcher = new()
 	var/mob/living/L = mymob
 
 	if(L.shown_schematics_background && !clear)
+
 		if(!istype(R))
-			switch(L.hand)
-				if(1)
-					R = L.l_hand
-					if(!istype(R))
-						return
-				else
-					R = L.r_hand
-					if(!istype(R))
-						return
+			R = L.get_active_hand()
+			if(!istype(R))
+				return
+
 		if((!R.schematics || !R.schematics.len) && !override)
 			to_chat(usr, "<span class='danger'>This [R] has no schematics to choose from.</span>")
 			return

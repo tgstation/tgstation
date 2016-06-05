@@ -209,3 +209,6 @@
 #define ui_blob_ping "EAST-1:24,CENTER+3:21"
 #define ui_blob_rally "EAST-1:24,CENTER+4:25"
 #define ui_blob_taunt "EAST-1:24,CENTER+5:29"
+
+//Layers
+#define UI_HAND_LAYER 19

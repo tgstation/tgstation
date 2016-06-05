@@ -32,10 +32,10 @@
 		H.equip_or_collect(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/heads/cmo(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/cmo(H), slot_wear_suit)
-		H.equip_or_collect(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
+		H.put_in_hands(new /obj/item/weapon/storage/firstaid/regular(H))
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
@@ -94,10 +94,10 @@
 			H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/medical(H), slot_belt)
-		H.equip_or_collect(new /obj/item/weapon/storage/firstaid/regular(H), slot_l_hand)
+		H.put_in_hands(new /obj/item/weapon/storage/firstaid/regular(H))
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
@@ -138,7 +138,7 @@
 		//H.equip_or_collect(new /obj/item/device/pda/chemist(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/chemist(H), slot_wear_suit)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
@@ -172,7 +172,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/genetics(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1
@@ -204,7 +204,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/virologist(H), slot_wear_suit)
 		H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_s_store)
 		if(H.backbag == 1)
-			H.equip_or_collect(new H.species.survival_gear(H), slot_r_hand)
+			H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 		else
 			H.equip_or_collect(new H.species.survival_gear(H.back), slot_in_backpack)
 		return 1

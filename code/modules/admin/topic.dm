@@ -1513,8 +1513,8 @@
 						oldhat = K.hat
 						K.hat = null
 						oldhat.loc = pack
-					K.equip_to_slot_or_del(ident, slot_r_hand)
-					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/green(K), slot_l_hand)
+					K.put_in_hands(ident)
+					K.put_in_hands(new /obj/item/weapon/storage/belt/thunderdome/green(K))
 					K.regenerate_icons()
 
 			if("Red")
@@ -1540,8 +1540,8 @@
 						oldhat = K.hat
 						K.hat = null
 						oldhat.loc = pack
-					K.equip_to_slot_or_del(ident, slot_r_hand)
-					K.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/thunderdome/red(K), slot_l_hand)
+					K.put_in_hands(ident)
+					K.put_in_hands(new /obj/item/weapon/storage/belt/thunderdome/red(K))
 					K.regenerate_icons()
 
 		if(pack.contents.len == 0)
@@ -1729,6 +1729,23 @@
 			if(new_mob.client == CLIENT) usr = new_mob //We probably transformed ourselves
 			show_player_panel(new_mob)
 
+	else if(href_list["changehands"])
+		if(!check_rights(R_SPAWN))	return
+
+		var/mob/M = locate(href_list["changehands"])
+		if(!istype(M))
+			return
+
+		var/max_hands = 40 //This number is randomly chosen
+
+		var/new_amount = input(usr, "Input a new amount of hands for [M] (current: [M.held_items.len]). WARNING: values larger than 4 may significantly clutter the UI. Maximum amount is [max_hands].", "Hands", M.held_items.len) as num
+		if(new_amount == null) return
+
+		new_amount = Clamp(new_amount, 0, max_hands)
+
+		M.set_hand_amount(new_amount)
+		to_chat(usr, "<span class='info'>Changed [M]'s amount of hands to [new_amount].</span>")
+
 	else if(href_list["togmutate"])
 		if(!check_rights(R_SPAWN))	return
 
@@ -1914,22 +1931,16 @@
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN|R_FUN))	return
 
-		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
-		if(!ishuman(H))
-			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human")
+		var/mob/living/carbon/H = locate(href_list["adminspawncookie"])
+		if(!iscarbon(H))
+			to_chat(usr, "This can only be used on instances of type /mob/living/carbon")
 			return
 
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
-		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
-			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
-				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
-				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
-		else
-			H.update_inv_l_hand()
+		if(!H.put_in_hands( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H)))
+			log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
+			return
+
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)

@@ -57,6 +57,7 @@
 
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
+	var/hand_index
 
 /obj/screen/close
 	name = "close"
@@ -359,12 +360,16 @@
 							if(ishuman(C))
 								var/mob/living/carbon/human/H = C
 								breathes = H.species.breath_type
-								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+								nicename = list ("suit", "back", "belt", "left pocket", "right pocket") //Hands are added below
+								tankcheck = list (H.s_store, C.back, H.belt, H.l_store, H.r_store)
 
 							else
-								nicename = list("Right Hand", "Left Hand", "Back")
-								tankcheck = list(C.r_hand, C.l_hand, C.back)
+								nicename = list("back")
+								tankcheck = list(C.back)
+
+							tankcheck = tankcheck + C.held_items
+							for(var/i = 1 to C.held_items.len)
+								nicename.Add(C.get_index_limb_name(i))
 
 							for(var/i=1, i<tankcheck.len+1, ++i)
 								if(istype(tankcheck[i], /obj/item/weapon/tank))
@@ -869,25 +874,18 @@
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
+
+	if(hand_index)
+		usr.activate_hand(hand_index)
+
 	switch(name)
-		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
-				//usr.next_move = world.time+2
-		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
-				//usr.next_move = world.time+2
 		if("swap")
 			usr:swap_hand()
 		if("hand")
 			usr:swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand(0)
-				usr.update_inv_r_hand(0)
+				usr.update_inv_hands()
 				usr.delayNextAttack(6)
 	return 1
 

@@ -38,8 +38,8 @@ mob/living/carbon/proc/handle_hallucinations()
 				if(!halitem)
 					halitem = new
 					var/list/slots_free = list(ui_lhand,ui_rhand)
-					if(l_hand) slots_free -= ui_lhand
-					if(r_hand) slots_free -= ui_rhand
+					if(get_held_item_by_index(GRASP_LEFT_HAND)) slots_free -= ui_lhand
+					if(get_held_item_by_index(GRASP_RIGHT_HAND)) slots_free -= ui_rhand
 					if(istype(src,/mob/living/carbon/human))
 						var/mob/living/carbon/human/H = src
 						if(!H.belt) slots_free += ui_belt
@@ -480,14 +480,12 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 
 	//var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
 	var/obj/effect/fake_attacker/F = getFromPool(/obj/effect/fake_attacker,target.loc)
-	if(clone.l_hand)
-		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.l_hand.name
-			F.weap = clone.l_hand
-	else if (clone.r_hand)
-		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.r_hand.name
-			F.weap = clone.r_hand
+
+	for(var/obj/item/I in clone.held_items)
+		if(!non_fakeattack_weapons.Find(I.type))
+			clone_weapon = I.name
+			F.weap = I
+			break
 
 	F.name = clone.name
 	F.my_target = target

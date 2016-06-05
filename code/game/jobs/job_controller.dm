@@ -421,7 +421,7 @@ var/global/datum/controller/occupations/job_master
 				switch(H.backbag) //BS12 EDIT
 					if(1)
 						if(H.species.survival_gear)
-							H.equip_to_slot_or_del(new H.species.survival_gear(H), slot_r_hand)
+							H.put_in_hand(GRASP_RIGHT_HAND, new H.species.survival_gear(H))
 					if(2)
 						var/obj/item/weapon/storage/backpack/BPK = new/obj/item/weapon/storage/backpack(H)
 						if(H.species.survival_gear)

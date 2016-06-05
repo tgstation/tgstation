@@ -96,31 +96,7 @@
 	inv_box.layer = 19
 	src.adding += inv_box
 
-	inv_box = getFromPool(/obj/screen/inventory)
-	inv_box.name = "r_hand"
-	inv_box.dir = WEST
-	inv_box.icon = 'icons/mob/screen1_alien.dmi'
-	inv_box.icon_state = "hand_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		using.icon_state = "hand_active"
-	inv_box.screen_loc = ui_rhand
-	inv_box.layer = 19
-	src.r_hand_hud_object = inv_box
-	inv_box.slot_id = slot_r_hand
-	src.adding += inv_box
-
-	inv_box = getFromPool(/obj/screen/inventory)
-	inv_box.name = "l_hand"
-	inv_box.dir = EAST
-	inv_box.icon = 'icons/mob/screen1_alien.dmi'
-	inv_box.icon_state = "hand_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_active"
-	inv_box.screen_loc = ui_lhand
-	inv_box.layer = 19
-	inv_box.slot_id = slot_l_hand
-	src.l_hand_hud_object = inv_box
-	src.adding += inv_box
+	init_hand_icons('icons/mob/screen1_alien.dmi')
 
 	using = getFromPool(/obj/screen/inventory)
 	using.name = "hand"
