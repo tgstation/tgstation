@@ -1013,6 +1013,24 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
 	feedback_add_details("admin_verb","MZI")
 
+/client/proc/mass_zombie_cure()
+	set category = "Fun"
+	set name = "Mass Zombie Cure"
+	set desc = "Removes the zombie infection from all humans, returning them to normal."
+	if(!holder)
+		return
+
+	var/confirm = alert(src, "Please confirm you want to cure all zombies?", "Confirm Zombie Cure", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	for(var/obj/item/organ/body_egg/zombie_infection/I in zombie_infection_list)
+		qdel(I)
+
+	message_admins("[key_name_admin(usr)] cured all zombies.")
+	log_admin("[key_name(usr)] cured all zombies.")
+	feedback_add_details("admin_verb","MZC")
+
 /client/proc/polymorph_all()
 	set category = "Fun"
 	set name = "Polymorph All"

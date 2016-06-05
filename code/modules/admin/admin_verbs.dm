@@ -96,6 +96,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/admin_change_sec_level,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
+	/client/proc/mass_zombie_cure,
 	/client/proc/polymorph_all
 	)
 var/list/admin_verbs_spawn = list(
