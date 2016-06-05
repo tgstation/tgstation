@@ -889,3 +889,8 @@
 		qdel(src)
 	else
 		return ..()
+
+/obj/machinery/hydroponics/soil/ash_pile //Used in lavaland
+	name = "ash pile"
+	desc = "Several drifts of ash scooped into a pile. Fertile for some plants."
+	icon_state = "ash_pile"

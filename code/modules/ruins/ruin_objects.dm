@@ -1,3 +1,5 @@
+//If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
+
 /obj/structure/lavaland_door
 	name = "necropolis gate"
 	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
@@ -89,20 +91,6 @@
 				/obj/item/seeds/berry/glow = 10,
 				/obj/item/seeds/sunflower/moonflower = 8
 				)
-
-/obj/effect/mob_spawn/human/seed_vault
-	name = "vault creature sleeper"
-	mob_name = "Vault Creature"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	mob_species = /datum/species/pod
-	flavour_text = {"You are a strange, artificial creature. Your creators were a highly advanced and benevolent race, and launched many seed vaults into the stars, hoping to aid fledgling civilizations. You are to tend to the vault and await the arrival of sentient species. You've been waiting quite a while though..."}
-
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
-	var/plant_name = pick("Tomato", "Potato", "Brocolli", "Carrot", "Deathcap", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Bannana", "Moss", "Flower", "Bloom", "Spore", "Root", "Bark", "Glowshroom", "Petal", "Leaf", "Venus", "Sprout","Cocao", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
 
 //Greed
 
@@ -243,58 +231,6 @@
 		visible_message("<span class='danger'>An egg is ready to hatch!</span>")
 		meat_counter -= 2
 
-/obj/effect/mob_spawn/human/ash_walker
-	name = "ash walker egg"
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "large_egg"
-	mob_species = /datum/species/lizard/ashwalker
-	helmet = /obj/item/clothing/head/helmet/gladiator
-	uniform = /obj/item/clothing/under/gladiator
-	roundstart = FALSE
-	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = {"<B>You are an Ash Walker. Your tribe worships <span class='danger'>the necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You have seen lights in the distance though, the arrival of outsiders seeking to destroy the land. Fresh sacrifices.</B>"}
-
-/obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
-	new_spawn.real_name = random_unique_lizard_name(gender)
-	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.underwear = "Nude"
-		H.update_body()
-
-/obj/effect/mob_spawn/human/ash_walker/New()
-	..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-
-//Wishgranter Exile
-
-/obj/effect/mob_spawn/human/exile
-	name = "exile sleeper"
-	mob_name = "Penitent Exile"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	mob_species = /datum/species/shadow
-	flavour_text = {"You are cursed! Many years ago you risked it all to reach the Wish Granter, siezing it's power for yourself and leaving your friends for dead.. Though your wish came true, it did so at a price, and you've been doomed to wander these wastes ever since. You seek only to atone now, to somehow redeem yourself, and finally be released. You've seen ships landing in the distance. Perhaps now is the time to make things right?"}
-
-/obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "[new_spawn.real_name] ([rand(0,999)])"
-	var/wish = rand(1,4)
-	switch(wish)
-		if(1)
-			new_spawn << "You wished to kill, and kill you did. You've lost track of the number and murder long lost it's spark of excitement. You feel only regret."
-		if(2)
-			new_spawn << "You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?"
-		if(3)
-			new_spawn << "You wished for power. Little good it did you, cast out of the light. You are a king, but ruling over a miserable wasteland. You feel only remorse."
-		if(4)
-			new_spawn << "You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. You are overwhelmed with guilt."
-
 //Free Golems
 
 /obj/item/weapon/disk/design_disk/golem_shell
@@ -357,57 +293,3 @@
 				user << "You need at least ten sheets to finish a golem."
 		else
 			user << "You can't build a golem out of this kind of material."
-
-/obj/effect/mob_spawn/human/golem
-	name = "completed golem shell"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	mob_species = /datum/species/golem
-	roundstart = FALSE
-	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = {"<B>You are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to travel the stars with a single declaration; 'Yeah go do whatever.' Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn golems, so that no golem may ever be forced to serve again.</B>"}
-
-
-/obj/effect/mob_spawn/human/golem/New()
-	..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
-	var/datum/species/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.set_cloned_appearance()
-
-
-/obj/effect/mob_spawn/human/golem/adamantine
-	name = "golem sleeper"
-	mob_name = "Free Golem"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	anchored = 1
-	density = 1
-	mob_species = /datum/species/golem/adamantine

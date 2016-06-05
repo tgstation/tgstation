@@ -1,0 +1,48 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/unpowered)
+"c" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"d" = (/obj/effect/mob_spawn/human/ash_walker,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"e" = (/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"f" = (/mob/living/simple_animal/hostile/spawner/ash_walker{luminosity = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"g" = (/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"h" = (/obj/structure/closet/crate/hydroponics,/obj/item/seeds/glowshroom,/obj/item/seeds/glowshroom,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"i" = (/obj/machinery/hydroponics/soil/ash_pile,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"j" = (/obj/item/weapon/reagent_containers/glass/bowl,/obj/structure/table/wood,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"k" = (/obj/structure/closet/crate/engineering/electrical{desc = "A hijacked shipment of flashlights and lanterns."; name = "flashlight shipment"},/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/obj/item/device/flashlight/lantern,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"l" = (/obj/structure/closet/crate/medical,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"m" = (/obj/structure/closet/crate/engineering,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"n" = (/turf/closed/wall/shuttle/survival/pod{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"o" = (/obj/structure/rack{desc = "A table adorned with the bones of men and beasts."; icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_left"; name = "tribal workbench"},/obj/item/weapon/storage/toolbox/syndicate,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"p" = (/obj/structure/rack{desc = "A table adorned with the bones of beasts and men."; icon = 'icons/obj/stationobjs.dmi'; icon_state = "minibar_right"; name = "tribal workbench"},/obj/item/weapon/kitchen/knife/combat/survival,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"q" = (/obj/structure/fans{desc = "A large environmental regulation machine. This one seems stalled."; icon_state = "fans_stalled"},/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/powered)
+"r" = (/obj/structure/tubes,/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"s" = (/obj/structure/table/wood,/obj/item/weapon/twohanded/bonespear,/obj/item/weapon/twohanded/bonespear,/obj/item/weapon/twohanded/bonespear,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"t" = (/obj/structure/bed/pod,/obj/item/weapon/bedsheet/black,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"u" = (/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"v" = (/obj/item/weapon/pickaxe,/obj/effect/decal/cleanable/blood,/obj/effect/light_emitter,/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"w" = (/obj/structure/table/survival_pod,/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"x" = (/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/footprints{tag = "icon-blood1 (NORTH)"; icon_state = "blood1"; dir = 1},/obj/effect/mob_spawn/human/corpse/damaged,/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"y" = (/obj/structure/tubes,/obj/effect/decal/cleanable/blood/drip,/obj/structure/closet/crate/miningcar{desc = "A splintered mining cart that seems to have been used for cadaver transport."; max_mob_size = 3; name = "gore-stained mine cart"},/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"z" = (/obj/effect/decal/cleanable/blood/footprints{tag = "icon-blood1 (NORTH)"; icon_state = "blood1"; dir = 1},/obj/structure/mineral_door/iron{color = "#646464"; desc = "A primitive door carved out of basalt slabs."; name = "basalt door"},/turf/open/floor/pod/dark{baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface},/area/ruin/unpowered)
+"A" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaabbbbbbbaaaa
+aabbcccccbbaaa
+aabcccdcecbaaa
+aabccdfdccbbaa
+abbcgcdccccbba
+abhccccicccjba
+abkccccccccjba
+ablciccccccbba
+abmccciccccbaa
+abncccccopbbaa
+aanqcrscctbbaa
+aanuvcsccbbaaa
+aanwxyncbbaaaa
+aannznnbbaaaaa
+aaaAAAAAaaaaaa
+AAAAAAAAAAAAAA
+AAAAAAAAAAAAAA
+AAAAAAAAAAAAAA
+"}

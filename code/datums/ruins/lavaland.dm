@@ -69,6 +69,11 @@
 	cost = 20
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/ash_walker/alternate
+	name = "Ash Walker Cave"
+	id = "ash-walker-alternate"
+	suffix = "lavaland_surface_ash_walker2.dmm"
+
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
 	id = "golem-ship"
