@@ -32,39 +32,41 @@
 /obj/structure/clockwork/proc/destroyed()
 	if(!takes_damage)
 		return 0
-	for(var/obj/item/I in debris)
+	for(var/I in debris)
 		new I (get_turf(src))
 	visible_message(break_message)
 	playsound(src, break_sound, 50, 1)
 	qdel(src)
 	return 1
 
-/obj/structure/clockwork/proc/damaged(mob/living/user, obj/item/I, amount, taip)
-	if(!amount || !taip || !taip in list(BRUTE, BURN))
+/obj/structure/clockwork/proc/take_damage(amount, damage_type)
+	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
 		return 0
-	if(user.a_intent == "harm" && user.canUseTopic(I) && I.force && takes_damage)
-		user.visible_message("<span class='warning'>[user] strikes [src] with [I]!</span>", "<span class='danger'>You strike [src] with [I]!</span>")
-		playsound(src, I.hitsound, 50, 1)
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src)
-		health = max(0, health - I.force)
+	if(takes_damage)
+		health = max(0, health - amount)
 		if(!health)
 			destroyed()
-	return 1
+		return 1
+	return 0
+
+/obj/structure/clockwork/narsie_act()
+	if(take_damage(rand(25, 50), BRUTE) && src) //if we still exist
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
 
 /obj/structure/clockwork/ex_act(severity)
-	if(takes_damage)
-		switch(severity)
-			if(1)
-				health -= max_health * 0.7 //70% max health lost
-			if(2)
-				health -= max_health * 0.4 //40% max health lost
-			if(3)
-				if(prob(50))
-					health -= max_health * 0.1 //10% max health lost
-		if(health <= max_health * 0.1) //If there's less than 10% max health left, destroy it
-			destroyed()
-			qdel(src)
+	var/damage = 0
+	switch(severity)
+		if(1)
+			damage = max_health * 0.7 //70% max health lost
+		if(2)
+			damage = max_health * 0.4 //40% max health lost
+		if(3)
+			if(prob(50))
+				damage = max_health * 0.1 //10% max health lost
+	if(damage)
+		take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/examine(mob/user)
 	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
@@ -72,11 +74,38 @@
 	..()
 	desc = initial(desc)
 
+/obj/structure/clockwork/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
+
+/obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
+	user.do_attack_animation(src)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+	take_damage(damage, damage_type)
+
+/obj/structure/clockwork/attack_alien(mob/living/user)
+	attack_generic(user, 15)
+
+/obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
+	if(!M.melee_damage_upper)
+		return
+	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
+
+/obj/structure/clockwork/attack_slime(mob/living/simple_animal/slime/user)
+	if(!user.is_adult)
+		return
+	attack_generic(user, rand(10, 15))
+
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
-	if(user.a_intent == "harm" && user.Adjacent(I) && I.force && takes_damage)
-		damaged(user, I, I.force, I.damtype)
-	else
-		return ..()
+	if(I.force && takes_damage)
+		take_damage(I.force, I.damtype)
+		playsound(src, I.hitsound, 50, 1)
+	return ..()
+
+/obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
+	if(..())
+		take_damage(M.force, M.damtype)
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
@@ -207,7 +236,7 @@
 	max_health = 25
 	construction_value = 15
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
-	debris = list(/obj/item/clockwork/component/replicant_alloy/blind_eye)
+	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
@@ -472,6 +501,21 @@
 	else
 		icon_state = "[initial(icon_state)]_inactive"
 
+/obj/structure/clockwork/wall_gear
+	name = "massive gear"
+	icon_state = "wall_gear"
+	climbable = TRUE
+	desc = "A massive brass gear."
+	clockwork_desc = "A massive brass gear that could possibly be proselytized into replicant alloy."
+	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards)
+
+/obj/structure/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		default_unfasten_wrench(user, I, 10)
+		return 1
+	return ..()
+
 ///////////////////////
 // CLOCKWORK EFFECTS //
 ///////////////////////
@@ -528,13 +572,14 @@
 			qdel(src)
 			return 1
 
-/obj/effect/clockwork/spatial_gateway //Spatial gateway: A one-way rift to another location.
+/obj/effect/clockwork/spatial_gateway //Spatial gateway: A usually one-way rift to another location.
 	name = "spatial gateway"
 	desc = "A gently thrumming tear in reality."
-	clockwork_desc = "A gateway in reality. It can either send or receive, but not both."
+	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = 1
 	var/sender = TRUE //If this gateway is made for sending, not receiving
+	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
 	var/uses = 1 //How many objects or mobs can go through the portal
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
@@ -545,17 +590,36 @@
 		if(!linked_gateway)
 			qdel(src)
 			return 0
+		if(both_ways)
+			clockwork_desc = "A gateway in reality. It can both send and receive objects."
 		else
-			if(linked_gateway.sender == sender)
-				linked_gateway.sender = !sender
+			clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
 		spawn(lifetime)
 			if(src)
 				qdel(src)
 
+//set up a gateway with another gateway
+/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, uses, two_way)
+	if(!gatewayB || !set_duration || !uses)
+		return 0
+	linked_gateway = gatewayB
+	gatewayB.linked_gateway = src
+	if(two_way)
+		both_ways = TRUE
+		gatewayB.both_ways = TRUE
+	else
+		sender = TRUE
+		gatewayB.sender = FALSE
+	lifetime = set_duration
+	gatewayB.lifetime = set_duration
+	uses = uses
+	gatewayB.uses = uses
+	return 1
+
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "This gateway can only [sender ? "send" : "receive"] objects."
+		user << "<span class='brass'>It has [uses] uses remaining.</span>"
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
@@ -593,6 +657,8 @@
 		return 0
 	if(!sender)
 		visible_message("<span class='warning'>[A] bounces off of [src]!</span>")
+		return 0
+	if(!uses)
 		return 0
 	if(isliving(A))
 		var/mob/living/user = A
@@ -672,7 +738,8 @@
 	desc = "A strange set of markings drawn on the ground."
 	clockwork_desc = "A sigil of some purpose."
 	icon_state = "sigil"
-	alpha = 25
+	layer = LOW_OBJ_LAYER
+	alpha = 50
 	var/affects_servants = FALSE
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
@@ -683,13 +750,13 @@
 	..()
 
 /obj/effect/clockwork/sigil/Crossed(atom/movable/AM)
+	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.stat)
 			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
 				sigil_effects(L)
 			return 1
-	..()
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
@@ -698,47 +765,59 @@
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
 	clockwork_desc = "A sigil that will stun the first non-servant to cross it. Nar-Sie's dogs will be knocked down."
-	color = rgb(255, 255, 0)
+	icon_state = "sigildull"
+	color = "#FAE48C"
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
-	visible_message("<span class='warning'>[src] appears in a burst of light!</span>")
+	var/target_flashed = L.flash_eyes()
 	for(var/mob/living/M in viewers(5, src))
-		if(!is_servant_of_ratvar(M))
+		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
 	if(!iscultist(L))
-		L << "<span class='userdanger'>An unseen force holds you in place!</span>"
+		L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", "<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	else
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
 		L.Weaken(5)
 	L.Stun(5)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/transgression, get_turf(src))
 	qdel(src)
 	return 1
 
 /obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
 	desc = "A brilliant golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they do not move and they stand still for a brief time."
-	color = rgb(255, 255, 0)
-	alpha = 75
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for three seconds."
+	icon_state = "sigilsubmission"
+	color = "#FAE48C"
+	alpha = 125
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
-	animate(src, color = rgb(255, 0, 150), time = 30)
-	sleep(30)
+	animate(src, color = "#EE54DE", time = 30)
+	var/I = 0
+	while(I < 30 && get_turf(L) == get_turf(src))
+		I++
+		sleep(1)
 	if(get_turf(L) != get_turf(src))
 		animate(src, color = initial(color), time = 30)
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
-	L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
+	if(is_eligible_servant(L))
+		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
 	L.Weaken(5) //Completely defenseless for a few seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(5)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	for(var/mob/living/M in living_mob_list - L)
-		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='heavy_brass'>Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "" : "un"]successfully converted [L.real_name]!</span>"
+	var/partial_message = "Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]"
+	for(var/M in mob_list - L)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, L)
+			M <<  "<span class='heavy_brass'>[partial_message] [link] [L.real_name]!</span>"
+		else if(is_servant_of_ratvar(M))
+			M << "<span class='heavy_brass'>[partial_message] [L.real_name]!</span>"
 	qdel(src)
 	return 1
 
@@ -746,8 +825,9 @@
 	name = "suspicious sigil"
 	desc = "A barely-visible sigil. Things seem a bit quieter around it."
 	clockwork_desc = "A sigil that will listen for and transmit anything it hears."
-	color = rgb(75, 75, 75)
-	alpha = 50
+	icon_state = "sigiltransmission"
+	color = "#6F6E5F"
+	alpha = 75
 	flags = HEAR
 	languages = ALL
 
@@ -761,6 +841,9 @@
 	if(!message || !speaker)
 		return 0
 	var/parsed_message = "<span class='heavy_brass'>(Sigil of Tranmission in [get_area(src)]): </span><span class='brass'>[message]</span>"
-	for(var/mob/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, speaker)
+			M << "[link] [parsed_message]"
+		else if(is_servant_of_ratvar(M))
 			M << parsed_message

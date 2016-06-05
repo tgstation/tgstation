@@ -526,6 +526,7 @@
 	item_state = "resonator_u"
 	w_class = 3
 	force = 5
+	flags = NOBLUDGEON
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
 	var/max_alloy = 100
 	var/uses_alloy = TRUE
@@ -551,17 +552,17 @@
 	else
 		return ..()
 
-/obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, flag, params)
-	if(!target || !user)
+/obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
+	if(!target || !user || !proximity_flag)
 		return 0
-	if(user.a_intent == "harm" || !user.Adjacent(target) || !is_servant_of_ratvar(user))
+	if(user.a_intent == "harm" || !is_servant_of_ratvar(user))
 		return ..()
 	proselytize(target, user)
 
 /obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	if(ratvar_awakens) //Summoning Ratvar doesn't make it free, but it might as well
-		amount = 1
-	stored_alloy = max(0, min(max_alloy, stored_alloy + amount))
+	if(ratvar_awakens) //Ratvar makes it free
+		amount = 0
+	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
 	return 1
 
 /obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
@@ -570,21 +571,82 @@
 	var/operation_time = 0 //In deciseconds, how long the proselytization will take
 	var/new_obj_type //The path of the new type of object to replace the old
 	var/alloy_cost = 0
+	var/spawn_dir = 2
+	var/dir_in_new = FALSE
 	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall) && !istype(target, /turf/closed/wall/clockwork)) //This looks sloppy, but it's the only way
+	var/target_type = target.type
+	if(istype(target, /turf/closed/wall/clockwork))
+		operation_time = 80
+		new_obj_type = /turf/open/floor/clockwork
+		alloy_cost = -4
+		valid_target = TRUE
+	else if(istype(target, /turf/open/floor/clockwork))
+		operation_time = 100
+		new_obj_type = /turf/closed/wall/clockwork
+		alloy_cost = 4
+		valid_target = TRUE
+	else if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall))
 		operation_time = 50
 		new_obj_type = /turf/closed/wall/clockwork
 		alloy_cost = 5
 		valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
-	else if(istype(src, /turf/open/floor) && !istype(target, /turf/open/floor/clockwork))
+	else if(istype(target, /turf/open/floor))
 		operation_time = 30
 		new_obj_type = /turf/open/floor/clockwork
 		alloy_cost = 1
 		valid_target = TRUE
-	else if(istype(src, /obj/machinery/door/airlock) && !istype(src, /obj/machinery/door/airlock/clockwork))
+	else if(istype(target, /obj/machinery/door/airlock) && !istype(target, /obj/machinery/door/airlock/clockwork))
 		operation_time = 40
-		new_obj_type = /obj/machinery/door/airlock/clockwork
+		var/obj/machinery/door/airlock/A = target
+		if(A.glass)
+			new_obj_type = /obj/machinery/door/airlock/clockwork/brass
+		else
+			new_obj_type = /obj/machinery/door/airlock/clockwork
 		alloy_cost = 5
+		valid_target = TRUE
+	else if(istype(target, /obj/structure/window) && !istype(target, /obj/structure/window/reinforced/clockwork))
+		var/obj/structure/window/W = target
+		if(W.fulltile)
+			new_obj_type = /obj/structure/window/reinforced/clockwork/fulltile
+			operation_time = 30
+		else
+			new_obj_type = /obj/structure/window/reinforced/clockwork
+			spawn_dir = W.dir
+			dir_in_new = TRUE
+			operation_time = 15
+		alloy_cost = 5
+		valid_target = TRUE
+	else if(istype(target, /obj/machinery/door/window) && !istype(target, /obj/machinery/door/window/clockwork))
+		var/obj/machinery/door/window/C = target
+		new_obj_type = /obj/machinery/door/window/clockwork
+		spawn_dir = C.dir
+		dir_in_new = TRUE
+		operation_time = 30
+		alloy_cost = 5
+		valid_target = TRUE
+	else if(istype(target, /obj/structure/grille) && !istype(target, /obj/structure/grille/ratvar))
+		var/obj/structure/grille/G = target
+		if(G.destroyed)
+			new_obj_type = /obj/structure/grille/ratvar/broken
+			operation_time = 5
+		else
+			new_obj_type = /obj/structure/grille/ratvar
+			operation_time = 15
+		alloy_cost = 0
+		valid_target = TRUE
+	else if(istype(target, /obj/structure/clockwork/wall_gear))
+		operation_time = 20
+		new_obj_type = /obj/item/clockwork/component/replicant_alloy
+		alloy_cost = 6
+		valid_target = TRUE
+	else if(istype(target, /obj/item/clockwork/alloy_shards))
+		operation_time = 10
+		new_obj_type = /obj/item/clockwork/component/replicant_alloy
+		alloy_cost = 7
+		valid_target = TRUE
+	else if(istype(target, /obj/item/clockwork/component/replicant_alloy))
+		new_obj_type = /obj/effect/overlay/temp/ratvar/beam/itemconsume
+		alloy_cost = -10
 		valid_target = TRUE
 	if(!uses_alloy)
 		alloy_cost = 0
@@ -597,11 +659,20 @@
 	if(stored_alloy - alloy_cost < 0)
 		user << "<span class='warning'>You need [alloy_cost] replicant alloy to proselytize [target]!</span>"
 		return 0
+	if(stored_alloy - alloy_cost > 100)
+		user << "<span class='warning'>You have too much replicant alloy stored to proselytize [target]!</span>"
+		return 0
+	if(ratvar_awakens) //Ratvar makes it faster
+		operation_time *= 0.5
 	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
-	if(!do_after(user, operation_time, target = target))
+	if(operation_time && !do_after(user, operation_time, target = target))
 		return 0
 	if(stored_alloy - alloy_cost < 0) //Check again to prevent bypassing via spamclick
+		return 0
+	if(stored_alloy - alloy_cost > 100)
+		return 0
+	if(!target || target.type != target_type)
 		return 0
 	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
 	"<span class='brass'>You proselytize [target].</span>")
@@ -610,7 +681,11 @@
 		var/turf/T = target
 		T.ChangeTurf(new_obj_type)
 	else
-		new new_obj_type(get_turf(target))
+		if(dir_in_new)
+			new new_obj_type(get_turf(target), spawn_dir)
+		else
+			var/atom/A = new new_obj_type(get_turf(target))
+			A.dir = spawn_dir
 		qdel(target)
 	modify_stored_alloy(-alloy_cost)
 	return 1
@@ -637,9 +712,11 @@
 		if(isliving(loc))
 			var/mob/living/L = loc
 			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		spawn(300) //5 minutes
+		spawn(3000) //5 minutes
 			if(src)
-				visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
+				var/turf/T = get_turf(src)
+				T.visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
+				PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
 				qdel(src)
 
 /obj/item/clockwork/ratvarian_spear/afterattack(atom/target, mob/living/user, flag, params)
@@ -661,14 +738,15 @@
 		..()
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
-	..()
-	if(!ismob(target))
-		return 0
+	var/turf/T = get_turf(target)
+	if(..() || !isliving(target))
+		return
 	var/mob/living/L = target
 	if(issilicon(L) || iscultist(L))
 		L.Stun(3)
 		L.Weaken(3)
-	visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
+	T.visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(T))
 	qdel(src)
 
 /obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
@@ -784,6 +862,15 @@
 	cultist_message = "The eye gives you an intensely hateful glare."
 	servant_of_ratvar_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.")
 
+/obj/item/clockwork/component/belligerent_eye/blind_eye
+	name = "blind eye"
+	desc = "A heavy brass eye, its red iris fallen dark."
+	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for a belligerent eye."
+	icon_state = "blind_eye"
+	cultist_message = "The eye flickers at you with intense hate before falling dark."
+	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
+	w_class = 3
+
 /obj/item/clockwork/component/vanguard_cogwheel
 	name = "vanguard cogwheel"
 	desc = "A sturdy brass cog with a faintly glowing blue gem in its center."
@@ -791,6 +878,15 @@
 	component_id = "vanguard_cogwheel"
 	cultist_message = "\"Pray to your god that we never meet.\""
 	servant_of_ratvar_messages = list("\"Be safe, child.\"", "You feel unexplainably comforted.", "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"")
+
+/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock
+	name = "pinion lock"
+	desc = "A dented and scratched gear. It's very heavy."
+	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
+	icon_state = "pinion_lock"
+	cultist_message = "The gear grows warm in your hands."
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.")
+	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
 	name = "guvax capacitor"
@@ -826,24 +922,6 @@
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
 	w_class = 3
 
-/obj/item/clockwork/component/replicant_alloy/blind_eye
-	name = "blind eye"
-	desc = "A heavy brass eye, its red iris fallen dark."
-	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for replicant alloy."
-	icon_state = "blind_eye"
-	cultist_message = "The eye flickers at you with intense hate before falling dark."
-	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
-	w_class = 3
-
-/obj/item/clockwork/component/replicant_alloy/pinion_lock
-	name = "pinion lock"
-	desc = "A dented and scratched gear. It's very heavy."
-	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for replicant alloy."
-	icon_state = "pinion_lock"
-	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.")
-	w_class = 3
-
 /obj/item/clockwork/component/hierophant_ansible
 	name = "hierophant ansible"
 	desc = "Some sort of transmitter? It seems as though it's trying to say something."
@@ -851,3 +929,9 @@
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
 	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"")
+
+/obj/item/clockwork/alloy_shards
+	name = "replicant alloy shards"
+	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
+	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+	icon_state = "alloy_shards"

@@ -574,14 +574,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/obj/effect/clockwork/spatial_gateway/S2 = new(get_step(chosen_servant, chosen_servant.dir))
 
 	//Set up the portals now that they've spawned
-	S1.linked_gateway = S2
-	S2.linked_gateway = S1
-	S1.sender = TRUE
-	S2.sender = FALSE
-	S1.lifetime = duration
-	S2.lifetime = duration
-	S1.uses = portal_uses
-	S2.uses = portal_uses
+	S1.setup_gateway(S2, duration, portal_uses)
 	S2.visible_message("<span class='warning'>The air in front of [chosen_servant] ripples before suddenly tearing open!</span>")
 	return 1
 

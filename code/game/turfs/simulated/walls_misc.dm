@@ -21,6 +21,13 @@
 /turf/closed/wall/mineral/cult/narsie_act()
 	return
 
+/turf/closed/wall/mineral/cult/ratvar_act()
+	..()
+	if(istype(src, /turf/closed/wall/mineral/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."
@@ -40,6 +47,7 @@
 	icon_state = "clockwork_wall"
 	canSmoothWith = list(/turf/closed/wall/clockwork)
 	smooth = SMOOTH_MORE
+	explosion_block = 2
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -72,16 +80,44 @@
 		if(!WT.remove_fuel(1, user))
 			return 0
 		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
-		break_wall()
+		dismantle_wall()
 		return 1
 	return ..()
 
+/turf/closed/wall/clockwork/ratvar_act()
+	return 0
+
+/turf/closed/wall/clockwork/narsie_act()
+	..()
+	if(istype(src, /turf/closed/wall/clockwork)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/turf/closed/wall/clockwork/dismantle_wall(devastated=0, explode=0)
+	if(devastated)
+		devastate_wall()
+		ChangeTurf(/turf/open/floor/plating)
+	else
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		var/newgirder = break_wall()
+		if(newgirder) //maybe we want a gear!
+			transfer_fingerprints_to(newgirder)
+		ChangeTurf(/turf/open/floor/clockwork)
+
+	for(var/obj/O in src) //Eject contents!
+		if(istype(O,/obj/structure/sign/poster))
+			var/obj/structure/sign/poster/P = O
+			P.roll_and_drop(src)
+		else
+			O.loc = src
+
 /turf/closed/wall/clockwork/break_wall()
-	new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-	return(new /obj/structure/girder(src))
+	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
-	return break_wall()
+	new/obj/item/clockwork/alloy_shards(src)
+
 
 /turf/closed/wall/vault
 	icon = 'icons/turf/walls.dmi'

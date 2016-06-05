@@ -142,11 +142,20 @@
 	icon_state = "ratvardoorglow"
 	layer = CLOSED_FIREDOOR_LAYER //above closed doors
 
+/obj/effect/overlay/temp/ratvar/door/window
+	icon_state = "ratvarwindoorglow"
+
 /obj/effect/overlay/temp/ratvar/beam
 	icon_state = "ratvarbeamglow"
 
 /obj/effect/overlay/temp/ratvar/beam/door
 	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+
+/obj/effect/overlay/temp/ratvar/beam/grille
+	layer = LOW_ITEM_LAYER //above grilles
+
+/obj/effect/overlay/temp/ratvar/beam/itemconsume
+	layer = HIGH_OBJ_LAYER
 
 /obj/effect/overlay/temp/ratvar/wall
 	icon_state = "ratvarwallglow"
@@ -156,10 +165,38 @@
 
 /obj/effect/overlay/temp/ratvar/window
 	icon_state = "ratvarwindowglow"
-	layer = ABOVE_OBJ_LAYER //To be above the window it creates
+	layer = ABOVE_WINDOW_LAYER //above windows
+
+/obj/effect/overlay/temp/ratvar/grille
+	icon_state = "ratvargrilleglow"
+	layer = LOW_ITEM_LAYER //above grilles
+
+/obj/effect/overlay/temp/ratvar/grille/broken
+	icon_state = "ratvarbrokengrilleglow"
 
 /obj/effect/overlay/temp/ratvar/window/single
 	icon_state = "ratvarwindowglow_s"
+
+/obj/effect/overlay/temp/ratvar/spearbreak
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "ratvarspearbreak"
+	layer = BELOW_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+
+/obj/effect/overlay/temp/ratvar/transgression
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "sigildull"
+	color = "#FAE48C"
+	layer = ABOVE_MOB_LAYER
+	duration = 40
+
+/obj/effect/overlay/temp/ratvar/transgression/New()
+	..()
+	var/oldtransform = transform
+	animate(src, transform = matrix()*2, time = 5)
+	animate(transform = oldtransform, alpha = 0, time = 25)
+
 
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"

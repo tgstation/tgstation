@@ -159,6 +159,13 @@
 /turf/open/floor/engine/cult/narsie_act()
 	return
 
+/turf/open/floor/engine/cult/ratvar_act()
+	..()
+	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(builtin_tile)

@@ -147,3 +147,13 @@
 		make_plating()
 		return 1
 	return ..()
+
+/turf/open/floor/clockwork/ratvar_act()
+	return 0
+
+/turf/open/floor/clockwork/narsie_act()
+	..()
+	if(istype(src, /turf/open/floor/clockwork)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
