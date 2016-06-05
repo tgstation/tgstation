@@ -74,11 +74,7 @@
 	A.audible_message("<span class='italics'>You hear a loud metallic \
 		grinding sound.</span>")
 
-	spawn(20)
-		if(removing_airlock)
-			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-			user.audible_message("<span class='warning'>[user] growls as \
-				their claws dig into the metal frame...</span>")
+	addtimer(src, "growl", 20, unique=FALSE, user)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
@@ -92,6 +88,12 @@
 			won't be keeping much out now."
 		qdel(A)
 	removing_airlock = FALSE
+
+/obj/item/zombie_hand/proc/growl(mob/user)
+	if(removing_airlock)
+		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+		user.audible_message("<span class='warning'>[user] growls as \
+			their claws dig into the metal frame...</span>")
 
 /obj/item/zombie_hand/suicide_act(mob/living/carbon/user)
 	// Suiciding as a zombie brings someone else in to play it

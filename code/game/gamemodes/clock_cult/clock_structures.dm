@@ -390,14 +390,17 @@
 		return 0
 	flick("[initial(icon_state)]_discharged", src)
 	icon_state = "[initial(icon_state)]_recharging"
-	spawn(3000) //5 minutes
-		if(!src)
-			return 0
-		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power.</span>")
-		flick("[initial(icon_state)]_recharged", src)
-		icon_state = initial(icon_state)
-		recharging = FALSE
+	addtimer(src, "recharge", 3000) // 5 minutes
 	return 1
+
+/obj/structure/clockwork/interdiction_lens/proc/recharge()
+	if(!src)
+		return 0
+	visible_message("<span class='warning'>The writhing tendrils return \
+		to the gemstone, which begins to glow with power.</span>")
+	flick("[initial(icon_state)]_recharged", src)
+	icon_state = initial(icon_state)
+	recharging = FALSE
 
 /obj/structure/clockwork/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
 	name = "mending motor"
@@ -594,9 +597,11 @@
 			clockwork_desc = "A gateway in reality. It can both send and receive objects."
 		else
 			clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
-		spawn(lifetime)
-			if(src)
-				qdel(src)
+		addtimer(src, "selfdel", lifetime)
+
+/obj/effect/clockwork/spatial_gateway/proc/selfdel()
+	if(src)
+		qdel(src)
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, uses, two_way)
@@ -690,8 +695,10 @@
 	..()
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	animate(src, alpha = 0, time = 10)
-	spawn(10)
-		qdel(src)
+	addtimer(src, "selfdel", 10)
+
+/obj/effect/clockwerk/general_marker/proc/selfdel()
+	qdel(src)
 
 /obj/effect/clockwork/general_marker/nezbere
 	name = "Nezbere, the Brass Eidolon"
