@@ -1,0 +1,19 @@
+author: Joan
+delete-after: True
+changes: 
+  - rscadd: "Clockwork structures can be damaged by projectiles and simple animals, and will actually drop debris when destroyed."
+  - rscadd: "AIs and Cyborgs that serve Ratvar can control clockwork airlocks and clockwork windoors."
+  - rscadd: "The clockwork proselytizer can now proselytize windows, doors, grilles, and windoors."
+  - rscadd: "The clockwork proselytizer can proselytize wall gears and alloy shards to produce replicant alloy. It can also proselytize replicant alloy to refill, in addition to refilling by attacking it with alloy."
+  - rscadd: "The clockwork proselytizer can replace clockwork floors with clockwork walls and vice versa."
+  - rscadd: "Ratvar will convert windoors, tables, and computers in addition to everything else."
+  - tweak: "Ratvar now moves around much faster."
+  - rscadd: "Ratvar and Nar-Sie will break each other's objects."
+  - tweak: "The blind eye from a broken ocular warden now serves as a belligerent eye instead of as replicant alloy. The pinion lock from a deconstructed clockwork airlock now serves as a vanguard cogwheel instead of as replicant alloy."
+  - rscadd: "Clockwork walls drop a wall gear when removed by a welding tool. The wall gear is dense, but can be climbed over or unwrenched, and drops alloy shards when broken. Clockwork walls drop alloy shards when broken by other means."
+  - bugfix: "Fixed Nar-Sie wandering while battling Ratvar."
+  - bugfix: "Ratvarian Spears now last for the proper 5 minute duration."
+  - bugfix: "Servant communication now has ghost follow links."
+  - imageadd: "New sigil sprites, courtesy Skowron."
+  - imageadd: "Sigils of Transgression have a visual effect when stunning a target."
+  - imageadd: "Clockwork spears now have a visual effect when breaking."
