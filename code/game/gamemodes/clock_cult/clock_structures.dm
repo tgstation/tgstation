@@ -572,13 +572,14 @@
 			qdel(src)
 			return 1
 
-/obj/effect/clockwork/spatial_gateway //Spatial gateway: A one-way rift to another location.
+/obj/effect/clockwork/spatial_gateway //Spatial gateway: A usually one-way rift to another location.
 	name = "spatial gateway"
 	desc = "A gently thrumming tear in reality."
-	clockwork_desc = "A gateway in reality. It can either send or receive, but not both."
+	clockwork_desc = "A gateway in reality."
 	icon_state = "spatial_gateway"
 	density = 1
 	var/sender = TRUE //If this gateway is made for sending, not receiving
+	var/both_ways = FALSE
 	var/lifetime = 25 //How many deciseconds this portal will last
 	var/uses = 1 //How many objects or mobs can go through the portal
 	var/obj/effect/clockwork/spatial_gateway/linked_gateway //The gateway linked to this one
@@ -589,17 +590,35 @@
 		if(!linked_gateway)
 			qdel(src)
 			return 0
+		if(both_ways)
+			clockwork_desc = "A gateway in reality. It can [both_ways ? "both send and receive":"only [sender ? "send" : "receive"]"] objects."
 		else
-			if(linked_gateway.sender == sender)
-				linked_gateway.sender = !sender
 		spawn(lifetime)
 			if(src)
 				qdel(src)
 
+//set up a gateway with another gateway
+/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, duration, uses, two_way)
+	if(!gatewayB || !duration || !uses)
+		return 0
+	linked_gateway = gatewayB
+	gatewayB.linked_gateway = src
+	if(two_way)
+		both_ways = TRUE
+		gatewayB.both_ways = TRUE
+	else
+		sender = TRUE
+		gatewayB.sender = FALSE
+	lifetime = duration
+	gatewayB.lifetime = duration
+	uses = portal_uses
+	gatewayB.uses = portal_uses
+	return 1
+
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "This gateway can only [sender ? "send" : "receive"] objects."
+		user << "<span class='brass'>It has [uses] uses remaining.</span>"
 
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
@@ -637,6 +656,8 @@
 		return 0
 	if(!sender)
 		visible_message("<span class='warning'>[A] bounces off of [src]!</span>")
+		return 0
+	if(!uses)
 		return 0
 	if(isliving(A))
 		var/mob/living/user = A

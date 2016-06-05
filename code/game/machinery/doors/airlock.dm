@@ -116,10 +116,6 @@ var/list/airlock_overlays = list()
 				new/obj/machinery/door/airlock/cult(T)
 			else
 				new/obj/machinery/door/airlock/cult/unruned(T)
-		if(runed)
-			PoolOrNew(/obj/effect/overlay/temp/cult/door, T)
-		else
-			PoolOrNew(/obj/effect/overlay/temp/cult/door/unruned, T)
 		qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants

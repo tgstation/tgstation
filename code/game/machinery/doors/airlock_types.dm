@@ -323,6 +323,10 @@
 	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
 	var/friendly = FALSE
 
+/obj/machinery/door/airlock/cult/New()
+	..()
+	PoolOrNew(openingoverlaytype, src.loc)
+
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
@@ -477,7 +481,6 @@
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \
 			apart!</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
 			new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(get_turf(src))
 			qdel(src)
 		return 1
