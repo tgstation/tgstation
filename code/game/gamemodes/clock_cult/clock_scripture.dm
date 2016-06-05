@@ -447,26 +447,28 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(!A.cell.charge && !A.shorted)
 				A.shorted = 1
 				A.visible_message("<span class='warning'>The [A.name]'s screen blurs with static.</span>")
+			A.update_icon()
 	for(var/obj/machinery/power/smes/S in view(7, invoker))
 		if(S.charge)
-			power_drained += min(S.charge, 500)
-			S.charge = max(0, S.charge - 500)
+			power_drained += min(S.charge, 1000)
+			S.charge = max(0, S.charge - 1000)
 			if(!S.charge && !S.panel_open)
 				S.panel_open = TRUE
 				S.update_icon()
 				var/datum/effect_system/spark_spread/spks = new(get_turf(S))
 				spks.set_up(10, 0, get_turf(S))
 				spks.start()
-				qdel(spks)
 				S.visible_message("<span class='warning'>[S]'s panel flies open with a flurry of sparks.</span>")
+			S.update_icon()
 	for(var/obj/item/weapon/stock_parts/cell/C in view(7, invoker))
 		if(C.charge)
-			power_drained += min(C.charge, 100)
-			C.charge = C.use(max(0, C.charge - 100))
+			power_drained += min(C.charge, 500)
+			C.charge = C.use(max(0, C.charge - 500))
+			C.updateicon()
 	for(var/obj/machinery/light/L in view(7, invoker))
 		playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
 		L.flicker(2)
-		power_drained += 25
+		power_drained += 50
 	for(var/mob/living/silicon/robot/R in view(7, invoker))
 		if(!is_servant_of_ratvar(R) && R.cell.charge)
 			power_drained += min(R.cell.charge, 500)
@@ -492,7 +494,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/mob/living/carbon/human/H = invoker
 			for(var/X in H.bodyparts)
 				var/obj/item/bodypart/BP = X
-				if(ratvar_awakens || total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
+				if(ratvar_awakens || BP.state == ORGAN_ROBOTIC && total_power_drained < augument_damage_threshhold) //if ratvar is alive, it won't damage and will always heal augumented limbs
 					BP.heal_damage(power_damage, power_damage, 1) //heals one point of burn and brute for every ~100W drained on augumented limbs
 				else
 					BP.take_damage(0, power_damage)

@@ -686,14 +686,14 @@
 					M << "<span class='warning'>You sense a strange force pass through you...</span>"
 				H.visible_message("<span class='warning'>The lights on [H] flare a blinding yellow before falling dark!</span>")
 				H.emp_act(1)
- 		if("Disable Cameras")
- 			for(var/obj/machinery/camera/C in cameranet.cameras)
- 				C.emp_act(1)
- 			for(var/mob/living/silicon/ai/A in living_mob_list)
- 				A << "<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>"
- 				A << 'sound/machines/warning-buzzer.ogg'
+		if("Disable Cameras")
+			for(var/obj/machinery/camera/C in cameranet.cameras)
+				C.emp_act(1)
+			for(var/mob/living/silicon/ai/A in living_mob_list)
+				A << "<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>"
+				A << 'sound/machines/warning-buzzer.ogg'
 		if("Disable Cyborgs")
-			for(var/mob/living/silicon/robot/R in living_mob_list)
+			for(var/mob/living/silicon/robot/R in living_mob_list) //Doesn't include AIs, for obvious reasons
 				if(is_servant_of_ratvar(R) || R.stat) //Doesn't affect already-offline cyborgs
 					continue
 				R.visible_message("<span class='warning'>[R] shuts down with no warning!</span>", \
