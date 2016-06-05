@@ -385,11 +385,12 @@ You are weak to holy things and starlight. Don't go into space and avoid the Cha
 			src.mind.vampire.draining = null
 			return 0
 		if(H.species.flags & NO_BLOOD)
-			to_chat(src, "<span class='warning'>Not a drop of blood here</span>")
+			to_chat(src, "<span class='warning'>Not a drop of blood here.</span>")
 			src.mind.vampire.draining = null
 			return 0
-		if (!H.mind)
+		if(!H.mind)
 			to_chat(src, "<span class='warning'>This blood is lifeless and has no power.</span>")
+			src.mind.vampire.draining = null
 			return 0
 		bloodtotal = src.mind.vampire.bloodtotal
 		bloodusable = src.mind.vampire.bloodusable
