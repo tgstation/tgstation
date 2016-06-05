@@ -1164,17 +1164,9 @@
 	},
 /area/ai_monitored/security/armory)
 "acN" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
-/area/ai_monitored/security/armory)
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "acO" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera{
@@ -22539,7 +22531,7 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYI" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/start{
 	name = "Assistant"
 	},
@@ -59408,7 +59400,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "czP" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -96564,11 +96556,11 @@ aMw
 aNI
 aMw
 aOK
-aPY
-aPY
-aPY
-aPY
-aPY
+acN
+acN
+acN
+acN
+acN
 aQc
 bae
 aJC
