@@ -51,21 +51,7 @@
 	message = src.say_quote(message, get_spans())
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 
-	for(var/mob/M in player_list)
-		var/adminoverride = 0
-		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(istype(M, /mob/new_player) && !adminoverride)
-			continue
-		if(M.stat != DEAD && !adminoverride)
-			continue
-		if(K && M.client && K in M.client.prefs.ignoring)
-			continue
-		if(istype(M, /mob/dead/observer))
-			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [rendered]"
-		else
-			M << "[rendered]"
+	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
 
 /mob/proc/emote(var/act)
 	return
