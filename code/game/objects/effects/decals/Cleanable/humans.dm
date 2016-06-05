@@ -13,7 +13,7 @@ var/global/list/blood_list = list()
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "mfloor1"
 	random_icon_states = list("mfloor1", "mfloor2", "mfloor3", "mfloor4", "mfloor5", "mfloor6", "mfloor7")
-	appearance_flags = NO_CLIENT_COLOR
+	appearance_flags = NO_CLIENT_COLOR|TILE_BOUND
 	var/base_icon = 'icons/effects/blood.dmi'
 
 	basecolor="#A10808" // Color when wet.

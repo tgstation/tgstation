@@ -56,6 +56,7 @@ var/global/list/ghdel_profiling = list()
 	var/tempoverlay
 	var/timestopped
 
+	appearance_flags = TILE_BOUND
 
 /atom/proc/beam_connect(var/obj/effect/beam/B)
 	if(!last_beamchecks) last_beamchecks = list()

@@ -40,7 +40,7 @@
 	var:last_movement_dir = 0 //Log the singularity's last movement to produce biased movement (singularity prefers constant movement due to inertia)
 	var/last_failed_movement = 0 //Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing.
 	var/last_warning
-
+	appearance_flags = 0
 	var/chained = 0 //Adminbus chain-grab
 
 /obj/machinery/singularity/New(loc, var/starting_energy = 50, var/temp = 0)

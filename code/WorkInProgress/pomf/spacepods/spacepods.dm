@@ -27,6 +27,7 @@
 	var/next_firetime = 0
 	var/list/pod_overlays
 	var/health = 400
+	appearance_flags = 0
 
 /obj/spacepod/New()
 	. = ..()
