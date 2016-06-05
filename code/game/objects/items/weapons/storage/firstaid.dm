@@ -30,7 +30,6 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
-	return
 
 /obj/item/weapon/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -48,7 +47,6 @@
 	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
-	return
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "toxin treatment kit"
@@ -65,7 +63,6 @@
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
 	new /obj/item/device/healthanalyzer(src)
-	return
 
 /obj/item/weapon/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -81,7 +78,6 @@
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
-	return
 
 /obj/item/weapon/storage/firstaid/brute
 	name = "brute trauma treatment kit"
@@ -97,7 +93,6 @@
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
-	return
 
 /obj/item/weapon/storage/firstaid/tactical
 	name = "combat medical kit"
@@ -115,7 +110,6 @@
 	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
-	return
 
 
 /*
@@ -131,6 +125,7 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/pill,/obj/item/weapon/dice)
 	allow_quick_gather = 1
 	use_to_pickup = 1
+	storage_slots = 21
 
 /obj/item/weapon/storage/pill_bottle/MouseDrop(obj/over_object) //Quick pillbottle fix. -Agouri
 

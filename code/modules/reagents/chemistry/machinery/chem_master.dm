@@ -1,6 +1,7 @@
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
-	desc = "Used to seperate chemicals and distribute them in a variety of forms."
+	desc = "Used to seperate chemicals and distribute them in a \
+		variety of forms."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -26,9 +27,9 @@
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
-							/obj/item/weapon/reagent_containers/glass/beaker = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+		/obj/item/weapon/reagent_containers/glass/beaker = 2,
+		/obj/item/weapon/stock_parts/manipulator = 1,
+		/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/item/weapon/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -205,12 +206,13 @@
 			if(reagents.total_volume == 0) return
 			if(!condi)
 				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
+				var/vol_each = min(reagents.total_volume, PILL_VOLUME)
 				if(text2num(many))
-					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
+					amount = round(input(usr, "Max [PILL_VOLUME]. Buffer content will be split evenly.", "How many pills?", amount) as num|null)
+					amount = Clamp(amount, 0, PILL_VOLUME)
 					if(!amount)
 						return
-					vol_each = min(reagents.total_volume / amount, 50)
+					vol_each = min(reagents.total_volume / amount, PILL_VOLUME)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 				if(!name || !reagents.total_volume)
 					return
@@ -241,12 +243,12 @@
 			var/many = params["many"]
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, PILL_VOLUME)
 			if(text2num(many))
 				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume / amount, 50)
+				vol_each = min(reagents.total_volume / amount, PILL_VOLUME)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume)
 				return
@@ -298,26 +300,10 @@
 			screen = params["screen"]
 			. = TRUE
 
-
-
-
-/obj/machinery/chem_master/proc/isgoodnumber(num)
-	if(isnum(num))
-		if(num > 200)
-			num = 200
-		else if(num < 0)
-			num = 0
-		else
-			num = round(num)
-		return num
-	else
-		return 0
-
-
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
-	condi = 1
+	condi = TRUE
 
 /obj/item/weapon/circuitboard/machine/chem_master/condi
 	name = "circuit board (CondiMaster 3000)"
