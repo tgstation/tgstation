@@ -65,6 +65,18 @@
 		messages when a sentient mob dies."
 	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
 
+/client/verb/toggle_arrivalrattle()
+	set name = "Toggle Arrivalrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when someone joins \
+		the station."
+	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
+		messages when someone joins the station."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
