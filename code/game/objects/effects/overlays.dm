@@ -184,18 +184,26 @@
 	pixel_y = -16
 	pixel_x = -16
 
-/obj/effect/overlay/temp/ratvar/transgression
+/obj/effect/overlay/temp/ratvar/sigil
+	name = "glowing circle"
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "sigildull"
+
+/obj/effect/overlay/temp/ratvar/sigil/transgression
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
 	duration = 40
 
-/obj/effect/overlay/temp/ratvar/transgression/New()
+/obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
 	animate(transform = oldtransform, alpha = 0, time = 25)
+
+/obj/effect/overlay/temp/ratvar/sigil/vitality
+	color = "#1E8CE1"
+	icon_state = "sigilactiveoverlay"
+	layer = BELOW_MOB_LAYER
 
 
 /obj/effect/overlay/temp/revenant

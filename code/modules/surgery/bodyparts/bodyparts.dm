@@ -113,13 +113,11 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, robotic)
 
-	if(robotic && status != ORGAN_ROBOTIC) // This makes organic limbs not heal when the proc is in Robotic mode.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(robotic && status != ORGAN_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
+		return
 
-	if(!robotic && status == ORGAN_ROBOTIC) // This makes robolimbs not healable by chems.
-		brute = max(0, brute - 3)
-		burn = max(0, burn - 3)
+	if(!robotic && status == ORGAN_ROBOTIC) //This makes robolimbs not healable by chems.
+		return
 
 	brute_dam	= max(brute_dam - brute, 0)
 	burn_dam	= max(burn_dam - burn, 0)
