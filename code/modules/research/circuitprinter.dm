@@ -10,12 +10,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	icon_state = "circuit_imprinter"
 	flags = OPENCONTAINER
 
-	var/g_amount = 0
-	var/gold_amount = 0
-	var/diamond_amount = 0
-	var/max_material_amount = 75000
+	var/datum/material_container/materials
 	var/efficiency_coeff
-	reagents = new(0)
 
 	var/list/categories = list(
 								"AI Modules",
@@ -32,9 +28,14 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/New()
 	..()
+	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND))
+	create_reagents(0)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
 	B.apply_default_parts(src)
-	reagents.my_atom = src
+
+/obj/machinery/r_n_d/circuit_imprinter/Destroy()
+	qdel(materials)
+	return ..()
 
 /obj/item/weapon/circuitboard/machine/circuit_imprinter
 	name = "circuit board (Circuit Imprinter)"
@@ -52,7 +53,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		G.reagents.trans_to(src, G.reagents.total_volume)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	max_material_amount = T * 75000
+	materials.max_amount = T * 75000
 	T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
@@ -62,36 +63,22 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (prob(50))
 		qdel(src)
 
+/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+	var/list/all_materials = being_built.reagents + being_built.materials
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
-	switch(M)
-		if(MAT_GLASS)
-			return (g_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
-		if(MAT_GOLD)
-			return (gold_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
-		if(MAT_DIAMOND)
-			return (diamond_amount - (being_built.materials[M]/efficiency_coeff) >= 0)
-		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)) != 0)
+	var/A = materials.amount(M)
+	if(!A)
+		A = reagents.get_reagent_amount(M)
 
+	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/TotalMaterials()
-	return g_amount + gold_amount + diamond_amount
-
-//we drop the minerals in the machine onto the ground when deconstructed.
+//we eject the materials upon deconstruction.
 /obj/machinery/r_n_d/circuit_imprinter/deconstruction()
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
-	if(g_amount >= MINERAL_MATERIAL_AMOUNT)
-		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-		G.amount = round(g_amount / MINERAL_MATERIAL_AMOUNT)
-	if(gold_amount >= MINERAL_MATERIAL_AMOUNT)
-		var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-		G.amount = round(gold_amount / MINERAL_MATERIAL_AMOUNT)
-	if(diamond_amount >= MINERAL_MATERIAL_AMOUNT)
-		var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-		G.amount = round(diamond_amount / MINERAL_MATERIAL_AMOUNT)
+	materials.retrieve_all()
 	..()
+
 
 /obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
@@ -99,35 +86,32 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 /obj/machinery/r_n_d/circuit_imprinter/Insert_Item(obj/item/O, mob/user)
 
-	if (istype(O, /obj/item/stack/sheet/glass) || istype(O, /obj/item/stack/sheet/mineral/gold) || istype(O, /obj/item/stack/sheet/mineral/diamond))
+	if(istype(O,/obj/item/stack/sheet))
 		. = 1
 		if(!is_insertion_ready(user))
 			return
+		var/sheet_material = materials.get_item_material_amount(O)
+		if(!sheet_material)
+			return
+
+		if(!materials.has_space(sheet_material))
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			return 1
+
 		var/obj/item/stack/sheet/stack = O
-		if ((TotalMaterials() + stack.perunit) > max_material_amount)
-			user << "<span class='warning'>The [name] is full! Please remove glass from the protolathe in order to insert more.</span>"
+		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		if(!in_range(src, stack) || !user.Adjacent(src))
 			return
-
-		var/amount = round(input("How many sheets do you want to add?") as num)
-		if(amount <= 0 || stack.amount <= 0)
-			return
-		if(amount > stack.amount)
-			amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
-
-		busy = 1
-		use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
-		user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
-		if(istype(stack, /obj/item/stack/sheet/glass))
-			g_amount += amount * MINERAL_MATERIAL_AMOUNT
-		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-			gold_amount += amount * MINERAL_MATERIAL_AMOUNT
-		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-			diamond_amount += amount * MINERAL_MATERIAL_AMOUNT
-		stack.use(amount)
-		busy = 0
-		src.updateUsrDialog()
+		var/amount_inserted = materials.insert_stack(O,amount)
+		if(!amount_inserted)
+			return 1
+		else
+			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
+			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
+		updateUsrDialog()
 
 	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
+		return 1
 	else
 		return 0
