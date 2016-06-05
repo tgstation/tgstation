@@ -37,7 +37,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + ranged_cooldown_time
+	ranged_cooldown = world.time + 120
 
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
@@ -52,11 +52,14 @@
 				spiral_shoot(1)
 
 	else if(prob(20))
+		ranged_cooldown = world.time + 30
 		random_shots()
 	else
 		if(prob(70))
+			ranged_cooldown = world.time + 20
 			blast()
 		else
+			ranged_cooldown = world.time + 40
 			diagonals()
 			sleep(10)
 			cardinals()
@@ -272,6 +275,8 @@
 	armour_penetration = 100
 	projectile_speed = 2
 	eyeblur = 0
+	damage_type = BRUTE
+	pass_flags = PASSTABLE
 
 /obj/item/device/gps/internal/colossus
 	icon_state = null
