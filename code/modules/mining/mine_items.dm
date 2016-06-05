@@ -62,7 +62,10 @@
 
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 15
 	throwforce = 10
 	item_state = "pickaxe"
