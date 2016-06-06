@@ -208,6 +208,7 @@
 		S.real_name = name
 		S.name = name
 		S.ckey = theghost.ckey
+		S.status_flags |= GODMODE
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
