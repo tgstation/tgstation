@@ -102,8 +102,8 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	spawn(50)
-		chemical_mob_spawn(holder, 5, "Gold Slime")
+	addtimer(src, "chemical_mob_spawn", 50, unique=FALSE,
+		holder, 5, "Gold Slime")
 
 /datum/chemical_reaction/slimecritlesser
 	name = "Slime Crit Lesser"
@@ -118,8 +118,8 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate violently !</span>")
-	spawn(50)
-		chemical_mob_spawn(holder, 3, "Lesser Gold Slime", "neutral")
+	addtimer(src, "chemical_mob_spawn", 50, unique=FALSE,
+		holder, 3, "Lesser Gold Slime", "neutral")
 
 /datum/chemical_reaction/slimecritfriendly
 	name = "Slime Crit Friendly"
@@ -134,8 +134,8 @@
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
 	T.visible_message("<span class='danger'>The slime extract begins to vibrate adorably !</span>")
-	spawn(50)
-		chemical_mob_spawn(holder, 1, "Friendly Gold Slime", "neutral")
+	addtimer(src, "chemical_mob_spawn", 50, unique=FALSE,
+		holder, 1, "Friendly Gold Slime", "neutral")
 
 //Silver
 /datum/chemical_reaction/slimebork

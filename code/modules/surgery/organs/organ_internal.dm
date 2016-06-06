@@ -125,18 +125,19 @@
 		if(!special)
 			H.heart_attack = 1
 
-	spawn(120)
-		if(!owner)
-			Stop()
+	addtimer(src, "stop_if_unowned", 120)
+
+/obj/item/organ/heart/proc/stop_if_unowned()
+	if(!owner)
+		Stop()
 
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
+		visible_message("<span class='notice'>[user] squeezes [src] to \
+			make it beat again!</span>")
 		Restart()
-		spawn(80)
-			if(!owner)
-				Stop()
-
+		addtimer(src, "stop_if_unowned", 80)
 
 /obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
 	..()

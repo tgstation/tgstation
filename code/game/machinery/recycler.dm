@@ -148,11 +148,12 @@ var/const/SAFETY_COOLDOWN = 100
 	safety_mode = TRUE
 	update_icon()
 	L.loc = src.loc
+	addtimer(src, "reboot", SAFETY_COOLDOWN)
 
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = FALSE
-		update_icon()
+/obj/machinery/recycler/proc/reboot()
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	safety_mode = FALSE
+	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
