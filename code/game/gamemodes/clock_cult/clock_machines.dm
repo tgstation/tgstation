@@ -448,7 +448,7 @@
 /obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
+		user << "<span class='nzcrentr'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
@@ -468,6 +468,7 @@
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
 			if(user.canUseTopic(src, be_close = 1))
 				if(try_use_power(hierophant_cost))
+					user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
 					send_hierophant_message(user, input, 1)
 				else
 					user <<  "<span class='warning'>The obelisk lacks the power to broadcast!</span>"

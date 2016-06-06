@@ -187,7 +187,7 @@
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(!ratvar_awakens || amount > 0)
-		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold))
+		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 		update_fatigue()
 	else
 		amount = 0
