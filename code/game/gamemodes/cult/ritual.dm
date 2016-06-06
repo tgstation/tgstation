@@ -250,9 +250,6 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
-	if(initial(AR.name) == "Space" || istype(Turf, /turf/open/space) || user.z != ZLEVEL_STATION)
-		user << "<span class='warning'>You can only scribe runes in station areas!</span>"
-		return
 	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
