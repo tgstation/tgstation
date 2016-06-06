@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 30 // 30 players - 5 players to be the nuke ops = 25 players remaining
-	required_enemies = 5
+	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
@@ -23,15 +23,11 @@
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
 /datum/game_mode/nuclear/pre_setup()
-	var/agent_number = 0
-	if(antag_candidates.len > agents_possible)
-		agent_number = agents_possible
-	else
-		agent_number = antag_candidates.len
-
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	var/n_agents = min(round(n_players / 10, 1), agents_possible)
+
+	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
+		n_agents = agent_candidate.len
 
 	while(agent_number > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
@@ -85,7 +81,7 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
-		if (nuke_code)
+		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
@@ -128,7 +124,7 @@
 	if(A)
 		A.command = TRUE
 
-	if (nuke_code)
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -149,7 +145,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
-	if (you_are)
+	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
