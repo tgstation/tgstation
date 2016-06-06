@@ -91,9 +91,6 @@
 		constructs. Put players in constructs if you want them to move. \
 		Cloning pods in 'medbay' area are showcases and nonfunctional."
 
-s spawn powered on, expect \
-		admin notices, they are harmless."
-
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
