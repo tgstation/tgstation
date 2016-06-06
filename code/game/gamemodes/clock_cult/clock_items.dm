@@ -476,11 +476,6 @@
 	if(!src || !user)
 		return 0
 	recharging = FALSE
-	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
-		if(V == src)
-			continue
-		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
-		addtimer(V, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)
 	icon_state = "judicial_visor_[active]"
 	user.update_action_buttons_icon()
 	if(loc == user)
@@ -518,6 +513,7 @@
 			continue
 		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 		V.update_status()
+		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
 	user.say("Xarry, urn'guraf!")
 	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 	new/obj/effect/clockwork/judicial_marker(get_turf(target))
