@@ -185,10 +185,10 @@
 	user << "<i>Total construction value: </i>[clockwork_construction_value]"
 	user << "<i>Total tinkerer's caches: </i>[clockwork_caches]"
 	user << "<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])"
-	user << "<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
+	user << "<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
 	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
