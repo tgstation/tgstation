@@ -142,11 +142,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
 		animate(transform = oldtransform, alpha = 255, time = 0)
 
-/obj/effect/rune/proc/fail_invoke(message=TRUE)
+/obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	if(message)
-		visible_message("<span class='warning'>The markings pulse with a \
-			small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a \
+		small flash of red light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
 		animate(src, color = rgb(255, 0, 0), time = 0)
 		animate(src, color = initial(color), time = 5)
@@ -530,7 +529,7 @@ var/list/teleport_runes = list()
 	if(!potential_sacrifice_mobs.len)
 		user << "<span class='cultitalic'>There are no eligible sacrifices nearby!</span>"
 		log_game("Raise Dead rune failed - no catalyst corpses")
-		fail_invoke(message = FALSE)
+		fail_invoke()
 		return
 	for(var/mob/living/M in T.contents)
 		if(M.stat == DEAD)
@@ -538,7 +537,7 @@ var/list/teleport_runes = list()
 	if(!potential_revive_mobs.len)
 		user << "<span class='cultitalic'>There is no eligible revival target on the rune!</span>"
 		log_game("Raise Dead rune failed - no corpses to revive")
-		fail_invoke(message = FALSE)
+		fail_invoke()
 		return
 	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
 	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
@@ -563,7 +562,7 @@ var/list/teleport_runes = list()
 	if(!mob_to_revive || mob_to_revive.stat != DEAD)
 		visible_message("<span class='warning'>The glowing tendril snaps against the rune with a shocking crack.</span>")
 		rune_in_use = 0
-		fail_invoke(message = FALSE)
+		fail_invoke()
 		return
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones.</span>")
 	mob_to_sacrifice.dust()
