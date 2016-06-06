@@ -20,7 +20,7 @@
 	var/list/duplicatenamecount = list()
 
 	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
-		if(!O.Adjacent(invoker)) //don't list obelisks that we're next to
+		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX)) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
 			var/resultkey = "[locname] [O.name]"
@@ -30,11 +30,10 @@
 			else
 				teleportnames.Add(resultkey)
 				duplicatenamecount[resultkey] = 1
-			if(O != src && (O.z <= ZLEVEL_SPACEMAX))
-				possible_targets[resultkey] = O
+			possible_targets[resultkey] = O
 
 	for(var/mob/living/L in living_mob_list)
-		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
 			var/resultkey = "[L.name] ([L.real_name])"
 			if(resultkey in teleportnames)
 				duplicatenamecount[resultkey]++
@@ -42,8 +41,7 @@
 			else
 				teleportnames.Add(resultkey)
 				duplicatenamecount[resultkey] = 1
-			if(L.z <= ZLEVEL_SPACEMAX)
-				possible_targets[resultkey] = L
+			possible_targets[resultkey] = L
 
 	if(!possible_targets.len)
 		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"

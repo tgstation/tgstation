@@ -621,6 +621,11 @@
 		alloy_cost = -4
 		valid_target = TRUE
 	else if(istype(target, /turf/open/floor/clockwork))
+		var/turf/open/T = target
+		for(var/obj/O in T)
+			if(O.density && !O.CanPass(user, T, 5))
+				src << "<span class='warning'>Something is in the way, preventing you from proselytizing [T] into a clockwork wall.</span>"
+				return 0
 		operation_time = 100
 		new_obj_type = /turf/closed/wall/clockwork
 		alloy_cost = 4
