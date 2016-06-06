@@ -358,11 +358,12 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
+	. = 0
 	if(slot != slot_glasses)
-		return 0
+		return
 	if(user.disabilities & BLIND)
 		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
-		return 0
+		return
 	if(iscultist(user)) //Cultists instantly go blind
 		user << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
 		user << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
@@ -370,9 +371,10 @@
 		user.become_blind()
 		user.adjust_blurriness(30)
 		user.adjust_blindness(30)
-		return 0
-	user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? " Your eyes begin to itch - you cannot do this for long." : ""]</span>"
-	return 1
+		return
+	if(is_servant_of_ratvar(user))
+		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		. = 1
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
@@ -485,16 +487,24 @@
 	name = "Ratvar's flame"
 	desc = "A blazing violet ball of fire that, curiously, doesn't melt your hand off."
 	icon = 'icons/effects/clockwork_effects.dmi'
-	icon_state = "ratvars_flame" //beware: minecraft-tier sprite
-	item_state = "disintegrate"
-	color = rgb(180, 50, 210)
+	icon_state = "ratvars_flame"
 	w_class = 5
 	flags = NODROP | ABSTRACT
 	force = 15 //Also serves as a potent melee weapon!
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	attack_verb = list("scorched")
+	attack_verb = list("scorched", "seared", "burnt", "judged")
 	var/obj/item/clothing/glasses/judicial_visor/visor //The linked visor
+	var/examined = FALSE
+
+/obj/item/weapon/ratvars_flame/examine(mob/user)
+	..()
+	user << "<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>"
+	if(prob(10) && examined)
+		user << "<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>"
+		examined = FALSE
+	else
+		examined = TRUE
 
 /obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
 	if(!visor || (visor && visor.cooldown))

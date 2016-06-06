@@ -394,10 +394,12 @@
 				if(is_servant_of_ratvar(L))
 					continue
 				if(!iscultist(L))
-					L << "<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>"
+					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
 					L.Weaken(8)
 				else
-					L << "<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>"
+					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+					"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
 					L.Weaken(4) //half the stun, but sets cultists on fire
 					L.adjust_fire_stacks(2)
 					L.IgniteMob()
