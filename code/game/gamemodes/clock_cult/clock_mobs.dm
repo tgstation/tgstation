@@ -81,10 +81,7 @@
 			recovering = FALSE
 	else
 		if(ratvar_awakens) //If Ratvar is alive, marauders both don't take fatigue loss and move at sanic speeds
-			speed = -1
-			melee_damage_lower = 30
-			melee_damage_upper = 30
-			attacktext = "devastates"
+			update_fatigue()
 		else
 			if(host)
 				switch(get_dist(get_turf(src), get_turf(host)))
@@ -99,37 +96,43 @@
 						adjust_fatigue(-1)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/update_fatigue()
-	switch(fatigue)
-		if(0 to 10) //Bonuses to speed and damage at normal fatigue levels
-			speed = 0
-			melee_damage_lower = 15
-			melee_damage_upper = 15
-			attacktext = "viciously slashes"
-		if(10 to 25)
-			speed = initial(speed)
-			melee_damage_lower = initial(melee_damage_lower)
-			melee_damage_upper = initial(melee_damage_upper)
-			attacktext = initial(attacktext)
-		if(25 to 50) //Damage decrease, but not speed
-			melee_damage_lower = 7
-			melee_damage_upper = 7
-			attacktext = "lightly slashes"
-		if(50 to 75) //Speed decrease
-			speed = 2
-		if(75 to 99) //Massive speed decrease and weak melee attacks
-			speed = 3
-			melee_damage_lower = 5
-			melee_damage_upper = 5
-			attacktext = "weakly slashes"
-		if(99 to 100)
-			src << "<span class='userdanger'>The fatigue becomes too much!</span>"
-			if(host)
-				src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
-				host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
-				recovering = TRUE
-				return_to_host()
-			else
-				qdel(src) //Shouldn't ever happen, but...
+	if(ratvar_awakens)
+		speed = -1
+		melee_damage_lower = 30
+		melee_damage_upper = 30
+		attacktext = "devastates"
+	else
+		switch(fatigue)
+			if(0 to 10) //Bonuses to speed and damage at normal fatigue levels
+				speed = 0
+				melee_damage_lower = 15
+				melee_damage_upper = 15
+				attacktext = "viciously slashes"
+			if(10 to 25)
+				speed = initial(speed)
+				melee_damage_lower = initial(melee_damage_lower)
+				melee_damage_upper = initial(melee_damage_upper)
+				attacktext = initial(attacktext)
+			if(25 to 50) //Damage decrease, but not speed
+				melee_damage_lower = 7
+				melee_damage_upper = 7
+				attacktext = "lightly slashes"
+			if(50 to 75) //Speed decrease
+				speed = 2
+			if(75 to 99) //Massive speed decrease and weak melee attacks
+				speed = 3
+				melee_damage_lower = 5
+				melee_damage_upper = 5
+				attacktext = "weakly slashes"
+			if(99 to 100)
+				src << "<span class='userdanger'>The fatigue becomes too much!</span>"
+				if(host)
+					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
+					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
+					recovering = TRUE
+					return_to_host()
+				else
+					qdel(src) //Shouldn't ever happen, but...
 
 /mob/living/simple_animal/hostile/clockwork_marauder/death(gibbed)
 	..(TRUE)
