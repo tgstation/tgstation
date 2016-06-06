@@ -234,8 +234,8 @@
 	materials = list(MAT_METAL=200)
 	w_class = 3
 	amount_per_transfer_from_this = 20
-	possible_transfer_amounts = list(10,15,20,25,30,50,70)
-	volume = 70
+	possible_transfer_amounts = list(25,50,100,250,500,1000)
+	volume = 1000
 	flags = OPENCONTAINER
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD

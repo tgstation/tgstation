@@ -5,7 +5,7 @@
 	icon_state = "pill"
 	item_state = "pill"
 	possible_transfer_amounts = list()
-	volume = 50
+	volume = PILL_VOLUME
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
 	var/roundstart = 0
@@ -75,43 +75,45 @@
 	name = "toxins pill"
 	desc = "Highly toxic."
 	icon_state = "pill5"
-	list_reagents = list("toxin" = 50)
+	list_reagents = list("toxin" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
-	list_reagents = list("cyanide" = 50)
+	list_reagents = list("cyanide" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
+	volume = 50 // see: magic
 	list_reagents = list("adminordrazine" = 50)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/morphine
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
-	list_reagents = list("morphine" = 30)
+	list_reagents = list("morphine" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/stimulant
 	name = "stimulant pill"
-	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
+	desc = "Often taken by overworked employees, athletes, and the \
+		inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
-	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
+	list_reagents = list("ephedrine" = 2.5, "antihol" = 2.5, "coffee" = 10)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill18"
-	list_reagents = list("salbutamol" = 30)
+	list_reagents = list("salbutamol" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/charcoal
 	name = "antitoxin pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
-	list_reagents = list("charcoal" = 50)
+	list_reagents = list("charcoal" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
@@ -123,30 +125,30 @@
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
-	list_reagents = list("mannitol" = 50)
+	list_reagents = list("mannitol" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
-	list_reagents = list("mutadone" = 50)
+	list_reagents = list("mutadone" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill5"
-	list_reagents = list("sal_acid" = 24)
+	list_reagents = list("sal_acid" = 15)
 	roundstart = 1
 /obj/item/weapon/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
 	icon_state = "pill5"
-	list_reagents = list("oxandrolone" = 24)
+	list_reagents = list("oxandrolone" = 15)
 	roundstart = 1
 
 /obj/item/weapon/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
 	icon_state = "pill5"
-	list_reagents = list("insulin" = 50)
+	list_reagents = list("insulin" = 15)
 	roundstart = 1

@@ -472,7 +472,7 @@
 /obj/item/weapon/storage/box/pillbottles/New()
 	..()
 	for(var/i in 1 to 7)
-		new /obj/item/weapon/storage/pill_bottle( src )
+		new /obj/item/weapon/storage/pill_bottle(src)
 
 /obj/item/weapon/storage/box/snappops
 	name = "snap pop box"

@@ -7,6 +7,19 @@
 	anchored = 0
 	pressure_resistance = 2*ONE_ATMOSPHERE
 
+	var/maximum_volume = TANK_VOLUME
+	var/starting_volume = -1
+	var/starting_reagent
+
+/obj/structure/reagent_dispensers/New()
+	. = ..()
+	create_reagents(maximum_volume)
+	if(starting_reagent)
+		var/volume = starting_volume
+		if(volume == -1)
+			volume = maximum_volume
+		reagents.add_reagent(starting_reagent, volume)
+
 /obj/structure/reagent_dispensers/ex_act(severity, target)
 	switch(severity)
 		if(1)
@@ -34,7 +47,7 @@
 		return ..()
 
 /obj/structure/reagent_dispensers/New()
-	create_reagents(1000)
+	create_reagents(TANK_VOLUME)
 	..()
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -48,9 +61,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 
-/obj/structure/reagent_dispensers/watertank/New()
-	..()
-	reagents.add_reagent("water",1000)
+	starting_reagent = "water"
 
 /obj/structure/reagent_dispensers/watertank/ex_act(severity, target)
 	switch(severity)
@@ -58,22 +69,19 @@
 			qdel(src)
 			return
 		if(2)
-			if (prob(50))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
-				qdel(src)
-				return
+			if(prob(50))
+				rupture()
 		if(3)
-			if (prob(5))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
-				qdel(src)
-				return
-		else
-	return
+			if(prob(5))
+				rupture()
 
 /obj/structure/reagent_dispensers/watertank/blob_act(obj/effect/blob/B)
 	if(prob(50))
-		PoolOrNew(/obj/effect/particle_effect/water, loc)
-		qdel(src)
+		rupture()
+
+/obj/structure/reagent_dispensers/watertank/proc/rupture()
+	PoolOrNew(/obj/effect/particle_effect/water, loc)
+	qdel(src)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
@@ -81,10 +89,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 
-/obj/structure/reagent_dispensers/fueltank/New()
-	..()
-	reagents.add_reagent("welding_fuel",1000)
-
+	starting_reagent = "welding_fuel"
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/item/projectile/Proj)
 	..()
@@ -120,10 +125,8 @@
 	anchored = 1
 	density = 0
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
-	reagents.add_reagent("condensedcapsaicin",1000)
-
+	maximum_volume = 1000
+	starting_reagent=  "condensedcapsaicin"
 
 /obj/structure/reagent_dispensers/water_cooler
 	name = "liquid cooler"
@@ -131,12 +134,11 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
-	var/cups = 50
-	var/reagent = "water"
 
-/obj/structure/reagent_dispensers/water_cooler/New()
-	..()
-	reagents.add_reagent(reagent,500)
+	maximum_volume = 1500
+	starting_reagent = "water"
+
+	var/cups = 50
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))
@@ -166,9 +168,8 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 
-/obj/structure/reagent_dispensers/beerkeg/New()
-	..()
-	reagents.add_reagent("beer",1000)
+	maximum_volume = 5867 // 58.67l
+	starting_reagent = "beer"
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
 	explosion(src.loc,0,3,5,7,10)
@@ -181,6 +182,5 @@
 	icon_state = "virusfoodtank"
 	anchored = 1
 
-/obj/structure/reagent_dispensers/virusfood/New()
-	..()
-	reagents.add_reagent("virusfood", 1000)
+	maximum_volume = 1000
+	starting_reagent = "virusfood"
