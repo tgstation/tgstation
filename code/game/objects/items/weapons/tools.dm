@@ -34,6 +34,10 @@
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wrench/golden
+	name = "high-speed wrench"
+	toolspeed = 2.5
+
 /obj/item/weapon/wrench/cyborg
 	name = "automatic wrench"
 	desc = "An advanced robotic wrench. Can be found in construction cyborgs."
@@ -102,6 +106,10 @@
 	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
 						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/golden
+	name = "high-speed screwdriver"
+	toolspeed = 2.5
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
 	if(!icon_state)
@@ -173,6 +181,9 @@
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wirecutters/golden
+	name = "high-speed wirecutters"
+	toolspeed = 2.5
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -422,6 +433,11 @@
 			user << "<span class='warning'>You need one rod to start building a flamethrower!</span>"
 			return
 
+/obj/item/weapon/weldingtool/golden
+	name = "high-speed welding tool"
+	max_fuel = 80
+	toolspeed = 2.5
+
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"
 	desc = "A slightly larger welder with a larger tank."
@@ -517,6 +533,10 @@
 	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
+
+/obj/item/weapon/crowbar/golden
+	name = "high-speed crowbar"
+	toolspeed = 2.5
 
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
