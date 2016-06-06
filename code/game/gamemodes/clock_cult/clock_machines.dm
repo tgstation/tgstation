@@ -121,8 +121,12 @@
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
+	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
 	var/stored_alloy = 0 //250W = 1 alloy
 	var/max_alloy = 50000
+	var/mob_cost = 200
+	var/structure_cost = 250
+	var/cyborg_cost = 300
 
 /obj/structure/clockwork/powered/mending_motor/prefilled
 	stored_alloy = 5000 //starts with 20 alloy
@@ -147,6 +151,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='alloy'>It has [stored_alloy*0.004]/[max_alloy*0.004] units of replicant alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
+		user << "<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>"
 
 /obj/structure/clockwork/powered/mending_motor/process()
 	if(!..())
@@ -158,7 +163,7 @@
 			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
 			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
 				continue
-			if(!try_use_power(150))
+			if(!try_use_power(mob_cost))
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
@@ -166,21 +171,28 @@
 			var/mob/living/simple_animal/hostile/anima_fragment/F = M
 			if(F.health == F.maxHealth || F.stat)
 				continue
-			if(!try_use_power(200))
+			if(!try_use_power(mob_cost))
 				break
 			F.adjustBruteLoss(-15)
+				else if(istype(M, /mob/living/simple_animal/hostile/reclaimer))
+			var/mob/living/simple_animal/hostile/reclaimer/R = M
+			if(R.health == R.maxHealth || R.stat)
+				continue
+			if(!try_use_power(mob_cost))
+				break
+			R.adjustBruteLoss(-15)
 		else if(istype(M, /obj/structure/clockwork))
 			var/obj/structure/clockwork/C = M
 			if(C.health == C.max_health)
 				continue
-			if(!try_use_power(250))
+			if(!try_use_power(structure_cost))
 				break
 			C.health = min(C.health + 15, C.max_health)
 		else if(issilicon(M))
 			var/mob/living/silicon/S = M
 			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
 				continue
-			if(!try_use_power(300))
+			if(!try_use_power(cyborg_cost))
 				break
 			S.adjustBruteLoss(-15)
 			S.adjustFireLoss(-15)
@@ -219,80 +231,104 @@
 	inactive_icon = "mania_motor_inactive"
 	construction_value = 20
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
-	debris = list(/obj/item/clockwork/component/guvax_capacitor/antennae, /obj/item/clockwork/alloy_shards)
+	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
+	var/mania_cost = 150
+	var/convert_attempt_cost = 150
+	var/convert_cost = 300
+
 	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"Trg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
 	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragvn.\"", "\"Fgevir gb trg n fperj ybbfr.\"")
 	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
 	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gung'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
-	var/mania_cost = 150
+	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gurfr vqvbgf va gur neg bs pbairefvba.\"", \
+	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Qevire gung bayl gnxrf gjb frpbaqf gb vaibxr?\"", \
+	"\"Ubj qb gurl snvy gb hfr Qrzragvn Qbpgevar, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
+
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires 150W of power to run, and 450W of power to convert humans adjecent to it.</span>"
+		user << "<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W  to convert humans adjecent to it.</span>"
 
 /obj/structure/clockwork/powered/mania_motor/process()
+	var/turf/T = get_turf(src)
 	if(!..())
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 40, 1)
+		playsound(T, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
 		return
 	if(try_use_power(mania_cost))
+		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		for(var/mob/living/carbon/human/H in range(10, src))
 			if(!is_servant_of_ratvar(H))
-				var/distance = get_dist(get_turf(src), get_turf(H))
-				var/divided_distance = distance ? 100/distance : 100
-				if(distance >= 4 && prob(divided_distance))
+				var/distance = get_dist(T, get_turf(H))
+				var/falloff_distance = (110) - distance * 10
+				var/sound_distance = falloff_distance * 0.4
+				var/targetbrainloss = H.getBrainLoss()
+				var/targethallu = H.hallucination
+				var/targetdruggy = H.druggy
+				if(distance >= 4 && prob(falloff_distance))
 					H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
 					if(0 to 1) //how did you get someone on top of it
-						if(try_use_power(150))
-							if(is_eligible_servant(H) && try_use_power(300))
+						if(try_use_power(convert_attempt_cost))
+							if(is_eligible_servant(H) && try_use_power(convert_cost))
 								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
 								add_servant_of_ratvar(H)
-							else if(H.getBrainLoss() >= H.maxHealth && !H.stat)
-								H.Paralyse(10)
-								H <<"<span class='sevtug'>\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"</span>"
-							else
-								H.adjustBrainLoss(100)
+							else if(!H.stat)
+								if(targetbrainloss >= H.maxHealth)
+									H.Paralyse(5)
+									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+								else
+									H.adjustBrainLoss(100)
+									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
 						else
 							visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
 							playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(2 to 3)
-						if(prob(divided_distance))
-							if(prob(divided_distance))
+						if(prob(falloff_distance))
+							if(prob(falloff_distance))
 								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
 							else
 								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
-						H.adjustBrainLoss(divided_distance)
-						H.adjust_drugginess(divided_distance)
-						H.hallucination += divided_distance
+						if(targetbrainloss <= 70)
+							H.adjustBrainLoss(70 - targetbrainloss) //got too close had brain eaten
+						if(targetdruggy <= 150)
+							H.adjust_drugginess(10)
+						if(targethallu <= 150)
+							H.hallucination += 10
 					if(4 to 5)
-						H.adjustBrainLoss(rand(10, 20))
-						H.adjust_drugginess(rand(30, 40))
-						H.hallucination += rand(30, 40)
+						if(targetbrainloss <= 50)
+							H.adjustBrainLoss(5)
+						if(targetdruggy <= 120)
+							H.adjust_drugginess(10)
+						if(targethallu <= 120)
+							H.hallucination += 10
 					if(6 to 7)
-						H.adjustBrainLoss(rand(5, 10))
-						if(prob(100/distance))
-							H.adjust_drugginess(rand(20, 30))
-						else
-							H.hallucination += rand(20, 30)
+						if(targetbrainloss <= 30)
+							H.adjustBrainLoss(2)
+						if(prob(falloff_distance) && targetdruggy <= 90)
+							H.adjust_drugginess(10)
+						else if(targethallu <= 90)
+							H.hallucination += 10
 					if(8 to 9)
-						H.adjustBrainLoss(rand(1, 5))
-						if(prob(100/distance))
-							H.adjust_drugginess(rand(10, 20))
-						else
-							H.hallucination += rand(10, 20)
+						if(H.getBrainLoss() <= 10)
+							H.adjustBrainLoss(1)
+						if(prob(falloff_distance) && targetdruggy <= 60)
+							H.adjust_drugginess(5)
+						else if(targethallu <= 60)
+							H.hallucination += 5
 					if(10)
-						if(prob(100/distance))
-							H.adjust_drugginess(rand(5, 10))
-						else
-							H.hallucination += rand(5, 10)
-			else
-				if(H.getBrainLoss() || H.hallucination || H.druggy)
-					H.adjustBrainLoss(-H.getBrainLoss()) //heals
-					H.hallucination = 0
-					H.adjust_drugginess(-H.druggy)
+						if(prob(falloff_distance) && targetdruggy <= 30)
+							H.adjust_drugginess(5)
+						else if(targethallu <= 30)
+							H.hallucination += 5
+
+			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
+				H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, and druggy
+				H.hallucination = 0
+				H.adjust_drugginess(-H.druggy)
 	else
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
@@ -320,12 +356,14 @@
 	break_sound = 'sound/effects/Glassbr3.ogg'
 	var/recharging = 0 //world.time when the lens was last used
 	var/recharge_time = 3000 //time, in deciseconds, the lens needs to recharge; 5 minutes by default
-	var/disrupt_cost = 1000 //how much power to use
+	var/disrupt_cost = 3000 //how much power to use
 
 /obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
-	user << "<span class='[recharging >= world.time ? "alloy":"brass"]'>Its gemstone [recharging >= world.time ? "has been breached by writhing tendrils of blackness that cover the obelisk" \
+	user << "<span class='[recharging >= world.time ? "nezbere_small":"brass"]'>Its gemstone [recharging >= world.time ? "has been breached by writhing tendrils of blackness that cover the obelisk" \
 	: "vibrates in place and thrums with power"]."
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics."
 
 /obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
 	if(user.canUseTopic(src))
@@ -398,14 +436,19 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
-	break_message = "<span class='warning'>The obelisk breaks apart in midair!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards)
+	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
+	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 
 /obj/structure/clockwork/powered/clockwork_obelisk/New()
 	..()
 	toggle(1)
+
+/obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='brass'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
@@ -416,8 +459,8 @@
 		density = 1
 
 /obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
-	if(!total_accessable_power() >= hierophant_cost)
-		user <<  "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
+	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
+		user << "<span class='warning'>You place your hand on the obelisk, but it doesn't react.</span>"
 		return
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)

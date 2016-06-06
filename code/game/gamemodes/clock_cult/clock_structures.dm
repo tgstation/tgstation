@@ -16,7 +16,7 @@
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
-	var/list/debris = list(/obj/item/clockwork/component/replicant_alloy) //Parts left behind when a structure breaks
+	var/list/debris = list(/obj/item/clockwork/alloy_shards) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 
 /obj/structure/clockwork/New()
@@ -98,10 +98,10 @@
 	attack_generic(user, rand(10, 15))
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
 	if(I.force && takes_damage)
 		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
-	return ..()
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
@@ -379,7 +379,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_OPEN_DOOR_LAYER
 
 /obj/effect/clockwork/judicial_marker/New()
 	..()
@@ -394,9 +394,11 @@
 					L << "<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>"
 					L.Weaken(8)
 				else
-					L << "<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>[!issilicon(L) ? "An unseen force piledrives you into the ground!" : "ERROR: Motor servos damaged by external source!"]</span>"
-					L.Weaken(10)
-					L.adjustBruteLoss(10)
+					L << "<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>"
+					L.Weaken(4) //half the stun, but sets cultists on fire
+					L.adjust_fire_stacks(2)
+					L.IgniteMob()
+				L.adjustBruteLoss(10)
 			qdel(src)
 			return 1
 
