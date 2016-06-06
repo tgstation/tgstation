@@ -22,7 +22,7 @@
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=400)
-	origin_tech = "magnets=3;bluespace=2"
+	origin_tech = "magnets=1"
 
 /obj/item/weapon/locator/attack_self(mob/user)
 	user.set_machine(src)
@@ -133,7 +133,7 @@ Frequency:
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=10000)
-	origin_tech = "magnets=3;bluespace=4"
+	origin_tech = "magnets=1;bluespace=3"
 	var/active_portals = 0
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
@@ -169,3 +169,5 @@ Frequency:
 	try_move_adjacent(P)
 	active_portals++
 	add_fingerprint(user)
+
+

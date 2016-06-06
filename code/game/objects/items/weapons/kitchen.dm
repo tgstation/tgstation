@@ -128,7 +128,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "knife"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
-	origin_tech = null
 
 /obj/item/weapon/kitchen/knife/carrotshiv
 	name = "carrot shiv"
@@ -138,7 +137,7 @@
 	force = 8
 	throwforce = 12//fuck git
 	materials = list()
-	origin_tech = "biotech=3;combat=2"
+	origin_tech = null
 	attack_verb = list("shanked", "shivved")
 
 /obj/item/weapon/kitchen/rollingpin

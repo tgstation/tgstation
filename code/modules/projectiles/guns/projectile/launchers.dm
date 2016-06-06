@@ -54,7 +54,6 @@
 	icon_state = "speargun"
 	item_state = "speargun"
 	w_class = 4
-	origin_tech = "combat=4;engineering=4"
 	force = 10
 	can_suppress = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/speargun

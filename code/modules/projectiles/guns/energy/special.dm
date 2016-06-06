@@ -20,6 +20,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
+	origin_tech = "combat=4;magnets=4;materials=4"
 	w_class = 3
 	slot_flags = SLOT_BELT
 	pin = null
@@ -31,7 +32,7 @@
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
 	icon_state = "decloner"
-	origin_tech = "combat=4;materials=4;biotech=5;plasmatech=6"
+	origin_tech = "combat=5;materials=4;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
 	ammo_x_offset = 1
@@ -48,7 +49,7 @@
 	icon_state = "flora"
 	item_state = "gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
-	origin_tech = "materials=2;biotech=4"
+	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1

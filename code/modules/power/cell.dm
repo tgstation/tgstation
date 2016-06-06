@@ -214,7 +214,7 @@
 
 /obj/item/weapon/stock_parts/cell/super
 	name = "super-capacity power cell"
-	origin_tech = "powerstorage=3;materials=3"
+	origin_tech = "powerstorage=5"
 	icon_state = "scell"
 	maxcharge = 20000
 	materials = list(MAT_GLASS=300)
@@ -227,7 +227,7 @@
 
 /obj/item/weapon/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
-	origin_tech = "powerstorage=4;engineering=4;materials=4"
+	origin_tech = "powerstorage=6"
 	icon_state = "hpcell"
 	maxcharge = 30000
 	materials = list(MAT_GLASS=400)
@@ -241,10 +241,10 @@
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
 	desc = "A rechargable transdimensional power cell."
-	origin_tech = "powerstorage=5;bluespace=4;materials=4;engineering=4"
+	origin_tech = "powerstorage=7"
 	icon_state = "bscell"
 	maxcharge = 40000
-	materials = list(MAT_GLASS=600)
+	materials = list(MAT_GLASS=80)
 	rating = 6
 	chargerate = 4000
 
@@ -278,7 +278,7 @@
 /obj/item/weapon/stock_parts/cell/high/slime
 	name = "charged slime core"
 	desc = "A yellow slime core infused with plasma, it crackles with power."
-	origin_tech = "powerstorage=5;biotech=4"
+	origin_tech = "powerstorage=2;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
 	materials = list()

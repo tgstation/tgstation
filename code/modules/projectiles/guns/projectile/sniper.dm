@@ -30,7 +30,7 @@
 	name = "syndicate sniper rifle"
 	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
+	origin_tech = "combat=8;syndicate=4"
 
 
 
@@ -110,6 +110,7 @@
 	name = "sniper rounds (Bleed)"
 	desc = "Haemorrhage sniper rounds, leaves your target in a pool of crimson pain"
 	icon_state = "haemorrhage"
+	origin_tech = "combat=7;syndicate=5"
 	ammo_type = /obj/item/ammo_casing/haemorrhage
 	max_ammo = 5
 	caliber = ".50"

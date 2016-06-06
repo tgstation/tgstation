@@ -5,7 +5,7 @@
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=3;syndicate=6"
+	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/mm556x45
 	weapon_weight = WEAPON_MEDIUM
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'

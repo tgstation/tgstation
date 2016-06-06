@@ -100,7 +100,7 @@
 	name = "diamond-tipped exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
-	origin_tech = "materials=4;engineering=4"
+	origin_tech = "materials=4;engineering=3"
 	equip_cooldown = 20
 	force = 15
 
@@ -109,6 +109,7 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
 	selectable = 0
 	equip_cooldown = 30
 	var/scanning = 0

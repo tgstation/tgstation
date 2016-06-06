@@ -6,7 +6,7 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	origin_tech = "programming=2"
+	origin_tech = "programming=4"
 	var/locked = 0
 	var/installed = 0
 	var/require_module = 0
@@ -158,7 +158,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=4;materials=5"
+	origin_tech = "engineering=5;materials=5"
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
 	if(..())
@@ -180,7 +180,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=4;materials=4;bluespace=4"
+	origin_tech = "engineering=5;materials=5;bluespace=3"
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	if(..())
@@ -199,7 +199,7 @@
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	origin_tech = "combat=4;syndicate=1"
+	origin_tech = "combat=4;syndicate=2"
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
 	if(..())

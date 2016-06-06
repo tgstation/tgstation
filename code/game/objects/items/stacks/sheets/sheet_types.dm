@@ -266,7 +266,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	desc = "Rare kind of gems which are only gained by blood sacrifice to minor deities. They are needed in crafting powerful objects."
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
-	origin_tech = "materials=7"
+	origin_tech = "materials=8"
 
 	/*
  * Bones
