@@ -124,18 +124,6 @@
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/pickup(mob/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/beaker/dropped(mob/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
-	..()
-	update_icon()
-
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
 	overlays.Cut()
 
