@@ -11,6 +11,7 @@
 	anchored = 1
 	density = 1
 	opacity = 0
+	layer = BELOW_OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/takes_damage = TRUE //If the structure can be damaged
@@ -235,6 +236,7 @@
 	health = 25
 	max_health = 25
 	construction_value = 15
+	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
 	var/damage_per_tick = 3
@@ -659,7 +661,7 @@
 	clockwork_desc = "A sigil that will serve as a battery for clockwork structures. Use Volt Void while standing on it to charge it."
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
-	alpha = 75
+	alpha = 50
 	var/power_charge = 4000 //starts with 4000W by default
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
@@ -674,7 +676,7 @@
 
 /obj/effect/clockwork/sigil/transmission/New()
 	..()
-	alpha = min(75 + power_charge*0.02, 255)
+	alpha = min(initial(alpha) + power_charge*0.02, 255)
 
 /obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
 	if(power_charge - amount < 0)
