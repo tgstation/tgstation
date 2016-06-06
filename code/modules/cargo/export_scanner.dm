@@ -33,15 +33,10 @@
 		user << "<span class='notice'>Scanned [O].</span>"
 
 		// Before you fix it: yes, checking manifests is a part of intended functionality.
-		var/exported = FALSE
-		for(var/a in supply.exports)
-			var/datum/export/E = a
-			if(E.applies_to(O, cargo_console.contraband, cargo_console.emagged))
-				var/cost = E.get_cost(O, cargo_console.contraband, cargo_console.emagged)
-				user << "<span class='notice'>Export cost: [cost] credits.</span>"
-				if(is_type_in_list(O, supply.storage_objects) && O.contents.len)
-					user << "<span class='notice'>(contents not included)</span>"
-				exported = TRUE
-				break
-		if(!exported)
-			user << "<span class='notice'>The object is unexportable.</span>"
+		var/price = export_item_and_contents(O, supply.exports, cargo_console.contraband, cargo_console.emagged, dry_run=TRUE)
+	
+		if(price)	
+			user << "<span class='notice'>Export value: [price] \
+				credits.</span>"
+			if(O.contents.len)
+				user << "<span class='notice'>(contents included)</span>"
