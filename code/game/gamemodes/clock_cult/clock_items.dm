@@ -547,7 +547,7 @@
 	icon_state = "clockwork_cuirass"
 	w_class = 4
 	armor = list(melee = 80, bullet = 40, laser = -10, energy = 5, bomb = 0, bio = 0, rad = 0)
-	allowed = list(/obj/item/clockwork)
+	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"

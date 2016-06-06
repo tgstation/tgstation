@@ -87,17 +87,16 @@
 			attacktext = "devastates"
 		else
 			if(host)
-				switch(get_dist(src, host))
-					if(0 to 1)
-						adjust_fatigue(-1)
+				switch(get_dist(get_turf(src), get_turf(host)))
 					if(2 to 4)
 						adjust_fatigue(1)
 					if(5)
 						adjust_fatigue(3)
 					if(6 to INFINITY)
-						adjust_fatigue(rand(10, 20))
+						adjust_fatigue(10)
 						src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
-				update_fatigue()
+					else //right next to or on top of host
+						adjust_fatigue(-1)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/update_fatigue()
 	switch(fatigue)
@@ -184,8 +183,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
-	if(!ratvar_awakens && amount > 0)
-		fatigue = max(0, min(fatigue + amount, fatigue_recall_threshold))
+	if(!ratvar_awakens || amount > 0)
+		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold))
 		update_fatigue()
 	else
 		amount = 0

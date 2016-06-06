@@ -14,7 +14,7 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/powered = total_accessable_power()
-		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "infinite":"[powered]"]W of power.</span>"
+		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "INFINITY":"[powered]"]W of power.</span>"
 
 /obj/structure/clockwork/powered/Destroy()
 	SSfastprocess.processing -= src
@@ -271,21 +271,6 @@
 					H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
 				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
-					if(0 to 1) //how did you get someone on top of it
-						if(try_use_power(convert_attempt_cost))
-							if(is_eligible_servant(H) && try_use_power(convert_cost))
-								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
-								add_servant_of_ratvar(H)
-							else if(!H.stat)
-								if(targetbrainloss >= H.maxHealth)
-									H.Paralyse(5)
-									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
-								else
-									H.adjustBrainLoss(100)
-									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
-						else
-							visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
-							playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 					if(2 to 3)
 						if(prob(falloff_distance))
 							if(prob(falloff_distance))
@@ -319,11 +304,26 @@
 							H.adjust_drugginess(5)
 						else if(targethallu <= 60)
 							H.hallucination += 5
-					if(10)
+					if(10 to INFINITY)
 						if(prob(falloff_distance) && targetdruggy <= 30)
 							H.adjust_drugginess(5)
 						else if(targethallu <= 30)
 							H.hallucination += 5
+					else //if it's a distance of 1 or they're on top of it(how'd they get on top of it???)
+						if(try_use_power(convert_attempt_cost))
+							if(is_eligible_servant(H) && try_use_power(convert_cost))
+								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
+								add_servant_of_ratvar(H)
+							else if(!H.stat)
+								if(targetbrainloss >= H.maxHealth)
+									H.Paralyse(5)
+									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+								else
+									H.adjustBrainLoss(100)
+									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
+						else
+							visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
+							playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 
 			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
 				H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, and druggy
