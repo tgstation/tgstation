@@ -18,4 +18,4 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 #define GATEWAY_SUMMON_RATE 3 //The speed multiplier used by the Gateway to the Celestial Derelict; defaults to 3x speed
 
-#define GENERAL_SUMMON_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
+#define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
