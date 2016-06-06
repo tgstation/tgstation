@@ -12,17 +12,6 @@
 	var/time_coeff = 1
 	var/component_coeff = 1
 	var/datum/material_container/materials
-/*	var/list/resources = list(
-								MAT_METAL=0,
-								MAT_GLASS=0,
-								MAT_BANANIUM=0,
-								MAT_DIAMOND=0,
-								MAT_GOLD=0,
-								MAT_PLASMA=0,
-								MAT_SILVER=0,
-								MAT_URANIUM=0
-								)
-	var/res_max_amount = 200000*/
 	var/datum/research/files
 	var/sync = 0
 	var/part_set

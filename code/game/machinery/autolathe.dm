@@ -244,7 +244,7 @@
 	return
 
 /obj/machinery/autolathe/RefreshParts()
-	var/T =1.2
+	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	materials.max_amount = T
