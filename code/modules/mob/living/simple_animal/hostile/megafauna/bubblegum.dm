@@ -164,3 +164,22 @@
 	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
+
+
+//Loot
+
+/obj/item/mayhem
+	name = "mayhem in a bottle"
+	desc = "A magically infused bottle of blood, the scent of which will drive anyone nearby into a murderous frenzy."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+
+/obj/item/mayhem/attack_self(mob/user)
+	for(var/mob/living/carbon/human/H in range(7,user))
+		spawn()
+			var/obj/effect/mine/pickup/bloodbath/B = new(H)
+			B.mineEffect(H)
+	user << "<span class='notice'>You shatter the bottle!</span>"
+	playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+	qdel(src)
