@@ -61,12 +61,13 @@ Changes to the uplinks were made to discourage murderboning, the rest is the sam
 		#include "map_files\generic\z7.dmm"
 		#include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		//#include "map_files\generic\z10.dmm" If ministation ever moves to use lavaland, uncomment this line and add EMPTY_AREA_8 = CROSSLINKED to the config
 
 		#define MAP_PATH "map_files/MiniStation"
 		#define MAP_FILE "MiniStation.dmm"
 		#define MAP_NAME "MiniStation"
 
-		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, ABANDONED_SATELLITE = CROSSLINKED, DERELICT = CROSSLINKED, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED)
+		#define MAP_TRANSITION_CONFIG	list(MAIN_STATION = CROSSLINKED, CENTCOMM = SELFLOOPING, MINING = CROSSLINKED, EMPTY_AREA_1 = CROSSLINKED, EMPTY_AREA_2 = CROSSLINKED, EMPTY_AREA_3 = CROSSLINKED, EMPTY_AREA_4 = CROSSLINKED, EMPTY_AREA_5 = CROSSLINKED, EMPTY_AREA_6 = CROSSLINKED, EMPTY_AREA_7 = CROSSLINKED)
 
 		#if !defined(MAP_OVERRIDE_FILES)
 				#define MAP_OVERRIDE_FILES

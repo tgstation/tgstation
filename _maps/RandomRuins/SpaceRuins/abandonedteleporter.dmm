@@ -1,0 +1,43 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/wall/r_wall,/area/space)
+"c" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"d" = (/obj/structure/frame/computer,/turf/open/floor/plating/airless,/area/space)
+"e" = (/obj/machinery/teleport/station,/turf/open/floor/plating/airless,/area/space)
+"f" = (/obj/machinery/teleport/hub,/turf/open/floor/plating/airless,/area/space)
+"g" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/plating/airless,/area/space)
+"h" = (/turf/open/floor/plating/airless,/area/space)
+"i" = (/obj/structure/rack,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plating/airless,/area/space)
+"j" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating/airless,/area/space)
+"k" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/obj/structure/grille,/turf/open/floor/plating/airless,/area/space)
+"l" = (/obj/item/weapon/stock_parts/cell,/turf/open/floor/plating/airless,/area/space)
+"m" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plating/airless,/area/space)
+"n" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plating/airless,/area/space)
+"o" = (/obj/effect/spawner/lootdrop/crate_spawner,/turf/open/floor/plating/airless,/area/space)
+"p" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating/airless,/area/space)
+"q" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/flashlight,/turf/open/floor/plating/airless,/area/space)
+"r" = (/obj/effect/decal/cleanable/dirt,/obj/item/device/radio/beacon,/turf/open/floor/plating/airless,/area/space)
+"s" = (/obj/machinery/portable_atmospherics/canister/air,/turf/open/floor/plating/airless,/area/space)
+"t" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/open/floor/plating/airless,/area/space)
+"u" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/airless,/area/space)
+"v" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/airless,/area/space)
+"w" = (/obj/item/weapon/shard,/obj/item/weapon/electronics/apc,/turf/open/floor/plating/airless,/area/space)
+"x" = (/obj/structure/closet,/turf/open/floor/plating/airless,/area/space)
+"y" = (/obj/item/weapon/storage/toolbox/electrical{pixel_x = 1; pixel_y = -1},/turf/open/floor/plating/airless,/area/space)
+"z" = (/obj/structure/closet/crate,/obj/item/device/aicard,/obj/item/device/multitool,/obj/item/weapon/weldingtool,/obj/item/weapon/wrench,/obj/item/weapon/circuitboard/computer/teleporter,/turf/open/floor/plating/airless,/area/space)
+"A" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating/airless,/area/space)
+"B" = (/obj/structure/girder,/turf/open/floor/plating/airless,/area/space)
+
+(1,1,1) = {"
+aaaaaabbbbbca
+aaaccbbdefbba
+acccbbghhhibb
+aajkbhlmhnmob
+ccphphqnrhhsb
+aajtbsuhvhwxb
+acccbbhhmhybb
+aaaccbbzhAbba
+aaaaaabbchBca
+aaaaaacccacaa
+aaaaaaacaaaaa
+aaaaaaaaccaaa
+"}
