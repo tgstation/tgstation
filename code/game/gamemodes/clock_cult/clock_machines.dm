@@ -78,7 +78,7 @@
 
 
 /obj/structure/clockwork/powered/proc/try_use_power(amount) //try to use an amount of power
-	if(!needs_power)
+	if(!needs_power || ratvar_awakens)
 		return 1
 	if(amount <= 0)
 		return 0
@@ -234,7 +234,7 @@
 /obj/structure/clockwork/powered/mania_motor/process()
 	if(!..())
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 20, 1)
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
 		return
 	if(try_use_power(mania_cost))
@@ -295,7 +295,7 @@
 					H.adjust_drugginess(-H.druggy)
 	else
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
-		playsound(src, 'sound/effects/screech.ogg', 20, 1)
+		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
 	return
 
