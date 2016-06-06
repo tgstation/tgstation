@@ -64,7 +64,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(slab.stored_components[i] < required_components[i] && clockwork_component_cache[i] < required_components[i])
 				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
 				return 0
-	if(multiple_invokers_used && !multiple_invokers_optional)
+	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
 			if(is_servant_of_ratvar(L) && L.can_speak_vocal())
@@ -882,11 +882,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
-	if(clockwork_generals_invoked["nezbere"])
+	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
 		invoker << "<span class='heavy_brass'>\"Abg whfg lrg, sevraq. Cngvrapr vf n iveghr.\"</span>\n\
 		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
 		return 0
-	if(ratvar_awakens)
+	if(!slab.no_cost && ratvar_awakens)
 		invoker << "<span class='heavy_brass'>\"Bhe znfgre vf urer nyernql. Lbh qb abg erdhver zl uryc, sevraq.\"</span>\n\
 		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
@@ -895,7 +895,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
 	var/obj/effect/clockwork/general_marker/nezbere/N = new(get_turf(invoker))
 	N.visible_message("<span class='heavy_brass'>\"V urrq lbhe pnyy, punz'cvbaf. Znl lbhe negvs-npgf oevat ehva hcba gur urnguraf gung bccbfr bhe znfgre!\"</span>")
-	clockwork_generals_invoked["nezbere"] = TRUE
+	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
 		W.damage_per_tick *= 3
 		W.sight_range *= 3
@@ -915,8 +915,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			D.production_interval = initial(D.production_interval)
 		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = TRUE
-	spawn(3000) //5 minutes
-		clockwork_generals_invoked["nezbere"] = FALSE
 	return 1
 
 
@@ -932,21 +930,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/check_special_requirements()
-	if(clockwork_generals_invoked["sevtug"])
+	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
 		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb tenfc gur pbaprcg bs jnvgvat?\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
-	if(ratvar_awakens)
+	if(!slab.no_cost && ratvar_awakens)
 		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guvax nalguvat v pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
 		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return ..()
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/scripture_effects()
-	clockwork_generals_invoked["sevtug"] = TRUE
+	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.dominate_mind(target, 600)
-	spawn(3000) //5 minutes
-		clockwork_generals_invoked["sevtug"] = FALSE
 	return 1
 
 
@@ -962,7 +958,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
-	if(clockwork_generals_invoked["nzcrentr"])
+	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
 		invoker << "<span class='nzcrentr'><b><i>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs v xvyyrq lbh? ...Ur jbhyq? Bx.\"</b></i></span>\n\
 		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
 		return 0
@@ -970,7 +966,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
-	clockwork_generals_invoked["nzcrentr"] = TRUE
+	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"Gur obff fnlf vg'f bxnl gb qb guvf. Qba'g oynzr zr vs lbh qvr sebz vg.\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
@@ -997,8 +993,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				)
 			L.Weaken(8)
 			playsound(L, 'sound/magic/LightningShock.ogg', 50, 0)
-	spawn(3000)
-		clockwork_generals_invoked["nzcrentr"] = FALSE
 	return 1
 
 
@@ -1014,7 +1008,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
-	if(clockwork_generals_invoked["inath-neq"])
+	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
 		invoker << "<span class='inathneq'>\"V pnaabg yraq lbh zl nvq lrg, punzcvba. Cyrnfr or pnershy.\"</span>\n\
 		<span class='warning'>Inath-Neq has already been invoked recently! You must wait several minutes before calling upon the Resonant Cogwheel.</span>"
 		return 0
@@ -1022,7 +1016,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_inathneq/scripture_effects()
 	new/obj/effect/clockwork/general_marker/inathneq(get_turf(invoker))
-	clockwork_generals_invoked["inath-neq"] = TRUE
+	clockwork_generals_invoked["inath-neq"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	if(invoker.real_name == "Lucio")
 		invoker.say("Aww, let's break it DOWN!!")
 	var/list/affected_servants = list()
@@ -1045,8 +1039,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			L.health -= 50
 			if(L.maxHealth == initial(L.maxHealth))
 				L.stun_absorption = FALSE
-	spawn(3000)
-		clockwork_generals_invoked["inath-neq"] = FALSE
 	return 1
 
 
