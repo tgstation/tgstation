@@ -145,9 +145,7 @@
 	add_fingerprint(user)
 	if(M == user && target == M.mind && M.mind.soulOwner == M.mind && attempt_signature(user))
 		user.visible_message("<span class='danger'>[user] slices their wrist with [src], and scrawls their name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.vessel.remove_reagent("blood",10)
+		user.blood_volume = max(user.blood_volume - 10, 0)
 	else
 		return ..()
 
