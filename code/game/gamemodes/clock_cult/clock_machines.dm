@@ -174,8 +174,8 @@
 			if(!try_use_power(mob_cost))
 				break
 			F.adjustBruteLoss(-15)
-		else if(istype(M, /mob/living/simple_animal/hostile/reclaimer))
-			var/mob/living/simple_animal/hostile/reclaimer/R = M
+		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_reclaimer))
+			var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = M
 			if(R.health == R.maxHealth || R.stat)
 				continue
 			if(!try_use_power(mob_cost))
