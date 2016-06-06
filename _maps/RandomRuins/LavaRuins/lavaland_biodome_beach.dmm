@@ -189,6 +189,7 @@
 /area/ruin/powered)
 "aG" = (
 /obj/structure/table,
+/obj/item/weapon/book/manual/barman_recipes,
 /obj/item/weapon/reagent_containers/glass/rag,
 /turf/open/floor/wood,
 /area/ruin/powered)

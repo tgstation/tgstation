@@ -81,6 +81,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/book/manual/barman_recipes,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -436,9 +437,20 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/powered)
-"bs" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plating,
+"bo" = (
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bp" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bq" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
@@ -449,20 +461,9 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
-"bq" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bp" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bo" = (
-/turf/closed/wall,
+"bs" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
 /area/ruin/powered{
 	name = "Space Bar"
 	})
