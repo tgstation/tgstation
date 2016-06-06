@@ -202,6 +202,10 @@ This file contains the arcane tome files.
 		return
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
+	if(istype(Turf, /turf/open/space))
+		user << "<span class='warning'>You cannot scribe runes in space!</span>"
+		return
+	var/area/AR = get_area(user)
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
 			var/datum/game_mode/cult/cult_mode = ticker.mode
@@ -214,9 +218,8 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-			var/area/AR = get_area(user)
-			if(initial(AR.name) == "Space" || istype(Turf, /turf/open/space) || user.z != ZLEVEL_STATION)
-				user << "<span class='warning'>The rune cannot be scribed this far from the station!</span>"
+			if(initial(AR.name) == "Space" || user.z != ZLEVEL_STATION)
+				user << "<span class='warning'>You can only scribe a rune this powerful in station areas!</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
@@ -238,7 +241,6 @@ This file contains the arcane tome files.
 			return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
-	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/machinery/shield/S = V
@@ -248,6 +250,10 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
+	if(initial(AR.name) == "Space" || istype(Turf, /turf/open/space) || user.z != ZLEVEL_STATION)
+		user << "<span class='warning'>You can only scribe runes in station areas!</span>"
+		return
+	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
