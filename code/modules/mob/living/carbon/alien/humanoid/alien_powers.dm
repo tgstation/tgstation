@@ -212,6 +212,7 @@ Doesn't work on other aliens/AI.*/
 	var/p_cost = 50
 	if(!iscarbon(user) || user.lying || user.stat)
 		return
+	user.next_click = world.time + 6
 	user.face_atom(target)
 	if(user.getPlasma() < p_cost)
 		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
