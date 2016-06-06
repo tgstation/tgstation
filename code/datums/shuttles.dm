@@ -58,20 +58,6 @@
 	suffix = "box"
 	name = "Box emergency shuttle"
 
-/datum/map_template/shuttle/emergency/clown
-	suffix = "clown"
-	name = "Snappop(tm)!"
-	description = "Hey kids and grownups! Are you bored of DULL and TEDIOUS \
-		shuttle journeys after you're evacuating for probably BORING reasons. \
-		Well then order the Snappop(tm) today! We've got fun activities for \
-		everyone, an all access cockpit, and no boring security brig! Boo! \
-		Play dress up with your friends! Collect all the bedsheets before \
-		your neighbour does! Check if the AI is watching you with our patent \
-		pending \"Peeping Tom AI Multitool Detector\" or PEEEEEETUR for \
-		short. Have a fun ride!"
-	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
-		lavaland chasms, stationside door has been removed to prevent \
-		accidental dropping."
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -104,33 +90,6 @@
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive \
 		constructs. Put players in constructs if you want them to move. \
 		Cloning pods in 'medbay' area are showcases and nonfunctional."
-
-/datum/map_template/shuttle/emergency/supermatter
-	suffix = "supermatter"
-	name = "Hyperfractal Gigashuttle"
-	description = "\"I dunno, this seems kinda needlessly complicated.\"\n\
-		\"This shuttle has very a very high safety record, according to \
-		Centcom Officer Cadet Yins.\"\n\
-		\"Are you sure?\"\n\
-		\"Yes, it has a safety record of N-A-N, which is apparently \
-		larger than 100%.\""
-	admin_notes = "Supermatter that spawns on shuttle is special anchored \
-		'hugbox' supermatter that cannot take damage and does not take in \
-		or emit gas. Outside of admin intervention, it cannot explode. \
-		It does, however, still dust anything on contact, emits high levels \
-		of radiation, and induce hallucinations in anyone looking at it \
-		without protective goggles. Emitters spawn powered on, expect \
-		admin notices, they are harmless."
-
-/datum/map_template/shuttle/emergency/imfedupwiththisworld
-	suffix = "imfedupwiththisworld"
-	name = "Oh, Hi Daniel"
-	description = "How was space work today? \
-		Oh, pretty good. We got a new space station and the company will make a lot of money. \
-		What space station? \
-		I cannot tell you; it's space confidential. \
-		Aw, come space on. Why not? \
-		No, I can't. Anyway, how is your space roleplay life?"
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
