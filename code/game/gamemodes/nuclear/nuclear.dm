@@ -27,7 +27,7 @@
 	var/n_agents = min(round(n_players / 10, 1), agents_possible)
 
 	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
-		n_agents = agent_candidates.len
+		n_agents = antag_candidates.len
 
 	while(n_agents > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
