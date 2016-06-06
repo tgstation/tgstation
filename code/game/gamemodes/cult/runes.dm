@@ -72,7 +72,7 @@ To draw a rune, use an arcane tome.
 	if(invokers.len >= req_cultists)
 		invoke(invokers)
 	else
-		fail_invoke(user)
+		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
@@ -101,12 +101,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 */
 
-/obj/effect/rune/proc/can_invoke(var/mob/living/user)
+/obj/effect/rune/proc/can_invoke(var/mob/living/user=null)
 	//This proc determines if the rune can be invoked at the time. If there are multiple required cultists, it will find all nearby cultists.
 	var/list/invokers = list() //people eligible to invoke the rune
 	var/list/chanters = list() //people who will actually chant the rune when passed to invoke()
-	chanters |= user
-	invokers |= user
+	if(user)
+		chanters |= user
+		invokers |= user
 	if(req_cultists > 1 || allow_excess_invokers)
 		for(var/mob/living/L in range(1, src))
 			if(iscultist(L))
@@ -141,9 +142,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 		animate(src, transform = matrix()*2, alpha = 0, time = 5) //fade out
 		animate(transform = oldtransform, alpha = 255, time = 0)
 
-/obj/effect/rune/proc/fail_invoke(var/mob/living/user)
+/obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a \
+		small flash of red light, then fall dark.</span>")
 	spawn(0) //animate is a delay, we want to avoid being delayed
 		animate(src, color = rgb(255, 0, 0), time = 0)
 		animate(src, color = initial(color), time = 5)
@@ -452,6 +454,14 @@ var/list/teleport_runes = list()
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used
 
+/obj/effect/rune/narsie/New()
+	. = ..()
+	poi_list |= src
+
+/obj/effect/rune/narsie/Destroy()
+	poi_list -= src
+	. = ..()
+
 /obj/effect/rune/narsie/talismanhide() //can't hide this, and you wouldn't want to
 	return
 
@@ -557,6 +567,7 @@ var/list/teleport_runes = list()
 	mob_to_sacrifice.visible_message("<span class='warning'><b>[mob_to_sacrifice] disintegrates into a pile of bones.</span>")
 	mob_to_sacrifice.dust()
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
+	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
 	mob_to_revive.visible_message("<span class='warning'>[mob_to_revive] draws in a huge breath, red light shining from their eyes.</span>", \
 								  "<span class='cultlarge'>You awaken suddenly from the void. You're alive!</span>")
