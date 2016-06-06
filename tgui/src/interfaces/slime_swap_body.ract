@@ -1,0 +1,14 @@
+{{#each data.bodies}}
+  <ui-section label={{'name'}} labelcolor='{{mcolor}}' candystrip right>
+    <ui-section label='Status'>{{status}}</ui-section>
+    <ui-section label='Jelly'>{{exoticblood}}</ui-section>
+    <ui-section label='Location'>{{area}}</ui-section>
+
+    <ui-button
+      state='{{swap_button_state}}'
+      action='swap' params='{"ref": "{{ref}}"}'>
+      {{current ? "You Are Here" : "Swap"}}
+    </ui-button>
+
+  </ui-section>
+{{/each}}

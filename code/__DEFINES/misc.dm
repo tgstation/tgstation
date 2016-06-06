@@ -447,3 +447,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
 #define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+// Slimeperson
+#define SPLIT_SLIME_MINIMUM 200 // how much slime toxin you need to split
+#define SPLIT_SLIME_COST 120 // how much it actually costs making a dupe
