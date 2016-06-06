@@ -1,4 +1,0 @@
-author: X-TheDark
-delete-after: True
-changes: 
-  - rscadd: "Mech battery replacement improved. The inserted battery's charge will be set to the same percentage of the removed one's (or 10%, if removed one's was less)."

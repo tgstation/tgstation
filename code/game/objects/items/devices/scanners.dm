@@ -173,7 +173,7 @@ MASS SPECTROMETER
 	// Time of death
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		user << "<span class='info'>Time of Death:</span> [M.tod]"
-		var/tdelta = world.time - M.timeofdeath
+		var/tdelta = round(world.time - M.timeofdeath)
 		if(tdelta < (DEFIB_TIME_LIMIT * 10))
 			user << "<span class='danger'>Subject died [tdelta / 10] seconds \
 				ago, defibrillation may be possible!</span>"
@@ -183,26 +183,29 @@ MASS SPECTROMETER
 			user << "<span class='alert'><b>Warning: [D.form] detected</b>\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]</span>"
 
 	// Blood Level
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.vessel)
-			if(H.blood_max)
-				user << "<span class='danger'>Subject is bleeding!</span>"
-			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-			var/blood_percent =  round((blood_volume / 560),0.01)
-			var/blood_type = H.dna.blood_type
-			blood_percent *= 100
-			if(blood_volume <= 500 && blood_volume > 336)
-				user << "<span class='danger'>LOW blood level [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
-			else if(blood_volume <= 336)
-				user << "<span class='danger'>CRITICAL blood level CRITICAL [blood_percent] %, [blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
+	if(M.has_dna())
+		var/mob/living/carbon/C = M
+		var/blood_id = C.get_blood_id()
+		if(blood_id)
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(H.bleed_rate)
+					user << "<span class='danger'>Subject is bleeding!</span>"
+			var/blood_percent =  round((C.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+			var/blood_type = C.dna.blood_type
+			if(blood_id != "blood")//special blood substance
+				blood_type = blood_id
+			if(C.blood_volume <= BLOOD_VOLUME_SAFE && C.blood_volume > BLOOD_VOLUME_OKAY)
+				user << "<span class='danger'>LOW blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
+			else if(C.blood_volume <= BLOOD_VOLUME_OKAY)
+				user << "<span class='danger'>CRITICAL blood level [blood_percent] %, [C.blood_volume] cl,</span> <span class='info'>type: [blood_type]</span>"
 			else
-				user << "<span class='info'>Blood level [blood_percent] %, [blood_volume] cl, type: [blood_type]</span>"
+				user << "<span class='info'>Blood level [blood_percent] %, [C.blood_volume] cl, type: [blood_type]</span>"
 
 		var/implant_detect
-		for(var/obj/item/organ/cyberimp/CI in H.internal_organs)
+		for(var/obj/item/organ/cyberimp/CI in C.internal_organs)
 			if(CI.status == ORGAN_ROBOTIC)
-				implant_detect += "[H.name] is modified with a [CI.name].<br>"
+				implant_detect += "[C.name] is modified with a [CI.name].<br>"
 		if(implant_detect)
 			user << "<span class='notice'>Detected cybernetic modifications:</span>"
 			user << "<span class='notice'>[implant_detect]</span>"

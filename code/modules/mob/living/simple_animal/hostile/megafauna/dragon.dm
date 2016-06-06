@@ -229,8 +229,8 @@
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
-	icon_state = "cultblade"
-	item_state = "cultblade"
+	icon_state = "spectral"
+	item_state = "spectral"
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = 4

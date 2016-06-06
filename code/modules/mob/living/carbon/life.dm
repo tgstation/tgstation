@@ -14,6 +14,8 @@
 	if(..())
 		. = 1
 
+		handle_blood()
+
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
@@ -211,6 +213,9 @@
 		else
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
+
+/mob/living/carbon/proc/handle_blood()
+	return
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)

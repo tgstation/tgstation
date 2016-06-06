@@ -77,9 +77,9 @@
 
 /obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0, hit_zone)
 	. = ..()
-	if((blocked != 100) && istype(target, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = target
-		H.drip(35)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(35)
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 60
