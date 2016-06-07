@@ -300,8 +300,11 @@
 	var/duplicate = FALSE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
+	var/list/blacklist = (/obj/item/weapon/spellbook)
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
+	if(O.type in blacklist)
+		return
 	if(istype(O, /obj/item))
 		return 1
 	return 0
