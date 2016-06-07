@@ -221,12 +221,12 @@
 	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
-	..()
 	if(user.has_dna())
 		if(user.dna.check_mutation(HULK))
 			user << "<span class='warning'>You grip the blade too hard and accidentally close it!</span>"
 			unwield()
 			return
+	..()
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
 		return
