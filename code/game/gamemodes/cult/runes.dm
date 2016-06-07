@@ -468,6 +468,8 @@ var/list/teleport_runes = list()
 /obj/effect/rune/narsie/invoke(var/list/invokers)
 	if(used)
 		return
+	if(z != ZLEVEL_STATION)
+		return
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
 		if(!cult_mode.eldergod)
@@ -479,8 +481,7 @@ var/list/teleport_runes = list()
 		used = 1
 		color = rgb(255, 0, 0)
 		..()
-		world << 'sound/effects/dimensional_rend.ogg'
-		world << "<span class='cultitalic'><b>The veil... <span class='big'>is...</span> <span class='reallybig'>TORN!!!--</span></b></span>"
+		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
 		var/turf/T = get_turf(src)
 		sleep(40)
 		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
