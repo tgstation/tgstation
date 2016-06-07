@@ -23,13 +23,15 @@ var/list/GPS_list = list()
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
-	emped = 1
+	emped = TRUE
 	overlays -= "working"
 	overlays += "emp"
-	spawn(300)
-		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+	addtimer(src, "reboot", 300)
+
+/obj/item/device/gps/proc/reboot()
+	emped = FALSE
+	overlays -= "emp"
+	overlays += "working"
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))

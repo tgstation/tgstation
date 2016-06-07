@@ -17,3 +17,5 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 #define SLAB_PRODUCTION_THRESHOLD 60 //How many cycles slabs require to produce a single component; defaults to one minute
 
 #define GATEWAY_SUMMON_RATE 3 //The speed multiplier used by the Gateway to the Celestial Derelict; defaults to 3x speed
+
+#define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes

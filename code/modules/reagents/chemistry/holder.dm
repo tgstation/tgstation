@@ -142,10 +142,6 @@ var/const/INJECT = 5 //injection
 	var/trans_data = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/T = reagent
-		if(T.id == "blood" && ishuman(target))
-			var/mob/living/carbon/human/H = target
-			H.inject_blood(my_atom, amount)
-			continue
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)

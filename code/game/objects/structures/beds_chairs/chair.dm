@@ -225,6 +225,12 @@
 		usr.put_in_hands(C)
 		qdel(src)
 
+/obj/structure/chair/stool/bar
+	name = "bar stool"
+	desc = "It has some unsavory stains on it..."
+	icon_state = "bar"
+	item_chair = null
+
 /obj/item/chair
 	name = "chair"
 	desc = "Bar brawl essential."

@@ -662,9 +662,8 @@ var/global/mulebot_count = 0
 	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
 
-	var/obj/effect/decal/cleanable/blood/B = new(loc)
-	B.add_blood_list(H)
-	add_blood_list(H)
+	var/turf/T = get_turf(src)
+	T.add_mob_blood(H)
 	bloodiness += 4
 
 // player on mulebot attempted to move

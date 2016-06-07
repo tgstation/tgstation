@@ -5147,7 +5147,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5183,7 +5182,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5241,10 +5239,9 @@
 /turf/open/floor/plating,
 /area/ctf)
 "qt" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4;
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	luminosity = 2
 	},
 /area/ctf)
 "qu" = (
@@ -5607,7 +5604,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)

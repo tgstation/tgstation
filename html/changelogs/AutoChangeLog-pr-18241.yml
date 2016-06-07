@@ -1,0 +1,7 @@
+author: phil235
+delete-after: True
+changes: 
+  - rscadd: "Monkeys and all other animals that should have blood now has it. Beating them up will make you and your weapon bloody, just like beating a human does. Dragging them when wounded and lying will leave a blood trail. Their blood is still mostly cosmetic, they suffer no effects from low blood level, unlike humans."
+  - rscadd: "When a mob leaves a blood trail while dragged, it loses blood. You can no longer drag a corpse to make an inifinite amount of blood trails, because once the victim's blood reaches a certain threshold it no longer leaves a blood trail (and no longer lose any more blood). The threshold depends on how much damage the mob has taken. You can always avoid hurting the dragged mob by making them stand up or by buckling them to something or by putting them in a container."
+  - rscdel: "You can no longer empty a mob of its blood entirely with a syringe, once the mob's blood volume reaches a critically low level you are unable to draw any more blood from it."
+  - tweak: "A changeling absorbing a human now sucks all their blood."
