@@ -15,7 +15,7 @@ This file contains the arcane tome files.
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
-	if(iscultist(user) || user.stat == DEAD)
+	if(iscultist(user) || isobserver(user))
 		user << "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>"
 		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
@@ -202,10 +202,6 @@ This file contains the arcane tome files.
 		return
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
-	if(istype(Turf, /turf/open/space))
-		user << "<span class='warning'>You cannot scribe runes in space!</span>"
-		return
-	var/area/AR = get_area(user)
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(ticker.mode.name == "cult")
 			var/datum/game_mode/cult/cult_mode = ticker.mode
@@ -218,21 +214,27 @@ This file contains the arcane tome files.
 			else if(!cult_mode.eldergod)
 				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
 				return
-			if(initial(AR.name) == "Space" || user.z != ZLEVEL_STATION)
-				user << "<span class='warning'>You can only scribe a rune this powerful in station areas!</span>"
+			var/area/A = get_area(src)
+			var/locname = initial(A.name)
+			if(loc.z && loc.z != ZLEVEL_STATION)
+				user << "<span class='warning'>The Geometer is not interested \
+					in lesser locations; the station is the prize!</span>"
+				return
+			if(istype(A, /area/shuttle))
+				user << "<span class='warning'>Interference from hyperspace \
+					engines prevents the Geometer from entering our world on \
+					a shuttle.</span>"
 				return
 			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 			if(confirm_final == "No")
 				user << "<span class='cult'>You decide to prepare further before scribing the rune.</span>"
 				return
-			var/area/A = get_area(src)
-			var/locname = initial(A.name)
 			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
 				var/obj/machinery/shield/N = new(T)
-				N.name = "sanguine shield"
-				N.desc = "A potent shield summoned by cultists to defend their rites."
+				N.name = "Rune-Scriber's Shield"
+				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
 				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
@@ -241,6 +243,7 @@ This file contains the arcane tome files.
 			return
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
+	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	if(!do_after(user, initial(rune_to_scribe.scribe_delay), target = get_turf(user)))
 		for(var/V in shields)
 			var/obj/machinery/shield/S = V
@@ -250,7 +253,6 @@ This file contains the arcane tome files.
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
-	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))
 	user.visible_message("<span class='warning'>[user] creates a strange circle in their own blood.</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
