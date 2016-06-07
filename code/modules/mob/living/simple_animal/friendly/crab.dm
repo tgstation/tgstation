@@ -44,38 +44,22 @@
 //LOOK AT THIS - ..()??
 /mob/living/simple_animal/crab/attackby(var/obj/item/O as obj, var/mob/user as mob)
 	if(iswirecutter(O))
+		if(stat == DEAD)
+			return ..()
 		if(prob(50))
 			to_chat(user, "<span class='danger'>This kills the crab.</span>")
 			health -= 20
 			Die()
 		else
+			to_chat(user, "<span class='danger'>You can't help but feel you've just done something terribly wrong.</span>")
+			add_gamelogs(user, "attacked a crab with wirecutters, and made it angry", admin = TRUE, tp_link = TRUE, span_class = "danger")
 			GetMad()
 	else
 		return ..()
 
 /mob/living/simple_animal/crab/proc/GetMad()
-	name = "MEGAMADCRAB"
-	real_name = "MEGAMADCRAB"
-	desc = "OH NO YOU DUN IT NOW."
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "madcrab"
-	icon_living = "madcrab"
-	icon_dead = "madcrab_dead"
-	speak_emote = list("clicks")
-	emote_hear = list("clicks with fury", "clicks angrily")
-	emote_see = list("clacks")
-	speak_chance = 1
-	turns_per_move = 15//Gotta go fast
-	maxHealth = 100//So they don't die as quickly
-	health = 100
-	melee_damage_lower = 3
-	melee_damage_upper = 10//Kill them. Kill them all
-	if(inventory_head)//Drops inventory so it doesn't have to be dealt with
-		inventory_head.loc = src.loc
-		inventory_head = null
-	if(inventory_mask)
-		inventory_mask.loc = src.loc
-		inventory_mask = null
+	new /mob/living/simple_animal/hostile/crab(src.loc)
+	qdel(src)
 
 /mob/living/simple_animal/crab/kickstool
 	name = "kickstool crab"
