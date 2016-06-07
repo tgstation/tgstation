@@ -207,6 +207,7 @@
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
+	sharpness = IS_SHARP
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
