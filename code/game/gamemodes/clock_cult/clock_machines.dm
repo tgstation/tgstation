@@ -468,8 +468,14 @@
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)
 		if("Hierophant Broadcast")
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
+				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
 			if(!input || !user.canUseTopic(src, be_close = 1))
+				return
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
 				return
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
@@ -477,11 +483,11 @@
 			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
 			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
-			if(!try_use_power(gateway_cost))
-				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
-				return
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"
+				return
+			if(!try_use_power(gateway_cost))
+				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1))
 				user.say("Fcnpvny tngrjnl, npgvingr!")
