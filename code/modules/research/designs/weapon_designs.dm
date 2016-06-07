@@ -12,8 +12,8 @@
 	build_path = /obj/item/device/firing_pin/test_range
 	category = list("Firing Pins")
 
-/datum/design/pin_loyalty
-	name = "loyalty firing pin"
+/datum/design/pin_mindshield
+	name = "mindshield firing pin"
 	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6)
