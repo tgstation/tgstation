@@ -445,9 +445,6 @@
 			if(C.l_hand && C.r_hand)
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
-			if(istype(C.l_hand, /obj/item/weapon/ratvars_flame)||istype(C.r_hand, /obj/item/weapon/ratvars_flame))
-				C << "<span class='warning'>The [src] is already projecting Ratvar's Flames! It is not powerful enough to maintain two!</span>"
-				return 0
 			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. Direct it at a tile <b>on harm intent</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
 			flame = R
