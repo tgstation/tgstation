@@ -316,3 +316,10 @@
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
 	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+
+/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
+	name = "Deep Fried Foods Holder Obj"
+	desc = "If you can see this description the code for the deep fryer fucked up."
+	icon_state = "deepfried_holder_icon"
+	filling_color = "#FFAD33"
+	bitesize = 2
