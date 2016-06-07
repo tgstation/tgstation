@@ -100,7 +100,7 @@
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
 	var/z_original = 1
 
-	var/meteordrop = /obj/item/weapon/ore/iron
+	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -169,7 +169,8 @@
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
-		new meteordrop(get_turf(src))
+		var/thing_to_spawn = pick(meteordrop)
+		new thing_to_spawn(get_turf(src))
 
 /obj/effect/meteor/proc/meteor_effect(sound=1)
 	if(sound)
@@ -193,7 +194,7 @@
 	hits = 1
 	hitpwr = 3
 	meteorsound = 'sound/weapons/Gunshot_smg.ogg'
-	meteordrop = /obj/item/weapon/ore/glass
+	meteordrop = list(/obj/item/weapon/ore/glass)
 
 //Medium-sized
 /obj/effect/meteor/medium
@@ -223,7 +224,7 @@
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = /obj/item/weapon/ore/plasma
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..(heavy)
@@ -234,7 +235,7 @@
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = /obj/item/weapon/ore/uranium
+	meteordrop = list(/obj/item/weapon/ore/uranium)
 
 
 /obj/effect/meteor/irradiated/meteor_effect()
@@ -251,8 +252,14 @@
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
+
+/obj/effect/meteor/meaty/New()
+	for(var/obj/item/organ/tongue/T in meteordrop)
+		meteordrop -= T
+		meteordrop += pick(typesof(T))
+	..()
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
@@ -270,8 +277,12 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
+
+/obj/effect/meteor/meaty/xeno/New()
+	meteordrop += subtypesof(/obj/item/organ/alien)
+	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!istype(T, /turf/open/space))
@@ -286,7 +297,7 @@
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = /obj/item/weapon/ore/plasma
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..(heavy)
@@ -311,9 +322,9 @@
 	hits = 10
 	heavy = 1
 	dropamt = 1
+	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 
 /obj/effect/meteor/pumpkin/New()
 	..()
-	meteordrop = pick(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
