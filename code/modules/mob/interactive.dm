@@ -194,8 +194,8 @@
 		if(choice)
 			if(choice == "Service NPC" || choice == "Security NPC")
 				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
-				for(var/datum/job/SSJ in SSjob.occupations)
-					var/datum/job/J = SSJ
+				for(var/j in SSjob.occupations)
+					var/datum/job/J = j
 					if(J.title == job)
 						T.myjob = J
 						T.job = T.myjob.title
