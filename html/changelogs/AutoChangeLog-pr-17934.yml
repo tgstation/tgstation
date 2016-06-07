@@ -1,0 +1,5 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscdel: "Bluespace shelter capsules can no longer be used on shuttles."
+  - rscadd: "Bluespace shelters may have different capsules stored. View what your capsule has inside by examining it."
