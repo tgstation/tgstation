@@ -48,7 +48,7 @@
 /mob/living/simple_animal/hades/New()
 	..()
 	lastsinPerson = world.time
-	var/list/possible_titles = list("Pope","Bishop","Lord","Cardinal")
+	var/list/possible_titles = list("Pope","Bishop","Lord","Cardinal","Deacon","Pontiff")
 	var/chosen = "[pick(possible_titles)] of Sin"
 	name = chosen
 	real_name = chosen
@@ -59,15 +59,15 @@
 	Appear()
 
 /mob/living/simple_animal/hades/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	..(AM,skipcatch,hitpush,blocked)
+	..()
 	lastsinPerson -= 75
 
 /mob/living/simple_animal/hades/bullet_act(obj/item/projectile/P, def_zone)
-	..(P,def_zone)
+	..()
 	lastsinPerson -= 75
 
 /mob/living/simple_animal/hades/attack_hand(mob/living/carbon/human/M)
-	..(M)
+	..()
 	lastsinPerson -= 75
 
 /mob/living/simple_animal/hades/proc/Appear()
@@ -97,127 +97,128 @@
 				loc = get_turf(pick(oview(1,sinPerson)))
 				Appear()
 				var/sinPersonchoice = pick(list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath"))
-				if(sinPersonchoice == "Greed")
-					src.say("Your sin, [sinPerson], is Greed.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						var/list/greed = list(/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/diamond)
-						for(var/i = 0; i < 10; ++i)
-							var/greed_type = pick(greed)
-							new greed_type(get_turf(sinPerson))
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						new/obj/structure/closet/statue(get_turf(sinPerson),sinPerson)
-				else if(sinPersonchoice == "Gluttony")
-					src.say("Your sin, [sinPerson], is Gluttony.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						var/list/allTypes = list()
-						for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
-							var/obj/item/weapon/reagent_containers/food/snacks/O = A
-							if(initial(O.cooked_type))
-								allTypes += A
-						for(var/i = 0; i < 10; ++i)
-							var/greed_type = pick(allTypes)
-							new greed_type(get_turf(sinPerson))
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						sinPerson.reagents.add_reagent("nutriment",9999)
-				else if(sinPersonchoice == "Pride")
-					src.say("Your sin, [sinPerson], is Pride.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						for(var/mob/living/carbon/human/H in player_list)
-							if(H == sinPerson)
-								continue
-							ticker.mode.traitors += H.mind
-							H.mind.special_role = "pride"
-							var/datum/objective/sinPersonholder/pride = new
-							pride.owner = H.mind
-							pride.explanation_text = "[sinPerson] is your idol now. Praise them as much as possible."
-							H.mind.objectives += pride
-							H << "<B>[pride.explanation_text]</B>"
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						for(var/mob/living/carbon/human/H in player_list)
-							if(H == sinPerson)
-								continue
-							ticker.mode.traitors += H.mind
-							H.mind.special_role = "pride"
-							var/datum/objective/sinPersonholder/pride = new
-							pride.owner = H.mind
-							pride.explanation_text = "[sinPerson] is insignificant to you. Show them who's boss."
-							H.mind.objectives += pride
-							H << "<B>[pride.explanation_text]</B>"
-				else if(sinPersonchoice == "Lust")
-					src.say("Your sin, [sinPerson], is Lust.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						for(var/mob/living/carbon/human/H in player_list)
-							if(H == sinPerson)
-								continue
-							ticker.mode.traitors += H.mind
-							H.mind.special_role = "lust"
-							var/datum/objective/sinPersonholder/lust = new
-							lust.owner = H.mind
-							lust.explanation_text = "[sinPerson] is the one person who means the world to you. Show your love for them."
-							H.mind.objectives += lust
-							H << "<B>[lust.explanation_text]</B>"
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						for(var/mob/living/carbon/human/H in player_list)
-							if(H == sinPerson)
-								continue
-							ticker.mode.traitors += H.mind
-							H.mind.special_role = "lust"
-							var/datum/objective/sinPersonholder/lust = new
-							lust.owner = H.mind
-							lust.explanation_text = "[sinPerson] is irresistible. Make them love you at ANY cost."
-							H.mind.objectives += lust
-							H << "<B>[lust.explanation_text]</B>"
-				else if(sinPersonchoice == "Envy")
-					src.say("Your sin, [sinPerson], is Envy.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						for(var/mob/living/carbon/human/H in player_list) // name lottery
-							if(H == sinPerson)
-								continue
-							if(prob(25))
-								spawn(10)
-									sinPerson.name = H.name
-									sinPerson.real_name = H.real_name
-									var/datum/dna/lottery = H.dna
-									lottery.transfer_identity(sinPerson, transfer_SE=1)
-									sinPerson.updateappearance(mutcolor_update=1)
-									sinPerson.domutcheck()
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						var/sinPersonspecies = pick(species_list)
-						var/newtype = species_list[sinPersonspecies]
-						var/datum/species/old_species = sinPerson.dna.species
-						sinPerson.set_species(newtype)
-						sinPerson.dna.species.admin_set_species(sinPerson,old_species)
-				else if(sinPersonchoice == "Sloth")
-					src.say("Your sin, [sinPerson], is Sloth.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						sinPerson.drowsyness += 50
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						sinPerson.reagents.add_reagent("frostoil", 50)
-				else if(sinPersonchoice == "Wrath")
-					src.say("Your sinPerson, [sinPerson], is Wrath.")
-					if(prob(50))
-						src.say("I will indulge your sin, [sinPerson].")
-						ticker.mode.traitors += sinPerson.mind
-						sinPerson.mind.special_role = "wrath"
-						var/datum/objective/sinPersonholder/wrath = new
-						wrath.owner = sinPerson.mind
-						wrath.explanation_text = "Everyone is against you, and your only choice is to fight your way out. Kill them all."
-						sinPerson.mind.objectives += wrath
-						sinPerson << "<B>[wrath.explanation_text]</B>"
-					else
-						src.say("Your sin will be punished, [sinPerson]!")
-						sinPerson.reagents.add_reagent("lexorin", 100)
-						sinPerson.reagents.add_reagent("mindbreaker", 100)
+				switch(sinPersonchoice)
+					if("Greed")
+						src.say("Your sin, [sinPerson], is Greed.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							var/list/greed = list(/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/diamond)
+							for(var/i in 1 to 10)
+								var/greed_type = pick(greed)
+								new greed_type(get_turf(sinPerson))
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							new/obj/structure/closet/statue(get_turf(sinPerson),sinPerson)
+					if("Gluttony")
+						src.say("Your sin, [sinPerson], is Gluttony.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							var/list/allTypes = list()
+							for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
+								var/obj/item/weapon/reagent_containers/food/snacks/O = A
+								if(initial(O.cooked_type))
+									allTypes += A
+							for(var/i in 1 to 10)
+								var/greed_type = pick(allTypes)
+								new greed_type(get_turf(sinPerson))
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							sinPerson.reagents.add_reagent("nutriment",1000)
+					if("Pride")
+						src.say("Your sin, [sinPerson], is Pride.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							for(var/mob/living/carbon/human/H in player_list)
+								if(H == sinPerson)
+									continue
+								ticker.mode.traitors += H.mind
+								H.mind.special_role = "pride"
+								var/datum/objective/sinPersonholder/pride = new
+								pride.owner = H.mind
+								pride.explanation_text = "[sinPerson] is your idol now. Praise them as much as possible."
+								H.mind.objectives += pride
+								H << "<B>[pride.explanation_text]</B>"
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							for(var/mob/living/carbon/human/H in player_list)
+								if(H == sinPerson)
+									continue
+								ticker.mode.traitors += H.mind
+								H.mind.special_role = "pride"
+								var/datum/objective/sinPersonholder/pride = new
+								pride.owner = H.mind
+								pride.explanation_text = "[sinPerson] is insignificant to you. Show them who's boss."
+								H.mind.objectives += pride
+								H << "<B>[pride.explanation_text]</B>"
+					if("Lust")
+						src.say("Your sin, [sinPerson], is Lust.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							for(var/mob/living/carbon/human/H in player_list)
+								if(H == sinPerson)
+									continue
+								ticker.mode.traitors += H.mind
+								H.mind.special_role = "lust"
+								var/datum/objective/sinPersonholder/lust = new
+								lust.owner = H.mind
+								lust.explanation_text = "[sinPerson] is the one person who means the world to you. Show your love for them."
+								H.mind.objectives += lust
+								H << "<B>[lust.explanation_text]</B>"
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							for(var/mob/living/carbon/human/H in player_list)
+								if(H == sinPerson)
+									continue
+								ticker.mode.traitors += H.mind
+								H.mind.special_role = "lust"
+								var/datum/objective/sinPersonholder/lust = new
+								lust.owner = H.mind
+								lust.explanation_text = "[sinPerson] is irresistible. Make them love you at ANY cost."
+								H.mind.objectives += lust
+								H << "<B>[lust.explanation_text]</B>"
+					if("Envy")
+						src.say("Your sin, [sinPerson], is Envy.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							for(var/mob/living/carbon/human/H in player_list) // name lottery
+								if(H == sinPerson)
+									continue
+								if(prob(25))
+									spawn(10)
+										sinPerson.name = H.name
+										sinPerson.real_name = H.real_name
+										var/datum/dna/lottery = H.dna
+										lottery.transfer_identity(sinPerson, transfer_SE=1)
+										sinPerson.updateappearance(mutcolor_update=1)
+										sinPerson.domutcheck()
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							var/sinPersonspecies = pick(species_list)
+							var/newtype = species_list[sinPersonspecies]
+							var/datum/species/old_species = sinPerson.dna.species
+							sinPerson.set_species(newtype)
+							sinPerson.dna.species.admin_set_species(sinPerson,old_species)
+					if("Sloth")
+						src.say("Your sin, [sinPerson], is Sloth.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							sinPerson.drowsyness += 50
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							sinPerson.reagents.add_reagent("frostoil", 50)
+					if("Wrath")
+						src.say("Your sinPerson, [sinPerson], is Wrath.")
+						if(prob(50))
+							src.say("I will indulge your sin, [sinPerson].")
+							ticker.mode.traitors += sinPerson.mind
+							sinPerson.mind.special_role = "wrath"
+							var/datum/objective/sinPersonholder/wrath = new
+							wrath.owner = sinPerson.mind
+							wrath.explanation_text = "Everyone is against you, and your only choice is to fight your way out. Kill them all."
+							sinPerson.mind.objectives += wrath
+							sinPerson << "<B>[wrath.explanation_text]</B>"
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+							sinPerson.reagents.add_reagent("lexorin", 100)
+							sinPerson.reagents.add_reagent("mindbreaker", 100)
 
