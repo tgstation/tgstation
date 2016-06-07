@@ -305,6 +305,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//WHY THE FUCK DOES THIS PREVENT THE CRASH?
 
 	names = sortList(names)
 
