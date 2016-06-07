@@ -63,6 +63,16 @@
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
+/obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)
+	var/mob/living/carbon/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
+		return
+	if(over_object == M)
+		M << "<span class='notice'>You lift up the skateboard.</span>"
+		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
+		M.put_in_hands(board)
+		qdel(src)
+
 //CONSTRUCTION
 /obj/item/scooter_frame
 	name = "scooter frame"
