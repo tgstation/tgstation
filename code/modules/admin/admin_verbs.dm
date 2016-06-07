@@ -1160,6 +1160,9 @@ var/list/admin_verbs_mod = list(
 			z_coord = input(usr, "Input the Z coordinate. If it's higher than [world.maxz], a new Z-level will be created (X = [x_coord], Y = [y_coord]): ", "Map element loading") as null|num
 			if(z_coord == null) return
 
+			x_coord = Clamp(x_coord, 1, world.maxx)
+			y_coord = Clamp(y_coord, 1, world.maxy)
+
 		if("Cancel")
 			return
 

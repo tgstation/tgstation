@@ -36,6 +36,7 @@ var/global/dmm_suite/preloader/_preloader = null
 	///////////////////////////////////////////////////////////////////////////////////////
 	var/list/grid_models = list()
 	var/key_len = length(copytext(tfile,2,findtext(tfile,quote,2,0)))//the length of the model key (e.g "aa" or "aba")
+	if(!key_len) key_len = 1
 
 	//proceed line by line
 	for(lpos=1; lpos<tfile_len; lpos=findtext(tfile,"\n",lpos,0)+1)
@@ -64,16 +65,17 @@ var/global/dmm_suite/preloader/_preloader = null
 			map.addZLevel(new /datum/zLevel/away, world.maxz) //create a new z_level if needed
 
 		var/zgrid = copytext(tfile,findtext(tfile,quote+"\n",zpos,0)+2,findtext(tfile,"\n"+quote,zpos,0)+1) //copy the whole map grid
-		var/z_depth = length(zgrid)
+		var/z_depth = length(zgrid) //Length of the whole block (with multiple lines in them)
 
 		//if exceeding the world max x or y, increase it
-		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0)))
-		if(world.maxx<x_depth)
-			world.maxx=x_depth
+		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0))) / key_len //This is the length of an encoded line (like "aaaaaaaaBBBBaaaaccccaaa"). It must be divided by the length of the key
 
-		var/y_depth = z_depth / (x_depth+1)//x_depth + 1 because we're counting the '\n' characters in z_depth
-		if(world.maxy<y_depth)
-			world.maxy=y_depth
+		if(world.maxx < x_depth + x_offset)
+			world.maxx = x_depth + x_offset
+
+		var/y_depth = z_depth / (x_depth+1) //x_depth + 1 because we're counting the '\n' characters in z_depth
+		if(world.maxy < y_depth + y_offset)
+			world.maxy = y_depth + y_offset
 
 		//then proceed it line by line, starting from top
 		ycrd = y_offset + y_depth
