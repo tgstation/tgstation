@@ -194,6 +194,26 @@
 
 	return 1
 
+/obj/item/borg/upgrade/hyperka
+	name = "mining cyborg hyper-kinetic accelerator"
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
+
+/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+		qdel(H)
+
+	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.rebuild()
+
+	return 1
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
