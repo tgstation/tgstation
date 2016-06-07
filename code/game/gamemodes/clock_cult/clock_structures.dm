@@ -719,7 +719,7 @@
 	sleep(10)
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while((!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = L.adjustToxLoss(4)

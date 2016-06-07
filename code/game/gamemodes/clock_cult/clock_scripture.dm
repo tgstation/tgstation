@@ -619,7 +619,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the loyalty implants of nearby humans
 	name = "Dementia Doctrine"
 	desc = "Deals minor brain damage and disables loyalty implants of everyone adjacent to the invoker."
-	invocations = list("Lbh ner jrnx.", "Lbh jvyy or uvf.", "Gurl jba'g fnir lbh - gurl'yy xvyy lbh.")
+	invocations = list("Lbh ner jrnx.", "Lbh jvyy or uvf.", "Gur'l jba'g fnir lbh - gur'lyy xvyy lbh.")
 	channel_time = 20
 	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
 	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
@@ -661,7 +661,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/create_object/sigil_of_transmission
 	name = "Sigil of Transmission"
 	desc = "Scribes a sigil beneath the invoker which stores power to power clockwork structures."
-	invocations = list("Qvivavgl...", "punetr gurznpuvarf!")
+	invocations = list("Qvivavgl...", "punetr gur-znpuvarf!")
 	channel_time = 50
 	required_components = list("belligerent_eye" = 2, "replicant_alloy" = 1, "hierophant_ansible" = 2)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 2)
