@@ -54,6 +54,17 @@
 	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_deathrattle()
+	set name = "Toggle Deathrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when sentient mobs \
+		die."
+	prefs.toggles ^= DISABLE_DEATHRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
+		messages when a sentient mob dies."
+	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"

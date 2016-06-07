@@ -323,6 +323,10 @@
 	var/openingoverlaytype = /obj/effect/overlay/temp/cult/door
 	var/friendly = FALSE
 
+/obj/machinery/door/airlock/cult/New()
+	..()
+	PoolOrNew(openingoverlaytype, src.loc)
+
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
@@ -344,6 +348,13 @@
 
 /obj/machinery/door/airlock/cult/narsie_act()
 	return
+
+/obj/machinery/door/airlock/cult/ratvar_act()
+	..()
+	if(src)
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
 
 /obj/machinery/door/airlock/cult/friendly
 	friendly = TRUE
@@ -394,6 +405,19 @@
 	var/turf/T = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
+
+/obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
+	return (is_servant_of_ratvar(user) && !isAllPowerCut())
+
+/obj/machinery/door/airlock/clockwork/ratvar_act()
+	return 0
+
+/obj/machinery/door/airlock/clockwork/narsie_act()
+	..()
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
 
 /obj/machinery/door/airlock/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(!attempt_construction(I, user))
@@ -460,11 +484,15 @@
 			user.visible_message("<span class='notice'>[user] lifts off [src]'s gear, causing it to fall apart!</span>", "<span class='notice'>You lift off [src]'s gear, causing it to fall \
 			apart!</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-			new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-			new/obj/item/clockwork/component/replicant_alloy/pinion_lock(get_turf(src))
+			new/obj/item/clockwork/alloy_shards(get_turf(src))
+			new/obj/item/clockwork/component/vanguard_cogwheel/pinion_lock(get_turf(src))
 			qdel(src)
 		return 1
 	return 0
+
+/obj/machinery/door/airlock/clockwork/brass
+	glass = 1
+	opacity = 0
 
 #undef GEAR_SECURE
 #undef GEAR_UNFASTENED

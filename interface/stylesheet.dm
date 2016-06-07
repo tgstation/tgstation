@@ -76,6 +76,20 @@ h1.alert, h2.alert		{color: #000000;}
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
 .large_brass			{color: #BE8700; font-size: 3;}
+.big_brass				{color: #BE8700; font-size: 3; font-weight: bold; font-style: italic;}
+.alloy					{color: #42474D;}
+.heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
+.large_alloy			{color: #42474D; font-size: 3;}
+.nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
+.nezbere_small			{color: #42474D;}
+.sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
+.sevtug_small			{color: #AF0AAF;}
+.inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
+.inathneq_small			{color: #1E8CE1;}
+.nzcrentr				{color: #BE8700; font-weight: bold; font-style: italic;}
+.nzcrentr_small			{color: #BE8700;}
+.neovgre				{color: #13143F; font-weight: bold; font-style: italic;}
+.neovgre_small			{color: #13143F;}
 
 .revennotice			{color: #1d2953;}
 .revenboldnotice		{color: #1d2953;	font-weight: bold;}

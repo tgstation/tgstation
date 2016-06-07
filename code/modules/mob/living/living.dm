@@ -300,6 +300,7 @@ Sorry Giacom. Please don't be mad :(
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
@@ -499,6 +500,7 @@ Sorry Giacom. Please don't be mad :(
 
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
+	restore_blood()
 	setToxLoss(0, 0)
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
@@ -572,8 +574,8 @@ Sorry Giacom. Please don't be mad :(
 		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
 			if(isliving(pulling))
 				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss() / 2)))
-					makeTrail(T, M)
+				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
+					M.makeTrail(T)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
@@ -598,39 +600,46 @@ Sorry Giacom. Please don't be mad :(
 		if("walk")
 			. += config.walk_speed
 
-/mob/living/proc/makeTrail(turf/T, mob/living/M)
-	if(!has_gravity(M))
+/mob/living/proc/makeTrail(turf/T)
+	if(!has_gravity(src))
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if((NOBLOOD in H.dna.species.specflags) || (!H.blood_max) || (H.bleedsuppress))
-			return
 	var/blood_exists = 0
-	var/trail_type = M.getTrail()
-	for(var/obj/effect/decal/cleanable/trail_holder/C in M.loc) //checks for blood splatter already on the floor
-		blood_exists = 1
-	if (istype(M.loc, /turf) && trail_type != null)
-		var/newdir = get_dir(T, M.loc)
-		if(newdir != M.dir)
-			newdir = newdir | M.dir
-			if(newdir == 3) //N + S
-				newdir = NORTH
-			else if(newdir == 12) //E + W
-				newdir = EAST
-		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
-			newdir = turn(get_dir(T, M.loc), 180)
-		if(!blood_exists)
-			new /obj/effect/decal/cleanable/trail_holder(M.loc)
-		for(var/obj/effect/decal/cleanable/trail_holder/H in M.loc)
-			if((!(newdir in H.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && H.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-				H.existing_dirs += newdir
-				H.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
-				if(M.has_dna()) //blood DNA
-					var/mob/living/carbon/DNA_helper = M
-					H.blood_DNA[DNA_helper.dna.unique_enzymes] = DNA_helper.dna.blood_type
 
-/mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
-    return null
+	for(var/obj/effect/decal/cleanable/trail_holder/C in src.loc) //checks for blood splatter already on the floor
+		blood_exists = 1
+	if (isturf(src.loc))
+		var/trail_type = getTrail()
+		if(trail_type)
+			var/brute_ratio = round(getBruteLoss()/maxHealth, 0.1)
+			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
+				var/newdir = get_dir(T, src.loc)
+				if(newdir != src.dir)
+					newdir = newdir | src.dir
+					if(newdir == 3) //N + S
+						newdir = NORTH
+					else if(newdir == 12) //E + W
+						newdir = EAST
+				if((newdir in cardinal) && (prob(50)))
+					newdir = turn(get_dir(T, src.loc), 180)
+				if(!blood_exists)
+					new /obj/effect/decal/cleanable/trail_holder(src.loc)
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
+					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+						TH.existing_dirs += newdir
+						TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+						TH.transfer_mob_blood_dna(src)
+
+/mob/living/carbon/human/makeTrail(turf/T)
+	if((NOBLOOD in dna.species.specflags) || !bleed_rate || bleedsuppress)
+		return
+	..()
+
+/mob/living/proc/getTrail()
+	if(getBruteLoss() < 300)
+		return pick("ltrails_1", "ltrails_2")
+	else
+		return pick("trails_1", "trails_2")
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -787,6 +796,13 @@ Sorry Giacom. Please don't be mad :(
 	gib()
 	return
 
+/mob/living/ratvar_act()
+	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
+		adjustFireLoss(35)
+		if(src)
+			adjust_fire_stacks(1)
+			IgniteMob()
 
 /atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0

@@ -8,7 +8,7 @@
 "h" = (/obj/item/weapon/veilrender/vealrender,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "i" = (/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "j" = (/obj/item/trash/plate,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"k" = (/obj/machinery/door/airlock/uranium,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth; blocks_air = 1},/area/ruin/powered)
+"k" = (/obj/machinery/door/airlock/uranium,/obj/structure/fans/tiny/invisible,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "l" = (/obj/item/trash/candy,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "m" = (/obj/item/trash/raisins,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "n" = (/obj/item/trash/pistachios,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)

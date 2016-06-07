@@ -105,12 +105,15 @@ This file's folder contains:
 		S.show_laws()
 	return 1
 
-/proc/send_hierophant_message(mob/user, message)
+/proc/send_hierophant_message(mob/user, message, large)
 	if(!user || !message || !ticker || !ticker.mode)
 		return 0
-	var/parsed_message = "<span class='heavy_brass'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='brass'>\"[message]\"</span>"
-	for(var/mob/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
+	var/parsed_message = "<span class='[large ? "big_brass":"heavy_brass"]'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[large ? "large_brass":"brass"]'>\"[message]\"</span>"
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [parsed_message]"
+		else if(is_servant_of_ratvar(M))
 			M << parsed_message
 	return 1
 

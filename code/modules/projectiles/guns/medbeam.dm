@@ -24,6 +24,10 @@
 	..()
 	LoseTarget()
 
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
+	..()
+	LoseTarget()
+
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)
 		qdel(current_beam)

@@ -1,3 +1,6 @@
+/mob/living/carbon
+	blood_volume = BLOOD_VOLUME_NORMAL
+
 /mob/living/carbon/New()
 	create_reagents(1000)
 	..()
@@ -296,16 +299,6 @@
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
 
-
-/mob/living/carbon/getTrail()
-	if(getBruteLoss() < 300)
-		if(prob(50))
-			return "ltrails_1"
-		return "ltrails_2"
-	else if(prob(50))
-		return "trails_1"
-	return "trails_2"
-
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
@@ -568,7 +561,7 @@
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
-				T.add_blood_floor(src)
+				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
 		else

@@ -162,6 +162,8 @@
 			return
 		if(AM.anchored || AM.buckled_mobs.len || (AM.flags & NODROP))
 			return
+	else
+		return
 
 	AM.forceMove(src)
 	if(AM.pulledby)
