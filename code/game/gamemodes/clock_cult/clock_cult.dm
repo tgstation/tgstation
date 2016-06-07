@@ -48,7 +48,7 @@ This file's folder contains:
 	if(iscarbon(M))
 		if(!silent)
 			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
-			Justiciar lies in exile, derelict and forgotten in an unseen realm.</span>"
+			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 		if(!is_eligible_servant(M))
 			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", "<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 			return 0
@@ -61,7 +61,7 @@ This file's folder contains:
 			"<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>")
 			return 0
 	else if(!silent)
-		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar lies in exile, derelict and forgotten in an unseen realm.</span>"
+		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 		if(!is_eligible_servant(M))
 			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", "<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 			return 0
