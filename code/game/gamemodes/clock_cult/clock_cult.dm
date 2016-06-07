@@ -40,10 +40,10 @@ This file's folder contains:
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/M)
-	return M && istype(M) && M.mind && !is_servant_of_ratvar(M) && !iscultist(M) && !isconstruct(M) && !isloyal(M)
+	return M && istype(M) && M.mind && !iscultist(M) && !isconstruct(M) && !isloyal(M)
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
-	if(!ticker || !ticker.mode)
+	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
 		return 0
 	if(iscarbon(M))
 		if(!silent)
