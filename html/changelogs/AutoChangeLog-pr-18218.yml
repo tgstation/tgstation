@@ -1,8 +1,0 @@
-author: Xhuis
-delete-after: True
-changes: 
-  - rscdel: "Removed the global message played when Nar-Sie _begins_ to spawn (but not when it actually spawns)."
-  - tweak: "Drunkenness recovery speed now increases with how drunk the imbiber is and is much quicker when the imbiber is asleep."
-  - tweak: "Suit storage units now take three seconds to enter (up from one) and have different sounds and messages for UV ray cauterization."
-  - bugfix: "Fixed some bugs with the suit storage unit, inserting mobs, and contents to seemed to duplicate themselves."
-  - bugfix: "The Summon Nar-Sie rune can now only be drawn on original station tiles and fails to invoke if scribed on the station then moved elsewhere."
