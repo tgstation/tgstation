@@ -17,7 +17,7 @@
 	name = "implanter (sad_trombone)"
 
 /obj/item/weapon/implanter/sad_trombone/New()
-	imp = new /obj/item/weapon/implant/explosive(src)
+	imp = new /obj/item/weapon/implant/sad_trombone(src)
 	..()
 
 
