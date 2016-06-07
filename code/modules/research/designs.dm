@@ -216,7 +216,7 @@ other types of metals and chemistry for reagents).
 	name = "Bag of Holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	id = "bag_holding"
-	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 6, "plasmatech" = 5)
+	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
 	build_path = /obj/item/weapon/storage/backpack/holding
@@ -236,7 +236,7 @@ other types of metals and chemistry for reagents).
 	name = "GPS Device"
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
-	req_tech = list("materials" = 2, "magnets" = 3, "bluespace" = 3)
+	req_tech = list("materials" = 2, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	build_path = /obj/item/device/gps
@@ -482,7 +482,7 @@ datum/design/diagnostic_hud_night
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
-	req_tech = list("magnets" = 3, "programming" = 3)
+	req_tech = list("programming" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator

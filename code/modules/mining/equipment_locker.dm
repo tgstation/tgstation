@@ -883,6 +883,7 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
+	origin_tech = "programming=6"
 
 
 /**********************Lazarus Injector**********************/
@@ -900,7 +901,7 @@
 	var/loaded = 1
 	var/malfunctioning = 0
 	var/revive_type = SENTIENCE_ORGANIC //So you can't revive boss monsters or robots with it
-	origin_tech = "biotech=4"
+	origin_tech = "biotech=4;magnets=6"
 
 /obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity_flag)
 	if(!loaded)
@@ -1172,4 +1173,3 @@
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
 	name = "circuit board (Golem Ship Equipment Vendor)"
 	build_path = /obj/machinery/mineral/equipment_vendor/golem
-
