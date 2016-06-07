@@ -235,7 +235,7 @@ Doesn't work on other aliens/AI.*/
 
 	return 1
 
-/obj/effect/proc_holder/alien/on_lose(mob/living/carbon/user)
+/obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	if(user.ranged_ability == src)
 		user.ranged_ability = null
 
