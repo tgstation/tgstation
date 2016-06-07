@@ -447,6 +447,7 @@
 	else
 		sender = TRUE
 		gatewayB.sender = FALSE
+		gatewayB.density = FALSE
 	lifetime = set_duration
 	gatewayB.lifetime = set_duration
 	uses = set_uses
