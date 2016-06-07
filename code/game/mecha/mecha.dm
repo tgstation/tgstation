@@ -36,6 +36,7 @@
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
+	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
@@ -164,7 +165,6 @@
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
-				E.reliability = round(rand(E.reliability/3,E.reliability))
 			else
 				E.detach(loc)
 				qdel(E)
@@ -415,7 +415,7 @@
 	if(src == target)
 		return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
+	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = safepick(view(3,target))
@@ -471,13 +471,13 @@
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)
 		return
-	if(user != src.occupant) //While not "realistic", this piece is player friendly.
+	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "<span class='notice'>You climb out from [src].</span>"
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
+			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
 	if(state)
@@ -506,7 +506,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction && !strafe)
+	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -526,10 +526,10 @@
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
-	var/current_dir = src.dir
+	var/current_dir = dir
 	var/result = step(src,direction)
 	if(strafe)
-		src.dir = current_dir
+		dir = current_dir
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -585,7 +585,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -755,7 +755,7 @@
 		return 0
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != src.loc)
+	if(new_port.loc != loc)
 		return 0
 
 	//Perform the connection
@@ -773,7 +773,7 @@
 
 	connected_port.connected_device = null
 	connected_port = null
-	src.log_message("Disconnected from gas port.")
+	log_message("Disconnected from gas port.")
 	return 1
 
 /obj/mecha/portableConnectorReturnAir()
@@ -810,13 +810,13 @@
 		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
-	visible_message("[user] starts to climb into [src.name].")
+	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
 		if(health <= 0)
-			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
+			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
-			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
 		else if(user.buckled_mobs.len)
@@ -858,7 +858,7 @@
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
+	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
@@ -968,8 +968,8 @@
 
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
-		if(src.occupant && src.occupant.client)
-			src.occupant << "\icon[src] [message]"
+		if(occupant && occupant.client)
+			occupant << "\icon[src] [message]"
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
@@ -978,7 +978,7 @@
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
-	var/list/last_entry = src.log[src.log.len]
+	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 

@@ -1,0 +1,22 @@
+author: Joan
+delete-after: True
+changes: 
+  - wip: "This is a bunch of Clockwork Cult changes."
+  - rscadd: "Added the Clockwork Obelisk, an Application scripture that produces a clockwork obelisk, which can Hierophant Broadcast a large message to all servants or open a Spatial Gateway with 5 uses and a 10 second duration to any conscious servant or clockwork obelisk."
+  - wip: "Spatial Gateways of any source have doubled uses and duration when the target is a clockwork obelisk."
+  - rscadd: "Added the Mania Motor, an Application scripture that produces a mania motor, which, while active, causes hallucinations and brain damage in all nearby humans."
+  - wip: "The Mania Motor will try to convert any non-servant human directly adjacent to it at an additional power cost and will remove brain damage, hallucinations, and the druggy effect from servants."
+  - rscadd: "Added the Vitality Matrix, an Application scripture that produces a sigil that will slowly drain health from non-servants that remain on it. Servants that remain on the sigil will instead be healed with the vitality drained from non-servants."
+  - wip: "The Vitality Matrix can revive dead servants for a cost of 25 vitality plus all non-oxygen damage the servant has. If it cannot immediately revive a servant, it will still heal their corpse."
+  - experiment: "Most clockwork structures, including the Mending Motor, Interdiction Lens, and the newly added Clockwork Obelisk and Mania Motor, now require power to function."
+  - wip: "Mending Motors can still use alloy for power."
+  - tweak: "The Sigil of Transmission has been remade into a power battery and will power directly adjecent clockwork structures. Sigils of Transmission start off with 4000 power and can be recharged with Volt Void."
+  - tweak: "Volt Void drains somewhat more power, but will not damage the invoker unless they drain too much power. Invokers with augmented limbs will instead have those limbs healed unless they drain especially massive amounts of power."
+  - wip: "Using Volt Void on top of a Sigil of Transmission will transfer most of the power drained to the Sigil of Transmission, effectively making it far less likely to damage the invoker."
+  - rscdel: "You can no longer stack most sigils and clockwork objects with themself. You can still have multiple different objects or sigils on a tile, however."
+  - tweak: "The Break Will Script has been renamed to Dementia Doctrine, is slightly faster, and causes slightly more brain damage."
+  - tweak: "The Judicial Visor now uses an action button instead of alt-click. Cultists of Nar-Sie judged by the visor will be stunned for half duration, but will be set on fire."
+  - tweak: "Multiple scriptures have had their component requirements changed. The Summon Judicial Visor Script has been reduced from a Script to a Driver."
+  - rscadd: "Recollection will now show both required and consumed components."
+  - tweak: "Clockwork Marauders can now emerge from their host if their host is at or below 60% total health(for humans, this is 20 health out of crit)"
+  - tweak: "Clockwork Marauders will slowly heal if directly adjacent to their host and have a slightly larger threshold for their no-Fatigue bonus damage."

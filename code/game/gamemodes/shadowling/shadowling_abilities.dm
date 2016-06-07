@@ -288,8 +288,9 @@
 	for(var/mob/M in mob_list)
 		if(is_shadow_or_thrall(M))
 			M << my_message
-		if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]"
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [my_message]"
 
 
 
@@ -750,7 +751,8 @@
 		if(is_shadow_or_thrall(M))
 			M << text
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [text]"
 	log_say("[user.real_name]/[user.key] : [text]")
 
 
@@ -893,5 +895,6 @@
 		if(is_shadow_or_thrall(M))
 			M << text
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [text]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [text]"
 	log_say("[user.real_name]/[user.key] : [text]")

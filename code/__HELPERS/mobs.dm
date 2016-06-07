@@ -327,3 +327,31 @@ Proc for attack log creation, because really why not
 		var/mob/living/carbon/human/H = A
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
+
+
+/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	for(var/mob/M in player_list)
+		var/datum/preferences/prefs
+		if(M.client && M.client.prefs)
+			prefs = M.client.prefs
+		else
+			prefs = new
+
+		var/adminoverride = 0
+		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+			adminoverride = 1
+		if(istype(M, /mob/new_player) && !adminoverride)
+			continue
+		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(speaker_key && speaker_key in prefs.ignoring)
+			continue
+		if(message_type == DEADCHAT_DEATHRATTLE)
+			if(prefs.toggles & DISABLE_DEATHRATTLE)
+				continue
+
+		if(istype(M, /mob/dead/observer) && follow_target)
+			var/link = FOLLOW_LINK(M, follow_target)
+			M << "[link] [message]"
+		else
+			M << "[message]"

@@ -49,8 +49,6 @@
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
-	make_blood()
-
 	martial_art = default_martial_art
 
 	handcrafting = new()
@@ -305,13 +303,10 @@
 		siemens_coeff = total_coeff
 	else if(!safety)
 		var/gloves_siemens_coeff = 1
-		var/species_siemens_coeff = 1
 		if(gloves)
 			var/obj/item/clothing/gloves/G = gloves
 			gloves_siemens_coeff = G.siemens_coefficient
-		if(dna && dna.species)
-			species_siemens_coeff = dna.species.siemens_coeff
-		siemens_coeff = gloves_siemens_coeff * species_siemens_coeff
+		siemens_coeff = gloves_siemens_coeff
 	if(heart_attack)
 		if(shock_damage * siemens_coeff >= 1 && prob(25))
 			heart_attack = 0
@@ -800,7 +795,7 @@
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
-			if(blood_max)
+			if(bleed_rate)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -878,7 +873,7 @@
 /mob/living/carbon/human/cuff_resist(obj/item/I)
 	if(dna && dna.check_mutation(HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		if(..(I, cuff_break = 1))
+		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
 	else
 		if(..())
@@ -893,7 +888,6 @@
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
-			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -1032,7 +1026,6 @@
 				T = new()
 				T.Insert(src)
 
-	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)

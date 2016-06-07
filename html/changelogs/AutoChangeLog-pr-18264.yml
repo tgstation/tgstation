@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - rscadd: "Deadchat is now notified when a sentient mob dies."

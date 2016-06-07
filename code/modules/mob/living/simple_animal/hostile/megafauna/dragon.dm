@@ -86,7 +86,7 @@
 	name = "certain death"
 	desc = "Don't just stand there, move!"
 	icon = 'icons/effects/96x96.dmi'
-	icon_state = "rune_large"
+	icon_state = "landing"
 	layer = BELOW_MOB_LAYER
 	pixel_x = -32
 	pixel_y = -32
@@ -157,7 +157,7 @@
 				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
-	if(stat)
+	if(stat || swooping)
 		return
 	swoop_cooldown = world.time + 200
 	var/swoop_target
@@ -229,8 +229,8 @@
 /obj/item/weapon/melee/ghost_sword
 	name = "spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
-	icon_state = "cultblade"
-	item_state = "cultblade"
+	icon_state = "spectral"
+	item_state = "spectral"
 	flags = CONDUCT
 	sharpness = IS_SHARP
 	w_class = 4
@@ -382,7 +382,8 @@
 	..()
 	if(lava_cooldown > world.time)
 		return
-	if(target && istype(target, /turf/open))
+	var/turf/T = get_turf(user)
+	if(istype(target, /turf/open) && (target in view(user.client.view,T)))
 		var/turf/open/O = target
 		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
 		O.ChangeTurf(/turf/open/floor/plating/lava/smooth)

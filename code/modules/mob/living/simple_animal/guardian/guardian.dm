@@ -275,7 +275,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		for(var/para in guardians)
 			para << my_message
 		for(var/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [my_message]"
 
 		log_say("[src.real_name]/[src.key] : [input]")
 
@@ -296,7 +297,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+		var/link = FOLLOW_LINK(M, src)
+		M << "[link] [my_message]"
 
 	log_say("[src.real_name]/[src.key] : [text]")
 

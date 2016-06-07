@@ -180,6 +180,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/engine/cult)
 
+/turf/open/floor/ratvar_act()
+	if(prob(20))
+		ChangeTurf(/turf/open/floor/clockwork)
+
 /turf/open/floor/can_have_cabling()
 	return !burnt && !broken
 

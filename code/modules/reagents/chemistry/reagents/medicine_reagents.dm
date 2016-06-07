@@ -272,13 +272,13 @@
 	..()
 
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && method == INJECT)
+	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
-		//The lower the blood of the patient, the better it is as a blood substitute.
-		var/efficiency = (560-H.vessel.get_reagent_amount("blood"))/700 + 0.2
-		efficiency = min(0.75,efficiency)
-		//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-		H.vessel.add_reagent("blood", efficiency * min(5,reac_volume))
+		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
+			efficiency = min(0.75,efficiency)
+			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
+			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
 
 /datum/reagent/medicine/mine_salve

@@ -635,26 +635,7 @@ body
 			if(!istype(M))
 				usr << "This can only be used on instances of type /mob"
 				return
-			M << "Control of your mob has been offered to dead players."
-			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/poll_message = "Do you want to play as [M.real_name]?"
-			if(M.mind && M.mind.assigned_role)
-				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-			if(M.mind && M.mind.special_role)
-				poll_message = "[poll_message] Status:[M.mind.special_role]."
-			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
-			var/mob/dead/observer/theghost = null
-
-			if(candidates.len)
-				theghost = pick(candidates)
-				M << "Your mob has been taken over by a ghost!"
-				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize(0)
-				M.key = theghost.key
-			else
-				M << "There were no ghosts willing to take control."
-				message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+			offer_control(M)
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))

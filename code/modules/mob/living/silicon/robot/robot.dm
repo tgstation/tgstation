@@ -237,7 +237,7 @@
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
-		if("Peacekeeper") //Secborg sprites untill someone gives me some to update with
+		if("Peacekeeper")
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			hands.icon_state = "standard"
 			icon_state = "peaceborg"
@@ -245,7 +245,7 @@
 			modtype = "Peace"
 			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 			status_flags &= ~CANPUSH
-			feedback_inc("cyborg_peacekeeper",1) //I'm assuming this is for logging.
+			feedback_inc("cyborg_peacekeeper",1)
 
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
@@ -829,6 +829,8 @@
 				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("minerborg")
 				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+			if("peaceborg")
+				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")
 				overlays += "eyes-syndie_bloodhound"
 			else

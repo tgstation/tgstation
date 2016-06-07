@@ -45,9 +45,9 @@
 
 /obj/item/weapon/melee/cultblade/dagger/attack(mob/living/target, mob/living/carbon/human/user)
 	..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.drip(50)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(50)
 
 
 /obj/item/weapon/restraints/legcuffs/bola/cult

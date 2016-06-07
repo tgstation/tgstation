@@ -67,5 +67,5 @@
 		else
 			icon_state = "intercom"
 
-/obj/item/device/radio/intercom/rejects_blood()
-	return 1
+/obj/item/device/radio/intercom/add_blood(list/blood_dna)
+	return 0

@@ -109,12 +109,30 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
 
+/mob/dead/observer/narsie_act()
+	var/old_color = color
+	color = "#960000"
+	animate(src, color = old_color, time = 10)
+
+/mob/dead/observer/ratvar_act()
+	var/old_color = color
+	color = "#FAE48C"
+	animate(src, color = old_color, time = 10)
+
 /mob/dead/observer/Destroy()
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
+	ghost_images_full -= ghostimage
+	qdel(ghostimage)
+	ghostimage = null
+
+	ghost_images_default -= ghostimage_default
+	qdel(ghostimage_default)
+	ghostimage_default = null
+
+	ghost_images_simple -= ghostimage_simple
+	qdel(ghostimage_simple)
+	ghostimage_simple = null
+
+	updateallghostimages()
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
