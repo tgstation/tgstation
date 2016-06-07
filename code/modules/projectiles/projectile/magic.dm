@@ -54,9 +54,9 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(target.hellbound)
-		return
-	if(ismob(target))
+	if(isliving(target))
+		if(target.hellbound)
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()

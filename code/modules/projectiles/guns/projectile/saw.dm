@@ -5,7 +5,7 @@
 	item_state = "l6closedmag"
 	w_class = 5
 	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=2"
+	origin_tech = "combat=6;engineering=3;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mm556x45
 	weapon_weight = WEAPON_MEDIUM
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
@@ -77,9 +77,9 @@
 
 /obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0, hit_zone)
 	. = ..()
-	if((blocked != 100) && istype(target, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = target
-		H.drip(35)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(35)
 
 /obj/item/projectile/bullet/saw/hollow
 	damage = 60
@@ -169,5 +169,3 @@ obj/item/projectile/bullet/saw/incen/Move()
 /obj/item/ammo_casing/mm556x45/incen
 	desc = "A 556x45mm bullet casing designed with a chemical-filled capsule on the tip that when bursted, reacts with the atmosphere to produce a fireball, engulfing the target in flames. "
 	projectile_type = /obj/item/projectile/bullet/saw/incen
-
-

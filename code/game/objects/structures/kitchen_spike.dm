@@ -65,9 +65,7 @@
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
 			L.emote("scream")
-			if(ishuman(L)) //So you don't get human blood when you spike a giant spider
-				var/turf/pos = get_turf(L)
-				pos.add_blood_floor(L)
+			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.buckled = src
 			L.dir = 2

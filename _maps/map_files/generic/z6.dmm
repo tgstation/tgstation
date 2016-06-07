@@ -235,7 +235,7 @@
 	},
 /area/awaymission/BMPship/Aft)
 "aQ" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/awaymission/BMPship/Aft)
@@ -244,7 +244,7 @@
 /obj/item/organ/appendix,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Aft)
@@ -253,14 +253,14 @@
 /obj/item/organ/brain,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Aft)
 "aT" = (
 /obj/structure/table,
 /obj/item/stack/packageWrap,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Aft)
@@ -270,17 +270,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Aft)
 "aV" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Aft)
 "aW" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 5
 	},
 /turf/closed/wall/shuttle{
@@ -312,7 +312,7 @@
 	},
 /area/awaymission/BMPship/Aft)
 "bb" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/awaymission/BMPship/Aft)
@@ -329,7 +329,7 @@
 /area/awaymission/BMPship/Aft)
 "bf" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/awaymission/BMPship/Aft)
@@ -364,23 +364,23 @@
 	},
 /area/awaymission/BMPship/Fore)
 "bk" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 9
 	},
 /area/awaymission/BMPship/Fore)
 "bl" = (
 /obj/structure/rack,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Fore)
 "bm" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 1
 	},
 /area/awaymission/BMPship/Fore)
 "bn" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 5
 	},
 /area/awaymission/BMPship/Fore)
@@ -440,7 +440,7 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/awaymission/BMPship/Aft)
@@ -490,7 +490,7 @@
 /turf/open/floor/wood,
 /area/awaymission/BMPship/Fore)
 "bE" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/awaymission/BMPship/Fore)
@@ -515,7 +515,7 @@
 /obj/structure/closet/crate,
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c50,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/awaymission/BMPship/Aft)
@@ -536,18 +536,18 @@
 	},
 /area/awaymission/BMPship/Fore)
 "bL" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Fore)
 "bM" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Fore)
 "bN" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/awaymission/BMPship/Fore)
@@ -625,7 +625,7 @@
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "bZ" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 4
 	},
 /area/awaymission/BMPship/Aft)
@@ -683,24 +683,24 @@
 /area/awaymission/BMPship/Aft)
 "ck" = (
 /obj/structure/closet/crate/large,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 10
 	},
 /area/awaymission/BMPship/Aft)
 "cl" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
 "cm" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
 "cn" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
@@ -708,7 +708,7 @@
 /obj/structure/closet/crate,
 /obj/item/device/analyzer,
 /obj/item/stack/spacecash/c10,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
@@ -717,7 +717,7 @@
 /obj/item/stack/spacecash/c1000,
 /obj/item/stack/spacecash/c200,
 /obj/item/stack/spacecash/c500,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
@@ -727,7 +727,7 @@
 /obj/item/organ/appendix,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab,
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
@@ -737,7 +737,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
@@ -747,12 +747,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 2
 	},
 /area/awaymission/BMPship/Aft)
 "ct" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plating/warnplate{
 	dir = 6
 	},
 /area/awaymission/BMPship/Aft)

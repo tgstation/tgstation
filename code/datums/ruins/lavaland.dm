@@ -164,7 +164,7 @@
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have \
 		undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_fountain_hall.dmm"
+	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
 
 /datum/map_template/ruin/lavaland/survivalcapsule
@@ -181,4 +181,30 @@
 	description = "A strange tomb, housing the dead of whatever strange civilization \
 		lived here before. You swear you hear rattling coming from the inside."
 	suffix = "lavaland_surface_tomb.dmm"
+	cost = 10
+
+/datum/map_template/ruin/lavaland/pizza
+	name = "Ruined Pizza Party"
+	id = "pizza"
+	description = "Little Timmy's birthday pizza-bash took a turn for the worse \
+		when a bluespace anomaly passed by."
+	suffix = "lavaland_surface_pizzaparty.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/cultaltar
+	name = "Summoning Ritual"
+	id = "cultaltar"
+	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily.\
+		 A demonic laugh echoes throughout the caverns"
+	suffix = "lavaland_surface_cultaltar.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/hermit
+	name = "Makeshift Shelter"
+	id = "hermitcave"
+	description = "A place of shelter for a lone hermit, scraping by to live another day."
+	suffix = "lavaland_surface_hermit.dmm"
+	allow_duplicates = FALSE
 	cost = 10

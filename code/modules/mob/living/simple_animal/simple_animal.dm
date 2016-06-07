@@ -411,6 +411,7 @@
 		icon_state = icon_dead
 		stat = DEAD
 		density = 0
+		lying = 1
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -457,6 +458,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
+		lying = 0
 		. = 1
 
 /mob/living/simple_animal/fully_heal(admin_revive = 0)

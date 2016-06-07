@@ -26,6 +26,7 @@
 	melee_damage_upper = 2
 	environment_smash = 0
 	stop_automated_movement_when_pulled = 1
+	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
@@ -102,6 +103,7 @@
 	maxHealth = 50
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
+	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/cow/New()
 	udder = new()
