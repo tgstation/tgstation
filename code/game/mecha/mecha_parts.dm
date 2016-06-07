@@ -8,7 +8,7 @@
 	icon_state = "blank"
 	w_class = 6
 	flags = CONDUCT
-	origin_tech = "programming=2;materials=2;engineering=2"
+	origin_tech = "programming=2;materials=2"
 
 /obj/item/mecha_parts/chassis
 	name="Mecha Chassis"
@@ -41,16 +41,19 @@
 	name = "\improper Ripley left arm"
 	desc = "A Ripley APLU left arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_l_arm"
+	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_right_arm
 	name = "\improper Ripley right arm"
 	desc = "A Ripley APLU right arm. Data and power sockets are compatible with most exosuit tools."
 	icon_state = "ripley_r_arm"
+	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_left_leg
 	name = "\improper Ripley left leg"
 	desc = "A Ripley APLU left leg. Contains somewhat complex servodrives and balance maintaining systems."
 	icon_state = "ripley_l_leg"
+	origin_tech = "programming=2;materials=2;engineering=2"
 
 /obj/item/mecha_parts/part/ripley_right_leg
 	name = "\improper Ripley right leg"
@@ -110,44 +113,44 @@
 	name = "\improper Gygax torso"
 	desc = "A torso part of Gygax. Contains power unit, processing core and life support systems."
 	icon_state = "gygax_harness"
-	origin_tech = "programming=2;materials=4;biotech=3;engineering=3"
+	origin_tech = "programming=2;materials=2;biotech=3;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_head
 	name = "\improper Gygax head"
 	desc = "A Gygax head. Houses advanced surveilance and targeting sensors."
 	icon_state = "gygax_head"
-	origin_tech = "programming=2;materials=4;magnets=3;engineering=3"
+	origin_tech = "programming=2;materials=2;magnets=3;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_left_arm
 	name = "\improper Gygax left arm"
 	desc = "A Gygax left arm. Data and power sockets are compatible with most exosuit tools and weapons."
 	icon_state = "gygax_l_arm"
-	origin_tech = "programming=2;materials=4;engineering=3"
+	origin_tech = "programming=2;materials=2;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_right_arm
 	name = "\improper Gygax right arm"
 	desc = "A Gygax right arm. Data and power sockets are compatible with most exosuit tools and weapons."
 	icon_state = "gygax_r_arm"
-	origin_tech = "programming=2;materials=4;engineering=3"
+	origin_tech = "programming=2;materials=2;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_left_leg
 	name = "\improper Gygax left leg"
 	desc = "A Gygax left leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
 	icon_state = "gygax_l_leg"
-	origin_tech = "programming=2;materials=4;engineering=3"
+	origin_tech = "programming=2;materials=2;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_right_leg
 	name = "\improper Gygax right leg"
 	desc = "A Gygax right leg. Constructed with advanced servomechanisms and actuators to enable faster speed."
 	icon_state = "gygax_r_leg"
-	origin_tech = "programming=2;materials=4;engineering=3"
+	origin_tech = "programming=2;materials=2;engineering=3"
 
 /obj/item/mecha_parts/part/gygax_armor
 	gender = PLURAL
 	name = "\improper Gygax armor plates"
 	desc = "A set of armor plates designed for the Gygax. Designed to effectively deflect damage with a lightweight construction."
 	icon_state = "gygax_armor"
-	origin_tech = "materials=6;combat=4;engineering=4"
+	origin_tech = "materials=6;combat=4;engineering=5"
 
 
 //////////// Durand
@@ -200,7 +203,7 @@
 	name = "\improper Durand armor plates"
 	desc = "A set of armor plates for the Durand. Built heavy to resist an incredible amount of brute force."
 	icon_state = "durand_armor"
-	origin_tech = "materials=5;combat=4;engineering=4"
+	origin_tech = "materials=5;combat=4;engineering=5"
 
 ////////// Firefighter
 
@@ -256,6 +259,7 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
+	origin_tech = "materials=6"
 
 /obj/item/mecha_parts/chassis/phazon/New()
 	..()
@@ -265,43 +269,43 @@
 	name="\improper Phazon torso"
 	desc="A Phazon torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
 	icon_state = "phazon_harness"
-	origin_tech = "programming=4;materials=4;bluespace=4;plasmatech=5"
+	origin_tech = "programming=5;materials=6;bluespace=5;powerstorage=5"
 
 /obj/item/mecha_parts/part/phazon_head
 	name="\improper Phazon head"
 	desc="A Phazon head. Its sensors are carefully calibrated to provide vision and data even when the exosuit is phasing."
 	icon_state = "phazon_head"
-	origin_tech = "programming=3;materials=3;magnets=3"
+	origin_tech = "programming=4;materials=5;magnets=5"
 
 /obj/item/mecha_parts/part/phazon_left_arm
 	name="\improper Phazon left arm"
 	desc="A Phazon left arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_l_arm"
-	origin_tech = "materials=3;bluespace=3;magnets=3"
+	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_right_arm
 	name="\improper Phazon right arm"
 	desc="A Phazon right arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
 	icon_state = "phazon_r_arm"
-	origin_tech = "materials=3;bluespace=3;magnets=3"
+	origin_tech = "materials=5;bluespace=2;magnets=2"
 
 /obj/item/mecha_parts/part/phazon_left_leg
 	name="\improper Phazon left leg"
 	desc="A Phazon left leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
 	icon_state = "phazon_l_leg"
-	origin_tech = "materials=3;bluespace=3;magnets=3"
+	origin_tech = "materials=5;bluespace=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_right_leg
 	name="\improper Phazon right leg"
 	desc="A Phazon right leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
 	icon_state = "phazon_r_leg"
-	origin_tech = "materials=3;bluespace=3;magnets=3"
+	origin_tech = "materials=5;bluespace=3;magnets=3"
 
 /obj/item/mecha_parts/part/phazon_armor
 	name="Phazon armor"
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
-	origin_tech = "materials=4;bluespace=4;plasmatech=5"
+	origin_tech = "materials=6;bluespace=5;magnets=5"
 
 
 ///////// Circuitboards
@@ -319,7 +323,7 @@
 	throw_range = 7
 
 /obj/item/weapon/circuitboard/mecha/ripley
-	origin_tech = "programming=2"
+	origin_tech = "programming=3"
 
 /obj/item/weapon/circuitboard/mecha/ripley/peripherals
 	name = "circuit board (Ripley Peripherals Control module)"
@@ -330,7 +334,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/gygax
-	origin_tech = "programming=4;combat=3;engineering=3"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/circuitboard/mecha/gygax/peripherals
 	name = "circuit board (Gygax Peripherals Control module)"
@@ -346,7 +350,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/durand
-	origin_tech = "programming=4;combat=3;engineering=3"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/circuitboard/mecha/durand/peripherals
 	name = "circuit board (Durand Peripherals Control module)"
@@ -355,14 +359,14 @@
 /obj/item/weapon/circuitboard/mecha/durand/targeting
 	name = "circuit board (Durand Weapon Control and Targeting module)"
 	icon_state = "mcontroller"
-	origin_tech = "programming=4;combat=4;engineering=3"
+	origin_tech = "programming=4;combat=4"
 
 /obj/item/weapon/circuitboard/mecha/durand/main
 	name = "circuit board (Durand Central Control module)"
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/honker
-	origin_tech = "programming=3;engineering=3"
+	origin_tech = "programming=4"
 
 /obj/item/weapon/circuitboard/mecha/honker/peripherals
 	name = "circuit board (H.O.N.K Peripherals Control module)"
@@ -377,7 +381,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/odysseus
-	origin_tech = "programming=3;biotech=3"
+	origin_tech = "programming=3"
 
 /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 	name = "circuit board (Odysseus Peripherals Control module)"
@@ -388,7 +392,7 @@
 	icon_state = "mainboard"
 
 /obj/item/weapon/circuitboard/mecha/phazon
-	origin_tech = "programming=5;plasmatech=4"
+	origin_tech = "programming=5"
 
 /obj/item/weapon/circuitboard/mecha/phazon/peripherals
 	name = "circuit board (Phazon Peripherals Control module)"

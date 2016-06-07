@@ -124,6 +124,7 @@
 	force_on = 30
 	force = 18 //About as much as a spear
 	hitsound = 'sound/weapons/circsawhit.ogg'
+	origin_tech = "materials=3;biotech=3;syndicate=3"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
 	icon_state_on = "esaw_1"

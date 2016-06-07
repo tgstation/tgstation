@@ -68,7 +68,7 @@
 /obj/item/weapon/circuitboard/machine/clonepod
 	name = "circuit board (Clone Pod)"
 	build_path = /obj/machinery/clonepod
-	origin_tech = "programming=2;biotech=2"
+	origin_tech = "programming=3;biotech=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 2,

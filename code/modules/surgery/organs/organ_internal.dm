@@ -3,7 +3,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=3"
+	origin_tech = "biotech=2"
 	force = 1
 	w_class = 2
 	throwforce = 0
@@ -104,7 +104,7 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = "heart"
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=3"
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")

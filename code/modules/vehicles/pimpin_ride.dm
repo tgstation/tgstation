@@ -38,7 +38,6 @@
 	desc = "An upgrade for mobile janicarts."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
-	origin_tech = "materials=3;engineering=4"
 
 
 /obj/vehicle/janicart/Moved(atom/OldLoc, Dir)

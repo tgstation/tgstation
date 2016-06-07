@@ -19,7 +19,7 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
-	origin_tech = "magnets=1;engineering=2"
+	origin_tech = "magnets=2;engineering=2"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
@@ -29,7 +29,6 @@
 	desc = "An Optical Meson Scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
 	item_state = "nvgmeson"
-	origin_tech = "magnets=4;engineering=5;plasmatech=4"
 	darkness_view = 8
 
 /obj/item/clothing/glasses/meson/gar
@@ -49,7 +48,7 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	origin_tech = "magnets=2;engineering=1"
+	origin_tech = "magnets=2;engineering=2"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 
@@ -62,7 +61,7 @@
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
 	item_state = "glasses"
-	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
+	origin_tech = "magnets=4"
 	darkness_view = 8
 	invis_view = SEE_INVISIBLE_MINIMUM
 

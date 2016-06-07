@@ -87,7 +87,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
-	origin_tech = "combat=5"
+	origin_tech = "combat=4"
 
 /obj/item/weapon/grown/nettle/death/add_juice()
 	..()

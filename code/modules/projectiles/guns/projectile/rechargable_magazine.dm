@@ -155,7 +155,7 @@
 	icon = 'icons/obj/guns/minigun.dmi'
 	icon_state = "minigun_spin"
 	item_state = "minigun"
-	origin_tech = "combat=6;powerstorage=5;magnets=4"
+	origin_tech = null
 	flags = CONDUCT | HANDSLOW
 	slowdown = 1
 	slot_flags = null

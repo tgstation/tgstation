@@ -115,7 +115,7 @@ display round(lastgen) and plasmatank amount
 /obj/item/weapon/circuitboard/machine/pacman
 	name = "circuit board (PACMAN-type Generator)"
 	build_path = /obj/machinery/power/port_gen/pacman
-	origin_tech = "programming=2;powerstorage=3;plasmatech=3;engineering=3"
+	origin_tech = "programming=3;powerstorage=3;plasmatech=3;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,

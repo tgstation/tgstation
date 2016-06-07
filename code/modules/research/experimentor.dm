@@ -485,6 +485,11 @@
 				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
 				m.apply_damage(50,"brute","chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
+			var/list/reqs = ConvertReqString2List(exp_on.origin_tech)
+			for(var/T in reqs)
+				reqs[T] = reqs[T] + 1
+			exp_on.origin_tech = list2params(reqs)
+			investigate_log("Experimentor has set the origin tech of [exp_on] to [exp_on.origin_tech]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message("<span class='warning'>[src] encounters a run-time error!</span>")
 			throwSmoke(src.loc)

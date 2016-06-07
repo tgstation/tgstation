@@ -107,7 +107,7 @@
  * (Alan) Edaggers
  */
 /obj/item/weapon/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
+	origin_tech = "combat=3;syndicate=5"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = 0
 
