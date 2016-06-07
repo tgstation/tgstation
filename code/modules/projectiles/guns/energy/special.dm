@@ -126,6 +126,10 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	. = ..()
 	if(!holds_charge)
