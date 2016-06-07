@@ -4,7 +4,7 @@
 	icon_state = "helmet"
 	flags = HEADBANGPROTECT
 	item_state = "helmet"
-	armor = list(melee = 30, bullet = 25, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEEARS
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
