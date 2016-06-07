@@ -41,7 +41,7 @@
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/weapon/shovel(src)
-	new /obj/item/weapon/pickaxe(src)
+	new /obj/item/weapon/pickaxe/mini(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
@@ -75,6 +75,16 @@
 	var/list/digsound = list('sound/effects/picaxe1.ogg','sound/effects/picaxe2.ogg','sound/effects/picaxe3.ogg')
 	origin_tech = "materials=2;engineering=3"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
+
+/obj/item/weapon/pickaxe/mini
+	name = "compact pickaxe"
+	desc = "A smaller, compact version of the standard pickaxe."
+	icon_state = "minipick"
+	force = 10
+	throwforce = 7
+	slot_flags = SLOT_BELT
+	w_class = 3
+	materials = list(MAT_METAL=1000)
 
 /obj/item/weapon/pickaxe/proc/playDigSound()
 	playsound(src, pick(digsound),50,1)
