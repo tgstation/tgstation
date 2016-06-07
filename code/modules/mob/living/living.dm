@@ -300,6 +300,7 @@ Sorry Giacom. Please don't be mad :(
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)

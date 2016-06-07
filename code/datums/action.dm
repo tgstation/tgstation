@@ -182,6 +182,19 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_flame
+	name = "Summon/Dismiss Ratvar's Flame"
+
+/datum/action/item_action/toggle_flame/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
+		var/obj/item/clothing/glasses/judicial_visor/V = target
+		if(V.recharging)
+			return 0
+	return ..()
+
+
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 

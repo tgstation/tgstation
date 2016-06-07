@@ -11,12 +11,13 @@
 	anchored = 1
 	density = 1
 	opacity = 0
+	layer = BELOW_OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
-	var/list/debris = list(/obj/item/clockwork/component/replicant_alloy) //Parts left behind when a structure breaks
+	var/list/debris = list(/obj/item/clockwork/alloy_shards) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 
 /obj/structure/clockwork/New()
@@ -98,10 +99,10 @@
 	attack_generic(user, rand(10, 15))
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
 	if(I.force && takes_damage)
 		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
-	return ..()
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
@@ -235,6 +236,7 @@
 	health = 25
 	max_health = 25
 	construction_value = 15
+	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
 	var/damage_per_tick = 3
@@ -327,179 +329,7 @@
 	else
 		return ..()
 
-/obj/structure/clockwork/interdiction_lens //Interdiction lens: A powerful artifact that can massively disrupt electronics. Five-minute cooldown between uses.
-	name = "interdiction lens"
-	desc = "An ominous, double-pronged brass obelisk. There's a strange gemstone clasped between the pincers."
-	clockwork_desc = "A powerful obelisk that can devastate certain electronics. It needs to recharge between uses."
-	icon_state = "interdiction_lens"
-	construction_value = 25
-	break_message = "<span class='warning'>The lens flares a blinding violet before shattering!</span>"
-	break_sound = 'sound/effects/Glassbr3.ogg'
-	var/recharging = FALSE //If the lens is still recharging its energy
 
-/obj/structure/clockwork/interdiction_lens/examine(mob/user)
-	..()
-	user << "Its gemstone [recharging ? "has been breached by writhing tendrils of blackness that cover the obelisk" : "vibrates in place and thrums with power"],"
-
-/obj/structure/clockwork/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src))
-		disrupt(user)
-
-/obj/structure/clockwork/interdiction_lens/proc/disrupt(mob/living/user)
-	if(!user || !is_servant_of_ratvar(user))
-		return 0
-	if(recharging)
-		user << "<span class='warning'>As you place your hand on the gemstone, cold tendrils of black matter crawl up your arm. You quickly pull back.</span>"
-		return 0
-	user.visible_message("<span class='warning'>[user] places their hand on [src]' gemstone...</span>", "<span class='brass'>You place your hand on the gemstone...</span>")
-	var/target = input(user, "Power flows through you. Choose where to direct it.", "Interdiction Lens") as null|anything in list("Disrupt Telecommunications", "Disable Cameras", "Disable Cyborgs")
-	if(!user.canUseTopic(src) || !target)
-		user.visible_message("<span class='warning'>[user] pulls their hand back.</span>", "<span class='brass'>On second thought, maybe not right now.</span>")
-		return 0
-	user.visible_message("<span class='warning'>Violet tendrils engulf [user]'s arm as the gemstone glows with furious energy!</span>", \
-	"<span class='heavy_brass'>A mass of violet tendrils cover your arm as [src] unleashes a blast of power!</span>")
-	user.notransform = TRUE
-	icon_state = "[initial(icon_state)]_active"
-	recharging = TRUE
-	sleep(30)
-	switch(target)
-		if("Disrupt Telecommunications")
-			for(var/obj/machinery/telecomms/hub/H in telecomms_list)
-				for(var/mob/M in range(7, H))
-					M << "<span class='warning'>You sense a strange force pass through you...</span>"
-				H.visible_message("<span class='warning'>The lights on [H] flare a blinding yellow before falling dark!</span>")
-				H.emp_act(1)
-		if("Disable Cameras")
-			for(var/obj/machinery/camera/C in cameranet.cameras)
-				C.emp_act(1)
-			for(var/mob/living/silicon/ai/A in living_mob_list)
-				A << "<span class='userdanger'>Massive energy surge detected. All cameras offline.</span>"
-				A << 'sound/machines/warning-buzzer.ogg'
-		if("Disable Cyborgs")
-			for(var/mob/living/silicon/robot/R in living_mob_list) //Doesn't include AIs, for obvious reasons
-				if(is_servant_of_ratvar(R) || R.stat) //Doesn't affect already-offline cyborgs
-					continue
-				R.visible_message("<span class='warning'>[R] shuts down with no warning!</span>", \
-				"<span class='userdanger'>Massive emergy surge detected. All systems offline. Initiating reboot sequence..</span>")
-				playsound(R, 'sound/machines/warning-buzzer.ogg', 50, 1)
-				R.Weaken(30)
-	user.visible_message("<span class='warning'>The tendrils around [user]'s arm turn to an onyx black and wither away!</span>", \
-	"<span class='heavy_brass'>The tendrils around your arm turn a horrible black and sting your skin before they shrivel away.</span>")
-	user.notransform = FALSE
-	if(!src)
-		return 0
-	flick("[initial(icon_state)]_discharged", src)
-	icon_state = "[initial(icon_state)]_recharging"
-	spawn(3000) //5 minutes
-		if(!src)
-			return 0
-		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power.</span>")
-		flick("[initial(icon_state)]_recharged", src)
-		icon_state = initial(icon_state)
-		recharging = FALSE
-	return 1
-
-/obj/structure/clockwork/mending_motor //Mending motor: A prism that consumes replicant alloy to repair nearby mechanical servants at a quick rate.
-	name = "mending motor"
-	desc = "A dark onyx prism, held in midair by spiraling tendrils of stone."
-	clockwork_desc = "A powerful prism that rapidly repairs nearby mechanical servants and clockwork structures."
-	icon_state = "mending_motor"
-	construction_value = 20
-	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	var/stored_alloy = 0
-	var/max_alloy = 150
-	var/uses_alloy = TRUE
-	var/active = TRUE
-
-/obj/structure/clockwork/mending_motor/prefilled
-	stored_alloy = 30
-
-/obj/structure/clockwork/mending_motor/New()
-	..()
-	SSobj.processing += src
-	toggle() //Toggles off as soon as it's created, but starts online for reasons
-
-/obj/structure/clockwork/mending_motor/Destroy()
-	SSobj.processing -= src
-	..()
-
-/obj/structure/clockwork/mending_motor/examine(mob/user)
-	..()
-	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "It has [stored_alloy]/[max_alloy] units of replicant alloy."
-
-/obj/structure/clockwork/mending_motor/process()
-	if(!active)
-		return 0
-	if(!stored_alloy && uses_alloy)
-		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
-		toggle()
-		return 0
-	for(var/atom/movable/M in range(5, src))
-		if(istype(M, /mob/living/simple_animal/hostile/anima_fragment))
-			var/mob/living/simple_animal/hostile/anima_fragment/F = M
-			if(F.health == F.maxHealth || F.stat)
-				continue
-			F.adjustBruteLoss(-15)
-			if(uses_alloy)
-				stored_alloy = max(0, stored_alloy - 2)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
-			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
-			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
-				continue
-			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
-			E.fatigue = max(0, E.fatigue - 15)
-			if(uses_alloy)
-				stored_alloy = max(0, stored_alloy - 2)
-		else if(istype(M, /mob/living/silicon))
-			var/mob/living/silicon/S = M
-			if(S.health == S.maxHealth || S.stat == DEAD || !is_servant_of_ratvar(S))
-				continue
-			S.adjustBruteLoss(-25)
-			S.adjustFireLoss(-25)
-			if(uses_alloy)
-				stored_alloy = max(0, stored_alloy - 5) //Much higher cost because silicons are much more useful
-		else if(istype(M, /obj/structure/clockwork))
-			var/obj/structure/clockwork/C = M
-			if(C.health == C.max_health)
-				continue
-			C.health = min(C.health + 10, C.max_health)
-			if(uses_alloy)
-				stored_alloy = max(0, stored_alloy - 1)
-	return 1
-
-/obj/structure/clockwork/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src)) //Unnecessary?
-		if(!stored_alloy)
-			user << "<span class='warning'>[src] needs more replicant alloy to function!</span>"
-			return 0
-		toggle(user)
-
-/obj/structure/clockwork/mending_motor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user))
-		if(stored_alloy + 10 > max_alloy)
-			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
-			return 0
-		user.whisper("Genafzhgr vagb jngre.")
-		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
-		"<span class='notice'>You liquify [src] and pour it onto [src], which transfers the alloy into its reserves.</span>")
-		stored_alloy = min(max(0, stored_alloy + 10), max_alloy)
-		user.drop_item()
-		qdel(I)
-		return 1
-	else
-		return ..()
-
-/obj/structure/clockwork/mending_motor/proc/toggle(mob/living/user)
-	if(user)
-		if(!is_servant_of_ratvar(user))
-			return 0
-		user.visible_message("<span class='notice'>[user] [active ? "dis" : "en"]ables [src].</span>", "<span class='brass'>You [active ? "dis" : "en"]able [src].</span>")
-	active = !active
-	if(active)
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]_inactive"
 
 /obj/structure/clockwork/wall_gear
 	name = "massive gear"
@@ -551,24 +381,29 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_MOB_LAYER
 
 /obj/effect/clockwork/judicial_marker/New()
 	..()
 	flick("judicial_marker", src)
 	spawn(25) //Utilizes spawns due to how it works with Ratvar's flame
+		layer = ABOVE_ALL_MOB_LAYER
 		flick("judicial_explosion", src)
 		spawn(15)
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
 				if(!iscultist(L))
-					L << "<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>"
+					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
 					L.Weaken(8)
 				else
-					L << "<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>[!issilicon(L) ? "An unseen force piledrives you into the ground!" : "ERROR: Motor servos damaged by external source!"]</span>"
-					L.Weaken(10)
-					L.adjustBruteLoss(10)
+					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+					"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
+					L.Weaken(4) //half the stun, but sets cultists on fire
+					L.adjust_fire_stacks(2)
+					L.IgniteMob()
+				L.adjustBruteLoss(10)
 			qdel(src)
 			return 1
 
@@ -601,7 +436,7 @@
 		qdel(src)
 
 //set up a gateway with another gateway
-/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, uses, two_way)
+/obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
 	if(!gatewayB || !set_duration || !uses)
 		return 0
 	linked_gateway = gatewayB
@@ -614,8 +449,8 @@
 		gatewayB.sender = FALSE
 	lifetime = set_duration
 	gatewayB.lifetime = set_duration
-	uses = uses
-	gatewayB.uses = uses
+	uses = set_uses
+	gatewayB.uses = set_uses
 	return 1
 
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
@@ -674,7 +509,7 @@
 	animate(linked_gateway, transform = matrix() / 1.5, time = 10)
 	A.forceMove(get_turf(linked_gateway))
 	uses = max(0, uses - 1)
-	linked_gateway.uses = max(0, uses - 1)
+	linked_gateway.uses = max(0, linked_gateway.uses - 1)
 	spawn(10)
 		if(!uses)
 			qdel(src)
@@ -704,7 +539,7 @@
 	icon = 'icons/effects/340x428.dmi'
 	icon_state = "nezbere"
 	pixel_x = -154
-	pixel_y = -192
+	pixel_y = -198
 
 /obj/effect/clockwork/general_marker/sevtug
 	name = "Sevtug, the Formless Pariah"
@@ -712,8 +547,8 @@
 	clockwork_desc = "One of Ratvar's four generals. Sevtug taught him how to manipulate minds and is one of his oldest allies."
 	icon = 'icons/effects/211x247.dmi'
 	icon_state = "sevtug"
-	pixel_x = -113
-	pixel_y = -131
+	pixel_x = -89
+	pixel_y = -107
 
 /obj/effect/clockwork/general_marker/nzcrentr
 	name = "Nzcrentr, the Forgotten Arbiter"
@@ -722,8 +557,8 @@
 	insane. Nzcrentr seeks out any and all sentient life to slaughter it for sport."
 	icon = 'icons/effects/254x361.dmi'
 	icon_state = "nzcrentr"
-	pixel_x = -110
-	pixel_y = -163
+	pixel_x = -111
+	pixel_y = -164
 
 /obj/effect/clockwork/general_marker/inathneq
 	name = "Inath-Neq, the Resonant Cogwheel"
@@ -734,8 +569,9 @@
 	merged her soul with those of the Cogs slain with her on the battlefield."
 	icon = 'icons/effects/187x381.dmi'
 	icon_state = "inath-neq"
-	pixel_x = -91
-	pixel_y = -199
+	pixel_x = -77
+	pixel_y = -174
+
 
 /obj/effect/clockwork/sigil //Sigils: Rune-like markings on the ground with various effects.
 	name = "sigil"
@@ -745,6 +581,7 @@
 	layer = LOW_OBJ_LAYER
 	alpha = 50
 	var/affects_servants = FALSE
+	var/affects_stat = FALSE
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && user.a_intent == "harm")
@@ -757,7 +594,7 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!L.stat)
+		if(!L.stat || affects_stat)
 			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
 				sigil_effects(L)
 			return 1
@@ -784,7 +621,7 @@
 		L.adjustBruteLoss(10)
 		L.Weaken(5)
 	L.Stun(5)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/transgression, get_turf(src))
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
 	return 1
 
@@ -798,7 +635,7 @@
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
-	animate(src, color = "#EE54DE", time = 30)
+	animate(src, color = "#AF0AAF", time = 30)
 	var/I = 0
 	while(I < 30 && get_turf(L) == get_turf(src))
 		I++
@@ -827,27 +664,118 @@
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
-	desc = "A barely-visible sigil. Things seem a bit quieter around it."
-	clockwork_desc = "A sigil that will listen for and transmit anything it hears."
+	desc = "A glowing orange sigil. The air around it feels staticky."
+	clockwork_desc = "A sigil that will serve as a battery for clockwork structures. Use Volt Void while standing on it to charge it."
 	icon_state = "sigiltransmission"
-	color = "#6F6E5F"
-	alpha = 75
-	flags = HEAR
-	languages = ALL
+	color = "#EC8A2D"
+	alpha = 50
+	var/power_charge = 4000 //starts with 4000W by default
+
+/obj/effect/clockwork/sigil/transmission/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing [power_charge]W of power.</span>"
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
-	for(var/mob/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='heavy_brass'>Sigil of Transmission in [get_area(src)] crossed by [L.name].</span>"
-	return 0
+	if(power_charge)
+		L << "<span class='brass'>You feel a slight, static shock.</span>"
+	return 1
 
-/obj/effect/clockwork/sigil/transmission/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(!message || !speaker)
+/obj/effect/clockwork/sigil/transmission/New()
+	..()
+	alpha = min(initial(alpha) + power_charge*0.02, 255)
+
+/obj/effect/clockwork/sigil/transmission/proc/modify_charge(amount)
+	if(power_charge - amount < 0)
 		return 0
-	var/parsed_message = "<span class='heavy_brass'>(Sigil of Tranmission in [get_area(src)]): </span><span class='brass'>[message]</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, speaker)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
+	power_charge -= amount
+	alpha = min(initial(alpha) + power_charge*0.02, 255)
+	return 1
+
+/obj/effect/clockwork/sigil/vitality
+	name = "comforting sigil"
+	desc = "A faint blue sigil. Looking at it makes you feel protected."
+	clockwork_desc = "A sigil that will drain non-servants that remain on it. Servants that remain on it will be healed if it has any vitality drained."
+	icon_state = "sigilvitality"
+	color = "#123456"
+	alpha = 75
+	affects_servants = TRUE
+	affects_stat = TRUE
+	var/vitality = 0
+	var/base_revive_cost = 25
+	var/sigil_active = FALSE
+
+/obj/effect/clockwork/sigil/vitality/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>"
+		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+
+/obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
+	if(L.suiciding || sigil_active || !is_servant_of_ratvar(L) && L.stat == DEAD)
+		return 0
+	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
+	animate(src, alpha = 255, time = 10)
+	sleep(10)
+	sigil_active = TRUE
+//as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
+	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+		if(!is_servant_of_ratvar(L))
+			var/vitality_drained = L.adjustToxLoss(4)
+			if(vitality_drained)
+				vitality += vitality_drained
+			else
+				break
+		else
+			var/clone_to_heal = L.getCloneLoss()
+			var/tox_to_heal = L.getToxLoss()
+			var/burn_to_heal = L.getFireLoss()
+			var/brute_to_heal = L.getBruteLoss()
+			var/oxy_to_heal = L.getOxyLoss()
+			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
+			if(L.stat == DEAD)
+				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
+				if(vitality >= revival_cost)
+					L.revive(1, 1)
+					L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
+					vitality -= revival_cost
+					break
+			if(!total_damage)
+				break
+			var/vitality_for_cycle = min(vitality, 8)
+
+			if(clone_to_heal && vitality_for_cycle)
+				var/healing = min(vitality_for_cycle, clone_to_heal)
+				vitality_for_cycle -= healing
+				L.adjustCloneLoss(-healing)
+				vitality -= healing
+
+			if(tox_to_heal && vitality_for_cycle)
+				var/healing = min(vitality_for_cycle, tox_to_heal)
+				vitality_for_cycle -= healing
+				L.adjustToxLoss(-healing)
+				vitality -= healing
+
+			if(burn_to_heal && vitality_for_cycle)
+				var/healing = min(vitality_for_cycle, burn_to_heal)
+				vitality_for_cycle -= healing
+				L.adjustFireLoss(-healing)
+				vitality -= healing
+
+			if(brute_to_heal && vitality_for_cycle)
+				var/healing = min(vitality_for_cycle, brute_to_heal)
+				vitality_for_cycle -= healing
+				L.adjustBruteLoss(-healing)
+				vitality -= healing
+
+			if(oxy_to_heal && vitality_for_cycle)
+				var/healing = min(vitality_for_cycle, oxy_to_heal)
+				vitality_for_cycle -= healing
+				L.adjustOxyLoss(-healing)
+				vitality -= healing
+		sleep(8)
+
+	sigil_active = FALSE
+	animate(src, alpha = initial(alpha), time = 30)
+	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
