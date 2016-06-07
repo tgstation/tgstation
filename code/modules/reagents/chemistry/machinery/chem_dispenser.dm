@@ -73,11 +73,12 @@
 		use_power(2500)
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
-	if(emagged || !emagged_reagents)
+	if(emagged)
 		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
 		return
 	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
+	emagged = 1
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
