@@ -59,7 +59,7 @@
 				src.visible_message(
 					"<span class='danger'>[src] devours [L]!</span>",
 					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-				adjustBruteLoss(-L.maxHealth)
+				adjustBruteLoss(-L.maxHealth/2)
 				L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
@@ -310,8 +310,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 750
-	health = 750
+	maxHealth = 300
+	health = 300
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -357,7 +357,7 @@
 	stage2	= list("Your skin feels scaley.")
 	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
 	stage4	= list("<span class='danger'>Your blood burns.</span>")
-	stage5	= list("<span class='danger'>You're a fucking dragon.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon. However, any previous allegiances you held still apply. It'd be incredibly rude to eat your still human friends for no reason.</span>")
 	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
 
@@ -395,9 +395,11 @@
 
 /obj/structure/closet/crate/necropolis/dragon/New()
 	..()
-	var/loot = rand(1,2)
+	var/loot = rand(1,3)
 	switch(loot)
 		if(1)
 			new /obj/item/weapon/melee/ghost_sword(src)
 		if(2)
 			new /obj/item/weapon/lava_staff(src)
+		if(3)
+			new /obj/item/weapon/dragons_blood(src)

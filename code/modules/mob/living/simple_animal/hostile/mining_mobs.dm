@@ -821,8 +821,8 @@
 	..()
 
 /obj/item/organ/hivelord_core/legion
-	name = "legion's soul"
-	desc = "A strange rock that still crackles with power... its \
+	name = "legion tumour"
+	desc = "A strange fleshy infection that still crackles with power... its \
 		healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "legion_soul"
