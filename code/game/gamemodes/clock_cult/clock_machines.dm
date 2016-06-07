@@ -95,7 +95,7 @@
 	while(sigilpower && amount >= 50)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(T.modify_charge(50))
+			if(amount >= 50 && T.modify_charge(50))
 				sigilpower -= 50
 				amount -= 50
 	var/apcpower = accessable_apc_power()
@@ -448,7 +448,7 @@
 /obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nzcrentr'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
+		user << "<span class='nzcrentr_small'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
