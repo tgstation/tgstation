@@ -298,7 +298,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Rayvtugra guvf urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hageh'guf naq ubabe Ratvar.")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Only works on those in melee range and does not penetrate loyalty implants. Much more efficient than a Sigil of Submission."
+	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/guvax/scripture_effects()
@@ -616,9 +616,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the loyalty implants of nearby humans
+/datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the mindshield implants of nearby humans
 	name = "Dementia Doctrine"
-	desc = "Deals minor brain damage and disables loyalty implants of everyone adjacent to the invoker."
+	desc = "Deals minor brain damage and disables mindshield implants of everyone adjacent to the invoker."
 	invocations = list("Lbh ner jrnx.", "Lbh jvyy or uvf.", "Gur'l jba'g fnir lbh - gur'lyy xvyy lbh.")
 	channel_time = 20
 	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
@@ -634,7 +634,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(isloyal(H))
 			H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
 			"<span class='sevtug'>Ohg jr pna cerirag gun'g. Jr pna znxr lbh zvar-naq-uvf.</span>")
-			for(var/obj/item/weapon/implant/loyalty/L in H)
+			for(var/obj/item/weapon/implant/mindshield/L in H)
 				if(L.implanted)
 					qdel(L)
 	return 1

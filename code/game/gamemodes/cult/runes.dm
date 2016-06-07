@@ -304,7 +304,7 @@ var/list/teleport_runes = list()
 //Rite of Enlightenment: Converts a normal crewmember to the cult.
 /obj/effect/rune/convert
 	cultist_name = "Convert"
-	cultist_desc = "converts a normal crewmember on top of it to the cult. Does not work on loyalty-implanted crew."
+	cultist_desc = "converts a normal crewmember on top of it to the cult. Does not work on mindshield-implanted crew."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
 	color = rgb(200, 0, 0)
