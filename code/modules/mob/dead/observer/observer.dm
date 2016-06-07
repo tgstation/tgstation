@@ -163,6 +163,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(new_form)
 		icon_state = new_form
+		ghostimage.icon_state = new_form
 		if(icon_state in ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
