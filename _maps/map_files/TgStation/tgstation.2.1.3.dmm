@@ -22580,7 +22580,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYP" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYQ" = (
@@ -22613,12 +22613,12 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYT" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera{
 	c_tag = "Hydroponics South";
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYU" = (
@@ -45493,7 +45493,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVU" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVV" = (
