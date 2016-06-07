@@ -440,6 +440,7 @@
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
+	var/gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/New()
 	..()
@@ -454,9 +455,11 @@
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
 		icon_state = active_icon
 		density = 0
+		gateway_active = TRUE
 	else
 		icon_state = inactive_icon
 		density = 1
+		gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
@@ -466,18 +469,21 @@
 	switch(choice)
 		if("Hierophant Broadcast")
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(user.canUseTopic(src, be_close = 1))
-				if(try_use_power(hierophant_cost))
-					user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
-					send_hierophant_message(user, input, 1)
-				else
-					user <<  "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
+			if(!input || !user.canUseTopic(src, be_close = 1))
+				return
+			if(!try_use_power(hierophant_cost))
+				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
+				return
+			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
-			if(total_accessable_power() >= gateway_cost)
-				if(procure_gateway(user, 100, 5, 1))
-					user.say("Fcnpvny tngrjnl, npgvingr!")
-					try_use_power(gateway_cost)
-			else
-				user <<  "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+			if(!try_use_power(gateway_cost))
+				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+				return
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"
+				return
+			if(procure_gateway(user, 100, 5, 1))
+				user.say("Fcnpvny tngrjnl, npgvingr!")
 		if("Cancel")
 			return

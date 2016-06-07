@@ -529,7 +529,7 @@
 	animate(src, alpha = 0, time = 10)
 	addtimer(src, "selfdel", 10)
 
-/obj/effect/clockwerk/general_marker/proc/selfdel()
+/obj/effect/clockwork/general_marker/proc/selfdel()
 	qdel(src)
 
 /obj/effect/clockwork/general_marker/nezbere
