@@ -141,6 +141,13 @@
 			master_ui, state)
 		ui.open()
 
+/obj/item/toy/crayon/spraycan/AltClick(mob/user)
+	if(has_cap)
+		is_capped = !is_capped
+		user << "<span class='notice'>The cap on [src] is now \
+			[is_capped ? "on" : "off"].</span>"
+		update_icon()
+
 /obj/item/toy/crayon/ui_data()
 	var/list/data = list()
 	data["drawables"] = list()
@@ -297,9 +304,10 @@
 
 	if(actually_paints)
 		if(gang_mode)
-			// They're attempting to tag for their gang
-			if(!tag_for_gang(user, target))
+			// Double check it wasn't tagged in the meanwhile
+			if(!can_claim_for_gang(user, target))
 				return
+			tag_for_gang(user, target)
 		else
 			new /obj/effect/decal/cleanable/crayon(target, paint_color,
 				drawing, temp, graf_rot)
@@ -337,36 +345,31 @@
 			tagging.</span>"
 		return FALSE
 
-	if(!(locate(/obj/effect/decal/cleanable/crayon/gang in target)))
-		if(territory_claimed(A, user))
-			return FALSE
+	var/spraying_over = FALSE
+	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
+		spraying_over = TRUE
 
-	var/apc_check_area = user.loc.contents | target.contents
-	if(locate(/obj/machinery/power/apc in apc_check_area))
+	for(var/obj/machinery/power/apc in target)
 		user << "<span class='warning'>You can't tag an APC.</span>"
+		return FALSE
+
+	var/occupying_gang = territory_claimed(A, user)
+	if(occupying_gang && !spraying_over)
+		user << "<span class='danger'>[A] has already been tagged \
+			by the [occupying_gang] gang! You must get rid of or spray over \
+			the old tag first!</span>"
 		return FALSE
 
 	// If you pass the gaunlet of checks, you're good to proceed
 	return TRUE
 
-/obj/item/toy/crayon/proc/territory_claimed(area/territory,mob/user)
-	var/occupying_gang
+/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
 	for(var/datum/gang/G in ticker.mode.gangs)
 		if(territory.type in (G.territory|G.territory_new))
-			occupying_gang = G.name
+			. = G.name
 			break
-	if(occupying_gang)
-		user << "<span class='danger'>[territory] has already been tagged \
-			by the [occupying_gang] gang! You must get rid of or spray over \
-			the old tag first!</span>"
-		return TRUE
-	return FALSE
 
 /obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target)
-	// Check again to see if anyone's tagged in the meanwhile
-	if(!can_claim_for_gang(user, target))
-		return
-
 	//Delete any old markings on this tile, including other gang tags
 	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
 		qdel(old_marking)
@@ -497,7 +500,8 @@
 	paint_color = null
 
 	item_state = "spraycan"
-	desc = "A metallic container containing tasty paint."
+	desc = "A metallic container containing tasty paint.\n\
+		Alt-click to toggle the cap."
 
 	instant = TRUE
 	edible = FALSE

@@ -174,7 +174,7 @@
 
 /obj/machinery/capture_the_flag/proc/TellGhost()
 	if(ctf_enabled)
-		notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, attack_not_jump = 0)
+		notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
 	if(href_list["join"])

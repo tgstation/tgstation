@@ -61,7 +61,6 @@
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
-
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -171,6 +170,9 @@
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
+
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
 
 	var/atom/A = src.loc
 	if(isturf(A))
@@ -409,6 +411,7 @@
 		icon_state = icon_dead
 		stat = DEAD
 		density = 0
+		lying = 1
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -455,6 +458,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
+		lying = 0
 		. = 1
 
 /mob/living/simple_animal/fully_heal(admin_revive = 0)
@@ -558,3 +562,6 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card

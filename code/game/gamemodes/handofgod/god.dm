@@ -198,12 +198,14 @@
 
 	msg = say_quote(msg, get_spans())
 	var/rendered = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
+	src << rendered
 
 	for(var/mob/M in mob_list)
-		if(is_handofgod_god(M) || is_handofgod_myfollowers(M))
+		if(is_handofgod_myfollowers(M))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 
 
 /mob/camera/god/emote(act,m_type = 1 ,msg = null)

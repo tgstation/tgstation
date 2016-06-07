@@ -12,7 +12,7 @@
 	opacity = 1
 	density = 1
 	blocks_air = 1
-	layer = MOB_LAYER + 0.05
+	layer = EDGED_TURF_LAYER
 	temperature = TCMB
 	var/environment_type = "asteroid"
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
@@ -179,7 +179,7 @@
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = 4.06)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
 		overlays += I
 		activated_image = I
 		name = "gibtonite deposit"
@@ -206,18 +206,20 @@
 
 /turf/closed/mineral/gibtonite/proc/countdown(notify_admins = 0)
 	set waitfor = 0
-	while(stage == 1 && det_time > 0 && mineralAmt >= 1)
+	while(istype(src, /turf/closed/mineral/gibtonite) && stage == 1 && det_time > 0 && mineralAmt >= 1)
 		det_time--
 		sleep(5)
-	if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
-		var/turf/bombturf = get_turf(src)
-		mineralAmt = 0
-		explosion(bombturf,1,3,5, adminlog = notify_admins)
+	if(istype(src, /turf/closed/mineral/gibtonite))
+		if(stage == 1 && det_time <= 0 && mineralAmt >= 1)
+			var/turf/bombturf = get_turf(src)
+			mineralAmt = 0
+			stage = 3
+			explosion(bombturf,1,3,5, adminlog = notify_admins)
 
 /turf/closed/mineral/gibtonite/proc/defuse()
 	if(stage == 1)
 		overlays -= activated_image
-		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = 4.06)
+		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
 		overlays += I
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
@@ -233,6 +235,7 @@
 	if(stage == 1 && mineralAmt >= 1) //Gibtonite deposit goes kaboom
 		var/turf/bombturf = get_turf(src)
 		mineralAmt = 0
+		stage = 3
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == 2) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
 		var/obj/item/weapon/twohanded/required/gibtonite/G = new /obj/item/weapon/twohanded/required/gibtonite/(src)
@@ -242,8 +245,10 @@
 		if(det_time >= 1 && det_time <= 2)
 			G.quality = 2
 			G.icon_state = "Gibtonite ore 2"
+
 	ChangeTurf(turf_type, defer_change)
-	AfterChange()
+	spawn(10)
+		AfterChange()
 
 /turf/closed/mineral/gibtonite/volcanic
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -375,7 +380,8 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
-	AfterChange()
+	spawn(10)
+		AfterChange()
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	return
 
@@ -453,7 +459,7 @@
 	baseturf = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	temperature = 180
+	initial_gas_mix = "TEMP=180"
 	slowdown = 2
 	environment_type = "snow"
 	sand_type = /obj/item/stack/sheet/mineral/snow
@@ -462,7 +468,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/snow/temperatre
-	temperature = 255.37
+	initial_gas_mix = "TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/New()
 	var/proper_name = name
@@ -583,6 +589,8 @@
 			// To freak out any bystanders
 			visible_message("[H] falls into [src]!")
 			J.chasm_react(H)
+			return
+		if(H.dna.species && (FLYING in H.dna.species.specflags))
 			return
 	drop(AM)
 

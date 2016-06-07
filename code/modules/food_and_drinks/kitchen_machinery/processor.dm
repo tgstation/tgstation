@@ -4,7 +4,7 @@
 	desc = "An industrial grinder used to process meat and other foods. Keep hands clear of intake area while operating."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
 	var/broken = 0
@@ -182,22 +182,12 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	var/atom/movable/what = O
-	if(istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
-		if(!user.Adjacent(G.affecting))
-			return
-		if(G.affecting.buckled || G.affecting.buckled_mobs.len)
-			user << "<span class='warning'>[G.affecting] is attached to somthing!</span>"
-			return
-		what = G.affecting
-
-	var/datum/food_processor_process/P = select_recipe(what)
+	var/datum/food_processor_process/P = select_recipe(O)
 	if(P)
-		user.visible_message("[user] put [what] into [src].", \
-			"You put the [what] into [src].")
+		user.visible_message("[user] put [O] into [src].", \
+			"You put the [O] into [src].")
 		user.drop_item()
-		what.loc = src
+		O.loc = src
 		return 1
 	else
 		if(user.a_intent != "harm")

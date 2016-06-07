@@ -108,6 +108,7 @@ var/global/datum/controller/master/Master = new()
 		CHECK_TICK
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
+	world.log << "Initializations complete."
 
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)

@@ -41,7 +41,7 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-###Object Oriented code 
+###Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 ###All Byond paths must contain the full path.
@@ -63,7 +63,7 @@ datum
 				code
 			proc2()
 				code
-		
+
 		datum2
 			varname1 = 0
 			proc
@@ -99,9 +99,7 @@ The previous code made compliant:
 ```
 
 ###No overriding type safety checks.
-The use of the : operator to override type safety checks is strongly discouraged. You must cast the variable to the proper type.
-
-Exceptions are only made when used in loops that require the performance boost from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
+The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ###Type paths must began with a /
 eg: `/datum/thing` not `datum/thing`
@@ -148,7 +146,7 @@ Remember, this tradeoff makes sense in many cases but not all, you should think 
 
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
-	
+
 ###Control statements:
 (if,while,for,etc)
 

@@ -21,9 +21,9 @@
 		if(4)
 			new /obj/item/weapon/katana/cursed(src)
 		if(5)
-			new /obj/item/weapon/dnainjector/xraymut(src)
+			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
-			new /obj/item/seeds/kudzu(src)
+			new /obj/item/weapon/wingpotion(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -41,7 +41,7 @@
 		if(13)
 			new /obj/item/weapon/sord(src)
 		if(14)
-			new /obj/item/weapon/nullrod/claymore/darkblade(src)
+			new /obj/item/weapon/nullrod/scythe/talking(src)
 		if(15)
 			new /obj/item/weapon/nullrod/armblade(src)
 		if(16)
@@ -64,7 +64,7 @@
 			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/hell(src)
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
-			new /obj/item/weapon/spellbook/oneuse/smoke(src)
+			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
 
 
 
@@ -79,41 +79,44 @@
 
 /obj/item/device/wisp_lantern/attack_self(mob/user)
 	if(!wisp)
-		user << "The wisp has gone missing!"
+		user << "<span class='warning'>The wisp has gone missing!</span>"
 		return
 	if(wisp.loc == src)
-		user << "You release the wisp. It begins to bob around your head."
+		user << "<span class='notice'>You release the wisp. It begins to \
+			bob around your head.</span>"
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
 		feedback_add_details("wisp_lantern","F") // freed
 
 	else
+		user << "<span class='notice'>You return the wisp to the lantern.\
+			</span>"
+
 		if(wisp.orbiting)
 			var/atom/A = wisp.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
-				M << "The wisp has returned to it's latern. Your vision returns to normal."
+				M << "<span class='notice'>Your vision returns to \
+					normal.</span>"
 
-			wisp.stop_orbit()
-			wisp.loc = src
-			user << "You return the wisp to the latern."
-			icon_state = "lantern-blue"
-			feedback_add_details("wisp_lantern","R") // returned
+		wisp.stop_orbit()
+		wisp.loc = src
+		icon_state = "lantern-blue"
+		feedback_add_details("wisp_lantern","R") // returned
 
 /obj/item/device/wisp_lantern/New()
 	..()
-	var/obj/effect/wisp/W = new(src)
-	wisp = W
-	W.home = src
+	wisp = new(src)
 
 /obj/item/device/wisp_lantern/Destroy()
 	if(wisp)
 		if(wisp.loc == src)
 			qdel(wisp)
 		else
-			wisp.home = null //stuck orbiting your head now
+			wisp.visible_message("<span class='notice'>[wisp] has a sad \
+				feeling for a moment, then it passes.</span>")
 	..()
 
 //Wisp Lantern
@@ -122,9 +125,8 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	var/obj/item/device/wisp_lantern/home
 	luminosity = 7
-	layer = FLY_LAYER - 0.3
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/device/warp_cube
 	name = "blue cube"
@@ -212,8 +214,11 @@
 	icon_state = "talisman"
 	var/cooldown = 0
 
-/obj/item/device/immortality_talisman/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/item/device/immortality_talisman/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
@@ -250,11 +255,11 @@
 /obj/effect/immortality_talisman/singularity_pull()
 	return 0
 
-/obj/effect/immortality_talisman/Destroy()
-	if(!can_destroy)
+/obj/effect/immortality_talisman/Destroy(force)
+	if(!can_destroy && !force)
 		return QDEL_HINT_LETMELIVE
 	else
-		..()
+		. = ..()
 
 
 //Shared Bag
@@ -404,3 +409,214 @@
 	generic_pixel_y = 2
 	generic_pixel_x = 1
 	vehicle_move_delay = 1
+
+//Potion of Flight
+
+/obj/item/weapon/wingpotion
+	name = "strange elixir"
+	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
+	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon_state = "potionflask"
+	w_class = 2
+	var/used = FALSE
+
+/obj/item/weapon/wingpotion/attack_self(mob/living/M)
+	if(used)
+		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+	else
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			CHECK_DNA_AND_SPECIES(C)
+			if(C.wear_mask)
+				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
+			else
+				if(ishumanbasic(C)) //implying xenoshumans are holy
+					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
+				else
+					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
+					C.set_species(/datum/species/angel)
+					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+					C.adjustBruteLoss(20)
+					C.emote("scream")
+				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
+				src.used = TRUE
+
+
+/obj/structure/closet/crate/necropolis/dragon
+	name = "dragon chest"
+
+/obj/structure/closet/crate/necropolis/dragon/New()
+	..()
+	var/loot = rand(1,2)
+	switch(loot)
+		if(1)
+			new /obj/item/weapon/melee/ghost_sword(src)
+		if(2)
+			new /obj/item/weapon/lava_staff(src)
+
+/obj/item/weapon/melee/ghost_sword
+	name = "spectral blade"
+	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
+	icon_state = "spectral"
+	item_state = "spectral"
+	flags = CONDUCT
+	sharpness = IS_SHARP
+	w_class = 4
+	force = 1
+	throwforce = 1
+	hitsound = 'sound/effects/ghost2.ogg'
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
+	var/summon_cooldown = 0
+	var/list/mob/dead/observer/spirits
+
+/obj/item/weapon/melee/ghost_sword/New()
+	..()
+	spirits = list()
+	SSobj.processing += src
+	poi_list |= src
+
+/obj/item/weapon/melee/ghost_sword/Destroy()
+	for(var/mob/dead/observer/G in spirits)
+		G.invisibility = initial(G.invisibility)
+	spirits.Cut()
+	SSobj.processing -= src
+	poi_list -= src
+	. = ..()
+
+/obj/item/weapon/melee/ghost_sword/attack_self(mob/user)
+	if(summon_cooldown > world.time)
+		user << "You just recently called out for aid. You don't want to annoy the spirits."
+		return
+	user << "You call out for aid, attempting to summon spirits to your side."
+
+	notify_ghosts("[user] is raising their [src], calling for your help!",
+		enter_link="<a href=?src=\ref[src];orbit=1>(Click to help)</a>",
+		source = user, action=NOTIFY_ORBIT)
+
+	summon_cooldown = world.time + 600
+
+/obj/item/weapon/melee/ghost_sword/Topic(href, href_list)
+	if(href_list["orbit"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost))
+			ghost.ManualFollow(src)
+
+/obj/item/weapon/melee/ghost_sword/process()
+	ghost_check()
+
+/obj/item/weapon/melee/ghost_sword/proc/ghost_check()
+	var/ghost_counter = 0
+	var/turf/T = get_turf(src)
+	var/list/contents = T.GetAllContents()
+	var/mob/dead/observer/current_spirits = list()
+	for(var/mob/dead/observer/G in dead_mob_list)
+		if(G.orbiting in contents)
+			ghost_counter++
+			G.invisibility = 0
+			current_spirits |= G
+
+	for(var/mob/dead/observer/G in spirits - current_spirits)
+		G.invisibility = initial(G.invisibility)
+
+	spirits = current_spirits
+
+	return ghost_counter
+
+/obj/item/weapon/melee/ghost_sword/attack(mob/living/target, mob/living/carbon/human/user)
+	force = 0
+	var/ghost_counter = ghost_check()
+
+	force = Clamp((ghost_counter * 4), 0, 75)
+	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
+	..()
+
+/obj/item/weapon/melee/ghost_sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	var/ghost_counter = ghost_check()
+	final_block_chance += Clamp((ghost_counter * 5), 0, 75)
+	owner.visible_message("<span class='danger'>[owner] is protected by a ring of [ghost_counter] ghosts!</span>")
+	return ..()
+
+//Blood
+
+/obj/item/weapon/dragons_blood
+	name = "bottle of dragons blood"
+	desc = "You're not actually going to drink this, are you?"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/weapon/dragons_blood/attack_self(mob/living/carbon/human/user)
+	if(!istype(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+	var/random = rand(1,3)
+
+	switch(random)
+		if(1)
+			user << "<span class='danger'>Other than tasting terrible, nothing really happens.</span>"
+		if(2)
+			user << "<span class='danger'>Your flesh begins to melt! Miraculously, you seem fine otherwise.</span>"
+			H.set_species(/datum/species/skeleton)
+		if(3)
+			user << "<span class='danger'>You don't feel so good...</span>"
+			message_admins("[key_name_admin(user)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has started transforming into a dragon via dragon's blood.")
+			H.ForceContractDisease(new /datum/disease/transformation/dragon(0))
+
+	playsound(user.loc,'sound/items/drink.ogg', rand(10,50), 1)
+	qdel(src)
+
+/datum/disease/transformation/dragon
+	name = "dragon transformation"
+	cure_text = "nothing"
+	cures = list("adminordrazine")
+	agent = "dragon's blood"
+	desc = "What do dragons have to do with Space Station 13?"
+	stage_prob = 20
+	severity = BIOHAZARD
+	visibility_flags = 0
+	stage1	= list("Your bones ache.")
+	stage2	= list("Your skin feels scaley.")
+	stage3	= list("<span class='danger'>You have an overwhelming urge to terrorize some peasants.</span>", "<span class='danger'>Your teeth feel sharper.</span>")
+	stage4	= list("<span class='danger'>Your blood burns.</span>")
+	stage5	= list("<span class='danger'>You're a fucking dragon.</span>")
+	new_form = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
+
+
+//Lava Staff
+
+/obj/item/weapon/lava_staff
+	name = "staff of lava"
+	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
+	icon_state = "staffofstorms"
+	item_state = "staffofstorms"
+	icon = 'icons/obj/guns/magic.dmi'
+	slot_flags = SLOT_BACK
+	item_state = "staffofstorms"
+	w_class = 4
+	force = 25
+	damtype = BURN
+	burn_state = LAVA_PROOF
+	hitsound = 'sound/weapons/sear.ogg'
+	var/turf_type = /turf/open/floor/plating/lava/smooth
+	var/cooldown = 200
+	var/timer = 0
+	var/banned_turfs
+
+/obj/item/weapon/lava_staff/New()
+	. = ..()
+	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+
+/obj/item/weapon/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	..()
+	if(timer > world.time)
+		return
+
+	if(is_type_in_typecache(target, banned_turfs))
+		return
+
+	if(target in view(user.client.view, get_turf(user)))
+		var/turf/open/O = target
+		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
+		O.ChangeTurf(turf_type)
+		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
+		timer = world.time + cooldown

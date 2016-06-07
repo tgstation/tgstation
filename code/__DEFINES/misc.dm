@@ -150,8 +150,9 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_TKSTRANGLE 10
 #define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
 //click cooldowns, in tenths of a second
 
 
@@ -164,6 +165,11 @@
 #define MOB_SIZE_SMALL 1
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
+
+//Cuff resist speeds
+
+#define FAST_CUFFBREAK 1
+#define INSTANT_CUFFBREAK 2
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -284,6 +290,7 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
 #define TURF_WET_PERMAFROST 4
+#define TURF_WET_SLIDE	5
 
 //Maximum amount of time, (in approx. seconds.) a tile can be wet for.
 #define MAXIMUM_WET_TIME 300
@@ -396,12 +403,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-//Launching Shuttles to Centcomm
-#define NOLAUNCH -1
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -424,10 +425,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
 
-// Shuttle return values
-#define SHUTTLE_ALREADY_DOCKED 7
-
-
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 
 // Evil narsie colour
@@ -436,3 +433,28 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
 #define DEFIB_TIME_LOSS 60
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
+
+//Slime commands defines
+#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
+#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
+#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
+#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
+#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
+#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
+#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+

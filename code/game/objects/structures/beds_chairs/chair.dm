@@ -162,7 +162,7 @@
 
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
-	armrest.layer = MOB_LAYER + 0.1
+	armrest.layer = ABOVE_MOB_LAYER
 
 	return ..()
 
@@ -224,6 +224,12 @@
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		qdel(src)
+
+/obj/structure/chair/stool/bar
+	name = "bar stool"
+	desc = "It has some unsavory stains on it..."
+	icon_state = "bar"
+	item_chair = null
 
 /obj/item/chair
 	name = "chair"
@@ -323,3 +329,9 @@
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"
 	origin_type = /obj/structure/chair/wood/wings
+
+/obj/structure/chair/old
+	name = "strange chair"
+	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
+	icon_state = "chairold"
+	item_chair = null

@@ -69,24 +69,7 @@
 			add_implants()
 			ready = 1
 
-	src.updateUsrDialog()
-	return
-
-
-/obj/machinery/implantchair/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = W
-		if(!ismob(G.affecting))
-			return
-		var/mob/M = G.affecting
-		if(M.buckled_mobs.len)
-			user << "[M] will not fit into [src] because they have a creature on them!"
-			return
-		if(put_mob(M))
-			qdel(G)
-		updateUsrDialog()
-	else
-		return ..()
+	updateUsrDialog()
 
 
 /obj/machinery/implantchair/go_out(mob/M)

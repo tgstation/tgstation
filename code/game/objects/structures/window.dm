@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
@@ -72,6 +72,14 @@
 	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
 		shard.color = NARSIE_WINDOW_COLOUR
+
+/obj/structure/window/ratvar_act()
+	if(prob(20))
+		if(!fulltile)
+			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+		else
+			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+		qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -487,3 +495,48 @@
 
 /obj/structure/window/shuttle/narsie_act()
 	color = "#3C3434"
+
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE
+
+/obj/structure/window/reinforced/clockwork
+	name = "brass window"
+	desc = "A paper-thin pane of translucent yet reinforced brass."
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon_state = "clockwork_window_single"
+	maxhealth = 100
+	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+
+/obj/structure/window/reinforced/clockwork/New(loc, direct)
+	..()
+	if(!fulltile)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		if(direct)
+			dir = direct
+			E.dir = direct
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	health = maxhealth
+	update_icon()
+	return 0
+
+/obj/structure/window/reinforced/clockwork/narsie_act()
+	take_damage(rand(25, 75), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/window/reinforced/clockwork/fulltile
+	icon_state = "clockwork_window"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	fulltile = 1
+	dir = 5
+	maxhealth = 150

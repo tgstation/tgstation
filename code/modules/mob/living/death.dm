@@ -44,6 +44,13 @@
 	unset_machine()
 	timeofdeath = world.time
 	tod = worldtime2text()
+	if(mind && mind.name && mind.active)
+		var/area/A = get_area(loc)
+		var/rendered = "<span class='game deadsay'><span class='name'>\
+			[mind.name]</span> has died at <span class='name'>[A.name]\
+			</span>.</span>"
+		deadchat_broadcast(rendered, follow_target = src,
+			message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
 	living_mob_list -= src

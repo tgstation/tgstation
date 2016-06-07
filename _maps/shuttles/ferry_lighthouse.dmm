@@ -38,7 +38,7 @@
 "aL" = (/turf/closed/wall/rust,/area/shuttle/transport)
 "aM" = (/obj/structure/table/wood,/obj/structure/window/reinforced{dir = 4},/turf/open/floor/wood,/area/shuttle/transport)
 "aN" = (/obj/machinery/power/grounding_rod{anchored = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
-"aO" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dir = 8;dwidth = 9;height = 27;id = "ferry";name = "ferry shuttle";roundstart_move = "ferry_away";travelDir = 180;width = 16},/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
+"aO" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile{dir = 8;dwidth = 8;height = 27;id = "ferry";name = "The Lighthouse";roundstart_move = "ferry_away";timid = 1;travelDir = 180;width = 16},/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
 "aP" = (/obj/machinery/vending/magivend,/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
 "aQ" = (/obj/structure/grille,/obj/structure/window/fulltile,/turf/open/floor/plasteel/shuttle,/area/shuttle/transport)
 "aR" = (/obj/structure/chair/office/dark{dir = 4},/turf/open/floor/wood,/area/shuttle/transport)
@@ -70,9 +70,9 @@ aaafamanaoapadadapaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae
 aaafafaqakapararapapapaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae
 agaaaaasakatauauavauapapapawawadadaxaxayaxaxaxazaxaxaA
 agagagaBakapauauaCaDaDaDaEaEaEakaFaGaHaIakaJaJaJaJaKay
-aaaaaaasakaLauauaMaDaDaDaNaNaEaEaEaEaEaEaEaEaEaEaEaEaO
+aaaaaaasakaLauauaCaDaDaDaNaNaEaEaEaEaEaEaEaEaEaEaEaEaO
 aaaaagasaPaQauaRaSaDaDaDaEaEaEakaTaUaVaWaWaWaWaWaWaWay
-aaabacaXaXapauauaMaDaDaDadadadaYawadaxayaxaxaxazaxaxaZ
+aaabacaXaXapauauaCaDaDaDadadadaYawadaxayaxaxaxazaxaxaZ
 aaaaagahbaaLaLbbbcbdadadadaeaeaeaeaeaeaeaeaeaeaeaeaeae
 aaaaaaahbebebfbgadadadaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae
 aaaaagahbhbhadadadaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeae

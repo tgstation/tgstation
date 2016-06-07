@@ -1,4 +1,4 @@
-//In this file: C4 and Syndicate Bombs
+//In this file: C4
 
 /obj/item/weapon/c4
 	name = "C-4"
@@ -9,7 +9,7 @@
 	item_state = "plasticx"
 	flags = NOBLUDGEON
 	w_class = 2
-	origin_tech = "syndicate=2"
+	origin_tech = "syndicate=1"
 	var/timer = 10
 	var/open_panel = 0
 	parent_type = /obj/item/weapon/grenade/plastic/c4

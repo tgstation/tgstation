@@ -709,7 +709,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		step_towards(O, get_turf(M))
 	return ..()
 
-// Another reference. Heals those in critical condition extremely quickly.
+//Another reference. Heals those in critical condition extremely quickly.
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"

@@ -79,6 +79,7 @@
 /mob/living/simple_animal/slime/proc/Feedon(mob/living/M)
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
 	if(M.buckle_mob(src, force=1))
+		layer = M.layer+0.01 //appear above the target mob
 		M.visible_message("<span class='danger'>The [name] has latched onto [M]!</span>", \
 						"<span class='userdanger'>The [name] has latched onto [M]!</span>")
 	else
@@ -94,6 +95,7 @@
 		if(!silent)
 			visible_message("<span class='warning'>[src] has let go of [buckled]!</span>", \
 							"<span class='notice'><i>I stopped feeding.</i></span>")
+		layer = initial(layer)
 		buckled.unbuckle_mob(src,force=1)
 
 /mob/living/simple_animal/slime/verb/Evolve()

@@ -4,13 +4,13 @@
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=6"
+	origin_tech = "bluespace=4;materials=4;programming=7"
 	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 
 /obj/item/device/unactivated_swarmer/New()
 	if(!crit_fail)
-		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+		notify_ghosts("An unactivated swarmer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	..()
 
 /obj/item/device/unactivated_swarmer/Topic(href, href_list)
@@ -389,7 +389,7 @@
 
 /obj/effect/overlay/temp/swarmer //temporary swarmer visual feedback objects
 	icon = 'icons/mob/swarmer.dmi'
-	layer = MOB_LAYER
+	layer = BELOW_MOB_LAYER
 
 /obj/effect/overlay/temp/swarmer/disintegration
 	icon_state = "disintegrate"
@@ -544,10 +544,12 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	// TODO get swarmers their own colour rather than just boldtext
 	var/rendered = "<B>Swarm communication - </b> [src] states: [message]"
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))
 				M << rendered
-			if(M in dead_mob_list)
-				M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			if(isobserver(M))
+				var/link = FOLLOW_LINK(M, src)
+				M << "[link] [rendered]"

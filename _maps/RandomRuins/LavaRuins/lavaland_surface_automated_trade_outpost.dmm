@@ -9,7 +9,7 @@
 "i" = (/obj/structure/table/glass,/obj/item/weapon/paper{name = "payment table"},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "j" = (/obj/machinery/vending/magivend{emagged = 1},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "k" = (/obj/machinery/vending/sustenance,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
-"l" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
+"l" = (/obj/machinery/door/airlock/shuttle{name = "automated trading pod"},/obj/structure/fans/tiny,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "m" = (/obj/structure/table/glass,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "n" = (/obj/machinery/vending/boozeomat{emagged = 1},/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)
 "o" = (/obj/machinery/vending/sovietsoda,/turf/open/floor/plasteel/shuttle/purple{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered)

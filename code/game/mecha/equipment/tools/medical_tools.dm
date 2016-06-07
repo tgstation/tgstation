@@ -34,10 +34,9 @@
 	desc = "Equipment for medical exosuits. A mounted sleeper that stabilizes patients and can inject reagents in the exosuit's reserves."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-	origin_tech = "programming=2;biotech=3"
+	origin_tech = "engineering=3;biotech=3;plasmatech=2"
 	energy_drain = 20
 	range = MELEE
-	reliability = 1000
 	equip_cooldown = 20
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
@@ -260,15 +259,15 @@
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
 	equip_cooldown = 10
-	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
+	origin_tech = "materials=3;biotech=4;magnets=4"
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/New()
 	..()
-	flags |= NOREACT
+	create_reagents(max_volume)
+	reagents.set_reacting(FALSE)
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
-	create_reagents(max_volume)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
 	SSobj.processing -= src
@@ -280,8 +279,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
 	..()
-	flags &= ~NOREACT
-	return
+	if(reagents)
+		reagents.set_reacting(TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())
@@ -523,8 +522,6 @@
 		log_message("Reagent processing stopped.")
 		SSobj.processing -= src
 		return
-	if(anyprob(reliability))
-		critfail()
 	var/amount = synth_speed / processed_reagents.len
 	for(var/reagent in processed_reagents)
 		reagents.add_reagent(reagent,amount)

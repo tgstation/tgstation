@@ -236,6 +236,9 @@
 		msg += "[t_He] looks a little soaked.\n"
 
 
+	if(pulledby && pulledby.grab_state)
+		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
+
 	if(nutrition < NUTRITION_LEVEL_STARVING - 50)
 		msg += "[t_He] [t_is] severely malnourished.\n"
 	else if(nutrition >= NUTRITION_LEVEL_FAT)
@@ -244,12 +247,12 @@
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
 
-	if(pale)
+	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
 
 	if(bleedsuppress)
 		msg += "[t_He] [t_is] bandaged with something.\n"
-	if(blood_max)
+	if(bleed_rate)
 		if(reagents.has_reagent("heparin"))
 			msg += "<b>[t_He] [t_is] bleeding uncontrollably!</b>\n"
 		else

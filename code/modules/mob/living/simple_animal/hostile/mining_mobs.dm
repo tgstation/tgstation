@@ -77,8 +77,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
+	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -288,10 +288,8 @@
 		if(NOBLOOD in H.dna.species.specflags)
 			return
 
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
-		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-		if(B && blood_volume < 560 && blood_volume)
-			B.volume += 2 // Fast blood regen
+		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume += 2 // Fast blood regen
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -398,7 +396,7 @@
 	transfer_reagents(C)
 	death()
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, var/volume = 30)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, volume = 30)
 	if(!reagents.total_volume)
 		return
 
@@ -406,29 +404,11 @@
 
 	var/fraction = min(volume/reagents.total_volume, 1)
 	reagents.reaction(C, INJECT, fraction)
-
-	var/datum/reagent/blood/B
-	for(var/datum/reagent/blood/d in reagents.reagent_list)
-		B = d
-		break
-	if(B)
-		C.inject_blood(src, min(B.volume, volume))
-
 	reagents.trans_to(C, volume)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
-	var/datum/reagent/B = C.take_blood(src, 30)
-	if(!B)
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.dna.species.exotic_blood && H.reagents.total_volume)
-				H.reagents.trans_to(src, 10)
-
-	else
-		reagents.reagent_list += B
-		reagents.update_total()
-
+	C.transfer_blood_to(src, 30)
 	color = mix_color_from_reagents(reagents.reagent_list)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
@@ -463,7 +443,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -558,7 +538,7 @@
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -629,7 +609,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
-	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
+	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
@@ -705,7 +685,7 @@
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
 
@@ -1005,7 +985,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	layer = MOB_LAYER-0.1
 	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
 	var/gps = null
@@ -1021,7 +1000,7 @@
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE

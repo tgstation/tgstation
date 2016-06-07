@@ -8,12 +8,12 @@
 	anchored = 1
 	density = 1
 	pixel_x = -16
-	layer = 9
+	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
-	if(!cut && log_amount)
+	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)

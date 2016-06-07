@@ -27,7 +27,7 @@
 //APPEARANCE
 /obj/vehicle/proc/handle_vehicle_layer()
 	if(dir != NORTH)
-		layer = MOB_LAYER+0.1
+		layer = ABOVE_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
@@ -109,7 +109,7 @@
 
 
 /obj/vehicle/Move(NewLoc,Dir=0,step_x=0,step_y=0)
-	..()
+	. = ..()
 	handle_vehicle_layer()
 	handle_vehicle_offsets()
 

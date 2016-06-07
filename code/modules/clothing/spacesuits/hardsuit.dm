@@ -119,11 +119,6 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
 
-
-/obj/item/clothing/suit/space/hardsuit/engine/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
-
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
 	name = "atmospherics hardsuit helmet"

@@ -6,19 +6,21 @@
 	desc = "Keeps cold things cold and hot things cold."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "smartfridge"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	density = 1
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	flags = NOREACT
 	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"
 
 /obj/machinery/smartfridge/New()
 	..()
+	create_reagents()
+	reagents.set_reacting(FALSE)
+
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
 	B.apply_default_parts(src)
 
@@ -360,8 +362,11 @@
 /obj/machinery/smartfridge/chemistry
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
-	var/list/spawn_meds = list(/obj/item/weapon/reagent_containers/pill/epinephrine = 12,/obj/item/weapon/reagent_containers/pill/charcoal = 1,
-								/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1, /obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
+	var/list/spawn_meds = list(
+		/obj/item/weapon/reagent_containers/pill/epinephrine = 12,
+		/obj/item/weapon/reagent_containers/pill/charcoal = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/epinephrine = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/charcoal = 1)
 
 /obj/machinery/smartfridge/chemistry/New()
 	..()
@@ -397,4 +402,10 @@
 /obj/machinery/smartfridge/chemistry/virology
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
-	spawn_meds = list(/obj/item/weapon/reagent_containers/syringe/antiviral = 4, /obj/item/weapon/reagent_containers/glass/bottle/cold = 1, /obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1, /obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1, /obj/item/weapon/reagent_containers/glass/bottle/plasma = 1, /obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)
+	spawn_meds = list(
+		/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
+		/obj/item/weapon/reagent_containers/glass/bottle/cold = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/flu_virion = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/plasma = 1,
+		/obj/item/weapon/reagent_containers/glass/bottle/synaptizine = 1)

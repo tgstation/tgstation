@@ -319,9 +319,7 @@
 		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
-		spawn(10)
-			AM.overlays -= targeteffect
-			qdel(targeteffect)
+		addtimer(src, "remove_sparkles", AM, targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
@@ -335,6 +333,9 @@
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
 			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
+/obj/effect/proc_holder/spell/aoe_turf/repulse/proc/remove_sparkles(atom/movable/AM, obj/effect/overlay/targeteffect)
+	AM.overlays -= targeteffect
+	qdel(targeteffect)
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"

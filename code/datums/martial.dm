@@ -66,12 +66,8 @@
 		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
-	if(H.martial_art && H.martial_art.temporary)
-		if(temporary)
-			base = H.martial_art.base
-		else
-			H.martial_art.base = src //temporary styles have priority
-			return
+	if(H.martial_art && temporary)
+		base = H.martial_art
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
@@ -323,10 +319,17 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	D.grabbedby(A,1)
-	var/obj/item/weapon/grab/G = A.get_active_hand()
-	if(G)
-		G.state = GRAB_AGGRESSIVE //Instant aggressive grab
+	if(A.grab_state >= GRAB_AGGRESSIVE)
+		D.grabbedby(A, 1)
+	else
+		A.start_pulling(D, 1)
+		if(A.pulling)
+			D.drop_r_hand()
+			D.drop_l_hand()
+			D.stop_pulling()
+			add_logs(A, D, "grabbed", addition="aggressively")
+			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
+	return 1
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	add_to_streak("H",D)

@@ -4,6 +4,7 @@
 /data/**/*
 
 #Ignore compiled files and other files generated during compilation.
+*.mdme
 *.dmb
 *.rsc
 *.lk
@@ -178,7 +179,5 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-
 
 *.before

@@ -31,11 +31,11 @@
 	name = "Faith"
 	icon_state = "deity_power"
 	screen_loc = ui_deitypower
-	layer = 20
+	layer = HUD_LAYER
 
 /obj/screen/deity_follower_display
 	name = "Followers"
 	icon_state = "deity_followers"
 	screen_loc = ui_deityfollowers
-	layer = 20
+	layer = HUD_LAYER
 

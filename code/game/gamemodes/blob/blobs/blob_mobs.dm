@@ -67,7 +67,8 @@
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 
 ////////////////
 // BLOB SPORE //
@@ -132,7 +133,7 @@
 	H.update_hair()
 	human_overlays = H.overlays
 	update_icons()
-	H.loc = src
+	H.forceMove(src)
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)

@@ -14,16 +14,10 @@
 	if(..())
 		. = 1
 
+		handle_blood()
+
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
-
-	//grab processing
-	if(istype(l_hand, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = l_hand
-		G.process()
-	if(istype(r_hand, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = r_hand
-		G.process()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -54,7 +48,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit)
+	if(health <= config.health_threshold_crit || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate
@@ -219,6 +213,9 @@
 		else
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
+
+/mob/living/carbon/proc/handle_blood()
+	return
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)

@@ -1,0 +1,88 @@
+<script>
+  import { filterMulti } from 'util/filter'
+  component.exports = {
+    data: {
+      filter: ''
+    },
+    oninit () {
+      this.observe('filter', (newkey, oldkey, keypath) => {
+        const categories = this.findAll('.display:not(:first-child)')
+        filterMulti(categories, this.get('filter').toLowerCase())
+      }, { init: false })
+    }
+  }
+</script>
+
+<ui-display title='{{data.category}}'>
+  {{#if data.busy}}
+    <ui-section>
+	  Crafting... <i class='fa-spin fa fa-spinner'></i>
+	</ui-section>
+  {{else}}
+    <ui-section>
+      <ui-button icon='arrow-left' action ='backwardCat'>
+	    {{data.prev_cat}}
+	  </ui-button>
+	  <ui-button icon='arrow-right' action='forwardCat'>
+	    {{data.next_cat}}
+      </ui-button>
+	  {{#if data.display_craftable_only}}
+	    <ui-button icon='lock' action='toggle_recipes'>
+		  Showing Craftable Recipes
+		</ui-button>
+	  {{else}}
+	    <ui-button icon='unlock' action='toggle_recipes'>
+		  Showing All Recipes
+		</ui-button>
+	  {{/if}}
+      {{#if config.fancy}}
+	    <ui-input value='{{filter}}' placeholder='Filter..'/>
+	  {{/if}}
+	</ui-section>
+    {{#each data.can_craft}}
+      <ui-display title='{{name}}'>
+	    {{#if req_text}}
+	      <ui-section label='Requirements'>
+	        {{req_text}}
+	      </ui-section>
+		{{/if}}
+	    {{#if catalyst_text}}
+		  <ui-section label='Catalysts'>
+	        {{catalyst_text}}
+	      </ui-section>
+	    {{/if}}
+		{{#if tool_text}}
+		  <ui-section label='Tools'>
+	        {{tool_text}}
+	      </ui-section>
+		{{/if}}
+	    <ui-section>
+	      <ui-button icon='gears' action='make' params='{"recipe": "{{ref}}"}'>
+		    Craft
+		  </ui-button>
+	    </ui-section>
+	  </ui-display>
+    {{/each}}
+	{{^data.display_craftable_only}}
+      {{#each data.cant_craft}}
+        <ui-display title='{{name}}'>
+	      {{#if req_text}}
+	        <ui-section label='Requirements'>
+	          {{req_text}}
+	        </ui-section>
+	      {{/if}}
+		  {{#if catalyst_text}}
+		    <ui-section label='Catalysts'>
+	          {{catalyst_text}}
+	        </ui-section>
+	      {{/if}}
+		  {{#if tool_text}}
+		    <ui-section label='Tools'>
+	          {{tool_text}}
+	        </ui-section>
+		  {{/if}}
+	    </ui-display>
+      {{/each}}
+	{{/data.display_craftable_only}}
+  {{/if}}
+</ui-display>

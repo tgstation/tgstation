@@ -5,6 +5,7 @@
 	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine_equip)
@@ -36,7 +37,7 @@
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "circuit board (Emitter)"
 	build_path = /obj/machinery/power/emitter
-	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -94,9 +95,9 @@
 
 /obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+		icon_state = icon_state_on
 	else
-		icon_state = "emitter"
+		icon_state = initial(icon_state)
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user)

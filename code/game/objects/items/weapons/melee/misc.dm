@@ -11,7 +11,7 @@
 	force = 10
 	throwforce = 7
 	w_class = 3
-	origin_tech = "combat=4"
+	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/slash.ogg' //pls replace
 	materials = list(MAT_METAL = 1000)
@@ -143,7 +143,7 @@
 	armour_penetration = 1000
 	var/obj/machinery/power/supermatter_shard/shard
 	var/balanced = 1
-	origin_tech = "combat=5;materials=6"
+	origin_tech = "combat=7;materials=6"
 
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
@@ -220,5 +220,5 @@
 	T.ChangeTurf(T.baseturf)
 	T.CalculateAdjacentTurfs()
 
-/obj/item/weapon/melee/supermatter_sword/add_blood()
-	return
+/obj/item/weapon/melee/supermatter_sword/add_blood(list/blood_dna)
+	return 0

@@ -5,7 +5,7 @@ var/const/SAFETY_COOLDOWN = 100
 	desc = "A large crushing machine which is used to recycle small items ineffeciently; there are lights on the side of it."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
-	layer = MOB_LAYER+1 // Overhead
+	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	anchored = 1
 	density = 1
 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
@@ -28,7 +28,7 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/item/weapon/circuitboard/machine/recycler
 	name = "circuit board (Recycler)"
 	build_path = /obj/machinery/recycler
-	origin_tech = "programming=1"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -148,11 +148,12 @@ var/const/SAFETY_COOLDOWN = 100
 	safety_mode = TRUE
 	update_icon()
 	L.loc = src.loc
+	addtimer(src, "reboot", SAFETY_COOLDOWN)
 
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = FALSE
-		update_icon()
+/obj/machinery/recycler/proc/reboot()
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	safety_mode = FALSE
+	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
@@ -169,7 +170,7 @@ var/const/SAFETY_COOLDOWN = 100
 		gib = FALSE
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!")
-		add_blood(L)
+		add_mob_blood(L)
 
 	if(!blood && !issilicon(L))
 		blood = TRUE

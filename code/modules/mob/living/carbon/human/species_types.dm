@@ -7,8 +7,8 @@
 	id = "human"
 	default_color = "FFFFFF"
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None")
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -63,6 +63,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	exotic_bloodtype = "L"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -194,26 +195,20 @@
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.reagents.get_reagent_amount(exotic_blood))
-		H.reagents.add_reagent(exotic_blood, 5)
+	if(!H.blood_volume)
+		H.blood_volume += 5
 		H.adjustBruteLoss(5)
 		H << "<span class='danger'>You feel empty!</span>"
 
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-
-	if(jelly_amount < 100)
+	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.reagents.add_reagent(exotic_blood, 0.5)
+			H.blood_volume += 3
 			H.nutrition -= 2.5
-	if(jelly_amount < 50)
+	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			H << "<span class='danger'>You feel drained!</span>"
-	if(jelly_amount < 10)
+	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		H.losebreath++
-
-/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == exotic_blood)
-		return 1
 
 /*
  SLIMEPEOPLE
@@ -245,6 +240,8 @@
 		callforward.Remove(C)
 	if(callback)
 		callback.Remove(C)
+	C.faction -= "slime"
+	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
@@ -252,14 +249,14 @@
 	if(ishuman(C))
 		slime_split = new
 		slime_split.Grant(C)
+	C.faction |= "slime"
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-	if(jelly_amount >= 200)
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			H << "<span class='notice'>You feel very bloated!</span>"
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.reagents.add_reagent(exotic_blood, 0.5)
+		H.blood_volume += 3
 		H.nutrition -= 2.5
 
 	..()
@@ -274,29 +271,28 @@
 	var/mob/living/carbon/human/H = owner
 	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
 	H.notransform = 1
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume >= 200)
-			var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
-			spare.underwear = "Nude"
-			H.dna.transfer_identity(spare, transfer_SE=1)
-			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-			spare.real_name = spare.dna.real_name
-			spare.name = spare.dna.real_name
-			spare.updateappearance(mutcolor_update=1)
-			spare.domutcheck()
-			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
-			S.volume = 80
-			H.notransform = 0
-			var/datum/species/jelly/slime/SS = H.dna.species
-			SS.callforward = new
-			SS.callforward.body = spare
-			SS.callforward.Grant(H)
-			SS.callback = new
-			SS.callback.body = H
-			SS.callback.Grant(spare)
-			H.mind.transfer_to(spare)
-			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
-			return
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
+		spare.underwear = "Nude"
+		H.dna.transfer_identity(spare, transfer_SE=1)
+		H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+		spare.real_name = spare.dna.real_name
+		spare.name = spare.dna.real_name
+		spare.updateappearance(mutcolor_update=1)
+		spare.domutcheck()
+		spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+		H.blood_volume = BLOOD_VOLUME_SAFE
+		H.notransform = 0
+		var/datum/species/jelly/slime/SS = H.dna.species
+		SS.callforward = new
+		SS.callforward.body = spare
+		SS.callforward.Grant(H)
+		SS.callback = new
+		SS.callback.body = H
+		SS.callback.Grant(spare)
+		H.mind.transfer_to(spare)
+		spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+		return
 
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
 	H.notransform = 0
@@ -338,6 +334,23 @@
 	nojumpsuit = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
+	// To prevent golem subtypes from overwhelming the odds when random species
+	// changes, only the Random Golem type can be chosen
+	blacklisted = TRUE
+	dangerous_existence = TRUE
+
+/datum/species/golem/random
+	name = "Random Golem"
+	blacklisted = FALSE
+	dangerous_existence = FALSE
+
+/datum/species/golem/random/New()
+	. = ..()
+	var/list/golem_types = typesof(/datum/species/golem) - src.type
+	var/datum/species/golem/golem_type = pick(golem_types)
+	name = initial(golem_type.name)
+	id = initial(golem_type.id)
+	meat = initial(golem_type.id)
 
 /datum/species/golem/adamantine
 	name = "Adamantine Golem"
@@ -347,32 +360,22 @@
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma"
-	dangerous_existence = 1
-	blacklisted = 1
 
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = "diamond"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = "gold"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = "silver"
-	blacklisted = 1
-	dangerous_existence = 1
 
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = "uranium"
-	blacklisted = 1
-	dangerous_existence = 1
 
 
 /*
@@ -397,9 +400,9 @@
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem,/datum/reagent/consumable))
 		var/datum/reagent/consumable/nutri_check = chem
-		if(nutri_check.nutriment_factor >0)
+		if(nutri_check.nutriment_factor > 0)
 			var/turf/pos = get_turf(H)
-			H.vomit()
+			H.vomit(0, 0, 0, 1, 1)
 			playsound(pos, 'sound/effects/splat.ogg', 50, 1)
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")
@@ -426,21 +429,61 @@
 
 /datum/species/zombie
 	// 1spooky
-	name = "Brain-Munching Zombie"
+	name = "High Functioning Zombie"
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	speedmod = 2
 
-/datum/species/cosmetic_zombie
+/datum/species/zombie/infectious
+	name = "Infectious Zombie"
+	no_equip = list(slot_wear_mask, slot_head)
+	armor = 20 // 120 damage to KO a zombie, which kills it
+
+/datum/species/zombie/infectious/spec_life(mob/living/carbon/C)
+	. = ..()
+	C.a_intent = "harm" // THE SUFFERING MUST FLOW
+	if(C.InCritical())
+		C.death()
+		// Zombies only move around when not in crit, they instantly
+		// succumb otherwise, and will standup again soon
+
+/datum/species/zombie/infectious/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	// Drop items in hands
+	// If you're a zombie lucky enough to have a NODROP item, then it stays.
+	if(C.unEquip(C.l_hand))
+		C.put_in_l_hand(new /obj/item/zombie_hand(C))
+	if(C.unEquip(C.r_hand))
+		C.put_in_r_hand(new /obj/item/zombie_hand(C))
+
+	// Next, deal with the source of this zombie corruption
+	var/obj/item/organ/body_egg/zombie_infection/infection
+	infection = C.getorganslot("zombie_infection")
+	if(!infection)
+		infection = new(C)
+
+/datum/species/zombie/infectious/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	var/obj/item/zombie_hand/left = C.l_hand
+	var/obj/item/zombie_hand/right = C.r_hand
+	// Deletion of the hands is handled in the items dropped()
+	if(istype(left))
+		C.unEquip(left, TRUE)
+	if(istype(right))
+		C.unEquip(right, TRUE)
+
+// Your skin falls off
+/datum/species/krokodil_addict
 	name = "Human"
 	id = "zombie"
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-
+	mutant_organs = list(/obj/item/organ/tongue/zombie)
 
 /datum/species/abductor
 	name = "Abductor"
@@ -725,3 +768,147 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
+
+/datum/species/angel
+	name = "Angel"
+	id = "angel"
+	default_color = "FFFFFF"
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
+	use_skintones = 1
+	no_equip = list(slot_back)
+	blacklisted = 1
+	limbs_id = "human"
+	skinned_type = /obj/item/stack/sheet/animalhide/human
+
+	var/datum/action/innate/flight/fly
+
+/datum/species/angel/on_species_gain(mob/living/carbon/human/H)
+	..()
+	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
+		H.dna.features["wings"] = "Angel"
+		H.update_body()
+	if(ishuman(H)&& !fly)
+		fly = new
+		fly.Grant(H)
+
+
+/datum/species/angel/on_species_loss(mob/living/carbon/human/H)
+	if(fly)
+		fly.Remove(H)
+	if(FLYING in specflags)
+		specflags -= FLYING
+	ToggleFlight(H,0)
+	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
+		H.dna.features["wings"] = "None"
+		H.update_body()
+	..()
+
+/datum/species/angel/spec_life(mob/living/carbon/human/H)
+	HandleFlight(H)
+
+/datum/species/angel/proc/HandleFlight(mob/living/carbon/human/H)
+	if(FLYING in specflags)
+		if(!CanFly(H))
+			ToggleFlight(H,0)
+			H.float(0)
+			return 0
+		H.float(1)
+		return 1
+	else
+		H.float(0)
+		return 0
+
+/datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
+	if(H.stat || H.stunned || H.weakened)
+		return 0
+	if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
+		H << "Your suit blocks your wings from extending!"
+		return 0
+	var/turf/T = get_turf(H)
+	if(!T)
+		return 0
+
+	var/datum/gas_mixture/environment = T.return_air()
+	if(environment && !(environment.return_pressure() > 30))
+		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
+		return 0
+	else
+		return 1
+
+/datum/action/innate/flight
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
+	button_icon_state = "slimesplit"
+	background_icon_state = "bg_alien"
+
+/datum/action/innate/flight/Activate()
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/angel/A = H.dna.species
+	if(A.CanFly(H))
+		if(FLYING in A.specflags)
+			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			A.ToggleFlight(H,0)
+			H.update_canmove()
+		else
+			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			H.resting = 0
+			A.ToggleFlight(H,1)
+			H.update_canmove()
+
+/datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
+	var/obj/buckled_obj
+	if(H.buckled)
+		buckled_obj = H.buckled
+
+	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+
+	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
+
+	H.accident(H.l_hand)
+	H.accident(H.r_hand)
+
+	var/olddir = H.dir
+
+	H.stop_pulling()
+	if(buckled_obj)
+		buckled_obj.unbuckle_mob(H)
+		step(buckled_obj, olddir)
+	else
+		for(var/i=1, i<5, i++)
+			spawn (i)
+				step(H, olddir)
+				H.spin(1,1)
+	return 1
+
+
+/datum/species/angel/spec_stun(mob/living/carbon/human/H,amount)
+	if(FLYING in specflags)
+		ToggleFlight(H,0)
+		flyslip(H)
+	. = ..()
+
+/datum/species/angel/negates_gravity()
+	if(FLYING in specflags)
+		return 1
+
+/datum/species/angel/space_move()
+	if(FLYING in specflags)
+		return 1
+
+/datum/species/angel/proc/ToggleFlight(mob/living/carbon/human/H,flight)
+	if(flight && CanFly(H))
+		stunmod = 2
+		speedmod = -1
+		specflags += FLYING
+		override_float = 1
+		H.pass_flags |= PASSTABLE
+		H.OpenWings()
+	else
+		stunmod = 1
+		speedmod = 0
+		specflags -= FLYING
+		override_float = 0
+		H.pass_flags &= ~PASSTABLE
+		H.CloseWings()

@@ -40,7 +40,7 @@
 /obj/item/weapon/circuitboard/machine/hydroponics
 	name = "circuit board (Hydroponics Tray)"
 	build_path = /obj/machinery/hydroponics/constructable
-	origin_tech = "programming=1;biotech=1"
+	origin_tech = "programming=1;biotech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 1,
@@ -278,7 +278,7 @@
 	else
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
 		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][t_growthstate]")
-	I.layer = MOB_LAYER + 0.1
+	I.layer = OBJ_LAYER + 0.01
 	overlays += I
 
 /obj/machinery/hydroponics/proc/update_icon_lights()
@@ -734,7 +734,7 @@
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"
 
-	else if(istype(O, /obj/item/device/analyzer/plant_analyzer))
+	else if(istype(O, /obj/item/device/plant_analyzer))
 		if(myseed)
 			user << "*** <B>[myseed.plantname]</B> ***" //Carn: now reports the plants growing, not the seeds.
 			user << "- Plant Age: <span class='notice'>[age]</span>"

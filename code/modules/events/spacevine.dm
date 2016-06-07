@@ -327,8 +327,7 @@
 
 /datum/spacevine_mutation/flowering/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud_enemy) in range(5,holder))
-		var/obj/structure/alien/resin/flower_bud_enemy/FBE = new /obj/structure/alien/resin/flower_bud_enemy (get_turf(holder))
-		FBE.layer = holder.layer+0.1
+		new/obj/structure/alien/resin/flower_bud_enemy(get_turf(holder))
 
 
 /datum/spacevine_mutation/flowering/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
@@ -344,7 +343,7 @@
 	icon_state = "Light1"
 	anchored = 1
 	density = 0
-	layer = MOB_LAYER + 0.8
+	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
@@ -435,7 +434,8 @@
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
 
-
+/obj/effect/spacevine/attack_alien(mob/living/user)
+	eat(user)
 
 /obj/effect/spacevine_controller
 	invisibility = INVISIBILITY_ABSTRACT
@@ -532,7 +532,6 @@
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
 		SetOpacity(1)
-		layer = 5
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
