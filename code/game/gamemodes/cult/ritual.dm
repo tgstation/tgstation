@@ -184,6 +184,9 @@ This file contains the arcane tome files.
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
+	if(istype(Turf, /turf/open/space))
+		user << "<span class='warning'>You cannot scribe runes in space!</span>"
+		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name) == entered_rune_name)
@@ -233,8 +236,8 @@ This file contains the arcane tome files.
 			for(var/B in spiral_range_turfs(1, user, 1))
 				var/turf/T = B
 				var/obj/machinery/shield/N = new(T)
-				N.name = "Rune-Scriber's Shield"
-				N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
+				N.name = "sanguine barrier"
+				N.desc = "A potent shield summoned by cultists to defend their rites."
 				N.icon_state = "shield-red"
 				N.health = 60
 				shields |= N
