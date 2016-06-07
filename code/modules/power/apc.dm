@@ -802,6 +802,8 @@
 /obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
+	malf.malfhack = null
+	malf.malfhacking = FALSE
 	if(src && !src.aidisabled)
 		malf.malfhack = null
 		malf.malfhacking = FALSE
@@ -813,6 +815,8 @@
 
 		malf << "Hack complete. The APC is now under your exclusive control."
 		update_icon()
+	else
+		malf << "Hack aborted. The designated APC has stopped responding and no longer exists on the power network."
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
