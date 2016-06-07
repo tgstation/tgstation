@@ -197,7 +197,7 @@
 	if(!used && istype(user, /mob/living/carbon/human))
 		used = 1
 		var/mob/living/carbon/human/H = user
-		H.influenceSin(PRIDE)
+		H.influenceSin(SLOTH)
 
 //Envy
 
