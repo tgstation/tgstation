@@ -805,8 +805,6 @@
 	malf.malfhack = null
 	malf.malfhacking = FALSE
 	if(src && !src.aidisabled)
-		malf.malfhack = null
-		malf.malfhacking = FALSE
 		malf.malf_picker.processing_time += 10
 
 		malfai = malf.parent || malf
