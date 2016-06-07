@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/anima_fragment/death(gibbed)
 	..(TRUE)
 	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash. A cube of metal tumbles out, whirring and sputtering.</span>", \
-	"<span class='userdanger'>Your gears seize up. Your flame jets flicker. Your soul vessel belches smoke as you helplessly crash down.</span>")
+	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/anima_fragment/Process_Spacemove(movement_dir = 0)
@@ -176,6 +176,7 @@
 			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
 		stat(null, "You are [recovering ? "too weak" : "able"] to deploy!")
+		stat(null, "You do [melee_damage_upper] on melee attacks.")
 
 /mob/living/simple_animal/hostile/clockwork_marauder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	..()
@@ -313,7 +314,10 @@
 	if(!is_in_host())
 		return 0
 	if(recovering)
-		host << "<span class='heavy_brass'>[true_name] is too weak to come forth!</span>"
+		if(hostchosen)
+			host << "<span class='heavy_brass'>[true_name] is too weak to come forth!</span>"
+		else
+			host << "<span class='heavy_brass'>[true_name] tries to emerge to protect you, but it's too weak!</span>"
 		src << "<span class='userdanger'>You try to come forth, but you're too weak!</span>"
 		return 0
 	if(hostchosen) //marauder approved
