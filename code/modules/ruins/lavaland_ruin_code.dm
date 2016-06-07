@@ -101,13 +101,14 @@
 	desc = "This is so wrong, but that doesn't matter."
 
 /obj/structure/acedialtar/attack_hand(mob/living/user)
-	if(ishuman(user) && user.mind.soulOwner == U.mind)
+	if(ishuman(user) && (user.mind.soulOwner == user.mind))
 		var/mob/living/carbon/human/U = user
 		if(U.check_acedia())
 			user << "<span class='notice'>Pfft, demonic power. Who cares?</span>"
 			return
 		user << "<span class='danger'>You feel your soul slipping away from you.  But that doesn't matter.</span>"
 		U.mind.soulOwner = null
+		U.influenceSin(ACEDIA)
 		new /obj/item/weapon/twohanded/pitchfork/demonic(get_turf(U))
 
 //Greed
