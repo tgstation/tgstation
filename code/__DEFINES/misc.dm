@@ -448,5 +448,13 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
+
 #define DEADCHAT_DEATHRATTLE "deathrattle"
 #define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+
