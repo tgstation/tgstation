@@ -14,7 +14,7 @@
 		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
 		return
 
-	var/new_name = reject_bad_name( input(user, "What do you want to name [station_name()]?")  as text|null )
+	var/new_name = reject_bad_name( input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.")  as text|null )
 	if(new_name)
 		world.name = new_name
 		minor_announce("[user.real_name] has designated your station as [world.name]", "Captain's Charter", 0)
