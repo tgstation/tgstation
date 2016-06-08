@@ -1,4 +1,0 @@
-author: Shadowmech88
-delete-after: True
-changes: 
-- bugfix: Fixed borer unlock prerequisites. Borers are now able to unlock dexalin plus secretion as well as the X-ray vision and fast running mutations for their hosts, as was always intended.
