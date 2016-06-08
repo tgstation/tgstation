@@ -24,19 +24,45 @@
 	if(buckled_mobs.len)
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			switch(buckled_mob.dir)
-				if(NORTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
-				if(EAST)
-					buckled_mob.pixel_x = -2
-					buckled_mob.pixel_y = 4
-				if(SOUTH)
-					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
-				if(WEST)
-					buckled_mob.pixel_x = 2
-					buckled_mob.pixel_y = 4
+			if(iscarbon(buckled_mob))
+				var/mob/living/carbon/buckled_carbon = buckled_mob
+				if(buckled_carbon.get_num_legs() < 2)
+					switch(buckled_carbon.dir)
+						if(NORTH)
+							buckled_carbon.pixel_x = 0
+							buckled_carbon.pixel_y = -4
+						if(EAST)
+							buckled_carbon.pixel_x = -2
+							buckled_carbon.pixel_y = -4
+						if(SOUTH)
+							buckled_carbon.pixel_x = 0
+							buckled_carbon.pixel_y = -4
+						if(WEST)
+							buckled_carbon.pixel_x = 2
+							buckled_carbon.pixel_y = -4
+			else
+				switch(buckled_mob.dir)
+					if(NORTH)
+						buckled_mob.pixel_x = 0
+						buckled_mob.pixel_y = 4
+					if(EAST)
+						buckled_mob.pixel_x = -2
+						buckled_mob.pixel_y = 4
+					if(SOUTH)
+						buckled_mob.pixel_x = 0
+						buckled_mob.pixel_y = 4
+					if(WEST)
+						buckled_mob.pixel_x = 2
+						buckled_mob.pixel_y = 4
+
+/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
+	vehicle_move_delay = initial(vehicle_move_delay)
+	..()
+	if(!iscarbon(M))
+		return
+	var/mob/living/carbon/C = M
+	if(C.get_num_legs() < 2)
+		vehicle_move_delay = initial(vehicle_move_delay) + 1
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -50,6 +76,7 @@
 		density = 1
 	else
 		density = 0
+	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
