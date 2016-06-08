@@ -125,21 +125,21 @@
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
 							var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-							good.pride_direction = 0
+							good.pride_direction = FALSE
 						else
 							src.say("Your sin will be punished, [sinPerson]!")
 							var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-							bad.pride_direction = 1
+							bad.pride_direction = TRUE
 					if("Lust")
 						src.say("Your sin, [sinPerson], is Lust.")
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
 							var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
-							good.lust_direction = 0
+							good.lust_direction = FALSE
 						else
 							src.say("Your sin will be punished, [sinPerson]!")
 							var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
-							bad.lust_direction = 1
+							bad.lust_direction = TRUE
 					if("Envy")
 						src.say("Your sin, [sinPerson], is Envy.")
 						if(prob(50))
@@ -194,7 +194,7 @@
 	force_wielded = 18
 	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
 	hitsound = 'sound/weapons/blade1.ogg'
-	var/pride_direction = 0 // 0 owner > target; 1 target > owner
+	var/pride_direction = FALSE
 
 /obj/item/weapon/twohanded/sin_pride/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
@@ -206,7 +206,7 @@
 		if(istype(A,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = A
 			if(H)
-				if(pride_direction == 0)
+				if(pride_direction == FALSE)
 					user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
 					user << "Your pride reflects on [H]."
 					H << "You feel insecure, taking on [user]'s burden."
@@ -222,7 +222,7 @@
 	icon_state = "lovestone"
 	item_state = "lovestone"
 	w_class = 1
-	var/lust_direction = 0
+	var/lust_direction = FALSE
 	var/lastUsage = 0
 	var/usageTimer = 300
 
@@ -231,7 +231,7 @@
 		lastUsage = world.time
 		user.visible_message("<span class='warning'>[user] grips the [src] tightly, causing it to vibrate and pulse brightly.</span>")
 		spawn(25)
-			if(lust_direction == 0)
+			if(lust_direction == FALSE)
 				var/list/throwAt = list()
 				for(var/atom/movable/AM in oview(7,user))
 					if(!AM.anchored && AM != user)
