@@ -125,7 +125,6 @@
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
-	modules += new /obj/item/weapon/melee/baton/loaded(src)
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/wrench/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
