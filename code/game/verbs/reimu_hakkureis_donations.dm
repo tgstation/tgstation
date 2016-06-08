@@ -15,6 +15,16 @@ Collectable rabbit ears:/obj/item/clothing/head/collectable/rabbitears:120
 Cardborg helment. Beep-boop!:/obj/item/clothing/head/cardborg:85
 Bear pelt:/obj/item/clothing/head/bearpelt:200
 
+Masks
+Fake Moustache:/obj/item/clothing/mask/fakemoustache:100
+Pig Mask:/obj/item/clothing/mask/spig:150
+Cow Mask:/obj/item/clothing/mask/cowmask:150
+Horse Head Mask:/obj/item/clothing/mask/horsehead:150
+Carp Mask:/obj/item/clothing/mask/gas/carp:150
+Plague Doctor Mask:/obj/item/clothing/mask/gas/plaguedoctor:180
+Monkey Mask:/obj/item/clothing/mask/gas/monkeymask:180
+Owl Mask:/obj/item/clothing/mask/gas/owl_mask:180
+
 Personal Stuff
 Eye patch:/obj/item/clothing/glasses/eyepatch:130
 Cane:/obj/item/weapon/cane:130
@@ -28,7 +38,7 @@ Three Mile Island Ice Tea:/obj/item/weapon/reagent_containers/food/drinks/drinki
 Red glasses:/obj/item/clothing/glasses/red:180
 Waistcoat:/obj/item/clothing/tie/waistcoat:85
 Cloak:/obj/item/clothing/cloak:190
-Dount Box:/obj/item/weapon/storage/fancy/donut_box:450
+Donut Box:/obj/item/weapon/storage/fancy/donut_box:450
 Badminka Vodka:/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka:240
 
 Shoes
