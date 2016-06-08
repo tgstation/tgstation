@@ -40,15 +40,15 @@ This file's folder contains:
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/M)
-	return M && istype(M) && M.mind && !M.mind.special_role && !isloyal(M)
+	return M && istype(M) && M.mind && !iscultist(M) && !isconstruct(M) && !isloyal(M)
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
-	if(!is_eligible_servant(M) || !ticker || !ticker.mode)
+	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
 		return 0
 	if(iscarbon(M))
 		if(!silent)
 			M << "<span class='heavy_brass'>Your mind is racing! Your body feels incredibly light! Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork \
-			Justiciar lies in exile, derelict and forgotten in an unseen realm.</span>"
+			Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 		if(!is_eligible_servant(M))
 			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", "<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 			return 0
@@ -59,6 +59,12 @@ This file's folder contains:
 		if(!is_eligible_servant(M))
 			M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>", \
 			"<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>")
+			return 0
+	else
+		if(!silent)
+			M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
+		if(!is_eligible_servant(M))
+			M.visible_message("<span class='warning'>[M] seems to resist an unseen force!</span>", "<span class='warning'><b>And yet, you somehow push it all away.</b></span>")
 			return 0
 	if(!silent)
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
