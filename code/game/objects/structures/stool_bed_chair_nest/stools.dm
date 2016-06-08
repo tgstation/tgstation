@@ -10,6 +10,7 @@
 
 /obj/item/weapon/stool/bar
 	name = "bar stool"
+	desc = "Apply butt. Get drunk."
 	icon_state = "bar-stool"
 
 /obj/item/weapon/stool/hologram
