@@ -68,10 +68,11 @@ var/global/dmm_suite/preloader/_preloader = null
 		var/z_depth = length(zgrid) //Length of the whole block (with multiple lines in them)
 
 		//if exceeding the world max x or y, increase it
-		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0))) / key_len //This is the length of an encoded line (like "aaaaaaaaBBBBaaaaccccaaa"). It must be divided by the length of the key
+		var/x_depth = length(copytext(zgrid,1,findtext(zgrid,"\n",2,0))) //This is the length of an encoded line (like "aaaaaaaaBBBBaaaaccccaaa")
+		var/map_width = x_depth / key_len //To get the map's width, divide the length of the line by the length of the key
 
-		if(world.maxx < x_depth + x_offset)
-			world.maxx = x_depth + x_offset
+		if(world.maxx < map_width + x_offset)
+			world.maxx = map_width + x_offset
 
 		var/y_depth = z_depth / (x_depth+1) //x_depth + 1 because we're counting the '\n' characters in z_depth
 		if(world.maxy < y_depth + y_offset)
