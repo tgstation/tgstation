@@ -136,7 +136,7 @@
 	if(user.pulledby)
 		user.pulledby.stop_pulling()
 	user.stop_pulling()
-	if(user.buckled_mobs.len)
+	if(user.has_buckled_mobs())
 		user.unbuckle_all_mobs(force=1)
 	sleep(40) //4 seconds
 	if(!qdeleted(user))

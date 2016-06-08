@@ -74,7 +74,7 @@
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
-	if(. && buckled_mobs.len && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
@@ -137,7 +137,7 @@
 	stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
 	if(client)

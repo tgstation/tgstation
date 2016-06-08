@@ -21,7 +21,7 @@
 
 /obj/vehicle/scooter/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
@@ -46,14 +46,14 @@
 	density = 0
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		density = 1
 	else
 		density = 0
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
-	if(A.density && buckled_mobs.len)
+	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)
