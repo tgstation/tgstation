@@ -25,7 +25,7 @@
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			if(buckled_mobs.get_num_legs() > 0)
-				switch(buckled_mobs.dir)
+				switch(buckled_mob.dir)
 					if(NORTH)
 						buckled_mob.pixel_x = 0
 						buckled_mob.pixel_y = 4
