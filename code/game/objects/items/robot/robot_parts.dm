@@ -219,12 +219,15 @@
 			if(M.hacked || M.clockwork)
 				aisync = 0
 				lawsync = 0
+				var/datum/ai_laws/L
 				if(M.clockwork)
-					O.laws = new/datum/ai_laws/ratvar
+					L = new/datum/ai_laws/ratvar
 					spawn(1)
 						add_servant_of_ratvar(O)
 				else
-					O.laws = new/datum/ai_laws/syndicate_override
+					L = new/datum/ai_laws/syndicate_override
+				O.laws = L
+				L.associate(O)
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
