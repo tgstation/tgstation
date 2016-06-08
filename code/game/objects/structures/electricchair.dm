@@ -37,7 +37,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(12, 1, src)
 	s.start()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.electrocute_act(85, src, 1)

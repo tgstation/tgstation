@@ -95,7 +95,7 @@
 	while(sigilpower && amount >= 50)
 		for(var/S in sigils_in_range)
 			var/obj/effect/clockwork/sigil/transmission/T = S
-			if(T.modify_charge(50))
+			if(amount >= 50 && T.modify_charge(50))
 				sigilpower -= 50
 				amount -= 50
 	var/apcpower = accessable_apc_power()
@@ -440,6 +440,7 @@
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
+	var/gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/New()
 	..()
@@ -448,15 +449,17 @@
 /obj/structure/clockwork/powered/clockwork_obelisk/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='nzcrentr'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
+		user << "<span class='nzcrentr_small'>It requires [hierophant_cost]W to broadcast over the Hierophant Network, and [gateway_cost]W to open a Spatial Gateway.</span>"
 
 /obj/structure/clockwork/powered/clockwork_obelisk/process()
 	if(locate(/obj/effect/clockwork/spatial_gateway) in loc)
 		icon_state = active_icon
 		density = 0
+		gateway_active = TRUE
 	else
 		icon_state = inactive_icon
 		density = 1
+		gateway_active = FALSE
 
 /obj/structure/clockwork/powered/clockwork_obelisk/attack_hand(mob/living/user)
 	if(!is_servant_of_ratvar(user) || !total_accessable_power() >= hierophant_cost)
@@ -465,19 +468,28 @@
 	var/choice = alert(user,"You place your hand on the obelisk...",,"Hierophant Broadcast","Spatial Gateway","Cancel")
 	switch(choice)
 		if("Hierophant Broadcast")
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
+				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(user.canUseTopic(src, be_close = 1))
-				if(try_use_power(hierophant_cost))
-					user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
-					send_hierophant_message(user, input, 1)
-				else
-					user <<  "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
+			if(!input || !user.canUseTopic(src, be_close = 1))
+				return
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
+				return
+			if(!try_use_power(hierophant_cost))
+				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
+				return
+			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
-			if(total_accessable_power() >= gateway_cost)
-				if(procure_gateway(user, 100, 5, 1))
-					user.say("Fcnpvny tngrjnl, npgvingr!")
-					try_use_power(gateway_cost)
-			else
-				user <<  "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+			if(gateway_active)
+				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"
+				return
+			if(!try_use_power(gateway_cost))
+				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
+				return
+			if(procure_gateway(user, 100, 5, 1))
+				user.say("Fcnpvny Tngrjnl, npgvingr!")
 		if("Cancel")
 			return

@@ -811,7 +811,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			if(H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
+			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
 			return
@@ -946,4 +946,9 @@
 
 /mob/living/simple_animal/parrot/Poly/ghost/New()
 	memory_saved = 1 //At this point nothing is saved
+	..()
+
+/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_movement()
+	if(isliving(parrot_interest))
+		parrot_interest = null
 	..()

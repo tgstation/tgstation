@@ -68,9 +68,10 @@
 	var/list/functions = list("nearbyscan","combat","shitcurity","chatter")
 	var/restrictedJob = 0
 	var/shouldUseDynamicProc = 0 // switch to make the AI control it's own proccessing
-	var/alternateProcessing = 0
+	var/alternateProcessing = 1
 	var/forceProcess = 0
-	var/processTime = 10
+	var/processTime = 8
+	var/lastProc = 0
 
 	var/list/knownStrings = list()
 
@@ -188,47 +189,82 @@
 		if(!istype(A,/mob/living/carbon/human/interactive))
 			return
 		var/mob/living/carbon/human/interactive/T = A
-		var/cjob = input("Choose Job") as null|anything in SSjob.occupations
 
-		if(cjob)
-			T.myjob = cjob
-			T.job = T.myjob.title
-			for(var/obj/item/W in T)
-				qdel(W)
-			T.myjob.equip(T)
-			T.myjob.apply_fingerprints(T)
-			T.doSetup()
-
-		var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
-		if(shouldDoppel)
-			if(shouldDoppel == "Yes")
-				var/list/validchoices = list()
-				for(var/mob/living/carbon/human/M in mob_list)
-					validchoices += M
-
-				var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
-
-				if(chosen)
+		var/choice = input("Customization Choices") as null|anything in list("Service NPC","Security NPC","Random","Custom")
+		if(choice)
+			if(choice == "Service NPC" || choice == "Security NPC")
+				var/job = choice == "Service NPC" ? pick("Bartender","Cook","Botanist","Janitor") : pick("Warden","Detective","Security Officer")
+				for(var/j in SSjob.occupations)
+					var/datum/job/J = j
+					if(J.title == job)
+						T.myjob = J
+						T.job = T.myjob.title
+						for(var/obj/item/W in T)
+							qdel(W)
+						T.myjob.equip(T)
+						T.myjob.apply_fingerprints(T)
+						T.doSetup()
+						break
+			if(choice == "Random")
+				T.myjob = pick(SSjob.occupations)
+				T.job = T.myjob.title
+				for(var/obj/item/W in T)
+					qdel(W)
+				T.myjob.equip(T)
+				T.myjob.apply_fingerprints(T)
+				T.doSetup()
+				if(prob(25))
+					var/list/validchoices = list()
+					for(var/mob/living/carbon/human/M in mob_list)
+						validchoices += M
+					var/mob/living/carbon/human/chosen = pick(validchoices)
 					var/datum/dna/toDoppel = chosen.dna
-
 					T.real_name = toDoppel.real_name
 					toDoppel.transfer_identity(T, transfer_SE=1)
 					T.updateappearance(mutcolor_update=1)
 					T.domutcheck()
-
-		var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
-		if(doTrait)
-			if(doTrait == "Yes")
-				var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
-				var/cType = input("Choose the traitor personality.") as null|anything in tType
-				if(cType)
-					var/value = tType[cType]
-					T.makeTraitor(value)
-
-		var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
-		if(doTele)
-			if(doTele == "Yes")
+				if(prob(25))
+					var/cType = pick(list(SNPC_BRUTE,SNPC_STEALTH,SNPC_MARTYR,SNPC_PSYCHO))
+					T.makeTraitor(cType)
 				T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
+			if(choice == "Custom")
+				var/cjob = input("Choose Job") as null|anything in SSjob.occupations
+				if(cjob)
+					T.myjob = cjob
+					T.job = T.myjob.title
+					for(var/obj/item/W in T)
+						qdel(W)
+					T.myjob.equip(T)
+					T.myjob.apply_fingerprints(T)
+					T.doSetup()
+				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
+				if(shouldDoppel)
+					if(shouldDoppel == "Yes")
+						var/list/validchoices = list()
+						for(var/mob/living/carbon/human/M in mob_list)
+							validchoices += M
+
+						var/mob/living/carbon/human/chosen = input("Which crewmember?") as null|anything in validchoices
+
+						if(chosen)
+							var/datum/dna/toDoppel = chosen.dna
+
+							T.real_name = toDoppel.real_name
+							toDoppel.transfer_identity(T, transfer_SE=1)
+							T.updateappearance(mutcolor_update=1)
+							T.domutcheck()
+				var/doTrait = input("Do you want the SNPC to be a traitor?") as null|anything in list("Yes","No")
+				if(doTrait)
+					if(doTrait == "Yes")
+						var/list/tType = list("Brute" = SNPC_BRUTE, "Stealth" = SNPC_STEALTH, "Martyr" = SNPC_MARTYR, "Psycho" = SNPC_PSYCHO)
+						var/cType = input("Choose the traitor personality.") as null|anything in tType
+						if(cType)
+							var/value = tType[cType]
+							T.makeTraitor(value)
+				var/doTele = input("Place the SNPC in their department?") as null|anything in list("Yes","No")
+				if(doTele)
+					if(doTele == "Yes")
+						T.loc = pick(get_area_turfs(T.job2area(T.myjob)))
 
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/weapon/card/id(src)
@@ -500,7 +536,7 @@
 	..()
 	if(ticker.current_state == GAME_STATE_FINISHED)
 		saveVoice()
-	if(!alternateProcessing || forceProcess)
+	if(!alternateProcessing || forceProcess || world.time > lastProc + processTime)
 		doProcess()
 
 /mob/living/carbon/human/interactive/death()
@@ -513,7 +549,9 @@
 	..()
 
 /mob/living/carbon/human/interactive/proc/doProcess()
+	set waitfor = 0
 	forceProcess = 0
+	lastProc = world.time
 
 	if(shouldUseDynamicProc)
 		var/isSeen = 0
@@ -540,31 +578,29 @@
 	//VIEW FUNCTIONS
 
 	//doorscan is now integrated into life and runs before all other procs
-	spawn(0)
-		for(var/dir in alldirs)
-			var/turf/T = get_step(src,dir)
-			if(T)
-				for(var/obj/machinery/door/D in T.contents)
-					if(!istype(D,/obj/machinery/door/poddoor) && D.density)
-						spawn(0)
-							if(istype(D,/obj/machinery/door/airlock))
-								var/obj/machinery/door/airlock/AL = D
-								if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
-									AL.panel_open = 1
-									AL.update_icon()
-									AL.shock(src,(100 - smartness)/2)
-									sleep(5)
-									AL.unbolt()
-									if(!AL.wires.is_cut(WIRE_BOLTS))
-										AL.wires.cut(WIRE_BOLTS)
-									if(!AL.wires.is_cut(WIRE_POWER1))
-										AL.wires.cut(WIRE_POWER1)
-									if(!AL.wires.is_cut(WIRE_POWER2))
-										AL.wires.cut(WIRE_POWER2)
-									sleep(5)
-									AL.panel_open = 0
-									AL.update_icon()
-							D.open()
+	for(var/dir in alldirs)
+		var/turf/T = get_step(src,dir)
+		if(T)
+			for(var/obj/machinery/door/D in T.contents)
+				if(!istype(D,/obj/machinery/door/poddoor) && D.density)
+					if(istype(D,/obj/machinery/door/airlock))
+						var/obj/machinery/door/airlock/AL = D
+						if(!AL.CanAStarPass(RPID)) // only crack open doors we can't get through
+							AL.panel_open = 1
+							AL.update_icon()
+							AL.shock(src,(100 - smartness)/2)
+							sleep(5)
+							AL.unbolt()
+							if(!AL.wires.is_cut(WIRE_BOLTS))
+								AL.wires.cut(WIRE_BOLTS)
+							if(!AL.wires.is_cut(WIRE_POWER1))
+								AL.wires.cut(WIRE_POWER1)
+							if(!AL.wires.is_cut(WIRE_POWER2))
+								AL.wires.cut(WIRE_POWER2)
+							sleep(5)
+							AL.panel_open = 0
+							AL.update_icon()
+					D.open()
 
 	if(update_hands)
 		if(l_hand || r_hand)
@@ -611,7 +647,7 @@
 			var/obj/machinery/door/D = TARGET
 			if(D.check_access(MYID) && !istype(D,/obj/machinery/door/poddoor))
 				D.open()
-				sleep(15)
+				//sleep(15)
 				var/turf/T = get_step(get_step(D.loc,dir),dir) //recursion yo
 				tryWalk(T)
 		//THIEVING SKILLS
@@ -1086,6 +1122,14 @@
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
 	var/list/allContents = getAllContents()
 
+	for(var/mob/living/carbon/human/C in nearby)
+		var/perpname = C.get_face_name(C.get_id_name())
+		var/datum/data/record/R = find_record("name", perpname, data_core.security)
+		if(R && R.fields["criminal"])
+			switch(R.fields["criminal"])
+				if("*Arrest*")
+					retalTarget(C)
+
 	if(retal && TARGET)
 		for(var/obj/item/I in allContents)
 			if(istype(I,/obj/item/weapon/restraints))
@@ -1411,7 +1455,6 @@
 	return hasSame
 
 /mob/living/carbon/human/interactive/proc/combat(obj)
-	set background = 1
 	enforce_hands()
 	if(canmove)
 		if((graytide || (TRAITS & TRAIT_MEAN)) || retal)

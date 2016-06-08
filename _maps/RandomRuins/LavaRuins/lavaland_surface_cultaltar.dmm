@@ -33,7 +33,7 @@
 	},
 /obj/effect/step_trigger/sound_effect{
 	name = "turn around";
-	sound = "turn_around";
+	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
 /turf/open/floor/plasteel/cult{
@@ -98,7 +98,7 @@
 	},
 /obj/effect/step_trigger/sound_effect{
 	name = "turn around";
-	sound = "turn_around";
+	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
 /turf/open/floor/plasteel/cult{
@@ -117,7 +117,7 @@
 /obj/effect/step_trigger/sound_effect{
 	happens_once = 1;
 	name = "a grave mistake";
-	sound = "i_see_you";
+	sound = 'sound/hallucinations/i_see_you1.ogg';
 	triggerer_only = 1
 	},
 /obj/effect/step_trigger/message{
@@ -138,7 +138,7 @@
 	},
 /obj/effect/step_trigger/sound_effect{
 	name = "turn around";
-	sound = "turn_around";
+	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
 /turf/open/floor/plasteel/cult{
@@ -165,7 +165,7 @@
 	},
 /obj/effect/step_trigger/sound_effect{
 	name = "turn around";
-	sound = "turn_around";
+	sound = 'sound/hallucinations/turn_around1.ogg';
 	triggerer_only = 1
 	},
 /turf/open/floor/plasteel/cult{

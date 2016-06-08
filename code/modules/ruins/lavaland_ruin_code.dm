@@ -412,27 +412,27 @@
 	mob_species = /datum/species/human
 	flavour_text = {"Doomed to walk this eternal hellscape due to means you barely remember at this point, every day is a struggle for survival as you barely scrape by in your makeshift housing."}
 
-/obj/effect/mob_spawn/human/hermit/special(mob/living/new_spawn)
+/obj/effect/mob_spawn/human/hermit/New()
 	var/arrpee = rand(1,4)
 	switch(arrpee)
 		if(1)
-			new_spawn << "You were the sole survivor of a raid-party's onslaught on a small orbital tradestation. You were forced to early-eject your pod to escape, the horrifed faces of the remaining crew when the raiders blew apart the room's airlock forever ingrained in your mind."
+			flavour_text = {"You were the sole survivor of a raid-party's onslaught on a small orbital tradestation. You were forced to early-eject your pod to escape, the horrifed faces of the remaining crew when the raiders blew apart the room's airlock forever ingrained in your mind."}
 			uniform = /obj/item/clothing/under/assistantformal
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			back = /obj/item/weapon/storage/backpack
 		if(2)
-			new_spawn << "A castaway from a far-off civilization, banished for crimes of heresy against the church. You awoke from hypersleep your pod crashlanding into this hellscape, only the essentials left to make a new life for yourself."
+			flavour_text = {"A castaway from a far-off civilization, banished for crimes of heresy against the church. You awoke from hypersleep your pod crashlanding into this hellscape, only the essentials left to make a new life for yourself."}
 			uniform = /obj/item/clothing/under/rank/prisoner
 			shoes = /obj/item/clothing/shoes/sneakers/orange
 			back = /obj/item/weapon/storage/backpack
 		if(3)
-			new_spawn << "A runaway from the tyranny of Nanotrasen and everything all these damnned corporations stand for. From a metaphorical hell to a literal one, you do your best to put your station-life behind you to try and survive in this harsh land."
+			flavour_text = {"A runaway from the tyranny of Nanotrasen and everything all these damnned corporations stand for. From a metaphorical hell to a literal one, you do your best to put your station-life behind you to try and survive in this harsh land."}
 			uniform = /obj/item/clothing/under/rank/medical
 			suit = /obj/item/clothing/suit/toggle/labcoat
 			back = /obj/item/weapon/storage/backpack/medic
 			shoes = /obj/item/clothing/shoes/sneakers/black
 		if(4)
-			new_spawn << "You weren't exactly the sharpest tool in the shed, hitting that big red button on the escape pod wondering what it'd do. Whether this 'special' attribute of yours is a defect of cloning or just genuine stupidity, the fact you've survived this long in a literal hellhole is enough to make Darwin roll in his grave."
+			flavour_text = {"You weren't exactly the sharpest tool in the shed, hitting that big red button on the escape pod wondering what it'd do. Whether this 'special' attribute of yours is a defect of cloning or just genuine stupidity, the fact you've survived this long in a literal hellhole is enough to make Darwin roll in his grave."}
 			uniform = /obj/item/clothing/under/color/grey/glorf
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			back = /obj/item/weapon/storage/backpack

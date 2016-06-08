@@ -681,6 +681,7 @@
 #include "code\game\objects\items\weapons\grenades\syndieminibomb.dm"
 #include "code\game\objects\items\weapons\implants\implant.dm"
 #include "code\game\objects\items\weapons\implants\implant_chem.dm"
+#include "code\game\objects\items\weapons\implants\implant_clown.dm"
 #include "code\game\objects\items\weapons\implants\implant_explosive.dm"
 #include "code\game\objects\items\weapons\implants\implant_freedom.dm"
 #include "code\game\objects\items\weapons\implants\implant_krav_maga.dm"

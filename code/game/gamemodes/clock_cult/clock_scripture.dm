@@ -645,7 +645,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/anima_fragment //Anima Fragment: Creates an empty anima fragment
 	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. The result is a powerful construct with low damage tolerance but exceptional melee power."
+	desc = "Creates a large shell fitted for soul vessels. Adding an active sould vessel to it results in a powerful construct with decent health, notable melee power, \
+	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Pnyy sbegu...", "...gur fbyqvref-bs Nezbere.")
 	channel_time = 50
 	required_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "replicant_alloy" = 2)
@@ -731,14 +732,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	invoker.notransform = FALSE
 	slab.busy = null
-	var/list/marauder_candidates = get_candidates(ROLE_SERVANT_OF_RATVAR)
+	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
+	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 100)
 	if(!marauder_candidates.len)
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return 0
-	var/client/new_marauder = pick(marauder_candidates)
+	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork_marauder/M = new(invoker)
-	M.client = new_marauder
+	M.key = theghost.key
 	M.host = invoker
 	M << M.playstyle_string
 	M << "<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>"
