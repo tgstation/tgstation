@@ -24,20 +24,20 @@
 	if(buckled_mobs.len)
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			if(buckled_mobs.get_num_legs() <= 0)
-				switch(buckled_mobs.dir)
+			if(buckled_mob.get_num_legs() <= 0)
+				switch(buckled_mob.dir)
 					if(NORTH)
-						buckled_mobs.pixel_x = 0
-						buckled_mobs.pixel_y = -4
+						buckled_mob.pixel_x = 0
+						buckled_mob.pixel_y = -4
 					if(EAST)
-						buckled_mobs.pixel_x = -2
-						buckled_mobs.pixel_y = -4
+						buckled_mob.pixel_x = -2
+						buckled_mob.pixel_y = -4
 					if(SOUTH)
-						buckled_mobs.pixel_x = 0
-						buckled_mobs.pixel_y = -4
+						buckled_mob.pixel_x = 0
+						buckled_mob.pixel_y = -4
 					if(WEST)
-						buckled_mobs.pixel_x = 2
-						buckled_mobs.pixel_y = -4
+						buckled_mob.pixel_x = 2
+						buckled_mob.pixel_y = -4
 			else
 				switch(buckled_mob.dir)
 					if(NORTH)
