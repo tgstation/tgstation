@@ -428,6 +428,9 @@
 
 /datum/reagent/gluttonytoxin/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	M.ForceContractDisease(new /datum/disease/transformation/morph(0))
+	if(istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+		H.influenceSin(GLUTTONY)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"

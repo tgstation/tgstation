@@ -1,0 +1,20 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+"c" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"d" = (/turf/closed/wall/rust{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"e" = (/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"f" = (/obj/structure/table/wood,/obj/item/toy/talking/codex_gigas,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"g" = (/obj/item/candle/infinite,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+"h" = (/obj/structure/acedialtar,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/unpowered)
+
+(1,1,1) = {"
+aabaaabaa
+aabcdcbaa
+bbdefedbb
+acegegeca
+adfehefda
+acegegeca
+bbdefedbb
+aabcdcbaa
+aabaaabaa
+"}
