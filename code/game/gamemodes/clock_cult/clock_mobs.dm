@@ -1,23 +1,23 @@
-/mob/living/simple_animal/hostile/anima_fragment //Anima fragment: High health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
+/mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
 	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	icon_state = "anime_fragment"
-	health = 120
-	maxHealth = 120
+	health = 90
+	maxHealth = 90
 	speed = -1
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
 	healable = FALSE
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment, /obj/item/device/mmi/posibrain/soul_vessel)
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
-	var/playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have medium health, do decent damage, and move at \
+	var/playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
 	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. Your goal is to serve the Justiciar and his servants \
 	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
@@ -35,9 +35,9 @@
 		stat(null, "Movement delay(seconds): [max(round((movement_delay_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/living/simple_animal/hostile/anima_fragment/death(gibbed)
-	..(TRUE)
 	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash. A cube of metal tumbles out, whirring and sputtering.</span>", \
 	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
+	..(TRUE)
 	return 1
 
 /mob/living/simple_animal/hostile/anima_fragment/Process_Spacemove(movement_dir = 0)
@@ -52,9 +52,9 @@
 	. = ..()
 	if(!ratvar_awakens) //if ratvar is up we ignore movement delay
 		if(movement_delay_time > world.time)
-			movement_delay_time = movement_delay_time + amount*2
+			movement_delay_time = movement_delay_time + amount*3
 		else
-			movement_delay_time = world.time + amount*2
+			movement_delay_time = world.time + amount*3
 
 
 /mob/living/simple_animal/hostile/clockwork_marauder //Clockwork marauder: Slow but with high damage, resides inside of a servant. Created via the Memory Allocation scripture.
