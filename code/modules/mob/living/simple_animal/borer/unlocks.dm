@@ -26,6 +26,7 @@
 
 /datum/unlockable/borer/end_unlock()
 //	to_chat(Redundant borer, "<span class='info'>You finally finish your task.</span>")
+	tree.unlocked.Add(src.id)
 	borer.chemicals -= cost
 
 // additional checks to perform when unlocking things.
@@ -174,12 +175,12 @@
 	gene_name = "FARSIGHT"
 
 /datum/unlockable/borer/gene_unlock/xray
-	id = "run"
+	id = "xray"
 	name = "High-Energy Vision"
 	desc = "Adjusts your host's eyes to see in the X-Ray spectrum."
 	cost = 200
 	time = 2 MINUTES
-	gene_name = "XRAYBLOCK"
+	gene_name = "XRAY"
 	prerequisites=list("farsight")
 
 
