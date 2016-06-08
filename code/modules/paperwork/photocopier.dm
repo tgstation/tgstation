@@ -127,7 +127,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(loc)
+					new /obj/item/documents/photocopy(loc, src)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -174,32 +174,14 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-				copy.loc = usr.loc
-				usr.put_in_hands(copy)
-			else
-				copy.loc = src.loc
-			usr << "<span class='notice'>You take [copy] out of [src].</span>"
+			do_removal(copy)
 			copy = null
-			updateUsrDialog()
 		else if(photocopy)
-			if(!istype(usr,/mob/living/silicon/ai)) //same with this one, wtf
-				photocopy.loc = usr.loc
-				usr.put_in_hands(photocopy)
-			else
-				photocopy.loc = src.loc
-			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
+			do_removal(photocopy)
 			photocopy = null
-			updateUsrDialog()
 		else if(doccopy)
-			if(!istype(usr,/mob/living/silicon/ai)) // honk honk honk
-				doccopy.loc = usr.loc
-				usr.put_in_hands(doccopy)
-			else
-				doccopy.loc = src.loc
-			usr << "<span class='notice'>You take [doccopy] out of [src].</span>"
+			do_removal(doccopy)
 			doccopy = null
-			updateUsrDialog()
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
 	else if(href_list["min"])
@@ -252,6 +234,15 @@
 	O.loc = src
 	user << "<span class ='notice'>You insert [O] into [src].</span>"
 	flick("photocopier1", src)
+	updateUsrDialog()
+
+/obj/machinery/photocopier/proc/do_removal(obj/item/O, mob/user)
+	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
+		O.loc = user.loc
+		user.put_in_hands(O)
+	else
+		O.loc = src.loc
+	user << "<span class='notice'>You take [O] out of [src].</span>"
 	updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
