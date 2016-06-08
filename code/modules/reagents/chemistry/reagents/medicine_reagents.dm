@@ -70,12 +70,6 @@
 	id = "nanites"
 	description = "Tiny nanomachines capable of rapid cellular regeneration."
 
-/datum/reagent/medicine/adminordrazine/earthsblood
-	name = "Earthsblood"
-	id = "earthsblood"
-	description = "A miraculous substance from the deepst roots of nature capable of restoration of all wounds."
-	color = rgb(255, 175, 0) //Golden yellow
-
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
@@ -1006,6 +1000,32 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood
+	name = "Earthsblood"
+	id = "earthsblood"
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	color = rgb(255, 175, 0)
+	overdose_threshold = 25
+
+/datum/reagent/medicine/earthsblood/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-3 * REM, 0)
+	M.adjustFireLoss(-3 * REM, 0)
+	M.adjustOxyLoss(-15 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustBrainLoss(0.5 * REM) //This does, after all, come from ambrosia
+	M.adjustCloneLoss(-1 * REM, 0)
+	M.adjustStaminaLoss(-30 * REM, 0)
+	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	M.druggy = min(max(0, M.druggy + 3), 15) //See above
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 10), 50)
+	M.adjustToxLoss(5 * REM, 0)
 	..()
 	. = 1
 
