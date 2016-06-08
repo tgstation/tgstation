@@ -14,8 +14,8 @@
 	weather_immunities = list("lava","ash")
 	speak_emote = list("gurgles")
 	armour_penetration = 40
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	speed = 1
 	move_to_delay = 10
 	ranged = 1
@@ -25,7 +25,7 @@
 	del_on_death = 1
 	aggro_vision_range = 18
 	idle_vision_range = 5
-	loot = list(/obj/structure/closet/crate/necropolis/dragon)
+	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
@@ -38,8 +38,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-/*	if(!charging)
-		blood_warp()*/
 	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
@@ -125,8 +123,6 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-//	if(blood_warp_cooldown > world.time)
-//		return
 	var/found_bloodpool = FALSE
 	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
 		found_bloodpool = TRUE
