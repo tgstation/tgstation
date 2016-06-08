@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Anima Fragments have slightly less health and damage and will slow down for longer when hit."
