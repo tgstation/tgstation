@@ -223,7 +223,7 @@
 				if(M.clockwork)
 					L = new/datum/ai_laws/ratvar
 					spawn(1)
-						add_servant_of_ratvar(O)
+						ticker.mode.update_servant_icons_added(O.mind)
 				else
 					L = new/datum/ai_laws/syndicate_override
 				O.laws = L
