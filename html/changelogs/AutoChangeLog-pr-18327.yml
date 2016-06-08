@@ -1,0 +1,4 @@
+author: Joan
+delete-after: True
+changes: 
+  - tweak: "Anima Fragments have slightly more health and move faster, but slow down temporarily when taking damage. Also they can move in space now."
