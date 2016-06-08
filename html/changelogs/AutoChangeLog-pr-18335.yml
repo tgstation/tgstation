@@ -1,7 +1,0 @@
-author: Fox McCloud
-delete-after: True
-changes: 
-  - bugfix: "Fixes Experimentor critical reactions not working"
-  - bugfix: "Fixes Experimentor item cloning not working"
-  - bugfix: "Fixes Experimentor producing coffee vending machines instead of coffe cups"
-  - tweak: "Experimentor can only clone critical reaction items instead of anything with an origin tech"
