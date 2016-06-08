@@ -132,7 +132,7 @@
 	if(!held_items[index])
 		if(W.prepickup(src))
 			return 0
-		W.loc = src
+		W.forceMove(src)
 		held_items[index] = W
 		W.layer = 20
 		W.pixel_x = initial(W.pixel_x)

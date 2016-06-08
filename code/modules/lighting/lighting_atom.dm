@@ -74,19 +74,6 @@
 	if(old_opacity != new_opacity && istype(T))
 		T.reconsider_lights()
 
-// These could probably be axed.
-/obj/item/equipped()
-	. = ..()
-	update_light()
-
-/obj/item/pickup()
-	. = ..()
-	update_light()
-
-/obj/item/dropped()
-	. = ..()
-	update_light()
-
 // This code makes the light be queued for update when it is moved.
 // Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
 /atom/Entered(atom/movable/Obj, atom/OldLoc) //Implemented here because forceMove() doesn't call Move()
