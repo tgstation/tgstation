@@ -490,6 +490,6 @@
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1))
-				user.say("Fcnpvny tngrjnl, npgvingr!")
+				user.say("Fcnpvny Tngrjnl, npgvingr!")
 		if("Cancel")
 			return
