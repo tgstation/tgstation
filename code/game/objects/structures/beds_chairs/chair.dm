@@ -229,7 +229,7 @@
 	name = "bar stool"
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
-	item_chair = null
+	item_chair = /obj/item/chair/stool/bar
 
 /obj/item/chair
 	name = "chair"
@@ -309,6 +309,12 @@
 	item_state = "stool"
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
+
+/obj/item/chair/stool/bar
+	name = "bar stool"
+	icon_state = "bar"
+	item_state = "stool_bar"
+	origin_type = /obj/structure/chair/stool
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
