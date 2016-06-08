@@ -106,7 +106,10 @@ CREATE TABLE client (
     warns          INTEGER,
     warnbans       INTEGER,
 	usewmp         INTEGER,
-	usenanoui      INTEGER 
+    usenanoui      INTEGER,
+    space_parallax INTEGER,
+    space_dust     INTEGER,
+    parallax_speed INTEGER
 );
 
 
@@ -119,4 +122,3 @@ CREATE TABLE client_roles (
     PRIMARY KEY ( ckey, slot, role ),
     FOREIGN KEY ( ckey, slot ) REFERENCES players ( player_ckey, player_slot ) ON DELETE CASCADE 
 );
-

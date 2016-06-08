@@ -102,6 +102,10 @@ datum/controller/game_controller/proc/setup()
 	cachedamageicons()
 	log_startup_progress("  Finished caching damage icons in [stop_watch(watch)]s.")
 
+	log_startup_progress("Caching space parallax simulation...")
+	cachespaceparallax()
+	log_startup_progress("  Finished caching space parallax simulation in [stop_watch(watch)]s.")
+
 	buildcamlist()
 
 	if(config.media_base_url)

@@ -62,3 +62,13 @@
 	// Their chat window, sort of important.
 	// See /goon/code/datums/browserOutput.dm
 	var/datum/chatOutput/chatOutput
+
+		////////////
+		//PARALLAX//
+		////////////
+	var/updating_parallax = 0
+	var/list/parallax = list()
+	var/list/parallax_offset = list()
+	var/turf/previous_turf = null
+	var/obj/screen/plane_master/parallax_master/parallax_master = null
+	var/obj/screen/plane_master/parallax_dustmaster/parallax_dustmaster = null

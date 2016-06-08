@@ -46,7 +46,7 @@
 
 	delayNextMove(0)
 
-	sight |= SEE_SELF
+	sight |= SEE_SELF | SEE_PIXELS
 
 	..()
 
