@@ -73,10 +73,6 @@
 /mob/living/simple_animal/hades/proc/Appear()
 	new /obj/effect/timestop(get_turf(src))
 
-/datum/objective/sinPersonholder
-	explanation_text = "You are feeling sinful."
-	dangerrating = 3
-
 /mob/living/simple_animal/hades/Life()
 	..()
 	if(world.time > lastsinPerson + sinPersonTime)
@@ -128,54 +124,22 @@
 						src.say("Your sin, [sinPerson], is Pride.")
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
-							for(var/mob/living/carbon/human/H in player_list)
-								if(H == sinPerson)
-									continue
-								ticker.mode.traitors += H.mind
-								H.mind.special_role = "pride"
-								var/datum/objective/sinPersonholder/pride = new
-								pride.owner = H.mind
-								pride.explanation_text = "[sinPerson] is your idol now. Praise them as much as possible."
-								H.mind.objectives += pride
-								H << "<B>[pride.explanation_text]</B>"
+							var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+							good.pride_direction = 0
 						else
 							src.say("Your sin will be punished, [sinPerson]!")
-							for(var/mob/living/carbon/human/H in player_list)
-								if(H == sinPerson)
-									continue
-								ticker.mode.traitors += H.mind
-								H.mind.special_role = "pride"
-								var/datum/objective/sinPersonholder/pride = new
-								pride.owner = H.mind
-								pride.explanation_text = "[sinPerson] is insignificant to you. Show them who's boss."
-								H.mind.objectives += pride
-								H << "<B>[pride.explanation_text]</B>"
+							var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+							bad.pride_direction = 1
 					if("Lust")
 						src.say("Your sin, [sinPerson], is Lust.")
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
-							for(var/mob/living/carbon/human/H in player_list)
-								if(H == sinPerson)
-									continue
-								ticker.mode.traitors += H.mind
-								H.mind.special_role = "lust"
-								var/datum/objective/sinPersonholder/lust = new
-								lust.owner = H.mind
-								lust.explanation_text = "[sinPerson] is the one person who means the world to you. Show your love for them."
-								H.mind.objectives += lust
-								H << "<B>[lust.explanation_text]</B>"
+							var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
+							good.lust_direction = 0
 						else
 							src.say("Your sin will be punished, [sinPerson]!")
-							for(var/mob/living/carbon/human/H in player_list)
-								if(H == sinPerson)
-									continue
-								ticker.mode.traitors += H.mind
-								H.mind.special_role = "lust"
-								var/datum/objective/sinPersonholder/lust = new
-								lust.owner = H.mind
-								lust.explanation_text = "[sinPerson] is irresistible. Make them love you at ANY cost."
-								H.mind.objectives += lust
-								H << "<B>[lust.explanation_text]</B>"
+							var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
+							bad.lust_direction = 1
 					if("Envy")
 						src.say("Your sin, [sinPerson], is Envy.")
 						if(prob(50))
@@ -210,15 +174,74 @@
 						src.say("Your sinPerson, [sinPerson], is Wrath.")
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
-							ticker.mode.traitors += sinPerson.mind
-							sinPerson.mind.special_role = "wrath"
-							var/datum/objective/sinPersonholder/wrath = new
-							wrath.owner = sinPerson.mind
-							wrath.explanation_text = "Everyone is against you, and your only choice is to fight your way out. Kill them all."
-							sinPerson.mind.objectives += wrath
-							sinPerson << "<B>[wrath.explanation_text]</B>"
+							sinPerson.reagents.add_reagent("bath_salts",100)
 						else
 							src.say("Your sin will be punished, [sinPerson]!")
 							sinPerson.reagents.add_reagent("lexorin", 100)
 							sinPerson.reagents.add_reagent("mindbreaker", 100)
 
+
+///Sin related things
+/obj/item/weapon/twohanded/sin_pride
+	icon_state = "mjollnir0"
+	name = "Pride-struck Hammer"
+	desc = "It resonates an aura of Pride."
+	force = 5
+	throwforce = 15
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 8
+	force_wielded = 18
+	attack_verb = list("attacked", "smashed", "crushed", "splattered", "cracked")
+	hitsound = 'sound/weapons/blade1.ogg'
+	var/pride_direction = 0 // 0 owner > target; 1 target > owner
+
+/obj/item/weapon/twohanded/sin_pride/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "mjollnir[wielded]"
+	return
+
+/obj/item/weapon/twohanded/sin_pride/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+	if(!proximity) return
+	if(wielded)
+		if(istype(A,/mob/living/carbon/human))
+			var/mob/living/carbon/human/H = A
+			if(H)
+				if(pride_direction == 0)
+					user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+					user << "Your pride reflects on [H]."
+					H << "You feel insecure, taking on [user]'s burden."
+				else if(pride_direction == 1)
+					H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
+					H << "Your pride reflects on [user]."
+					user << "You feel insecure, taking on [H]'s burden."
+
+/obj/item/lovestone
+	name = "Stone of Lust"
+	desc = "It lays within your hand, radiating pulses of uncomfortable warmth."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "lovestone"
+	item_state = "lovestone"
+	w_class = 1
+	var/lust_direction = 0
+	var/lastUsage = 0
+	var/usageTimer = 300
+
+/obj/item/lovestone/attack_self(mob/user)
+	if(world.time > lastUsage + usageTimer)
+		lastUsage = world.time
+		user.visible_message("<span class='warning'>[user] grips the [src] tightly, causing it to vibrate and pulse brightly.</span>")
+		spawn(25)
+			if(lust_direction == 0)
+				var/list/throwAt = list()
+				for(var/atom/movable/AM in oview(7,user))
+					if(!AM.anchored && AM != user)
+						throwAt.Add(AM)
+				for(var/counter = 1, counter < throwAt.len, ++counter)
+					var/atom/movable/cast = throwAt[counter]
+					cast.throw_at_fast(user,10,1)
+			else if(lust_direction == 1)
+				var/mob/living/carbon/human/H = user
+				H << "As you hold the stone, your heart feels heavy and you struggle to breath."
+				H.reagents.add_reagent("initropidril",50)
+	else
+		user << "The stone lays inert. It is still recharging."
