@@ -13,6 +13,8 @@ var/global/list/nuke_tiles = list()					//list of all turfs that turn to animate
 
 var/global/list/chemical_reactions_list				//list of all /datum/chemical_reaction datums. Used during chemical reactions
 var/global/list/chemical_reagents_list				//list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+var/global/list/materials_list = list()				//list of all /datum/material datums indexed by material id.
+var/global/list/tech_list = list()					//list of all /datum/tech datums indexed by id.
 var/global/list/surgeries_list = list()				//list of all surgeries by name, associated with their path.
 var/global/list/crafting_recipes = list()				//list of all table craft recipes
 var/global/list/rcd_list = list()					//list of Rapid Construction Devices.
