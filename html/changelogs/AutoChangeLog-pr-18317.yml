@@ -1,4 +1,0 @@
-author: Cruix
-delete-after: True
-changes: 
-  - bugfix: "Changelings no longer lose the regenerate ability if they respect while in regenerative stasis."
