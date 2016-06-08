@@ -186,7 +186,6 @@ This file's folder contains:
 		modePlayer += servant
 		servant.special_role = "Servant of Ratvar"
 		servant.restricted_roles = restricted_jobs
-		update_servant_icons_added(servant)
 		starter_servants--
 	return 1
 
@@ -198,7 +197,7 @@ This file's folder contains:
 		var/mob/living/L = servant.current
 		greet_servant(L)
 		equip_servant(L)
-		add_servant_of_ratvar(L)
+		add_servant_of_ratvar(L, TRUE)
 	..()
 	return 1
 
