@@ -25,6 +25,7 @@
 	var/unwrenchable = 1
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpolinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
+	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
 	pixel_y=8
 
@@ -118,6 +119,13 @@
 
 	if(myseed && (myseed.loc != src))
 		myseed.loc = src
+
+	if(self_sustaining)
+		adjustNutri(2 / rating)
+		adjustWater(rand(8, 10) / rating)
+		adjustWeeds(-5 / rating)
+		adjustPests(-5 / rating)
+		adjustToxic(-5 / rating)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -244,17 +252,25 @@
 	//Refreshes the icon and sets the luminosity
 	overlays.Cut()
 
+	if(self_sustaining)
+		if(istype(src, /obj/machinery/hydroponics/soil))
+			color = rgb(255, 175, 0)
+		else
+			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
+		SetLuminosity(3)
+
 	update_icon_hoses()
 
 	if(myseed)
 		update_icon_plant()
 		update_icon_lights()
 
-	if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
-		var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-		SetLuminosity(G.get_lum(myseed))
-	else
-		SetLuminosity(0)
+	if(!self_sustaining)
+		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
+			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
+			SetLuminosity(G.get_lum(myseed))
+		else
+			SetLuminosity(0)
 
 	return
 
@@ -308,8 +324,11 @@
 	else
 		user << "<span class='info'>[src] is empty.</span>"
 
-	user << "<span class='info'>Water: [waterlevel]/[maxwater]</span>"
-	user << "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>"
+	if(!self_sustaining)
+		user << "<span class='info'>Water: [waterlevel]/[maxwater]</span>"
+		user << "<span class='info'>Nutrient: [nutrilevel]/[maxnutri]</span>"
+	else
+		user << "<span class='info'>It doesn't require any maintenance.</span>"
 
 	if(weedlevel >= 5)
 		user << "<span class='warning'>[src] is filled with weeds!</span>"
@@ -652,7 +671,23 @@
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
-	if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia)) //Checked early on so it doesn't have to deal with composting checks
+		if(self_sustaining)
+			user << "<span class='warning'>This [name] is already self-sustaining!</span>"
+			return
+		if(myseed || weedlevel)
+			user << "<span class='warning'>[src] needs to be clear of plants and weeds!</span>"
+			return
+		if(alert(user, "This will [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort")
+			return
+		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
+		user.drop_item()
+		qdel(O)
+		visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
+		self_sustaining = TRUE
+		update_icon()
+
+	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/weapon/reagent_containers/reagent_source = O
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe))
@@ -894,7 +929,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/shovel))
+	if(istype(O, /obj/item/weapon/shovel) && !istype(O, /obj/item/weapon/shovel/spade))
 		user << "<span class='notice'>You clear up [src]!</span>"
 		qdel(src)
 	else

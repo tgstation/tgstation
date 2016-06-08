@@ -70,6 +70,12 @@
 	id = "nanites"
 	description = "Tiny nanomachines capable of rapid cellular regeneration."
 
+/datum/reagent/medicine/adminordrazine/earthsblood
+	name = "Earthsblood"
+	id = "earthsblood"
+	description = "A miraculous substance from the deepst roots of nature capable of restoration of all wounds."
+	color = rgb(255, 175, 0) //Golden yellow
+
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
 	id = "synaptizine"
