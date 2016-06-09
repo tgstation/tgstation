@@ -357,7 +357,7 @@
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

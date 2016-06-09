@@ -701,7 +701,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 

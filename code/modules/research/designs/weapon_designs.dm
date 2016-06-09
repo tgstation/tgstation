@@ -12,14 +12,14 @@
 	build_path = /obj/item/device/firing_pin/test_range
 	category = list("Firing Pins")
 
-/datum/design/pin_loyalty
-	name = "loyalty firing pin"
-	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
+/datum/design/pin_mindshield
+	name = "mindshield firing pin"
+	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
-	build_path = /obj/item/device/firing_pin/implant/loyalty
+	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
 /datum/design/stunrevolver

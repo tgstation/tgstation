@@ -50,7 +50,7 @@ Captain
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

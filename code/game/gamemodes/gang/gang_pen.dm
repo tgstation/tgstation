@@ -76,7 +76,7 @@
 
 /obj/item/weapon/implant/gang/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Criminal Loyalty Implant<BR>
+				<b>Name:</b> Criminal brainwash implant<BR>
 				<b>Life:</b> A few seconds after injection.<BR>
 				<b>Important Notes:</b> Illegal<BR>
 				<HR>
