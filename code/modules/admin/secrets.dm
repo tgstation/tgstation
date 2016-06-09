@@ -149,7 +149,8 @@
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
 				return
-			world.name = "Space Station 13"
+			world.name = new_station_name()
+			station_name = world.name
 			log_admin("[key_name(usr)] reset the station name.")
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 
