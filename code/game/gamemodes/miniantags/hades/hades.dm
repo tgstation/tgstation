@@ -43,10 +43,26 @@
 	"Wallow in sin, and give yourself unto darkness.",\
 	"Only the truly sinful may stand.",\
 	"Find yourself and you will find Absolution.",\
-	"Forego the pain of this process, and submit.")
+	"Forego the pain of this process, and submit.",\
+	"We can be one in suffering.",\
+	"You stand on the precipice of ascension, give in.",\
+	"You cannot fathom what lies beyond",\
+	"Repent your sins.",\
+	"This is the eve of your last days.",\
+	"Darkness comes.")
+
+	var/obj/effect/proc_holder/spell/targeted/lightning/sinLightning
 
 /mob/living/simple_animal/hades/New()
 	..()
+
+	sinLightning = new/obj/effect/proc_holder/spell/targeted/lightning(src)
+
+	sinLightning.charge_max = 1
+	sinLightning.clothes_req = 0
+	sinLightning.range = 32
+	sinLightning.cooldown_min = 1
+
 	lastsinPerson = world.time
 	var/list/possible_titles = list("Pope","Bishop","Lord","Cardinal","Deacon","Pontiff")
 	var/chosen = "[pick(possible_titles)] of Sin"
@@ -61,14 +77,35 @@
 /mob/living/simple_animal/hades/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
 	..()
 	lastsinPerson -= 75
+	Defend(AM)
 
 /mob/living/simple_animal/hades/bullet_act(obj/item/projectile/P, def_zone)
 	..()
 	lastsinPerson -= 75
+	Defend(P.firer)
 
 /mob/living/simple_animal/hades/attack_hand(mob/living/carbon/human/M)
 	..()
 	lastsinPerson -= 75
+	Defend(M)
+
+/mob/living/simple_animal/hades/proc/Defend(var/mob/attacker)
+	src.visible_message("<span class='warning'>[src] rounds on the [attacker], gazing at them with a [pick("cold","frosty","freezing","dark")] [pick("glare","gaze","glower","stare")].</span>")
+	var/chosenDefend = rand(1,3)
+	switch(chosenDefend)
+		if(1)
+			attacker.visible_message("<span class='warning'>[attacker] is lifted from the ground, shadowy powers tossing them aside.</span>")
+			attacker.throw_at_fast(pick(orange(src,7)),10,1)
+		if(2)
+			attacker.visible_message("<span class='warning'>[attacker] crackles with electricity, a bolt leaping from [src] to them.</span>")
+			sinLightning.Bolt(src,attacker,30,5,src)
+		if(3)
+			src.visible_message("<span class='warning'>[src] points his staff at [attacker], a swarm of eyeballs lurching fourth!</span>")
+			for(var/i in 1 to 4)
+				var/mob/living/simple_animal/hostile/carp/eyeball/E = new/mob/living/simple_animal/hostile/carp/eyeball(pick(orange(attacker,1)))
+				E.faction = faction
+				spawn(150)
+					qdel(E)
 
 /mob/living/simple_animal/hades/proc/Appear()
 	new /obj/effect/timestop(get_turf(src))
@@ -88,7 +125,10 @@
 			world << pick(creepyasssounds)
 		else
 			lastsinPerson = world.time
-			var/mob/living/carbon/human/sinPerson = pick(player_list)
+			var/mob/living/carbon/human/sinPerson = pick(living_mob_list)
+			if(!sinPerson.ckey)
+				while(!sinPerson.ckey)
+					sinPerson = pick(living_mob_list)
 			if(sinPerson)
 				loc = get_turf(pick(oview(1,sinPerson)))
 				Appear()
@@ -171,7 +211,7 @@
 							src.say("Your sin will be punished, [sinPerson]!")
 							sinPerson.reagents.add_reagent("frostoil", 50)
 					if("Wrath")
-						src.say("Your sinPerson, [sinPerson], is Wrath.")
+						src.say("Your sin, [sinPerson], is Wrath.")
 						if(prob(50))
 							src.say("I will indulge your sin, [sinPerson].")
 							sinPerson.reagents.add_reagent("bath_salts",100)
@@ -196,7 +236,7 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	var/pride_direction = FALSE
 
-/obj/item/weapon/twohanded/sin_pride/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/twohanded/sin_pride/update_icon()
 	icon_state = "mjollnir[wielded]"
 	return
 
