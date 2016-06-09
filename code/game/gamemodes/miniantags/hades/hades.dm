@@ -126,8 +126,10 @@
 		else
 			lastsinPerson = world.time
 			var/mob/living/carbon/human/sinPerson = pick(living_mob_list)
+			var/depth = living_mob_list.len + 1 // just in case
 			if(!sinPerson.ckey)
-				while(!sinPerson.ckey)
+				while(!sinPerson.ckey && depth > 0)
+					--depth
 					sinPerson = pick(living_mob_list)
 			if(sinPerson)
 				loc = get_turf(pick(oview(1,sinPerson)))
