@@ -50,21 +50,14 @@ This file's folder contains:
 		return 0
 	if(isconstruct(M))
 		return 0
+	if(isguardian(M))
+		var/mob/living/simple_animal/hostile/guardian/G = M
+		if(!is_servant_of_ratvar(G.summoner))
+			return 0 //can't convert it unless the owner is converted
 	if(isloyal(M))
 		return 0
 	if(M.mind.enslaved_to)
 		return 0
-	if(isguardian(M))
-		var/mob/living/simple_animal/hostile/guardian/G = M
-		G.summoner << "<span class='userdanger'>You feel your guardian being subverted, and try to stop it-</span>"
-		if(is_eligible_servant(G.summoner))
-			G.summoner << "<span class='userdanger'>-But you fail.</span>"
-			G.summoner << "<span class='big_brass'>Gjb-sbe-bar. Jung n qrny.</span>"
-			add_servant_of_ratvar(G.summoner)
-			return 1
-		else
-			G.summoner << "<span class='userdanger'>-And manage to push back, preventing whatever that was from taking you over.</span>"
-			return 0 //can't convert it unless the owner got converted
 	return 1
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
