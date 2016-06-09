@@ -99,7 +99,7 @@
 	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, FALSE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize_russian(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 
 	if(!mob)
