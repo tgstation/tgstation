@@ -36,6 +36,7 @@
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			user << "<span class='caution'>You save the data in the [I.name]'s buffer.</span>"
+			return 1
 
 	if(exchange_parts(user, I))
 		return
