@@ -445,11 +445,11 @@ var/list/teleport_runes = list()
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
 	req_cultists = 9
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'icons/effects/128x128.dmi'
 	color = rgb(125,23,23)
-	icon_state = "rune_large"
-	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = -32
+	icon_state = "rune_huge"
+	pixel_x = -48 //So the big ol' 105x104 sprite shows up right
+	pixel_y = -48
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used
