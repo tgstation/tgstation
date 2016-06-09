@@ -18,7 +18,7 @@
 
 
 obj/vehicle/atv/post_buckle_mob(mob/living/M)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		overlays += atvcover
 	else
 		overlays -= atvcover

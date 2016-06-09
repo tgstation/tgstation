@@ -191,10 +191,12 @@
 	if(loaded_item)
 		if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
-			new loaded_item(get_turf(pick(oview(1,src))))
+			var/type_to_make = loaded_item.type
+			new type_to_make(get_turf(pick(oview(1,src))))
 			--cloneCount
 			if(cloneCount == 0)
 				cloneMode = FALSE
+			return
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
 			dropturf = get_turf(src)
@@ -225,7 +227,7 @@
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
 	var/chosenchem
-	var/criticalReaction = locate(exp_on) in critical_items ? TRUE : FALSE
+	var/criticalReaction = (exp_on.type in critical_items) ? TRUE : FALSE
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == SCANTYPE_POKE)
 		visible_message("[src] prods at [exp_on] with mechanical arms.")
@@ -379,7 +381,7 @@
 		visible_message("[src] lowers [exp_on]'s temperature.")
 		if(prob(EFFECT_PROB_LOW) && criticalReaction)
 			visible_message("<span class='warning'>[src]'s emergency coolant system gives off a small ding!</span>")
-			var/obj/machinery/vending/coffee/C = new /obj/machinery/vending/coffee(get_turf(pick(oview(1,src))))
+			var/obj/item/weapon/reagent_containers/food/drinks/coffee/C = new /obj/item/weapon/reagent_containers/food/drinks/coffee(get_turf(pick(oview(1,src))))
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //Ding! Your death coffee is ready!
 			chosenchem = pick("uranium","frostoil","ephedrine")
 			C.reagents.remove_any(25)
@@ -588,6 +590,7 @@
 	var/cooldown
 
 /obj/item/weapon/relic/New()
+	..()
 	icon_state = pick("shock_kit","armor-igniter-analyzer","infra-igniter0","infra-igniter1","radio-multitool","prox-radio1","radio-radio","timer-multitool0","radio-igniter-tank")
 	realName = "[pick("broken","twisted","spun","improved","silly","regular","badly made")] [pick("device","object","toy","illegal tech","weapon")]"
 

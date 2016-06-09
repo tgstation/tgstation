@@ -27,22 +27,19 @@
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
-	var/changed = FALSE
 	if(active_tables.len >= 2)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")
-			changed = TRUE
+			update_icon()
 		active = TRUE
 	else
 		if(active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] closes its eyes.</span>")
-			changed = TRUE
+			update_icon()
 		active = FALSE
 
-	if(changed)
-		update_icon()
 
 /obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
 	return
@@ -115,7 +112,7 @@
 			say(desc)
 			never_spoken = FALSE
 	else
-		our_statue.active_tables &= src
+		our_statue.active_tables -= src
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."

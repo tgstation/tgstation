@@ -102,7 +102,7 @@
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.buckled_mobs.len)
+		if(C.buckled ||C.has_buckled_mobs())
 			user << "<span class='warning'>[C] is attached to something!</span>"
 			return
 		if(C.abiotic(1) && !ignore_clothing)
@@ -112,7 +112,7 @@
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
-			if(C && user.pulling == C && !C.buckled && !C.buckled_mobs.len && !occupant)
+			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				occupant = C

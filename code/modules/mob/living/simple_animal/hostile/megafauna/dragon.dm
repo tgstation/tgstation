@@ -59,7 +59,7 @@
 				src.visible_message(
 					"<span class='danger'>[src] devours [L]!</span>",
 					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-				adjustBruteLoss(-L.maxHealth)
+				adjustBruteLoss(-L.maxHealth/2)
 				L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
@@ -224,8 +224,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 	name = "lesser ash drake"
-	maxHealth = 750
-	health = 750
+	maxHealth = 300
+	health = 300
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

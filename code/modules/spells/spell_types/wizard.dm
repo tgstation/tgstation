@@ -319,7 +319,7 @@
 		AM.overlays += targeteffect
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
-		addtimer(src, "remove_sparkles", AM, targeteffect)
+		addtimer(src, "remove_sparkles", 10, FALSE, AM, targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM

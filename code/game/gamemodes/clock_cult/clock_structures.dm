@@ -447,6 +447,7 @@
 	else
 		sender = TRUE
 		gatewayB.sender = FALSE
+		gatewayB.density = FALSE
 	lifetime = set_duration
 	gatewayB.lifetime = set_duration
 	uses = set_uses
@@ -461,7 +462,7 @@
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.anchored || L.buckled_mobs.len)
+		if(L.buckled || L.anchored || L.has_buckled_mobs())
 			return 0
 		user.visible_message("<span class='warning'>[user] shoves [L] into [src]!</span>", "<span class='danger'>You shove [L] into [src]!</span>")
 		user.stop_pulling()
@@ -480,6 +481,7 @@
 		qdel(src)
 		return 1
 	if(user.drop_item())
+		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
 		pass_through_gateway(I)
 	..()
 
@@ -529,7 +531,7 @@
 	animate(src, alpha = 0, time = 10)
 	addtimer(src, "selfdel", 10)
 
-/obj/effect/clockwerk/general_marker/proc/selfdel()
+/obj/effect/clockwork/general_marker/proc/selfdel()
 	qdel(src)
 
 /obj/effect/clockwork/general_marker/nezbere

@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 

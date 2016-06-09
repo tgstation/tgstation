@@ -81,9 +81,14 @@
 		return
 	if (disabled)
 		return
-	if (!linked_console)
-		user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
-		return
+	if (!linked_console) // Try to auto-connect to new RnD consoles nearby.
+		for(var/obj/machinery/computer/rdconsole/console in oview(3, src))
+			if(console.first_use)
+				console.SyncRDevices()
+
+		if(!linked_console)
+			user << "<span class='warning'>The [name] must be linked to an R&D console first!</span>"
+			return
 	if (busy)
 		user << "<span class='warning'>The [src.name] is busy right now.</span>"
 		return

@@ -70,7 +70,7 @@ This file contains the arcane tome files.
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>This rune is critical to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
+	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br> \
 	Successful conversions will produce a tome for the new cultist.<br><br>"
 

@@ -658,6 +658,16 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_ashplating
+	name = "Cyborg Upgrade (Ash Storm Plating)"
+	id = "borg_upgrade_ashplating"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ashplating
+	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
+	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_syndicate_module
 	name = "Cyborg Upgrade (Illegal Modules)"
 	id = "borg_syndicate_module"

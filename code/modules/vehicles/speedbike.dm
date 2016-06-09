@@ -26,7 +26,7 @@
 	dir = move_dir
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		PoolOrNew(/obj/effect/overlay/temp/speedbike_trail,list(loc,move_dir))
 	. = ..()
 
@@ -40,7 +40,7 @@
 			pixel_y = 0
 
 /obj/vehicle/space/speedbike/handle_vehicle_offsets()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.dir = dir

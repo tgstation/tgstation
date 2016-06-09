@@ -298,7 +298,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Rayvtugra guvf urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hageh'guf naq ubabe Ratvar.")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Only works on those in melee range and does not penetrate loyalty implants. Much more efficient than a Sigil of Submission."
+	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/guvax/scripture_effects()
@@ -616,9 +616,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the loyalty implants of nearby humans
+/datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the mindshield implants of nearby humans
 	name = "Dementia Doctrine"
-	desc = "Deals minor brain damage and disables loyalty implants of everyone adjacent to the invoker."
+	desc = "Deals minor brain damage and disables mindshield implants of everyone adjacent to the invoker."
 	invocations = list("Lbh ner jrnx.", "Lbh jvyy or uvf.", "Gur'l jba'g fnir lbh - gur'lyy xvyy lbh.")
 	channel_time = 20
 	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
@@ -634,7 +634,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(isloyal(H))
 			H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
 			"<span class='sevtug'>Ohg jr pna cerirag gun'g. Jr pna znxr lbh zvar-naq-uvf.</span>")
-			for(var/obj/item/weapon/implant/loyalty/L in H)
+			for(var/obj/item/weapon/implant/mindshield/L in H)
 				if(L.implanted)
 					qdel(L)
 	return 1
@@ -645,7 +645,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/anima_fragment //Anima Fragment: Creates an empty anima fragment
 	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. The result is a powerful construct with low damage tolerance but exceptional melee power."
+	desc = "Creates a large shell fitted for soul vessels. Adding an active sould vessel to it results in a powerful construct with decent health, notable melee power, \
+	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Pnyy sbegu...", "...gur fbyqvref-bs Nezbere.")
 	channel_time = 50
 	required_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "replicant_alloy" = 2)
@@ -731,14 +732,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	invoker.notransform = FALSE
 	slab.busy = null
-	var/list/marauder_candidates = get_candidates(ROLE_SERVANT_OF_RATVAR)
+	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
+	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 100)
 	if(!marauder_candidates.len)
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return 0
-	var/client/new_marauder = pick(marauder_candidates)
+	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork_marauder/M = new(invoker)
-	M.client = new_marauder
+	M.key = theghost.key
 	M.host = invoker
 	M << M.playstyle_string
 	M << "<b>Your true name is \"[M.true_name]\". You can change this <i>once</i> by using the Change True Name verb in your Marauder tab.</b>"

@@ -96,6 +96,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 10
 	var/stat = 0
@@ -177,11 +178,11 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled || C.buckled_mobs.len)
+			if(C.buckled || C.has_buckled_mobs())
 				continue
 			else
 				target = C
-	if(target && !target.buckled && !target.buckled_mobs.len)
+	if(target && !target.buckled && !target.has_buckled_mobs())
 		occupant = target
 		target.forceMove(src)
 	updateUsrDialog()
