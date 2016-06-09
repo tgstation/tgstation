@@ -82,6 +82,55 @@
 	rend_desc = "Gently wafting with the sounds of endless laughter."
 	icon_state = "clownrender"
 
+
+//--- BECAUSE IT'S FUCKING HILARIOUS --//
+/obj/item/weapon/veilrender/uncharged
+	name = "wicked blade"
+	desc = "A replica of a notorious eldritch artifact of immense power. Legend tells that those who capture two powerful souls with it will weild the weapon of legends."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "render"
+	item_state = "render"
+	force = 5 //shitty wizard build quality
+	throwforce = 0
+	w_class = 3
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	charges = 1
+	spawn_type = /obj/singularity/narsie/wizard
+	spawn_amt = 1
+	activate_descriptor = "the blood geometer's prison"
+	rend_desc = "You hear the sound of laughing slaughter demons."
+	spawn_fast = 1
+	var/captured_ascendants = 0
+
+/obj/item/weapon/veilrender/uncharged/attack_self(mob/user)
+	if(charges > 0 && captured_ascendants==2)
+		new /obj/effect/rend(get_turf(user), spawn_type, spawn_amt, rend_desc, spawn_fast)
+		charges--
+		captured_ascendants = 0
+		user << "<span class='boldannounce'>You merge the two ascendants' souls and drive them into bluespace. You hear blood curdling screams emitting from the souls and the hole to bluespace opens wider. Uh oh.</span>"//Blood dimension = bluespace because EMERGENT LORE EXPANSION is sorely needed
+		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
+		world << "span class='shadowling'>NAR`SIE  WGHA'N SHU-AIIIIEEEEEEEEEEE!!!!</span>"//Those ascendants are healthy snacks to make sure your interdinmensional horror grows up big and strong!
+	else
+		user << "<span class='danger'>The blade lies quiet.</span>"
+
+/obj/item/weapon/veilrender/uncharged/attack(mob/living/M, mob/living/user)
+	if(!iswizard(user))
+		user.Paralyse(5)
+		user.adjustBrainLoss(5)//Aay it's an eldritch artifact, I ain't gotta explain shit!
+		user << "<span class='userdanger'>Your mind oozes as you try to figure out how to use the sanity-shattering blade!</span>"
+		return ..()
+	if(!istype(M, /mob/living/simple_animal/ascendant_shadowling))
+		return ..()
+	if(captured_ascendants>=2)
+		M << "<span class='danger>You feel your soul being ripped from your form, only to return to your flesh! Foolish wizard!</span>"
+		user << "<span class='danger'>Your blade is full, you cannot capture any more lesser gods!</span>"
+		return
+	add_logs(user, M, "captured [M.name]'s god soul", src)
+	captured_ascendants++
+	M << "<span class='danger'>no no no no no no no no no no no no nonNONNnNNO</span><span class='shadowling'>NO NONOONOOONOoOoO!!!</span>"
+	M.visible_message("<span class='boldannounce'>[user.name] sucks the godlike power right from [M.name]'s horrible body, leaving behind a pile of dust!</span>")
+	M.dust()
+
 ////TEAR IN REALITY
 
 /obj/singularity/wizard

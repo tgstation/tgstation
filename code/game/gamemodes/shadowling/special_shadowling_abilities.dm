@@ -155,6 +155,36 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					M << "<span class='userdanger'>An immense pressure slams you onto the ground!</span>"
 				world << "<font size=5><span class='shadowling'><b>\"VYSHA NERADA YEKHEZET U'RUU!!\"</font></span>"
 				world << 'sound/hallucinations/veryfar_noise.ogg'
+				if(!ticker.mode.wizards)
+					message_admins("A space wizard has spawned to try and combat the Ascendant.")
+					priority_announce("ERROR \[0x0441c\]: MEMORY HIJACK EXECUTED. UNAUTHORIZED ANNOUNCEMENT DETECTED.", null, 'sound/misc/wizard_announce.ogg')
+
+					var/list/mob/dead/observer/candidates = list()
+					var/mob/dead/observer/theghost = null
+
+
+					pollCandidates("Do you wish to be considered for the special position of the Space Wizard researcher?", "wizard", null, FALSE, 100)
+
+					sleep(100)
+
+
+
+					if(candidates.len)
+						shuffle(candidates)
+						for(var/mob/i in candidates)
+							if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
+
+							theghost = i
+							break
+
+					if(theghost)
+						var/mob/living/carbon/human/new_character=makeBody(theghost)
+						new_character.mind.make_Wizard()
+						new_character.equip_to_slot_or_del(/obj/item/weapon/veilrender/uncharged, slot_l_hand)
+						return 1
+
+
+
 				for(var/obj/machinery/power/apc/A in apcs_list)
 					A.overload_lighting()
 				var/mob/A = new /mob/living/simple_animal/ascendant_shadowling(H.loc)
