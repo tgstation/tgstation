@@ -5,6 +5,7 @@
  *		Double-Bladed Energy Swords
  *		Spears
  *		CHAINSAWS
+ *		Bone Axe and Spear
  */
 
 /*##################################################################
@@ -61,6 +62,9 @@
 		return
 	if(user.get_inactive_hand())
 		user << "<span class='warning'>You need your other hand to be empty!</span>"
+		return
+	if(user.get_num_arms() < 2)
+		user << "<span class='warning'>You don't have enough hands.</span>"
 		return
 	wielded = 1
 	if(force_wielded)
@@ -193,13 +197,14 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
+	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
-	armour_penetration = 75
-	origin_tech = "magnets=3;syndicate=4"
+	armour_penetration = 35
+	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
@@ -217,6 +222,11 @@
 	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
+	if(user.has_dna())
+		if(user.dna.check_mutation(HULK))
+			user << "<span class='warning'>You grip the blade too hard and accidentally close it!</span>"
+			unwield()
+			return
 	..()
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
@@ -251,10 +261,14 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
+	sharpness = IS_SHARP
+	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	sharpness = initial(sharpness)
+	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
 
@@ -318,14 +332,13 @@
 		explosive.prime()
 		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
 /obj/item/weapon/twohanded/spear/throw_impact(atom/target)
 	. = ..()
 	if(!.) //not caught
 		if(explosive)
 			explosive.prime()
 			qdel(src)
-
 
 /obj/item/weapon/twohanded/spear/AltClick()
 	..()
@@ -337,17 +350,8 @@
 		if(input)
 			src.war_cry = input
 
-//Placeholder C4 "grenade" for use on this spear
-/obj/item/weapon/grenade/C4
-	name = "C-4"
-	desc = "A brick of C-4."
-
-/obj/item/weapon/grenade/C4/prime()
-	update_mob()
-	explosion(src.loc,-1,1,3)
-	qdel(src)
-
-/obj/item/weapon/twohanded/spear/CheckParts()
+/obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
+	..()
 	if(explosive)
 		explosive.loc = get_turf(src.loc)
 		explosive = null
@@ -357,12 +361,6 @@
 		name = "explosive lance"
 		desc = "A makeshift spear with [G] attached to it. Alt+click on the spear to set your war cry!"
 		return
-	var/obj/item/weapon/c4/C4 = locate() in contents
-	if(C4)
-		var /obj/item/weapon/grenade/C4/C42 = new /obj/item/weapon/grenade/C4(src)
-		qdel(C4)
-		explosive = C42
-		desc = "A makeshift spear with [C42] attached to it. Alt+click on the spear to set your war cry!"
 	update_icon()
 
 // CHAINSAW
@@ -377,7 +375,7 @@
 	throw_speed = 2
 	throw_range = 4
 	materials = list(MAT_METAL=13000)
-	origin_tech = "materials=2;engineering=2;combat=2"
+	origin_tech = "materials=3;engineering=4;combat=2"
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
@@ -403,6 +401,9 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
+	if(wielded)
+		. = ..()
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
@@ -429,3 +430,131 @@
 			M.faction = user.faction.Copy()
 			M.Copy_Parent(user, 100, user.health/2.5, 12, 30)
 			M.GiveTarget(L)
+
+/obj/item/weapon/twohanded/pitchfork
+	icon_state = "pitchfork0"
+	name = "pitchfork"
+	desc = "A simple tool used for moving hay."
+	force = 7
+	throwforce = 15
+	w_class = 4
+	force_unwielded = 7
+	force_wielded = 15
+	attack_verb = list("attacked", "impaled", "pierced")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/pitchfork/demonic
+	name = "demonic pitchfork"
+	desc = "A red pitchfork, it looks like the work of the devil."
+	force = 19
+	throwforce = 24
+	force_unwielded = 19
+	force_wielded = 25
+
+/obj/item/weapon/twohanded/pitchfork/demonic/greater
+	force = 24
+	throwforce = 50
+	force_unwielded = 24
+	force_wielded = 34
+
+/obj/item/weapon/twohanded/pitchfork/demonic/ascended
+	force = 100
+	throwforce = 100
+	force_unwielded = 100
+	force_wielded = 500000 // Kills you DEAD.
+
+/obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
+	icon_state = "pitchfork[wielded]"
+
+/obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] impales \himself in \his abdomen with [src]! It looks like \he's trying to commit suicide..</span>")
+	return (BRUTELOSS)
+
+/obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
+	if(istype(user, /mob/living))
+		var/mob/living/U = user
+		if(!U.mind.devilinfo)
+			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
+				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
+			if(ishuman(U))
+				var/mob/living/carbon/human/H = U
+				H.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+			else
+				U.adjustFireLoss(rand(force/2,force))
+
+/obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
+	if(!user.mind.devilinfo)
+		user << "<span class ='warning'>The [src] burns in your hands.</span>"
+		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
+	..()
+
+//HF blade
+
+/obj/item/weapon/twohanded/vibro_weapon
+	icon_state = "hfrequency0"
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	force_unwielded = 20
+	force_wielded = 40
+	armour_penetration = 100
+	block_chance = 40
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = 4
+	slot_flags = SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/weapon/twohanded/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+				return 1
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return 1
+	return 0
+
+/obj/item/weapon/twohanded/vibro_weapon/update_icon()
+	icon_state = "hfrequency[wielded]"
+
+/*
+ * Bone Axe
+ */
+/obj/item/weapon/twohanded/fireaxe/boneaxe  // Blatant imitation of the fireaxe, but made out of bone.
+	icon_state = "bone_axe0"
+	name = "bone axe"
+	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
+	force_wielded = 23
+
+/obj/item/weapon/twohanded/fireaxe/boneaxe/update_icon()
+	icon_state = "bone_axe[wielded]"
+
+/*
+ * Bone Spear
+ */
+/obj/item/weapon/twohanded/bonespear	//Blatant imitation of spear, but made out of bone. Not valid for explosive modification.
+	icon_state = "bone_spear0"
+	name = "bone spear"
+	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
+	force = 11
+	w_class = 4
+	slot_flags = SLOT_BACK
+	force_unwielded = 11
+	force_wielded = 20					//I have no idea how to balance
+	throwforce = 22
+	throw_speed = 4
+	embedded_impact_pain_multiplier = 3
+	armour_penetration = 15				//Enhanced armor piercing
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
+	sharpness = IS_SHARP
+
+/obj/item/weapon/twohanded/bonespear/update_icon()
+		icon_state = "bone_spear[wielded]"

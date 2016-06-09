@@ -99,6 +99,8 @@ Borg Hypospray
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
+	var/contained = english_list(R)
+	add_logs(user, M, "injected", src, "(CHEMICALS: [contained])")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
@@ -207,3 +209,13 @@ Borg Shaker
 	recharge_time = 3
 
 	reagent_ids = list("beer2")
+
+/obj/item/weapon/reagent_containers/borghypo/peace
+	name = "Peace Hypospray"
+
+	reagent_ids = list("dizzysolution","tiresolution")
+
+/obj/item/weapon/reagent_containers/borghypo/peace/hacked
+	desc = "Everything's peaceful in death!"
+	icon_state = "borghypo_s"
+	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")

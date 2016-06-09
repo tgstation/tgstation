@@ -342,11 +342,11 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/loyalty
-	name = "Loyalty Implants Crate"
+/datum/supply_pack/security/armory/mindshield
+	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
-	crate_name = "loyalty implant crate"
+	crate_name = "mindshield implant crate"
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
@@ -530,7 +530,7 @@
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
 					/obj/item/solar_assembly,
-					/obj/item/weapon/circuitboard/solar_control,
+					/obj/item/weapon/circuitboard/computer/solar_control,
 					/obj/item/weapon/electronics/tracker,
 					/obj/item/weapon/paper/solar)
 	crate_name = "solar panel crate"
@@ -558,6 +558,12 @@
 	cost = 5000
 	contains = list(/obj/machinery/the_singularitygen)
 	crate_name = "singularity generator crate"
+
+/datum/supply_pack/engineering/engine/tesla_gen
+	name = "Tesla Generator Crate"
+	cost = 5000
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	crate_name = "tesla generator crate"
 
 /datum/supply_pack/engineering/engine/collector
 	name = "Collector Crate"
@@ -697,7 +703,7 @@
 					/obj/item/weapon/reagent_containers/blood/BMinus,
 					/obj/item/weapon/reagent_containers/blood/OPlus,
 					/obj/item/weapon/reagent_containers/blood/OMinus)
-	crate_name = "blood pack crate"
+	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/iv_drip
@@ -829,6 +835,14 @@
 					/obj/item/pizzabox/vegetable)
 	crate_name = "pizza crate"
 
+/datum/supply_pack/organic/cream_piee
+	name = "High-yield Clown-grade Cream Pie Crate"
+	cost = 6000
+	contains = list(/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie)
+	crate_name = "party equipment crate"
+	contraband = TRUE
+	access = access_theatre
+
 /datum/supply_pack/organic/monkey
 	name = "Monkey Crate"
 	cost = 2000
@@ -935,7 +949,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
 					/obj/item/weapon/hatchet,
 					/obj/item/weapon/cultivator,
-					/obj/item/device/analyzer/plant_analyzer,
+					/obj/item/device/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron)
 	crate_name = "hydroponics crate"
@@ -1121,6 +1135,13 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/misc/hightank
+	name = "High-Capacity Water Tank Crate"
+	cost = 1200
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/lasertag
 	name = "Laser Tag Crate"
 	cost = 1500
@@ -1198,7 +1219,9 @@
 					/obj/item/weapon/folder/red,
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
-					/obj/item/weapon/clipboard)
+					/obj/item/weapon/clipboard,
+					/obj/item/weapon/stamp,
+					/obj/item/weapon/stamp/denied)
 	crate_name = "bureaucracy crate"
 
 /datum/supply_pack/misc/toner
@@ -1317,6 +1340,7 @@
 					/obj/item/clothing/head/collectable/wizard,
 					/obj/item/clothing/head/collectable/hardhat,
 					/obj/item/clothing/head/collectable/HoS,
+					/obj/item/clothing/head/collectable/HoP,
 					/obj/item/clothing/head/collectable/thunderdome,
 					/obj/item/clothing/head/collectable/swat,
 					/obj/item/clothing/head/collectable/slime,
@@ -1345,14 +1369,15 @@
 	contains = list(/obj/item/toy/spinningtoy,
 	                /obj/item/toy/sword,
 	                /obj/item/toy/foamblade,
-	                /obj/item/toy/AI,
+	                /obj/item/toy/talking/AI,
 	                /obj/item/toy/talking/owl,
 	                /obj/item/toy/talking/griffin,
+	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
-	                /obj/item/stack/tile/fakespace,
+	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"
@@ -1418,3 +1443,18 @@
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/artsupply
+	name = "Art Supplies"
+	cost = 800
+	contains = list(/obj/structure/easel,
+					/obj/structure/easel,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/nineteenXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXnineteen,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/weapon/canvas/twentythreeXtwentythree,
+					/obj/item/toy/crayon/rainbow,
+					/obj/item/toy/crayon/rainbow)
+	crate_name= "art supply crate"

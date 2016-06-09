@@ -70,8 +70,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Adds item's cost and amount to the current export cycle.
 // get_cost, get_amount and applies_to do not neccesary mean a successful sale.
 /datum/export/proc/sell_object(obj/O, contr = 0, emag = 0)
-	total_cost += get_cost(O)
-	total_amount += get_amount(O)
+	var/cost = get_cost(O)
+	var/amount = get_amount(O)
+	total_cost += cost
+	total_amount += amount
+	feedback_add_details("export_sold_amount","[O.type]|[amount]")
+	feedback_add_details("export_sold_cost","[O.type]|[cost]")
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.

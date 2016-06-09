@@ -2,20 +2,19 @@ var/global/list/possiblethemes = list("organharvest","cult","wizden","cavein","x
 
 var/global/max_secret_rooms = 6
 
-/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name)
+/proc/spawn_room(atom/start_loc, x_size, y_size, list/walltypes, floor, name, oldarea)
 	var/list/room_turfs = list("walls"=list(),"floors"=list())
+
+	var/area/asteroid/artifactroom/A = new
+	if(name)
+		A.name = name
+	else
+		A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 	for(var/x = 0, x < x_size, x++)		//sets the size of the room on the x axis
 		for(var/y = 0, y < y_size, y++) //sets it on y axis.
 			var/turf/T
 			var/cur_loc = locate(start_loc.x + x, start_loc.y + y, start_loc.z)
-
-
-			var/area/asteroid/artifactroom/A = new
-			if(name)
-				A.name = name
-			else
-				A.name = "Artifact Room #[start_loc.x]-[start_loc.y]-[start_loc.z]"
 
 
 			if(x == 0 || x == x_size-1 || y == 0 || y == y_size-1)
@@ -30,7 +29,8 @@ var/global/max_secret_rooms = 6
 				T.ChangeTurf(floor)
 				room_turfs["floors"] += T
 
-			A.contents += T
+			if(!oldarea)
+				A.contents += T
 
 	return room_turfs
 
@@ -65,19 +65,19 @@ var/global/max_secret_rooms = 6
 			walltypes = list(/turf/closed/wall/r_wall=2,/turf/closed/wall=2,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel,/turf/open/floor/engine)
 			treasureitems = list(/mob/living/simple_animal/bot/medbot/mysterious=1, /obj/item/weapon/circular_saw=1, /obj/structure/closet/crate/critter=2, /mob/living/simple_animal/pet/cat/space=1)
-			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/internal/appendix=2,/obj/structure/closet/crate/freezer=2,
+			fluffitems = list(/obj/effect/decal/cleanable/blood=5,/obj/item/organ/appendix=2,/obj/structure/closet/crate/freezer=2,
 							  /obj/structure/table/optable=1,/obj/item/weapon/scalpel=1,/obj/item/weapon/storage/firstaid/regular=3,
 							  /obj/item/weapon/tank/internals/anesthetic=1, /obj/item/weapon/surgical_drapes=2, /obj/item/device/mass_spectrometer/adv=1,/obj/item/clothing/glasses/hud/health=1)
 
 		if("cult")
 			theme = "cult"
-			walltypes = list(/turf/closed/wall/cult=3,/turf/closed/mineral/random/high_chance=1)
+			walltypes = list(/turf/closed/wall/mineral/cult=3,/turf/closed/mineral/random/high_chance=1)
 			floortypes = list(/turf/open/floor/plasteel/cult)
-			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/cult=1, /obj/item/weapon/bedsheet/cult=2,
+			treasureitems = list(/obj/item/device/soulstone/anybody=1, /obj/item/clothing/suit/space/hardsuit/cult=1, /obj/item/weapon/bedsheet/cult=2,
 								 /obj/item/clothing/suit/cultrobes=2, /mob/living/simple_animal/hostile/creature=3)
 			fluffitems = list(/obj/effect/gateway=1,/obj/effect/gibspawner=1,/obj/structure/cult/talisman=1,/obj/item/toy/crayon/red=2,
-							  /obj/item/organ/internal/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/wood=2,/obj/item/weapon/ectoplasm=3,
-							  /obj/item/clothing/head/helmet/space/cult=1, /obj/item/clothing/shoes/cult=1)
+							  /obj/item/organ/heart=2, /obj/effect/decal/cleanable/blood=4,/obj/structure/table/wood=2,/obj/item/weapon/ectoplasm=3,
+							/obj/item/clothing/shoes/cult=1)
 
 		if("wizden")
 			theme = "wizden"

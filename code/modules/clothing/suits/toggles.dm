@@ -56,8 +56,7 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else
-				H.equip_to_slot_if_possible(hood,slot_head,0,0,1)
+			else if(H.equip_to_slot_if_possible(hood,slot_head,0,0,1))
 				suittoggled = 1
 				src.icon_state = "[initial(icon_state)]_t"
 				H.update_inv_wear_suit()
@@ -71,10 +70,8 @@
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		suit_toggle(user)
@@ -172,9 +169,8 @@
 			if(H.head)
 				H << "<span class='warning'>You're already wearing something on your head!</span>"
 				return
-			else
+			else if(H.equip_to_slot_if_possible(helmet,slot_head,0,0,1))
 				H << "<span class='notice'>You engage the helmet on the hardsuit.</span>"
-				H.equip_to_slot_if_possible(helmet,slot_head,0,0,1)
 				suittoggled = 1
 				H.update_inv_wear_suit()
 				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)

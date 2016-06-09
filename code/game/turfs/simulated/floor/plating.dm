@@ -79,6 +79,9 @@
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 
+/turf/open/floor/engine/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
 
@@ -156,6 +159,13 @@
 /turf/open/floor/engine/cult/narsie_act()
 	return
 
+/turf/open/floor/engine/cult/ratvar_act()
+	..()
+	if(istype(src, /turf/open/floor/engine/cult)) //if we haven't changed type
+		var/previouscolor = color
+		color = "#FAE48C"
+		animate(src, color = previouscolor, time = 8)
+
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(builtin_tile)
@@ -172,6 +182,19 @@
 
 /turf/open/floor/plasteel/airless
 	initial_gas_mix = "TEMP=2.7"
+
+// ONE DAY WE WILL HAVE SUBTYPES
+/turf/open/floor/plasteel/airless/shuttle
+	icon_state = "shuttlefloor"
+/turf/open/floor/plasteel/airless/shuttle/red
+	name = "Brig floor"
+	icon_state = "shuttlefloor4"
+/turf/open/floor/plasteel/airless/shuttle/yellow
+	icon_state = "shuttlefloor2"
+/turf/open/floor/plasteel/airless/shuttle/white
+	icon_state = "shuttlefloor3"
+/turf/open/floor/plasteel/airless/shuttle/purple
+	icon_state = "shuttlefloor5"
 
 /turf/open/floor/plating/abductor
 	name = "alien floor"
@@ -205,6 +228,13 @@
 		processing = 0
 		SSobj.processing.Remove(src)
 
+/turf/open/floor/plating/lava/GetHeatCapacity()
+	. = 700000
+
+/turf/open/floor/plating/lava/GetTemperature()
+	. = 5000
+
+/turf/open/floor/plating/lava/TakeTemperature(temp)
 
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
@@ -224,7 +254,7 @@
 		else if (istype(thing, /mob/living))
 			. = 1
 			var/mob/living/L = thing
-			if("mining" in L.faction)
+			if("lava" in L.weather_immunities)
 				continue
 			if(L.buckled)
 				if(isobj(L.buckled))
@@ -232,8 +262,8 @@
 					if(O.burn_state == LAVA_PROOF)
 						continue
 				if(isliving(L.buckled)) //Goliath riding
-					var/mob/living/liv = L.buckled
-					if("mining" in liv.faction)
+					var/mob/living/live = L.buckled
+					if("lava" in live.weather_immunities)
 						continue
 
 			L.adjustFireLoss(20)
@@ -259,7 +289,17 @@
 	baseturf = /turf/open/floor/plating/lava/smooth
 	icon = 'icons/turf/floors/lava.dmi'
 	icon_state = "unsmooth"
-	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface
-	)
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/closed/wall, /turf/closed/mineral, /turf/open/floor/plating/lava/smooth, /turf/open/floor/plating/lava/smooth/lava_land_surface)
+
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
+
+/turf/open/floor/plating/warnplate
+	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate
+	icon_state = "warnplate"
+/turf/open/floor/plating/warnplate/corner
+	icon_state = "warnplatecorner"
+/turf/open/floor/plating/airless/warnplate/corner
+	icon_state = "warnplatecorner"

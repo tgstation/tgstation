@@ -23,13 +23,13 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define SPECIES_LAYER			27		// mutantrace colors... these are on a seperate layer in order to prvent
-#define MUTATIONS_LAYER			26		//mutations. Hulk, Tk headglows, etc
-#define BODY_BEHIND_LAYER		25
-#define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_ADJ_LAYER			23
-#define AUGMENTS_LAYER			22
-#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body and augments layer (e.g. laser eyes)
+#define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
+#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
@@ -60,7 +60,7 @@
 #define UNDER_BODY_LAYER			BODY_LAYER+1
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
 #define UNDER_MUTATIONS_LAYER		MUTATIONS_LAYER+1
-#define UNDER_AUGMENTS_LAYER		AUGMENTS_LAYER+1
+#define UNDER_BODYPARTS_LAYER		BODYPARTS_LAYER+1
 #define UNDER_DAMAGE_LAYER			DAMAGE_LAYER+1
 #define UNDER_UNIFORM_LAYER			UNIFORM_LAYER+1
 #define UNDER_ID_LAYER				ID_LAYER+1
@@ -88,7 +88,7 @@
 #define ABOVE_BODY_LAYER			BODY_LAYER-1
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
 #define ABOVE_MUTATIONS_LAYER		MUTATIONS_LAYER-1
-#define ABOVE_AUGMENTS_LAYER		AUGMENTS_LAYER-1
+#define ABOVE_BODYPARTS_LAYER		BODYPARTS_LAYER-1
 #define ABOVE_DAMAGE_LAYER			DAMAGE_LAYER-1
 #define ABOVE_UNIFORM_LAYER			UNIFORM_LAYER-1
 #define ABOVE_ID_LAYER				ID_LAYER-1
@@ -150,8 +150,9 @@
 #define CLICK_CD_RANGE 4
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
-#define CLICK_CD_TKSTRANGLE 10
 #define CLICK_CD_RESIST 20
+#define CLICK_CD_GRABBING 10
+
 //click cooldowns, in tenths of a second
 
 
@@ -164,6 +165,11 @@
 #define MOB_SIZE_SMALL 1
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
+
+//Cuff resist speeds
+
+#define FAST_CUFFBREAK 1
+#define INSTANT_CUFFBREAK 2
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -226,7 +232,7 @@
 #define MIN_RANGE_FIND 16
 #define FUZZY_CHANCE_HIGH 85
 #define FUZZY_CHANCE_LOW 50
-#define CHANCE_TALK 15
+#define CHANCE_TALK 1
 
 #define SNPC_BRUTE 1
 #define SNPC_STEALTH 2
@@ -283,6 +289,11 @@ var/list/bloody_footprints_cache = list()
 #define TURF_WET_WATER	1
 #define TURF_WET_LUBE	2
 #define TURF_WET_ICE	3
+#define TURF_WET_PERMAFROST 4
+#define TURF_WET_SLIDE	5
+
+//Maximum amount of time, (in approx. seconds.) a tile can be wet for.
+#define MAXIMUM_WET_TIME 300
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -392,12 +403,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
 #define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
-//Launching Shuttles to Centcomm
-#define NOLAUNCH -1
-#define UNLAUNCHED 0
-#define ENDGAME_LAUNCHED 1
-#define EARLY_LAUNCHED 2
-
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
 
@@ -419,3 +424,37 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define MAP_MAXX 4
 #define MAP_MAXY 5
 #define MAP_MAXZ 6
+
+#define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
+
+// Evil narsie colour
+#define NARSIE_WINDOW_COLOUR "#7D1919"
+
+// Defib stats
+#define DEFIB_TIME_LIMIT 120
+#define DEFIB_TIME_LOSS 60
+
+// Diagonal movement
+#define FIRST_DIAG_STEP 1
+#define SECOND_DIAG_STEP 2
+
+
+//Slime commands defines
+#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
+#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
+#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
+#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
+#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
+#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
+#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+

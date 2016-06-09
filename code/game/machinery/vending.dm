@@ -15,7 +15,7 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	anchored = 1
 	density = 1
 	verb_say = "beeps"
@@ -58,14 +58,8 @@
 	..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		component_parts = list()
-		var/obj/item/weapon/circuitboard/vendor/V = new(null)
-		V.set_type(type)
-		component_parts += V
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		component_parts += new refill_canister
-		RefreshParts()
+		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		B.apply_default_parts(src)
 	else
 		build_inventory(products)
 		build_inventory(contraband, 1)
@@ -77,6 +71,45 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
+
+/obj/item/weapon/circuitboard/machine/vendor
+	name = "circuit board (Booze-O-Mat Vendor)"
+	build_path = /obj/machinery/vending/boozeomat
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/vending_refill/boozeomat = 3)
+
+	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
+							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
+							/obj/machinery/vending/snack = "Getmore Chocolate Corp",
+							/obj/machinery/vending/cola = "Robust Softdrinks",
+							/obj/machinery/vending/cigarette = "ShadyCigs Deluxe",
+							/obj/machinery/vending/autodrobe = "AutoDrobe",
+							/obj/machinery/vending/clothing = "ClothesMate")
+
+/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/position = names_paths.Find(build_path)
+		position = (position == names_paths.len) ? 1 : (position + 1)
+		var/typepath = names_paths[position]
+
+		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		set_type(typepath)
+	else
+		return ..()
+
+/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
+	build_path = typepath
+	name = "circuit board ([names_paths[build_path]] Vendor)"
+	req_components = list(initial(typepath.refill_canister) = 3)
+
+/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+	for(var/typepath in names_paths)
+		if(istype(M, typepath))
+			set_type(typepath)
+			break
+	..()
+
 
 /obj/machinery/vending/Destroy()
 	qdel(wires)
@@ -796,7 +829,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
 	products = list(/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez = 30,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z = 20,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh = 10,/obj/item/weapon/reagent_containers/spray/pestspray = 20,
-					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5,/obj/item/weapon/cultivator = 3,/obj/item/weapon/shovel/spade = 3,/obj/item/device/analyzer/plant_analyzer = 4)
+					/obj/item/weapon/reagent_containers/syringe = 5,/obj/item/weapon/storage/bag/plants = 5,/obj/item/weapon/cultivator = 3,/obj/item/weapon/shovel/spade = 3,/obj/item/device/plant_analyzer = 4)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/ammonia = 10,/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5)
 
 /obj/machinery/vending/hydroseeds
@@ -959,9 +992,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
-	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2)
-	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3)
+	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
+	/obj/item/clothing/suit/jacket/letterman_red=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1)
+	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
 #undef STANDARD_CHARGE

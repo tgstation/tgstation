@@ -10,6 +10,7 @@
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 	var/can_charge = 1 //Can it be charged in a recharger?
+	var/charge_sections = 4
 	ammo_x_offset = 2
 	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
 	var/selfcharge = 0
@@ -99,7 +100,7 @@
 
 /obj/item/weapon/gun/energy/update_icon()
 	overlays.Cut()
-	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * 4)
+	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
@@ -118,7 +119,7 @@
 				overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
 		else
 			overlays += image(icon = icon, icon_state = "[icon_state]_charge[ratio]")
-	if(F)
+	if(F && can_flashlight)
 		var/iconF = "flight"
 		if(F.on)
 			iconF = "flight_on"
@@ -163,3 +164,4 @@
 			SSobj.processing |= src
 		else
 			SSobj.processing -= src
+	..()

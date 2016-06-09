@@ -26,7 +26,7 @@
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 5
-	variance = 0.8
+	variance = 25
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
@@ -161,7 +161,7 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/net
 	select_name = "netting"
 	pellets = 6
-	variance = 1
+	variance = 40
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
@@ -177,3 +177,24 @@ obj/item/ammo_casing/energy/net
 
 /obj/item/ammo_casing/energy/instakill/red
 	projectile_type = /obj/item/projectile/beam/instakill/red
+
+/obj/item/ammo_casing/energy/shock_revolver
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+	e_cost = 200
+	select_name = "stun"
+	projectile_type = /obj/item/projectile/energy/shock_revolver
+
+/obj/item/ammo_casing/energy/gravipulse
+	projectile_type = /obj/item/projectile/gravipulse
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "repulse"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravipulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
+/obj/item/ammo_casing/energy/gravipulse/alt
+	projectile_type = /obj/item/projectile/gravipulse/alt
+	select_name = "attract"

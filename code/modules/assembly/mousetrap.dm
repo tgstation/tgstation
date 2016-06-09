@@ -3,7 +3,7 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	materials = list(MAT_METAL=100)
-	origin_tech = "combat=1"
+	origin_tech = "combat=1;materials=2;engineering=1"
 	attachable = 1
 	var/armed = 0
 
@@ -40,7 +40,7 @@
 /obj/item/device/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)
 		return
-	var/obj/item/organ/limb/affecting = null
+	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(PIERCEIMMUNE in H.dna.species.specflags)
@@ -52,11 +52,11 @@
 		switch(type)
 			if("feet")
 				if(!H.shoes)
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
+					affecting = H.get_bodypart(pick("l_leg", "r_leg"))
 					H.Weaken(3)
 			if("l_hand", "r_hand")
 				if(!H.gloves)
-					affecting = H.get_organ(type)
+					affecting = H.get_bodypart(type)
 					H.Stun(3)
 		if(affecting)
 			if(affecting.take_damage(1, 0))

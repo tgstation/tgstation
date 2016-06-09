@@ -141,7 +141,7 @@
 	..()
 
 /obj/item/projectile/kinetic/on_range()
-	new /obj/item/effect/kinetic_blast(src.loc)
+	new /obj/effect/kinetic_blast(src.loc)
 	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
@@ -150,7 +150,7 @@
 	if(istype(target_turf, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
-	new /obj/item/effect/kinetic_blast(target_turf)
+	new /obj/effect/kinetic_blast(target_turf)
 	if(src.splash)
 		for(var/turf/T in range(splash, target_turf))
 			if(istype(T, /turf/closed/mineral))
@@ -158,13 +158,13 @@
 				M.gets_drilled(firer)
 
 
-/obj/item/effect/kinetic_blast
+/obj/effect/kinetic_blast
 	name = "kinetic explosion"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "kinetic_blast"
-	layer = 4.1
+	layer = ABOVE_ALL_MOB_LAYER
 
-/obj/item/effect/kinetic_blast/New()
+/obj/effect/kinetic_blast/New()
 	spawn(4)
 		qdel(src)
 
@@ -196,13 +196,6 @@
 		qdel(src)
 	gun.create_portal(src)
 
-
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
-	..()
-	explosion(target, -1, 0, 2)
-	return 1
-
-
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
@@ -218,7 +211,7 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3
+	range = 5
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
@@ -227,9 +220,9 @@
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
-		if(pressure < 30)
+		if(pressure < 60)
 			name = "full strength plasma blast"
-			damage *= 3
+			damage *= 4
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
@@ -237,12 +230,62 @@
 	if(istype(target, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
-		range = max(range - 1, 1)
-		return -1
+		Range()
+		if(range > 0)
+			return -1
 
 /obj/item/projectile/plasma/adv
-	range = 5
+	damage = 7
+	range = 7
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
+	range = 8
+
+
+/obj/item/projectile/gravipulse
+	name = "one-point energy bolt"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "chronofield"
+	hitsound = "sound/weapons/wave.ogg"
+	damage = 0
+	damage_type = BRUTE
+	nodamage = 1
+	color = "#33CCFF"
+	var/turf/T
+	var/power = 4
+
+/obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
+	..()
+	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
+		power = min(C.gun.power, 15)
+
+/obj/item/projectile/gravipulse/on_hit()
+	. = ..()
+	T = get_turf(src)
+	for(var/atom/movable/A in range(T, power))
+		if(A == src || (firer && A == src.firer) || A.anchored)
+			continue
+		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
+		A.throw_at_fast(throwtarget,power+1,1)
+	for(var/turf/F in range(T,power))
+		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
+		F.overlays += gravfield
+		spawn(5)
+		F.overlays -= gravfield
+
+/obj/item/projectile/gravipulse/alt
+	color = "#FF6600"
+
+/obj/item/projectile/gravipulse/alt/on_hit()
+	. = ..()
+	T = get_turf(src)
+	for(var/atom/movable/A in range(T, power))
+		if(A == src || (firer && A == src.firer) || A.anchored)
+			continue
+		A.throw_at_fast(T,power+1,1)
+	for(var/turf/F in range(T,power))
+		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
+		F.overlays += gravfield
+		spawn(5)
+		F.overlays -= gravfield

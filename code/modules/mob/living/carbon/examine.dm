@@ -46,6 +46,9 @@
 		if(fire_stacks < 0)
 			msg += "It's soaked in water.\n"
 
+		if(pulledby && pulledby.grab_state)
+			msg += "It's restrained by [pulledby]'s grip.\n"
+
 		if(stat == UNCONSCIOUS)
 			msg += "It isn't responding to anything around it; it seems to be asleep.\n"
 		msg += "</span>"
@@ -53,7 +56,7 @@
 	if(digitalcamo)
 		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
 
-	if(!getorgan(/obj/item/organ/internal/brain))
+	if(!getorgan(/obj/item/organ/brain))
 		msg += "<span class='deadsay'>It appears that it's brain is missing...</span>\n"
 
 	msg += "*---------*</span>"

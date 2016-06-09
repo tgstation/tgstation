@@ -15,12 +15,17 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 /obj/machinery/r_n_d/destructive_analyzer/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/destructive_analyzer(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/destructive_analyzer
+	name = "circuit board (Destructive Analyzer)"
+	build_path = /obj/machinery/r_n_d/destructive_analyzer
+	origin_tech = "magnets=2;engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/micro_laser = 1)
 
 /obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
 	var/T = 0
@@ -34,6 +39,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
+
+/obj/machinery/r_n_d/destructive_analyzer/disconnect_console()
+	linked_console.linked_destroy = null
+	..()
 
 /obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != "harm")
@@ -56,5 +65,5 @@ Note: Must be placed within 3 tiles of the R&D Console
 		user << "<span class='notice'>You add the [O.name] to the [src.name]!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)
+			icon_state = "d_analyzer_l"
 			busy = 0
-

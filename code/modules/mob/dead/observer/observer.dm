@@ -7,7 +7,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	desc = "It's a g-g-g-g-ghooooost!" //jinkies!
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
-	layer = MOB_LAYER + 1
+	layer = GHOST_LAYER
 	stat = DEAD
 	density = 0
 	canmove = 0
@@ -50,6 +50,9 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	//If there's a bug with changing your ghost settings, it's probably related to this.
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
+	// Used for displaying in ghost chat, without changing the actual name
+	// of the mob
+	var/deadchat_name
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -106,17 +109,34 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
 
+/mob/dead/observer/narsie_act()
+	var/old_color = color
+	color = "#960000"
+	animate(src, color = old_color, time = 10)
+
+/mob/dead/observer/ratvar_act()
+	var/old_color = color
+	color = "#FAE48C"
+	animate(src, color = old_color, time = 10)
+
 /mob/dead/observer/Destroy()
-	if (ghostimage)
-		ghost_darkness_images -= ghostimage
-		qdel(ghostimage)
-		ghostimage = null
-		updateallghostimages()
+	ghost_images_full -= ghostimage
+	qdel(ghostimage)
+	ghostimage = null
+
+	ghost_images_default -= ghostimage_default
+	qdel(ghostimage_default)
+	ghostimage_default = null
+
+	ghost_images_simple -= ghostimage_simple
+	qdel(ghostimage_simple)
+	ghostimage_simple = null
+
+	updateallghostimages()
 	return ..()
 
 /mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
 	return 1
-
 
 /*
  * This proc will update the icon of the ghost itself, with hair overlays, as well as the ghost image.
@@ -143,6 +163,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(new_form)
 		icon_state = new_form
+		ghostimage.icon_state = new_form
 		if(icon_state in ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
@@ -231,6 +252,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
+	if(mental_dominator)
+		src << "<span class='warning'>This body's force of will is too strong! You can't break it enough to force them into a catatonic state.</span>"
+		if(mind_control_holder)
+			mind_control_holder << "<span class='userdanger'>Through tremendous force of will, you stop a catatonia attempt!</span>"
+		return 0
 	if(stat != DEAD)
 		succumb()
 	if(stat == DEAD)
@@ -590,7 +616,38 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		src << "<span class='notice'>Data HUDs enabled.</span>"
 		data_huds_on = 1
 
+/mob/dead/observer/verb/restore_ghost_apperance()
+	set name = "Restore Ghost Character"
+	set desc = "Sets your deadchat name and ghost appearance to your \
+		roundstart character."
+	set category = "Ghost"
+
+	set_ghost_appearance()
+	if(client && client.prefs)
+		deadchat_name = client.prefs.real_name
+
+/mob/dead/observer/proc/set_ghost_appearance()
+	if((!client) || (!client.prefs))
+		return
+
+	if(client.prefs.be_random_name)
+		client.prefs.real_name = random_unique_name(gender)
+	if(client.prefs.be_random_body)
+		client.prefs.random_character(gender)
+
+	if(HAIR in client.prefs.pref_species.specflags)
+		hair_style = client.prefs.hair_style
+		hair_color = brighten_color(client.prefs.hair_color)
+	if(FACEHAIR in client.prefs.pref_species.specflags)
+		facial_hair_style = client.prefs.facial_hair_style
+		facial_hair_color = brighten_color(client.prefs.facial_hair_color)
+
+	update_icon()
+
 /mob/dead/observer/canUseTopic()
 	if(check_rights(R_ADMIN, 0))
 		return 1
 	return
+
+/mob/dead/observer/is_literate()
+	return 1

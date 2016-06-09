@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/megafauna/legion
-	name = "legion"
+	name = "Legion"
 	health = 800
 	maxHealth = 800
 	icon_state = "legion"
@@ -57,20 +57,31 @@
 				charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
+	if(health > 0)
+		return
 	if(size > 2)
-		for(var/i in 1 to 2)
-			var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
-			L.health = src.maxHealth * 0.6
-			L.maxHealth = L.health
-			L.size = size - 2
-			var/size_multiplier = L.size * 0.08
-			L.resize = size_multiplier
-			L.pixel_y = L.pixel_y * size_multiplier
-			L.pixel_x = L.pixel_x * size_multiplier
+		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
+		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
 
-			L.update_transform()
+		L.maxHealth = maxHealth * 0.6
+		maxHealth = L.maxHealth
+
+		L.health = L.maxHealth
+		health = L.health
+
+		L.size = size - 2
+		size = L.size
+
+		var/size_multiplier = L.size * 0.08
+		L.resize = size_multiplier
+		resize = L.resize
+
+		L.update_transform()
+		update_transform()
+
+		L.target = target
+
 		visible_message("<span class='danger'>[src] splits!</span>")
-		qdel(src)
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)

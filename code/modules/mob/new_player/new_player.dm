@@ -127,19 +127,12 @@
 				observer.loc = O.loc
 			else
 				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_unique_name(gender)
-			if(client.prefs.be_random_body)
-				client.prefs.random_character(gender)
-			if(HAIR in client.prefs.pref_species.specflags)
-				observer.hair_style = client.prefs.hair_style
-				observer.hair_color = observer.brighten_color(client.prefs.hair_color)
-			if(FACEHAIR in client.prefs.pref_species.specflags)
-				observer.facial_hair_style = client.prefs.facial_hair_style
-				observer.facial_hair_color = observer.brighten_color(client.prefs.facial_hair_color)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
 			observer.key = key
+			observer.client = client
+			observer.set_ghost_appearance()
+			if(observer.client && observer.client.prefs)
+				observer.real_name = observer.client.prefs.real_name
+				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stopLobbySound()
 			qdel(mind)
@@ -320,6 +313,7 @@
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
+		AddEmploymentContract(character)
 	else
 		character.Robotize()
 
@@ -341,6 +335,15 @@
 				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
 					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
 					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
+	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
+	sleep(30)
+	for(var/C in employmentCabinets)
+		var/obj/structure/filingcabinet/employment/employmentCabinet = C
+		if(!employmentCabinet.virgin)
+			employmentCabinet.addFile(employee)
+
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever

@@ -1,11 +1,3 @@
- #define SAWN_INTACT  0
- #define SAWN_OFF     1
- #define SAWN_SAWING -1
-
- #define WEAPON_LIGHT 0
- #define WEAPON_MEDIUM 1
- #define WEAPON_HEAVY 2
-
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -40,10 +32,12 @@
 	var/semicd = 0						//cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 
+	var/spread = 0						//Spread induced by the gun itself.
+	var/randomspread = 1				//Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.
+
 	var/unique_rename = 0 //allows renaming with a pen
 	var/unique_reskin = 0 //allows one-time reskinning
-	var/reskinned = 0 //whether or not the gun has been reskinned
-	var/current_skin = null
+	var/current_skin = null //the skin choice if we had a reskin
 	var/list/options = list()
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
@@ -72,11 +66,14 @@
 	..()
 	if(pin)
 		pin = new pin(src)
-
+	if(F)
+		verbs += /obj/item/weapon/gun/proc/toggle_gunlight
+		new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
 
 
-/obj/item/weapon/gun/CheckParts()
+/obj/item/weapon/gun/CheckParts(list/parts_list)
+	..()
 	var/obj/item/weapon/gun/G = locate(/obj/item/weapon/gun) in contents
 	if(G)
 		G.loc = loc
@@ -91,6 +88,10 @@
 		user << "It has [pin] installed."
 	else
 		user << "It doesn't have a firing pin installed, and won't fire."
+	if(unique_reskin && !current_skin)
+		user << "<span class='notice'>Alt-click it to reskin it.</span>"
+	if(unique_rename)
+		user << "<span class='notice'>Use a pen on it to rename it.</span>"
 
 
 /obj/item/weapon/gun/proc/process_chamber()
@@ -221,7 +222,12 @@ obj/item/weapon/gun/proc/newshot()
 				if( i>1 && !(src in get_both_hands(user))) //for burst firing
 					break
 			if(chambered)
-				if(!chambered.fire(target, user, params, , suppressed, zone_override))
+				var/sprd = 0
+				if(randomspread)
+					sprd = round((rand() - 0.5) * spread)
+				else //Smart spread
+					sprd = round((i / burst_size - 0.5) * spread)
+				if(!chambered.fire(target, user, params, ,suppressed, zone_override, sprd))
 					shoot_with_empty_chamber(user)
 					break
 				else
@@ -238,7 +244,7 @@ obj/item/weapon/gun/proc/newshot()
 		firing_burst = 0
 	else
 		if(chambered)
-			if(!chambered.fire(target, user, params, , suppressed, zone_override))
+			if(!chambered.fire(target, user, params, , suppressed, zone_override, spread))
 				shoot_with_empty_chamber(user)
 				return
 			else
@@ -288,7 +294,7 @@ obj/item/weapon/gun/proc/newshot()
 					A.Grant(user)
 
 	if(istype(I, /obj/item/weapon/screwdriver))
-		if(F)
+		if(F && can_flashlight)
 			for(var/obj/item/device/flashlight/seclite/S in src)
 				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
 				F = null
@@ -371,24 +377,20 @@ obj/item/weapon/gun/proc/newshot()
 	if(user.incapacitated())
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
-	if(unique_reskin && !reskinned && loc == user)
+	if(unique_reskin && !current_skin && loc == user)
 		reskin_gun(user)
 
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
 	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
 
-	if(src && choice && !M.stat && in_range(M,src) && !M.restrained() && M.canmove)
+	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(options[choice] == null)
 			return
-		if(sawn_state == SAWN_OFF)
-			icon_state = options[choice] + "-sawn"
-		else
-			icon_state = options[choice]
-		current_skin = icon_state
+		current_skin = options[choice]
 		M << "Your gun is now skinned as [choice]. Say hello to your new friend."
-		reskinned = 1
-		return
+		update_icon()
+
 
 /obj/item/weapon/gun/proc/rename_gun(mob/M)
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)

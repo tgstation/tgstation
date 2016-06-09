@@ -22,14 +22,17 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/cryo_tube
+	name = "circuit board (Cryotube)"
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
+	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 4)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)
@@ -158,7 +161,7 @@
 		user << "[src] seems empty."
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target))
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
 		return
 	close_machine(target)
 

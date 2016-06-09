@@ -22,9 +22,12 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
 
 	//Species
@@ -35,10 +38,20 @@
 		species_list[S.id] = S.type
 
 	//Surgeries
-	for(var/path in (subtypesof(/datum/surgery)))
+	for(var/path in subtypesof(/datum/surgery))
 		surgeries_list += new path()
 
-	init_subtypes(/datum/table_recipe, table_recipes)
+	//Materials
+	for(var/path in subtypesof(/datum/material))
+		var/datum/material/D = new path()
+		materials_list[D.id] = D
+
+	//Techs
+	for(var/path in subtypesof(/datum/tech))
+		var/datum/tech/D = new path()
+		tech_list[D.id] = D
+
+	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

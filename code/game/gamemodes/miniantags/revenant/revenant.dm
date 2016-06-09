@@ -18,7 +18,7 @@
 	invisibility = INVISIBILITY_REVENANT
 	health = INFINITY //Revenants don't use health, they use essence instead
 	maxHealth = INFINITY
-	layer = 5
+	layer = GHOST_LAYER
 	healable = 0
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
@@ -41,8 +41,9 @@
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	speed = 0
+	speed = 1
 	unique_name = 1
+	hud_possible = list(ANTAG_HUD)
 
 	var/essence = 75 //The resource, and health, of revenants.
 	var/essence_regen_cap = 75 //The regeneration cap of essence (go figure); regenerates every Life() tick up to this amount.
@@ -133,6 +134,12 @@
 			essencecolor = "#1D2953" //oh jeez you're dying
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='[essencecolor]'>[essence]E</font></div>"
 
+/mob/living/simple_animal/revenant/med_hud_set_health()
+	return //we use no hud
+
+/mob/living/simple_animal/revenant/med_hud_set_status()
+	return //we use no hud
+
 /mob/living/simple_animal/revenant/say(message)
 	if(!message)
 		return
@@ -142,7 +149,8 @@
 		if(istype(M, /mob/living/simple_animal/revenant))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 	return
 
 
@@ -165,6 +173,7 @@
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
+	. = ..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		visible_message("<span class='warning'>[src] violently flinches!</span>", \
 						"<span class='revendanger'>As \the [W] passes through you, you feel your essence draining away!</span>")
@@ -174,8 +183,6 @@
 		spawn(30)
 			inhibited = 0
 			update_action_buttons_icon()
-	else
-		return ..()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
@@ -268,9 +275,13 @@
 	if(!src)
 		return
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/closed/wall))
+	if(istype(T, /turf/closed))
 		src << "<span class='revenwarning'>You cannot use abilities from inside of a wall.</span>"
 		return 0
+	for(var/obj/O in T)
+		if(O.density && !O.CanPass(src, T, 5))
+			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
+			return 0
 	if(src.inhibited)
 		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0

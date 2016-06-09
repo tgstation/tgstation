@@ -1,35 +1,47 @@
 /obj/item/robot_parts
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
+	force = 4
+	throwforce = 4
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	var/body_zone
 
 /obj/item/robot_parts/l_arm
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "l_arm"
+	body_zone = "l_arm"
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "r_arm"
+	body_zone = "r_arm"
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "l_leg"
+	body_zone = "l_leg"
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "r_leg"
+	body_zone = "r_leg"
 
 /obj/item/robot_parts/chest
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	icon_state = "chest"
+	body_zone = "chest"
 	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = null
 
@@ -37,6 +49,7 @@
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	icon_state = "head"
+	body_zone = "head"
 	var/obj/item/device/assembly/flash/handheld/flash1 = null
 	var/obj/item/device/assembly/flash/handheld/flash2 = null
 
@@ -203,10 +216,15 @@
 			if(!user.unEquip(W))
 				return
 
-			if(M.syndiemmi)
+			if(M.hacked || M.clockwork)
 				aisync = 0
 				lawsync = 0
-				O.laws = new /datum/ai_laws/syndicate_override
+				if(M.clockwork)
+					O.laws = new/datum/ai_laws/ratvar
+					spawn(1)
+						add_servant_of_ratvar(O)
+				else
+					O.laws = new/datum/ai_laws/syndicate_override
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -219,7 +237,7 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync && !M.syndiemmi)
+			if(!lawsync && !M.hacked)
 				O.lawupdate = 0
 				O.make_laws()
 

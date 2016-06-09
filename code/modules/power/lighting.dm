@@ -32,7 +32,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-construct-stage1"
 	anchored = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
@@ -131,7 +131,7 @@
 	icon_state = "tube1"
 	desc = "A lighting fixture."
 	anchored = 1
-	layer = 5  					// They were appearing under mobs which is a little weird - Ostaf
+	layer = WALL_OBJ_LAYER
 	use_power = 2
 	idle_power_usage = 2
 	active_power_usage = 20
@@ -435,8 +435,8 @@
 		else
 			user << "<span class='warning'>You try to remove the light [fitting], but you burn your hand on it!</span>"
 
-			var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-			if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+			var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+			if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 				H.update_damage_overlays(0)
 			H.updatehealth()
 			return				// if burned, don't remove the light

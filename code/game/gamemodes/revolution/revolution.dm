@@ -148,7 +148,7 @@
 	if (!where2)
 		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
 	else
-		mob << "The chameleon security HUD in your [where2] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+		mob << "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited."
 
 	if (!where)
 		mob << "The Syndicate were unfortunately unable to get you a flash."
@@ -231,6 +231,15 @@
 ///////////////////////////////////////////////////
 //Deals with converting players to the revolution//
 ///////////////////////////////////////////////////
+/proc/is_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.revolutionaries
+
+/proc/is_head_revolutionary(mob/M)
+	return M && istype(M) && M.mind && ticker && ticker.mode && M.mind in ticker.mode.head_revolutionaries
+
+/proc/is_revolutionary_in_general(mob/M)
+	return is_revolutionary(M) || is_head_revolutionary(M)
+
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
 		return 0
@@ -315,7 +324,7 @@
 /datum/game_mode/revolution/proc/check_heads_victory()
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		var/turf/T = get_turf(rev_mind.current)
-		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && rev_mind.current.client && T && (T.z == ZLEVEL_STATION))
+		if((rev_mind) && (rev_mind.current) && (rev_mind.current.stat != 2) && T && (T.z == ZLEVEL_STATION))
 			if(ishuman(rev_mind.current))
 				return 0
 	return 1

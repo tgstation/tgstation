@@ -100,6 +100,7 @@
 	icon_state = "banana_blue"
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
+	origin_tech = "biotech=3;bluespace=5"
 
 /obj/item/weapon/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace
@@ -107,12 +108,13 @@
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
 
-
 // Other
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes
 	name = "synthesized banana peel"
 	desc = "A synthetic banana peel."
 
 /obj/item/weapon/grown/bananapeel/specialpeel/Crossed(AM)
-	if(..())
-		qdel(src)
+	if(iscarbon(AM))
+		var/mob/living/carbon/carbon = AM
+		if(carbon.slip(2, 2, src, FALSE))
+			qdel(src)

@@ -8,6 +8,7 @@
 	speak_emote = list("barks", "woofs")
 	emote_hear = list("barks!", "woofs!", "yaps.","pants.")
 	emote_see = list("shakes its head.", "chases its tail.","shivers.")
+	faction = list("dog")
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
@@ -24,7 +25,7 @@
 	gender = MALE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
-	species = /mob/living/simple_animal/pet/dog
+	animal_species = /mob/living/simple_animal/pet/dog
 	var/shaved = 0
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
@@ -164,7 +165,7 @@
 						usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 						return
 
-					if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
+					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 						item_to_add.afterattack(src,usr,1)
 						return
 
@@ -200,7 +201,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/proc/place_on_head(obj/item/item_to_add, mob/user)
 
-	if(istype(item_to_add,/obj/item/weapon/c4)) // last thing he ever wears, I guess
+	if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
 		item_to_add.afterattack(src,user,1)
 		return
 
@@ -533,7 +534,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
-				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",ABOVE_MOB_LAYER), list(M.client), 20)
 				emote("me", 1, "yaps happily!")
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)

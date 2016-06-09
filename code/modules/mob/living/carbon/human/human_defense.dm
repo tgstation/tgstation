@@ -5,18 +5,19 @@
 	if(def_zone)
 		if(islimb(def_zone))
 			return checkarmor(def_zone, type)
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(def_zone))
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(def_zone))
 		return checkarmor(affecting, type)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
-	for(var/obj/item/organ/limb/organ in organs)
-		armorval += checkarmor(organ, type)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		armorval += checkarmor(BP, type)
 		organnum++
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/organ/limb/def_zone, type)
+/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, type)
 	if(!type)
 		return 0
 	var/protection = 0
@@ -52,6 +53,7 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
+					P.Angle = null
 
 				return -1 // complete projectile permutation
 
@@ -94,23 +96,21 @@
 	return 0
 
 
-/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
 	if(!I || !user)
 		return 0
 
-	var/obj/item/organ/limb/target_limb = get_organ(check_zone(user.zone_selected))
-	var/obj/item/organ/limb/affecting = get_organ(ran_zone(user.zone_selected))
-	var/hit_area = parse_zone(affecting.name)
-	var/target_area = parse_zone(target_limb.name)
+	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
+	var/target_area = parse_zone(check_zone(user.zone_selected))
 	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
 	feedback_add_details("zone_targeted","[target_area]")
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, def_zone, affecting, hit_area, a_intent, target_limb, target_area, src)
+	return dna.species.spec_attacked_by(I, user, affecting, a_intent, target_area, src)
 
 /mob/living/carbon/human/emp_act(severity)
 	var/informed = 0
-	for(var/obj/item/organ/limb/L in src.organs)
+	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
 				src << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
@@ -149,7 +149,7 @@
 		else
 			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
 	else
-		. = get_organ("head")
+		. = get_bodypart("head")
 		if(.)
 			damaged += .
 		if(ears)
@@ -170,7 +170,7 @@
 		else
 			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
 	else
-		. = get_organ("chest")
+		. = get_bodypart("chest")
 		if(.)
 			damaged += .
 		if(wear_id)
@@ -201,10 +201,10 @@
 		else
 			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
 	else
-		. = get_organ("r_arm")
+		. = get_bodypart("r_arm")
 		if(.)
 			damaged += .
-		. = get_organ("l_arm")
+		. = get_bodypart("l_arm")
 		if(.)
 			damaged += .
 
@@ -227,16 +227,16 @@
 		else
 			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
 	else
-		. = get_organ("r_leg")
+		. = get_bodypart("r_leg")
 		if(.)
 			damaged += .
-		. = get_organ("l_leg")
+		. = get_bodypart("l_leg")
 		if(.)
 			damaged += .
 
 
 	//DAMAGE//
-	for(var/obj/item/organ/limb/affecting in damaged)
+	for(var/obj/item/bodypart/affecting in damaged)
 		affecting.take_damage(acidity, 2*acidity)
 
 		if(affecting.name == "head")
@@ -265,11 +265,6 @@
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
 
-/mob/living/carbon/human/grabbedby(mob/living/user)
-	if(w_uniform)
-		w_uniform.add_fingerprint(user)
-	..()
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -277,7 +272,7 @@
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee")
 		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
 		updatehealth()
@@ -291,7 +286,7 @@
 			return 0
 		if(stat != DEAD)
 			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/organ/limb/affecting = get_organ(ran_zone(L.zone_selected))
+			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 			var/armor_block = run_armor_check(affecting, "melee")
 			apply_damage(damage, BRUTE, affecting, armor_block)
 			updatehealth()
@@ -308,7 +303,7 @@
 
 		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
 
-		var/obj/item/organ/limb/affecting = get_organ(ran_zone(dam_zone))
+		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
@@ -318,7 +313,7 @@
 		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
-		var/obj/item/organ/limb/temp = get_organ(pick("chest", "chest", "chest", "head"))
+		var/obj/item/bodypart/temp = get_bodypart(pick("chest", "chest", "chest", "head"))
 		if(temp)
 			var/update = 0
 			switch(M.damtype)
@@ -351,7 +346,9 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
+			return ..()
+	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
@@ -360,13 +357,28 @@
 			if(can_embed(I))
 				if(prob(I.embed_chance) && !(dna && (PIERCEIMMUNE in dna.species.specflags)))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-					var/obj/item/organ/limb/L = pick(organs)
+					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
-					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.getDisplayName()]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.getDisplayName()]!</span>")
+					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")
 					hitpush = 0
 					skipcatch = 1 //can't catch the now embedded item
 
 	return ..()
+
+/mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
+		devour_mob(pulling)
+	else
+		..()
+
+/mob/living/carbon/human/grippedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+
+/mob/living/carbon/human/Stun(amount, updating_canmove = 1)
+	amount = dna.species.spec_stun(src,amount)
+	..()

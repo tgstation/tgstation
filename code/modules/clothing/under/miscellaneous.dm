@@ -244,6 +244,13 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
+/obj/item/clothing/under/burial
+	name = "burial garments"
+	desc = "Traditional burial garments from the early 22nd century."
+	icon_state = "burial"
+	item_state = "burial"
+	item_color = "burial"
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
@@ -559,6 +566,7 @@
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
+	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"
@@ -566,4 +574,3 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
-

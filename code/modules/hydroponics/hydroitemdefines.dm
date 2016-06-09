@@ -1,14 +1,14 @@
 // Plant analyzer
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
-	origin_tech = "magnets=1;biotech=1"
-
-/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user)
-	return 0
+	w_class = 1
+	slot_flags = SLOT_BELT
+	origin_tech = "magnets=2;biotech=2"
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
 // Hydroponics Tools
@@ -64,6 +64,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "cultivator"
 	item_state = "cultivator"
+	origin_tech = "engineering=2;biotech=2"
 	flags = CONDUCT
 	force = 5
 	throwforce = 7
@@ -84,7 +85,7 @@
 	throw_speed = 3
 	throw_range = 4
 	materials = list(MAT_METAL = 15000)
-	origin_tech = "materials=2;combat=1"
+	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
@@ -106,7 +107,7 @@
 	flags = CONDUCT
 	armour_penetration = 20
 	slot_flags = SLOT_BACK
-	origin_tech = "materials=2;combat=2"
+	origin_tech = "materials=3;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
@@ -198,4 +199,3 @@
 /obj/item/weapon/reagent_containers/glass/bottle/killer/pestkiller/New()
 	..()
 	reagents.add_reagent("pestkiller", 50)
-

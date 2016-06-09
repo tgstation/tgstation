@@ -65,12 +65,6 @@
 	caliber = "38"
 	max_ammo = 6
 
-/obj/item/ammo_box/magazine/internal/cylinder/rev38/can_load(mob/user)
-	user << "<span class='notice'>You start reloading...</span>"
-	if(!do_after(user, 30, target = user))
-		return 0
-	return 1
-
 /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
@@ -91,9 +85,6 @@
 	max_ammo = 4
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shot/lethal
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-
 /obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0
@@ -103,6 +94,15 @@
 		return boolets
 	else
 		return ..()
+
+
+/obj/item/ammo_box/magazine/internal/shot/tube
+	name = "dual feed shotgun internal tube"
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
+	max_ammo = 4
+
+/obj/item/ammo_box/magazine/internal/shot/lethal
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
@@ -156,6 +156,11 @@
 	max_ammo = 5
 	multiload = 1
 
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted
+	max_ammo =1
+	ammo_type = /obj/item/ammo_casing/a762/enchanted
+
+
 /obj/item/ammo_box/magazine/internal/shot/toy
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	caliber = "foam_force"
@@ -163,6 +168,7 @@
 
 /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	max_ammo = 5
+
 
 ///////////EXTERNAL MAGAZINES////////////////
 
@@ -227,6 +233,10 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 21
+
+/obj/item/ammo_box/magazine/smgm9mm/update_icon()
+	..()
+	icon_state = "smg9mm-[ammo_count() ? "42" : "0"]"
 
 /obj/item/ammo_box/magazine/smgm9mm/ap
 	name = "SMG magazine (Armour Piercing 9mm)"

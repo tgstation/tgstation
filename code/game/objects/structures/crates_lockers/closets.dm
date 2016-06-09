@@ -141,7 +141,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.buckled_mobs.len)
+		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
@@ -160,8 +160,10 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.buckled_mobs.len || (AM.flags & NODROP))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
 			return
+	else
+		return
 
 	AM.forceMove(src)
 	if(AM.pulledby)
@@ -251,7 +253,7 @@
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
-		if(!toggle(user))
+		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
 	else
@@ -381,10 +383,10 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
-	if(opened || !secure || !in_range(src, user))
+	if(opened || !secure)
 		return
 	else
 		togglelock(user)
@@ -395,7 +397,7 @@
 			add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
-							"<span class='notice'>You [locked ? null : "un"]locks [src].</span>")
+							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
 			update_icon()
 		else
 			user << "<span class='notice'>Access Denied</span>"

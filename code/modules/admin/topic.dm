@@ -252,14 +252,14 @@
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+				if(EMERGENCY_AT_LEAST_DOCKED)
 					return
 				SSshuttle.emergency.request()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
 
 			if("2")
-				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+				if(EMERGENCY_AT_LEAST_DOCKED)
 					return
 				switch(SSshuttle.emergency.mode)
 					if(SHUTTLE_CALL)
@@ -1608,6 +1608,9 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
+	
+	else if(href_list["admincheckdevilinfo"])
+		output_devil_info()
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"])

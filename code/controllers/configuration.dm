@@ -93,6 +93,7 @@
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
+	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
@@ -173,6 +174,8 @@
 	var/generate_minimaps = 0
 	var/grey_assistants = 0
 
+	var/lavaland_budget = 60
+
 	var/aggressive_changelog = 0
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
@@ -202,6 +205,7 @@
 	var/client_error_version = 0
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
+	var/cross_name = "Other server"
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -359,6 +363,12 @@
 					global.comms_key = value
 					if(value != "default_pwd" && length(value) > 6) //It's the default value or less than 6 characters long, warn badmins
 						global.comms_allowed = 1
+				if("cross_server_address")
+					global.cross_address = value
+					if(value != "byond:\\address:port")
+						global.cross_allowed = 1
+				if("cross_comms_name")
+					cross_name = value
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -551,6 +561,8 @@
 					config.allow_ai					= 1
 				if("disable_secborg")
 					config.forbid_secborg			= 1
+				if("disable_peaceborg")
+					config.forbid_peaceborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
 				if("silent_borg")
@@ -577,6 +589,8 @@
 					config.starlight			= 1
 				if("grey_assistants")
 					config.grey_assistants			= 1
+				if("lavaland_budget")
+					config.lavaland_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")

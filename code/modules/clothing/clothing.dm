@@ -19,6 +19,39 @@
 	var/gang //Is this a gang outfit?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
+	//Var modification - PLEASE be careful with this I know who you are and where you live
+	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
+	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
+
+
+/obj/item/clothing/Destroy()
+	if(isliving(loc))
+		dropped(loc)
+	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	return ..()
+
+
+/obj/item/clothing/dropped(mob/user)
+	..()
+	if(user_vars_remembered && user_vars_remembered.len)
+		for(var/variable in user_vars_remembered)
+			if(variable in user.vars)
+				if(user.vars[variable] == user_vars_to_edit[variable]) //Is it still what we set it to? (if not we best not change it)
+					user.vars[variable] = user_vars_remembered[variable]
+		user_vars_remembered = list()
+
+
+/obj/item/clothing/equipped(mob/user, slot)
+	..()
+
+	if(slot_flags & slotdefine2slotbit(slot)) //Was equipped to a valid slot for this item?
+		for(var/variable in user_vars_to_edit)
+			if(variable in user.vars)
+				user_vars_remembered[variable] = user.vars[variable]
+				user.vars[variable] = user_vars_to_edit[variable]
+
+
+
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
@@ -150,7 +183,7 @@ BLIND     // can't see anything
 		permeability_coefficient = null
 		flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
-		flags_cover &= 0
+		flags_cover = 0
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
 	user.wear_mask_update(src, toggle_off = mask_adjusted)
@@ -308,9 +341,7 @@ BLIND     // can't see anything
 	var/can_adjust = 1
 	var/adjusted = 0
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
-	var/suit_color = null
 	var/obj/item/clothing/tie/hastie = null
-
 
 /obj/item/clothing/under/worn_overlays(var/isinhands = FALSE)
 	. = list()
@@ -331,7 +362,6 @@ BLIND     // can't see anything
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
 	adjusted = 0
-	suit_color = item_color
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
@@ -430,10 +460,8 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		rolldown()
@@ -450,25 +478,25 @@ BLIND     // can't see anything
 	if(!can_adjust)
 		usr << "<span class='warning'>You cannot wear this suit any differently!</span>"
 		return
-	if(src.adjusted == 1)
-		src.fitted = initial(fitted)
-		src.item_color = initial(item_color)
-		src.item_color = src.suit_color //colored jumpsuits are shit and break without this
-		src.body_parts_covered = CHEST|GROIN|LEGS|ARMS
-		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
-		src.adjusted = 0
-	else
-		if(src.fitted != FEMALE_UNIFORM_TOP)
-			src.fitted = NO_FEMALE_UNIFORM
-		src.item_color += "_d"
-		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
-			src.body_parts_covered = CHEST|GROIN|LEGS
-		else
-			src.body_parts_covered = GROIN|LEGS
+	if(toggle_jumpsuit_adjust())
 		usr << "<span class='notice'>You adjust the suit to wear it more casually.</span>"
-		src.adjusted = 1
+	else
+		usr << "<span class='notice'>You adjust the suit back to normal.</span>"
 	usr.update_inv_w_uniform()
-	..()
+
+/obj/item/clothing/under/proc/toggle_jumpsuit_adjust()
+	adjusted = !adjusted
+	if(adjusted)
+		if(fitted != FEMALE_UNIFORM_TOP)
+			fitted = NO_FEMALE_UNIFORM
+		if (alt_covers_chest) // for the special snowflake suits that don't expose the chest when adjusted
+			body_parts_covered = CHEST|GROIN|LEGS
+		else
+			body_parts_covered = GROIN|LEGS
+	else
+		fitted = initial(fitted)
+		body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	return adjusted
 
 /obj/item/clothing/under/examine(mob/user)
 	..()

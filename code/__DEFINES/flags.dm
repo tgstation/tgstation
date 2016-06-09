@@ -18,6 +18,7 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
+#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 
 
 #define HEADBANGPROTECT		4096
@@ -30,8 +31,6 @@
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
 #define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
 #define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
-
-#define	NOREACT		16384 		//Reagents dont' react inside this container.
 
 //turf-only flags
 #define NOJAUNT		1
@@ -52,21 +51,25 @@
 
 #define MUTCOLORS		1
 #define HAIR			2
-#define FACEHAIR		4
-#define EYECOLOR		8
-#define LIPS			16
-#define COLDRES			32
-#define HEATRES			64
-#define RADIMMUNE		128
-#define NOBREATH		256
-#define NOGUNS			512
-#define NOBLOOD			1024
-#define NOFIRE			2048
-#define VIRUSIMMUNE		4096
-#define PIERCEIMMUNE	8192
-#define NOTRANSSTING	16384
+#define FACEHAIR		3
+#define EYECOLOR		4
+#define LIPS			5
+#define RESISTTEMP		6
+#define RADIMMUNE		7
+#define NOBREATH		8
+#define NOGUNS			9
+#define NOBLOOD			10
+#define NOFIRE			11
+#define VIRUSIMMUNE		12
+#define PIERCEIMMUNE	13
+#define NOTRANSSTING	14
+#define MUTCOLORS_PARTSONLY	15	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		16
+#define NOHUNGER		17
+#define NOCRITDAMAGE	18
+#define NOZOMBIE		19
 
-#define MUTCOLORS_PARTSONLY 	32768	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define FLYING	65536
 
 /*
 	These defines are used specifically with the atom/movable/languages bitmask.
@@ -79,3 +82,6 @@
 #define SLIME 16
 #define DRONE 32
 #define SWARMER 64
+
+// Flags for reagents
+#define REAGENT_NOREACT 1

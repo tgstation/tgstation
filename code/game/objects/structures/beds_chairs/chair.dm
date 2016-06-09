@@ -16,7 +16,8 @@
 	handle_layer()
 
 /obj/structure/chair/deconstruct()
-	if(buildstacktype)
+	// If we have materials, and don't have the NOCONSTRUCT flag
+	if(buildstacktype && (!(flags & NODECONSTRUCT)))
 		new buildstacktype(loc,buildstackamount)
 	..()
 
@@ -70,14 +71,14 @@
 		return ..()
 
 /obj/structure/chair/attack_tk(mob/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		..()
 	else
 		rotate()
 	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.buckled = null //Temporary, so Move() succeeds.
@@ -98,7 +99,7 @@
 /obj/structure/chair/proc/spin()
 	dir = turn(dir, 90)
 	handle_layer()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			buckled_mob.dir = dir
@@ -161,12 +162,12 @@
 
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
-	armrest.layer = MOB_LAYER + 0.1
+	armrest.layer = ABOVE_MOB_LAYER
 
 	return ..()
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		overlays += armrest
 	else
 		overlays -= armrest
@@ -214,7 +215,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || buckled_mobs.len || src.flags & NODECONSTRUCT)
+		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
 			usr << "<span class='warning'>You can't do that right now!</span>"
@@ -223,6 +224,12 @@
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		qdel(src)
+
+/obj/structure/chair/stool/bar
+	name = "bar stool"
+	desc = "It has some unsavory stains on it..."
+	icon_state = "bar"
+	item_chair = /obj/item/chair/stool/bar
 
 /obj/item/chair
 	name = "chair"
@@ -303,6 +310,12 @@
 	origin_type = /obj/structure/chair/stool
 	break_chance = 0 //It's too sturdy.
 
+/obj/item/chair/stool/bar
+	name = "bar stool"
+	icon_state = "bar"
+	item_state = "stool_bar"
+	origin_type = /obj/structure/chair/stool
+
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
 
@@ -322,3 +335,9 @@
 /obj/item/chair/wood/wings
 	icon_state = "wooden_chair_wings_toppled"
 	origin_type = /obj/structure/chair/wood/wings
+
+/obj/structure/chair/old
+	name = "strange chair"
+	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
+	icon_state = "chairold"
+	item_chair = null

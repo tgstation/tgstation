@@ -3,8 +3,10 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
+	luminosity = 1
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 
@@ -52,6 +54,7 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
+	luminosity = 2
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -65,6 +68,9 @@
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	legacy = 1
+	luminosity = 2
+	animate_movement = SLIDE_STEPS
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss

@@ -8,7 +8,7 @@
 	w_class = 1
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
+	layer = MOB_LAYER
 	pressure_resistance = 1
 
 /obj/item/documents/nanotrasen
@@ -50,8 +50,8 @@
 			user << "<span class='warning'>You have already forged a seal on [src]!</span>"
 		else
 			var/obj/item/toy/crayon/C = O
-			name = "[C.colourName] secret documents"
-			icon_state = "docs_[C.colourName]"
-			forgedseal = C.colourName
-			user << "<span class='notice'>You forge the official seal with a [C.colourName] crayon. No one will notice... right?</span>"
+			name = "[C.item_color] secret documents"
+			icon_state = "docs_[C.item_color]"
+			forgedseal = C.item_color
+			user << "<span class='notice'>You forge the official seal with a [C.item_color] crayon. No one will notice... right?</span>"
 			update_icon()

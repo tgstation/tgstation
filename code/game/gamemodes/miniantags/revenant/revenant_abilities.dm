@@ -118,6 +118,18 @@
 			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
 			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
 			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
+			for(var/ded in dead_mob_list)
+				if(!isobserver(ded))
+					continue
+				var/follow_rev = FOLLOW_LINK(ded, user)
+				var/follow_whispee = FOLLOW_LINK(ded, M)
+				ded << "[follow_rev] \
+					<span class='name'>[user]</span> \
+					<span class='revenboldnotice'>Revenant Transmit --></span> \
+					[follow_whispee] \
+					<span class='name'>[M]</span> \
+					<span class='revennotice'>[msg]</span>"
+
 
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
@@ -214,7 +226,7 @@
 							if(M == user)
 								continue
 							L.Beam(M,icon_state="purple_lightning",icon='icons/effects/effects.dmi',time=5)
-							M.electrocute_act(shock_damage, "[L.name]", safety=1)
+							M.electrocute_act(shock_damage, L, safety=1)
 							var/datum/effect_system/spark_spread/z = new /datum/effect_system/spark_spread
 							z.set_up(4, 0, M)
 							z.start()

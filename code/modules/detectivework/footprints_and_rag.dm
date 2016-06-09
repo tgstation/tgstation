@@ -1,11 +1,9 @@
 
 /mob
 	var/bloody_hands = 0
-	var/mob/living/carbon/human/bloody_hands_mob
 
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
-	var/mob/living/carbon/human/bloody_hands_mob
 
 
 /obj/item/weapon/reagent_containers/glass/rag
@@ -47,4 +45,5 @@
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 			A.clean_blood()
+			A.wash_cream()
 	return

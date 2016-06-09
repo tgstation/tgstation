@@ -85,7 +85,7 @@
 	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/computerframe, 		/obj/structure/displaycase, \
+	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
 									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
 									/obj/machinery/computer,			/obj/machinery/clonepod, \
 									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
@@ -811,7 +811,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			if(H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
+			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
 			return
@@ -923,12 +923,13 @@
 	S["longestsurvival"]	>> longest_survival
 	S["longestdeathstreak"] >> longest_deathstreak
 
-	if(isnull(speech_buffer))
+	if(!islist(speech_buffer))
 		speech_buffer = list()
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
 	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 			<< speech_buffer
+	if(islist(speech_buffer))
+		S["phrases"] 			<< speech_buffer
 	S["roundssurvived"]		<< rounds_survived
 	S["longestsurvival"]	<< longest_survival
 	S["longestdeathstreak"] << longest_deathstreak
@@ -945,4 +946,9 @@
 
 /mob/living/simple_animal/parrot/Poly/ghost/New()
 	memory_saved = 1 //At this point nothing is saved
+	..()
+
+/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_movement()
+	if(isliving(parrot_interest))
+		parrot_interest = null
 	..()

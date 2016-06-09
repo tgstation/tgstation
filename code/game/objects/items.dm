@@ -55,7 +55,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/put_on_delay = 20
 	var/breakouttime = 0
 	var/list/materials = list()
-	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
@@ -202,9 +201,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			var/list/techlvls = params2list(origin_tech)
 			for(var/T in techlvls) //This needs to use the better names.
 				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-			msg += "Research reliability: [reliability]% <BR>"
-			if(crit_fail)
-				msg += "<span class='danger'>Critical failure detected in subject!</span><BR>"
 		else
 			msg += "<span class='danger'>No tech origins detected.</span><BR>"
 
@@ -247,8 +243,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
 				user << "<span class='warning'>You burn your hand on [src]!</span>"
-				var/obj/item/organ/limb/affecting = H.get_organ("[user.hand ? "l" : "r" ]_arm")
-				if(affecting.take_damage( 0, 5 ))		// 5 burn damage
+				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
+				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
 				H.updatehealth()
 				return
@@ -409,7 +405,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
@@ -427,7 +423,10 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
 	var/is_human_victim = 0
+	var/obj/item/bodypart/affecting = M.get_bodypart("head")
 	if(ishuman(M))
+		if(!affecting) //no head!
+			return
 		is_human_victim = 1
 		var/mob/living/carbon/human/H = M
 		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
@@ -467,7 +466,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		)
 	if(is_human_victim)
 		var/mob/living/carbon/human/U = M
-		var/obj/item/organ/limb/affecting = U.get_organ("head")
 		if(affecting.take_damage(7))
 			U.update_damage_overlays(0)
 
@@ -509,7 +507,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	. = ..()
 	if(.)
 		transfer_blood = 0
-		bloody_hands_mob = null
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
@@ -572,3 +569,23 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/is_sharp()
 	return sharpness
+
+/obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
+	if(affecting.can_dismember(src))
+		if((sharpness || damtype == BURN) && w_class >= 3)
+			. = force*(w_class-1)
+
+/obj/item/proc/get_dismember_sound()
+	if(damtype == BURN)
+		. = 'sound/weapons/sear.ogg'
+	else
+		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
+
+/obj/item/proc/open_flame()
+	var/turf/location = loc
+	if(ismob(location))
+		var/mob/M = location
+		if(M.l_hand == src || M.r_hand == src)
+			location = get_turf(M)
+	if(isturf(location))
+		location.hotspot_expose(700, 5)

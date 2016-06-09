@@ -23,7 +23,7 @@
 	return I.attack(src, user)
 
 
-/obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/proc/attack(mob/living/M, mob/living/user)
 	if(flags & NOBLUDGEON)
 		return
 	if(!force)
@@ -34,7 +34,7 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	M.attacked_by(src, user, def_zone)
+	M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -57,16 +57,18 @@
 	if(I.force)
 		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
 
-/mob/living/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/attacked_by(obj/item/I, mob/living/user)
 	if(user != src)
 		user.do_attack_animation(src)
-	if(send_item_attack_message(I, user, def_zone))
-		if(apply_damage(I.force, I.damtype, def_zone))
+	if(send_item_attack_message(I, user))
+		if(apply_damage(I.force, I.damtype))
 			if(I.damtype == BRUTE)
 				if(prob(33))
+					I.add_mob_blood(src)
 					var/turf/location = get_turf(src)
-					location.add_blood_floor(src)
-
+					add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+						user.add_mob_blood(src)
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.

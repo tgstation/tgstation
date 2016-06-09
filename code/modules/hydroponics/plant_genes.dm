@@ -171,6 +171,7 @@
 	// For code, see grown.dm
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+	origin_tech = list("bio" = 5)
 
 /*/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
 	G.squash(target)*/
@@ -188,15 +189,15 @@
 		var/obj/item/seeds/seed = G.seed
 		var/mob/living/carbon/M = target
 
-		var/stun_len = seed.potency * rate
+		var/stun_len = seed.potency * rate * 0.8
 		if(istype(G) && ispath(G.trash, /obj/item/weapon/grown))
 			return
 
 		if(!istype(G, /obj/item/weapon/grown/bananapeel) && (!G.reagents || !G.reagents.has_reagent("lube")))
 			stun_len /= 3
 
-		var/stun = max(stun_len * 2, 1)
-		var/weaken = max(stun_len, 0.5)
+		var/stun = min(stun_len, 7)
+		var/weaken = min(stun_len, 7)
 
 		if(M.slip(stun, weaken, G))
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -209,7 +210,7 @@
 	// Multiplies max charge by (rate*1000) when used in potato power cells.
 	name = "Electrical Activity"
 	rate = 0.2
-	origin_tech = list("powerstorage" = 4)
+	origin_tech = list("powerstorage" = 5)
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
@@ -268,7 +269,7 @@
 	// Teleport radius is calculated as max(round(potency*rate), 1)
 	name = "Bluespace Activity"
 	rate = 0.1
-	origin_tech = list("bluespace" = 3)
+	origin_tech = list("bluespace" = 5)
 
 /datum/plant_gene/trait/teleport/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
 	if(isliving(target))
@@ -290,15 +291,15 @@
 
 
 /datum/plant_gene/trait/noreact
-	// Makes plant NOREACT until squashed.
+	// Makes plant reagents not react until squashed.
 	name = "Separated Chemicals"
 
 /datum/plant_gene/trait/noreact/on_new(obj/item/weapon/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	G.flags |= NOREACT
+	G.reagents.set_reacting(FALSE)
 
 /datum/plant_gene/trait/noreact/on_squash(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
-	G.flags &= ~NOREACT
+	G.reagents.set_reacting(TRUE)
 	G.reagents.handle_reactions()
 
 

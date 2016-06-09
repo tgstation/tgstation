@@ -204,8 +204,8 @@ var/global/list/multiverse = list()
 	name = "multiverse sword"
 	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "energy_katana"
-	item_state = "energy_katana"
+	icon_state = "multiverse"
+	item_state = "multiverse"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -298,7 +298,7 @@ var/global/list/multiverse = list()
 		M.set_species(pick(all_species), icon_update=0)
 	M.update_body()
 	M.update_hair()
-	M.update_mutcolor()
+	M.update_body_parts()
 	M.dna.update_dna_identity()
 	equip_copy(M)
 
@@ -355,21 +355,9 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/red(M), slot_head)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 		if("cyborg")
-			var/obj/item/organ/limb/chest/C = locate(/obj/item/organ/limb/chest) in M.organs
-			qdel(C)
-			M.organs += new /obj/item/organ/limb/robot/chest
-			var/obj/item/organ/limb/r_arm/R = locate(/obj/item/organ/limb/r_arm) in M.organs
-			qdel(R)
-			M.organs += new /obj/item/organ/limb/robot/r_arm
-			var/obj/item/organ/limb/l_arm/L = locate(/obj/item/organ/limb/l_arm) in M.organs
-			qdel(L)
-			M.organs += new /obj/item/organ/limb/robot/l_arm
-			var/obj/item/organ/limb/l_leg/LL = locate(/obj/item/organ/limb/l_leg) in M.organs
-			qdel(LL)
-			M.organs += new /obj/item/organ/limb/robot/l_leg
-			var/obj/item/organ/limb/r_leg/RL = locate(/obj/item/organ/limb/r_leg) in M.organs
-			qdel(RL)
-			M.organs += new /obj/item/organ/limb/robot/r_leg
+			for(var/X in M.bodyparts)
+				var/obj/item/bodypart/affecting = X
+				affecting.change_bodypart_status(ORGAN_ROBOTIC)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
@@ -431,7 +419,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))
-					carried_item.add_blood(M)
+					carried_item.add_mob_blood(M)
 
 		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
@@ -473,7 +461,7 @@ var/global/list/multiverse = list()
 			return
 
 	M.update_icons()
-	M.update_augments()
+	M.update_body_parts()
 
 	var/obj/item/weapon/card/id/W = new /obj/item/weapon/card/id
 	W.icon_state = "centcom"
@@ -602,7 +590,7 @@ var/global/list/multiverse = list()
 
 
 //Provides a decent heal, need to pump every 6 seconds
-/obj/item/organ/internal/heart/cursed/wizard
+/obj/item/organ/heart/cursed/wizard
 	pump_delay = 60
 	heal_brute = 25
 	heal_burn = 25

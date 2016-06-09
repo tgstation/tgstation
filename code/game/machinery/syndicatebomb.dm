@@ -7,7 +7,7 @@
 
 	anchored = 0
 	density = 0
-	layer = MOB_LAYER - 0.2 //so people can't hide it and it's REALLY OBVIOUS
+	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
 	var/timer = 60
@@ -18,6 +18,7 @@
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
 	var/delayedlittle  = FALSE	//activation wire pulsed?
+	var/obj/effect/countdown/syndicatebomb/countdown
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -41,6 +42,7 @@
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
+	countdown = new(src)
 	..()
 
 /obj/machinery/syndicatebomb/Destroy()
@@ -210,7 +212,7 @@
 	icon_state = "bombcore"
 	item_state = "eshield0"
 	w_class = 3
-	origin_tech = "syndicate=6;combat=5"
+	origin_tech = "syndicate=5;combat=6"
 	burn_state = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
@@ -413,7 +415,8 @@
 			return
 	..()
 
-/obj/item/weapon/bombcore/chemical/CheckParts()
+/obj/item/weapon/bombcore/chemical/CheckParts(list/parts_list)
+	..()
 	// Using different grenade casings, causes the payload to have different properties.
 	var/obj/item/weapon/stock_parts/matter_bin/MB = locate(/obj/item/weapon/stock_parts/matter_bin) in src
 	if(MB)
@@ -464,7 +467,7 @@
 	icon_state = "bigred"
 	item_state = "electronic"
 	w_class = 1
-	origin_tech = "syndicate=2"
+	origin_tech = "syndicate=3"
 	var/cooldown = 0
 	var/detonated =	0
 	var/existant =	0

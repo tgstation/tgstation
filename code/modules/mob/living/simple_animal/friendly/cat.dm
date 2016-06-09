@@ -20,7 +20,7 @@
 	minbodytemp = 200
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 1
-	species = /mob/living/simple_animal/pet/cat
+	animal_species = /mob/living/simple_animal/pet/cat
 	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_help  = "pets"
@@ -114,13 +114,14 @@
 /mob/living/simple_animal/pet/cat/Runtime/proc/Write_Memory(dead)
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
-	for(var/mob/living/simple_animal/pet/cat/C in mob_list)
-		if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
-			continue
-		if(C.type in family)
-			family[C.type] += 1
-		else
-			family[C.type] = 1
+	if(!dead)
+		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
+				continue
+			if(C.type in family)
+				family[C.type] += 1
+			else
+				family[C.type] = 1
 	S["family"]				<< family
 	memory_saved = 1
 
@@ -206,7 +207,7 @@
 	if(change)
 		if(change > 0)
 			if(M && stat != DEAD)
-				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", MOB_LAYER+1), list(M.client), 20)
+				flick_overlay(image('icons/mob/animal.dmi', src, "heart-ani2", ABOVE_MOB_LAYER), list(M.client), 20)
 				emote("me", 1, "purrs!")
 		else
 			if(M && stat != DEAD)

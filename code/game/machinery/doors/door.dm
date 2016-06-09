@@ -6,10 +6,11 @@
 	anchored = 1
 	opacity = 1
 	density = 1
-	layer = 2.7
+	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 
 	var/secondsElectrified = 0
+	var/shockedby = list()
 	var/visible = 1
 	var/operating = 0
 	var/glass = 0
@@ -18,7 +19,7 @@
 	var/heat_proof = 0 // For rglass-windowed airlocks and firedoors
 	var/emergency = 0 // Emergency access override
 	var/sub_door = 0 // 1 if it's meant to go under another door.
-	var/closingLayer = 3.1
+	var/closingLayer = CLOSED_DOOR_LAYER
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
@@ -28,9 +29,9 @@
 /obj/machinery/door/New()
 	..()
 	if(density)
-		layer = 3.1 //Above most items if closed
+		layer = CLOSED_DOOR_LAYER //Above most items if closed
 	else
-		layer = 2.7 //Under all objects if opened. 2.7 due to tables being at 2.6
+		layer = OPEN_DOOR_LAYER //Under all objects if opened. 2.7 due to tables being at 2.6
 	update_freelook_sight()
 	air_update_turf(1)
 	airlocks += src
@@ -174,16 +175,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-
 
 
 /obj/machinery/door/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
-	return
-
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -191,10 +187,12 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
-			spawn(300)
-				secondsElectrified = 0
+			shockedby += "\[[time_stamp()]\]EM Pulse"
+			addtimer(src, "unelectrify", 300)
 	..()
 
+/obj/machinery/door/proc/unelectrify()
+	secondsElectrified = 0
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
@@ -210,8 +208,6 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		icon_state = "door1"
 	else
 		icon_state = "door0"
-	return
-
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -243,7 +239,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	sleep(5)
 	density = 0
 	sleep(5)
-	layer = 2.7
+	layer = OPEN_DOOR_LAYER
 	update_icon()
 	SetOpacity(0)
 	operating = 0
@@ -305,7 +301,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-		location.add_blood_floor(L)
+		L.add_splatter_floor(location)
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 

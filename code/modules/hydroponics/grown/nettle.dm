@@ -27,7 +27,6 @@
 	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
 	rarity = 20
 
-
 /obj/item/weapon/grown/nettle //abstract type
 	name = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -40,7 +39,7 @@
 	w_class = 1
 	throw_speed = 1
 	throw_range = 3
-	origin_tech = "combat=1"
+	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
 /obj/item/weapon/grown/nettle/suicide_act(mob/user)
@@ -57,8 +56,8 @@
 		if(H.gloves)
 			return 0
 		var/organ = ((H.hand ? "l_":"r_") + "arm")
-		var/obj/item/organ/limb/affecting = H.get_organ(organ)
-		if(affecting.take_damage(0, force))
+		var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+		if(affecting && affecting.take_damage(0, force))
 			H.update_damage_overlays(0)
 	else
 		C.take_organ_damage(0,force)
@@ -74,14 +73,12 @@
 		usr.unEquip(src)
 		qdel(src)
 
-
 /obj/item/weapon/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
 /obj/item/weapon/grown/nettle/basic/add_juice()
 	..()
 	force = round((5 + seed.potency / 5), 1)
-
 
 /obj/item/weapon/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
@@ -90,7 +87,7 @@
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
-	origin_tech = "combat=3"
+	origin_tech = "combat=5"
 
 /obj/item/weapon/grown/nettle/death/add_juice()
 	..()

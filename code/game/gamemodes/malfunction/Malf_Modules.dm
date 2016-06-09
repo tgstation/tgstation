@@ -157,12 +157,13 @@
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
-				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
 					AL.locked = 0 //For airlocks that were bolted open.
 					AL.safe = 0 //DOOR CRUSH
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
+					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -187,7 +188,7 @@
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
-				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
 					AL.unbolt()
 					AL.secondsElectrified = 0
 					AL.open()

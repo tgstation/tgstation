@@ -81,7 +81,7 @@
 	countEggs()
 
 /obj/item/weapon/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	..()
+	. = ..()
 	countEggs()
 
 //Bunny Suit
@@ -151,7 +151,7 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 
-/datum/table_recipe/hotcrossbun
+/datum/crafting_recipe/food/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -175,7 +175,7 @@
 	icon_state = "briochecake_slice"
 	filling_color = "#FFD700"
 
-/datum/table_recipe/briochecake
+/datum/crafting_recipe/food/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -193,7 +193,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 6)
 
-/datum/table_recipe/scotchegg
+/datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -205,14 +205,14 @@
 	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	name = "Mämmi"
+	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
-/datum/table_recipe/mammi
-	name = "Mämmi"
+/datum/crafting_recipe/food/mammi
+	name = "Mammi"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
@@ -229,7 +229,7 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 
-/datum/table_recipe/chocolatebunny
+/datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,

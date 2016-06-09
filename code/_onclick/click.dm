@@ -58,6 +58,9 @@
 			return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["middle"])
+		ShiftMiddleClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -74,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened || sleeping)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
@@ -84,7 +87,7 @@
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A,src,params)
 
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
@@ -262,6 +265,10 @@
 */
 /mob/proc/CtrlShiftClickOn(atom/A)
 	A.CtrlShiftClick(src)
+	return
+
+/mob/proc/ShiftMiddleClickOn(atom/A)
+	src.pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)

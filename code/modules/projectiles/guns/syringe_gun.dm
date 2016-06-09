@@ -8,6 +8,7 @@
 	throw_range = 7
 	force = 4
 	materials = list(MAT_METAL=2000)
+	origin_tech = "combat=2;biotech=3"
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -24,7 +25,8 @@
 
 	if(!S) return
 
-	chambered.BB = new /obj/item/projectile/bullet/dart/syringe(src)
+	chambered.BB = new S.projectile_type (src)
+
 	S.reagents.trans_to(chambered.BB, S.reagents.total_volume)
 	chambered.BB.name = S.name
 	syringes.Remove(S)
@@ -85,7 +87,7 @@
 	icon_state = "syringe_pistol"
 	item_state = "gun" //Smaller inhand
 	w_class = 2
-	origin_tech = "combat=2;syndicate=2"
+	origin_tech = "combat=2;syndicate=2;biotech=3"
 	force = 2 //Also very weak because it's smaller
 	suppressed = 1 //Softer fire sound
 	can_unsuppress = 0 //Permanently silenced

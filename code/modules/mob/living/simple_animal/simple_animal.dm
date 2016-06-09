@@ -56,12 +56,11 @@
 	//Hot simple_animal baby making vars
 	var/list/childtype = null
 	var/scan_ready = 1
-	var/species //Sorry, no spider+corgi buttbabies.
+	var/animal_species //Sorry, no spider+corgi buttbabies.
 
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
-
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -111,6 +110,7 @@
 			death()
 		else
 			stat = CONSCIOUS
+	med_hud_set_status()
 
 
 /mob/living/simple_animal/handle_status_effects()
@@ -171,6 +171,9 @@
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
 
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
+
 	var/atom/A = src.loc
 	if(isturf(A))
 		var/turf/T = A
@@ -226,15 +229,16 @@
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(3)
 
-/mob/living/simple_animal/gib(animation = 0)
-	if(icon_gib)
-		flick(icon_gib, src)
+/mob/living/simple_animal/gib()
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
 				new path(src.loc)
 	..()
 
+/mob/living/simple_animal/gib_animation()
+	if(icon_gib)
+		new /obj/effect/overlay/temp/gib_animation/animal(loc, icon_gib)
 
 /mob/living/simple_animal/blob_act(obj/effect/blob/B)
 	adjustBruteLoss(20)
@@ -392,12 +396,13 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
-	if(death_sound)
-		playsound(get_turf(src),death_sound, 200, 1)
-	if(deathmessage && !gibbed)
-		visible_message("<span class='danger'>[deathmessage]</span>")
-	else if(!del_on_death)
-		visible_message("<span class='danger'>\the [src] stops moving...</span>")
+	if(!gibbed)
+		if(death_sound)
+			playsound(get_turf(src),death_sound, 200, 1)
+		if(deathmessage)
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
+		else if(!del_on_death)
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -406,6 +411,7 @@
 		icon_state = icon_dead
 		stat = DEAD
 		density = 0
+		lying = 1
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -452,6 +458,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
+		lying = 0
 		. = 1
 
 /mob/living/simple_animal/fully_heal(admin_revive = 0)
@@ -459,8 +466,8 @@
 	..()
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || !scan_ready || !childtype || !species || ticker.current_state != GAME_STATE_PLAYING)
-		return
+	if(gender != FEMALE || stat || !scan_ready || !childtype || !animal_species || ticker.current_state != GAME_STATE_PLAYING)
+		return 0
 	scan_ready = 0
 	spawn(400)
 		scan_ready = 1
@@ -468,21 +475,24 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children FIRST.
+		else if(istype(M, childtype)) //Check for children SECOND.
 			children++
-		else if(istype(M, species))
+		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+
+		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
 		var/childspawn = pickweight(childtype)
 		new childspawn(loc)
+		return 1
+	return 0
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
@@ -552,3 +562,6 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card

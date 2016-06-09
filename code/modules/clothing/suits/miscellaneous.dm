@@ -372,6 +372,30 @@
 	item_state = "militaryjacket"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter,/obj/item/weapon/gun/projectile/automatic/pistol,/obj/item/weapon/gun/projectile/revolver,/obj/item/weapon/gun/projectile/revolver/detective,/obj/item/device/radio)
 
+/obj/item/clothing/suit/jacket/letterman
+	name = "letterman jacket"
+	desc = "A classic brown letterman jacket. Looks pretty hot and heavy."
+	icon_state = "letterman"
+	item_state = "letterman"
+
+/obj/item/clothing/suit/jacket/letterman_red
+	name = "red letterman jacket"
+	desc = "A letterman jacket in a sick red color. Radical."
+	icon_state = "letterman_red"
+	item_state = "letterman_red"
+
+/obj/item/clothing/suit/jacket/letterman_syndie
+	name = "blood-red letterman jacket"
+	desc = "Oddly, this jacket seems to have a large S on the back..."
+	icon_state = "letterman_s"
+	item_state = "letterman_s"
+
+/obj/item/clothing/suit/jacket/letterman_nanotrasen
+	name = "blue letterman jacket"
+	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
+	icon_state = "letterman_n"
+	item_state = "letterman_n"
+
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
@@ -467,7 +491,7 @@
 /obj/item/clothing/suit/hooded/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 	hoodtype = /obj/item/clothing/head/winterhood/hydro
 
 /obj/item/clothing/head/winterhood/hydro
@@ -490,3 +514,10 @@
 
 /obj/item/clothing/head/winterhood/miner
 	icon_state = "winterhood_miner"
+
+/obj/item/clothing/suit/spookyghost
+	name = "spooky ghost"
+	desc = "this is obviously just a bedsheet, but maybe try it on?"
+	icon_state = "bedsheet"
+	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
+	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
