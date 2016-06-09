@@ -12,9 +12,7 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
 
-/datum/subsystem/minimap/Initialize(timeofday, zlevel)
-	if(zlevel)
-		return ..()
+/datum/subsystem/minimap/Initialize(timeofday)
 	if(!config.generate_minimaps)
 		world << "Minimap generation disabled... Skipping"
 		return

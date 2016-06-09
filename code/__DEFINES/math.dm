@@ -10,7 +10,8 @@
 #define T20C					293.15	// 20degC
 #define TCMB					2.7		// -270.3degC
 
-//fancy math for calculating cost in ms from tick_usage percentage and the length of ticks
+//"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(precent ratio)
 //collapsed to precent_of_tick_used * tick_lag
-#define TICK_USAGE_TO_MS(percent_of_tick_used) (percent_of_tick_used * world.tick_lag)
+#define TICK_DELTA_TO_MS(percent_of_tick_used) ((percent_of_tick_used) * world.tick_lag)
+#define TICK_USAGE_TO_MS(starting_tickusage) (TICK_DELTA_TO_MS(world.tick_usage-starting_tickusage))

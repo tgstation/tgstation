@@ -57,9 +57,7 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -456,7 +454,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return

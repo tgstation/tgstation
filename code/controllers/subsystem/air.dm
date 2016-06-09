@@ -253,17 +253,10 @@ var/datum/subsystem/air/SSair
 			add_to_active(S)
 
 
-/datum/subsystem/air/proc/setup_allturfs(z_level)
-	var/z_start = 1
-	var/z_finish = world.maxz
-	var/times_fired = ++src.times_fired
-	if(1 <= z_level && z_level <= world.maxz)
-		z_level = round(z_level)
-		z_start = z_level
-		z_finish = z_level
-
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
+/datum/subsystem/air/proc/setup_allturfs()
+	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
+	var/times_fired = ++src.times_fired
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
@@ -297,7 +290,7 @@ var/datum/subsystem/air/SSair
 			EG.self_breakdown(space_is_all_consuming = 1)
 			EG.dismantle()
 
-		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] world start active turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
+		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
 		world << "<span class='boldannounce'>[msg]</span>"
 		warning(msg)
 
@@ -327,22 +320,16 @@ var/datum/subsystem/air/SSair
 /turf/open/space/resolve_active_graph()
 	return list()
 
-/datum/subsystem/air/proc/setup_atmos_machinery(z_level)
+/datum/subsystem/air/proc/setup_atmos_machinery()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		if (z_level && AM.z != z_level)
-			CHECK_TICK
-			continue
 		AM.atmosinit()
 		CHECK_TICK
 
 //this can't be done with setup_atmos_machinery() because
 //	all atmos machinery has to initalize before the first
 //	pipenet can be built.
-/datum/subsystem/air/proc/setup_pipenets(z_level)
+/datum/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		if (z_level && AM.z != z_level)
-			CHECK_TICK
-			continue
 		AM.build_network()
 		CHECK_TICK
 

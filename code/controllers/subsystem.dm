@@ -1,4 +1,4 @@
-#define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
+
 
 /datum/subsystem
 	// Metadata; you should define these.
@@ -46,6 +46,77 @@
 	can_fire = 0
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
+/datum/subsystem/Destroy()
+	dequeue()
+	Master.subsystems -= src
+
+/datum/subsystem/proc/enqueue()
+	var/SS_priority = priority
+	var/SS_flags = flags
+	//world << "checking queue"
+	var/datum/subsystem/queue_node
+	var/queue_node_priority
+	var/queue_node_flags
+	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.next)
+		queue_node_priority = queue_node.queued_priority
+		queue_node_flags = queue_node.flags
+
+		if (queue_node_flags & SS_TICKER)
+			if (!(SS_flags & SS_TICKER))
+				continue
+			if (queue_node_priority < SS_priority)
+				break
+
+		else if (queue_node_flags & SS_BACKGROUND)
+			if (!(SS_flags & SS_BACKGROUND))
+				break
+			if (queue_node_priority < SS_priority)
+				break
+
+		else
+			if (SS_flags & SS_BACKGROUND)
+				continue
+			if (SS_flags & SS_TICKER)
+				break
+			if (queue_node_priority < SS_priority)
+				break
+
+	queued_time = world.time
+	if (!(SS_flags & SS_BACKGROUND)) //update our running total
+		Master.queue_priority_count += SS_priority
+		queued_priority = SS_priority
+	else
+		queued_priority = 0
+
+	next = queue_node
+	if (!queue_node)//we stopped at the end, add to tail
+		prev = Master.queue_tail
+		if (Master.queue_tail)
+			Master.queue_tail.next = src
+		else //empty queue, we also need to set the head
+			Master.queue_head = src
+		Master.queue_tail = src
+
+	else if (queue_node == Master.queue_head)//insert at start of list
+		Master.queue_head.prev = src
+		Master.queue_head = src
+		prev = null
+	else
+		queue_node.prev.next = src
+		prev = queue_node.prev
+		queue_node.prev = src
+
+/datum/subsystem/proc/dequeue()
+	if (next)
+		next.prev = prev
+	if (prev)
+		prev.next = next
+	if (src == Master.queue_tail)
+		Master.queue_tail = prev
+	if (src == Master.queue_head)
+		Master.queue_head = next
+
+
 /datum/subsystem/proc/pause()
 	. = 1
 	paused = TRUE
@@ -53,12 +124,9 @@
 	debug_admins("MC: Pausing [src]([type])")
 
 //used to initialize the subsystem AFTER the map has loaded
-/datum/subsystem/proc/Initialize(start_timeofday, zlevel)
+/datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] seconds!"
-	if(zlevel) // If only initialized for one Z-level.
-		testing(msg)
-		return time
 	world << "<span class='boldannounce'>[msg]</span>"
 	return time
 

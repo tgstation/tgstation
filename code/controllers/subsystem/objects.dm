@@ -18,13 +18,11 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
-/datum/subsystem/objects/Initialize(timeofday, zlevel)
+/datum/subsystem/objects/Initialize(timeofdayl)
 	trigger_atom_spawners()
 	setupGenetics()
-	for(var/V in world)
-		var/atom/A = V
-		if (zlevel && A.z != zlevel)
-			continue
+	for(var/thing in world)
+		var/atom/A = thing
 		A.initialize()
 		CHECK_TICK
 	. = ..()

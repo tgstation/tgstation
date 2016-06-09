@@ -15,7 +15,7 @@ var/datum/subsystem/machines/SSmachine
 	fire()
 	..()
 
-/datum/subsystem/machines/proc/makepowernets(zlevel)
+/datum/subsystem/machines/proc/makepowernets()
 	for(var/datum/powernet/PN in powernets)
 		qdel(PN)
 	powernets.Cut()

@@ -36,9 +36,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)

@@ -16,13 +16,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	name = "Master"
 
 	// Are we processing (higher values increase the processing delay)
-	var/processing = 10
+	var/processing = 1
 	// The iteration of the MC.
 	var/iteration = 0
 	// The cost (in deciseconds) of the MC loop.
 	var/cost = 0
 	// A list of subsystems to process().
-	var/list/subsystems = list()
+	var/list/subsystems
 	// The cost of running the subsystems (in deciseconds).
 	var/subsystem_cost = 0
 
@@ -36,6 +36,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
+	subsystems = list()
 	if (Master != src)
 		if (istype(Master))
 			Recover()
@@ -81,18 +82,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	subsystems = Master.subsystems
 	spawn (10)
-		Master.startprocessing()
+		Master.StartProcessing()
 
 
 //Please don't stuff random bullshit here,
 //make a subsystem, give it the NO_FIRE flag, and do your work in it's Initialize()
-/datum/controller/master/proc/Setup(zlevel)
-	// Per-Z-level subsystems.
-	if (zlevel && zlevel > 0 && zlevel <= world.maxz)
-		for (var/datum/subsystem/SS in subsystems)
-			SS.Initialize(world.timeofday, zlevel)
-			CHECK_TICK
-		return
+/datum/controller/master/proc/Setup()
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	var/tally = 0
@@ -129,11 +124,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	sortTim(subsystems, /proc/cmp_subsystem_init)
 
 	// Initialize subsystems.
+	CURRENT_TICKLIMIT = TICK_LIMIT_MC_INIT
 	for (var/datum/subsystem/SS in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(world.timeofday, zlevel)
+		SS.Initialize(world.timeofday)
 		CHECK_TICK
+	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
 	world.log << "Initializations complete."
@@ -148,7 +145,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	sleep(1)
 
 	// Loop.
-	Master.startprocessing()
+	Master.StartProcessing()
 
 // Notify the MC that the round has started.
 /datum/controller/master/proc/RoundStart()
@@ -162,9 +159,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.next_fire = timer + rand(0, SS.wait) // Stagger subsystems.
 
 //starts the mc, and sticks around to restart it if the loop ever ends.
-/datum/controller/master/proc/startprocessing()
+/datum/controller/master/proc/StartProcessing()
 	set waitfor = 0
-	var/rtn = loop()
+	var/rtn = Loop()
 	if (rtn > 0 || processing < 0)
 		return //this was suppose to happen.
 	//loop ended, restart the mc
@@ -176,7 +173,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		Failsafe.defcon = 2
 
 //main loop.
-/datum/controller/master/proc/loop()
+/datum/controller/master/proc/Loop()
 	. = -1
 	//Prep the loop (most of this is because we want MC restarts to reset as much state as we can, and because
 	//	local vars rock
@@ -232,38 +229,38 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			debug_admins("MC: checking subsystems")
 			if (round_started)
 				debug_admins("MC: checking normal subsystems")
-				check_queue(normalsubsystems)
+				CheckQueue(normalsubsystems)
 			else
 				debug_admins("MC: checking lobby subsystems")
-				check_queue(lobbysubsystems)
+				CheckQueue(lobbysubsystems)
 		else
 			debug_admins("MC: not checking subsystems, checking tickers")
-			check_queue(tickersubsystems)
+			CheckQueue(tickersubsystems)
 		debug_admins("MC: checking to run")
 		if (queue_head)
 			debug_admins("MC: running queue")
-			run_queue()
+			RunQueue()
 		iteration++
 		debug_admins("MC: sleeping [world.time]|[world.timeofday]")
+		if (Debug2)
+			processing = max(processing, 5)
 		sleep((world.tick_lag * processing) + (world.tick_lag * 0.49)) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
 		debug_admins("MC: end sleeping [world.time]|[world.timeofday]")
 
 
 
 //this actually decides if something should run.
-/datum/controller/master/proc/check_queue(list/subsystemstocheck)
+/datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
 	debug_admins("MC: checking [subsystemstocheck.len] subsystems")
 	//we create our variables outside of the loops to save on overhead
 	var/datum/subsystem/SS
-	var/SS_priority
 	var/SS_flags
 	//world << "checking queue"
-	var/datum/subsystem/queue_node
-	var/queue_node_priority
-	var/queue_node_flags
 
 	for (var/thing in subsystemstocheck)
 		debug_admins("MC: checking [thing]")
+		if (!thing)
+			subsystemstocheck -= thing
 		SS = thing
 		if (SS.queued_time) //already in the queue
 			debug_admins("MC: already queued")
@@ -283,56 +280,11 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//	(we loop thru a linked list until we get to the end or find the right point)
 		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 		debug_admins("MC: queuing to run")
-		SS_priority = SS.priority
-		for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
-			queue_node_priority = queue_node.queued_priority
-			queue_node_flags = queue_node.flags
-
-			if (queue_node_flags & SS_TICKER)
-				if (!(SS_flags & SS_TICKER))
-					continue
-				if (queue_node_priority < SS_priority)
-					break
-
-			else if (queue_node_flags & SS_BACKGROUND)
-				if (!(SS_flags & SS_BACKGROUND))
-					break
-				if (queue_node_priority < SS_priority)
-					break
-
-			else
-				if (SS_flags & SS_BACKGROUND)
-					continue
-				if (SS_flags & SS_TICKER)
-					break
-				if (queue_node_priority < SS_priority)
-					break
-
-		SS.queued_time = world.time
-		if (!(SS_flags & SS_BACKGROUND)) //update our running total
-			queue_priority_count += SS_priority
-			SS.queued_priority = SS_priority
-		SS.next = queue_node
-		if (!queue_node)//we stopped at the end, add to tail
-			SS.prev = queue_tail
-			if (queue_tail)
-				queue_tail.next = SS
-			else //empty queue, we also need to set the head
-				queue_head = SS
-			queue_tail = SS
-
-		else if (queue_node == queue_head)//insert at start of list
-			queue_head.prev = SS
-			queue_head = SS
-			SS.prev = null
-		else
-			queue_node.prev.next = SS
-			SS.prev = queue_node.prev
-			queue_node.prev = SS
+		SS.enqueue()
 
 
 //run thru the queue of subsystems to run, balancing out their tick precentage
-/datum/controller/master/proc/run_queue()
+/datum/controller/master/proc/RunQueue()
 	debug_admins("MC: queue start")
 	var/datum/subsystem/queue_node
 	var/queue_node_flags
@@ -353,7 +305,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			debug_admins("MC: processing [queue_node]")
 			if (world.tick_usage > TICK_LIMIT_RUNNING)
 				debug_admins("MC: tick limit reached")
-				return
+				break
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
 
@@ -409,7 +361,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 			queue_node.tick_usage = MC_AVERAGE_FAST(queue_node.tick_usage, tick_usage)
 
-			queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_USAGE_TO_MS(tick_usage))
+			queue_node.cost = MC_AVERAGE_FAST(queue_node.cost, TICK_DELTA_TO_MS(tick_usage))
 			queue_node.paused_ticks = 0
 			queue_node.paused_tick_usage = 0
 
@@ -431,14 +383,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			queue_node.queued_time = 0
 
 			//remove from queue
-			if (queue_node.next)
-				queue_node.next.prev = queue_node.prev
-			if (queue_node.prev)
-				queue_node.prev.next = queue_node.next
-			if (queue_node == queue_tail)
-				queue_tail = queue_node.prev
-			if (queue_node == queue_head)
-				queue_head = queue_node.next
+			queue_node.dequeue()
+
+	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 /datum/controller/master/proc/stat_entry()
 	if(!statclick)

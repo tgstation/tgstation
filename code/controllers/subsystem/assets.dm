@@ -9,9 +9,7 @@ var/datum/subsystem/assets/SSasset
 /datum/subsystem/assets/New()
 	NEW_SS_GLOBAL(SSasset)
 
-/datum/subsystem/assets/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/assets/Initialize(timeofday)
 	for(var/type in typesof(/datum/asset) - list(/datum/asset, /datum/asset/simple))
 		var/datum/asset/A = new type()
 		A.register()
