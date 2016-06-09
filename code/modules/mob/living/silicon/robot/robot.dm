@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Engineering", "Medical", "Miner", "Janitor","Service")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -181,12 +181,6 @@
 	updatename()
 
 	switch(designation)
-		if("Standard")
-			module = new /obj/item/weapon/robot_module/standard(src)
-			hands.icon_state = "standard"
-			icon_state = "robot"
-			modtype = "Stand"
-			feedback_inc("cyborg_standard",1)
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
