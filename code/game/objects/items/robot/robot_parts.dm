@@ -246,7 +246,7 @@
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
 
-			if(clockwork)
+			if(M.clockwork)
 				O.emagged = 1
 				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
