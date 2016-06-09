@@ -55,12 +55,7 @@
 		..()
 		if(isliving(target))
 			var/mob/living/L = target
-			if(L.stat == DEAD)
-				src.visible_message(
-					"<span class='danger'>[src] devours [L]!</span>",
-					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-				adjustBruteLoss(-L.maxHealth/2)
-				L.gib()
+			devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1

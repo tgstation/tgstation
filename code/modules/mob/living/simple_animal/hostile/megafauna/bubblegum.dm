@@ -36,6 +36,12 @@
 	desc = "You're not quite sure how a signal can be bloody."
 	invisibility = 100
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		devour(L)
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
 	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
