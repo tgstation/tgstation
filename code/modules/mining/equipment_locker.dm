@@ -1161,14 +1161,8 @@
 
 		)
 
-
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem(null)
+	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mining_equipment_vendor/golem
 	name = "circuit board (Golem Ship Equipment Vendor)"
