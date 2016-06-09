@@ -1,0 +1,44 @@
+"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"d" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"e" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"f" = (/obj/effect/decal/cleanable/blood/gibs/limb,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"g" = (/obj/effect/mob_spawn/human/corpse/damaged,/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"h" = (/obj/effect/decal/cleanable/blood/tracks{desc = "They look like tracks left by something being dragged."; dir = 4},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"i" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"j" = (/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
+"k" = (/obj/effect/decal/cleanable/blood/gibs/core,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"l" = (/obj/structure/colossus_rune,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"m" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
+"n" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+"o" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
+"p" = (/turf/open/chasm/straight_down/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaabbbbbbbbbaaaaaaaaa
+aacccccbbbbbbbbbbaaaaaaaa
+aaccccbbbbbbbbbbbbbbaaaaa
+aacccbbbbbdbbbbdbbbbbbaaa
+accccbbbbbbbbbbbbbbbbbbba
+acccbbbdbbbbbbdbbbbbbbbba
+acccbbbbbbbebbbbbbbbbbbba
+acccbbdbbfbbbebbbbbbdbbba
+agchhhhhhhbbebbifbbbbbbba
+accjbbbfbibbbbbbbbbbbbbba
+accjdbbbbbbbbbbfbbbbbbdba
+accjjjbibkbblbbbfbbbbbbba
+acjjjjbbbbbbbbbibbbbbbbba
+acjmjjbbfbbbbbbbbbbbbbbba
+acjjjjbbbbibnbbfbdbbbbbba
+acjjjjmjjjjjjojjjjjjjjbba
+aajjjjjjjjjjjjjjjjjjjjbba
+aajjjjjjjjmjjjjjjjjjjjdba
+aaajmjbbbbbbbbbbbbmjjjjba
+aaajjjbbbbbbbbbdbbjjjjjba
+aaaaapppppppbbbbbbbbbbbaa
+aaaaapppppppppppbbbbbaaaa
+aaaaaappppppppppppaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+"}

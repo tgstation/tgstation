@@ -259,10 +259,7 @@
 	},
 /area/ruin/powered)
 "aM" = (
-/obj/effect/mob_spawn/human/doctor/alive{
-	flavour_text = "You were putting in your hours as a vet in the local animal hospital when a massive bluespace translocation shunted you across the galaxy. Can you survive on this desolate wasteland..?";
-	id_job = "Veterinarian"
-	},
+/obj/effect/mob_spawn/human/doctor/alive/lavaland,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;

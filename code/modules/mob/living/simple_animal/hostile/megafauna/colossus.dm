@@ -29,7 +29,7 @@
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 
-	deathmessage = "disintegrates, leaving a glowing core."
+	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/anger_modifier = 0
@@ -43,7 +43,10 @@
 		telegraph()
 
 		if(health < maxHealth/3)
-			double_spiral()
+			if(prob(50))
+				double_spiral()
+			else
+				seeking_laser()
 		else
 			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
 			if(prob(50))
@@ -105,7 +108,7 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='cult'><font size=5>\"<b>Die</b>\"</font></span>")
+	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
 	sleep(10)
 	spawn()
@@ -233,7 +236,7 @@
 	spawn()
 		while(loc)
 			step_towards(src, target)
-			sleep(1)
+			sleep(5)
 
 /obj/effect/overlay/temp/seeking_beam/process()
 	step_towards(src, target)
