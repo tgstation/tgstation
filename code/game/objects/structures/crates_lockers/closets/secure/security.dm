@@ -67,6 +67,7 @@
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
 	new /obj/item/clothing/head/HoS(src)
+	new /obj/item/clothing/glasses/thermal(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
 	new /obj/item/device/megaphone/sec(src)
@@ -93,7 +94,7 @@
 	new /obj/item/clothing/head/beret/sec/navywarden(src)
 	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
 	new /obj/item/clothing/under/rank/warden/navyblue(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/glasses/thermal(src)
 	new /obj/item/weapon/holosign_creator/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
 	new /obj/item/weapon/storage/box/zipties(src)
@@ -114,7 +115,7 @@
 	new /obj/item/clothing/head/helmet/sec(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/radio/headset/headset_sec/alt(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/glasses/thermal(src)
 	new /obj/item/device/flashlight/seclite(src)
 
 /obj/structure/closet/secure_closet/security/sec
@@ -160,6 +161,7 @@
 
 /obj/structure/closet/secure_closet/detective/New()
 	..()
+	new /obj/item/clothing/glasses/thermal(src)
 	new /obj/item/clothing/under/rank/det(src)
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/det_hat(src)
