@@ -181,6 +181,8 @@
 	if(istype(M, /mob/living))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(seed.potency / 20)
+		message_admins("[key_name_admin(user)] set (key_name_admin(M)) on fire")
+		log_game("[key_name(user)] set [key_name(M)] on fire")
 		M.IgniteMob()
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
