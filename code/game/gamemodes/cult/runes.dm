@@ -759,7 +759,7 @@ var/list/teleport_runes = list()
 	var/mob/living/user = invokers[1]
 	var/list/cultists = list()
 	for(var/datum/mind/M in ticker.mode.cult)
-		if(!(M.current in invokers) && isliving(M.current) && M.current.stat != DEAD)
+		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
 	var/mob/living/cultist_to_summon = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
