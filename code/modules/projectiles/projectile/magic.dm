@@ -182,11 +182,9 @@
 					else
 						new_mob.languages |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/simple_animal/slime(M.loc)
-					var/mob/living/simple_animal/slime/slimey = new_mob
-					if(prob(50))
-						slimey.is_adult = 1
-					slimey.random_colour()
+					var/mob/living/simple_animal/slime/random/slimey
+					slimey = new(get_turf(M), null, new_is_adult=prob(50))
+					new_mob = slimey
 					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
