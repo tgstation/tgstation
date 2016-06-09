@@ -42,10 +42,9 @@
 
 /obj/structure/clockwork/burn()
 	SSobj.burning -= src
-	playsound(src 'sound/items/Welder.ogg', 100, 1)
-	visible_message("<span class='warning'>[src] is warped by the heat!</span>")
-	if(!take_damage(rand(50, 100), BURN))
-		burn_state = LAVA_PROOF
+	if(take_damage(rand(50, 100), BURN))
+		playsound(src 'sound/items/Welder.ogg', 100, 1)
+		visible_message("<span class='warning'>[src] is warped by the heat!</span>")
 
 /obj/structure/clockwork/proc/take_damage(amount, damage_type)
 	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
@@ -312,6 +311,7 @@
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
+	burn_state = LAVA_PROOF
 
 /obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))

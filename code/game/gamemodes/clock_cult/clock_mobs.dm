@@ -15,6 +15,8 @@
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment, /obj/item/device/mmi/posibrain/soul_vessel)
+	weather_immunities = list("lava")
+	flying = 1
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
@@ -75,6 +77,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	environment_smash = 1
 	unique_name = 1
+	weather_immunities = list("lava")
+	flying = 1
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
 	var/fatigue = 0 //Essentially what determines the marauder's power
