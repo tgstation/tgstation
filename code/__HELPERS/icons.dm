@@ -952,12 +952,17 @@ var/global/list/friendly_animal_types = list()
 		return
 	var/list/new_overlays = overlays.Copy()
 	if(priority)
+		if(!priority_overlays)
+			priority_overlays = list()
 		priority_overlays += image
 		new_overlays += image
 	else
-		new_overlays -= priority_overlays
-		new_overlays += image
-		new_overlays += priority_overlays
+		if(priority_overlays)
+			new_overlays -= priority_overlays
+			new_overlays += image
+			new_overlays += priority_overlays
+		else
+			new_overlays += image
 	overlays = new_overlays
 
 var/global/list/humanoid_icon_cache = list()
