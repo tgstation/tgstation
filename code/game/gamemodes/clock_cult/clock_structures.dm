@@ -43,7 +43,7 @@
 /obj/structure/clockwork/burn()
 	SSobj.burning -= src
 	if(takes_damage)
-		playsound(src 'sound/items/Welder.ogg', 100, 1)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		visible_message("<span class='warning'>[src] is warped by the heat!</span>")
 		take_damage(rand(50, 100), BURN)
 
