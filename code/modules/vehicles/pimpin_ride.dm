@@ -10,7 +10,7 @@
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)

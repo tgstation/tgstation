@@ -117,7 +117,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/hydroponics/soil,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/camera{
 	c_tag = "Prison Common Room";
 	network = list("SS13","Prison")
@@ -1164,17 +1164,9 @@
 	},
 /area/ai_monitored/security/armory)
 "acN" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
-/area/ai_monitored/security/armory)
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "acO" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera{
@@ -3453,7 +3445,6 @@
 "aht" = (
 /turf/open/floor/plasteel/whitered/corner{
 	tag = "icon-whiteredcorner (WEST)";
-	icon_state = "whiteredcorner";
 	dir = 8
 	},
 /area/security/brig)
@@ -14595,7 +14586,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/hatchet,
 /obj/item/weapon/crowbar,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
@@ -16092,7 +16083,7 @@
 /obj/item/weapon/cultivator,
 /obj/item/weapon/crowbar,
 /obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -16106,7 +16097,7 @@
 "aIT" = (
 /obj/item/weapon/storage/bag/plants/portaseeder,
 /obj/structure/table/glass,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -22539,7 +22530,7 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYI" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/start{
 	name = "Assistant"
 	},
@@ -22589,7 +22580,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYP" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYQ" = (
@@ -22622,12 +22613,12 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYT" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera{
 	c_tag = "Hydroponics South";
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYU" = (
@@ -35566,7 +35557,7 @@
 /area/maintenance/aft)
 "bAL" = (
 /obj/structure/table,
-/obj/item/device/analyzer/plant_analyzer,
+/obj/item/device/plant_analyzer,
 /obj/item/weapon/stock_parts/cell/high/plus,
 /turf/open/floor/plating,
 /area/storage/tech)
@@ -45502,7 +45493,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVU" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVV" = (
@@ -59408,7 +59399,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "czP" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -96564,11 +96555,11 @@ aMw
 aNI
 aMw
 aOK
-aPY
-aPY
-aPY
-aPY
-aPY
+acN
+acN
+acN
+acN
+acN
 aQc
 bae
 aJC

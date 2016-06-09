@@ -197,6 +197,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
+	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
@@ -221,6 +222,11 @@
 	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
+	if(user.has_dna())
+		if(user.dna.check_mutation(HULK))
+			user << "<span class='warning'>You grip the blade too hard and accidentally close it!</span>"
+			unwield()
+			return
 	..()
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
@@ -255,10 +261,14 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
+	sharpness = IS_SHARP
+	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	sharpness = initial(sharpness)
+	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
 

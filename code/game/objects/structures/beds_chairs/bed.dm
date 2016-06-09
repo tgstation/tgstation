@@ -134,7 +134,7 @@
 			return
 
 		var/obj/structure/bed/roller/R = target
-		if(R.buckled_mobs.len)
+		if(R.has_buckled_mobs())
 			if(R.buckled_mobs.len > 1)
 				R.unbuckle_all_mobs()
 				user.visible_message("<span class='notice'>[user] unbuckles all creatures from [R].</span>")

@@ -1,14 +1,14 @@
 // Plant analyzer
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
+	w_class = 1
+	slot_flags = SLOT_BELT
 	origin_tech = "magnets=2;biotech=2"
-
-/obj/item/device/analyzer/plant_analyzer/attack_self(mob/user)
-	return 0
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
 // Hydroponics Tools

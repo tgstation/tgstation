@@ -4,7 +4,7 @@
 	icon_state = "iv_drip"
 	anchored = 0
 	density = 1
-	var/mob/living/carbon/human/attached = null
+	var/mob/living/carbon/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
 
@@ -65,8 +65,8 @@
 		update_icon()
 		return
 
-	if(!ishuman(target))
-		usr << "<span class='danger'>The drip beeps: Warning, human patients only!</span>"
+	if(!target.has_dna())
+		usr << "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>"
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
@@ -129,36 +129,15 @@
 				if(prob(5)) visible_message("\The [src] pings.")
 				return
 
-			var/mob/living/carbon/human/T = attached
-
-			if(!istype(T))
-				return
-
-			if(T.disabilities & NOCLONE)
-				return
-
-			if((NOBLOOD in T.dna.species.specflags) && !T.dna.species.exotic_blood)
-				return
-
-			if(T.dna.species.exotic_blood)
-				T.reagents.trans_to(beaker, amount)
-				update_icon()
-			else
-				// If the human is losing too much blood, beep.
-				if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE && prob(5))
-					visible_message("\The [src] beeps loudly.")
-					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-				var/datum/reagent/B = T.take_blood(beaker,amount)
-
-				if (B)
-					beaker.reagents.reagent_list |= B
-					beaker.reagents.update_total()
-					beaker.on_reagent_change()
-					beaker.reagents.handle_reactions()
-					update_icon()
+			// If the human is losing too much blood, beep.
+			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+				visible_message("\The [src] beeps loudly.")
+				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+			attached.transfer_blood_to(beaker, amount)
+			update_icon()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
-	if (!ishuman(user))
+	if(!ishuman(user))
 		return
 	if(attached)
 		visible_message("[attached] is detached from \the [src]")

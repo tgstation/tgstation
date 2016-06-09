@@ -63,6 +63,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
+	exotic_bloodtype = "L"
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -194,26 +195,20 @@
 /datum/species/jelly/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
 		return
-	if(!H.reagents.get_reagent_amount(exotic_blood))
-		H.reagents.add_reagent(exotic_blood, 5)
+	if(!H.blood_volume)
+		H.blood_volume += 5
 		H.adjustBruteLoss(5)
 		H << "<span class='danger'>You feel empty!</span>"
 
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-
-	if(jelly_amount < 100)
+	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
-			H.reagents.add_reagent(exotic_blood, 0.5)
+			H.blood_volume += 3
 			H.nutrition -= 2.5
-	if(jelly_amount < 50)
+	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			H << "<span class='danger'>You feel drained!</span>"
-	if(jelly_amount < 10)
+	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		H.losebreath++
-
-/datum/species/jelly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
-	if(chem.id == exotic_blood)
-		return 1
 
 /*
  SLIMEPEOPLE
@@ -246,6 +241,7 @@
 	if(callback)
 		callback.Remove(C)
 	C.faction -= "slime"
+	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C)
@@ -256,12 +252,11 @@
 	C.faction |= "slime"
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	var/jelly_amount = H.reagents.get_reagent_amount(exotic_blood)
-	if(jelly_amount >= 200)
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
 			H << "<span class='notice'>You feel very bloated!</span>"
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.reagents.add_reagent(exotic_blood, 0.5)
+		H.blood_volume += 3
 		H.nutrition -= 2.5
 
 	..()
@@ -276,29 +271,28 @@
 	var/mob/living/carbon/human/H = owner
 	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
 	H.notransform = 1
-	for(var/datum/reagent/toxin/slimejelly/S in H.reagents.reagent_list)
-		if(S.volume >= 200)
-			var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
-			spare.underwear = "Nude"
-			H.dna.transfer_identity(spare, transfer_SE=1)
-			H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-			spare.real_name = spare.dna.real_name
-			spare.name = spare.dna.real_name
-			spare.updateappearance(mutcolor_update=1)
-			spare.domutcheck()
-			spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
-			S.volume = 80
-			H.notransform = 0
-			var/datum/species/jelly/slime/SS = H.dna.species
-			SS.callforward = new
-			SS.callforward.body = spare
-			SS.callforward.Grant(H)
-			SS.callback = new
-			SS.callback.body = H
-			SS.callback.Grant(spare)
-			H.mind.transfer_to(spare)
-			spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
-			return
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
+		spare.underwear = "Nude"
+		H.dna.transfer_identity(spare, transfer_SE=1)
+		H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+		spare.real_name = spare.dna.real_name
+		spare.name = spare.dna.real_name
+		spare.updateappearance(mutcolor_update=1)
+		spare.domutcheck()
+		spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
+		H.blood_volume = BLOOD_VOLUME_SAFE
+		H.notransform = 0
+		var/datum/species/jelly/slime/SS = H.dna.species
+		SS.callforward = new
+		SS.callforward.body = spare
+		SS.callforward.Grant(H)
+		SS.callback = new
+		SS.callback.body = H
+		SS.callback.Grant(spare)
+		H.mind.transfer_to(spare)
+		spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+		return
 
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
 	H.notransform = 0

@@ -19,6 +19,7 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/fyellow/New()
+	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/black
@@ -182,6 +183,7 @@
 	item_color = "mime"
 
 /obj/item/clothing/gloves/color/random/New()
+	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
 		/obj/item/clothing/gloves/color/red = 1,

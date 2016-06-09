@@ -2,6 +2,7 @@
 	name = "massive construct"
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
+	density = FALSE
 
 /obj/structure/clockwork/massive/New()
 	..()
@@ -17,8 +18,8 @@
 	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
-	pixel_x = -30
-	pixel_y = -30
+	pixel_x = -32
+	pixel_y = -32
 	alpha = 175
 	health = 1000
 	max_health = 1000
@@ -128,26 +129,50 @@
 	takes_damage = FALSE
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
+	var/proselytize_range = 10
+
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
 	SSobj.processing += src
-	world << "<span class='heavy_brass'><font size=7>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	ratvar_awakens = TRUE
+	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
+	var/area/A = get_area(src)
+	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	spawn(50)
 		SSshuttle.emergency.request(null, 0.3)
 
+
 /obj/structure/clockwork/massive/ratvar/Destroy()
 	SSobj.processing -= src
-	world << "<span class='heavy_brass'><font size=7>\"NO! I will not... be...</font> <font size=6>banished...</font> <font size=5>again...\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	ratvar_awakens = FALSE
 	..()
 
+
+/obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
+	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
+		return 0
+	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(src))
+	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
+	R.key = O.key
+
+
+/obj/structure/clockwork/massive/ratvar/Bump(atom/A)
+	forceMove(get_turf(A))
+	A.ratvar_act()
+
+
+/obj/structure/clockwork/massive/ratvar/Process_Spacemove()
+	return clashing
+
+
 /obj/structure/clockwork/massive/ratvar/process()
 	if(clashing) //I'm a bit occupied right now, thanks
-		return 0
-	for(var/atom/A in range(7, src))
+		return
+	for(var/atom/A in range(proselytize_range, src))
 		A.ratvar_act()
 	var/dir_to_step_in = pick(cardinal)
 	if(!prey)
@@ -172,7 +197,7 @@
 			prey = null
 		else
 			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
-	forceMove(get_step(src, dir_to_step_in))
+	step(src, dir_to_step_in)
 
 /obj/structure/clockwork/massive/ratvar/narsie_act()
 	if(clashing)
@@ -181,8 +206,10 @@
 	world << "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>"
 	world << "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>"
 	for(var/obj/singularity/narsie/N in range(15, src))
-		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
+		if(N.clashing)
+			continue
 		N.clashing = TRUE
+		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		break
 	return 1
 
@@ -232,24 +259,3 @@
 			narsie.clashing = FALSE
 			qdel(src)
 			return 1
-
-/atom/proc/ratvar_act() //Called on everything near Ratvar
-	return
-
-/turf/closed/wall/ratvar_act() //Walls and floors are changed to their clockwork variants
-	if(prob(20))
-		ChangeTurf(/turf/closed/wall/clockwork)
-/turf/open/floor/ratvar_act()
-	if(prob(20))
-		ChangeTurf(/turf/open/floor/clockwork)
-
-/obj/structure/window/ratvar_act() //Windows turn yellow
-	color = rgb(75, 53, 0)
-
-/mob/living/ratvar_act()
-	add_servant_of_ratvar(src)
-
-/mob/dead/observer/ratvar_act() //Ghosts flash yellow for a second
-	var/old_color = color
-	color = rgb(75, 53, 0)
-	animate(src, color = old_color, time = 10)

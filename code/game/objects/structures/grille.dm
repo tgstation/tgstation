@@ -23,6 +23,14 @@
 		else
 			take_damage(rand(5,10), BRUTE, 0)
 
+/obj/structure/grille/ratvar_act()
+	if(prob(20))
+		if(destroyed)
+			new /obj/structure/grille/ratvar/broken(src.loc)
+		else
+			new /obj/structure/grille/ratvar(src.loc)
+		qdel(src)
+
 /obj/structure/grille/blob_act(obj/effect/blob/B)
 	qdel(src)
 
@@ -113,7 +121,7 @@
 	..()
 
 /obj/structure/grille/proc/Break()
-	icon_state = "brokengrille"
+	icon_state = "broken[initial(icon_state)]"
 	density = 0
 	destroyed = 1
 	stored.amount = 1
@@ -143,7 +151,7 @@
 			health = 10
 			density = 1
 			destroyed = 0
-			icon_state = "grille"
+			icon_state = initial(icon_state)
 			R.use(1)
 			return
 
@@ -260,7 +268,6 @@
 	return 0
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
-	icon_state = "brokengrille"
 	density = 0
 	health = 0
 	destroyed = 1
@@ -268,3 +275,36 @@
 /obj/structure/grille/broken/New()
 	..()
 	stored.amount = 1
+	icon_state = "brokengrille"
+
+/obj/structure/grille/ratvar
+	icon_state = "ratvargrille"
+	desc = "A strangely-shaped grille."
+
+/obj/structure/grille/ratvar/New()
+	..()
+	if(destroyed)
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille/broken, get_turf(src))
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/grille, get_turf(src))
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/grille, get_turf(src))
+
+/obj/structure/grille/ratvar/narsie_act()
+	take_damage(rand(1, 3), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/grille/ratvar/ratvar_act()
+	return
+
+/obj/structure/grille/ratvar/broken
+	density = 0
+	health = 0
+	destroyed = 1
+
+/obj/structure/grille/ratvar/broken/New()
+	..()
+	stored.amount = 1
+	icon_state = "brokenratvargrille"

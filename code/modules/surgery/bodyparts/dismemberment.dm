@@ -17,10 +17,10 @@
 	if(dam_type == BURN)
 		burn()
 		return 1
-	add_blood(H)
+	add_mob_blood(H)
 	var/turf/location = H.loc
 	if(istype(location))
-		location.add_blood(H)
+		H.add_splatter_floor(location)
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -40,7 +40,7 @@
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(H)
-	T.add_blood(H)
+	H.add_splatter_floor(T)
 	playsound(get_turf(owner), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in owner.internal_organs)
 		var/obj/item/organ/O = X

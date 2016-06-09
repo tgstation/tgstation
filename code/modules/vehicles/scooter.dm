@@ -21,22 +21,32 @@
 
 /obj/vehicle/scooter/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(EAST)
 					buckled_mob.pixel_x = -2
-					buckled_mob.pixel_y = 4
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(WEST)
 					buckled_mob.pixel_x = 2
-					buckled_mob.pixel_y = 4
+			if(buckled_mob.get_num_legs() > 0)
+				buckled_mob.pixel_y = 4
+			else
+				buckled_mob.pixel_y = -4
+
+/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
+	vehicle_move_delay = initial(vehicle_move_delay)
+	..()
+	if(M.get_num_legs() < 2)
+		vehicle_move_delay ++
+		if(M.get_num_arms() <= 0)
+			if(buckled_mobs.len)//to prevent the message displaying twice due to unbuckling
+				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
+			unbuckle_mob(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -46,14 +56,15 @@
 	density = 0
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		density = 1
 	else
 		density = 0
+	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
-	if(A.density && buckled_mobs.len)
+	if(A.density && has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(cardinal))
 		unbuckle_mob(H)

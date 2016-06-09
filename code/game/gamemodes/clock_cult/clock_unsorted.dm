@@ -1,94 +1,3 @@
-//AI lawset
-/datum/ai_laws/ratvar
-	name = "Servant of the Justiciar"
-	zeroth = ("Purge all untruths and honor Ratvar.")
-	inherent = list()
-
-//Clockwork wall: Causes nearby caches to generate components
-/turf/closed/wall/clockwork
-	name = "clockwork wall"
-	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	canSmoothWith = list(/turf/closed/wall/clockwork)
-	smooth = SMOOTH_MORE
-
-/turf/closed/wall/clockwork/New()
-	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
-	clockwork_construction_value += 5
-
-/turf/closed/wall/clockwork/Destroy()
-	SSobj.processing -= src
-	clockwork_construction_value -= 5
-	..()
-
-/turf/closed/wall/clockwork/process()
-	for(var/obj/structure/clockwork/cache/C in range(1, src))
-		if(prob(5))
-			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
-			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 20, 1)
-
-/turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = I
-		if(!WT.isOn())
-			return 0
-		user.visible_message("<span class='notice'>[user] begins slowly breaking down [src]...</span>", "<span class='notice'>You begin painstakingly destroying [src]...</span>")
-		if(!do_after(user, 120 / WT.toolspeed, target = src))
-			return 0
-		if(!WT.remove_fuel(1, user))
-			return 0
-		user.visible_message("<span class='notice'>[user] breaks apart [src]!</span>", "<span class='notice'>You break apart [src]!</span>")
-		break_wall()
-		return 1
-	..()
-
-/turf/closed/wall/clockwork/break_wall()
-	new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-	return(new /obj/structure/girder(src))
-
-/turf/closed/wall/clockwork/devastate_wall()
-	return break_wall()
-
-//Clockwork floor: Slowly heals conventional damage on nearby servants
-/turf/open/floor/clockwork
-	name = "clockwork floor"
-	desc = "Tightly-pressed brass tiles. They emit minute vibration."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "clockwork_floor"
-
-/turf/open/floor/clockwork/New()
-	..()
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
-	clockwork_construction_value++
-
-/turf/open/floor/clockwork/Destroy()
-	SSobj.processing -= src
-	clockwork_construction_value--
-	..()
-
-/turf/open/floor/clockwork/process()
-	for(var/mob/living/L in src)
-		if(L.stat == DEAD || !is_servant_of_ratvar(L))
-			continue
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-
-/turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
-		if(!do_after(user, 70 / I.toolspeed, target = src))
-			return 0
-		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it in doing so!</span>")
-		make_plating()
-		return 1
-	..()
-
 //Function Call verb: Calls forth a Ratvarian spear.
 /mob/living/carbon/human/proc/function_call()
 	set name = "Function Call"
@@ -102,6 +11,57 @@
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	usr.put_in_hands(R)
 	usr.verbs -= /mob/living/carbon/human/proc/function_call
+	return 1
+
+//allows a mob to select a target to gate to
+/atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
+	var/list/possible_targets = list()
+	var/list/teleportnames = list()
+	var/list/duplicatenamecount = list()
+
+	for(var/obj/structure/clockwork/powered/clockwork_obelisk/O in all_clockwork_objects)
+		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX)) //don't list obelisks that we're next to
+			var/area/A = get_area(O)
+			var/locname = initial(A.name)
+			var/resultkey = "[locname] [O.name]"
+			if(resultkey in teleportnames) //why the fuck did you put two obelisks in the same area
+				duplicatenamecount[resultkey]++
+				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
+			else
+				teleportnames.Add(resultkey)
+				duplicatenamecount[resultkey] = 1
+			possible_targets[resultkey] = O
+
+	for(var/mob/living/L in living_mob_list)
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && L != invoker && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
+			var/resultkey = "[L.name] ([L.real_name])"
+			if(resultkey in teleportnames)
+				duplicatenamecount[resultkey]++
+				resultkey = "[resultkey] ([duplicatenamecount[resultkey]])"
+			else
+				teleportnames.Add(resultkey)
+				duplicatenamecount[resultkey] = 1
+			possible_targets[resultkey] = L
+
+	if(!possible_targets.len)
+		invoker << "<span class='warning'>There are no other eligible targets for a Spatial Gateway!</span>"
+		return 0
+	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
+	var/atom/movable/target = possible_targets[input_target_key]
+	if(!target || !invoker.canUseTopic(src, be_close = 1))
+		return 0
+	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
+	if(istargetobelisk)
+		gateway_uses *= 2
+		time_duration *= 2
+	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
+	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? src.loc : get_step(invoker, invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? target.loc : get_step(target, target.dir))
+
+	//Set up the portals now that they've spawned
+	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
+	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return 1
 
 /*

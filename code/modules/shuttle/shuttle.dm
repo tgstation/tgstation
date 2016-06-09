@@ -554,26 +554,23 @@
 		for(var/atom/movable/AM in T)
 			if(isliving(AM) && (!(AM in hurt_mobs)))
 				hurt_mobs |= AM
-				if(ishuman(AM))
-					var/mob/living/M = AM
-					M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple and thrown clear!</span>",
+				var/mob/living/M = AM
+				if(M.buckled)
+					M.buckled.unbuckle_mob(M, 1)
+				if(M.pulledby)
+					M.pulledby.stop_pulling()
+				M.stop_pulling()
+				M.visible_message("<span class='warning'>[M] is hit by \
+						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
-						crushing pressure as the space around you ripples.\
-						</span>")
-
-					M.Paralyse(10)
-					M.apply_damage(60, BRUTE, "chest")
-					M.apply_damage(60, BRUTE, "head")
-					M.anchored = 0
-				else
-					var/mob/M = AM
-					M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple and is torn into pieces!</span>",
-						"<span class='userdanger'>You are torn into pieces by \
-						bluespace churn.</span>")
+						crushing pressure as the space around you ripples.</span>")
+				if(M.anchored)
 					M.gib()
-					continue
+				else
+					M.Paralyse(10)
+					M.ex_act(2)
+					step(M, dir)
+				continue
 
 			if(!AM.anchored)
 				step(AM, dir)

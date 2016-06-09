@@ -37,6 +37,21 @@
 				/obj/item/toy/cards/deck/syndicate = 2
 				)
 
+/obj/effect/spawner/lootdrop/grille_or_trash
+	name = "maint grille or trash spawner"
+	loot = list(/obj/structure/grille = 5,
+			/obj/item/weapon/cigbutt = 1,
+			/obj/item/trash/cheesie = 1,
+			/obj/item/trash/candy = 1,
+			/obj/item/trash/chips = 1,
+			/obj/item/trash/deadmouse = 1,
+			/obj/item/trash/pistachios = 1,
+			/obj/item/trash/plate = 1,
+			/obj/item/trash/popcorn = 1,
+			/obj/item/trash/raisins = 1,
+			/obj/item/trash/sosjerky = 1,
+			/obj/item/trash/syndi_cakes = 1)
+
 /obj/effect/spawner/lootdrop/maintenance
 	name = "maintenance loot spawner"
 

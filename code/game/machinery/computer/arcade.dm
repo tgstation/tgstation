@@ -4,6 +4,7 @@
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
+	clockwork = TRUE //it'd look weird
 	var/list/prizes = list(
 		/obj/item/weapon/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,
@@ -51,7 +52,7 @@
 
 /obj/machinery/computer/arcade/proc/prizevend()
 	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse(src)
+		new /obj/item/weapon/gun/energy/pulse/prize(src)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
