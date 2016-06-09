@@ -209,11 +209,11 @@
 				user << "<span class='warning'>This MMI does not seem to fit!</span>"
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
-			if(!O)
+			if(!user.unEquip(W))
 				return
 
-			if(!user.unEquip(W))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			if(!O)
 				return
 
 			if(M.hacked || M.clockwork)
@@ -240,9 +240,10 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync && !M.hacked)
+			if(!lawsync)
 				O.lawupdate = 0
-				O.make_laws()
+				if(!M.hacked && !M.clockwork)
+					O.make_laws()
 
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
