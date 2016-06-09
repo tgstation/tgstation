@@ -126,25 +126,28 @@
 	if(!is_valid_hand_index(index) || !is_valid_hand_index(active_hand))
 		return 0
 
+	if(held_items[index])
+		return 0
+
 	if(!put_in_hand_check(W, index))
 		return 0
 
-	if(!held_items[index])
-		if(W.prepickup(src))
-			return 0
-		W.forceMove(src)
-		held_items[index] = W
-		W.layer = 20
-		W.pixel_x = initial(W.pixel_x)
-		W.pixel_y = initial(W.pixel_y)
-		W.equipped(src, null, index)
+	if(W.prepickup(src))
+		return 0
+	
+	W.forceMove(src)
+	held_items[index] = W
+	W.layer = 20
+	W.pixel_x = initial(W.pixel_x)
+	W.pixel_y = initial(W.pixel_y)
+	W.equipped(src, null, index)
 
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
+	if(client)	client.screen |= W
+	if(pulling == W) stop_pulling()
 
-		update_inv_hand(index)
-		W.pickup(src)
-		return 1
+	update_inv_hand(index)
+	W.pickup(src)
+	return 1
 
 //Puts the item into your left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(var/obj/item/W)
