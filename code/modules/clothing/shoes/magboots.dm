@@ -50,7 +50,7 @@
 	icon_state = "advmag0"
 	magboot_state = "advmag"
 	slowdown_active = SHOES_SLOWDOWN
-	origin_tech = "magnets=6;engineering=4"
+	origin_tech = null
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."

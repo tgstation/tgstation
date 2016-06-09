@@ -104,6 +104,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+	..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","pink","brown","green","cyan","yellow")

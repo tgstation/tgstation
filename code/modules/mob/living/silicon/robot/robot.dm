@@ -827,8 +827,10 @@
 				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("janiborg")
 				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("minerborg")
+			if("minerborg","ashborg")
 				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+				state_name = "minerborg"
+>>>>>>> 2f0a3919d29575a7ac958125dc17e417a471036a
 			if("peaceborg")
 				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")

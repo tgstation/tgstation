@@ -437,3 +437,24 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
+
+
+//Slime commands defines
+#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
+#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
+#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
+#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
+#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
+#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
+#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+

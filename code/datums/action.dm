@@ -13,7 +13,7 @@
 	var/button_icon = 'icons/mob/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
-	var/mob/living/owner
+	var/mob/owner
 
 /datum/action/New(Target)
 	target = Target
@@ -29,23 +29,23 @@
 	button = null
 	return ..()
 
-/datum/action/proc/Grant(mob/living/L)
+/datum/action/proc/Grant(mob/M)
 	if(owner)
-		if(owner == L)
+		if(owner == M)
 			return
 		Remove(owner)
-	owner = L
-	L.actions += src
-	if(L.client)
-		L.client.screen += button
-	L.update_action_buttons()
+	owner = M
+	M.actions += src
+	if(M.client)
+		M.client.screen += button
+	M.update_action_buttons()
 
-/datum/action/proc/Remove(mob/living/L)
-	if(L.client)
-		L.client.screen -= button
+/datum/action/proc/Remove(mob/M)
+	if(M.client)
+		M.client.screen -= button
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	L.actions -= src
-	L.update_action_buttons()
+	M.actions -= src
+	M.update_action_buttons()
 	owner = null
 
 /datum/action/proc/Trigger()
@@ -182,6 +182,19 @@
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
 
+/datum/action/item_action/toggle_flame
+	name = "Summon/Dismiss Ratvar's Flame"
+
+/datum/action/item_action/toggle_flame/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	if(istype(target, /obj/item/clothing/glasses/judicial_visor))
+		var/obj/item/clothing/glasses/judicial_visor/V = target
+		if(V.recharging)
+			return 0
+	return ..()
+
+
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
 
@@ -256,7 +269,7 @@
 		owner << "<span class='notice'>Research analyzer is now [owner.research_scanner ? "active" : "deactivated"].</span>"
 		return 1
 
-/datum/action/item_action/toggle_research_scanner/Remove(mob/living/L)
+/datum/action/item_action/toggle_research_scanner/Remove(mob/M)
 	if(owner)
 		owner.research_scanner = 0
 	..()

@@ -1,4 +1,4 @@
-//In this file: C4 and Syndicate Bombs
+//In this file: C4
 
 /obj/item/weapon/c4
 	name = "C-4"

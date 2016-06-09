@@ -205,6 +205,10 @@
 			BB.bees |= src
 			beehome = BB
 
+/mob/living/simple_animal/hostile/poison/bees/toxin/New()
+	. = ..()
+	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
+	assign_reagent(chemical_reagents_list[initial(R.id)])
 
  /mob/living/simple_animal/hostile/poison/bees/queen
  	name = "queen bee"

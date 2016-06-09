@@ -342,11 +342,11 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/loyalty
-	name = "Loyalty Implants Crate"
+/datum/supply_pack/security/armory/mindshield
+	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
-	crate_name = "loyalty implant crate"
+	crate_name = "mindshield implant crate"
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
@@ -1133,6 +1133,13 @@
 	cost = 600
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_name = "water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
+/datum/supply_pack/misc/hightank
+	name = "High-Capacity Water Tank Crate"
+	cost = 1200
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	crate_name = "high-capacity water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
 /datum/supply_pack/misc/lasertag

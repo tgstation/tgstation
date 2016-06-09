@@ -60,21 +60,13 @@
 	closeToolTip(usr)
 
 
-
-//used to update the buttons icon.
 /mob/proc/update_action_buttons_icon()
-	return
-
-/mob/living/update_action_buttons_icon()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
 //This is the proc used to update all the action buttons.
 /mob/proc/update_action_buttons(reload_screen)
-	return
-
-/mob/living/update_action_buttons(reload_screen)
 	if(!hud_used || !client)
 		return
 

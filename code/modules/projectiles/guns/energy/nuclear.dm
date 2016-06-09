@@ -35,7 +35,7 @@
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
-	origin_tech = "combat=5;magnets=4"
+	origin_tech = null
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4

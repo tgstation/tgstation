@@ -3,7 +3,7 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = ABOVE_NORMAL_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -106,12 +106,8 @@
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
 	bloodiness = 0
-	var/list/drips = list()
+	var/drips = 1
 
-/obj/effect/decal/cleanable/blood/drip/New()
-	..()
-	spawn(1)
-		drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
 	return 1

@@ -47,7 +47,7 @@
 	return -10
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
-	return
+	return 0
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)

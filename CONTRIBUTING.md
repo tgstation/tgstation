@@ -99,9 +99,7 @@ The previous code made compliant:
 ```
 
 ###No overriding type safety checks.
-The use of the : operator to override type safety checks is strongly discouraged. You must cast the variable to the proper type.
-
-Exceptions are only made when used in loops that require the performance boost from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
+The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ###Type paths must began with a /
 eg: `/datum/thing` not `datum/thing`

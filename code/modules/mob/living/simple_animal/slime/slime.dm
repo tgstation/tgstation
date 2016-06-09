@@ -335,9 +335,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			++Discipline
 	return
 
-/mob/living/simple_animal/slime/getTrail()
-	return null
-
 /mob/living/simple_animal/slime/examine(mob/user)
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"

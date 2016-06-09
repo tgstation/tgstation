@@ -140,9 +140,11 @@
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	if(crit_fail)
 		return
-	crit_fail = 1
-	spawn(90 / severity)
-		crit_fail = 0
+	crit_fail = TRUE
+	addtimer(src, "reboot", 90 / severity)
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
+	crit_fail = FALSE
 
 
 //[[[[MOUTH]]]]

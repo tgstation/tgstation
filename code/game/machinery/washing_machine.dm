@@ -226,7 +226,7 @@
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(L.buckled || L.buckled_mobs.len)
+		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
 			if(iscorgi(L))

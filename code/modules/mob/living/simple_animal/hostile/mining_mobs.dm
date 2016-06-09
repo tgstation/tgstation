@@ -288,10 +288,8 @@
 		if(NOBLOOD in H.dna.species.specflags)
 			return
 
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
-		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-		if(B && blood_volume < 560 && blood_volume)
-			B.volume += 2 // Fast blood regen
+		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume += 2 // Fast blood regen
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -398,7 +396,7 @@
 	transfer_reagents(C)
 	death()
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, var/volume = 30)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, volume = 30)
 	if(!reagents.total_volume)
 		return
 
@@ -406,29 +404,11 @@
 
 	var/fraction = min(volume/reagents.total_volume, 1)
 	reagents.reaction(C, INJECT, fraction)
-
-	var/datum/reagent/blood/B
-	for(var/datum/reagent/blood/d in reagents.reagent_list)
-		B = d
-		break
-	if(B)
-		C.inject_blood(src, min(B.volume, volume))
-
 	reagents.trans_to(C, volume)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
-	var/datum/reagent/B = C.take_blood(src, 30)
-	if(!B)
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.dna.species.exotic_blood && H.reagents.total_volume)
-				H.reagents.trans_to(src, 10)
-
-	else
-		reagents.reagent_list += B
-		reagents.update_total()
-
+	C.transfer_blood_to(src, 30)
 	color = mix_color_from_reagents(reagents.reagent_list)
 
 /mob/living/simple_animal/hostile/asteroid/goliath

@@ -760,8 +760,7 @@
 	},
 /area/tcommsat/chamber)
 "cs" = (
-/turf/open/floor/plasteel/airless{
-	icon_state = "warningcorner";
+/turf/open/floor/plasteel/airless/warning/corner{
 	dir = 4
 	},
 /area/tcommsat/chamber)
@@ -819,8 +818,7 @@
 "cC" = (
 /obj/machinery/light/small,
 /obj/item/weapon/paper,
-/turf/open/floor/plasteel/airless{
-	icon_state = "warningcorner";
+/turf/open/floor/plasteel/airless/warning/corner{
 	dir = 1
 	},
 /area/tcommsat/chamber)
@@ -889,8 +887,7 @@
 	},
 /area/tcommsat/chamber)
 "cN" = (
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
+/turf/open/floor/plasteel/warning/corner{
 	dir = 4
 	},
 /area/tcommsat/chamber)
@@ -898,8 +895,7 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/chamber)
 "cP" = (
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
+/turf/open/floor/plasteel/warning/corner{
 	dir = 8
 	},
 /area/tcommsat/chamber)
@@ -952,8 +948,7 @@
 	},
 /area/tcommsat/chamber)
 "da" = (
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
+/turf/open/floor/plasteel/warning/corner{
 	dir = 1
 	},
 /area/tcommsat/chamber)

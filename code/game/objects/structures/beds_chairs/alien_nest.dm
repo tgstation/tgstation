@@ -18,7 +18,7 @@
 	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
@@ -60,7 +60,7 @@
 	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
