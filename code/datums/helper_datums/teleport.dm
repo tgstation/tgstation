@@ -103,12 +103,19 @@
 		if(!center)
 			center = destination
 		for(var/turf/T in range(precision,center))
-			posturfs.Add(T)
+			var/area/A = T.loc
+			if(!A.noteleport)
+				posturfs.Add(T)
+
 		destturf = safepick(posturfs)
 	else
 		destturf = get_turf(destination)
 
 	if(!destturf || !curturf)
+		return 0
+
+	var/area/A = get_area(curturf)
+	if(A.noteleport)
 		return 0
 
 	playSpecials(curturf,effectin,soundin)
