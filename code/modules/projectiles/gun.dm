@@ -508,7 +508,4 @@ obj/item/weapon/gun/proc/newshot()
 /obj/item/weapon/gun/burn()
 	if(pin)
 		qdel(pin)
-	if(power_supply)
-		qdel(power_supply)
-	SSobj.burning -= src
-	qdel(src)
+	.=..()
