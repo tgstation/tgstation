@@ -39,12 +39,17 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSshuttle.emergencyNoEscape = FALSE
+	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+		SSshuttle.emergency.mode = SHUTTLE_DOCKED
+		SSshuttle.emergency.timer = world.time
+		if(!purpose_fulfilled)
+			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 	SSobj.processing -= src
 	if(!purpose_fulfilled)
 		for(var/mob/M in mob_list)
 			if(is_servant_of_ratvar(M) || isobserver(M))
 				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [get_area(src)]!</b></span>"
-				world << sound(null, 0, channel = 8)
+		world << sound(null, 0, channel = 8)
 	..()
 
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
