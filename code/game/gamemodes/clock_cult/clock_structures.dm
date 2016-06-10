@@ -118,11 +118,21 @@
 
 /obj/structure/clockwork/cache/New()
 	..()
+	SSobj.processing += src
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
+	SSobj.processing -= src
 	return ..()
+
+/obj/structure/clockwork/cache/process()
+	if(prob(2))
+		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
+	for(var/turf/closed/wall/clockwork/C in orange(1, get_turf(src)))
+		if(prob(5))
+			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
+			playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
