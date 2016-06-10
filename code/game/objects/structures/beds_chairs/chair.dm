@@ -312,9 +312,9 @@
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
-	icon_state = "bar"
+	icon_state = "bar_toppled"
 	item_state = "stool_bar"
-	origin_type = /obj/structure/chair/stool
+	origin_type = /obj/structure/chair/stool/bar
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god
