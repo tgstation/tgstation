@@ -19,7 +19,6 @@
 	if(user.stat)
 		user << "<span class='userdanger'>No... just one more try...</span>"
 		user.gib()
-		win_prob = 100 //Makes 'em think they were just one away
 	else
 		user.visible_message("<span class='warning'>[user], pulls [src]'s lever with a glint in their eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
 		know it'll be worth it.</span>")
