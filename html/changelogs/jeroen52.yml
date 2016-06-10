@@ -1,8 +1,0 @@
-author: jeroen52
-
-delete-after: True
-
-changes: 
-- tweak: "Added more biohazard shutters to the Science areas."
-- rscadd: "Adds a 'Mech Bay' camera in the RD's office."
-- rscadd: "Adds a button for the mech bay shutters in the RD's office."
