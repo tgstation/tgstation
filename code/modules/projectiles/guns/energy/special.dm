@@ -189,14 +189,6 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/burn()
-	var/obj/item/weapon/stock_parts/cell/C = power_supply
-	qdel(C)
-	var/obj/item/device/firing_pin/P = pin
-	qdel(P)
-	SSobj.burning -= src
-	qdel(src)
-
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
