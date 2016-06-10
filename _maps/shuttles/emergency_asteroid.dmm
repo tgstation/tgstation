@@ -7,7 +7,7 @@
 "ag" = (/turf/open/space,/area/space/nearstation)
 "ah" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating/airless,/area/shuttle/escape)
 "ai" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
-"aj" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 2; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; width = 28},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
+"aj" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"},/obj/docking_port/mobile/emergency{dir = 2; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; width = 28; timid = 1},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/escape)
 "ak" = (/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/shuttle/escape)
 "al" = (/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Airlock"; req_access_txt = "2"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
 "am" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/open/floor/plating/airless,/area/shuttle/escape)

@@ -128,7 +128,7 @@ var/const/INJECT = 5 //injection
 	return id
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if(!target )
+	if(!target || !total_volume)
 		return
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))

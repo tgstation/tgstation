@@ -27,16 +27,26 @@
 			switch(buckled_mob.dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(EAST)
 					buckled_mob.pixel_x = -2
-					buckled_mob.pixel_y = 4
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
 				if(WEST)
 					buckled_mob.pixel_x = 2
-					buckled_mob.pixel_y = 4
+			if(buckled_mob.get_num_legs() > 0)
+				buckled_mob.pixel_y = 4
+			else
+				buckled_mob.pixel_y = -4
+
+/obj/vehicle/scooter/post_buckle_mob(mob/living/M)
+	vehicle_move_delay = initial(vehicle_move_delay)
+	..()
+	if(M.get_num_legs() < 2)
+		vehicle_move_delay ++
+		if(M.get_num_arms() <= 0)
+			if(buckled_mobs.len)//to prevent the message displaying twice due to unbuckling
+				M << "<span class='warning'>Your limbless body flops off \the [src].</span>"
+			unbuckle_mob(M)
 
 /obj/vehicle/scooter/skateboard
 	name = "skateboard"
@@ -50,6 +60,7 @@
 		density = 1
 	else
 		density = 0
+	..()
 
 /obj/vehicle/scooter/skateboard/Bump(atom/A)
 	..()
