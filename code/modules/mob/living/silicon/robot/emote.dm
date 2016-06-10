@@ -230,6 +230,17 @@
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 			m_type = 2
 
+		if ("spin")
+			if(buckled_mobs)
+				message = "<B>[src]</B> spins in place, and throws [english_list(buckled_mobs)] clear of itself!"
+			else
+				message = "<B>[src]</B> spins in place!"
+			m_type = 1
+			src.SpinAnimation(32,2)
+			src.unbuckle_all_mobs(1)
+			for(var/mob/living/T in buckled_mobs)
+				T.throwat(get_edge_target_turf(user, get_dir(user, get_step_away(T, user))),6,1)
+
 		if ("help")
 			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
 
