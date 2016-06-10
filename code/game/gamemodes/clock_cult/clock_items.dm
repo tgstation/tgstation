@@ -814,24 +814,31 @@
 		attack_verb = list("stabbed", "poked", "slashed")
 		if(target)
 			user << "<span class='notice'>You prepare to remove your ratvarian spear from [target]...</span>"
-			if(do_after(user, 5, 1, target))
+			if(do_after(user, 7, 1, target))
 				var/turf/T = get_turf(target)
 				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
+				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
 					var/remove_verb = pick("pull", "yank", "drag")
 					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear out of [target]!</span>")
 				else
 					user.visible_message("<span class='warning'>[user] kicks [target] off of [src], breaking it!</span>", "<span class='warning'>You kick [target] off of [src], breaking it!</span>")
-					target << "<span class='userdanger'>[user] kicks you off of their ratvarian spear!</span>"
+					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
+					target.emote("scream")
 					break_spear(get_turf(T))
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
 					target.Weaken(2)
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
+				flash_color(target, color="#911414", time=7)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
 				user << "<span class='warning'>Your ratvarian spear breaks!</span>"
+				if(target.stat == CONSCIOUS)
+					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
+					target.emote("scream")
+					flash_color(target, color="#911414", time=7)
 				break_spear(get_turf(target))
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
