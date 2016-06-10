@@ -25,7 +25,6 @@ Borg Hypospray
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin")
-	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 
@@ -219,3 +218,8 @@ Borg Shaker
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
 	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+
+/obj/item/weapon/reagent_containers/borghypo/epi
+	name = "epinephrine injector"
+	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients.."
+	reagent_ids = list("epinephrine")
