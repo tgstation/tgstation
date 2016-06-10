@@ -1,5 +1,0 @@
-author: Albinobigfoot
-delete-after: True
-changes:
-- tweak: You can now grab an item from your inventory by clicking on its storage slot, as if you had selected the item's pixel itself.
-- tweak: "This works for items in storage (e.g. backpacks, boxes, bags, etc.), items on your person (e.g. pockets, suit storage, belt slot, etc.), as well as borg and mommi modules." 
