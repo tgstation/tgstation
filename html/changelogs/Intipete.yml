@@ -1,0 +1,6 @@
+author: Intigracy
+delete-after: True
+changes: 
+- rscdel: "Cuban pete no longer gives you a free bomb when you beat him via emagged arcade."
+- tweak: "The maracas Pete gives you for beating him are now by default emagged, meaning when you throw them at something they explode."
+- tweak: "Buffed the emagged maraca explosion. It will now cause a hull breach if thrown at a floor, and will gib dead bodies. It deals about 100 damage when thrown at mobs."
