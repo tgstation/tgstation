@@ -3,6 +3,7 @@
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
 	density = FALSE
+	burn_state = LAVA_PROOF
 
 /obj/structure/clockwork/massive/New()
 	..()
