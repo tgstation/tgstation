@@ -1,9 +1,9 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
 	desc = "Delivers medical nanites in a focused beam."
-	icon = 'icons/obj/chronos.dmi'
-	icon_state = "chronogun"
-	item_state = "chronogun"
+	icon = 'icons/obj/guns/energy.dmi'
+	icon_state = "medigun"
+	item_state = "medigun"
 	w_class = 3.0
 
 	var/mob/living/current_target
