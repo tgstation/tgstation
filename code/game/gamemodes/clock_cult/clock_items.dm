@@ -333,6 +333,7 @@
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
 		user << "<b>Stored components (with global cache):</b>"
 		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
 		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]] ([stored_components["vanguard_cogwheel"] + clockwork_component_cache["vanguard_cogwheel"]])</span>"

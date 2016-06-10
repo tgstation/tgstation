@@ -355,7 +355,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Z`rgny, orpbzr terngre!")
 	channel_time = 0
 	required_components = list("replicant_alloy" = 1)
-	consumed_components = list("replicant_alloy" = 1) //People were spamming slabs to get infinite components. You chose this.
 	whispered = TRUE
 	usage_tip = "This is inefficient as a way to produce components, as it consumes them in the first place."
 	tier = SCRIPTURE_DRIVER
