@@ -140,6 +140,9 @@
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
 	new /obj/item/clothing/shoes/orange(src)
+	new /obj/item/clothing/shoes/orange(src)
+	new /obj/item/clothing/suit/space/plasmaman/prisoner(src)
+	new /obj/item/clothing/head/helmet/space/plasmaman/prisoner(src)
 	AddToProfiler()
 	return
 
