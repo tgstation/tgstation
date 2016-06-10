@@ -1,0 +1,5 @@
+author: Shadowmech88
+delete-after: True
+changes: 
+- rscadd: Adds a new type of secure locker, the vault locker. Vault lockers are immovable, explosion-proof, EMP-proof, and have 100 times the health of a standard locker.
+- rscadd: Adds a single vault locker to the armories of Defficiency, Metastation, Busstation, and Taxistation. Adds two vault lockers to the armory of Boxstation.
