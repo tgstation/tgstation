@@ -204,14 +204,13 @@ var/global/list/alert_overlays_global = list()
 		ASSERT(istype(A)) // This worries me.
 		var/alarmed = A.doors_down || A.fire
 		var/old_density = src.density
-		if(old_density && alert("Override the [alarmed ? "alarming " : ""]firelock safeties and open \the [src]?",,"Yes","No") == "Yes")
+		if(old_density && alert("Override the [alarmed ? "alarming " : ""]firelock's safeties and open \the [src]?" ,,"Yes", "No") == "Yes")
 			open()
 		else if(!old_density)
 			close()
 		else
 			return
-		admin_diary << ("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
-		message_admins("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+		investigation_log(I_ATMOS, "[density ? "closed" : "opened"] [alarmed ? "while alarming" : ""] by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]")
 
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	return attackby(null, user)
@@ -305,7 +304,7 @@ var/global/list/alert_overlays_global = list()
 	else
 		spawn()
 			close()
-	admin_diary << ("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+	investigation_log(I_ATMOS, "has been [density ? "closed" : "opened"] [alarmed ? "while alarming" : ""] by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]")
 
 	if(needs_to_close)
 		spawn(50)
@@ -345,7 +344,7 @@ var/global/list/alert_overlays_global = list()
 	else
 		spawn(0)
 			close()
-	admin_diary << ("[user]/([user.ckey]) [density ? "closed the open" : "opened the closed"] [alarmed ? "and alarming" : ""] firelock at [formatJumpTo(get_turf(src))]")
+	investigation_log(I_ATMOS, "has been [density ? "closed" : "opened"] [alarmed ? "while alarming" : ""] by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]")
 	return
 
 /obj/machinery/door/firedoor/close()

@@ -95,11 +95,12 @@
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
 			user.visible_message("<span class='warning'>With one strong swing, [user] destroys the rotting [src] with \the [W].</span>", \
 			"<span class='notice'>With one strong swing, the rotting [src] crumbles away under \the [W].</span>")
-			src.dismantle_wall()
+			dismantle_wall()
 
 			var/pdiff = performWallPressureCheck(src.loc)
 			if(pdiff)
-				message_admins("[user.real_name] ([formatPlayerPanel(user,user.ckey)]) broke a rotting reinforced wall with a pdiff of [pdiff] at [formatJumpTo(loc)]!")
+				investigation_log(I_ATMOS, "with a pdiff of [pdiff] has been broken after rotting by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
+				message_admins("\The [src] with a pdiff of [pdiff] has been broken after rotting by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
 			return
 
 	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
@@ -331,8 +332,15 @@
 				if(do_after(user, src, 100) && d_state == WALLRODSCUT)
 					user.visible_message("<span class='warning'>[user] pries off [src]'s internal cover.</span>", \
 					"<span class='notice'>You pry off [src]'s internal cover.</span>")
-					dismantle_wall() //Mr. Engineer, break down that reinforced wall
 					playsound(src, 'sound/items/Deconstruct.ogg', 100, 1)
+
+					var/pdiff = performWallPressureCheck(loc)
+					if(pdiff)
+						investigation_log(I_ATMOS, "with a pdiff of [pdiff] has been dismantled by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
+						message_admins("\The [src] with a pdiff of [pdiff] has been dismantled by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
+
+					dismantle_wall() //Mr. Engineer, break down that reinforced wall
+
 				return
 
 			//Repair the external support rods welded through in the previous step, with a welding tool. Naturally
@@ -370,6 +378,11 @@
 		if(do_after(user, src, PK.digspeed * 50))
 			user.visible_message("<span class='notice'>[user]'s [PK] tears though the last of \the [src], leaving nothing but a girder.</span>", \
 			"<span class='notice'>Your [PK] tears though the last of \the [src], leaving nothing but a girder.</span>")
+			var/pdiff = performWallPressureCheck(src.loc)
+			if(pdiff)
+				investigation_log(I_ATMOS, "with a pdiff of [pdiff] has been drilled through by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
+				message_admins("\The [src] with a pdiff of [pdiff] has been drilled through by [user.real_name] ([formatPlayerPanel(user, user.ckey)]) at [formatJumpTo(get_turf(src))]!")
+
 			dismantle_wall()
 		return
 
