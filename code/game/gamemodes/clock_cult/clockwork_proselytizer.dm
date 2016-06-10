@@ -116,7 +116,7 @@
 
 /turf/open/floor/clockwork/proselytize_vals(mob/living/proselytizer)
 	for(var/obj/O in src)
-		if(O.density && !O.CanPass(user, src, 5))
+		if(O.density && !O.CanPass(proselytizer, src, 5))
 			proselytizer << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
 			return 0
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = 4, "spawn_dir" = SOUTH)
