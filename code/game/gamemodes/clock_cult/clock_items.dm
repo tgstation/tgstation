@@ -28,7 +28,7 @@
 	w_class = 3
 	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 	var/busy //If the slab is currently being used by something
-	var/production_cycle = 0
+	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 
 /obj/item/clockwork/slab/starter
@@ -45,16 +45,17 @@
 /obj/item/clockwork/slab/New()
 	..()
 	SSobj.processing += src
+	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/clockwork/slab/process()
-	production_cycle++
-	if(production_cycle < SLAB_PRODUCTION_THRESHOLD)
-		return 0
-	var/component_to_generate = pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible") //Possible todo: Generate based on the lowest amount?
+	if(production_time > world.time)
+		return
+	var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
+	production_time = world.time + SLAB_PRODUCTION_TIME
 	stored_components[component_to_generate]++
 	var/mob/living/L
 	if(isliving(loc))
@@ -64,17 +65,15 @@
 		if(isliving(W.loc)) //Only goes one level down - otherwise it just doesn't tell you
 			L = W.loc
 	if(L)
-		L << "<span class='brass'>Your slab clunks as it produces a new component.</span>"
-	production_cycle = 0
-	return 1
+		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src]'s compartments.</span>", "<span class='notice'>You insert [C] into [src].</span>")
-		stored_components[C.component_id]++
+		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src], where it is added to the global cache.</span>")
+		clockwork_component_cache[C.component_id]++
 		user.drop_item()
 		qdel(C)
 		return 1
@@ -93,7 +92,8 @@
 		return 0
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
-		user.confused = max(0, user.confused + 3)
+		user.confused += 5
+		user.dizziness += 5
 		return 0
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
@@ -103,7 +103,7 @@
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Repository", "Report")
+	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Report")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
@@ -113,9 +113,6 @@
 			show_stats(user)
 		if("Recollection")
 			show_guide(user)
-		if("Repository")
-			show_components(user)
-			access_display(user)
 		if("Report")
 			show_hierophant(user)
 			access_display(user)
@@ -329,14 +326,15 @@
 	popup.open()
 	return 1
 
-/obj/item/clockwork/slab/proc/show_components(mob/living/user)
-	user << "<b>Stored components:</b>"
-	user << "<i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]]"
-	user << "<i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]]"
-	user << "<i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]]"
-	user << "<i>Replicant Alloys:</i> [stored_components["replicant_alloy"]]"
-	user << "<i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]]"
-	return 1
+/obj/item/clockwork/slab/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<b>Stored components (with global cache):</b>"
+		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
+		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]] ([stored_components["vanguard_cogwheel"] + clockwork_component_cache["vanguard_cogwheel"]])</span>"
+		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]] ([stored_components["guvax_capacitor"] + clockwork_component_cache["guvax_capacitor"]])</span>"
+		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [stored_components["replicant_alloy"]] ([stored_components["replicant_alloy"] + clockwork_component_cache["replicant_alloy"]])</span>"
+		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]] ([stored_components["hierophant_ansible"] + clockwork_component_cache["hierophant_ansible"]])</span>"
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -853,8 +851,8 @@
 	w_class = 3
 	var/specific_component //The type of component that the daemon is set to produce in particular, if any
 	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
-	var/production_progress = 0 //Progress towards production of the next component in seconds
-	var/production_interval = 30 //How many seconds it takes to produce a new component
+	var/production_time = 0 //Progress towards production of the next component in seconds
+	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
@@ -864,7 +862,7 @@
 /obj/item/clockwork/tinkerers_daemon/Destroy()
 	SSobj.processing -= src
 	clockwork_daemons--
-	..()
+	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
 	if(!cache)
@@ -872,19 +870,15 @@
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
 		return 0
-	var/servants = 0
+	/*var/servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants / 5 < clockwork_daemons)
-		return 0
-	production_progress = min(production_progress + 1, production_interval)
-	if(production_progress >= production_interval)
-		production_progress = 0 //Start it over
-		if(specific_component)
-			clockwork_component_cache[specific_component]++
-		else
-			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
+	if(servants * 0.2 < clockwork_daemons)
+		return 0 */
+	if(production_time <= world.time)
+		production_time = world.time + production_cooldown //Start it over
+		generate_cache_component(specific_component)
 		cache.visible_message("<span class='warning'>Something clunks around inside of [cache].</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)

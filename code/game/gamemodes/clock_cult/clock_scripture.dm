@@ -28,15 +28,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
+		if(slab.busy)
+			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
+			return 0
 		slab.busy = "Invocation ([name]) in progress"
-		if(check_special_requirements() && recital())
-			slab.busy = null
-			if(check_special_requirements() && scripture_effects() && (!ratvar_awakens || !slab.no_cost))
-				for(var/i in required_components)
-					if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
-						clockwork_component_cache[i] -= consumed_components[i]
-					else
-						slab.stored_components[i] -= consumed_components[i]
+		if(!ratvar_awakens && !slab.no_cost)
+			for(var/i in consumed_components)
+				if(slab.stored_components[i] >= consumed_components[i]) //Draw components from the slab first
+					slab.stored_components[i] -= consumed_components[i]
+				else
+					clockwork_component_cache[i] -= consumed_components[i]
+		if(check_special_requirements())
+			if(recital())
+				scripture_effects()
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -63,7 +67,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			return 0
 	return 1
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked three times during invocation
+/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked twice during invocation
 	return 1
 
 /datum/clockwork_scripture/proc/recital() //The process of speaking the words
@@ -911,7 +915,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
 	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
-		D.production_interval /= 2
+		D.production_time *= 0.5
 	for(var/obj/structure/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 	spawn(600)
@@ -919,11 +923,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = TRUE
+			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
-			D.production_interval = initial(D.production_interval)
+			D.production_time = initial(D.production_time)
 		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = TRUE
+			M.needs_power = initial(M.needs_power)
 	return 1
 
 
