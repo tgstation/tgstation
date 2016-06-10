@@ -69,7 +69,7 @@
 				P.add_fingerprint(user)
 				I.add_fingerprint(user)
 				user.put_in_hands(P)
-			I.loc = P
+			I.forceMove(P)
 			var/size = round(I.w_class)
 			P.w_class = size
 			size = min(size, 5)

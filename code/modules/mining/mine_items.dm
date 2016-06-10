@@ -321,14 +321,14 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/horizontal/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/horizontal/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = 0
 	glass = 1
 
 /obj/machinery/door/airlock/survival_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
-	doortype = /obj/structure/door_assembly/door_assembly_pod/vertical
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
