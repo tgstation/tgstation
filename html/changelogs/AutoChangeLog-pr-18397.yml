@@ -1,0 +1,4 @@
+author: coiax
+delete-after: True
+changes: 
+  - tweak: "Slimes and aliens with custom names now retain those names when changing forms."
