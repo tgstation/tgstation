@@ -34,14 +34,11 @@
 			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
 			user.Dizzy(120)
 		else
-			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things \he shouldn't. Cute.\"</span>"
+			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.gender == FEMALE ? "s" : ""]he shouldn't. Cute.\"</span>"
 			user << "<span class='userdanger'>A horrible force yanks at your arm!</span>"
 			user.emote("scream")
-			if(user.l_hand == src)
-				user.apply_damage(30, BRUTE, "l_arm")
-			else if(user.r_hand == src)
-				user.apply_damage(30, BRUTE, "r_arm")
-			user.drop_item()
+			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.unEquip(src)
 
 /obj/item/weapon/melee/cultblade/dagger
 	name = "sacrificial dagger"
@@ -178,7 +175,7 @@
 	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
@@ -232,7 +229,7 @@
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	armor = list(melee = -100, bullet = -100, laser = -100,energy = -100, bomb = -100, bio = -100, rad = -100)
 
-/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/user, slot)
+/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
 	if(!iscultist(user))
 		if(!is_servant_of_ratvar(user))
