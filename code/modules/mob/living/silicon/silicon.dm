@@ -496,6 +496,6 @@
 	return 1
 
 /mob/living/silicon/buckle_mob(mob/living/M, force = 0)
-	if(M.restrained)
+	if(M.restrained())
 		return 0
 	.=..()
