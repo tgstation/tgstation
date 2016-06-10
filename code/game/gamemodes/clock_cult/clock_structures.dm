@@ -123,9 +123,13 @@
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
-	for(var/I in src)
-		var/atom/movable/A = I
-		A.forceMove(get_turf(src)) //drop any daemons we have
+	return ..()
+
+/obj/structure/clockwork/cache/destroyed()
+	if(takes_damage)
+		for(var/I in src)
+			var/atom/movable/A = I
+			A.forceMove(get_turf(src)) //drop any daemons we have
 	return ..()
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
