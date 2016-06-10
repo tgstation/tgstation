@@ -870,12 +870,12 @@
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
 		return 0
-	/*var/servants = 0
+	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
 	if(servants * 0.2 < clockwork_daemons)
-		return 0 */
+		return 0
 	if(production_time <= world.time)
 		production_time = world.time + production_cooldown //Start it over
 		generate_cache_component(specific_component)
