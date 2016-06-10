@@ -303,7 +303,7 @@
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 10
+	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
 	var/duplicate = FALSE
