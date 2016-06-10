@@ -27,7 +27,7 @@
 		..()
 
 		pixel_x = ((src.dir & 3)? (0) : (src.dir == 4 ? 32 : -32))
-		pixel_y = ((src.dir & 3)? (src.dir ==1 ? 24 : -32) : (0))
+		pixel_y = ((src.dir & 3)? (src.dir ==1 ? 32 : -32) : (0))
 
 		spawn(20)
 			for(var/obj/machinery/door/window/brigdoor/M in all_doors)
