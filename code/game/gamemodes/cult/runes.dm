@@ -319,6 +319,10 @@ var/list/teleport_runes = list()
 		else if(is_sacrifice_target(M.mind))
 			for(var/C in invokers)
 				C << "<span class='cultlarge'>\"I desire this one for myself. <i>SACRIFICE THEM!</i>\"</span>"
+		else if(is_servant_of_ratvar(M))
+			M.visible_message("<span class='warning'>[M]'s eyes glow a defiant yellow!</span>", \
+			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span> <span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
+			M.Weaken(4)
 	if(!convertees.len)
 		fail_invoke()
 		log_game("Convert rune failed - no eligible convertees")
@@ -634,7 +638,7 @@ var/list/teleport_runes = list()
 			playsound(E, 'sound/magic/Disable_Tech.ogg', 100, 1)
 			for(var/M in invokers)
 				var/mob/living/L = M
-				L << "<span class=userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>"
+				L << "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>"
 				L.Weaken(2)
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
@@ -815,6 +819,9 @@ var/list/teleport_runes = list()
 			C << "<span class='cultlarge'>Your blood boils in your veins!</span>"
 			C.take_overall_damage(45,45)
 			C.Stun(7)
+			if(is_servant_of_ratvar(C))
+				C << "<span class='userdanger'>You feel unholy darkness dimming the Justiciar's light!</span>"
+				C.adjustStaminaLoss(30)
 	for(var/M in invokers)
 		var/mob/living/L = M
 		L.apply_damage(15, BRUTE, pick("l_arm", "r_arm"))

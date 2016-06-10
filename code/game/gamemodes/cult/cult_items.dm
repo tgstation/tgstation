@@ -29,9 +29,19 @@
 /obj/item/weapon/melee/cultblade/pickup(mob/living/user)
 	..()
 	if(!iscultist(user))
-		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
-		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-		user.Dizzy(120)
+		if(!is_servant_of_ratvar(user))
+			user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+			user.Dizzy(120)
+		else
+			user << "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things \he shouldn't. Cute.\"</span>"
+			user << "<span class='userdanger'>A horrible force yanks at your arm!</span>"
+			user.emote("scream")
+			if(user.l_hand == src)
+				user.apply_damage(30, BRUTE, "l_arm")
+			else if(user.r_hand == src)
+				user.apply_damage(30, BRUTE, "r_arm")
+			user.drop_item()
 
 /obj/item/weapon/melee/cultblade/dagger
 	name = "sacrificial dagger"
@@ -48,6 +58,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.bleed(50)
+		if(is_servant_of_ratvar(C) && C.reagents)
+			C.reagents.add_reagent("heparin", 1)
 
 
 /obj/item/weapon/restraints/legcuffs/bola/cult
@@ -169,11 +181,18 @@
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/user, slot)
 	..()
 	if(!iscultist(user))
-		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
-		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-		user.unEquip(src, 1)
-		user.Dizzy(30)
-		user.Weaken(5)
+		if(!is_servant_of_ratvar(user))
+			user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+			user.unEquip(src, 1)
+			user.Dizzy(30)
+			user.Weaken(5)
+		else
+			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='userdanger'>The armor squeezes at your body!</span>"
+			user.emote("scream")
+			user.adjustBruteLoss(25)
+			user.unEquip(src, 1)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/hit_reaction(mob/living/carbon/human/owner, attack_text, isinhands)
 	if(current_charges)
@@ -216,11 +235,18 @@
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/user, slot)
 	..()
 	if(!iscultist(user))
-		user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
-		user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
-		user.unEquip(src, 1)
-		user.Dizzy(30)
-		user.Weaken(5)
+		if(!is_servant_of_ratvar(user))
+			user << "<span class='cultlarge'>\"I wouldn't advise that.\"</span>"
+			user << "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>"
+			user.unEquip(src, 1)
+			user.Dizzy(30)
+			user.Weaken(5)
+		else
+			user << "<span class='cultlarge'>\"Putting on things you don't own is bad, you know.\"</span>"
+			user << "<span class='userdanger'>The robes squeeze at your body!</span>"
+			user.emote("scream")
+			user.adjustBruteLoss(25)
+			user.unEquip(src, 1)
 
 /obj/item/clothing/glasses/night/cultblind
 	desc = "May nar-sie guide you through the darkness and shield you from the light."
