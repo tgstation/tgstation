@@ -26,6 +26,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
 
+//components the scripture used from a slab
+	var/list/used_slab_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+//components the scripture used from the global cache
+	var/list/used_cache_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
 		if(slab.busy)
@@ -36,11 +41,20 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/i in consumed_components)
 				if(slab.stored_components[i] >= consumed_components[i]) //Draw components from the slab first
 					slab.stored_components[i] -= consumed_components[i]
+					used_slab_components[i]++
 				else
 					clockwork_component_cache[i] -= consumed_components[i]
-		if(check_special_requirements())
-			if(recital())
-				scripture_effects()
+					used_cache_components[i]++
+		if(!check_special_requirements() || !recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
+			for(var/i in used_slab_components)
+				if(used_slab_components[i])
+					if(slab)
+						slab.stored_components[i] += consumed_components[i]
+					else //if we can't find a slab add to the global cache
+						clockwork_component_cache[i] += consumed_components[i]
+			for(var/i in used_cache_components)
+				if(used_cache_components[i])
+					clockwork_component_cache[i] += consumed_components[i]
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -67,7 +81,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			return 0
 	return 1
 
-/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked twice during invocation
+/datum/clockwork_scripture/proc/check_special_requirements() //Special requirements for scriptures, checked three times during invocation
 	return 1
 
 /datum/clockwork_scripture/proc/recital() //The process of speaking the words

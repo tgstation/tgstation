@@ -119,10 +119,12 @@
 
 /obj/structure/clockwork/cache/New()
 	..()
+	SSobj.processing += src
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
+	SSobj.processing -= src
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -131,6 +133,14 @@
 			var/atom/movable/A = I
 			A.forceMove(get_turf(src)) //drop any daemons we have
 	return ..()
+
+/obj/structure/clockwork/cache/process()
+	for(var/turf/closed/wall/clockwork/C in orange(1, src))
+		if(wall_generation_cooldown <= world.time)
+			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			generate_cache_component()
+			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+			visible_message("<span class='warning'>Something clunks around inside of [src].</span>")
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))

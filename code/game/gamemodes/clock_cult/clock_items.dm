@@ -54,17 +54,21 @@
 /obj/item/clockwork/slab/process()
 	if(production_time > world.time)
 		return
-	var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
 	production_time = world.time + SLAB_PRODUCTION_TIME
-	stored_components[component_to_generate]++
 	var/mob/living/L
 	if(isliving(loc))
 		L = loc
 	else if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/W = loc
-		if(isliving(W.loc)) //Only goes one level down - otherwise it just doesn't tell you
+		if(isliving(W.loc)) //Only goes one level down - otherwise it won't produce components
 			L = W.loc
 	if(L)
+		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
+		stored_components[component_to_generate]++
+		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
+			if(L == src)
+				continue
+			S.production_time = world.time + SLAB_PRODUCTION_TIME
 		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
