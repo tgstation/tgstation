@@ -231,26 +231,18 @@
 			m_type = 2
 
 		if ("spin")
-			if(buckled_mobs.len)
-				message = "<B>[src]</B> spins in place, and throws [english_list(buckled_mobs)] clear of itself!"
-			else
-				message = "<B>[src]</B> spins in place!"
+			message = "<B>[src]</B> spins in place!"
 			m_type = 1
 			src.spin(24,1)
-			src.unbuckle_all_mobs(1)
 			for(var/mob/living/T in buckled_mobs)
-				var/r_dir = NORTH
-				var/r_dir_number = rand(1,4)
-				switch(r_dir_number)
-					if(1)
-						r_dir = NORTH
-					if(2)
-						r_dir = EAST
-					if(3)
-						r_dir = SOUTH
-					if(4)
-						r_dir = WEST
-				T.throw_at(get_edge_target_turf(T, r_dir),6,1)
+				if(prob(70))
+					T.visible_message("<span class='warning'>[T] tries to hang on, but couldn't, and is thrown off [src]!<span>")
+					unbuckle_mob(T,1)
+					T.Weaken(3)
+					T.Dizzy(5)
+				else
+					T.visible_message("<span class='warning'>[T] hangs on to [src] as it spins around dizzily!<span>")
+					T.Dizzy(5)
 
 		if ("help")
 			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
