@@ -43,6 +43,13 @@
 	visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 	message_admins("[key_name_admin(user)] has summoned Legion!")
 	log_game("[key_name(user)] summoned Legion.")
+	for(var/mob/M in player_list)
+		if(M.z == z)
+			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
+			M << 'sound/creatures/legion_spawn.ogg'
+			if(M.client)
+				flash_color(M, color = "#FF0000", time = 50)
+	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
