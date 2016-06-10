@@ -154,8 +154,8 @@
 	var/prosel_time = 15
 	if(destroyed)
 		grilletype = /obj/structure/grille/ratvar/broken
-		prosel_time = 30
-	return list("operation_time" = prosel_time, "new_obj_type" = grilletype, "alloy_cost" = 5, "spawn_dir" = dir)
+		prosel_time = 5
+	return list("operation_time" = prosel_time, "new_obj_type" = grilletype, "alloy_cost" = 0, "spawn_dir" = dir)
 
 /obj/structure/grille/ratvar/proselytize_vals(mob/living/proselytizer)
 	return FALSE
