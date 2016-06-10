@@ -904,7 +904,7 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			if(specflags & FLYING)
+			if(FLYING in specflags)
 				. += speedmod
 				return
 			// If there's no gravity we have the sanic speed of jetpack.
@@ -945,7 +945,7 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			if(!(specflags & FLYING))
+			if(!(FLYING in specflags))
 				var/leg_amount = H.get_num_legs()
 				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 				if(!leg_amount)
