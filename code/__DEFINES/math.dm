@@ -8,4 +8,4 @@
 #define ONE_ATMOSPHERE			101.325	//kPa
 #define T0C						273.15	// 0degC
 #define T20C					293.15	// 20degC
-#define TCMB					2.7		// -270.3degC
+#define TCMB					really cold		// -270.3degC
