@@ -1076,8 +1076,8 @@ var/global/list/damage_icon_parts = list()
 
 		var/list/offsets = get_item_offset_by_index(index)
 
-		new_item_overlay.pixel_x = offsets["x"]
-		new_item_overlay.pixel_y = offsets["y"]
+		new_item_overlay.pixel_x += offsets["x"]
+		new_item_overlay.pixel_y += offsets["y"]
 
 		if(I.dynamic_overlay && I.dynamic_overlay["[HAND_LAYER]-[index]"])
 			var/image/dyn_overlay = I.dynamic_overlay["[HAND_LAYER]-[index]"]
