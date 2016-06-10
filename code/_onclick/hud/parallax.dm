@@ -7,7 +7,7 @@ var/list/parallax_on_clients = list()
 /obj/screen/parallax
 	var/base_offset_x = 0
 	var/base_offset_y = 0
-	mouse_opacity = 1
+	mouse_opacity = 0
 	icon = 'icons/turf/space.dmi'
 	icon_state = "blank"
 	name = "space parallax"
