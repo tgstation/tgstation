@@ -35,8 +35,6 @@
 					blood_type = bloodSample.data["blood_type"]
 					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
-					factions |= "plants"
-					factions |= "vines"
 					W.reagents.clear_reagents()
 					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
 					contains_sample = 1
