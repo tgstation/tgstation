@@ -60,6 +60,7 @@
 	set desc = "Toggle recieving a message in deadchat when sentient mobs \
 		die."
 	prefs.toggles ^= DISABLE_DEATHRATTLE
+	prefs.save_preferences()
 	usr << "You will \
 		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
 		messages when a sentient mob dies."
