@@ -196,12 +196,6 @@
 	category = "Assistance"
 	cost = 1
 
-/datum/spellbook_entry/lichdom
-	name = "Bind Soul"
-	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
-	log_name = "LD"
-	category = "Defensive"
-
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lightning
@@ -387,8 +381,7 @@
 	name = "Cursed Heart"
 	desc = "A heart that has been revived by dark magicks, the user must \
 	concentrate to ensure the heart beats, but every beat heals them. It \
-	must beat every 6 seconds. The heart is fickle, and will not work for a \
-	lich."
+	must beat every 6 seconds."
 	item_path = /obj/item/organ/heart/cursed/wizard
 	log_name = "CH"
 	cost = 1
