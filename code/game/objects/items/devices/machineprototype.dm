@@ -4,4 +4,4 @@
 	icon = 'icons/obj/machineprototype.dmi'
 	icon_state = "machineprototype"
 	materials = list(MAT_METAL=1000, MAT_GLASS=500)
-	origin_tech = "engineering=7"
+	origin_tech = "engineering=6"
