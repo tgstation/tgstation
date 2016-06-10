@@ -43,13 +43,9 @@
 
 /obj/machinery/power/smes/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/smes(null)
-	for(var/i in 1 to 5)
-		component_parts += new /obj/item/weapon/stock_parts/cell/high/empty(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 5)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
+	B.apply_default_parts(src)
+
 	spawn(5)
 		dir_loop:
 			for(var/d in cardinal)
@@ -65,6 +61,16 @@
 		terminal.master = src
 		update_icon()
 	return
+
+/obj/item/weapon/circuitboard/machine/smes
+	name = "circuit board (SMES)"
+	build_path = /obj/machinery/power/smes
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 5,
+							/obj/item/weapon/stock_parts/cell = 5,
+							/obj/item/weapon/stock_parts/capacitor = 1)
+	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high/empty)
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0

@@ -898,6 +898,7 @@
 	name = "meme component"
 	desc = "A piece of a famous meme."
 	clockwork_desc = null
+	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
@@ -1017,3 +1018,4 @@
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
+	burn_state = LAVA_PROOF
