@@ -142,7 +142,7 @@ emp_act
 		target_zone = user.zone_sel.selecting
 	if(!target_zone && !src.stat)
 		visible_message("<span class='danger'>[user] misses [src] with \the [I]!</span>")
-		return
+		return 0
 	if(istype(I, /obj/item/weapon/kitchen/utensil/knife/large/butch/meatcleaver) && src.stat == DEAD && user.a_intent == I_HURT)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(get_turf(src.loc))
 		newmeat.name = src.real_name + newmeat.name

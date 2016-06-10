@@ -180,7 +180,8 @@
 		qdel(src)
 
 /obj/item/weapon/sword/venom/attack(mob/M as mob, mob/user as mob)
-	..()
+	if(!..())	//If the attack missed.
+		return
 	if(!beaker)
 		return
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = beaker
