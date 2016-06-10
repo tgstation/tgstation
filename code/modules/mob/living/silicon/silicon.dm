@@ -9,6 +9,9 @@
 	verb_yell = "alarms"
 	see_in_dark = 8
 	bubble_icon = "machine"
+	can_buckle = 1
+	max_buckled_mobs = 3
+	buckle_lying = 0
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
