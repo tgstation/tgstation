@@ -420,7 +420,7 @@
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 
 /*
@@ -435,7 +435,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
 
