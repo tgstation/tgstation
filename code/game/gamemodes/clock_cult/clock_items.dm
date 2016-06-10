@@ -799,7 +799,9 @@
 		user.stop_pulling()
 		target.Stun(2)
 		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
-		impale_cooldown = world.time + initial(impale_cooldown)
+	if(impale_cooldown > world.time)
+		user << "<span class='warning'>You can't attack right now, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		return
 	..()
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
@@ -811,6 +813,7 @@
 		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
 		M.adjustFireLoss(10)
 	if(impaling)
+		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_verb = list("stabbed", "poked", "slashed")
 		if(target)
 			user << "<span class='notice'>You prepare to remove your ratvarian spear from [target]...</span>"
@@ -838,7 +841,7 @@
 				if(target.stat == CONSCIOUS)
 					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
 					target.emote("scream")
-					flash_color(target, color="#911414", time=7)
+				flash_color(target, color="#911414", time=7)
 				break_spear(get_turf(target))
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
