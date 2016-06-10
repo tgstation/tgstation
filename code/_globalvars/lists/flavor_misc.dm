@@ -93,4 +93,4 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
 	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics")
 
-var/list/guitar_notes = flist("sound/guitar/")
+var/global/list/guitar_notes = flist("sound/guitar/")

@@ -65,15 +65,17 @@
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
+	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
 
 /obj/effect/cross_action/spacetime_dist/New()
 	..()
 	sound = "sound/guitar/[safepick(guitar_notes)]"
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
-	if(linked_dist)
+	if(linked_dist && walks_left > 0)
 		flick("purplesparkles", src)
 		linked_dist.get_walker(AM)
+		walks_left--
 
 /obj/effect/cross_action/spacetime_dist/proc/get_walker(atom/movable/AM)
 	busy = TRUE
