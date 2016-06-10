@@ -545,21 +545,21 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	whispered = TRUE
-	usage_tip = "The spear will snap in two when thrown but do massive damage."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage. Both of these will break the spear, however."
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
-	if(invoker.verbs.Find(/mob/living/carbon/human/proc/function_call))
+	for(var/datum/action/innate/function_call/F in invoker.actions)
 		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
 		return 0
 	return ishuman(invoker)
 
 /datum/clockwork_scripture/function_call/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" verb in your Clockwork tab to call it forth.</span>")
-	invoker.verbs += /mob/living/carbon/human/proc/function_call
+	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	var/datum/action/innate/function_call/F = new()
+	F.Grant(invoker)
 	return 1
-
 
 
 /datum/clockwork_scripture/spatial_gateway

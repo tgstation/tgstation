@@ -754,43 +754,85 @@
 	item_state = "ratvarian_spear"
 	force = 17 //Extra damage is dealt to silicons in afterattack()
 	throwforce = 40
-	attack_verb = list("stabbed", "poked", "slashed", "impaled")
+	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
+	var/impale_cooldown = 30 //brief delay, in deciseconds, where you can't impale again if you're really fast
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
+	impale_cooldown = 0
+	SSobj.processing += src
 	spawn(1)
-		if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
-			force = 30
-			throwforce = 50
 		if(isliving(loc))
 			var/mob/living/L = loc
 			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		spawn(3000) //5 minutes
-			if(src)
-				var/turf/T = get_turf(src)
-				T.visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
-				PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
-				qdel(src)
+		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
 
-/obj/item/clockwork/ratvarian_spear/afterattack(atom/target, mob/living/user, flag, params)
-	if(!target || !user)
-		return 0
-	if(!ismob(target))
-		return ..()
-	var/mob/living/L = target
-	if(issilicon(L))
-		var/mob/living/silicon/S = L
+/obj/item/clockwork/ratvarian_spear/Destroy()
+	SSobj.processing -= src
+	return ..()
+
+/obj/item/clockwork/ratvarian_spear/process()
+	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+		force = 30
+		throwforce = 50
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+
+/obj/item/clockwork/ratvarian_spear/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and breaking the spear if they remain conscious.</span>"
+		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>"
+
+/obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
+	var/impaling = FALSE
+	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
+		if(impale_cooldown > world.time)
+			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+			return
+		impaling = TRUE
+		attack_verb = list("impaled")
+		force += 23 //40 damage if ratvar isn't alive, 53 if he is
+		user.stop_pulling()
+		target.Stun(2)
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+		impale_cooldown = world.time + initial(impale_cooldown)
+	..()
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
 			S.adjustFireLoss(25)
-	else if(iscultist(L)) //Cultists take extra fire damage
-		var/mob/living/M = L
+	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+		var/mob/living/M = target
 		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
 		M.adjustFireLoss(10)
-	else
-		..()
+	if(impaling)
+		attack_verb = list("stabbed", "poked", "slashed")
+		if(target)
+			user << "<span class='notice'>You prepare to remove your ratvarian spear from [target]...</span>"
+			if(do_after(user, 5, 1, target))
+				var/turf/T = get_turf(target)
+				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
+				playsound(T, 'sound/misc/splort.ogg', 200, 1)
+				if(target.stat != CONSCIOUS)
+					var/remove_verb = pick("pull", "yank", "drag")
+					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear out of [target]!</span>")
+				else
+					user.visible_message("<span class='warning'>[user] kicks [target] off of [src], breaking it!</span>", "<span class='warning'>You kick [target] off of [src], breaking it!</span>")
+					target << "<span class='userdanger'>[user] kicks you off of their ratvarian spear!</span>"
+					break_spear(get_turf(T))
+					step(target, get_dir(user, target))
+					T = get_turf(target)
+					B.forceMove(T)
+					target.Weaken(2)
+					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
+			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
+				user << "<span class='warning'>Your ratvarian spear breaks!</span>"
+				break_spear(get_turf(target))
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
@@ -800,9 +842,17 @@
 	if(issilicon(L) || iscultist(L))
 		L.Stun(3)
 		L.Weaken(3)
-	T.visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(T))
-	qdel(src)
+	break_spear(T)
+
+/obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
+	if(src)
+		if(!T)
+			T = get_turf(src)
+		if(T) //make sure we're not in null or something
+			T.visible_message("[pick("<span class='warning'>[src] cracks in two and fades away!</span>", "<span class='warning'>[src] snaps in two and dematerializes!</span>")]")
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
+		qdel(src)
+
 
 /obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
 	name = "soul vessel"
