@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
+	unique_name = 1
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
 	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
