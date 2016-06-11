@@ -102,9 +102,8 @@
 	name = "drips of blood"
 	desc = "It's red."
 	gender = PLURAL
-	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
-	random_icon_states = list("1","2","3","4","5")
+	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
 	var/drips = 1
 

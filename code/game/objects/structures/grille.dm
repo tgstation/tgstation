@@ -13,6 +13,7 @@
 	var/obj/item/stack/rods/stored
 
 /obj/structure/grille/New()
+	..()
 	stored = new/obj/item/stack/rods(src)
 	stored.amount = 2
 

@@ -23,6 +23,10 @@
 		var/mob/living/carbon/M = target
 		M.IgniteMob()
 
+/obj/item/projectile/beam/weak
+	damage = 15
+	armour_penetration = 50
+
 /obj/item/projectile/beam/practice
 	name = "practice laser"
 	damage = 0
@@ -63,6 +67,17 @@
 
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
+
+/obj/item/projectile/beam/pulse/heavy
+	name = "heavy pulse laser"
+	icon_state = "pulse1_bl"
+	var/life = 20
+
+/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0, hit_zone)
+	life -= 10
+	if(life > 0)
+		. = -1
+	..()
 
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
