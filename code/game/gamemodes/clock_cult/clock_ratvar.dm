@@ -140,10 +140,12 @@
 
 /obj/structure/clockwork/massive/ratvar/New()
 	..()
+	ratvar_awakens = TRUE
+	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
+		R.update_force()
 	SSobj.processing += src
 	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
-	ratvar_awakens = TRUE
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
@@ -152,10 +154,12 @@
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
+	ratvar_awakens = FALSE
+	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
+		R.update_force()
 	SSobj.processing -= src
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
-	ratvar_awakens = FALSE
-	..()
+	return ..()
 
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)

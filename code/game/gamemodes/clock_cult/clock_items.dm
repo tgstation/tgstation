@@ -763,19 +763,11 @@
 	..()
 	impale_cooldown = 0
 	update_force()
-	SSobj.processing += src
 	spawn(1)
 		if(isliving(loc))
 			var/mob/living/L = loc
 			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
 		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
-
-/obj/item/clockwork/ratvarian_spear/Destroy()
-	SSobj.processing -= src
-	return ..()
-
-/obj/item/clockwork/ratvarian_spear/process()
-	update_force()
 
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
