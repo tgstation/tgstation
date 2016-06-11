@@ -824,16 +824,17 @@
 			S.adjustFireLoss(25)
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
-		M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
-		M.adjustFireLoss(10)
+		if(M.stat != DEAD)
+			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+			M.adjustFireLoss(10)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
 	if(impaling)
-		target.Stun(2)
-		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 		impale_cooldown = world.time + initial(impale_cooldown)
 		if(target)
-			user << "<span class='notice'>You prepare to remove your ratvarian spear from [target]...</span>"
+			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+			target.Stun(2)
+			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
 			if(do_after(user, 7, 1, target))
 				var/turf/T = get_turf(target)
 				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
@@ -852,14 +853,14 @@
 					B.forceMove(T)
 					target.Weaken(2)
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
-				flash_color(target, color="#911414", time=7)
+				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
 				user << "<span class='warning'>Your ratvarian spear breaks!</span>"
 				if(target.stat == CONSCIOUS)
 					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
 					target.emote("scream")
-				flash_color(target, color="#911414", time=7)
 				break_spear(get_turf(target))
+				flash_color(target, flash_color="#911414", flash_time=4)
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
