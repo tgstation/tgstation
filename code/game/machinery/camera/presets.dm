@@ -78,14 +78,18 @@
 
 /obj/machinery/camera/proc/upgradeEmpProof()
 	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
+	update_upgrades()
 
 /obj/machinery/camera/proc/upgradeXRay()
 	assembly.upgrades.Add(new /obj/item/weapon/reagent_containers/food/snacks/grown/carrot(assembly))
+	update_upgrades()
 
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()
 	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
+	update_upgrades()
 
 /obj/machinery/camera/proc/upgradeHearing()
 	assembly.upgrades.Add(new /obj/item/device/assembly/voice(assembly))
+	update_upgrades()
 	update_hear()

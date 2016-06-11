@@ -279,9 +279,7 @@
 				reset_view(null)
 			if(iscamera(client.eye))
 				var/obj/machinery/camera/C = client.eye
-				sight = 0
-				if(C.isXRay())
-					sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+				sight = C.vision_flags
 
 		else
 			var/isRemoteObserve = 0
