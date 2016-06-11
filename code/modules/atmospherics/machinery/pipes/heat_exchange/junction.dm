@@ -8,7 +8,7 @@
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions = NORTH
 	initialize_directions_he = SOUTH
 

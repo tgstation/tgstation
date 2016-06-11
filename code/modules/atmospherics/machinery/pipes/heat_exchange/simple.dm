@@ -4,7 +4,7 @@
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe"
 
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions_he = SOUTH|NORTH
 
 	device_type = BINARY
@@ -20,9 +20,9 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/proc/normalize_dir()
 	if(dir==SOUTH)
-		dir = NORTH
+		setDir(NORTH)
 	else if(dir==WEST)
-		dir = EAST
+		setDir(EAST)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/atmosinit()
 	normalize_dir()

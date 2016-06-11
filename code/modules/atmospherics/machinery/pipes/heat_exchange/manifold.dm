@@ -5,7 +5,7 @@
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions_he = EAST|NORTH|WEST
 
 	device_type = TRINARY

@@ -957,19 +957,19 @@ var/global/list/humanoid_icon_cache = list()
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 
-		body.dir = NORTH
+		body.setDir(NORTH)
 		var/icon/partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=NORTH)
 
-		body.dir = SOUTH
+		body.setDir(SOUTH)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=SOUTH)
 
-		body.dir = WEST
+		body.setDir(WEST)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=WEST)
 
-		body.dir = EAST
+		body.setDir(EAST)
 		partial = getFlatIcon(body)
 		out_icon.Insert(partial,dir=EAST)
 
@@ -985,4 +985,4 @@ var/global/list/humanoid_icon_cache = list()
 //Images have dir without being an atom, so they get their own definition.
 //Lame.
 /image/proc/setDir(newdir)
-	dir = newdir
+	setDir(newdir)

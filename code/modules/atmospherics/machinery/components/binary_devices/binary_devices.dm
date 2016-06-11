@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/binary
 	icon = 'icons/obj/atmospherics/components/binary_devices.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions = SOUTH|NORTH
 	use_power = 1
 	device_type = BINARY

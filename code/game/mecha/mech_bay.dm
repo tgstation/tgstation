@@ -14,7 +14,7 @@
 	name = "mech bay power port"
 	density = 1
 	anchored = 1
-	dir = 4
+	setDir(4)
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/obj/mecha/recharging_mech

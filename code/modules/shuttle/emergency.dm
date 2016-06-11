@@ -178,7 +178,7 @@
 	dwidth = 9
 	width = 22
 	height = 11
-	dir = 4
+	setDir(4)
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
@@ -446,7 +446,7 @@
 	dwidth = 2
 	width = 8
 	height = 8
-	dir = 4
+	setDir(4)
 
 	roundstart_move = "backup_away"
 

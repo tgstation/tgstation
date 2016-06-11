@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/components/trinary
 	icon = 'icons/obj/atmospherics/components/trinary_devices.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
 	device_type = TRINARY

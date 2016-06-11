@@ -10,7 +10,7 @@ The regular pipe you see everywhere, including bent ones.
 	name = "pipe"
 	desc = "A one meter section of regular pipe"
 
-	dir = SOUTH
+	setDir(SOUTH)
 	initialize_directions = SOUTH|NORTH
 
 	device_type = BINARY
@@ -30,9 +30,9 @@ The regular pipe you see everywhere, including bent ones.
 
 /obj/machinery/atmospherics/pipe/simple/proc/normalize_dir()
 	if(dir==SOUTH)
-		dir = NORTH
+		setDir(NORTH)
 	else if(dir==WEST)
-		dir = EAST
+		setDir(EAST)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	normalize_dir()

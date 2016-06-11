@@ -68,7 +68,7 @@
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)

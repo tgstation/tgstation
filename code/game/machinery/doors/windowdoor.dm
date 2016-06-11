@@ -18,7 +18,7 @@
 /obj/machinery/door/window/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 	if(src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -272,7 +272,7 @@
 								WA.secure = 1
 						WA.anchored = 1
 						WA.state= "02"
-						WA.dir = src.dir
+						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name
@@ -348,7 +348,7 @@
 	..()
 	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 	if(set_dir)
-		E.dir = set_dir
+		E.setDir(set_dir)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
 
 /obj/machinery/door/window/clockwork/ratvar_act()
@@ -367,65 +367,65 @@
 	return 0
 
 /obj/machinery/door/window/northleft
-	dir = NORTH
+	setDir(NORTH)
 
 /obj/machinery/door/window/eastleft
-	dir = EAST
+	setDir(EAST)
 
 /obj/machinery/door/window/westleft
-	dir = WEST
+	setDir(WEST)
 
 /obj/machinery/door/window/southleft
-	dir = SOUTH
+	setDir(SOUTH)
 
 /obj/machinery/door/window/northright
-	dir = NORTH
+	setDir(NORTH)
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/eastright
-	dir = EAST
+	setDir(EAST)
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/westright
-	dir = WEST
+	setDir(WEST)
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/southright
-	dir = SOUTH
+	setDir(SOUTH)
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/brigdoor/northleft
-	dir = NORTH
+	setDir(NORTH)
 
 /obj/machinery/door/window/brigdoor/eastleft
-	dir = EAST
+	setDir(EAST)
 
 /obj/machinery/door/window/brigdoor/westleft
-	dir = WEST
+	setDir(WEST)
 
 /obj/machinery/door/window/brigdoor/southleft
-	dir = SOUTH
+	setDir(SOUTH)
 
 /obj/machinery/door/window/brigdoor/northright
-	dir = NORTH
+	setDir(NORTH)
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/eastright
-	dir = EAST
+	setDir(EAST)
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/westright
-	dir = WEST
+	setDir(WEST)
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/southright
-	dir = SOUTH
+	setDir(SOUTH)
 	icon_state = "rightsecure"
 	base_state = "rightsecure"

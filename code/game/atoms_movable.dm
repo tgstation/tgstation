@@ -188,7 +188,7 @@
 
 	var/old_dir = dir
 	. = step(src, direction)
-	dir = old_dir
+	setDir(old_dir)
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag

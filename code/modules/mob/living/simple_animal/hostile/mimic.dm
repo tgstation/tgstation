@@ -187,7 +187,7 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 
 /mob/living/simple_animal/hostile/mimic/copy/Aggro()
 	..()
-	googly_eyes.dir = get_dir(src,target)
+	googly_eyes.setDir(get_dir(src,target))
 
 
 /mob/living/simple_animal/hostile/mimic/copy/machine
