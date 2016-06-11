@@ -446,7 +446,7 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	setDir(5)
+	dir = NORTHEAST
 	maxhealth = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -455,7 +455,7 @@
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	setDir(5)
+	dir = NORTHEAST
 	maxhealth = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -465,7 +465,7 @@
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	setDir(5)
+	dir = NORTHEAST
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
@@ -483,7 +483,7 @@
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	setDir(5)
+	dir = NORTHEAST
 	maxhealth = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -538,5 +538,5 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	setDir(5)
+	dir = NORTHEAST
 	maxhealth = 150

@@ -368,4 +368,4 @@ var/next_external_rsc = 0
 //Hook, override it to run code when dir changes
 //Like for /atoms, but clients are their own snowflake FUCK
 /client/proc/setDir(newdir)
-	setDir(newdir)
+	dir = newdir

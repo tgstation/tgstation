@@ -765,7 +765,7 @@ var/next_mob_id = 0
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	setDir(angle2dir(rotation)+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)

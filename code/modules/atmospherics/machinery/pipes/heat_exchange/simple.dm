@@ -4,7 +4,7 @@
 	name = "pipe"
 	desc = "A one meter section of heat-exchanging pipe"
 
-	setDir(SOUTH)
+	dir = SOUTH
 	initialize_directions_he = SOUTH|NORTH
 
 	device_type = BINARY

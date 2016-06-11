@@ -10,7 +10,7 @@
 	use_power = 0
 	idle_power_usage = 500
 	active_power_usage = 10000
-	setDir(1)
+	dir = NORTH
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts

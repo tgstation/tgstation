@@ -8,7 +8,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
-	setDir(0)
+	dir = 0
 	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
 	var/destinationTag = 0 // changes if contains a delivery container
 	var/tomail = 0 //changes if contains wrapped package
@@ -134,7 +134,7 @@
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
-	setDir(0				)// dir will contain dominant direction for junction pipes
+	dir = 0// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map

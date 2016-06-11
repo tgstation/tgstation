@@ -5,7 +5,7 @@
 	name = "oxygen generator"
 	desc = "Generates oxygen"
 
-	setDir(SOUTH)
+	dir = SOUTH
 	initialize_directions = SOUTH
 
 	var/on = 0

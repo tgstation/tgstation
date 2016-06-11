@@ -1,10 +1,10 @@
 /turf/open/space/transit
 	icon_state = "black"
-	setDir(SOUTH)
+	dir = SOUTH
 	baseturf = /turf/open/space/transit
 
 /turf/open/space/transit/horizontal
-	setDir(WEST)
+	dir = WEST
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)

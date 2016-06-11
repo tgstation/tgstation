@@ -985,4 +985,4 @@ var/global/list/humanoid_icon_cache = list()
 //Images have dir without being an atom, so they get their own definition.
 //Lame.
 /image/proc/setDir(newdir)
-	setDir(newdir)
+	dir = newdir

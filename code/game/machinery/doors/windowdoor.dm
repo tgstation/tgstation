@@ -367,65 +367,65 @@
 	return 0
 
 /obj/machinery/door/window/northleft
-	setDir(NORTH)
+	dir = NORTH
 
 /obj/machinery/door/window/eastleft
-	setDir(EAST)
+	dir = EAST
 
 /obj/machinery/door/window/westleft
-	setDir(WEST)
+	dir = WEST
 
 /obj/machinery/door/window/southleft
-	setDir(SOUTH)
+	dir = SOUTH
 
 /obj/machinery/door/window/northright
-	setDir(NORTH)
+	dir = NORTH
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/eastright
-	setDir(EAST)
+	dir = EAST
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/westright
-	setDir(WEST)
+	dir = WEST
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/southright
-	setDir(SOUTH)
+	dir = SOUTH
 	icon_state = "right"
 	base_state = "right"
 
 /obj/machinery/door/window/brigdoor/northleft
-	setDir(NORTH)
+	dir = NORTH
 
 /obj/machinery/door/window/brigdoor/eastleft
-	setDir(EAST)
+	dir = EAST
 
 /obj/machinery/door/window/brigdoor/westleft
-	setDir(WEST)
+	dir = WEST
 
 /obj/machinery/door/window/brigdoor/southleft
-	setDir(SOUTH)
+	dir = SOUTH
 
 /obj/machinery/door/window/brigdoor/northright
-	setDir(NORTH)
+	dir = NORTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/eastright
-	setDir(EAST)
+	dir = EAST
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/westright
-	setDir(WEST)
+	dir = WEST
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
 /obj/machinery/door/window/brigdoor/southright
-	setDir(SOUTH)
+	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"

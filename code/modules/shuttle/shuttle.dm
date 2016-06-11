@@ -12,7 +12,7 @@
 	anchored = 1
 
 	var/id
-	setDir(NORTH		)//this should point -away- from the dockingport door, ie towards the ship
+	dir = NORTH//this should point -away- from the dockingport door, ie towards the ship
 	var/width = 0	//size of covered area, perpendicular to dir
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir

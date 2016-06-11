@@ -10,7 +10,7 @@ The regular pipe you see everywhere, including bent ones.
 	name = "pipe"
 	desc = "A one meter section of regular pipe"
 
-	setDir(SOUTH)
+	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 
 	device_type = BINARY
