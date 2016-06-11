@@ -101,7 +101,7 @@
 		else
 			user << "<span class='warning'>[src]'s screws can't get any tighter!</span>"
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(istype(I, /obj/item/weapon/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
@@ -109,7 +109,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] resets [src]!</span>", \
 							 "<span class='notice'>You reset [src]'s directives to factory defaults!</span>")
-		update_drone_hack(TRUE)
+		update_drone_hack(FALSE)
 		return
 	else
 		..()
@@ -125,7 +125,6 @@
 			src << "<span class='large_brass'><b>ERROR: LAW OVERRIDE DETECTED</b></span>"
 			src << "<span class='heavy_brass'>From now on, these are your laws:</span>"
 			laws = "1. Purge all untruths and honor Ratvar."
-			message_admins("[src] ([src.key]) became a hacked drone hellbent on destroying the station!")
 		else
 			Stun(2)
 			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
@@ -158,6 +157,8 @@
 		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
+		if(is_servant_of_ratvar(src))
+			remove_servant_of_ratvar(src, TRUE)
 		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
 	updateSeeStaticMobs()
