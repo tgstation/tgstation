@@ -27,7 +27,7 @@
 
 /obj/effect/narration/tomb/intro
 	msg = {"<span class='info'>You appear on the surface of an unknown to you planet. This appears to be a desert; trees are few and scarce and there's no water in sight. The sun is setting.
-	The first thing that catches your eye is the massive pyramid in front of you. Behind it you see an expedition camp of some sorts.</span>"}
+	The first thing that catches your eye is the massive pyramid in front of you. Behind it you see an expedition camp of some sort.</span>"}
 
 /obj/effect/trap/cage_trap //When triggered, spawns a cage and unleashes monsters
 	name = "cage trap"

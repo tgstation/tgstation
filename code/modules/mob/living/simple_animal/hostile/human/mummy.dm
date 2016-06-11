@@ -45,7 +45,7 @@
 	if(!isturf(loc))
 		return
 
-	visible_message("<span class='danger'>\The [src] emits a cloud of miasma before being put to peace.</span>")
+	visible_message("<span class='danger'>\The [src] emits a cloud of miasma before being laid to rest.</span>")
 	var/datum/effect/effect/system/smoke_spread/chem/rot/S = new /datum/effect/effect/system/smoke_spread/chem/rot
 	S.attach(loc)
 	S.set_up(src, 10, 0, loc)

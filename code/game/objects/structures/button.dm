@@ -10,6 +10,9 @@
 	var/global_search = 1 //If 1, search for all hidden doors in the world. Otherwise, only search for those in current area
 	var/reset_name = 1
 
+	var/one_time = 0 //If this button can only be used once
+	var/used = 0
+
 /obj/structure/button/New()
 	..()
 
@@ -18,6 +21,10 @@
 		name = initial(name)
 
 /obj/structure/button/attack_hand(mob/user)
+	if(one_time && used)
+		to_chat(user, "<span class='info'>It won't budge!</span>")
+		return
+
 	visible_message("<span class='info'>[user] presses \the [src].</span>")
 	activate()
 
@@ -26,10 +33,12 @@
 		for(var/obj/effect/hidden_door/hidden_door in hidden_doors)
 			if(hidden_door.icon_state == activate_id && hidden_door.z == src.z)
 				hidden_door.toggle()
+				used = 1
 	else
 		for(var/obj/effect/hidden_door/hidden_door in get_area(src))
 			if(hidden_door.icon_state == activate_id && hidden_door.z == src.z)
 				hidden_door.toggle()
+				used = 1
 
 var/list/hidden_doors = list()
 
