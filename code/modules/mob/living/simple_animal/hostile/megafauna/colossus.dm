@@ -35,6 +35,15 @@
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 
+
+/mob/living/simple_animal/hostile/megafauna/colossus/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat == DEAD)
+			src.visible_message("<span class='danger'>[src] disintegrates [L]!</span>")
+			L.dust()
+
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
@@ -84,7 +93,7 @@
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
 	luminosity = 2
-	duration = 80
+	duration = 8
 	var/target
 
 /obj/effect/overlay/temp/at_shield/New()
@@ -294,7 +303,7 @@
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 10
+	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
 	var/duplicate = FALSE
