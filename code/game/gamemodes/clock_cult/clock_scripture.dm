@@ -26,17 +26,35 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
 
+//components the scripture used from a slab
+	var/list/used_slab_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+//components the scripture used from the global cache
+	var/list/used_cache_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
+		if(slab.busy)
+			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
+			return 0
 		slab.busy = "Invocation ([name]) in progress"
-		if(check_special_requirements() && recital())
-			slab.busy = null
-			if(check_special_requirements() && scripture_effects() && (!ratvar_awakens || !slab.no_cost))
-				for(var/i in required_components)
-					if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
-						clockwork_component_cache[i] -= consumed_components[i]
-					else
-						slab.stored_components[i] -= consumed_components[i]
+		if(!ratvar_awakens && !slab.no_cost)
+			for(var/i in consumed_components)
+				if(slab.stored_components[i] >= consumed_components[i]) //Draw components from the slab first
+					slab.stored_components[i] -= consumed_components[i]
+					used_slab_components[i]++
+				else
+					clockwork_component_cache[i] -= consumed_components[i]
+					used_cache_components[i]++
+		if(!check_special_requirements() || !recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
+			for(var/i in used_slab_components)
+				if(used_slab_components[i])
+					if(slab)
+						slab.stored_components[i] += consumed_components[i]
+					else //if we can't find a slab add to the global cache
+						clockwork_component_cache[i] += consumed_components[i]
+			for(var/i in used_cache_components)
+				if(used_cache_components[i])
+					clockwork_component_cache[i] += consumed_components[i]
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -337,7 +355,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Z`rgny, orpbzr terngre!")
 	channel_time = 0
 	required_components = list("replicant_alloy" = 1)
-	consumed_components = list("replicant_alloy" = 1) //People were spamming slabs to get infinite components. You chose this.
 	whispered = TRUE
 	usage_tip = "This is inefficient as a way to produce components, as it consumes them in the first place."
 	tier = SCRIPTURE_DRIVER
@@ -911,7 +928,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
 	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
-		D.production_interval /= 2
+		D.production_time *= 0.5
 	for(var/obj/structure/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 	spawn(600)
@@ -919,11 +936,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = TRUE
+			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
-			D.production_interval = initial(D.production_interval)
+			D.production_time = initial(D.production_time)
 		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = TRUE
+			M.needs_power = initial(M.needs_power)
 	return 1
 
 

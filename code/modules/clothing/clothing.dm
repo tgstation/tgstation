@@ -6,6 +6,7 @@
 	var/up = 0					//	   but seperated to allow items to protect but not impair vision, like space helmets
 	var/visor_flags = 0			// flags that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		// same as visor_flags, but for flags_inv
+	var/visor_flags_cover = 0	// same as above, but for flags_cover
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	var/alt_desc = null
@@ -164,7 +165,7 @@ BLIND     // can't see anything
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/mask/proc/adjustmask(mob/living/user)
-	if(user.incapacitated())
+	if(user && user.incapacitated())
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
@@ -173,7 +174,7 @@ BLIND     // can't see anything
 		permeability_coefficient = initial(permeability_coefficient)
 		flags |= visor_flags
 		flags_inv |= visor_flags_inv
-		flags_cover = initial(flags_cover)
+		flags_cover |= visor_flags_cover
 		user << "<span class='notice'>You push \the [src] back into place.</span>"
 		slot_flags = initial(slot_flags)
 	else
@@ -183,11 +184,12 @@ BLIND     // can't see anything
 		permeability_coefficient = null
 		flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
-		flags_cover = 0
+		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	user.wear_mask_update(src, toggle_off = mask_adjusted)
-	user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
+	if(user)
+		user.wear_mask_update(src, toggle_off = mask_adjusted)
+		user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.
 
 
 

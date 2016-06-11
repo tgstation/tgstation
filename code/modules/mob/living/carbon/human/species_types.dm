@@ -36,7 +36,6 @@
 		H << "<span class='danger'>Your flesh rapidly mutates!</span>"
 		H.set_species(/datum/species/jelly/slime)
 		H.reagents.del_reagent(chem.type)
-		H.faction |= "slime"
 		return 1
 
 //Curiosity killed the cat's wagging tail.
@@ -148,6 +147,7 @@
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
+	
 
 /*
  SHADOWPEOPLE
