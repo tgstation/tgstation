@@ -40,6 +40,13 @@
 	qdel(src)
 	return 1
 
+/obj/structure/clockwork/burn()
+	SSobj.burning -= src
+	if(takes_damage)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		visible_message("<span class='warning'>[src] is warped by the heat!</span>")
+		take_damage(rand(50, 100), BURN)
+
 /obj/structure/clockwork/proc/take_damage(amount, damage_type)
 	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
 		return 0
@@ -263,6 +270,7 @@
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
+	burn_state = LAVA_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
@@ -328,6 +336,7 @@
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
+	burn_state = LAVA_PROOF
 
 /obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
@@ -383,6 +392,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
+	burn_state = LAVA_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -393,7 +403,7 @@
 	return ..()
 
 /obj/effect/clockwork/examine(mob/user)
-	if(is_servant_of_ratvar(user) && clockwork_desc)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
@@ -606,6 +616,8 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
+	burn_state = FIRE_PROOF
+	burntime = 1
 	var/affects_servants = FALSE
 	var/affects_stat = FALSE
 
