@@ -157,8 +157,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		target_name = reject_bad_name(input(invoker, "Enter the actual name of a target (case-sensitive).", name), 1)
 		if(!target_name)
 			return 0
-		target = find_target()
-		if(target)
+		var/list/targets = find_targets()
+		if(targets.len)
+			if(targets.len == 1)
+				target = targets[1]
+			else
+				target = input(invoker, "Choose a target to affect.", "Target Selection") as null|anything in targets
+			if(!target)
+				return 0
 			if(!target.mind)
 				invoker << "<span class='warning'>[target] has no mind!</span>"
 				target = null
@@ -170,13 +176,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				target = null
 	return 1
 
-/datum/clockwork_scripture/targeted/proc/find_target()
+/datum/clockwork_scripture/targeted/proc/find_targets()
+	var/list/validtargets = list()
 	for(var/mob/living/L in living_mob_list)
 		if(L.real_name == target_name)
 			if(is_servant_of_ratvar(L) && !affects_servants)
-				return 0
-			return L
-	return 0
+				continue
+			validtargets |= L
+	. = validtargets
 
 /////////////
 // DRIVERS //
@@ -766,6 +773,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_APPLICATION
 
 /datum/clockwork_scripture/targeted/justiciars_gavel/scripture_effects()
+	if(!target)
+		return 0 //wait where'd they go
 	if(iscarbon(target))
 		if(iscultist(target))
 			target.visible_message("<span class='warning'>Blood sprays from a sudden wound on [target]'s head!</span>", \
@@ -951,6 +960,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return ..()
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/scripture_effects()
+	if(!target)
+		return 0 //wait where'd they go
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.dominate_mind(target, 600)
 	return 1
