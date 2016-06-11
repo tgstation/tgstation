@@ -174,16 +174,17 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			do_removal(copy)
+			remove_photocopy(copy)
 			copy = null
 		else if(photocopy)
-			do_removal(photocopy)
+			remove_photocopy(photocopy)
 			photocopy = null
 		else if(doccopy)
-			do_removal(doccopy)
+			remove_photocopy(doccopy)
 			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+		updateUsrDialog()
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -236,14 +237,13 @@
 	flick("photocopier1", src)
 	updateUsrDialog()
 
-/obj/machinery/photocopier/proc/do_removal(obj/item/O, mob/user)
+/obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
 	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
 		O.loc = user.loc
 		user.put_in_hands(O)
 	else
 		O.loc = src.loc
 	user << "<span class='notice'>You take [O] out of [src].</span>"
-	updateUsrDialog()
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
