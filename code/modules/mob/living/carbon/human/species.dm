@@ -1506,9 +1506,10 @@
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
-/datum/species/proc/IgniteMob(mob/living/carbon/human/H)
+/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
-		return 1
+		return FALSE
+	return TRUE
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
