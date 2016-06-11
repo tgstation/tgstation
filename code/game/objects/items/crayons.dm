@@ -300,7 +300,6 @@
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
-		text_buffer = copytext(text_buffer,2)
 
 	if(actually_paints)
 		if(gang_mode)
@@ -314,6 +313,9 @@
 
 	user << "<span class='notice'>You finish \
 		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+
+	if(length(text_buffer))
+		text_buffer = copytext(text_buffer,2)
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")

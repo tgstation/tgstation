@@ -54,7 +54,7 @@
 /obj/item/weapon/circuitboard/machine/gibber
 	name = "circuit board (Gibber)"
 	build_path = /obj/machinery/gibber
-	origin_tech = "programming=1"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -102,7 +102,7 @@
 			user << "<span class='danger'>This item is not suitable for the gibber!</span>"
 			return
 		var/mob/living/carbon/C = L
-		if(C.buckled ||C.buckled_mobs.len)
+		if(C.buckled ||C.has_buckled_mobs())
 			user << "<span class='warning'>[C] is attached to something!</span>"
 			return
 		if(C.abiotic(1) && !ignore_clothing)
@@ -112,7 +112,7 @@
 		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
 		src.add_fingerprint(user)
 		if(do_after(user, gibtime, target = src))
-			if(C && user.pulling == C && !C.buckled && !C.buckled_mobs.len && !occupant)
+			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
 				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
 				C.forceMove(src)
 				occupant = C
@@ -235,5 +235,3 @@
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		src.operating = 0
 		update_icon()
-
-

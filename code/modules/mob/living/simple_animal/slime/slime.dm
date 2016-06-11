@@ -3,8 +3,9 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	"gold", "green", "adamantine", "oil", "light pink", "bluespace",
 	"cerulean", "sepia", "black", "pyrite")
 
+
 /mob/living/simple_animal/slime
-	name = "baby slime"
+	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
@@ -68,15 +69,19 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
+	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
 	var/colour = "grey"
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
-/mob/living/simple_animal/slime/New()
+/mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)
+
+	is_adult = new_is_adult
+
 	if(is_adult)
 		var/datum/action/innate/slime/reproduce/R = new
 		R.Grant(src)
@@ -86,20 +91,22 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		var/datum/action/innate/slime/evolve/E = new
 		E.Grant(src)
 	create_reagents(100)
-	spawn(0)
-		set_colour(colour)
+	set_colour(new_colour)
 	..()
 
 /mob/living/simple_animal/slime/proc/set_colour(new_colour)
 	colour = new_colour
-
-	number = rand(1, 1000)
-	name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
-	real_name = name
+	update_name()
 	slime_mutation = mutation_table(colour)
 	var/sanitizedcolour = replacetext(colour, " ", "")
 	coretype = text2path("/obj/item/slime_extract/[sanitizedcolour]")
 	regenerate_icons()
+
+/mob/living/simple_animal/slime/proc/update_name()
+	if(slime_name_regex.Find(name))
+		number = rand(1, 1000)
+		name = "[colour] [is_adult ? "adult" : "baby"] slime ([number])"
+		real_name = name
 
 /mob/living/simple_animal/slime/proc/random_colour()
 	set_colour(pick(slime_colours))
@@ -181,7 +188,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 				stat(null, "You can evolve!")
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of CO2!")
+			stat(null,"You are knocked out by high levels of BZ!")
 		else
 			stat(null,"Power Level: [powerlevel]")
 
@@ -335,9 +342,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 			++Discipline
 	return
 
-/mob/living/simple_animal/slime/getTrail()
-	return null
-
 /mob/living/simple_animal/slime/examine(mob/user)
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
@@ -413,3 +417,6 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
+
+/mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
+	. = ..(loc, pick(slime_colours), new_is_adult)

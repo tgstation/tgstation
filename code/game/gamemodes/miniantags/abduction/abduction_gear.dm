@@ -11,7 +11,7 @@
 	icon_state = "vest_stealth"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-	origin_tech = "materials=5;biotech=4;powerstorage=5;abductor=3"
+	origin_tech = "magnets=7;biotech=4;powerstorage=4;abductor=4"
 	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	var/mode = VEST_STEALTH
@@ -129,7 +129,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
-	origin_tech = "materials=5;magnets=5;bluespace=6;abductor=4"
+	origin_tech = "engineering=7;magnets=4;bluespace=4;abductor=3"
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -210,7 +210,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "silencer"
 	item_state = "gizmo"
-	origin_tech = "materials=5;magnets=5;abductor=3"
+	origin_tech = "materials=4;programming=7;abductor=3"
 
 /obj/item/device/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -254,7 +254,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "implant"
 	activated = 1
-	origin_tech = "materials=2;biotech=3;magnets=4;bluespace=5;abductor=5"
+	origin_tech = "materials=2;biotech=7;magnets=4;bluespace=4;abductor=5"
 	var/obj/machinery/abductor/pad/home
 	var/cooldown = 30
 
@@ -314,7 +314,7 @@
 	pin = /obj/item/device/firing_pin/abductor
 	icon_state = "alienpistol"
 	item_state = "alienpistol"
-	origin_tech = "combat=5;materials=4;powerstorage=3;abductor=3"
+	origin_tech = "combat=4;magnets=7;powerstorage=3;abductor=3"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
 /obj/item/weapon/paper/abductor
@@ -357,7 +357,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
 	slot_flags = SLOT_BELT
-	origin_tech = "materials=6;combat=5;biotech=7;abductor=4"
+	origin_tech = "materials=4;combat=4;biotech=7;abductor=4"
 	force = 7
 	w_class = 3
 	actions_types = list(/datum/action/item_action/toggle_mode)
@@ -507,7 +507,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "cuff_white" // Needs sprite
 	breakouttime = 450
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
-	origin_tech = "materials=2;magnets=5;abductor=2"
+	origin_tech = "materials=4;magnets=5;abductor=2"
 
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "energy discharge"
@@ -569,7 +569,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
 	blockTracking = 1
-	origin_tech = "materials=6;magnets=5;abductor=3"
+	origin_tech = "materials=7;magnets=4;abductor=3"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers

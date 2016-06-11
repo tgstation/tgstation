@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
 
@@ -153,7 +154,6 @@
 	materials = list(MAT_METAL=500)
 	throwforce = 10
 	flags = CONDUCT
-	max_amount = 60
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
 

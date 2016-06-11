@@ -20,7 +20,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/New()
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1, MAT_PLASMA=1, MAT_SILVER=1, MAT_GOLD=1, MAT_DIAMOND=1, MAT_URANIUM=1, MAT_BANANIUM=1))
+	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS, MAT_PLASMA, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_URANIUM, MAT_BANANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/recycler(null)
 	B.apply_default_parts(src)
 	update_icon()
@@ -28,7 +28,7 @@ var/const/SAFETY_COOLDOWN = 100
 /obj/item/weapon/circuitboard/machine/recycler
 	name = "circuit board (Recycler)"
 	build_path = /obj/machinery/recycler
-	origin_tech = "programming=1"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -148,11 +148,12 @@ var/const/SAFETY_COOLDOWN = 100
 	safety_mode = TRUE
 	update_icon()
 	L.loc = src.loc
+	addtimer(src, "reboot", SAFETY_COOLDOWN)
 
-	spawn(SAFETY_COOLDOWN)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		safety_mode = FALSE
-		update_icon()
+/obj/machinery/recycler/proc/reboot()
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	safety_mode = FALSE
+	update_icon()
 
 /obj/machinery/recycler/proc/crush_living(mob/living/L)
 
@@ -169,7 +170,7 @@ var/const/SAFETY_COOLDOWN = 100
 		gib = FALSE
 		if(L.stat == CONSCIOUS)
 			L.say("ARRRRRRRRRRRGH!!!")
-		add_blood(L)
+		add_mob_blood(L)
 
 	if(!blood && !issilicon(L))
 		blood = TRUE

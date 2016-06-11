@@ -99,9 +99,7 @@ The previous code made compliant:
 ```
 
 ###No overriding type safety checks.
-The use of the : operator to override type safety checks is strongly discouraged. You must cast the variable to the proper type.
-
-Exceptions are only made when used in loops that require the performance boost from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
+The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ###Type paths must began with a /
 eg: `/datum/thing` not `datum/thing`
@@ -281,6 +279,9 @@ There is no strict process when it comes to merging pull requests, pull requests
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+
+####Merge tokens
+At the moment there is a system in place for feature/balance pull requests that intend to change gameplay in some form. This system works such that for every feature/balance pull request, you must have a valid bugfix. (Pull requests can have multiple bugfixes, so these pull requests would count as N tokens, instead of just one.) This system is in place indefinitely, it may be removed in the future if we take the number of bugs down to a reasonable number, or it may never be removed.
 
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:

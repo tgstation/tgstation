@@ -2,6 +2,7 @@
 	name = "Regenerate"
 	desc = "We regenerate, healing all damage from our form."
 	req_stat = DEAD
+	always_keep = 1
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)

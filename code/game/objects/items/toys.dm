@@ -239,12 +239,9 @@
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if(W == src)
-			user << "<span class='warning'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else if((W.flags & NODROP) || (flags & NODROP))
+		if((W.flags & NODROP) || (flags & NODROP))
 			user << "<span class='warning'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
+			return
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)

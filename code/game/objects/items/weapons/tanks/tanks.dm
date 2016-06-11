@@ -113,7 +113,7 @@
 				step(W, pick(alldirs))
 		H.hair_style = "Bald"
 		H.update_hair()
-		H.blood_max = 5
+		H.bleed_rate = 5
 		gibs(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 

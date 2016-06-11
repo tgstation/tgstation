@@ -28,6 +28,7 @@
 			<A href='?src=\ref[src];secrets=fingerprints'>List Fingerprints</A><BR>
 			<A href='?src=\ref[src];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
 			<A href='?src=\ref[src];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=\ref[src];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
@@ -144,6 +145,14 @@
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
 					D.cure(D)
+
+		if("reset_name")
+			if(!check_rights(R_ADMIN))
+				return
+			world.name = new_station_name()
+			station_name = world.name
+			log_admin("[key_name(usr)] reset the station name.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
 
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))

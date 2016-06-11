@@ -18,6 +18,7 @@
 	var/beepsound = 'sound/items/timer.ogg'
 	var/delayedbig = FALSE	//delay wire pulsed?
 	var/delayedlittle  = FALSE	//activation wire pulsed?
+	var/obj/effect/countdown/syndicatebomb/countdown
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -34,13 +35,14 @@
 	if(!active || defused)					//Counter terrorists win
 		if(defused && payload in src)
 			payload.defuse()
-		return
+			countdown.stop()
 
 /obj/machinery/syndicatebomb/New()
-	wires 	= new /datum/wires/syndicatebomb(src)
+	wires = new /datum/wires/syndicatebomb(src)
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
+	countdown = new(src)
 	..()
 
 /obj/machinery/syndicatebomb/Destroy()
@@ -136,10 +138,8 @@
 	if(!open_panel)
 		if(!active)
 			settings(user)
-			return
 		else if(anchored)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
-			return
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
@@ -154,6 +154,7 @@
 			return
 		else
 			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
+			countdown.start()
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			active = 1
 			update_icon()
@@ -210,7 +211,7 @@
 	icon_state = "bombcore"
 	item_state = "eshield0"
 	w_class = 3
-	origin_tech = "syndicate=6;combat=5"
+	origin_tech = "syndicate=5;combat=6"
 	burn_state = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 
@@ -465,7 +466,7 @@
 	icon_state = "bigred"
 	item_state = "electronic"
 	w_class = 1
-	origin_tech = "syndicate=2"
+	origin_tech = "syndicate=3"
 	var/cooldown = 0
 	var/detonated =	0
 	var/existant =	0

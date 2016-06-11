@@ -75,6 +75,16 @@
 		PoolOrNew(/obj/effect/particle_effect/water, loc)
 		qdel(src)
 
+/obj/structure/reagent_dispensers/watertank/high
+	name = "high-capacity water tank"
+	desc = "A specialised high-pressure water tank for holding large amounts of water."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "hightank"
+
+/obj/structure/reagent_dispensers/watertank/high/New()
+	..()
+	reagents.add_reagent("water",100000)
+
 /obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A fuel tank."
@@ -126,16 +136,17 @@
 
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "water cooler"
-	desc = "A machine that dispenses water to drink."
+	name = "liquid cooler"
+	desc = "A machine that dispenses liquid to drink."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	anchored = 1
 	var/cups = 50
+	var/reagent = "water"
 
 /obj/structure/reagent_dispensers/water_cooler/New()
 	..()
-	reagents.add_reagent("water",500)
+	reagents.add_reagent(reagent,500)
 
 /obj/structure/reagent_dispensers/water_cooler/attack_hand(mob/living/carbon/human/user)
 	if((!istype(user)) || (user.stat))

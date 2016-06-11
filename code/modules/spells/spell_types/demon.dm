@@ -123,48 +123,66 @@
 					continuing = 1
 					break
 			if(continuing)
-				user.infernalphasein()
+				addtimer(user,"infernalphasein",150,TRUE)
 			else
 				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
 				return ..()
 		else
-			user.infernalphaseout()
+			user.notransform = 1
+			user.fakefire()
+			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
 		start_recharge()
 		return
 	revert_cast()
 
 
-/mob/living/proc/infernalphaseout()
-	var/turf/mobloc = get_turf(src.loc)
-	src.notransform = 1
-	spawn(0)
-		src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
-		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-		var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
-		src.ExtinguishMob()
-		if(buckled)
-			buckled.unbuckle_mob(src,force=1)
-		if(buckled_mobs.len)
-			unbuckle_all_mobs(force=1)
-		if(pulledby)
-			pulledby.stop_pulling()
-		if(pulling)
-			stop_pulling()
-		src.loc = holder
-		src.holder = holder
-		src.notransform = 0
-	return 1
+/mob/living/proc/infernalphaseout(var/turf/mobloc)
+	if(get_turf(src) != mobloc)
+		src << "<span class='warning'>You must remain still while exiting."
+		return
+	dust_animation()
+	spawn_dust()
+	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	src.ExtinguishMob()
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1)
+	if(has_buckled_mobs())
+		unbuckle_all_mobs(force=1)
+	if(pulledby)
+		pulledby.stop_pulling()
+	if(pulling)
+		stop_pulling()
+	src.loc = holder
+	src.holder = holder
+	src.notransform = 0
+	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
 	if(src.notransform)
 		src << "<span class='warning'>You're too busy to jaunt in.</span>"
 		return 0
+	fakefire()
 	src.loc = get_turf(src)
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	return 1
+	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
+
+/mob/living/proc/fakefire()
+	return
+
+/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	apply_overlay(FIRE_LAYER)
+
+/mob/living/proc/fakefireextinguish()
+	return
+
+/mob/living/carbon/fakefireextinguish()
+	remove_overlay(FIRE_LAYER)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"

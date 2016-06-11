@@ -6,7 +6,7 @@ var/list/GPS_list = list()
 	icon_state = "gps-c"
 	w_class = 2
 	slot_flags = SLOT_BELT
-	origin_tech = "programming=2;engineering=2"
+	origin_tech = "materials=2;magnets=1;bluespace=2"
 	var/gpstag = "COM0"
 	var/emped = 0
 	var/turf/locked_location
@@ -23,13 +23,15 @@ var/list/GPS_list = list()
 	return ..()
 
 /obj/item/device/gps/emp_act(severity)
-	emped = 1
+	emped = TRUE
 	overlays -= "working"
 	overlays += "emp"
-	spawn(300)
-		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+	addtimer(src, "reboot", 300)
+
+/obj/item/device/gps/proc/reboot()
+	emped = FALSE
+	overlays -= "emp"
+	overlays += "working"
 
 /obj/item/device/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, be_close=TRUE))

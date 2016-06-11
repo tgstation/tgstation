@@ -32,13 +32,13 @@
 	name = "viscerator delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/viscerator
 	deliveryamt = 5
-	origin_tech = "materials=3;magnets=4;syndicate=4"
+	origin_tech = "materials=3;magnets=4;syndicate=3"
 
 /obj/item/weapon/grenade/spawnergrenade/spesscarp
 	name = "carp delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/carp
 	deliveryamt = 5
-	origin_tech = "materials=3;magnets=4;syndicate=4"
+	origin_tech = "materials=3;magnets=4;syndicate=3"
 
 /obj/item/weapon/grenade/spawnergrenade/syndiesoap
 	name = "Mister Scrubby"

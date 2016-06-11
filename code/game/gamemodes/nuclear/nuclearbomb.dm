@@ -33,9 +33,11 @@ var/bomb_set
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
+	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
+	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	SSobj.processing -= core
@@ -45,6 +47,9 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/Destroy()
 	poi_list -= src
+	nuke_list -= src
+	qdel(countdown)
+	countdown = null
 	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct
@@ -205,6 +210,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
+		countdown.start()
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -215,7 +221,8 @@ var/bomb_set
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				attack_hand(M)
-	return
+	else
+		countdown.stop()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
@@ -309,18 +316,19 @@ var/bomb_set
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
 	if(safety)
+		if(timing)
+			set_security_level(previous_level)
 		timing = 0
 		bomb_set = 0
-		set_security_level(previous_level)
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety)
+	if(safety && !bomb_set)
 		usr << "<span class='danger'>The safety is still on.</span>"
 		return
 	timing = !timing
-	previous_level = get_security_level()
 	if(timing)
+		previous_level = get_security_level()
 		bomb_set = 1
 		set_security_level("delta")
 	else

@@ -363,7 +363,7 @@
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	return ..()
 
@@ -434,7 +434,8 @@
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
 
-
+/obj/effect/spacevine/attack_alien(mob/living/user)
+	eat(user)
 
 /obj/effect/spacevine_controller
 	invisibility = INVISIBILITY_ABSTRACT
@@ -539,7 +540,7 @@
 		SM.on_grow(src)
 
 /obj/effect/spacevine/proc/entangle_mob()
-	if(!buckled_mobs.len && prob(25))
+	if(!has_buckled_mobs() && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
 			if(buckled_mobs.len)

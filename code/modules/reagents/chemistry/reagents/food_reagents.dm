@@ -29,6 +29,10 @@
 	if(prob(50))
 		M.heal_organ_damage(1,0, 0)
 		. = 1
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.4
 	..()
 
 /datum/reagent/consumable/vitamin
@@ -44,6 +48,10 @@
 		. = 1
 	if(M.satiety < 600)
 		M.satiety += 30
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.5
 	..()
 
 /datum/reagent/consumable/sugar

@@ -4,7 +4,7 @@
 	icon_state = "energy"
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-	origin_tech = "combat=3;magnets=2"
+	origin_tech = "combat=4;magnets=3"
 	modifystate = 2
 	can_flashlight = 1
 	ammo_x_offset = 3
@@ -35,6 +35,7 @@
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
+	origin_tech = null
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4
@@ -43,7 +44,7 @@
 	name = "\improper DRAGnet"
 	desc = "The \"Dynamic Rapid-Apprehension of the Guilty\" net is a revolution in law enforcement technology."
 	icon_state = "dragnet"
-	origin_tech = "combat=3;magnets=3;materials=4;bluespace=4"
+	origin_tech = "combat=4;magnets=3;bluespace=4"
 	ammo_type = list(/obj/item/ammo_casing/energy/net, /obj/item/ammo_casing/energy/trap)
 	can_flashlight = 0
 	ammo_x_offset = 1
@@ -52,17 +53,6 @@
 	name = "Energy Snare Launcher"
 	desc = "Fires an energy snare that slows the target down"
 	ammo_type = list(/obj/item/ammo_casing/energy/trap)
-
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg
-	can_charge = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/trap/cyborg)
-
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/newshot()
-	..()
-	robocharge()
-
-/obj/item/weapon/gun/energy/gun/dragnet/snare/cyborg/emp_act()
-	return
 
 /obj/item/weapon/gun/energy/gun/turret
 	name = "hybrid turret gun"
@@ -82,52 +72,10 @@
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
 	item_state = "nucgun"
-	origin_tech = "combat=3;materials=5;powerstorage=3"
-	var/fail_tick = 0
+	origin_tech = "combat=4;magnets=4;powerstorage=4"
 	charge_delay = 5
 	pin = null
 	can_charge = 0
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
-
-/obj/item/weapon/gun/energy/gun/nuclear/process()
-	if(fail_tick > 0)
-		fail_tick--
-	..()
-
-/obj/item/weapon/gun/energy/gun/nuclear/shoot_live_shot()
-	failcheck()
-	update_icon()
-	..()
-
-/obj/item/weapon/gun/energy/gun/nuclear/proc/failcheck()
-	if(!prob(reliability) && istype(loc, /mob/living))
-		var/mob/living/M = loc
-		switch(fail_tick)
-			if(0 to 200)
-				fail_tick += (2*(100-reliability))
-				M.rad_act(40)
-				M << "<span class='userdanger'>Your [name] feels warmer.</span>"
-			if(201 to INFINITY)
-				SSobj.processing.Remove(src)
-				M.rad_act(80)
-				crit_fail = 1
-				M << "<span class='userdanger'>Your [name]'s reactor overloads!</span>"
-
-/obj/item/weapon/gun/energy/gun/nuclear/emp_act(severity)
-	..()
-	reliability = max(reliability - round(15/severity), 0) //Do not allow it to go negative!
-
-/obj/item/weapon/gun/energy/gun/nuclear/update_icon()
-	..()
-	if(crit_fail)
-		overlays += "[icon_state]_fail_3"
-	else
-		switch(fail_tick)
-			if(0)
-				overlays += "[icon_state]_fail_0"
-			if(1 to 150)
-				overlays += "[icon_state]_fail_1"
-			if(151 to INFINITY)
-				overlays += "[icon_state]_fail_2"

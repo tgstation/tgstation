@@ -49,8 +49,6 @@
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
-	make_blood()
-
 	martial_art = default_martial_art
 
 	handcrafting = new()
@@ -166,6 +164,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -703,7 +702,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -797,7 +796,7 @@
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
-			if(blood_max)
+			if(bleed_rate)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -890,7 +889,6 @@
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
-			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -1029,7 +1027,6 @@
 				T = new()
 				T.Insert(src)
 
-	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)

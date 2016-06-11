@@ -16,6 +16,7 @@
 #define ispodperson(A) (is_species(A, /datum/species/podperson))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
+#define ishumanbasic(A) (is_species(A, /datum/species/human))
 
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
 
@@ -76,6 +77,8 @@
 #define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
 #define ismovableatom(A) (istype(A, /atom/movable))
+
+#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
 
 // ASSEMBLY HELPERS
 

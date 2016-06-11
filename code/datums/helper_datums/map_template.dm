@@ -87,6 +87,7 @@
 
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
+	preloadShelterTemplates()
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -122,3 +123,13 @@
 
 		shuttle_templates[S.shuttle_id] = S
 		map_templates[S.shuttle_id] = S
+
+/proc/preloadShelterTemplates()
+	for(var/item in subtypesof(/datum/map_template/shelter))
+		var/datum/map_template/shelter/shelter_type = item
+		if(!(initial(shelter_type.mappath)))
+			continue
+		var/datum/map_template/shelter/S = new shelter_type()
+
+		shelter_templates[S.shelter_id] = S
+		map_templates[S.shelter_id] = S

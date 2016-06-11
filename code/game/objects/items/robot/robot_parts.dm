@@ -1,6 +1,8 @@
 /obj/item/robot_parts
 	name = "robot parts"
 	icon = 'icons/obj/robot_parts.dmi'
+	force = 4
+	throwforce = 4
 	item_state = "buildpipe"
 	icon_state = "blank"
 	flags = CONDUCT
@@ -10,24 +12,28 @@
 /obj/item/robot_parts/l_arm
 	name = "cyborg left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "l_arm"
 	body_zone = "l_arm"
 
 /obj/item/robot_parts/r_arm
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("slapped", "punched")
 	icon_state = "r_arm"
 	body_zone = "r_arm"
 
 /obj/item/robot_parts/l_leg
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "l_leg"
 	body_zone = "l_leg"
 
 /obj/item/robot_parts/r_leg
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
+	attack_verb = list("kicked", "stomped")
 	icon_state = "r_leg"
 	body_zone = "r_leg"
 
@@ -203,22 +209,23 @@
 				user << "<span class='warning'>This MMI does not seem to fit!</span>"
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
-			if(!O)
+			if(!user.unEquip(W))
 				return
 
-			if(!user.unEquip(W))
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
+			if(!O)
 				return
 
 			if(M.hacked || M.clockwork)
 				aisync = 0
 				lawsync = 0
+				var/datum/ai_laws/L
 				if(M.clockwork)
-					O.laws = new/datum/ai_laws/ratvar
-					spawn(1)
-						add_servant_of_ratvar(O)
+					L = new/datum/ai_laws/ratvar
 				else
-					O.laws = new/datum/ai_laws/syndicate_override
+					L = new/datum/ai_laws/syndicate_override
+				O.laws = L
+				L.associate(O)
 
 			O.invisibility = 0
 			//Transfer debug settings to new mob
@@ -231,12 +238,19 @@
 				O.notify_ai(1)
 				if(forced_ai)
 					O.connected_ai = forced_ai
-			if(!lawsync && !M.hacked)
+			if(!lawsync)
 				O.lawupdate = 0
-				O.make_laws()
+				if(!M.hacked && !M.clockwork)
+					O.make_laws()
 
 			ticker.mode.remove_antag_for_borging(BM.mind)
 			BM.mind.transfer_to(O)
+
+			if(M.clockwork)
+				O.emagged = 1
+				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
+				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
+				ticker.mode.update_servant_icons_added(O.mind)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")

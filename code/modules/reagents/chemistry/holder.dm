@@ -128,7 +128,7 @@ var/const/INJECT = 5 //injection
 	return id
 
 /datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
-	if(!target )
+	if(!target || !total_volume)
 		return
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
@@ -142,10 +142,6 @@ var/const/INJECT = 5 //injection
 	var/trans_data = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/T = reagent
-		if(T.id == "blood" && ishuman(target))
-			var/mob/living/carbon/human/H = target
-			H.inject_blood(my_atom, amount)
-			continue
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)

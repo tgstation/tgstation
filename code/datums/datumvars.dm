@@ -305,6 +305,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
