@@ -707,7 +707,7 @@
 	if(production_time <= world.time)
 		production_time = world.time + production_cooldown //Start it over
 		generate_cache_component(specific_component)
-		cache.visible_message("<span class='warning'>Something clunks around inside of [cache].</span>")
+		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
 	return 0

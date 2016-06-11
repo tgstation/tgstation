@@ -123,6 +123,7 @@
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
 	var/wall_generation_cooldown
+	var/wall_found = FALSE //if we've found a wall and finished our windup delay
 
 /obj/structure/clockwork/cache/New()
 	..()
@@ -143,11 +144,17 @@
 
 /obj/structure/clockwork/cache/process()
 	for(var/turf/closed/wall/clockwork/C in orange(1, src))
+		if(!wall_found)
+			wall_found = TRUE
+			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
+			break
 		if(wall_generation_cooldown <= world.time)
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()
 			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
-			visible_message("<span class='warning'>Something clunks around inside of [src].</span>")
+			visible_message("<span class='warning'>Something clunks around inside of [src]...</span>")
+			break
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
