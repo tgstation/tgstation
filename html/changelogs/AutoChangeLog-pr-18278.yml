@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts are notified when someone arrives on the Arrivals
-Shuttle. This is independent of the announcement system, and the (F)
-link will follow the arrived person."

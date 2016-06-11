@@ -1,6 +1,0 @@
-author: kevinz000
-delete-after: True
-changes: 
-  - bugfix: "Malf AI hacking an APC that is then destroyed will no longer bug the AI"
-  - bugfix: "Being turned into a Revolutionary now stuns you for a short while."
-  - bugfix: "Kinetic Accelerators no longer drop their firing pin or cell when destroyed by lava"
