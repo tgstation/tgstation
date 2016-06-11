@@ -212,3 +212,32 @@
 		else
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
+
+/mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
+	name = "Keeki"
+	desc = "It's a cat made out of cake."
+	icon_state = "cak"
+	icon_living = "cak"
+	icon_dead = "cak_dead"
+	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
+	/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
+	response_harm = "takes a bite out of"
+	attacked_sound = 'sound/items/eatfood.ogg'
+
+/mob/living/simple_animal/pet/cat/cak/Life()
+	..()
+	if(health < maxHealth)
+		adjustBruteLoss(-2) //Fast life regen
+	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
+		if(D.name != "frosted donut")
+			D.name = "frosted donut"
+			D.icon_state = "donut2"
+			D.reagents.add_reagent("sprinkles", 2)
+			D.bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
+			D.filling_color = "#FF69B4"
+
+/mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
+	..()
+	if(L.a_intent == "harm" && L.reagents && !stat)
+		L.reagents.add_reagent("nutriment", 0.4)
+		L.reagents.add_reagent("vitamin", 0.4)
