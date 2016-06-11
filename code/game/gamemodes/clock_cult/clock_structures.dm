@@ -634,7 +634,7 @@
 		L.Weaken(4)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(2)
+	L.Stun(3)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
 	return 1
@@ -647,6 +647,7 @@
 	luminosity = 2
 	color = "#FAE48C"
 	alpha = 125
+	var/convert_time = 50
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
@@ -654,9 +655,9 @@
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
-	animate(src, color = "#AF0AAF", time = 38)
+	animate(src, color = "#AF0AAF", time = convert_time)
 	var/I = 0
-	while(I < 38 && get_turf(L) == get_turf(src))
+	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
 	if(get_turf(L) != get_turf(src))
