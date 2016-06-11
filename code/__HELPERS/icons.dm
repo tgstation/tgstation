@@ -980,3 +980,9 @@ var/global/list/humanoid_icon_cache = list()
 	else
 		return humanoid_icon_cache[icon_id]
 
+
+//Hook, override to run code on- wait this is images
+//Images have dir without being an atom, so they get their own definition.
+//Lame.
+/image/proc/setDir(newdir)
+	dir = newdir
