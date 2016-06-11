@@ -624,7 +624,7 @@
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	return ..()
+	..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)

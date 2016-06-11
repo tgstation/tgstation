@@ -121,7 +121,6 @@
 	if(message_verb)
 		visible_message("<span class='danger'>[attack_message]</span>",
 		"<span class='userdanger'>[attack_message]</span>")
-	return 1
 
 /mob/living/carbon/true_devil/UnarmedAttack(atom/A, proximity)
 	A.attack_hand(src)
