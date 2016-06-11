@@ -762,6 +762,7 @@
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
 	impale_cooldown = 0
+	update_force()
 	SSobj.processing += src
 	spawn(1)
 		if(isliving(loc))
@@ -774,6 +775,9 @@
 	return ..()
 
 /obj/item/clockwork/ratvarian_spear/process()
+	update_force()
+
+/obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
 		force = 30
 		throwforce = 50
@@ -797,12 +801,22 @@
 		attack_verb = list("impaled")
 		force += 23 //40 damage if ratvar isn't alive, 53 if he is
 		user.stop_pulling()
-		target.Stun(2)
-		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+
 	if(impale_cooldown > world.time)
 		user << "<span class='warning'>You can't attack right now, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		return
-	..()
+	if(impaling)
+		if(hitsound)
+			playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+		user.lastattacked = target
+		target.lastattacker = user
+		if(!target.attacked_by(src, user))
+			impaling = FALSE //if we got blocked, stop impaling
+		add_logs(user, target, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+		add_fingerprint(user)
+	else //todo yell at someone to make attack() use proper return values
+		..()
+
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
@@ -810,11 +824,14 @@
 			S.adjustFireLoss(25)
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
-		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
+		M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
 		M.adjustFireLoss(10)
+	attack_verb = list("stabbed", "poked", "slashed")
+	update_force()
 	if(impaling)
+		target.Stun(2)
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 		impale_cooldown = world.time + initial(impale_cooldown)
-		attack_verb = list("stabbed", "poked", "slashed")
 		if(target)
 			user << "<span class='notice'>You prepare to remove your ratvarian spear from [target]...</span>"
 			if(do_after(user, 7, 1, target))
