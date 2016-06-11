@@ -801,7 +801,7 @@
 
 /datum/supply_pack/science/research
 	name = "Machine Prototype Crate"
-	cost = 5000
+	cost = 8000
 	access = access_research
 	contains = list(/obj/item/device/machineprototype)
 	crate_name = "machine prototype crate"
