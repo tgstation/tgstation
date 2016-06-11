@@ -154,7 +154,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/targeted/check_special_requirements()
 	while(!target)
-		target_name = stripped_input(invoker, "Enter the actual name of a target (case-sensitive).", name)
+		target_name = reject_bad_name(input(invoker, "Enter the actual name of a target (case-sensitive).", name), 1)
 		if(!target_name)
 			return 0
 		target = find_target()
