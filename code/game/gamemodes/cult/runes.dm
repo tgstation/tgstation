@@ -223,7 +223,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!do_after(user, 100, target = paper_to_imbue))
 		rune_in_use = 0
 		return
-	new talisman_type(get_turf(src))
+	new talisman_type(T)
 	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	rune_in_use = 0
