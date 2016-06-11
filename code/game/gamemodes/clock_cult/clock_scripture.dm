@@ -317,14 +317,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
 	name = "Sigil of Submission"
-	desc = "Places a subtle sigil that will enslave any valid beings standing on it after a time."
+	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
+	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
 	usage_tip = "This should not be your primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
