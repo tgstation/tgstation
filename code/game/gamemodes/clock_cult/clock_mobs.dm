@@ -166,7 +166,7 @@
 					recovering = TRUE
 					return_to_host()
 				else
-					qdel(src) //Shouldn't ever happen, but...
+					death() //Shouldn't ever happen, but...
 
 /mob/living/simple_animal/hostile/clockwork_marauder/death(gibbed)
 	..(TRUE)
@@ -339,7 +339,7 @@
 	else
 		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
 	forceMove(get_turf(host))
-	visible_message("<span class='warning'>[host]'s skin glows red as a [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
+	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
