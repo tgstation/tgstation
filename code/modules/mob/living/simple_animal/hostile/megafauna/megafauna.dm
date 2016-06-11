@@ -21,6 +21,9 @@
 		feedback_set_details("megafauna_kills","[initial(name)]")
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/gib()
 	if(health > 0)
 		return
