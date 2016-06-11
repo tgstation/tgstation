@@ -125,16 +125,26 @@
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
-	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/epi(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+
+	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	modules += new /obj/item/weapon/wrench/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/device/healthanalyzer(src)
-	modules += new /obj/item/toy/crayon/spraycan/borg(src)
+	add_module(new /obj/item/stack/sheet/metal/cyborg())
+	modules += new /obj/item/weapon/extinguisher(src)
+
+	modules += new /obj/item/weapon/pickaxe(src)
+	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+
+	modules += new /obj/item/weapon/soap/nanotrasen(src)
+
 	modules += new /obj/item/borg/cyborghug(src)
+
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
-
 
 
 /obj/item/weapon/robot_module/medical
