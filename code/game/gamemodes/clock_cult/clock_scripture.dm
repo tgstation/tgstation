@@ -174,6 +174,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(is_servant_of_ratvar(target) && !affects_servants)
 				invoker << "<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>"
 				target = null
+		else
+			invoker << "<span class='warning'>There are no targets with that name!</span>"
+			return 0
 	return 1
 
 /datum/clockwork_scripture/targeted/proc/find_targets()
