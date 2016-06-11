@@ -38,7 +38,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("yiffhell", "chinese", "secborg")
+	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
 	var/list/all_drawables
 
@@ -224,6 +224,7 @@
 				. = TRUE
 			if(stencil in graffiti_large_h)
 				paint_mode = PAINT_LARGE_HORIZONTAL
+				text_buffer = ""
 			else
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
@@ -235,6 +236,8 @@
 				"Scribbles",default = text_buffer)
 			text_buffer = crayon_text_strip(txt)
 			. = TRUE
+			paint_mode = PAINT_NORMAL
+			drawtype = "a"
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
