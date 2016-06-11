@@ -448,7 +448,7 @@
 	return
 
 /mob/living/simple_animal/IgniteMob()
-	return
+	return FALSE
 
 /mob/living/simple_animal/ExtinguishMob()
 	return
