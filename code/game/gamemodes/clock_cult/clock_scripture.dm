@@ -1041,8 +1041,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.health += 500
 		L.color = "#1E8CE1"
 		L.stun_absorption = TRUE
-		spawn(0)
-			animate(invoker, color = initial(invoker.color), time = 100)
+		animate(invoker, color = initial(invoker.color), time = 100)
 		affected_servants += L
 	for(var/i in 1 to 10)
 		sleep(10)
