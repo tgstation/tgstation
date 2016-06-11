@@ -373,12 +373,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/L = loc
 		if(L.stat || !L.client)
-			loc = get_turf(L)
-			visible_message("<span class='warning'>[src] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
-			status_flags -= GODMODE
-			remove_servant_of_ratvar(L)
-			L.unEquip(L.head)
-			qdel(L.head)
+			disengage()
 
 /mob/living/simple_animal/hostile/clockwork_reclaimer/death()
 	..(1)
@@ -400,13 +395,13 @@
 	visible_message("<span class='warning'>[src] rockets with blinding speed towards [H]!</span>", "<span class='heavy_brass'>You leap with blinding speed towards [H]'s head!</span>")
 	for(var/i = 9, i > 0, i -= 3)
 		pixel_y += i
-		sleep(2)
+		sleep(1)
 	icon_state = "[initial(icon_state)]_charging"
 	while(loc != H.loc)
 		if(!H)
 			icon_state = initial(icon_state)
 			return 0
-		sleep(3)
+		sleep(1)
 		forceMove(get_step(src, get_dir(src, H)))
 	if(H.head)
 		H.visible_message("<span class='warning'>[src] tears apart [H]'s [H.name]!</span>")
@@ -424,6 +419,23 @@
 	if(!H.mind)
 		mind.transfer_to(H)
 	return 1
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/verb/disengage()
+	set name = "Disgengage From Host"
+	set desc = "Jumps off of your host if you have one, freeing their mind but allowing you movement."
+	set category = "Clockwork"
+
+	if(!ishuman(usr.loc))
+		usr << "<span class='warning'>You have no host! Alt-click on a non-servant to enslave them.</span>"
+		return
+	var/mob/living/carbon/human/L = usr.loc
+	usr.loc = get_turf(L)
+	pixel_y = initial(pixel_y)
+	usr.visible_message("<span class='warning'>[usr] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
+	usr.status_flags -= GODMODE
+	remove_servant_of_ratvar(L)
+	L.unEquip(L.head)
+	qdel(L.head)
 
 
 
