@@ -3,7 +3,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 /datum/subsystem/icon_smooth
 	name = "Icon Smoothing"
 	priority = -5
-	wait = 5
+	wait = 2
 	var/list/smooth_queue = list()
 
 /datum/subsystem/icon_smooth/New()
