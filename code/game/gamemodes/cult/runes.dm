@@ -231,7 +231,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/imbue/proc/checkpapers()
 	. = list()
 	for(var/obj/item/weapon/paper/P in get_turf(src))
-		if(!P.info && !istype(P, obj/item/weapon/paper/talisman))
+		if(!P.info && !istype(P, /obj/item/weapon/paper/talisman))
 			. |= P
 
 var/list/teleport_runes = list()
