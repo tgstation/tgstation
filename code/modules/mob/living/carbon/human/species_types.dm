@@ -148,6 +148,11 @@
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
 	return
+	
+/datum/species/pod/on_species_gain(mob/living/carbon/C)
+	..()
+	C.faction |= "plants"
+	C.faction |= "vines"
 
 /*
  SHADOWPEOPLE

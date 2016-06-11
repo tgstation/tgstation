@@ -579,13 +579,13 @@
 	// Plant-B-Gone is just as bad
 	if(S.has_reagent("plantbgone", 1))
 		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
-		adjustToxic(-round(S.get_reagent_amount("plantbgone") * 6))
+		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
 	// why, just why
 	if(S.has_reagent("napalm", 1))
 		adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-		adjustToxic(-round(S.get_reagent_amount("napalm") * 7))
+		adjustToxic(round(S.get_reagent_amount("napalm") * 7))
 		adjustWeeds(-rand(5,9))
 
 	//Weed Spray

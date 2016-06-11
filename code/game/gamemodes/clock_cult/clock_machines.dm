@@ -333,7 +333,6 @@
 		visible_message("<span class='warning'>[src] hums loudly, then the sockets at its base fall dark!</span>")
 		playsound(src, 'sound/effects/screech.ogg', 40, 1)
 		toggle(0)
-	return
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, be_close = 1))

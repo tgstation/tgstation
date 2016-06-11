@@ -53,17 +53,11 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	SSobj.processing += src
 	clockwork_construction_value += 5
 
 /turf/closed/wall/clockwork/Destroy()
-	SSobj.processing -= src
 	clockwork_construction_value -= 5
 	..()
-
-/turf/closed/wall/clockwork/process()
-	if(prob(2))
-		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', rand(1, 5), 1, -4, 1, 1)
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))

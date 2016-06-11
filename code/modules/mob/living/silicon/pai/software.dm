@@ -238,15 +238,19 @@
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
-				remove_med_sec_hud()
 				if(secHUD)
 					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
-				remove_med_sec_hud()
 				if(medHUD)
 					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
 				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL

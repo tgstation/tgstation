@@ -39,6 +39,7 @@
 /obj/effect/countdown/process()
 	if(!attached_to || qdeleted(attached_to))
 		qdel(src)
+	forceMove(get_turf(attached_to))
 	var/new_val = get_value()
 	if(new_val == displayed_text)
 		return

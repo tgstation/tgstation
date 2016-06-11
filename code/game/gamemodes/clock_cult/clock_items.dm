@@ -571,183 +571,6 @@
 	flags = NOSLIP
 
 
-/obj/item/clockwork/clockwork_proselytizer //Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
-	name = "clockwork proselytizer"
-	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified replicant alloy to function."
-	icon_state = "clockwork_proselytizer"
-	item_state = "resonator_u"
-	w_class = 3
-	force = 5
-	flags = NOBLUDGEON
-	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
-	var/max_alloy = 100
-	var/uses_alloy = TRUE
-
-/obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = 25
-
-/obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
-	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)) && uses_alloy)
-		user << "It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored."
-
-/obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
-		if(stored_alloy >= max_alloy)
-			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
-			return 0
-		modify_stored_alloy(10)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
-		user.drop_item()
-		qdel(I)
-		return 1
-	else
-		return ..()
-
-/obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
-	if(!target || !user || !proximity_flag)
-		return 0
-	if(user.a_intent == "harm" || !is_servant_of_ratvar(user))
-		return ..()
-	proselytize(target, user)
-
-/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	if(ratvar_awakens) //Ratvar makes it free
-		amount = 0
-	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
-	return 1
-
-/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
-	if(!target || !user)
-		return 0
-	var/operation_time = 0 //In deciseconds, how long the proselytization will take
-	var/new_obj_type //The path of the new type of object to replace the old
-	var/alloy_cost = 0
-	var/spawn_dir = 2
-	var/dir_in_new = FALSE
-	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	var/target_type = target.type
-	if(istype(target, /turf/closed/wall/clockwork))
-		operation_time = 80
-		new_obj_type = /turf/open/floor/clockwork
-		alloy_cost = -4
-		valid_target = TRUE
-	else if(istype(target, /turf/open/floor/clockwork))
-		var/turf/open/T = target
-		for(var/obj/O in T)
-			if(O.density && !O.CanPass(user, T, 5))
-				src << "<span class='warning'>Something is in the way, preventing you from proselytizing [T] into a clockwork wall.</span>"
-				return 0
-		operation_time = 100
-		new_obj_type = /turf/closed/wall/clockwork
-		alloy_cost = 4
-		valid_target = TRUE
-	else if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall))
-		operation_time = 50
-		new_obj_type = /turf/closed/wall/clockwork
-		alloy_cost = 5
-		valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
-	else if(istype(target, /turf/open/floor))
-		operation_time = 30
-		new_obj_type = /turf/open/floor/clockwork
-		alloy_cost = 1
-		valid_target = TRUE
-	else if(istype(target, /obj/machinery/door/airlock) && !istype(target, /obj/machinery/door/airlock/clockwork))
-		operation_time = 40
-		var/obj/machinery/door/airlock/A = target
-		if(A.glass)
-			new_obj_type = /obj/machinery/door/airlock/clockwork/brass
-		else
-			new_obj_type = /obj/machinery/door/airlock/clockwork
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/window) && !istype(target, /obj/structure/window/reinforced/clockwork))
-		var/obj/structure/window/W = target
-		if(W.fulltile)
-			new_obj_type = /obj/structure/window/reinforced/clockwork/fulltile
-			operation_time = 30
-		else
-			new_obj_type = /obj/structure/window/reinforced/clockwork
-			spawn_dir = W.dir
-			dir_in_new = TRUE
-			operation_time = 15
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/machinery/door/window) && !istype(target, /obj/machinery/door/window/clockwork))
-		var/obj/machinery/door/window/C = target
-		new_obj_type = /obj/machinery/door/window/clockwork
-		spawn_dir = C.dir
-		dir_in_new = TRUE
-		operation_time = 30
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/grille) && !istype(target, /obj/structure/grille/ratvar))
-		var/obj/structure/grille/G = target
-		if(G.destroyed)
-			new_obj_type = /obj/structure/grille/ratvar/broken
-			operation_time = 5
-		else
-			new_obj_type = /obj/structure/grille/ratvar
-			operation_time = 15
-		alloy_cost = 0
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/clockwork/wall_gear))
-		operation_time = 20
-		new_obj_type = /obj/item/clockwork/component/replicant_alloy
-		alloy_cost = 6
-		valid_target = TRUE
-	else if(istype(target, /obj/item/clockwork/alloy_shards))
-		operation_time = 10
-		new_obj_type = /obj/item/clockwork/component/replicant_alloy
-		alloy_cost = 7
-		valid_target = TRUE
-	else if(istype(target, /obj/item/clockwork/component/replicant_alloy))
-		new_obj_type = /obj/effect/overlay/temp/ratvar/beam/itemconsume
-		alloy_cost = -10
-		valid_target = TRUE
-	if(!uses_alloy)
-		alloy_cost = 0
-	if(!valid_target)
-		user << "<span class='warning'>[target] cannot be proselytized!</span>"
-		return 0
-	if(!new_obj_type)
-		user << "<span class='warning'>That object can't be changed into anything!</span>"
-		return 0
-	if(stored_alloy - alloy_cost < 0)
-		user << "<span class='warning'>You need [alloy_cost] replicant alloy to proselytize [target]!</span>"
-		return 0
-	if(stored_alloy - alloy_cost > 100)
-		user << "<span class='warning'>You have too much replicant alloy stored to proselytize [target]!</span>"
-		return 0
-	if(ratvar_awakens) //Ratvar makes it faster
-		operation_time *= 0.5
-	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
-	playsound(target, 'sound/machines/click.ogg', 50, 1)
-	if(operation_time && !do_after(user, operation_time, target = target))
-		return 0
-	if(stored_alloy - alloy_cost < 0) //Check again to prevent bypassing via spamclick
-		return 0
-	if(stored_alloy - alloy_cost > 100)
-		return 0
-	if(!target || target.type != target_type)
-		return 0
-	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
-	"<span class='brass'>You proselytize [target].</span>")
-	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-	if(isturf(target))
-		var/turf/T = target
-		T.ChangeTurf(new_obj_type)
-	else
-		if(dir_in_new)
-			new new_obj_type(get_turf(target), spawn_dir)
-		else
-			var/atom/A = new new_obj_type(get_turf(target))
-			A.dir = spawn_dir
-		qdel(target)
-	modify_stored_alloy(-alloy_cost)
-	return 1
-
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
 	name = "ratvarian spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
@@ -897,6 +720,7 @@
 	name = "meme component"
 	desc = "A piece of a famous meme."
 	clockwork_desc = null
+	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
@@ -1016,3 +840,4 @@
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
+	burn_state = LAVA_PROOF
