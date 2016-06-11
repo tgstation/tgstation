@@ -797,22 +797,24 @@
 		attack_verb = list("impaled")
 		force += 23 //40 damage if ratvar isn't alive, 53 if he is
 		user.stop_pulling()
-		target.Stun(2)
-		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 	if(impale_cooldown > world.time)
 		user << "<span class='warning'>You can't attack right now, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
 		return
-	..()
-	if(issilicon(target))
-		var/mob/living/silicon/S = target
-		if(S.stat != DEAD)
-			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
-			S.adjustFireLoss(25)
-	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
-		var/mob/living/M = target
-		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
-		M.adjustFireLoss(10)
+	if(!..())
+		impaling = FALSE
+	else
+		if(issilicon(target))
+			var/mob/living/silicon/S = target
+			if(S.stat != DEAD)
+				S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
+				S.adjustFireLoss(25)
+		else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+			var/mob/living/M = target
+			M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
+			M.adjustFireLoss(10)
 	if(impaling)
+		target.Stun(2)
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_verb = list("stabbed", "poked", "slashed")
 		if(target)

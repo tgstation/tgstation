@@ -34,7 +34,7 @@
 	user.lastattacked = M
 	M.lastattacker = user
 
-	M.attacked_by(src, user)
+	. = M.attacked_by(src, user)
 
 	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
@@ -69,6 +69,7 @@
 					add_splatter_floor(location)
 					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 						user.add_mob_blood(src)
+	return 1
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.

@@ -132,7 +132,7 @@
 	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
-	..()
+	. = ..()
 	retal = 1
 	retal_target = user
 
