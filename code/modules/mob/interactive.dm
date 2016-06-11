@@ -384,9 +384,7 @@
 /mob/living/carbon/human/interactive/New()
 	..()
 
-	src.set_species(/datum/species/synth)
-	var/datum/species/synth/mSyn = dna.species
-	mSyn.assume_disguise(new/datum/species/human,src)
+	set_species(/datum/species/synth)
 
 	random()
 

@@ -201,9 +201,7 @@
 							src.say("Your sin will be punished, [sinPerson]!")
 							var/sinPersonspecies = pick(species_list)
 							var/newtype = species_list[sinPersonspecies]
-							var/datum/species/old_species = sinPerson.dna.species
 							sinPerson.set_species(newtype)
-							sinPerson.dna.species.admin_set_species(sinPerson,old_species)
 					if("Sloth")
 						src.say("Your sin, [sinPerson], is Sloth.")
 						if(prob(50))
