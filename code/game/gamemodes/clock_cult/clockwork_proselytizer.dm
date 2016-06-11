@@ -18,7 +18,8 @@
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if((is_servant_of_ratvar(user) || isobserver(user)) && uses_alloy)
-		user << "It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored."
+		user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored.</span>"
+		user << "<span class='alloy'>Strike it with replicant alloy or attack replicant alloy with it to add additional alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
@@ -36,7 +37,7 @@
 /obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
 	if(!target || !user || !proximity_flag)
 		return 0
-	if(user.a_intent == "harm" || !is_servant_of_ratvar(user))
+	if(!is_servant_of_ratvar(user))
 		return ..()
 	proselytize(target, user)
 
