@@ -514,9 +514,6 @@
 	new /datum/round_event/ghost_role/abductor
 	return 1
 
-/datum/admins/proc/makeRevenant()
-	new /datum/round_event/ghost_role/revenant
-
 //Shadowling
 /datum/admins/proc/makeShadowling()
 	var/datum/game_mode/shadowling/temp = new
