@@ -31,6 +31,8 @@
 		return 0
 	if(mind.enslaved_to)
 		return 0
+	if(is_servant_of_ratvar(mind.current))
+		return 0
 	return 1
 
 /datum/game_mode/cult
