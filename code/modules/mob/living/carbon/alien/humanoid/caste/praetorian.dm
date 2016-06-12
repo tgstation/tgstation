@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/humanoid/royal/praetorian
+r/mob/living/carbon/alien/humanoid/royal/praetorian
 	name = "alien praetorian"
 	caste = "p"
 	maxHealth = 250
@@ -38,14 +38,12 @@
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
-	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen) && (!(user.ckey in list("optimumtact", "coiax", "technoalchemist", "crimsonvision", "misterperson", "mrstonedone", "jordie0608", "xhuis", "iamgoofball", "cheridan", "pkpenguin321", "basilman"))))
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen) && (!(if user.client in admins)))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		user.alien_evolve(new_xeno)
 		return 1
 	else
-		if(user.ckey in list("optimumtact", "coiax", "technoalchemist", "crimsonvision", "misterperson", "mrstonedone", "jordie0608", "xhuis", "iamgoofball", "cheridan", "pkpenguin321", "basilman"))
-			var/mob/living/carbon/alien/humanoid/royal/queen/maid/new_maid = new (user.loc)
-			user.alien_evolve(new_maid)
+		if user.client in admins
 			return 1
 		else
 			user << "<span class='notice'>We already have an alive queen.</span>"
