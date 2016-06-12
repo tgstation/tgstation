@@ -228,6 +228,9 @@
 		processing = 0
 		SSobj.processing.Remove(src)
 
+/turf/open/floor/plating/lava/make_plating()
+	return
+
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
 
