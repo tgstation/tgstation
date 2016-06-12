@@ -39,7 +39,7 @@ var/global/list/lawlorify = list (
 			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
 			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
 			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
-			BANISH_FUNERAL_GARB = "Funeral garments will prevent the devil from resurrecting."
+			BANISH_FUNERAL_GARB = "If clad in funeral garments, this devil will be unable to resurrect.  Should the clothes not fit, lay them gently on top of the devil's corpse."
 		),
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
@@ -367,7 +367,12 @@ var/global/list/lawlorify = list (
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
 					return 1
-			return 0
+				return 0
+			else
+				for(var/obj/item/clothing/under/burial/B in range(0,body))
+					if(B.loc == body.loc)
+						return 1
+				return 0
 
 /datum/devilinfo/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
