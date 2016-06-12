@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Attacking a human you are pulling or have grabbed with a ratvarian spear will impale them, doing massive damage, stunning the target, and breaking the spear if they remain conscious after being attacked."
+  - tweak: "The Function Call verb is now an action button."
