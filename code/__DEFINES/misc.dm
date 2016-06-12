@@ -252,6 +252,7 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_TITANIUM	"$titanium"
 
 
 //check_target_facings() return defines

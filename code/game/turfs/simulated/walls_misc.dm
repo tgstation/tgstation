@@ -68,11 +68,17 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
+/turf/closed/wall/shuttle/syndie
+	icon_state = "wall3"
+	walltype = "syndieshuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
 	walltype = "shuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
@@ -105,10 +111,3 @@
 /turf/closed/wall/shuttle/copyTurf(turf/T)
 	. = ..()
 	T.transform = transform
-
-
-//why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way
-/turf/closed/wall/shuttle/shuttleRotate(rotation)
-	var/matrix/M = transform
-	M.Turn(rotation)
-	transform = M
