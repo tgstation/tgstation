@@ -57,8 +57,6 @@
 				charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
-	if(health > 0)
-		return
 	if(size > 2)
 		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
