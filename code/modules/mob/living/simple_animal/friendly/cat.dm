@@ -219,9 +219,9 @@
 	icon_state = "cak"
 	icon_living = "cak"
 	icon_dead = "cak_dead"
-	health = 1000
-	maxHealth = 1000
-	harm_intent_damage = 200
+	health = 50
+	maxHealth = 50
+	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
@@ -248,7 +248,7 @@
 	if(stat)
 		return
 	if(health < maxHealth)
-		adjustBruteLoss(-150) //Fast life regen
+		adjustBruteLoss(-8) //Fast life regen
 	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
