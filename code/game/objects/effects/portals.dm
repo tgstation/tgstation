@@ -31,7 +31,7 @@
 		src.teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
-			qdel(src)
+		qdel(src)
 	return
 
 /obj/effect/portal/Destroy()
