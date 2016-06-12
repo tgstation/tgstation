@@ -77,7 +77,7 @@
 			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
 			return 1
 		else
-			H << "<span class='warning'>You're repulsed by even looking at [src]. There's no way you can bring yourself to touch it.</span>"
+			H << "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>"
 	else
 		return 0
 

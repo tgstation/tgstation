@@ -43,10 +43,7 @@
 		telegraph()
 
 		if(health < maxHealth/3)
-			if(prob(50))
-				double_spiral()
-			else
-				seeking_laser()
+			double_spiral()
 		else
 			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
 			if(prob(50))
@@ -214,55 +211,6 @@
 	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/seeking_laser()
-	visible_message("<span class='cult'><font size=5>\"<b>You can't run.</b>\"</font></span>")
-	var/obj/effect/overlay/temp/seeking_beam/B = new(get_turf(src))
-	B.target = target
-	B.firer = src
-
-/obj/effect/overlay/temp/seeking_beam
-	name = "disintegration ball"
-	desc = "Get out of the way!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shield-cult"
-	density = 1
-	luminosity = 1
-	var/target
-	var/firer
-	duration = 100
-
-/obj/effect/overlay/temp/seeking_beam/New()
-	..()
-	spawn()
-		while(loc)
-			step_towards(src, target)
-			sleep(5)
-
-/obj/effect/overlay/temp/seeking_beam/process()
-	step_towards(src, target)
-
-/obj/effect/overlay/temp/seeking_beam/Crossed(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/Bumped(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/Bump(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/proc/collision(AM as mob|obj)
-	if(AM == firer)
-		return
-	if(isliving(AM))
-		var/mob/living/M = AM
-		visible_message("<span class='danger'>[M] is disintegrated by the disintegration ball!</span>")
-		M.dust()
-	else if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		I.burn()
 
 /obj/item/projectile/colossus
 	name ="death bolt"

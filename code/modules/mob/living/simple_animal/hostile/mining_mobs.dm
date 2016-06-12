@@ -1007,7 +1007,7 @@
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
 	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)

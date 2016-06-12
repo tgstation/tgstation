@@ -4,7 +4,7 @@
 	maxHealth = 800
 	icon_state = "legion"
 	icon_living = "legion"
-	desc = "The Dark One from the fallen city. One of many."
+	desc = "One of many."
 	icon = 'icons/mob/lavaland/legion.dmi'
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
