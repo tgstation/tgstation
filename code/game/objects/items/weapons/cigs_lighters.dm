@@ -74,7 +74,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!isliving(M))
 		return
 	if(M.IgniteMob())
-		message_admins("[key_name_admin(user)] set (key_name_admin(M)) on fire")
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
@@ -531,7 +531,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.IgniteMob())
-		message_admins("[key_name_admin(user)] set (key_name_admin(M)) on fire")
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")

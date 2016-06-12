@@ -320,7 +320,7 @@
 		if(isliving(O))
 			var/mob/living/L = O
 			if(L.IgniteMob())
-				message_admins("[key_name_admin(user)] set (key_name_admin(L)) on fire")
+				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
 				log_game("[key_name(user)] set [key_name(L)] on fire")
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
