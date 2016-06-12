@@ -52,12 +52,10 @@
 		adjustBruteLoss(-L.maxHealth/2)
 		L.gib()
 
-
 /mob/living/simple_animal/ex_act(severity, target)
 	switch (severity)
 		if (1)
-			adjustBruteLoss(200)
-			return
+			adjustBruteLoss(250)
 
 		if (2)
 			adjustBruteLoss(100)
