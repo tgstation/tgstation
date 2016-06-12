@@ -91,7 +91,7 @@
 			new new_thing_type(get_turf(target), proselytize_values["spawn_dir"])
 		else
 			var/atom/A = new new_thing_type(get_turf(target))
-			A.dir = proselytize_values["spawn_dir"]
+			A.setDir(proselytize_values["spawn_dir"])
 		qdel(target)
 	modify_stored_alloy(-proselytize_values["alloy_cost"])
 	return 1

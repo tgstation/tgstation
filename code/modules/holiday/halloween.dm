@@ -191,7 +191,7 @@
 
 /mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
 	loc = get_step(src, direction)
-	dir = direction
+	setDir(direction)
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
 	if(prob(80))

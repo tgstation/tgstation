@@ -68,6 +68,7 @@
 		Moved(oldloc, direct)
 
 	last_move = direct
+	setDir(direct)
 
 	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
 		if(loc && direct && last_move == direct)
@@ -187,7 +188,7 @@
 
 	var/old_dir = dir
 	. = step(src, direction)
-	dir = old_dir
+	setDir(old_dir)
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag

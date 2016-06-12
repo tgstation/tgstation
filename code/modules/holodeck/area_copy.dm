@@ -84,7 +84,7 @@
 		var/old_icon1 = T.icon
 
 		var/turf/X = new T.type(B)
-		X.dir = old_dir1
+		X.setDir(old_dir1)
 		X.icon = old_icon1
 		X.icon_state = old_icon_state1
 

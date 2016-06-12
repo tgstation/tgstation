@@ -306,14 +306,14 @@
 			if(ratvar_awakens && target)
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
-			dir = get_dir(get_turf(src), get_turf(target))
+			setDir(get_dir(get_turf(src), get_turf(target)))
 	else
 		if(!acquire_nearby_target() && prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			var/list/idle_messages = list("[src] sulkily glares around.", "[src] lazily drifts from side to side.", "[src] looks around for something to burn.", "[src] slowly turns in circles.")
 			if(prob(50))
 				visible_message("<span class='notice'>[pick(idle_messages)]</span>")
 			else
-				dir = pick(NORTH, EAST, SOUTH, WEST) //Random rotation
+				setDir(pick(NORTH, EAST, SOUTH, WEST) )//Random rotation
 
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
 	var/list/possible_targets = list()

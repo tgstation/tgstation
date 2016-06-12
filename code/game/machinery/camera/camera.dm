@@ -156,7 +156,7 @@
 					assembly = new()
 				assembly.loc = src.loc
 				assembly.state = 1
-				assembly.dir = src.dir
+				assembly.setDir(src.dir)
 				assembly = null
 				qdel(src)
 			return
@@ -339,13 +339,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					src.setDir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					src.setDir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					src.setDir(EAST)
 				if(EAST)
-					src.dir = WEST
+					src.setDir(WEST)
 			break
 
 //Return a working camera that can see a given mob
