@@ -937,7 +937,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 //Revenant scriptures are different than any others. They are all very powerful, but also very costly and have drawbacks. This might be a very long invocation time or a very high component cost.
 
 /datum/clockwork_scripture/invoke_nezbere //Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
-	descname = "Temporary Structure Buff"
+	descname = "Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
 	clockwork proselytizers will cost no replicant alloy to use."
@@ -988,7 +988,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/targeted/invoke_sevtug //Invoke Sevtug, the Formless Pariah: Allows the invoker to silently control the mind of a defined target for one minute.
-	descname = "Temporary Mind Control"
+	descname = "Mind Control"
 	name = "Invoke Sevtug, the Formless Pariah"
 	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to silently dominate the mind of a defined target \
 	for one minute. <b>Note that this process is very delicate and very many things may prevent you from ever returning to your old form!</b>"
@@ -1020,7 +1020,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/invoke_nzcrentr //Invoke Nzcrentr, the Forgotten Arbiter: Imbues an immense amount of energy into the invoker. After several seconds, everyone nearby will be hit with a devastating chain lightning blast.
-	descname = "Area Lightning Blast"
+	descname = "Lightning Blast"
 	name = "Invoke Nzcrentr, the Forgotten Arbiter"
 	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. The immense energy Nzcrentr wields will allow you to imbue a tiny fraction of it into your body. After several \
 	seconds, anyone nearby will be struck by a devastating lightning bolt."
@@ -1072,7 +1072,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/invoke_inathneq //Invoke Inath-Neq, the Resonant Cogwheel: Grants a huge health boost to nearby servants that rapidly decreases to original levels.
-	descname = "Temporary Invulnerability"
+	descname = "Invulnerability"
 	name = "Invoke Inath-Neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant a massive maximum and current health boost to all nearby servants that \
 	quickly returns itself to normal over the course of ten seconds."
