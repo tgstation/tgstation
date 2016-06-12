@@ -5,7 +5,7 @@
 	var/toxins_alert = 0
 	var/fire_alert = 0
 	var/pressure_alert = 0
-
+	base_insulation = 0.5
 	var/temperature_alert = 0
 
 
@@ -91,8 +91,6 @@
 /mob/living/carbon/monkey/calculate_affecting_pressure(var/pressure)
 	..()
 	return pressure
-
-/mob/living/carbon/monkey
 
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
@@ -428,7 +426,7 @@
 	if(uniform)
 		thermal_protection += uniform.return_thermal_protection()
 
-	var/max_protection = get_thermal_protection(get_thermal_protection_flags())
+	var/max_protection = max(get_thermal_protection(get_thermal_protection_flags()),base_insulation) // monkies have fur, silly!
 	return min(thermal_protection,max_protection)
 
 /mob/living/carbon/monkey/get_heat_protection_flags(temperature)
