@@ -1191,6 +1191,15 @@
 					/obj/item/clothing/suit/hooded/chaplain_hoodie)
 	crate_name = "religious supplies crate"
 
+/datum/supply_pack/misc/book_crate
+	name = "Book Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/book/codex_gigas,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/random/triple)
+
 /datum/supply_pack/misc/posters
 	name = "Corporate Posters Crate"
 	cost = 800
