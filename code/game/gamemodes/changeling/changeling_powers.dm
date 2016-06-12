@@ -967,3 +967,44 @@ var/list/datum/dna/hivemind_bank = list()
 	feedback_add_details("changeling_powers","ED")
 	return 1
 
+/mob/proc/changeling_armblade()
+	set category = "Changeling"
+	set name = "Generate Arm Blade (20)"
+	set desc="Transform one of our arms into a deadly blade."
+
+	if(!istype(src, /mob/living/carbon/human))
+		return
+	var/mob/living/carbon/human/H = src
+	var/datum/changeling/changeling = null
+	if(src.mind && src.mind.changeling)
+		changeling = src.mind.changeling
+	if(!changeling)
+		return 0
+	for(var/obj/item/weapon/armblade/W in src)
+		visible_message("<span class='warning'>With a sickening crunch, (src) reforms their arm blade into an arm!</span>",
+		"<span class='notice'>We assimilate the weapon back into our body.</span>",
+		"<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		playsound(src, 'sound/weapons/bloodyslice.ogg', 30, 1)
+		qdel(W)
+		return 1
+	var/datum/changeling/check_chems = changeling_power(20,1)
+	if(!check_chems)
+		return
+	var/good_hand
+	if(H.can_use_hand(active_hand))
+		good_hand = active_hand
+	else
+		for(var/i = 1 to held_items.len)
+			if(H.can_use_hand(i))
+				good_hand = i
+	if(good_hand)
+		drop_item(held_items[good_hand], force_drop = 1)
+		var/obj/item/weapon/armblade/A = new (src)
+		put_in_hand(good_hand, A)
+		H.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>",
+			"<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>",
+			"<span class='italics'>You hear organic matter ripping and tearing!</span>")
+		playsound(H, 'sound/weapons/bloodyslice.ogg', 30, 1)
+		changeling.chem_charges -= 20
+		feedback_add_details("changeling_powers","AB")
+		return 1

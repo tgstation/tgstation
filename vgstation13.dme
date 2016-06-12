@@ -685,6 +685,7 @@
 #include "code\game\objects\items\stacks\tiles\plasteel.dm"
 #include "code\game\objects\items\stacks\tiles\tile_types.dm"
 #include "code\game\objects\items\weapons\airlock_painter.dm"
+#include "code\game\objects\items\weapons\armblade.dm"
 #include "code\game\objects\items\weapons\barricade_kit.dm"
 #include "code\game\objects\items\weapons\boomerang.dm"
 #include "code\game\objects\items\weapons\cards_ids.dm"

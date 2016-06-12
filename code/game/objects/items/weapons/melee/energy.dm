@@ -167,3 +167,4 @@
 	..()
 	_color = null
 	update_icon()
+
