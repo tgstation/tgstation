@@ -354,6 +354,9 @@
 /obj/machinery/door/window/clockwork/ratvar_act()
 	health = initial(health)
 
+/obj/machinery/door/window/clockwork/hasPower()
+	return TRUE //yup that's power all right
+
 /obj/machinery/door/window/clockwork/narsie_act()
 	take_damage(rand(30, 60), BRUTE)
 	if(src)

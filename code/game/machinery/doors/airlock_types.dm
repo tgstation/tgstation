@@ -428,6 +428,9 @@
 		return 1
 	return 0
 
+/obj/machinery/door/airlock/clockwork/hasPower()
+	return TRUE //yes we do have power
+
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))
 		return 0
