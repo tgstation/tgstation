@@ -1,16 +1,23 @@
-//Function Call verb: Calls forth a Ratvarian spear.
-/mob/living/carbon/human/proc/function_call()
-	set name = "Function Call"
-	set desc = "Calls forth your Ratvarian spear."
-	set category = "Clockwork"
+//Function Call action: Calls forth a Ratvarian spear.
+/datum/action/innate/function_call
+	name = "Function Call"
+	button_icon_state = "ratvarian_spear"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 
-	if(usr.l_hand && usr.r_hand)
+/datum/action/innate/function_call/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/innate/function_call/Activate()
+	if(owner.l_hand && owner.r_hand)
 		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
 		return 0
-	usr.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	owner.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
-	usr.put_in_hands(R)
-	usr.verbs -= /mob/living/carbon/human/proc/function_call
+	owner.put_in_hands(R)
+	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
+		qdel(F)
 	return 1
 
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component

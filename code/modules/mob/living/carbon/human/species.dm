@@ -1161,7 +1161,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return TRUE
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100

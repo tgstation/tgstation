@@ -120,7 +120,8 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
-	M.verbs -= /mob/living/carbon/human/proc/function_call //Removes any bound Ratvarian spears
+	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
+		qdel(F)
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))

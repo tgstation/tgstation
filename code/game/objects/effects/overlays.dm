@@ -24,8 +24,8 @@
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
-	var/duration = 10
-	var/randomdir = 1
+	var/duration = 10 //in deciseconds
+	var/randomdir = TRUE
 
 /obj/effect/overlay/temp/Destroy()
 	..()
@@ -37,6 +37,48 @@
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
+
+/obj/effect/overlay/temp/bloodsplatter
+	icon = 'icons/effects/blood.dmi'
+	duration = 5
+	randomdir = FALSE
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/overlay/temp/bloodsplatter/New(loc, set_dir)
+	if(set_dir in diagonals)
+		icon_state = "splatter[pick(1, 2, 6)]"
+	else
+		icon_state = "splatter[pick(3, 4, 5)]"
+	..()
+	var/target_pixel_x = 0
+	var/target_pixel_y = 0
+	switch(set_dir)
+		if(NORTH)
+			target_pixel_y = 16
+		if(SOUTH)
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(EAST)
+			target_pixel_x = 16
+		if(WEST)
+			target_pixel_x = -16
+		if(NORTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = 16
+		if(NORTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = 16
+		if(SOUTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(SOUTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+	setDir(set_dir)
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
+
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
