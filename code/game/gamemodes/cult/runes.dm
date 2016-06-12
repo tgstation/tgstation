@@ -185,7 +185,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/imbue/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1] //the first invoker is always the user
-	var/turf/T = get_turf(src)
 	var/list/papers_on_rune = checkpapers()
 	var/entered_talisman_name
 	var/obj/item/weapon/paper/talisman/talisman_type
@@ -216,14 +215,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Talisman Creation rune failed - no blank papers on rune")
 		return
-	var/obj/item/weapon/paper/paper_to_imbue = pick(papers_on_rune)
+	var/obj/item/weapon/paper/paper_to_imbue = papers_on_rune[1]
 	..()
 	visible_message("<span class='warning'>Dark power begins to channel into the paper!</span>")
 	rune_in_use = 1
 	if(!do_after(user, 100, target = paper_to_imbue))
 		rune_in_use = 0
 		return
-	new talisman_type(T)
+	new talisman_type(get_turf(src))
 	visible_message("<span class='warning'>[src] glows with power, and bloody images form themselves on [paper_to_imbue].</span>")
 	qdel(paper_to_imbue)
 	rune_in_use = 0
