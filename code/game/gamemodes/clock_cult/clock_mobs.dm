@@ -100,6 +100,9 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/Life()
 	..()
 	if(is_in_host())
+		if(!ratvar_awakens && host.stat == DEAD)
+			death()
+			return
 		adjust_fatigue(-2)
 		if(!fatigue && recovering)
 			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
@@ -110,6 +113,9 @@
 			update_fatigue()
 		else
 			if(host)
+				if(host.stat == DEAD)
+					death()
+					return
 				switch(get_dist(get_turf(src), get_turf(host)))
 					if(2 to 4)
 						adjust_fatigue(1)
@@ -122,6 +128,9 @@
 						adjust_fatigue(-1)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/update_fatigue()
+	if(!ratvar_awakens && host && host.stat == DEAD)
+		death()
+		return
 	if(ratvar_awakens)
 		speed = -1
 		melee_damage_lower = 30
@@ -158,11 +167,11 @@
 					recovering = TRUE
 					return_to_host()
 				else
-					qdel(src) //Shouldn't ever happen, but...
+					death() //Shouldn't ever happen, but...
 
 /mob/living/simple_animal/hostile/clockwork_marauder/death(gibbed)
 	..(TRUE)
-	emerge_from_host()
+	emerge_from_host(0, 1)
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
 	playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 100, 1)
@@ -213,7 +222,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
-	if(!ratvar_awakens || amount > 0)
+	if(!ratvar_awakens || amount < 0)
 		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 		update_fatigue()
 	else
@@ -311,14 +320,15 @@
 		return 0
 	var/resulthealth
 	resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
-	if(resulthealth > 60) //if above 20 health, fails
+	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
 		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
+		return
 	return emerge_from_host(0)
 
-/mob/living/simple_animal/hostile/clockwork_marauder/proc/emerge_from_host(hostchosen) //Notice that this is a proc rather than a verb - marauders can NOT exit at will, but they CAN return
+/mob/living/simple_animal/hostile/clockwork_marauder/proc/emerge_from_host(hostchosen, force) //Notice that this is a proc rather than a verb - marauders can NOT exit at will, but they CAN return
 	if(!is_in_host())
 		return 0
-	if(recovering)
+	if(!force && recovering)
 		if(hostchosen)
 			host << "<span class='heavy_brass'>[true_name] is too weak to come forth!</span>"
 		else
@@ -330,7 +340,7 @@
 	else
 		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
 	forceMove(get_turf(host))
-	visible_message("<span class='warning'>[host]'s skin glows red as a [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
+	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
