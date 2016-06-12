@@ -96,9 +96,9 @@
 		H = hud_used.inv_slots[slot_r_hand]
 		H.update_icon()
 	/*if (!( src.hand ))
-		src.hands.dir = NORTH
+		src.hands.setDir(NORTH)
 	else
-		src.hands.dir = SOUTH*/
+		src.hands.setDir(SOUTH)*/
 	return
 
 /mob/living/carbon/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
@@ -326,7 +326,7 @@
 				D = SOUTH
 			if(WEST)
 				D = NORTH
-		dir = D
+		setDir(D)
 		spintime -= speed
 
 /mob/living/carbon/resist_buckle()

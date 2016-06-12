@@ -23,7 +23,7 @@
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
-
+	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 
 /obj/machinery/door/New()

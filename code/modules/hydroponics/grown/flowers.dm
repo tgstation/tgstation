@@ -12,6 +12,7 @@
 	potency = 20
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
 	icon_dead = "poppy-dead"
 	mutatelist = list(/obj/item/seeds/poppy/geranium, /obj/item/seeds/poppy/lily)
@@ -78,6 +79,7 @@
 	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_WEED
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list("nutriment" = 0.04)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/harebell
@@ -103,6 +105,7 @@
 	yield = 2
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
@@ -181,7 +184,9 @@
 	if(istype(M, /mob/living))
 		M << "<span class='danger'>You are lit on fire from the intense heat of the [name]!</span>"
 		M.adjust_fire_stacks(seed.potency / 20)
-		M.IgniteMob()
+		if(M.IgniteMob())
+			message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+			log_game("[key_name(user)] set [key_name(M)] on fire")
 
 /obj/item/weapon/grown/novaflower/afterattack(atom/A as mob|obj, mob/user,proximity)
 	if(!proximity) return

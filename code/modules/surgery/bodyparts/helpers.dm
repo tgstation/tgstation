@@ -24,7 +24,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/proc/has_left_hand()
+/mob/proc/has_left_hand()
 	return 1
 
 /mob/living/carbon/human/has_left_hand()
@@ -34,7 +34,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/proc/has_right_hand()
+/mob/proc/has_right_hand()
 	return 1
 
 /mob/living/carbon/human/has_right_hand()

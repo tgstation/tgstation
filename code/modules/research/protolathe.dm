@@ -51,13 +51,16 @@ Note: Must be placed west/left of and R&D console to function.
 	return ..()
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
-	var/T = 0
+	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
+
+	materials.max_amount = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	materials.max_amount = T * 75000
-	T = 1.2
+		materials.max_amount += M.rating * 75000
+
+	var/T = 1.2
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T -= M.rating/10
 	efficiency_coeff = min(max(0, T), 1)

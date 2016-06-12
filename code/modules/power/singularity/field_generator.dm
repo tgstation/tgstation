@@ -283,7 +283,7 @@ field_generator power level display
 			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
 			CF.set_master(src,G)
 			CF.loc = T
-			CF.dir = field_dir
+			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)

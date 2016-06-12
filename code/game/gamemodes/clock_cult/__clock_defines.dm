@@ -14,7 +14,13 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 #define SCRIPTURE_REVENANT 4
 #define SCRIPTURE_JUDGEMENT 5
 
-#define SLAB_PRODUCTION_THRESHOLD 60 //How many cycles slabs require to produce a single component; defaults to one minute
+#define SLAB_PRODUCTION_TIME 400 //how long(deciseconds) slabs require to produce a single component; defaults to 40 seconds
+
+#define CACHE_PRODUCTION_TIME 300 //how long(deciseconds) caches require to produce a component; defaults to 30 seconds
+
+#define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
+
+#define MAX_COMPONENTS_BEFORE_RAND 10*LOWER_PROB_PER_COMPONENT //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
 #define GATEWAY_SUMMON_RATE 3 //The speed multiplier used by the Gateway to the Celestial Derelict; defaults to 3x speed
 

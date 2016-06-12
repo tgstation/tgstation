@@ -60,7 +60,7 @@
 			up = !up
 			flags ^= visor_flags
 			flags_inv ^= visor_flags_inv
-			flags_cover ^= initial(flags_cover)
+			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
 			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
 

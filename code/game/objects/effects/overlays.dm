@@ -33,7 +33,7 @@
 
 /obj/effect/overlay/temp/New()
 	if(randomdir)
-		dir = pick(cardinal)
+		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
@@ -76,7 +76,7 @@
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-	dir = set_dir
+	setDir(set_dir)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 
@@ -127,7 +127,7 @@
 	if(mimiced_atom)
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
-		dir = mimiced_atom.dir
+		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
@@ -147,7 +147,7 @@
 /obj/effect/overlay/temp/cult/phase/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 
 /obj/effect/overlay/temp/cult/phase/out
 	icon_state = "cultout"

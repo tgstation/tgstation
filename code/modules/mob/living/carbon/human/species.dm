@@ -904,7 +904,7 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			if(specflags & FLYING)
+			if(FLYING in specflags)
 				. += speedmod
 				return
 			// If there's no gravity we have the sanic speed of jetpack.
@@ -945,7 +945,7 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			if(!(specflags & FLYING))
+			if(!(FLYING in specflags))
 				var/leg_amount = H.get_num_legs()
 				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 				if(!leg_amount)
@@ -1233,8 +1233,12 @@
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = 1
-		H.throw_alert("oxy", /obj/screen/alert/oxy)
-
+		if(safe_oxygen_min)
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
+		else if(safe_toxins_min)
+			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else if(safe_co2_min)
+			H.throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
 		return 0
 
 	var/gas_breathed = 0
@@ -1506,9 +1510,10 @@
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
-/datum/species/proc/IgniteMob(mob/living/carbon/human/H)
+/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
-		return 1
+		return FALSE
+	return TRUE
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return

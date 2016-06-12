@@ -26,7 +26,7 @@
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
-		src.dir = dir
+		src.setDir(dir)
 	if(building)
 		buildstage = 0
 		panel_open = 1

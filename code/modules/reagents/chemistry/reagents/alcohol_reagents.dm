@@ -190,6 +190,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 35
 
+/datum/reagent/consumable/ethanol/lizardwine
+	name = "Lizard wine"
+	id = "lizardwine"
+	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
+	color = "#7E4043" // rgb: 126, 64, 67
+	boozepwr = 45
+
 /datum/reagent/consumable/ethanol/grappa
 	name = "Grappa"
 	id = "grappa"
