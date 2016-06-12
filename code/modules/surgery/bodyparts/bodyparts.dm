@@ -185,7 +185,10 @@
 	should_draw_gender = S.sexes
 
 	if(MUTCOLORS in S.specflags)
-		species_color = H.dna.features["mcolor"]
+		if(S.fixed_mut_color)
+			species_color = S.fixed_mut_color
+		else
+			species_color = H.dna.features["mcolor"]
 		should_draw_greyscale = TRUE
 	else
 		species_color = ""
