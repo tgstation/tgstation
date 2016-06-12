@@ -640,7 +640,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.stat || affects_stat)
-			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
+			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				sigil_effects(L)
 			return 1
 

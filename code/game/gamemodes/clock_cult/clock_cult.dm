@@ -58,6 +58,8 @@ This file's folder contains:
 		return 0
 	if(M.mind.enslaved_to)
 		return 0
+	if(isdrone(M))
+		return 0
 	return 1
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
@@ -76,6 +78,13 @@ This file's folder contains:
 				M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>")
 			M << "<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>" //silicons have a custom fail message
 			return 0
+	else if(istype(M, /mob/living/simple_animal/drone))
+		if(!silent)
+			M << "<span class='heavy_brass'>You must not involve yourself in other affairs, but... this one... you see it all. Your world glows a brilliant yellow, and all it once it comes to you. \
+			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>"
+		var/mob/living/simple_animal/drone/D = M
+		D.update_drone_hack(TRUE, TRUE)
+		D.languages |= HUMAN
 	else if(!silent)
 		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 
