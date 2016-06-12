@@ -538,6 +538,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
