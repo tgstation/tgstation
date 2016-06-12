@@ -37,7 +37,7 @@ var/global/list/lawlorify = list (
 			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
 			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
 			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
-			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
+			BANISH_CANDLES = "A large number of nearby lit candles will prevent it from resurrecting.",
 			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
 			BANISH_FUNERAL_GARB = "If clad in funeral garments, this devil will be unable to resurrect.  Should the clothes not fit, lay them gently on top of the devil's corpse."
 		),
