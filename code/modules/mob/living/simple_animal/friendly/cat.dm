@@ -219,15 +219,36 @@
 	icon_state = "cak"
 	icon_living = "cak"
 	icon_dead = "cak_dead"
+	health = 1000
+	maxHealth = 1000
+	harm_intent_damage = 200
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
-	/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
+	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
+	deathmessage = "loses its false life and collapses!"
+	death_sound = "bodyfall"
+
+/mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
+	..()
+	var/obj/item/organ/brain/B = locate(/obj/item/organ/brain) in contents
+	if(!B || !B.brainmob || !B.brainmob.mind)
+		return
+	B.brainmob.mind.transfer_to(src)
+	src << "<font size=3><b>Y</b></font><b>ou are a cak! You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
+	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
+	free cake to the station!</b>"
+	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
+	if(new_name)
+		src << "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>"
+		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life()
 	..()
+	if(stat)
+		return
 	if(health < maxHealth)
-		adjustBruteLoss(-2) //Fast life regen
+		adjustBruteLoss(-150) //Fast life regen
 	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
 		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
