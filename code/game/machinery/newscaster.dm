@@ -200,7 +200,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 

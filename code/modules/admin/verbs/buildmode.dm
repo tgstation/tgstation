@@ -52,7 +52,7 @@
 
 
 /obj/screen/buildmode/bdir/update_icon()
-	dir = bd.build_dir
+	setDir(bd.build_dir)
 	return
 
 /obj/screen/buildmode/quit
@@ -273,19 +273,19 @@
 				switch(build_dir)
 					if(NORTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTH
+						WIN.setDir(NORTH)
 					if(SOUTH)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = SOUTH
+						WIN.setDir(SOUTH)
 					if(EAST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = EAST
+						WIN.setDir(EAST)
 					if(WEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = WEST
+						WIN.setDir(WEST)
 					if(NORTHWEST)
 						var/obj/structure/window/reinforced/WIN = new/obj/structure/window/reinforced(get_turf(object))
-						WIN.dir = NORTHWEST
+						WIN.setDir(NORTHWEST)
 				log_admin("Build Mode: [key_name(user)] built a window at ([object.x],[object.y],[object.z])")
 		if(ADV_BUILDMODE)
 			if(left_click)
@@ -295,7 +295,7 @@
 					T.ChangeTurf(objholder)
 				else
 					var/obj/A = new objholder (get_turf(object))
-					A.dir = build_dir
+					A.setDir(build_dir)
 					log_admin("Build Mode: [key_name(user)] modified [A]'s ([A.x],[A.y],[A.z]) dir to [build_dir]")
 			else if(right_click)
 				if(isobj(object))

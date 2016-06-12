@@ -26,17 +26,35 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/multiple_invokers_optional = FALSE //If scripture can have multiple invokers to bolster its effects
 	var/tier = SCRIPTURE_PERIPHERAL //The scripture's tier
 
+//components the scripture used from a slab
+	var/list/used_slab_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+//components the scripture used from the global cache
+	var/list/used_cache_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
+
 /datum/clockwork_scripture/proc/run_scripture()
 	if(can_recite() && check_special_requirements())
+		if(slab.busy)
+			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
+			return 0
 		slab.busy = "Invocation ([name]) in progress"
-		if(check_special_requirements() && recital())
-			slab.busy = null
-			if(check_special_requirements() && scripture_effects() && (!ratvar_awakens || !slab.no_cost))
-				for(var/i in required_components)
-					if(clockwork_component_cache[i] >= consumed_components[i]) //Draw components from the global cache first
-						clockwork_component_cache[i] -= consumed_components[i]
-					else
-						slab.stored_components[i] -= consumed_components[i]
+		if(!ratvar_awakens && !slab.no_cost)
+			for(var/i in consumed_components)
+				if(slab.stored_components[i] >= consumed_components[i]) //Draw components from the slab first
+					slab.stored_components[i] -= consumed_components[i]
+					used_slab_components[i]++
+				else
+					clockwork_component_cache[i] -= consumed_components[i]
+					used_cache_components[i]++
+		if(!check_special_requirements() || !recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
+			for(var/i in used_slab_components)
+				if(used_slab_components[i])
+					if(slab)
+						slab.stored_components[i] += consumed_components[i]
+					else //if we can't find a slab add to the global cache
+						clockwork_component_cache[i] += consumed_components[i]
+			for(var/i in used_cache_components)
+				if(used_cache_components[i])
+					clockwork_component_cache[i] += consumed_components[i]
 	if(slab)
 		slab.busy = null
 	qdel(src)
@@ -154,11 +172,17 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/targeted/check_special_requirements()
 	while(!target)
-		target_name = stripped_input(invoker, "Enter the actual name of a target (case-sensitive).", name)
+		target_name = reject_bad_name(input(invoker, "Enter the actual name of a target (case-sensitive).", name), 1)
 		if(!target_name)
 			return 0
-		target = find_target()
-		if(target)
+		var/list/targets = find_targets()
+		if(targets.len)
+			if(targets.len == 1)
+				target = targets[1]
+			else
+				target = input(invoker, "Choose a target to affect.", "Target Selection") as null|anything in targets
+			if(!target)
+				return 0
 			if(!target.mind)
 				invoker << "<span class='warning'>[target] has no mind!</span>"
 				target = null
@@ -168,15 +192,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(is_servant_of_ratvar(target) && !affects_servants)
 				invoker << "<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>"
 				target = null
+		else
+			invoker << "<span class='warning'>There are no targets with that name!</span>"
+			return 0
 	return 1
 
-/datum/clockwork_scripture/targeted/proc/find_target()
+/datum/clockwork_scripture/targeted/proc/find_targets()
+	var/list/validtargets = list()
 	for(var/mob/living/L in living_mob_list)
 		if(L.real_name == target_name)
 			if(is_servant_of_ratvar(L) && !affects_servants)
-				return 0
-			return L
-	return 0
+				continue
+			validtargets |= L
+	. = validtargets
 
 /////////////
 // DRIVERS //
@@ -317,14 +345,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
 	name = "Sigil of Submission"
-	desc = "Places a subtle sigil that will enslave any valid beings standing on it after a time."
+	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
 	channel_time = 60
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
+	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
 	usage_tip = "This should not be your primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
@@ -337,7 +365,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	invocations = list("Z`rgny, orpbzr terngre!")
 	channel_time = 0
 	required_components = list("replicant_alloy" = 1)
-	consumed_components = list("replicant_alloy" = 1) //People were spamming slabs to get infinite components. You chose this.
 	whispered = TRUE
 	usage_tip = "This is inefficient as a way to produce components, as it consumes them in the first place."
 	tier = SCRIPTURE_DRIVER
@@ -545,21 +572,21 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1)
 	whispered = TRUE
-	usage_tip = "The spear will snap in two when thrown but do massive damage."
+	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage. Both of these will break the spear, however."
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
-	if(invoker.verbs.Find(/mob/living/carbon/human/proc/function_call))
+	for(var/datum/action/innate/function_call/F in invoker.actions)
 		invoker << "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>"
 		return 0
 	return ishuman(invoker)
 
 /datum/clockwork_scripture/function_call/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" verb in your Clockwork tab to call it forth.</span>")
-	invoker.verbs += /mob/living/carbon/human/proc/function_call
+	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	var/datum/action/innate/function_call/F = new()
+	F.Grant(invoker)
 	return 1
-
 
 
 /datum/clockwork_scripture/spatial_gateway
@@ -766,6 +793,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_APPLICATION
 
 /datum/clockwork_scripture/targeted/justiciars_gavel/scripture_effects()
+	if(!target)
+		return 0 //wait where'd they go
 	if(iscarbon(target))
 		if(iscultist(target))
 			target.visible_message("<span class='warning'>Blood sprays from a sudden wound on [target]'s head!</span>", \
@@ -911,7 +940,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
 		P.uses_alloy = FALSE
 	for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects) //Daemons produce components twice as quickly
-		D.production_interval /= 2
+		D.production_time *= 0.5
 	for(var/obj/structure/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 	spawn(600)
@@ -919,11 +948,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			W.damage_per_tick = initial(W.damage_per_tick)
 			W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			P.uses_alloy = TRUE
+			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/item/clockwork/tinkerers_daemon/D in all_clockwork_objects)
-			D.production_interval = initial(D.production_interval)
+			D.production_time = initial(D.production_time)
 		for(var/obj/structure/clockwork/powered/M in all_clockwork_objects)
-			M.needs_power = TRUE
+			M.needs_power = initial(M.needs_power)
 	return 1
 
 
@@ -951,6 +980,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return ..()
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/scripture_effects()
+	if(!target)
+		return 0 //wait where'd they go
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.dominate_mind(target, 600)
 	return 1
@@ -1041,8 +1072,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.health += 500
 		L.color = "#1E8CE1"
 		L.stun_absorption = TRUE
-		spawn(0)
-			animate(invoker, color = initial(invoker.color), time = 100)
+		animate(invoker, color = initial(invoker.color), time = 100)
 		affected_servants += L
 	for(var/i in 1 to 10)
 		sleep(10)

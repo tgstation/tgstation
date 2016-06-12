@@ -78,7 +78,7 @@
 	var/exit_delay
 
 	if(reverse_launch)
-		dir = turn(dir, 180) // Back it up
+		setDir(turn(dir, 180) )// Back it up
 
 	for(var/obj/structure/transit_tube/tube in loc)
 		if(tube.has_exit(dir))
@@ -105,13 +105,13 @@
 				break
 
 		if(current_tube == null)
-			dir = next_dir
+			setDir(next_dir)
 			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
-		dir = next_dir
+		setDir(next_dir)
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -200,12 +200,12 @@
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							setDir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						setDir(direction)
 						return

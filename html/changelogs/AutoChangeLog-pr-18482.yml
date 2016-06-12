@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Sigils of Transgression will now only stun for about 5 seconds, from around 10 seconds."
+  - tweak: "Sigils of Submission take about 5 seconds to convert a target, from around 3 seconds, and will glow faintly."
+  - rscadd: "Sigils of any type can be attacked with an open hand to destroy them, instead of requiring harm intent. Servants still require harm intent to do so."

@@ -11,7 +11,7 @@
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
+	src.setDir(pick(1,2,3,4))
 	..()
 	air_update_turf(1)
 
@@ -407,7 +407,7 @@
 		T2 = T
 		var/obj/machinery/shieldwall/CF = new/obj/machinery/shieldwall/(src, G) //(ref to this gen, ref to connected gen)
 		CF.loc = T
-		CF.dir = field_dir
+		CF.setDir(field_dir)
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)

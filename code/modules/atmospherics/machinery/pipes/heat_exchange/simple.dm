@@ -20,9 +20,9 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/proc/normalize_dir()
 	if(dir==SOUTH)
-		dir = NORTH
+		setDir(NORTH)
 	else if(dir==WEST)
-		dir = EAST
+		setDir(EAST)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/atmosinit()
 	normalize_dir()

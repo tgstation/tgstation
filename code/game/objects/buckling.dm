@@ -52,7 +52,7 @@
 		return 0
 
 	M.buckled = src
-	M.dir = dir
+	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
 	post_buckle_mob(M)
