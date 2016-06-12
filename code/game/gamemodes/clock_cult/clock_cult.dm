@@ -40,11 +40,25 @@ This file's folder contains:
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/living/M)
+	if(!istype(M))
+		return 0
+	if(!M.mind)
+		return 0
+	if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		return 0
+	if(iscultist(M))
+		return 0
+	if(isconstruct(M))
+		return 0
 	if(isguardian(M))
 		var/mob/living/simple_animal/hostile/guardian/G = M
 		if(!is_servant_of_ratvar(G.summoner))
-			return 0
-	return !is_servant_of_ratvar(M) && !iscultist(M) && !isloyal(M) && !isloyal(M) && !isdrone(M) && !M.mind.assigned_role in list("Captain", "Chaplain") && !M.mind.enslaved_to
+			return 0 //can't convert it unless the owner is converted
+	if(isloyal(M))
+		return 0
+	if(M.mind.enslaved_to)
+		return 0
+	return 1
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
 	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
