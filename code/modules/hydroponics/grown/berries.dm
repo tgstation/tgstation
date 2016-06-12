@@ -122,7 +122,7 @@
 	species = "bluecherry"
 	plantname = "Blue Cherry Tree"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries
-	mutatelist = list(/obj/item/seeds/cherry/bomb)
+	mutatelist = list()
 	reagents_add = list("nutriment" = 0.07, "sugar" = 0.07)
 	rarity = 10
 
