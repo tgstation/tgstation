@@ -58,6 +58,8 @@ This file's folder contains:
 		return 0
 	if(M.mind.enslaved_to)
 		return 0
+	if(isdrone(M))
+		return 0
 	return 1
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
