@@ -24,10 +24,6 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
 		SortAreas() //To add recently loaded areas
-	else
-		world << "<span class='boldannounce'>No away missions found.</span>"
-		return
-
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
@@ -65,8 +61,6 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 /proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	var/overall_sanity = 100
 	var/ruins = potentialRuins.Copy()
-
-	world << "<span class='boldannounce'>Loading ruins...</span>"
 
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
@@ -122,11 +116,16 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		template = safepick(possible_ruins)
 	if(!template)
 		return FALSE
-	for(var/i in template.get_affected_turfs(get_turf(src), 1))
+	var/turf/central_turf = get_turf(src)
+	for(var/i in template.get_affected_turfs(central_turf, 1))
 		var/turf/T = i
 		for(var/mob/living/simple_animal/monster in T)
 			qdel(monster)
-	template.load(get_turf(src),centered = TRUE)
+	template.load(central_turf,centered = TRUE)
 	template.loaded++
+	var/datum/map_template/ruin = template
+	if(istype(ruin))
+		new /obj/effect/landmark/ruin(central_turf, ruin)
+
 	qdel(src)
 	return TRUE

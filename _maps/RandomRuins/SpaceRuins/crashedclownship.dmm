@@ -1,44 +1,697 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/mineral/random,/area/space)
-"c" = (/turf/open/floor/plating/asteroid/airless,/area/space)
-"d" = (/turf/closed/wall/mineral/clown,/area/space)
-"e" = (/obj/machinery/door/airlock/clown,/turf/open/floor/mineral/bananium/airless,/area/space)
-"f" = (/obj/effect/mob_spawn/human/clown,/turf/open/floor/mineral/bananium/airless,/area/space)
-"g" = (/turf/open/floor/mineral/bananium/airless,/area/space)
-"h" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/space)
-"i" = (/obj/structure/closet/crate{icon_state = "crateopen"; opened = 1},/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/space)
-"j" = (/obj/structure/closet/secure_closet{name = "clown locker"; req_access_txt = "46"},/obj/item/clothing/shoes/clown_shoes/banana_shoes,/obj/effect/spawner/lootdrop/maintenance{lootcount = 2; name = "2maintenance loot spawner"},/turf/open/floor/mineral/bananium/airless,/area/space)
-"k" = (/obj/structure/shuttle/engine/heater{color = "#FFFF00"; dir = 4; icon_state = "heater"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/space)
-"l" = (/obj/structure/shuttle/engine/propulsion{color = "#FFFF00"; dir = 8; icon_state = "propulsion_l"},/turf/open/space,/area/space)
-"m" = (/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/space)
-"n" = (/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/space)
-"o" = (/obj/item/weapon/shard{icon_state = "medium"},/obj/structure/chair{dir = 8},/turf/open/floor/plating/asteroid/airless,/area/space)
-"p" = (/obj/effect/mob_spawn/human/clown{name = "Clown Pilot"},/turf/open/floor/mineral/bananium/airless,/area/space)
-"q" = (/obj/item/weapon/paper{info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"},/turf/open/floor/mineral/bananium/airless,/area/space)
-"r" = (/obj/structure/grille{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 4},/obj/structure/window/reinforced{color = "#FFFF00"; dir = 8},/turf/open/floor/plating/airless{color = "#FFFF00"},/area/space)
-"s" = (/obj/item/weapon/shard,/obj/structure/chair{dir = 8},/turf/open/floor/mineral/bananium/airless,/area/space)
-"t" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/open/floor/mineral/bananium/airless,/area/space)
-"u" = (/obj/item/weapon/storage/bag/ore,/turf/open/floor/mineral/bananium/airless,/area/space)
-"v" = (/obj/item/weapon/pickaxe,/turf/open/floor/mineral/bananium/airless,/area/space)
-"w" = (/obj/structure/closet/crate,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/obj/item/weapon/ore/bananium,/turf/open/floor/mineral/bananium/airless,/area/space)
-"x" = (/obj/item/weapon/shovel,/turf/open/floor/mineral/bananium/airless,/area/space)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/closed/mineral/random,
+/area/space)
+"c" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
+"d" = (
+/turf/closed/wall/mineral/clown,
+/area/ruin/unpowered)
+"e" = (
+/obj/machinery/door/airlock/clown,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"f" = (
+/obj/effect/mob_spawn/human/clown,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"g" = (
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"h" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"i" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen";
+	opened = 1
+	},
+/obj/item/weapon/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"j" = (
+/obj/structure/closet/secure_closet{
+	name = "clown locker";
+	req_access_txt = "46"
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/shuttle/engine/heater{
+	color = "#FFFF00";
+	dir = 4;
+	icon_state = "heater"
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	color = "#FFFF00"
+	},
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/shuttle/engine/propulsion{
+	color = "#FFFF00";
+	dir = 8;
+	icon_state = "propulsion_l"
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"m" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"n" = (
+/obj/item/weapon/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"o" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"p" = (
+/obj/effect/mob_spawn/human/clown{
+	name = "Clown Pilot"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"q" = (
+/obj/item/weapon/paper{
+	info = "The call has gone out! Our ancestral home has been rediscovered! Not a small patch of land, but a true clown nation, a true Clown Planet! We're on our way home at last!"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/grille{
+	color = "#FFFF00"
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00"
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	color = "#FFFF00";
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	color = "#FFFF00"
+	},
+/area/ruin/unpowered)
+"s" = (
+/obj/item/weapon/shard,
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"t" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"u" = (
+/obj/item/weapon/storage/bag/ore,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"v" = (
+/obj/item/weapon/pickaxe,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/obj/item/weapon/ore/bananium,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"x" = (
+/obj/item/weapon/shovel,
+/turf/open/floor/mineral/bananium/airless,
+/area/ruin/unpowered)
+"y" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered)
+"z" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
-abbaaaaccccccaaaaaaaaaaaaaaa
-bbbbaabbbbbccbbbaaaaaaaaaaaa
-bbbbbbbbbbbccbbaaaaaaaaaaaaa
-abbbbbbbbbbbbbbaaaaaaaaaaaaa
-abbbbbbbbbbbbccaadddeeddddda
-aabbbbbbbbbbbbcdddcfgghhijkl
-aaabbbbbbbbbbbbbbbmgggggngkl
-aabbbbbbbbbbbbbbbopgqngngnkl
-aabbbbbbbbbbbbbrgsgtgfgggnkl
-aabbbbbbbbbbbbbddduvggwwhxkl
-aabbbbbbbbbbbbbbbdddeeddddda
-abbbbbbbbbbbbbbbbbbbbbbbbaaa
-abbabbbbbccbbbbbbbbbbbaaaaaa
-aaaabbbbcccbbbbbbbbbaaaaaaaa
-aaaabbaaaaccbcbbcccaaaaaaaaa
-aaaabaaaaaacbbbbbbcaaaaaaaaa
-aaaaaaaaaaaaaabbbbcaaaaaaaaa
+a
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+b
+b
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+a
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(8,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(9,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+a
+a
+a
+"}
+(10,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+a
+a
+"}
+(11,1,1) = {"
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+a
+a
+"}
+(12,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+a
+"}
+(13,1,1) = {"
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+b
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+b
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+c
+c
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(16,1,1) = {"
+a
+b
+a
+a
+a
+d
+z
+z
+r
+d
+b
+b
+b
+b
+b
+b
+b
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+d
+z
+z
+g
+d
+b
+b
+b
+b
+c
+b
+b
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+d
+d
+z
+o
+s
+d
+d
+b
+b
+b
+c
+b
+b
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+d
+y
+m
+p
+g
+u
+d
+b
+b
+b
+c
+c
+c
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+d
+f
+g
+g
+t
+v
+d
+b
+b
+b
+a
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+e
+g
+g
+q
+g
+g
+e
+b
+b
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+e
+g
+g
+n
+f
+g
+e
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+d
+h
+g
+g
+g
+w
+d
+b
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+d
+h
+g
+n
+g
+w
+d
+b
+a
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+d
+i
+n
+g
+g
+h
+d
+b
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+a
+a
+a
+a
+d
+j
+g
+n
+n
+x
+d
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+a
+a
+d
+k
+k
+k
+k
+k
+d
+a
+a
+a
+a
+a
+a
+"}
+(28,1,1) = {"
+a
+a
+a
+a
+a
+l
+l
+l
+l
+l
+a
+a
+a
+a
+a
+a
+a
 "}
