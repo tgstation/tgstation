@@ -40,7 +40,11 @@ This file's folder contains:
 	return M && istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.servants_of_ratvar)
 
 /proc/is_eligible_servant(mob/living/M)
-	return !is_servant_of_ratvar(M) && !iscultist(M) && !isloyal(M) && !isloyal(M) && !isdrone(M) && !M.mind.assigned_role in list("Captain", "Chaplain")
+	if(isguardian(M))
+		var/mob/living/simple_animal/hostile/guardian/G = M
+		if(!is_servant_of_ratvar(G.summoner))
+			return 0
+	return !is_servant_of_ratvar(M) && !iscultist(M) && !isloyal(M) && !isloyal(M) && !isdrone(M) && !M.mind.assigned_role in list("Captain", "Chaplain") && !M.mind.enslaved_to
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
 	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
