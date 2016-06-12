@@ -291,19 +291,13 @@
 	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
 		power = min(C.gun.power, 15)
 
-/obj/item/projectile/gravityattract/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/gravityattract/on_hit()
 	. = ..()
 	T = get_turf(src)
-	var/list/atom/movable/B
 	for(var/atom/movable/A in range(T, power))
 		if(A == src || (firer && A == src.firer) || A.anchored)
 			continue
-		B += (A)
-	for(var/atom/movable/C in B)
-		if(blocked)
-			B.throw_at_fast(T, power+1, 1)
-		else
-			B.throw_at_fast(target, power+1, 1)
+		A.throw_at_fast(T, power+1, 1)
 	for(var/turf/F in range(T,power))
 		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
 		F.overlays += gravfield
@@ -328,7 +322,7 @@
 		power = min(C.gun.power, 15)
 
 /obj/item/projectile/gravitychaos/on_hit()
-	. = ..
+	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
 		if(A == src|| (firer && A == src.firer) || A.anchored)
