@@ -10,7 +10,12 @@
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
-
+	can_buckle = 1
+	max_buckled_mobs = 3
+	buckle_lying = 0
+	var/mob/living/buckled_mob_1 = null
+	var/mob/living/buckled_mob_2 = null
+	var/mob/living/buckled_mob_3 = null
 	var/custom_name = ""
 	var/braintype = "Cyborg"
 	var/modtype = "robot"
@@ -935,6 +940,7 @@
 
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
+	handle_buckled_mobs()
 	var/oldLoc = src.loc
 	. = ..()
 	if(.)
@@ -1311,3 +1317,90 @@
 			locked = 1
 		notify_ai(1)
 		. = 1
+
+/mob/living/silicon/robot/buckle_mob(mob/living/M, force = 0)
+	if(M.restrained())
+		return 0
+	if(isrobot(M)) //No cyborg stacking.
+		return 0
+	if(!buckled_mob_1)
+		buckled_mob_1 = M
+	else if(!buckled_mob_2)
+		buckled_mob_2 = M
+	else if(!buckled_mob_3)
+		buckled_mob_3 = M
+	else
+		return 0
+	.=..()
+
+/mob/living/silicon/robot/unbuckle_mob(mob/living/buckled_mob, force = 0)
+	.=..()
+
+/mob/living/silicon/robot/post_buckle_mob(mob/living/M)
+	handle_buckled_mobs()
+
+/mob/living/silicon/robot/proc/handle_buckled_mobs()
+	if(buckled_mobs.len)
+		layer = ABOVE_MOB_LAYER
+	else
+		layer = MOB_LAYER
+		return
+	for(var/mob/living/L in buckled_mobs)
+		L.pixel_x = 0
+		L.pixel_y = 0
+	if(buckled_mob_1 in buckled_mobs)
+		switch(dir)
+			if(NORTH)
+				buckled_mob_1.pixel_x = 0
+				buckled_mob_1.pixel_y = -7
+			if(SOUTH)
+				buckled_mob_1.pixel_x = 0
+				buckled_mob_1.pixel_y = 7
+			if(WEST)
+				buckled_mob_1.pixel_x = 7
+				buckled_mob_1.pixel_y = 0
+			if(EAST)
+				buckled_mob_1.pixel_x = -7
+				buckled_mob_1.pixel_y = 0
+	else
+		buckled_mob_1.pixel_x = 0
+		buckled_mob_1.pixel_y = 0
+		buckled_mob_1 = null
+
+	if(buckled_mob_2 in buckled_mobs)
+		switch(dir)
+			if(NORTH)
+				buckled_mob_2.pixel_x = 7
+				buckled_mob_2.pixel_y = 0
+			if(SOUTH)
+				buckled_mob_2.pixel_x = -7
+				buckled_mob_2.pixel_y = 0
+			if(WEST)
+				buckled_mob_2.pixel_x = 0
+				buckled_mob_2.pixel_y = 7
+			if(EAST)
+				buckled_mob_2.pixel_x = 0
+				buckled_mob_2.pixel_y = -7
+	else
+		buckled_mob_2.pixel_x = 0
+		buckled_mob_2.pixel_y = 0
+		buckled_mob_2 = null
+
+	if(buckled_mob_3 in buckled_mobs)
+		switch(dir)
+			if(NORTH)
+				buckled_mob_3.pixel_x = -7
+				buckled_mob_3.pixel_y = 0
+			if(SOUTH)
+				buckled_mob_3.pixel_x = 7
+				buckled_mob_3.pixel_y = 0
+			if(WEST)
+				buckled_mob_3.pixel_x = 0
+				buckled_mob_3.pixel_y = -7
+			if(EAST)
+				buckled_mob_3.pixel_x = 0
+				buckled_mob_3.pixel_y = 7
+	else
+		buckled_mob_3.pixel_x = 0
+		buckled_mob_3.pixel_y = 0
+		buckled_mob_3 = null

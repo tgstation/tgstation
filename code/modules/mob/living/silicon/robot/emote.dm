@@ -236,13 +236,17 @@
 			src.spin(24,1)
 			for(var/mob/living/T in buckled_mobs)
 				if(prob(70))
-					T.visible_message("<span class='warning'>[T] tries to hang on, but couldn't, and is thrown off [src]!<span>")
+					T.visible_message("<span class='warning'>[T] tries to hang on, but couldn't, and is sent flying by [src]!<span>")
 					unbuckle_mob(T,1)
+					var/atom/A = get_edge_target_turf(T, pick(cardinal))
+					T.throw_at_fast(A, 6, 1)
 					T.Weaken(3)
 					T.Dizzy(5)
+					playsound(src, 'sound/effects/bang.ogg', 50, 1)
 				else
 					T.visible_message("<span class='warning'>[T] hangs on to [src] as it spins around dizzily!<span>")
 					T.Dizzy(5)
+				spawn(5)
 
 		if ("help")
 			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
