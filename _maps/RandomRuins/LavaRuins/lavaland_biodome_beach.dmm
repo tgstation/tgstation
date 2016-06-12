@@ -161,7 +161,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -211,7 +210,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -281,7 +279,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
