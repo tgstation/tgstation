@@ -142,15 +142,13 @@
 			if(GATEWAY_RATVAR_COMING to INFINITY)
 				user << "<span class='warning'><b>Something is coming through!</b></span>"
 
-/obj/effect/clockwork/gateway_glow
+/obj/effect/clockwork/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
 	mouse_opacity = 0
 	layer = MASSIVE_OBJ_LAYER
-	density = FALSE
-	burn_state = LAVA_PROOF
 	var/obj/structure/clockwork/massive/celestial_gateway/linked_gate
 
 /obj/effect/clockwork/gateway_glow/Destroy()
