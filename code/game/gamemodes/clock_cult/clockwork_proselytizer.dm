@@ -69,7 +69,7 @@
 	if(ratvar_awakens) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
 
-	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"] && !do_after(user, proselytize_values["operation_time"], target = target))
 		return 0
