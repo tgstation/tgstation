@@ -370,7 +370,7 @@ var/global/list/lawlorify = list (
 				return 0
 			else
 				for(var/obj/item/clothing/under/burial/B in range(0,body))
-					if(B.loc == body.loc)
+					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
 						return 1
 				return 0
 
