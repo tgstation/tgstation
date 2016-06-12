@@ -103,13 +103,12 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
-	var/atom/T = target.loc
-	if(isturf(target) && target.density)
-		CreateDoor(target)
-	else if (isturf(T) && T.density)
-		CreateDoor(T)
-	else if(istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
+	else
+		var/turf/T = get_turf(target)
+		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
