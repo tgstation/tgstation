@@ -229,7 +229,7 @@
 	if(health < maxHealth)
 		adjustBruteLoss(-2) //Fast life regen
 	for(var/obj/item/weapon/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
-		if(D.name != "frosted donut")
+		if(D.icon_state != "donut2")
 			D.name = "frosted donut"
 			D.icon_state = "donut2"
 			D.reagents.add_reagent("sprinkles", 2)
