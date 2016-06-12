@@ -332,13 +332,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/guvax/scripture_effects()
 	for(var/mob/living/L in hearers(1, get_turf(invoker))) //Affects silicons
 		if(!is_servant_of_ratvar(L))
-			add_servant_of_ratvar(L)
+			if(L.stat != DEAD)
+				add_servant_of_ratvar(L)
 		else
 			if(L.reagents && L.reagents.has_reagent("holywater"))
 				L.reagents.remove_reagent("holywater", 1000)
 				L << "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>"
 	for(var/mob/living/silicon/ai/A in range(1, get_turf(invoker))) //Seems necessary because AIs don't count as hearers for some reason
-		add_servant_of_ratvar(A)
+		if(A.stat != DEAD)
+			add_servant_of_ratvar(A)
 	return 1
 
 
