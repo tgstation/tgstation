@@ -159,7 +159,7 @@
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
 		if(initial(C.tier) == tier_to_browse)
-			available_scriptures += initial(C.name)
+			available_scriptures += "[initial(C.name)] ([initial(C.descname)])"
 	if(!available_scriptures.len)
 		return 0
 	var/chosen_scripture = input(user, "Choose a piece of scripture to recite.", "[src]") as null|anything in available_scriptures
@@ -167,7 +167,7 @@
 		return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
-		if(initial(C.name) == chosen_scripture)
+		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
 	if(!scripture_to_recite)
 		return 0
