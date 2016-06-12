@@ -24,6 +24,7 @@
 	src.creator = creator
 	var/area/A = target.loc
 	if(A.noteleport) // No point in persisting if the target is unreachable.
+		src.visible_message("<span class='danger'>The [src] suddenly loses power and closes! The target destination is under the effects of a teleportation jammer!<span>")
 		qdel(src)
 		return
 	for(var/mob/M in src.loc)
