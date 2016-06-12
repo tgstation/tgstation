@@ -342,7 +342,7 @@
 
 	var/datum/gas_mixture/env
 
-	if (!lighting_corners_initialised)
+	if (!lighting_corners_initialised && global.lighting_corners_initialised)
 		for (var/i = 1 to 4)
 			if (corners[i]) // Already have a corner on this direction.
 				continue
