@@ -105,7 +105,7 @@
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
 		if(!user.unEquip(W))
 			return
-		if(!drop_item()) // no eating borg items
+		if(!W.drop_item()) // no eating borg items
 			return
 		user << "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>"
 		upgrades += W
