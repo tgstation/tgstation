@@ -230,6 +230,20 @@
 			playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 			m_type = 2
 
+		if ("spin")
+			message = "<B>[src]</B> spins in place!"
+			m_type = 1
+			src.spin(24,1)
+			for(var/mob/living/T in buckled_mobs)
+				if(prob(70))
+					T.visible_message("<span class='warning'>[T] tries to hang on, but couldn't, and is thrown off [src]!<span>")
+					unbuckle_mob(T,1)
+					T.Weaken(3)
+					T.Dizzy(5)
+				else
+					T.visible_message("<span class='warning'>[T] hangs on to [src] as it spins around dizzily!<span>")
+					T.Dizzy(5)
+
 		if ("help")
 			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
 

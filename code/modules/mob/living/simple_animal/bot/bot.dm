@@ -14,6 +14,7 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
+	can_buckle = 0
 
 	speak_emote = list("states")
 	bubble_icon = "machine"
