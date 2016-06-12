@@ -27,6 +27,8 @@
 						"<span class='warning'>Your [name] rasps, \"WOOP WOOP!\"</span>", \
 						"<span class='warning'>You hear a siren: \"WOOP WOOP!\"</span>")
 
+	var/list/bystanders = get_hearers_in_view(world.view, src)
+	flick_overlay(image('icons/mob/talk.dmi', user, "hail", MOB_LAYER+1), clients_in_moblist(bystanders), 15)
 	spamcheck = 1
 	spawn(15)
 		spamcheck = 0

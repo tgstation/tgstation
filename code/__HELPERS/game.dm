@@ -348,6 +348,7 @@ var/list/DummyCache = list()
 				C.screen -= O
 
 /proc/flick_overlay(image/I, list/show_to, duration)
+	set waitfor = FALSE
 	for(var/client/C in show_to)
 		C.images += I
 	sleep(duration)

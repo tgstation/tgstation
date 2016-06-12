@@ -1579,3 +1579,9 @@ Game Mode config tags:
 					found_mode = GM
 					break
 	return found_mode
+
+/proc/clients_in_moblist(var/list/mob/mobs)
+	. = list()
+	for(var/mob/M in mobs)
+		if(M.client)
+			. += M.client
