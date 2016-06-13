@@ -1,5 +1,6 @@
 #define UMBRA_INVISIBILITY 50
-#define UMBRA_VITAE_DRAIN_RATE 0.01 //How much vitae is drained per tick to sustain the umbra
+#define UMBRA_VITAE_DRAIN_RATE 0.01 //How much vitae is drained per tick to sustain the umbra. Set this to higher values to make umbras need to harvest vitae more often.
+#define UMBRA_MAX_HARVEST_COOLDOWN 3000 //In deciseconds, how long it takes for a recently-drained target's soul to be drainable again.
 
 /*
 
@@ -30,13 +31,14 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "umbra"
 	icon_living = "umbra"
+	alpha = 175 //To show invisibility
 	health = 100
 	maxHealth = 100
 	healable = FALSE
-	friendly = null
+	friendly = "passes through"
 	speak_emote = list("murmurs")
 	emote_hear = list("murmurs")
-	incorporeal_move = TRUE
+	incorporeal_move = 3
 	stop_automated_movement = TRUE
 	wander = FALSE
 	see_in_dark = 8
@@ -47,12 +49,56 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	var/vitae = 10 //The amount of vitae captured by the umbra
 	var/vitae_cap = 100 //How much vitae a single umbra can hold
 	var/breaking_apart = FALSE //If the umbra is currently dying
+	var/harvesting = FALSE //If the umbra is harvesting a soul
+	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
+	var/playstyle_string = "<font size=3 color='#5000A0'><b>You are an umbra,</b></font><b> a spirit with enough anger or determination not to fully pass on. Although the circumstances of your \
+	death have been forgotten, you still clearly remember your name, but nothing other than that. What you do know is that you're going to make the most out of this second chance that you have \
+	somehow claimed.\n\
+	\n\
+	Even now you feel your hold on life slipping away. You know that the souls of all creatures - humans in particular - still hold a spark of life, even after death. This spark is called \
+	<i>vitae</i> and every living thing has at least a small amount of it. You think that you can harvest this vitae from the corpses of living things, but those still alive might be too \
+	difficult to draw from. Anything in critical condition wouldn't be affected enough to harm by a draining, but you might be able to extract more vitae from them regardless.\n\
+	\n\
+	Although living things have plenty of vitae, you think that the souls of these creatures might be rendered useless if you drain too much. For this reason, you'll have to limit yourself and \
+	can only draw any significant amount of vitae from a particular corpse once every few minutes. After that time, you think that the soul will have recuperated enough that you can draw from \
+	it again.</b>"
 
 /mob/living/simple_animal/umbra/Life()
 	..()
-	adjust_vitae(-UMBRA_VITAE_DRAIN_RATE)
+	adjust_vitae(-UMBRA_VITAE_DRAIN_RATE, TRUE, "passive drain")
 	if(!vitae)
 		death()
+
+/mob/living/simple_animal/umbra/Stat()
+	..()
+	if(statpanel("Status"))
+		stat(null, "Vitae: [vitae]/[vitae_cap]")
+		stat(null, "Vitae Cost/Tick: [UMBRA_VITAE_DRAIN_RATE]")
+		var/drained_mobs = ""
+		var/length = recently_drained.len
+		for(var/mob/living/L in recently_drained)
+			if(!L)
+				recently_drained -= L
+				length--
+			else
+				drained_mobs += "[L.real_name][length > 1 ? ", " : ""]"
+			length--
+		stat(null, "Recently Drained Creatures: [drained_mobs ? "[drained_mobs]" : "None"]")
+
+/mob/living/simple_animal/umbra/ClickOn(atom/A, params)
+	A.examine(src)
+	if(isliving(A) && Adjacent(A))
+		var/mob/living/L = A
+		if(!L.stat)
+			src << "<span class='warning'>[L]'s soul is too strong to drain while they're conscious!</span>"
+			return
+		else if(L in recently_drained)
+			src << "<span class='warning'>[L]'s soul is still recuperating! You can't risk draining any more vitae!</span>"
+			return
+		else if(harvesting)
+			src << "<span class='warning'>You're already trying to harvest a soul!</span>"
+			return
+		harvest_soul(L)
 
 /mob/living/simple_animal/umbra/death()
 	if(breaking_apart)
@@ -77,6 +123,125 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 /mob/living/simple_animal/umbra/say() //Umbras can't directly speak
 	return
 
-/mob/living/simple_animal/umbra/proc/adjust_vitae(amount)
-	vitae = min(max(0, vitae + UMBRA_VITAE_DRAIN_RATE), vitae_cap)
+/mob/living/simple_animal/umbra/attack_ghost(mob/dead/observer/O)
+	if(key)
+		return
+	if(alert(O, "Become an umbra? You won't be clonable!",,"Yes", "No") == "No" || !O)
+		return
+	notify_ghosts("The umbra at [get_area(src)] has been taken control of.", source = src, action = NOTIFY_ORBIT)
+	key = O.key
+	src << playstyle_string
+
+
+
+/mob/living/simple_animal/umbra/proc/adjust_vitae(amount, silent, source)
+	vitae = min(max(0, vitae + amount), vitae_cap)
+	if(!silent)
+		src << "<span class='umbra'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
 	return vitae
+
+
+
+/mob/living/simple_animal/umbra/proc/harvest_soul(mob/living/L) //How umbras drain vitae from their targets
+	if(!L || !L.stat || L in recently_drained)
+		return
+	harvesting = TRUE
+	src << "<span class='umbra'>You search for [L]'s soul...</span>"
+	if(!do_after(src, 30, target = L))
+		harvesting = FALSE
+		return
+	if(L.hellbound)
+		src << "<span class='warning'>[L] has only emptiness in place of their soul!</span>"
+		harvesting = FALSE
+		return
+	if(!L.stat)
+		src << "<span class='warning'>[L] is conscious again and shields your efforts!</span>"
+		L << "<span class='warning'>You're being watched.</span>"
+		harvesting = FALSE
+		return
+	var/vitae_yield = 1 //A bit of essence even if it's a weak soul
+	var/vitae_information = "<span class='umbra'>This soul is "
+	if(ishuman(L))
+		vitae_information += "human, "
+		vitae_yield += rand(10, 15)
+	if(L.mind)
+		if(!(L.mind in ticker.mode.devils))
+			vitae_information += "sentient, "
+		else
+			vitae_information += "infernal and home to multiple souls, all of which you can drain! Moving on... it's "
+			for(var/i in 1 to (L.mind.devilinfo.soulsOwned.len))
+				vitae_yield += rand(5, 10) //You can drain all the souls that a devil has stolen!
+		vitae_yield += rand(10, 15)
+	if(L.stat == UNCONSCIOUS)
+		vitae_information += "blazing with vitality, "
+		vitae_yield += rand(20, 25) //Significant bonus if the target is in critical condition instead of dead
+	else if(L.stat == DEAD)
+		vitae_information += "dim but still useable, "
+		vitae_yield += rand(1, 10)
+	vitae_information += "and ready for harvest. You'll absorb around [vitae_yield] vitae - "
+	switch(vitae_yield)
+		if(0 to 15)
+			vitae_information += "not much, but everything counts."
+		if(15 to 30)
+			vitae_information += "decent, but not great."
+		if(30 to 45)
+			vitae_information += "about what you could expect."
+		if(45 to 60)
+			vitae_information += "a good bit, more than you've come to expect."
+		if(75 to vitae_cap)
+			vitae_information += "<i>a bounty, more than you could ever dream of!</i>"
+	vitae_information += " Now, for the harvest...</span>"
+	src << vitae_information
+	if(!do_after(src, 30, target = L))
+		harvesting = FALSE
+		return
+	if(L.hellbound)
+		src << "<span class='warning'>[L] seems to have lost their soul!</span>"
+		harvesting = FALSE
+		return
+	if(!L.stat)
+		src << "<span class='warning'>[L] is conscious again and shields your efforts!</span>"
+		L << "<span class='warning'>A chill runs across your body.</span>"
+		harvesting = FALSE
+		return
+	Stun(50)
+	Reveal(50)
+	visible_message("<span class='warning'>[src] flickers into existence and reaches out towards [L]...</span>")
+	L.visible_message("<span class='warning'>...who rises into the air, shuddering as purple light streams towards out of their body!</span>")
+	animate(L, pixel_y = pixel_y + 5, time = 10)
+	Beam(L, icon_state = "drain_life", icon = 'icons/effects/effects.dmi', time = 50)
+	sleep(50)
+	adjust_vitae(vitae_yield, FALSE, "[L]. They won't yield any more for the time being")
+	recently_drained |= L
+	visible_message("<span class='warning'>[src] winks out of existence, releasing its hold on [L]...</span>")
+	L.visible_message("<span class='warning'>...who falls unceremoniously back to the ground.</span>")
+	animate(L, pixel_y = pixel_y - 5, time = 10)
+	spawn(rand(UMBRA_MAX_HARVEST_COOLDOWN - 600, UMBRA_MAX_HARVEST_COOLDOWN)) //Between 4-5 minutes by default
+		if(!L)
+			return
+		src << "<span class='umbra'>You think that [L]'s soul should be strong enough to harvest again.</span>"
+		recently_drained -= L
+	harvesting = FALSE
+	return 1
+
+
+
+/mob/living/simple_animal/umbra/proc/Reveal(time) //Makes the umbra visible for the designated amount of deciseconds
+	if(!time)
+		return
+	src << "<span class='warning'>You've become visible!</span>"
+	alpha = 255
+	invisibility = FALSE
+	spawn(time)
+		alpha = initial(alpha)
+		src << "<span class='umbra'>You've become invisible again!</span>"
+		invisibility = UMBRA_INVISIBILITY
+
+/mob/living/simple_animal/umbra/Stun(time) //Immobilizes the umbra for the designated amount of deciseconds
+	if(!time)
+		return
+	src << "<span class='warning'>You can't move!</span>"
+	notransform = TRUE
+	spawn(time)
+		src << "<span class='umbra'>You can move again!</span>"
+		notransform = FALSE

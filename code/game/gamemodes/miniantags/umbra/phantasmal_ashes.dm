@@ -24,17 +24,21 @@
 	return 1
 
 /obj/item/phantasmal_ashes/proc/reform()
-	if(!umbra_key || !umbra_vitae)
-		visible_message("<span class='warning'>[src] tremble for a moment, but quickly lose their glow...</span>")
-		name = "lifeless phantasmal ashes"
-		desc = "A dull pile of blue ashes with an inert purple core"
-		return
-	visible_message("<span class='warning'>[src] hover into the air and reform into an umbra!</span>")
+	visible_message("<span class='warning'>[src] hover into the air and reform!</span>")
 	flick("phantasmal_ashes_reforming", src)
 	animate(src, alpha = 0, time = 12)
 	sleep(12)
 	var/mob/living/simple_animal/umbra/U = new(get_turf(src))
 	U.key = umbra_key
-	U.vitae = umbra_vitae
+	if(!U.client)
+		U.key = null
+		var/image/alert_overlay = image('icons/mob/mob.dmi', "umbra")
+		notify_ghosts("An umbra has formed in [get_area(U)]. Attack it to take control of it.", null, source = U, alert_overlay = alert_overlay)
+	else
+		U << "<span class='umbra'>Back... you're back. Now, where were we?</span>"
+	if(umbra_vitae)
+		U.vitae = umbra_vitae
+	U.alpha = 0
+	animate(U, alpha = 255, time = 10) //To give a fade-in effect for the newly-spawned
 	qdel(src)
 	return 1
