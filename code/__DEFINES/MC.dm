@@ -19,7 +19,7 @@
 #define SS_NO_FIRE 4
 
 //subsystem only runs on spare cpu (after all non-background subsystems have ran that tick)
-//	Also keeps the mc from taking this subsystem into account when spliting up the tick
+//	SS_BACKGROUND has its own priority bracket
 #define SS_BACKGROUND 8
 
 //subsystem does not tick check, and should not run unless there is enough time (or its running behind (unless background))

@@ -10,7 +10,7 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air
 	name = "Air"
 	init_order = -1
-	priority = 25
+	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
 	display_order = 1

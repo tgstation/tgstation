@@ -44,10 +44,13 @@
 /datum/subsystem/proc/fire(resumed = 0)
 	set waitfor = 0 //this should not be depended upon, this is just to solve issues with sleeps messing up tick tracking
 	can_fire = 0
+	flags |= SS_NO_FIRE
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
 /datum/subsystem/Destroy()
 	dequeue()
+	can_fire = 0
+	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 
 /datum/subsystem/proc/enqueue()
@@ -82,11 +85,11 @@
 				break
 
 	queued_time = world.time
-	if (!(SS_flags & SS_BACKGROUND)) //update our running total
-		Master.queue_priority_count += SS_priority
-		queued_priority = SS_priority
+	queued_priority = SS_priority
+	if (SS_flags & SS_BACKGROUND) //update our running total
+		Master.queue_priority_count_bg += SS_priority
 	else
-		queued_priority = 0
+		Master.queue_priority_count += SS_priority
 
 	next = queue_node
 	if (!queue_node)//we stopped at the end, add to tail
@@ -115,6 +118,7 @@
 		Master.queue_tail = prev
 	if (src == Master.queue_head)
 		Master.queue_head = next
+	queued_time = 0
 
 
 /datum/subsystem/proc/pause()

@@ -4,7 +4,7 @@ var/datum/subsystem/fastprocess/SSfastprocess
 	name = "Fast Process"
 	priority = 25
 	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
-	wait = 4
+	wait = 2
 
 	var/list/processing = list()
 	var/list/currentrun = list()

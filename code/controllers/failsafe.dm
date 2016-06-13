@@ -11,7 +11,7 @@ var/datum/controller/failsafe/Failsafe
 
 	// The length of time to check on the MC (in deciseconds).
 	// Set to 0 to disable.
-	var/processing_interval = 10
+	var/processing_interval = 20
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 5
 	//the world.time of the last check, so the mc can restart US if we hang.
@@ -43,25 +43,26 @@ var/datum/controller/failsafe/Failsafe
 			new /datum/controller/master()
 		// Only poke it if overrides are not in effect.
 		if(processing_interval > 0)
-			if(Master.processing)
+			if(Master.processing && Master.iteration)
 				// Check if processing is done yet.
 				if(Master.iteration == master_iteration)
 					switch(defcon)
 						if(4,5)
 							--defcon
 						if(3)
-							admins << "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks."
+							admins << "<span class='adminnotice'>Notice: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks."
 							--defcon
 						if(2)
-							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [defcon * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
+							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has not fired in the last [(5-defcon) * processing_interval] ticks. Automatic restart in [processing_interval] ticks.</span>"
 							--defcon
 						if(1)
 
-							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [defcon * processing_interval] ticks. Killing and restarting...</span>"
+							admins << "<span class='boldannounce'>Warning: DEFCON [defcon_pretty()]. The Master Controller has still not fired within the last [(5-defcon) * processing_interval] ticks. Killing and restarting...</span>"
 							--defcon
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4
+								master_iteration = 0
 								admins << "<span class='adminnotice'>MC restarted successfully</span>"
 							else if(rtn < 0)
 								log_game("FailSafe: Could not restart MC, runtime encountered. Entering defcon 0")
@@ -72,11 +73,12 @@ var/datum/controller/failsafe/Failsafe
 							var/rtn = Recreate_MC()
 							if(rtn > 0)
 								defcon = 4
+								master_iteration = 0
 								admins << "<span class='adminnotice'>MC restarted successfully</span>"
 				else
 					defcon = min(defcon + 1,5)
 					master_iteration = Master.iteration
-			if (defcon <= 0)
+			if (defcon <= 1)
 				sleep(processing_interval*2)
 			else
 				sleep(processing_interval)
