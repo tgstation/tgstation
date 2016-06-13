@@ -38,17 +38,17 @@
 	if(node.recent_queen_death)
 		user << "<span class='danger'>You are still too burdened with guilt to evolve into a queen.</span>"
 		return 0
-	if((!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen) && (!(user.client && user.client.holder))))
+	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
+		if(user.client.prefs.unlock_content) //check the player is a donator
+			new_xeno.maidify() //turn the new queen into a maid with a new proc we'll
 		user.alien_evolve(new_xeno)
 		return 1
 	else
-		if (user.client && user.client.holder)
-			var/mob/living/carbon/alien/humanoid/royal/queen/maid/new_maid = new (user.loc)
-			user.alien_evolve(new_maid)
-			return 1
-		else
-			user << "<span class='notice'>We already have an alive queen.</span>"
-			return 0
+		user << "<span class='notice'>We already have an alive queen.</span>"
+		return 0
 
-
+/mob/living/carbon/alien/humanoid/royal/queen/proc/maidify()
+    name = "alien queen maid"
+    icon_state = "alienqmaid"
+    caste = "qmaid"

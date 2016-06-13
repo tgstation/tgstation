@@ -23,16 +23,14 @@
 	health = 400
 	icon_state = "alienq"
 
-/mob/living/carbon/alien/humanoid/royal/queen/maid
+/mob/living/carbon/alien/humanoid/royal/maid
 	name = "alien queen maid"
 	caste = "qmaid"
-	maxHealth = 400
-	health = 400
 	icon_state = "alienqmaid"
 	languages = ALIEN | HUMAN
 
 
-/mob/living/carbon/alien/humanoid/royal/queen/maid/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+/mob/living/carbon/alien/humanoid/royal/maid/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
     ..(message_langs = message_langs | ALIEN)
 
 
