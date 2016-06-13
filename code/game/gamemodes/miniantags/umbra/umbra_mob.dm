@@ -109,8 +109,8 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	A.examine(src)
 	if(isliving(A) && Adjacent(A))
 		var/mob/living/L = A
-		if(!L.stat)
-			src << "<span class='warning'>[L]'s soul is too strong to drain while they're conscious!</span>"
+		if(L.health)
+			src << "<span class='warning'>[L]'s soul is too strong to drain while they aren't severly wounded!</span>"
 			return
 		else if(L in recently_drained)
 			src << "<span class='warning'>[L]'s soul is still recuperating! You can't risk draining any more vitae!</span>"
@@ -171,7 +171,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 
 
 /mob/living/simple_animal/umbra/proc/harvest_soul(mob/living/L) //How umbras drain vitae from their targets
-	if(!L || !L.stat || L in recently_drained)
+	if(!L || L.health || L in recently_drained)
 		return
 	harvesting = TRUE
 	src << "<span class='umbra'>You search for [L]'s soul...</span>"
