@@ -69,7 +69,7 @@ effective or pretty fucking useless.
 */
 
 /obj/item/device/healthanalyzer/rad_laser
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject. It has a strange device hooked up to it's scanning end."
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject. It has a strange device hooked up to its scanning end."
 	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/irradiate = 1
