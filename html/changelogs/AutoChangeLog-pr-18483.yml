@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "You can now create living cake/cat hybrids through a slightly expensive crafting recipe. These \"caks\" are remarkably resilient, quickly regenerating any brute damage dealt, and can be attacked on harm intent to take a bite to be fed by a small amount. They serve as mobile sources of food and make great pets."
-  - rscadd: "If a brain occupied by a player is used in the crafting recipe for caks, that player then takes control of the cak!"
