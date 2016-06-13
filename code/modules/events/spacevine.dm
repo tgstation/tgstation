@@ -574,7 +574,7 @@
 	if(!override)
 		qdel(src)
 
-/obj/effect/spacevine/CanPass(atom/moveable/mover, turf/target, height=0)
+/obj/effect/spacevine/CanPass(atom/movable/mover, turf/target, height=0)
 	if(isvineimmune(mover))
 		. = TRUE
 	else
