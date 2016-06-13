@@ -2,5 +2,5 @@
 author: Icantthinkofanameritenow
 delete-after: True
 changes: 
--rscadd: "Added arm blades for changelings."
+  - rscadd: "Added arm blades for changelings."
 
