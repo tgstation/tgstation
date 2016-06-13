@@ -56,13 +56,13 @@
 /obj/effect/cross_action
 	name = "cross me"
 	desc = "for crossing"
+	anchored = 1
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"
 	desc = "A distortion in spacetime. You can hear faint music..."
 	icon_state = "wave1"
 	color = "#8A2BE2"
-	anchored = 1
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
