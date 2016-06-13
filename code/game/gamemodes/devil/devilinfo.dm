@@ -1,4 +1,6 @@
-#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
+#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
+#define TRUE_THRESHOLD 7
+#define ARCH_THRESHOLD 12
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -143,11 +145,11 @@ var/global/list/lawlorify = list (
 		if(0)
 			owner.current << "<span class='warning'>Your hellish powers have been restored."
 			give_base_spells()
-		if(POWERUPTHRESHOLD)
+		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
-		if(POWERUPTHRESHOLD*2)
+		if(TRUE_THRESHOLD)
 			increase_true_devil()
-		if(POWERUPTHRESHOLD*3)
+		if(ARCH_THRESHOLD)
 			increase_arch_devil()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
@@ -161,9 +163,9 @@ var/global/list/lawlorify = list (
 		if(-1)
 			remove_spells()
 			owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
-		if(POWERUPTHRESHOLD-1)
+		if(BLOOD_THRESHOLD-1)
 			regress_humanoid()
-		if(POWERUPTHRESHOLD*2-1)
+		if(TRUE_THRESHOLD-1)
 			regress_blood_lizard()
 
 /datum/devilinfo/proc/increase_form()
@@ -376,7 +378,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
-	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch devils do not go down in power by any means.
+	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
@@ -401,23 +403,22 @@ var/global/list/lawlorify = list (
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
 			give_summon_contract()
-			if(SOULVALUE >= POWERUPTHRESHOLD)
+			if(SOULVALUE >= BLOOD_THRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
 				H.underwear = "Nude"
 				H.undershirt = "Nude"
 				H.socks = "Nude"
 				H.dna.features["mcolor"] = "511"
 				H.regenerate_icons()
-			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
-				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
-				A.faction |= "hell"
-				H.forceMove(A)
-				A.oldform = H
-				A.set_name()
-				owner.transfer_to(A)
-				if(SOULVALUE >= POWERUPTHRESHOLD * 3)
-					A.convert_to_archdevil()
-
+				if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+					var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
+					A.faction |= "hell"
+					H.forceMove(A)
+					A.oldform = H
+					A.set_name()
+					owner.transfer_to(A)
+					if(SOULVALUE >= ARCH_THRESHOLD)
+						A.convert_to_archdevil()
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()
