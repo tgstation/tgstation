@@ -1072,7 +1072,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/invoke_inathneq //Invoke Inath-Neq, the Resonant Cogwheel: Grants a huge health boost to nearby servants that rapidly decreases to original levels.
-	descname = "Invulnerability"
 	descname = "Area Invuln"
 	name = "Invoke Inath-Neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant a massive maximum and current health boost to all nearby servants that \
