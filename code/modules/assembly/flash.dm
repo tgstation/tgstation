@@ -150,6 +150,7 @@
 					if(!isloyal(M))
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
+								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1

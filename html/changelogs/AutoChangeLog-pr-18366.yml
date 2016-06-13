@@ -1,7 +1,0 @@
-author: Xhuis
-delete-after: True
-changes: 
-  - rscadd: "You can now remove all plants and weeds from a hydroponics tray by using a spade on it."
-  - rscadd: "Added meatwheat, a mutated variant of wheat that can be crushed into meat substitute."
-  - rscadd: "Added ambrosia gaia, a mysterious plant that is rumored to provide nutrients and water to any soil - hydroponic or otherwise - that it's planted in."
-  - rscadd: "Added cherry bombs, a mutated variant of blue cherries that have an explosively good taste. Oh, and don't pluck the stems."

@@ -373,7 +373,7 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = turn(dir,-90)
+		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0

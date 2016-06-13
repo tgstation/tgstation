@@ -35,10 +35,10 @@
 	if(!active || defused)					//Counter terrorists win
 		if(defused && payload in src)
 			payload.defuse()
-		return
+			countdown.stop()
 
 /obj/machinery/syndicatebomb/New()
-	wires 	= new /datum/wires/syndicatebomb(src)
+	wires = new /datum/wires/syndicatebomb(src)
 	if(src.payload)
 		payload = new payload(src)
 	update_icon()
@@ -138,10 +138,8 @@
 	if(!open_panel)
 		if(!active)
 			settings(user)
-			return
 		else if(anchored)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
-			return
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
@@ -156,6 +154,7 @@
 			return
 		else
 			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
+			countdown.start()
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			active = 1
 			update_icon()

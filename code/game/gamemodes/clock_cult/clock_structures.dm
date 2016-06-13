@@ -28,7 +28,7 @@
 /obj/structure/clockwork/Destroy()
 	clockwork_construction_value -= construction_value
 	all_clockwork_objects -= src
-	..()
+	return ..()
 
 /obj/structure/clockwork/proc/destroyed()
 	if(!takes_damage)
@@ -39,6 +39,13 @@
 	playsound(src, break_sound, 50, 1)
 	qdel(src)
 	return 1
+
+/obj/structure/clockwork/burn()
+	SSobj.burning -= src
+	if(takes_damage)
+		playsound(src, 'sound/items/Welder.ogg', 100, 1)
+		visible_message("<span class='warning'>[src] is warped by the heat!</span>")
+		take_damage(rand(50, 100), BURN)
 
 /obj/structure/clockwork/proc/take_damage(amount, damage_type)
 	if(!amount || !damage_type || !damage_type in list(BRUTE, BURN))
@@ -115,14 +122,39 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
+	var/wall_generation_cooldown
+	var/wall_found = FALSE //if we've found a wall and finished our windup delay
 
 /obj/structure/clockwork/cache/New()
 	..()
+	SSobj.processing += src
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
+	SSobj.processing -= src
 	return ..()
+
+/obj/structure/clockwork/cache/destroyed()
+	if(takes_damage)
+		for(var/I in src)
+			var/atom/movable/A = I
+			A.forceMove(get_turf(src)) //drop any daemons we have
+	return ..()
+
+/obj/structure/clockwork/cache/process()
+	for(var/turf/closed/wall/clockwork/C in orange(1, src))
+		if(!wall_found)
+			wall_found = TRUE
+			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
+			break
+		if(wall_generation_cooldown <= world.time)
+			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
+			generate_cache_component()
+			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
+			visible_message("<span class='warning'>Something clunks around inside of [src]...</span>")
+			break
 
 /obj/structure/clockwork/cache/attackby(obj/item/I, mob/living/user, params)
 	if(!is_servant_of_ratvar(user))
@@ -169,7 +201,7 @@
 		D.cache = src
 		D.specific_component = component_type
 		user.visible_message("<span class='notice'>[user] spins the cogwheel on [I] and puts it into [src].</span>", \
-		"<span class='notice'>You activate the daemon and put it into [src]. It will now produce a component every thirty seconds.</span>")
+		"<span class='notice'>You activate the daemon and put it into [src]. It will now produce a component every twenty seconds.</span>")
 		user.drop_item()
 		qdel(I)
 		return 1
@@ -199,20 +231,25 @@
 	var/obj/item/clockwork/component/the_component
 	switch(component_to_withdraw)
 		if("Belligerent Eye")
-			the_component = new/obj/item/clockwork/component/belligerent_eye(get_turf(src))
-			clockwork_component_cache["belligerent_eye"]--
+			if(clockwork_component_cache["belligerent_eye"])
+				the_component = new/obj/item/clockwork/component/belligerent_eye(get_turf(src))
+				clockwork_component_cache["belligerent_eye"]--
 		if("Vanguard Cogwheel")
-			the_component = new/obj/item/clockwork/component/vanguard_cogwheel(get_turf(src))
-			clockwork_component_cache["vanguard_cogwheel"]--
+			if(clockwork_component_cache["vanguard_cogwheel"])
+				the_component = new/obj/item/clockwork/component/vanguard_cogwheel(get_turf(src))
+				clockwork_component_cache["vanguard_cogwheel"]--
 		if("Guvax Capacitor")
-			the_component = new/obj/item/clockwork/component/guvax_capacitor(get_turf(src))
-			clockwork_component_cache["guvax_capacitor"]--
+			if(clockwork_component_cache["guvax_capacitor"])
+				the_component = new/obj/item/clockwork/component/guvax_capacitor(get_turf(src))
+				clockwork_component_cache["guvax_capacitor"]--
 		if("Replicant Alloy")
-			the_component = new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-			clockwork_component_cache["replicant_alloy"]--
+			if(clockwork_component_cache["replicant_alloy"])
+				the_component = new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
+				clockwork_component_cache["replicant_alloy"]--
 		if("Hierophant Ansible")
-			the_component = new/obj/item/clockwork/component/hierophant_ansible(get_turf(src))
-			clockwork_component_cache["hierophant_ansible"]--
+			if(clockwork_component_cache["hierophant_ansible"])
+				the_component = new/obj/item/clockwork/component/hierophant_ansible(get_turf(src))
+				clockwork_component_cache["hierophant_ansible"]--
 	if(the_component)
 		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
 		user.put_in_hands(the_component)
@@ -222,11 +259,12 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<b>Stored components:</b>"
-		user << "<i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]"
-		user << "<i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]"
-		user << "<i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]"
-		user << "<i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]"
-		user << "<i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]"
+		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
+		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
+		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>"
+		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>"
+		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>"
+
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
 	name = "ocular warden"
@@ -239,6 +277,7 @@
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
+	burn_state = LAVA_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
@@ -267,14 +306,14 @@
 			if(ratvar_awakens && target)
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
-			dir = get_dir(get_turf(src), get_turf(target))
+			setDir(get_dir(get_turf(src), get_turf(target)))
 	else
 		if(!acquire_nearby_target() && prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			var/list/idle_messages = list("[src] sulkily glares around.", "[src] lazily drifts from side to side.", "[src] looks around for something to burn.", "[src] slowly turns in circles.")
 			if(prob(50))
 				visible_message("<span class='notice'>[pick(idle_messages)]</span>")
 			else
-				dir = pick(NORTH, EAST, SOUTH, WEST) //Random rotation
+				setDir(pick(NORTH, EAST, SOUTH, WEST) )//Random rotation
 
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
 	var/list/possible_targets = list()
@@ -304,6 +343,7 @@
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
+	burn_state = LAVA_PROOF
 
 /obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
@@ -359,6 +399,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
+	burn_state = LAVA_PROOF
 
 /obj/effect/clockwork/New()
 	..()
@@ -369,7 +410,7 @@
 	return ..()
 
 /obj/effect/clockwork/examine(mob/user)
-	if(is_servant_of_ratvar(user) && clockwork_desc)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
@@ -582,11 +623,13 @@
 	icon_state = "sigil"
 	layer = LOW_OBJ_LAYER
 	alpha = 50
+	burn_state = FIRE_PROOF
+	burntime = 1
 	var/affects_servants = FALSE
 	var/affects_stat = FALSE
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
-	if(iscarbon(user) && !user.stat && user.a_intent == "harm")
+	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == "harm")))
 		user.visible_message("<span class='warning'>[user] stamps out [src]!</span>", "<span class='danger'>You stomp on [src], scattering it into thousands of particles.</span>")
 		qdel(src)
 		return 1
@@ -597,13 +640,13 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!L.stat || affects_stat)
-			if(!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants))
+			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				sigil_effects(L)
 			return 1
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
-/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down.
+/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for about twice the stun
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -616,51 +659,60 @@
 	for(var/mob/living/M in viewers(5, src))
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
-	if(!iscultist(L))
-		L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", "<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	else
+	if(iscultist(L))
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
-		L.Weaken(5)
-	L.Stun(5)
+		L.Weaken(4)
+	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
+	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
+	L.Stun(3)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
 	return 1
 
 /obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
-	desc = "A brilliant golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for three seconds."
+	desc = "A luminous golden sigil. Something about it really bothers you."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
 	icon_state = "sigilsubmission"
+	luminosity = 2
 	color = "#FAE48C"
 	alpha = 125
+	var/convert_time = 50
+
+/obj/effect/clockwork/sigil/submission/New()
+	..()
+	SetLuminosity(2,1) //soft light
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
-	animate(src, color = "#AF0AAF", time = 30)
+	animate(src, color = "#AF0AAF", time = convert_time)
 	var/I = 0
-	while(I < 30 && get_turf(L) == get_turf(src))
+	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
 	if(get_turf(L) != get_turf(src))
-		animate(src, color = initial(color), time = 30)
+		animate(src, color = initial(color), time = 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
 	if(is_eligible_servant(L))
 		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
-	L.Weaken(5) //Completely defenseless for a few seconds - mainly to give them time to read over the information they've just been presented with
-	L.Stun(5)
+	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
+	L.Stun(3)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	var/partial_message = "Sigil of Submission in [get_area(src)] [is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]"
-	for(var/M in mob_list - L)
+	var/message = "Sigil of Submission in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
+	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[partial_message] [link] [L.real_name]!</span>"
+			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
-			M << "<span class='heavy_brass'>[partial_message] [L.real_name]!</span>"
+			if(M == L)
+				M << "<span class='heavy_brass'>[message] you!</span>"
+			else
+				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
 	qdel(src)
 	return 1
 
@@ -779,5 +831,5 @@
 		sleep(8)
 
 	sigil_active = FALSE
-	animate(src, alpha = initial(alpha), time = 30)
+	animate(src, alpha = initial(alpha), time = 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")

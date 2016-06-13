@@ -24,7 +24,7 @@
 	..()
 
 	if(make_from)
-		dir = make_from.dir
+		setDir(make_from.dir)
 		make_from.loc = 0
 		stored = make_from
 	else

@@ -49,7 +49,7 @@
 /obj/structure/chair/narsie_act()
 	if(prob(20))
 		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.dir = dir
+		W.setDir(dir)
 		qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
@@ -62,7 +62,7 @@
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.dir = dir
+		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
 		SK.master = E
@@ -84,7 +84,7 @@
 			buckled_mob.buckled = null //Temporary, so Move() succeeds.
 			if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
 				buckled_mob.buckled = src
-				dir = buckled_mob.dir
+				setDir(buckled_mob.dir)
 				return 0
 			buckled_mob.buckled = src //Restoring
 	handle_layer()
@@ -97,12 +97,12 @@
 		layer = OBJ_LAYER
 
 /obj/structure/chair/proc/spin()
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 	handle_layer()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
+			buckled_mob.setDir(dir)
 
 /obj/structure/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -249,7 +249,7 @@
 /obj/item/chair/narsie_act()
 	if(prob(20))
 		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.dir = dir
+		W.setDir(dir)
 		qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
@@ -266,7 +266,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
-	C.dir = dir
+	C.setDir(dir)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
@@ -312,9 +312,9 @@
 
 /obj/item/chair/stool/bar
 	name = "bar stool"
-	icon_state = "bar"
+	icon_state = "bar_toppled"
 	item_state = "stool_bar"
-	origin_type = /obj/structure/chair/stool
+	origin_type = /obj/structure/chair/stool/bar
 
 /obj/item/chair/stool/narsie_act()
 	return //sturdy enough to ignore a god

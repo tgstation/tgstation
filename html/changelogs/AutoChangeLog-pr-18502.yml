@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Gateway to the Celestial Derelict now takes exactly 5 minutes to successfully summon Ratvar and has 500 health, from 1000."
+  - rscadd: "You can now actually hit people adjacent to the Gateway; only the center of the Gateway can be attacked. The Gateway is also now dense, allowing you to more easily shoot at it."

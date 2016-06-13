@@ -173,7 +173,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
-		dir = 2 		//reset the dir to its default so the sprites all properly align up
+		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
 	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
@@ -271,7 +271,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		dir = direct //only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -401,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = 2 //reset dir so the right directional sprites show up
+	setDir(2 )//reset dir so the right directional sprites show up
 	..()
 	//restart our floating animation after orbit is done.
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end

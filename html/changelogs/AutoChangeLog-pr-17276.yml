@@ -1,5 +1,0 @@
-author: nullbear
-delete-after: True
-changes: 
-  - tweak: "Removes the restriction on wormhole jaunters, preventing them from teleporting you to beacons on other z-levels."
-  - tweak: "No longer able to use beacons to bypass normal shuttle/centcomm anti-bluespace measures."

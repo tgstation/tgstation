@@ -158,7 +158,6 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))

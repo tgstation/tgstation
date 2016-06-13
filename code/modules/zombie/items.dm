@@ -80,7 +80,7 @@
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		A.audible_message("<span class='danger'>With a screech, [A] is torn \
 			apart!</span>")
-		var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
+		var/obj/structure/door_assembly/door = new A.assemblytype(get_turf(A))
 		door.density = 0
 		door.anchored = 1
 		door.name = "ravaged [door]"

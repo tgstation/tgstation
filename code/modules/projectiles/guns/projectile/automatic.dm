@@ -275,3 +275,135 @@
 	..()
 	empty_alarm()
 	return
+
+
+
+// L6 SAW //
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw
+	name = "\improper L6 SAW"
+	desc = "A heavily modified 5.56x45mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	icon_state = "l6closed100"
+	item_state = "l6closedmag"
+	w_class = 5
+	slot_flags = 0
+	origin_tech = "combat=6;engineering=3;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/mm556x45
+	weapon_weight = WEAPON_MEDIUM
+	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
+	var/cover_open = 0
+	can_suppress = 0
+	burst_size = 3
+	fire_delay = 1
+	pin = /obj/item/device/firing_pin/implant/pindicate
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/unrestricted
+	pin = /obj/item/device/firing_pin
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
+	cover_open = !cover_open
+	user << "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>"
+	update_icon()
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
+	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+	if(cover_open)
+		user << "<span class='warning'>[src]'s cover is open! Close it before firing!</span>"
+	else
+		..()
+		update_icon()
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
+	if(loc != user)
+		..()
+		return	//let them pick it up
+	if(!cover_open || (cover_open && !magazine))
+		..()
+	else if(cover_open && magazine)
+		//drop the mag
+		magazine.update_icon()
+		magazine.loc = get_turf(src.loc)
+		user.put_in_hands(magazine)
+		magazine = null
+		update_icon()
+		user << "<span class='notice'>You remove the magazine from [src].</span>"
+
+
+/obj/item/weapon/gun/projectile/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	if(!cover_open)
+		user << "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>"
+		return
+	..()
+
+
+
+// SNIPER //
+
+/obj/item/weapon/gun/projectile/automatic/sniper_rifle
+	name = "sniper rifle"
+	desc = "The kind of gun that will leave you crying for mummy before you even realise your leg's missing"
+	icon_state = "sniper"
+	item_state = "sniper"
+	recoil = 2
+	weapon_weight = WEAPON_MEDIUM
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 40
+	burst_size = 1
+	origin_tech = "combat=7"
+	can_unsuppress = 1
+	can_suppress = 1
+	w_class = 3
+	zoomable = TRUE
+	zoom_amt = 7 //Long range, enough to see in front of you, but no tiles behind you.
+	slot_flags = SLOT_BACK
+	actions_types = list()
+
+
+/obj/item/weapon/gun/projectile/automatic/sniper_rifle/update_icon()
+	if(magazine)
+		icon_state = "sniper-mag"
+	else
+		icon_state = "sniper"
+
+
+/obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate
+	name = "syndicate sniper rifle"
+	desc = "Syndicate flavoured sniper rifle, it packs quite a punch, a punch to your face"
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	origin_tech = "combat=7;syndicate=6"
+
+
+
+
+// Laser rifle (rechargeable magazine) //
+
+/obj/item/weapon/gun/projectile/automatic/laser
+	name = "laser rifle"
+	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargable ammunition has given Nanotrasen a decisive edge over many a foe."
+	icon_state = "oldrifle"
+	item_state = "arg"
+	mag_type = /obj/item/ammo_box/magazine/recharge
+	fire_delay = 2
+	can_suppress = 0
+	burst_size = 0
+	actions_types = list()
+	fire_sound = 'sound/weapons/Laser.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/laser/process_chamber(eject_casing = 0, empty_chamber = 1)
+	..() //we changed the default value of the first argument
+
+
+/obj/item/weapon/gun/projectile/automatic/laser/update_icon()
+	..()
+	icon_state = "oldrifle[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
+	return

@@ -288,6 +288,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
+	name = "Bottle of lizard wine"
+	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
+	icon_state = "lizardwine"
+	list_reagents = list("lizardwine" = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice

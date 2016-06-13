@@ -73,7 +73,7 @@
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/scanning_module = 2,
 							/obj/item/weapon/stock_parts/manipulator = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stack/sheet/glass = 1)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
@@ -355,7 +355,7 @@
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, color="#960000", time=100)
+		flash_color(occupant, flash_color="#960000", flash_time=100)
 		occupant << "<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
 			<i>Is this what dying is like? Yes it is.</i></span>"

@@ -286,15 +286,15 @@
 /obj/machinery/hydroponics/proc/update_icon_plant()
 	var/image/I
 	if(dead)
-		I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_dead)
+		I = image(icon = myseed.growing_icon, icon_state = myseed.icon_dead)
 	else if(harvest)
 		if(!myseed.icon_harvest)
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][myseed.growthstages]")
+			I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][myseed.growthstages]")
 		else
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_harvest)
+			I = image(icon = myseed.growing_icon, icon_state = myseed.icon_harvest)
 	else
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
-		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][t_growthstate]")
+		I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][t_growthstate]")
 	I.layer = OBJ_LAYER + 0.01
 	add_overlay(I)
 
@@ -579,13 +579,13 @@
 	// Plant-B-Gone is just as bad
 	if(S.has_reagent("plantbgone", 1))
 		adjustHealth(-round(S.get_reagent_amount("plantbgone") * 5))
-		adjustToxic(-round(S.get_reagent_amount("plantbgone") * 6))
+		adjustToxic(round(S.get_reagent_amount("plantbgone") * 6))
 		adjustWeeds(-rand(4,8))
 
 	// why, just why
 	if(S.has_reagent("napalm", 1))
 		adjustHealth(-round(S.get_reagent_amount("napalm") * 6))
-		adjustToxic(-round(S.get_reagent_amount("napalm") * 7))
+		adjustToxic(round(S.get_reagent_amount("napalm") * 7))
 		adjustWeeds(-rand(5,9))
 
 	//Weed Spray

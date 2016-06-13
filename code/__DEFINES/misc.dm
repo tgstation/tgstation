@@ -23,8 +23,7 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
 #define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
 #define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
@@ -50,12 +49,11 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SPECIES_LAYER			SPECIES_LAYER+1
 #define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
 #define UNDER_BODY_LAYER			BODY_LAYER+1
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
@@ -83,7 +81,6 @@
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SPECIES_LAYER			SPECIES_LAYER-1
 #define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
 #define ABOVE_BODY_LAYER			BODY_LAYER-1
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
@@ -448,7 +445,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
-
+#define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
 #define DEADCHAT_DEATHRATTLE "deathrattle"
 #define DEADCHAT_REGULAR "regular-deadchat"
 

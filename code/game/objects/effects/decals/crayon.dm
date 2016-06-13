@@ -12,7 +12,7 @@
 	return
 
 
-/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0)
+/obj/effect/decal/cleanable/crayon/New(location, main = "#FFFFFF", var/type = "rune1", var/e_name = "rune", var/rotation = 0, var/alt_icon = null)
 	..()
 	loc = location
 
@@ -20,6 +20,9 @@
 	desc = "A [name] vandalizing the station."
 	if(type == "poseur tag")
 		type = pick(gang_name_pool)
+
+	if(alt_icon)
+		icon = alt_icon
 	icon_state = type
 
 	if(rotation && do_icon_rotate)

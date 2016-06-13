@@ -55,6 +55,9 @@
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
 
+/obj/item/weapon/nullrod/godhand/dropped(mob/user)
+	qdel(src)
+
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"

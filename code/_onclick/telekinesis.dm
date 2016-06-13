@@ -177,7 +177,7 @@ var/const/tk_maxrange = 15
 	O.anchored = 1
 	O.density = 0
 	O.layer = FLY_LAYER
-	O.dir = pick(cardinal)
+	O.setDir(pick(cardinal))
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
 	flick("empdisable",O)

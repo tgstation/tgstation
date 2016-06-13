@@ -1,7 +1,6 @@
 /obj/item/bodypart/head
 	name = "head"
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
-	icon_state = "head"
 	max_damage = 200
 	body_zone = "head"
 	body_part = HEAD
