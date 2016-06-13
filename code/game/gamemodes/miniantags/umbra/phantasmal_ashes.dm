@@ -14,8 +14,9 @@
 /obj/item/phantasmal_ashes/New()
 	..()
 	spawn(UMBRA_ASHES_REFORM_TIME)
-		if(src)
-			reform()
+		if(!src)
+			return
+		reform()
 
 /obj/item/phantasmal_ashes/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] scatters [src]!</span>", "<span class='notice'>You scatter [src], which tremble and fade away.</span>")
@@ -35,7 +36,7 @@
 		var/image/alert_overlay = image('icons/mob/mob.dmi', "umbra")
 		notify_ghosts("An umbra has formed in [get_area(U)]. Attack it to take control of it.", null, source = U, alert_overlay = alert_overlay)
 	else
-		U << "<span class='umbra'>Back... you're back. Now, where were we?</span>"
+		U << "<span class='umbra_emphasis'>Back... you're back. Now, where were we?</span>"
 	if(umbra_vitae)
 		U.vitae = umbra_vitae
 	U.alpha = 0

@@ -26,23 +26,29 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 /mob/living/simple_animal/umbra
 	name = "umbra"
 	real_name = "umbra"
-	desc = "A translucent cobalt-blue spirit floating several feet in the air."
+	desc = "A translucent, cobalt-blue spirit floating several feet in the air."
 	invisibility = UMBRA_INVISIBILITY
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "umbra"
 	icon_living = "umbra"
+	layer = GHOST_LAYER
 	alpha = 175 //To show invisibility
 	health = 100
 	maxHealth = 100
+	healable = 0
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	healable = FALSE
 	friendly = "passes through"
 	speak_emote = list("murmurs")
 	emote_hear = list("murmurs")
+	languages = ALL
 	incorporeal_move = 3
+	flying = TRUE
 	stop_automated_movement = TRUE
 	wander = FALSE
+	sight = SEE_SELF
+	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	see_in_dark = 8
-	see_invisible = UMBRA_INVISIBILITY
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -50,6 +56,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	var/vitae_cap = 100 //How much vitae a single umbra can hold
 	var/breaking_apart = FALSE //If the umbra is currently dying
 	var/harvesting = FALSE //If the umbra is harvesting a soul
+	var/manifest_theme = "Void" //Flavors used for the Manifest spell
 	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
 	var/playstyle_string = "<font size=3 color='#5000A0'><b>You are an umbra,</b></font><b> a spirit with enough anger or determination not to fully pass on. Although the circumstances of your \
 	death have been forgotten, you still clearly remember your name, but nothing other than that. What you do know is that you're going to make the most out of this second chance that you have \
@@ -61,7 +68,19 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	\n\
 	Although living things have plenty of vitae, you think that the souls of these creatures might be rendered useless if you drain too much. For this reason, you'll have to limit yourself and \
 	can only draw any significant amount of vitae from a particular corpse once every few minutes. After that time, you think that the soul will have recuperated enough that you can draw from \
-	it again.</b>"
+	it again.\n\
+	\n\
+	Right now, you are incorporeal and invisible to the naked eye. However, some abilities and circumstances may reveal and immobilize you, making you vulnerable to attack.</b>"
+
+/mob/living/simple_animal/umbra/New()
+	..()
+	if(prob(1))
+		name = "grief ghost"
+		real_name = "grief ghost"
+		desc = "You wonder how something that produces so much salt can be weak to it."
+	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/umbra(null))
+	AddSpell(new/obj/effect/proc_holder/spell/targeted/discordant_whisper(null))
+	AddSpell(new/obj/effect/proc_holder/spell/self/manifest(null))
 
 /mob/living/simple_animal/umbra/Life()
 	..()
@@ -84,6 +103,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 				drained_mobs += "[L.real_name][length > 1 ? ", " : ""]"
 			length--
 		stat(null, "Recently Drained Creatures: [drained_mobs ? "[drained_mobs]" : "None"]")
+		stat(null, "Manifest Theme: [manifest_theme]")
 
 /mob/living/simple_animal/umbra/ClickOn(atom/A, params)
 	A.examine(src)
@@ -112,7 +132,8 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	flick("umbra_disintegrate", src)
 	sleep(12)
 	if(vitae)
-		visible_message("<span class='warning'>[src] breaks apart into a pile of ashes!</span>")
+		visible_message("<span class='warning'>[src] breaks apart into a pile of ashes!</span>", \
+		"<span class='umbra_emphasis'><font size=3>You'll</font> be <font size=1>back...</font></span>")
 		var/obj/item/phantasmal_ashes/P = new(get_turf(src))
 		P.umbra_key = key
 		P.umbra_vitae = vitae
@@ -128,9 +149,16 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 		return
 	if(alert(O, "Become an umbra? You won't be clonable!",,"Yes", "No") == "No" || !O)
 		return
-	notify_ghosts("The umbra at [get_area(src)] has been taken control of.", source = src, action = NOTIFY_ORBIT)
+	notify_ghosts("The umbra at [get_area(src)] has been taken control of by [O].", source = src, action = NOTIFY_ORBIT)
 	key = O.key
 	src << playstyle_string
+
+/mob/living/simple_animal/umbra/verb/change_manifest_theme()
+	set name = "Change Manifest Theme"
+	set desc = "Change how your Manifest looks and sounds."
+	set category = "IC"
+
+	manifest_theme = input("Choose a theme for your Manifest ability.", "Manifest Theme") in list("Void", "Clown")
 
 
 
