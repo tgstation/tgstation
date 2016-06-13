@@ -100,8 +100,8 @@
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.d_state = 0
-				W.dir = user.dir
-				W.ini_dir = user.dir
+				W.dir = SOUTHWEST
+				W.ini_dir = SOUTHWEST
 				W.anchored = 0
 				src.use(2)
 			if("Windoor")
@@ -180,8 +180,8 @@
 					return 1
 				var/obj/structure/window/W = new full_window( user.loc, 0 )
 				W.d_state = 0
-				W.dir = user.dir
-				W.ini_dir = user.dir
+				W.dir = SOUTHWEST
+				W.ini_dir = SOUTHWEST
 				W.anchored = 0
 				src.use(2)
 	return 0

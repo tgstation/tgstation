@@ -66,8 +66,6 @@
 	// This is the placed to store data for the holomap.
 	var/list/image/holomap_data
 
-	var/image/viewblock
-
 /turf/examine(mob/user)
 	..()
 	if(bullet_marks)
