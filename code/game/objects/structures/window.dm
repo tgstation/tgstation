@@ -26,10 +26,13 @@
 	penetration_dampening = 1
 
 	var/obj/Overlays/damage_overlay
+	var/image/oneway_overlay
 	var/cracked_base = "crack"
 
 	var/fire_temp_threshold = 800
 	var/fire_volume_mod = 100
+
+	var/one_way = 0 //If set to 1, it will act as a one-way window.
 
 /obj/structure/window/New(loc)
 
@@ -40,6 +43,7 @@
 	update_nearby_tiles()
 	update_nearby_icons()
 	update_icon()
+	oneway_overlay = image('icons/obj/structures.dmi', src, "one_way_overlay")
 
 /obj/structure/window/projectile_check()
 	return PROJREACT_WINDOWS
@@ -268,6 +272,29 @@
 			msg_admin_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) ([gstate]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			log_attack("[user.name] ([user.ckey]) window slammed [M.name] ([M.ckey]) ([gstate]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			return
+
+	if(iscrowbar(W) && one_way)
+		to_chat(user, "<span class='notice'>You pry the sheet of plastic off the window.</span>")
+		one_way = 0
+		new /obj/item/stack/sheet/mineral/plastic(get_turf(user))
+		overlays -= oneway_overlay
+		return
+
+	if(istype(W, /obj/item/stack/sheet/mineral/plastic))
+		if(one_way)
+			to_chat(user, "<span class='notice'>This [src] already has one-way tint on it.</span>")
+			return
+		var/obj/item/stack/sheet/mineral/plastic/P = W
+		one_way = 1
+		P.use(1)
+		to_chat(user, "<span class='notice'>You place a sheet of plastic over the window.</span>")
+//		if(!oneway_overlay)
+//			oneway_overlay = new(src)
+//			oneway_overlay.icon = icon('icons/obj/structures.dmi')
+//			oneway_overlay.dir = src.dir
+//			oneway_overlay.icon_state = "one_way_overlay"
+		overlays += oneway_overlay
+		return
 
 	//Start construction and deconstruction, absolute priority over the other object interactions to avoid hitting the window
 

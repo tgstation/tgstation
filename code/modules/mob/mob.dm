@@ -343,7 +343,14 @@ var/global/obj/screen/fuckstat/FUCK = new
 			if(hallucination && self_drugged_message)
 				msg = self_drugged_message
 
-		M.show_message( msg, 1, msg2, 2)
+		var/showmessage = 1
+		if(M.client)
+			var/client/C = M.client
+			if(C.ObscuredTurfs.len)
+				if(get_turf(src) in C.ObscuredTurfs)
+					showmessage = 0
+		if(showmessage)
+			M.show_message( msg, 1, msg2, 2)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
@@ -363,11 +370,27 @@ var/global/obj/screen/fuckstat/FUCK = new
 					msg = drugged_message
 				if(blind_drugged_message)
 					msg2 = blind_drugged_message
-			M.show_message( msg, 1, msg2, 2)
+
+			var/showmessage = 1
+			if(M.client)
+				var/client/C = M.client
+				if(C.ObscuredTurfs.len)
+					if(get_turf(src) in C.ObscuredTurfs)
+						showmessage = 0
+			if(showmessage)
+				M.show_message( msg, 1, msg2, 2)
 		else if(istype(hearer.attached, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/holo = hearer.attached
 			if(holo.master)
-				holo.master.show_message( message, 1, blind_message, 2)
+				var/mob/M = holo.master
+				var/showmessage = 1
+				if(M.client)
+					var/client/C = M.client
+					if(C.ObscuredTurfs.len)
+						if(get_turf(src) in C.ObscuredTurfs)
+							showmessage = 0
+				if(showmessage)
+					holo.master.show_message( message, 1, blind_message, 2)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -990,7 +1013,7 @@ var/list/slot_equipment_priority = list( \
 	if(isVentCrawling())
 		to_chat(src, "<span class='danger'>Not while we're vent crawling!</span>")
 		return
-	
+
 	var/obj/item/W = get_held_item_by_index(active_hand)
 	if(W)
 		W.attack_self(src)

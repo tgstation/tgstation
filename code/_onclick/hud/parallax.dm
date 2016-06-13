@@ -36,12 +36,6 @@ var/list/parallax_on_clients = list()
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
-	if(!parallax_initialized || C.updating_parallax) return
-
-	for(var/turf/T in range(get_turf(C.eye),C.view))
-		if(istype(T,/turf/space))
-			C.updating_parallax = 1
-			break
 
 	if(!C.updating_parallax)
 		return

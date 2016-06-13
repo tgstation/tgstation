@@ -333,17 +333,18 @@
 
 /atom/movable/proc/update_client_hook(atom/destination)
 	if(locate(/mob) in src)
-		for(var/client/C in parallax_on_clients)
+		for(var/client/C in clients)
 			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
-				C.mob.hud_used.update_parallax()
+				C.update_special_views()
 
 /mob/update_client_hook(atom/destination)
 	if(locate(/mob) in src)
-		for(var/client/C in parallax_on_clients)
+		for(var/client/C in clients)
 			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
-				C.mob.hud_used.update_parallax()
+				C.update_special_views()
 	else if(client && hud_used)
-		hud_used.update_parallax()
+		var/client/C = client
+		C.update_special_views()
 
 /atom/movable/proc/forceEnter(atom/destination)
 	if(destination)

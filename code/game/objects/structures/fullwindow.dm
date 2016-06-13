@@ -58,6 +58,42 @@
 		icon_state = "[base_state][junction]"
 		return
 
+/obj/structure/window/full/verb/set_direction() //Full windows get this because it's possible for them to face diagonally
+	set name = "Set Window Direction"			//Diagonal facing matters in the use of one-way windows
+	set category = "Object"
+	set src in oview(1)
+
+	if(usr.incapacitated())
+		return 0
+
+	if(anchored)
+		to_chat(usr, "<span class='warning'>\The [src] is fastened to the floor, therefore you can't rotate it!</span>")
+		return 0
+
+	var/direction_list = list("north","south","east","west","northeast","southeast","southwest","northwest")
+	var/N = input("Which direction do you want \the [src] to face?","[src]") as null|anything in direction_list
+	if(N)
+		update_nearby_tiles() //Compel updates before
+		switch(N)
+			if("north")
+				dir = NORTH
+			if("south")
+				dir = SOUTH
+			if("east")
+				dir = EAST
+			if("west")
+				dir = WEST
+			if("northeast")
+				dir = NORTHEAST
+			if("southeast")
+				dir = SOUTHEAST
+			if("southwest")
+				dir = SOUTHWEST
+			if("northwest")
+				dir = NORTHWEST
+		update_nearby_tiles()
+		ini_dir = dir
+
 /obj/structure/window/full/reinforced
 	name = "reinforced window"
 	desc = "A window with a rod matrice. It looks more solid than the average window."
