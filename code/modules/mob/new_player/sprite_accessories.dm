@@ -119,6 +119,30 @@
 		name = "Ponytail 3"
 		icon_state = "hair_ponytail3"
 
+	longpony
+		name = "Long Ponytail"
+		icon_state = "hair_longpony"
+
+	highpony
+		name = "High Ponytail"
+		icon_state = "hair_highpony"
+
+	sidepony1
+		name = "Side Ponytail 1"
+		icon_state = "hair_sidepony1"
+
+	sidepony2
+		name = "Side Ponytail 2"
+		icon_state = "hair_sidepony2"
+
+	oneshoulder
+		name = "One Shoulder"
+		icon_state = "hair_oneshoulder"
+
+	tressshoulder
+		name = "Tress Shoulder"
+		icon_state = "hair_tressshoulder"
+
 	parted
 		name = "Parted"
 		icon_state = "hair_parted"
