@@ -67,20 +67,36 @@
 	var/damage = 0
 	switch(severity)
 		if(1)
-			damage = max_health * 0.7 //70% max health lost
+			damage = max_health * 1 //100% max health lost
 		if(2)
-			damage = max_health * 0.4 //40% max health lost
+			damage = max_health * rand(0.5, 0.7) //50-70% max health lost
 		if(3)
-			if(prob(50))
-				damage = max_health * 0.1 //10% max health lost
+			damage = max_health * rand(0.1, 0.3) //10-30% max health lost
 	if(damage)
 		take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/examine(mob/user)
-	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
+	var/can_see_clockwork = is_servant_of_ratvar(user) || isobserver(user)
+	if(can_see_clockwork && clockwork_desc)
 		desc = clockwork_desc
 	..()
 	desc = initial(desc)
+	if(takes_damage)
+		var/servant_message = "It is at [health]/[max_health] integrity"
+		var/other_message = "It seems pristine and undamaged"
+		var/heavily_damaged = FALSE
+		switch(health/max_health)
+			if(100)
+				other_message = "It seems pristine and undamaged"
+			if(100 to 60)
+				other_message = "It looks slightly dented"
+			if(60 to 25)
+				other_message = "It appears heavily damaged"
+				heavily_damaged = TRUE
+			if(25 to 0)
+				other_message = "It's falling apart"
+				heavily_damaged = TRUE
+		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork  ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -118,7 +134,8 @@
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
 	name = "tinkerer's cache"
 	desc = "A large brass spire with a flaming hole in its center."
-	clockwork_desc = "A brass container capable of storing a large amount of components. Shares components with all other caches."
+	clockwork_desc = "A brass container capable of storing a large amount of components.\n\
+	Shares components with all other caches and will gradually generate components if near a Clockwork Wall."
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
@@ -165,6 +182,25 @@
 		user << "<span class='notice'>You add [C] to [src].</span>"
 		user.drop_item()
 		qdel(C)
+		return 1
+	else if(istype(I, /obj/item/clockwork/clockwork_proselytizer))
+		var/obj/item/clockwork/clockwork_proselytizer/P = I
+		if(P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy)
+			if(clockwork_component_cache["replicant_alloy"])
+				user.visible_message("<span class='notice'>[user] places the end of [P] in the hole in [src]...</span>", \
+				"<span class='notice'>You start filling [P] with liquified alloy...</span>")
+				while(P && P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"] && do_after(user, 10, target = src) \
+				&& P && P.uses_alloy &&  P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"]) //hugeass check because we need to re-check after the do_after
+					P.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
+					clockwork_component_cache["replicant_alloy"]--
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+				if(P && user)
+					user.visible_message("<span class='notice'>[user] removes [P] from the hole in [src], apparently satisfied.</span>", \
+					"<span class='brass'>You finish filling [P] with liquified alloy. It now contains [P.stored_alloy]/[P.max_alloy] units of liquified alloy.</span>")
+			else
+				user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
+		else
+			user << "<span class='warning'>[P]'s containers of liquified alloy are full!</span>"
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -375,8 +411,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	desc = "A massive brass gear."
-	clockwork_desc = "A massive brass gear that could possibly be proselytized into replicant alloy."
+	desc = "A massive brass gear. You could probably remove it from the floor with a wrench."
+	clockwork_desc = "A massive brass gear. You could probably remove it from the floor with a wrench, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards)
 
