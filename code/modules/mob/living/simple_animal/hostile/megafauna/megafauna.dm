@@ -15,23 +15,8 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
-	if(health > 0)
-		return
-	else
-		feedback_set_details("megafauna_kills","[initial(name)]")
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/gib()
-	if(health > 0)
-		return
-	else
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/dust()
-	if(health > 0)
-		return
-	else
-		..()
+	feedback_set_details("megafauna_kills","[initial(name)]")
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
@@ -51,3 +36,12 @@
 			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 		adjustBruteLoss(-L.maxHealth/2)
 		L.gib()
+
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			adjustBruteLoss(600)
+		if(2)
+			adjustBruteLoss(300)
+		if(3)
+			adjustBruteLoss(150)
