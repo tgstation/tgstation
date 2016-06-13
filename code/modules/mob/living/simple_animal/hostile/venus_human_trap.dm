@@ -2,7 +2,7 @@
 
 /obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
-	desc = "a large pulsating plant..."
+	desc = "A large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
@@ -33,7 +33,7 @@
 /obj/effect/ebeam/vine
 	name = "thick vine"
 	mouse_opacity = 1
-	desc = "a thick vine, painful to the touch"
+	desc = "A thick vine, painful to the touch."
 
 
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
@@ -47,7 +47,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
-	desc = "now you know how the fly feels"
+	desc = "Now you know how the fly feels."
 	icon_state = "venus_human_trap"
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
