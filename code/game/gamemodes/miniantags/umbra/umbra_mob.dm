@@ -56,7 +56,6 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	var/vitae_cap = 100 //How much vitae a single umbra can hold
 	var/breaking_apart = FALSE //If the umbra is currently dying
 	var/harvesting = FALSE //If the umbra is harvesting a soul
-	var/manifest_theme = "Void" //Flavors used for the Manifest spell
 	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
 	var/playstyle_string = "<font size=3 color='#5000A0'><b>You are an umbra,</b></font><b> a spirit with enough anger or determination not to fully pass on. Although the circumstances of your \
 	death have been forgotten, you still clearly remember your name, but nothing other than that. What you do know is that you're going to make the most out of this second chance that you have \
@@ -80,7 +79,6 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 		desc = "You wonder how something that produces so much salt can be weak to it."
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/umbra(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/discordant_whisper(null))
-	AddSpell(new/obj/effect/proc_holder/spell/self/manifest(null))
 
 /mob/living/simple_animal/umbra/Life()
 	..()
@@ -109,8 +107,8 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	A.examine(src)
 	if(isliving(A) && Adjacent(A))
 		var/mob/living/L = A
-		if(L.health)
-			src << "<span class='warning'>[L]'s soul is too strong to drain while they aren't severly wounded!</span>"
+		if(L.health > 0 && L.stat != DEAD)
+			src << "<span class='warning'>[L]'s soul is too strong to drain while they aren't severely wounded!</span>"
 			return
 		else if(L in recently_drained)
 			src << "<span class='warning'>[L]'s soul is still recuperating! You can't risk draining any more vitae!</span>"
@@ -153,21 +151,12 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	key = O.key
 	src << playstyle_string
 
-/mob/living/simple_animal/umbra/verb/change_manifest_theme()
-	set name = "Change Manifest Theme"
-	set desc = "Change how your Manifest looks and sounds."
-	set category = "IC"
-
-	manifest_theme = input("Choose a theme for your Manifest ability.", "Manifest Theme") in list("Void", "Clown")
-
-
 
 /mob/living/simple_animal/umbra/proc/adjust_vitae(amount, silent, source)
 	vitae = min(max(0, vitae + amount), vitae_cap)
 	if(!silent)
 		src << "<span class='umbra'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
 	return vitae
-
 
 
 /mob/living/simple_animal/umbra/proc/harvest_soul(mob/living/L) //How umbras drain vitae from their targets
@@ -244,14 +233,15 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	visible_message("<span class='warning'>[src] winks out of existence, releasing its hold on [L]...</span>")
 	L.visible_message("<span class='warning'>...who falls unceremoniously back to the ground.</span>")
 	animate(L, pixel_y = pixel_y - 5, time = 10)
-	spawn(rand(UMBRA_MAX_HARVEST_COOLDOWN - 600, UMBRA_MAX_HARVEST_COOLDOWN)) //Between 4-5 minutes by default
-		if(!L)
-			return
-		src << "<span class='umbra'>You think that [L]'s soul should be strong enough to harvest again.</span>"
-		recently_drained -= L
+	addtimer(src, "harvest_cooldown", rand(UMBRA_MAX_HARVEST_COOLDOWN - 600, UMBRA_MAX_HARVEST_COOLDOWN), L)
 	harvesting = FALSE
 	return 1
 
+/mob/living/simple_animal/umbra/proc/harvest_cooldown(mob/living/L) //After a while, mobs that have already been drained can be harvested again
+	if(!L)
+		return
+	src << "<span class='umbra'>You think that [L]'s soul should be strong enough to harvest again.</span>"
+	recently_drained -= L
 
 
 /mob/living/simple_animal/umbra/proc/Reveal(time) //Makes the umbra visible for the designated amount of deciseconds

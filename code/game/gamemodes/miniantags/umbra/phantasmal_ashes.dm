@@ -13,10 +13,7 @@
 
 /obj/item/phantasmal_ashes/New()
 	..()
-	spawn(UMBRA_ASHES_REFORM_TIME)
-		if(!src)
-			return
-		reform()
+	addtimer(src, "reform", UMBRA_ASHES_REFORM_TIME)
 
 /obj/item/phantasmal_ashes/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] scatters [src]!</span>", "<span class='notice'>You scatter [src], which tremble and fade away.</span>")
@@ -25,6 +22,8 @@
 	return 1
 
 /obj/item/phantasmal_ashes/proc/reform()
+	if(!src)
+		return
 	visible_message("<span class='warning'>[src] hover into the air and reform!</span>")
 	flick("phantasmal_ashes_reforming", src)
 	animate(src, alpha = 0, time = 12)
@@ -40,6 +39,6 @@
 	if(umbra_vitae)
 		U.vitae = umbra_vitae
 	U.alpha = 0
-	animate(U, alpha = 255, time = 10) //To give a fade-in effect for the newly-spawned
+	animate(U, alpha = initial(U.alpha), time = 10) //To give a fade-in effect for the newly-spawned
 	qdel(src)
 	return 1
