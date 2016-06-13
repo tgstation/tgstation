@@ -294,11 +294,13 @@
 
 
 //Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(noheal)
+/mob/living/proc/regenerate_limbs(noheal, excluded_limbs)
 	return 0
 
-/mob/living/carbon/human/regenerate_limbs(noheal)
+/mob/living/carbon/human/regenerate_limbs(noheal, list/excluded_limbs)
 	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
+	if(excluded_limbs)
+		limb_list -= excluded_limbs
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
 
