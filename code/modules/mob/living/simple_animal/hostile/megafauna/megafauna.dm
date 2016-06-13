@@ -45,4 +45,3 @@
 			adjustBruteLoss(300)
 		if(3)
 			adjustBruteLoss(150)
-	updatehealth()
