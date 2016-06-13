@@ -163,25 +163,25 @@
 		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 
-/datum/action/innate/mecha/mech_defence_mode
-	name = "Toggle Defence Mode"
+/datum/action/innate/mecha/mech_defense_mode
+	name = "Toggle defense Mode"
 	button_icon_state = "mech_defense_mode_off"
 
-/datum/action/innate/mecha/mech_defence_mode/Activate(forced_state = null)
+/datum/action/innate/mecha/mech_defense_mode/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
 	if(!isnull(forced_state))
-		chassis.defence_mode = forced_state
+		chassis.defense_mode = forced_state
 	else
-		chassis.defence_mode = !chassis.defence_mode
-	button_icon_state = "mech_defense_mode_[chassis.defence_mode ? "on" : "off"]"
-	if(chassis.defence_mode)
-		chassis.deflect_chance = chassis.defence_mode_deflect_chance
-		chassis.occupant_message("<span class='notice'>You enable [chassis] defence mode.</span>")
+		chassis.defense_mode = !chassis.defense_mode
+	button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
+	if(chassis.defense_mode)
+		chassis.deflect_chance = chassis.defense_mode_deflect_chance
+		chassis.occupant_message("<span class='notice'>You enable [chassis] defense mode.</span>")
 	else
 		chassis.deflect_chance = initial(chassis.deflect_chance)
-		chassis.occupant_message("<span class='danger'>You disable [chassis] defence mode.</span>")
-	chassis.log_message("Toggled defence mode.")
+		chassis.occupant_message("<span class='danger'>You disable [chassis] defense mode.</span>")
+	chassis.log_message("Toggled defense mode.")
 	UpdateButtonIcon()
 
 /datum/action/innate/mecha/mech_overload_mode

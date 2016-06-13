@@ -136,7 +136,7 @@
 
 /obj/item/clothing/tie/medal/silver/security
 	name = "robust security award"
-	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
+	desc = "An award for distinguished combat and sacrifice in defense of Nanotrasen's commercial interests. Often awarded to security staff."
 
 /obj/item/clothing/tie/medal/gold
 	name = "gold medal"
