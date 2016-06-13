@@ -620,6 +620,8 @@ $(function() {
 			return;
 		}
 
+		e.preventDefault()
+		
 		var k = e.which;
 		var command; // Command to execute through winset.
 
