@@ -37,6 +37,9 @@
 /area/vault/biodome
 	requires_power = 1
 
+/area/vault/brokeufo
+	requires_power = 1
+
 /mob/living/simple_animal/hostile/monster/cyber_horror/quiet
 	speak_chance = 1 //shut the fuck up
 
