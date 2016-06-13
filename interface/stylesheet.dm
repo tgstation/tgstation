@@ -91,13 +91,6 @@ h1.alert, h2.alert		{color: #000000;}
 .neovgre				{color: #13143F; font-weight: bold; font-style: italic;}
 .neovgre_small			{color: #13143F;}
 
-.revennotice			{color: #1d2953;}
-.revenboldnotice		{color: #1d2953;	font-weight: bold;}
-.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
-.revenminor				{color: #823abb}
-.revenwarning			{color: #760fbb;	font-style: italic;}
-.revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
-
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
 

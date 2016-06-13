@@ -247,16 +247,9 @@
 	icon_state = "sigilactivepulse"
 	layer = BELOW_MOB_LAYER
 
-
-/obj/effect/overlay/temp/revenant
+/obj/effect/overlay/temp/purple_sparkles
 	name = "spooky lights"
 	icon_state = "purplesparkles"
-
-/obj/effect/overlay/temp/revenant/cracks
-	name = "glowing cracks"
-	icon_state = "purplecrack"
-	duration = 6
-
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"

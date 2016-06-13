@@ -5,7 +5,7 @@ Currently, that list consists of:
 	-Prophets of sin
 	-The Jungle Fever virus (infected monkey bites human, human becomes another infected monkey)
 	-Morphs
-	-Revenants
 	-Sintouched crewmembers
 	-Slaughter demons
+	-Umbras (formerly revenants)
 Please update this if you add another mini-antagonist.
