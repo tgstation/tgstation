@@ -1,4 +1,4 @@
-#define UMBRA_ASHES_REFORM_TIME 30 //In deciseconds, how long ashes take to reform
+#define UMBRA_ASHES_REFORM_TIME 600 //In deciseconds, how long ashes take to reform
 
 /obj/item/phantasmal_ashes
 	name = "phantasmal ashes"
