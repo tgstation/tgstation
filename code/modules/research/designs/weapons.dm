@@ -8,7 +8,7 @@
 	reliability_base = 76
 	category = "Weapons"
 	build_path = /obj/item/device/modkit/aeg_parts
-	
+
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
@@ -20,7 +20,7 @@
 	category = "Weapons"
 	build_path = /obj/item/weapon/gun/energy/stunrevolver
 	locked = 1
-	req_lock_access = list(access_armory)
+	req_lock_access = list(access_security)
 
 /datum/design/lasercannon
 	name = "Laser Cannon"
