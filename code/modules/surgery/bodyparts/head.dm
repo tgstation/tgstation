@@ -1,11 +1,10 @@
 /obj/item/bodypart/head
 	name = "head"
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
-	icon_state = "head"
 	max_damage = 200
 	body_zone = "head"
 	body_part = HEAD
-	layer = 4.1 //so it isn't hidden behind some objects when on the floor
+	layer = ABOVE_MOB_LAYER //so it isn't hidden behind some objects when on the floor
 	w_class = 4 //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
@@ -35,7 +34,8 @@
 	playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		if(I == brain)
-			user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
+			if(user)
+				user.visible_message("<span class='warning'>[user] saws [src] open and pulls out a brain!</span>", "<span class='notice'>You saw [src] open and pull out a brain.</span>")
 			if(brainmob)
 				brainmob.container = null
 				brainmob.loc = brain
@@ -159,3 +159,7 @@
 
 	if(standing.len)
 		return standing
+
+/obj/item/bodypart/head/burn()
+	drop_organs()
+	..()

@@ -9,7 +9,7 @@
 	role_name = "lone operative"
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = get_candidates("operative", 3000, ROLE_OPERATIVE)
+	var/list/candidates = get_candidates("operative", null, ROLE_OPERATIVE)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

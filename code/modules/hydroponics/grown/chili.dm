@@ -11,6 +11,7 @@
 	production = 5
 	yield = 4
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "chili-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "chili-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/chili/ice, /obj/item/seeds/chili/ghost)
@@ -46,6 +47,7 @@
 	icon_state = "icepepper"
 	filling_color = "#0000CD"
 	bitesize_mod = 2
+	origin_tech = "biotech=4"
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -71,6 +73,7 @@
 	var/mob/held_mob
 	filling_color = "#F8F8FF"
 	bitesize_mod = 4
+	origin_tech = "biotech=4;magnets=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()

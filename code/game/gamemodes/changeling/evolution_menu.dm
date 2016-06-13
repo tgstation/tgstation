@@ -392,7 +392,7 @@ var/list/sting_paths
 			mind.changeling.changeling_speak = 0
 			mind.changeling.reset()
 			for(var/obj/effect/proc_holder/changeling/p in mind.changeling.purchasedpowers)
-				if(p.dna_cost == 0 && keep_free_powers)
+				if((p.dna_cost == 0 && keep_free_powers) || p.always_keep)
 					continue
 				mind.changeling.purchasedpowers -= p
 				p.on_refund(src)

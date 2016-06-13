@@ -14,7 +14,7 @@
 	name = "mech bay power port"
 	density = 1
 	anchored = 1
-	dir = 4
+	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	var/obj/mecha/recharging_mech
@@ -33,7 +33,7 @@
 /obj/item/weapon/circuitboard/machine/mech_recharger
 	name = "circuit board (Mechbay Recharger)"
 	build_path = /obj/machinery/mech_bay_recharge_port
-	origin_tech = "programming=3;powerstorage=4;engineering=4"
+	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/capacitor = 5)

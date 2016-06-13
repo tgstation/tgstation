@@ -53,6 +53,7 @@
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
+					P.Angle = null
 
 				return -1 // complete projectile permutation
 
@@ -264,11 +265,6 @@
 		I.acid_act(acidpwr, acid_volume_left)
 		acid_volume_left = max(acid_volume_left - acid_decay, 0)
 
-/mob/living/carbon/human/grabbedby(mob/living/user)
-	if(w_uniform)
-		w_uniform.add_fingerprint(user)
-	..()
-
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -350,7 +346,9 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
+			return ..()
+	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
@@ -361,7 +359,7 @@
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
-					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")
@@ -369,3 +367,18 @@
 					skipcatch = 1 //can't catch the now embedded item
 
 	return ..()
+
+/mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
+		devour_mob(pulling)
+	else
+		..()
+
+/mob/living/carbon/human/grippedby(mob/living/user)
+	if(w_uniform)
+		w_uniform.add_fingerprint(user)
+	..()
+
+/mob/living/carbon/human/Stun(amount, updating_canmove = 1)
+	amount = dna.species.spec_stun(src,amount)
+	..()

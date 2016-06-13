@@ -33,14 +33,24 @@ var/bomb_set
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
+	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
+	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	SSobj.processing -= core
 	update_icon()
+	poi_list |= src
 	previous_level = get_security_level()
+
+/obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
+	nuke_list -= src
+	qdel(countdown)
+	countdown = null
+	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -48,7 +58,7 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/machinery/nuclearbomb/syndicate
 
@@ -200,6 +210,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
+		countdown.start()
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -210,7 +221,8 @@ var/bomb_set
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				attack_hand(M)
-	return
+	else
+		countdown.stop()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
@@ -304,18 +316,19 @@ var/bomb_set
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
 	if(safety)
+		if(timing)
+			set_security_level(previous_level)
 		timing = 0
 		bomb_set = 0
-		set_security_level(previous_level)
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety)
+	if(safety && !bomb_set)
 		usr << "<span class='danger'>The safety is still on.</span>"
 		return
 	timing = !timing
-	previous_level = get_security_level()
 	if(timing)
+		previous_level = get_security_level()
 		bomb_set = 1
 		set_security_level("delta")
 	else
@@ -429,10 +442,16 @@ This is here to make the tiles around the station mininuke change when it's arme
 		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
 		qdel(src)
 
-/obj/item/weapon/disk/nuclear/Destroy()
+/obj/item/weapon/disk/nuclear/Destroy(force)
+	var/turf/diskturf = get_turf(src)
+
+	if(force)
+		message_admins("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]).")
+		log_game("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]).")
+		return ..()
+
 	if(blobstart.len > 0)
 		var/turf/targetturf = get_turf(pick(blobstart))
-		var/turf/diskturf = get_turf(src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.remove_from_mob(src)
@@ -444,4 +463,4 @@ This is here to make the tiles around the station mininuke change when it's arme
 		log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
-	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced

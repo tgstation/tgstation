@@ -1,4 +1,3 @@
-//TODO: Add critfail checks and reliability
 //DO NOT ADD MECHA PARTS TO THE GAME WITH THE DEFAULT "SPRITE ME" SPRITE!
 //I'm annoyed I even have to tell you this! SPRITE FIRST, then commit.
 
@@ -7,7 +6,7 @@
 	icon = 'icons/mecha/mecha_equipment.dmi'
 	icon_state = "mecha_equip"
 	force = 5
-	origin_tech = "materials=2"
+	origin_tech = "materials=2;engineering=2"
 	var/equip_cooldown = 0 // cooldown after use
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0

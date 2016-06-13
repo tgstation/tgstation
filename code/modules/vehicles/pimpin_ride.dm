@@ -1,5 +1,3 @@
-
-
 //PIMP-CART
 /obj/vehicle/janicart
 	name = "janicart (pimpin' ride)"
@@ -12,7 +10,7 @@
 
 /obj/vehicle/janicart/handle_vehicle_offsets()
 	..()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
 			switch(buckled_mob.dir)
@@ -40,6 +38,7 @@
 	desc = "An upgrade for mobile janicarts."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "upgrade"
+	origin_tech = "materials=3;engineering=4"
 
 
 /obj/vehicle/janicart/Moved(atom/OldLoc, Dir)
@@ -91,4 +90,3 @@
 		user.put_in_hands(mybag)
 		mybag = null
 		update_icon()
-

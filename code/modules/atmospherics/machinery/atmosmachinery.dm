@@ -15,6 +15,7 @@ Pipelines + Other Objects -> Pipe network
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
+	layer = GAS_PIPE_LAYER //under wires
 	var/nodealert = 0
 	var/can_unwrench = 0
 	var/initialize_directions = 0
@@ -211,7 +212,7 @@ Pipelines + Other Objects -> Pipe network
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.dir = src.dir		  //need to define them here, because the obj directions...
+		stored.setDir(src.dir		  )//need to define them here, because the obj directions...
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
 		stored.color = obj_color
 	var/turf/T = loc

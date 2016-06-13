@@ -11,19 +11,15 @@
 	throw_range = 1
 	w_class = 5
 	var/charged = 5
-	origin_tech = "combat=5;bluespace=4"
-
-
+	origin_tech = "combat=4;bluespace=4;plasmatech=7"
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
 	SSobj.processing |= src
 
-
 /obj/item/weapon/twohanded/singularityhammer/Destroy()
 	SSobj.processing.Remove(src)
 	return ..()
-
 
 /obj/item/weapon/twohanded/singularityhammer/process()
 	if(charged < 5)
@@ -33,7 +29,6 @@
 /obj/item/weapon/twohanded/singularityhammer/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "mjollnir[wielded]"
 	return
-
 
 /obj/item/weapon/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -55,8 +50,6 @@
 				step_towards(H,pull)
 	return
 
-
-
 /obj/item/weapon/twohanded/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(wielded)
@@ -68,7 +61,6 @@
 			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
-
 
 /obj/item/weapon/twohanded/mjollnir
 	name = "Mjolnir"
@@ -83,7 +75,7 @@
 	throw_range = 7
 	w_class = 5
 	//var/charged = 5
-	origin_tech = "combat=5;powerstorage=5"
+	origin_tech = "combat=4;powerstorage=7"
 
 /obj/item/weapon/twohanded/mjollnir/proc/shock(mob/living/target)
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
@@ -95,7 +87,6 @@
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at_fast(throw_target, 200, 4)
 	return
-
 
 /obj/item/weapon/twohanded/mjollnir/attack(mob/living/M, mob/user)
 	..()

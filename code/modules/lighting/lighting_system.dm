@@ -27,7 +27,7 @@
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
-#define LIGHTING_LAYER 15									//Drawing layer for lighting
+//#define LIGHTING_LAYER 15									//Drawing layer for lighting, moved to layers.dm
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
@@ -245,8 +245,11 @@
 	infra_luminosity = 1
 	anchored = 1
 
-/atom/movable/light/Destroy()
-	return QDEL_HINT_LETMELIVE
+/atom/movable/light/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /atom/movable/light/Move()
 	return 0
@@ -362,7 +365,6 @@
 		T.init_lighting()
 		T.update_lumcount(0)
 
-#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 #undef LIGHTING_ICON
 #undef LIGHTING_ICON_STATE

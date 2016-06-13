@@ -29,5 +29,6 @@
 			speaker = S.eyeobj
 		else
 			speaker = V.source
-	src << "<a href=?src=\ref[src];follow=\ref[speaker]>(F)</a> [message]"
+	var/link = FOLLOW_LINK(src, speaker)
+	src << "[link] [message]"
 

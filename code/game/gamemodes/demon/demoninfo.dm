@@ -182,6 +182,8 @@ var/global/list/lawlorify = list (
 		H.set_species(/datum/species/human, 1)
 		H.regenerate_icons()
 	give_base_spells()
+	if(istype(owner.current.loc, /obj/effect/dummy/slaughter/))
+		owner.current.forceMove(get_turf(owner.current))//Fixes dying while jaunted leaving you permajaunted.
 	form = BASIC_DEVIL
 
 /datum/devilinfo/proc/regress_blood_lizard()
@@ -262,9 +264,11 @@ var/global/list/lawlorify = list (
 	world << 'sound/hallucinations/veryfar_noise.ogg'
 	give_arch_spells()
 	D.convert_to_archdevil()
+	if(istype(D.loc, /obj/effect/dummy/slaughter/))
+		D.forceMove(get_turf(D))//Fixes dying while jaunted leaving you permajaunted.
 	var/area/A = get_area(owner.current)
 	if(A)
-		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, attack_not_jump = 1)
+		notify_ghosts("An arch devil has ascended in \the [A.name]. Reach out to the devil to be given a new shell for your soul.", source = owner.current, action=NOTIFY_ATTACK)
 	sleep(50)
 	if(!ticker.mode.devil_ascended)
 		SSshuttle.emergency.request(null, 0.3)
@@ -371,7 +375,8 @@ var/global/list/lawlorify = list (
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
-		body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
+		if(istype(body.loc, /obj/effect/dummy/slaughter/))
+			body.forceMove(get_turf(body))//Fixes dying while jaunted leaving you permajaunted.
 		if(istype(body, /mob/living/carbon/true_devil))
 			var/mob/living/carbon/true_devil/D = body
 			if(D.oldform)

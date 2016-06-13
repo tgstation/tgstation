@@ -1,5 +1,6 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
+	. += grab_state * 3
 	if(legcuffed)
 		. += legcuffed.slowdown
 

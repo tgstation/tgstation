@@ -8,12 +8,12 @@
 	anchored = 1
 	density = 1
 	pixel_x = -16
-	layer = 9
+	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
-	if(!cut && log_amount)
+	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
@@ -239,10 +239,10 @@
 
 //a rock is flora according to where the icon file is
 //and now these defines
+
 /obj/structure/flora/rock
-	name = "rock"
-	desc = "a rock"
-	icon_state = "rock"
+	icon_state = "basalt"
+	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	anchored = 1
 	burn_state = FIRE_PROOF
@@ -250,27 +250,12 @@
 
 /obj/structure/flora/rock/New()
 	..()
-	icon_state = "[icon_state][rand(1,5)]"
-
-/obj/structure/flora/rock/pile
-	name = "rocks"
-	desc = "some rocks"
-	icon_state = "rockpile"
-	density = 0
-
-
-/obj/structure/flora/rock/volcanic
-	icon_state = "basalt"
-	desc = "A volcanic rock"
-
-
-/obj/structure/flora/rock/volcanic/New()
-	..()
 	icon_state = "[icon_state][rand(1,3)]"
 
-/obj/structure/flora/rock/pile/volcanic
+/obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
+	desc = "A pile of rocks"
 
-/obj/structure/flora/rock/pile/volcanic/New()
+/obj/structure/flora/rock/pile/New()
 	..()
 	icon_state = "[icon_state][rand(1,3)]"

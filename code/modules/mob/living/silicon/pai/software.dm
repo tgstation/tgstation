@@ -238,15 +238,19 @@
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
-				remove_med_sec_hud()
 				if(secHUD)
 					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
-				remove_med_sec_hud()
 				if(medHUD)
 					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
 				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
@@ -536,7 +540,7 @@
 		if (total_moles)
 			for(var/id in env_gases)
 				var/gas_level = env_gases[id][MOLES]/total_moles
-				if(id in hardcoded_gases || gas_level > 0.01)
+				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"

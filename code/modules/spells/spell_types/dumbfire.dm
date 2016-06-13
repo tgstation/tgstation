@@ -45,7 +45,7 @@
 				projectile = new proj_type(user)
 			projectile.icon = proj_icon
 			projectile.icon_state = proj_icon_state
-			projectile.dir = get_dir(projectile, target)
+			projectile.setDir(get_dir(projectile, target))
 			projectile.name = proj_name
 
 			var/current_loc = user.loc
@@ -81,6 +81,9 @@
 								qdel(trail)
 
 				current_loc = projectile.loc
+				var/matrix/M = new
+				M.Turn(dir2angle(projectile.dir))
+				projectile.transform = M
 
 				sleep(proj_step_delay)
 

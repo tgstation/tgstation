@@ -4,7 +4,7 @@
 	id = "thermite"
 	description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
 	reagent_state = SOLID
-	color = "#673910" // rgb: 103, 57, 16
+	color = "#550000"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1 && istype(T, /turf/closed/wall))
@@ -32,14 +32,14 @@
 	id = "stabilizing_agent"
 	description = "Keeps unstable chemicals stable. This does not work on everything."
 	reagent_state = LIQUID
-	color = "#FFFFFF"
+	color = "#FFFF00"
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	id = "clf3"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
 	reagent_state = LIQUID
-	color = "#FF0000"
+	color = "#FFC8C8"
 	metabolization_rate = 4
 
 /datum/reagent/clf3/on_mob_life(mob/living/M)
@@ -62,7 +62,8 @@
 			F.burn_tile()
 		if(istype(F, /turf/open/floor/))
 			for(var/turf/turf in range(1,F))
-				PoolOrNew(/obj/effect/hotspot, F)
+				if(!locate(/obj/effect/hotspot) in turf)
+					PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/closed/wall/))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
@@ -73,21 +74,22 @@
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
-			PoolOrNew(/obj/effect/hotspot, M.loc)
+			if(!locate(/obj/effect/hotspot) in M.loc)
+				PoolOrNew(/obj/effect/hotspot, M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"
 	id = "sorium"
 	description = "Sends everything flying from the detonation point."
 	reagent_state = LIQUID
-	color = "#FFA500"
+	color = "#5A64C8"
 
 /datum/reagent/liquid_dark_matter
 	name = "Liquid Dark Matter"
 	id = "liquid_dark_matter"
 	description = "Sucks everything into the detonation point."
 	reagent_state = LIQUID
-	color = "#800080"
+	color = "#210021"
 
 /datum/reagent/blackpowder
 	name = "Black Powder"
@@ -109,28 +111,28 @@
 	id = "flash_powder"
 	description = "Makes a very bright flash."
 	reagent_state = LIQUID
-	color = "#FFFF00"
+	color = "#C8C8C8"
 
 /datum/reagent/smoke_powder
 	name = "Smoke Powder"
 	id = "smoke_powder"
 	description = "Makes a large cloud of smoke that can carry reagents."
 	reagent_state = LIQUID
-	color = "#808080"
+	color = "#C8C8C8"
 
 /datum/reagent/sonic_powder
 	name = "Sonic Powder"
 	id = "sonic_powder"
 	description = "Makes a deafening noise."
 	reagent_state = LIQUID
-	color = "#0000FF"
+	color = "#C8C8C8"
 
 /datum/reagent/phlogiston
 	name = "Phlogiston"
 	id = "phlogiston"
 	description = "Catches you on fire and makes you ignite."
 	reagent_state = LIQUID
-	color = "#FF9999"
+	color = "#FA00AF"
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.IgniteMob()
@@ -148,7 +150,7 @@
 	id = "napalm"
 	description = "Very flammable."
 	reagent_state = LIQUID
-	color = "#FF9999"
+	color = "#FA00AF"
 
 /datum/reagent/napalm/on_mob_life(mob/living/M)
 	M.adjust_fire_stacks(1)
@@ -163,7 +165,7 @@
 	name = "Cryostylane"
 	id = "cryostylane"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Cryostylane slowly cools all other reagents in the mob down to 0K."
-	color = "#B2B2FF" // rgb: 139, 166, 233
+	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 
@@ -189,7 +191,7 @@
 	name = "Pyrosium"
 	id = "pyrosium"
 	description = "Comes into existence at 20K. As long as there is sufficient oxygen for it to react with, Pyrosium slowly cools all other reagents in the mob down to 0K."
-	color = "#B20000" // rgb: 139, 166, 233
+	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/M)

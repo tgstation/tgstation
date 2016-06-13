@@ -3,8 +3,10 @@
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 20
+	luminosity = 1
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 	flag = "laser"
 	eyeblur = 2
 
@@ -20,6 +22,10 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.IgniteMob()
+
+/obj/item/projectile/beam/weak
+	damage = 15
+	armour_penetration = 50
 
 /obj/item/projectile/beam/practice
 	name = "practice laser"
@@ -52,6 +58,7 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
+	luminosity = 2
 
 /obj/item/projectile/beam/pulse/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -61,10 +68,24 @@
 /obj/item/projectile/beam/pulse/shot
 	damage = 40
 
+/obj/item/projectile/beam/pulse/heavy
+	name = "heavy pulse laser"
+	icon_state = "pulse1_bl"
+	var/life = 20
+
+/obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0, hit_zone)
+	life -= 10
+	if(life > 0)
+		. = -1
+	..()
+
 /obj/item/projectile/beam/emitter
 	name = "emitter beam"
 	icon_state = "emitter"
 	damage = 30
+	legacy = 1
+	luminosity = 2
+	animate_movement = SLIDE_STEPS
 
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss

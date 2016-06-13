@@ -153,11 +153,6 @@
 	if(update)
 		update_damage_overlays(0)
 
-/mob/living/carbon/human/proc/restore_blood()
-	if(!(NOBLOOD in dna.species.specflags))
-		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560-blood_volume)
-
 ////////////////////////////////////////////
 
 

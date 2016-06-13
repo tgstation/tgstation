@@ -305,6 +305,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
@@ -635,26 +636,7 @@ body
 			if(!istype(M))
 				usr << "This can only be used on instances of type /mob"
 				return
-			M << "Control of your mob has been offered to dead players."
-			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/poll_message = "Do you want to play as [M.real_name]?"
-			if(M.mind && M.mind.assigned_role)
-				poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-			if(M.mind && M.mind.special_role)
-				poll_message = "[poll_message] Status:[M.mind.special_role]."
-			var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
-			var/mob/dead/observer/theghost = null
-
-			if(candidates.len)
-				theghost = pick(candidates)
-				M << "Your mob has been taken over by a ghost!"
-				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize(0)
-				M.key = theghost.key
-			else
-				M << "There were no ghosts willing to take control."
-				message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+			offer_control(M)
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))
@@ -760,9 +742,9 @@ body
 
 			switch(href_list["rotatedir"])
 				if("right")
-					A.dir = turn(A.dir, -45)
+					A.setDir(turn(A.dir, -45))
 				if("left")
-					A.dir = turn(A.dir, 45)
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
@@ -890,9 +872,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
 			if(!check_rights(R_SPAWN))
@@ -927,7 +907,7 @@ body
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna.species.id == "human")
+			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
 				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 					usr << "Put [H] on purrbation."
 					H << "Something is nya~t right."
