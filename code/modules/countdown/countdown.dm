@@ -11,6 +11,7 @@
 	var/text_size = 4
 	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
+	anchored = TRUE
 	layer = GHOST_LAYER
 
 /obj/effect/countdown/New(atom/A)
