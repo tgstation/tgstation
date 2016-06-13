@@ -53,12 +53,3 @@
 	burn_state = FIRE_PROOF
 	armor = list(melee = 15, bullet = 35, laser = 35, energy = 20, bomb = 35, bio = 35, rad = 35) //Not like anything ever hits the arms anyways.
 
-/obj/item/clothing/gloves/rags
-	name = "makeshift gloves"
-	desc = "Wrapped bandages that were shaped to fit over your hands."
-	icon_state = "rags"
-	item_state = "rags"
-	item_color = null
-	transfer_prints = TRUE
-	strip_delay = 40
-	put_on_delay = 20
