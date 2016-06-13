@@ -327,6 +327,9 @@
 	..()
 	PoolOrNew(openingoverlaytype, src.loc)
 
+/obj/machinery/door/airlock/cult/canAIControl(mob/user)
+	return (iscultist(user) && !isAllPowerCut())
+
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
