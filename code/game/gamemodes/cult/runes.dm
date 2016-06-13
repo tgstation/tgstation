@@ -492,9 +492,9 @@ var/list/teleport_runes = list()
 			return
 		//BEGIN THE SUMMONING
 		used = 1
-		color = rgb(255, 0, 0)
 		..()
 		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+		color = rgb(255, 0, 0)
 		var/turf/T = get_turf(src)
 		sleep(40)
 		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
