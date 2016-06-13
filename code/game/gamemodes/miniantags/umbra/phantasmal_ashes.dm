@@ -1,0 +1,40 @@
+#define UMBRA_ASHES_REFORM_TIME 30 //In deciseconds, how long ashes take to reform
+
+/obj/item/phantasmal_ashes
+	name = "phantasmal ashes"
+	desc = "A shimmering pile of blue ashes with a glowing purple core."
+	icon = 'icons/obj/magic.dmi'
+	icon_state = "phantasmal_ashes"
+	w_class = 2
+	gender = PLURAL
+	origin_tech = "materials=6;bluespace=4;biotech=6" //Good origin tech if you think you have enough time to get them to research
+	var/umbra_key //The key of the umbra that these ashes came from
+	var/umbra_vitae //The vitae of the umbra that these ashes came from
+
+/obj/item/phantasmal_ashes/New()
+	..()
+	spawn(UMBRA_ASHES_REFORM_TIME)
+		if(src)
+			reform()
+
+/obj/item/phantasmal_ashes/attack_self(mob/living/user)
+	user.visible_message("<span class='warning'>[user] scatters [src]!</span>", "<span class='notice'>You scatter [src], which tremble and fade away.</span>")
+	user.drop_item()
+	qdel(src)
+	return 1
+
+/obj/item/phantasmal_ashes/proc/reform()
+	if(!umbra_key || !umbra_vitae)
+		visible_message("<span class='warning'>[src] tremble for a moment, but quickly lose their glow...</span>")
+		name = "lifeless phantasmal ashes"
+		desc = "A dull pile of blue ashes with an inert purple core"
+		return
+	visible_message("<span class='warning'>[src] hover into the air and reform into an umbra!</span>")
+	flick("phantasmal_ashes_reforming", src)
+	animate(src, alpha = 0, time = 12)
+	sleep(12)
+	var/mob/living/simple_animal/umbra/U = new(get_turf(src))
+	U.key = umbra_key
+	U.vitae = umbra_vitae
+	qdel(src)
+	return 1
