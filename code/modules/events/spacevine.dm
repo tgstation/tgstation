@@ -109,24 +109,23 @@
 /turf/open/floor/vines/ChangeTurf(turf/open/floor/T)
 	for(var/obj/effect/spacevine/SV in src)
 		qdel(SV)
-	..()
+	. = ..()
 	UpdateAffectingLights()
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/open/space))
-		var/turf/open/spaceturf = holder.loc
-		spaceturf.ChangeTurf(/turf/open/floor/vines)
+	var/turf/T = get_turf(holder)
+	if(istype(T, /turf/open/space))
+		T.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/process_mutation(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/open/space))
-		var/turf/open/spaceturf = holder.loc
-		spaceturf.ChangeTurf(/turf/open/floor/vines)
+	var/turf/T = get_turf(holder)
+	if(istype(T, /turf/open/space))
+		T.ChangeTurf(/turf/open/floor/vines)
 
 /datum/spacevine_mutation/space_covering/on_death(obj/effect/spacevine/holder)
-	if(istype(holder.loc, /turf/open/floor/vines))
-		var/turf/open/spaceturf = holder.loc
-		spawn(0)
-			spaceturf.ChangeTurf(/turf/open/space)
+	var/turf/T = get_turf(holder)
+	if(istype(T, /turf/open/floor/vines))
+		T.ChangeTurf(/turf/open/space)
 
 /datum/spacevine_mutation/bluespace
 	name = "bluespace"
@@ -156,12 +155,13 @@
 /datum/spacevine_mutation/toxicity/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
-	if(prob(severity) && istype(crosser))
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
 		crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
-	eater.adjustToxLoss(5)
+	if(!isvineimmune(eater))
+		eater.adjustToxLoss(5)
 
 /datum/spacevine_mutation/explosive  //OH SHIT IT CAN CHAINREACT RUN!!!
 	name = "explosive"
@@ -174,8 +174,10 @@
 		qdel(src)
 	else
 		. = 1
-		spawn(5)
-			qdel(src)
+		addtimer(src, "delete_self", 5, unique=TRUE) // TODO replace with addqdeltimer when that's made
+
+/datum/spacevine_mutation/explosive/proc/delete_self()
+	qdel(src)
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	explosion(holder.loc, 0, 0, severity, 0, 0)
@@ -209,10 +211,10 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/effect/spacevine/holder, turf/target)
-	target.ex_act(severity, src)
+	target.ex_act(severity, src) // vine immunity handled at /mob/ex_act
 
 /datum/spacevine_mutation/aggressive_spread/on_buckle(obj/effect/spacevine/holder, mob/living/buckled)
-	buckled.ex_act(severity)
+	buckled.ex_act(severity, src)
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
@@ -290,13 +292,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/effect/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser))
+	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter)
-	if(prob(severity) && istype(hitter))
+	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
@@ -537,7 +539,7 @@
 
 
 /obj/effect/spacevine/proc/entangle(mob/living/V)
-	if(!V)
+	if(!V || isvineimmune(V))
 		return
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
@@ -571,3 +573,16 @@
 		override += SM.process_temperature(src, temp, volume)
 	if(!override)
 		qdel(src)
+
+/obj/effect/spacevine/CanPass(atom/moveable/mover, turf/target, height=0)
+	if(isvineimmune(mover))
+		. = TRUE
+	else
+		. = ..()
+
+/proc/isvineimmune(atom/A)
+	. = FALSE
+	if(isliving(A))
+		var/mob/living/M = A
+		if(("vines" in M.faction) || ("plants" in M.faction))
+			. = TRUE
