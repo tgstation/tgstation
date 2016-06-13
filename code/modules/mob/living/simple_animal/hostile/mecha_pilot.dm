@@ -31,7 +31,7 @@
 
 	//Vars that control when the pilot uses their mecha's abilities (if the mecha has that ability)
 	var/threat_use_mecha_smoke = 5 //5 mobs is enough to engage crowd control
-	var/defence_mode_chance = 35 //Chance to engage Defence mode when damaged
+	var/defense_mode_chance = 35 //Chance to engage defense mode when damaged
 	var/smoke_chance = 20 //Chance to deploy smoke for crowd control
 	var/retreat_chance = 40 //Chance to run away
 
@@ -225,13 +225,13 @@
 				if(mecha.smoke_action && mecha.smoke_action.owner && mecha.smoke)
 					mecha.smoke_action.Activate()
 
-			//Heavy damage - Defence Power or Retreat
+			//Heavy damage - defense Power or Retreat
 			if(mecha.health < initial(mecha.health)*0.25)
-				if(prob(defence_mode_chance))
-					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defence_mode)
+				if(prob(defense_mode_chance))
+					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defense_mode)
 						mecha.leg_overload_mode = 0
 						mecha.defense_action.Activate(TRUE)
-						addtimer(mecha.defense_action, "Activate", 100, FALSE, FALSE) //10 seconds of defence, then toggle off
+						addtimer(mecha.defense_action, "Activate", 100, FALSE, FALSE) //10 seconds of defense, then toggle off
 
 				else if(prob(retreat_chance))
 					//Speed boost if possible

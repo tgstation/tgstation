@@ -340,7 +340,7 @@
 					if(L in Friends) // No eating friends!
 						continue
 
-					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
+					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defense
 						targets += L // Possible target found!
 
 					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
