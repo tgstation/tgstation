@@ -176,7 +176,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 		vitae_information += "blazing with vitality, "
 		vitae_yield += rand(20, 25) //Significant bonus if the target is in critical condition instead of dead
 	else if(L.stat == DEAD)
-		vitae_information += "dim but still useable, "
+		vitae_information += "dim but still usable, "
 		vitae_yield += rand(1, 10)
 	vitae_information += "and ready for harvest. You'll absorb around [vitae_yield] vitae - "
 	switch(vitae_yield)
