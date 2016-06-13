@@ -137,8 +137,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (SS.flags & SS_FIRE_IN_LOBBY || SS.flags & SS_TICKER)
 			continue //already firing
 		// Stagger subsystems.
-		timer += world.tick_lag * rand(1, (SS.wait / world.tick_lag))
-		SS.can_fire = 1
+		timer += world.tick_lag * rand(1, 5)
 		SS.next_fire = timer
 
 // Starts the mc, and sticks around to restart it if the loop ever ends.
@@ -163,12 +162,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	//	local vars rock
 
 	// Schedule the first run of the Subsystems.
-	var/timer = world.time
 	round_started = world.has_round_started()
 	//all this shit is here so that flag edits can be refreshed by restarting the MC. (and for speed)
 	var/list/tickersubsystems = list()
 	var/list/normalsubsystems = list()
 	var/list/lobbysubsystems = list()
+	var/timer = world.time
 	for (var/thing in subsystems)
 		var/datum/subsystem/SS = thing
 		if (SS.flags & SS_NO_FIRE)
@@ -178,15 +177,15 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		SS.prev = null
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
-			timer += world.tick_lag * rand(1, (SS.wait / world.tick_lag))
-			SS.next_fire = timer + (world.tick_lag * rand(1,SS.wait))
+			timer += world.tick_lag * rand(1, 5)
+			SS.next_fire = timer
 			continue
 		if (SS.flags & SS_FIRE_IN_LOBBY)
 			lobbysubsystems += SS
-			timer += world.tick_lag * rand(1, (SS.wait / world.tick_lag))
+			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 		else if (round_started)
-			timer += world.tick_lag * rand(1, (SS.wait / world.tick_lag))
+			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
 		normalsubsystems += SS
 
