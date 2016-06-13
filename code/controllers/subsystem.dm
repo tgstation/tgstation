@@ -27,8 +27,8 @@
 	var/queued_time = 0		//time we entered the queue, (for timing and priority reasons)
 	var/queued_priority //we keep a running total to make the math easier, if it changes mid-fire that would break our running total, so we store it here
 	//linked list stuff for the queue
-	var/datum/subsystem/next
-	var/datum/subsystem/prev
+	var/datum/subsystem/queue_next
+	var/datum/subsystem/queue_prev
 
 
 	// The object used for the clickable stat() button.
@@ -60,7 +60,7 @@
 	var/datum/subsystem/queue_node
 	var/queue_node_priority
 	var/queue_node_flags
-	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.next)
+	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
 
@@ -91,35 +91,58 @@
 	else
 		Master.queue_priority_count += SS_priority
 
-	next = queue_node
+	queue_next = queue_node
 	if (!queue_node)//we stopped at the end, add to tail
-		prev = Master.queue_tail
+		queue_prev = Master.queue_tail
 		if (Master.queue_tail)
-			Master.queue_tail.next = src
+			Master.queue_tail.queue_next = src
 		else //empty queue, we also need to set the head
 			Master.queue_head = src
 		Master.queue_tail = src
 
 	else if (queue_node == Master.queue_head)//insert at start of list
-		Master.queue_head.prev = src
+		Master.queue_head.queue_prev = src
 		Master.queue_head = src
-		prev = null
+		queue_prev = null
 	else
-		queue_node.prev.next = src
-		prev = queue_node.prev
-		queue_node.prev = src
+		queue_node.queue_prev.queue_next = src
+		queue_prev = queue_node.queue_prev
+		queue_node.queue_prev = src
+
+	if (!isnull(queue_prev) && !istype(queue_prev))
+		sstypebad("prev", src, queue_prev, "enqueue")
+	if (!isnull(queue_next) && !istype(queue_next))
+		sstypebad("next", src, queue_next, "enqueue")
+	if (!isnull(Master.queue_head) && !istype(Master.queue_head))
+		sstypebad("head", src, Master.queue_head, "enqueue")
+	if (!isnull(Master.queue_tail) && !istype(Master.queue_tail))
+		sstypebad("tail", src, Master.queue_tail, "enqueue")
+
+/proc/sstypebad(name, thing, baddata, location)
+	world.log << "Bad ss queue data detected! [name], [thing], [baddata], [gettypeofbadssdata(baddata)], [location]"
+
+/proc/gettypeofbadssdata(baddata)
+	. = "[baddata:type]"
 
 /datum/subsystem/proc/dequeue()
-	if (next)
-		next.prev = prev
-	if (prev)
-		prev.next = next
+	if (queue_next)
+		queue_next.queue_prev = queue_prev
+	if (queue_prev)
+		queue_prev.queue_next = queue_next
 	if (src == Master.queue_tail)
-		Master.queue_tail = prev
+		Master.queue_tail = queue_prev
 	if (src == Master.queue_head)
-		Master.queue_head = next
+		Master.queue_head = queue_next
 	queued_time = 0
 
+	if (!isnull(queue_prev) && !istype(queue_prev))
+		sstypebad("prev", src, queue_prev, "enqueue")
+	if (!isnull(queue_next) && !istype(queue_next))
+		sstypebad("next", src, queue_next, "enqueue")
+	if (!isnull(Master.queue_head) && !istype(Master.queue_head))
+		sstypebad("head", src, Master.queue_head, "enqueue")
+	if (!isnull(Master.queue_tail) && !istype(Master.queue_tail))
+		sstypebad("tail", src, Master.queue_tail, "enqueue")
 
 /datum/subsystem/proc/pause()
 	. = 1

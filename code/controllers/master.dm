@@ -173,8 +173,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		if (SS.flags & SS_NO_FIRE)
 			continue
 		SS.queued_time = 0
-		SS.next = null
-		SS.prev = null
+		SS.queue_next = null
+		SS.queue_prev = null
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
 			timer += world.tick_lag * rand(1, 5)
@@ -312,7 +312,17 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		bg_calc = FALSE
 		current_tick_budget = queue_priority_count
 		debug_admins("MC: Starting a pass thru thru the queue")
-		for (queue_node = queue_head; queue_node; queue_node = queue_node.next)
+
+		for (queue_node = queue_head; queue_node; queue_node = queue_node.queue_next)
+			if (!isnull(queue_node.queue_prev) && !istype(queue_node.queue_prev))
+				sstypebad("prev", queue_node, queue_node.queue_prev, "run")
+			if (!isnull(queue_node.queue_next) && !istype(queue_node.queue_next))
+				sstypebad("next", queue_node, queue_node.queue_next, "run")
+			if (!isnull(queue_head) && !istype(queue_head))
+				sstypebad("head", queue_node, queue_head, "run")
+			if (!isnull(queue_tail) && !istype(queue_tail))
+				sstypebad("tail", queue_node, queue_tail, "run")
+
 			debug_admins("MC: processing [queue_node]")
 			if (world.tick_usage > TICK_LIMIT_RUNNING)
 				debug_admins("MC: tick limit reached")
