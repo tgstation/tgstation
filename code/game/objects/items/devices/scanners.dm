@@ -8,14 +8,14 @@ REAGENT SCANNER
 */
 
 /obj/item/device/t_scanner
-	name = "T-ray scanner"
+	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner that can pick up the faintest traces of energy, used to detect the invisible."
 	icon_state = "t-ray0"
 	flags = FPRINT
 	slot_flags = SLOT_BELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
-	starting_materials = list(MAT_IRON = 150, MAT_GLASS = 50)
+	starting_materials = list(MAT_IRON = 500, MAT_GLASS = 100)
 	w_type = RECYK_ELECTRONIC
 	melt_temperature = MELTPOINT_PLASTIC
 	origin_tech = "magnets=1;engineering=1"
@@ -74,6 +74,15 @@ REAGENT SCANNER
 			spawn(10)
 				if(M)
 					M.invisibility = INVISIBILITY_LEVEL_TWO
+
+/obj/item/device/t_scanner/advanced
+	name = "\improper P-ray scanner"
+	desc = "A petahertz-ray emitter and scanner that can pick up the faintest traces of energy, used to detect the invisible. Has a significantly better range than t-ray scanners."
+	icon_state = "p-ray0"
+	origin_tech = "magnets=3;engineering=3"
+
+	base_state = "p-ray"
+	ray_range = 3
 
 /obj/item/device/healthanalyzer
 	name = "health analyzer"
