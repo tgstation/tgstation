@@ -378,6 +378,26 @@
 	seed_type = "nofruit"
 	vending_cat = "fruits"
 
+/obj/item/seeds/breadfruit
+	name = "packet of breadfruit seeds"
+	seed_type = "breadfruit"
+	vending_cat = "Vox hydroponics"
+
+/obj/item/seeds/woodapple
+	name = "packet of woodapple seeds"
+	seed_type = "woodapple"
+	vending_cat = "Vox hydroponics"
+
+/obj/item/seeds/chickenshroom
+	name = "packet of chicken-of-the-stars spores"
+	seed_type = "chickenshroom"
+	vending_cat = "Vox hydroponics"
+
+/obj/item/seeds/garlic
+	name = "packet of garlic growths"
+	seed_type = "garlic"
+	vending_cat = "Vox hydroponics"
+
 // Chili plants/variants.
 /datum/seed/chili
 
@@ -1513,3 +1533,79 @@
 	water_consumption = 6
 	nutrient_consumption = 0.10
 	growth_stages = 4
+
+// Vox Food
+
+/datum/seed/mushroom/chicken
+	name = "chickenshroom"
+	seed_name = "chickenshroom"
+	display_name = "chicken of the stars"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom)
+	mutants = null
+	packet_icon = "mycelium-chickenshroom"
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "chickenshroom"
+	chems = list("nutriment" = list(2,10))
+	consume_gasses = list("nitrogen"=20) //Really likes its nitrogen. Planting on main station may mess with room air mix.
+
+	lifespan = 30
+	growth_stages = 3
+	maturation = 4
+	yield = 3
+	potency = 0
+
+/datum/seed/apple/wood
+	name = "woodapple"
+	seed_name = "woodapple"
+	display_name = "woodapple tree"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/woodapple)
+	packet_icon = "seed-woodapple"
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "woodapple"
+	chems = list("sugar" = list(1,10))
+
+	growth_stages = 3
+	maturation = 4
+	yield = 4
+	potency = 20
+	ligneous = 1
+
+/datum/seed/breadfruit
+	name = "breadfruit"
+	seed_name = "breadfruit"
+	display_name = "breadfruit tree"
+	packet_icon = "seed-breadfruit"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/breadfruit)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "breadfruit"
+	harvest_repeat = 1
+	chems = list("flour" = list(2,10))
+
+	potency = 30
+	lifespan = 50
+	maturation = 6
+	growth_stages = 3
+	production = 6
+	yield = 3
+	ideal_light = 9
+	water_consumption = 6
+	ideal_heat = 298
+
+/datum/seed/garlic
+	name = "garlic"
+	seed_name = "garlic"
+	display_name = "garlic"
+	packet_icon = "seed-garlic"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/garlic)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "garlic"
+	chems = list("holywater" = list(1,25),"nutriment" = list(1,10))
+
+	potency = 15
+	lifespan = 200
+	maturation = 4
+	growth_stages = 3
+	production = 6
+	yield = 4
+	water_consumption = 2
+	ideal_heat = 298

@@ -195,6 +195,11 @@
 				desc = "A spice, obtained from the bark of cinnamomum trees."
 				icon_state = "cinnamon"
 				item_state = null
+			if("gravy")
+				name = "gravy boat"
+				desc = "Too small to set sail on."
+				icon_state = "gravy"
+				item_state = null
 			else
 				name = "misc condiment bottle"
 				desc = "Just your average condiment container."
@@ -273,6 +278,15 @@
 /obj/item/weapon/reagent_containers/food/condiment/vinegar/New()
 	..()
 	reagents.add_reagent("vinegar", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/gravy
+	name = "gravy boat"
+	desc = "Too small to set sail on."
+	volume = 10 //So nutrment isn't added
+
+/obj/item/weapon/reagent_containers/food/condiment/gravy/New()
+	..()
+	reagents.add_reagent("gravy", 10)
 
 /obj/item/weapon/reagent_containers/food/condiment/exotic
 	name = "exotic bottle"

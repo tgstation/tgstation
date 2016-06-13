@@ -5056,3 +5056,17 @@ var/global/list/tonio_doesnt_remove=list("tonio", "blood")
 			else
 				to_chat(M, "<span class='warning'>Your mind breaks apart.</span>")
 				M.hallucination += 200
+
+/datum/reagent/gravy
+	name = "Gravy"
+	id = "gravy"
+	description = "Aww, come on Double D, I don't say 'gravy' all the time."
+	reagent_state = LIQUID
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "#EDEDE1"
+
+/datum/reagent/gravy/on_mob_life(var/mob/living/M, var/alien)
+	if(..()) return 1
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.name == "Vox") M.adjustToxLoss(-4 * REM) //chicken and gravy just go together

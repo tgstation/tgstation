@@ -3985,7 +3985,7 @@
 		..()
 		reagents.add_reagent("nutriment", 3)
 		reagents.add_reagent("cream", 2)
-		
+
 /obj/item/weapon/reagent_containers/food/snacks/ijzerkoekje
 	name = "IJzerkoekje"
 	desc = "Bevat geen ijzer."
@@ -4060,3 +4060,98 @@
 			if(counter == available_snacks.len)
 				counter = 0
 			counter++
+
+/obj/item/weapon/reagent_containers/food/snacks/sundayroast
+	name = "Sunday roast"
+	desc = "Everyday is Sunday when you orbit a sun."
+	icon_state = "voxroast"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 20)
+		reagents.add_reagent("cornoil", 4)
+		reagents.add_reagent("gravy", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/risenshiny
+	name = "rise 'n' shiny"
+	desc = "A biscuit: exactly what a Vox merchant or thief needs to start their day. (What's the difference?)"
+	icon_state = "voxbiscuit"
+	bitesize = 3
+	New()
+		..()
+		reagents.add_reagent("nutriment", 6)
+		reagents.add_reagent("gravy", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/mushnslush
+	name = "mush 'n' slush"
+	desc = "Mushroom gravy poured thickly over more mushrooms. Rich in flavor and in pocket."
+	icon_state = "voxmush"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("nutriment", 2)
+		reagents.add_reagent("gravy", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/woodapplejam
+	name = "woodapple jam"
+	desc = "Tastes like white lightning made from pure sugar. Wham!"
+	icon_state = "voxjam"
+	bitesize = 2
+	New()
+		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
+		reagents.add_reagent("hyperzine", 4)
+		reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/pie/breadfruit
+	name = "breadfruit pie"
+	desc = "Tastes like chalk, but birds like it for some reason."
+	icon_state = "voxpie"
+	bitesize = 2
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("nutriment", 6)
+
+/obj/item/weapon/reagent_containers/food/snacks/candiedwoodapple
+	name = "candied woodapple"
+	desc = "The sweet juices inside the woodapple quickferment under heat, producing this party favorite."
+	icon_state = "candiedwoodapple"
+	bitesize = 2
+	New()
+		..()
+		reagents.add_reagent("sugar", 4)
+		reagents.add_reagent("wine", 20)
+
+/obj/item/weapon/reagent_containers/food/snacks/voxstew
+	name = "Vox stew"
+	desc = "The culinary culmination of all Vox culture: throwing all their plants into the same pot."
+	icon_state = "voxstew"
+	bitesize = 4
+	New()
+		..()
+		eatverb = pick("slurp","sip","suck","inhale","drink")
+		reagents.add_reagent("nutriment", 15)
+		reagents.add_reagent("imidazoline", 5)
+
+/obj/item/weapon/reagent_containers/food/snacks/garlicbread
+	name = "garlic bread"
+	desc = "Banned in Space Transylvania."
+	icon_state = "garlicbread"
+	bitesize = 3
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("nutriment", 4)
+		reagents.add_reagent("holywater", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/flammkuchen
+	name = "flammkuchen"
+	desc = "Also called tarte flambee, literally 'flame cake'. Ancient French and German people once tried not fighting and the result was a pie that is loaded with garlic, burned, and flat."
+	icon_state = "flammkuchen"
+	bitesize = 4
+	New()
+		..()
+		reagents.clear_reagents()
+		reagents.add_reagent("nutriment", 30)
+		reagents.add_reagent("holywater", 10)

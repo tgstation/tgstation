@@ -1669,6 +1669,84 @@
 		new /obj/item/weapon/reagent_containers/food/snacks/ijzerkoekje(get_turf(src))
 	qdel(src)
 
+///Vox Food///
+/datum/recipe/gravyboat
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom
+		)
+	result = /obj/item/weapon/reagent_containers/food/condiment/gravy
+
+/datum/recipe/sundayroast
+	reagents = list("gravy" = 10,"sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sundayroast
+
+/datum/recipe/risenshiny
+	reagents = list("flour" = 10, "gravy" = 5)
+	result = /obj/item/weapon/reagent_containers/food/snacks/risenshiny
+
+/datum/recipe/mushnslush
+	reagents = list("gravy" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/mushnslush
+
+/datum/recipe/breadfruitpie
+	reagents = list("flour" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/breadfruit
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/breadfruit
+
+/datum/recipe/woodapplejam
+	reagents = list("sugar" = 20)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/woodapple
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/woodapplejam
+
+/datum/recipe/candiedwoodapple
+	reagents = list("sugar" = 5, "water" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/woodapple
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/candiedwoodapple
+
+/datum/recipe/voxstew
+	reagents = list("gravy" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/woodapple,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/breadfruit,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/voxstew
+
+/datum/recipe/garlicbread
+	reagents = list("flour" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/garlicbread
+
+/datum/recipe/flammkuche
+	reagents = list("flour" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/garlic,
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/flammkuchen
+
 // Currently Disabled //////////////////////////////////////////
 
 /*

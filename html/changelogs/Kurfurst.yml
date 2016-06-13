@@ -1,0 +1,8 @@
+author: Kurfurst
+delete-after: True
+
+changes: 
+- rscadd: Added a new vendor, Vox Seed 'n' Feed, to eventually (but not yet) replace the Megaseed Servitor on the Vox Outpost.
+- rscadd: Added four new plants, specific to the Seed 'n' Feed. They are Breadfruit, Woodapple, Chicken of the Stars, and Garlic.
+- rscadd: Added a new condiment, gravy. Gravy heals toxin damage for Vox, because they go together like chicken and gravy.
+- rscadd: Added ten new recipes using the new foods.
