@@ -4,7 +4,7 @@
 	max_occurrences = 2
 	earliest_start = 0 // Can happen instantly.
 	min_players = 15 //Any less and the devil will have trouble finding signers
-	weight = 1 //Pretty rare
+	weight = 0 //Pretty rare
 
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0
