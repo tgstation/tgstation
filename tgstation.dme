@@ -909,6 +909,7 @@
 #include "code\modules\atmospherics\machinery\components\unary_devices\cryo.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\generator_input.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\heat_exchanger.dm"
+#include "code\modules\atmospherics\machinery\components\unary_devices\nitrogen_generator.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\outlet_injector.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\oxygen_generator.dm"
 #include "code\modules\atmospherics\machinery\components\unary_devices\portables_connector.dm"
