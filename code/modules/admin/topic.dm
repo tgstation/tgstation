@@ -1728,8 +1728,10 @@
 		if(!ishuman(H))
 			usr << "This can only be used on instances of type /mob/living/carbon/human"
 			return
-
-		H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_l_hand )
+		var/obj/item/weapon/reagent_containers/food/snacks/cookie/C = new(H)
+		
+		C.reagents.add_reagent(adminordrazine,1)
+		H.equip_to_slot_or_del(C, slot_l_hand )
 		if(!(istype(H.l_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
 			H.equip_to_slot_or_del( new /obj/item/weapon/reagent_containers/food/snacks/cookie(H), slot_r_hand )
 			if(!(istype(H.r_hand,/obj/item/weapon/reagent_containers/food/snacks/cookie)))
