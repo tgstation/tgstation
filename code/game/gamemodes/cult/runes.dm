@@ -494,9 +494,10 @@ var/list/teleport_runes = list()
 		used = 1
 		..()
 		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
-		color = rgb(255, 0, 0)
 		var/turf/T = get_turf(src)
 		sleep(40)
+		if(src)
+			color = rgb(255, 0, 0)
 		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 		cult_mode.eldergod = 0
 	else
