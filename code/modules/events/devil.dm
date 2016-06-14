@@ -1,10 +1,7 @@
 /datum/round_event_control/devil
 	name = "Create Devil"
 	typepath = /datum/round_event/ghost_role/devil
-	max_occurrences = 2
-	earliest_start = 0 // Can happen instantly.
-	min_players = 15 //Any less and the devil will have trouble finding signers
-	weight = 0 //Pretty rare
+	max_occurrences = 0
 
 /datum/round_event/ghost_role/devil
 	var/success_spawn = 0
