@@ -101,7 +101,6 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 				drained_mobs += "[L.real_name][length > 1 ? ", " : ""]"
 			length--
 		stat(null, "Recently Drained Creatures: [drained_mobs ? "[drained_mobs]" : "None"]")
-		stat(null, "Manifest Theme: [manifest_theme]")
 
 /mob/living/simple_animal/umbra/ClickOn(atom/A, params)
 	A.examine(src)
