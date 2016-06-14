@@ -23,7 +23,7 @@ var/global/__btime__lastTimeOfHour = 0
 var/global/__btime__callCount = 0
 var/global/__btime__lastTick = 0
 #define TimeOfHour __btime__timeofhour()
-#define __extern__timeofhour text2num(call("btime.[world.system_type==MS_WINDOWS?"dll":"so"]", "gettime")())
+#define __extern__timeofhour text2num(call("./btime.[world.system_type==MS_WINDOWS?"dll":"so"]", "gettime")())
 proc/__btime__timeofhour()
 	if (!(__btime__callCount++ % 50))
 		if (world.time > __btime__lastTick)
