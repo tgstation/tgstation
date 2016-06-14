@@ -4,7 +4,6 @@
 	desc = "An odd, L-shaped device that hums with energy."
 	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
 	icon_state = "clockwork_proselytizer"
-	item_state = "resonator_u"
 	w_class = 3
 	force = 5
 	flags = NOBLUDGEON
