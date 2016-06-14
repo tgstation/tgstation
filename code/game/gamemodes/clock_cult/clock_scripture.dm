@@ -122,7 +122,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/channeled //Channeled scripture begins instantly but runs constantly
-	var/list/chant_invocations = list("NLL YZNB") //"AYY LAMO"
+	var/list/chant_invocations = list("NLL YZNB") //"AYY LMAO"
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
 
