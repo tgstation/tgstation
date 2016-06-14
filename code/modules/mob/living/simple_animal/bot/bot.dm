@@ -14,8 +14,10 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-
-	speak_emote = list("states")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon")
@@ -341,7 +343,7 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel)
+		Radio.talk_into(src, message, channel, get_spans())
 	else
 		say(message)
 	return
