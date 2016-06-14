@@ -722,10 +722,10 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "bB" = (
 /turf/open/floor/plasteel/freezer,
-/area/lavaland/surface/outdoors)
+/area/mine/living_quarters)
 "bC" = (
 /turf/closed/wall/shuttle/survival/pod,
 /area/survivalpod)
@@ -2618,7 +2618,10 @@
 	outdoors = 1
 	})
 "fy" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/riveted{
+	icon = 'icons/turf/walls/cult_wall.dmi';
+	icon_state = "cult"
+	},
 /area/awaycontent/a30{
 	has_gravity = 1;
 	outdoors = 1
@@ -2691,176 +2694,122 @@
 	dir = 8
 	},
 /area/mine/laborcamp)
-"gD" = (
-/obj/machinery/light/small,
-/turf/open/chasm/straight_down/lava_land_surface,
+"fI" = (
+/turf/closed/indestructible/riveted{
+	icon = 'icons/turf/walls/cult_wall.dmi';
+	icon_state = "cult"
+	},
 /area/lavaland/surface/outdoors)
-"gC" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Labor Camp Maintenance";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gB" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Labor Camp Monitoring";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gA" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 10
-	},
-/obj/item/weapon/paper{
-	anchored = 0;
-	info = "Emergency breach metal: to be used only if breaches to the outside are made or found!";
-	name = "Note"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"gz" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Labor Camp Shuttle Prisoner Airlock";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gy" = (
-/obj/docking_port/stationary{
-	area_type = /area/lavaland/surface/outdoors;
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_away";
-	name = "labor camp";
-	turf_type = /turf/open/floor/plating;
-	width = 9
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+"fJ" = (
+/turf/open/floor/plasteel/cult{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
-"gx" = (
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 6;
-	icon_state = "warnplate";
-	initial_gas_mix = "o2=14;n2=23;TEMP=300";
-	tag = "icon-warnplate (SOUTHEAST)"
+"fK" = (
+/obj/machinery/lavaland_controller,
+/turf/open/floor/plasteel/cult{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area)
+"fL" = (
+/obj/structure/lavaland_door,
+/turf/closed/indestructible/riveted{
+	icon = 'icons/turf/walls/cult_wall.dmi';
+	icon_state = "cult"
 	},
 /area/lavaland/surface/outdoors)
-"gw" = (
+"fM" = (
+/turf/closed/mineral/random/volcanic,
+/area)
+"fN" = (
+/turf/open/chasm/straight_down/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fO" = (
+/turf/closed/wall/mineral/cult,
+/area/lavaland/surface/outdoors)
+"fP" = (
+/obj/structure/cult/pylon,
+/turf/open/floor/plasteel/cult{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"fQ" = (
+/obj/effect/light_emitter,
+/turf/open/floor/plasteel/cult{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"fR" = (
+/obj/structure/flora/rock{
+	icon_state = "basalt1"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fS" = (
+/obj/structure/flora/rock{
+	icon_state = "basalt3"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fT" = (
+/obj/structure/flora/rock{
+	icon_state = "basalt2"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fU" = (
+/obj/structure/closet/crate/necropolis/tendril,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fV" = (
+/obj/machinery/light/small,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fW" = (
+/obj/machinery/porta_turret/syndicate{
+	desc = "An automated turret with twin 5.56mm barrels. It periodically beeps softly, swivelling side-to-side in search of the planet's hostile denizens.";
+	eprojectile = /obj/item/projectile/bullet/midbullet3;
+	faction = "neutral";
+	icon_state = "syndieOff";
+	name = "Mining Outpost Turret"
+	},
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"fX" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors)
+"fY" = (
+/obj/structure/grille,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"fZ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/warnplate{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
-"gv" = (
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 10;
-	icon_state = "warnplate";
-	initial_gas_mix = "o2=14;n2=23;TEMP=300";
-	tag = "icon-warnplate (SOUTHWEST)"
-	},
-/area/lavaland/surface/outdoors)
-"gu" = (
-/obj/machinery/porta_turret/syndicate{
-	desc = "An automated turret with twin 5.56mm barrels. It periodically beeps softly, swivelling side-to-side in search of the planet's hostile denizens.";
-	eprojectile = /obj/item/projectile/bullet/midbullet3;
-	faction = "neutral";
-	icon_state = "syndieOff";
-	name = "Mining Outpost Turret"
-	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "warnplate";
-	initial_gas_mix = "o2=14;n2=23;TEMP=300";
-	tag = "icon-warnplate (EAST)"
-	},
-/area/lavaland/surface/outdoors)
-"gt" = (
-/obj/machinery/porta_turret/syndicate{
-	desc = "An automated turret with twin 5.56mm barrels. It periodically beeps softly, swivelling side-to-side in search of the planet's hostile denizens.";
-	eprojectile = /obj/item/projectile/bullet/midbullet3;
-	faction = "neutral";
-	icon_state = "syndieOff";
-	name = "Mining Outpost Turret"
-	},
-/turf/open/floor/plating/warnplate{
-	tag = "icon-warnplate (WEST)";
-	dir = 8;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
-"gs" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gr" = (
-/obj/machinery/conveyor{
-	dir = 10;
-	icon_state = "conveyor0";
-	id = "gulag"
+"ga" = (
+/obj/machinery/door/airlock{
+	name = "Labor Camp External Access"
 	},
-/turf/open/floor/plating/warnplate/corner{
-	tag = "icon-warnplatecorner (EAST)";
-	dir = 4;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gq" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "gulag"
-	},
-/turf/open/floor/plating/warnplate{
-	tag = "icon-warnplate (NORTH)";
-	dir = 1;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gp" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "gulag"
-	},
-/turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 9
-	},
-/area/mine/laborcamp)
-"go" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
-"gn" = (
+/area/mine/laborcamp)
+"gb" = (
 /turf/open/floor/plating/warnplate{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 5;
-	icon_state = "warnplate";
-	initial_gas_mix = "o2=14;n2=23;TEMP=300";
-	tag = "icon-warnplate (NORTHEAST)"
+	dir = 9;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
-"gm" = (
-/obj/machinery/light/small,
+"gc" = (
 /turf/open/floor/plating/warnplate{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
@@ -2868,21 +2817,59 @@
 	tag = "icon-warnplate (NORTH)"
 	},
 /area/lavaland/surface/outdoors)
-"gl" = (
-/obj/structure/ore_box,
+"gd" = (
+/obj/machinery/camera{
+	c_tag = "Labor Camp External";
+	dir = 4;
+	network = list("Labor")
+	},
 /obj/machinery/light/small{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gk" = (
-/obj/machinery/mineral/processing_unit{
+"ge" = (
+/turf/open/floor/plating/warnplate{
+	tag = "icon-warnplate (WEST)";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors)
+"gf" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"gg" = (
+/obj/machinery/mineral/unloading_machine{
 	dir = 1;
+	icon_state = "unloader-corner";
+	input_dir = 1;
 	output_dir = 2
+	},
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9
+	},
+/area/mine/laborcamp)
+"gh" = (
+/obj/machinery/conveyor{
+	dir = 2;
+	id = "gulag"
 	},
 /turf/open/floor/plating/warnplate{
 	tag = "icon-warnplate (WEST)";
 	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gi" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "Labor Camp Shuttle Security Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
@@ -2901,63 +2888,26 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp)
-"gi" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gh" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "gulag"
-	},
-/turf/open/floor/plating/warnplate{
-	tag = "icon-warnplate (WEST)";
-	dir = 8;
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/laborcamp)
-"gg" = (
-/obj/machinery/mineral/unloading_machine{
+"gk" = (
+/obj/machinery/mineral/processing_unit{
 	dir = 1;
-	icon_state = "unloader-corner";
-	input_dir = 1;
 	output_dir = 2
 	},
 /turf/open/floor/plating/warnplate{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 9
-	},
-/area/mine/laborcamp)
-"gf" = (
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
-"ge" = (
-/turf/open/floor/plating/warnplate{
 	tag = "icon-warnplate (WEST)";
 	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
-"gd" = (
-/obj/machinery/camera{
-	c_tag = "Labor Camp External";
-	dir = 4;
-	network = list("Labor")
-	},
+/area/mine/laborcamp)
+"gl" = (
+/obj/structure/ore_box,
 /obj/machinery/light/small{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"gc" = (
+"gm" = (
+/obj/machinery/light/small,
 /turf/open/floor/plating/warnplate{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
@@ -2965,37 +2915,74 @@
 	tag = "icon-warnplate (NORTH)"
 	},
 /area/lavaland/surface/outdoors)
-"gb" = (
+"gn" = (
 /turf/open/floor/plating/warnplate{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 9;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	dir = 5;
+	icon_state = "warnplate";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	tag = "icon-warnplate (NORTHEAST)"
 	},
 /area/lavaland/surface/outdoors)
-"ga" = (
-/obj/machinery/door/airlock{
-	name = "Labor Camp External Access"
-	},
+"go" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
+/area/lavaland/surface/outdoors)
+"gp" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "gulag"
+	},
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9
+	},
 /area/mine/laborcamp)
-"fZ" = (
+"gq" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "gulag"
+	},
+/turf/open/floor/plating/warnplate{
+	tag = "icon-warnplate (NORTH)";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gr" = (
+/obj/machinery/conveyor{
+	dir = 10;
+	icon_state = "conveyor0";
+	id = "gulag"
+	},
+/turf/open/floor/plating/warnplate/corner{
+	tag = "icon-warnplatecorner (EAST)";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gs" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"fY" = (
-/obj/structure/grille,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fX" = (
-/turf/closed/wall{
+"gt" = (
+/obj/machinery/porta_turret/syndicate{
+	desc = "An automated turret with twin 5.56mm barrels. It periodically beeps softly, swivelling side-to-side in search of the planet's hostile denizens.";
+	eprojectile = /obj/item/projectile/bullet/midbullet3;
+	faction = "neutral";
+	icon_state = "syndieOff";
+	name = "Mining Outpost Turret"
+	},
+/turf/open/floor/plating/warnplate{
+	tag = "icon-warnplate (WEST)";
+	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/lavaland/surface/outdoors)
-"fW" = (
+"gu" = (
 /obj/machinery/porta_turret/syndicate{
 	desc = "An automated turret with twin 5.56mm barrels. It periodically beeps softly, swivelling side-to-side in search of the planet's hostile denizens.";
 	eprojectile = /obj/item/projectile/bullet/midbullet3;
@@ -3005,80 +2992,96 @@
 	},
 /turf/open/floor/plating/warnplate{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 9;
+	dir = 4;
+	icon_state = "warnplate";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	tag = "icon-warnplate (EAST)"
+	},
+/area/lavaland/surface/outdoors)
+"gv" = (
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 10;
+	icon_state = "warnplate";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	tag = "icon-warnplate (SOUTHWEST)"
+	},
+/area/lavaland/surface/outdoors)
+"gw" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/warnplate{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/lavaland/surface/outdoors)
-"fV" = (
+"gx" = (
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 6;
+	icon_state = "warnplate";
+	initial_gas_mix = "o2=14;n2=23;TEMP=300";
+	tag = "icon-warnplate (SOUTHEAST)"
+	},
+/area/lavaland/surface/outdoors)
+"gy" = (
+/obj/docking_port/stationary{
+	area_type = /area/lavaland/surface/outdoors;
+	dir = 8;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_away";
+	name = "labor camp";
+	turf_type = /turf/open/floor/plating;
+	width = 9
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/lavaland/surface/outdoors)
+"gz" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gA" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/obj/item/weapon/paper{
+	anchored = 0;
+	info = "Emergency breach metal: to be used only if breaches to the outside are made or found!";
+	name = "Note"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"gB" = (
+/obj/machinery/door/airlock/glass_security{
+	name = "Labor Camp Monitoring";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gC" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Labor Camp Maintenance";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/laborcamp)
+"gD" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fU" = (
-/obj/structure/closet/crate/necropolis/tendril,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fT" = (
-/obj/structure/flora/rock{
-	icon_state = "basalt2"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fS" = (
-/obj/structure/flora/rock{
-	icon_state = "basalt3"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fR" = (
-/obj/structure/flora/rock{
-	icon_state = "basalt1"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fQ" = (
-/obj/effect/light_emitter,
-/turf/open/floor/plasteel/cult{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
-"fP" = (
-/obj/structure/cult/pylon,
-/turf/open/floor/plasteel/cult{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
-"fO" = (
-/turf/closed/wall/mineral/cult,
-/area/lavaland/surface/outdoors)
-"fN" = (
 /turf/open/chasm/straight_down/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"fM" = (
-/turf/closed/mineral/random/volcanic,
-/area)
-"fL" = (
-/obj/structure/lavaland_door,
-/turf/closed/indestructible/riveted{
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
-/area/lavaland/surface/outdoors)
-"fK" = (
-/obj/machinery/lavaland_controller,
-/turf/open/floor/plasteel/cult{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area)
-"fJ" = (
-/turf/open/floor/plasteel/cult{
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/lavaland/surface/outdoors)
-"fI" = (
-/turf/closed/indestructible/riveted{
-	icon = 'icons/turf/walls/cult_wall.dmi';
-	icon_state = "cult"
-	},
 /area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
@@ -14352,7 +14355,7 @@ cQ
 aH
 ee
 bA
-fX
+ee
 al
 ab
 ab
@@ -14609,7 +14612,7 @@ dc
 cQ
 ee
 bB
-fX
+ee
 al
 ab
 ab
@@ -14865,8 +14868,8 @@ cY
 dd
 di
 ee
-fX
-fX
+ee
+ee
 ab
 ab
 ab
@@ -23392,7 +23395,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -23649,7 +23652,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -23906,7 +23909,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -24163,7 +24166,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -24420,7 +24423,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -24677,7 +24680,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -24934,7 +24937,7 @@ aa
 aa
 aa
 aa
-fM
+al
 al
 al
 al
@@ -35468,7 +35471,7 @@ fJ
 fJ
 fJ
 fK
-ac
+fJ
 fJ
 fJ
 fQ
