@@ -12,6 +12,11 @@
 
 	var/nitrogen_content = 10
 
+/obj/machinery/atmospherics/components/unary/nitrogen_generator/attack_hand(mob/user as mob)
+	on = !on
+	user << "you turn on the" + name
+	return
+
 /obj/machinery/atmospherics/components/unary/nitrogen_generator/update_icon_nopipes()
 
 	overlays.Cut()
