@@ -422,7 +422,7 @@
 		return 1
 	return ..()
 
-/obj/structure/clockwork/wall_gear/exanime(mob/user)
+/obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
 	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
 
