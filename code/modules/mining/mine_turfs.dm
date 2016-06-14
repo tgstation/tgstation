@@ -784,5 +784,5 @@
 
 /turf/open/indestructible/necropolis/New()
 	..()
-	if(prob(20))
+	if(prob(12))
 		icon_state = "necropolis[rand(1,2)]"
