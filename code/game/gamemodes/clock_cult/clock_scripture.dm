@@ -383,6 +383,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/starttime = world.time
 	progbar = new(invoker, flee_time, invoker)
 	progbar.bar.color = "#AF0AAF"
+	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
 	while(world.time < endtime)
 		sleep(1)
 		progbar.update(world.time - starttime)

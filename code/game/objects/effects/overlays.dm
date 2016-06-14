@@ -234,13 +234,13 @@
 /obj/effect/overlay/temp/ratvar/sigil/transgression
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
-	duration = 38
+	duration = 50
 
 /obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 33)
+	animate(transform = oldtransform, alpha = 0, time = 45)
 
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
