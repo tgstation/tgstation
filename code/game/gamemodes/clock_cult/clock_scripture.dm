@@ -119,7 +119,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/channeled //Channeled scripture begins instantly but runs constantly
-	var/list/chant_invocations = list("NYY YZNB") //"AYY LAMO"
+	var/list/chant_invocations = list("NLL YZNB") //"AYY LAMO"
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
 
@@ -149,9 +149,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/creator_message = "<span class='brass'>You create a meme.</span>" //Shown to the invoker
 	var/observer_message
 	var/one_per_tile = FALSE
+	var/prevent_path
+
+/datum/clockwork_scripture/create_object/New()
+	..()
+	if(!prevent_path)
+		prevent_path = object_path
 
 /datum/clockwork_scripture/create_object/check_special_requirements()
-	if(one_per_tile && (locate(object_path) in get_turf(invoker)))
+	if(one_per_tile && (locate(prevent_path) in get_turf(invoker)))
 		invoker << "<span class='warning'>You can only place one of this object on each tile!</span>"
 		return 0
 	return 1
@@ -717,6 +723,25 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."
 	tier = SCRIPTURE_APPLICATION
+
+
+
+/datum/clockwork_scripture/create_object/sigil_of_accession //Sigil of Accession: Creates a sigil of accession.
+	descname = "Permenant Conversion Trap"
+	name = "Sigil of Accession"
+	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
+	It will penetrate mindshield implants once before disappearing."
+	invocations = list("Qvivavgl, rafynir...", "...nyy jub gerfcnff urer!")
+	channel_time = 100
+	required_components = list("belligerent_eye" = 2, "guvax_capacitor" = 2, "hierophant_ansible" = 2)
+	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission/accession
+	prevent_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. All non-servants to cross it will be enslaved after a brief time if they do not move.</span>"
+	usage_tip = "It will remain after converting a target, unless that target has a mindshield implant, which it will break to convert them, but consume itself in the process."
+	tier = SCRIPTURE_APPLICATION
+	one_per_tile = TRUE
 
 
 

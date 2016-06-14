@@ -675,26 +675,39 @@
 	desc = "A luminous golden sigil. Something about it really bothers you."
 	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
 	icon_state = "sigilsubmission"
-	luminosity = 2
 	color = "#FAE48C"
 	alpha = 125
 	var/convert_time = 50
+	var/glow_light = 2 //soft light
+	var/glow_falloff = 1
+	var/delete_on_finish = TRUE
+	var/sigil_name = "Sigil of Submission"
+	var/glow_type
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	SetLuminosity(2,1) //soft light
+	SetLuminosity(glow_light,glow_falloff)
+
+/obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
 	animate(src, color = "#AF0AAF", time = convert_time)
+	var/obj/effect/overlay/temp/ratvar/sigil/glow
+	if(glow_type)
+		glow = PoolOrNew(glow_type, get_turf(src))
+		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
 	if(get_turf(L) != get_turf(src))
+		if(glow)
+			qdel(glow)
 		animate(src, color = initial(color), time = 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
+	post_channel(L)
 	if(is_eligible_servant(L))
 		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
@@ -703,7 +716,7 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	var/message = "Sigil of Submission in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
+	var/message = "[sigil_name] in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
@@ -713,8 +726,35 @@
 				M << "<span class='heavy_brass'>[message] you!</span>"
 			else
 				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
-	qdel(src)
+	if(delete_on_finish)
+		qdel(src)
+	else
+		animate(src, color = initial(color), time = 20)
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	return 1
+
+/obj/effect/clockwork/sigil/submission/accession //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
+	name = "terrifying sigil"
+	desc = "A luminous brassy sigil. Something about it makes you want to flee."
+	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for five seconds. \n\
+	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
+	icon_state = "sigiltransgression"
+	color = "#A97F1B"
+	alpha = 200
+	glow_light = 4 //bright light
+	glow_falloff = 3
+	delete_on_finish = FALSE
+	sigil_name = "Sigil of Accession"
+	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
+
+/obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
+	if(isloyal(L))
+		delete_on_finish = TRUE
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
+		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guvf chal gevaxrg jvyy abg fgbc zr.</span>")
+		for(var/obj/item/weapon/implant/mindshield/M in L)
+			if(M.implanted)
+				qdel(M)
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"

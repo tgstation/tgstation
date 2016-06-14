@@ -247,6 +247,13 @@
 	icon_state = "sigilactivepulse"
 	layer = BELOW_MOB_LAYER
 
+/obj/effect/overlay/temp/ratvar/sigil/accession
+	color = "#AF0AAF"
+	layer = ABOVE_MOB_LAYER
+	duration = 50
+	icon_state = "sigilactiveoverlay"
+	alpha = 0
+
 
 /obj/effect/overlay/temp/revenant
 	name = "spooky lights"
