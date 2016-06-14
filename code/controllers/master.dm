@@ -65,9 +65,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Returns 1 if we created a new mc, 0 if we couldn't due to a recent restart,
 //	-1 if we encountered a runtime trying to recreate it
 /proc/Recreate_MC()
+	. = -1 //so if we runtime, things know we failed
 	if (world.time < MC_restart_timeout)
 		return 0
-	. = -1 //so if we runtime, things know we failed
 	MC_restart_timeout = world.time + (50 * ++MC_restart_count)
 	Master.processing = 0 //stop ticking this one
 	try
@@ -91,10 +91,15 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				else
 					msg += "\t [varname] = [varval]\n"
 	world.log << msg
-
-	subsystems = Master.subsystems
-	spawn (10)
-		Master.StartProcessing()
+	if (istype(Master.subsystems))
+		subsystems = Master.subsystems
+		spawn (10)
+			StartProcessing()
+	else
+		world << "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>"
+		spawn (20)
+			init_subtypes(/datum/subsystem, subsystems)
+			Setup()
 
 
 // Please don't stuff random bullshit here,
@@ -203,83 +208,88 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	init_timeofday = world.timeofday
 	init_time = world.time
 
-	var/lagged
-	debug_admins("MC: Starting main loop")
 	iteration = 1
+	var/sleep_delta = 0
+	var/list/subsystems_to_check
 	//the actual loop.
 	while (1)
-		iteration++
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		if (processing <= 0)
-			debug_admins("MC: processing disabled, sleeping")
 			sleep(10)
 			continue
-		lagged = FALSE
-		if (last_run+(world.tick_lag * processing) > world.time || world.tick_usage > (TICK_LIMIT_MC*0.5))
-			lagged = TRUE
+
+		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later
+		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
+		if (world.tick_usage > TICK_LIMIT_MC)
+			sleep_delta += 2
+			sleep(world.tick_lag * (processing + sleep_delta))
+			continue
+
+		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 0)
+		if (last_run + (world.tick_lag * processing) > world.time)
+			sleep_delta += 1
+		if (world.tick_usage > (TICK_LIMIT_MC*0.5))
+			sleep_delta += 1
+
 		if (make_runtime)
 			var/datum/subsystem/SS
 			SS.can_fire = 0
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
 		if (!queue_head || !(iteration % 3))
-			debug_admins("MC: checking subsystems")
 			if (round_started)
-				debug_admins("MC: checking normal subsystems")
-				CheckQueue(normalsubsystems)
+				subsystems_to_check = normalsubsystems
 			else
-				debug_admins("MC: checking lobby subsystems")
-				CheckQueue(lobbysubsystems)
+				subsystems_to_check = lobbysubsystems
 		else
-			debug_admins("MC: not checking subsystems, checking tickers")
-			CheckQueue(tickersubsystems)
-		debug_admins("MC: checking to run")
+			subsystems_to_check = tickersubsystems
+		if (CheckQueue(subsystems_to_check) <= 0)
+			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
+				world.log << "MC: SoftReset() failed, crashing"
+				return
+			sleep(10)
+			continue
+
 		if (queue_head)
-			debug_admins("MC: running queue")
-			RunQueue()
+			if (RunQueue() <= 0)
+				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
+					world.log << "MC: SoftReset() failed, crashing"
+					return
+				sleep(10)
+				continue
+
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
 			queue_priority_count = 0
 			queue_priority_count_bg = 0
 
-		debug_admins("MC: sleeping [world.time]|[world.timeofday]")
-		if (Debug2)
-			processing = max(processing, 5)
+		iteration++
 		last_run = world.time
-		if (lagged)
-			sleep((world.tick_lag * processing) - (world.tick_lag * 0.49)) //the *0.49 ensures we are the first thing to run next tick, as we fired late this tick
-		else
-			sleep((world.tick_lag * processing) + (world.tick_lag * 0.49)) //the *0.49 ensures we are the last thing to run next tick (after other sleeps)
-		debug_admins("MC: end sleeping [world.time]|[world.timeofday]")
+		sleep(world.tick_lag * (processing + sleep_delta))
 
 
 
-// This actually decides if something should run.
+
+// This is what decides if something should run.
 /datum/controller/master/proc/CheckQueue(list/subsystemstocheck)
-	debug_admins("MC: checking [subsystemstocheck.len] subsystems")
+	. = 0 //so the mc knows if we runtimed
 	//we create our variables outside of the loops to save on overhead
 	var/datum/subsystem/SS
 	var/SS_flags
-	//world << "checking queue"
 
 	for (var/thing in subsystemstocheck)
-		debug_admins("MC: checking [thing]")
 		if (!thing)
 			subsystemstocheck -= thing
 		SS = thing
 		if (SS.queued_time) //already in the queue
-			debug_admins("MC: already queued")
 			continue
 		if (SS.can_fire <= 0)
-			debug_admins("MC: not firing")
 			continue
 		if (SS.next_fire > world.time)
-			debug_admins("MC: not its time")
 			continue
 		SS_flags = SS.flags
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
 		if (!(SS_flags & SS_TICKER) && (SS_flags & SS_KEEP_TIMING) && SS.last_fire + (SS.wait * 0.75) > world.time)
-			debug_admins("MC: fired too recently")
 			continue
 
 		//Queue it to run.
@@ -287,11 +297,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 		debug_admins("MC: queuing to run")
 		SS.enqueue()
+	. = 1
 
 
 // Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
 /datum/controller/master/proc/RunQueue()
-	debug_admins("MC: queue start")
+	. = 0
 	var/datum/subsystem/queue_node
 	var/queue_node_flags
 	var/queue_node_priority
@@ -311,21 +322,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		ran = FALSE
 		bg_calc = FALSE
 		current_tick_budget = queue_priority_count
-		debug_admins("MC: Starting a pass thru thru the queue")
-
 		for (queue_node = queue_head; queue_node; queue_node = queue_node.queue_next)
-			if (!isnull(queue_node.queue_prev) && !istype(queue_node.queue_prev))
-				sstypebad("prev", queue_node, queue_node.queue_prev, "run")
-			if (!isnull(queue_node.queue_next) && !istype(queue_node.queue_next))
-				sstypebad("next", queue_node, queue_node.queue_next, "run")
-			if (!isnull(queue_head) && !istype(queue_head))
-				sstypebad("head", queue_node, queue_head, "run")
-			if (!isnull(queue_tail) && !istype(queue_tail))
-				sstypebad("tail", queue_node, queue_tail, "run")
-
-			debug_admins("MC: processing [queue_node]")
-			if (world.tick_usage > TICK_LIMIT_RUNNING)
-				debug_admins("MC: tick limit reached")
+			if (ran && world.tick_usage > TICK_LIMIT_RUNNING)
 				break
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
@@ -336,42 +334,44 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			//(unless we haven't even ran anything this tick, since its unlikely they will ever be able run
 			//	in those cases, so we just let them run)
 			if (queue_node_flags & SS_NO_TICK_CHECK)
-				debug_admins("MC: no tick check")
 				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - world.tick_usage && ran_non_ticker)
-					debug_admins("MC: no time to run tick checkless system this tick")
 					queue_node.queued_priority += queue_priority_count * 0.10
 					queue_priority_count -= queue_node_priority
 					queue_priority_count += queue_node.queued_priority
 					current_tick_budget -= queue_node_priority
 					continue
+
 			if ((queue_node_flags & SS_BACKGROUND) && !bg_calc)
 				current_tick_budget = queue_priority_count_bg
 				bg_calc = TRUE
+
 			tick_remaining = TICK_LIMIT_RUNNING - world.tick_usage
+
 			if (current_tick_budget > 0 && queue_node_priority > 0)
 				tick_precentage = tick_remaining / (current_tick_budget / queue_node_priority)
 			else
 				tick_precentage = tick_remaining
 
 			CURRENT_TICKLIMIT = world.tick_usage + tick_precentage
-			debug_admins("MC: running [queue_node] until tick_usage of [CURRENT_TICKLIMIT]%, current tick_usage [world.tick_usage] meaning [CURRENT_TICKLIMIT-world.tick_usage]% of a tick")
+
 			if (!(queue_node_flags & SS_TICKER))
 				ran_non_ticker = TRUE
 			ran = TRUE
 			tick_usage = world.tick_usage
 			queue_node_paused = queue_node.paused
 			queue_node.paused = FALSE
-			debug_admins("MC: [( queue_node_paused ? "resuming" : "running" )] subsystem [queue_node]")
 			last_type_processed = queue_node
+
 			queue_node.fire(queue_node_paused)
+
 			current_tick_budget -= queue_node_priority
 			tick_usage = world.tick_usage - tick_usage
 
 			if (tick_usage < 0)
 				tick_usage = 0
-			debug_admins("MC: [queue_node].fire() exit, used [tick_usage]% of a tick")
+
 			if (queue_node.paused)
-				debug_admins("MC: [queue_node] paused, moving on")
+
 				queue_node.paused_ticks++
 				queue_node.paused_tick_usage += tick_usage
 				continue
@@ -408,6 +408,41 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			queue_node.dequeue()
 
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+	. = 1
+
+//resets the queue, and all subsystems, while filtering out the subsystem lists
+//	called if any mc's queue procs runtime or exit improperly.
+/datum/controller/master/proc/SoftReset(list/ticker_SS, list/normal_SS, list/lobby_SS)
+	. = 0
+	world.log << "MC: SoftReset called, resetting MC queue state."
+	if (!istype(subsystems) || !istype(ticker_SS) || !istype(normal_SS) || !istype(lobby_SS))
+		world.log << "MC: SoftReset: Bad list contents: '[subsystems]' '[ticker_SS]' '[normal_SS]' '[lobby_SS]' Crashing!"
+		return
+	var/subsystemstocheck = subsystems + ticker_SS + normal_SS + lobby_SS
+
+	for (var/thing in subsystemstocheck)
+		var/datum/subsystem/SS = thing
+		if (!SS || !istype(SS))
+			//list(SS) is so if a list makes it in the subsystem list, we remove the list, not the contents
+			subsystems -= list(SS)
+			ticker_SS -= list(SS)
+			normal_SS -= list(SS)
+			lobby_SS -= list(SS)
+			world.log << "MC: SoftReset: Found bad entry in subsystem list, '[SS]'"
+			continue
+		SS.queue_next = null
+		SS.queue_prev = null
+		SS.queued_priority = 0
+		SS.queued_time = 0
+		SS.paused = 0
+	queue_head = null
+	queue_tail = null
+	queue_priority_count = 0
+	queue_priority_count_bg = 0
+	world.log << "MC: SoftReset: Finished."
+	. = 1
+
+
 
 /datum/controller/master/proc/stat_entry()
 	if(!statclick)

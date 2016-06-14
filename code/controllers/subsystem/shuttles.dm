@@ -219,3 +219,28 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK
+
+/datum/subsystem/shuttle/Recover()
+	if (istype(SSshuttle.mobile))
+		mobile = SSshuttle.mobile
+	if (istype(SSshuttle.stationary))
+		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.transit))
+		transit = SSshuttle.transit
+	if (istype(SSshuttle.discoveredPlants))
+		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.requestlist))
+		requestlist = SSshuttle.requestlist
+	if (istype(SSshuttle.orderhistory))
+		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
+	centcom_message = SSshuttle.centcom_message
+	ordernum = SSshuttle.ordernum
+	points = SSshuttle.points
+

@@ -498,3 +498,40 @@ var/datum/subsystem/ticker/ticker
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
 		return TRUE
 	return FALSE
+
+/datum/subsystem/ticker/Recover()
+	current_state = ticker.current_state
+	force_ending = ticker.force_ending
+	hide_mode = ticker.hide_mode
+	mode = ticker.mode
+	event_time = ticker.event_time
+	event = ticker.event
+
+	login_music = ticker.login_music
+	round_end_sound = ticker.round_end_sound
+
+	minds = ticker.minds
+
+	Bible_icon_state = ticker.Bible_icon_state
+	Bible_item_state = ticker.Bible_item_state
+	Bible_name = ticker.Bible_name
+	Bible_deity_name = ticker.Bible_deity_name
+
+	syndicate_coalition = ticker.syndicate_coalition
+	factions = ticker.factions
+	availablefactions = ticker.availablefactions
+
+	delay_end = ticker.delay_end
+
+	triai = ticker.triai
+	tipped = ticker.tipped
+
+	timeLeft = ticker.timeLeft
+
+	totalPlayers = ticker.totalPlayers
+	totalPlayersReady = ticker.totalPlayersReady
+
+	queue_delay = ticker.queue_delay
+	queued_players = ticker.queued_players
+	cinematic = ticker.cinematic
+	maprotatechecked = ticker.maprotatechecked

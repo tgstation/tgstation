@@ -33,3 +33,6 @@ var/datum/subsystem/mapping/SSmapping
 	// Set up Z-level transistions.
 	setup_map_transitions()
 	..()
+
+/datum/subsystem/mapping/Recover()
+	flags |= SS_NO_INIT

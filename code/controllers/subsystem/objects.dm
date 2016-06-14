@@ -66,3 +66,11 @@ var/datum/subsystem/objects/SSobj
 	for(var/A in objects)
 		var/atom/B = A
 		B.initialize()
+
+/datum/subsystem/objects/Recover()
+	if (istype(SSobj.atom_spawners))
+		atom_spawners = SSobj.atom_spawners
+	if (istype(SSobj.processing))
+		processing = SSobj.processing
+	if (istype(SSobj.burning))
+		burning = SSobj.burning

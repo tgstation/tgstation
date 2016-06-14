@@ -44,13 +44,13 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "C:{"
-	msg += "AT:[round(cost_turfs,0.01)]|"
-	msg += "EG:[round(cost_groups,0.01)]|"
-	msg += "HP:[round(cost_highpressure,0.01)]|"
-	msg += "HS:[round(cost_hotspots,0.01)]|"
-	msg += "SC:[round(cost_superconductivity,0.01)]|"
-	msg += "PN:[round(cost_pipenets,0.01)]|"
-	msg += "AM:[round(cost_atmos_machinery,0.01)]"
+	msg += "AT:[round(cost_turfs)]|"
+	msg += "EG:[round(cost_groups)]|"
+	msg += "HP:[round(cost_highpressure)]|"
+	msg += "HS:[round(cost_hotspots)]|"
+	msg += "SC:[round(cost_superconductivity)]|"
+	msg += "PN:[round(cost_pipenets)]|"
+	msg += "AM:[round(cost_atmos_machinery)]"
 	msg += "} "
 	msg +=  "AT:[active_turfs.len]|"
 	msg +=  "EG:[excited_groups.len]|"
@@ -59,73 +59,73 @@ var/datum/subsystem/air/SSair
 	..(msg)
 
 
-/datum/subsystem/air/Initialize(timeofday, zlevel)
-	setup_allturfs(zlevel)
-	setup_atmos_machinery(zlevel)
-	setup_pipenets(zlevel)
+/datum/subsystem/air/Initialize(timeofday)
+	setup_allturfs()
+	setup_atmos_machinery()
+	setup_pipenets()
 	..()
 
 
 /datum/subsystem/air/fire(resumed = 0)
-	var/timer = world.timeofday
+	var/timer = world.tick_usage
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
-		cost_pipenets = MC_AVERAGE(cost_pipenets, (world.timeofday - timer))
+		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_ATMOSMACHINERY
 
 	if(currentpart == SSAIR_ATMOSMACHINERY)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_atmos_machinery(resumed)
-		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, (world.timeofday - timer))
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_ACTIVETURFS
 
 	if(currentpart == SSAIR_ACTIVETURFS)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_active_turfs(resumed)
-		cost_turfs = MC_AVERAGE(cost_turfs, (world.timeofday - timer))
+		cost_turfs = MC_AVERAGE(cost_turfs, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_EXCITEDGROUPS
 
 	if(currentpart == SSAIR_EXCITEDGROUPS)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_excited_groups(resumed)
-		cost_groups = MC_AVERAGE(cost_groups, (world.timeofday - timer))
+		cost_groups = MC_AVERAGE(cost_groups, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_HIGHPRESSURE
 
 	if(currentpart == SSAIR_HIGHPRESSURE)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_high_pressure_delta(resumed)
-		cost_highpressure = MC_AVERAGE(cost_highpressure, (world.timeofday - timer))
+		cost_highpressure = MC_AVERAGE(cost_highpressure, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_HOTSPOTS
 
 	if(currentpart == SSAIR_HOTSPOTS)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_hotspots(resumed)
-		cost_hotspots = MC_AVERAGE(cost_hotspots, (world.timeofday - timer))
+		cost_hotspots = MC_AVERAGE(cost_hotspots, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0
 		currentpart = SSAIR_SUPERCONDUCTIVITY
 
 	if(currentpart == SSAIR_SUPERCONDUCTIVITY)
-		timer = world.timeofday
+		timer = world.tick_usage
 		process_super_conductivity(resumed)
-		cost_superconductivity = MC_AVERAGE(cost_superconductivity, (world.timeofday - timer))
+		cost_superconductivity = MC_AVERAGE(cost_superconductivity, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(paused)
 			return
 		resumed = 0

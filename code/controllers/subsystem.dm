@@ -56,10 +56,10 @@
 /datum/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
-	//world << "checking queue"
 	var/datum/subsystem/queue_node
 	var/queue_node_priority
 	var/queue_node_flags
+
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		queue_node_priority = queue_node.queued_priority
 		queue_node_flags = queue_node.flags
@@ -109,20 +109,6 @@
 		queue_prev = queue_node.queue_prev
 		queue_node.queue_prev = src
 
-	if (!isnull(queue_prev) && !istype(queue_prev))
-		sstypebad("prev", src, queue_prev, "enqueue")
-	if (!isnull(queue_next) && !istype(queue_next))
-		sstypebad("next", src, queue_next, "enqueue")
-	if (!isnull(Master.queue_head) && !istype(Master.queue_head))
-		sstypebad("head", src, Master.queue_head, "enqueue")
-	if (!isnull(Master.queue_tail) && !istype(Master.queue_tail))
-		sstypebad("tail", src, Master.queue_tail, "enqueue")
-
-/proc/sstypebad(name, thing, baddata, location)
-	world.log << "Bad ss queue data detected! [name], [thing], [baddata], [gettypeofbadssdata(baddata)], [location]"
-
-/proc/gettypeofbadssdata(baddata)
-	. = "[baddata:type]"
 
 /datum/subsystem/proc/dequeue()
 	if (queue_next)
@@ -135,14 +121,6 @@
 		Master.queue_head = queue_next
 	queued_time = 0
 
-	if (!isnull(queue_prev) && !istype(queue_prev))
-		sstypebad("prev", src, queue_prev, "enqueue")
-	if (!isnull(queue_next) && !istype(queue_next))
-		sstypebad("next", src, queue_next, "enqueue")
-	if (!isnull(Master.queue_head) && !istype(Master.queue_head))
-		sstypebad("head", src, Master.queue_head, "enqueue")
-	if (!isnull(Master.queue_tail) && !istype(Master.queue_tail))
-		sstypebad("tail", src, Master.queue_tail, "enqueue")
 
 /datum/subsystem/proc/pause()
 	. = 1

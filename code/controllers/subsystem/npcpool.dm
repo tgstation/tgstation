@@ -120,3 +120,9 @@ var/datum/subsystem/npcpool/SSnpc
 						candidate.eye_color = "yellow"
 						candidate.update_icons()
 			npcCount++
+
+/datum/subsystem/npcpool/Recover()
+	if (istype(SSnpc.botPool_l))
+		botPool_l = SSnpc.botPool_l
+	if (istype(SSnpc.botPool_l_non))
+		botPool_l_non = SSnpc.botPool_l_non

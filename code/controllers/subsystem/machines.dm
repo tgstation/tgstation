@@ -62,3 +62,9 @@ var/datum/subsystem/machines/SSmachine
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
+
+/datum/subsystem/machines/Recover()
+	if (istype(SSmachine.processing))
+		processing = SSmachine.processing
+	if (istype(SSmachine.powernets))
+		powernets = SSmachine.powernets
