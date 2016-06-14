@@ -291,6 +291,7 @@
 	name = "skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
 	icon_state = "skateboard"
+	item_state = "skateboard"
 	force = 12
 	throwforce = 4
 	w_class = 5.0
@@ -298,5 +299,4 @@
 
 /obj/item/weapon/melee/skateboard/attack_self(mob/user)
 	new /obj/vehicle/scooter/skateboard(get_turf(user))
-	user << "<span class='notice'>You place the skateboard down on its wheels. It's ready to ride.</span>"
 	qdel(src)

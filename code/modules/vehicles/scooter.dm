@@ -34,7 +34,7 @@
 				if(WEST)
 					buckled_mob.pixel_x = 2
 			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 4
+				buckled_mob.pixel_y = 5
 			else
 				buckled_mob.pixel_y = -4
 
@@ -78,8 +78,10 @@
 	var/mob/living/carbon/M = usr
 	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
+	if(has_buckled_mobs() && over_object == M)
+		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
+		return
 	if(over_object == M)
-		M << "<span class='notice'>You lift up the skateboard.</span>"
 		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
 		M.put_in_hands(board)
 		qdel(src)
