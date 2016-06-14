@@ -84613,12 +84613,18 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/effect/decal/cleanable/cobweb,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26;
 	pixel_y = 0
 	},
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cOi" = (
