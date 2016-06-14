@@ -119,7 +119,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/channeled //Channeled scripture begins instantly but runs constantly
-	var/chant_invocation = "NLL YZNB" //"AYY LMAO"
+	var/list/chant_invocations = list("NYY YZNB") //"AYY LAMO"
 	var/chant_amount = 5 //Times the chant is spoken
 	var/chant_interval = 10 //Amount of deciseconds between times the chant is actually spoken aloud
 
@@ -130,9 +130,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!do_after(invoker, chant_interval, target = invoker))
 			break
 		if(!whispered)
-			invoker.say(chant_invocation)
+			invoker.say(pick(chant_invocations))
 		else
-			invoker.whisper(chant_invocation)
+			invoker.whisper(pick(chant_invocations))
 		chant_effects()
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"
@@ -212,10 +212,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /////////////
 
 /datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to ten times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
-	descname = "Area Slowdown"
+	descname = "Channeled, Area Slowdown"
 	name = "Belligerent"
 	desc = "Forces all nearby non-servants to walk rather than run. Chanted every three seconds for up to thirty seconds."
-	chant_invocation = "Chav'fu gurve oyva-qarff!" //"Punish their blindness!"
+	chant_invocations = list("Chav'fu gurve oyva-qarff!") //"Punish their blindness!"
 	chant_amount = 10
 	chant_interval = 30
 	required_components = list("belligerent_eye" = 1)
@@ -349,20 +349,42 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
-	descname = "Conversion Trap"
-	name = "Sigil of Submission"
-	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
-	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
-	channel_time = 60
+/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to ten times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
+	descname = "Channeled, Mobile Area Confusion"
+	name = "Taunting Tirade"
+	desc = "Confuses, dizzies, and briefly interrupts all nearby non-servants with a short invocation, then allows movement for three seconds. Chanted every second for up to thirty-five seconds."
+	chant_invocations = list("Ubfgvyrf ba zl onpx!", "Rarzvrf ba zl genvy!", "Tbaan gel naq funxr zl gnvy.", "Obtrlf ba zl fvk!")
+	chant_amount = 10
+	chant_interval = 5
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/submission
-	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
-	usage_tip = "This should not be your primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
+	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
-	one_per_tile = TRUE
+	var/flee_time = 27 //allow fleeing for 3 seconds
+	var/grace_period = 3 //very short grace period so you don't have to stop immediately
+	var/datum/progressbar/progbar
+
+/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects()
+	for(var/mob/living/L in hearers(7, invoker))
+		if(!is_servant_of_ratvar(L))
+			L.confused = min(L.confused + 20, 100)
+			L.dizziness = min(L.dizziness + 20, 100)
+			L.Stun(1)
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.color = "#AF0AAF"
+	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+	var/endtime = world.time + flee_time
+	var/starttime = world.time
+	progbar = new(invoker, flee_time, invoker)
+	progbar.bar.color = "#AF0AAF"
+	while(world.time < endtime)
+		sleep(1)
+		progbar.update(world.time - starttime)
+	qdel(progbar)
+	sleep(grace_period)
+
+/datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
+	qdel(progbar)
 
 
 
@@ -454,10 +476,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/channeled/volt_void //Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
-	descname = "Area Power Drain"
+	descname = "Channeled, Area Power Drain"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
 	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
-	chant_invocation = "Qenj punetr gb guv’f furyy!"
+	chant_invocations = list("Qenj punetr gb guv’f furyy!")
 	chant_amount = 30
 	chant_interval = 10
 	required_components = list("belligerent_eye" = 1, "hierophant_ansible" = 1)
@@ -661,29 +683,21 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/dementia_doctrine //Dementia Doctrine: Deals minor brain damage and destroys the mindshield implants of nearby humans
-	descname = "Area Implant Removal"
-	name = "Dementia Doctrine"
-	desc = "Deals minor brain damage and disables mindshield implants of everyone adjacent to the invoker."
-	invocations = list("Lbh ner jrnx.", "Lbh jvyy or uvf.", "Gur'l jba'g fnir lbh - gur'lyy xvyy lbh.")
-	channel_time = 20
+/datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
+	descname = "Conversion Trap"
+	name = "Sigil of Submission"
+	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
+	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
+	channel_time = 60
 	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
 	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
-	usage_tip = "Extremely fast invocation time."
+	whispered = TRUE
+	object_path = /obj/effect/clockwork/sigil/submission
+	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
+	usage_tip = "This is not a primary conversion method - use Guvax for that. It is advantageous as a trap, however, as it will transmit the name of the newly-converted."
 	tier = SCRIPTURE_SCRIPT
+	one_per_tile = TRUE
 
-/datum/clockwork_scripture/dementia_doctrine/scripture_effects()
-	for(var/mob/living/carbon/human/H in hearers(1, get_turf(invoker)))
-		if(is_servant_of_ratvar(H))
-			continue
-		H.adjustBrainLoss(10)
-		if(isloyal(H))
-			H.visible_message("<span class='warning'>[H] visibly trembles!</span>", \
-			"<span class='sevtug'>Ohg jr pna cerirag gun'g. Jr pna znxr lbh zvar-naq-uvf.</span>")
-			for(var/obj/item/weapon/implant/mindshield/L in H)
-				if(L.implanted)
-					qdel(L)
-	return 1
 
 //////////////////
 // APPLICATIONS //
@@ -692,7 +706,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/create_object/anima_fragment //Anima Fragment: Creates an empty anima fragment
 	descname = "Fast Soul Vessel Shell"
 	name = "Anima Fragment"
-	desc = "Creates a large shell fitted for soul vessels. Adding an active sould vessel to it results in a powerful construct with decent health, notable melee power, \
+	desc = "Creates a large shell fitted for soul vessels. Adding an active soul vessel to it results in a powerful construct with decent health, notable melee power, \
 	and exceptional speed, though taking damage will temporarily slow it down."
 	invocations = list("Pnyy sbegu...", "...gur fbyqvref-bs Nezbere.")
 	channel_time = 50
