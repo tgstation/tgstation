@@ -18,6 +18,7 @@
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = 0
+	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/mob/living/carbon/target
 	var/oldtarget_name

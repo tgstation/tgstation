@@ -742,9 +742,9 @@ body
 
 			switch(href_list["rotatedir"])
 				if("right")
-					A.dir = turn(A.dir, -45)
+					A.setDir(turn(A.dir, -45))
 				if("left")
-					A.dir = turn(A.dir, 45)
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
@@ -872,9 +872,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
 			if(!check_rights(R_SPAWN))

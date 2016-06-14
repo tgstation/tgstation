@@ -79,7 +79,7 @@
 			smoke_mob(L)
 		var/obj/effect/particle_effect/smoke/S = new type(T)
 		reagents.copy_to(S, reagents.total_volume)
-		S.dir = pick(cardinal)
+		S.setDir(pick(cardinal))
 		S.amount = amount-1
 		S.color = color
 		S.lifetime = lifetime

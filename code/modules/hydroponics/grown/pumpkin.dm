@@ -9,6 +9,7 @@
 	lifespan = 50
 	endurance = 40
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "pumpkin-grow"
 	icon_dead = "pumpkin-dead"
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)

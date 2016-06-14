@@ -25,7 +25,7 @@
 /obj/machinery/flasher/New(loc, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else

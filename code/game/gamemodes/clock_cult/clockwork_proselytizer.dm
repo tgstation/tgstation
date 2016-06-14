@@ -69,7 +69,7 @@
 	if(ratvar_awakens) //Ratvar makes it faster
 		proselytize_values["operation_time"] *= 0.5
 
-	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
+	user.visible_message("<span class='warning'>[user]'s [name] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
 	playsound(target, 'sound/machines/click.ogg', 50, 1)
 	if(proselytize_values["operation_time"] && !do_after(user, proselytize_values["operation_time"], target = target))
 		return 0
@@ -91,7 +91,7 @@
 			new new_thing_type(get_turf(target), proselytize_values["spawn_dir"])
 		else
 			var/atom/A = new new_thing_type(get_turf(target))
-			A.dir = proselytize_values["spawn_dir"]
+			A.setDir(proselytize_values["spawn_dir"])
 		qdel(target)
 	modify_stored_alloy(-proselytize_values["alloy_cost"])
 	return 1

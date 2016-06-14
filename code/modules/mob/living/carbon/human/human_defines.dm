@@ -38,8 +38,6 @@ var/global/default_martial_art = new/datum/martial_art
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/icon/base_icon_state = "caucasian1_m"
-
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine

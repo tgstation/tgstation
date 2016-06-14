@@ -363,3 +363,9 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+
+//Hook, override it to run code when dir changes
+//Like for /atoms, but clients are their own snowflake FUCK
+/client/proc/setDir(newdir)
+	dir = newdir

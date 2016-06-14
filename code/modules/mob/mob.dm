@@ -701,7 +701,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = EAST
+	setDir(EAST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -710,7 +710,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = WEST
+	setDir(WEST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -719,7 +719,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = NORTH
+	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -728,7 +728,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = SOUTH
+	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -765,7 +765,7 @@ var/next_mob_id = 0
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)
