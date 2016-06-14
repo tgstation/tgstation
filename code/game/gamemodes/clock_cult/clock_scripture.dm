@@ -33,7 +33,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/list/used_cache_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 
 /datum/clockwork_scripture/proc/run_scripture()
-	if(can_recite() && check_special_requirements())
+	if(can_recite() && has_requirements() && check_special_requirements())
 		if(slab.busy)
 			invoker << "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>"
 			return 0
@@ -67,6 +67,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!invoker.can_speak_vocal())
 		invoker << "<span class='warning'>You are unable to speak the words of the scripture!</span>"
 		return 0
+	return 1
+
+/datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	if(!ratvar_awakens && !slab.no_cost)
 		for(var/i in required_components)
 			if(slab.stored_components[i] + clockwork_component_cache[i] < required_components[i])
@@ -805,8 +808,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return create_marauder()
 
 /datum/clockwork_scripture/memory_allocation/proc/create_marauder()
-	if(!can_recite())
-		return 0
 	invoker.visible_message("<span class='warning'>A yellow tendril appears from [invoker]'s [slab.name] and impales itself in their forehead!</span>", \
 	"<span class='heavy_brass'>A tendril flies from [slab] into your forehead. You begin waiting while it painfully rearranges your thought pattern...</span>")
 	invoker.notransform = TRUE //Vulnerable during the process
