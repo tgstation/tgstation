@@ -689,8 +689,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Qvivavgl, rayvtugra...", "...gubfr jub gerfcnff urer!")
 	channel_time = 60
-	required_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
-	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1)
+	required_components = list("guvax_capacitor" = 2)
+	consumed_components = list("guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/submission
 	creator_message = "<span class='brass'>A luminous sigil appears below you. The next non-servant to cross it will be enslaved after a brief time if they do not move.</span>"
