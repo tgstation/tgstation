@@ -1016,7 +1016,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!target)
 		return 0 //wait where'd they go
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	invoker.dominate_mind(target, 600)
+	invoker.dominate_mind(target, 300)
 	return 1
 
 
