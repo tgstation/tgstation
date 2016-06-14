@@ -8,7 +8,6 @@
 	action_background_icon_state = "bg_umbra"
 
 
-
 /obj/effect/proc_holder/spell/targeted/discordant_whisper //Discordant Whisper: Sends a single, silent message to a creature that the umbra can see. Doesn't work on dead targets.
 	name = "Discordant Whisper"
 	desc = "Telepathically sends a single message to a target within range. Nobody else can perceive this message, and it works on unconscious and deafened targets."

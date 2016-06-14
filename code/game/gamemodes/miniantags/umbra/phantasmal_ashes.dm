@@ -33,7 +33,7 @@
 	if(!U.client)
 		U.key = null
 		var/image/alert_overlay = image('icons/mob/mob.dmi', "umbra")
-		notify_ghosts("An umbra has formed in [get_area(U)]. Attack it to take control of it.", null, source = U, alert_overlay = alert_overlay)
+		notify_ghosts("An umbra has re-formed in [get_area(U)]. Interact with it to take control of it.", null, source = U, alert_overlay = alert_overlay)
 	else
 		U << "<span class='umbra_emphasis'>Back... you're back. Now, where were we?</span>"
 	if(umbra_vitae)

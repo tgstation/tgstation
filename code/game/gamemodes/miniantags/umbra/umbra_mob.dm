@@ -4,29 +4,30 @@
 
 /*
 
-Umbras are spirits of the dead with enough anger or determination in their souls to not fully pass on. They exist somewhere between the realms of the living and the dead.
+Umbras are residual entities created by the dying who possess enough anger or determination that they never fully pass on.
+Physically, they're incorporeal and invisible. Umbras are formed of a steadily-decaying sapient electromagnetic field with a drive to sustain itself.
+Umbras sustain themselves by feeding on a substance, found in the dead or dying, known as vitae.
 
-Unfortunately, this comes at a price: umbras require the vitae of souls to keep themselves alive. Their forms are difficult to maintain, and without vitae, they will fade away.
-This vitae can be drained at will from any being's corpse, although humans typically net a richer pool to drink from - in particular, sapient humans are worth the most.
-Some humans have a "perfect soul" - a new soul, not corrupted by lives' worth of being passed down. These humans yield huge amounts of vitae to the umbra lucky enough to find them.
-Vitae is not only used as an umbra's health, but it's also used to fuel some of their unique abilities. These abilities can be used to influence the living realm in different ways.
-As a final note, umbras require vitae to live. Although it drains very slowly, it does drain, and without vitae, the umbra will die.
+Vitae is a substance most closely comparable to adrenaline that is produced in creatures at times of distress. For this reason, almost all dead creatures have vitae in one way or another.
+Biologically, it's indistinguishable from normal blood, but vitae is what allows creatures to survive grievous wounds or cling to life in critical condition. It provides a large amount of energy.
+It's for this reason that umbras desire it. Vitae serves as a potent energy source to a living thing, and umbras can use the energy of this vitae to sustain themselves.
+Without enough vitae, the field that sustains an umbra will break down and weaken. If the umbra has no vitae at all, it will permanently dissipate.
 
-Umbras are not without their weaknesses. Despite being invisible to the naked eye and completely incorporeal, certain things can restrict, weaken, or outright harm them.
+Umbras are not without their weaknesses. Despite being invisible to the naked eye and untouchable, certain things can restrict, weaken, or outright harm them.
 Lines of salt on the ground will prevent an umbra's passage, making area encircled in it completely inaccessible to even the most determined umbra.
-In addition, objects and artifacts of a holy nature can force an umbra to manifest or drain its vitae.
+In addition, objects and artifacts of a holy nature can force an umbra to manifest or draw away some of the energy that it's gleaned through vitae.
 
 When an umbra dies, two things can occur. If the umbra died from passive vitae drain, it will be dead forever, with no way to bring it back.
-However, if the umbra is slain forcibly and still has vitae, it leaves behind phantasmal ashes. These ashes will, after a minute or so, reform into another umbra and vanish.
-If possible, the new umbra will be controlled by the same player as before. If not, another player will be chosen to control it.
-Regardless of whether or not this is successful, the new umbra will have the same vitae as the old one.
+However, if the umbra is slain forcibly and still has vitae, the vitae possesses enough power to coalesce a part of the umbra into phantasmal ashes.
+These "ashes" will, given around a full minute, re-form into another umbra. This umbra typically possesses the memories and consciousness of the old one, but may be a completely new mind as well.
+Although these phantasmal ashes make umbras resilient, they can be killed permanently by scattering the ashes or destroying them, thus separating the vitae from the umbra's remains.
 
 */
 
 /mob/living/simple_animal/umbra
 	name = "umbra"
 	real_name = "umbra"
-	desc = "A translucent, cobalt-blue spirit floating several feet in the air."
+	desc = "A translucent, cobalt-blue apparition floating several feet in the air."
 	invisibility = UMBRA_INVISIBILITY
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "umbra"
@@ -57,19 +58,18 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	var/breaking_apart = FALSE //If the umbra is currently dying
 	var/harvesting = FALSE //If the umbra is harvesting a soul
 	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
-	var/playstyle_string = "<font size=3 color='#5000A0'><b>You are an umbra,</b></font><b> a spirit with enough anger or determination not to fully pass on. Although the circumstances of your \
-	death have been forgotten, you still clearly remember your name, but nothing other than that. What you do know is that you're going to make the most out of this second chance that you have \
-	somehow claimed.\n\
+	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</span> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, losing \
+	your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange form of \
+	life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
 	\n\
-	Even now you feel your hold on life slipping away. You know that the souls of all creatures - humans in particular - still hold a spark of life, even after death. This spark is called \
-	<i>vitae</i> and every living thing has at least a small amount of it. You think that you can harvest this vitae from the corpses of living things, but those still alive might be too \
-	difficult to draw from. Anything in critical condition wouldn't be affected enough to harm by a draining, but you might be able to extract more vitae from them regardless.\n\
+	You seem to be invisible and incorporeal, so you don't think that anyone can see, feel, or otherwise perceive you right now, but there has to be some way that you managed not to just fully \
+	die and instead ended up like this. You think that if you find a corpse, or perhaps someone still alive but in critical condition, you'd be able to drain whatever kept you in this state \
+	from them. At first the idea sounds horrible - stealing their very life force - but as you continue to weaken it sounds more and more appealing... you think it'd be as simple as interacting \
+	with them. Something in the back of your mind tells you to call this life force <i>vitae</i>.\n\
 	\n\
-	Although living things have plenty of vitae, you think that the souls of these creatures might be rendered useless if you drain too much. For this reason, you'll have to limit yourself and \
-	can only draw any significant amount of vitae from a particular corpse once every few minutes. After that time, you think that the soul will have recuperated enough that you can draw from \
-	it again.\n\
-	\n\
-	Right now, you are incorporeal and invisible to the naked eye. However, some abilities and circumstances may reveal and immobilize you, making you vulnerable to attack.</b>"
+	In any case, you can definitely feel something else. You feel partially alive, but partially dead. Perhaps somewhere in between. Nonetheless, you might be able to influence both realms. \
+	You can see clearly in the dark, and you seem to have a sort of limited telepathic capabilities, plus some other things. You'll have to experiment with your new form to find out what you \
+	exactly you can do."
 
 /mob/living/simple_animal/umbra/New()
 	..()
@@ -107,15 +107,15 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	if(isliving(A) && Adjacent(A))
 		var/mob/living/L = A
 		if(L.health > 0 && L.stat != DEAD)
-			src << "<span class='warning'>[L]'s soul is too strong to drain while they aren't severely wounded!</span>"
+			src << "<span class='warning'>[L] has no vitae to drain!</span>"
 			return
 		else if(L in recently_drained)
-			src << "<span class='warning'>[L]'s soul is still recuperating! You can't risk draining any more vitae!</span>"
+			src << "<span class='warning'>[L]'s body is still recuperating! You can't risk draining any more vitae!</span>"
 			return
 		else if(harvesting)
-			src << "<span class='warning'>You're already trying to harvest a soul!</span>"
+			src << "<span class='warning'>You're already trying to harvest vitae!</span>"
 			return
-		harvest_soul(L)
+		harvest_vitae(L)
 
 /mob/living/simple_animal/umbra/death()
 	if(breaking_apart)
@@ -139,6 +139,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	qdel(src)
 
 /mob/living/simple_animal/umbra/say() //Umbras can't directly speak
+	src << "<span class='warning'>You lack the power to speak out loud! Use Discordant Whisper instead.</span>"
 	return
 
 /mob/living/simple_animal/umbra/attack_ghost(mob/dead/observer/O)
@@ -158,41 +159,41 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 	return vitae
 
 
-/mob/living/simple_animal/umbra/proc/harvest_soul(mob/living/L) //How umbras drain vitae from their targets
+/mob/living/simple_animal/umbra/proc/harvest_vitae(mob/living/L) //How umbras drain vitae from their targets
 	if(!L || L.health || L in recently_drained)
 		return
 	harvesting = TRUE
-	src << "<span class='umbra'>You search for [L]'s soul...</span>"
+	src << "<span class='umbra'>You search for any vitae in [L]...</span>"
 	if(!do_after(src, 30, target = L))
 		harvesting = FALSE
 		return
 	if(L.hellbound)
-		src << "<span class='warning'>[L] has only emptiness in place of their soul!</span>"
+		src << "<span class='warning'>[L] seems to be incapable of producing vitae!</span>"
 		harvesting = FALSE
 		return
 	if(!L.stat)
-		src << "<span class='warning'>[L] is conscious again and shields your efforts!</span>"
+		src << "<span class='warning'>[L] is conscious again and their vitae is receding!</span>"
 		L << "<span class='warning'>You're being watched.</span>"
 		harvesting = FALSE
 		return
 	var/vitae_yield = 1 //A bit of essence even if it's a weak soul
-	var/vitae_information = "<span class='umbra'>This soul is "
+	var/vitae_information = "<span class='umbra'>This one's vitae is "
 	if(ishuman(L))
-		vitae_information += "human, "
+		vitae_information += "high-quality, "
 		vitae_yield += rand(10, 15)
 	if(L.mind)
 		if(!(L.mind in ticker.mode.devils))
-			vitae_information += "sentient, "
+			vitae_information += "in copious amounts, "
 		else
-			vitae_information += "infernal and home to multiple souls, all of which you can drain! Moving on... it's "
+			vitae_information += "seeming to come from multiple sources, "
 			for(var/i in 1 to (L.mind.devilinfo.soulsOwned.len))
 				vitae_yield += rand(5, 10) //You can drain all the souls that a devil has stolen!
 		vitae_yield += rand(10, 15)
 	if(L.stat == UNCONSCIOUS)
-		vitae_information += "blazing with vitality, "
+		vitae_information += "still being produced, , "
 		vitae_yield += rand(20, 25) //Significant bonus if the target is in critical condition instead of dead
 	else if(L.stat == DEAD)
-		vitae_information += "dim but still usable, "
+		vitae_information += "definitely there, but now stagnant, "
 		vitae_yield += rand(1, 10)
 	vitae_information += "and ready for harvest. You'll absorb around [vitae_yield] vitae - "
 	switch(vitae_yield)
@@ -206,17 +207,17 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 			vitae_information += "a good bit, more than you've come to expect."
 		if(75 to vitae_cap)
 			vitae_information += "<i>a bounty, more than you could ever dream of!</i>"
-	vitae_information += " Now, for the harvest...</span>"
+	vitae_information += " Now,  then...</span>"
 	src << vitae_information
 	if(!do_after(src, 30, target = L))
 		harvesting = FALSE
 		return
 	if(L.hellbound)
-		src << "<span class='warning'>[L] seems to have lost their soul!</span>"
+		src << "<span class='warning'>[L] seems to have lost their vitae!</span>"
 		harvesting = FALSE
 		return
 	if(!L.stat)
-		src << "<span class='warning'>[L] is conscious again and shields your efforts!</span>"
+		src << "<span class='warning'>[L] is conscious again and their vitae is receding!</span>"
 		L << "<span class='warning'>A chill runs across your body.</span>"
 		harvesting = FALSE
 		return
@@ -239,7 +240,7 @@ Regardless of whether or not this is successful, the new umbra will have the sam
 /mob/living/simple_animal/umbra/proc/harvest_cooldown(mob/living/L) //After a while, mobs that have already been drained can be harvested again
 	if(!L)
 		return
-	src << "<span class='umbra'>You think that [L]'s soul should be strong enough to harvest again.</span>"
+	src << "<span class='umbra'>You think that [L]'s body should be strong enough to produce vitae again.</span>"
 	recently_drained -= L
 
 
