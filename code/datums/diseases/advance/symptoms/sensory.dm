@@ -90,12 +90,12 @@ Bonus
 				if(prob(15))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(4)
-				M.reagents.add_reagent_list(list("ethanol",rand(7,15),"mindbreaker",rand(5,10)))
+				M.reagents.add_reagent_list(list("ethanol" = rand(7,15), "mindbreaker" = rand(5,10)))
 				M << "<span class='warning'>u can count 2 potato!</span>"
 				if(prob(20))
 					M.reagents.add_reagent("morphine",rand(5,7))
 			if(5)
-				M.reagents.add_reagent_list(list("impedrezene",rand(5,15),"ethanol",rand(7,20),"mindbreaker",rand(5,15)))
+				M.reagents.add_reagent_list(list("impedrezene" = rand(5,15), "ethanol" = rand(7,20), "mindbreaker" = rand(5,15)))
 				if(prob(25))
 					M.reagents.add_reagent("morphine",rand(5,7))
 	return
