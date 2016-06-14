@@ -67,7 +67,7 @@
 	var/damage = 0
 	switch(severity)
 		if(1)
-			damage = max_health * 1 //100% max health lost
+			damage = max_health //100% max health lost
 		if(2)
 			damage = max_health * rand(0.5, 0.7) //50-70% max health lost
 		if(3)
