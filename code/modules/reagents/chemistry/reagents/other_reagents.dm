@@ -1,21 +1,31 @@
 
 /datum/reagent/blood
-			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-			name = "Blood"
-			id = "blood"
-			color = "#C80000" // rgb: 200, 0, 0
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Blood"
+	id = "blood"
+	color = "#C80000" // rgb: 200, 0, 0
+	metabolization_rate = 5 //fast rate so it disappears fast.
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/datum/disease/D in data["viruses"])
 
-			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
+			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
 
 			if(method == TOUCH || method == VAPOR)
 				M.ContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
+
+	if(method == INJECT && iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.get_blood_id() == "blood")
+			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+				C.reagents.add_reagent("toxin", reac_volume * 0.5)
+			else
+				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
@@ -51,38 +61,18 @@
 		return
 	if(reac_volume < 3)
 		return
-	if(!data["donor"] || istype(data["donor"], /mob/living/carbon/human))
-		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
-		if(!blood_prop) //first blood!
-			blood_prop = new(T)
-			blood_prop.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	if(!B)
+		B = new(T)
+	if(data["blood_DNA"])
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
+	for(var/datum/disease/D in data["viruses"])
+		var/datum/disease/newVirus = D.Copy(1)
+		B.viruses += newVirus
+		newVirus.holder = B
 
-	else if(istype(data["donor"], /mob/living/carbon/monkey))
-		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
-		if(!blood_prop)
-			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-	else if(istype(data["donor"], /mob/living/carbon/alien))
-		var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
-		if(!blood_prop)
-			blood_prop = new(T)
-			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-	return
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -121,8 +111,9 @@
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	var/CT = cooling_temperature
-	if(reac_volume >= 10)
-		T.MakeSlippery()
+
+	if(reac_volume >= 5)
+		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -172,6 +163,11 @@
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 
+/datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(is_servant_of_ratvar(M))
+		M << "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>"
+	..()
+
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
 	if(!data) data = 1
 	data++
@@ -183,13 +179,26 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-	if(data >= 75 && prob(33))	// 30 units, 135 seconds
+		else if(is_servant_of_ratvar(M) && prob(5))
+			switch(pick("speech", "message", "emote"))
+				if("speech")
+					M.say("...[pick("Ratvar... lbhe yvtug tebjf qnex", "Jurer ner lbh, znfgre?", "Ur yvrf ehfgvat va Reebe", "Chetr nyy hagehguf naq... naq... fbzrguvat")]...")
+				if("message")
+					M << "<span class='warning'><b>[pick("Ratvar's illumination of your mind has begun to flicker.", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay.", \
+					"You can't save him. Nothing can save him now.", "It seems that Nar-Sie will triumph after all.")]</b></span>"
+				if("emote")
+					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")]</span>")
+	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
 		M.confused += 3
-		if(iscultist(M) || (is_handofgod_cultist(M) && !is_handofgod_prophet(M)))
-			ticker.mode.remove_cultist(M.mind, 1, 1)
-			ticker.mode.remove_hog_follower(M.mind)
+		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
+			if(iscultist(M))
+				ticker.mode.remove_cultist(M.mind, 1, 1)
+			else if(is_handofgod_cultist(M) || is_handofgod_prophet(M))
+				ticker.mode.remove_hog_follower(M.mind)
+			else if(is_servant_of_ratvar(M))
+				remove_servant_of_ratvar(M)
 			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
@@ -257,7 +266,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(TURF_WET_LUBE)
+		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=5, wet_time_to_add=reac_volume)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
@@ -373,7 +382,6 @@
 	spawn(30)
 		if(!H || qdeleted(H))
 			return
-		//var/list/blacklisted_species = list(
 		var/list/possible_morphs = list()
 		for(var/type in subtypesof(/datum/species))
 			var/datum/species/S = type
@@ -381,13 +389,9 @@
 				continue
 			possible_morphs += S
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation && H.dna.species != /datum/species/golem && H.dna.species != /datum/species/golem/adamantine)
+		if(prob(90) && mutation)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
-			if(mutation.id == "slime")
-				H.faction |= "slime"
-			else
-				H.faction -= "slime"
 		else
 			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
 
@@ -618,6 +622,13 @@
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/iron/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.5
+	..()
+
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living))
 		return
@@ -722,7 +733,7 @@
 			M.adjustToxLoss(rand(5,10))
 
 /datum/reagent/space_cleaner/reaction_mob(mob/M, method=TOUCH, reac_volume)
-	if(method == TOUCH || VAPOR)
+	if(method == TOUCH || method == VAPOR)
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(istype(M,/mob/living/carbon/human))
@@ -1144,7 +1155,8 @@
 
 /datum/reagent/drying_agent/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T) && T.wet)
-		T.MakeDry(TURF_WET_WATER)
+		T.wet_time = max(0, T.wet_time-reac_volume*5) // removes 5 seconds of wetness for every unit.
+		T.HandleWet()
 
 /datum/reagent/drying_agent/reaction_obj(obj/O, reac_volume)
 	if(O.type == /obj/item/clothing/shoes/galoshes)
@@ -1217,4 +1229,21 @@ datum/reagent/shadowling_blindness_smoke
 /datum/reagent/royal_bee_jelly/on_mob_life(mob/living/M)
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
+	..()
+
+datum/reagent/romerol
+	name = "romerol"
+	// the REAL zombie powder
+	id = "romerol"
+	description = "Romerol is a highly experimental bioterror agent \
+		which causes dormant nodules to be etched into the grey matter of \
+		the subject. These nodules only become active upon death of the \
+		host, upon which, the secondary structures activate and take control \
+		of the host body."
+	color = "#123524" // RGB (18, 53, 36)
+	metabolization_rate = INFINITY
+
+/datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
+	// Silently add the zombie infection organ to be activated upon death
+	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()

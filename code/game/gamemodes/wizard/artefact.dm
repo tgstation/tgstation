@@ -204,8 +204,8 @@ var/global/list/multiverse = list()
 	name = "multiverse sword"
 	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "energy_katana"
-	item_state = "energy_katana"
+	icon_state = "multiverse"
+	item_state = "multiverse"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -419,7 +419,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))
-					carried_item.add_blood(M)
+					carried_item.add_mob_blood(M)
 
 		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)

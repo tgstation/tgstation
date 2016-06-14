@@ -40,7 +40,7 @@ var/list/announcement_systems = list()
 /obj/item/weapon/circuitboard/machine/announcement_system
 	name = "circuit board (Announcement System)"
 	build_path = /obj/machinery/announcement_system
-	origin_tech = "programming=3;bluespace=2"
+	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
@@ -158,7 +158,6 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))

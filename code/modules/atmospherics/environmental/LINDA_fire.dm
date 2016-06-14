@@ -49,7 +49,7 @@
 	unacidable = 1//So you can't melt fire with acid.
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
-	layer = TURF_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	luminosity = 3
 
 	var/volume = 125
@@ -61,7 +61,7 @@
 	..()
 	SSair.hotspots += src
 	perform_exposure()
-	dir = pick(cardinal)
+	setDir(pick(cardinal))
 	air_update_turf()
 
 
@@ -116,8 +116,6 @@
 		return
 
 	perform_exposure()
-
-	if(location.wet) location.wet = 0
 
 	if(bypassing)
 		icon_state = "3"

@@ -11,6 +11,7 @@
 	var/product						// A type path. The thing that is created when the plant is harvested.
 	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overriden.
 
+	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
 	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
 	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
 	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
@@ -227,7 +228,7 @@
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
 		var/text = get_analyzer_text()
 		if(text)
@@ -246,6 +247,10 @@
 // Maybe some day it would be used as unit test.
 /proc/check_plants_growth_stages_icons()
 	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_fruits.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
+	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
 	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
 
 	for(var/seedpath in paths)

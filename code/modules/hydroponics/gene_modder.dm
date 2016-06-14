@@ -29,7 +29,7 @@
 /obj/item/weapon/circuitboard/machine/plantgenes
 	name = "circuit board (Plant DNA Manipulator)"
 	build_path = /obj/machinery/plantgenes
-	origin_tech = "programming=2;biotech=3"
+	origin_tech = "programming=3;biotech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
@@ -38,8 +38,12 @@
 
 /obj/machinery/plantgenes/RefreshParts()
 	rating = 0
-	for(var/obj/item/weapon/stock_parts/S in component_parts)
-		rating += S.rating-1
+	for(var/I in component_parts)
+		if(istype(I, /obj/item/weapon/stock_parts))
+			var/obj/item/weapon/stock_parts/S = I
+			rating += S.rating-1
+		else if(istype(I, /obj/item/weapon/circuitboard/machine/plantgenes/vault))
+			rating += 5 // Having original alien board is +25%
 	max_extract_pot = initial(max_extract_pot) + rating*5
 
 /obj/machinery/plantgenes/update_icon()
@@ -354,17 +358,21 @@
 
 
 
-// Gene modder for seed vault ship, built with high-end alien (?) parts.
+// Gene modder for seed vault ship, built with high tech alien parts.
 /obj/machinery/plantgenes/seedvault/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/plantgenes(src)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(src)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(src)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser/quadultra(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(src)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
+	B.apply_default_parts(src)
 
+/obj/item/weapon/circuitboard/machine/plantgenes/vault
+	name = "alien board (Plant DNA Manipulator)"
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;biotech=5"
+	// It wasn't made by actual abductors race, so no abductor tech here.
+	def_components = list(
+		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
+		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra,
+		/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/triphasic)
 
 /*
  *  Plant DNA disk

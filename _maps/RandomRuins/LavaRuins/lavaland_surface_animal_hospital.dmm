@@ -139,10 +139,9 @@
 "av" = (
 /obj/item/weapon/reagent_containers/glass/rag,
 /obj/item/weapon/reagent_containers/spray/cleaner,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "aw" = (
@@ -252,10 +251,9 @@
 	},
 /area/ruin/powered)
 "aL" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "aM" = (
@@ -263,10 +261,9 @@
 	flavour_text = "You were putting in your hours as a vet in the local animal hospital when a massive bluespace translocation shunted you across the galaxy. Can you survive on this desolate wasteland..?";
 	id_job = "Veterinarian"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "aN" = (
@@ -275,46 +272,40 @@
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "aO" = (
 /obj/machinery/iv_drip,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "aP" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 0;
-	icon_state = "blue"
+	dir = 0
 	},
 /area/ruin/powered)
 "aQ" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "bluecorner"
+	dir = 8
 	},
 /area/ruin/powered)
 "aR" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "blue"
+	dir = 4
 	},
 /area/ruin/powered)
 "aS" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "aT" = (
@@ -464,20 +455,18 @@
 /obj/item/weapon/reagent_containers/food/snacks/cookie{
 	name = "doggie biscuit"
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "bm" = (
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 "bn" = (
@@ -499,10 +488,9 @@
 /obj/item/trash/pistachios,
 /obj/item/weapon/lipstick/random,
 /obj/item/seeds/apple,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "bq" = (
@@ -534,10 +522,9 @@
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4;
-	icon_state = "blue"
+	dir = 4
 	},
 /area/ruin/powered)
 "bv" = (
@@ -568,10 +555,9 @@
 "by" = (
 /obj/structure/table/reinforced,
 /obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "bz" = (
@@ -617,37 +603,33 @@
 /area/ruin/powered)
 "bE" = (
 /obj/structure/closet/crate/critter,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "bF" = (
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 10;
-	icon_state = "blue"
+	dir = 10
 	},
 /area/ruin/powered)
 "bG" = (
 /obj/structure/chair/comfy/teal{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 6;
-	icon_state = "blue"
+	dir = 6
 	},
 /area/ruin/powered)
 "bH" = (
 /obj/structure/table,
 /obj/item/weapon/tank/internals/oxygen,
 /obj/item/weapon/tank/internals/oxygen,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 8;
-	icon_state = "blue"
+	dir = 8
 	},
 /area/ruin/powered)
 "bI" = (
@@ -726,10 +708,9 @@
 /obj/machinery/cell_charger,
 /obj/item/weapon/melee/baton/cattleprod,
 /obj/item/weapon/stock_parts/cell/high,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 10;
-	icon_state = "blue"
+	dir = 10
 	},
 /area/ruin/powered)
 "bS" = (
@@ -737,10 +718,9 @@
 /obj/item/weapon/defibrillator/loaded,
 /obj/item/weapon/storage/belt/medical,
 /obj/item/clothing/glasses/hud/health,
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 6;
-	icon_state = "blue"
+	dir = 6
 	},
 /area/ruin/powered)
 "bT" = (
@@ -826,10 +806,9 @@
 	icon_state = "sleeper-open";
 	dir = 4
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1;
-	icon_state = "blue"
+	dir = 1
 	},
 /area/ruin/powered)
 

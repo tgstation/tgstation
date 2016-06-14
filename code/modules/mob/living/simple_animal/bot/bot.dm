@@ -14,8 +14,10 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-
-	speak_emote = list("states")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon")
@@ -61,6 +63,7 @@
 	var/new_destination		// pending new destination (waiting for beacon response)
 	var/destination			// destination description tag
 	var/next_destination	// the next destination in the patrol route
+	var/shuffle = FALSE		// If we should shuffle our adjacency checking
 
 	var/blockcount = 0		//number of times retried a blocked path
 	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
@@ -71,6 +74,7 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC //The type of data HUD the bot uses. Diagnostic by default.
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
@@ -123,12 +127,17 @@
 
 	bot_core = new bot_core_type(src)
 
+	//Adds bot to the diagnostic HUD system
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
+
+	//Gives a HUD view to player bots that use a HUD.
+	activate_data_hud()
+
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -143,6 +152,9 @@
 	qdel(access_card)
 	qdel(bot_core)
 	return ..()
+
+/mob/living/simple_animal/bot/bee_friendly()
+	return 1
 
 /mob/living/simple_animal/bot/death(gibbed)
 	explode()
@@ -331,7 +343,7 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel)
+		Radio.talk_into(src, message, channel, get_spans())
 	else
 		say(message)
 	return
@@ -375,11 +387,22 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 	if(!T)
 		return
 	var/list/adjacent = T.GetAtmosAdjacentTurfs(1)
+	if(shuffle)	//If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
+		adjacent = shuffle(adjacent)
+		shuffle = FALSE
 	for(var/scan in adjacent)//Let's see if there's something right next to us first!
-		var/final_result = checkscan(scan,scan_type,old_target)
-		if(final_result)
-			return final_result
-
+		if(check_bot(scan))	//Is there another bot there? Then let's just skip it
+			continue
+		if(isturf(scan_type))	//If we're lookeing for a turf we can just run the checks directly!
+			var/final_result = checkscan(scan,scan_type,old_target)
+			if(final_result)
+				return final_result
+		else
+			var/turf/turfy = scan
+			for(var/deepscan in turfy.contents)//Check the contents since adjacent is turfs
+				var/final_result = checkscan(deepscan,scan_type,old_target)
+				if(final_result)
+					return final_result
 	for (var/scan in shuffle(view(scan_range, src))-adjacent) //Search for something in range!
 		var/final_result = checkscan(scan,scan_type,old_target)
 		if(final_result)
@@ -390,11 +413,7 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return 0 //If not, keep searching!
 	if( (scan in ignore_list) || (scan == old_target) ) //Filter for blacklisted elements, usually unreachable or previously processed oness
 		return 0
-	var/turf/T = get_turf(scan)
-	if(T)
-		for(var/C in T.contents)
-			if(istype(C,src.type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
-				return 0
+
 	var/scan_result = process_scan(scan) //Some bots may require additional processing when a result is selected.
 	if(scan_result)
 		return scan_result
@@ -402,6 +421,12 @@ Pass the desired type path itself, declaring a temporary var beforehand is not r
 		return 0 //The current element failed assessment, move on to the next.
 	return
 
+/mob/living/simple_animal/bot/proc/check_bot(targ)
+	var/turf/T = get_turf(targ)
+	if(T)
+		for(var/C in T.contents)
+			if(istype(C,type) && (C != src))	//Is there another bot there already? If so, let's skip it so we dont all atack on top of eachother.
+				return 1	//Let's abort if we find a bot so we dont have to keep rechecking
 
 //When the scan finds a target, run bot specific processing to select it for the next step. Empty by default.
 /mob/living/simple_animal/bot/proc/process_scan(scan_target)
@@ -466,6 +491,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
+
+	if(client) //Player bots instead get a location command from the AI
+		src << "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>."
 
 	//For giving the bot temporary all-access.
 	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
@@ -865,6 +893,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	access_card.access += player_access
 	diag_hud_set_botmode()
+	activate_data_hud()
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
@@ -883,3 +912,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
+
+/mob/living/simple_animal/bot/proc/activate_data_hud()
+//If a bot has its own HUD (for player bots), provide it.
+	if(!data_hud_type)
+		return
+	var/datum/atom_hud/datahud = huds[data_hud_type]
+	datahud.add_hud_to(src)

@@ -17,7 +17,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	var/gcedlasttick = 0		// number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
-	
+
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
@@ -31,6 +31,9 @@ var/datum/subsystem/garbage_collector/SSgarbage
 								// the types are stored as strings
 
 	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
+	// all types that did not respect qdel(A, force=TRUE) and returned one
+	// of the immortality qdel hints
+	var/list/noforcerespect = list()
 
 #ifdef TESTING
 	var/list/qdel_list = list()	// list of all types that have been qdel()eted
@@ -150,7 +153,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
-/proc/qdel(datum/D)
+/proc/qdel(datum/D, force=FALSE)
 	if(!D)
 		return
 #ifdef TESTING
@@ -159,16 +162,25 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if(!istype(D))
 		del(D)
 	else if(isnull(D.gc_destroyed))
-		var/hint = D.Destroy() // Let our friend know they're about to get fucked up.
+		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
 		if(!D)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
-			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
-				return
-			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
-				return
+			if (QDEL_HINT_LETMELIVE, QDEL_HINT_IWILLGC)	//qdel should let the object live after calling destory.
+				if(!force)
+					return
+				// Returning LETMELIVE after being told to force destroy
+				// indicates the objects Destroy() does not respect force
+				if(!("[D.type]" in SSgarbage.noforcerespect))
+					SSgarbage.noforcerespect += "[D.type]"
+					testing("WARNING: [D.type] has been force deleted, but is \
+						returning an immortal QDEL_HINT, indicating it does \
+						not respect the force flag for qdel(). It has been \
+						placed in the queue, further instances of this type \
+						will also be queued.")
+				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
@@ -197,7 +209,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
-/datum/proc/Destroy()
+/datum/proc/Destroy(force=FALSE)
 	tag = null
 	return QDEL_HINT_QUEUE
 

@@ -156,7 +156,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		mob << "Your Syndicate benefactors were unfortunately unable to get you a chameleon security HUD."
 		. += 1
 	else
-		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is loyalty-implanted, and unable to be recruited."
+		mob << "The <b>chameleon security HUD</b> in your [where4] will help you keep track of who is mindshield-implanted, and unable to be recruited."
 	mob.update_icons()
 	return .
 
@@ -165,7 +165,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 //Deals with converting players to a gang//
 ///////////////////////////////////////////
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, datum/gang/G, check = 1)
-	if(!G || (gangster_mind in get_all_gangsters()))
+	if(!G || (gangster_mind in get_all_gangsters()) || gangster_mind.enslaved_to)
 		return 0
 	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1

@@ -197,13 +197,14 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
+	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 35
-	origin_tech = "magnets=3;syndicate=4"
+	origin_tech = "magnets=4;syndicate=5"
 	item_color = "green"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 75
@@ -221,6 +222,11 @@
 	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
+	if(user.has_dna())
+		if(user.dna.check_mutation(HULK))
+			user << "<span class='warning'>You grip the blade too hard and accidentally close it!</span>"
+			unwield()
+			return
 	..()
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
 		impale(user)
@@ -228,7 +234,7 @@
 	if((wielded) && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
-				user.dir = i
+				user.setDir(i)
 				if(i == 8)
 					user.emote("flip")
 				sleep(1)
@@ -255,10 +261,14 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
+	sharpness = IS_SHARP
+	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
+	sharpness = initial(sharpness)
+	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
 
@@ -365,7 +375,7 @@
 	throw_speed = 2
 	throw_range = 4
 	materials = list(MAT_METAL=13000)
-	origin_tech = "materials=2;engineering=2;combat=2"
+	origin_tech = "materials=3;engineering=4;combat=2"
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
@@ -454,7 +464,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
@@ -464,7 +474,7 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
 	if(istype(user, /mob/living))
 		var/mob/living/U = user
-		if(!U.mind.devilinfo)
+		if(U.mind && (!U.mind.devilinfo || (U.mind.soulOwner == U.mind))) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
 				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
 			if(ishuman(U))
@@ -474,7 +484,7 @@
 				U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(!user.mind.devilinfo)
+	if(user.mind && (!user.mind.devilinfo || (user.mind.soulOwner == user.mind)))
 		user << "<span class ='warning'>The [src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

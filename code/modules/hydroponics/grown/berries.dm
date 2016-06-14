@@ -10,6 +10,7 @@
 	maturation = 5
 	production = 5
 	yield = 2
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
@@ -85,6 +86,7 @@
 	desc = "Nutritious!"
 	icon_state = "glowberrypile"
 	filling_color = "#7CFC00"
+	origin_tech = "plasmatech=6"
 
 // Cherries
 /obj/item/seeds/cherry
@@ -99,6 +101,7 @@
 	maturation = 5
 	production = 5
 	growthstages = 5
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"
 	mutatelist = list(/obj/item/seeds/cherry/blue)
@@ -133,6 +136,49 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 
+//Cherry Bombs
+/obj/item/seeds/cherry/bomb
+	name = "pack of cherry bomb pits"
+	desc = "They give you vibes of dread and frustration."
+	icon_state = "seed-cherry_bomb"
+	species = "cherry_bomb"
+	plantname = "Cherry Bomb Tree"
+	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb
+	mutatelist = list()
+	reagents_add = list("nutriment" = 0.1, "sugar" = 0.1, "blackpowder" = 0.1)
+	rarity = 25
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb
+	name = "cherry bombs"
+	desc = "You think you can hear the hissing of a tiny fuse."
+	icon_state = "cherry_bomb"
+	filling_color = rgb(20, 20, 20)
+	seed = /obj/item/seeds/cherry/bomb
+	bitesize_mod = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
+	var/area/A = get_area(user)
+	user.visible_message("<span class='warning'>[user] plucks the stem from [src]!</span>", "<span class='userdanger'>You pluck the stem from [src], which begins to hiss loudly!</span>")
+	message_admins("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x], [user.y], [user.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>(JMP)</a>")
+	log_game("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x],[user.y],[user.z]).")
+	prime()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/burn()
+	prime()
+	..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
+	icon_state = "cherry_bomb_lit"
+	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
+	sleep(30)
+	if(!src)
+		return
+	var/d_strength = round(seed.potency / 100)
+	var/h_strength = round(seed.potency / 50)
+	var/l_strength = round(seed.potency / 20)
+	var/f_strength = l_strength
+	explosion(get_turf(src), d_strength, h_strength, l_strength, f_strength)
+	qdel(src)
 
 // Grapes
 /obj/item/seeds/grape
@@ -148,6 +194,7 @@
 	production = 5
 	yield = 4
 	growthstages = 2
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "grape-grow"
 	icon_dead = "grape-dead"
 	mutatelist = list(/obj/item/seeds/grape/green)

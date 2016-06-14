@@ -96,6 +96,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 10
 	var/stat = 0
@@ -177,11 +178,11 @@ Class Procs:
 	density = 1
 	if(!target)
 		for(var/mob/living/carbon/C in loc)
-			if(C.buckled || C.buckled_mobs.len)
+			if(C.buckled || C.has_buckled_mobs())
 				continue
 			else
 				target = C
-	if(target && !target.buckled && !target.buckled_mobs.len)
+	if(target && !target.buckled && !target.has_buckled_mobs())
 		occupant = target
 		target.forceMove(src)
 	updateUsrDialog()
@@ -352,8 +353,6 @@ Class Procs:
 		M.state = 2
 		M.icon_state = "box_1"
 		for(var/obj/item/I in component_parts)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
 			I.loc = loc
 		qdel(src)
 
@@ -374,7 +373,7 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = turn(dir,-90)
+		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0
@@ -391,10 +390,12 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
-	if(flags & NODECONSTRUCT)
+	if(!istype(W))
+		return
+	if((flags & NODECONSTRUCT) && !W.works_from_distance)
 		return
 	var/shouldplaysound = 0
-	if(istype(W) && component_parts)
+	if(component_parts)
 		if(panel_open || W.works_from_distance)
 			var/obj/item/weapon/circuitboard/machine/CB = locate(/obj/item/weapon/circuitboard/machine) in component_parts
 			var/P

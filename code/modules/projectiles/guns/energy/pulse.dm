@@ -13,8 +13,28 @@
 /obj/item/weapon/gun/energy/pulse/emp_act(severity)
 	return
 
+/obj/item/weapon/gun/energy/pulse/prize
+	pin = /obj/item/device/firing_pin
+
+/obj/item/weapon/gun/energy/pulse/prize/New()
+	. = ..()
+	poi_list |= src
+	var/msg = "A pulse rifle prize has been created at ([x],[y],[z] - (\
+	<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>\
+	JMP</a>)"
+
+	message_admins(msg)
+	log_game(msg)
+
+	notify_ghosts("Someone won a pulse rifle as a prize!", source = src,
+		action = NOTIFY_ORBIT)
+
+/obj/item/weapon/gun/energy/pulse/prize/Destroy()
+	poi_list -= src
+	. = ..()
+
 /obj/item/weapon/gun/energy/pulse/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/carbine
 	name = "pulse carbine"
@@ -29,7 +49,7 @@
 	flight_y_offset = 12
 
 /obj/item/weapon/gun/energy/pulse/carbine/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/pistol
 	name = "pulse pistol"
@@ -42,7 +62,7 @@
 	can_charge = 0
 
 /obj/item/weapon/gun/energy/pulse/pistol/loyalpin
-	pin = /obj/item/device/firing_pin/implant/loyalty
+	pin = /obj/item/device/firing_pin/implant/mindshield
 
 /obj/item/weapon/gun/energy/pulse/destroyer
 	name = "pulse destroyer"

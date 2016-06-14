@@ -17,6 +17,7 @@
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
 	del_on_death = 1
+	deathmessage = "vanishes into thin air! It was a fake!"
 
 
 /mob/living/simple_animal/hostile/illusion/Life()
@@ -28,7 +29,7 @@
 /mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, health = 100, damage = 0, replicate = 0 )
 	appearance = original.appearance
 	parent_mob = original
-	dir = original.dir
+	setDir(original.dir)
 	life_span = world.time+life
 	melee_damage_lower = damage
 	melee_damage_upper = damage
@@ -37,11 +38,6 @@
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
-
-
-/mob/living/simple_animal/hostile/illusion/New()
-	..()
-	deathmessage = "[src] vanishes into thin air! It was a fake!"
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)

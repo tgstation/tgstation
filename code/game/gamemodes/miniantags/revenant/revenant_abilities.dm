@@ -121,10 +121,12 @@
 			for(var/ded in dead_mob_list)
 				if(!isobserver(ded))
 					continue
-				ded << "<a href='?src=\ref[ded];follow=\ref[user]'>(F)</a> \
+				var/follow_rev = FOLLOW_LINK(ded, user)
+				var/follow_whispee = FOLLOW_LINK(ded, M)
+				ded << "[follow_rev] \
 					<span class='name'>[user]</span> \
 					<span class='revenboldnotice'>Revenant Transmit --></span> \
-					<a href='?src=\ref[ded];follow=\ref[M]'>(F)</a> \
+					[follow_whispee] \
 					<span class='name'>[M]</span> \
 					<span class='revennotice'>[msg]</span>"
 
@@ -344,12 +346,13 @@
 							if(H.dna && H.dna.species)
 								H.dna.species.handle_mutant_bodyparts(H,"#1d2953")
 								H.dna.species.handle_hair(H,"#1d2953")
-								H.dna.species.update_color(H,"#1d2953")
+								var/old_color = H.color
+								H.color = "#1d2953"
 								spawn(20)
 									if(H && H.dna && H.dna.species)
 										H.dna.species.handle_mutant_bodyparts(H)
 										H.dna.species.handle_hair(H)
-										H.dna.species.update_color(H)
+										H.color = old_color
 							var/blightfound = 0
 							for(var/datum/disease/revblight/blight in H.viruses)
 								blightfound = 1

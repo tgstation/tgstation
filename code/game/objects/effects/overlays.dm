@@ -22,10 +22,10 @@
 /obj/effect/overlay/temp
 	icon_state = "nothing"
 	anchored = 1
-	layer = 4.1
+	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
-	var/duration = 10
-	var/randomdir = 1
+	var/duration = 10 //in deciseconds
+	var/randomdir = TRUE
 
 /obj/effect/overlay/temp/Destroy()
 	..()
@@ -33,10 +33,52 @@
 
 /obj/effect/overlay/temp/New()
 	if(randomdir)
-		dir = pick(cardinal)
+		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 	spawn(duration)
 		qdel(src)
+
+/obj/effect/overlay/temp/bloodsplatter
+	icon = 'icons/effects/blood.dmi'
+	duration = 5
+	randomdir = FALSE
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/overlay/temp/bloodsplatter/New(loc, set_dir)
+	if(set_dir in diagonals)
+		icon_state = "splatter[pick(1, 2, 6)]"
+	else
+		icon_state = "splatter[pick(3, 4, 5)]"
+	..()
+	var/target_pixel_x = 0
+	var/target_pixel_y = 0
+	switch(set_dir)
+		if(NORTH)
+			target_pixel_y = 16
+		if(SOUTH)
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(EAST)
+			target_pixel_x = 16
+		if(WEST)
+			target_pixel_x = -16
+		if(NORTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = 16
+		if(NORTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = 16
+		if(SOUTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(SOUTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+	setDir(set_dir)
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
+
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
@@ -85,7 +127,7 @@
 	if(mimiced_atom)
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
-		dir = mimiced_atom.dir
+		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
@@ -105,7 +147,7 @@
 /obj/effect/overlay/temp/cult/phase/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 
 /obj/effect/overlay/temp/cult/phase/out
 	icon_state = "cultout"
@@ -117,7 +159,7 @@
 /obj/effect/overlay/temp/cult/door
 	name = "unholy glow"
 	icon_state = "doorglow"
-	layer = 3.17 //above closed doors
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
 
 /obj/effect/overlay/temp/cult/door/unruned
 	icon_state = "unruneddoorglow"
@@ -125,11 +167,85 @@
 /obj/effect/overlay/temp/cult/turf
 	name = "unholy glow"
 	icon_state = "wallglow"
-	layer = TURF_LAYER + 0.07
+	layer = ABOVE_NORMAL_TURF_LAYER
 
 /obj/effect/overlay/temp/cult/turf/open/floor
 	icon_state = "floorglow"
 	duration = 5
+
+
+/obj/effect/overlay/temp/ratvar
+	name = "ratvar's light"
+	duration = 8
+	randomdir = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+
+/obj/effect/overlay/temp/ratvar/door
+	icon_state = "ratvardoorglow"
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+
+/obj/effect/overlay/temp/ratvar/door/window
+	icon_state = "ratvarwindoorglow"
+
+/obj/effect/overlay/temp/ratvar/beam
+	icon_state = "ratvarbeamglow"
+
+/obj/effect/overlay/temp/ratvar/beam/door
+	layer = CLOSED_FIREDOOR_LAYER //above closed doors
+
+/obj/effect/overlay/temp/ratvar/beam/grille
+	layer = LOW_ITEM_LAYER //above grilles
+
+/obj/effect/overlay/temp/ratvar/beam/itemconsume
+	layer = HIGH_OBJ_LAYER
+
+/obj/effect/overlay/temp/ratvar/wall
+	icon_state = "ratvarwallglow"
+
+/obj/effect/overlay/temp/ratvar/floor
+	icon_state = "ratvarfloorglow"
+
+/obj/effect/overlay/temp/ratvar/window
+	icon_state = "ratvarwindowglow"
+	layer = ABOVE_WINDOW_LAYER //above windows
+
+/obj/effect/overlay/temp/ratvar/grille
+	icon_state = "ratvargrilleglow"
+	layer = LOW_ITEM_LAYER //above grilles
+
+/obj/effect/overlay/temp/ratvar/grille/broken
+	icon_state = "ratvarbrokengrilleglow"
+
+/obj/effect/overlay/temp/ratvar/window/single
+	icon_state = "ratvarwindowglow_s"
+
+/obj/effect/overlay/temp/ratvar/spearbreak
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "ratvarspearbreak"
+	layer = BELOW_MOB_LAYER
+	pixel_y = -16
+	pixel_x = -16
+
+/obj/effect/overlay/temp/ratvar/sigil
+	name = "glowing circle"
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "sigildull"
+
+/obj/effect/overlay/temp/ratvar/sigil/transgression
+	color = "#FAE48C"
+	layer = ABOVE_MOB_LAYER
+	duration = 38
+
+/obj/effect/overlay/temp/ratvar/sigil/transgression/New()
+	..()
+	var/oldtransform = transform
+	animate(src, transform = matrix()*2, time = 5)
+	animate(transform = oldtransform, alpha = 0, time = 33)
+
+/obj/effect/overlay/temp/ratvar/sigil/vitality
+	color = "#1E8CE1"
+	icon_state = "sigilactivepulse"
+	layer = BELOW_MOB_LAYER
 
 
 /obj/effect/overlay/temp/revenant
@@ -179,7 +295,7 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	density = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	anchored = 1
 
 /obj/effect/overlay/palmtree_l
@@ -187,7 +303,7 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
 	density = 1
-	layer = 5
+	layer = WALL_OBJ_LAYER
 	anchored = 1
 
 /obj/effect/overlay/coconut

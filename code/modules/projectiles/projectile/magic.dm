@@ -54,19 +54,16 @@
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
-	if(target.hellbound)
-		return
-	if(ismob(target))
+	if(isliving(target))
+		if(target.hellbound)
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
 		if(target.revive(full_heal = 1))
-			if(!target.ckey)
-				for(var/mob/dead/observer/ghost in player_list)
-					if(target.real_name == ghost.real_name)
-						ghost.reenter_corpse()
-						break
-			target << "<span class='notice'>You rise with a start, you're alive!!!</span>"
+			target.grab_ghost(force = TRUE) // even suicides
+			target << "<span class='notice'>You rise with a start, \
+				you're alive!!!</span>"
 		else if(target.stat != DEAD)
 			target << "<span class='notice'>You feel great!</span>"
 
@@ -87,11 +84,11 @@
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
 		if(!stuff.anchored && stuff.loc)
-			teleammount++
-			do_teleport(stuff, stuff, 10)
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()
+			if(do_teleport(stuff, stuff, 10))
+				teleammount++
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
@@ -106,13 +103,12 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
-	var/atom/T = target.loc
-	if(isturf(target) && target.density)
-		CreateDoor(target)
-	else if (isturf(T) && T.density)
-		CreateDoor(T)
-	else if(istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
+	else
+		var/turf/T = get_turf(target)
+		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
@@ -175,7 +171,7 @@
 						if("drone")
 							new_mob = new /mob/living/simple_animal/drone(M.loc)
 							var/mob/living/simple_animal/drone/D = new_mob
-							D.update_drone_hack()
+							D.liberate() // F R E E D R O N E
 					if(issilicon(new_mob))
 						new_mob.gender = M.gender
 						new_mob.invisibility = 0
@@ -185,10 +181,9 @@
 					else
 						new_mob.languages |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/simple_animal/slime(M.loc)
-					if(prob(50))
-						var/mob/living/simple_animal/slime/Slime = new_mob
-						Slime.is_adult = 1
+					var/mob/living/simple_animal/slime/random/slimey
+					slimey = new(get_turf(M), null, new_is_adult=prob(50))
+					new_mob = slimey
 					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))
@@ -220,7 +215,7 @@
 							if("spiderhunter")
 								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
 							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
 							if("magicarp")
 								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
 							if("chaosmagicarp")
@@ -279,10 +274,8 @@
 			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
-			if(M.mind)
-				M.mind.transfer_to(new_mob)
-			else
-				new_mob.key = M.key
+
+			M.wabbajack_act(new_mob)
 
 			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
 

@@ -84,7 +84,7 @@
 			var/predir = AM.dir
 			step(AM, direction)
 			if(!facedir)
-				AM.dir = predir
+				AM.setDir(predir)
 
 
 

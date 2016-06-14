@@ -89,17 +89,15 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H.wear_suit, suit_type) || istype(H.head, helmet_type))
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='italics'>You hear the organic matter ripping and tearing!</span>")
-		qdel(H.wear_suit)
-		qdel(H.head)
+		H.unEquip(H.head, TRUE) //The qdel on dropped() takes care of it
+		H.unEquip(H.wear_suit, TRUE)
 		H.update_inv_wear_suit()
 		H.update_inv_head()
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/T = get_turf(H)
-			if(istype(T))
-				T.add_blood(H) //So real blood decals
-				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+			H.add_splatter_floor()
+			playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
 
 		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown

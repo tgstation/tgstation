@@ -2,6 +2,7 @@
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
+
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
@@ -29,6 +30,8 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -47,7 +50,7 @@
 	return -10
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
-	return
+	return 0
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
@@ -177,6 +180,10 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	new_xeno.setDir(dir)
+	if(!alien_name_regex.Find(name))
+		new_xeno.name = name
+		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)

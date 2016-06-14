@@ -4,15 +4,13 @@
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
 	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
-	var/list/mob/living/buckled_mobs = list()
+	var/list/mob/living/buckled_mobs = null //list()
 	var/max_buckled_mobs = 1
-
-
 
 //Interaction
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
-	if(can_buckle && buckled_mobs.len)
+	if(can_buckle && has_buckled_mobs())
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
 			if(user_unbuckle_mob(unbuckled,user))
@@ -27,15 +25,22 @@
 		if(user_buckle_mob(M, user))
 			return 1
 
-
 //Cleanup
 /atom/movable/Destroy()
 	. = ..()
 	unbuckle_all_mobs(force=1)
 
+/atom/movable/proc/has_buckled_mobs()
+	if(!buckled_mobs)
+		return FALSE
+	if(buckled_mobs.len)
+		return TRUE
+
 //procs that handle the actual buckling and unbuckling
 /atom/movable/proc/buckle_mob(mob/living/M, force = 0)
-	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || (M.buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
+	if(!buckled_mobs)
+		buckled_mobs = list()
+	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return 0
 	if(!M.can_buckle() && !force)
 		if(M == usr)
@@ -45,7 +50,7 @@
 		return 0
 
 	M.buckled = src
-	M.dir = dir
+	M.setDir(dir)
 	buckled_mobs |= M
 	M.update_canmove()
 	post_buckle_mob(M)
@@ -72,6 +77,8 @@
 		post_buckle_mob(.)
 
 /atom/movable/proc/unbuckle_all_mobs(force=0)
+	if(!has_buckled_mobs())
+		return
 	for(var/m in buckled_mobs)
 		unbuckle_mob(m, force)
 

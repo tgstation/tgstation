@@ -217,11 +217,11 @@ Made by Xhuis
 
 
 /datum/game_mode/shadowling/declare_completion()
-	if(check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
+	if(check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
 		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
 		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
-	else if(!check_shadow_victory() && SSshuttle.emergency.mode >= SHUTTLE_ESCAPE)
+	else if(!check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED)
 		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
 	else
 		world << "<span class='redtext'>The shadowlings have failed!</span>"
@@ -254,10 +254,10 @@ Made by Xhuis
 	name = "Shadowling"
 	id = "shadowling"
 	say_mod = "chitters"
-	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS) //Can't use guns due to muzzle flash
+	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,NOGUNS,NODISMEMBER) //Can't use guns due to muzzle flash
 	burnmod = 1.5 //1.5x burn damage, 2x is excessive
 	heatmod = 1.5
-	has_dismemberment = 0
+
 
 /datum/species/shadow/ling/spec_life(mob/living/carbon/human/H)
 	if(!H.weakeyes) H.weakeyes = 1 //Makes them more vulnerable to flashes and flashbangs

@@ -109,9 +109,9 @@
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
-		dir = ndir
+		setDir(ndir)
 	src.tdir = dir		// to fix Vars bug
-	dir = SOUTH
+	setDir(SOUTH)
 
 	if(auto_name)
 		name = "[get_area(src)] APC"
@@ -153,7 +153,7 @@
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.setDir(tdir)
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
@@ -802,9 +802,9 @@
 /obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
+	malf.malfhack = null
+	malf.malfhacking = FALSE
 	if(src && !src.aidisabled)
-		malf.malfhack = null
-		malf.malfhacking = FALSE
 		malf.malf_picker.processing_time += 10
 
 		malfai = malf.parent || malf
@@ -813,6 +813,8 @@
 
 		malf << "Hack complete. The APC is now under your exclusive control."
 		update_icon()
+	else
+		malf << "Hack aborted. The designated APC has stopped responding and no longer exists on the power network."
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))

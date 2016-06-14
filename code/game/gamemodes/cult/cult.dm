@@ -29,6 +29,10 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
+	if(mind.enslaved_to)
+		return 0
+	if(is_servant_of_ratvar(mind.current))
+		return 0
 	return 1
 
 /datum/game_mode/cult
@@ -68,7 +72,7 @@
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
-	recommended_enemies = 3 + round(num_players()/20)
+	recommended_enemies = 3 + round(num_players()/15)
 
 
 	for(var/cultists_number = 1 to recommended_enemies)

@@ -43,6 +43,13 @@
 		"bromine",
 		"stable_plasma"
 	)
+	var/list/emagged_reagents = list(
+		"space_drugs",
+		"morphine",
+		"carpotoxin",
+		"mine_salve",
+		"toxin"
+	)
 
 /obj/machinery/chem_dispenser/New()
 	..()
@@ -64,6 +71,14 @@
 	energy = min(energy + addenergy, max_energy)
 	if(energy != oldenergy)
 		use_power(2500)
+
+/obj/machinery/chem_dispenser/emag_act(mob/user)
+	if(emagged)
+		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		return
+	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
+	emagged = 1
 
 /obj/machinery/chem_dispenser/ex_act(severity, target)
 	if(severity < 3)
@@ -165,7 +180,7 @@
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		overlays += icon_beaker
-	else if(user.a_intent != "harm")
+	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
@@ -224,15 +239,20 @@
 
 /obj/machinery/chem_dispenser/constructable/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/chem_dispenser
+	name = "circuit board (Portable Chem Dispenser)"
+	build_path = /obj/machinery/chem_dispenser/constructable
+	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/cell = 1)
+	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
@@ -296,6 +316,13 @@
 		"tomatojuice",
 		"lemonjuice"
 	)
+	emagged_reagents = list(
+		"thirteenloko",
+		"whiskeycola",
+		"mindbreaker",
+		"tirizene"
+	)
+
 
 
 /obj/machinery/chem_dispenser/drinks/beer
@@ -318,8 +345,16 @@
 		"ale",
 		"absinthe"
 	)
+	emagged_reagents = list(
+		"ethanol",
+		"iron",
+		"minttoxin",
+		"atomicbomb"
+	)
+
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	emagged_reagents = list("plasma")

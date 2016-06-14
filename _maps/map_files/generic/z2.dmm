@@ -22,17 +22,9 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "ag" = (
-/obj/structure/foamedmetal,
-/obj/structure/window/reinforced/tinted{
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "rwindow";
-	dir = 8
-	},
-/turf/open/floor/holofloor/plating,
-/area/holodeck/rec_center/bunker)
+/obj/effect/holodeck_effect/mobspawner/bee,
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/anthophila)
 "ah" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
@@ -94,11 +86,7 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/offline)
 "as" = (
-/turf/open/floor/holofloor{
-	icon_state = "engine";
-	name = "Burn-Mix Floor";
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
-	},
+/turf/open/floor/holofloor/plating/burnmix,
 /area/holodeck/rec_center/burn)
 "at" = (
 /turf/open/floor/holofloor{
@@ -150,11 +138,7 @@
 /area/holodeck/rec_center/wildlife)
 "aB" = (
 /obj/effect/holodeck_effect/sparks,
-/turf/open/floor/holofloor{
-	icon_state = "engine";
-	name = "Burn-Mix Floor";
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
-	},
+/turf/open/floor/holofloor/plating/burnmix,
 /area/holodeck/rec_center/burn)
 "aC" = (
 /turf/open/floor/holofloor{
@@ -1283,9 +1267,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/centcom/evac)
 "dM" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor2"
-	},
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/centcom/evac)
 "dN" = (
 /obj/structure/table,
@@ -1368,29 +1350,21 @@
 "dY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "dZ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "ea" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "eb" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "ec" = (
 /obj/machinery/sleeper{
@@ -1413,45 +1387,33 @@
 /area/centcom/evac)
 "ef" = (
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "eg" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "eh" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "ei" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "ej" = (
 /obj/structure/table,
 /obj/item/device/assembly/flash/handheld,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "ek" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "el" = (
 /obj/structure/chair{
@@ -1462,9 +1424,7 @@
 "em" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/handcuffs,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "en" = (
 /obj/machinery/door/window/northright{
@@ -1474,9 +1434,7 @@
 	name = "Security Desk";
 	req_access_txt = "103"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/centcom/evac)
 "eo" = (
 /obj/docking_port/stationary{
@@ -1500,9 +1458,7 @@
 /area/centcom/evac)
 "er" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor2"
-	},
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/centcom/evac)
 "es" = (
 /obj/docking_port/stationary{
@@ -1553,9 +1509,7 @@
 	name = "Cockpit";
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor2"
-	},
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/centcom/evac)
 "eA" = (
 /obj/structure/table,
@@ -1625,7 +1579,11 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eP" = (
-/obj/structure/flora/kirbyplants,
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Backup Docks";
+	opacity = 1;
+	req_access_txt = "101"
+	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eQ" = (
@@ -1658,12 +1616,11 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "eU" = (
-/obj/structure/sign/map/left,
-/turf/open/floor/light,
+/obj/machinery/shuttle_manipulator,
+/turf/open/floor/plasteel/circuit,
 /area/centcom/ferry)
 "eV" = (
-/obj/structure/sign/map/right,
-/turf/open/floor/light,
+/turf/open/floor/plasteel/circuit,
 /area/centcom/ferry)
 "eW" = (
 /obj/structure/extinguisher_cabinet{
@@ -2358,11 +2315,11 @@
 "hh" = (
 /obj/docking_port/stationary{
 	dir = 4;
-	dwidth = 9;
-	height = 11;
+	dwidth = 25;
+	height = 50;
 	id = "emergency_away";
-	name = "Centcom";
-	width = 22
+	name = "Centcom Emergency Shuttle Dock";
+	width = 50
 	},
 /turf/open/space,
 /area/space)
@@ -2907,9 +2864,8 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership)
 "iS" = (
-/turf/open/floor/plating/airless{
-	dir = 2;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 2
 	},
 /area/syndicate_mothership)
 "iT" = (
@@ -2954,10 +2910,8 @@
 	color = "#008000";
 	icon_state = "small"
 	},
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating/airless,
 /area/wizard_station)
@@ -3034,9 +2988,8 @@
 	},
 /area/syndicate_mothership)
 "jl" = (
-/turf/open/floor/plating/airless{
-	dir = 6;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 6
 	},
 /area/syndicate_mothership)
 "jm" = (
@@ -3073,9 +3026,8 @@
 	},
 /area/shuttle/assault_pod)
 "jq" = (
-/turf/open/floor/plating/airless{
-	dir = 10;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 10
 	},
 /area/syndicate_mothership)
 "jr" = (
@@ -3169,36 +3121,28 @@
 	},
 /area/syndicate_mothership)
 "jF" = (
-/turf/open/floor/plating/airless{
-	dir = 4;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 4
 	},
 /area/syndicate_mothership)
 "jG" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/assault_pod)
 "jH" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/assault_pod)
 "jI" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/assault_pod)
 "jJ" = (
-/turf/open/floor/plating/airless{
-	dir = 8;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 8
 	},
 /area/syndicate_mothership)
 "jK" = (
@@ -3247,7 +3191,6 @@
 "jS" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHWEST)";
-	icon_state = "darkblue";
 	dir = 9
 	},
 /area/ctf)
@@ -3283,7 +3226,6 @@
 "jX" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
-	icon_state = "darkblue";
 	dir = 1
 	},
 /area/ctf)
@@ -3312,9 +3254,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/assault_pod)
 "ka" = (
 /turf/open/floor/plasteel/red/side{
@@ -3476,9 +3416,7 @@
 /area/syndicate_mothership)
 "kz" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor4"
-	},
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/assault_pod)
 "kA" = (
 /turf/open/floor/grass,
@@ -3551,7 +3489,6 @@
 "kM" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHEAST)";
-	icon_state = "darkblue";
 	dir = 5
 	},
 /area/ctf)
@@ -3615,21 +3552,18 @@
 "kW" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
-	icon_state = "darkred";
 	dir = 9
 	},
 /area/ctf)
 "kX" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/ctf)
 "kY" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
-	icon_state = "darkred";
 	dir = 5
 	},
 /area/ctf)
@@ -3656,22 +3590,19 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership)
 "ld" = (
-/turf/open/floor/plating/airless{
-	dir = 5;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 5
 	},
 /area/syndicate_mothership)
 "le" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (WEST)";
-	icon_state = "darkblue";
 	dir = 8
 	},
 /area/ctf)
 "lf" = (
-/turf/open/floor/plating/airless{
-	dir = 9;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 9
 	},
 /area/syndicate_mothership)
 "lg" = (
@@ -3750,9 +3681,8 @@
 /turf/open/floor/wood,
 /area/syndicate_mothership)
 "lu" = (
-/turf/open/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
+/turf/open/floor/plating/airless/warnplate{
+	dir = 1
 	},
 /area/syndicate_mothership)
 "lv" = (
@@ -3858,7 +3788,6 @@
 "lK" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (EAST)";
-	icon_state = "darkblue";
 	dir = 4
 	},
 /area/ctf)
@@ -3996,8 +3925,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/arena)
 "mk" = (
-/turf/open/floor/plasteel{
-	icon_state = "red";
+/turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/tdome/arena)
@@ -4074,7 +4002,6 @@
 "mv" = (
 /obj/structure/closet/syndicate/personal,
 /turf/open/floor/plasteel/darkwarning{
-	icon_state = "warndark";
 	dir = 1
 	},
 /area/syndicate_mothership)
@@ -4084,7 +4011,6 @@
 	pin = /obj/item/device/firing_pin
 	},
 /turf/open/floor/plasteel/darkwarning{
-	icon_state = "warndark";
 	dir = 1
 	},
 /area/syndicate_mothership)
@@ -4118,10 +4044,8 @@
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mB" = (
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating,
 /area/wizard_station)
@@ -4216,10 +4140,8 @@
 	color = "#008000";
 	icon_state = "medium"
 	},
-/obj/structure/grille{
-	color = "#008000";
-	density = 0;
-	icon_state = "brokengrille"
+/obj/structure/grille/broken{
+	color = "#008000"
 	},
 /turf/open/floor/plating,
 /area/wizard_station)
@@ -5155,7 +5077,6 @@
 "pS" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
-	icon_state = "darkred";
 	dir = 8
 	},
 /area/ctf)
@@ -5166,7 +5087,6 @@
 "pU" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
-	icon_state = "darkred";
 	dir = 4
 	},
 /area/ctf)
@@ -5180,7 +5100,6 @@
 "pX" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHWEST)";
-	icon_state = "darkblue";
 	dir = 10
 	},
 /area/ctf)
@@ -5190,14 +5109,12 @@
 "pZ" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHEAST)";
-	icon_state = "darkblue";
 	dir = 6
 	},
 /area/ctf)
 "qa" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
-	icon_state = "darkred";
 	dir = 10
 	},
 /area/ctf)
@@ -5207,7 +5124,6 @@
 "qc" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
-	icon_state = "darkred";
 	dir = 6
 	},
 /area/ctf)
@@ -5227,12 +5143,10 @@
 /turf/open/floor/plasteel/darkblue/corner,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5240,19 +5154,16 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qh" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (WEST)";
-	icon_state = "darkbluecorners";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5260,7 +5171,6 @@
 /turf/open/floor/plasteel/darkblue/corner,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5268,12 +5178,10 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5284,12 +5192,10 @@
 "ql" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
-	icon_state = "darkbluecorners";
 	dir = 4
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
@@ -5297,41 +5203,35 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
 "qn" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (WEST)";
-	icon_state = "darkbluecorners";
 	dir = 8
 	},
 /area/ctf)
 "qo" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
-	icon_state = "darkbluecorners";
 	dir = 4
 	},
 /area/ctf)
 "qp" = (
-/turf/open/floor/plating{
-	icon_plating = "warnplate";
-	icon_state = "warnplate"
+/turf/open/floor/plating/warnplate{
+	icon_plating = "warnplate"
 	},
 /area/ctf)
 "qq" = (
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
 "qr" = (
-/turf/open/floor/plating{
-	icon_state = "warnplate";
+/turf/open/floor/plating/warnplate{
 	dir = 8
 	},
 /area/ctf)
@@ -5339,25 +5239,21 @@
 /turf/open/floor/plating,
 /area/ctf)
 "qt" = (
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4;
-	icon_state = "warnplate";
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	luminosity = 2
 	},
 /area/ctf)
 "qu" = (
 /turf/open/floor/plasteel/darkblue/corner,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
 "qv" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (NORTH)";
-	icon_state = "darkbluecorners";
 	dir = 1
 	},
 /area/ctf)
@@ -5365,27 +5261,23 @@
 /turf/open/floor/plasteel/darkblue/corner,
 /area/ctf)
 "qx" = (
-/turf/open/floor/plating{
-	dir = 1;
-	icon_state = "warnplate"
+/turf/open/floor/plating/warnplate{
+	dir = 1
 	},
 /area/ctf)
 "qy" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
-	icon_state = "darkbluecorners";
 	dir = 4
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
-	icon_state = "warningline";
 	dir = 10
 	},
 /area/ctf)
 "qz" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (NORTH)";
-	icon_state = "darkbluecorners";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5393,7 +5285,6 @@
 "qA" = (
 /turf/open/floor/plasteel/darkblue/corner{
 	tag = "icon-darkbluecorners (EAST)";
-	icon_state = "darkbluecorners";
 	dir = 4
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5402,7 +5293,6 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
-	icon_state = "warningline";
 	dir = 6
 	},
 /area/ctf)
@@ -5422,7 +5312,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5430,7 +5319,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5438,7 +5326,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5456,7 +5343,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
@@ -5464,7 +5350,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
@@ -5477,7 +5362,6 @@
 /turf/open/floor/plasteel/warningline,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
-	icon_state = "warningline";
 	dir = 10
 	},
 /area/ctf)
@@ -5485,7 +5369,6 @@
 /turf/open/floor/plasteel/circuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
-	icon_state = "warningline";
 	dir = 6
 	},
 /area/ctf)
@@ -5505,24 +5388,20 @@
 "qS" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
-	icon_state = "darkblue";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qT" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHWEST)";
-	icon_state = "darkblue";
 	dir = 9
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5530,67 +5409,56 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qV" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTHEAST)";
-	icon_state = "darkblue";
 	dir = 5
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qW" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
-	icon_state = "darkred";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qX" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
-	icon_state = "darkred";
 	dir = 9
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "qY" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
-	icon_state = "darkred";
 	dir = 5
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
 "qZ" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (WEST)";
-	icon_state = "darkblue";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
@@ -5600,12 +5468,10 @@
 "rb" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
-	icon_state = "darkred";
 	dir = 4
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
@@ -5638,12 +5504,10 @@
 "rj" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHWEST)";
-	icon_state = "darkblue";
 	dir = 10
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
-	icon_state = "warningline";
 	dir = 10
 	},
 /area/ctf)
@@ -5654,7 +5518,6 @@
 "rl" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (SOUTHEAST)";
-	icon_state = "darkblue";
 	dir = 6
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5666,7 +5529,6 @@
 "rn" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
-	icon_state = "darkred";
 	dir = 10
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5674,12 +5536,10 @@
 "ro" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
-	icon_state = "darkred";
 	dir = 6
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
-	icon_state = "warningline";
 	dir = 6
 	},
 /area/ctf)
@@ -5687,7 +5547,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5695,7 +5554,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5703,7 +5561,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5711,7 +5568,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/ctf)
@@ -5719,7 +5575,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
@@ -5731,7 +5586,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
-	icon_state = "warningline";
 	dir = 10
 	},
 /area/ctf)
@@ -5739,7 +5593,6 @@
 /turf/open/floor/plasteel/circuit/rcircuit,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
-	icon_state = "warningline";
 	dir = 6
 	},
 /area/ctf)
@@ -5747,24 +5600,20 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "ry" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
-	icon_state = "darkredcorners";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5772,19 +5621,16 @@
 /turf/open/floor/plasteel/darkred/corner,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
 "rA" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
-	icon_state = "darkredcorners";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5794,45 +5640,38 @@
 "rC" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/ctf)
 "rD" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
 "rE" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/ctf)
 "rF" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
-	icon_state = "darkredcorners";
 	dir = 8
 	},
 /area/ctf)
 "rG" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
-	icon_state = "darkredcorners";
 	dir = 8
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/ctf)
@@ -5840,14 +5679,12 @@
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
-	icon_state = "warningline";
 	dir = 10
 	},
 /area/ctf)
 "rI" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5855,7 +5692,6 @@
 "rJ" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
-	icon_state = "darkredcorners";
 	dir = 4
 	},
 /turf/open/floor/plasteel/warningline,
@@ -5863,12 +5699,10 @@
 "rK" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
-	icon_state = "darkredcorners";
 	dir = 1
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
-	icon_state = "warningline";
 	dir = 6
 	},
 /area/ctf)
@@ -5881,12 +5715,12 @@
 /area/shuttle/escape)
 "rN" = (
 /obj/machinery/status_display{
-	layer = 4;
-	pixel_x = 0;
-	pixel_y = 32
+	density = 0;
+	pixel_y = 32;
+	supply_display = 1
 	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
+/turf/open/floor/plasteel/black,
+/area/centcom/ferry)
 "rO" = (
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
@@ -5903,7 +5737,9 @@
 	name = "Backup Shuttle Dock";
 	width = 8
 	},
-/obj/docking_port/mobile/emergency/backup,
+/obj/docking_port/mobile/emergency/backup{
+	dwidth = 3
+	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "rR" = (
@@ -5930,22 +5766,52 @@
 /turf/open/space/transit,
 /area/space)
 "rU" = (
+/obj/structure/flora/kirbyplants,
 /obj/machinery/status_display{
-	density = 0;
-	pixel_y = -30;
-	supply_display = 1
+	pixel_y = 32
 	},
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
+/turf/open/floor/plasteel/black,
+/area/centcom/ferry)
 "rV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/book/manual/random,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "rW" = (
-/obj/machinery/shuttle_manipulator,
-/turf/open/floor/plasteel/black,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"rX" = (
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/escape)
+"rY" = (
+/turf/open/floor/plasteel/darkwarning{
+	tag = "icon-warndark (EAST)";
+	dir = 4
+	},
 /area/centcom/ferry)
+"rZ" = (
+/obj/machinery/door/airlock/external{
+	name = "Backup Emergency Escape Shuttle"
+	},
+/turf/open/floor/plasteel/delivery,
+/area/centcom/ferry)
+"sd" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sc" = (
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sb" = (
+/obj/structure/flora/bush,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sa" = (
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 
 (1,1,1) = {"
 aa
@@ -36895,7 +36761,7 @@ ab
 ab
 ab
 ab
-ab
+rL
 ab
 ab
 ab
@@ -38463,7 +38329,7 @@ ab
 ab
 ab
 eJ
-eO
+rN
 eO
 eS
 eO
@@ -38716,11 +38582,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
 eJ
-eP
+eJ
+eJ
+eJ
+rU
 eO
 eO
 eO
@@ -38973,11 +38839,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
 eJ
-rW
+eO
+eO
+eP
+eO
 eO
 eO
 eW
@@ -39230,9 +39096,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+rY
+eJ
 eJ
 eJ
 eJ
@@ -39487,9 +39353,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+fQ
+eJ
 ab
 ab
 ab
@@ -39744,9 +39610,9 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
+eJ
+rZ
+eJ
 ab
 ab
 ab
@@ -40000,14 +39866,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rM
+rQ
+rM
+rM
+rM
+rM
+rM
 ab
 ab
 eJ
@@ -40257,14 +40123,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rX
+rO
+rO
+rO
+rO
+rO
+rO
+rX
 ab
 ab
 eJ
@@ -40514,14 +40380,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rO
+rO
+rO
+rO
+rO
+rO
+rM
 ab
 ab
 fh
@@ -40771,14 +40637,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
 ab
 ab
 fh
@@ -41028,14 +40894,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rP
+rP
+rP
+rP
+rO
+rP
+rM
 ab
 ab
 fh
@@ -41285,14 +41151,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rO
+rR
+rO
+rO
+rO
+rO
+rM
 ab
 ab
 fh
@@ -41542,14 +41408,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rX
+rO
+rS
+rV
+rO
+rO
+rO
+rX
 ab
 ab
 fh
@@ -41799,14 +41665,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rM
+rM
+rM
+rM
+rM
+rM
+rM
+rM
 ab
 ab
 fh
@@ -57024,7 +56890,7 @@ ab
 ab
 ab
 ab
-rL
+ab
 ab
 ab
 ab
@@ -60432,29 +60298,29 @@ ab
 ab
 "}
 (213,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+ad
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+ad
 ab
 ab
 ab
@@ -60689,29 +60555,29 @@ ab
 ab
 "}
 (214,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -60946,29 +60812,29 @@ ab
 ab
 "}
 (215,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sb
+sa
+sa
+sa
+sd
+sc
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61203,29 +61069,29 @@ ab
 ab
 "}
 (216,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61460,29 +61326,29 @@ ab
 ab
 "}
 (217,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sc
+sa
+sa
+sa
+sa
+sa
+sc
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61717,29 +61583,29 @@ ab
 ab
 "}
 (218,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sb
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61975,27 +61841,27 @@ ab
 "}
 (219,1,1) = {"
 ad
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
 ad
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
 ad
 ab
 ab
@@ -62232,7 +62098,7 @@ ab
 "}
 (220,1,1) = {"
 ae
-ag
+ax
 ax
 ax
 ax
@@ -64835,16 +64701,16 @@ df
 dg
 cT
 ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65092,16 +64958,16 @@ cT
 cT
 cT
 ab
-ad
-rM
-rM
-rQ
-rM
-rM
-rM
-rM
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65349,16 +65215,16 @@ cU
 ad
 ab
 ab
-ad
-rM
-rN
-rO
-rO
-rO
-rO
-rU
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65606,16 +65472,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rO
-rO
-rO
-rO
-rO
-rO
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -65863,16 +65729,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rP
-rP
-rP
-rP
-rO
-rP
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66120,16 +65986,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rP
-rP
-rP
-rP
-rO
-rP
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66377,16 +66243,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rO
-rR
-rO
-rO
-rO
-rO
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66634,16 +66500,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rN
-rS
-rV
-rO
-rO
-rU
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -66891,16 +66757,16 @@ cV
 ad
 ab
 ab
-ad
-rM
-rM
-rM
-rM
-rM
-rM
-rM
-rM
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -67148,16 +67014,16 @@ cV
 ad
 ab
 ab
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -71479,6 +71345,6 @@ ab
 ab
 ab
 ab
-ab
-ab
+rW
+rW
 "}
