@@ -474,11 +474,12 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
-
+	
 	var/in_head= istype(loc, /obj/item/weapon/organ/head)
 	if(!host && !in_head)
 		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
+
 
 	if(stat)
 		to_chat(src, "<span class='warning'>You cannot leave your host in your current state.</span>")
@@ -488,9 +489,13 @@ var/global/borer_unlock_types = typesof(/datum/unlockable/borer) - /datum/unlock
 		to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 		return
 
+	var/response = alert(src, "Are you -sure- you want to abandon your current host?\n(This will take a few seconds and cannot be halted!)","Are you sure you want to abandon host?","Yes","No")
+	if(response != "Yes")
+		return
+		
 	if(!src)
 		return
-
+	
 	to_chat(src, "<span class='info'>You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.</span>")
 
 	spawn(200)
