@@ -981,7 +981,7 @@ var/list/datum/dna/hivemind_bank = list()
 	if(!changeling)
 		return 0
 	for(var/obj/item/weapon/armblade/W in src)
-		visible_message("<span class='warning'>With a sickening crunch, (src) reforms their arm blade into an arm!</span>",
+		visible_message("<span class='warning'>With a sickening crunch, [src] reforms their arm blade into an arm!</span>",
 		"<span class='notice'>We assimilate the weapon back into our body.</span>",
 		"<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		playsound(src, 'sound/weapons/bloodyslice.ogg', 30, 1)
