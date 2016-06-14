@@ -22,17 +22,9 @@
 /turf/closed/indestructible/riveted,
 /area/space)
 "ag" = (
-/obj/structure/foamedmetal,
-/obj/structure/window/reinforced/tinted{
-	icon_state = "rwindow";
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "rwindow";
-	dir = 8
-	},
-/turf/open/floor/holofloor/plating,
-/area/holodeck/rec_center/bunker)
+/obj/effect/holodeck_effect/mobspawner/bee,
+/turf/open/floor/holofloor/asteroid,
+/area/holodeck/rec_center/anthophila)
 "ah" = (
 /obj/structure/foamedmetal,
 /obj/structure/window{
@@ -94,11 +86,7 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/offline)
 "as" = (
-/turf/open/floor/holofloor{
-	icon_state = "engine";
-	name = "Burn-Mix Floor";
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
-	},
+/turf/open/floor/holofloor/plating/burnmix,
 /area/holodeck/rec_center/burn)
 "at" = (
 /turf/open/floor/holofloor{
@@ -150,11 +138,7 @@
 /area/holodeck/rec_center/wildlife)
 "aB" = (
 /obj/effect/holodeck_effect/sparks,
-/turf/open/floor/holofloor{
-	icon_state = "engine";
-	name = "Burn-Mix Floor";
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
-	},
+/turf/open/floor/holofloor/plating/burnmix,
 /area/holodeck/rec_center/burn)
 "aC" = (
 /turf/open/floor/holofloor{
@@ -5163,7 +5147,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/ctf)
@@ -5199,7 +5182,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/ctf)
@@ -5257,10 +5239,9 @@
 /turf/open/floor/plating,
 /area/ctf)
 "qt" = (
-/turf/open/floor/plating/warnplate{
+/turf/open/floor/plating/airless/warnplate{
 	dir = 4;
-	luminosity = 2;
-	initial_gas_mix = "o2=0.01;n2=0.01;TEMP=2.7"
+	luminosity = 2
 	},
 /area/ctf)
 "qu" = (
@@ -5623,7 +5604,6 @@
 	},
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/ctf)
@@ -5817,6 +5797,21 @@
 	},
 /turf/open/floor/plasteel/delivery,
 /area/centcom/ferry)
+"sd" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sc" = (
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sb" = (
+/obj/structure/flora/bush,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sa" = (
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 
 (1,1,1) = {"
 aa
@@ -60303,29 +60298,29 @@ ab
 ab
 "}
 (213,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ad
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+ad
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+ad
 ab
 ab
 ab
@@ -60560,29 +60555,29 @@ ab
 ab
 "}
 (214,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -60817,29 +60812,29 @@ ab
 ab
 "}
 (215,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sb
+sa
+sa
+sa
+sd
+sc
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61074,29 +61069,29 @@ ab
 ab
 "}
 (216,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61331,29 +61326,29 @@ ab
 ab
 "}
 (217,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sc
+sa
+sa
+sa
+sa
+sa
+sc
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61588,29 +61583,29 @@ ab
 ab
 "}
 (218,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ae
+sa
+sa
+sa
+sa
+sa
+sb
+sa
+sa
+sa
+sa
+aV
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+cS
 ab
 ab
 ab
@@ -61846,27 +61841,27 @@ ab
 "}
 (219,1,1) = {"
 ad
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
 ad
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+ak
 ad
 ab
 ab
@@ -62103,7 +62098,7 @@ ab
 "}
 (220,1,1) = {"
 ae
-ag
+ax
 ax
 ax
 ax

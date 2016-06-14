@@ -22,7 +22,7 @@
 			// If the AI talks on binary chat, we still want to follow
 			// it's camera eye, like if it talked on the radio
 			if(istype(src, /mob/living/silicon/ai))
-				var/mob/living/silicon/ai/ai = M
+				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 			var/link = FOLLOW_LINK(M, following)
 			M << "[link] [rendered]"

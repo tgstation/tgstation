@@ -5,7 +5,10 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
+	w_class = 1
+	slot_flags = SLOT_BELT
 	origin_tech = "magnets=2;biotech=2"
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
 // Hydroponics Tools

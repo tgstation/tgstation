@@ -75,7 +75,8 @@
 	owner << "<span class='warning'>You feel nauseous!</span>"
 	owner.vomit(20)
 
-	var/mob/living/simple_animal/slime/Slime = new/mob/living/simple_animal/slime(get_turf(owner))
+	var/mob/living/simple_animal/slime/Slime
+	Slime = new(get_turf(owner), "grey")
 	Slime.Friends = list(owner)
 	Slime.Leader = owner
 
@@ -184,14 +185,9 @@
 	"<span class='userdanger'>Blood pours from your skin!</span>")
 
 	for(var/turf/T in oview(3,owner)) //Make this respect walls and such
-		T.add_blood_floor(owner)
+		owner.add_splatter_floor(T)
 	for(var/mob/living/carbon/human/H in oview(3,owner)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
-		if(H.wear_suit)
-			H.wear_suit.add_blood(owner)
-			H.update_inv_wear_suit(0)
-		else if(H.w_uniform)
-			H.w_uniform.add_blood(owner)
-			H.update_inv_w_uniform(0)
+		H.add_mob_blood(owner)
 
 /obj/item/organ/gland/bodysnatch
 	cooldown_low = 600

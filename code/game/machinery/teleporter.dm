@@ -255,13 +255,17 @@
 /obj/machinery/teleport/hub/New()
 	..()
 	link_power_station()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/teleporter_hub
+	name = "circuit board (Teleporter Hub)"
+	build_path = /obj/machinery/teleport/hub
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 3,
+							/obj/item/weapon/stock_parts/matter_bin = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/hub/initialize()
 	link_power_station()
@@ -363,15 +367,19 @@
 
 /obj/machinery/teleport/station/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
+	B.apply_default_parts(src)
 	link_console_and_hub()
+
+/obj/item/weapon/circuitboard/machine/teleporter_station
+	name = "circuit board (Teleporter Station)"
+	build_path = /obj/machinery/teleport/station
+	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/teleport/station/initialize()
 	link_console_and_hub()

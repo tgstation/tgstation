@@ -233,6 +233,7 @@
 			qdel(src)
 
 /obj/item/weapon/ore/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -259,6 +260,7 @@
 	var/value = 1
 
 /obj/item/weapon/coin/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 

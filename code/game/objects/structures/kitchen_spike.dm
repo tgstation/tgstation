@@ -40,7 +40,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!buckled_mobs.len)
+		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
@@ -57,7 +57,7 @@
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !buckled_mobs.len)
 		var/mob/living/L = user.pulling
 		if(do_mob(user, src, 120))
-			if(buckled_mobs.len) //to prevent spam/queing up attacks
+			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
@@ -65,12 +65,10 @@
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
 			L.emote("scream")
-			if(ishuman(L)) //So you don't get human blood when you spike a giant spider
-				var/turf/pos = get_turf(L)
-				pos.add_blood_floor(L)
+			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
 			L.buckled = src
-			L.dir = 2
+			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)

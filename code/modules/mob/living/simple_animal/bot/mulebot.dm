@@ -357,7 +357,7 @@ var/global/mulebot_count = 0
 
 	if(isobj(AM))
 		var/obj/O = AM
-		if(O.buckled_mobs.len || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
@@ -482,14 +482,14 @@ var/global/mulebot_count = 0
 						B.blood_DNA |= blood_DNA.Copy()
 						var/newdir = get_dir(next, loc)
 						if(newdir == dir)
-							B.dir = newdir
+							B.setDir(newdir)
 						else
 							newdir = newdir | dir
 							if(newdir == 3)
 								newdir = 1
 							else if(newdir == 12)
 								newdir = 4
-							B.dir = newdir
+							B.setDir(newdir)
 						bloodiness--
 
 
@@ -662,9 +662,8 @@ var/global/mulebot_count = 0
 	H.apply_damage(0.5*damage, BRUTE, "l_arm", run_armor_check("l_arm", "melee"))
 	H.apply_damage(0.5*damage, BRUTE, "r_arm", run_armor_check("r_arm", "melee"))
 
-	var/obj/effect/decal/cleanable/blood/B = new(loc)
-	B.add_blood_list(H)
-	add_blood_list(H)
+	var/turf/T = get_turf(src)
+	T.add_mob_blood(H)
 	bloodiness += 4
 
 // player on mulebot attempted to move

@@ -127,7 +127,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(src, doccopy)
+					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -174,25 +174,17 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-				copy.loc = usr.loc
-				usr.put_in_hands(copy)
-			else
-				copy.loc = src.loc
-			usr << "<span class='notice'>You take [copy] out of [src].</span>"
+			remove_photocopy(copy)
 			copy = null
-			updateUsrDialog()
 		else if(photocopy)
-			if(!istype(usr,/mob/living/silicon/ai)) //same with this one, wtf
-				photocopy.loc = usr.loc
-				usr.put_in_hands(photocopy)
-			else
-				photocopy.loc = src.loc
-			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
+			remove_photocopy(photocopy)
 			photocopy = null
-			updateUsrDialog()
+		else if(doccopy)
+			remove_photocopy(doccopy)
+			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+		updateUsrDialog()
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -244,6 +236,14 @@
 	user << "<span class ='notice'>You insert [O] into [src].</span>"
 	flick("photocopier1", src)
 	updateUsrDialog()
+
+/obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
+	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
+		O.loc = user.loc
+		user.put_in_hands(O)
+	else
+		O.loc = src.loc
+	user << "<span class='notice'>You take [O] out of [src].</span>"
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))

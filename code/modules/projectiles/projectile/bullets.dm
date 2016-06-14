@@ -221,3 +221,102 @@
 		weaken = 0
 		nodamage = 1
 	. = ..() // Execute the rest of the code.
+
+
+
+//// SNIPER BULLETS
+
+/obj/item/projectile/bullet/sniper
+	damage = 70
+	stun = 5
+	weaken = 5
+	armour_penetration = 50
+	var/breakthings = TRUE
+
+/obj/item/projectile/bullet/sniper/on_hit(atom/target, blocked = 0, hit_zone)
+	if((blocked != 100) && (!ismob(target) && breakthings))
+		target.ex_act(rand(1,2))
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/soporific
+	armour_penetration = 0
+	nodamage = 1
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/soporific/on_hit(atom/target, blocked = 0, hit_zone)
+	if((blocked != 100) && istype(target, /mob/living))
+		var/mob/living/L = target
+		L.Sleeping(20)
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/haemorrhage
+	armour_penetration = 15
+	damage = 15
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+/obj/item/projectile/bullet/sniper/haemorrhage/on_hit(atom/target, blocked = 0, hit_zone)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(100)
+	return ..()
+
+
+/obj/item/projectile/bullet/sniper/penetrator
+	icon_state = "gauss"
+	name = "penetrator round"
+	damage = 60
+	forcedodge = 1
+	stun = 0
+	weaken = 0
+	breakthings = FALSE
+
+
+
+//// SAW BULLETS
+
+
+/obj/item/projectile/bullet/saw
+	damage = 45
+	armour_penetration = 5
+
+/obj/item/projectile/bullet/saw/bleeding
+	damage = 20
+	armour_penetration = 0
+
+/obj/item/projectile/bullet/saw/bleeding/on_hit(atom/target, blocked = 0, hit_zone)
+	. = ..()
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(35)
+
+/obj/item/projectile/bullet/saw/hollow
+	damage = 60
+	armour_penetration = -10
+
+/obj/item/projectile/bullet/saw/ap
+	damage = 40
+	armour_penetration = 75
+
+/obj/item/projectile/bullet/saw/incen
+	damage = 7
+	armour_penetration = 0
+
+obj/item/projectile/bullet/saw/incen/Move()
+	..()
+	var/turf/location = get_turf(src)
+	if(location)
+		PoolOrNew(/obj/effect/hotspot, location)
+		location.hotspot_expose(700, 50, 1)
+
+/obj/item/projectile/bullet/saw/incen/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		M.adjust_fire_stacks(3)
+		M.IgniteMob()

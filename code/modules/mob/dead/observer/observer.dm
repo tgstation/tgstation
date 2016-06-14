@@ -109,19 +109,29 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 	..()
 
+/mob/dead/observer/narsie_act()
+	var/old_color = color
+	color = "#960000"
+	animate(src, color = old_color, time = 10)
+
+/mob/dead/observer/ratvar_act()
+	var/old_color = color
+	color = "#FAE48C"
+	animate(src, color = old_color, time = 10)
+
 /mob/dead/observer/Destroy()
 	ghost_images_full -= ghostimage
 	qdel(ghostimage)
 	ghostimage = null
-	
+
 	ghost_images_default -= ghostimage_default
 	qdel(ghostimage_default)
 	ghostimage_default = null
-	
+
 	ghost_images_simple -= ghostimage_simple
 	qdel(ghostimage_simple)
 	ghostimage_simple = null
-	
+
 	updateallghostimages()
 	return ..()
 
@@ -153,6 +163,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 	if(new_form)
 		icon_state = new_form
+		ghostimage.icon_state = new_form
 		if(icon_state in ghost_forms_with_directions_list)
 			ghostimage_default.icon_state = new_form + "_nodir" //if this icon has dirs, the default ghostimage must use its nodir version or clients with the preference set to default sprites only will see the dirs
 		else
@@ -162,7 +173,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		updatedir = 1
 	else
 		updatedir = 0	//stop updating the dir in case we want to show accessories with dirs on a ghost sprite without dirs
-		dir = 2 		//reset the dir to its default so the sprites all properly align up
+		setDir(2 		)//reset the dir to its default so the sprites all properly align up
 
 	if(ghost_accs == GHOST_ACCS_FULL && icon_state in ghost_forms_with_accessories_list) //check if this form supports accessories and if the client wants to show them
 		var/datum/sprite_accessory/S
@@ -260,7 +271,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/Move(NewLoc, direct)
 	if(updatedir)
-		dir = direct //only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
+		setDir(direct )//only update dir if we actually need it, so overlays won't spin on base sprites that don't have directions of their own
 	if(NewLoc)
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
@@ -390,7 +401,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	orbit(target,orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
-	dir = 2 //reset dir so the right directional sprites show up
+	setDir(2 )//reset dir so the right directional sprites show up
 	..()
 	//restart our floating animation after orbit is done.
 	sleep 2  //orbit sets up a 2ds animation when it finishes, so we wait for that to end
@@ -527,6 +538,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+
+	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
+
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0

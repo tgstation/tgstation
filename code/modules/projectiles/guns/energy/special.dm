@@ -84,7 +84,14 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	desc = "According to Nanotrasen accounting, this is mining equipment. \
+	It's been modified for extreme power output to crush rocks, but often \
+	serves as a miner's first defense against hostile alien life; it's not \
+	very powerful unless used in a low pressure environment.\n\
+	It uses an experimental self-charging cell powered by the user's \
+	bioelectrical field. The downside of this is that it quickly discharges \
+	when not in direct contact with a user, and multiple accelerators can \
+	interfere with each other."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
@@ -119,6 +126,10 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
+/obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg
+	holds_charge = TRUE
+	unique_frequency = TRUE
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/New()
 	. = ..()
 	if(!holds_charge)
@@ -138,9 +149,9 @@
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
-		spawn(1)
-			if(!ismob(loc))
-				empty()
+		sleep(1)
+		if(!ismob(loc))
+			empty()
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
 	power_supply.use(500)
@@ -162,9 +173,7 @@
 	else
 		carried = 1
 
-	spawn(overheat_time * carried)
-		reload()
-		overheat = FALSE
+	addtimer(src, "reload", overheat_time * carried)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
@@ -176,6 +185,7 @@
 	else
 		loc << "<span class='warning'>[src] silently charges up.<span>"
 	update_icon()
+	overheat = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
 	if(!can_shoot())
@@ -357,3 +367,14 @@
 
 /obj/item/weapon/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
+
+/obj/item/weapon/gun/energy/gravity_gun
+	name = "one-point bluespace-gravitational manipulator"
+	icon_state = "gravity_gun"
+	item_state = "gravity_gun"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
+	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
+	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
+	item_state = null
+	icon_state = "gravity_gun"
+	var/power = 4

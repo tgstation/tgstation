@@ -1164,17 +1164,9 @@
 	},
 /area/ai_monitored/security/armory)
 "acN" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/obj/item/weapon/storage/box/rubbershot,
-/turf/open/floor/plasteel/bot{
-	dir = 2
-	},
-/area/ai_monitored/security/armory)
+/obj/structure/chair/stool/bar,
+/turf/open/floor/plasteel/bar,
+/area/crew_quarters/bar)
 "acO" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera{
@@ -3453,7 +3445,6 @@
 "aht" = (
 /turf/open/floor/plasteel/whitered/corner{
 	tag = "icon-whiteredcorner (WEST)";
-	icon_state = "whiteredcorner";
 	dir = 8
 	},
 /area/security/brig)
@@ -5203,7 +5194,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 1";
 	name = "Cell 1";
-	req_access_txt = "2"
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5238,7 +5229,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 2";
 	name = "Cell 2";
-	req_access_txt = "2"
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5265,7 +5256,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 3";
 	name = "Cell 3";
-	req_access_txt = "2"
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5363,7 +5354,7 @@
 /obj/machinery/door/window/brigdoor{
 	id = "Cell 4";
 	name = "Cell 4";
-	req_access_txt = "2"
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -22539,7 +22530,7 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYI" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/start{
 	name = "Assistant"
 	},
@@ -22589,7 +22580,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYP" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYQ" = (
@@ -22622,12 +22613,12 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYT" = (
-/obj/structure/reagent_dispensers/watertank,
 /obj/machinery/camera{
 	c_tag = "Hydroponics South";
 	dir = 8;
 	network = list("SS13")
 	},
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aYU" = (
@@ -45502,7 +45493,7 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVU" = (
-/obj/structure/reagent_dispensers/watertank,
+/obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVV" = (
@@ -59408,7 +59399,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "czP" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/bar,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
@@ -60465,6 +60456,16 @@
 	},
 /turf/open/space,
 /area/space)
+"cBZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -96564,11 +96565,11 @@ aMw
 aNI
 aMw
 aOK
-aPY
-aPY
-aPY
-aPY
-aPY
+acN
+acN
+acN
+acN
+acN
 aQc
 bae
 aJC
@@ -105812,7 +105813,7 @@ aHf
 aIz
 aJM
 aLa
-aMX
+cBZ
 aFw
 aPh
 aQs

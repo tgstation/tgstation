@@ -78,7 +78,7 @@
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	new /obj/item/weapon/screwdriver(src, "red")
+	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar/red(src)

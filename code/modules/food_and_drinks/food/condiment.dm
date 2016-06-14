@@ -124,6 +124,15 @@
 	list_reagents = list("sodiumchloride" = 20)
 	possible_states = list()
 
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like \he's trying to commit suicide.</span>")
+	var/newname = "[name]"
+	name = "[user.name]"
+	user.name = newname
+	user.real_name = newname
+	desc = "Salt. From dead crew, presumably."
+	return (TOXLOSS)
+
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
 	desc = "Often used to flavor food or make people sneeze."

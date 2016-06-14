@@ -55,6 +55,9 @@
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
 
+/obj/item/weapon/nullrod/godhand/dropped(mob/user)
+	qdel(src)
+
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
@@ -208,6 +211,7 @@
 		S.real_name = name
 		S.name = name
 		S.ckey = theghost.ckey
+		S.status_flags |= GODMODE
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)

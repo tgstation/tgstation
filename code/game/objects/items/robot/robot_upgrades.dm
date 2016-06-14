@@ -49,6 +49,7 @@
 	R.speed = 0 // Remove upgrades.
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
+	R.weather_immunities = initial(R.weather_immunities)
 
 	R.status_flags |= CANPUSH
 
@@ -194,6 +195,26 @@
 
 	return 1
 
+/obj/item/borg/upgrade/hyperka
+	name = "mining cyborg hyper-kinetic accelerator"
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
+
+/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+		qdel(H)
+
+	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.rebuild()
+
+	return 1
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
@@ -211,6 +232,20 @@
 	R.SetEmagged(1)
 
 	return 1
+
+/obj/item/borg/upgrade/ashplating
+	name = "mining cyborg ash storm plating"
+	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
+	icon_state = "ash_plating"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "engineering=4;materials=4;plasmatech=4"
+
+/obj/item/borg/upgrade/ashplating/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	R.weather_immunities += "ash"
+	R.icon_state = "ashborg"
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"

@@ -12,6 +12,7 @@
 #define WIRE_TERMINAL_LAYER 2.45
 #define LOW_OBJ_LAYER 2.5
 
+#define BELOW_OPEN_DOOR_LAYER 2.6
 #define OPEN_DOOR_LAYER 2.7
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
@@ -21,6 +22,7 @@
 #define CLOSED_DOOR_LAYER 3.1
 #define CLOSED_FIREDOOR_LAYER 3.11
 #define ABOVE_OBJ_LAYER 3.2
+#define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
 #define HIGH_OBJ_LAYER 3.5
 

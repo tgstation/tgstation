@@ -502,7 +502,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.setDir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -1370,7 +1370,7 @@ proc/pick_closest_path(value)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
 
-/proc/flash_color(mob_or_client, color="#960000", time=20)
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
 	if(istype(mob_or_client, /mob))
 		var/mob/M = mob_or_client
@@ -1385,6 +1385,6 @@ proc/pick_closest_path(value)
 		return
 
 	var/old_color = C.color
-	C.color = "#960000"
+	C.color = flash_color
 	spawn(0)
-		animate(C, color = old_color, time = 20)
+		animate(C, color = old_color, time = flash_time)

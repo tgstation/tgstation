@@ -118,8 +118,11 @@
 	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
-	if(!dna || !dna.species.IgniteMob(src))
-		..()
+	//If have no DNA or can be Ignited, call parent handling to light user
+	//If firestacks are high enough
+	if(!dna || dna.species.CanIgniteMob(src))
+		return ..()
+	. = FALSE //No ignition
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
@@ -340,9 +343,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	..()
 	if(drunkenness)
 		if(sleeping)
-			drunkenness = max(drunkenness - 1.5, 0)
+			drunkenness = max(drunkenness - (drunkenness / 10), 0)
 		else
-			drunkenness = max(drunkenness - 0.2, 0)
+			drunkenness = max(drunkenness - (drunkenness / 25), 0)
 
 		if(drunkenness >= 6)
 			if(prob(25))

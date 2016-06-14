@@ -1,21 +1,31 @@
 
 /datum/reagent/blood
-			data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
-			name = "Blood"
-			id = "blood"
-			color = "#C80000" // rgb: 200, 0, 0
+	data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null)
+	name = "Blood"
+	id = "blood"
+	color = "#C80000" // rgb: 200, 0, 0
+	metabolization_rate = 5 //fast rate so it disappears fast.
 
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/datum/disease/D in data["viruses"])
 
-			if(D.spread_flags & SPECIAL || D.spread_flags & NON_CONTAGIOUS)
+			if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 				continue
 
 			if(method == TOUCH || method == VAPOR)
 				M.ContractDisease(D)
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
+
+	if(method == INJECT && iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.get_blood_id() == "blood")
+			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
+				C.reagents.add_reagent("toxin", reac_volume * 0.5)
+			else
+				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+
 
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
@@ -51,38 +61,18 @@
 		return
 	if(reac_volume < 3)
 		return
-	if(!data["donor"] || istype(data["donor"], /mob/living/carbon/human))
-		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
-		if(!blood_prop) //first blood!
-			blood_prop = new(T)
-			blood_prop.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
+	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
+	if(!B)
+		B = new(T)
+	if(data["blood_DNA"])
+		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
+	for(var/datum/disease/D in data["viruses"])
+		var/datum/disease/newVirus = D.Copy(1)
+		B.viruses += newVirus
+		newVirus.holder = B
 
-	else if(istype(data["donor"], /mob/living/carbon/monkey))
-		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
-		if(!blood_prop)
-			blood_prop = new(T)
-			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-	else if(istype(data["donor"], /mob/living/carbon/alien))
-		var/obj/effect/decal/cleanable/xenoblood/blood_prop = locate() in T
-		if(!blood_prop)
-			blood_prop = new(T)
-			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-	return
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -631,6 +621,13 @@
 	reagent_state = SOLID
 
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/iron/on_mob_life(mob/living/M)
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		if(C.blood_volume < BLOOD_VOLUME_NORMAL)
+			C.blood_volume += 0.5
+	..()
 
 /datum/reagent/iron/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(!istype(M, /mob/living))

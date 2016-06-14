@@ -1,3 +1,6 @@
+/mob/living/carbon
+	blood_volume = BLOOD_VOLUME_NORMAL
+
 /mob/living/carbon/New()
 	create_reagents(1000)
 	..()
@@ -47,9 +50,9 @@
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
-	CHECK_DNA_AND_SPECIES(src)
-
-	shock_damage *= (siemens_coeff * dna.species.siemens_coeff)
+	shock_damage *= siemens_coeff
+	if(dna && dna.species)
+		shock_damage *= dna.species.siemens_coeff
 	if(shock_damage<1 && !override)
 		return 0
 	if(reagents.has_reagent("teslium"))
@@ -93,9 +96,9 @@
 		H = hud_used.inv_slots[slot_r_hand]
 		H.update_icon()
 	/*if (!( src.hand ))
-		src.hands.dir = NORTH
+		src.hands.setDir(NORTH)
 	else
-		src.hands.dir = SOUTH*/
+		src.hands.setDir(SOUTH)*/
 	return
 
 /mob/living/carbon/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
@@ -296,16 +299,6 @@
 									"<span class='userdanger'>[usr] [internal ? "opens" : "closes"] the valve on [src]'s [ITEM].</span>")
 
 
-
-/mob/living/carbon/getTrail()
-	if(getBruteLoss() < 300)
-		if(prob(50))
-			return "ltrails_1"
-		return "ltrails_2"
-	else if(prob(50))
-		return "trails_1"
-	return "trails_2"
-
 /mob/living/carbon/fall(forced)
     loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
@@ -333,7 +326,7 @@
 				D = SOUTH
 			if(WEST)
 				D = NORTH
-		dir = D
+		setDir(D)
 		spintime -= speed
 
 /mob/living/carbon/resist_buckle()
@@ -568,7 +561,7 @@
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
-				T.add_blood_floor(src)
+				add_splatter_floor(T)
 			if(stun)
 				adjustBruteLoss(3)
 		else

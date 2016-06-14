@@ -276,7 +276,7 @@
 	if(!animation_length)
 		return
 	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
+	src.setDir(SOUTH)
 	notransform = 1
 	flick(icon_state, src)
 	sleep(animation_length+1)
@@ -624,7 +624,7 @@
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	..()
+	return ..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -827,8 +827,9 @@
 				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("janiborg")
 				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg")
+			if("minerborg","ashborg")
 				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
+				state_name = "minerborg"
 			if("peaceborg")
 				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
 			if("syndie_bloodhound")

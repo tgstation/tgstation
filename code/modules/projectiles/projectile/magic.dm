@@ -84,11 +84,11 @@
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
 		if(!stuff.anchored && stuff.loc)
-			teleammount++
-			do_teleport(stuff, stuff, 10)
-			var/datum/effect_system/smoke_spread/smoke = new
-			smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()
+			if(do_teleport(stuff, stuff, 10))
+				teleammount++
+				var/datum/effect_system/smoke_spread/smoke = new
+				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
@@ -103,13 +103,12 @@
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
-	var/atom/T = target.loc
-	if(isturf(target) && target.density)
-		CreateDoor(target)
-	else if (isturf(T) && T.density)
-		CreateDoor(T)
-	else if(istype(target, /obj/machinery/door))
+	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
+	else
+		var/turf/T = get_turf(target)
+		if(istype(T,/turf/closed) && !istype(T, /turf/closed/indestructible))
+			CreateDoor(T)
 
 /obj/item/projectile/magic/door/proc/CreateDoor(turf/T)
 	var/door_type = pick(door_types)
@@ -182,11 +181,9 @@
 					else
 						new_mob.languages |= HUMAN
 				if("slime")
-					new_mob = new /mob/living/simple_animal/slime(M.loc)
-					var/mob/living/simple_animal/slime/slimey = new_mob
-					if(prob(50))
-						slimey.is_adult = 1
-					slimey.random_colour()
+					var/mob/living/simple_animal/slime/random/slimey
+					slimey = new(get_turf(M), null, new_is_adult=prob(50))
+					new_mob = slimey
 					new_mob.languages |= HUMAN
 				if("xeno")
 					if(prob(50))

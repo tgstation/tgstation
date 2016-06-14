@@ -239,18 +239,26 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 /obj/item/weapon/circuitboard/machine
 	var/list/req_components = null
+	// Components required by the machine.
+	// Example: list(/obj/item/weapon/stock_parts/matter_bin = 5)
+	var/list/def_components = null
+	// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
+	// Example: list(/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/super)
 
 /obj/item/weapon/circuitboard/machine/proc/apply_default_parts(obj/machinery/M)
 	if(!req_components)
 		return
 
-	M.component_parts = list(src)
+	M.component_parts = list(src) // List of components always contains a board
 	loc = null
 
 	for(var/comp_path in req_components)
 		var/comp_amt = req_components[comp_path]
 		if(!comp_amt)
 			continue
+
+		if(def_components && def_components[comp_path])
+			comp_path = def_components[comp_path]
 
 		if(ispath(comp_path, /obj/item/stack))
 			M.component_parts += new comp_path(null, comp_amt)
@@ -261,49 +269,11 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	M.RefreshParts()
 
 
-/obj/item/weapon/circuitboard/machine/smes
-	name = "circuit board (SMES)"
-	build_path = /obj/machinery/power/smes
-	origin_tech = "programming=3;powerstorage=3;engineering=3"
-	req_components = list(
-							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/cell = 5,
-							/obj/item/weapon/stock_parts/capacitor = 1)
+/obj/item/weapon/circuitboard/machine/abductor
+	name = "alien board (Report This)"
+	icon_state = "abductor_mod"
+	origin_tech = "programming=5;abductor=3"
 
-/obj/item/weapon/circuitboard/machine/teleporter_hub
-	name = "circuit board (Teleporter Hub)"
-	build_path = /obj/machinery/teleport/hub
-	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 3,
-							/obj/item/weapon/stock_parts/matter_bin = 1)
-
-/obj/item/weapon/circuitboard/machine/teleporter_station
-	name = "circuit board (Teleporter Station)"
-	build_path = /obj/machinery/teleport/station
-	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
-
-/obj/item/weapon/circuitboard/machine/chem_dispenser
-	name = "circuit board (Portable Chem Dispenser)"
-	build_path = /obj/machinery/chem_dispenser/constructable
-	origin_tech = "materials=4;programming=4;plasmatech=4;biotech=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/cell = 1)
-
-/obj/item/weapon/circuitboard/machine/telesci_pad
-	name = "circuit board (Telepad)"
-	build_path = /obj/machinery/telepad
-	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
-	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+/obj/item/weapon/circuitboard/machine/clockwork
+	name = "clockwork board (Report This)"
+	icon_state = "clock_mod"

@@ -116,9 +116,8 @@ research holder datum.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
 	var/datum/tech/KT = known_tech[ID]
-	if(KT)
-		if(KT.level <= level)
-			KT.level = KT.level + 1
+	if(KT && KT.level <= level)
+		KT.level = max(KT.level + 1, level)
 
 //Checks if the origin level can raise current tech levels
 //Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
@@ -172,12 +171,12 @@ research holder datum.
 
 /datum/tech/engineering
 	name = "Engineering Research"
-	desc = "Development of new and improved engineering parts and."
+	desc = "Development of new and improved engineering parts and tools."
 	id = "engineering"
 
 /datum/tech/plasmatech
 	name = "Plasma Research"
-	desc = "Research into the mysterious substance colloqually known as 'plasma'."
+	desc = "Research into the mysterious substance colloqually known as \"plasma\"."
 	id = "plasmatech"
 	rare = 3
 
@@ -187,8 +186,8 @@ research holder datum.
 	id = "powerstorage"
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	desc = "Research into the sub-reality known as 'blue-space'"
+	name = "\"Blue-space\" Research"
+	desc = "Research into the sub-reality known as \"blue-space\"."
 	id = "bluespace"
 	rare = 2
 
@@ -218,6 +217,9 @@ research holder datum.
 	id = "syndicate"
 	rare = 4
 
+
+//Secret Technologies (hidden by default, require rare items to reveal)
+
 /datum/tech/abductor
 	name = "Alien Technologies Research"
 	desc = "The study of technologies used by the advanced alien race known as Abductors."
@@ -225,13 +227,14 @@ research holder datum.
 	rare = 5
 	level = 0
 
-/*
 /datum/tech/arcane
 	name = "Arcane Research"
-	desc = "Research into the occult and arcane field for use in practical science"
+	desc = "When sufficiently analyzed, any magic becomes indistinguishable from technology."
 	id = "arcane"
-	level = 0 //It didn't become "secret" as advertised.
+	rare = 5
+	level = 0
 
+/*
 //Branch Techs
 /datum/tech/explosives
 	name = "Explosives Research"
