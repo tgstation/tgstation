@@ -92,9 +92,6 @@ var/global/datum/controller/master/Master = new()
 		make_mining_asteroid_secrets()
 
 	// deep space ruins
-	seedRuins(3, rand(0,2), /area/space, space_ruins_templates)
-	seedRuins(4, rand(0,2), /area/space, space_ruins_templates)
-	seedRuins(6, rand(0,2), /area/space, space_ruins_templates)
 	seedRuins(7, rand(0,2), /area/space, space_ruins_templates)
 	seedRuins(8, rand(0,2), /area/space, space_ruins_templates)
 	seedRuins(9, rand(0,2), /area/space, space_ruins_templates)
