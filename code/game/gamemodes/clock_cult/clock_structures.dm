@@ -411,8 +411,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
-	desc = "A massive brass gear. You could probably remove it from the floor with a wrench."
-	clockwork_desc = "A massive brass gear. You could probably remove it from the floor with a wrench, or proselytize it into replicant alloy."
+	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
+	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards)
 
@@ -421,6 +421,10 @@
 		default_unfasten_wrench(user, I, 10)
 		return 1
 	return ..()
+
+/obj/structure/clockwork/wall_gear/exanime(mob/user)
+	..()
+	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
