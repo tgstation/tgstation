@@ -1,4 +1,4 @@
-##Corruption of Champions v1.0.1
+##Corruption of Champions v4.2.0
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
 
