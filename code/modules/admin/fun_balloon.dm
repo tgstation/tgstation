@@ -50,6 +50,15 @@
 		body.key = ghost.key
 		new /obj/effect/overlay/sparkle(null, body)
 
+/obj/effect/fun_balloon/sentience/emergency_shuttle
+	name = "shuttle sentience fun balloon"
+	var/trigger_time = 60
+
+/obj/effect/fun_balloon/sentience/emergency_shuttle/check()
+	. = FALSE
+	if(SSshuttle.emergency && (SSshuttle.emergency.timeLeft() <= trigger_time) && (SSshuttle.emergency.mode == SHUTTLE_CALL))
+		. = TRUE
+
 /obj/effect/overlay/sparkle
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
