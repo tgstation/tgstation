@@ -317,7 +317,7 @@
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
-	var/list/idle_messages = list("[src] sulkily glares around.", "[src] lazily drifts from side to side.", "[src] looks around for something to burn.", "[src] slowly turns in circles.")
+	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
@@ -352,7 +352,7 @@
 			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
-				visible_message("<span class='notice'>[pick(idle_messages)]</span>")
+				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
 			else
 				setDir(pick(cardinal))//Random rotation
 
