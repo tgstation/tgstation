@@ -210,9 +210,9 @@
 	cost = 10
 
 /datum/map_template/ruin/lavaland/colossus_arena
-	name = "Ominous Lair"
+	name = "Colossus Arena"
 	id = "colossus_arena"
-	description = "A horrible site of ancient guardians."
+	description = "The horrible lair of an ancient guardian."
 	suffix = "lavaland_surface_colossus_arena.dmm"
 	allow_duplicates = FALSE
 	cost = 0 //Try our best to get one

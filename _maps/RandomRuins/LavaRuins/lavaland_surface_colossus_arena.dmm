@@ -1,44 +1,838 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"d" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"e" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"f" = (/obj/effect/decal/cleanable/blood/gibs/limb,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"g" = (/obj/effect/mob_spawn/human/corpse/damaged,/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"h" = (/obj/effect/decal/cleanable/blood/tracks{desc = "They look like tracks left by something being dragged."; dir = 4},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"i" = (/obj/effect/decal/cleanable/blood/splatter,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"j" = (/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
-"k" = (/obj/effect/decal/cleanable/blood/gibs/core,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"l" = (/obj/structure/colossus_rune,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"m" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
-"n" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
-"o" = (/obj/effect/decal/cleanable/blood/gibs/down,/turf/open/floor/plating/asteroid/basalt,/area/ruin/powered{name = "Ominous Lair"})
-"p" = (/turf/open/chasm/straight_down/lava_land_surface,/area/ruin/powered{name = "Ominous Lair"})
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"d" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"f" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"g" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"h" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "They look like tracks left by something being dragged.";
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"i" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"j" = (
+/turf/open/floor/plating/asteroid/basalt,
+/area/lavaland/surface/outdoors)
+"k" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"l" = (
+/obj/structure/colossus_rune,
+/obj/item/weapon/paper/crumpled/bloody{
+	desc = "You feel as though this was addressed to <i>you</i>.";
+	info = "UIF BODJFOU HVBSEJBO XBUDIFT PWFS UIJT QMBDF<br>XPF UP UIF JOWBEFS UIBU TFFLT FOUSZ UP UIF OFDSPQPMJT<br>TQFBL UIF XPSET PG UIF TJHJM UP JTTVF ZPVS DIBMMFOHF<br>BOE GBMM BT BMM PUIFST IBWF GBMMFO.";
+	name = "blood-drenched scrap"
+	},
+/obj/effect/gateway{
+	layer = 2.98
+	},
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"m" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plating/asteroid/basalt,
+/area/lavaland/surface/outdoors)
+"n" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"o" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"p" = (
+/turf/open/chasm/straight_down/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"I" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/closed/wall/mineral/cult,
+/area/ruin/powered)
+"H" = (
+/obj/structure/door_assembly/door_assembly_cult/unruned,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"G" = (
+/turf/open/floor/plasteel/cult/airless{
+	icon_state = "cultdamage7"
+	},
+/area/ruin/powered)
+"F" = (
+/turf/open/floor/plasteel/cult/airless{
+	icon_state = "cultdamage5"
+	},
+/area/ruin/powered)
+"E" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"D" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/floor/plasteel/cult/airless,
+/area/lavaland/surface/outdoors)
+"C" = (
+/turf/open/floor/plasteel/cult/airless,
+/area/lavaland/surface/outdoors)
+"B" = (
+/obj/item/stack/sheet/runed_metal{
+	amount = 2
+	},
+/obj/effect/rune/wall{
+	density = 1
+	},
+/turf/open/floor/plasteel/cult/airless,
+/area/lavaland/surface/outdoors)
+"A" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"z" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "They look like tracks left by something being dragged.";
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"y" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "They look like tracks left by something being dragged.";
+	dir = 4
+	},
+/turf/open/floor/plasteel/cult/airless,
+/area/lavaland/surface/outdoors)
+"x" = (
+/turf/open/floor/plasteel/cult/airless{
+	icon_state = "cultdamage4"
+	},
+/area/ruin/powered)
+"w" = (
+/obj/effect/gateway,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"v" = (
+/obj/structure/girder/cult,
+/turf/open/floor/plasteel/cult/airless,
+/area/lavaland/surface/outdoors)
+"u" = (
+/turf/open/floor/plasteel/cult/airless{
+	icon_state = "cultdamage3"
+	},
+/area/ruin/powered)
+"t" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"s" = (
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"r" = (
+/obj/machinery/door/airlock/cult/unruned,
+/turf/open/floor/plasteel/cult/airless,
+/area/ruin/powered)
+"q" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/powered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaabbbbbbbbbaaaaaaaaa
-aacccccbbbbbbbbbbaaaaaaaa
-aaccccbbbbbbbbbbbbbbaaaaa
-aacccbbbbbdbbbbdbbbbbbaaa
-accccbbbbbbbbbbbbbbbbbbba
-acccbbbdbbbbbbdbbbbbbbbba
-acccbbbbbbbebbbbbbbbbbbba
-acccbbdbbfbbbebbbbbbdbbba
-agchhhhhhhbbebbifbbbbbbba
-accjbbbfbibbbbbbbbbbbbbba
-accjdbbbbbbbbbbfbbbbbbdba
-accjjjbibkbblbbbfbbbbbbba
-acjjjjbbbbbbbbbibbbbbbbba
-acjmjjbbfbbbbbbbbbbbbbbba
-acjjjjbbbbibnbbfbdbbbbbba
-acjjjjmjjjjjjojjjjjjjjbba
-aajjjjjjjjjjjjjjjjjjjjbba
-aajjjjjjjjmjjjjjjjjjjjdba
-aaajmjbbbbbbbbbbbbmjjjjba
-aaajjjbbbbbbbbbdbbjjjjjba
-aaaaapppppppbbbbbbbbbbbaa
-aaaaapppppppppppbbbbbaaaa
-aaaaaappppppppppppaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+c
+c
+c
+c
+g
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+j
+j
+j
+j
+j
+j
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+c
+c
+h
+j
+j
+j
+j
+m
+j
+j
+j
+j
+j
+j
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+c
+c
+c
+c
+b
+b
+b
+h
+b
+d
+j
+j
+j
+j
+j
+j
+j
+m
+j
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+c
+c
+b
+q
+q
+q
+v
+y
+B
+v
+r
+q
+q
+q
+q
+q
+q
+q
+j
+p
+p
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+c
+b
+b
+q
+s
+s
+t
+y
+C
+s
+s
+s
+s
+s
+t
+s
+s
+q
+b
+p
+p
+p
+a
+"}
+(8,1,1) = {"
+a
+b
+b
+b
+b
+q
+t
+s
+s
+z
+D
+s
+i
+s
+s
+s
+s
+G
+s
+q
+b
+p
+p
+p
+a
+"}
+(9,1,1) = {"
+a
+b
+b
+b
+b
+q
+s
+u
+s
+z
+s
+s
+w
+s
+f
+s
+s
+s
+s
+q
+b
+p
+p
+p
+a
+"}
+(10,1,1) = {"
+a
+b
+b
+b
+b
+q
+s
+s
+f
+w
+i
+s
+k
+s
+s
+w
+s
+s
+s
+q
+b
+p
+p
+p
+a
+"}
+(11,1,1) = {"
+a
+b
+b
+b
+d
+q
+s
+s
+s
+s
+E
+s
+s
+s
+E
+i
+s
+s
+t
+q
+b
+p
+p
+p
+a
+"}
+(12,1,1) = {"
+a
+b
+b
+b
+b
+q
+s
+e
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+q
+b
+p
+p
+p
+a
+"}
+(13,1,1) = {"
+a
+b
+b
+b
+b
+r
+s
+s
+w
+A
+s
+s
+l
+s
+s
+n
+w
+s
+s
+H
+b
+b
+p
+p
+a
+"}
+(14,1,1) = {"
+a
+b
+b
+b
+b
+q
+s
+s
+e
+s
+s
+s
+s
+s
+s
+s
+o
+s
+s
+q
+b
+b
+p
+p
+a
+"}
+(15,1,1) = {"
+a
+b
+b
+b
+b
+q
+t
+s
+s
+s
+E
+s
+s
+s
+E
+s
+s
+s
+s
+q
+b
+b
+p
+p
+a
+"}
+(16,1,1) = {"
+a
+b
+b
+b
+d
+q
+s
+s
+x
+w
+s
+f
+E
+i
+s
+w
+s
+s
+s
+q
+d
+b
+p
+p
+a
+"}
+(17,1,1) = {"
+a
+a
+b
+b
+b
+q
+s
+s
+s
+f
+s
+s
+w
+s
+s
+s
+s
+s
+s
+q
+b
+b
+b
+p
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+b
+b
+q
+s
+s
+s
+s
+s
+s
+s
+s
+F
+t
+s
+s
+s
+q
+b
+b
+b
+p
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+b
+b
+q
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+I
+j
+b
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+b
+b
+q
+q
+q
+q
+q
+q
+q
+r
+q
+q
+q
+q
+q
+q
+q
+j
+b
+b
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+d
+b
+b
+b
+b
+b
+b
+b
+j
+j
+j
+j
+j
+b
+b
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+j
+j
+j
+j
+j
+b
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+d
+b
+b
+b
+b
+b
+b
+d
+j
+j
+b
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}
