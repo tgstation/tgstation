@@ -83,6 +83,8 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 /mob/living/simple_animal/umbra/Life()
 	..()
 	adjust_vitae(-UMBRA_VITAE_DRAIN_RATE, TRUE, "passive drain")
+	adjustBruteLoss(-1) //Vitae slowly heals the umbra as well
+	adjustFireLoss(-1)
 	if(!vitae)
 		death()
 
@@ -177,7 +179,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		harvesting = FALSE
 		return
 	var/vitae_yield = 1 //A bit of essence even if it's a weak soul
-	var/vitae_information = "<span class='umbra'>This one's vitae is "
+	var/vitae_information = "<span class='umbra'>[L]'s vitae is "
 	if(ishuman(L))
 		vitae_information += "high-quality, "
 		vitae_yield += rand(10, 15)
@@ -185,7 +187,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		if(!(L.mind in ticker.mode.devils))
 			vitae_information += "in copious amounts, "
 		else
-			vitae_information += "seeming to come from multiple sources, "
+			vitae_information += "coming from multiple sources, "
 			for(var/i in 1 to (L.mind.devilinfo.soulsOwned.len))
 				vitae_yield += rand(5, 10) //You can drain all the souls that a devil has stolen!
 		vitae_yield += rand(10, 15)
