@@ -248,7 +248,7 @@
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W  to convert humans adjecent to it.</span>"
+		user << "<span class='sevtug_small'>It requires [mania_cost]W to run, and [convert_attempt_cost + convert_cost]W to convert humans adjecent to it.</span>"
 
 /obj/structure/clockwork/powered/mania_motor/process()
 	var/turf/T = get_turf(src)

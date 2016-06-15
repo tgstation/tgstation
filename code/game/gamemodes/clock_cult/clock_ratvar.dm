@@ -121,7 +121,7 @@
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
 	..()
 	icon_state = initial(icon_state)
-	if(is_servant_of_ratvar(user))
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/arrival_text = "IMMINENT"
 		if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
 			arrival_text = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)]"
