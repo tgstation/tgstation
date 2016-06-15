@@ -159,28 +159,21 @@
 		toggle()
 		return
 	for(var/atom/movable/M in range(5, src))
-		if(istype(M, /mob/living/simple_animal/hostile/clockwork_marauder))
-			var/mob/living/simple_animal/hostile/clockwork_marauder/E = M
+		if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
+			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
 			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
-		else if(istype(M, /mob/living/simple_animal/hostile/anima_fragment))
-			var/mob/living/simple_animal/hostile/anima_fragment/F = M
-			if(F.health == F.maxHealth || F.stat)
+		else if(istype(M, /mob/living/simple_animal/hostile/clockwork))
+			var/mob/living/simple_animal/hostile/clockwork/W = M
+			if(W.health == W.maxHealth || W.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
-			F.adjustBruteLoss(-15)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork_reclaimer))
-			var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = M
-			if(R.health == R.maxHealth || R.stat)
-				continue
-			if(!try_use_power(mob_cost))
-				break
-			R.adjustBruteLoss(-15)
+			W.adjustBruteLoss(-15)
 		else if(istype(M, /obj/structure/clockwork))
 			var/obj/structure/clockwork/C = M
 			if(C.health == C.max_health)
