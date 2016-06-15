@@ -31,14 +31,13 @@
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")
-			update_icon()
 		active = TRUE
 	else
 		if(active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] closes its eyes.</span>")
-			update_icon()
 		active = FALSE
+	update_icon()
 
 
 /obj/machinery/power/emitter/energycannon/magical/attack_hand(mob/user)
@@ -77,6 +76,12 @@
 			our_statue = M
 			break
 
+	if(!our_statue)
+		name = "inert [name]"
+		return
+	else
+		name = initial(name)
+
 	var/turf/T = get_turf(src)
 	var/list/found = list()
 	for(var/mob/living/carbon/C in T)
@@ -90,7 +95,8 @@
 		L.visible_message("<span class='revennotice'>A strange purple glow \
 			wraps itself around [L] as they suddenly fall unconcious.</span>",
 			"<span class='revendanger'>[desc]</span>")
-
+		// Don't let them sit suround unconscious forever
+		addtimer(src, "sleeper_dreams", 100, unique=FALSE, L)
 
 	// Existing sleepers
 	for(var/i in found)
@@ -103,6 +109,7 @@
 		L.color = initial(L.color)
 		L.visible_message("<span class='revennotice'>The glow from [L] fades \
 			away.</span>")
+		L.grab_ghost()
 
 	sleepers = found
 
@@ -113,6 +120,13 @@
 			never_spoken = FALSE
 	else
 		our_statue.active_tables -= src
+
+/obj/structure/table/abductor/wabbajack/proc/sleeper_dreams(mob/living/sleeper)
+	if(sleeper in sleepers)
+		sleeper << "<span class='revennotice'>While you slumber, you have \
+			the strangest dream, like you can see yourself from the outside.\
+			</span>"
+		sleeper.ghostize(TRUE)
 
 /obj/structure/table/abductor/wabbajack/left
 	desc = "You sleep so it may wake."

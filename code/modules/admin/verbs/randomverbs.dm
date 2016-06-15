@@ -1053,15 +1053,12 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	for(var/mob/living/M in mobs)
 		CHECK_TICK
 
-		if(!M || !M.name || !M.real_name)
+		if(!M)
 			continue
 
 		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
 		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
 
-		var/mob/living/new_mob = wabbajack(M)
-		new_mob.name = name
-		new_mob.real_name = real_name
-
+		wabbajack(M)
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")

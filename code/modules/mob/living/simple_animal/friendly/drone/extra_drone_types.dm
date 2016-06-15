@@ -5,6 +5,7 @@
 //Drones with custom shells
 //Drones with overriden procs
 //Drones with camogear for hat related memes
+//Drone type for use with polymorph (no preloaded items, random appearance)
 
 
 //More types of drones
@@ -69,3 +70,20 @@
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	drone_type = /mob/living/simple_animal/drone/snowflake
 
+/mob/living/simple_animal/drone/polymorphed
+	default_storage = null
+	default_hatmask = null
+	picked = TRUE
+
+/mob/living/simple_animal/drone/polymorphed/New()
+	. = ..()
+	liberate()
+	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
+	if(visualAppearence == MAINTDRONE)
+		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
+		icon_state = "[visualAppearence]_[colour]"
+	else
+		icon_state = visualAppearence
+
+	icon_living = icon_state
+	icon_dead = "[visualAppearence]_dead"
