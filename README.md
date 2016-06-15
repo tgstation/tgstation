@@ -1,4 +1,4 @@
-##/tg/station v1.0.1
+##Corruption of Champions v1.0.1
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
 
