@@ -162,7 +162,7 @@
 	A.say("TORNADO SWEEP!")
 	spawn(0)
 		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			A.dir = i
+			A.setDir(i)
 			playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
 			sleep(1)
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)

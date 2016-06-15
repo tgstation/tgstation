@@ -13,6 +13,7 @@
 	potency = 50
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	icon_dead = "towercap-dead"
 	plant_type = PLANT_MUSHROOM
 	mutatelist = list(/obj/item/seeds/tower/steel)

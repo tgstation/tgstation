@@ -11,6 +11,7 @@
 	yield = 5
 	oneharvest = 1
 	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
 	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
@@ -65,6 +66,7 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
@@ -89,6 +91,7 @@
 	endurance = 50
 	yield = 6
 	oneharvest = 1
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 

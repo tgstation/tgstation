@@ -1,5 +1,6 @@
 /mob/living/simple_animal/hostile/anima_fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
+	unique_name = 1
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
 	faction = list("ratvar")
 	icon = 'icons/mob/clockwork_mobs.dmi'
@@ -15,6 +16,8 @@
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment, /obj/item/device/mmi/posibrain/soul_vessel)
+	weather_immunities = list("lava")
+	flying = 1
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
@@ -75,6 +78,8 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	environment_smash = 1
 	unique_name = 1
+	weather_immunities = list("lava")
+	flying = 1
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
 	var/fatigue = 0 //Essentially what determines the marauder's power
@@ -95,6 +100,9 @@
 /mob/living/simple_animal/hostile/clockwork_marauder/Life()
 	..()
 	if(is_in_host())
+		if(!ratvar_awakens && host.stat == DEAD)
+			death()
+			return
 		adjust_fatigue(-2)
 		if(!fatigue && recovering)
 			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
@@ -105,6 +113,9 @@
 			update_fatigue()
 		else
 			if(host)
+				if(host.stat == DEAD)
+					death()
+					return
 				switch(get_dist(get_turf(src), get_turf(host)))
 					if(2 to 4)
 						adjust_fatigue(1)
@@ -117,6 +128,9 @@
 						adjust_fatigue(-1)
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/update_fatigue()
+	if(!ratvar_awakens && host && host.stat == DEAD)
+		death()
+		return
 	if(ratvar_awakens)
 		speed = -1
 		melee_damage_lower = 30
@@ -153,11 +167,11 @@
 					recovering = TRUE
 					return_to_host()
 				else
-					qdel(src) //Shouldn't ever happen, but...
+					death() //Shouldn't ever happen, but...
 
 /mob/living/simple_animal/hostile/clockwork_marauder/death(gibbed)
 	..(TRUE)
-	emerge_from_host()
+	emerge_from_host(0, 1)
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
 	playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 100, 1)
@@ -208,7 +222,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
-	if(!ratvar_awakens || amount > 0)
+	if(!ratvar_awakens || amount < 0)
 		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 		update_fatigue()
 	else
@@ -306,14 +320,15 @@
 		return 0
 	var/resulthealth
 	resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
-	if(resulthealth > 60) //if above 20 health, fails
+	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
 		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
+		return
 	return emerge_from_host(0)
 
-/mob/living/simple_animal/hostile/clockwork_marauder/proc/emerge_from_host(hostchosen) //Notice that this is a proc rather than a verb - marauders can NOT exit at will, but they CAN return
+/mob/living/simple_animal/hostile/clockwork_marauder/proc/emerge_from_host(hostchosen, force) //Notice that this is a proc rather than a verb - marauders can NOT exit at will, but they CAN return
 	if(!is_in_host())
 		return 0
-	if(recovering)
+	if(!force && recovering)
 		if(hostchosen)
 			host << "<span class='heavy_brass'>[true_name] is too weak to come forth!</span>"
 		else
@@ -325,7 +340,7 @@
 	else
 		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
 	forceMove(get_turf(host))
-	visible_message("<span class='warning'>[host]'s skin glows red as a [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
+	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork_marauder/proc/is_in_host() //Checks if the marauder is inside of their host
@@ -369,12 +384,7 @@
 	if(ishuman(loc))
 		var/mob/living/carbon/human/L = loc
 		if(L.stat || !L.client)
-			loc = get_turf(L)
-			visible_message("<span class='warning'>[src] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
-			status_flags -= GODMODE
-			remove_servant_of_ratvar(L)
-			L.unEquip(L.head)
-			qdel(L.head)
+			disengage()
 
 /mob/living/simple_animal/hostile/clockwork_reclaimer/death()
 	..(1)
@@ -396,13 +406,13 @@
 	visible_message("<span class='warning'>[src] rockets with blinding speed towards [H]!</span>", "<span class='heavy_brass'>You leap with blinding speed towards [H]'s head!</span>")
 	for(var/i = 9, i > 0, i -= 3)
 		pixel_y += i
-		sleep(2)
+		sleep(1)
 	icon_state = "[initial(icon_state)]_charging"
 	while(loc != H.loc)
 		if(!H)
 			icon_state = initial(icon_state)
 			return 0
-		sleep(3)
+		sleep(1)
 		forceMove(get_step(src, get_dir(src, H)))
 	if(H.head)
 		H.visible_message("<span class='warning'>[src] tears apart [H]'s [H.name]!</span>")
@@ -420,6 +430,23 @@
 	if(!H.mind)
 		mind.transfer_to(H)
 	return 1
+
+/mob/living/simple_animal/hostile/clockwork_reclaimer/verb/disengage()
+	set name = "Disgengage From Host"
+	set desc = "Jumps off of your host if you have one, freeing their mind but allowing you movement."
+	set category = "Clockwork"
+
+	if(!ishuman(usr.loc))
+		usr << "<span class='warning'>You have no host! Alt-click on a non-servant to enslave them.</span>"
+		return
+	var/mob/living/carbon/human/L = usr.loc
+	usr.loc = get_turf(L)
+	pixel_y = initial(pixel_y)
+	usr.visible_message("<span class='warning'>[usr] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
+	usr.status_flags -= GODMODE
+	remove_servant_of_ratvar(L)
+	L.unEquip(L.head)
+	qdel(L.head)
 
 
 

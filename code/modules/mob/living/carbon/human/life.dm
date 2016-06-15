@@ -118,8 +118,11 @@
 	return thermal_protection
 
 /mob/living/carbon/human/IgniteMob()
-	if(!dna || !dna.species.IgniteMob(src))
-		..()
+	//If have no DNA or can be Ignited, call parent handling to light user
+	//If firestacks are high enough
+	if(!dna || dna.species.CanIgniteMob(src))
+		return ..()
+	. = FALSE //No ignition
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))

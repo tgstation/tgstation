@@ -27,7 +27,7 @@
 	else
 		in_use = 1
 		icon_state = "fitnesslifter2"
-		user.dir = SOUTH
+		user.setDir(SOUTH)
 		user.Stun(4)
 		user.loc = src.loc
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
@@ -65,7 +65,7 @@
 	else
 		in_use = 1
 		icon_state = "fitnessweight-c"
-		user.dir = SOUTH
+		user.setDir(SOUTH)
 		user.Stun(4)
 		user.loc = src.loc
 		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")

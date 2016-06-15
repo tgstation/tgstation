@@ -228,7 +228,7 @@
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.dir = user.dir
+		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
@@ -634,6 +634,10 @@
 		return
 
 	if(target in view(user.client.view, get_turf(user)))
+		var/turf/T = get_turf(target)
+		message_admins("[key_name_admin(user)] fired the lava staff at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[get_area(target)] ([T.x], [T.y], [T.z])</a>).")
+		log_game("[key_name(user)] fired the lava staff at [get_area(target)] ([T.x], [T.y], [T.z]).")
+
 		var/turf/open/O = target
 		user.visible_message("<span class='danger'>[user] turns \the [O] into lava!</span>")
 		O.ChangeTurf(turf_type)

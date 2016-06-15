@@ -5,6 +5,10 @@
 #define RANDOM_RUNE "Random Rune"
 #define RANDOM_ANY "Random Anything"
 
+#define PAINT_NORMAL	1
+#define PAINT_LARGE_HORIZONTAL	2
+#define PAINT_LARGE_HORIZONTAL_ICON	'icons/effects/96x32.dmi'
+
 /*
  * Crayons
  */
@@ -34,8 +38,11 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
+	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
 	var/list/all_drawables
+
+	var/paint_mode = PAINT_NORMAL
 
 	var/charges = 30 //-1 or less for unlimited uses
 	var/charges_left
@@ -76,7 +83,7 @@
 			graffiti |= "antilizard"
 			graffiti |= "prolizard"
 
-	all_drawables = graffiti + letters + numerals + oriented + runes
+	all_drawables = graffiti + letters + numerals + oriented + runes + graffiti_large_h
 	drawtype = pick(all_drawables)
 
 	refill()
@@ -108,6 +115,10 @@
 
 /obj/item/toy/crayon/proc/use_charges(amount)
 	// Returns number of charges actually used
+	switch(paint_mode)
+		if(PAINT_LARGE_HORIZONTAL)
+			amount *= 3
+
 	if(charges == -1)
 		. = amount
 		refill()
@@ -158,6 +169,11 @@
 	for(var/g in graffiti)
 		g_items += list(list("item" = g))
 
+	var/list/glh_items = list()
+	D += list(list("name" = "Graffiti Large Horizontal", "items" = glh_items))
+	for(var/glh in graffiti_large_h)
+		glh_items += list(list("item" = glh))
+
 	var/list/L_items = list()
 	D += list(list("name" = "Letters", "items" = L_items))
 	for(var/L in letters)
@@ -206,6 +222,11 @@
 			if(stencil in all_drawables + randoms)
 				drawtype = stencil
 				. = TRUE
+			if(stencil in graffiti_large_h)
+				paint_mode = PAINT_LARGE_HORIZONTAL
+				text_buffer = ""
+			else
+				paint_mode = PAINT_NORMAL
 		if("select_colour")
 			if(can_change_colour)
 				paint_color = input(usr,"Choose Color") as color
@@ -215,6 +236,8 @@
 				"Scribbles",default = text_buffer)
 			text_buffer = crayon_text_strip(txt)
 			. = TRUE
+			paint_mode = PAINT_NORMAL
+			drawtype = "a"
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
@@ -300,7 +323,6 @@
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
-		text_buffer = copytext(text_buffer,2)
 
 	if(actually_paints)
 		if(gang_mode)
@@ -309,11 +331,22 @@
 				return
 			tag_for_gang(user, target)
 		else
-			new /obj/effect/decal/cleanable/crayon(target, paint_color,
-				drawing, temp, graf_rot)
+			switch(paint_mode)
+				if(PAINT_NORMAL)
+					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+				if(PAINT_LARGE_HORIZONTAL)
+					if(is_type_in_list(locate(target.x-1,target.y,target.z), validSurfaces)\
+					   && is_type_in_list(locate(target.x+1,target.y,target.z), validSurfaces))
+						new /obj/effect/decal/cleanable/crayon(locate(target.x-1,target.y,target.z), paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					else
+						user << "<span class='warning'>There isn't enough space to paint!</span>"
+						return
 
 	user << "<span class='notice'>You finish \
 		[instant ? "spraying" : "drawing"] \the [temp].</span>"
+
+	if(length(text_buffer))
+		text_buffer = copytext(text_buffer,2)
 
 	if(post_noise)
 		audible_message("<span class='notice'>You hear spraying.</span>")

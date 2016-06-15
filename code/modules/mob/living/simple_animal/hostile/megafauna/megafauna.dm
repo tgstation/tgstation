@@ -43,3 +43,22 @@
 		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
 		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
 		([newloc.x],[newloc.y],[newloc.z])")
+
+/mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
+	if(L.stat == DEAD)
+		src.visible_message(
+			"<span class='danger'>[src] devours [L]!</span>",
+			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+		adjustBruteLoss(-L.maxHealth/2)
+		L.gib()
+
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+	switch (severity)
+		if (1)
+			adjustBruteLoss(250)
+
+		if (2)
+			adjustBruteLoss(100)
+
+		if(3)
+			adjustBruteLoss(50)
