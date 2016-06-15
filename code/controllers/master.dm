@@ -430,12 +430,20 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			lobby_SS -= list(SS)
 			world.log << "MC: SoftReset: Found bad entry in subsystem list, '[SS]'"
 			continue
+		if (SS.queue_next && !istype(SS.queue_next))
+			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_next = '[SS.queue_next]'"
 		SS.queue_next = null
+		if (SS.queue_prev && !istype(SS.queue_prev))
+			world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_prev = '[SS.queue_prev]'"
 		SS.queue_prev = null
 		SS.queued_priority = 0
 		SS.queued_time = 0
 		SS.paused = 0
+	if (queue_head && !istype(queue_head))
+		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_head = '[queue_head]'"
 	queue_head = null
+	if (queue_tail && !istype(queue_tail))
+		world.log << "MC: SoftReset: Found bad data in subsystem queue, queue_tail = '[queue_tail]'"
 	queue_tail = null
 	queue_priority_count = 0
 	queue_priority_count_bg = 0
