@@ -858,7 +858,7 @@
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		myseed.harvest()
+		myseed.harvest(user)
 	else if(dead)
 		dead = 0
 		user << "<span class='notice'>You remove the dead plant from [src].</span>"
