@@ -1076,13 +1076,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/invoke_inathneq //Invoke Inath-Neq, the Resonant Cogwheel: Grants a huge health boost to nearby servants that rapidly decreases to original levels.
 	descname = "Area Invuln"
 	name = "Invoke Inath-Neq, the Resonant Cogwheel"
-	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant a massive maximum and current health boost to all nearby servants that \
-	quickly returns itself to normal over the course of ten seconds."
+	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
 	invocations = list("V pnyy hcba lbh, Inath-Neq!!", "Yrg gur Erfbanag Pbtf ghea bapr zber!!", "Tenag zr naq zl nyyvrf gur fgeratgu gb inadhvfu bhe sbrf!!")
 	channel_time = 150
 	required_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	consumed_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
-	usage_tip = "Also provides stun immunity during its duration."
+	usage_tip = "Those affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
@@ -1103,19 +1102,17 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			continue
 		L << "<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Yrg tybel thvqr lbhe oybjf!\"</span>\n\
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
-		L.maxHealth += 500
-		L.health += 500
 		L.color = "#1E8CE1"
+		L.fully_heal()
 		L.stun_absorption = TRUE
-		animate(invoker, color = initial(invoker.color), time = 100)
+		L.status_flags |= GODMODE
+		animate(invoker, color = initial(invoker.color), time = 150, easing = EASE_IN)
 		affected_servants += L
-	for(var/i in 1 to 10)
-		sleep(10)
-		for(var/mob/living/L in affected_servants)
-			L.maxHealth -= 50
-			L.health -= 50
-			if(L.maxHealth == initial(L.maxHealth))
-				L.stun_absorption = FALSE
+	sleep(150)
+	for(var/mob/living/L in affected_servants)
+		L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
+		L.status_flags &= ~GODMODE
+		L.stun_absorption = FALSE
 	return 1
 
 
