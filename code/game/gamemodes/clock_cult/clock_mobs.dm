@@ -15,6 +15,11 @@
 	..()
 	internalslab = new/obj/item/clockwork/slab/internal(src)
 
+/mob/living/simple_animal/hostile/clockwork/Destroy()
+	qdel(internalslab)
+	internalslab = null
+	return ..()
+
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
