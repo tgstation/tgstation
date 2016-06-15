@@ -96,7 +96,7 @@
 			if(25 to 0)
 				other_message = "It's falling apart"
 				heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork  ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
