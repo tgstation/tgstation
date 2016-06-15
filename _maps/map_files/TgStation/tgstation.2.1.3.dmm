@@ -60456,6 +60456,47 @@
 	},
 /turf/open/space,
 /area/space)
+"cCd" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
+"cCc" = (
+/obj/machinery/atmospherics/components/unary/nitrogen_generator{
+	tag = "icon-o2gen_map (EAST)";
+	icon_state = "o2gen_map";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
+"cCb" = (
+/obj/machinery/atmospherics/components/unary/oxygen_generator{
+	tag = "icon-o2gen_map (WEST)";
+	icon_state = "o2gen_map";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
+"cCa" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
+"cBZ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
 
 (1,1,1) = {"
 aaa
@@ -91971,7 +92012,7 @@ bOV
 bQj
 bRw
 bSF
-bOd
+cCc
 bTP
 bRA
 bWQ
@@ -92228,7 +92269,7 @@ bOV
 bQo
 bRz
 bSH
-bOd
+cCd
 bTP
 bRA
 bWQ
@@ -92485,7 +92526,7 @@ bOV
 bQj
 bRy
 bSG
-bOd
+bRA
 bUK
 bVT
 bWR
@@ -92741,8 +92782,8 @@ bIG
 bJB
 bKV
 bRB
-bSI
-bSI
+cBZ
+bVV
 bUM
 bVV
 bWS
@@ -92998,7 +93039,7 @@ bIF
 bOZ
 bQp
 bRA
-bOd
+cCa
 bTO
 bUL
 bVU
@@ -93255,7 +93296,7 @@ bIH
 bJF
 bQr
 bRA
-bOd
+cCb
 bTP
 bOd
 bVX

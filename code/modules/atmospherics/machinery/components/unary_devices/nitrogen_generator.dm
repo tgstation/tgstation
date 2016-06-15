@@ -1,23 +1,23 @@
-/obj/machinery/atmospherics/components/unary/oxygen_generator
+/obj/machinery/atmospherics/components/unary/nitrogen_generator
 
 	icon_state = "o2gen_map"
 
-	name = "oxygen generator"
-	desc = "Generates oxygen"
+	name = "nitrogen generator"
+	desc = "Generates nitrogen"
 
 	dir = SOUTH
 	initialize_directions = SOUTH
 
 	var/on = 0
 
-	var/oxygen_content = 10
+	var/nitrogen_content = 10
 
 /obj/machinery/atmospherics/components/unary/nitrogen_generator/attack_hand(mob/user as mob)
 	on = !on
 	user << "you turn on the" + name
 	return
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
+/obj/machinery/atmospherics/components/unary/nitrogen_generator/update_icon_nopipes()
 
 	overlays.Cut()
 	if(showpipe)
@@ -30,13 +30,13 @@
 	else
 		icon_state = "o2gen_on"
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
+/obj/machinery/atmospherics/components/unary/nitrogen_generator/New()
 	..()
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 50
 	AIR1 = air_contents
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
+/obj/machinery/atmospherics/components/unary/nitrogen_generator/process_atmos()
 	..()
 	if(!on)
 		return 0
@@ -45,14 +45,14 @@
 
 	var/total_moles = air_contents.total_moles()
 
-	if(total_moles < oxygen_content)
+	if(total_moles < nitrogen_content)
 		var/current_heat_capacity = air_contents.heat_capacity()
 
-		var/added_oxygen = oxygen_content - total_moles
+		var/added_nitrogen = nitrogen_content - total_moles
 
-		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_oxygen*T0C)/(current_heat_capacity+20*added_oxygen)
-		air_contents.assert_gas("o2")
-		air_contents.gases["o2"][MOLES] += added_oxygen
+		air_contents.temperature = (current_heat_capacity*air_contents.temperature + 20*added_nitrogen*T0C)/(current_heat_capacity+20*added_nitrogen)
+		air_contents.assert_gas("n2")
+		air_contents.gases["n2"][MOLES] += added_nitrogen
 
 		update_parents()
 
