@@ -68,7 +68,7 @@
 	. = ..()
 
 	access_card = new /obj/item/weapon/card/id(src)
-	var/datum/job/captain/C = new /datum/job/captain
+	var/datum/job/co/C = new /datum/job/co
 	access_card.access = C.get_access()
 
 	if(default_storage)

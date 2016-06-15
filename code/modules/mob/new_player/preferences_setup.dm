@@ -23,35 +23,43 @@
 
 /datum/preferences/proc/update_preview_icon()
 	// Silicons only need a very basic preview since there is no customization for them.
-	if(job_engsec_high)
-		switch(job_engsec_high)
+/*(
+	if(job_eng_high)
+		switch(job_eng_high)
 			if(AI)
 				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
+
 			if(CYBORG)
 				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
-
+*/
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = new()
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
-	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
+	var/highRankFlag = job_civ_high | job_med_high | job_eng_high | job_ops_high | job_sci_high | job_sec_high
 
-	if(job_civilian_low & ASSISTANT)
-		previewJob = SSjob.GetJob("Assistant")
+	if(job_civ_low & DUTYOFFICER)
+		previewJob = SSjob.GetJob("Duty Officer")
 	else if(highRankFlag)
 		var/highDeptFlag
-		if(job_civilian_high)
-			highDeptFlag = CIVILIAN
-		else if(job_medsci_high)
-			highDeptFlag = MEDSCI
-		else if(job_engsec_high)
-			highDeptFlag = ENGSEC
+		if(job_civ_high)
+			highDeptFlag = CIVJOBS
+		else if(job_med_high)
+			highDeptFlag = MEDJOBS
+		else if(job_eng_high)
+			highDeptFlag = ENGJOBS
+		else if(job_sci_high)
+			highDeptFlag = SCIJOBS
+		else if(job_sec_high)
+			highDeptFlag = SECJOBS
+		else if(job_ops_high)
+			highDeptFlag = OPSJOBS
 
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.flag == highRankFlag && job.department_flag == highDeptFlag)

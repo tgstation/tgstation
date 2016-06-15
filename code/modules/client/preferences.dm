@@ -59,24 +59,36 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "antennae" = "None", "crests" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
 	var/icon/preview_icon = null
 
 		//Jobs, uses bitflags
-	var/job_civilian_high = 0
-	var/job_civilian_med = 0
-	var/job_civilian_low = 0
+	var/job_sec_high = 0
+	var/job_sec_med = 0
+	var/job_sec_low = 0
 
-	var/job_medsci_high = 0
-	var/job_medsci_med = 0
-	var/job_medsci_low = 0
+	var/job_med_high = 0
+	var/job_med_med = 0
+	var/job_med_low = 0
 
-	var/job_engsec_high = 0
-	var/job_engsec_med = 0
-	var/job_engsec_low = 0
+	var/job_sci_high = 0
+	var/job_sci_med = 0
+	var/job_sci_low = 0
+
+	var/job_eng_high = 0
+	var/job_eng_med = 0
+	var/job_eng_low = 0
+
+	var/job_ops_high = 0
+	var/job_ops_med = 0
+	var/job_ops_low = 0
+
+	var/job_civ_high = 0
+	var/job_civ_med = 0
+	var/job_civ_low = 0
 
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 //defaults to 1 for fewer assistants
@@ -209,118 +221,90 @@ var/list/preferences_datums = list()
 			if(HAIR in pref_species.specflags)
 
 				dat += "<td valign='top' width='21%'>"
-
 				dat += "<h3>Hair Style</h3>"
-
 				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
 				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
-
-
 				dat += "</td><td valign='top' width='21%'>"
 
 				dat += "<h3>Facial Hair Style</h3>"
-
 				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
 				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
-
 				dat += "</td>"
 
 			if(EYECOLOR in pref_species.specflags)
-
 				dat += "<td valign='top' width='21%'>"
-
 				dat += "<h3>Eye Color</h3>"
-
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-
 				dat += "</td>"
 
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
-
 				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
-
 					dat += "<td valign='top' width='21%'>"
-
 					dat += "<h3>Alien/Mutant Color</h3>"
-
 					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-
 					dat += "</td>"
 
 				if("tail_lizard" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Tail</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("snout" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Snout</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("horns" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Horns</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("frills" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Frills</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("spines" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Spines</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("body_markings" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Body Markings</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
+					dat += "</td>"
 
+				if("antennae" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+					dat += "<h3>Antennae</h3>"
+					dat += "<a href='?_src_=prefs;preference=antennae;task=input'>[features["antennae"]]</a><BR>"
+					dat += "</td>"
+
+				if("crests" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+					dat += "<h3>Bone/Head Crests</h3>"
+					dat += "<a href='?_src_=prefs;preference=crests;task=input'>[features["crests"]]</a><BR>"
 					dat += "</td>"
 
 			if(config.mutant_humans)
-
 				if("tail_human" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Tail</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
-
 					dat += "</td>"
 
 				if("ears" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
-
 					dat += "<h3>Ears</h3>"
-
 					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-
 					dat += "</td>"
 
 			dat += "</tr></table>"
@@ -482,7 +466,7 @@ var/list/preferences_datums = list()
 			var/available_in_days = job.available_in_days(user.client)
 			HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
 			continue
-		if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
+		if((job_civ_low & DUTYOFFICER) && (rank != "Duty Officer") && !jobban_isbanned(user, "Duty Officer"))
 			HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue
 		if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
@@ -528,7 +512,7 @@ var/list/preferences_datums = list()
 		HTML += "<a class='white' href='?_src_=prefs;preference=job;task=setJobLevel;level=[prefUpperLevel];text=[rank]' oncontextmenu='javascript:return setJobPrefRedirect([prefLowerLevel], \"[rank]\");'>"
 
 		if(rank == "Assistant")//Assistant is special
-			if(job_civilian_low & ASSISTANT)
+			if(job_civ_low & DUTYOFFICER)
 				HTML += "<font color=green>Yes</font>"
 			else
 				HTML += "<font color=red>No</font>"
@@ -562,54 +546,96 @@ var/list/preferences_datums = list()
 
 	if (level == 1) // to high
 		// remove any other job(s) set to high
-		job_civilian_med |= job_civilian_high
-		job_engsec_med |= job_engsec_high
-		job_medsci_med |= job_medsci_high
-		job_civilian_high = 0
-		job_engsec_high = 0
-		job_medsci_high = 0
+		job_civ_med |= job_civ_high
+		job_eng_med |= job_eng_high
+		job_med_med |= job_med_high
+		job_sci_med |= job_sci_high
+		job_ops_med |= job_ops_high
+		job_sec_med |= job_sec_high
 
-	if (job.department_flag == CIVILIAN)
-		job_civilian_low &= ~job.flag
-		job_civilian_med &= ~job.flag
-		job_civilian_high &= ~job.flag
+		job_civ_high = 0
+		job_eng_high = 0
+		job_sci_high = 0
+		job_med_high = 0
+		job_ops_high = 0
+		job_sec_high = 0
+
+	if (job.department_flag == CIVJOBS)
+		job_civ_low &= ~job.flag
+		job_civ_med &= ~job.flag
+		job_civ_high &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_civilian_high |= job.flag
+				job_civ_high |= job.flag
 			if (2)
-				job_civilian_med |= job.flag
+				job_civ_med |= job.flag
 			if (3)
-				job_civilian_low |= job.flag
+				job_civ_low |= job.flag
 
 		return 1
-	else if (job.department_flag == ENGSEC)
-		job_engsec_low &= ~job.flag
-		job_engsec_med &= ~job.flag
-		job_engsec_high &= ~job.flag
+	else if (job.department_flag == ENGJOBS)
+		job_eng_low &= ~job.flag
+		job_eng_med &= ~job.flag
+		job_eng_high &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_engsec_high |= job.flag
+				job_eng_high |= job.flag
 			if (2)
-				job_engsec_med |= job.flag
+				job_eng_med |= job.flag
 			if (3)
-				job_engsec_low |= job.flag
+				job_eng_low |= job.flag
 
 		return 1
-	else if (job.department_flag == MEDSCI)
-		job_medsci_low &= ~job.flag
-		job_medsci_med &= ~job.flag
-		job_medsci_high &= ~job.flag
+	else if (job.department_flag == MEDJOBS)
+		job_sci_low &= ~job.flag
+		job_sci_med &= ~job.flag
+		job_sci_high &= ~job.flag
 
 		switch(level)
 			if (1)
-				job_medsci_high |= job.flag
+				job_med_high |= job.flag
 			if (2)
-				job_medsci_med |= job.flag
+				job_med_med |= job.flag
 			if (3)
-				job_medsci_low |= job.flag
+				job_med_low |= job.flag
+	else if (job.department_flag == SCIJOBS)
+		job_sci_low &= ~job.flag
+		job_sci_med &= ~job.flag
+		job_sci_high &= ~job.flag
 
+		switch(level)
+			if (1)
+				job_sci_high |= job.flag
+			if (2)
+				job_sci_med |= job.flag
+			if (3)
+				job_sci_low |= job.flag
+	else if (job.department_flag == SECJOBS)
+		job_sec_low &= ~job.flag
+		job_sec_med &= ~job.flag
+		job_sec_high &= ~job.flag
+
+		switch(level)
+			if (1)
+				job_sec_high |= job.flag
+			if (2)
+				job_sec_med |= job.flag
+			if (3)
+				job_sec_low |= job.flag
+	else if (job.department_flag == OPSJOBS)
+		job_ops_low &= ~job.flag
+		job_ops_med &= ~job.flag
+		job_ops_high &= ~job.flag
+
+		switch(level)
+			if (1)
+				job_ops_high |= job.flag
+			if (2)
+				job_ops_med |= job.flag
+			if (3)
+				job_ops_low |= job.flag
 		return 1
 
 	return 0
@@ -630,10 +656,10 @@ var/list/preferences_datums = list()
 		return
 
 	if(role == "Assistant")
-		if(job_civilian_low & job.flag)
-			job_civilian_low &= ~job.flag
+		if(job_civ_low & job.flag)
+			job_civ_low &= ~job.flag
 		else
-			job_civilian_low |= job.flag
+			job_civ_low |= job.flag
 		SetChoices(user)
 		return 1
 
@@ -645,47 +671,82 @@ var/list/preferences_datums = list()
 
 /datum/preferences/proc/ResetJobs()
 
-	job_civilian_high = 0
-	job_civilian_med = 0
-	job_civilian_low = 0
+	job_civ_high = 0
+	job_civ_med = 0
+	job_civ_low = 0
 
-	job_medsci_high = 0
-	job_medsci_med = 0
-	job_medsci_low = 0
+	job_med_high = 0
+	job_med_med = 0
+	job_med_low = 0
 
-	job_engsec_high = 0
-	job_engsec_med = 0
-	job_engsec_low = 0
+	job_eng_high = 0
+	job_eng_med = 0
+	job_eng_low = 0
 
+	job_sci_high = 0
+	job_sci_med = 0
+	job_sci_low = 0
+
+	job_ops_high = 0
+	job_ops_med = 0
+	job_ops_low = 0
+
+	job_sec_high = 0
+	job_sec_med = 0
+	job_sec_low = 0
 
 /datum/preferences/proc/GetJobDepartment(datum/job/job, level)
 	if(!job || !level)
 		return 0
 	switch(job.department_flag)
-		if(CIVILIAN)
+		if(CIVJOBS)
 			switch(level)
 				if(1)
-					return job_civilian_high
+					return job_civ_high
 				if(2)
-					return job_civilian_med
+					return job_civ_med
 				if(3)
-					return job_civilian_low
-		if(MEDSCI)
+					return job_civ_low
+		if(MEDJOBS)
 			switch(level)
 				if(1)
-					return job_medsci_high
+					return job_med_high
 				if(2)
-					return job_medsci_med
+					return job_med_med
 				if(3)
-					return job_medsci_low
-		if(ENGSEC)
+					return job_med_low
+		if(ENGJOBS)
 			switch(level)
 				if(1)
-					return job_engsec_high
+					return job_eng_high
 				if(2)
-					return job_engsec_med
+					return job_eng_med
 				if(3)
-					return job_engsec_low
+					return job_eng_low
+		if(SCIJOBS)
+			switch(level)
+				if(1)
+					return job_sci_high
+				if(2)
+					return job_sci_med
+				if(3)
+					return job_sci_low
+		if(SECJOBS)
+			switch(level)
+				if(1)
+					return job_sec_high
+				if(2)
+					return job_sec_med
+				if(3)
+					return job_sec_low
+		if(OPSJOBS)
+			switch(level)
+				if(1)
+					return job_ops_high
+				if(2)
+					return job_ops_med
+				if(3)
+					return job_ops_low
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
@@ -962,6 +1023,16 @@ var/list/preferences_datums = list()
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
+				if("antennae")
+					var/new_antennae
+					new_antennae = input(user, "Choose your character's antenna type:", "Character Preference") as null|anything in antennae_list
+					if(new_antennae)
+						features["antennae"] = new_antennae
+				if("crests")
+					var/new_crests
+					new_crests = input(user, "Choose your character's forehead ridges/head crest:", "Character Preference") as null|anything in crests_list
+					if(new_crests)
+						features["crests"] = new_crests
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones

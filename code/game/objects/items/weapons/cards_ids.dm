@@ -186,7 +186,7 @@ update_label("John Doe", "Clowny")
 	assignment = "Captain"
 
 /obj/item/weapon/card/id/captains_spare/New()
-	var/datum/job/captain/J = new/datum/job/captain
+	var/datum/job/co/J = new/datum/job/co
 	access = J.get_access()
 	..()
 

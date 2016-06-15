@@ -686,7 +686,7 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 		jobs += "</tr></table>"
-
+/*
 	//Supply (Brown)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -709,7 +709,7 @@
 				jobs += "</tr><tr align='center'>"
 				counter = 0
 		jobs += "</tr></table>"
-
+*/
 	//Civilian (Grey)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -736,8 +736,8 @@
 	//Non-Human (Green)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in nonhuman_positions)
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(special_positions)]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in special_positions)
 			if(!jobPos)
 				continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
@@ -921,6 +921,7 @@
 					if(!temp)
 						continue
 					joblist += temp.title
+/*
 			if("supplydept")
 				for(var/jobPos in supply_positions)
 					if(!jobPos)
@@ -929,6 +930,7 @@
 					if(!temp)
 						continue
 					joblist += temp.title
+*/
 			if("civiliandept")
 				for(var/jobPos in civilian_positions)
 					if(!jobPos)
@@ -938,7 +940,7 @@
 						continue
 					joblist += temp.title
 			if("nonhumandept")
-				for(var/jobPos in nonhuman_positions)
+				for(var/jobPos in special_positions)
 					if(!jobPos)
 						continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
@@ -1608,7 +1610,7 @@
 
 	else if(href_list["adminchecklaws"])
 		output_ai_laws()
-	
+
 	else if(href_list["admincheckdevilinfo"])
 		output_devil_info()
 

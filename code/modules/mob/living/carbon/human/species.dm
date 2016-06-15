@@ -383,6 +383,14 @@
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
 			bodyparts_to_add -= "ears"
 
+	if("antennae" in mutant_bodyparts)
+		if(!H.dna.features["antennae"] || H.dna.features["antennae"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "antennae"
+
+	if("crests" in mutant_bodyparts)
+		if(!H.dna.features["crests"] || H.dna.features["crests"] == "None" || (H.wear_mask && (H.wear_mask.flags_inv & HIDEFACE)) || (H.head && (H.head.flags_inv & HIDEFACE)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "crests"
+
 	if(!bodyparts_to_add)
 		return
 
@@ -416,6 +424,10 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
+				if("antennae")
+					S = antennae_list[H.dna.features["antennae"]]
+				if("crests")
+					S = crests_list[H.dna.features["crests"]]
 
 			if(!S || S.icon_state == "none")
 				continue

@@ -199,7 +199,7 @@ var/global/list/lawlorify = list (
 	sleep(50)
 	if(istype(owner.current, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner.current
-		H.set_species(/datum/species/lizard, 1)
+		H.set_species(/datum/species/gorn, 1)
 		H.underwear = "Nude"
 		H.undershirt = "Nude"
 		H.socks = "Nude"
@@ -392,7 +392,7 @@ var/global/list/lawlorify = list (
 			var/mob/living/carbon/human/H  = owner.current
 			give_summon_contract()
 			if(SOULVALUE >= POWERUPTHRESHOLD)
-				H.set_species(/datum/species/lizard, 1)
+				H.set_species(/datum/species/gorn, 1)
 				H.underwear = "Nude"
 				H.undershirt = "Nude"
 				H.socks = "Nude"

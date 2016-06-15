@@ -51,7 +51,7 @@ var/global/mulebot_count = 0
 /mob/living/simple_animal/bot/mulebot/New()
 	..()
 	wires = new /datum/wires/mulebot(src)
-	var/datum/job/cargo_tech/J = new/datum/job/cargo_tech
+	var/datum/job/dutyofficer/J = new/datum/job/dutyofficer
 	access_card.access = J.get_access()
 	prev_access = access_card.access
 	cell = new(src)

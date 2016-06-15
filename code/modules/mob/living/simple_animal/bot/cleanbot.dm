@@ -33,7 +33,7 @@
 	get_targets()
 	icon_state = "cleanbot[on]"
 
-	var/datum/job/janitor/J = new/datum/job/janitor
+	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 

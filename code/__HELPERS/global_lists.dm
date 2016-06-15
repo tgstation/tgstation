@@ -25,7 +25,8 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
-
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/antennae, antennae_list) //For Andorians.
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/crests, crests_list) //For wrinkly foreheads.
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

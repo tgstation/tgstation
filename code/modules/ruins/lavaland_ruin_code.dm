@@ -223,7 +223,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard
+	mob_species = /datum/species/gorn
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE

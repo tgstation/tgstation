@@ -125,7 +125,7 @@
 	//this is here because this has no client/prefs/brain whatever.
 	age = rand(AGE_MIN,AGE_MAX)
 	//job handling
-	myjob = new/datum/job/assistant()
+	myjob = new/datum/job/dutyofficer()
 	job = myjob.title
 	myjob.equip(src)
 	myjob.apply_fingerprints(src)
@@ -233,7 +233,7 @@
 /mob/living/carbon/human/interactive/proc/doSetup()
 	Path_ID = new /obj/item/weapon/card/id(src)
 
-	var/datum/job/captain/C = new/datum/job/captain
+	var/datum/job/co/C = new/datum/job/co
 	Path_ID.access = C.get_access()
 
 	MYID = new(src)

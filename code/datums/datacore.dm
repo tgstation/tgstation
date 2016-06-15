@@ -84,7 +84,7 @@
 	var/list/eng = list()
 	var/list/med = list()
 	var/list/sci = list()
-	var/list/sup = list()
+//	var/list/sup = list()
 	var/list/civ = list()
 	var/list/bot = list()
 	var/list/misc = list()
@@ -121,13 +121,13 @@
 		if(rank in science_positions)
 			sci[name] = rank
 			department = 1
-		if(rank in supply_positions)
-			sup[name] = rank
-			department = 1
+//		if(rank in supply_positions)
+//			sup[name] = rank
+//			department = 1
 		if(rank in civilian_positions)
 			civ[name] = rank
 			department = 1
-		if(rank in nonhuman_positions)
+		if(rank in special_positions)
 			bot[name] = rank
 			department = 1
 		if(!department && !(name in heads))
@@ -157,11 +157,11 @@
 		for(var/name in sci)
 			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sci[name]]</td></tr>"
 			even = !even
-	if(sup.len > 0)
-		dat += "<tr><th colspan=3>Supply</th></tr>"
-		for(var/name in sup)
-			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
-			even = !even
+//	if(sup.len > 0)
+//		dat += "<tr><th colspan=3>Supply</th></tr>"
+//		for(var/name in sup)
+//			dat += "<tr[even ? " class='alt'" : ""]><td>[name]</td><td>[sup[name]]</td></tr>"
+//			even = !even
 	if(civ.len > 0)
 		dat += "<tr><th colspan=3>Civilian</th></tr>"
 		for(var/name in civ)

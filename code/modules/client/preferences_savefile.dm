@@ -338,6 +338,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
+	S["feature_antennae"]				>> features["antennae"]
+	S["feature_crests"]				>> features["crests"]
+
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -353,15 +356,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Jobs
 	S["userandomjob"]		>> userandomjob
-	S["job_civilian_high"]	>> job_civilian_high
-	S["job_civilian_med"]	>> job_civilian_med
-	S["job_civilian_low"]	>> job_civilian_low
-	S["job_medsci_high"]	>> job_medsci_high
-	S["job_medsci_med"]		>> job_medsci_med
-	S["job_medsci_low"]		>> job_medsci_low
-	S["job_engsec_high"]	>> job_engsec_high
-	S["job_engsec_med"]		>> job_engsec_med
-	S["job_engsec_low"]		>> job_engsec_low
+
+	S["job_civ_high"]		>> job_civ_high
+	S["job_civ_med"]		>> job_civ_med
+	S["job_civ_low"]		>> job_civ_low
+	S["job_sci_high"]		>> job_sci_high
+	S["job_sci_med"]		>> job_sci_med
+	S["job_sci_low"]		>> job_sci_low
+	S["job_eng_high"]		>> job_eng_high
+	S["job_eng_med"]		>> job_eng_med
+	S["job_eng_low"]		>> job_eng_low
+	S["job_ops_high"]		>> job_ops_high
+	S["job_ops_med"]		>> job_ops_med
+	S["job_ops_low"]		>> job_ops_low
+	S["job_med_high"]		>> job_med_high
+	S["job_med_med"]		>> job_med_med
+	S["job_med_low"]		>> job_med_low
+	S["job_sec_high"]		>> job_sec_high
+	S["job_sec_med"]		>> job_sec_med
+	S["job_sec_low"]		>> job_sec_low
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -402,19 +415,29 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
+	features["antennae"] 	= sanitize_inlist(features["antennae"], antennae_list)
+	features["crests"] 	= sanitize_inlist(features["crests"], crests_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
-	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
-	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
-	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
-	job_medsci_high = sanitize_integer(job_medsci_high, 0, 65535, initial(job_medsci_high))
-	job_medsci_med = sanitize_integer(job_medsci_med, 0, 65535, initial(job_medsci_med))
-	job_medsci_low = sanitize_integer(job_medsci_low, 0, 65535, initial(job_medsci_low))
-	job_engsec_high = sanitize_integer(job_engsec_high, 0, 65535, initial(job_engsec_high))
-	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
-	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
-
+	job_civ_high = sanitize_integer(job_civ_high, 0, 65535, initial(job_civ_high))
+	job_civ_med = sanitize_integer(job_civ_med, 0, 65535, initial(job_civ_med))
+	job_civ_low = sanitize_integer(job_civ_low, 0, 65535, initial(job_civ_low))
+	job_med_high = sanitize_integer(job_med_high, 0, 65535, initial(job_med_high))
+	job_med_med = sanitize_integer(job_med_med, 0, 65535, initial(job_med_med))
+	job_med_low = sanitize_integer(job_med_low, 0, 65535, initial(job_med_low))
+	job_eng_high = sanitize_integer(job_eng_high, 0, 65535, initial(job_eng_high))
+	job_eng_med = sanitize_integer(job_eng_med, 0, 65535, initial(job_eng_med))
+	job_eng_low = sanitize_integer(job_eng_low, 0, 65535, initial(job_eng_low))
+	job_ops_high = sanitize_integer(job_ops_high, 0, 65535, initial(job_ops_high))
+	job_ops_med = sanitize_integer(job_ops_med, 0, 65535, initial(job_ops_med))
+	job_ops_low = sanitize_integer(job_ops_low, 0, 65535, initial(job_ops_low))
+	job_sci_high = sanitize_integer(job_sci_high, 0, 65535, initial(job_sci_high))
+	job_sci_med = sanitize_integer(job_sci_med, 0, 65535, initial(job_sci_med))
+	job_sci_low = sanitize_integer(job_sci_low, 0, 65535, initial(job_sci_low))
+	job_sec_high = sanitize_integer(job_sec_high, 0, 65535, initial(job_sec_high))
+	job_sec_med = sanitize_integer(job_sec_med, 0, 65535, initial(job_sec_med))
+	job_sec_low = sanitize_integer(job_sec_low, 0, 65535, initial(job_sec_low))
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -445,6 +468,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.id
+
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
 	S["feature_human_tail"]				<< features["tail_human"]
@@ -454,6 +478,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
 	S["feature_lizard_body_markings"]	<< features["body_markings"]
+	S["feature_antennae"]				<< features["antennae"]
+	S["feature_crests"]					<< features["crests"]
+
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]
@@ -463,15 +490,24 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Jobs
 	S["userandomjob"]		<< userandomjob
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	S["job_civ_high"]		<< job_civ_high
+	S["job_civ_med"]		<< job_civ_med
+	S["job_civ_low"]		<< job_civ_low
+	S["job_med_high"]		<< job_med_high
+	S["job_med_med"]		<< job_med_med
+	S["job_med_low"]		<< job_med_low
+	S["job_eng_high"]		<< job_eng_high
+	S["job_eng_med"]		<< job_eng_med
+	S["job_eng_low"]		<< job_eng_low
+	S["job_ops_high"]		<< job_ops_high
+	S["job_ops_med"]		<< job_ops_med
+	S["job_ops_low"]		<< job_ops_low
+	S["job_sci_high"]		<< job_sci_high
+	S["job_sci_med"]		<< job_sci_med
+	S["job_sci_low"]		<< job_sci_low
+	S["job_sec_high"]		<< job_sec_high
+	S["job_sec_med"]		<< job_sec_med
+	S["job_sec_low"]		<< job_sec_low
 
 	return 1
 

@@ -1295,6 +1295,10 @@
 	hasinner = 1
 	color_src = HAIR
 
+/datum/sprite_accessory/ears/spock
+	name = "Vulcan"
+	icon_state = "spock"
+
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
@@ -1367,3 +1371,46 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+/datum/sprite_accessory/antennae
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/antennae/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/antennae/short
+	name = "Short"
+	icon_state = "short"
+
+/datum/sprite_accessory/antennae/long
+	name = "Long"
+	icon_state = "long"
+
+/datum/sprite_accessory/antennae/wide
+	name = "Wide"
+	icon_state = "wide"
+
+/datum/sprite_accessory/crests
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/crests/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/crests/simple
+	name = "Simple"
+	icon_state = "simple"
+
+/datum/sprite_accessory/crests/intricate
+	name = "Intricate"
+	icon_state = "fancy"
+
+/datum/sprite_accessory/crests/bajoran
+	name = "Bajoran"
+	icon_state = "bajoran"
+
+/datum/sprite_accessory/crests/cardassian
+	name = "Cardassian"
+	icon_state = "cardassian"
+

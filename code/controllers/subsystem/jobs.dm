@@ -247,29 +247,17 @@ var/datum/subsystem/job/SSjob
 	HandleFeedbackGathering()
 
 	//People who wants to be assistants, sure, go on.
-	Debug("DO, Running Assistant Check 1")
-	var/datum/job/assist = new /datum/job/assistant()
-	var/list/assistant_candidates = FindOccupationCandidates(assist, 3)
-	Debug("AC1, Candidates: [assistant_candidates.len]")
+	var/datum/job/dutyofficer = new /datum/job/dutyofficer()
+	var/list/assistant_candidates = FindOccupationCandidates(dutyofficer, 3)
 	for(var/mob/new_player/player in assistant_candidates)
-		Debug("AC1 pass, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Duty Officer")
 		assistant_candidates -= player
-	Debug("DO, AC1 end")
 
 	//Select one head
-	Debug("DO, Running Head Check")
 	FillHeadPosition()
-	Debug("DO, Head Check end")
 
 	//Check for an AI
-	Debug("DO, Running AI Check")
 	FillAIPosition()
-	Debug("DO, AI Check end")
-
-	//Other jobs are now checked
-	Debug("DO, Running Standard Check")
-
 
 	// New job giving system by Donkie
 	// This will cause lots of more loops, but since it's only done once it shouldn't really matter much at all.
@@ -292,28 +280,21 @@ var/datum/subsystem/job/SSjob
 					continue
 
 				if(jobban_isbanned(player, job.title))
-					Debug("DO isbanned failed, Player: [player], Job:[job.title]")
 					continue
 
 				if(!job.player_old_enough(player.client))
-					Debug("DO player not old enough, Player: [player], Job:[job.title]")
 					continue
 
 				if(player.mind && job.title in player.mind.restricted_roles)
-					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
 				if(config.enforce_human_authority && !player.client.prefs.pref_species.qualifies_for_rank(job.title, player.client.prefs.features))
-					Debug("DO non-human failed, Player: [player], Job:[job.title]")
 					continue
-
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
-
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-						Debug("DO pass, Player: [player], Level:[level], Job:[job.title]")
 						AssignRole(player, job.title)
 						unassigned -= player
 						break
@@ -332,16 +313,11 @@ var/datum/subsystem/job/SSjob
 		else if(player.client.prefs.userandomjob)
 			GiveRandomJob(player)
 
-	Debug("DO, Standard Check end")
-
-	Debug("DO, Running AC2")
-
 	// For those who wanted to be assistant if their preferences were filled, here you go.
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		Debug("AC2 Assistant located, Player: [player]")
-		AssignRole(player, "Assistant")
+		AssignRole(player, "Duty Officer")
 	return 1
 
 //Gives the player the stuff he should have with his rank

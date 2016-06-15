@@ -127,7 +127,7 @@
 
 				var/obj/item/weapon/card/id/gold/santacard = new(santa)
 				santacard.update_label("Santa Claus", "Santa")
-				var/datum/job/captain/J = new/datum/job/captain
+				var/datum/job/co/J = new/datum/job/co
 				santacard.access = J.get_access()
 				santa.equip_to_slot_or_del(santacard, slot_wear_id)
 
