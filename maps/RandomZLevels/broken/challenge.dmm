@@ -102,7 +102,7 @@
 "bX" = (/obj/machinery/door_control{id_tag = "challenge"; name = "Gateway Lockdown"; pixel_x = -4; pixel_y = 26; req_access_txt = "0"},/turf/simulated/floor/carpet,/area/awaymission/challenge/end)
 "bY" = (/turf/simulated/floor/carpet,/area/awaymission/challenge/end)
 "bZ" = (/obj/structure/mirror{pixel_y = 28},/turf/simulated/floor/wood,/area/awaymission/challenge/end)
-"ca" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/clothing/head/helmet/tactical/riot,/obj/item/clothing/gloves/swat,/obj/item/clothing/mask/balaclava,/obj/item/clothing/suit/storage/bandolier,/obj/item/weapon/shield/riot,/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/awaymission/challenge/end)
+"ca" = (/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/obj/item/clothing/head/helmet/tactical/riot,/obj/item/clothing/gloves/swat,/obj/item/clothing/mask/balaclava,/obj/item/clothing/accessory/storage/bandolier,/obj/item/weapon/shield/riot,/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/awaymission/challenge/end)
 "cb" = (/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/awaymission/challenge/end)
 "cc" = (/obj/structure/bed/chair{dir = 1},/obj/item/device/radio/intercom{dir = 0; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = 28},/turf/simulated/floor{icon_state = "dark"},/area/awaymission/challenge/end)
 "cd" = (/turf/simulated/floor{icon_state = "dark"},/area/awaymission/challenge/end)

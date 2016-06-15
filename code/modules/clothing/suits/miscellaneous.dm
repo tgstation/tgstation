@@ -333,14 +333,6 @@
 	icon_state = "kaminacape"
 	body_parts_covered = 0
 
-/obj/item/clothing/suit/storage/bandolier
-	name = "bandolier"
-	desc = "A bandolier designed to hold up to eight shotgun shells."
-	icon_state = "bandolier"
-	storage_slots = 8
-	max_combined_w_class = 20
-	can_only_hold = list("/obj/item/ammo_casing/shotgun")
-
 /obj/item/clothing/suit/officercoat
 	name = "Officer's Coat"
 	desc = "Ein Mantel gemacht, um die Juden zu bestrafen."

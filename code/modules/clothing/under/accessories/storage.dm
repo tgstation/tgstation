@@ -4,16 +4,22 @@
 	icon_state = "webbing"
 	_color = "webbing"
 	var/slots = 3
+	var/list/can_only_hold = list() //I would add the other storage item variables, but nothing would use them yet, so there's no point.
+	var/list/cant_hold = list("/obj/item/clothing/accessory/storage", "/obj/item/clothing/under") //NO RECURSION
 	var/obj/item/weapon/storage/internal/hold
 	accessory_exclusion = STORAGE
 
 /obj/item/clothing/accessory/storage/New()
+	..()
 	hold = new (src)
+	hold.name = name //So that you don't just put things into "the storage"
 	hold.master_item = src
 	hold.storage_slots = slots
+	hold.can_only_hold = can_only_hold
+	hold.cant_hold = cant_hold
 
 /obj/item/clothing/accessory/storage/attack_hand(mob/user)
-	if(src.loc == user)
+	if(user.get_inactive_hand() == src)
 		hold.attack_hand(user)
 		return
 	return ..()
@@ -37,6 +43,12 @@
 /obj/item/clothing/accessory/storage/emp_act(severity)
 	hold.emp_act(severity)
 
+/obj/item/clothing/accessory/storage/Destroy()
+	if(hold)
+		qdel(hold)
+		hold = null
+	return ..()
+
 /obj/item/weapon/storage/internal
 	name = "storage"
 	var/master_item		//item it belongs to
@@ -46,9 +58,13 @@
 	..()
 	loc = master_item
 
+/obj/item/weapon/storage/internal/Destroy()
+	master_item = null
+	return ..()
+
 /obj/item/clothing/accessory/storage/webbing
 	name = "webbing"
-	desc = "Strudy mess of synthcotton belts and buckles, ready to share your burden."
+	desc = "Sturdy mess of synthcotton belts and buckles, ready to share your burden."
 	icon_state = "webbing"
 	_color = "webbing"
 
@@ -66,6 +82,13 @@
 	_color = "vest_brown"
 	slots = 5
 
+/obj/item/clothing/accessory/storage/bandolier
+	name = "bandolier"
+	desc = "A bandolier designed to hold up to eight shotgun shells."
+	icon_state = "bandolier"
+	_color = "bandolier"
+	slots = 8
+	can_only_hold = list("/obj/item/ammo_casing/shotgun")
 
 /obj/item/clothing/accessory/storage/knifeharness
 	name = "decorated harness"
@@ -73,6 +96,7 @@
 	icon_state = "unathiharness2"
 	_color = "unathiharness2"
 	slots = 2
+	can_only_hold = list("/obj/item/weapon/hatchet", "/obj/item/weapon/kitchen/utensil/knife")
 
 /obj/item/clothing/accessory/storage/knifeharness/attackby(var/obj/item/O as obj, mob/user as mob)
 	..()
@@ -98,4 +122,3 @@
 	..()
 	new /obj/item/weapon/hatchet/unathiknife(hold)
 	new /obj/item/weapon/hatchet/unathiknife(hold)
-	hold.can_only_hold = list("obj/item/weapon/hatchet", "obj/item/weapon/kitchen/utensil/knife")
