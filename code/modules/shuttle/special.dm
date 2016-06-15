@@ -11,6 +11,7 @@
 	icon_state = "wabbajack_statue"
 	icon_state_on = "wabbajack_statue_on"
 	var/list/active_tables = list()
+	var/tables_required = 2
 	active = FALSE
 
 /obj/machinery/power/emitter/energycannon/magical/New()
@@ -27,7 +28,7 @@
 
 /obj/machinery/power/emitter/energycannon/magical/process()
 	. = ..()
-	if(active_tables.len >= 2)
+	if(active_tables.len >= tables_required)
 		if(!active)
 			visible_message("<span class='revenboldnotice'>\
 				[src] opens its eyes.</span>")
@@ -54,6 +55,8 @@
 
 /obj/structure/table/abductor/wabbajack
 	name = "wabbajack altar"
+	desc = "Whether you're sleeping or waking, it's going to be \
+		quite chaotic."
 	health = 1000
 	verb_say = "chants"
 	var/obj/machinery/power/emitter/energycannon/magical/our_statue
@@ -96,7 +99,7 @@
 			wraps itself around [L] as they suddenly fall unconcious.</span>",
 			"<span class='revendanger'>[desc]</span>")
 		// Don't let them sit suround unconscious forever
-		addtimer(src, "sleeper_dreams", 100, unique=FALSE, L)
+		addtimer(src, "sleeper_dreams", 100, FALSE, L)
 
 	// Existing sleepers
 	for(var/i in found)
