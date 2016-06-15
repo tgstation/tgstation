@@ -7,6 +7,9 @@
 
 	dir = SOUTH
 	initialize_directions = SOUTH
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
 
 	var/on = 0
 
