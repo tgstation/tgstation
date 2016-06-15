@@ -98,12 +98,17 @@ var/global/list/all_graffitis = list(
 	shadeColour = input(user, "Please select the shade colour.", "Crayon colour") as color
 	return
 
+#define FONT_SIZE "6pt"
+#define FONT_NAME "Comic Sans MS"
 /obj/item/toy/crayon/afterattack(atom/target, mob/user as mob, proximity)
 	if(!proximity) return
 
 	if(istype(target, /turf/simulated))
-		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
+		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter","text")
 		var/preference
+		var/alignment = "center" //For text
+		var/drawtime = 50
+
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
@@ -123,17 +128,61 @@ var/global/list/all_graffitis = list(
 				if(!preference) return
 
 				drawtype=graffitis[preference]
-				to_chat(user, "You start drawing graffiti on the [target.name].")
+				to_chat(user, "You start drawing graffiti on \the [target].")
 			if("rune")
-				to_chat(user, "You start drawing a rune on the [target.name].")
+				to_chat(user, "You start drawing a rune on \the [target].")
+			if("text")
+				#define MAX_LETTERS 15
+				preference = input("Write some text here (maximum [MAX_LETTERS] letters).", "Crayon scribbles") as null|text
+				preference = copytext(preference, 1, MAX_LETTERS)
+				#undef MAX_LETTERS
+
+				var/letter_amount = length(replacetext(preference, " ", ""))
+				if(!letter_amount) //If there is no text
+					return
+				drawtime = 4 * letter_amount //10 letters = 4 seconds
+
+				alignment = input("Select vertical text alignment (your text is \"[preference]\")", "Crayon scribbles") as null|anything in list("middle", "bottom", "top")
+				if(!alignment) return
+
+				if(user.client)
+					var/image/I = image(icon = null) //Create an empty image. You can't just do "image()" for some reason, at least one argument is needed
+					I.maptext = {"<span style="color:[colour];font-size:[FONT_SIZE];font-family:'[FONT_NAME]';" valign="[alignment]">[preference]</span>"}
+					I.loc = get_turf(target)
+					animate(I, alpha = 100, 10, -1)
+					animate(alpha = 255, 10, -1)
+
+					user.client.images.Add(I)
+					var/continue_drawing = alert(user, "This is how your drawing will look. Continue?", "Crayon scribbles", "Yes", "Cancel")
+
+					user.client.images.Remove(I)
+					animate(I) //Cancel the animation so that the image gets garbage collected
+					I.loc = null
+					I = null
+
+					if(continue_drawing != "Yes")
+						return
+
+				to_chat(user, "You start writing \"[preference]\" on \the [target].")
 
 		if(!user.Adjacent(target)) return
 		if(target.density && !cardinal.Find(get_dir(user, target))) //Drawing on a wall and not standing in a cardinal direction - don't draw
 			to_chat(user, "<span class='warning'>You can't reach \the [target] from here!</span>")
 			return
 
-		if(instant || do_after(user,target, 50))
-			var/obj/effect/decal/cleanable/C = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
+		if(instant || do_after(user,target, drawtime))
+			var/obj/effect/decal/cleanable/C
+			if(drawtype == "text")
+				C = new /obj/effect/decal/cleanable(target)
+				C.name = "written text"
+				C.desc = "\"[preference]\", written in crayon."
+
+				var/maptext_start = {"<span style="color:[colour];font-size:[FONT_SIZE];font-family:'[FONT_NAME]';" valign="[alignment]">"}
+				var/maptext_end = "</span>"
+				C.maptext = "[maptext_start][preference][maptext_end]"
+
+			else
+				C = new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
 			if(target.density && (C.loc != get_turf(user))) //Drawn on a wall (while standing on a floor)
 				C.forceMove(get_turf(user))
@@ -152,6 +201,9 @@ var/global/list/all_graffitis = list(
 					to_chat(user, "<span class='warning'>You used up your crayon!</span>")
 					qdel(src)
 	return
+
+#undef FONT_SIZE
+#undef FONT_NAME
 
 /obj/item/toy/crayon/attack(mob/M as mob, mob/user as mob)
 	if(M == user)
