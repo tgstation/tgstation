@@ -68,7 +68,7 @@
 		else
 			movement_delay_time = world.time + amount*3
 
-/mob/living/simple_animal/hostile/clockwork/fragment/update_health()
+/mob/living/simple_animal/hostile/clockwork/fragment/updatehealth()
 	..()
 	if(health == maxHealth)
 		speed = initial(speed)
