@@ -385,85 +385,21 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bE" = (
+"bo" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-gwall_space (EAST)";
-	icon_state = "gwall_space";
-	dir = 4
-	},
-/area/shuttle/escape)
-"bD" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3";
-	icon_state = "wall3";
+	icon_state = "swall_s6";
 	dir = 2
 	},
 /area/shuttle/escape)
-"bC" = (
+"bp" = (
 /turf/closed/wall/shuttle{
-	tag = "icon-gwall_space";
-	icon_state = "gwall_space";
+	icon_state = "swall_s10";
 	dir = 2
 	},
 /area/shuttle/escape)
-"bB" = (
+"bq" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bA" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
-/area/shuttle/escape)
-"by" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bx" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall4";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bw" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall8";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bv" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bu" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bt" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall13";
-	icon_state = "swall13";
-	dir = 2
-	},
-/area/shuttle/escape)
-"bs" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
+	icon_state = "swallc4";
 	dir = 2
 	},
 /area/shuttle/escape)
@@ -474,22 +410,88 @@
 	dir = 2
 	},
 /area/shuttle/escape)
-"bq" = (
+"bs" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swallc4";
+	icon_state = "swall3";
 	dir = 2
 	},
 /area/shuttle/escape)
-"bp" = (
+"bt" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
+	tag = "icon-swall13";
+	icon_state = "swall13";
 	dir = 2
 	},
 /area/shuttle/escape)
-"bo" = (
+"bu" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
+	icon_state = "swall12";
 	dir = 2
+	},
+/area/shuttle/escape)
+"bv" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bw" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall8";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bx" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall4";
+	dir = 2
+	},
+/area/shuttle/escape)
+"by" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bz" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall1";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bA" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc2";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bB" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bC" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-gwall_space";
+	icon_state = "gwall_space";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bD" = (
+/obj/structure/table/wood/bar{
+	boot_dir = 8
+	},
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
+	group_name = "barstaff for the Emergency Escape Bar"
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bE" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-gwall_space (EAST)";
+	icon_state = "gwall_space";
+	dir = 4
 	},
 /area/shuttle/escape)
 
@@ -672,7 +674,7 @@ av
 aF
 aH
 aH
-aH
+bD
 aH
 aH
 aT
