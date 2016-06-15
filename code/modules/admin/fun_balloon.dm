@@ -4,6 +4,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	anchored = TRUE
+	var/popped = FALSE
 
 /obj/effect/fun_balloon/New()
 	. = ..()
@@ -14,17 +15,24 @@
 	. = ..()
 
 /obj/effect/fun_balloon/process()
-	if(check())
+	if(!popped && check() && !qdeleted(src))
+		popped = TRUE
 		pop()
-		visible_message("[src] pops!")
-		playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
-		qdel(src)
 
 /obj/effect/fun_balloon/proc/check()
-	return TRUE
+	return FALSE
 
 /obj/effect/fun_balloon/proc/pop()
-	return
+	visible_message("[src] pops!")
+	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, 1, -1)
+	qdel(src)
+
+/obj/effect/fun_balloon/attack_ghost(mob/user)
+	if(!user.client || !user.client.holder || popped)
+		return
+	switch(alert("Pop [src]?","Fun Balloon","Yes","No"))
+		if("Yes")
+			pop()
 
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
@@ -48,7 +56,9 @@
 			of ([key_name_admin(body)])")
 		body.ghostize(0)
 		body.key = ghost.key
-		new /obj/effect/overlay/sparkle(null, body)
+		new /obj/effect/overlay/sparkle(body)
+
+	. = ..()
 
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
@@ -59,6 +69,19 @@
 	if(SSshuttle.emergency && (SSshuttle.emergency.timeLeft() <= trigger_time) && (SSshuttle.emergency.mode == SHUTTLE_CALL))
 		. = TRUE
 
+/obj/effect/fun_balloon/scatter
+	name = "scatter fun balloon"
+	desc = "When this pops, you're not going to be around here anymore."
+	var/effect_range = 5
+
+/obj/effect/fun_balloon/scatter/pop()
+	for(var/mob/living/M in range(effect_range, get_turf(src)))
+		var/turf/T = find_safe_turf()
+		new /obj/effect/overlay/sparkle(M)
+		M.forceMove(T)
+		M << "<span class='notice'>Pop!</span>"
+	. = ..()
+
 /obj/effect/overlay/sparkle
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
@@ -68,8 +91,11 @@
 
 /obj/effect/overlay/sparkle/New(atom/movable/AM)
 	. = ..(null)
-	AM.overlays += src
-	addtimer(src, "expire", lifetime, FALSE, AM)
+	if(AM)
+		AM.overlays += src
+		addtimer(src, "expire", lifetime, FALSE, AM)
+	else
+		qdel(AM)
 
 /obj/effect/overlay/sparkle/proc/expire(atom/movable/AM)
 	AM.overlays -= src
