@@ -52,7 +52,7 @@
 		stat(null, "Movement delay(seconds): [max(round((movement_delay_time - world.time)*0.1, 0.1), 0)]")
 
 /mob/living/simple_animal/hostile/clockwork/fragment/death(gibbed)
-	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash. A cube of metal tumbles out, whirring and sputtering.</span>", \
+	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash.</span>", \
 	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
 	..(TRUE)
 	return 1
