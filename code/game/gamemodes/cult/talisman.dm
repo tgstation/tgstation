@@ -198,7 +198,7 @@
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune drawn in crayon."
+		R.desc = "A rune vandalizing the station."
 
 
 //Rite of Disruption: Weaker than rune
