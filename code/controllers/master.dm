@@ -322,7 +322,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		ran = FALSE
 		bg_calc = FALSE
 		current_tick_budget = queue_priority_count
-		for (queue_node = queue_head; queue_node; queue_node = queue_node.queue_next)
+		for (queue_node = queue_head; istype(queue_node); queue_node = queue_node.queue_next)
 			if (ran && world.tick_usage > TICK_LIMIT_RUNNING)
 				break
 			queue_node_flags = queue_node.flags
