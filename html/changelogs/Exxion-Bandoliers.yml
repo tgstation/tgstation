@@ -1,7 +1,0 @@
-author: Exxion
-
-delete-after: True
-
-changes: 
-- tweak: "Bandoliers are now accessories rather than exosuits. This means they attach directly to your jumpsuit rather than taking up your exosuit slot. They can be removed with the Remove Accessory verb. You should be able to figure out how to use them. Note that, like other storage accessories, they must be removed in order to take the jumpsuit off by yourself."
-- bugfix: "Fixes storage accessories not being visible on jumpsuits in the inventory."
