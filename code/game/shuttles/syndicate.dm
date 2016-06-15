@@ -67,7 +67,7 @@ var/global/datum/shuttle/syndicate/syndicate_shuttle = new(starting_area = /area
 	areaname = "south east of the station"
 
 /obj/docking_port/destination/syndicate/commssat
-	areaname = "south of the Communications Satelite"
+	areaname = "south of the Communications Satellite"
 
 /obj/docking_port/destination/syndicate/mining
 	areaname = "north east of the mining asteroid"

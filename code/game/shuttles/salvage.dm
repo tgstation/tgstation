@@ -81,7 +81,7 @@ var/global/datum/shuttle/salvage/salvage_shuttle = new(starting_area=/area/shutt
 	areaname = "ruskie DJ station"
 
 /obj/docking_port/destination/salvage/commssat
-	areaname = "communications satelite"
+	areaname = "communications satellite"
 
 /obj/docking_port/destination/salvage/abandoned_ship
 	areaname = "abandoned ship"
