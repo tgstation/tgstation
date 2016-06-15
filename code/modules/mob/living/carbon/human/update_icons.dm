@@ -880,6 +880,12 @@ var/global/list/damage_icon_parts = list()
 		var/obj/Overlays/O = obj_overlays[SUIT_LAYER]
 		O.overlays.len = 0
 		var/image/standing	= image("icon" = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'), "icon_state" = "[wear_suit.icon_state]")
+		if((((M_FAT in mutations) && (species.flags & CAN_BE_FAT)) || (species.flags & IS_BULKY)) && !(wear_suit.icon_override))
+			if(wear_suit.flags&ONESIZEFITSALL)
+				standing.icon	= 'icons/mob/suit_fat.dmi'
+			else
+				to_chat(src, "<span class='warning'>You burst out of \the [wear_suit]!</span>")
+				drop_from_inventory(wear_suit)
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
 			drop_from_inventory(handcuffed)

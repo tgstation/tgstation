@@ -95,17 +95,18 @@ var/global/list/whitelisted_species = list("Human")
 	var/blood_color = "#A10808" //Red.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
-	var/uniform_icons = 'icons/mob/uniform.dmi'
-	var/fat_uniform_icons = 'icons/mob/uniform_fat.dmi'
-	var/gloves_icons    = 'icons/mob/hands.dmi'
-	var/glasses_icons   = 'icons/mob/eyes.dmi'
-	var/ears_icons      = 'icons/mob/ears.dmi'
-	var/shoes_icons     = 'icons/mob/feet.dmi'
-	var/head_icons      = 'icons/mob/head.dmi'
-	var/belt_icons      = 'icons/mob/belt.dmi'
-	var/wear_suit_icons = 'icons/mob/suit.dmi'
-	var/wear_mask_icons = 'icons/mob/mask.dmi'
-	var/back_icons      = 'icons/mob/back.dmi'
+	var/uniform_icons       = 'icons/mob/uniform.dmi'
+	var/fat_uniform_icons   = 'icons/mob/uniform_fat.dmi'
+	var/gloves_icons        = 'icons/mob/hands.dmi'
+	var/glasses_icons       = 'icons/mob/eyes.dmi'
+	var/ears_icons          = 'icons/mob/ears.dmi'
+	var/shoes_icons         = 'icons/mob/feet.dmi'
+	var/head_icons          = 'icons/mob/head.dmi'
+	var/belt_icons          = 'icons/mob/belt.dmi'
+	var/wear_suit_icons     = 'icons/mob/suit.dmi'
+	var/fat_wear_suit_icons = 'icons/mob/suit_fat.dmi'
+	var/wear_mask_icons     = 'icons/mob/mask.dmi'
+	var/back_icons          = 'icons/mob/back.dmi'
 
 
 	//Used in icon caching.
