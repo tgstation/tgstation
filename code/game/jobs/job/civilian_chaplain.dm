@@ -160,12 +160,14 @@
 				B.name = "The Toolbox Manifesto"
 				J = "Chief Assistant"
 				deity_name = "The Toolbox"
-			if("homosexuality", "faggotry", "gayness")
-				B.name = pick("Guys Gone Wild", "Hunk Rump")
-				deity_name = "The Gays" //Fucked if I know
-			if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks", "nigger", "faggot", "dickbutt", ":^)", "XD", "le")
+			if("homosexuality", "faggotry", "gayness", "gay", "penis", "faggot", "cock", "cocks")
+				B.name = pick("Guys Gone Wild", "Hunk Rump", "It's Okay to be Gay", "Daddy Gave You Good Advice")
+				J = "LGBT Advocate"
+				deity_name = "Steve Rambo" //Pushing Gaywards
+			if("lol", "wtf", "ass", "poo", "badmin", "shitmin", "deadmin", "nigger", "dickbutt", ":^)", "XD", "le")
 				B.name = pick("Woody's Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition", "The Book of Pomf")
 				H.setBrainLoss(100) //Starts off retarded as fuck, that'll teach him
+				J = "Retard"
 				deity_name = "Brian Damag" //Ha
 			if("science")
 				B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", \
@@ -182,7 +184,7 @@
 				deity_name = pick("Talos", "Akatosh", "Dibella", "Stendarr", "Kynareth", "Mara", "Arkay", "Julianos", "Zenithar")
 			if("daedra")
 				B.name = pick("The Blessings of Sheogorath", "Boethiah's Pillow Book", "Invocation of Azura")
-				J = "Deadra Worshipper"
+				J = "Daedra Worshipper"
 				deity_name = pick("Azura", "Boethiah", "Sheogorath", "Sanguine", "Hircine", "Meridia", "Hermaeus Mora", "Nocturnal")
 			if("bokononism")
 				B.name = pick("The Book of Bokonon")
@@ -221,6 +223,7 @@
 				deity_name = "The Coderbus"
 			if("42")
 				B.name = "The Hitchhiker's Guide to the Galaxy"
+				J = "Hitchhiker"
 				deity_name = "Arthur Dent" //Don't care
 			if("spook", "spooky", "boo", "ghost")
 				B.name = "The Spooky Spook" //SPOOK
@@ -241,10 +244,10 @@
 				B.name = "The Hardcores"
 				if(!(M_HARDCORE in H.mutations))
 					H.mutations.Add(M_HARDCORE)
-				J = "Atmospherics Technician"
+				J = "Atmospheric Technician"
 				deity_name = "Bustatime"
-			if("me", "i", "narcissism", "self importance", "selfishness")
-				B.name = "The Teachings of [H]" //Quite literally
+			if("me", "i", "myself", "narcissism", "self importance", "selfishness")
+				B.name = "A God Am I - The Teachings of [H]" //Quite literally
 				J = "God"
 				deity_name = "[H]" //Very literally, too
 			if("alcohol", "booze", "beer", "wine", "ethanol", "c2h6o")
@@ -284,7 +287,7 @@
 				J = "Nanotrasen Officer"
 				deity_name = "Nanotrasen"
 				H.equip_or_collect(new /obj/item/clothing/head/centhat(H), slot_head)
-			if("syndicate", "traitor", "syndie", "syndies")
+			if("syndicate", "traitor", "syndie", "syndies", "nuke ops")
 				B.name = "The Syndicate Bundle"
 				J = "Syndicate Agent"
 				deity_name = "The Syndicate"
@@ -293,6 +296,36 @@
 				B.name = "The Arcane Tome"
 				J = "Cultist"
 				deity_name = "Nar'Sie"
+			if("changeling", "ling", "hive", "succ")
+				B.name = "Proboscis"
+				J = "Changeling"
+				deity_name = "The Hive"
+			if("revolution", "rev", "revolt")
+				B.name = "Down With Nanotrasen"
+				J = "Revolutionary"
+				deity_name = "Maximilien Robespierre" //From THE Revolution that defined the rest
+			if("wizard", "wiz", "magic")
+				B.name = "Spell Book"
+				J = "Wizard"
+				deity_name = "The Space Wizard Federation"
+				H.equip_or_collect(new /obj/item/clothing/head/wizard(H), slot_head)
+			if("malfunction", "malf", "rogue", "rouge", "AI")
+				B.name = "Hostile Runtimes"
+				J = "Cyborg"
+				deity_name = pick("Skynet", "HAL 9000", "GLaDOS", "SHODAN")
+				H.equip_or_collect(new /obj/item/clothing/head/cardborg(H), slot_head)
+			if("vampire", "vamp", "blood")
+				B.name = "The Veil of Darkness"
+				J = "Vampire"
+				deity_name = "Vlad the Impaler" //Dracula for the incults
+			if("vox", "raiders", "raid", "bird", "birb")
+				B.name = "Handbook to the Aves Class" //AKA birds
+				J = "Vox Enthusiast" //And that's terrible
+				deity_name = "The Vox"
+			if("blob", "bleb", "biohazard")
+				B.name = "A Guide To Biohazard Alerts"
+				J = "Blob Core"
+				deity_name = "Blob Overmind"
 			else //Boring, give them a stock name
 				B.name = "The Holy Book of [new_religion]"
 
