@@ -1048,20 +1048,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
-	spawn(88)
+	sleep(88)
+	if(invoker)
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
 		"<span class='nzcrentr'>\"V gbyq lbh lbh jbhyqa'g or noyr gb unaqyr vg.\"</span>\n \
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 50, 0)
 		animate(invoker, color = initial(invoker.color), time = 10)
-		for(var/mob/living/L in range(5, invoker))
+		for(var/mob/living/L in view(7, invoker))
 			if(is_servant_of_ratvar(L))
 				continue
-			invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 6)
+			invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
+			var/randdamage = rand(30, 50)
 			if(iscarbon(L))
-				L.electrocute_act(rand(30, 50), "Nzcrentr's power")
+				L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)
 			else
-				L.adjustFireLoss(rand(30, 50))
+				L.adjustFireLoss(randdamage)
 				L.visible_message(
 				"<span class='danger'>[src] was shocked by Nzcrentr's power!</span>", \
 				"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -1069,7 +1071,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				)
 			L.Weaken(8)
 			playsound(L, 'sound/magic/LightningShock.ogg', 50, 0)
-	return 1
+		return 1
+	else
+		return 0
 
 
 
