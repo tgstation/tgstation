@@ -1,2 +1,4 @@
 author: DrCelt
-changes: []
+changes:
+- tweak: changes the effect of high pressure on heat loss.
+- tweak: disables high pressure heat loss multiplier effect on ventcrawling mobs.
