@@ -15,23 +15,31 @@
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
-	src.teleport(M)
+	teleport(M)
 
-/obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
+/obj/effect/portal/attack_hand(mob/user)
+	if(Adjacent(user))
+		teleport(user)
+
+/obj/effect/portal/attackby(obj/item/weapon/W, mob/user, params)
+	if(user && Adjacent(user))
+		teleport(user)
+
+
+
+/obj/effect/portal/New(loc, turf/target, creator=null, lifespan=300)
+	..()
 	portals += src
-	src.loc = loc
 	src.target = target
 	src.creator = creator
-	var/area/A = target.loc
-	if(A.noteleport) // No point in persisting if the target is unreachable.
+
+	var/area/A = get_area(target)
+	if(A && A.noteleport) // No point in persisting if the target is unreachable.
 		qdel(src)
 		return
-	for(var/mob/M in src.loc)
-		src.teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
 			qdel(src)
-	return
 
 /obj/effect/portal/Destroy()
 	portals -= src

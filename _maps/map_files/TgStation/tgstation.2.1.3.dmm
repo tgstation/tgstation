@@ -60456,6 +60456,7 @@
 	},
 /turf/open/space,
 /area/space)
+
 "cCd" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
@@ -60497,6 +60498,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
+
+"cBZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/office)
+
 
 (1,1,1) = {"
 aaa
@@ -105844,7 +105857,7 @@ aHf
 aIz
 aJM
 aLa
-aMX
+cBZ
 aFw
 aPh
 aQs
