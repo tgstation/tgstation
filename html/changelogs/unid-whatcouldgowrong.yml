@@ -1,6 +1,0 @@
-author: Unid
-
-delete-after: True
-
-changes: 
-- rscadd: It's now possible to draw text with crayons (there's a limit of 15 symbols per drawing)
