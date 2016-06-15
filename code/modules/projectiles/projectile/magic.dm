@@ -134,7 +134,7 @@
 	wabbajack(change)
 
 /proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform)
+	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
 	M.notransform = 1
