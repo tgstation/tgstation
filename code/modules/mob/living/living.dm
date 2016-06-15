@@ -1034,6 +1034,9 @@ Sorry Giacom. Please don't be mad :(
 	else
 		new_mob.key = key
 
+	new_mob.name = name
+	new_mob.real_name = real_name
+
 	for(var/para in hasparasites())
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.summoner = new_mob

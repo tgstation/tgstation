@@ -134,153 +134,151 @@
 	wabbajack(change)
 
 /proc/wabbajack(mob/living/M)
-	if(istype(M))
-		if(istype(M, /mob/living) && M.stat != DEAD)
-			if(M.notransform)
-				return
-			M.notransform = 1
-			M.canmove = 0
-			M.icon = null
-			M.overlays.Cut()
-			M.invisibility = INVISIBILITY_ABSTRACT
+	if(!istype(M) || M.stat == DEAD || M.notransform)
+		return
 
-			if(istype(M, /mob/living/silicon/robot))
-				var/mob/living/silicon/robot/Robot = M
-				if(Robot.mmi)
-					qdel(Robot.mmi)
-				Robot.notify_ai(1)
+	M.notransform = 1
+	M.canmove = 0
+	M.icon = null
+	M.overlays.Cut()
+	M.invisibility = INVISIBILITY_ABSTRACT
+
+	var/list/contents = M.contents.Copy()
+
+	if(istype(M, /mob/living/silicon/robot))
+		var/mob/living/silicon/robot/Robot = M
+		if(Robot.mmi)
+			qdel(Robot.mmi)
+		Robot.notify_ai(1)
+	else
+		for(var/obj/item/W in contents)
+			if(!M.unEquip(W))
+				qdel(W)
+
+	var/mob/living/new_mob
+
+	var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+	switch(randomize)
+		if("monkey")
+			new_mob = new /mob/living/carbon/monkey(M.loc)
+		if("robot")
+			var/robot = pick("cyborg","syndiborg","drone")
+			switch(robot)
+				if("cyborg")
+					new_mob = new /mob/living/silicon/robot(M.loc)
+				if("syndiborg")
+					new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+				if("drone")
+					new_mob = new /mob/living/simple_animal/drone(M.loc)
+					var/mob/living/simple_animal/drone/D = new_mob
+					D.liberate() // F R E E D R O N E
+			if(issilicon(new_mob))
+				new_mob.gender = M.gender
+				new_mob.invisibility = 0
+				new_mob.job = "Cyborg"
+				var/mob/living/silicon/robot/Robot = new_mob
+				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+		if("slime")
+			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
+		if("xeno")
+			if(prob(50))
+				new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
 			else
-				for(var/obj/item/W in M)
-					if(!M.unEquip(W))
-						qdel(W)
+				new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
 
-			var/mob/living/new_mob
-
-			var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
-			switch(randomize)
-				if("monkey")
-					new_mob = new /mob/living/carbon/monkey(M.loc)
-					new_mob.languages |= HUMAN
-				if("robot")
-					var/robot = pick("cyborg","syndiborg","drone")
-					switch(robot)
-						if("cyborg")
-							new_mob = new /mob/living/silicon/robot(M.loc)
-						if("syndiborg")
-							new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
-						if("drone")
-							new_mob = new /mob/living/simple_animal/drone(M.loc)
-							var/mob/living/simple_animal/drone/D = new_mob
-							D.liberate() // F R E E D R O N E
-					if(issilicon(new_mob))
-						new_mob.gender = M.gender
-						new_mob.invisibility = 0
-						new_mob.job = "Cyborg"
-						var/mob/living/silicon/robot/Robot = new_mob
-						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+		if("animal")
+			if(prob(50))
+				var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
+				switch(beast)
+					if("carp")
+						new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
+					if("bear")
+						new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
+					if("mushroom")
+						new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
+					if("statue")
+						new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
+					if("bat")
+						new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
+					if("goat")
+						new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
+					if("killertomato")
+						new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
+					if("spiderbase")
+						new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
+					if("spiderhunter")
+						new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
+					if("blobbernaut")
+						new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
+					if("magicarp")
+						new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
+					if("chaosmagicarp")
+						new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
+			else
+				var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
+				switch(animal)
+					if("parrot")
+						new_mob = new /mob/living/simple_animal/parrot(M.loc)
+					if("corgi")
+						new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
+					if("crab")
+						new_mob = new /mob/living/simple_animal/crab(M.loc)
+					if("pug")
+						new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
+					if("cat")
+						new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
+					if("mouse")
+						new_mob = new /mob/living/simple_animal/mouse(M.loc)
+					if("chicken")
+						new_mob = new /mob/living/simple_animal/chicken(M.loc)
+					if("cow")
+						new_mob = new /mob/living/simple_animal/cow(M.loc)
+					if("lizard")
+						new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
+					if("fox")
+						new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
+					if("butterfly")
+						new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 					else
-						new_mob.languages |= HUMAN
-				if("slime")
-					var/mob/living/simple_animal/slime/random/slimey
-					slimey = new(get_turf(M), null, new_is_adult=prob(50))
-					new_mob = slimey
-					new_mob.languages |= HUMAN
-				if("xeno")
-					if(prob(50))
-						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
-					else
-						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
-					new_mob.languages |= HUMAN
+						new_mob = new /mob/living/simple_animal/chick(M.loc)
+		if("humanoid")
+			new_mob = new /mob/living/carbon/human(M.loc)
 
-				if("animal")
-					if(prob(50))
-						var/beast = pick("carp","bear","mushroom","statue", "bat", "goat","killertomato", "spiderbase", "spiderhunter", "blobbernaut", "magicarp", "chaosmagicarp")
-						switch(beast)
-							if("carp")
-								new_mob = new /mob/living/simple_animal/hostile/carp(M.loc)
-							if("bear")
-								new_mob = new /mob/living/simple_animal/hostile/bear(M.loc)
-							if("mushroom")
-								new_mob = new /mob/living/simple_animal/hostile/mushroom(M.loc)
-							if("statue")
-								new_mob = new /mob/living/simple_animal/hostile/statue(M.loc)
-							if("bat")
-								new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
-							if("goat")
-								new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
-							if("killertomato")
-								new_mob = new /mob/living/simple_animal/hostile/killertomato(M.loc)
-							if("spiderbase")
-								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider(M.loc)
-							if("spiderhunter")
-								new_mob = new /mob/living/simple_animal/hostile/poison/giant_spider/hunter(M.loc)
-							if("blobbernaut")
-								new_mob = new /mob/living/simple_animal/hostile/blob/blobbernaut/independent(M.loc)
-							if("magicarp")
-								new_mob = new /mob/living/simple_animal/hostile/carp/ranged(M.loc)
-							if("chaosmagicarp")
-								new_mob = new /mob/living/simple_animal/hostile/carp/ranged/chaos(M.loc)
-					else
-						var/animal = pick("parrot","corgi","crab","pug","cat","mouse","chicken","cow","lizard","chick","fox","butterfly")
-						switch(animal)
-							if("parrot")
-								new_mob = new /mob/living/simple_animal/parrot(M.loc)
-							if("corgi")
-								new_mob = new /mob/living/simple_animal/pet/dog/corgi(M.loc)
-							if("crab")
-								new_mob = new /mob/living/simple_animal/crab(M.loc)
-							if("pug")
-								new_mob = new /mob/living/simple_animal/pet/dog/pug(M.loc)
-							if("cat")
-								new_mob = new /mob/living/simple_animal/pet/cat(M.loc)
-							if("mouse")
-								new_mob = new /mob/living/simple_animal/mouse(M.loc)
-							if("chicken")
-								new_mob = new /mob/living/simple_animal/chicken(M.loc)
-							if("cow")
-								new_mob = new /mob/living/simple_animal/cow(M.loc)
-							if("lizard")
-								new_mob = new /mob/living/simple_animal/hostile/lizard(M.loc)
-							if("fox")
-								new_mob = new /mob/living/simple_animal/pet/fox(M.loc)
-							if("butterfly")
-								new_mob = new /mob/living/simple_animal/butterfly(M.loc)
-							else
-								new_mob = new /mob/living/simple_animal/chick(M.loc)
-					new_mob.languages |= HUMAN
-				if("humanoid")
-					new_mob = new /mob/living/carbon/human(M.loc)
+			var/datum/preferences/A = new()	//Randomize appearance for the human
+			A.copy_to(new_mob, icon_updates=0)
 
-					var/datum/preferences/A = new()	//Randomize appearance for the human
-					A.copy_to(new_mob, icon_updates=0)
+			var/mob/living/carbon/human/H = new_mob
+			if(prob(50))
+				var/list/all_species = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = new speciestype()
+					if(!S.dangerous_existence)
+						all_species += speciestype
+				H.set_species(pick(all_species), icon_update=0)
+			H.update_body()
+			H.update_hair()
+			H.update_body_parts()
+			H.dna.update_dna_identity()
+		else
+			return
 
-					var/mob/living/carbon/human/H = new_mob
-					if(prob(50))
-						var/list/all_species = list()
-						for(var/speciestype in subtypesof(/datum/species))
-							var/datum/species/S = new speciestype()
-							if(!S.dangerous_existence)
-								all_species += speciestype
-						H.set_species(pick(all_species), icon_update=0)
-						H.real_name = H.dna.species.random_name(H.gender,1)
-					H.update_body()
-					H.update_hair()
-					H.update_body_parts()
-					H.dna.update_dna_identity()
-				else
-					return
+	new_mob.languages |= HUMAN
+	new_mob.attack_log = M.attack_log
 
-			new_mob.attack_log = M.attack_log
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+	// Some forms can still wear some items
+	for(var/obj/item/W in contents)
+		new_mob.equip_to_appropriate_slot(W)
 
-			new_mob.a_intent = "harm"
+	M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
-			M.wabbajack_act(new_mob)
+	new_mob.a_intent = "harm"
 
-			new_mob << "<B>Your form morphs into that of a [randomize].</B>"
+	M.wabbajack_act(new_mob)
 
-			qdel(M)
-			return new_mob
+	new_mob << "<span class='warning'>Your form morphs into that of a [randomize].</span>"
+
+	qdel(M)
+	return new_mob
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
