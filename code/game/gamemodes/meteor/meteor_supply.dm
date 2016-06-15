@@ -1,4 +1,4 @@
-/datum/game_mode/meteor/proc/meteor_initial_supply()
+/datum/universal_state/meteor_storm/proc/meteor_initial_supply()
 
 	var/list/meteor_initial_drop = list(/obj/structure/closet/crate/engi/meteor_materials, \
 	/obj/structure/closet/crate/meteor_assorted_protection, \

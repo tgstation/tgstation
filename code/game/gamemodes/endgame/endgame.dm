@@ -49,6 +49,10 @@
 	if(decay_rate && prob(decay_rate))
 		DecayTurf(T)
 
+// In the event you just need something called every tick, here it is
+/datum/universal_state/proc/process()
+	return 0
+
 // Apply changes when exiting state
 /datum/universal_state/proc/OnExit()
  	// Does nothing by default
