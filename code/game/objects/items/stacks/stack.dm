@@ -19,6 +19,7 @@
 	var/perunit = 3750
 	var/max_amount //also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/redeemed = 0 // For selling minerals to central command via supply shuttle.
+	var/restock_amount = 0 //For borg chargers restocking.
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
@@ -339,10 +340,10 @@
 	return ..()
 
 /obj/item/stack/restock()
-	if(istype(src,/obj/item/stack/cable_coil) || istype(src,/obj/item/stack/medical))
-		if(amount < max_amount)
-			amount += 2
-		if(amount > max_amount)
-			amount = max_amount
+	if(!restock_amount) return //Do not restock this stack type
+	if(amount < max_amount)
+		amount += restock_amount
+	if(amount > max_amount)
+		amount = max_amount
 
 #undef CORRECT_STACK_NAME

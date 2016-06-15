@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
+	restock_amount = 2
 	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10

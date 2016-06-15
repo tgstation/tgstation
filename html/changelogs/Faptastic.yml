@@ -1,2 +1,4 @@
 author: Faptastic
-changes: []
+changes: 
+- rscadd: The miner borg module now has a destination tagger and package wrap.
+- tweak: The miner borg is now known as the supply borg, hail cargonia.

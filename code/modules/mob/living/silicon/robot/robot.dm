@@ -223,7 +223,7 @@
 		sensor = null
 
 /proc/getAvailableRobotModules()
-	var/list/modules = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Security")
+	var/list/modules = list("Standard", "Engineering", "Medical", "Supply", "Janitor", "Service", "Security")
 	if(security_level == SEC_LEVEL_RED) //Add crisis to this check if you want to make it available at an admin's whim
 		modules+="Combat"
 	return modules
@@ -273,7 +273,7 @@
 			module_sprites["#27"] = "servbot-service"
 			speed = 0
 
-		if("Miner")
+		if("Supply")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			radio.insert_key(new/obj/item/device/encryptionkey/headset_cargo(radio))
 			if(camera && "Robots" in camera.network)

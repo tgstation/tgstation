@@ -20,6 +20,7 @@ var/global/list/datum/stack_recipe/cable_recipes = list ( \
 	icon_state = "coil_red"
 	gender = NEUTER
 	amount = MAXCOIL
+	restock_amount = 2
 	singular_name = "cable piece"
 	max_amount = MAXCOIL
 	_color = "red"
