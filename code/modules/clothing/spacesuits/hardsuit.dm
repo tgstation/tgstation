@@ -83,6 +83,11 @@
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
+/obj/item/clothing/suit/space/hardsuit/New()
+	if(jetpack && ispath(jetpack))
+		jetpack = new jetpack(src)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
@@ -162,6 +167,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 
 	//Mining hardsuit
@@ -276,10 +282,7 @@
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-
-/obj/item/clothing/suit/space/hardsuit/syndi/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 
 //Elite Syndie suit

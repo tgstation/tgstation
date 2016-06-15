@@ -428,7 +428,6 @@
 
 		if(3)
 			adjustBruteLoss(30)
-	updatehealth()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)

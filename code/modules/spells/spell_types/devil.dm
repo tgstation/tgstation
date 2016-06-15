@@ -14,8 +14,6 @@
 	action_icon_state = "pitchfork"
 	action_background_icon_state = "bg_demon"
 
-
-
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/cast(list/targets, mob/user = usr)
 	if (pitchfork)
 		qdel(pitchfork)
@@ -82,7 +80,7 @@
 	desc = "This spell launches hellfire at the target."
 
 	school = "evocation"
-	charge_max = 30
+	charge_max = 80
 	clothes_req = 0
 	invocation = "Your very soul will catch fire!"
 	invocation_type = "shout"

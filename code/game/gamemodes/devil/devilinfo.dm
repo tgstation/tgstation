@@ -1,4 +1,6 @@
-#define POWERUPTHRESHOLD 3 //How many souls are needed per stage.
+#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
+#define TRUE_THRESHOLD 7
+#define ARCH_THRESHOLD 12
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -37,9 +39,9 @@ var/global/list/lawlorify = list (
 			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
 			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
 			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
-			BANISH_CANDLES = "A large number of candles will prevent it from resurrecting.",
+			BANISH_CANDLES = "A large number of nearby lit candles will prevent it from resurrecting.",
 			BANISH_DESTRUCTION = "It's corpse must be utterly destroyed to prevent resurrection.",
-			BANISH_FUNERAL_GARB = "Funeral garments will prevent the devil from resurrecting."
+			BANISH_FUNERAL_GARB = "If clad in funeral garments, this devil will be unable to resurrect.  Should the clothes not fit, lay them gently on top of the devil's corpse."
 		),
 		LAW = list(
 			OBLIGATION_FOOD = "When not acting in self defense, you must always offer your victim food before harming them.",
@@ -143,11 +145,11 @@ var/global/list/lawlorify = list (
 		if(0)
 			owner.current << "<span class='warning'>Your hellish powers have been restored."
 			give_base_spells()
-		if(POWERUPTHRESHOLD)
+		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
-		if(POWERUPTHRESHOLD*2)
+		if(TRUE_THRESHOLD)
 			increase_true_devil()
-		if(POWERUPTHRESHOLD*3)
+		if(ARCH_THRESHOLD)
 			increase_arch_devil()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
@@ -161,9 +163,9 @@ var/global/list/lawlorify = list (
 		if(-1)
 			remove_spells()
 			owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
-		if(POWERUPTHRESHOLD-1)
+		if(BLOOD_THRESHOLD-1)
 			regress_humanoid()
-		if(POWERUPTHRESHOLD*2-1)
+		if(TRUE_THRESHOLD-1)
 			regress_blood_lizard()
 
 /datum/devilinfo/proc/increase_form()
@@ -367,11 +369,16 @@ var/global/list/lawlorify = list (
 				var/mob/living/carbon/human/H = body
 				if(H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/burial))
 					return 1
-			return 0
+				return 0
+			else
+				for(var/obj/item/clothing/under/burial/B in range(0,body))
+					if(B.loc == get_turf(B)) //Make sure it's not in someone's inventory or something.
+						return 1
+				return 0
 
 /datum/devilinfo/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
-	if(SOULVALUE < POWERUPTHRESHOLD * 3) // once ascended, arch devils do not go down in power by any means.
+	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
 	if(body)
 		body.revive(1,0)
@@ -396,23 +403,22 @@ var/global/list/lawlorify = list (
 			currentMob.change_mob_type( /mob/living/carbon/human , targetturf, null, 1)
 			var/mob/living/carbon/human/H  = owner.current
 			give_summon_contract()
-			if(SOULVALUE >= POWERUPTHRESHOLD)
+			if(SOULVALUE >= BLOOD_THRESHOLD)
 				H.set_species(/datum/species/lizard, 1)
 				H.underwear = "Nude"
 				H.undershirt = "Nude"
 				H.socks = "Nude"
 				H.dna.features["mcolor"] = "511"
 				H.regenerate_icons()
-			if(SOULVALUE >= POWERUPTHRESHOLD * 2) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
-				var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
-				A.faction |= "hell"
-				H.forceMove(A)
-				A.oldform = H
-				A.set_name()
-				owner.transfer_to(A)
-				if(SOULVALUE >= POWERUPTHRESHOLD * 3)
-					A.convert_to_archdevil()
-
+				if(SOULVALUE >= TRUE_THRESHOLD) //Yes, BOTH this and the above if statement are to run if soulpower is high enough.
+					var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(targetturf)
+					A.faction |= "hell"
+					H.forceMove(A)
+					A.oldform = H
+					A.set_name()
+					owner.transfer_to(A)
+					if(SOULVALUE >= ARCH_THRESHOLD)
+						A.convert_to_archdevil()
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()

@@ -51,3 +51,14 @@
 			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 		adjustBruteLoss(-L.maxHealth/2)
 		L.gib()
+
+/mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
+	switch (severity)
+		if (1)
+			adjustBruteLoss(250)
+
+		if (2)
+			adjustBruteLoss(100)
+
+		if(3)
+			adjustBruteLoss(50)

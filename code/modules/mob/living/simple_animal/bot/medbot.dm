@@ -22,6 +22,7 @@
 	bot_core_type = /obj/machinery/bot_core/medbot
 	window_id = "automed"
 	window_name = "Automatic Medical Unit v1.1"
+	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
 
 	var/obj/item/weapon/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null //Set to "tox", "ointment" or "o2" for the other two firstaid kits.
@@ -88,9 +89,6 @@
 		var/datum/job/doctor/J = new/datum/job/doctor
 		access_card.access += J.get_access()
 		prev_access = access_card.access
-
-	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
-	medsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()

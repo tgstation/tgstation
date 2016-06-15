@@ -20,6 +20,7 @@
 	window_id = "autoed209"
 	window_name = "Automatic Security Unit v2.6"
 	allow_pai = 0
+	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/lastfired = 0
 	var/shot_delay = 3 //.3 seconds between shots
