@@ -39067,6 +39067,9 @@
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/caution/corner{
 	dir = 8
 	},
@@ -39815,8 +39818,8 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bJu" = (
-/obj/machinery/light_construct{
-	dir = 4
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/construction)
@@ -39884,10 +39887,6 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 8
 	},
@@ -40528,14 +40527,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bKP" = (
-/obj/effect/landmark{
-	name = "xeno_spawn";
-	pixel_x = -1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
 /area/construction)
 "bKQ" = (
 /obj/structure/rack{
@@ -40578,14 +40571,13 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bKU" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Construction Area";
-	req_access_txt = "32"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/glass{
+	name = "Public Autolathe"
+	},
+/turf/open/floor/plasteel,
 /area/construction)
 "bKV" = (
 /obj/structure/cable{
@@ -40936,10 +40928,15 @@
 /area/construction)
 "bLG" = (
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 0;
+	pixel_y = -27
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/device/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /turf/open/floor/plasteel,
 /area/construction)
@@ -41818,10 +41815,17 @@
 	frequency = 1439;
 	pixel_y = 23
 	},
+/obj/structure/closet/toolcloset,
 /turf/open/floor/plating,
 /area/construction)
 "bNM" = (
-/obj/structure/closet/toolcloset,
+/obj/machinery/autolathe,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/construction)
 "bNN" = (
@@ -43348,9 +43352,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/turf/open/floor/plasteel/caution/corner{
-	dir = 8
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bRq" = (
 /turf/open/floor/plasteel/caution{
@@ -43836,10 +43838,8 @@
 /turf/open/floor/plating,
 /area/construction)
 "bSv" = (
-/obj/machinery/camera{
-	c_tag = "Construction Area";
-	dir = 1
-	},
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/construction)
 "bSw" = (
@@ -43855,11 +43855,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bSx" = (
-/obj/structure/table,
-/obj/item/stack/cable_coil{
-	amount = 5
-	},
-/obj/item/device/flashlight,
+/obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/construction)
 "bSy" = (
@@ -43870,7 +43866,7 @@
 /turf/open/floor/plating,
 /area/construction)
 "bSz" = (
-/obj/structure/table,
+/obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/construction)
 "bSA" = (
@@ -60466,6 +60462,117 @@
 /obj/item/clothing/under/burial,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
+"cCn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	on = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
+"cCm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/construction)
+"cCl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/turf/open/floor/plasteel,
+/area/construction)
+"cCk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Construction Area";
+	dir = 1
+	},
+/obj/structure/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/hazardvest,
+/turf/open/floor/plasteel,
+/area/construction)
+"cCj" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/construction)
+"cCi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/construction)
+"cCh" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/construction)
+"cCg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel,
+/area/construction)
+"cCf" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Construction Area";
+	req_access_txt = "32"
+	},
+/turf/open/floor/plating,
+/area/construction)
+"cCe" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/junction,
+/turf/open/floor/plasteel/caution/corner{
+	dir = 8
+	},
+/area/hallway/primary/aft)
+"cCd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/construction)
+"cCc" = (
+/obj/structure/closet/toolcloset,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/construction)
+"cCb" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/construction)
+"cCa" = (
+/obj/effect/landmark{
+	name = "xeno_spawn";
+	pixel_x = -1
+	},
+/turf/open/floor/plating,
+/area/construction)
 
 (1,1,1) = {"
 aaa
@@ -87094,8 +87201,8 @@ bFa
 bLz
 bCs
 bNH
-bNJ
-bRl
+bQc
+bKA
 bLF
 bNJ
 bNI
@@ -87350,11 +87457,11 @@ bJj
 bKu
 bLy
 bCs
-bNJ
+cCa
 bNJ
 bKx
-bLF
-bNJ
+cCj
+cCn
 bNI
 bUA
 bVJ
@@ -87611,7 +87718,7 @@ bNL
 bNJ
 bRl
 bLF
-bNJ
+bSy
 bNI
 bUz
 bVJ
@@ -87864,11 +87971,11 @@ bJk
 bFa
 bLA
 bCs
-bNK
-bQc
-bKA
-bLF
-bSv
+bNI
+cCf
+bRn
+bON
+bNI
 bNI
 bUB
 bVJ
@@ -88121,12 +88228,12 @@ bJm
 bFa
 bHO
 bCs
-bNK
-bNK
+cCb
+cCg
 bKP
-bLF
-bSy
+cCk
 bNI
+bSv
 bEP
 bVJ
 bVJ
@@ -88381,9 +88488,9 @@ bCs
 bNM
 bNK
 bKF
-bLF
-bSx
+cCl
 bNI
+bSx
 bEP
 bVL
 bVJ
@@ -88635,12 +88742,12 @@ bJn
 bHi
 bHQ
 bCs
-bNM
+cCc
 bJu
-bKF
+cCi
 bLG
-bSz
 bNI
+bSz
 bUD
 bVM
 bVM
@@ -88892,10 +88999,10 @@ bCs
 bLD
 bCs
 bCs
-bNI
-bNI
+cCd
+cCh
 bKU
-bON
+cCm
 bNI
 bNI
 bCq
@@ -89149,11 +89256,11 @@ bJp
 bHk
 bHR
 bIe
+cCe
 bFd
-bJz
 bRp
 cav
-bSA
+bJz
 bTJ
 bSA
 bSA
