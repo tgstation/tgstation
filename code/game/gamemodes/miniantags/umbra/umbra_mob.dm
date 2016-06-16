@@ -100,6 +100,9 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 			immobilize(30)
 			reveal(50)
 			return
+		if(possessed.stat == DEAD)
+			unpossess()
+			return
 		adjust_vitae(UMBRA_VITAE_DRAIN_RATE, TRUE, "passive gain")
 		time_possessing++
 		switch(time_possessing)
