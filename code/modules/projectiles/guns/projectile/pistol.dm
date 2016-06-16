@@ -40,6 +40,9 @@
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/gold/onedeag
+	mag_type = /obj/item/ammo_box/magazine/m50/onedeag
+
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/camo
 	desc = "A Deagle brand Deagle for operators operating operationally. Uses .50 AE ammo."
 	icon_state = "deaglecamo"
