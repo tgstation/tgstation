@@ -241,8 +241,8 @@
 	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
 	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gung'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
 	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gurfr vqvbgf va gur neg bs pbairefvba.\"", \
-	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Qevire gung bayl gnxrf gjb frpbaqf gb vaibxr?\"", \
-	"\"Ubj qb gurl snvy gb hfr Qrzragvn Qbpgevar, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
+	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
+	"\"Ubj qb gurl snvy gb hfr n Fvtvy bs Npprffvba, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
