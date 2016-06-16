@@ -215,13 +215,14 @@
 /datum/map_template/ruin/space/oldAIsat
 	id = "oldAIsat"
 	suffix = "oldAIsat.dmm"
-	name = "Abandoned AI Satellite"
-	description = "Early experiments in AI housing focused on large \
-		remote structures that could not be easily penetrated. \
-		Over time the benifits of having immediate physical access \
-		to the AI core has been proven in the blood of dozens of \
-		\"liberated\" stations."
-
+	name = "Abandoned Telecommunications Satellite"
+	description = "When the inspector told the employees that they \
+		were all fired, and that their jobs \"could be done by \
+		trained lizards anyway\", they reacted badly. This event and \
+		others is the reason why Central always sends an ERT squad with \
+		their competent inspectors. Incompetent inspectors are told \
+		they can \"do it alone\" because they're \"that pro\". \
+		Incompetent inspectors believe this."
 
 /datum/map_template/ruin/space/oldteleporter
 	id = "oldteleporter"
