@@ -35,13 +35,13 @@
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 
-/obj/item/clockwork/slab/debug
-	no_cost = TRUE
-
-/obj/item/clockwork/slab/internal
+/obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
 	name = "scripture motor"
 	no_cost = TRUE
 	produces_components = FALSE
+
+/obj/item/clockwork/slab/debug
+	no_cost = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
@@ -58,7 +58,10 @@
 	return ..()
 
 /obj/item/clockwork/slab/process()
-	if(!produces_components || production_time > world.time)
+	if(!produces_components)
+		SSobj.processing -= src
+		return
+	if(production_time > world.time)
 		return
 	production_time = world.time + SLAB_PRODUCTION_TIME
 	var/mob/living/L

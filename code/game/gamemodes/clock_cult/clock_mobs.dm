@@ -67,7 +67,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/adjustHealth(amount)
 	. = ..()
-	if(!ratvar_awakens) //if ratvar is up we ignore movement delay
+	if(!ratvar_awakens && amount > 0) //if ratvar is up we ignore movement delay
 		if(movement_delay_time > world.time)
 			movement_delay_time = movement_delay_time + amount*3
 		else
@@ -174,7 +174,7 @@
 				melee_damage_lower = 5
 				melee_damage_upper = 5
 				attacktext = "weakly slashes"
-			if(99 to 100)
+			if(99 to fatigue_recall_threshold)
 				src << "<span class='userdanger'>The fatigue becomes too much!</span>"
 				if(host)
 					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
