@@ -800,7 +800,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_APPLICATION
 
 /datum/clockwork_scripture/memory_allocation/check_special_requirements()
-	for(var/mob/living/simple_animal/hostile/clockwork_marauder/M in living_mob_list)
+	for(var/mob/living/simple_animal/hostile/clockwork/marauder/M in living_mob_list)
 		if(M.host == invoker)
 			invoker << "<span class='warning'>You can only house one marauder at a time!</span>"
 			return 0
@@ -832,7 +832,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return 0
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
-	var/mob/living/simple_animal/hostile/clockwork_marauder/M = new(invoker)
+	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
 	M.host = invoker
 	M << M.playstyle_string

@@ -393,8 +393,9 @@
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
 			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
 			return 0
-		user.visible_message("<span class='notice'>[user] clicks [S] into place on [src].</span>", "<span class='brass'>You insert [S] into [src]. It whirs and begins to rise.</span>")
-		var/mob/living/simple_animal/hostile/anima_fragment/A = new(get_turf(src))
+		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
+		var/mob/living/simple_animal/hostile/clockwork/fragment/A = new(get_turf(src))
+		A.visible_message("[src] whirs and rises from the ground on a flickering jet of reddish fire.")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
 		A << A.playstyle_string

@@ -30,9 +30,15 @@
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/produces_components = TRUE //if it produces components at all
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+
+/obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
+	name = "scripture motor"
+	no_cost = TRUE
+	produces_components = FALSE
 
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
@@ -52,6 +58,9 @@
 	return ..()
 
 /obj/item/clockwork/slab/process()
+	if(!produces_components)
+		SSobj.processing -= src
+		return
 	if(production_time > world.time)
 		return
 	production_time = world.time + SLAB_PRODUCTION_TIME
