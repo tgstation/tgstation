@@ -378,8 +378,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L))
-			L.confused = min(L.confused + 10, 100)
-			L.dizziness = min(L.dizziness + 10, 100)
+			L.confused = min(L.confused + 20, 100)
+			L.dizziness = min(L.dizziness + 20, 100)
 			L.Stun(1)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
 		invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
