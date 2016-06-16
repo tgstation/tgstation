@@ -1,15 +1,21 @@
 var/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack
-	name = "Fulton Recovery Pack"
+	name = "fulton material extraction pack"
 	desc = "A balloon that can be used to extract a target to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	var/obj/machinery/extraction_point/beacon
-	var/list/beacon_networks = ("station")
+	var/obj/structure/extraction_point/beacon
+	var/list/beacon_networks = list("station")
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 0
+
+/obj/item/weapon/extraction_pack/medivac
+	name = "fulton medivac extraction pack"
+	desc = "A specialized extraction balloon capable of safely extracting living targets."
+	uses_left = 2
+	safe_for_living_creatures = 1
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()
@@ -18,7 +24,7 @@ var/list/total_extraction_beacons = list()
 /obj/item/weapon/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
 	for(var/B in total_extraction_beacons)
-		var/obj/machinery/extraction_point/EP = B
+		var/obj/structure/extraction_point/EP = B
 		if(EP.beacon_network in beacon_networks)
 			possible_beacons += EP
 
@@ -100,8 +106,7 @@ var/list/total_extraction_beacons = list()
 			animate(holder_obj, pixel_z = 1000, time = 30)
 			if(istype(A, /mob/living/carbon/human))
 				var/mob/living/carbon/human/L = A
-			//	L.forcesay(extraction_appends) // ";HELP BL-AAAAAAAAAAAAAAAAHHHHHHHHH"
-				L.SetParalysis(0) // wakey wakey
+				L.SetParalysis(0)
 				L.drowsyness = 0
 				L.sleeping = 0
 			sleep(30)
@@ -131,8 +136,23 @@ var/list/total_extraction_beacons = list()
 			if(uses_left <= 0)
 				qdel(src)
 
-/obj/machinery/extraction_point
-	name = "Fulton Recovery Beacon"
+
+/obj/item/fulton_core
+	name = "extraction beacon signaller"
+	desc = "Emits a signal which fulton recovery devices can lock on to. Craft with metal to create a beacon."
+	icon = 'icons/obj/stock_parts.dmi'
+	icon_state = "subspace_amplifier"
+
+/datum/crafting_recipe/fulton
+	name = "fulton recovery beacon"
+	result = /obj/structure/extraction_point
+	reqs = list(/obj/item/fulton_core = 1,
+				/obj/item/stack/sheet/metal = 5)
+	time = 15
+	category = CAT_MISC
+
+/obj/structure/extraction_point
+	name = "fulton recovery beacon"
 	desc = "A beacon for the fulton recovery system. Hit a beacon with a pack to link the pack to a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_point"
@@ -140,13 +160,13 @@ var/list/total_extraction_beacons = list()
 	density = 0
 	var/beacon_network = "station"
 
-/obj/machinery/extraction_point/New()
+/obj/structure/extraction_point/New()
 	var/area/area_name = get_area(src)
 	name += " ([rand(100,999)]) ([area_name.name])"
 	total_extraction_beacons += src
 	..()
 
-/obj/machinery/extraction_point/Destroy()
+/obj/structure/extraction_point/Destroy()
 	total_extraction_beacons -= src
 	..()
 
@@ -155,14 +175,14 @@ var/list/total_extraction_beacons = list()
 	desc = "you shouldnt see this"
 	var/atom/movable/stored_obj
 
-
-
 /obj/item/weapon/extraction_pack/proc/check_for_living_mobs(atom/A)
 	if(istype(A, /mob/living))
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return 1
-	for(var/thing in A)
-		if(.(thing))
-			return 1
+	for(var/atom/thing in A.GetAllContents())
+		if(istype(A, /mob/living))
+			var/mob/living/L = A
+			if(L.stat != DEAD)
+				return 1
 	return 0
