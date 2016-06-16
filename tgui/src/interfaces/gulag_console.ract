@@ -7,7 +7,7 @@
 				<span>{{data.teleporter_location}}</span>
 			</ui-section>
 			<ui-section label='Locked status'>
-				<ui-button action="teleporter_lock">{{data.teleporter_lock ? "Locked" : "Unlocked"}}</ui-button>
+				<ui-button icon='{{data.teleporter_lock ? "lock" : "unlock"}}' action="teleporter_lock">{{data.teleporter_lock ? "Locked" : "Unlocked"}}</ui-button>
 			</ui-section>
 		{{else}}
 			<span><ui-button action="scan_teleporter">Scan Teleporter</ui-button></span>

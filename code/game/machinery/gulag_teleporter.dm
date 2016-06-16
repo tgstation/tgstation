@@ -17,7 +17,7 @@ The console is located at computer/gulag_teleporter.dm
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
-	var/locked = 0
+	var/locked = FALSE
 	var/list/stored_items = list()
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
@@ -49,29 +49,28 @@ The console is located at computer/gulag_teleporter.dm
 	//open/closed with no occupant
 	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 
-/obj/machinery/gulag_teleporter/relaymove(mob/user as mob)
+/obj/machinery/gulag_teleporter/relaymove(mob/user)
 	if(user.stat != CONSCIOUS)
 		return
 	if(locked)
 		user << "[src] is locked!"
 	open_machine()
 
-/obj/machinery/gulag_teleporter/container_resist()
-	var/mob/living/user = usr
-	var/breakout_time = 1
+/obj/machinery/gulag_teleporter/container_resist(mob/living/user)
+	var/breakout_time = 600
 	if(!locked)
 		open_machine()
 		return
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [breakout_time] minutes.)</span>"
+	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
 	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
 
-	if(do_after(user,(breakout_time*60*10), target = src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time), target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
 			return
 
-		locked = 0
+		locked = FALSE
 		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
 		user << "<span class='notice'>You successfully break out of [src]!</span>"
 
@@ -105,9 +104,7 @@ The console is located at computer/gulag_teleporter.dm
 		stored_items[prisoner] -= W
 		W.forceMove(get_turf(src))
 
-/obj/machinery/gulag_teleporter/proc/handle_prisoner(var/obj/item/id, var/datum/data/record/R)
-	if(!occupant)
-		return
+/obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
 		return
 	strip_occupant()

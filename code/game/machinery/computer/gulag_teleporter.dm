@@ -1,6 +1,6 @@
 //computer that handle the points and teleports the prisoner
 /obj/machinery/computer/gulag_teleporter_computer
-	name = "Labor Camp teleporter console"
+	name = "labor camp teleporter console"
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
@@ -42,7 +42,7 @@
 		ui.open()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
-	var/data = list()
+	var/list/data = list()
 
 	var/list/prisoner_list = list()
 	var/can_change_goal = FALSE
@@ -52,7 +52,8 @@
 		prisoner = teleporter.occupant
 		prisoner_list["name"] = prisoner.name
 		if(!isnull(data_core.general))
-			for(var/datum/data/record/R in data_core.security)
+			for(var/r in data_core.security)
+				var/datum/data/record/R = r
 				if(R.fields["name"] == prisoner_list["name"])
 					temporary_record = R
 					prisoner_list["crimstat"] = temporary_record.fields["criminal"]
@@ -105,9 +106,9 @@
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
 			if(!isnum(new_goal))
 				return
-			if(isnull(new_goal))
+			if(!new_goal)
 				new_goal = default_goal
-			id.goal = round(min(new_goal,1000)) //maximum 1000 points
+			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
 		if("teleporter_lock")
 			teleporter.locked = !teleporter.locked
 		if("teleport")
@@ -122,20 +123,13 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findteleporter()
 	var/obj/machinery/gulag_teleporter/teleporterf = null
 
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in cardinal)
 		teleporterf = locate(/obj/machinery/gulag_teleporter, get_step(src, dir))
-		if(!isnull(teleporterf) && teleporterf.is_operational())
+		if(teleporterf && teleporterf.is_operational())
 			return teleporterf
 
-	return null
-
 /obj/machinery/computer/gulag_teleporter_computer/proc/findbeacon()
-	var/obj/structure/gulag_beacon/beaconf = locate(/obj/structure/gulag_beacon)
-
-	if(!isnull(beaconf))
-		return beaconf
-
-	return null
+	return locate(/obj/structure/gulag_beacon)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/teleport()
 	teleporter.handle_prisoner(id, temporary_record)
