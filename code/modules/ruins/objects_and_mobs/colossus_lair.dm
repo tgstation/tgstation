@@ -52,10 +52,10 @@
 			if(4)
 				words = "Rn bnld enqsg zmc H rgzkk rbqx... rlhkd... rsqhjd xnt cnvm, vgdko!"
 		user.say(words)
-	visible_message("<span class='cult'><font size=5><b>\"Brave words for someone so idiotic.\"</font></b></span>\n<span class='warning'><b>[src] begins to glow and expand!</b></span>")
-	animate(src, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), transform = matrix() * 1.5, time = 50)
+	visible_message("<span class='cult'><font size=5><b>\"Brave words for someone so idiotic.\"</font></b></span>\n<span class='warning'><b>[src] begins to glow and shrink!</b></span>")
+	animate(src, color = rgb(255, 0, 0), transform = matrix() - matrix(), time = 50)
 	sleep(50)
-	visible_message("<span class='userdanger'>[src] erupts in red light!</span>")
+	visible_message("<span class='userdanger'>[src] shifts into something horrible!</span>")
 	new/mob/living/simple_animal/hostile/megafauna/colossus(get_turf(src))
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 0)
 	playsound(src, 'sound/effects/tendril_destroyed.ogg', 100, 0)
