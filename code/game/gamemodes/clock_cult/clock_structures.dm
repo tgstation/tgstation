@@ -82,24 +82,25 @@
 	..()
 	desc = initial(desc)
 	if(takes_damage)
-		var/servant_message = "It is at [health]/[max_health] integrity"
+		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
 		var/other_message = "It seems pristine and undamaged"
 		var/heavily_damaged = FALSE
-		switch(health/max_health)
-			if(100)
-				other_message = "It seems pristine and undamaged"
-			if(100 to 60)
-				other_message = "It looks slightly dented"
-			if(60 to 25)
-				other_message = "It appears heavily damaged"
-				heavily_damaged = TRUE
-			if(25 to 0)
-				other_message = "It's falling apart"
-				heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork  ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		var/healthpercent = (health/max_health) * 100
+		if(healthpercent >= 100)
+			other_message = "It seems pristine and undamaged"
+		else if(healthpercent >= 50)
+			other_message = "It looks slightly dented"
+		else if(healthpercent >= 25)
+			other_message = "It appears heavily damaged"
+			heavily_damaged = TRUE
+		else if(healthpercent >= 0)
+			other_message = "It's falling apart"
+			heavily_damaged = TRUE
+		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
+	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
@@ -317,6 +318,7 @@
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
+	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
@@ -328,14 +330,15 @@
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
 	..()
-	user << "[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"]."
+	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
 
 /obj/structure/clockwork/ocular_warden/process()
+	var/list/validtargets = acquire_nearby_targets()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
 		damage_per_tick = 10
 		sight_range = 5
 	if(target)
-		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range || is_servant_of_ratvar(target))
+		if(!(target in validtargets))
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
@@ -343,25 +346,22 @@
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
 			setDir(get_dir(get_turf(src), get_turf(target)))
-	else
-		if(!acquire_nearby_target() && prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
-			var/list/idle_messages = list("[src] sulkily glares around.", "[src] lazily drifts from side to side.", "[src] looks around for something to burn.", "[src] slowly turns in circles.")
+	if(!target)
+		if(validtargets.len)
+			target = pick(validtargets)
+			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
+			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
-				visible_message("<span class='notice'>[pick(idle_messages)]</span>")
+				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
 			else
-				setDir(pick(NORTH, EAST, SOUTH, WEST) )//Random rotation
+				setDir(pick(cardinal))//Random rotation
 
-/obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
-	var/list/possible_targets = list()
+/obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
+	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind)
-			possible_targets += L
-	if(!possible_targets.len)
-		return 0
-	target = pick(possible_targets)
-	visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-	target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
-	return 1
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND))
+			. += L
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
