@@ -7937,11 +7937,17 @@
 /turf/open/floor/plating,
 /area/security/processing)
 "aqU" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
-/area/construction)
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Cargo Technician"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "aqV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin{
@@ -83807,7 +83813,7 @@ bfm
 bnI
 boR
 bqs
-bqs
+bbR
 bkM
 bNM
 bwd
@@ -84315,7 +84321,7 @@ apd
 beA
 bqp
 bbR
-boU
+aqU
 bLF
 aZK
 bnJ
