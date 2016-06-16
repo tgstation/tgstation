@@ -737,7 +737,7 @@
 /obj/item/clockwork/daemon_shell
 	name = "daemon shell"
 	desc = "A vaguely arachnoid brass shell with a single empty socket in its body."
-	clockwork_desc = "An unpowered daemon. It needs to be attached to a cache."
+	clockwork_desc = "An unpowered daemon. It needs to be attached to a Tinkerer's Cache."
 	icon_state = "daemon_shell"
 	w_class = 3
 
@@ -763,7 +763,7 @@
 	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache)
+	if(!cache || !istype(loc, /obj/structure/clockwork/cache))
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
@@ -802,6 +802,11 @@
 		user << "<span class='[message_span]'>[cultist_message]</span>"
 	if(is_servant_of_ratvar(user) && prob(20))
 		user << "<span class='[message_span]'>[pick(servant_of_ratvar_messages)]</span>"
+
+/obj/item/clockwork/component/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>"
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -864,6 +869,11 @@
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
 	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
 	message_span = "nezbere"
+
+/obj/item/clockwork/component/replicant_alloy/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>"
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"

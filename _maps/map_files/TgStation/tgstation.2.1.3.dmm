@@ -60456,14 +60456,14 @@
 	},
 /turf/open/space,
 /area/space)
-"cCd" = (
+"cCe" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 4;
 	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
-"cCc" = (
+"cCd" = (
 /obj/machinery/atmospherics/components/unary/nitrogen_generator{
 	tag = "icon-o2gen_map (EAST)";
 	icon_state = "o2gen_map";
@@ -60471,7 +60471,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
-"cCb" = (
+"cCc" = (
 /obj/machinery/atmospherics/components/unary/oxygen_generator{
 	tag = "icon-o2gen_map (WEST)";
 	icon_state = "o2gen_map";
@@ -60479,24 +60479,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
-"cCa" = (
+"cCb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
-"cBZ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 8
-	},
+"cCa" = (
+/obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/plasteel,
-/area/atmos)
+/area/medical/sleeper)
+"cBZ" = (
+/obj/structure/table/wood,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/obj/item/clothing/under/burial,
+/turf/open/floor/plasteel/grimy,
+/area/chapel/office)
 
 (1,1,1) = {"
 aaa
@@ -92012,7 +92015,7 @@ bOV
 bQj
 bRw
 bSF
-cCc
+cCd
 bTP
 bRA
 bWQ
@@ -92269,7 +92272,7 @@ bOV
 bQo
 bRz
 bSH
-cCd
+cCe
 bTP
 bRA
 bWQ
@@ -92782,7 +92785,7 @@ bIG
 bJB
 bKV
 bRB
-cBZ
+bQt
 bVV
 bUM
 bVV
@@ -93039,7 +93042,7 @@ bIF
 bOZ
 bQp
 bRA
-cCa
+cCb
 bTO
 bUL
 bVU
@@ -93296,7 +93299,7 @@ bIH
 bJF
 bQr
 bRA
-cCb
+cCc
 bTP
 bOd
 bVX
@@ -95343,7 +95346,7 @@ bzS
 bBc
 bCJ
 buk
-bxQ
+cCa
 bvd
 bKH
 bLK
@@ -105844,7 +105847,7 @@ aHf
 aIz
 aJM
 aLa
-aMX
+cBZ
 aFw
 aPh
 aQs

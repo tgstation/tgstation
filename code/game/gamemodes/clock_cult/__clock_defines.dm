@@ -24,6 +24,17 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 #define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
 
+//porselytizer defines
+#define REPLICANT_ALLOY_UNIT 100 //how much each piece of replicant alloy gives in a clockwork proselytizer
+
+#define REPLICANT_STANDARD REPLICANT_ALLOY_UNIT*0.2 //how much alloy is in anything else; doesn't matter as much as the following
+
+#define REPLICANT_FLOOR REPLICANT_ALLOY_UNIT*0.1 //how much alloy is in a clockwork floor, determines the cost of clockwork floor production
+
+#define REPLICANT_WALL_MINUS_FLOOR REPLICANT_ALLOY_UNIT*0.4 //amount of alloy in a clockwork wall, determines the cost of clockwork wall production
+
+#define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
+
 //Ark defines
 #define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick
 
