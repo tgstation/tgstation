@@ -455,13 +455,6 @@
 	screen_loc = ui_health
 	mouse_opacity = 0
 
-/obj/screen/healths/revenant
-	name = "essence"
-	icon = 'icons/mob/actions.dmi'
-	icon_state = "bg_revenant"
-	screen_loc = ui_health
-	mouse_opacity = 0
-
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll

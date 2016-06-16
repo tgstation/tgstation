@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Polymorphed mobs now have the same name, and where possible, the same equipment as their previous form."
