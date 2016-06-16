@@ -84,7 +84,7 @@
 
 	spawn(4)
 		if(skin)
-			overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
+			add_overlay(image('icons/obj/aibots.dmi', "medskin_[skin]"))
 
 		var/datum/job/doctor/J = new/datum/job/doctor
 		access_card.access += J.get_access()

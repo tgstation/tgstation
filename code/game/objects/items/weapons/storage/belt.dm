@@ -8,9 +8,9 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 
 /obj/item/weapon/storage/belt/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += "[I.name]"
+		add_overlay("[I.name]")
 	..()
 
 /obj/item/weapon/storage/belt/utility

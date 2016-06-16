@@ -96,11 +96,11 @@
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	overlays.Cut()
+	cut_overlays()
 	if(health == 0)
-		overlays += cap_dead
+		add_overlay(cap_dead)
 	else
-		overlays += cap_living
+		add_overlay(cap_living)
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message("[src] slowly begins to recover.")

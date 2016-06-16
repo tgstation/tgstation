@@ -408,11 +408,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 					if(!alert_overlay)
 						var/old_layer = source.layer
 						source.layer = FLOAT_LAYER
-						A.overlays += source
+						A.add_overlay(source)
 						source.layer = old_layer
 					else
 						alert_overlay.layer = FLOAT_LAYER
-						A.overlays += alert_overlay
+						A.add_overlay(alert_overlay)
 
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))

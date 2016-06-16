@@ -19,8 +19,8 @@
 
 /obj/item/weapon/grenade/iedcasing/New(loc)
 	..()
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled")
-	overlays += image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired")
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_filled"))
+	add_overlay(image('icons/obj/grenade.dmi', icon_state = "improvised_grenade_wired"))
 	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 	det_time = text2num(pickweight(times))
 	if(det_time < 0) //checking for 'duds'

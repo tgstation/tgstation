@@ -278,9 +278,9 @@
 		if(anchored)
 			panel_open = !panel_open
 			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
-			overlays.Cut()
+			cut_overlays()
 			if(panel_open)
-				overlays += image(icon, "[initial(icon_state)]-panel")
+				add_overlay(image(icon, "[initial(icon_state)]-panel"))
 			updateUsrDialog()
 		else
 			user << "<span class='warning'>You must first secure [src].</span>"

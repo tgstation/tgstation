@@ -140,7 +140,7 @@
 	M.notransform = 1
 	M.canmove = 0
 	M.icon = null
-	M.overlays.Cut()
+	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
 
 	var/list/contents = M.contents.Copy()
@@ -328,3 +328,4 @@
 		// Change our allegiance!
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
+

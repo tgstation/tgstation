@@ -833,9 +833,9 @@
 
 /obj/item/organ/hivelord_core/update_icon()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	overlays.Cut()
+	cut_overlays()
 	if(!inert)
-		overlays += image(icon, "legion_soul_crackle")
+		add_overlay(image(icon, "legion_soul_crackle"))
 
 /obj/item/organ/hivelord_core/legion/go_inert()
 	. = ..()
@@ -903,9 +903,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
-		overlays += "gl_full"
+		add_overlay("gl_full")
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)

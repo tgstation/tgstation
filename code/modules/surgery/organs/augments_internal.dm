@@ -13,7 +13,7 @@
 	if(implant_overlay)
 		var/image/overlay = new /image(icon, implant_overlay)
 		overlay.color = implant_color
-		overlays |= overlay
+		add_overlay(overlay)
 	return ..()
 
 

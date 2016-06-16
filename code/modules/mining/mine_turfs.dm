@@ -180,7 +180,7 @@
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
-		overlays += I
+		add_overlay(I)
 		activated_image = I
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
@@ -220,7 +220,7 @@
 	if(stage == 1)
 		overlays -= activated_image
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
-		overlays += I
+		add_overlay(I)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)

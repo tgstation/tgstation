@@ -112,13 +112,13 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	set_colour(pick(slime_colours))
 
 /mob/living/simple_animal/slime/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	else
 		icon_state = icon_dead
 	..()

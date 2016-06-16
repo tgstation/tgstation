@@ -75,11 +75,11 @@
 
 
 /obj/vehicle/janicart/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(mybag)
-		overlays += "cart_garbage"
+		add_overlay("cart_garbage")
 	if(floorbuffer)
-		overlays += "cart_buffer"
+		add_overlay("cart_buffer")
 
 
 /obj/vehicle/janicart/attack_hand(mob/user)

@@ -64,9 +64,9 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())

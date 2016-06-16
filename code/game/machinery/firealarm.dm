@@ -56,11 +56,11 @@
 			icon_state = "firex"
 			return
 
-		overlays += "overlay_[security_level]"
+		add_overlay("overlay_[security_level]")
 		if(detecting)
-			overlays += "overlay_[A.fire ? "fire" : "clear"]"
+			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
-			overlays += "overlay_fire"
+			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
 	. = ..()
