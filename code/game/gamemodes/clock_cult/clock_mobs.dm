@@ -142,6 +142,9 @@
 					else //right next to or on top of host
 						adjust_fatigue(-1)
 
+/mob/living/simple_animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
+	return 1
+
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/update_fatigue()
 	if(!ratvar_awakens && host && host.stat == DEAD)
 		death()
@@ -201,7 +204,10 @@
 			var/resulthealth
 			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
-		stat(null, "You are [recovering ? "too weak" : "able"] to deploy!")
+			if(resulthealth > 60)
+				stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing True Name"]!")
+			else
+				stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
 		stat(null, "You do [melee_damage_upper] on melee attacks.")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
