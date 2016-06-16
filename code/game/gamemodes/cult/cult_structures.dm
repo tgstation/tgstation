@@ -155,7 +155,7 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 		else
 			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				F.pulse()
+				PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, F)
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?

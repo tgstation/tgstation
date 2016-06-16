@@ -153,11 +153,8 @@
 	icon_state = "cult"
 
 /turf/open/floor/engine/cult/New()
-	pulse()
-	..()
-
-/turf/open/floor/engine/cult/proc/pulse()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+	..()
 
 /turf/open/floor/engine/cult/narsie_act()
 	return
