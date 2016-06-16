@@ -36,9 +36,8 @@
 	SSshuttle.emergencyNoEscape = TRUE
 	SSobj.processing += src
 	var/area/gate_area = get_area(src)
-	for(var/mob/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
+	for(var/M in mob_list)
+		M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSshuttle.emergencyNoEscape = FALSE
@@ -50,9 +49,8 @@
 	SSobj.processing -= src
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
-		for(var/mob/M in mob_list)
-			if(is_servant_of_ratvar(M) || isobserver(M))
-				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
+		for(var/M in mob_list)
+			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
 		world << sound(null, 0, channel = 8)
 	qdel(glow)
 	glow = null
