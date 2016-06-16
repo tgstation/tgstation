@@ -178,7 +178,7 @@ This file contains the arcane tome files.
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
 
-	if(Turf != ZLEVEL_STATION && Turf != ZLEVEL_MINING)
+	if(Turf.z != ZLEVEL_STATION && Turf.z != ZLEVEL_MINING)
 		user << "<span class='warning'>The veil is not weak enough here."
 		return
 	if(istype(A, /area/shuttle))
