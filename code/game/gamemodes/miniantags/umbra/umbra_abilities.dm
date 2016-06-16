@@ -39,3 +39,32 @@
 		var/f1 = FOLLOW_LINK(O, user)
 		var/f2 = FOLLOW_LINK(O, target)
 		O << "[f1] <span class='umbra_bold'>[user] (Umbra Whisper):</span> <span class='umbra'>\"[message]\"</span> to [f2] <span class='name'>[target]</span>"
+
+
+/obj/effect/proc_holder/spell/targeted/possess //Possess: Occupies the body of a sapient and living human, slowly training vitae while they're conscious.
+	name = "Possess/Unpossess"
+	desc = "Enters and merges with the body of a nearby human. While inside of this human, you will very slowly generate vitae."
+	panel = "Umbral Evocation"
+	range = 1
+	charge_max = 600
+	clothes_req = FALSE
+	include_user = FALSE
+	action_icon_state = "possess"
+	action_background_icon_state = "bg_umbra"
+
+/obj/effect/proc_holder/spell/targeted/possess/cast(list/targets, mob/living/simple_animal/umbra/user)
+	if(!isumbra(user))
+		revert_cast()
+		return
+	if(!user.possessed)
+		var/mob/living/carbon/human/target = targets[1]
+		if(!ishuman(target))
+			user << "<span class='warning'>Only humans can produce enough vitae to sustain you in this manner!</span>"
+			revert_cast()
+			return
+		user.possessed = target
+		user.loc = target
+		user << "<span class='umbra_emphasis'>You silently enter [user.possessed]'s body and begin leeching vitae. You won't be able to do this for very long.</span>"
+		user.notransform = TRUE
+	else
+		user.unpossess()

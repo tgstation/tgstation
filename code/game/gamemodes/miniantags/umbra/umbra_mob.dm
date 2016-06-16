@@ -1,20 +1,23 @@
 #define UMBRA_INVISIBILITY 50
 #define UMBRA_VITAE_DRAIN_RATE 0.01 //How much vitae is drained per tick to sustain the umbra. Set this to higher values to make umbras need to harvest vitae more often.
-#define UMBRA_MAX_HARVEST_COOLDOWN 3000 //In deciseconds, how long it takes for a recently-drained target's soul to be drainable again.
+#define UMBRA_MAX_HARVEST_COOLDOWN 3000 //In deciseconds, how long it takes for a harvested target to become eligible for draining again.
+#define UMBRA_POSSESSION_THRESHOLD_WARNING 60 //In ticks, how long it takes before a possessed human starts showing signs of possession
+#define UMBRA_POSSESSION_THRESHOLD_DANGER 150 //In ticks, how long it takes before a possessed human starts forcing out the umbra
+#define UMBRA_POSSESSION_THRESHOLD_FORCED_OUT 155 //In ticks, how long it takes before a possessed human forces out the umbra
 
 /*
 
 Umbras are residual entities created by the dying who possess enough anger or determination that they never fully pass on.
-Physically, they're incorporeal and invisible. Umbras are formed of a steadily-decaying sapient electromagnetic field with a drive to sustain itself.
-Umbras sustain themselves by feeding on a substance, found in the dead or dying, known as vitae.
+Physically, they're incorporeal and invisible. Umbras are formed of a steadily-decaying electromagnetic field with a drive to sustain itself.
+Umbras do this by feeding on a substance, found in the dead or dying, known as vitae.
 
-Vitae is a substance most closely comparable to adrenaline that is produced in creatures at times of distress. For this reason, almost all dead creatures have vitae in one way or another.
+Vitae is most closely comparable to adrenaline in that is produced by creatures at times of distress. For this reason, almost all dead creatures have vitae in one way or another.
 Biologically, it's indistinguishable from normal blood, but vitae is what allows creatures to survive grievous wounds or cling to life in critical condition. It provides a large amount of energy.
 It's for this reason that umbras desire it. Vitae serves as a potent energy source to a living thing, and umbras can use the energy of this vitae to sustain themselves.
 Without enough vitae, the field that sustains an umbra will break down and weaken. If the umbra has no vitae at all, it will permanently dissipate.
 
 Umbras are not without their weaknesses. Despite being invisible to the naked eye and untouchable, certain things can restrict, weaken, or outright harm them.
-Lines of salt on the ground will prevent an umbra's passage, making area encircled in it completely inaccessible to even the most determined umbra.
+Piles of salt on the ground will prevent an umbra's passage, making areas encircled in it completely inaccessible to even the most determined umbra.
 In addition, objects and artifacts of a holy nature can force an umbra to manifest or draw away some of the energy that it's gleaned through vitae.
 
 When an umbra dies, two things can occur. If the umbra died from passive vitae drain, it will be dead forever, with no way to bring it back.
@@ -58,9 +61,11 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	var/breaking_apart = FALSE //If the umbra is currently dying
 	var/harvesting = FALSE //If the umbra is harvesting a soul
 	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
-	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</span> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, losing \
-	your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange form of \
-	life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
+	var/mob/living/carbon/human/possessed //The human that an umbra is inside of, if applicable
+	var/time_possessing = 0 //How long an umbra has been in possession of a single target.
+	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</b></span><b> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, \
+	lsoing your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange \
+	form of life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
 	\n\
 	You seem to be invisible and incorporeal, so you don't think that anyone can see, feel, or otherwise perceive you right now, but there has to be some way that you managed not to just fully \
 	die and instead ended up like this. You think that if you find a corpse, or perhaps someone still alive but in critical condition, you'd be able to drain whatever kept you in this state \
@@ -71,6 +76,8 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	You can see clearly in the dark, and you seem to have a sort of limited telepathic capabilities, plus some other things. You'll have to experiment with your new form to find out what you \
 	exactly you can do."
 
+
+//Creation, destruction, life, and death
 /mob/living/simple_animal/umbra/New()
 	..()
 	if(prob(1))
@@ -79,10 +86,50 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		desc = "You wonder how something that produces so much salt can be weak to it."
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/umbra(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/discordant_whisper(null))
+	AddSpell(new/obj/effect/proc_holder/spell/targeted/possess(null))
 
 /mob/living/simple_animal/umbra/Life()
 	..()
-	adjust_vitae(-UMBRA_VITAE_DRAIN_RATE, TRUE, "passive drain")
+	if(!possessed)
+		adjust_vitae(-UMBRA_VITAE_DRAIN_RATE, TRUE, "passive drain")
+		time_possessing = 0
+	else
+		if(possessed.reagents && possessed.reagents.has_reagent("sodiumchloride"))
+			unpossess(TRUE)
+			visible_message("<span class='warning'>[src] appears from nowhere, twitching and flickering!</span>", "<span class='userdanger'>AAAH! SALT!</span>")
+			immobilize(30)
+			reveal(50)
+			return
+		adjust_vitae(UMBRA_VITAE_DRAIN_RATE, TRUE, "passive gain")
+		time_possessing++
+		switch(time_possessing)
+			if(0 to UMBRA_POSSESSION_THRESHOLD_WARNING)
+				if(prob(1))
+					possessed << "<span class='warning'>You feel [pick("watched", "not wholly yourself", "an intense craving for salt", "singularly odd", \
+					"a horrible dread in your heart")].</span>"
+			if(UMBRA_POSSESSION_THRESHOLD_WARNING to UMBRA_POSSESSION_THRESHOLD_DANGER)
+				if(prob(2))
+					possessed << "<span class='warning'>[pick("Another mind briefly touches yours, then fades", "Your vision briefly flares violet", "You feel a brief pain in your chest", \
+					"A murmur from within your mind, too quiet to understand", "You become uneasy for no explainable reason")].</span>"
+				if(prob(5))
+					possessed.emote("twitch")
+			if(UMBRA_POSSESSION_THRESHOLD_DANGER to UMBRA_POSSESSION_THRESHOLD_FORCED_OUT)
+				possessed << "<span class='userdanger'>GET OUT GET OUT GET OUT</span>"
+				possessed.confused = max(3, possessed.confused)
+				possessed.emote(pick("moan", "groan", "shiver", "twitch", "cry"))
+				flash_color(possessed, flash_color = "#5000A0", flash_time = 10)
+			if(UMBRA_POSSESSION_THRESHOLD_FORCED_OUT to INFINITY)
+				src << "<span class='userdanger'>You can't stay any longer - you retreat from [possessed]'s body!</span>"
+				unpossess(TRUE)
+				return
+		if(time_possessing == UMBRA_POSSESSION_THRESHOLD_WARNING)
+			src << "<span class='warning'>[possessed] is starting to catch on to your presence. Be wary.</span>"
+		else if(time_possessing == UMBRA_POSSESSION_THRESHOLD_DANGER)
+			src << "<span class='userdanger'>[possessed] has noticed your presence and is forcing you out!</span>"
+			possessed << "<span class='userdanger'>There's something in your head! You start trying to force it out--</span>"
+		else if(time_possessing == UMBRA_POSSESSION_THRESHOLD_FORCED_OUT)
+			src << "<span class='userdanger'>You can't stay any longer! You flee from [possessed]...</span>"
+			unpossess()
 	adjustBruteLoss(-1) //Vitae slowly heals the umbra as well
 	adjustFireLoss(-1)
 	if(!vitae)
@@ -103,26 +150,14 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 				drained_mobs += "[L.real_name][length > 1 ? ", " : ""]"
 			length--
 		stat(null, "Recently Drained Creatures: [drained_mobs ? "[drained_mobs]" : "None"]")
-
-/mob/living/simple_animal/umbra/ClickOn(atom/A, params)
-	A.examine(src)
-	if(isliving(A) && Adjacent(A))
-		var/mob/living/L = A
-		if(L.health > 0 && L.stat != DEAD)
-			src << "<span class='warning'>[L] has no vitae to drain!</span>"
-			return
-		else if(L in recently_drained)
-			src << "<span class='warning'>[L]'s body is still recuperating! You can't risk draining any more vitae!</span>"
-			return
-		else if(harvesting)
-			src << "<span class='warning'>You're already trying to harvest vitae!</span>"
-			return
-		harvest_vitae(L)
+		if(possessed)
+			stat(null, "Time in [possessed]: [time_possessing]/[UMBRA_POSSESSION_THRESHOLD_FORCED_OUT]")
 
 /mob/living/simple_animal/umbra/death()
 	if(breaking_apart)
 		return
 	..(1)
+	unpossess(TRUE)
 	breaking_apart = TRUE
 	notransform = TRUE
 	invisibility = FALSE
@@ -140,6 +175,32 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		visible_message("<span class='warning'>[src] breaks apart and fades away!</span>")
 	qdel(src)
 
+/mob/living/simple_animal/umbra/proc/reveal(time, silent) //Makes the umbra visible for the designated amount of deciseconds
+	if(!time)
+		return
+	if(!silent)
+		src << "<span class='warning'>You've become visible!</span>"
+	alpha = 255
+	invisibility = FALSE
+	spawn(time)
+		alpha = initial(alpha)
+		if(!silent)
+			src << "<span class='umbra'>You've become invisible again!</span>"
+		invisibility = UMBRA_INVISIBILITY
+
+/mob/living/simple_animal/umbra/proc/immobilize(time, silent) //Immobilizes the umbra for the designated amount of deciseconds
+	if(!time)
+		return
+	if(!silent)
+		src << "<span class='warning'>You can't move!</span>"
+	notransform = TRUE
+	spawn(time)
+		if(!silent)
+			src << "<span class='umbra'>You can move again!</span>"
+		notransform = FALSE
+
+
+//Actions and interaction
 /mob/living/simple_animal/umbra/say() //Umbras can't directly speak
 	src << "<span class='warning'>You lack the power to speak out loud! Use Discordant Whisper instead.</span>"
 	return
@@ -153,13 +214,20 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	key = O.key
 	src << playstyle_string
 
-
-/mob/living/simple_animal/umbra/proc/adjust_vitae(amount, silent, source)
-	vitae = min(max(0, vitae + amount), vitae_cap)
-	if(!silent)
-		src << "<span class='umbra'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
-	return vitae
-
+/mob/living/simple_animal/umbra/ClickOn(atom/A, params)
+	A.examine(src)
+	if(isliving(A) && Adjacent(A))
+		var/mob/living/L = A
+		if(L.health > 0 && L.stat != DEAD)
+			src << "<span class='warning'>[L] has no vitae to drain!</span>"
+			return
+		else if(L in recently_drained)
+			src << "<span class='warning'>[L]'s body is still recuperating! You can't risk draining any more vitae!</span>"
+			return
+		else if(harvesting)
+			src << "<span class='warning'>You're already trying to harvest vitae!</span>"
+			return
+		harvest_vitae(L)
 
 /mob/living/simple_animal/umbra/proc/harvest_vitae(mob/living/L) //How umbras drain vitae from their targets
 	if(!L || L.health || L in recently_drained)
@@ -181,7 +249,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	var/vitae_yield = 1 //A bit of essence even if it's a weak soul
 	var/vitae_information = "<span class='umbra'>[L]'s vitae is "
 	if(ishuman(L))
-		vitae_information += "high-quality, "
+		vitae_information += "of the highest quality, "
 		vitae_yield += rand(10, 15)
 	if(L.mind)
 		if(!(L.mind in ticker.mode.devils))
@@ -223,8 +291,8 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		L << "<span class='warning'>A chill runs across your body.</span>"
 		harvesting = FALSE
 		return
-	Stun(50)
-	Reveal(50)
+	immobilize(50)
+	reveal(50)
 	visible_message("<span class='warning'>[src] flickers into existence and reaches out towards [L]...</span>")
 	L.visible_message("<span class='warning'>...who rises into the air, shuddering as purple light streams towards out of their body!</span>")
 	animate(L, pixel_y = pixel_y + 5, time = 10)
@@ -245,23 +313,41 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	src << "<span class='umbra'>You think that [L]'s body should be strong enough to produce vitae again.</span>"
 	recently_drained -= L
 
+/mob/living/simple_animal/umbra/singularity_act() //Umbras are immune to most things that are catastrophic to normal humans
+	return
 
-/mob/living/simple_animal/umbra/proc/Reveal(time) //Makes the umbra visible for the designated amount of deciseconds
-	if(!time)
-		return
-	src << "<span class='warning'>You've become visible!</span>"
-	alpha = 255
-	invisibility = FALSE
-	spawn(time)
-		alpha = initial(alpha)
-		src << "<span class='umbra'>You've become invisible again!</span>"
-		invisibility = UMBRA_INVISIBILITY
+/mob/living/simple_animal/umbra/narsie_act()
+	return
 
-/mob/living/simple_animal/umbra/Stun(time) //Immobilizes the umbra for the designated amount of deciseconds
-	if(!time)
+/mob/living/simple_animal/umbra/ratvar_act()
+	return
+
+/mob/living/simple_animal/umbra/blob_act(obj/effect/blob/B)
+	return
+
+/mob/living/simple_animal/umbra/ex_act(severity)
+	return
+
+/mob/living/simple_animal/umbra/emp_act(severity)
+	src << "<span class='umbra_bold'>You feel the energy of an electromagnetic pulse revitalizing you!</span>" //As they're composed of an EM field, umbras are strengthened by EMPs
+	adjust_vitae(50 - (severity * 10), TRUE)
+
+
+//Helper procs
+/mob/living/simple_animal/umbra/proc/adjust_vitae(amount, silent, source)
+	vitae = min(max(0, vitae + amount), vitae_cap)
+	if(!silent)
+		src << "<span class='umbra'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
+	return vitae
+
+/mob/living/simple_animal/umbra/proc/unpossess(silent)
+	if(!possessed)
 		return
-	src << "<span class='warning'>You can't move!</span>"
-	notransform = TRUE
-	spawn(time)
-		src << "<span class='umbra'>You can move again!</span>"
-		notransform = FALSE
+	if(!silent)
+		src << "<span class='umbra'>You free yourself from [possessed]'s body.</span>"
+	if(time_possessing >= UMBRA_POSSESSION_THRESHOLD_WARNING)
+		possessed << "<span class='warning'>You feel a horrible presence depart from you...</span>"
+	loc = get_turf(possessed)
+	possessed = null
+	time_possessing = 0
+	notransform = FALSE
