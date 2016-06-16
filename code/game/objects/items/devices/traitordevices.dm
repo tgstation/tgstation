@@ -69,7 +69,6 @@ effective or pretty fucking useless.
 */
 
 /obj/item/device/healthanalyzer/rad_laser
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject. It has a strange device hooked up to its scanning end."
 	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/irradiate = 1
@@ -88,7 +87,7 @@ effective or pretty fucking useless.
 		icon_state = "health1"
 		handle_cooldown(cooldown) // splits off to handle the cooldown while handling wavelength
 		user << "<span class='warning'>Successfully irradiated [M].</span>"
-		spawn((wavelength+(intensity*4))*10)
+		spawn((wavelength+(intensity*4))*5)
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
@@ -151,7 +150,7 @@ effective or pretty fucking useless.
 	else if(href_list["radint"])
 		var/amount = text2num(href_list["radint"])
 		amount += intensity
-		intensity = max(1,(min(15,amount)))
+		intensity = max(1,(min(20,amount)))
 
 	else if(href_list["radwav"])
 		var/amount = text2num(href_list["radwav"])
