@@ -7,8 +7,10 @@
   *
  **/
 var/datum/controller/master/Master = new()
+var/MC_restart_clear = 0
 var/MC_restart_timeout = 0
 var/MC_restart_count = 0
+
 
 //current tick limit, assigned by the queue controller before running a subsystem.
 //used by check_tick as well so that the procs subsystems call can obey that SS's tick limits
@@ -68,7 +70,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	. = -1 //so if we runtime, things know we failed
 	if (world.time < MC_restart_timeout)
 		return 0
-	MC_restart_timeout = world.time + (50 * ++MC_restart_count)
+	if (world.time < MC_restart_clear)
+		MC_restart_count *= 0.5
+
+	var/delay = 50 * ++MC_restart_count
+	MC_restart_timeout = world.time + delay
+	MC_restart_clear = world.time + (delay * 2)
 	Master.processing = 0 //stop ticking this one
 	try
 		new/datum/controller/master()
@@ -209,6 +216,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	init_time = world.time
 
 	iteration = 1
+	var/error_level = 0
 	var/sleep_delta = 0
 	var/list/subsystems_to_check
 	//the actual loop.
@@ -247,6 +255,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 			if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
 				world.log << "MC: SoftReset() failed, crashing"
 				return
+			if (!error_level)
+				iteration++
+			error_level++
 			sleep(10)
 			continue
 
@@ -255,9 +266,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				if (!SoftReset(tickersubsystems, normalsubsystems, lobbysubsystems))
 					world.log << "MC: SoftReset() failed, crashing"
 					return
+				if (!error_level)
+					iteration++
+				error_level++
 				sleep(10)
 				continue
-
+		error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
 			queue_priority_count = 0
 			queue_priority_count_bg = 0
@@ -295,7 +309,6 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		//Queue it to run.
 		//	(we loop thru a linked list until we get to the end or find the right point)
 		//	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
-		debug_admins("MC: queuing to run")
 		SS.enqueue()
 	. = 1
 
@@ -322,9 +335,13 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		ran = FALSE
 		bg_calc = FALSE
 		current_tick_budget = queue_priority_count
-		for (queue_node = queue_head; istype(queue_node); queue_node = queue_node.queue_next)
+		queue_node = queue_head
+		while (queue_node)
 			if (ran && world.tick_usage > TICK_LIMIT_RUNNING)
 				break
+			if (!istype(queue_node))
+				world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
+				return
 			queue_node_flags = queue_node.flags
 			queue_node_priority = queue_node.queued_priority
 
@@ -339,6 +356,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 					queue_priority_count -= queue_node_priority
 					queue_priority_count += queue_node.queued_priority
 					current_tick_budget -= queue_node_priority
+					if (!istype(queue_node))
+						world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
+						return
+					queue_node = queue_node.queue_next
 					continue
 
 			if ((queue_node_flags & SS_BACKGROUND) && !bg_calc)
@@ -371,9 +392,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 				tick_usage = 0
 
 			if (queue_node.paused)
-
 				queue_node.paused_ticks++
 				queue_node.paused_tick_usage += tick_usage
+				if (!istype(queue_node))
+					world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
+					return
+				queue_node = queue_node.queue_next
 				continue
 
 			queue_node.ticks = MC_AVERAGE(queue_node.ticks, queue_node.paused_ticks)
@@ -406,6 +430,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 			//remove from queue
 			queue_node.dequeue()
+			if (!istype(queue_node))
+				world.log << "[__FILE__]:[__LINE__] queue_node bad, now equals: [queue_node](\ref[queue_node])"
+				return
+			queue_node = queue_node.queue_next
 
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	. = 1
