@@ -178,6 +178,9 @@
 		else if(prob(30))
 			ReplaceWithLattice()
 
+/turf/open/floor/engine/cult/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
 	icon_state = "engine"
