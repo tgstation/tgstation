@@ -31,7 +31,7 @@
 	armour_penetration = 10
 
 /obj/item/projectile/bullet/onedeag
-	damage = 200
+	damage = 201
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
