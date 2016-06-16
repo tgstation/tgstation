@@ -263,10 +263,10 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 				vitae_yield += rand(5, 10) //You can drain all the souls that a devil has stolen!
 		vitae_yield += rand(10, 15)
 	if(L.stat == UNCONSCIOUS)
-		vitae_information += "still being produced, , "
+		vitae_information += "still being produced, "
 		vitae_yield += rand(20, 25) //Significant bonus if the target is in critical condition instead of dead
 	else if(L.stat == DEAD)
-		vitae_information += "definitely there, but now stagnant, "
+		vitae_information += "stagnant, "
 		vitae_yield += rand(1, 10)
 	vitae_information += "and ready for harvest. You'll absorb around [vitae_yield] vitae - "
 	switch(vitae_yield)
@@ -280,7 +280,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 			vitae_information += "a good bit, more than you've come to expect."
 		if(75 to vitae_cap)
 			vitae_information += "<i>a bounty, more than you could ever dream of!</i>"
-	vitae_information += " Now,  then...</span>"
+	vitae_information += " Now, then...</span>"
 	src << vitae_information
 	if(!do_after(src, 30, target = L))
 		harvesting = FALSE
@@ -297,15 +297,15 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	immobilize(50)
 	reveal(50)
 	visible_message("<span class='warning'>[src] flickers into existence and reaches out towards [L]...</span>")
-	L.visible_message("<span class='warning'>...who rises into the air, shuddering as purple light streams towards out of their body!</span>")
-	animate(L, pixel_y = pixel_y + 5, time = 10)
+	L.visible_message("<span class='warning'>...who rises into the air, shuddering as purple light streams out of their body!</span>")
+	animate(L, pixel_y = 5, time = 10)
 	Beam(L, icon_state = "drain_life", icon = 'icons/effects/effects.dmi', time = 50)
 	sleep(50)
 	adjust_vitae(vitae_yield, FALSE, "[L]. They won't yield any more for the time being")
 	recently_drained |= L
 	visible_message("<span class='warning'>[src] winks out of existence, releasing its hold on [L]...</span>")
 	L.visible_message("<span class='warning'>...who falls unceremoniously back to the ground.</span>")
-	animate(L, pixel_y = pixel_y - 5, time = 10)
+	animate(L, pixel_y = 0, time = 10)
 	addtimer(src, "harvest_cooldown", rand(UMBRA_MAX_HARVEST_COOLDOWN - 600, UMBRA_MAX_HARVEST_COOLDOWN), L)
 	harvesting = FALSE
 	return 1
