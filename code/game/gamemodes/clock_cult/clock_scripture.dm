@@ -329,7 +329,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	L.adjustToxLoss(burndamage / 2)
 	L.adjustBruteLoss(-brutedamage)
 	L.adjustFireLoss(-burndamage)
-	var/healseverity = max(round((totaldamage*0.5)*0.1, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 	var/targetturf = get_turf(L)
 	for(var/i in 1 to healseverity)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(servantturf, "#1E8CE1"))
