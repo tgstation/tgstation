@@ -268,7 +268,9 @@ MASS SPECTROMETER
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
+	print_environment(user, environment)
 
+/proc/print_environment(user, datum/gas_mixture/environment)
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
