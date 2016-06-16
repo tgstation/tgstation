@@ -134,14 +134,63 @@
 	wabbajack(change)
 
 /proc/wabbajack(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
-		return
+	if(istype(M))
+		if(istype(M, /mob/living) && M.stat != DEAD)
+			if(M.notransform)
+				return
+			M.notransform = 1
+			M.canmove = 0
+			M.icon = null
+			M.cut_overlays()
+			M.invisibility = INVISIBILITY_ABSTRACT
 
-	M.notransform = 1
-	M.canmove = 0
-	M.icon = null
-	M.cut_overlays()
-	M.invisibility = INVISIBILITY_ABSTRACT
+			if(istype(M, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/Robot = M
+				if(Robot.mmi)
+					qdel(Robot.mmi)
+				Robot.notify_ai(1)
+			else
+				for(var/obj/item/W in M)
+					if(!M.unEquip(W))
+						qdel(W)
+
+			var/mob/living/new_mob
+
+			var/randomize = pick("monkey","robot","slime","xeno","humanoid","animal")
+			switch(randomize)
+				if("monkey")
+					new_mob = new /mob/living/carbon/monkey(M.loc)
+					new_mob.languages |= HUMAN
+				if("robot")
+					var/robot = pick("cyborg","syndiborg","drone")
+					switch(robot)
+						if("cyborg")
+							new_mob = new /mob/living/silicon/robot(M.loc)
+						if("syndiborg")
+							new_mob = new /mob/living/silicon/robot/syndicate(M.loc)
+						if("drone")
+							new_mob = new /mob/living/simple_animal/drone(M.loc)
+							var/mob/living/simple_animal/drone/D = new_mob
+							D.liberate() // F R E E D R O N E
+					if(issilicon(new_mob))
+						new_mob.gender = M.gender
+						new_mob.invisibility = 0
+						new_mob.job = "Cyborg"
+						var/mob/living/silicon/robot/Robot = new_mob
+						Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+					else
+						new_mob.languages |= HUMAN
+				if("slime")
+					var/mob/living/simple_animal/slime/random/slimey
+					slimey = new(get_turf(M), null, new_is_adult=prob(50))
+					new_mob = slimey
+					new_mob.languages |= HUMAN
+				if("xeno")
+					if(prob(50))
+						new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
+					else
+						new_mob = new /mob/living/carbon/alien/humanoid/sentinel(M.loc)
+					new_mob.languages |= HUMAN
 
 	var/list/contents = M.contents.Copy()
 
