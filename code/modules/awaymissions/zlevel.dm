@@ -1,3 +1,5 @@
+// How much "space" we give the edge of the map
+#define BORDER_BUBBLE 7
 var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
 
 /proc/createRandomZlevel()
@@ -58,7 +60,9 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	return potentialMaps
 
 
-/proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
+/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
+	if(!z_levels || !z_levels.len)
+		z_levels = list(1)
 	var/overall_sanity = 100
 	var/ruins = potentialRuins.Copy()
 
@@ -75,7 +79,10 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		while(sanity > 0)
 			sanity--
-			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/width_border = BORDER_BUBBLE + ruin.width
+			var/height_border = BORDER_BUBBLE + ruin.height
+			var/z_level = pick(z_levels)
+			var/turf/T = locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z_level)
 			var/valid = TRUE
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
@@ -129,3 +136,4 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 	qdel(src)
 	return TRUE
+#undef BORDER_BUBBLE
