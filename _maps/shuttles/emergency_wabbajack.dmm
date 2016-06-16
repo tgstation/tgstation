@@ -65,9 +65,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "aq" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/table,
@@ -77,9 +75,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/crowbar,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "as" = (
 /obj/structure/grille,
@@ -108,17 +104,13 @@
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aw" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "ax" = (
 /obj/machinery/door/airlock/shuttle{
@@ -134,22 +126,16 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "az" = (
 /obj/machinery/computer/emergency_shuttle,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aA" = (
 /obj/structure/table,
 /obj/item/weapon/coin/mythril,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aB" = (
 /obj/machinery/door/airlock/glass{
@@ -160,9 +146,7 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aD" = (
 /obj/machinery/door/airlock/shuttle{
@@ -179,9 +163,7 @@
 /area/shuttle/escape)
 "aF" = (
 /obj/machinery/door/window/eastleft,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aG" = (
 /obj/structure/extinguisher_cabinet{
@@ -194,9 +176,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/box/beakers,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aH" = (
 /turf/closed/wall/shuttle{
@@ -208,9 +188,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/chair{
@@ -219,30 +197,22 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aK" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aM" = (
 /obj/machinery/chem_dispenser,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/table,
@@ -252,9 +222,7 @@
 	pixel_y = 1
 	},
 /obj/item/weapon/wrench/medical,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aO" = (
 /turf/open/floor/plating,
@@ -263,27 +231,19 @@
 /obj/structure/chair/office/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aQ" = (
 /obj/machinery/chem_heater,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aR" = (
 /obj/machinery/chem_master,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aS" = (
 /obj/machinery/door/window/eastright,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aT" = (
 /obj/structure/table/glass,
@@ -292,9 +252,7 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aU" = (
 /obj/machinery/door/airlock/glass,
@@ -310,7 +268,6 @@
 /turf/open/floor/plasteel/yellow,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -318,7 +275,6 @@
 /turf/open/floor/plasteel/yellow,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHEAST)";
-	icon_state = "warningline";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -326,7 +282,6 @@
 /turf/open/floor/plasteel/whitered,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTHWEST)";
-	icon_state = "warningline";
 	dir = 9
 	},
 /area/shuttle/escape)
@@ -334,7 +289,6 @@
 /turf/open/floor/plasteel/whitered,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
-	icon_state = "warningline";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -349,7 +303,6 @@
 /turf/open/floor/plasteel/yellow,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
-	icon_state = "warningline";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -357,7 +310,6 @@
 /turf/open/floor/plasteel/whitered,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
-	icon_state = "warningline";
 	dir = 8
 	},
 /area/shuttle/escape)

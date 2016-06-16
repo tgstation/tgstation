@@ -101,6 +101,12 @@ var/list/GPS_list = list()
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
+/obj/item/device/gps/cyborg
+	icon_state = "gps-b"
+	gpstag = "BORG0"
+	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
+	flags = NODROP
+
 /obj/item/device/gps/internal
 	icon_state = null
 	flags = ABSTRACT
