@@ -1,0 +1,5 @@
+author: "Quiltyquilty"
+delete-after: True
+changes: 
+  - rscdel: "Patches now hold only 40u."
+  - rscdel: "Patches in first aid kits now only contain 20u of chemicals."
