@@ -831,13 +831,14 @@
 			return
 		switching = 0
 		var/N = rand(1,3)
-		switch(N)
-			if(1)
-				playsound(user, 'sound/weapons/genhit1.ogg', 50, 1)
-			if(2)
-				playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
-			if(3)
-				playsound(user, 'sound/weapons/genhit3.ogg', 50, 1)
+		if(get_turf(user))
+			switch(N)
+				if(1)
+					playsound(get_turf(user), 'sound/weapons/genhit1.ogg', 50, 1)
+				if(2)
+					playsound(get_turf(user), 'sound/weapons/genhit2.ogg', 50, 1)
+				if(3)
+					playsound(get_turf(user), 'sound/weapons/genhit3.ogg', 50, 1)
 		user.visible_message("[user] smacks \the [src] with \the [W].","You smack \the [src] with \the [W].")
 		if(src.loc == user)
 			user.drop_item(src, force_drop = 1)
@@ -855,7 +856,8 @@
 			current_path = available_fruits[counter]
 			var/obj/item/weapon/reagent_containers/food/snacks/grown/G = current_path
 			icon_state = initial(G.icon_state)
-			playsound(src, 'sound/misc/click.ogg', 50, 1)
+			if(get_turf(src))
+				playsound(get_turf(src), 'sound/misc/click.ogg', 50, 1)
 			sleep(1)
 			if(counter == available_fruits.len)
 				counter = 0
