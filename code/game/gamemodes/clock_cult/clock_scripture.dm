@@ -136,13 +136,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			invoker.say(pick(chant_invocations))
 		else
 			invoker.whisper(pick(chant_invocations))
-		chant_effects()
+		chant_effects(i)
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"
 		chant_end_effects()
 	return 1
 
-/datum/clockwork_scripture/channeled/proc/chant_effects() //The chant's periodic effects
+/datum/clockwork_scripture/channeled/proc/chant_effects(chant_number) //The chant's periodic effects
 /datum/clockwork_scripture/channeled/proc/chant_end_effects() //The chant's effect upon ending
 
 
@@ -231,7 +231,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
 
-/datum/clockwork_scripture/channeled/belligerent/chant_effects()
+/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
@@ -375,25 +375,26 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects()
+/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L))
-			L.confused = min(L.confused + 20, 100)
-			L.dizziness = min(L.dizziness + 20, 100)
+			L.confused = min(L.confused + 10, 100)
+			L.dizziness = min(L.dizziness + 10, 100)
 			L.Stun(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
-	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
-	var/endtime = world.time + flee_time
-	var/starttime = world.time
-	progbar = new(invoker, flee_time, invoker)
-	progbar.bar.color = "#AF0AAF"
-	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-	while(world.time < endtime)
-		sleep(1)
-		progbar.update(world.time - starttime)
-	qdel(progbar)
-	sleep(grace_period)
+	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
+		invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+		invoker.color = "#AF0AAF"
+		animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+		var/endtime = world.time + flee_time
+		var/starttime = world.time
+		progbar = new(invoker, flee_time, invoker)
+		progbar.bar.color = "#AF0AAF"
+		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
+		while(world.time < endtime)
+			sleep(1)
+			progbar.update(world.time - starttime)
+		qdel(progbar)
+		sleep(grace_period)
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
 	qdel(progbar)
@@ -502,7 +503,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/power_damage_threshhold = 3000
 	var/augument_damage_threshhold = 6000
 
-/datum/clockwork_scripture/channeled/volt_void/chant_effects()
+/datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
 	var/power_drained = 0
 	for(var/obj/machinery/power/apc/A in view(7, invoker))
