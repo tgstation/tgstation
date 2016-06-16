@@ -247,6 +247,8 @@
 	R.weather_immunities += "ash"
 	R.icon_state = "ashborg"
 
+	return 1
+
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
 	desc = "This module will repair the cyborg over time."
