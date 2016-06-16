@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Anima Fragments are now slightly slower if not at maximum health and no longer drop a soul vessel when destroyed."

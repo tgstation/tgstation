@@ -268,9 +268,6 @@
 			if(!do_mob(user, H, 50))
 				return
 			item_heal_robotic(H, user, 5, 0)
-			return
-		else
-			return
 	else
 		return ..()
 

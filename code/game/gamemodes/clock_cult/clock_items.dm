@@ -30,9 +30,15 @@
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/produces_components = TRUE //if it produces components at all
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
+
+/obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
+	name = "scripture motor"
+	no_cost = TRUE
+	produces_components = FALSE
 
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
@@ -52,6 +58,9 @@
 	return ..()
 
 /obj/item/clockwork/slab/process()
+	if(!produces_components)
+		SSobj.processing -= src
+		return
 	if(production_time > world.time)
 		return
 	production_time = world.time + SLAB_PRODUCTION_TIME
@@ -583,7 +592,8 @@
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
-	var/impale_cooldown = 30 //brief delay, in deciseconds, where you can't impale again if you're really fast
+	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
+	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
@@ -606,23 +616,23 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and breaking the spear if they remain conscious.</span>"
+		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
 		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
+	if(attack_cooldown > world.time)
+		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
 			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
-			return
-		impaling = TRUE
-		attack_verb = list("impaled")
-		force += 23 //40 damage if ratvar isn't alive, 53 if he is
-		user.stop_pulling()
+		else
+			impaling = TRUE
+			attack_verb = list("impaled")
+			force += 23 //40 damage if ratvar isn't alive, 53 if he is
+			user.stop_pulling()
 
-	if(impale_cooldown > world.time)
-		user << "<span class='warning'>You can't attack right now, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
-		return
 	if(impaling)
 		if(hitsound)
 			playsound(loc, hitsound, get_clamped_volume(), 1, -1)
@@ -649,23 +659,23 @@
 	update_force()
 	if(impaling)
 		impale_cooldown = world.time + initial(impale_cooldown)
+		attack_cooldown = world.time + initial(attack_cooldown)
 		if(target)
 			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 			target.Stun(2)
 			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
-			if(do_after(user, 7, 1, target))
+			var/remove_verb = pick("pull", "yank", "drag")
+			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
 				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
-					var/remove_verb = pick("pull", "yank", "drag")
-					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear out of [target]!</span>")
+					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				else
-					user.visible_message("<span class='warning'>[user] kicks [target] off of [src], breaking it!</span>", "<span class='warning'>You kick [target] off of [src], breaking it!</span>")
-					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
+					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
+					target << "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>"
 					target.emote("scream")
-					break_spear(get_turf(T))
 					step(target, get_dir(user, target))
 					T = get_turf(target)
 					B.forceMove(T)
@@ -673,11 +683,10 @@
 					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
 				flash_color(target, flash_color="#911414", flash_time=8)
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
-				user << "<span class='warning'>Your ratvarian spear breaks!</span>"
+				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				if(target.stat == CONSCIOUS)
-					target << "<span class='userdanger'>You scream in pain as [src] breaks within you!</span>"
+					target << "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>"
 					target.emote("scream")
-				break_spear(get_turf(target))
 				flash_color(target, flash_color="#911414", flash_time=4)
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)

@@ -241,12 +241,12 @@
 			var/many = params["many"]
 			if(reagents.total_volume == 0) return
 			var/amount = 1
-			var/vol_each = min(reagents.total_volume, 50)
+			var/vol_each = min(reagents.total_volume, 40)
 			if(text2num(many))
 				amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many patches?", amount) as num|null), 0), 10)
 				if(!amount)
 					return
-				vol_each = min(reagents.total_volume / amount, 50)
+				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
 			if(!name || !reagents.total_volume)
 				return

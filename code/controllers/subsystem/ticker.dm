@@ -4,9 +4,10 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker
 	name = "Ticker"
-	priority = 0
+	init_order = 0
 
-	can_fire = 1 // This needs to fire before round start.
+	priority = 200
+	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -56,9 +57,7 @@ var/datum/subsystem/ticker/ticker
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
-/datum/subsystem/ticker/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/ticker/Initialize(timeofday)
 	if(!syndicate_code_phrase)
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
@@ -455,7 +454,7 @@ var/datum/subsystem/ticker/ticker
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
 	else if(memetips.len)
 		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
-		
+
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
 		return
@@ -493,3 +492,46 @@ var/datum/subsystem/ticker/ticker
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
 		maprotate()
+
+
+/world/proc/has_round_started()
+	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
+		return TRUE
+	return FALSE
+
+/datum/subsystem/ticker/Recover()
+	current_state = ticker.current_state
+	force_ending = ticker.force_ending
+	hide_mode = ticker.hide_mode
+	mode = ticker.mode
+	event_time = ticker.event_time
+	event = ticker.event
+
+	login_music = ticker.login_music
+	round_end_sound = ticker.round_end_sound
+
+	minds = ticker.minds
+
+	Bible_icon_state = ticker.Bible_icon_state
+	Bible_item_state = ticker.Bible_item_state
+	Bible_name = ticker.Bible_name
+	Bible_deity_name = ticker.Bible_deity_name
+
+	syndicate_coalition = ticker.syndicate_coalition
+	factions = ticker.factions
+	availablefactions = ticker.availablefactions
+
+	delay_end = ticker.delay_end
+
+	triai = ticker.triai
+	tipped = ticker.tipped
+
+	timeLeft = ticker.timeLeft
+
+	totalPlayers = ticker.totalPlayers
+	totalPlayersReady = ticker.totalPlayersReady
+
+	queue_delay = ticker.queue_delay
+	queued_players = ticker.queued_players
+	cinematic = ticker.cinematic
+	maprotatechecked = ticker.maprotatechecked

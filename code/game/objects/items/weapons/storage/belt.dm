@@ -78,7 +78,6 @@
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/device/rad_laser,
 		/obj/item/device/sensor_device,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/,
