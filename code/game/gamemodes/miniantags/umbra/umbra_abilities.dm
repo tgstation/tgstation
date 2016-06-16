@@ -68,3 +68,50 @@
 		user.notransform = TRUE
 	else
 		user.unpossess()
+
+
+/obj/effect/proc_holder/spell/targeted/thoughtsteal //Thoughtsteal: Paralyzes and deals temporary brain damage to a target as the umbra drains it of vitae.
+	name = "Thoughtsteal"
+	desc = "Immobilizes a target as you copy their memories, gaining the knowledge of whatever they know."
+	panel = "Umbral Evocation"
+	range = 1
+	charge_max = 450
+	clothes_req = FALSE
+	include_user = FALSE
+	action_icon_state = "thoughtsteal"
+	action_background_icon_state = "bg_umbra"
+
+/obj/effect/proc_holder/spell/targeted/thoughtsteal/cast(list/targets, mob/living/simple_animal/umbra/user)
+	if(!isumbra(user))
+		revert_cast()
+		return
+	var/mob/living/target = targets[1]
+	if(target in user.lobotomized)
+		user << "<span class='warning'>You've already stolen [target]'s memories!</span>"
+		revert_cast()
+		return
+	if(target.stat == DEAD)
+		user << "<span class='warning'>You can't glean any knowledge from a dead brain!</span>"
+		revert_cast()
+		return
+	if(!target.mind)
+		user << "<span class='warning'>[target] is mindless and incapable of higher thought!</span>"
+		revert_cast()
+		return
+	user.visible_message("<span class='warning'>[user] appears from nowhere, stretching out towards [target]!</span>", "<span class='umbra'>You try to copy [target]'s memories...</span>")
+	target.visible_message("<span class='warning'>A blue beam arcs into [target]'s head, immobilizing them!</span>", "<span class='userdanger'>Your mind freezes. You can't move. \
+	You can't think.</span>")
+	user.Beam(target, icon = 'icons/effects/beam.dmi', icon_state = "b_beam", time = 50)
+	user.immobilize(50)
+	user.reveal(50)
+	target.Stun(5)
+	if(!do_after(user, 50, target = target))
+		return
+	user.visible_message("<span class='warning'>A chunk of biomatter travels along the beam and into [user]!</span>", \
+	"<span class='umbra_bold'>Sweet, sweet thoughts. A lifetime of memories surges through you.</span>")
+	target.visible_message("<span class='warning'>[target] silently collapses, motionless.</span>", "<span class='userdanger'>Your mind blanks. Your thoughts have fled. Slowly, they begin to \
+	return... but you feel <i>wrong.</i></span>")
+	target.mind.show_memory(user, 0)
+	user.mind.memory += "<b><i>[target.real_name]'s Memories:</i></b>\n[target.mind.memory]\n\n"
+	target.Weaken(5)
+	user.lobotomized |= target

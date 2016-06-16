@@ -21,9 +21,9 @@ Piles of salt on the ground will prevent an umbra's passage, making areas encirc
 In addition, objects and artifacts of a holy nature can force an umbra to manifest or draw away some of the energy that it's gleaned through vitae.
 
 When an umbra dies, two things can occur. If the umbra died from passive vitae drain, it will be dead forever, with no way to bring it back.
-However, if the umbra is slain forcibly and still has vitae, the vitae possesses enough power to coalesce a part of the umbra into phantasmal ashes.
+However, if the umbra is slain forcibly and still has vitae, the vitae possesses enough power to coalesce a part of the umbra into umbral ashes.
 These "ashes" will, given around a full minute, re-form into another umbra. This umbra typically possesses the memories and consciousness of the old one, but may be a completely new mind as well.
-Although these phantasmal ashes make umbras resilient, they can be killed permanently by scattering the ashes or destroying them, thus separating the vitae from the umbra's remains.
+Although these umbral ashes make umbras resilient, they can be killed permanently by scattering the ashes or destroying them, thus separating the vitae from the umbra's remains.
 
 */
 
@@ -61,8 +61,10 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	var/breaking_apart = FALSE //If the umbra is currently dying
 	var/harvesting = FALSE //If the umbra is harvesting a soul
 	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
+	var/list/total_drained = list() //Mobs that have been drained, period
 	var/mob/living/carbon/human/possessed //The human that an umbra is inside of, if applicable
 	var/time_possessing = 0 //How long an umbra has been in possession of a single target.
+	var/list/lobotomized = list() //Mobs that have had their memories stolen by the umbra
 	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</b></span><b> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, \
 	lsoing your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange \
 	form of life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
@@ -87,6 +89,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/umbra(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/discordant_whisper(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/possess(null))
+	AddSpell(new/obj/effect/proc_holder/spell/targeted/thoughtsteal(null))
 
 /mob/living/simple_animal/umbra/Life()
 	..()
@@ -171,7 +174,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	if(vitae)
 		visible_message("<span class='warning'>[src] breaks apart into a pile of ashes!</span>", \
 		"<span class='umbra_emphasis'><font size=3>You'll</font> be <font size=1>back...</font></span>")
-		var/obj/item/phantasmal_ashes/P = new(get_turf(src))
+		var/obj/item/umbral_ashes/P = new(get_turf(src))
 		P.umbra_key = key
 		P.umbra_vitae = vitae
 	else
@@ -213,8 +216,8 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 		return
 	if(alert(O, "Become an umbra? You won't be clonable!",,"Yes", "No") == "No" || !O)
 		return
+	occupy(O)
 	notify_ghosts("The umbra at [get_area(src)] has been taken control of by [O].", source = src, action = NOTIFY_ORBIT)
-	key = O.key
 	src << playstyle_string
 
 /mob/living/simple_animal/umbra/ClickOn(atom/A, params)
@@ -303,6 +306,7 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	sleep(50)
 	adjust_vitae(vitae_yield, FALSE, "[L]. They won't yield any more for the time being")
 	recently_drained |= L
+	total_drained |= L
 	visible_message("<span class='warning'>[src] winks out of existence, releasing its hold on [L]...</span>")
 	L.visible_message("<span class='warning'>...who falls unceremoniously back to the ground.</span>")
 	animate(L, pixel_y = 0, time = 10)
@@ -354,3 +358,12 @@ Although these phantasmal ashes make umbras resilient, they can be killed perman
 	possessed = null
 	time_possessing = 0
 	notransform = FALSE
+
+/mob/living/simple_animal/umbra/proc/occupy(mob/dead/observer/O)
+	if(!O)
+		return
+	key = O.key
+	mind.special_role = "Umbra"
+	var/datum/objective/umbra/lobotomize/L = new
+	mind.objectives += L
+	src << "<b>Objective #1:</b> [L.explanation_text]"
