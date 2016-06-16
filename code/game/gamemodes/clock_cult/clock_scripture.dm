@@ -314,22 +314,29 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(C.stat != DEAD && is_servant_of_ratvar(C))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
-		invoker << "<span class='warning'>There are no eligible cultists nearby!</span>"
+		invoker << "<span class='warning'>There are no eligible servants nearby!</span>"
 		return 0
 	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
 	if(!L || !invoker || !invoker.canUseTopic(slab))
 		return 0
-	if(!L.getBruteLoss() && !L.getFireLoss())
+	var/brutedamage = L.getBruteLoss()
+	var/burndamage = L.getFireLoss()
+	var/totaldamage = brutedamage + burndamage
+	if(!totaldamage)
 		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
 		return 0
-	L.adjustToxLoss(L.getBruteLoss() / 2)
-	L.adjustToxLoss(L.getFireLoss() / 2)
-	L.adjustBruteLoss(-L.getBruteLoss())
-	L.adjustFireLoss(-L.getFireLoss())
-	invoker << "<span class='brass'>You bathe [L] in the light of Ratvar!</span>"
-	L.visible_message("<span class='warning'>A white light washes over [L], mending their bruises and burns!</span>", \
-	"<span class='heavy_brass'>You feel Ratvar's energy healing your wounds, but a deep nausea overcomes you!</span>")
-	playsound(get_turf(L), 'sound/magic/Staff_Healing.ogg', 50, 1)
+	L.adjustToxLoss(brutedamage / 2)
+	L.adjustToxLoss(burndamage / 2)
+	L.adjustBruteLoss(-brutedamage)
+	L.adjustFireLoss(-burndamage)
+	var/healseverity = max(round((totaldamage*0.5)*0.1, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+	var/targetturf = get_turf(L)
+	for(var/i in 1 to healseverity)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(servantturf, "#1E8CE1"))
+	invoker << "<span class='brass'>You bathe [L] with Inath-Neq's power!</span>"
+	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
+	"<span class='heavy_brass'>You feel Inath-Neq's power healing your wounds, but a deep nausea overcomes you!</span>")
+	playsound(servantturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
 
 
