@@ -1,5 +1,6 @@
 /obj
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2

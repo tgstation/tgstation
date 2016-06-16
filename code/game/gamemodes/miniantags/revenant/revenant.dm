@@ -23,7 +23,8 @@
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	see_in_dark = 8
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"

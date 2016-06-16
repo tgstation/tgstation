@@ -84,7 +84,7 @@ This file's folder contains:
 			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>"
 		var/mob/living/simple_animal/drone/D = M
 		D.update_drone_hack(TRUE, TRUE)
-		D.languages |= HUMAN
+		D.languages_spoken |= HUMAN
 	else if(!silent)
 		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 
