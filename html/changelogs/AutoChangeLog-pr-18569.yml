@@ -1,7 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Removed Dementia Doctrine, replacing it with an Application sigil."
-  - rscadd: "Adds the Sigil of Accession, the previously-mentioned Application sigil, which is much like a Sigil of Submission, except it isn't removed on converting un-mindshielded targets and will disappear after converting a mindshielded target."
-  - tweak: "Sigil of Submission is now a Script instead of a Driver; It's unlocked one tier up, so you have to rely on the Drivers you have until you get Scripts, instead of spamming both Driver sigils for free converts."
-  - rscadd: "To replace Sigil of Submission in the Driver tier; Added Taunting Tirade, which is a chanted scripture with a very fast invocation, which, on chanting, confuses, dizzies, and briefly stuns nearby non-servants and allows the invoker a brief time to relocate before continuing the chant."
