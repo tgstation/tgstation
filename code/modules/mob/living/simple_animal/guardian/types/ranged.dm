@@ -2,7 +2,7 @@
 /obj/item/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
-	damage = 5
+	damage = 7
 	damage_type = BRUTE
 	armour_penetration = 100
 
