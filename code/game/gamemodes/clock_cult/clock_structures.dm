@@ -82,24 +82,25 @@
 	..()
 	desc = initial(desc)
 	if(takes_damage)
-		var/servant_message = "It is at [health]/[max_health] integrity"
+		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
 		var/other_message = "It seems pristine and undamaged"
 		var/heavily_damaged = FALSE
-		switch(health/max_health * 100)
-			if(100)
-				other_message = "It seems pristine and undamaged"
-			if(100 to 60)
-				other_message = "It looks slightly dented"
-			if(60 to 25)
-				other_message = "It appears heavily damaged"
-				heavily_damaged = TRUE
-			if(25 to 0)
-				other_message = "It's falling apart"
-				heavily_damaged = TRUE
+		var/healthpercent = (health/max_health) * 100
+		if(healthpercent >= 100)
+			other_message = "It seems pristine and undamaged"
+		else if(healthpercent >= 50)
+			other_message = "It looks slightly dented"
+		else if(healthpercent >= 25)
+			other_message = "It appears heavily damaged"
+			heavily_damaged = TRUE
+		else if(healthpercent >= 0)
+			other_message = "It's falling apart"
+			heavily_damaged = TRUE
 		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
+	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
