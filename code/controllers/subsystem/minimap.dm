@@ -2,8 +2,8 @@ var/datum/subsystem/minimap/SSminimap
 
 /datum/subsystem/minimap
 	name = "Minimap"
-	priority = -2
-
+	init_order = -2
+	flags = SS_NO_FIRE
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 
@@ -12,9 +12,7 @@ var/datum/subsystem/minimap/SSminimap
 /datum/subsystem/minimap/New()
 	NEW_SS_GLOBAL(SSminimap)
 
-/datum/subsystem/minimap/Initialize(timeofday, zlevel)
-	if(zlevel)
-		return ..()
+/datum/subsystem/minimap/Initialize(timeofday)
 	if(!config.generate_minimaps)
 		world << "Minimap generation disabled... Skipping"
 		return

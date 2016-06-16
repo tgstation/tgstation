@@ -277,6 +277,8 @@
 			shake_camera(M, 4, 3)
 		var/r_success_modifier = (ticker.mode.servants_of_ratvar.len * 2) //2% for each cultist
 		var/n_success_modifier = (ticker.mode.cult.len * 2)
+		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
+			n_success_modifier += 2
 		if(prob(base_victory_chance + r_success_modifier))
 			winner = "Ratvar"
 			break
@@ -295,7 +297,7 @@
 		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>"
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'
