@@ -41,7 +41,11 @@
 	if(!alien_type_present(/mob/living/carbon/alien/humanoid/royal/queen))
 		var/mob/living/carbon/alien/humanoid/royal/queen/new_xeno = new (user.loc)
 		if(user.client.prefs.unlock_content) //check the player is a donator
-			new_xeno.maidify() //turn the new queen into a maid with a new proc we'll
+			switch(alert("Would you like to use your alternative skin?",,"Yes","No"))
+				if("Yes")
+					new_xeno.maidify()
+				if("No")
+					user << "You decide against the xeno fetish outfit"
 		user.alien_evolve(new_xeno)
 		return 1
 	else
