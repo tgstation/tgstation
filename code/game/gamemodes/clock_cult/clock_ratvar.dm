@@ -29,10 +29,13 @@
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
 	var/obj/effect/clockwork/gateway_glow/glow
+	var/obj/effect/countdown/clockworkgate/countdown
 
 /obj/structure/clockwork/massive/celestial_gateway/New()
 	..()
 	glow = new(get_turf(src))
+	countdown = new(src)
+	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
 	SSobj.processing += src
 	var/area/gate_area = get_area(src)
@@ -56,9 +59,12 @@
 		world << sound(null, 0, channel = 8)
 	qdel(glow)
 	glow = null
+	qdel(countdown)
+	countdown = null
 	return ..()
 
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
+	countdown.stop()
 	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
 	make_glow()
@@ -105,6 +111,7 @@
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
+				countdown.stop()
 				takes_damage = FALSE
 				purpose_fulfilled = TRUE
 				make_glow()
