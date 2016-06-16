@@ -233,7 +233,7 @@ var/next_mob_id = 0
 	if(!istype(W)) return 0
 
 	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0

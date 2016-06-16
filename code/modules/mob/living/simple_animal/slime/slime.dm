@@ -419,4 +419,4 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		return 3
 
 /mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
-	. = ..(loc, pick(slime_colours), new_is_adult)
+	. = ..(loc, pick(slime_colours), prob(50))
