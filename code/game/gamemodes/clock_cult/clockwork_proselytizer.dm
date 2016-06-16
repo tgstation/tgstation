@@ -2,31 +2,33 @@
 /obj/item/clockwork/clockwork_proselytizer //Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified replicant alloy to function."
+	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy to function."
 	icon_state = "clockwork_proselytizer"
-	item_state = "resonator_u"
 	w_class = 3
 	force = 5
 	flags = NOBLUDGEON
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
-	var/max_alloy = 100
+	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = 25
+	stored_alloy = REPLICANT_ALLOY_UNIT
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)) && uses_alloy)
-		user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored.</span>"
-		user << "<span class='alloy'>Strike it with replicant alloy or attack replicant alloy with it to add additional alloy.</span>"
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
+		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
+		if(uses_alloy)
+			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
+			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
-		if(stored_alloy >= max_alloy)
+		if(stored_alloy + REPLICANT_ALLOY_UNIT >= max_alloy)
 			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
 			return 0
-		modify_stored_alloy(10)
+		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
 		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
 		user.drop_item()
 		qdel(I)
@@ -60,10 +62,10 @@
 		proselytize_values["alloy_cost"] = 0
 
 	if(stored_alloy - proselytize_values["alloy_cost"] < 0)
-		user << "<span class='warning'>You need [proselytize_values["alloy_cost"]] replicant alloy to proselytize [target]!</span>"
+		user << "<span class='warning'>You need [proselytize_values["alloy_cost"]] liquified alloy to proselytize [target]!</span>"
 		return 0
-	if(stored_alloy - proselytize_values["alloy_cost"] > 100)
-		user << "<span class='warning'>You have too much replicant alloy stored to proselytize [target]!</span>"
+	if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
+		user << "<span class='warning'>You have too much liquified alloy stored to proselytize [target]!</span>"
 		return 0
 
 	if(ratvar_awakens) //Ratvar makes it faster
@@ -75,7 +77,7 @@
 		return 0
 	if(stored_alloy - proselytize_values["alloy_cost"] < 0) //Check again to prevent bypassing via spamclick
 		return 0
-	if(stored_alloy - proselytize_values["alloy_cost"] > 100)
+	if(stored_alloy - proselytize_values["alloy_cost"] > max_alloy)
 		return 0
 	if(!target || target.type != target_type)
 		return 0
@@ -104,29 +106,29 @@
 	return FALSE
 
 /turf/closed/wall/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = 5, "spawn_dir" = SOUTH)
+	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
 
 /turf/closed/wall/r_wall/proselytize_vals(mob/living/proselytizer)
 	return FALSE
 
 /turf/closed/wall/clockwork/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 80, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = -4, "spawn_dir" = SOUTH)
+	return list("operation_time" = 50, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = -REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = 1, "spawn_dir" = SOUTH)
+	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = REPLICANT_FLOOR, "spawn_dir" = SOUTH)
 
 /turf/open/floor/clockwork/proselytize_vals(mob/living/proselytizer)
 	for(var/obj/O in src)
 		if(O.density && !O.CanPass(proselytizer, src, 5))
 			proselytizer << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
-			return 0
-	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = 4, "spawn_dir" = SOUTH)
+			return FALSE
+	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /obj/machinery/door/airlock/proselytize_vals(mob/living/proselytizer)
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
-	return list("operation_time" = 40, "new_obj_type" = doortype, "alloy_cost" = 5, "spawn_dir" = dir)
+	return list("operation_time" = 40, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
 
 /obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/proselytizer)
 	return FALSE
@@ -135,17 +137,19 @@
 	var/windowtype = /obj/structure/window/reinforced/clockwork
 	var/new_dir = TRUE
 	var/prosel_time = 15
+	var/prosel_cost = REPLICANT_FLOOR
 	if(fulltile)
 		windowtype = /obj/structure/window/reinforced/clockwork/fulltile
 		new_dir = FALSE
 		prosel_time = 30
-	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = 5, "spawn_dir" = dir, "dir_in_new" = new_dir)
+		prosel_cost = REPLICANT_STANDARD
+	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
 /obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/proselytizer)
 	return FALSE
 
 /obj/machinery/door/window/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "alloy_cost" = 5, "spawn_dir" = dir, "dir_in_new" = TRUE)
+	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "alloy_cost" = REPLICANT_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE)
 
 /obj/machinery/door/window/clockwork/proselytize_vals(mob/living/proselytizer)
 	return FALSE
@@ -162,10 +166,10 @@
 	return FALSE
 
 /obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 20, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = 6, "spawn_dir" = SOUTH)
+	return list("operation_time" = 10, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 10, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = 7, "spawn_dir" = SOUTH)
+	return list("operation_time" = 5, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_STANDARD, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/component/replicant_alloy/proselytize_vals(mob/living/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -10, "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_ALLOY_UNIT, "spawn_dir" = SOUTH)
