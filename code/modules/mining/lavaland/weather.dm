@@ -22,9 +22,10 @@
 
 	var/start_up_overlay = "lava"
 	var/duration_overlay = "lava"
-	var/overlay_layer = 10 //This is the default area layer, and above everything else. 2 is floors/below walls and mobs.
+	var/overlay_layer = AREA_LAYER //This is the default area layer, and above everything else. TURF_LAYER is floors/below walls and mobs.
 	var/purely_aesthetic = FALSE //If we just want gentle rain that doesn't hurt people
 	var/list/impacted_areas = list()
+	var/immunity_type = "storm"
 
 /datum/weather/proc/weather_start_up()
 	for(var/area/N in get_areas(area_type))
@@ -73,9 +74,8 @@
 
 
 /datum/weather/proc/storm_act(mob/living/L)
-	if(prob(30)) //Dont want it spammed very tick
-		L << "You're buffeted by the storm!"
-		L.adjustBruteLoss(1)
+	if(immunity_type in L.weather_immunities)
+		return
 
 /datum/weather/proc/update_areas()
 	for(var/area/N in impacted_areas)
@@ -95,6 +95,6 @@
 			if(END_STAGE)
 				N.icon_state = initial(N.icon_state)
 				N.icon = 'icons/turf/areas.dmi'
-				N.layer = 10 //Just default back to normal area stuff since I assume setting a var is faster than initial
+				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
 				N.invisibility = INVISIBILITY_MAXIMUM
 				N.opacity = 0

@@ -342,11 +342,11 @@
 					/obj/item/ammo_box/magazine/wt550m9)
 	crate_name = "auto rifle ammo crate"
 
-/datum/supply_pack/security/armory/loyalty
-	name = "Loyalty Implants Crate"
+/datum/supply_pack/security/armory/mindshield
+	name = "mindshield implants Crate"
 	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
-	crate_name = "loyalty implant crate"
+	crate_name = "mindshield implant crate"
 
 /datum/supply_pack/security/armory/trackingimp
 	name = "Tracking Implants Crate"
@@ -703,7 +703,7 @@
 					/obj/item/weapon/reagent_containers/blood/BMinus,
 					/obj/item/weapon/reagent_containers/blood/OPlus,
 					/obj/item/weapon/reagent_containers/blood/OMinus)
-	crate_name = "blood pack crate"
+	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
 /datum/supply_pack/medical/iv_drip
@@ -789,7 +789,6 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure
 
-
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
 	cost = 6000
@@ -799,6 +798,14 @@
 	crate_name = "tank transfer valves crate"
 	crate_type = /obj/structure/closet/crate/secure
 	dangerous = TRUE
+
+/datum/supply_pack/science/research
+	name = "Machine Prototype Crate"
+	cost = 8000
+	access = access_research
+	contains = list(/obj/item/device/machineprototype)
+	crate_name = "machine prototype crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
@@ -949,7 +956,7 @@
 					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
 					/obj/item/weapon/hatchet,
 					/obj/item/weapon/cultivator,
-					/obj/item/device/analyzer/plant_analyzer,
+					/obj/item/device/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron)
 	crate_name = "hydroponics crate"
@@ -1135,6 +1142,13 @@
 	crate_name = "water tank crate"
 	crate_type = /obj/structure/closet/crate/large
 
+/datum/supply_pack/misc/hightank
+	name = "High-Capacity Water Tank Crate"
+	cost = 1200
+	contains = list(/obj/structure/reagent_dispensers/watertank/high)
+	crate_name = "high-capacity water tank crate"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/lasertag
 	name = "Laser Tag Crate"
 	cost = 1500
@@ -1181,8 +1195,19 @@
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/weapon/storage/book/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
-					/obj/item/clothing/suit/hooded/chaplain_hoodie)
+					/obj/item/clothing/suit/hooded/chaplain_hoodie,
+					/obj/item/clothing/under/burial,
+					/obj/item/clothing/under/burial)
 	crate_name = "religious supplies crate"
+
+/datum/supply_pack/misc/book_crate
+	name = "Book Crate"
+	cost = 1500
+	contains = list(/obj/item/weapon/book/codex_gigas,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/manual/random/,
+					/obj/item/weapon/book/random/triple)
 
 /datum/supply_pack/misc/posters
 	name = "Corporate Posters Crate"
@@ -1370,7 +1395,7 @@
 	                /obj/item/toy/minimeteor,
 	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
-	                /obj/item/stack/tile/fakespace,
+	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"

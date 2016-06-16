@@ -3,7 +3,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
-	priority = 3
+	init_order = 3
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -35,9 +36,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
@@ -79,9 +78,16 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		WARNING("requestEvac(): There is no emergency shuttle, but the shuttle was called. Using the backup shuttle instead.")
+		WARNING("requestEvac(): There is no emergency shuttle, but the \
+			shuttle was called. Using the backup shuttle instead.")
 		if(!backup_shuttle)
-			throw EXCEPTION("requestEvac(): There is no emergency shuttle, or backup shuttle! The game will be unresolvable. This is likely due to a mapping error")
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			or backup shuttle! The game will be unresolvable. This is \
+			possibly a mapping error, more likely a bug with the shuttle \
+			manipulation system, or badminry. It is possible to manually \
+			resolve this problem by loading an emergency shuttle template \
+			manually, and then calling register() on the mobile docking port. \
+			Good luck.")
 			return
 		emergency = backup_shuttle
 
@@ -170,7 +176,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if(callShuttle)
-		if(emergency.mode < SHUTTLE_CALL)
+		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
@@ -211,11 +217,30 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		for(var/obj/docking_port/stationary/S in stationary)
-			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
-				S.width = M.width
-				S.height = M.height
-				S.dwidth = M.dwidth
-				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK
+
+/datum/subsystem/shuttle/Recover()
+	if (istype(SSshuttle.mobile))
+		mobile = SSshuttle.mobile
+	if (istype(SSshuttle.stationary))
+		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.transit))
+		transit = SSshuttle.transit
+	if (istype(SSshuttle.discoveredPlants))
+		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.requestlist))
+		requestlist = SSshuttle.requestlist
+	if (istype(SSshuttle.orderhistory))
+		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
+	centcom_message = SSshuttle.centcom_message
+	ordernum = SSshuttle.ordernum
+	points = SSshuttle.points
+

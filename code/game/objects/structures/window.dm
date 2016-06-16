@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
@@ -69,10 +69,17 @@
 	shatter()
 
 /obj/structure/window/narsie_act()
-	var/evil_color = "#7D1919"
-	color = evil_color
+	color = NARSIE_WINDOW_COLOUR
 	for(var/obj/item/weapon/shard/shard in debris)
-		shard.color = evil_color
+		shard.color = NARSIE_WINDOW_COLOUR
+
+/obj/structure/window/ratvar_act()
+	if(prob(20))
+		if(!fulltile)
+			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+		else
+			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+		qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -305,7 +312,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -325,7 +332,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 270)
+	setDir(turn(dir, 270))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -367,7 +374,7 @@
 /obj/structure/window/Move()
 	var/turf/T = loc
 	..()
-	dir = ini_dir
+	setDir(ini_dir)
 	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
@@ -439,7 +446,7 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -448,7 +455,7 @@
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -458,7 +465,7 @@
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = 5
+	dir = NORTHEAST
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
@@ -476,7 +483,7 @@
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -488,3 +495,48 @@
 
 /obj/structure/window/shuttle/narsie_act()
 	color = "#3C3434"
+
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE
+
+/obj/structure/window/reinforced/clockwork
+	name = "brass window"
+	desc = "A paper-thin pane of translucent yet reinforced brass."
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon_state = "clockwork_window_single"
+	maxhealth = 100
+	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+
+/obj/structure/window/reinforced/clockwork/New(loc, direct)
+	..()
+	if(!fulltile)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		if(direct)
+			setDir(direct)
+			E.setDir(direct)
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	health = maxhealth
+	update_icon()
+	return 0
+
+/obj/structure/window/reinforced/clockwork/narsie_act()
+	take_damage(rand(25, 75), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/window/reinforced/clockwork/fulltile
+	icon_state = "clockwork_window"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	fulltile = 1
+	dir = NORTHEAST
+	maxhealth = 150

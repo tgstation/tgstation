@@ -350,14 +350,14 @@
 
 		switch(href_list["call_shuttle"])
 			if("1")
-				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+				if(EMERGENCY_AT_LEAST_DOCKED)
 					return
 				SSshuttle.emergency.request()
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station</span>")
 
 			if("2")
-				if(SSshuttle.emergency.mode >= SHUTTLE_DOCKED)
+				if(EMERGENCY_AT_LEAST_DOCKED)
 					return
 				switch(SSshuttle.emergency.mode)
 					if(SHUTTLE_CALL)
@@ -2041,7 +2041,7 @@
 					else
 						var/atom/O = new path(target)
 						if(O)
-							O.dir = obj_dir
+							O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name
 								if(istype(O,/mob))

@@ -254,7 +254,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if (3)
 				dat += "<h4><img src=pda_atmos.png> Atmospheric Readings</h4>"
 
-				var/turf/T = get_turf(user.loc)
+				var/turf/T = user.loc
 				if (isnull(T))
 					dat += "Unable to obtain a reading.<br>"
 				else
@@ -269,7 +269,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					if (total_moles)
 						for(var/id in env_gases)
 							var/gas_level = env_gases[id][MOLES]/total_moles
-							if(id in hardcoded_gases || gas_level > 0.001)
+							if(gas_level > 0)
 								dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100, 0.01)]%<br>"
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
@@ -619,7 +619,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
-			M << russian_html2text("<a href='?src=\ref[M];follow=\ref[user]'>(F)</a><span class='name'> [msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
+			var/link = FOLLOW_LINK(M, user)
+			M << russian_html2text("[link] <span class='name'>[msg.sender] </span><span class='game say'>PDA Message</span> --> <span class='name'>[multiple ? "Everyone" : msg.recipient]</span>: <span class='message'>[msg.message][msg.get_photo_ref()]</span></span>")
 
 /obj/item/device/pda/proc/can_send(obj/item/device/pda/P)
 	if(!P || qdeleted(P) || P.toff)

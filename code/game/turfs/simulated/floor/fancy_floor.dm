@@ -69,6 +69,9 @@
 		if(smooth)
 			queue_smooth_neighbors(src)
 
+/turf/open/floor/carpet/narsie_act()
+	return
+
 /turf/open/floor/carpet/break_tile()
 	broken = 1
 	update_icon()

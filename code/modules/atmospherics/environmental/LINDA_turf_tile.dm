@@ -192,7 +192,6 @@
 		if(air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 			if(consider_superconductivity(starting = 1))
 				remove = 0
-	HandleWet() // if the tile is wet, and cold, make ice. Or if it's wet, and warm, dry it off.
 
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
@@ -272,16 +271,22 @@
 	breakdown_cooldown = 0
 	dismantle_cooldown = 0
 
-/datum/excited_group/proc/self_breakdown()
+//argument is so world start can clear out any turf differences quickly.
+/datum/excited_group/proc/self_breakdown(space_is_all_consuming = 0)
 	var/datum/gas_mixture/A = new
 
 	//make local for sanic speed
 	var/list/A_gases = A.gases
 	var/list/turf_list = src.turf_list
 	var/turflen = turf_list.len
+	var/space_in_group = 0
 
 	for(var/t in turf_list)
 		var/turf/open/T = t
+		if (space_is_all_consuming && !space_in_group && istype(T.air, /datum/gas_mixture/space))
+			space_in_group = 1
+			qdel(A)
+			A = new/datum/gas_mixture/space()
 		A.merge(T.air)
 
 	for(var/id in A_gases)

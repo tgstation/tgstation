@@ -131,3 +131,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	id = "Broadcaster B"
 	network = "tcommsat"
 	autolinkers = list("broadcasterB")
+
+/obj/machinery/telecomms/broadcaster/preset_left/birdstation
+	name = "Broadcaster"

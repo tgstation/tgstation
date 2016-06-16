@@ -77,22 +77,22 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 2
+						T.setDir(2)
 		if("koran")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 4
+						T.setDir(4)
 		if("scientology")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 8
+						T.setDir(8)
 		if("athiest")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 10
+						T.setDir(10)
 
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
 	if(href_list["seticon"] && ticker && !ticker.Bible_icon_state)

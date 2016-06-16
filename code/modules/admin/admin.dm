@@ -21,6 +21,9 @@ var/global/BSACooldown = 0
 	if(!check_rights())
 		return
 
+	if(!isobserver(usr))
+		log_game("[key_name_admin(usr)] checked the player panel while in game.")
+
 	if(!M)
 		usr << "You seem to be selecting a mob that doesn't exist anymore."
 		return

@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Invoking Inath-Neq, the Resonant Cogwheel, now gives total invulnerability to all servants in range for 15 seconds instead of buffing maximum health."

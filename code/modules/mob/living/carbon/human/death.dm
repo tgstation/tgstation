@@ -57,4 +57,5 @@
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()
 	disabilities |= NOCLONE
+	blood_volume = 0
 	return 1

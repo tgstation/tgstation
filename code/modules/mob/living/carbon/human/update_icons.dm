@@ -39,24 +39,14 @@ There are several things that need to be remembered:
 
 >	There are also these special cases:
 		update_damage_overlays()	//handles damage overlays for brute/burn damage
-		update_base_icon_state()	//Handles updating var/base_icon_state (WIP) This is used to update the
-									mob's icon_state easily e.g. "[base_icon_state]_s" is the standing icon_state
-		update_body()				//Handles updating your mob's icon_state (using update_base_icon_state())
+		update_body()				//Handles updating your mob's body layer and mutant bodyparts
 									as well as sprite-accessories that didn't really fit elsewhere (underwear, undershirts, socks, lips, eyes)
 									//NOTE: update_mutantrace() is now merged into this!
 		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
 
-If you have any questions/constructive-comments/bugs-to-report
-Please contact me on #coderbus IRC. ~Carnie x
-//Carn can sometimes be hard to reach now. However IRC is still your best bet for getting help.
 
 */
-
-/mob/living/carbon/human/proc/update_base_icon_state()
-	base_icon_state = dna.species.update_base_icon_state(src)
-	icon_state = "[base_icon_state]_s"
-
 
 //DAMAGE OVERLAYS
 //constructs damage icon for each organ from mask * damage field and saves it in our overlays_ lists
@@ -66,12 +56,16 @@ Please contact me on #coderbus IRC. ~Carnie x
 	var/image/standing	= image("icon"='icons/mob/dam_human.dmi', "icon_state"="blank", "layer"=-DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER]	= standing
 
+	var/dmgoverlaytype = ""
+	if(dna.species.exotic_damage_overlay)
+		dmgoverlaytype = dna.species.exotic_damage_overlay + "_"
+
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.brutestate)
-			standing.overlays	+= "[BP.icon_state]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(BP.burnstate)
-			standing.overlays	+= "[BP.icon_state]_0[BP.burnstate]"
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_0[BP.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 
@@ -94,14 +88,6 @@ Please contact me on #coderbus IRC. ~Carnie x
 	..("Standing")
 
 /mob/living/carbon/human/proc/update_body_parts()
-	if(NODISMEMBER in dna.species.specflags) //Species don't have no dismemberment going for 'em!
-		remove_overlay(BODYPARTS_LAYER)
-		return
-
-	icon_state = ""//Reset here as apposed to having a null one due to some getFlatIcon calls at roundstart.
-
-	remove_overlay(SPECIES_LAYER)//if we switch from a species w/o dismemberment to one with it, we must clear that layer.
-
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
 	icon_render_key = generate_icon_render_key()
@@ -585,12 +571,14 @@ var/global/list/limb_icon_cache = list()
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/proc/generate_icon_render_key()
-	. = "[dna.species.id]"
+	. = "[dna.species.limbs_id]"
 
 	if(dna.check_mutation(HULK))
 		. += "-coloured-hulk"
 	else if(dna.species.use_skintones)
 		. += "-coloured-[skin_tone]"
+	else if(dna.species.fixed_mut_color)
+		. += "-coloured-[dna.species.fixed_mut_color]"
 	else if(dna.features["mcolor"])
 		. += "-coloured-[dna.features["mcolor"]]"
 	else

@@ -90,6 +90,9 @@
 	pixel_y = 0
 	},
 /obj/effect/decal/sandeffect,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
@@ -158,7 +161,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -186,6 +188,7 @@
 /area/ruin/powered)
 "aG" = (
 /obj/structure/table,
+/obj/item/weapon/book/manual/barman_recipes,
 /obj/item/weapon/reagent_containers/glass/rag,
 /turf/open/floor/wood,
 /area/ruin/powered)
@@ -207,7 +210,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)
@@ -277,7 +279,6 @@
 /turf/open/floor/plasteel/asteroid/warning{
 	baseturf = /turf/open/floor/plating/beach/sand;
 	dir = 1;
-	icon_state = "asteroidwarning";
 	tag = "icon-asteroidwarning (NORTH)"
 	},
 /area/ruin/powered)

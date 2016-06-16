@@ -32,12 +32,13 @@
 /obj/item/weapon/circuitboard/machine/sleeper
 	name = "circuit board (Sleeper)"
 	build_path = /obj/machinery/sleeper
-	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	origin_tech = "programming=3;biotech=2;engineering=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 2)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -73,6 +74,8 @@
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		..(user)
+		if(occupant && occupant.stat != DEAD)
+			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)

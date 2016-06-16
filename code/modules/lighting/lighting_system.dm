@@ -27,7 +27,7 @@
 */
 
 #define LIGHTING_CIRCULAR 1									//Comment this out to use old square lighting effects.
-#define LIGHTING_LAYER 15									//Drawing layer for lighting
+//#define LIGHTING_LAYER 15									//Drawing layer for lighting, moved to layers.dm
 #define LIGHTING_CAP 10										//The lumcount level at which alpha is 0 and we're fully lit.
 #define LIGHTING_CAP_FRAC (255/LIGHTING_CAP)				//A precal'd variable we'll use in turf/redraw_lighting()
 #define LIGHTING_ICON 'icons/effects/alphacolors.dmi'
@@ -176,26 +176,28 @@
 //Movable atoms with luminosity when they are constructed will create a light_source automatically
 /atom/movable/New()
 	..()
-	if(opacity)
-		UpdateAffectingLights()
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
 	if(luminosity)
 		light = new(src)
 
 //Objects with opacity will trigger nearby lights to update at next SSlighting fire
 /atom/movable/Destroy()
 	qdel(light)
-	if(opacity)
-		UpdateAffectingLights()
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
 	return ..()
 
 //Objects with opacity will trigger nearby lights of the old location to update at next SSlighting fire
 /atom/movable/Moved(atom/OldLoc, Dir)
-	if(isturf(loc))
-		if(opacity)
+	if(opacity)
+		if (isturf(OldLoc))
 			OldLoc.UpdateAffectingLights()
-		else
-			if(light)
-				light.changed()
+		if (isturf(loc))
+			loc.UpdateAffectingLights()
+	else
+		if(light)
+			light.changed()
 	return ..()
 
 //Sets our luminosity.
@@ -245,8 +247,11 @@
 	infra_luminosity = 1
 	anchored = 1
 
-/atom/movable/light/Destroy()
-	return QDEL_HINT_LETMELIVE
+/atom/movable/light/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /atom/movable/light/Move()
 	return 0
@@ -301,8 +306,9 @@
 
 /turf/proc/init_lighting()
 	var/area/A = loc
-	if(!IS_DYNAMIC_LIGHTING(A) || istype(src, /turf/open/space))
-		lighting_changed = 0
+	if(!IS_DYNAMIC_LIGHTING(A))
+		if(lighting_changed)
+			lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
 			lighting_object = null
@@ -310,10 +316,16 @@
 		if(!lighting_object)
 			lighting_object = new (src)
 		redraw_lighting(1)
+		for(var/turf/open/space/T in RANGE_TURFS(1,src))
+			T.update_starlight()
+
 
 /turf/open/space/init_lighting()
-	..()
-	update_starlight()
+	if(lighting_changed)
+		lighting_changed = 0
+	if(lighting_object)
+		lighting_object.alpha = 0
+		lighting_object = null
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)
@@ -321,7 +333,6 @@
 		if(lighting_lumcount <= 0)
 			newalpha = 255
 		else
-			lighting_object.luminosity = 1
 			if(lighting_lumcount < LIGHTING_CAP)
 				var/num = Clamp(lighting_lumcount * LIGHTING_CAP_FRAC, 0, 255)
 				newalpha = 255-num
@@ -337,6 +348,9 @@
 			if(newalpha >= LIGHTING_DARKEST_VISIBLE_ALPHA)
 				luminosity = 0
 				lighting_object.luminosity = 0
+			else
+				luminosity = 1
+				lighting_object.luminosity = 1
 
 	lighting_changed = 0
 
@@ -362,7 +376,6 @@
 		T.init_lighting()
 		T.update_lumcount(0)
 
-#undef LIGHTING_LAYER
 #undef LIGHTING_CIRCULAR
 #undef LIGHTING_ICON
 #undef LIGHTING_ICON_STATE
@@ -386,7 +399,8 @@
 /turf/UpdateAffectingLights()
 	if(affecting_lights)
 		for(var/datum/light_source/thing in affecting_lights)
-			thing.changed()			//force it to update at next process()
+			if (!thing.changed)
+				thing.changed()			//force it to update at next process()
 
 
 #define LIGHTING_MAX_LUMINOSITY_STATIC	8	//Maximum luminosity to reduce lag.

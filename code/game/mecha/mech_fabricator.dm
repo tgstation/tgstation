@@ -10,19 +10,9 @@
 	active_power_usage = 5000
 	req_access = list(access_robotics)
 	var/time_coeff = 1
-	var/list/resources = list(
-								MAT_METAL=0,
-								MAT_GLASS=0,
-								MAT_BANANIUM=0,
-								MAT_DIAMOND=0,
-								MAT_GOLD=0,
-								MAT_PLASMA=0,
-								MAT_SILVER=0,
-								MAT_URANIUM=0
-								)
-	var/res_max_amount = 200000
+	var/component_coeff = 1
+	var/datum/material_container/materials
 	var/datum/research/files
-	var/id
 	var/sync = 0
 	var/part_set
 	var/datum/design/being_built
@@ -46,14 +36,15 @@
 
 /obj/machinery/mecha_part_fabricator/New()
 	..()
+	files = new /datum/research(src) //Setup the research data holder.
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
-	files = new /datum/research(src) //Setup the research data holder.
 
 /obj/item/weapon/circuitboard/machine/mechfab
 	name = "circuit board (Exosuit Fabricator)"
 	build_path = /obj/machinery/mecha_part_fabricator
-	origin_tech = "programming=3;engineering=3"
+	origin_tech = "programming=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 1,
@@ -63,10 +54,16 @@
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
 
-	//maximum stocking amount (max 412000)
+	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
-	res_max_amount = (187000+(T * 37500))
+	materials.max_amount = (200000 + (T*50000))
+
+	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
+	T = 1.15
+	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
+		T -= Ma.rating*0.15
+	component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
@@ -86,24 +83,20 @@
 			return 0
 	return 1
 
-/obj/machinery/mecha_part_fabricator/proc/emag()
-	switch(emagged)
-		if(0)
-			emagged = 0.5
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB error \[Code 0x00F1\]\"")
-			sleep(10)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"Attempting auto-repair\"")
-			sleep(15)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB corrupted \[Code 0x00FA\]. Truncating data structure...\"")
-			sleep(30)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"User DB truncated. Please contact your Nanotrasen system operator for future assistance.\"")
-			req_access = null
-			emagged = 1
-		if(0.5)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"DB not responding \[Code 0x0003\]...\"")
-		if(1)
-			visible_message("\icon[src] <b>\The [src]</b> beeps: \"No records in User DB\"")
-	return
+/obj/machinery/mecha_part_fabricator/emag_act()
+	if(emagged)
+		return
+
+	emagged = 0.5
+	say("DB error \[Code 0x00F1\]")
+	sleep(10)
+	say("Attempting auto-repair...")
+	sleep(15)
+	say("User DB corrupted \[Code 0x00FA\]. Truncating data structure...")
+	sleep(30)
+	say("User DB truncated. Please contact your Nanotrasen system operator for future assistance.")
+	req_access = null
+	emagged = 1
 
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
@@ -112,8 +105,10 @@
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
-			var/resources_available = check_resources(D)
-			output += "<div class='part'>[output_part_info(D)]<br>\[[resources_available?"<a href='?src=\ref[src];part=[D.id]'>Build</a> | ":null]<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
+			output += "<div class='part'>[output_part_info(D)]<br>\["
+			if(check_resources(D))
+				output += "<a href='?src=\ref[src];part=[D.id]'>Build</a> | "
+			output += "<a href='?src=\ref[src];add_to_queue=[D.id]'>Add to queue</a>\]\[<a href='?src=\ref[src];part_desc=[D.id]'>?</a>\]</div>"
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_part_info(datum/design/D)
@@ -124,39 +119,42 @@
 	var/i = 0
 	var/output
 	for(var/c in D.materials)
-		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
-			i++
+		output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
+		i++
 	return output
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
-	for(var/resource in resources)
-		var/amount = min(res_max_amount, resources[resource])
-		output += "<span class=\"res_name\">[material2name(resource)]: </span>[amount] cm&sup3;"
-		if(amount>0)
-			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[resource]'>1</a>\] | \[<a href='?src=\ref[src];remove_mat=10;material=[resource]'>10</a>\] | \[<a href='?src=\ref[src];remove_mat=[resources[resource] / MINERAL_MATERIAL_AMOUNT];material=[resource]'>All</a>\]</span>"
+	for(var/mat_id in materials.materials)
+		var/datum/material/M = materials.materials[mat_id]
+		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
+		if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+			output += "<span style='font-size:80%;'>- Remove \[<a href='?src=\ref[src];remove_mat=1;material=[mat_id]'>1</a>\]"
+			if(M.amount >= (MINERAL_MATERIAL_AMOUNT * 10))
+				output += " | \[<a href='?src=\ref[src];remove_mat=10;material=[mat_id]'>10</a>\]"
+			output += " | \[<a href='?src=\ref[src];remove_mat=50;material=[mat_id]'>All</a>\]</span>"
 		output += "<br/>"
 	return output
 
-/obj/machinery/mecha_part_fabricator/proc/remove_resources(datum/design/D)
-	for(var/resource in D.materials)
-		if(resource in resources)
-			resources[resource] -= get_resource_cost_w_coeff(D,resource)
+/obj/machinery/mecha_part_fabricator/proc/get_resources_w_coeff(datum/design/D)
+	var/list/resources = list()
+	for(var/R in D.materials)
+		resources[R] = get_resource_cost_w_coeff(D, R)
+	return resources
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
-	for(var/R in D.materials)
-		if(R in resources)
-			if(resources[R] < get_resource_cost_w_coeff(D, R))
-				return 0
-		else
-			return 0
-	return 1
+	if(D.reagents.len) // No reagents storage - no reagent designs.
+		return 0
+	if(materials.has_materials(get_resources_w_coeff(D)))
+		return 1
+	return 0
 
 /obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D)
 	being_built = D
 	desc = "It's building \a [initial(D.name)]."
-	remove_resources(D)
+	var/list/res_coef = get_resources_w_coeff(D)
+
+	materials.use_amount(res_coef)
 	overlays += "fab-active"
 	use_power = 2
 	updateUsrDialog()
@@ -167,9 +165,8 @@
 
 	var/location = get_step(src,(dir))
 	var/obj/item/I = new D.build_path(location)
-	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
-	visible_message("\icon[src] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
+	I.materials = res_coef
+	say("\The [I] is complete.")
 	being_built = null
 
 	updateUsrDialog()
@@ -213,14 +210,14 @@
 		if(stat&(NOPOWER|BROKEN))
 			return 0
 		if(!check_resources(D))
-			visible_message("\icon[src] <b>\The [src]</b> beeps, \"Not enough resources. Queue processing stopped.\"")
+			say("Not enough resources. Queue processing stopped.")
 			temp = {"<span class='alert'>Not enough resources to build next part.</span><br>
 						<a href='?src=\ref[src];process_queue=1'>Try again</a> | <a href='?src=\ref[src];clear_temp=1'>Return</a><a>"}
 			return 0
 		remove_from_queue(1)
 		build_part(D)
 		D = listgetindex(queue, 1)
-	visible_message("\icon[src] <b>\The [src]</b> beeps, \"Queue processing finished successfully.\"")
+	say("Queue processing finished successfully.")
 
 /obj/machinery/mecha_part_fabricator/proc/list_queue()
 	var/output = "<b>Queue contains:</b>"
@@ -232,7 +229,11 @@
 		for(var/datum/design/D in queue)
 			i++
 			var/obj/part = D.build_path
-			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>[initial(part.name)] - [i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] [i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] <a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
+			output += "<li[!check_resources(D)?" style='color: #f00;'":null]>"
+			output += initial(part.name) + " - "
+			output += "[i>1?"<a href='?src=\ref[src];queue_move=-1;index=[i]' class='arrow'>&uarr;</a>":null] "
+			output += "[i<queue.len?"<a href='?src=\ref[src];queue_move=+1;index=[i]' class='arrow'>&darr;</a>":null] "
+			output += "<a href='?src=\ref[src];remove_from_queue=[i]'>Remove</a></li>"
 
 		output += "</ol>"
 		output += "\[<a href='?src=\ref[src];process_queue=1'>Process queue</a> | <a href='?src=\ref[src];clear_queue=1'>Clear queue</a>\]"
@@ -258,7 +259,7 @@
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
 		updateUsrDialog()
-		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Successfully synchronized with R&D server.\"")
+		say("Successfully synchronized with R&D server.")
 		return
 
 	temp = "Unable to connect to local R&D Database.<br>Please check your connections and try again.<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
@@ -266,7 +267,7 @@
 	return
 
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
-	return round(D.materials[resource], roundto)
+	return round(D.materials[resource]*component_coeff, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
@@ -282,7 +283,7 @@
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
-		visible_message("\icon[src] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
+		say("Error! Part outlet is obstructed.")
 		return
 	if(temp)
 		left_part = temp
@@ -296,7 +297,7 @@
 				left_part = output_available_resources()+"<hr>"
 				left_part += "<a href='?src=\ref[src];sync=1'>Sync with R&D servers</a><hr>"
 				for(var/part_set in part_sets)
-					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue\]<br>"
+					left_part += "<a href='?src=\ref[src];part_set=[part_set]'>[part_set]</a> - \[<a href='?src=\ref[src];partset_to_queue=[part_set]'>Add all parts to queue</a>\]<br>"
 			if("parts")
 				left_part += output_parts_list(part_set)
 				left_part += "<hr><a href='?src=\ref[src];screen=main'>Return</a>"
@@ -409,124 +410,57 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
-		var/amount = text2num(href_list["remove_mat"])
-		var/material = href_list["material"]
-		if(amount < 0 || amount > resources[material]) //href protection
-			return
-
-		var/removed = remove_material(material,amount)
-		if(removed == -1)
-			temp = "Not enough [material2name(material)] to produce a sheet."
-		else
-			temp = "Ejected [removed] of [material2name(material)]"
-		temp += "<br><a href='?src=\ref[src];clear_temp=1'>Return</a>"
+		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
 
 	updateUsrDialog()
 	return
 
-/obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
-	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
-		return -1
-	var/type
-	switch(mat_string)
-		if(MAT_METAL)
-			type = /obj/item/stack/sheet/metal
-		if(MAT_GLASS)
-			type = /obj/item/stack/sheet/glass
-		if(MAT_GOLD)
-			type = /obj/item/stack/sheet/mineral/gold
-		if(MAT_SILVER)
-			type = /obj/item/stack/sheet/mineral/silver
-		if(MAT_DIAMOND)
-			type = /obj/item/stack/sheet/mineral/diamond
-		if(MAT_PLASMA)
-			type = /obj/item/stack/sheet/mineral/plasma
-		if(MAT_URANIUM)
-			type = /obj/item/stack/sheet/mineral/uranium
-		if(MAT_BANANIUM)
-			type = /obj/item/stack/sheet/mineral/bananium
-		else
-			return 0
-	var/result = 0
-
-	while(amount > 50)
-		new type(get_turf(src),50)
-		amount -= 50
-		result += 50
-		resources[mat_string] -= 50 * MINERAL_MATERIAL_AMOUNT
-
-	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
-	if(total_amount)//if there's still enough material for sheets
-		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
-		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
-		result += res.amount
-
-	return result
-
 /obj/machinery/mecha_part_fabricator/deconstruction()
-	for(var/material in resources)
-		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
+	materials.retrieve_all()
+	..()
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return
+		return 1
 
 	if(exchange_parts(user, W))
-		return
+		return 1
 
 	if(default_deconstruction_crowbar(W))
 		return 1
 
-	if(istype(W, /obj/item/stack))
+	if(istype(W, /obj/item/stack/sheet))
 		if(panel_open)
-			user << "<span class='warning'>You can't load \the [name] while it's opened!</span>"
+			user << "<span class='warning'>You can't load [src] while it's opened!</span>"
 			return 1
-		var/material
-		switch(W.type)
-			if(/obj/item/stack/sheet/mineral/gold)
-				material = MAT_GOLD
-			if(/obj/item/stack/sheet/mineral/silver)
-				material = MAT_SILVER
-			if(/obj/item/stack/sheet/mineral/diamond)
-				material = MAT_DIAMOND
-			if(/obj/item/stack/sheet/mineral/plasma)
-				material = MAT_PLASMA
-			if(/obj/item/stack/sheet/metal)
-				material = MAT_METAL
-			if(/obj/item/stack/sheet/glass)
-				material = MAT_GLASS
-			if(/obj/item/stack/sheet/mineral/bananium)
-				material = MAT_BANANIUM
-			if(/obj/item/stack/sheet/mineral/uranium)
-				material = MAT_URANIUM
-			else
-				return ..()
-
 		if(being_built)
 			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
-			return
-		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
-			user << "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>"
-			return
-		var/obj/item/stack/sheet/stack = W
-		var/sname = "[stack.name]"
-		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			return 1
 
-			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
-			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
-			stack.use(transfer_amount)
-			user << "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>"
-			sleep(10)
-			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
-		else
-			user << "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>"
+		var/material_amount = materials.get_item_material_amount(W)
+		if(!material_amount)
+			user << "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>"
+			return 1
+		if(!materials.has_space(material_amount))
+			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
+			return 1
+		if(!user.unEquip(W))
+			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
+			return 1
+
+		var/inserted = materials.insert_item(W)
+		if(inserted)
+			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
+			if(W && W.materials.len)
+				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
+				overlays += mat_overlay
+				sleep(10)
+				overlays -= mat_overlay //No matter what the overlay shall still be deleted
+
+		updateUsrDialog()
+
 	else
 		return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)
-
-/obj/machinery/mecha_part_fabricator/emag_act()
-	emag()

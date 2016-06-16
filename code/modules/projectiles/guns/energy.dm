@@ -165,3 +165,8 @@
 		else
 			SSobj.processing -= src
 	..()
+
+/obj/item/weapon/gun/energy/burn()
+	if(power_supply)
+		qdel(power_supply)
+	.=..()

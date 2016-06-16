@@ -23,6 +23,7 @@
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
 
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Summon Cult Wall"
 	desc = "This spell constructs a cult wall"
@@ -36,7 +37,8 @@
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
 
-	summon_type = list(/turf/closed/wall/cult/artificer) //we don't want artificer-based runed metal farms
+	summon_type = list(/turf/closed/wall/mineral/cult/artificer) //we don't want artificer-based runed metal farms
+
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
@@ -109,12 +111,12 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_disappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "phase_shift"
-	animation.dir = target.dir
+	animation.setDir(target.dir)
 	flick("phase_shift",animation)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_reappear(atom/movable/overlay/animation, mob/living/target)
 	animation.icon_state = "phase_shift2"
-	animation.dir = target.dir
+	animation.setDir(target.dir)
 	flick("phase_shift2",animation)
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)

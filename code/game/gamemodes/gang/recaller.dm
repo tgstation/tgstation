@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	origin_tech = "programming=3;bluespace=2;syndicate=5"
+	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
@@ -334,7 +334,8 @@
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [ping]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [ping]"
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 

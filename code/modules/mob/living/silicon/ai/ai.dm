@@ -313,7 +313,7 @@ var/list/ai_list = list()
 		SSshuttle.requestEvac(src, reason)
 
 	// hack to display shuttle timer
-	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
+	if(!EMERGENCY_IDLE_OR_RECALLED)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -357,8 +357,8 @@ var/list/ai_list = list()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/restrained()
-	return 0
+/mob/living/silicon/ai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))

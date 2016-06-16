@@ -223,7 +223,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	else if(isnum(variable))
 		usr << "Variable appears to be <b>NUM</b>."
 		default = "num"
-		dir = 1
+		setDir(1)
 
 	else if(istext(variable))
 		usr << "Variable appears to be <b>TEXT</b>."
@@ -258,23 +258,23 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(dir)
 		switch(variable)
 			if(1)
-				dir = "NORTH"
+				setDir("NORTH")
 			if(2)
-				dir = "SOUTH"
+				setDir("SOUTH")
 			if(4)
-				dir = "EAST"
+				setDir("EAST")
 			if(8)
-				dir = "WEST"
+				setDir("WEST")
 			if(5)
-				dir = "NORTHEAST"
+				setDir("NORTHEAST")
 			if(6)
-				dir = "SOUTHEAST"
+				setDir("SOUTHEAST")
 			if(9)
-				dir = "NORTHWEST"
+				setDir("NORTHWEST")
 			if(10)
-				dir = "SOUTHWEST"
+				setDir("SOUTHWEST")
 			else
-				dir = null
+				setDir(null)
 
 		if(dir)
 			usr << "If a direction, direction is: [dir]"
@@ -451,7 +451,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			else if(isnum(var_value))
 				usr << "Variable appears to be <b>NUM</b>."
 				class = "num"
-				dir = 1
+				setDir(1)
 
 			else if(istext(var_value))
 				usr << "Variable appears to be <b>TEXT</b>."
@@ -515,7 +515,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		else if(isnum(var_value))
 			usr << "Variable appears to be <b>NUM</b>."
 			default = "num"
-			dir = 1
+			setDir(1)
 
 		else if(istext(var_value))
 			usr << "Variable appears to be <b>TEXT</b>."
@@ -550,23 +550,23 @@ var/list/VVckey_edit = list("key", "ckey")
 		if(dir)
 			switch(var_value)
 				if(1)
-					dir = "NORTH"
+					setDir("NORTH")
 				if(2)
-					dir = "SOUTH"
+					setDir("SOUTH")
 				if(4)
-					dir = "EAST"
+					setDir("EAST")
 				if(8)
-					dir = "WEST"
+					setDir("WEST")
 				if(5)
-					dir = "NORTHEAST"
+					setDir("NORTHEAST")
 				if(6)
-					dir = "SOUTHEAST"
+					setDir("SOUTHEAST")
 				if(9)
-					dir = "NORTHWEST"
+					setDir("NORTHWEST")
 				if(10)
-					dir = "SOUTHWEST"
+					setDir("SOUTHWEST")
 				else
-					dir = null
+					setDir(null)
 			if(dir)
 				usr << "If a direction, direction is: [dir]"
 

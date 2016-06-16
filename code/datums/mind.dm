@@ -62,6 +62,8 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
+	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -244,6 +246,7 @@
 		"nuclear",
 		"traitor", // "traitorchan",
 		"monkey",
+		"clockcult"
 	)
 	var/text = ""
 
@@ -350,6 +353,26 @@
 			text += "|Disabled in Prefs"
 
 		sections["cult"] = text
+
+		/** CLOCKWORK CULT **/
+		text = "clockwork cult"
+		if(ticker.mode.config_tag == "clockwork cult")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in ticker.mode.servants_of_ratvar)
+			text += "loyal|<a href='?src=\ref[src];clockcult=clear'>employee</a>|<b>SERVANT</b>"
+			text += "<br><a href='?src=\ref[src];clockcult=slab'>Give slab</a>"
+		else if(isloyal(current))
+			text += "<b>LOYAL</b>|employee|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+		else
+			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
+
+		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
+			text += "|Enabled in Prefs"
+		else
+			text += "|Disabled in Prefs"
+
+		sections["clockcult"] = text
 
 		/** WIZARD ***/
 		text = "wizard"
@@ -1016,6 +1039,22 @@
 				if (!ticker.mode.equip_cultist(current))
 					usr << "<span class='danger'>Spawning amulet failed!</span>"
 
+	else if(href_list["clockcult"])
+		switch(href_list["clockcult"])
+			if("clear")
+				remove_servant_of_ratvar(current, TRUE)
+				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
+				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
+			if("servant")
+				if(!is_servant_of_ratvar(current))
+					add_servant_of_ratvar(current, TRUE)
+					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
+					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+			if("slab")
+				if(!ticker.mode.equip_servant(current))
+					usr << "<span class='warning'>Failed to outfit [current] with a slab!</span>"
+				else
+					usr << "<span class='notice'>Successfully gave [current] a clockwork slab!</span>"
 
 	else if (href_list["wizard"])
 		switch(href_list["wizard"])
@@ -1688,7 +1727,11 @@
 				return G
 			break
 
-
+/datum/mind/proc/grab_ghost(force)
+	var/mob/dead/observer/G = get_ghost(even_if_they_cant_reenter = force)
+	. = G
+	if(G)
+		G.reenter_corpse()
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

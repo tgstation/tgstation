@@ -30,8 +30,11 @@
 /obj/structure/lavaland_door/singularity_pull()
 	return 0
 
-/obj/structure/lavaland_door/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/structure/lavaland_door/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/machinery/lavaland_controller
 	name = "weather control machine"
@@ -50,8 +53,15 @@
 	LAVA.weather_start_up()
 	ongoing_weather = null
 
-/obj/machinery/lavaland_controller/Destroy()
-	return QDEL_HINT_LETMELIVE
+/obj/machinery/lavaland_controller/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+
+/obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
+	invisibility = INVISIBILITY_ABSTRACT
 
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
@@ -223,7 +233,7 @@
 	name = "ash walker egg"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "large_egg"
-	mob_species = /datum/species/lizard
+	mob_species = /datum/species/lizard/ashwalker
 	helmet = /obj/item/clothing/head/helmet/gladiator
 	uniform = /obj/item/clothing/under/gladiator
 	roundstart = FALSE
@@ -237,8 +247,6 @@
 	new_spawn << "Drag corpses to your nest to feed the young, and spawn more Ash Walkers. Bring glory to the tribe!"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
-		H.dna.species.specflags |= NOBREATH
-		H.dna.species.specflags |= NOGUNS
 		H.underwear = "Nude"
 		H.update_body()
 
@@ -246,7 +254,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, attack_not_jump = 1)
+		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 //Wishgranter Exile
 
@@ -352,7 +360,7 @@
 	..()
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, attack_not_jump = 1)
+		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
 /obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
 	var/golem_surname = pick(golem_names)
@@ -389,3 +397,42 @@
 	anchored = 1
 	density = 1
 	mob_species = /datum/species/golem/adamantine
+
+
+//Hermit
+
+/obj/effect/mob_spawn/human/hermit
+	name = "hermit sleeper"
+	mob_name = "Hermit"
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "sleeper"
+	roundstart = FALSE
+	death = FALSE
+	random = TRUE
+	mob_species = /datum/species/human
+	flavour_text = {"Doomed to walk this eternal hellscape due to means you barely remember at this point, every day is a struggle for survival as you barely scrape by in your makeshift housing."}
+
+/obj/effect/mob_spawn/human/hermit/New()
+	var/arrpee = rand(1,4)
+	switch(arrpee)
+		if(1)
+			flavour_text = {"You were the sole survivor of a raid-party's onslaught on a small orbital tradestation. You were forced to early-eject your pod to escape, the horrifed faces of the remaining crew when the raiders blew apart the room's airlock forever ingrained in your mind."}
+			uniform = /obj/item/clothing/under/assistantformal
+			shoes = /obj/item/clothing/shoes/sneakers/black
+			back = /obj/item/weapon/storage/backpack
+		if(2)
+			flavour_text = {"A castaway from a far-off civilization, banished for crimes of heresy against the church. You awoke from hypersleep your pod crashlanding into this hellscape, only the essentials left to make a new life for yourself."}
+			uniform = /obj/item/clothing/under/rank/prisoner
+			shoes = /obj/item/clothing/shoes/sneakers/orange
+			back = /obj/item/weapon/storage/backpack
+		if(3)
+			flavour_text = {"A runaway from the tyranny of Nanotrasen and everything all these damnned corporations stand for. From a metaphorical hell to a literal one, you do your best to put your station-life behind you to try and survive in this harsh land."}
+			uniform = /obj/item/clothing/under/rank/medical
+			suit = /obj/item/clothing/suit/toggle/labcoat
+			back = /obj/item/weapon/storage/backpack/medic
+			shoes = /obj/item/clothing/shoes/sneakers/black
+		if(4)
+			flavour_text = {"You weren't exactly the sharpest tool in the shed, hitting that big red button on the escape pod wondering what it'd do. Whether this 'special' attribute of yours is a defect of cloning or just genuine stupidity, the fact you've survived this long in a literal hellhole is enough to make Darwin roll in his grave."}
+			uniform = /obj/item/clothing/under/color/grey/glorf
+			shoes = /obj/item/clothing/shoes/sneakers/black
+			back = /obj/item/weapon/storage/backpack

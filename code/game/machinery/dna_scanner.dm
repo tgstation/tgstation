@@ -26,7 +26,7 @@
 							/obj/item/weapon/stock_parts/scanning_module = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 1,
 							/obj/item/stack/cable_coil = 2)
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -152,19 +152,6 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!ismob(G.affecting))
-			return
-
-		if(!state_open)
-			user << "<span class='notice'>Open the scanner first.</span>"
-			return
-
-		var/mob/M = G.affecting
-		M.forceMove(loc)
-		qdel(G)
-		return
 	return ..()
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
