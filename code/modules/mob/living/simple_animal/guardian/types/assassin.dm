@@ -58,7 +58,7 @@
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
-			cooldown = world.time + 40 //can't recall for 5 seconds
+			cooldown = world.time + 40 //can't recall for 4 seconds
 		updatestealthalert()
 		toggle = FALSE
 	else if(stealthcooldown <= world.time)
