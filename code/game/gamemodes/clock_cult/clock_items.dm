@@ -361,7 +361,6 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
-	. = 0
 	if(slot != slot_glasses)
 		return
 	if(user.disabilities & BLIND)
@@ -376,8 +375,11 @@
 		user.adjust_blindness(30)
 		return
 	if(is_servant_of_ratvar(user))
+		tint = 0
 		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
-		. = 1
+	else
+		tint = 3
+		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
@@ -385,10 +387,10 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
 	SSobj.processing -= src
-	..()
+	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/process()
-	if(ratvar_awakens || !ishuman(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
+	if(ratvar_awakens || !ishuman(loc) || !is_servant_of_ratvar(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
 		return 0
 	var/mob/living/carbon/human/H = loc
 	if(H.glasses != src)
