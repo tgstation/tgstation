@@ -34,7 +34,7 @@
 	desc = "In the darkest times, we will find our way home."
 
 /obj/structure/signpost/exit
-	name = "\proper exit"
+	name = "exit"
 	desc = "Make sure to bring all your belongings with you when you \
 		exit the area."
 	question = "Leave? You might never come back."

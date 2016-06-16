@@ -177,7 +177,7 @@
 /datum/map_template/ruin/space/abandonedteleporter
 	id = "abandonedteleporter"
 	suffix = "abandonedteleporter.dmm"
-	name = "Abadoned Teleporter"
+	name = "Abandoned Teleporter"
 	description = "In space construction the teleporter is often the \
 		first system brought online. This lonely half built teleporter \
 		is a sign of a proposed structure that for one reason or another \
