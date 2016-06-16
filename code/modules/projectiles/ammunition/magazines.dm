@@ -296,6 +296,10 @@ obj/item/ammo_box/magazine/tommygunm45
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/magazine/m50/onedeag
+	name = "better handgun magazine (.50ae)"
+	ammo_type = /obj/item/ammo_casing/a50/onedeag
+
 /obj/item/ammo_box/magazine/m75
 	name = "specialized magazine (.75)"
 	icon_state = "75"

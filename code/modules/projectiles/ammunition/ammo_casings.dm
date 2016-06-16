@@ -17,6 +17,11 @@
 	caliber = ".50"
 	projectile_type = /obj/item/projectile/bullet
 
+/obj/item/ammo_casing/a50/onedeag
+	desc = "A better .50AE bullet casing."
+	caliber = ".50"
+	projectile_type = /obj/item/projectile/bullet/onedeag
+
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
 	caliber = "38"
