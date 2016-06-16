@@ -45,7 +45,8 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	friendly = "passes through"
 	speak_emote = list("murmurs")
 	emote_hear = list("murmurs")
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	incorporeal_move = 3
 	flying = TRUE
 	stop_automated_movement = TRUE
