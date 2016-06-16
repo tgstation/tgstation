@@ -332,11 +332,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 	var/targetturf = get_turf(L)
 	for(var/i in 1 to healseverity)
-		PoolOrNew(/obj/effect/overlay/temp/heal, list(servantturf, "#1E8CE1"))
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
 	invoker << "<span class='brass'>You bathe [L] with Inath-Neq's power!</span>"
 	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Inath-Neq's power healing your wounds, but a deep nausea overcomes you!</span>")
-	playsound(servantturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
 
 
