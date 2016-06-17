@@ -71,6 +71,9 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/simple_animal/borer/can_ventcrawl()
 	return 1
 
+/mob/living/simple_animal/borer/ventcrawl_carry()
+	return 1
+
 /mob/living/simple_animal/mouse/can_ventcrawl()
 	return 1
 

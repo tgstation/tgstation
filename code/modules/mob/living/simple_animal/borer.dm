@@ -528,7 +528,12 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 			to_chat(src, "<span class='warning'>You cannot abandon [host] while your focus is directed elsewhere.</span>")
 			return
 
-		if(!check_can_do())
+		if(controlling)
+			to_chat(src, "<span class='warning'>You're too busy controlling your host.</span>")
+			return
+
+		if(research.unlocking)
+			to_chat(src, "<span class='warning'>You are busy evolving.</span>")
 			return
 
 		if(severed)
