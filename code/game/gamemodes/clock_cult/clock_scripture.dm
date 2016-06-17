@@ -1151,7 +1151,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.fully_heal()
 		L.stun_absorption = TRUE
 		L.status_flags |= GODMODE
-		animate(invoker, color = initial(invoker.color), time = 150, easing = EASE_IN)
+		animate(L, color = initial(L.color), time = 150, easing = EASE_IN)
 		affected_servants += L
 	sleep(150)
 	for(var/mob/living/L in affected_servants)
