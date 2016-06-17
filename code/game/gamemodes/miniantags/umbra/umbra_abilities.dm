@@ -98,6 +98,10 @@
 		user << "<span class='warning'>[target] is mindless and incapable of higher thought!</span>"
 		revert_cast()
 		return
+	if(user.possessed)
+		user << "<span class='warning'>Unpossess [user.possessed] first!</span>"
+		revert_cast()
+		return
 	user.visible_message("<span class='warning'>[user] appears from nowhere, stretching out towards [target]!</span>", "<span class='umbra'>You try to copy [target]'s memories...</span>")
 	target.visible_message("<span class='warning'>A blue beam arcs into [target]'s head, immobilizing them!</span>", "<span class='userdanger'>Your mind freezes. You can't move. \
 	You can't think.</span>")
@@ -112,6 +116,6 @@
 	target.visible_message("<span class='warning'>[target] silently collapses, motionless.</span>", "<span class='userdanger'>Your mind blanks. Your thoughts have fled. Slowly, they begin to \
 	return... but you feel <i>wrong.</i></span>")
 	target.mind.show_memory(user, 0)
-	user.mind.memory += "<b><i>[target.real_name]'s Memories:</i></b>\n[target.mind.memory]\n\n"
+	user.mind.memory += "<b><i>[target.real_name]'s Memories:</i></b><br>[target.mind.memory]<br><br>"
 	target.Weaken(5)
 	user.lobotomized |= target

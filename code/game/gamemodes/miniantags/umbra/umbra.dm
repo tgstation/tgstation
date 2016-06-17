@@ -30,6 +30,8 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 /mob/living/simple_animal/umbra
 	name = "umbra"
 	real_name = "umbra"
+	unique_name = TRUE
+	gender = NEUTER
 	desc = "A translucent, cobalt-blue apparition floating several feet in the air."
 	invisibility = UMBRA_INVISIBILITY
 	icon = 'icons/mob/mob.dmi'
@@ -39,23 +41,28 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	alpha = 175 //To show invisibility
 	health = 100
 	maxHealth = 100
-	healable = 0
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	healable = FALSE
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	minbodytemp = 0
+	maxbodytemp = INFINITY
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	friendly = "passes through"
 	speak_emote = list("murmurs")
 	emote_hear = list("murmurs")
 	languages = ALL
+	status_flags = 0
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	incorporeal_move = 3
 	flying = TRUE
-	stop_automated_movement = TRUE
 	wander = FALSE
+	stop_automated_movement = TRUE
+	mob_size = MOB_SIZE_TINY
+	anchored = TRUE
+	density = FALSE
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	see_in_dark = 8
-	minbodytemp = 0
-	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	var/vitae = 10 //The amount of vitae captured by the umbra
 	var/vitae_cap = 100 //How much vitae a single umbra can hold
 	var/breaking_apart = FALSE //If the umbra is currently dying
@@ -65,6 +72,7 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	var/mob/living/carbon/human/possessed //The human that an umbra is inside of, if applicable
 	var/time_possessing = 0 //How long an umbra has been in possession of a single target.
 	var/list/lobotomized = list() //Mobs that have had their memories stolen by the umbra
+	var/image/ghost_image //So ghosts can see the umbra in the dark
 	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</b></span><b> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, \
 	lsoing your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange \
 	form of life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
@@ -82,6 +90,9 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 //Creation, destruction, life, and death
 /mob/living/simple_animal/umbra/New()
 	..()
+	ghost_image = image(icon, src, icon_state)
+	ghost_darkness_images |= ghost_image
+	updateallghostimages()
 	if(prob(1))
 		name = "grief ghost"
 		real_name = "grief ghost"
@@ -203,7 +214,8 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	spawn(time)
 		if(!silent)
 			src << "<span class='umbra'>You can move again!</span>"
-		notransform = FALSE
+		if(!possessed) //To ensure that umbras don't escape their quarry
+			notransform = FALSE
 
 
 //Actions and interaction

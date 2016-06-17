@@ -1,7 +1,7 @@
 /*
 
 Possible objectives:
-	1. Steal the memories of # humans. (# = round population / 4)
+	1. Steal the memories of # humans. (# = 10-20)
 
 */
 
@@ -15,7 +15,7 @@ Possible objectives:
 	explanation_text = "Steal the memories of several humans."
 
 /datum/objective/umbra/lobotomize/New()
-	target_amount = round(ticker.mode.num_players() / 4)
+	target_amount = rand(10, 20)
 	explanation_text = "Steal the memories of [target_amount] humans."
 	..()
 

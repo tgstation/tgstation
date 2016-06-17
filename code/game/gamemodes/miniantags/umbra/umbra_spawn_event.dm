@@ -12,7 +12,7 @@
 /datum/round_event/ghost_role/umbra/spawn_role()
 	message_admins("An unoccupied umbra was created by a random event.")
 	var/mob/living/simple_animal/umbra/U = new(pick(xeno_spawn))
-	var/image/alert_overlay = image('icons/mob/mob.dmi', "umbra")
-	notify_ghosts("An umbra has formed in [get_area(U)]. Interact with it to take control of it.", null, source = U, alert_overlay = alert_overlay)
+	var/image/I = image('icons/mob/mob.dmi', "umbra")
+	notify_ghosts("An umbra has formed in [get_area(U)]. Interact with it to take control of it.", 'sound/effects/ghost2.ogg', alert_overlay = I, source = U, action = NOTIFY_ATTACK)
 	spawned_mobs += U
 	return SUCCESSFUL_SPAWN
