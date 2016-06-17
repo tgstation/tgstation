@@ -286,6 +286,10 @@ SKIP_MINIMAP_GENERATION
 ## Recommended for your sanity if you start the server a lot for testing things.
 #SHUT_UP_AUTOMATIC_DIAGNOSTIC_AND_ANNOUNCEMENT_SYSTEM
 
-##ENABLE_ROUNDSTART_AWAY_MISSIONS
+## ENABLE_ROUNDSTART_AWAY_MISSIONS
 ## Uncomment to genereate an away mission at the beginning of each round
 #ENABLE_ROUNDSTART_AWAY_MISSIONS
+
+## ENABLE_WAGES
+## Comment out to disable wages being enabled by default.
+ENABLE_WAGES
