@@ -730,7 +730,6 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/weapon/gun/energy/ionrifle,
 /obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -22475,7 +22474,7 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/black,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai)
 "aYC" = (
 /obj/machinery/firealarm{
@@ -22963,7 +22962,9 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "aZR" = (
-/turf/open/floor/bluegrid,
+/turf/open/floor/plasteel/darkwarning{
+	dir = 9
+	},
 /area/turret_protected/ai_upload)
 "aZS" = (
 /obj/effect/landmark{
@@ -22997,18 +22998,7 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "aZT" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plasteel/black,
+/turf/closed/wall/r_wall,
 /area/space)
 "aZU" = (
 /obj/item/device/multitool,
@@ -24771,9 +24761,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bed" = (
 /obj/machinery/power/apc{
@@ -24832,9 +24820,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bei" = (
 /obj/machinery/light{
@@ -25343,9 +25329,14 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
+/obj/machinery/porta_turret/ai{
+	tag = "icon-greyOff (EAST)";
+	icon_state = "greyOff";
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -25363,9 +25354,14 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/obj/machinery/ai_slipper{
-	icon_state = "motion0";
-	uses = 10
+/obj/machinery/porta_turret/ai{
+	tag = "icon-greyOff (WEST)";
+	icon_state = "greyOff";
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -25876,11 +25872,6 @@
 /area/engine/gravity_generator)
 "bgO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bgP" = (
@@ -26542,7 +26533,10 @@
 /area/engine/gravity_generator)
 "bij" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bik" = (
 /obj/item/device/radio/intercom{
@@ -27682,12 +27676,9 @@
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bkI" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
+/obj/structure/table,
+/obj/item/weapon/aiModule/supplied/freeform,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bkJ" = (
 /obj/structure/grille,
@@ -29289,10 +29280,17 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "bnV" = (
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 0;
+	pixel_y = 24
+	},
 /obj/machinery/porta_turret/ai{
 	icon_state = "greyOff"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1
+	},
 /area/turret_protected/ai_upload)
 "bnW" = (
 /obj/structure/grille,
@@ -30571,8 +30569,38 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 2;
+	name = "Upload APC";
+	pixel_y = -24
+	},
+/obj/machinery/light/small,
+/obj/structure/table,
+/obj/machinery/door/window{
+	base_state = "left";
+	dir = 4;
+	icon_state = "left";
+	name = "High-Risk Modules";
+	req_access_txt = "20"
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/obj/item/weapon/aiModule/supplied/oxygen,
+/obj/item/weapon/aiModule/zeroth/oneHuman,
+/obj/item/weapon/aiModule/reset/purge,
+/obj/item/weapon/aiModule/core/full/antimov,
+/obj/item/weapon/aiModule/supplied/protectStation,
+/turf/open/floor/plasteel/darkwarning/corner{
+	tag = "icon-warndarkcorners (EAST)";
+	icon_state = "warndarkcorners";
+	dir = 4
 	},
 /area/turret_protected/ai_upload)
 "bqE" = (
@@ -30597,7 +30625,33 @@
 	dir = 4;
 	on = 1
 	},
-/turf/open/floor/plasteel/vault{
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Station Intercom (AI Private)";
+	pixel_y = -29
+	},
+/obj/machinery/light/small,
+/obj/structure/table,
+/obj/item/weapon/aiModule/core/full/asimov,
+/obj/item/weapon/aiModule/core/freeformcore,
+/obj/item/weapon/aiModule/core/full/corp,
+/obj/item/weapon/aiModule/core/full/custom,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Core Modules";
+	req_access_txt = "20"
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/plasteel/darkwarning/corner{
+	tag = "icon-warndarkcorners (WEST)";
+	icon_state = "warndarkcorners";
 	dir = 8
 	},
 /area/turret_protected/ai_upload)
@@ -31342,29 +31396,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/machinery/light/small,
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	dir = 2;
-	name = "Upload APC";
-	pixel_y = -24
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "bsb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/machinery/porta_turret/ai{
-	tag = "icon-greyOff (EAST)";
-	icon_state = "greyOff";
-	dir = 4
-	},
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "bsc" = (
 /obj/structure/cable{
@@ -31386,15 +31424,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/machinery/light/small,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Station Intercom (AI Private)";
-	pixel_y = -29
-	},
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "bsf" = (
 /obj/machinery/camera/motion{
@@ -31402,18 +31432,13 @@
 	dir = 1;
 	network = list("SS13")
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/plasteel/black,
 /area/turret_protected/ai_upload)
 "bsg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/machinery/porta_turret/ai{
-	tag = "icon-greyOff (WEST)";
-	icon_state = "greyOff";
-	dir = 8
-	},
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "bsh" = (
 /turf/closed/wall,
@@ -57677,296 +57702,91 @@
 	name = "AI Satellite Hallway"
 	})
 "cvx" = (
-/obj/effect/landmark{
-	name = "tripai"
+/obj/machinery/porta_turret/ai{
+	icon_state = "greyOff"
 	},
-/obj/item/device/radio/intercom{
-	anyai = 1;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = 0;
-	pixel_y = 28
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	freerange = 1;
-	listening = 1;
-	name = "Common Channel";
-	pixel_x = -27;
-	pixel_y = 5
-	},
-/obj/item/device/radio/intercom{
-	anyai = 1;
-	broadcasting = 0;
-	freerange = 1;
-	frequency = 1447;
-	name = "Private Channel";
-	pixel_x = 0;
-	pixel_y = -25
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "cvy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
-"cvz" = (
+/obj/machinery/power/terminal{
+	icon_state = "term";
+	dir = 1
+	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-4";
+	d2 = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/ai_slipper{
+	icon_state = "motion0";
+	uses = 10
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvz" = (
+/obj/machinery/airalarm{
+	desc = "This particular atmos control unit appears to have no access restrictions.";
+	dir = 8;
+	icon_state = "alarm0";
+	locked = 0;
+	name = "all-access air alarm";
+	pixel_x = 24;
+	req_access = "0";
+	req_one_access = "0"
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
 "cvA" = (
-/obj/effect/landmark{
-	name = "tripai"
-	},
-/obj/item/device/radio/intercom{
-	anyai = 1;
-	freerange = 1;
-	listening = 0;
-	name = "Custom Channel";
-	pixel_x = 0;
-	pixel_y = 28
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	freerange = 1;
-	listening = 1;
-	name = "Common Channel";
-	pixel_x = 27;
-	pixel_y = 5
-	},
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
 	freerange = 1;
 	frequency = 1447;
 	name = "Private Channel";
-	pixel_x = 0;
-	pixel_y = -25
+	pixel_x = -5;
+	pixel_y = -27
+	},
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = -26;
+	pixel_y = 0
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 1;
+	listening = 1;
+	name = "Common Channel";
+	pixel_x = -5;
+	pixel_y = 20
+	},
+/obj/effect/landmark{
+	name = "tripai"
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "cvB" = (
-/obj/structure/rack,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/wrench,
-/turf/open/floor/plating,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
 "cvC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
-"cvD" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
-"cvE" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating,
-/area/turret_protected/AIsatextFS{
-	name = "AI Satellite Hallway"
-	})
-"cvF" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat External NorthWest";
-	dir = 8;
-	network = list("MiniSat");
-	pixel_x = 0;
-	pixel_y = 0;
-	start_active = 1
-	},
-/turf/open/space,
-/area/space)
-"cvG" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel/blue/side{
-	dir = 0
-	},
-/area/bridge)
-"cvH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvI" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvJ" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvK" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvN" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/turret_protected/ai)
-"cvO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/asmaint2)
-"cvP" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvQ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/turret_protected/ai)
-"cvS" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvV" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvW" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
-"cvX" = (
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber North";
-	dir = 1;
-	network = list("SS13")
-	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
-"cvY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
-	dir = 4;
-	icon_state = "alarm0";
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = -24;
-	req_access = "0";
-	req_one_access = "0"
-	},
-/turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cvZ" = (
 /obj/item/device/radio/intercom{
 	anyai = 1;
 	broadcasting = 0;
@@ -57995,37 +57815,284 @@
 /obj/effect/landmark/start{
 	name = "AI"
 	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = 28;
-	pixel_y = 28
-	},
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	pixel_x = -28;
-	pixel_y = 28
-	},
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
 	d2 = 2
 	},
+/obj/machinery/button/door{
+	id = "aiBlast";
+	name = "AI Chamber Blast Door Control";
+	pixel_x = -23;
+	pixel_y = 23;
+	req_access_txt = "16"
+	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
-"cwa" = (
+"cvD" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvE" = (
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	broadcasting = 0;
+	freerange = 1;
+	frequency = 1447;
+	name = "Private Channel";
+	pixel_x = 5;
+	pixel_y = 20
+	},
+/obj/item/device/radio/intercom{
+	anyai = 1;
+	freerange = 1;
+	listening = 0;
+	name = "Custom Channel";
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 1;
+	listening = 1;
+	name = "Common Channel";
+	pixel_x = 5;
+	pixel_y = -26
+	},
+/obj/effect/landmark{
+	name = "tripai"
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvF" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/blue/side{
+	dir = 0
+	},
+/area/bridge)
+"cvH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvJ" = (
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber South";
+	dir = 1;
+	network = list("SS13")
+	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
+"cvK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvN" = (
+/obj/machinery/porta_turret/ai{
+	icon_state = "greyOff"
+	},
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	pixel_x = 0;
+	pixel_y = 28
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
+"cvP" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	dir = 2;
+	network = list("SS13")
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 0;
+	pixel_y = 24
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvQ" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/newscaster/security_unit{
+	pixel_x = 0;
+	pixel_y = 28
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvS" = (
+/obj/machinery/airalarm{
+	desc = "This particular atmos control unit appears to have no access restrictions.";
+	dir = 4;
+	icon_state = "alarm0";
+	locked = 0;
+	name = "all-access air alarm";
+	pixel_x = -24;
+	req_access = "0";
+	req_one_access = "0"
+	},
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cvT" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvU" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvV" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvW" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai)
+"cvX" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "aiBlast";
+	name = "AI Chamber Blast Door"
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
+/area/turret_protected/ai)
+"cvY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	desc = "This particular atmos control unit appears to have no access restrictions.";
+	dir = 4;
+	icon_state = "alarm0";
+	locked = 0;
+	name = "all-access air alarm";
+	pixel_x = -24;
+	req_access = "0";
+	req_one_access = "0"
+	},
+/turf/closed/wall/r_wall,
+/area/turret_protected/ai)
+"cvZ" = (
+/obj/structure/table,
+/obj/item/weapon/aiModule/supplied/quarantine,
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai_upload)
+"cwa" = (
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1
+	},
+/area/turret_protected/ai_upload)
 "cwb" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -58091,67 +58158,60 @@
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
 "cwe" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/porta_turret/ai{
+	icon_state = "greyOff"
 	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1
+	},
+/area/turret_protected/ai_upload)
 "cwf" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/turf/open/floor/plasteel/darkwarning{
+	dir = 5
 	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
+/area/turret_protected/ai_upload)
 "cwg" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+/turf/open/floor/plasteel/darkwarning{
+	dir = 8
 	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
+/area/turret_protected/ai_upload)
 "cwh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/bluegrid,
+/area/turret_protected/ai)
+"cwi" = (
+/turf/open/floor/plasteel/darkwarning{
+	dir = 4
+	},
+/area/turret_protected/ai_upload)
+"cwj" = (
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
-"cwi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/light,
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
-"cwj" = (
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber South";
-	dir = 1;
-	network = list("SS13")
+/turf/open/floor/plasteel/black,
+/area/turret_protected/ai_upload)
+"cwk" = (
+/obj/structure/cable{
+	tag = "icon-1-2";
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
-"cwk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light,
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai)
+/area/turret_protected/ai_upload)
 "cwl" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "AI Core";
 	req_access_txt = "65"
 	},
-/turf/open/floor/bluegrid,
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/turret_protected/ai)
 "cwm" = (
 /obj/structure/grille,
@@ -58160,59 +58220,33 @@
 /area/turret_protected/ai_upload)
 "cwn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/black,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "cwo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/table,
-/obj/item/weapon/aiModule/supplied/oxygen,
-/obj/item/weapon/aiModule/zeroth/oneHuman,
-/obj/item/weapon/aiModule/reset/purge,
-/obj/item/weapon/aiModule/core/full/antimov,
-/obj/item/weapon/aiModule/supplied/protectStation,
-/obj/machinery/door/window{
-	base_state = "left";
-	dir = 4;
-	icon_state = "left";
-	name = "High-Risk Modules";
-	req_access_txt = "20"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/table,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwp" = (
-/obj/machinery/computer/upload/borg,
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 0;
-	pixel_y = 24
-	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai_upload)
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/space)
 "cwq" = (
-/obj/machinery/computer/upload/ai,
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
-/turf/open/floor/bluegrid,
-/area/turret_protected/ai_upload)
+/turf/closed/wall/r_wall,
+/area/hallway/primary/central)
 "cwr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/weapon/aiModule/core/full/asimov,
-/obj/item/weapon/aiModule/core/freeformcore,
-/obj/item/weapon/aiModule/core/full/corp,
-/obj/item/weapon/aiModule/core/full/custom,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Core Modules";
-	req_access_txt = "20"
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/table,
+/obj/item/weapon/aiModule/reset,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cws" = (
@@ -58225,30 +58259,25 @@
 /area/turret_protected/ai_upload)
 "cwu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/table,
-/obj/item/weapon/aiModule/supplied/freeform,
+/obj/machinery/computer/upload/borg,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/item/weapon/aiModule/supplied/quarantine,
+/obj/machinery/computer/upload/ai,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cww" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/table,
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "cwx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/item/weapon/aiModule/reset,
-/turf/open/floor/bluegrid,
+/turf/closed/wall/r_wall,
 /area/turret_protected/ai_upload)
 "cwy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -60054,7 +60083,13 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "1-4";
+	tag = "90Curve"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
@@ -60131,17 +60166,16 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
 "cBj" = (
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+/obj/machinery/power/smes{
+	charge = 5e+006
 	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -88129,10 +88163,10 @@ aaa
 aaf
 aaa
 aaf
-aaa
-aaa
-aaa
-aJn
+aZT
+cwp
+cwp
+cwq
 aXf
 aJq
 byV
@@ -88372,13 +88406,13 @@ cpC
 aWO
 aYt
 aYx
-cvp
-bce
-cvp
-cvl
+cva
+cva
+cva
+cvA
 cvY
-cvl
-bce
+cva
+cva
 cva
 cva
 cwm
@@ -88387,9 +88421,9 @@ cwm
 bfv
 bfv
 bfv
-aaa
-aaa
-aJn
+cwp
+cwp
+cwq
 aXf
 aJq
 byU
@@ -88628,15 +88662,15 @@ aTX
 aVi
 aWU
 aYv
-aZS
-cvl
+cva
+cvp
 cvS
 cvp
 bec
 bfu
 cwn
 bgO
-cwi
+cvM
 cvM
 cwo
 cws
@@ -88644,9 +88678,9 @@ cwu
 cww
 bsb
 bfv
-aaf
-aaf
-aJn
+cwp
+cwp
+cwq
 aXf
 aJq
 bBi
@@ -88889,15 +88923,15 @@ cva
 cvN
 cvT
 cvW
-cvW
-cvW
-cwa
-cwf
-cvN
+cvB
+cvF
+cvl
+cvp
+cva
 cvb
 bkI
 aZR
-bdh
+cwg
 bqD
 bsa
 bbk
@@ -89142,21 +89176,21 @@ aTY
 aVl
 aWT
 aYx
-cvI
+cva
 cvP
 cvU
-cvp
 cvv
 cvv
 cwb
+cvl
 cvp
-cwj
 cva
-cwp
+cva
+bfv
 bnV
 bbm
-aZR
-bsd
+cwj
+bbm
 bfv
 buQ
 bwn
@@ -89401,19 +89435,19 @@ aWS
 cva
 aZT
 cBj
-bcf
-bdg
+cvy
 cvv
-cvZ
+cvC
 cwc
-cvp
 bcf
+cvp
+cvX
 cwl
-aZR
-bbm
+bdh
+cwa
 bph
-bbm
 bsc
+cwk
 btF
 cwz
 cwA
@@ -89656,20 +89690,20 @@ aTZ
 aVn
 aWV
 aYz
-cvJ
+cva
 cvQ
 cAZ
-cvX
 cvv
 cvv
 cwd
-cvp
 cvl
+cvJ
 cva
-cwq
-bnV
+cva
+bfv
+cwe
 bbm
-aZR
+bbm
 bsf
 bfv
 buS
@@ -89914,18 +89948,18 @@ aVm
 cvG
 aYy
 cva
-cvN
+cvx
 cvV
 cvW
-cvW
-cvW
-cwe
-cwg
-cvN
+cvD
+cvI
+cvl
+cvp
+cva
 cvb
-bkI
-aZR
-bdh
+cvZ
+cwf
+cwi
 bqG
 bse
 bbp
@@ -90170,15 +90204,15 @@ ceh
 aVp
 aWU
 aYy
-aZS
-cvl
-cvS
+cva
 cvp
+cvz
+aZU
 beh
 bfx
 bij
 cwh
-cwk
+cvR
 cvR
 cwr
 cwt
@@ -90186,9 +90220,9 @@ cwv
 cwx
 bsg
 bfv
-aaf
-aaf
-aJn
+cwp
+cwp
+cwq
 aJq
 aJq
 bBu
@@ -90428,13 +90462,13 @@ aVo
 aWW
 aYA
 cvK
-cvp
-bcg
-aZU
-cvl
+cva
+cva
+cva
+cvE
 aYB
-cvl
-bcg
+cva
+cva
 cva
 cva
 cwm
@@ -90443,9 +90477,9 @@ cwm
 bfv
 bfv
 bfv
-aaa
-aaa
-aJn
+cwp
+cwp
+cwq
 aJq
 aJq
 bBt
@@ -90699,10 +90733,10 @@ aaa
 aaf
 aaa
 aaf
-aaa
-aaa
-aaa
-aJn
+aZT
+cwp
+cwp
+cwq
 aJq
 aJq
 aXf
