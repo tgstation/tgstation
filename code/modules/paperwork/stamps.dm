@@ -20,6 +20,11 @@
 	icon_state = "stamp-cap"
 	_color = "captain"
 
+/obj/item/weapon/stamp/judge
+	name = "judge's rubber stamp"
+	icon_state = "stamp-cap"
+	_color = "captain"
+
 /obj/item/weapon/stamp/hop
 	name = "head of personnel's rubber stamp"
 	icon_state = "stamp-hop"

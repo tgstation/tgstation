@@ -1964,7 +1964,11 @@ proc/process_adminbus_teleport_locs()
 
 /area/vox_trading_post/dorms
 	name = "\improper Vox Dormitory"
-	icon_state = "blue"
+	icon_state = "Sleep"
+
+/area/vox_trading_post/restroom
+	name = "\improper Vox Restroom"
+	icon_state = "toilet"
 
 /area/vox_trading_post/bar
 	name = "\improper Vox Bar"
@@ -1973,6 +1977,10 @@ proc/process_adminbus_teleport_locs()
 /area/vox_trading_post/medbay
 	name = "\improper Vox Medbay"
 	icon_state = "medbay"
+
+/area/vox_trading_post/maintroom
+	name = "\improper Vox Maintenance Room"
+	icon_state = "maintcentral"
 
 /area/vox_trading_post/solararray
 	name = "\improper Vox Solar Array"
@@ -2142,7 +2150,7 @@ proc/process_adminbus_teleport_locs()
 
 /area/awaymission/leviathan
 	name = "Leviathan"
-		
+
 /area/awaymission/leviathan/research
 	name = "Leviathan"
 	icon_state = "anolab"

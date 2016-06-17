@@ -119,7 +119,7 @@ var/global/list/tv_monitors = list()
 	desc = "Damn, they better have chicken-channel on these things."
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "entertainment"
-	network = list("thunder")
+	network = list("thunder", "courtroom")
 	density = 0
 	circuit = null
 
