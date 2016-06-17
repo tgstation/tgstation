@@ -655,6 +655,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
+	if(!isturf(invoker.loc))
+		invoker << "<span class='warning'>You must not be inside an object to use this scripture!</span>"
+		return 0
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat != DEAD)
