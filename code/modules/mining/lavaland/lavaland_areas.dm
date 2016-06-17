@@ -23,7 +23,8 @@
 	power_light = 0
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 
-
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
 	outdoors = 1
+	no_observers = 1
+
