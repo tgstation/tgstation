@@ -807,6 +807,10 @@ Sorry Giacom. Please don't be mad :(
 			adjust_fire_stacks(1)
 			IgniteMob()
 
+/mob/living/water_act(obj/effect/water/W)
+	if(reagents && !stat && W.fullness >= 50)
+		reagents.add_reagent("seawater", 0.1) //Small increments because of how quickly water processes
+
 /atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0

@@ -781,5 +781,6 @@
 
 	..()
 
-
-
+/mob/living/carbon/water_act(obj/effect/water/W)
+	if(reagents && !stat && !internal && W.fullness >= 50)
+		reagents.add_reagent("seawater", 0.1)

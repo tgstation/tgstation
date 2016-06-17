@@ -45,7 +45,10 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+	var/req_flags = STOPSPRESSUREDMAGE //The flags needed on the suit and helmet to stop pressure damage
+	if(pressure >= 9000) //Past 900 meters underwater is the only time pressure can be this high
+		req_flags = STOPSCRUSHINGPRESSUREDAMAGE
+	if((wear_suit && (wear_suit.flags & req_flags)) && (head && (head.flags & req_flags)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure

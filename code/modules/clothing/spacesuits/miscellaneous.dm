@@ -10,6 +10,7 @@ Contains:
  - Pirate's spacesuit
  - ERT hardsuit: command, sec, engi, med
  - EVA spacesuit
+ - Dive suit and power suit (for deep ocean diving)
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
 */
@@ -233,8 +234,94 @@ Contains:
 	icon_state = "space"
 	item_state = "space"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	flash_protect = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+
+/obj/item/clothing/head/helmet/space/dive
+	name = "dive helmet"
+	desc = "A dome-shaped helmet with a small visor. It's designed to withstand pressures up to 900 meters deep."
+	flags = STOPSPRESSUREDMAGE
+	icon_state = "dive"
+	item_state = "space"
+	flash_protect = 1
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 100, rad = 0)
+
+/obj/item/clothing/suit/space/dive
+	name = "dive suit"
+	desc = "A tight-fitting suit made of black fiber mesh. It can protect its wearer from pressure as far as 900 meters down."
+	flags = STOPSPRESSUREDMAGE
+	icon_state = "dive"
+	item_state = "space"
+	slowdown = 2
+	armor = list(melee = 30, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 100, rad = 0)
+
+/obj/item/clothing/head/helmet/space/dive/power
+	name = "power helmet"
+	desc = "A bulky and tremendously heavy helmet designed for extreme depths. Its visor restricts vision."
+	flags = NODROP | STOPSCRUSHINGPRESSUREDAMAGE | STOPSPRESSUREDMAGE
+	icon_state = "power_dive"
+	tint = 2
+	unacidable = TRUE
+	armor = list(melee = 90, bullet = 60, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 0)
+
+/obj/item/clothing/suit/space/dive/power
+	name = "power suit"
+	desc = "A gigantic, restrictive suit designed for traversal of the ocean floor at depths well over 1,000 meters. It's extremely bulky, impossible to remove, and takes a lot of effort to \
+	don or take off - it can only be done at the power suit's designated storage area."
+	flags = null
+	var/unsealed_flags = null //Flags to apply when unsealed
+	var/sealed_flags = NODROP | STOPSPRESSUREDMAGE | STOPSCRUSHINGPRESSUREDAMAGE | THICKMATERIAL //Flags to apply when sealed
+	icon_state = "power_dive"
+	slowdown = 10 //When I say bulky, I mean BULKY.
+	unacidable = TRUE
+	armor = list(melee = 90, bullet = 60, laser = 0, energy = 0, bomb = 50, bio = 100, rad = 0)
+	actions_types = list(/datum/action/item_action/power_suit_seal)
+	var/sealed = FALSE
+
+/obj/item/clothing/suit/space/dive/power/move_action()
+	playsound(src, 'sound/items/power_suit_move.ogg', 50, 0)
+
+/obj/item/clothing/suit/space/dive/power/examine(mob/user)
+	..()
+	user << "It's [sealed ? "sealed tightly" : "not sealed"]."
+
+/obj/item/clothing/suit/space/dive/power/ui_action_click(user)
+	if(sealed)
+		unseal(user)
+	else
+		seal(user)
+
+/obj/item/clothing/suit/space/dive/power/proc/seal(mob/living/user)
+	if(!user || sealed)
+		return
+	if(user.get_item_by_slot(slot_wear_suit) != src)
+		user << "<span class='warning'>You need to put on [src] before you can seal it!</span>"
+		return
+	user.visible_message("<span class='notice'>[user] stands statue-still as [src] shifts around them...</span>", "<span class='notice'>You initiate [src]'s sealing sequence. This will take \
+	around a full minute to complete and you cannot move or act during this time.</span>")
+	if(!do_after(user, 600, target = user))
+		return
+	user.visible_message("<span class='notice'>[user]'s suit seals around them!</span>", "<span class='notice'>Your [name] lets out a hiss as your body is sealed in place.</span>")
+	sealed = TRUE
+	flags = sealed_flags
+
+/obj/item/clothing/suit/space/dive/power/proc/unseal(mob/living/user)
+	if(!user || !sealed)
+		return
+	if(user.get_item_by_slot(slot_wear_suit) != src)
+		user << "<span class='warning'>You need to put on [src] before you can unseal it!</span>"
+		return
+	user.visible_message("<span class='notice'>[user] stands statue-still as [src] shifts around them...</span>", "<span class='notice'>You initiate [src]'s unsealing sequence. This will take \
+	around fifteen seconds to complete and you cannot move or act during this time.</span>")
+	if(!do_after(user, 150, target = user))
+		return
+	user.visible_message("<span class='notice'>[user]'s suit unseals around them!</span>", "<span class='notice'>Your [name] lets out a rush of air as the air escapes from it .</span>")
+	sealed = FALSE
+	flags = unsealed_flags
+
+/datum/action/item_action/power_suit_seal
+	name = "Adjust Power Suit Seals"
+	button_icon = 'icons/obj/clothing/suits.dmi'
+	button_icon_state = "power_dive"
 
 /obj/item/clothing/head/helmet/space/freedom
 	name = "eagle helmet"

@@ -359,6 +359,13 @@ so as to remain in compliance with the most up-to-date laws."
 	if(isliving(usr))
 		var/mob/living/L = usr
 		return L.resist()
+
+//WATER-BASED
+/obj/screen/alert/drowning
+	name = "Drowning"
+	desc = "There's seawater in your lungs! Put on some internals or retreat to a pressurized area so you can start breathing normally again."
+	icon_state = "drowning"
+
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
 // Re-render all alerts - also called in /datum/hud/show_hud() because it's needed there

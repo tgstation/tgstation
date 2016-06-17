@@ -55,6 +55,13 @@
 				//End bloody footprints
 
 				S.step_action()
+	if(wear_suit)
+		if(!lying && !buckled)
+			if(loc == NewLoc)
+				if(!has_gravity(loc))
+					return
+		var/obj/item/clothing/suit/S = get_item_by_slot(slot_wear_suit)
+		S.move_action()
 
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.

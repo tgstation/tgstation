@@ -190,6 +190,45 @@
 			return 0
 	..()
 
+/mob/living/carbon/human/water_act(obj/effect/water/W)
+	if(reagents && !stat && !internal && W.fullness >= 50)
+		reagents.add_reagent("seawater", 0.1) //glub glub
+	var/pressure_damage = calculate_damage_from_water(W)
+	var/water_chill = calculate_chill_from_water(W)
+	adjustBruteLoss(pressure_damage)
+	bodytemperature = max(0, bodytemperature - water_chill)
+	if(W.depth >= 1000 && pressure_damage && stat)
+		src << "<span class='userdanger'>Your body implodes from the intense pressure!</span>"
+		visible_message("<span class='warning'>[src] implodes from the pressure!</span>")
+		gib() //You just went into a hundred atmospheres' worth of pressure without protection! Yay!
+
+/mob/living/carbon/human/proc/calculate_damage_from_water(obj/effect/water/W)
+	if(!W)
+		return
+	var/end_damage = 0
+	var/pressure_protection = calculate_affecting_pressure(W.pressure)
+	if(pressure_protection != ONE_ATMOSPHERE) //Ensures that damage is always 0 if they're protected
+		end_damage = round(pressure_protection / 1500)
+		if(W.depth >= 900) //Very deep waters kill pretty much instantaneously
+			end_damage *= 3
+	return end_damage
+
+/mob/living/carbon/human/proc/calculate_chill_from_water(obj/effect/water/W)
+	if(!W)
+		return
+	var/end_chill = 0
+	switch(W.depth)
+		if(100 to 250)
+			end_chill += 5
+		if(250 to 750)
+			end_chill += 10
+		if(750 to 1000)
+			end_chill += 20
+		if(1000 to INFINITY)
+			end_chill = -bodytemperature
+	end_chill *= (1 - get_cold_protection(273.15)) //273.15K = 0C, which is the average temperature of deep ocean water according to Wikipedia
+	return end_chill
+
 /mob/living/carbon/human/attack_ui(slot)
 	if(!get_bodypart(hand ? "l_arm" : "r_arm"))
 		return 0

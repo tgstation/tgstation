@@ -181,6 +181,7 @@
 	density = 1
 	var/constructionStep = CONSTRUCTION_NOCIRCUIT
 	var/reinforced = 0
+	var/construction_type = /obj/machinery/door/firedoor
 
 /obj/structure/firelock_frame/examine(mob/user)
 	..()
@@ -217,7 +218,7 @@
 				return
 			if(istype(C, /obj/item/weapon/wrench))
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-					user << "<span class='warning'>There's already a firlock there.</span>"
+					user << "<span class='warning'>There's already a firelock there.</span>"
 					return
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \
@@ -232,7 +233,7 @@
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
 				else
-					new /obj/machinery/door/firedoor(get_turf(src))
+					new construction_type(get_turf(src))
 				qdel(src)
 				return
 			if(istype(C, /obj/item/stack/sheet/plasteel))
@@ -365,3 +366,17 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
+
+/obj/machinery/door/firedoor/floodlock
+	name = "floodlock"
+	desc = "A specialized door for controlling water flow."
+	icon = 'icons/obj/doors/floodlock.dmi'
+	heat_proof = FALSE
+	assemblytype = /obj/structure/firelock_frame/floodlock
+
+/obj/structure/firelock_frame/floodlock
+	name = "floodlock frame"
+	desc = "A partially completed floodlock."
+	icon = 'icons/obj/doors/floodlock.dmi'
+	icon_state = "frame1"
+	construction_type = /obj/machinery/door/firedoor/floodlock

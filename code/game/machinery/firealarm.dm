@@ -10,7 +10,7 @@
 	result_path = /obj/machinery/firealarm
 
 /obj/machinery/firealarm
-	name = "fire alarm"
+	name = "fire/flood alarm"
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
@@ -22,7 +22,8 @@
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	var/health = 50
-
+	var/fire_sound = 'sound/ambience/signal.ogg' //The sound played when the alarm goes off
+	var/flood_sound = 'sound/misc/bloblarm.ogg'
 
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
@@ -81,14 +82,22 @@
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && temperature > T0C + 200)
-		alarm()
+		alarm(FALSE)
 
-/obj/machinery/firealarm/proc/alarm()
+/obj/machinery/firealarm/water_act(obj/effect/water/W)
+	var/area/A = get_area(src)
+	if(!emagged && detecting && is_operational() && W.depth >= 25 && !A.fire)
+		alarm(TRUE)
+
+/obj/machinery/firealarm/proc/alarm(water)
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
+	if(!water)
+		playsound(src.loc, fire_sound, 75, 0)
+	else
+		playsound(src, flood_sound, 75, 0)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(src, "alarm", time, FALSE)
