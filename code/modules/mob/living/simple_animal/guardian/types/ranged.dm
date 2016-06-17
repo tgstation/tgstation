@@ -30,12 +30,12 @@
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
 	if(src.loc == summoner)
 		if(toggle)
-			ranged = 1
-			melee_damage_lower = 10
-			melee_damage_upper = 10
+			ranged = initial(ranged)
+			melee_damage_lower = initial(melee_damage_lower)
+			melee_damage_upper = initial(melee_damage_upper)
 			environment_smash = initial(environment_smash)
 			alpha = 255
-			range = 13
+			range = initial(range)
 			incorporeal_move = 0
 			src << "<span class='danger'><B>You switch to combat mode.</span></B>"
 			toggle = FALSE
