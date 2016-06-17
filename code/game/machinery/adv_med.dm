@@ -442,7 +442,12 @@
 		"brainloss" = H.getBrainLoss(),
 		"paralysis" = H.paralysis,
 		"bodytemp" = H.bodytemperature,
-		"borer_present" = H.has_brain_worms(),
+		"borer_present_head" = H.has_brain_worms(),
+		"borer_present_chest" = H.has_brain_worms("chest"),
+		"borer_present_r_arm" = H.has_brain_worms("r_arm"),
+		"borer_present_l_arm" = H.has_brain_worms("l_arm"),
+		"borer_present_r_leg" = H.has_brain_worms("r_leg"),
+		"borer_present_l_leg" = H.has_brain_worms("l_leg"),
 		"inaprovaline_amount" = H.reagents.get_reagent_amount("inaprovaline"),
 		"dexalin_amount" = H.reagents.get_reagent_amount("dexalin"),
 		"stoxin_amount" = H.reagents.get_reagent_amount("stoxin"),
@@ -485,8 +490,18 @@
 	dat += text("Paralysis Summary %: [] ([] seconds left!)<br>", occ["paralysis"], round(occ["paralysis"] / 4))
 	dat += text("Body Temperature: [occ["bodytemp"]-T0C]&deg;C ([occ["bodytemp"]*1.8-459.67]&deg;F)<br><HR>")
 
-	if(occ["borer_present"])
+	if(occ["borer_present_head"])
 		dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<br>"
+	if(occ["borer_present_chest"])
+		dat += "Large growth detected in chest cavity, possibly cancerous. Surgical removal is recommended.<br>"
+	if(occ["borer_present_r_arm"])
+		dat += "Large growth detected in right arm, possibly cancerous. Surgical removal is recommended.<br>"
+	if(occ["borer_present_l_arm"])
+		dat += "Large growth detected in left arm, possibly cancerous. Surgical removal is recommended.<br>"
+	if(occ["borer_present_r_leg"])
+		dat += "Large growth detected in right leg, possibly cancerous. Surgical removal is recommended.<br>"
+	if(occ["borer_present_l_leg"])
+		dat += "Large growth detected in left leg, possibly cancerous. Surgical removal is recommended.<br>"
 
 	dat += text("[]\tBlood Level %: [] ([] units)</FONT><BR>", (occ["blood_amount"] > 448 ?"<font color='blue'>" : "<font color='red'>"), occ["blood_amount"]*100 / 560, occ["blood_amount"])
 	if(connected.scanning>=2)

@@ -1,5 +1,5 @@
 
-/obj/item/verbs/borer/beheaded/verb/abandon_host()
+/obj/item/verbs/borer/severed/verb/abandon_host()
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
@@ -8,7 +8,7 @@
 	if(!istype(B)) return
 	B.abandon_host()
 
-/obj/item/verbs/borer/beheaded/verb/borer_speak(var/message as text)
+/obj/item/verbs/borer/severed/verb/borer_speak(var/message as text)
 	set category = "Alien"
 	set name = "Borer Speak"
 	set desc = "Communicate with your bretheren"

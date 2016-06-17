@@ -1,5 +1,5 @@
 
-/obj/item/verbs/borer/attached/verb/borer_speak(var/message as text)
+/obj/item/verbs/borer/attached_head/verb/borer_speak(var/message as text)
 	set category = "Alien"
 	set name = "Borer Speak"
 	set desc = "Communicate with your bretheren"
@@ -15,7 +15,7 @@
 	B.borer_speak(message)
 
 /* Disabled for now.
-/obj/item/verbs/borer/attached/verb/bond_brain()
+/obj/item/verbs/borer/attached_head/verb/bond_brain()
 	set category = "Alien"
 	set name = "Assume Control"
 	set desc = "Fully connect to the brain of your host."
@@ -24,7 +24,7 @@
 	if(!istype(B)) return
 	B.bond_brain()
 
-/obj/item/verbs/borer/attached/verb/kill_host()
+/obj/item/verbs/borer/attached_head/verb/kill_host()
 	set category = "Alien"
 	set name = "Kill Host"
 	set desc = "Give the host massive brain damage, killing them nearly instantly."
@@ -33,7 +33,7 @@
 	if(!istype(B)) return
 	B.kill_host()
 
-/obj/item/verbs/borer/attached/verb/damage_brain()
+/obj/item/verbs/borer/attached_head/verb/damage_brain()
 	set category = "Alien"
 	set name = "Retard Host"
 	set desc = "Give the host a bit of brain damage.  Can be healed with alkysine."
@@ -43,7 +43,7 @@
 	B.damage_brain()
 */
 
-/obj/item/verbs/borer/attached/verb/evolve()
+/obj/item/verbs/borer/attached_head/verb/evolve()
 	set category = "Alien"
 	set name = "Evolve"
 	set desc = "Upgrade yourself or your host."
@@ -52,7 +52,7 @@
 	if(!istype(B)) return
 	B.evolve()
 
-/obj/item/verbs/borer/attached/verb/secrete_chemicals()
+/obj/item/verbs/borer/attached_head/verb/secrete_chemicals()
 	set category = "Alien"
 	set name = "Secrete Chemicals"
 	set desc = "Push some chemicals into your host's bloodstream."
@@ -61,7 +61,7 @@
 	if(!istype(B)) return
 	B.secrete_chemicals()
 
-/obj/item/verbs/borer/attached/verb/abandon_host()
+/obj/item/verbs/borer/attached_head/verb/abandon_host()
 	set category = "Alien"
 	set name = "Abandon Host"
 	set desc = "Slither out of your host."
@@ -70,7 +70,7 @@
 	if(!istype(B)) return
 	B.abandon_host()
 
-/obj/item/verbs/borer/attached/verb/analyze_host()
+/obj/item/verbs/borer/attached_head/verb/analyze_host()
 	set category = "Alien"
 	set name = "Analyze Health"
 	set desc = "Check your host for damage."

@@ -101,6 +101,17 @@
 
 	mymob.client.screen += list(mymob.healths, mymob.pullin, mymob.zone_sel, mymob.purged, mymob.flash)
 
+/datum/hud/proc/borer_hud()
+
+	mymob.zone_sel = getFromPool(/obj/screen/zone_sel)
+	mymob.zone_sel.icon = 'icons/mob/screen1_shade.dmi'
+	mymob.zone_sel.overlays.len = 0
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
+	mymob.client.reset_screen()
+
+	mymob.client.screen += list(mymob.zone_sel)
+
 /datum/hud/proc/construct_hud()
 	var/constructtype
 

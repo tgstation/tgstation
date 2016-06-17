@@ -8,7 +8,8 @@
 	var/unlocked=0
 	//var/remove_on_detach=1
 
-	var/list/prerequisites=list()
+	var/list/prerequisites=list() //these must be unlocked for the unlockable to be accessible
+	var/list/antirequisites=list() //these must NOT be unlocked for the unlockable to be accessible
 	var/datum/research_tree/tree
 
 // CALL BEFORE USING ANY OTHER PROCS.
@@ -19,6 +20,13 @@
 	if(prerequisites.len>0)
 		for(var/prereq in prerequisites)
 			if(!(prereq in tree.unlocked))
+				return 0
+	return 1
+
+/datum/unlockable/proc/check_antirequisites()
+	if(antirequisites.len>0)
+		for(var/antireq in antirequisites)
+			if(antireq in tree.unlocked)
 				return 0
 	return 1
 

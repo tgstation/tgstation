@@ -187,7 +187,16 @@
 	var/move_on_shuttle = 1 // Can move on the shuttle.
 	var/captured = 0 //Functionally, should give the same effect as being buckled into a chair when true.
 
-	var/movement_speed_modifier = 1
+	var/brute_damage_modifier = 1 //Affects how much weakness or resistance a particular mob has to this damage type.
+	var/burn_damage_modifier = 1 //Incoming damage for this damage type is multiplied by this var.
+	var/tox_damage_modifier = 1
+	var/oxy_damage_modifier = 1
+	var/clone_damage_modifier = 1
+	var/brain_damage_modifier = 1
+	var/hal_damage_modifier = 1
+
+	var/movement_speed_modifier = 1 //To allow on-the-fly editing of a human mob's base move speed
+	var/has_penalized_speed = 0 //does nothing, merely for checking
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.

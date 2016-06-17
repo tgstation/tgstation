@@ -200,3 +200,50 @@
 			cooldown = world.time
 	else
 		..()
+
+/obj/item/weapon/shield/riot/bone
+	name = "bone shield"
+	desc = "A somewhat gruesome shield that appears to be made of solid bone."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "bone_shield"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/shields.dmi', "right_hand" = 'icons/mob/in-hand/right/shields.dmi')
+	siemens_coefficient = 0
+	slot_flags = null
+	force = 15
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 1
+	w_class = 5
+	mech_flags = MECH_SCAN_ILLEGAL
+	cant_drop = 1
+	var/mob/living/simple_animal/borer/parent_borer = null
+
+/obj/item/weapon/shield/riot/bone/New(turf/T, var/p_borer = null)
+	..(T)
+	if(istype(p_borer, /mob/living/simple_animal/borer))
+		parent_borer = p_borer
+	if(!parent_borer)
+		qdel(src)
+	else
+		processing_objects.Add(src)
+
+/obj/item/weapon/shield/riot/bone/Destroy()
+	if(parent_borer)
+		if(parent_borer.channeling_bone_shield)
+			parent_borer.channeling_bone_shield = 0
+		if(parent_borer.channeling)
+			parent_borer.channeling = 0
+		parent_borer = null
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/shield/riot/bone/process()
+	set waitfor = 0
+	if(!parent_borer)
+		return
+	if(!parent_borer.channeling_bone_shield) //the borer has stopped sustaining the sword
+		qdel(src)
+	if(parent_borer.chemicals < 3) //the parent borer no longer has the chemicals required to sustain the shield
+		qdel(src)
+	else
+		parent_borer.chemicals -= 3

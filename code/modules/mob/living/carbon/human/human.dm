@@ -182,7 +182,7 @@
 	// TODO: Loop through contents and call parasite_panel or something.
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
 	if(B)
-		html +="<h2>Cortical Borer:</h2> [B] ("
+		html +="<h2>Borer:</h2> [B] ("
 		if(B.controlling)
 			html += "<a style='color:red;font-weight:bold;' href='?src=\ref[B]&act=release'>Controlling</a>"
 		else if(B.host_brain.ckey)

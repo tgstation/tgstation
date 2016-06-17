@@ -78,7 +78,7 @@
 			vermstring = "space bats"
 		if(VERM_BORERS)
 			spawn_types = /mob/living/simple_animal/borer
-			vermstring = "cortical borers"
+			vermstring = "borers"
 			max_number = 5
 		if(VERM_MIMICS)
 			spawn_types = /mob/living/simple_animal/hostile/mimic/crate/item

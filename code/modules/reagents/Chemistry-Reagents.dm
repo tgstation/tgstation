@@ -3424,6 +3424,14 @@
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
 
+/datum/reagent/clottingagent
+	name = "Clotting Agent"
+	id = "clotting_agent"
+	description = "Concentrated blood platelets, capable of stemming bleeding."
+	reagent_state = LIQUID
+	color = "#a00000" //rgb: 160, 0, 0
+	custom_metabolism = 0.1
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum//////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -70,8 +70,9 @@
 		sleep(sleeptime)
 
 /obj/item/projectile/hookshot/bullet_die()
-	var/obj/item/weapon/gun/hookshot/hookshot = shot_from
-	hookshot.hook = null
+	if(shot_from)
+		var/obj/item/weapon/gun/hookshot/hookshot = shot_from
+		hookshot.hook = null
 	spawn()
 		OnDeath()
 		returnToPool(src)

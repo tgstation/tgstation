@@ -133,11 +133,17 @@ emp_act
 	..()
 
 
-/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
+/mob/living/carbon/human/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone, var/originator = null)
 	. = 1
 	if(!I || !user)
 		return 0
-	var/target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
+	var/target_zone = null
+	if(originator)
+		if(ismob(originator))
+			var/mob/M = originator
+			target_zone = get_zone_with_miss_chance(M.zone_sel.selecting, src)
+	else
+		target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, src)
 	if(user == src) // Attacking yourself can't miss
 		target_zone = user.zone_sel.selecting
 	if(!target_zone && !src.stat)
@@ -167,7 +173,10 @@ emp_act
 	if (!affecting)
 		return
 	if(affecting.status & ORGAN_DESTROYED)
-		to_chat(user, "What [affecting.display_name]?")
+		if(originator)
+			to_chat(originator, "What [affecting.display_name]?")
+		else
+			to_chat(user, "What [affecting.display_name]?")
 		return
 	var/hit_area = affecting.display_name
 
@@ -197,8 +206,18 @@ emp_act
 	if(!I.force)	return 1
 
 	//Knocking teeth out!
-	if(user.zone_sel.selecting == "mouth" && target_zone == "head") //You can't actually hit people in the mouth - this checks if the user IS targetting mouth, and if he didn't miss!
-		if((!armor) && (I.force >= 8 || I.w_class <= W_CLASS_SMALL) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class = W_CLASS_SMALL. Sharp items can't knock out teeth. Armor prevents this completely!
+	var/knock_teeth = 0
+	if(originator)
+		if(ismob(originator))
+			var/mob/M = originator
+			if(M.zone_sel.selecting == "mouth" && target_zone == "head")
+				knock_teeth = 1
+		else if(user.zone_sel.selecting == "mouth" && target_zone == "head")
+			knock_teeth = 1
+	else if(user.zone_sel.selecting == "mouth" && target_zone == "head")
+		knock_teeth = 1
+	if(knock_teeth) //You can't actually hit people in the mouth - this checks if the user IS targetting mouth, and if he didn't miss!
+		if((!armor) && (I.force >= 8 || I.w_class >= W_CLASS_SMALL) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class=2. Sharp items can't knock out teeth. Armor prevents this completely!
 			var/datum/butchering_product/teeth/T = locate(/datum/butchering_product/teeth) in src.butchering_drops
 			if(T && T.amount > 0) //If the guy has some teeth
 				var/chance = min(I.force * I.w_class, 40) //an item with w_class = W_CLASS_MEDIUM and force of 10 has a 30% chance of knocking a few teeth out. Chance is capped at 40%

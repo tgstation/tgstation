@@ -195,3 +195,59 @@ obj/item/weapon/banhammer/admin
 	desc = "A banhammer specifically reserved for admins. Legends tell of a weapon that destroys the target to the utmost capacity."
 	throwforce = 999
 	force = 999
+
+/obj/item/weapon/melee/bone_hammer
+	name = "bone hammer"
+	desc = "A large growth that appears to be made of solid bone. It looks heavy."
+	icon_state = "bone_hammer"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+	hitsound = "sound/weapons/heavysmash.ogg"
+	flags = FPRINT
+	siemens_coefficient = 0
+	slot_flags = null
+	force = 35
+	throwforce = 0
+	w_class = 5
+	sharpness = 0
+	attack_verb = list("bludgeoned", "smashed", "pummeled", "crushed", "slammed")
+	mech_flags = MECH_SCAN_ILLEGAL
+	cant_drop = 1
+	var/mob/living/simple_animal/borer/parent_borer = null
+
+	suicide_act(mob/user)
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing his face with \the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		return(BRUTELOSS)
+
+/obj/item/weapon/melee/bone_hammer/afterattack(null, mob/living/user as mob|obj, null, null, null)
+	user.delayNextAttack(50) //five times the regular attack delay
+
+/obj/item/weapon/melee/bone_hammer/New(turf/T, var/p_borer = null)
+	..(T)
+	if(istype(p_borer, /mob/living/simple_animal/borer))
+		parent_borer = p_borer
+	if(!parent_borer)
+		qdel(src)
+	else
+		processing_objects.Add(src)
+
+/obj/item/weapon/melee/bone_hammer/Destroy()
+	if(parent_borer)
+		if(parent_borer.channeling_bone_hammer)
+			parent_borer.channeling_bone_hammer = 0
+		if(parent_borer.channeling)
+			parent_borer.channeling = 0
+		parent_borer = null
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/melee/bone_hammer/process()
+	set waitfor = 0
+	if(!parent_borer)
+		return
+	if(!parent_borer.channeling_bone_hammer) //the borer has stopped sustaining the hammer
+		qdel(src)
+	if(parent_borer.chemicals < 10) //the parent borer no longer has the chemicals required to sustain the hammer
+		qdel(src)
+	else
+		parent_borer.chemicals -= 10
+		sleep(10)

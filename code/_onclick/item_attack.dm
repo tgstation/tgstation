@@ -16,10 +16,14 @@
 	if(W && !(W.flags&NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
-/mob/living/attackby(obj/item/I, mob/user)
-	user.delayNextAttack(10)
+/mob/living/attackby(obj/item/I, mob/user, var/no_delay = 0, var/originator = null)
+	if(!no_delay)
+		user.delayNextAttack(10)
 	if(istype(I) && ismob(user))
-		I.attack(src, user)
+		if(originator)
+			I.attack(src, user, null, originator)
+		else
+			I.attack(src, user)
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
@@ -39,11 +43,14 @@ obj/item/proc/get_clamped_volume()
 	else if(!src.force && src.w_class)
 		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
-	return handle_attack(src, M, user, def_zone)
+/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone, var/originator = null)
+	if(originator)
+		return handle_attack(src, M, user, def_zone, originator)
+	else
+		return handle_attack(src, M, user, def_zone)
 
 // Making this into a helper proc because of inheritance wonkyness making children of reagent_containers being nigh impossible to attack with.
-/obj/item/proc/handle_attack(obj/item/I, mob/living/M as mob, mob/living/user as mob, def_zone)
+/obj/item/proc/handle_attack(obj/item/I, mob/living/M as mob, mob/living/user as mob, def_zone, var/mob/originator = null)
 	. = 1
 	if (!istype(M)) // not sure if this is the right thing...
 		return 0
@@ -54,12 +61,17 @@ obj/item/proc/get_clamped_volume()
 	//if (istype(M,/mob/living/carbon/brain))
 	//	messagesource = M:container
 	if (hitsound)
-		playsound(I.loc, I.hitsound, 50, 1, -1)
+		playsound(get_turf(M.loc), I.hitsound, 50, 1, -1)
 	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
-
-	add_logs(user, M, "attacked", object=I.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(I.damtype)])")
+	if(originator)
+		if(ismob(originator))
+			originator.lastattacked = M
+			M.lastattacker = originator
+			add_logs(originator, M, "attacked", object=I.name, addition="(INTENT: [uppertext(originator.a_intent)]) (DAMTYE: [uppertext(I.damtype)])")
+	else
+		user.lastattacked = M
+		M.lastattacker = user
+		add_logs(user, M, "attacked", object=I.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(I.damtype)])")
 
 	//spawn(1800)            // this wont work right
 	//	M.lastattacker = null
@@ -140,21 +152,55 @@ obj/item/proc/get_clamped_volume()
 										step_away(slime, user)
 								slime.canmove = 1
 
+
+		var/showname = "."
+		if(user)
+			showname = "[user]"
+		if(!(user in viewers(M, null)))
+			showname = "."
+
+		if(originator)
+			if(istype(originator, /mob/living/simple_animal/borer))
+				var/mob/living/simple_animal/borer/B = originator
+				if(B.host == user)
+					if(B.hostlimb == "r_arm")
+						showname = "[user]'s right arm"
+					else if(B.hostlimb == "l_arm")
+						showname = "[user]'s left arm"
+
 		//make not the same mistake as me, these messages are only for slimes
 		if(istype(I.attack_verb,/list) && I.attack_verb.len)
-			M.visible_message("<span class='danger'>[user] [pick(I.attack_verb)] [M] with [I].</span>", \
-				"<span class='userdanger'>[user] [pick(I.attack_verb)] you with [I].</span>")
+			M.visible_message("<span class='danger'>[showname] [pick(I.attack_verb)] [M] with [I].</span>", \
+				"<span class='userdanger'>[showname] [pick(I.attack_verb)] you with [I].</span>")
 		else if(I.force == 0)
-			M.visible_message("<span class='danger'>[user] [pick("taps","pats")] [M] with [I].</span>", \
-				"<span class='userdanger'>[user] [pick("taps","pats")] you with [I].</span>")
+			M.visible_message("<span class='danger'>[showname] [pick("taps","pats")] [M] with [I].</span>", \
+				"<span class='userdanger'>[showname] [pick("taps","pats")] you with [I].</span>")
 		else
-			M.visible_message("<span class='danger'>[user] attacks [M] with [I].</span>", \
-				"<span class='userdanger'>[user] attacks you with [I].</span>")
+			M.visible_message("<span class='danger'>[showname] attacks [M] with [I].</span>", \
+				"<span class='userdanger'>[showname] attacks you with [I].</span>")
+
+		if(!showname && user)
+			if(user.client)
+				if(originator)
+					if(istype(originator, /mob/living/simple_animal/borer))
+						var/mob/living/simple_animal/borer/BO = originator
+						if(BO.host == user)
+							if(BO.hostlimb == "r_arm")
+								to_chat(user, "<span class='warning'>Your right arm attacks [M] with [I]!</span>")
+							else if(BO.hostlimb == "l_arm")
+								to_chat(user, "<span class='warning'>Your left arm attacks [M] with [I]!</span>")
+					else
+						to_chat(user, "<span class='warning'>You attack [M] with [I]!</span>")
+				else
+					to_chat(user, "<span class='warning'>You attack [M] with [I]!</span>")
 
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		. = H.attacked_by(I, user, def_zone)
+		if(originator)
+			. = H.attacked_by(I, user, def_zone, originator)
+		else
+			. = H.attacked_by(I, user, def_zone)
 	else
 		switch(I.damtype)
 			if("brute")

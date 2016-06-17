@@ -6,6 +6,7 @@
  *		Energy Blade
  *		Energy Axe
  *		Energy Shield
+ *		Bone Sword
  */
 
 /*
@@ -209,3 +210,56 @@
 		src.sharpness = initial(src.sharpness)
 	src.add_fingerprint(user)
 	return
+
+/obj/item/weapon/melee/bone_sword
+	name = "bone sword"
+	desc = "A somewhat gruesome blade that appears to be made of solid bone."
+	icon_state = "bone_sword"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+	hitsound = "sound/weapons/bloodyslice.ogg"
+	flags = FPRINT
+	siemens_coefficient = 0
+	slot_flags = null
+	force = 20
+	throwforce = 0
+	w_class = 5
+	sharpness = 1.5
+	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+	mech_flags = MECH_SCAN_ILLEGAL
+	cant_drop = 1
+	var/mob/living/simple_animal/borer/parent_borer = null
+
+	suicide_act(mob/user)
+		to_chat(viewers(user), "<span class='danger'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		return(BRUTELOSS)
+
+/obj/item/weapon/melee/bone_sword/New(turf/T, var/p_borer = null)
+	..(T)
+	if(istype(p_borer, /mob/living/simple_animal/borer))
+		parent_borer = p_borer
+	if(!parent_borer)
+		qdel(src)
+	else
+		processing_objects.Add(src)
+
+/obj/item/weapon/melee/bone_sword/Destroy()
+	if(parent_borer)
+		if(parent_borer.channeling_bone_sword)
+			parent_borer.channeling_bone_sword = 0
+		if(parent_borer.channeling)
+			parent_borer.channeling = 0
+		parent_borer = null
+	processing_objects.Remove(src)
+	..()
+
+/obj/item/weapon/melee/bone_sword/process()
+	set waitfor = 0
+	if(!parent_borer)
+		return
+	if(!parent_borer.channeling_bone_sword) //the borer has stopped sustaining the sword
+		qdel(src)
+	if(parent_borer.chemicals < 5) //the parent borer no longer has the chemicals required to sustain the sword
+		qdel(src)
+	else
+		parent_borer.chemicals -= 5
+		sleep(10)

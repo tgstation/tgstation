@@ -501,10 +501,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		//Internal wounds get worse over time. Low temperatures (cryo) stop them.
 		if(W.internal && !W.is_treated() && owner.bodytemperature >= 170 && !(owner.species && owner.species.flags & NO_BLOOD))
-			if(!owner.reagents.has_reagent("bicaridine"))	//Bicard stops internal wounds from growing bigger with time, and also stop bleeding
-				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood", 0.05 * W.damage * wound_update_accuracy)
-			if(!owner.reagents.has_reagent("inaprovaline")) //This little copypaste will allow inaprovaline to work too, giving it a much needed buff to help medical.
+			if(!owner.reagents.has_reagent("bicaridine") && !owner.reagents.has_reagent("inaprovaline") && !owner.reagents.has_reagent("clotting_agent"))	//Bicard, inaprovaline, and clotting agent stops internal wounds from growing bigger with time, and also stop bleeding
 				W.open_wound(0.1 * wound_update_accuracy)
 				owner.vessel.remove_reagent("blood", 0.05 * W.damage * wound_update_accuracy)
 
@@ -560,13 +557,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		if(is_organic() && W.bleeding() && !(owner.species.flags & NO_BLOOD))
 			W.bleed_timer--
-			status |= ORGAN_BLEEDING
+			if(!owner.reagents.has_reagent("clotting_agent"))
+				status |= ORGAN_BLEEDING
 
 		clamped |= W.clamped
 		number_wounds += W.amount
 
 	if(open && !clamped && is_organic() && !(owner.species.flags & NO_BLOOD)) //Things tend to bleed if they are CUT OPEN
-		status |= ORGAN_BLEEDING
+		if(!owner.reagents.has_reagent("clotting_agent"))
+			status |= ORGAN_BLEEDING
 
 
 // new damage icon system
@@ -1197,6 +1196,7 @@ obj/item/weapon/organ
 	//They are transferred from the mob from which the organ was removed.
 	//Currently the only "butchering drops" which are going to be stored here are teeth
 	var/list/butchering_drops = list()
+	var/mob/living/simple_animal/borer/borer
 
 	var/datum/species/species
 
@@ -1282,34 +1282,61 @@ obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = "l_arm"
 	part = "l_arm"
+obj/item/weapon/organ/l_arm/New(loc, mob/living/carbon/human/H)
+	..()
+	var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_arm")
+	if(B)
+		B.infest_limb(src)
+
 obj/item/weapon/organ/l_foot
 	name = "left foot"
 	icon_state = "l_foot"
 	part = "l_foot"
+
 obj/item/weapon/organ/l_hand
 	name = "left hand"
 	icon_state = "l_hand"
 	part = "l_hand"
+
 obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = "l_leg"
 	part = "l_leg"
+obj/item/weapon/organ/l_leg/New(loc, mob/living/carbon/human/H)
+	..()
+	var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_leg")
+	if(B)
+		B.infest_limb(src)
+
 obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = "r_arm"
 	part = "r_arm"
+obj/item/weapon/organ/r_arm/New(loc, mob/living/carbon/human/H)
+	..()
+	var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_arm")
+	if(B)
+		B.infest_limb(src)
+
 obj/item/weapon/organ/r_foot
 	name = "right foot"
 	icon_state = "r_foot"
 	part = "r_foot"
+
 obj/item/weapon/organ/r_hand
 	name = "right hand"
 	icon_state = "r_hand"
 	part = "r_hand"
+
 obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = "r_leg"
 	part = "r_leg"
+obj/item/weapon/organ/r_leg/New(loc, mob/living/carbon/human/H)
+	..()
+	var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_leg")
+	if(B)
+		B.infest_limb(src)
 
 obj/item/weapon/organ/head
 	dir = NORTH
@@ -1318,7 +1345,6 @@ obj/item/weapon/organ/head
 	part = "head"
 	ashtype = /obj/item/weapon/skull
 	var/mob/living/carbon/brain/brainmob
-	var/mob/living/simple_animal/borer/borer
 	var/brain_op_stage = 0
 	var/mob/living/carbon/human/origin_body = null
 
@@ -1368,7 +1394,7 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 
 	var/mob/living/simple_animal/borer/B = H.has_brain_worms()
 	if(B)
-		B.infest_head(src)
+		B.infest_limb(src)
 
 	//if(ishuman(H))
 	//	if(H.gender == FEMALE)

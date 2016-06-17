@@ -37,9 +37,14 @@
 /obj/item/weapon/gun/hookshot/New()
 	..()
 	for(var/i = 0;i <= maxlength; i++)
-		var/obj/effect/overlay/hookchain/HC = new(src)
-		HC.shot_from = src
-		links["[i]"] = HC
+		if(istype(src, /obj/item/weapon/gun/hookshot/flesh))
+			var/obj/effect/overlay/hookchain/flesh/HC = new(src)
+			HC.shot_from = src
+			links["[i]"] = HC
+		else
+			var/obj/effect/overlay/hookchain/HC = new(src)
+			HC.shot_from = src
+			links["[i]"] = HC
 
 /obj/item/weapon/gun/hookshot/Destroy()//if a single link of the chain is destroyed, the rest of the chain is instantly destroyed as well.
 	if(chain_datum)
@@ -232,11 +237,11 @@
 	undergoing_deletion = 1
 	if(extremity_A)
 		if(snap)
-			extremity_A.visible_message("The chain snaps and let go of \the [extremity_A]")
+			extremity_A.visible_message("The chain snaps and lets go of \the [extremity_A].")
 		extremity_A.tether = null
 	if(extremity_B)
 		if(snap)
-			extremity_B.visible_message("The chain snaps and let go of \the [extremity_B]")
+			extremity_B.visible_message("The chain snaps and lets go of \the [extremity_B].")
 		extremity_B.tether = null
 	for(var/i = 1; i<= links.len ;i++)
 		var/obj/effect/overlay/chain/C = links["[i]"]

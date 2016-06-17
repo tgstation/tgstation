@@ -49,6 +49,8 @@
 	if(species && species.brute_mod)
 		amount = amount*species.brute_mod
 
+	amount = amount * brute_damage_modifier
+
 	if(amount > 0)
 		take_overall_damage(amount, 0)
 	else
@@ -59,6 +61,8 @@
 	if(species && species.burn_mod)
 		amount = amount*species.burn_mod
 
+	amount = amount * burn_damage_modifier
+
 	if(amount > 0)
 		take_overall_damage(0, amount)
 	else
@@ -68,6 +72,8 @@
 /mob/living/carbon/human/proc/adjustBruteLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
 	if(species && species.brute_mod)
 		amount = amount*species.brute_mod
+
+	amount = amount * brute_damage_modifier
 
 	if (organ_name in organs_by_name)
 		var/datum/organ/external/O = get_organ(organ_name)
@@ -83,6 +89,8 @@
 /mob/living/carbon/human/proc/adjustFireLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
 	if(species && species.burn_mod)
 		amount = amount*species.burn_mod
+
+	amount = amount * burn_damage_modifier
 
 	if (organ_name in organs_by_name)
 		var/datum/organ/external/O = get_organ(organ_name)
@@ -109,6 +117,8 @@
 
 /mob/living/carbon/human/adjustCloneLoss(var/amount)
 	..()
+
+	amount = amount * clone_damage_modifier
 
 	var/heal_prob = max(0, 80 - getCloneLoss())
 	var/mut_prob = min(80, getCloneLoss()+10)
@@ -289,12 +299,14 @@ This function restores all organs.
 			damageoverlaytemp = 20
 			if(species && species.brute_mod)
 				damage = damage*species.brute_mod
+			damage = damage * brute_damage_modifier
 			if(organ.take_damage(damage, 0, sharp, edge, used_weapon))
 				UpdateDamageIcon(1)
 		if(BURN)
 			damageoverlaytemp = 20
 			if(species && species.burn_mod)
 				damage = damage*species.burn_mod
+			damage = damage * burn_damage_modifier
 			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
 				UpdateDamageIcon(1)
 

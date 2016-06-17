@@ -53,6 +53,15 @@
 		if(!C.get_active_hand())
 			to_chat(usr, "<span class='warning'>You have nothing to drop in your hand.</span>")
 			return
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			var/list/borers_in_host = H.get_brain_worms()
+			if(borers_in_host && borers_in_host.len) //to allow a host to drop an item at-range mid-extension
+				for(var/mob/living/simple_animal/borer/B in borers_in_host)
+					if((B.hostlimb == "r_arm" && H.get_active_hand() == H.get_held_item_by_index(GRASP_RIGHT_HAND)) || (B.hostlimb == "l_arm" && H.get_active_hand() == H.get_held_item_by_index(GRASP_LEFT_HAND)))
+						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
+						F.to_be_dropped = H.get_active_hand()
+						F.item_overlay = null
 		drop_item()
 	else if(isMoMMI(usr))
 		var/mob/living/silicon/robot/mommi/M = usr
@@ -66,6 +75,34 @@
 			return
 		R.uneq_active()
 	else
+		if(istype(usr, /mob/living/simple_animal/borer))
+			var/mob/living/simple_animal/borer/B = usr
+			if(B.host && ishuman(B.host))
+				var/mob/living/carbon/human/H = B.host
+				if(B.hostlimb == "r_arm")
+					if(B.extend_o_arm)
+						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
+						if(H.get_held_item_by_index(GRASP_RIGHT_HAND))
+							F.to_be_dropped = H.get_held_item_by_index(GRASP_RIGHT_HAND)
+							F.item_overlay = null
+						F.attack_self(H)
+						H.drop_item(H.get_held_item_by_index(GRASP_RIGHT_HAND))
+						return
+					else
+						to_chat(usr, "<span class='warning'>Your host has nothing to drop in [H.gender == FEMALE ? "her" : "his"] right hand.</span>")
+						return
+				else if(B.hostlimb == "l_arm")
+					if(B.extend_o_arm)
+						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
+						if(H.get_held_item_by_index(GRASP_LEFT_HAND))
+							F.to_be_dropped = H.get_held_item_by_index(GRASP_LEFT_HAND)
+							F.item_overlay = null
+						F.attack_self(H)
+						H.drop_item(H.get_held_item_by_index(GRASP_LEFT_HAND))
+						return
+					else
+						to_chat(usr, "<span class='warning'>Your host has nothing to drop in [H.gender == FEMALE ? "her" : "his"] left hand.</span>")
+						return
 		to_chat(usr, "<span class='warning'>This mob type cannot drop items.</span>")
 	return
 

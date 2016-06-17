@@ -251,11 +251,13 @@
 
 /obj/item/weapon/gun/proc/click_empty(mob/user = null)
 	if (user)
-		user.visible_message("*click click*", "<span class='danger'>*click*</span>")
-		playsound(user, empty_sound, 100, 1)
+		if(empty_sound)
+			user.visible_message("*click click*", "<span class='danger'>*click*</span>")
+			playsound(user, empty_sound, 100, 1)
 	else
-		src.visible_message("*click click*")
-		playsound(get_turf(src), empty_sound, 100, 1)
+		if(empty_sound)
+			src.visible_message("*click click*")
+			playsound(get_turf(src), empty_sound, 100, 1)
 
 /obj/item/weapon/gun/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 	//Suicide handling.
