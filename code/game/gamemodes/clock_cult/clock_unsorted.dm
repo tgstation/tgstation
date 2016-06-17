@@ -80,20 +80,21 @@
 	for(var/mob/living/silicon/ai/ai in living_mob_list)
 		if(!is_servant_of_ratvar(ai) && ai.client)
 			unconverted_ai_exists = TRUE
-	if(scripture_tier == SCRIPTURE_DRIVER)
-		return 1
-	if(scripture_tier == SCRIPTURE_SCRIPT)
-		if(servants >= 5 && clockwork_caches)
-			return 1 //5 or more non-brain servants and any number of clockwork caches
-	if(scripture_tier == SCRIPTURE_APPLICATION)
-		if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50)
-			return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 50 CV
-	if(scripture_tier == SCRIPTURE_REVENANT)
-		if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
-			return 1 //10 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
-	if(scripture_tier == SCRIPTURE_JUDGEMENT)
-		if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100 && !unconverted_ai_exists)
-			return 1 //10 or more non-brain servants, 3+ clockwork caches, at least 100 CV, and there are no living, non-servant ais
+	switch(scripture_tier)
+		if(SCRIPTURE_DRIVER)
+			return 1
+		if(SCRIPTURE_SCRIPT)
+			if(servants >= 5 && clockwork_caches)
+				return 1 //5 or more non-brain servants and any number of clockwork caches
+		if(SCRIPTURE_APPLICATION)
+			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50)
+				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 50 CV
+		if(SCRIPTURE_REVENANT)
+			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
+				return 1 //10 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
+		if(SCRIPTURE_JUDGEMENT)
+			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100 && !unconverted_ai_exists)
+				return 1 //10 or more non-brain servants, 3+ clockwork caches, at least 100 CV, and there are no living, non-servant ais
 	return 0
 
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
