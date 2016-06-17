@@ -664,6 +664,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			ghostimage.icon = icon
 			ghostimage_default.icon = icon
 			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state_state
 		if("fun_verbs")
 			if(fun_verbs)
 				verbs += /mob/dead/observer/verb/boo
