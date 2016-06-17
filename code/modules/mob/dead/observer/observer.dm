@@ -658,6 +658,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return 1
 
 /mob/dead/observer/on_varedit(var_name)
+	. = ..()
 	switch(var_name)
 		if("icon")
 			ghostimage.icon = icon
