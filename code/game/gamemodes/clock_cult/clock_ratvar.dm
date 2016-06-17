@@ -37,7 +37,8 @@
 	SSobj.processing += src
 	var/area/gate_area = get_area(src)
 	for(var/M in mob_list)
-		M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
+		if(is_servant_of_ratvar(M) || isobserver(M))
+			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSshuttle.emergencyNoEscape = FALSE
@@ -50,7 +51,8 @@
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		for(var/M in mob_list)
-			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
+			if(is_servant_of_ratvar(M) || isobserver(M))
+				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
 		world << sound(null, 0, channel = 8)
 	qdel(glow)
 	glow = null
@@ -76,8 +78,8 @@
 	return 0 //Nice try, Toxins!
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
-	if(prob(5))
-		for(var/mob/M in mob_list)
+	if(!progress_in_seconds || prob(5))
+		for(var/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!health)
 		return 0
