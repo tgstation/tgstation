@@ -42,8 +42,9 @@
 			if(start_up_sound)
 				M << start_up_sound
 	sleep(start_up_time)
-	stage = MAIN_STAGE
-	weather_main()
+	if(src && stage != MAIN_STAGE)
+		stage = MAIN_STAGE
+		weather_main()
 
 
 /datum/weather/proc/weather_main()
@@ -63,8 +64,9 @@
 					storm_act(L)
 			sleep(10)
 
-	stage = WIND_DOWN_STAGE
-	weather_wind_down()
+	if(src && stage != WIND_DOWN_STAGE)
+		stage = WIND_DOWN_STAGE
+		weather_wind_down()
 
 
 /datum/weather/proc/weather_wind_down()
@@ -76,8 +78,9 @@
 				M << wind_down_sound
 	sleep(wind_down)
 
-	stage = END_STAGE
-	update_areas()
+	if(src && stage != END_STAGE)
+		stage = END_STAGE
+		update_areas()
 
 
 /datum/weather/proc/storm_act(mob/living/L)
