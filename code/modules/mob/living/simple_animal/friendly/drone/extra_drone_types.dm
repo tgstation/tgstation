@@ -119,15 +119,16 @@
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
-	for(var/datum/action/generic/drone/select_filter/SF in actions)
+	for(var/datum/action/generic/drone/select_filter/SF in actions) //clear all the drone shit we don't need
 		qdel(SF)
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, \
-	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, and are immune to extreme temperatures and pressures. \n\
-	Your goal is to serve the Justiciar and his servants by repairing and defending all they create. You yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>
+	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with <b>:b</b>, \
+	and are immune to extreme temperatures and pressures. \n Your goal is to serve the Justiciar and his servants by repairing and defending all they create. \
+	You yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>
 
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
