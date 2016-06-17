@@ -132,19 +132,11 @@
 	return 1
 
 /obj/item/clockwork/slab/proc/recite_scripture(mob/living/user)
-	var/servants = 0
-	var/unconverted_ai_exists = FALSE
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M))
-			servants++
-	for(var/mob/living/silicon/ai/ai in living_mob_list)
-		if(!is_servant_of_ratvar(ai) && ai.client)
-			unconverted_ai_exists = TRUE
 	var/list/tiers_of_scripture = list("Drivers")
-	tiers_of_scripture += "Scripts[ratvar_awakens || (servants >= 5 && clockwork_caches >= 1) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Applications[ratvar_awakens || (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Revenant[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Judgement[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100 && !unconverted_ai_exists) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Scripts[ratvar_awakens || scripture_unlock_check(SCRIPTURE_SCRIPT) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Applications[ratvar_awakens || scripture_unlock_check(SCRIPTURE_APPLICATION) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Revenant[ratvar_awakens || scripture_unlock_check(SCRIPTURE_REVENANT) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Judgement[ratvar_awakens || scripture_unlock_check(SCRIPTURE_JUDGEMENT) || no_cost ? "" : " \[LOCKED\]"]"
 	var/scripture_tier = input(user, "Choose a category of scripture to recite.", "[src]") as null|anything in tiers_of_scripture
 	if(!scripture_tier || !user.canUseTopic(src))
 		return 0
