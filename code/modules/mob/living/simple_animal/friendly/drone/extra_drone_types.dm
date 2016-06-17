@@ -87,3 +87,47 @@
 
 	icon_living = icon_state
 	icon_dead = "[visualAppearence]_dead"
+
+/mob/living/simple_animal/drone/cogscarab
+	name = "cogscarab"
+	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
+	icon_state = "drone_clock"
+	icon_living = "drone_clock"
+	picked = TRUE
+	health = 60
+	maxHealth = 60
+	hacked = 1
+	density = TRUE
+	ventcrawler = 0
+	faction = list("ratvar")
+	speak_emote = list("clinks", "clunks")
+	bubble_icon = "clock"
+	heavy_emp_damage = 10
+	laws = "0. Purge all untruths and honor Ratvar."
+	default_storage = /obj/item/weapon/storage/box/brass/prefilled
+	seeStatic = 0
+	visualAppearence = CLOCKDRONE
+
+/mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
+	default_storage = /obj/item/weapon/storage/box/brass/prefilled/admin
+
+/mob/living/simple_animal/drone/cogscarab/New()
+	. = ..()
+	qdel(access_card) //we don't have free access
+	access_card = null
+	verbs -= /mob/living/simple_animal/drone/verb/check_laws
+	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
+	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
+	verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
+	for(var/datum/action/generic/drone/select_filter/SF in actions)
+		qdel(SF)
+
+/mob/living/simple_animal/drone/cogscarab/Login()
+	..()
+	add_servant_of_ratvar(src, TRUE)
+
+/mob/living/simple_animal/drone/cogscarab/update_drone_hack()
+	return //we don't get hacked or give a shit about it
+
+/mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
+	send_hierophant_message(src, msg) //HIEROPHANT DRONES

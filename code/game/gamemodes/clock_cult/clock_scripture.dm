@@ -696,6 +696,22 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
+/datum/clockwork_scripture/create_object/anima_fragment //Anima Fragment: Creates an empty anima fragment
+	descname = "Constructor Soul Vessel Shell"
+	name = "Cogscarab"
+	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
+	invocations = list("Pnyy sbegu...", "...gur jbexref-bs Nezbere.")
+	channel_time = 50
+	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
+	object_path = /obj/structure/clockwork/shell/cogscarab
+	creator_message = "<span class='brass'>You form a cogscarab, a constructor soul vessel receptable.</span>"
+	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that contracts and forms into a strange shell!</span>"
+	usage_tip = "Useless without a soul vessel and should not be created without one."
+	tier = SCRIPTURE_SCRIPT
+
+
+
 /datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
 	descname = "Conversion Trap"
 	name = "Sigil of Submission"
@@ -725,7 +741,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 50
 	required_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "replicant_alloy" = 2)
 	consumed_components = list("belligerent_eye" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 2)
-	object_path = /obj/structure/clockwork/anima_fragment
+	object_path = /obj/structure/clockwork/shell/fragment
 	creator_message = "<span class='brass'>You form an anima fragment, a powerful soul vessel receptable.</span>"
 	observer_message = "<span class='warning'>The slab disgorges a puddle of black metal that expands and forms into a strange shell!</span>"
 	usage_tip = "Useless without a soul vessel and should not be created without one."

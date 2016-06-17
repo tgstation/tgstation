@@ -111,6 +111,9 @@
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
+	if(!no_cost && !ishuman(user))
+		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
+		return 0
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)

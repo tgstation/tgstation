@@ -829,3 +829,29 @@
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/weapon/circuitboard/computer/rdconsole(src)
+
+/obj/item/weapon/storage/box/brass
+	name = "brass box"
+	desc = "A huge brass box with several indentations in its surface."
+	icon_state = "brassbox"
+	w_class = 4
+	max_w_class = 3
+	max_combined_w_class = 21
+	storage_slots = 21
+	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
+
+/obj/item/weapon/storage/box/brass/prefilled/New()
+	..()
+	new proselytizer_type(src)
+	new /obj/item/weapon/screwdriver/brass(src)
+	new /obj/item/weapon/wirecutters/brass(src)
+	new /obj/item/weapon/wrench/brass(src)
+	new /obj/item/weapon/crowbar/brass(src)
+	new /obj/item/weapon/weldingtool/experimental/brass(src)
+
+/obj/item/weapon/storage/box/brass/prefilled/admin
+	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
+
+/obj/item/weapon/storage/box/brass/prefilled/admin/New()
+	..()
+	new /obj/item/clockwork/slab/debug(src)

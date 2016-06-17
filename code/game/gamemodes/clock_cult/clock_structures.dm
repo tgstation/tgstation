@@ -370,18 +370,17 @@
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/clockwork/anima_fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
-	name = "anima fragment"
-	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
-	icon_state = "anime_fragment"
+
+/obj/structure/clockwork/shell
 	construction_value = 0
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
 	burn_state = LAVA_PROOF
+	var/mobtype
+	var/spawn_message
 
-/obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/clockwork/shell/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
 		if(!is_servant_of_ratvar(user))
 			..()
@@ -394,11 +393,10 @@
 			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
-		var/mob/living/simple_animal/hostile/clockwork/fragment/A = new(get_turf(src))
-		A.visible_message("[src] whirs and rises from the ground on a flickering jet of reddish fire.")
+		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
+		A.visible_message("[src][spawn_message]")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
-		A << A.playstyle_string
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -406,6 +404,21 @@
 	else
 		return ..()
 
+/obj/structure/clockwork/shell/cogscarab
+	name = "cogscarab shell"
+	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	icon_state = "clockdrone_shell"
+	mobtype = /mob/living/simple_animal/drone/cogscarab
+	spawn_message = "'s eyes blink open, glowing bright red."
+
+/obj/structure/clockwork/shell/fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
+	name = "fragment shell"
+	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
+	icon_state = "anime_fragment"
+	mobtype = /mob/living/simple_animal/hostile/clockwork/fragment
+	spawn_message = " whirs and rises from the ground on a flickering jet of reddish fire."
 
 
 /obj/structure/clockwork/wall_gear

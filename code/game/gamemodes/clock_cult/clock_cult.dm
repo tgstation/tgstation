@@ -58,7 +58,7 @@ This file's folder contains:
 		return 0
 	if(M.mind.enslaved_to)
 		return 0
-	if(isdrone(M))
+	if(isdrone(M) && !istype(M, /mob/living/simple_animal/drone/cogscarab))
 		return 0
 	return 1
 
