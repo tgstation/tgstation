@@ -1054,10 +1054,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return ..()
 
 /datum/clockwork_scripture/targeted/invoke_sevtug/scripture_effects()
-	if(!target)
-		return 0 //wait where'd they go
+	new/obj/effect/clockwork/general_marker/sevtug(get_turf(invoker))
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	invoker.dominate_mind(target, 300)
+	invoker.visible_message("<span class='sevtug'>[invoker]'s eyes glow bright purple!</span>")
+	if(invoker.dominate_mind(target, 300))
+		invoker.visible_message("<span class='sevtug_small'>The glow in [invoker]'s eyes dims...</span>")
 	return 1
 
 
