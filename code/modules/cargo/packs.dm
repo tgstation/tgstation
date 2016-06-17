@@ -16,9 +16,14 @@
 	if(access)
 		C.req_access = list(access)
 
+	fill(C)
+
+	return C
+
+/datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		new item(C)
-	return C
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Emergency ///////////////////////////////////////
@@ -1367,6 +1372,13 @@
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
 	crate_name = "collectable hats crate"
+
+/datum/supply_pack/misc/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
+
 
 /datum/supply_pack/misc/randomised/contraband
 	name = "Contraband Crate"
