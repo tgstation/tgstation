@@ -23001,15 +23001,15 @@
 	charge = 5e+006
 	},
 /obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
 /turf/open/floor/plasteel/black,
-/area/turret_protected/ai)
+/area/space)
 "aZU" = (
 /obj/item/device/multitool,
 /turf/open/floor/bluegrid,
@@ -54975,13 +54975,10 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cpS" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "SMES room APC";
-	pixel_y = -24
-	},
-/obj/machinery/power/smes/engineering,
 /obj/structure/cable,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "cpT" = (
@@ -58036,7 +58033,7 @@
 	},
 /obj/machinery/power/apc{
 	cell_type = 5000;
-	dir = 2;
+	dir = 1;
 	name = "AI Chamber APC";
 	pixel_y = 24
 	},
