@@ -203,7 +203,8 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	spawn(time)
 		if(!silent)
 			src << "<span class='umbra'>You can move again!</span>"
-		notransform = FALSE
+		if(!possessed) //To ensure that umbras don't escape their quarry
+			notransform = FALSE
 
 
 //Actions and interaction
