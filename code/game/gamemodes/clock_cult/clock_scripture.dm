@@ -1081,10 +1081,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/distanceA = max(200 - distance, 20)
 			var/distanceB = max(150 - distance, 15)
 			var/distanceC = max(100 - distance, 10)
-			var/sound_distance = distanceA * 0.4
 			if(prob(distanceA))
 				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
-			H.playsound_local(T, hum, sound_distance, 1)
+			H.playsound_local(T, hum, distanceC, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like 2 and a half minutes of color flash
 			H.set_drugginess(max(distanceA + H.hallucination, H.hallucination))
 			H.dizziness = max(distanceA + H.dizziness, H.dizziness)
