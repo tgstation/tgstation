@@ -22358,6 +22358,12 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/button/door{
+	id = "datboidetective";
+	name = "Privacy Shutters";
+	pixel_x = 0;
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aYk" = (
@@ -42282,6 +42288,11 @@
 	},
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/preopen{
+	id = "datboidetective";
+	layer = 2.9;
+	name = "privacy shutters"
+	},
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "bOO" = (
@@ -60532,12 +60543,9 @@
 	},
 /turf/open/floor/plating,
 /area/security/processing)
-"cCk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
+"cCi" = (
 /turf/closed/wall,
-/area/security/detectives_office)
+/area/security/detectives_office/old)
 "cCj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -60547,9 +60555,12 @@
 	},
 /turf/closed/wall,
 /area/security/detectives_office)
-"cCi" = (
+"cCk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/closed/wall,
-/area/security/detectives_office/old)
+/area/security/detectives_office)
 
 (1,1,1) = {"
 aaa
