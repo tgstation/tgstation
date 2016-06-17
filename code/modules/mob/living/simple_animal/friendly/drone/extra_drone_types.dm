@@ -125,6 +125,9 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
+	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, \
+	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, and are immune to extreme temperatures and pressures. \n\
+	Your goal is to serve the Justiciar and his servants by repairing and defending all they create. You yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>
 
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it

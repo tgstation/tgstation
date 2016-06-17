@@ -40,7 +40,7 @@
 	weather_immunities = list("lava")
 	flying = 1
 	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
-	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. Your goal is to serve the Justiciar and his servants \
+	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. \n Your goal is to serve the Justiciar and his servants \
 	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
 
