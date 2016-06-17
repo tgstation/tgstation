@@ -1073,7 +1073,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 	var/turf/T = get_turf(invoker)
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(H.z == invoker.z/* && !is_servant_of_ratvar(H)*/)
+		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
 			if(isloyal(H))
