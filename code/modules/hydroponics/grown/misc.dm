@@ -127,6 +127,9 @@
 	prime()
 	..()
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
+	qdel(src) //Ensuring that it's deleted by its own explosion
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"
 	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
