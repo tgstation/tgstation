@@ -1,40 +1,40 @@
 #define UMBRA_INVISIBILITY 50
-#define UMBRA_VITAE_DRAIN_RATE 0.01 //How much vitae is drained per tick to sustain the umbra. Set this to higher values to make umbras need to harvest vitae more often.
+#define UMBRA_VITAE_DRAIN_RATE 0.01 //How much vitae is drained per tick to sustain the revenant. Set this to higher values to make revenants need to harvest vitae more often.
 #define UMBRA_MAX_HARVEST_COOLDOWN 3000 //In deciseconds, how long it takes for a harvested target to become eligible for draining again.
 #define UMBRA_POSSESSION_THRESHOLD_WARNING 60 //In ticks, how long it takes before a possessed human starts showing signs of possession
-#define UMBRA_POSSESSION_THRESHOLD_DANGER 150 //In ticks, how long it takes before a possessed human starts forcing out the umbra
-#define UMBRA_POSSESSION_THRESHOLD_FORCED_OUT 155 //In ticks, how long it takes before a possessed human forces out the umbra
+#define UMBRA_POSSESSION_THRESHOLD_DANGER 150 //In ticks, how long it takes before a possessed human starts forcing out the revenant
+#define UMBRA_POSSESSION_THRESHOLD_FORCED_OUT 155 //In ticks, how long it takes before a possessed human forces out the revenant
 
 /*
 
-Umbras are residual entities created by the dying who possess enough anger or determination that they never fully pass on.
-Physically, they're incorporeal and invisible. Umbras are formed of a steadily-decaying electromagnetic field with a drive to sustain itself.
-Umbras do this by feeding on a substance, found in the dead or dying, known as vitae.
+Revenants are residual entities created by the dying who possess enough anger or determination that they never fully pass on.
+Physically, they're incorporeal and invisible. Revenants are formed of a steadily-decaying electromagnetic field with a drive to sustain itself.
+Revenants do this by feeding on a substance, found in the dead or dying, known as vitae.
 
 Vitae is most closely comparable to adrenaline in that is produced by creatures at times of distress. For this reason, almost all dead creatures have vitae in one way or another.
 Biologically, it's indistinguishable from normal blood, but vitae is what allows creatures to survive grievous wounds or cling to life in critical condition. It provides a large amount of energy.
-It's for this reason that umbras desire it. Vitae serves as a potent energy source to a living thing, and umbras can use the energy of this vitae to sustain themselves.
-Without enough vitae, the field that sustains an umbra will break down and weaken. If the umbra has no vitae at all, it will permanently dissipate.
+It's for this reason that revenants desire it. Vitae serves as a potent energy source to a living thing, and revenants can use the energy of this vitae to sustain themselves.
+Without enough vitae, the field that sustains an revenant will break down and weaken. If the revenant has no vitae at all, it will permanently dissipate.
 
-Umbras are not without their weaknesses. Despite being invisible to the naked eye and untouchable, certain things can restrict, weaken, or outright harm them.
-Piles of salt on the ground will prevent an umbra's passage, making areas encircled in it completely inaccessible to even the most determined umbra.
-In addition, objects and artifacts of a holy nature can force an umbra to manifest or draw away some of the energy that it's gleaned through vitae.
+Revenants are not without their weaknesses. Despite being invisible to the naked eye and untouchable, certain things can restrict, weaken, or outright harm them.
+Piles of salt on the ground will prevent an revenant's passage, making areas encircled in it completely inaccessible to even the most determined revenant.
+In addition, objects and artifacts of a holy nature can force an revenant to manifest or draw away some of the energy that it's gleaned through vitae.
 
-When an umbra dies, two things can occur. If the umbra died from passive vitae drain, it will be dead forever, with no way to bring it back.
-However, if the umbra is slain forcibly and still has vitae, the vitae possesses enough power to coalesce a part of the umbra into umbral ashes.
-These "ashes" will, given around a full minute, re-form into another umbra. This umbra typically possesses the memories and consciousness of the old one, but may be a completely new mind as well.
-Although these umbral ashes make umbras resilient, they can be killed permanently by scattering the ashes or destroying them, thus separating the vitae from the umbra's remains.
+When an revenant dies, two things can occur. If the revenant died from passive vitae drain, it will be dead forever, with no way to bring it back.
+However, if the revenant is slain forcibly and still has vitae, the vitae possesses enough power to coalesce a part of the revenant into revenantl ashes.
+These "ashes" will, given around a full minute, re-form into another revenant. This revenant typically possesses the memories and consciousness of the old one, but may be a completely new mind as well.
+Although these revenantl ashes make revenants resilient, they can be killed permanently by scattering the ashes or destroying them, thus separating the vitae from the revenant's remains.
 
 */
 
-/mob/living/simple_animal/umbra
-	name = "umbra"
-	real_name = "umbra"
+/mob/living/simple_animal/revenant
+	name = "revenant"
+	real_name = "revenant"
 	desc = "A translucent, cobalt-blue apparition floating several feet in the air."
 	invisibility = UMBRA_INVISIBILITY
 	icon = 'icons/mob/mob.dmi'
-	icon_state = "umbra"
-	icon_living = "umbra"
+	icon_state = "revenant"
+	icon_living = "revenant"
 	layer = GHOST_LAYER
 	alpha = 175 //To show invisibility
 	health = 100
@@ -56,16 +56,16 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	var/vitae = 10 //The amount of vitae captured by the umbra
-	var/vitae_cap = 100 //How much vitae a single umbra can hold
-	var/breaking_apart = FALSE //If the umbra is currently dying
-	var/harvesting = FALSE //If the umbra is harvesting a soul
-	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the umbra
+	var/vitae = 10 //The amount of vitae captured by the revenant
+	var/vitae_cap = 100 //How much vitae a single revenant can hold
+	var/breaking_apart = FALSE //If the revenant is currently dying
+	var/harvesting = FALSE //If the revenant is harvesting a soul
+	var/list/recently_drained = list() //Mobs that have been drained in the last five minutes by the revenant
 	var/list/total_drained = list() //Mobs that have been drained, period
-	var/mob/living/carbon/human/possessed //The human that an umbra is inside of, if applicable
-	var/time_possessing = 0 //How long an umbra has been in possession of a single target.
-	var/list/lobotomized = list() //Mobs that have had their memories stolen by the umbra
-	var/playstyle_string = "<span class='umbra_large'><b>You are an umbra,</b></span><b> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, \
+	var/mob/living/carbon/human/possessed //The human that an revenant is inside of, if applicable
+	var/time_possessing = 0 //How long an revenant has been in possession of a single target.
+	var/list/lobotomized = list() //Mobs that have had their memories stolen by the revenant
+	var/playstyle_string = "<span class='revenant_large'><b>You are an revenant,</b></span><b> and you aren't quite sure how you're alive. You don't remember much, but you remember slipping away, \
 	lsoing your hold on life. You died, but here you are... somehow. You can't be quite sure how this happened, but you're pretty sure that it won't last long. Already you feel this strange \
 	form of life weakening. You need to find a way to sustain yourself, and you think you might have an idea.\n\
 	\n\
@@ -80,18 +80,18 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 
 
 //Creation, destruction, life, and death
-/mob/living/simple_animal/umbra/New()
+/mob/living/simple_animal/revenant/New()
 	..()
 	if(prob(1))
 		name = "grief ghost"
 		real_name = "grief ghost"
 		desc = "You wonder how something that produces so much salt can be weak to it."
-	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/umbra(null))
+	AddSpell(new/obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/discordant_whisper(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/possess(null))
 	AddSpell(new/obj/effect/proc_holder/spell/targeted/thoughtsteal(null))
 
-/mob/living/simple_animal/umbra/Life()
+/mob/living/simple_animal/revenant/Life()
 	..()
 	if(!possessed)
 		adjust_vitae(-UMBRA_VITAE_DRAIN_RATE, TRUE, "passive drain")
@@ -136,12 +136,12 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 		else if(time_possessing == UMBRA_POSSESSION_THRESHOLD_FORCED_OUT)
 			src << "<span class='userdanger'>You can't stay any longer! You flee from [possessed]...</span>"
 			unpossess()
-	adjustBruteLoss(-1) //Vitae slowly heals the umbra as well
+	adjustBruteLoss(-1) //Vitae slowly heals the revenant as well
 	adjustFireLoss(-1)
 	if(!vitae)
 		death()
 
-/mob/living/simple_animal/umbra/Stat()
+/mob/living/simple_animal/revenant/Stat()
 	..()
 	if(statpanel("Status"))
 		stat(null, "Vitae: [vitae]/[vitae_cap]")
@@ -159,7 +159,7 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 		if(possessed)
 			stat(null, "Time in [possessed]: [time_possessing]/[UMBRA_POSSESSION_THRESHOLD_FORCED_OUT]")
 
-/mob/living/simple_animal/umbra/death()
+/mob/living/simple_animal/revenant/death()
 	if(breaking_apart)
 		return
 	..(1)
@@ -169,19 +169,19 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	invisibility = FALSE
 	visible_message("<span class='warning'>An [name] appears from nowhere and begins to disintegrate!</span>", \
 	"<span class='userdanger'>You feel your will faltering, and your form begins to break apart!</span>")
-	flick("umbra_disintegrate", src)
+	flick("revenant_disintegrate", src)
 	sleep(12)
 	if(vitae)
 		visible_message("<span class='warning'>[src] breaks apart into a pile of ashes!</span>", \
-		"<span class='umbra_emphasis'><font size=3>You'll</font> be <font size=1>back...</font></span>")
-		var/obj/item/umbral_ashes/P = new(get_turf(src))
-		P.umbra_key = key
-		P.umbra_vitae = vitae
+		"<span class='revenant_emphasis'><font size=3>You'll</font> be <font size=1>back...</font></span>")
+		var/obj/item/revenantl_ashes/P = new(get_turf(src))
+		P.revenant_key = key
+		P.revenant_vitae = vitae
 	else
 		visible_message("<span class='warning'>[src] breaks apart and fades away!</span>")
 	qdel(src)
 
-/mob/living/simple_animal/umbra/proc/reveal(time, silent) //Makes the umbra visible for the designated amount of deciseconds
+/mob/living/simple_animal/revenant/proc/reveal(time, silent) //Makes the revenant visible for the designated amount of deciseconds
 	if(!time)
 		return
 	if(!silent)
@@ -191,10 +191,10 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	spawn(time)
 		alpha = initial(alpha)
 		if(!silent)
-			src << "<span class='umbra'>You've become invisible again!</span>"
+			src << "<span class='revenant'>You've become invisible again!</span>"
 		invisibility = UMBRA_INVISIBILITY
 
-/mob/living/simple_animal/umbra/proc/immobilize(time, silent) //Immobilizes the umbra for the designated amount of deciseconds
+/mob/living/simple_animal/revenant/proc/immobilize(time, silent) //Immobilizes the revenant for the designated amount of deciseconds
 	if(!time)
 		return
 	if(!silent)
@@ -202,25 +202,25 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	notransform = TRUE
 	spawn(time)
 		if(!silent)
-			src << "<span class='umbra'>You can move again!</span>"
+			src << "<span class='revenant'>You can move again!</span>"
 		notransform = FALSE
 
 
 //Actions and interaction
-/mob/living/simple_animal/umbra/say() //Umbras can't directly speak
+/mob/living/simple_animal/revenant/say() //Revenants can't directly speak
 	src << "<span class='warning'>You lack the power to speak out loud! Use Discordant Whisper instead.</span>"
 	return
 
-/mob/living/simple_animal/umbra/attack_ghost(mob/dead/observer/O)
+/mob/living/simple_animal/revenant/attack_ghost(mob/dead/observer/O)
 	if(key)
 		return
-	if(alert(O, "Become an umbra? You won't be clonable!",,"Yes", "No") == "No" || !O)
+	if(alert(O, "Become an revenant? You won't be clonable!",,"Yes", "No") == "No" || !O)
 		return
 	occupy(O)
-	notify_ghosts("The umbra at [get_area(src)] has been taken control of by [O].", source = src, action = NOTIFY_ORBIT)
+	notify_ghosts("The revenant at [get_area(src)] has been taken control of by [O].", source = src, action = NOTIFY_ORBIT)
 	src << playstyle_string
 
-/mob/living/simple_animal/umbra/ClickOn(atom/A, params)
+/mob/living/simple_animal/revenant/ClickOn(atom/A, params)
 	A.examine(src)
 	if(isliving(A) && Adjacent(A))
 		var/mob/living/L = A
@@ -235,11 +235,11 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 			return
 		harvest_vitae(L)
 
-/mob/living/simple_animal/umbra/proc/harvest_vitae(mob/living/L) //How umbras drain vitae from their targets
+/mob/living/simple_animal/revenant/proc/harvest_vitae(mob/living/L) //How revenants drain vitae from their targets
 	if(!L || L.health || L in recently_drained)
 		return
 	harvesting = TRUE
-	src << "<span class='umbra'>You search for any vitae in [L]...</span>"
+	src << "<span class='revenant'>You search for any vitae in [L]...</span>"
 	if(!do_after(src, 30, target = L))
 		harvesting = FALSE
 		return
@@ -253,7 +253,7 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 		harvesting = FALSE
 		return
 	var/vitae_yield = 1 //A bit of essence even if it's a weak soul
-	var/vitae_information = "<span class='umbra'>[L]'s vitae is "
+	var/vitae_information = "<span class='revenant'>[L]'s vitae is "
 	if(ishuman(L))
 		vitae_information += "of the highest quality, "
 		vitae_yield += rand(10, 15)
@@ -314,44 +314,44 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	harvesting = FALSE
 	return 1
 
-/mob/living/simple_animal/umbra/proc/harvest_cooldown(mob/living/L) //After a while, mobs that have already been drained can be harvested again
+/mob/living/simple_animal/revenant/proc/harvest_cooldown(mob/living/L) //After a while, mobs that have already been drained can be harvested again
 	if(!L)
 		return
-	src << "<span class='umbra'>You think that [L]'s body should be strong enough to produce vitae again.</span>"
+	src << "<span class='revenant'>You think that [L]'s body should be strong enough to produce vitae again.</span>"
 	recently_drained -= L
 
-/mob/living/simple_animal/umbra/singularity_act() //Umbras are immune to most things that are catastrophic to normal humans
+/mob/living/simple_animal/revenant/singularity_act() //Revenants are immune to most things that are catastrophic to normal humans
 	return
 
-/mob/living/simple_animal/umbra/narsie_act()
+/mob/living/simple_animal/revenant/narsie_act()
 	return
 
-/mob/living/simple_animal/umbra/ratvar_act()
+/mob/living/simple_animal/revenant/ratvar_act()
 	return
 
-/mob/living/simple_animal/umbra/blob_act(obj/effect/blob/B)
+/mob/living/simple_animal/revenant/blob_act(obj/effect/blob/B)
 	return
 
-/mob/living/simple_animal/umbra/ex_act(severity)
+/mob/living/simple_animal/revenant/ex_act(severity)
 	return
 
-/mob/living/simple_animal/umbra/emp_act(severity)
-	src << "<span class='umbra_bold'>You feel the energy of an electromagnetic pulse revitalizing you!</span>" //As they're composed of an EM field, umbras are strengthened by EMPs
+/mob/living/simple_animal/revenant/emp_act(severity)
+	src << "<span class='revenant_bold'>You feel the energy of an electromagnetic pulse revitalizing you!</span>" //As they're composed of an EM field, revenants are strengthened by EMPs
 	adjust_vitae(50 - (severity * 10), TRUE)
 
 
 //Helper procs
-/mob/living/simple_animal/umbra/proc/adjust_vitae(amount, silent, source)
+/mob/living/simple_animal/revenant/proc/adjust_vitae(amount, silent, source)
 	vitae = min(max(0, vitae + amount), vitae_cap)
 	if(!silent)
-		src << "<span class='umbra'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
+		src << "<span class='revenant'>[amount > 0 ? "Gained" : "Lost"] [amount] vitae[source ? " from [source]" : ""].</span>"
 	return vitae
 
-/mob/living/simple_animal/umbra/proc/unpossess(silent)
+/mob/living/simple_animal/revenant/proc/unpossess(silent)
 	if(!possessed)
 		return
 	if(!silent)
-		src << "<span class='umbra'>You free yourself from [possessed]'s body.</span>"
+		src << "<span class='revenant'>You free yourself from [possessed]'s body.</span>"
 	if(time_possessing >= UMBRA_POSSESSION_THRESHOLD_WARNING)
 		possessed << "<span class='warning'>You feel a horrible presence depart from you...</span>"
 	loc = get_turf(possessed)
@@ -359,11 +359,11 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	time_possessing = 0
 	notransform = FALSE
 
-/mob/living/simple_animal/umbra/proc/occupy(mob/dead/observer/O)
+/mob/living/simple_animal/revenant/proc/occupy(mob/dead/observer/O)
 	if(!O)
 		return
 	key = O.key
-	mind.special_role = "Umbra"
-	var/datum/objective/umbra/lobotomize/L = new
+	mind.special_role = "Revenant"
+	var/datum/objective/revenant/lobotomize/L = new
 	mind.objectives += L
 	src << "<b>Objective #1:</b> [L.explanation_text]"

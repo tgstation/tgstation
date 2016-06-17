@@ -72,7 +72,7 @@
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isumbra(A) (istype(A, /mob/living/simple_animal/umbra))
+#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
 
 #define islimb(A) (istype(A, /obj/item/bodypart))
 
