@@ -244,7 +244,6 @@
 
 /mob/living/simple_animal/blob_act(obj/effect/blob/B)
 	adjustBruteLoss(20)
-	return
 
 /mob/living/simple_animal/say_quote(input)
 	var/ending = copytext(input, length(input))
@@ -337,8 +336,6 @@
 			visible_message("<span class='notice'>[M.name] [response_help] [src].</span>")
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-	return
-
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
 		if(M.a_intent == "disarm")
@@ -418,14 +415,11 @@
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
-	switch (severity)
-		if (1)
+	switch(severity)
+		if(1)
 			gib()
-			return
-
-		if (2)
+		if(2)
 			adjustBruteLoss(60)
-
 		if(3)
 			adjustBruteLoss(30)
 

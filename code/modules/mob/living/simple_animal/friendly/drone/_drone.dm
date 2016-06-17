@@ -84,7 +84,7 @@
 		equip_to_slot_or_del(I, slot_head)
 	if(default_radio)
 		radio = new default_radio(src)
-		radio |= NODROP
+		radio.flags |= NODROP
 
 	access_card.flags |= NODROP
 
