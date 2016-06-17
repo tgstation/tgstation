@@ -69,8 +69,8 @@
 	roundstart = FALSE
 	death = FALSE
 	mob_species = /datum/species/shadow
-	flavour_text = "<font size=3><b>Y</b></font>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you did so, \
-	it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are cursed. Years ago, you sacrificed the lives of your trusted friends and the humanity of yourself to reach the Wish Granter. Though you \
+	did so, it has come at a cost: your very body rejects the light, dooming you to wander endlessly in this horrible wasteland.</b>"
 
 /obj/effect/mob_spawn/human/exile/Destroy()
 	new/obj/structure/fluff/empty_sleeper(get_turf(src))
