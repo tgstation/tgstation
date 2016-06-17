@@ -58236,7 +58236,7 @@
 "cwp" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/space)
+/area/turret_protected/ai_upload)
 "cwq" = (
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
@@ -88163,7 +88163,7 @@ aaa
 aaf
 aaa
 aaf
-aZT
+bfv
 cwp
 cwp
 cwq
@@ -88404,7 +88404,7 @@ aSu
 aTU
 cpC
 aWO
-aYt
+cvH
 aYx
 cva
 cva
@@ -88414,7 +88414,7 @@ cvY
 cva
 cva
 cva
-cva
+bfv
 cwm
 cwm
 cwm
@@ -88671,7 +88671,7 @@ bfu
 cwn
 bgO
 cvM
-cvM
+bbk
 cwo
 cws
 cwu
@@ -88928,7 +88928,7 @@ cvF
 cvl
 cvp
 cva
-cvb
+bft
 bkI
 aZR
 cwg
@@ -89433,7 +89433,7 @@ aTX
 aVk
 aWS
 cva
-aZT
+cva
 cBj
 cvy
 cvv
@@ -89956,7 +89956,7 @@ cvI
 cvl
 cvp
 cva
-cvb
+bft
 cvZ
 cwf
 cwi
@@ -90213,7 +90213,7 @@ bfx
 bij
 cwh
 cvR
-cvR
+bbp
 cwr
 cwt
 cwv
@@ -90460,7 +90460,7 @@ aSC
 aUa
 aVo
 aWW
-aYA
+cvL
 cvK
 cva
 cva
@@ -90470,7 +90470,7 @@ aYB
 cva
 cva
 cva
-cva
+bfv
 cwm
 cwm
 cwm
@@ -90733,7 +90733,7 @@ aaa
 aaf
 aaa
 aaf
-aZT
+bfv
 cwp
 cwp
 cwq
