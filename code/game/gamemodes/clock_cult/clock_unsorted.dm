@@ -1,17 +1,45 @@
-//Function Call verb: Calls forth a Ratvarian spear.
-/mob/living/carbon/human/proc/function_call()
-	set name = "Function Call"
-	set desc = "Calls forth your Ratvarian spear."
-	set category = "Clockwork"
+//Function Call action: Calls forth a Ratvarian spear.
+/datum/action/innate/function_call
+	name = "Function Call"
+	button_icon_state = "ratvarian_spear"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 
-	if(usr.l_hand && usr.r_hand)
+/datum/action/innate/function_call/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/innate/function_call/Activate()
+	if(owner.l_hand && owner.r_hand)
 		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
 		return 0
-	usr.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	owner.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
-	usr.put_in_hands(R)
-	usr.verbs -= /mob/living/carbon/human/proc/function_call
+	owner.put_in_hands(R)
+	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
+		qdel(F)
 	return 1
+
+/proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
+	if(specific_component_id)
+		clockwork_component_cache[specific_component_id]++
+	else
+		var/component_to_generate = get_weighted_component_id()
+		clockwork_component_cache[component_to_generate]++
+
+/proc/get_weighted_component_id(obj/item/clockwork/slab/storage_slab) //returns a chosen component id based on the lowest amount of that component
+	if(storage_slab)
+		return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["belligerent_eye"] + storage_slab.stored_components["belligerent_eye"]), 1), \
+			"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["vanguard_cogwheel"] + storage_slab.stored_components["vanguard_cogwheel"]), 1), \
+			"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["guvax_capacitor"] + storage_slab.stored_components["guvax_capacitor"]), 1), \
+			"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["replicant_alloy"] + storage_slab.stored_components["replicant_alloy"]), 1), \
+			"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*(clockwork_component_cache["hierophant_ansible"] + storage_slab.stored_components["hierophant_ansible"]), 1)))
+
+	return pickweight(list("belligerent_eye" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["belligerent_eye"], 1), \
+		"vanguard_cogwheel" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["vanguard_cogwheel"], 1), \
+		"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["guvax_capacitor"], 1), \
+		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
+		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
 
 //allows a mob to select a target to gate to
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)

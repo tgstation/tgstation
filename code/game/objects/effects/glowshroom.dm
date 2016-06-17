@@ -26,7 +26,7 @@ obj/effect/glowshroom/glowcap
 /obj/effect/glowshroom/New()
 	..()
 	SetLuminosity(round(potency/10))
-	dir = CalcDir()
+	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor

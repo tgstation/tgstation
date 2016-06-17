@@ -25,7 +25,6 @@ Borg Hypospray
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "antitoxin", "epinephrine", "spaceacillin")
-	//var/list/reagent_ids = list("salbutamol", "salglu_solution", "salglu_solution", "charcoal", "ephedrine", "spaceacillin")
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 
@@ -99,8 +98,11 @@ Borg Hypospray
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>"
-	var/contained = english_list(R)
-	add_logs(user, M, "injected", src, "(CHEMICALS: [contained])")
+
+	var/list/injected = list()
+	for(var/datum/reagent/RG in R.reagent_list)
+		injected += RG.name
+	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
@@ -219,3 +221,8 @@ Borg Shaker
 	desc = "Everything's peaceful in death!"
 	icon_state = "borghypo_s"
 	reagent_ids = list("dizzysolution","tiresolution","tirizene","sulfonal","sodium_thiopental","cyanide","neurotoxin2")
+
+/obj/item/weapon/reagent_containers/borghypo/epi
+	name = "epinephrine injector"
+	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients.."
+	reagent_ids = list("epinephrine")

@@ -47,14 +47,16 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 							/obj/item/weapon/reagent_containers/glass/beaker = 2)
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
-	var/T = 0
+	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
+
+	materials.max_amount = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	materials.max_amount = T * 75000
-	T = 0
+		materials.max_amount += M.rating * 75000
+
+	var/T = 0
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas

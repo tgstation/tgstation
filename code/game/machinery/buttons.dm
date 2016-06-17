@@ -19,7 +19,7 @@
 /obj/machinery/button/New(loc, ndir = 0, built = 0)
 	..()
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = 1
@@ -41,13 +41,13 @@
 
 
 /obj/machinery/button/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
 		icon_state = "button-open"
 		if(device)
-			overlays += "button-device"
+			add_overlay("button-device")
 		if(board)
-			overlays += "button-board"
+			add_overlay("button-board")
 
 	else
 		if(stat & (NOPOWER|BROKEN))

@@ -52,19 +52,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
+		add_overlay(greenlight)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		overlays |= pinklight
+		add_overlay(pinklight)
 	else
 		overlays -= pinklight
 
 	if(broken)
-		overlays |= errorlight
+		add_overlay(errorlight)
 	else
 		overlays -= errorlight
 
@@ -158,7 +158,6 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))

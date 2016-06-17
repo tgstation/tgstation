@@ -73,7 +73,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/match/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!isliving(M))
 		return
-	M.IgniteMob()
+	if(M.IgniteMob())
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)
@@ -485,7 +487,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/greyscale/New()
 	var/image/I = image(icon,"lighter-overlay")
 	I.color = color2hex(randomColor(1))
-	overlays += I
+	add_overlay(I)
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
@@ -528,8 +530,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit)
-		M.IgniteMob()
+	if(lit && M.IgniteMob())
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)

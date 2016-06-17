@@ -25,7 +25,7 @@
 /obj/machinery/flasher/New(loc, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
 		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
 	else
@@ -148,13 +148,13 @@
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays += "[base_state]-s"
+			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
 			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
-			overlays.Cut()
+			cut_overlays()
 			anchored = 0
 			power_change()
 			remove_from_proximity_list(src, range)

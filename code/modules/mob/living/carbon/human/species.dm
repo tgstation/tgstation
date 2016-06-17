@@ -54,6 +54,8 @@
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
+	var/exotic_damage_overlay = ""
+	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -100,12 +102,6 @@
 	..()
 
 
-//Called when admins use the Set Species verb, let's species
-//do some init stuff on the mob that got SS'd if necessary
-/datum/species/proc/admin_set_species(mob/living/carbon/human/H, datum/species/old_species)
-	return
-
-
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
@@ -130,7 +126,7 @@
 		return 0
 	return 1
 
-/datum/species/proc/on_species_gain(mob/living/carbon/C)
+/datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	// Drop the items the new species can't wear
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
@@ -175,56 +171,6 @@
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
-
-/datum/species/proc/update_base_icon_state(mob/living/carbon/human/H)
-	if(H.disabilities & HUSK)
-		H.remove_overlay(SPECIES_LAYER) // races lose their color
-		return "husk"
-	else if(sexes)
-		if(use_skintones)
-			return "[H.skin_tone]_[(H.gender == FEMALE) ? "f" : "m"]"
-		else
-			return "[id]_[(H.gender == FEMALE) ? "f" : "m"]"
-	else
-		return "[id]"
-
-/datum/species/proc/update_color(mob/living/carbon/human/H, forced_colour)
-	if(!(NODISMEMBER in specflags)) //only species without dismemberment still use base icon states.
-		return
-	H.remove_overlay(SPECIES_LAYER)
-
-	var/image/standing
-
-	var/g = (H.gender == FEMALE) ? "f" : "m"
-
-	if((MUTCOLORS in specflags) || use_skintones)
-		var/image/spec_base
-		var/icon_state_string = "[id]_"
-
-		if(use_skintones)
-			if(sexes)
-				icon_state_string = "[H.skin_tone]_[g]_s"
-			else
-				icon_state_string = "[H.skin_tone]_s"
-		else
-			if(sexes)
-				icon_state_string += "[g]_s"
-			else
-				icon_state_string += "_s"
-
-		spec_base = image("icon" = 'icons/mob/human.dmi', "icon_state" = icon_state_string, "layer" = -SPECIES_LAYER)
-
-		if(!forced_colour && !use_skintones)
-			spec_base.color = "#[H.dna.features["mcolor"]]"
-		else
-			spec_base.color = forced_colour
-
-		standing = spec_base
-
-	if(standing)
-		H.overlays_standing[SPECIES_LAYER]	+= standing
-
-	H.apply_overlay(SPECIES_LAYER)
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
@@ -313,12 +259,6 @@
 
 	var/list/standing	= list()
 
-	if(NODISMEMBER in specflags) //Legacy support
-		H.update_base_icon_state()
-		if(!(H.disabilities & HUSK))
-			update_color(H)
-
-
 	handle_mutant_bodyparts(H)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
@@ -359,7 +299,6 @@
 
 	H.apply_overlay(BODY_LAYER)
 
-	return
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -497,7 +436,10 @@
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
-							I.color = "#[H.dna.features["mcolor"]]"
+							if(fixed_mut_color)
+								I.color = "#[fixed_mut_color]"
+							else
+								I.color = "#[H.dna.features["mcolor"]]"
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								I.color = "#[H.dna.features["mcolor"]]"
@@ -904,7 +846,7 @@
 
 	if(!(H.status_flags & IGNORESLOWDOWN))
 		if(!has_gravity(H))
-			if(specflags & FLYING)
+			if(FLYING in specflags)
 				. += speedmod
 				return
 			// If there's no gravity we have the sanic speed of jetpack.
@@ -945,7 +887,7 @@
 			if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 				. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 
-			if(!(specflags & FLYING))
+			if(!(FLYING in specflags))
 				var/leg_amount = H.get_num_legs()
 				. += 6 - 3*leg_amount //the fewer the legs, the slower the mob
 				if(!leg_amount)
@@ -1161,7 +1103,7 @@
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
 			H.forcesay(hit_appends)	//forcesay checks stat already.
-		return
+	return TRUE
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
 	blocked = (100-(blocked+armor))/100
@@ -1510,9 +1452,10 @@
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
 		return 1
 
-/datum/species/proc/IgniteMob(mob/living/carbon/human/H)
+/datum/species/proc/CanIgniteMob(mob/living/carbon/human/H)
 	if((RESISTTEMP in specflags) || (NOFIRE in specflags))
-		return 1
+		return FALSE
+	return TRUE
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return

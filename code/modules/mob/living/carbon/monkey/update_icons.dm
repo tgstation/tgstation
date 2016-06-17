@@ -8,10 +8,10 @@
 		update_transform()
 
 /mob/living/carbon/monkey/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	icon_state = "monkey1"
 	for(var/image/I in overlays_standing)
-		overlays += I
+		add_overlay(I)
 
 ////////
 

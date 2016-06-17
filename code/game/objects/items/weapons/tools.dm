@@ -219,9 +219,9 @@
 	return
 
 /obj/item/weapon/weldingtool/proc/update_torch()
-	overlays.Cut()
+	cut_overlays()
 	if(welding)
-		overlays += "[initial(icon_state)]-on"
+		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
@@ -268,9 +268,6 @@
 			if(!do_mob(user, H, 50))
 				return
 			item_heal_robotic(H, user, 5, 0)
-			return
-		else
-			return
 	else
 		return ..()
 
@@ -319,7 +316,9 @@
 
 		if(isliving(O))
 			var/mob/living/L = O
-			L.IgniteMob()
+			if(L.IgniteMob())
+				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
+				log_game("[key_name(user)] set [key_name(L)] on fire")
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)

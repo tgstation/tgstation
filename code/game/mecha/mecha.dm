@@ -110,13 +110,6 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
-	var/static/list/armour_facings = list(
-	"[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR ),
-	"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR)
-	)
-
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -520,7 +513,7 @@
 
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
 	return 1
@@ -529,7 +522,7 @@
 	var/current_dir = dir
 	var/result = step(src,direction)
 	if(strafe)
-		dir = current_dir
+		setDir(current_dir)
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -836,7 +829,7 @@
 		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -888,7 +881,7 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -940,7 +933,7 @@
 			mmi.update_icon()
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
-		dir = dir_in
+		setDir(dir_in)
 
 	if(L && L.client)
 		L.client.view = world.view

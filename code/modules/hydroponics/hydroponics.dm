@@ -250,7 +250,7 @@
 
 /obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
-	overlays.Cut()
+	cut_overlays()
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
@@ -286,29 +286,29 @@
 /obj/machinery/hydroponics/proc/update_icon_plant()
 	var/image/I
 	if(dead)
-		I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_dead)
+		I = image(icon = myseed.growing_icon, icon_state = myseed.icon_dead)
 	else if(harvest)
 		if(!myseed.icon_harvest)
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][myseed.growthstages]")
+			I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][myseed.growthstages]")
 		else
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = myseed.icon_harvest)
+			I = image(icon = myseed.growing_icon, icon_state = myseed.icon_harvest)
 	else
 		var/t_growthstate = min(round((age / myseed.maturation) * myseed.growthstages), myseed.growthstages)
-		I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.icon_grow][t_growthstate]")
+		I = image(icon = myseed.growing_icon, icon_state = "[myseed.icon_grow][t_growthstate]")
 	I.layer = OBJ_LAYER + 0.01
-	overlays += I
+	add_overlay(I)
 
 /obj/machinery/hydroponics/proc/update_icon_lights()
 	if(waterlevel <= 10)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
 	if(nutrilevel <= 2)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
 	if(health <= (myseed.endurance / 2))
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
 	if(harvest)
-		overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3")
+		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_harvest3"))
 
 
 /obj/machinery/hydroponics/examine(user)
@@ -858,7 +858,7 @@
 	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
-		myseed.harvest()
+		myseed.harvest(user)
 	else if(dead)
 		dead = 0
 		user << "<span class='notice'>You remove the dead plant from [src].</span>"

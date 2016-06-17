@@ -109,9 +109,9 @@
 	// offset 24 pixels in direction of dir
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
-		dir = ndir
+		setDir(ndir)
 	src.tdir = dir		// to fix Vars bug
-	dir = SOUTH
+	setDir(SOUTH)
 
 	if(auto_name)
 		name = "[get_area(src)] APC"
@@ -153,7 +153,7 @@
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(src.loc)
-	terminal.dir = tdir
+	terminal.setDir(tdir)
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/init()
@@ -274,12 +274,12 @@
 		if(overlays.len)
 			overlays.len = 0
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			overlays += status_overlays_lock[locked+1]
-			overlays += status_overlays_charging[charging+1]
+			add_overlay(status_overlays_lock[locked+1])
+			add_overlay(status_overlays_charging[charging+1])
 			if(operating)
-				overlays += status_overlays_equipment[equipment+1]
-				overlays += status_overlays_lighting[lighting+1]
-				overlays += status_overlays_environ[environ+1]
+				add_overlay(status_overlays_equipment[equipment+1])
+				add_overlay(status_overlays_lighting[lighting+1])
+				add_overlay(status_overlays_environ[environ+1])
 
 
 /obj/machinery/power/apc/proc/check_updates()

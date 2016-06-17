@@ -45,13 +45,13 @@
 		return PROCESS_KILL
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
-	overlays.Cut()
+	cut_overlays()
 	if(charge < 0.01)
 		return
 	else if(charge/maxcharge >=0.995)
-		overlays += image('icons/obj/power.dmi', "cell-o2")
+		add_overlay(image('icons/obj/power.dmi', "cell-o2"))
 	else
-		overlays += image('icons/obj/power.dmi', "cell-o1")
+		add_overlay(image('icons/obj/power.dmi', "cell-o1"))
 
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100*charge/maxcharge

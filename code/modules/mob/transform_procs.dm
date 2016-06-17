@@ -25,7 +25,7 @@
 	canmove = 0
 	stunned = 1
 	icon = null
-	overlays.Cut()
+	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
@@ -141,7 +141,7 @@
 	canmove = 0
 	stunned = 1
 	icon = null
-	overlays.Cut()
+	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
 	animation.icon_state = "blank"

@@ -61,7 +61,7 @@
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
-	mask_type = /obj/item/clothing/mask/gas
+	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = /obj/item/clothing/suit/space/hardsuit/mining
@@ -114,28 +114,28 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(uv)
 		if(uv_super)
-			overlays += "super"
+			add_overlay("super")
 		else if(occupant)
-			overlays += "uvhuman"
+			add_overlay("uvhuman")
 		else
-			overlays += "uv"
+			add_overlay("uv")
 	else if(state_open)
 		if(stat & BROKEN)
-			overlays += "broken"
+			add_overlay("broken")
 		else
-			overlays += "open"
+			add_overlay("open")
 			if(suit)
-				overlays += "suit"
+				add_overlay("suit")
 			if(helmet)
-				overlays += "helm"
+				add_overlay("helm")
 			if(storage)
-				overlays += "storage"
+				add_overlay("storage")
 	else if(occupant)
-		overlays += "human"
+		add_overlay("human")
 
 /obj/machinery/suit_storage_unit/power_change()
 	..()

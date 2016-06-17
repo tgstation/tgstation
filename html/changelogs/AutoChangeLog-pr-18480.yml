@@ -1,0 +1,6 @@
+author: "Kor and Iamgoofball"
+delete-after: True
+changes: 
+  - rscadd: "Miners can now purchase fulton extraction packs."
+  - rscadd: "Miners can now purchase fulton medivac packs."
+  - rscadd: "Two new fulton related bundles are available for purchase with vouchers."
