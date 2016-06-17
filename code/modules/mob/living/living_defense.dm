@@ -191,6 +191,8 @@
 	mind.transfer_to(target)
 	target.mental_dominator = src
 	spawn(duration)
+		if(!target)
+			return 0
 		if(!src)
 			if(!silent)
 				target << "<span class='userdanger'>You try to return to your own body, but sense nothing! You're being forced out!</span>"
