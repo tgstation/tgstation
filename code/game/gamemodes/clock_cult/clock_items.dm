@@ -179,11 +179,15 @@
 
 /obj/item/clockwork/slab/proc/show_stats(mob/living/user) //A bit barebones, but there really isn't any more needed
 	var/servants = 0
+	var/validservants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L) && !isbrain(L))
+		if(is_servant_of_ratvar(L))
 			servants++
+			if(ishuman(L) || issilicon(L))
+				validservants++
 	user << "<b>State of the Enlightened</b>"
 	user << "<i>Total servants: </i>[servants]"
+	user << "<i>Servants valid for scripture unlock: </i>[validservants]"
 	user << "<i>Total construction value: </i>[clockwork_construction_value]"
 	user << "<i>Total tinkerer's caches: </i>[clockwork_caches]"
 	user << "<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])"
