@@ -219,7 +219,7 @@ var/list/uplink_items = list()
 //Assistant
 /datum/uplink_item/jobspecific/pickpocketgloves
 	name = "Pickpocket's Gloves"
-	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can see inside the pockets of any unsuspecting mark, loot the ID, belt, or pockets without them knowing, and pickpocketing puts the item directly into your hand."
+	desc = "A pair of sleek gloves to aid in pickpocketing, while wearing these you can sneakily empty pockets and strip clothing with nobody seeing you. Pickpocketed items will also be put into your hand rather than fall to the ground."
 	item = /obj/item/clothing/gloves/black/thief
 	cost = 3
 	job = list("Assistant")
