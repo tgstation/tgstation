@@ -33,7 +33,7 @@
 	if(!U.client)
 		U.key = null
 		var/image/I = image('icons/mob/mob.dmi', "umbra")
-		notify_ghosts("An umbra has reformed in [get_area(U)]. Interact with it to take control of it.", 'sound/effects/ghost2.ogg', alert_overlay = I, enter_link = "<a href=?src=\ref[U];activate=1>(Become Umbra)</a>", source = U, action = NOTIFY_ATTACK)
+		notify_ghosts("An umbra has reformed in [get_area(U)]. Interact with it to take control of it.", 'sound/effects/ghost2.ogg', alert_overlay = I, source = U, action = NOTIFY_ATTACK)
 	else
 		U << "<span class='umbra_emphasis'>Back... you're back. You can't remember what you were supposed to be doing here. Now... where were we?</span>"
 	if(umbra_vitae)
