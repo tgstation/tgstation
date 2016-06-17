@@ -208,11 +208,3 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 10
-
-/datum/map_template/ruin/lavaland/colossus_arena
-	name = "Colossus Arena"
-	id = "colossus_arena"
-	description = "The horrible lair of an ancient guardian."
-	suffix = "lavaland_surface_colossus_arena.dmm"
-	allow_duplicates = FALSE
-	cost = 0 //Try our best to get one

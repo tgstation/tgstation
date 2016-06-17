@@ -1683,7 +1683,6 @@
 #include "code\modules\ruins\lavaland_ruin_code.dm"
 #include "code\modules\ruins\ruin_areas.dm"
 #include "code\modules\ruins\objects_and_mobs\ash_walker_den.dm"
-#include "code\modules\ruins\objects_and_mobs\colossus_lair.dm"
 #include "code\modules\ruins\objects_and_mobs\necropolis_gate.dm"
 #include "code\modules\ruins\objects_and_mobs\sin_ruins.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
