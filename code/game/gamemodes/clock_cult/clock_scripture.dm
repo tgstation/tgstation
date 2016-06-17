@@ -136,13 +136,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			invoker.say(pick(chant_invocations))
 		else
 			invoker.whisper(pick(chant_invocations))
-		chant_effects()
+		chant_effects(i)
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"
 		chant_end_effects()
 	return 1
 
-/datum/clockwork_scripture/channeled/proc/chant_effects() //The chant's periodic effects
+/datum/clockwork_scripture/channeled/proc/chant_effects(chant_number) //The chant's periodic effects
 /datum/clockwork_scripture/channeled/proc/chant_end_effects() //The chant's effect upon ending
 
 
@@ -231,7 +231,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
 
-/datum/clockwork_scripture/channeled/belligerent/chant_effects()
+/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
 			if(!iscultist(L))
@@ -314,22 +314,29 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(C.stat != DEAD && is_servant_of_ratvar(C))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
-		invoker << "<span class='warning'>There are no eligible cultists nearby!</span>"
+		invoker << "<span class='warning'>There are no eligible servants nearby!</span>"
 		return 0
 	var/mob/living/L = input(invoker, "Choose a fellow servant to heal.", name) as null|anything in nearby_cultists
 	if(!L || !invoker || !invoker.canUseTopic(slab))
 		return 0
-	if(!L.getBruteLoss() && !L.getFireLoss())
+	var/brutedamage = L.getBruteLoss()
+	var/burndamage = L.getFireLoss()
+	var/totaldamage = brutedamage + burndamage
+	if(!totaldamage)
 		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
 		return 0
-	L.adjustToxLoss(L.getBruteLoss() / 2)
-	L.adjustToxLoss(L.getFireLoss() / 2)
-	L.adjustBruteLoss(-L.getBruteLoss())
-	L.adjustFireLoss(-L.getFireLoss())
-	invoker << "<span class='brass'>You bathe [L] in the light of Ratvar!</span>"
-	L.visible_message("<span class='warning'>A white light washes over [L], mending their bruises and burns!</span>", \
-	"<span class='heavy_brass'>You feel Ratvar's energy healing your wounds, but a deep nausea overcomes you!</span>")
-	playsound(get_turf(L), 'sound/magic/Staff_Healing.ogg', 50, 1)
+	L.adjustToxLoss(brutedamage / 2)
+	L.adjustToxLoss(burndamage / 2)
+	L.adjustBruteLoss(-brutedamage)
+	L.adjustFireLoss(-burndamage)
+	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
+	var/targetturf = get_turf(L)
+	for(var/i in 1 to healseverity)
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
+	invoker << "<span class='brass'>You bathe [L] with Inath-Neq's power!</span>"
+	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
+	"<span class='heavy_brass'>You feel Inath-Neq's power healing your wounds, but a deep nausea overcomes you!</span>")
+	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
 	return 1
 
 
@@ -375,25 +382,26 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
-/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects()
+/datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
 		if(!is_servant_of_ratvar(L))
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Stun(1)
-	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
-	invoker.color = "#AF0AAF"
-	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
-	var/endtime = world.time + flee_time
-	var/starttime = world.time
-	progbar = new(invoker, flee_time, invoker)
-	progbar.bar.color = "#AF0AAF"
-	animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
-	while(world.time < endtime)
-		sleep(1)
-		progbar.update(world.time - starttime)
-	qdel(progbar)
-	sleep(grace_period)
+	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
+		invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+		invoker.color = "#AF0AAF"
+		animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
+		var/endtime = world.time + flee_time
+		var/starttime = world.time
+		progbar = new(invoker, flee_time, invoker)
+		progbar.bar.color = "#AF0AAF"
+		animate(progbar.bar, color = initial(progbar.bar.color), time = flee_time+grace_period)
+		while(world.time < endtime)
+			sleep(1)
+			progbar.update(world.time - starttime)
+		qdel(progbar)
+		sleep(grace_period)
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_end_effects()
 	qdel(progbar)
@@ -502,7 +510,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/power_damage_threshhold = 3000
 	var/augument_damage_threshhold = 6000
 
-/datum/clockwork_scripture/channeled/volt_void/chant_effects()
+/datum/clockwork_scripture/channeled/volt_void/chant_effects(chant_number)
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
 	var/power_drained = 0
 	for(var/obj/machinery/power/apc/A in view(7, invoker))
@@ -654,6 +662,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_SCRIPT
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
+	if(!isturf(invoker.loc))
+		invoker << "<span class='warning'>You must not be inside an object to use this scripture!</span>"
+		return 0
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L) && !L.stat != DEAD)

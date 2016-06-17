@@ -425,7 +425,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
+	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -667,7 +667,7 @@
 	burn_state = FIRE_PROOF
 	burntime = 1
 	var/affects_servants = FALSE
-	var/affects_stat = FALSE
+	var/stat_affected = CONSCIOUS
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == "harm")))
@@ -680,7 +680,7 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!L.stat || affects_stat)
+		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				sigil_effects(L)
 			return 1
@@ -718,6 +718,7 @@
 	icon_state = "sigilsubmission"
 	color = "#FAE48C"
 	alpha = 125
+	stat_affected = UNCONSCIOUS
 	var/convert_time = 50
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
@@ -761,7 +762,7 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
+			M <<  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
 				M << "<span class='heavy_brass'>[message] you!</span>"
@@ -835,7 +836,7 @@
 	color = "#123456"
 	alpha = 75
 	affects_servants = TRUE
-	affects_stat = TRUE
+	stat_affected = DEAD
 	var/vitality = 0
 	var/base_revive_cost = 25
 	var/sigil_active = FALSE

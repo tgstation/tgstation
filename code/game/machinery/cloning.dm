@@ -48,6 +48,7 @@
 	radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
+	go_out()
 	qdel(radio)
 	radio = null
 	qdel(countdown)
