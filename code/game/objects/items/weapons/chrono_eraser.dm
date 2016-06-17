@@ -46,7 +46,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = 3
-	flags = NODROP
+	flags = NODROP | DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -61,10 +61,6 @@
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
-
-/obj/item/weapon/gun/energy/chrono_gun/dropped()
-	..()
-	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
 	return
