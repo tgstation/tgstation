@@ -54,6 +54,12 @@
 	icon_state = "skateboard"
 	vehicle_move_delay = 0//fast
 	density = 0
+	var/obj/item/weapon/melee/skateboard/linked_board
+
+/obj/vehicle/scooter/skateboard/New()
+	..()
+	linked_board = new /obj/item/weapon/melee/skateboard(src)
+	linked_board.linked_board = src
 
 /obj/vehicle/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	if(has_buckled_mobs())
@@ -82,9 +88,8 @@
 		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
 		return
 	if(over_object == M)
-		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
-		M.put_in_hands(board)
-		qdel(src)
+		loc = linked_board
+		M.put_in_hands(linked_board)
 
 //CONSTRUCTION
 /obj/item/scooter_frame

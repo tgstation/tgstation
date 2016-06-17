@@ -296,7 +296,15 @@
 	throwforce = 4
 	w_class = 5.0
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
+	var/obj/vehicle/scooter/skateboard/linked_board
 
-/obj/item/weapon/melee/skateboard/attack_self(mob/user)
-	new /obj/vehicle/scooter/skateboard(get_turf(user))
-	qdel(src)
+/obj/item/weapon/melee/skateboard/attack_self(mob/user)//get_turf(user)
+	if(!user.drop_item())
+		return
+	linked_board.loc = get_turf(user)
+	loc = linked_board
+
+/obj/item/weapon/melee/skateboard/New()
+	..()
+	linked_board = new /obj/vehicle/scooter/skateboard(src)
+	linked_board.linked_board = src
