@@ -253,7 +253,7 @@
 	if(M.has_bane(BANE_SALT))
 		M.mind.disrupt_spells(-200)
 
-/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an umbra-blocking salt pile
+/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates an revenant-blocking salt pile
 	if(!istype(T))
 		return
 	if(reac_volume < 1)

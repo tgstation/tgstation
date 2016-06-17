@@ -224,11 +224,11 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
-		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles. Used by umbras.
-			if(!isumbra(L))
+		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles. Used by revenants.
+			if(!isrevenant(L))
 				L.incorporeal_move = 1
 				return
-			var/mob/living/simple_animal/umbra/U = L
+			var/mob/living/simple_animal/revenant/U = L
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
 				U << "<span class='warning'>[S] bars your passage!</span>"
