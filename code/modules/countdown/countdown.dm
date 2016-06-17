@@ -29,7 +29,7 @@
 
 /obj/effect/countdown/proc/stop()
 	if(started)
-		overlays.Cut()
+		cut_overlays()	
 		SSfastprocess.processing -= src
 		started = FALSE
 
@@ -52,10 +52,10 @@
 		text_image.maptext = "<font size = [text_size]>[displayed_text]</font>"
 		text_image.color = text_color
 
-		overlays.Cut()
-		overlays += text_image
+		cut_overlays()	
+		add_overlay(text_image)
 	else
-		overlays.Cut()
+		cut_overlays()
 
 /obj/effect/countdown/Destroy()
 	attached_to = null

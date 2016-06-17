@@ -751,9 +751,9 @@ var/list/teleport_runes = list()
 		I.appearance_flags = RESET_COLOR
 		I.alpha = 60
 		I.color = "#701414"
-		overlays += I
+		add_overlay(I)
 	else
-		overlays.Cut()
+		cut_overlays()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick("l_arm", "r_arm"))
