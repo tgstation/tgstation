@@ -68,6 +68,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
 
+/obj/item/stack/sheet/metal/five
+	amount = 5
+
 /obj/item/stack/sheet/metal/cyborg
 	materials = list()
 	is_cyborg = 1

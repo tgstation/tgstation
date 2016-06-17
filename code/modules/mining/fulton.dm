@@ -5,6 +5,7 @@ var/list/total_extraction_beacons = list()
 	desc = "A balloon that can be used to extract a target to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
+	w_class = 3
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
@@ -14,7 +15,7 @@ var/list/total_extraction_beacons = list()
 /obj/item/weapon/extraction_pack/medivac
 	name = "fulton medivac extraction pack"
 	desc = "A specialized extraction balloon capable of safely extracting living targets."
-	uses_left = 2
+	uses_left = 1
 	safe_for_living_creatures = 1
 
 /obj/item/weapon/extraction_pack/examine()
@@ -144,10 +145,9 @@ var/list/total_extraction_beacons = list()
 	icon_state = "subspace_amplifier"
 
 /datum/crafting_recipe/fulton
-	name = "fulton recovery beacon"
+	name = "Fulton Recovery Beacon"
 	result = /obj/structure/extraction_point
-	reqs = list(/obj/item/fulton_core = 1,
-				/obj/item/stack/sheet/metal = 5)
+	reqs = list(/obj/item/fulton_core = 1, /obj/item/stack/sheet/metal = 5)
 	time = 15
 	category = CAT_MISC
 
