@@ -75,7 +75,7 @@
 	var/servants = 0
 	var/unconverted_ai_exists = FALSE
 	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M) && (ishuman(L) || issilicon(L)))
+		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
 	for(var/mob/living/silicon/ai/ai in living_mob_list)
 		if(!is_servant_of_ratvar(ai) && ai.client)
