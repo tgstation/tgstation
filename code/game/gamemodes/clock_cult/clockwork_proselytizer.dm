@@ -17,7 +17,7 @@
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy, and to be used by a cogsacarb, to function."
+	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy, and to be used by a cogscarab, to function."
 	metal_to_alloy = TRUE
 	item_state = "nothing"
 
