@@ -180,7 +180,7 @@ var/list/total_extraction_beacons = list()
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return 1
-	for(var/atom/thing in A.GetAllContents())
+	for(var/thing in A.GetAllContents())
 		if(istype(A, /mob/living))
 			var/mob/living/L = A
 			if(L.stat != DEAD)
