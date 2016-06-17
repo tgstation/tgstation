@@ -1062,16 +1062,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	// You can throw off the mind control if you're shielded
 	for(var/obj/item/weapon/implant/mindshield/M in target)
 		if(M.implanted)
-			M << "<span class='sevtug'>Lbhe anabobgf jvyy abg cebgrpg lbh \
-				sberire...</span>\n\
+			M << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, ohg \
+				V'yy uhzbe vg.</span>\n\
 				<span class='userdanger'>You feel like something tried to \
 				control you, but was unable to</span>"
 			qdel(M)
 
-			invoker << "<span class='sevtug'>Juvyr V fgvyy jnvg va gur \
-				Pryrfgvny Qreryvpg, zl graqevyf ner irel sentvyr. Fbzrguvat \
-				vagrecbfrq vgfrys orgjrra zr naq gur gnetrg, naq \
-				fnpevsvprq vgfrys.</span>\n\
+			invoker << "<span class='sevtug'>Gurl chg fbzr zrgny va gurve \
+				urnq gb cebgrpg gurz. Vf guvf gur yngrfg snfuvba gurfr \
+				qnlf?</span>\n\
 				<span class='warning'>The target's mindshield protected it, \
 				at the cost of becoming non-functional.</span>"
 			return 1
