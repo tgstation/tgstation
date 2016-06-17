@@ -8,10 +8,10 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 Roleplay Rascal = Host
-Dopaper = Game Master
-Sheylos = Game Master
-Flammenwerfer = Game Admin
+Dopaper = Head Staff
+Sheylos = Head Staff
+Turbotracker = Head Staff
+Flammenwerfer = Staff
 Koriath = Coder
 Kyron = Coder
 Akrilla = Coder
-Turbotracker = Coder
