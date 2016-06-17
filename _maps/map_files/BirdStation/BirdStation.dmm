@@ -23263,7 +23263,7 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
-"ZzT" = (
+"ZzR" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -23271,24 +23271,35 @@
 /obj/item/toy/crayon/spraycan/mimecan,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
-"ZzU" = (
+"ZzS" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
 	dir = 9
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ZzV" = (
+"ZzT" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "hallway shutter";
 	name = "hallway shutter"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ZzW" = (
+"ZzU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"ZzV" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"ZzW" = (
+/obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "ZzX" = (
@@ -23297,19 +23308,8 @@
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"ZzY" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
-"ZzZ" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"ZAa" = (
+"ZzY" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "science maintenance door";
 	req_one_access_txt = "47;12;29"
@@ -23319,13 +23319,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/asmaint2)
-"ZAb" = (
+"ZzZ" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
-"ZAc" = (
+"ZAa" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
@@ -23336,28 +23336,28 @@
 	dir = 2
 	},
 /area/maintenance/asmaint2)
-"ZAd" = (
+"ZAb" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/warning,
 /area/maintenance/asmaint2)
-"ZAe" = (
+"ZAc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
-"ZAf" = (
+"ZAd" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
 /area/maintenance/asmaint2)
-"ZAg" = (
+"ZAe" = (
 /obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/maintenance/asmaint2)
-"ZAh" = (
+"ZAf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	tag = "icon-intact (WEST)";
@@ -23366,7 +23366,7 @@
 	},
 /turf/open/floor/plating,
 /area/medical/medbay)
-"ZAi" = (
+"ZAg" = (
 /obj/machinery/shieldwallgen{
 	req_access = null
 	},
@@ -23374,7 +23374,7 @@
 /area/hallway/primary/aft{
 	name = "\improper South Hallway"
 	})
-"ZAj" = (
+"ZAh" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
 	on = 1
@@ -23383,7 +23383,7 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
-"ZAk" = (
+"ZAi" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
@@ -23395,7 +23395,7 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
-"ZAl" = (
+"ZAj" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	icon_state = "connector_map";
 	dir = 8
@@ -23404,18 +23404,29 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
-"ZAm" = (
+"ZAk" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/maintenance/asmaint2)
-"ZAn" = (
+"ZAl" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
-"ZAo" = (
+"ZAm" = (
+/obj/item/clothing/head/cone,
+/turf/open/floor/plating{
+	icon_plating = "asteroidplating";
+	icon_state = "asteroidplating"
+	},
+/area/maintenance/asmaint2)
+"ZAn" = (
 /obj/machinery/atmospherics/components/binary/valve/open,
+/turf/open/floor/plating,
+/area/maintenance/asmaint2)
+"ZAo" = (
+/obj/structure/barricade/wooden,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "ZAp" = (
@@ -57267,7 +57278,7 @@ axh
 axh
 aCJ
 axh
-ZzX
+ZzV
 axh
 axh
 aGD
@@ -57522,9 +57533,9 @@ aww
 aAL
 aww
 azs
-ZzU
+ZzS
 atT
-ZzY
+ZzW
 atT
 atT
 atT
@@ -57813,8 +57824,8 @@ aZh
 aPK
 bac
 aQp
-ZAj
-ZAk
+ZAh
+ZAi
 bbJ
 aPH
 aay
@@ -58071,7 +58082,7 @@ aPK
 bad
 bad
 baR
-ZAl
+ZAj
 bbK
 aPH
 aaa
@@ -60627,8 +60638,8 @@ aMv
 aRD
 aKj
 aKj
-ZAh
-ZAh
+ZAf
+ZAf
 aKj
 aVX
 aVX
@@ -61119,7 +61130,7 @@ azo
 axr
 aAO
 aAl
-ZzT
+ZzR
 aCk
 aCk
 aEv
@@ -61392,7 +61403,7 @@ aLM
 aMt
 aNv
 aOn
-ZAe
+ZAc
 aPU
 aQM
 aRF
@@ -63175,10 +63186,10 @@ azs
 ave
 aww
 aBC
+ZzS
+ZzT
 ZzU
-ZzV
 ZzW
-ZzY
 atT
 atT
 atU
@@ -64755,8 +64766,8 @@ bez
 aSJ
 azL
 bbX
-ZAm
-ZAo
+ZAk
+ZAn
 bcA
 bcI
 bcj
@@ -65012,8 +65023,8 @@ bez
 aSJ
 azL
 bbX
+ZAl
 ZAn
-ZAo
 aHG
 ZAr
 bcY
@@ -65265,12 +65276,12 @@ aXp
 aXp
 aWG
 aTK
-ZAi
+ZAg
 beD
 azL
 bbX
+ZAl
 ZAn
-ZAo
 aNE
 ZAs
 bcZ
@@ -65748,7 +65759,7 @@ awK
 aCt
 aCX
 aDL
-ZzZ
+ZzX
 aED
 aED
 aGU
@@ -66298,7 +66309,7 @@ aBb
 aBb
 aBb
 aBe
-aRZ
+ZAo
 bcB
 aDj
 azL
@@ -66555,7 +66566,7 @@ aWM
 aXq
 aWM
 aBb
-aRZ
+ZAo
 bcB
 aDj
 azL
@@ -66811,7 +66822,7 @@ aWb
 aWb
 aWb
 aWM
-aAx
+aRZ
 aBR
 aAx
 aDi
@@ -67068,7 +67079,7 @@ aWK
 aWK
 aWb
 aWM
-aWK
+ZAm
 azL
 bcz
 bcI
@@ -67559,8 +67570,8 @@ aQV
 aHG
 aML
 aNE
-ZAc
-ZAf
+ZAa
+ZAd
 bdT
 bdV
 aRY
@@ -67816,8 +67827,8 @@ bdF
 aCy
 aCy
 aNF
-ZAd
-ZAg
+ZAb
+ZAe
 aBR
 bdU
 aRZ
@@ -71662,8 +71673,8 @@ aDV
 aEK
 aXw
 aGn
-ZAa
-ZAb
+ZzY
+ZzZ
 aJH
 aHI
 aHI
