@@ -180,7 +180,7 @@
 /obj/item/clockwork/slab/proc/show_stats(mob/living/user) //A bit barebones, but there really isn't any more needed
 	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L))
+		if(is_servant_of_ratvar(L) && !isbrain(L))
 			servants++
 	user << "<b>State of the Enlightened</b>"
 	user << "<i>Total servants: </i>[servants]"
