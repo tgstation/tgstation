@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Drones can hear robotic talk, but cannot communicate on it. AIs and cyborgs are encouraged to share information with station repair drones."
