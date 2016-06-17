@@ -819,9 +819,6 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		var/datum/organ/external/implanted = H.get_organ(body_region)
 		implanted.implants += src
 
-	to_chat(src, "You've been given extra chemicals with which to try out your new abilities!")
-	chemicals += 5000
-
 	host_brain.name = M.name
 	host_brain.real_name = M.real_name
 
