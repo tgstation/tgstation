@@ -72,9 +72,10 @@
 
 	//IP Intel vars
 	var/ipintel_email
-	var/ipintel_rating_max = 1
-	var/ipintel_save_good = 3
+	var/ipintel_rating_bad = 1
+	var/ipintel_save_good = 12
 	var/ipintel_save_bad = 1
+	var/ipintel_domain = "check.getipintel.net"
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -398,8 +399,10 @@
 				if("ipintel_email")
 					if (value != "ch@nge.me")
 						config.ipintel_email = value
-				if("ipintel_rating_max")
-					config.ipintel_rating_max = text2num(value)
+				if("ipintel_rating_bad")
+					config.ipintel_rating_bad = text2num(value)
+				if("ipintel_domain")
+					config.ipintel_domain = value
 				if("ipintel_save_good")
 					config.ipintel_save_good = text2num(value)
 				if("ipintel_save_bad")
