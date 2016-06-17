@@ -40,6 +40,7 @@
 				visible_message("With a CLANG noise, the chain mysteriously snaps and rewinds back into the hookshot.")
 				hookshot.cancel_chain()
 				bullet_die()
+				return
 			HC.loc = loc
 			HC.pixel_x = pixel_x
 			HC.pixel_y = pixel_y

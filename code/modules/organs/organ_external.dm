@@ -1284,9 +1284,10 @@ obj/item/weapon/organ/l_arm
 	part = "l_arm"
 obj/item/weapon/organ/l_arm/New(loc, mob/living/carbon/human/H)
 	..()
-	var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_arm")
-	if(B)
-		B.infest_limb(src)
+	if(H && istype(H))
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_arm")
+		if(B)
+			B.infest_limb(src)
 
 obj/item/weapon/organ/l_foot
 	name = "left foot"
@@ -1304,9 +1305,10 @@ obj/item/weapon/organ/l_leg
 	part = "l_leg"
 obj/item/weapon/organ/l_leg/New(loc, mob/living/carbon/human/H)
 	..()
-	var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_leg")
-	if(B)
-		B.infest_limb(src)
+	if(H && istype(H))
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_leg")
+		if(B)
+			B.infest_limb(src)
 
 obj/item/weapon/organ/r_arm
 	name = "right arm"
@@ -1314,9 +1316,10 @@ obj/item/weapon/organ/r_arm
 	part = "r_arm"
 obj/item/weapon/organ/r_arm/New(loc, mob/living/carbon/human/H)
 	..()
-	var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_arm")
-	if(B)
-		B.infest_limb(src)
+	if(H && istype(H))
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_arm")
+		if(B)
+			B.infest_limb(src)
 
 obj/item/weapon/organ/r_foot
 	name = "right foot"
@@ -1334,9 +1337,10 @@ obj/item/weapon/organ/r_leg
 	part = "r_leg"
 obj/item/weapon/organ/r_leg/New(loc, mob/living/carbon/human/H)
 	..()
-	var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_leg")
-	if(B)
-		B.infest_limb(src)
+	if(H && istype(H))
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_leg")
+		if(B)
+			B.infest_limb(src)
 
 obj/item/weapon/organ/head
 	dir = NORTH
@@ -1392,9 +1396,10 @@ obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
 	if(brainmob && brainmob.client)
 		brainmob.client.screen.len = null //clear the hud
 
-	var/mob/living/simple_animal/borer/B = H.has_brain_worms()
-	if(B)
-		B.infest_limb(src)
+	if(H && istype(H))
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms()
+		if(B)
+			B.infest_limb(src)
 
 	//if(ishuman(H))
 	//	if(H.gender == FEMALE)

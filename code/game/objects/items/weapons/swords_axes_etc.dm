@@ -258,8 +258,10 @@
 		return
 	if(!parent_borer.channeling_bone_sword) //the borer has stopped sustaining the sword
 		qdel(src)
+		return
 	if(parent_borer.chemicals < 5) //the parent borer no longer has the chemicals required to sustain the sword
 		qdel(src)
+		return
 	else
 		parent_borer.chemicals -= 5
 		sleep(10)

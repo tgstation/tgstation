@@ -308,6 +308,7 @@
 				visible_message("With a tearing noise, the length of flesh mysteriously snaps and retracts back into its arm.")
 				hookshot.cancel_chain()
 				bullet_die()
+				return
 			HC.loc = loc
 			HC.pixel_x = pixel_x
 			HC.pixel_y = pixel_y
