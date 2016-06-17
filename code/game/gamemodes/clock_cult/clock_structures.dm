@@ -425,7 +425,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
+	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -761,7 +761,7 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
+			M <<  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
 				M << "<span class='heavy_brass'>[message] you!</span>"
