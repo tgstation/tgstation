@@ -9,8 +9,6 @@
 	opacity = 1
 	bound_width = 96
 	bound_height = 96
-	pixel_x = -32
-	bound_x = -32
 	burn_state = LAVA_PROOF
 	luminosity = 1
 	var/boss = FALSE
@@ -47,8 +45,7 @@
 		if(M.z == z)
 			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
 			M << 'sound/creatures/legion_spawn.ogg'
-			if(M.client)
-				flash_color(M, color = "#FF0000", time = 50)
+			flash_color(M, flash_color = "#FF0000", flash_time = 50)
 	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
