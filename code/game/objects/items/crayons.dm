@@ -501,9 +501,9 @@
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.item_color)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.item_color))
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -653,11 +653,11 @@
 /obj/item/toy/crayon/spraycan/update_icon()
 	icon_state = is_capped ? icon_capped : icon_uncapped
 	if(use_overlays)
-		overlays.Cut()
+		cut_overlays()
 		var/image/I = image('icons/obj/crayons.dmi',
 			icon_state = "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		I.color = paint_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/toy/crayon/spraycan/gang
 	//desc = "A modified container containing suspicious paint."

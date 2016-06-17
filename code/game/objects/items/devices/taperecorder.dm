@@ -257,7 +257,7 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	overlays += "ribbonoverlay"
+	add_overlay("ribbonoverlay")
 	ruined = 1
 
 

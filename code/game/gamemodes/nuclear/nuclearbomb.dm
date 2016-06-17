@@ -168,10 +168,10 @@ var/bomb_set
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_timing"
 			if(NUKE_ON_EXPLODING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_exploding"
 	else
 		icon_state = "nuclearbomb_base"
@@ -193,7 +193,7 @@ var/bomb_set
 			interior = image(icon,"core-removed")
 		if(NUKESTATE_INTACT)
 			interior = null
-	overlays += interior
+	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
 	overlays -= lights
@@ -206,7 +206,7 @@ var/bomb_set
 			lights = image(icon,"lights-timing")
 		if(NUKE_ON_EXPLODING)
 			lights = image(icon,"lights-exploding")
-	overlays += lights
+	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)

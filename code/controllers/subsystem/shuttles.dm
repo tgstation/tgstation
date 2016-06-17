@@ -3,7 +3,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
-	priority = 3
+	init_order = 3
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -35,9 +36,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
@@ -220,3 +219,28 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
 		CHECK_TICK
+
+/datum/subsystem/shuttle/Recover()
+	if (istype(SSshuttle.mobile))
+		mobile = SSshuttle.mobile
+	if (istype(SSshuttle.stationary))
+		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.transit))
+		transit = SSshuttle.transit
+	if (istype(SSshuttle.discoveredPlants))
+		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.requestlist))
+		requestlist = SSshuttle.requestlist
+	if (istype(SSshuttle.orderhistory))
+		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
+
+	centcom_message = SSshuttle.centcom_message
+	ordernum = SSshuttle.ordernum
+	points = SSshuttle.points
+

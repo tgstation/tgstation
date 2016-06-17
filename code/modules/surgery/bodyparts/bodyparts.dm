@@ -208,12 +208,12 @@
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = get_limb_icon(1)
 	if(I)
 		I.pixel_x = px_x
 		I.pixel_y = px_y
-		overlays += I
+		add_overlay(I)
 
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped)

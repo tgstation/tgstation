@@ -66,7 +66,7 @@
 /obj/structure/closet/body_bag/update_icon()
 	..()
 	if (tagged)
-		overlays += "bodybag_label"
+		add_overlay("bodybag_label")
 
 /obj/structure/closet/body_bag/close()
 	if(..())

@@ -372,7 +372,7 @@
 		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 
 		user << "<span class='info'>You light \the [src] on fire.</span>"
-		overlays += fire_overlay
+		add_overlay(fire_overlay)
 		if(!isGlass)
 			spawn(50)
 				if(active)

@@ -1,7 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now strike a Tinkerer's Cache with a Clockwork Proselytizer to refill the Proselytizer from the global component cache."
-  - tweak: "The Clockwork Proselytizer requires slightly less alloy to convert windows and windoors."
-  - tweak: "Several clockwork objects have more useful descriptions, most notably including structures, which will show a general health level to non-servants and exact health to servants."
-  - imageadd: "The Clockwork Proselytizer has new, more appropriate inhands."

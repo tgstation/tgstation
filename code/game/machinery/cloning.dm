@@ -87,7 +87,7 @@
 /obj/item/weapon/disk/data/New()
 	..()
 	icon_state = "datadisk[rand(0,6)]"
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
