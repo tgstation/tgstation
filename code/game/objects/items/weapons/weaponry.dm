@@ -298,13 +298,16 @@
 	attack_verb = list("smacked", "whacked", "slammed", "smashed")
 	var/obj/vehicle/scooter/skateboard/linked_board
 
-/obj/item/weapon/melee/skateboard/attack_self(mob/user)//get_turf(user)
+/obj/item/weapon/melee/skateboard/attack_self(mob/user)
+	if(!linked_board)
+		linked_board = new /obj/vehicle/scooter/skateboard(src)
+		linked_board.linked_board = src
 	if(!user.drop_item())
 		return
-	linked_board.loc = get_turf(user)
-	loc = linked_board
+	linked_board.forceMove(get_turf(user))
+	forceMove(linked_board)
 
-/obj/item/weapon/melee/skateboard/New()
+/obj/item/weapon/melee/skateboard/Destroy()
+	if(linked_board)
+		qdel(linked_board)
 	..()
-	linked_board = new /obj/vehicle/scooter/skateboard(src)
-	linked_board.linked_board = src
