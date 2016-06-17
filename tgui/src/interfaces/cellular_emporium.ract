@@ -16,8 +16,10 @@
       <span>Required Absorbtions: {{required_absorbtions}}
     {{/if}}
 
-    <ui-button state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
-      action='evolve' params='{"name": "{{name}}"}'>
+    <ui-button
+      state='{{owned ? "selected" : can_purchase ? null : "disabled"}}'
+      action='evolve'
+      params='{"name": "{{name}}"}'>
       {{owned ? "Evolved" : "Evolve"}}
     </ui-button>
   </ui-section>

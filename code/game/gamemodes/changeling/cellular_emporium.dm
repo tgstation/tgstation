@@ -6,6 +6,7 @@
 	var/datum/changeling/changeling
 
 /datum/cellular_emporium/New(my_changeling)
+	. = ..()
 	changeling = my_changeling
 
 /datum/cellular_emporium/Destroy()
@@ -32,18 +33,21 @@
 	var/list/abilities = list()
 
 	for(var/path in subtypesof(/obj/effect/proc_holder/changeling))
-		var/obj/effect/proc_holder/changeling/ability = new path()
+		var/obj/effect/proc_holder/changeling/ability = path
 
-		if(ability.dna_cost <= 0)
+		var/dna_cost = initial(ability.dna_cost)
+		if(dna_cost <= 0)
 			continue
+
 		var/list/AL = list()
-		AL["name"] = ability.name
-		AL["desc"] = ability.desc
-		AL["helptext"] = ability.helptext
+		AL["name"] = initial(ability.name)
+		AL["desc"] = initial(ability.desc)
+		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
-		AL["required_absorptions"] = ability.req_dna
-		AL["dna_cost"] = ability.dna_cost
-		AL["can_purchase"] = ((ability.req_dna <= absorbed_dna_count) && (ability.dna_cost <= genetic_points_remaining))
+		var/req_dna = initial(ability.req_dna)
+		AL["required_absorptions"] = req_dna
+		AL["dna_cost"] = dna_cost
+		AL["can_purchase"] = ((req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
 
 		abilities += list(AL)
 

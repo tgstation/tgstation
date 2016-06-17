@@ -99,6 +99,6 @@
 
 /datum/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
 	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
-		if(power.name == P.name)
+		if(initial(power.name) == P.name)
 			return 1
 	return 0
