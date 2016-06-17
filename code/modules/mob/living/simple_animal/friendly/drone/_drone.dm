@@ -83,8 +83,11 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	var/datum/action/generic/drone/select_filter/SF = new(src)
-	SF.Grant(src)
+	if(seeStatic)
+		var/datum/action/generic/drone/select_filter/SF = new(src)
+		SF.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
 	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]

@@ -118,9 +118,6 @@
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
 	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
-	for(var/datum/action/generic/drone/select_filter/SF in actions) //clear all the drone shit we don't need
-		qdel(SF)
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
