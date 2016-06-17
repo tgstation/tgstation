@@ -1,6 +1,6 @@
 #define CLONEPODRANGE 7
 /obj/machinery/computer/cloning
-	name = "Cloning console"
+	name = "cloning console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "cloning"
 	circuit = "/obj/item/weapon/circuitboard/cloning"
@@ -16,6 +16,7 @@
 	var/datum/dna2/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
+	var/available_species = list("Human","Tajaran","Skrell","Unathi","Grey","Plasmamen","Vox")
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -92,7 +93,11 @@
 				to_chat(user, "You insert \the [W].")
 				src.updateUsrDialog()
 				return 1
-	return
+
+/obj/machinery/computer/cloning/emag(mob/user)
+	if(!emagged)
+		emagged = 1
+		user.visible_message("<span class='warning'>[user] slides something into \the [src]'s card-reader.</span>","<span class='warning'>You disable \the [src]'s safety overrides.</span>")
 
 /obj/machinery/computer/cloning/attack_paw(mob/user as mob)
 	return attack_hand(user)
@@ -173,7 +178,7 @@
 			if (!src.active_record)
 				dat += "<font color=red>ERROR: Record not found.</font>"
 			else
-				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Delete Record</a></font><br>
+				dat += {"<br><font size=1><a href='byond://?src=\ref[src];del_rec=1'>Edit Record</a></font><br>
 					<b>Name:</b> [src.active_record.dna.real_name && src.active_record.dna.real_name != "" ? src.active_record.dna.real_name : "Unknown"]<br>"}
 				var/obj/item/weapon/implant/health/H = null
 				if(src.active_record.implant)
@@ -205,11 +210,13 @@
 		if(4)
 			if (!src.active_record)
 				src.menu = 2
-
 			dat = {"[src.temp]<br>
-				<h4>Confirm Record Deletion</h4>
-				<b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>
-				<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"}
+                        [(emagged) ? "<h4> Edit Record </h4>\
+						<b><a href='byond://?src=\ref[src];change_name=1'>Change name.</a></b><br>\
+                        <b><a href='byond://?src=\ref[src];change_species=1'>Change Species.</a></b><br>" : ""]
+                        <h4>Record Deletion</h4>
+                        <b><a href='byond://?src=\ref[src];del_rec=1'>Scan card to confirm.</a></b><br>
+                        <b><a href='byond://?src=\ref[src];menu=3'>Return</a></b>"}
 	user << browse(dat, "window=cloning")
 	onclose(user, "cloning")
 	return
@@ -258,7 +265,7 @@
 		if ((!src.active_record) || (src.menu < 3))
 			return
 		if (src.menu == 3) //If we are viewing a record, confirm deletion
-			src.temp = "Delete record?"
+			src.temp = "Edit record?"
 			src.menu = 4
 
 		else if (src.menu == 4)
@@ -362,6 +369,16 @@
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
 
+	else if (emagged && active_record)
+		if(href_list["change_name"])
+			var/name_of_victim = input(usr, "/^!@#! ERROR: NAME PROTOCOLS OVERRIDDEN. MANUALLY INSERT NAME.", "Change Record Name") as text|null
+			active_record.dna.real_name = name_of_victim
+		if(href_list["change_species"])
+			var/species_of_victim = input(usr, "/^!@#! ERROR: SPECIES PROTOCOLS OVERRIDDEN. MANUALLY INSERT SPECIES.","Change Record Species") as null|anything in list("random")+available_species
+			if(species_of_victim == "random")
+				active_record.dna.species = pick(available_species)
+			else
+				active_record.dna.species = species_of_victim
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return

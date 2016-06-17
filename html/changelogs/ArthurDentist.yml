@@ -1,2 +1,3 @@
 author: ArthurDentist
-changes: []
+changes:
+  - rscadd: The cloning Console can now be emagged. Emagging the Cloning Console will allow you to edit the records of people who have been scanned allowing you to change their name or species.

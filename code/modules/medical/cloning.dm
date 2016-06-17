@@ -141,7 +141,7 @@
 /obj/item/weapon/disk/data/New()
 	..()
 	var/diskcolor = pick(0,1,2)
-	src.icon_state = "datadisk[diskcolor]"
+	icon_state = "datadisk[diskcolor]"
 
 /obj/item/weapon/disk/data/attack_self(mob/user as mob)
 	src.read_only = !src.read_only
@@ -219,7 +219,10 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species, delay_ready_dna=1)
 	occupant = H
 
-	src.icon_state = "pod_1"
+	if(!connected.emagged)
+		icon_state = "pod_1"
+	else
+		icon_state = "pod_e"
 
 	connected.update_icon()
 
@@ -467,7 +470,7 @@
 	if(src.occupant)
 		src.connected_message("Critical Error!")
 		src.mess = 1
-		src.icon_state = "pod_g"
+		icon_state = "pod_g"
 		src.occupant.ghostize()
 		spawn(5)
 			qdel(src.occupant)
