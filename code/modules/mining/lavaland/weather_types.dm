@@ -91,6 +91,19 @@
 	duration_message = "Looks like the storm just missed the mining area. False alarm."
 	wind_down_message = "The ash fall starts to trail off."
 
+/datum/weather/ash_storm/weather_main()
+	if(!purely_aesthetic)
+		addtimer(src, "blow_away_active_turfs", duration*0.5*10)
+	..()
+
+//its a planet, wind outside would wipe away what ever you added to the air.
+/datum/weather/ash_storm/proc/blow_away_active_turfs()
+	for(var/area/A in impacted_areas)
+		for(var/turf/open/T in A)
+			if(!T.blocks_air && T.z == target_z)
+				T.air.copy_from_turf(T)
+			CHECK_TICK
+
 /datum/weather/ash_storm/storm_act(mob/living/L)
 	if(immunity_type in L.weather_immunities)
 		return
