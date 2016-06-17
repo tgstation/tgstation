@@ -8,21 +8,20 @@
 //**************************************************************
 
 /obj/map/spawner/set_spawner
-	var/subChance = 100
+	var/sub_chance = 100
 
-/obj/map/spawner/set_spawner/New()
+/obj/map/spawner/set_spawner/perform_spawn()
+
 	var/obj/spawned
-	src.toSpawn = pick(src.toSpawn)
-	for(src.amount,src.amount,src.amount--)
-		for(spawned in src.toSpawn)
-			if(src.subChance)
-				new spawned(src.loc)
-				if(src.jiggle)
-					spawned.pixel_x = rand(-src.jiggle,src.jiggle)
-					spawned.pixel_y = rand(-src.jiggle,src.jiggle)
-	qdel(src)
-	return
-	
+	to_spawn = pick(to_spawn)
+	for(var/i = 1, i <= amount, i++)
+		for(spawned in to_spawn)
+			if(sub_chance)
+				new spawned(loc)
+				if(jiggle)
+					spawned.pixel_x = rand(-jiggle, jiggle)
+					spawned.pixel_y = rand(-jiggle, jiggle)
+
 //**************************************************************
 // Subtypes ////////////////////////////////////////////////////
 //**************************************************************
@@ -30,7 +29,7 @@
 /obj/map/spawner/set_spawner/theater
 	name = "theater costume spawner"
 	icon_state = "costumes"
-	toSpawn = list(
+	to_spawn = list(
 	list(
 		/obj/item/clothing/suit/chickensuit,
 		/obj/item/clothing/head/chicken,
