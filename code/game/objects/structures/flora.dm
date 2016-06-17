@@ -231,6 +231,27 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
 
+/obj/structure/flora/kirbyplants/random
+	var/list/static/states
+
+/obj/structure/flora/kirbyplants/random/New()
+	. = ..()
+	if(!states)
+		generate_states()
+	icon_state = pick(states)
+
+/obj/structure/flora/kirbyplants/random/proc/generate_states()
+	states = list()
+	for(var/i in 1 to 25)
+		var/number
+		if(i < 10)
+			number = "0[i]"
+		else
+			number = "[i]"
+		states += "plant-[number]"
+	states += "applebush"
+
+
 /obj/structure/flora/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
