@@ -979,6 +979,11 @@ var/default_colour_matrix = list(1,0,0,0,\
 #define EQUIP_FAILACTION_DELETE 1
 #define EQUIP_FAILACTION_DROP 2
 
+//mob_can_equip flags
+#define CANNOT_EQUIP 0
+#define CAN_EQUIP 1
+#define CAN_EQUIP_BUT_SLOT_TAKEN 2
+
 // Vampire power defines
 #define VAMP_REJUV    1
 #define VAMP_GLARE    2

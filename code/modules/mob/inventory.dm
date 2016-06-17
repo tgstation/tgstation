@@ -1,6 +1,38 @@
+/*
+ * NOTE FROM SOMEBODY WHO DID SOME HOUSEKEEPING AROUND THIS ASS-CODE
+ * There's absolutely no documentation on most of this so I'd like to write this down to help you get a grasp of how this works and how redundant it all is.
+ * Let's assume you live in a horrible horrible universe where nobody coded inventory datums yet. Damn. Now let's say you want your new mob to be able to wear a jumpsuit.
+ *
+ * First thing the mob needs is a variable for the inventory slot, like var/obj/item/w_uniform = null. Start by the most awful part and modify /obj/item/proc/mob_can_equip()
+ * to account for your mob. It has a switch for every slot, and jumpsuits go in under slot_w_uniform, so probably just copypaste how monkeys do it.
+ *
+ * Good, now the item thinks the mob can equip it. Now the mob has to be ACTUALLY be able to equip it. Go and modify or create mob/your_mob/equip_to_slot(). Again, it's a switch of
+ * all slots. You'll see that that proc also handles the icon refreshing, so you have to create mob/your_mob/update_inv_w_uniform() as well. Good luck there because iconcode is also ass.
+ *
+ * You can't do anything with the jumpsuit yet though, you need to add it to mob/your_mob/get_item_by_slot() for most things to work.
+ * Small detail: Your mob cannot unequip their jumpsuit yet. You need to add it to mob/your_mob/u_equip()
+ * Oh yeah, you need to add the new variable for the jumpsuit to mob/your_mob/get_all_slots(). I know, I know, this is why we need inventory datums.
+ *
+ * Okay, so your mob still has no HUD element for their inventory slot. That takes a /obj/screen/inventory... beats me how most of it works, but you do need to have it point to
+ * slot_id = slot_w_uniform and define a new screen_loc for it. I would advise you to just look at code/_onclick/hud/monkey.dm and do the ol' monkey see, monkey do.
+ * When you click on that obj/screen/inventory, it calls attack_ui() which by default will just call equip_to_slot_if_possible(item, slot_id)
+ * At this point I think you need to handle some UI shitcode in mob/your_mob/update_inv_w_uniform(), something like w_uniform.screen_loc = the_screen_loc_you_defined_earlier
+ *
+ * For other players to be able to strip and forcibly put on the uniform on your mob, you need to give it a fancy mob/your_mob/show_inv(), and put HREF links that you'll pick up
+ * in mob/your_mob/Topic() that finally point to handle_strip_slot(). If you search for (href_list["item"]) I'm sure you'll be able to figure this out.
+ *
+ * Good luck.
+ *
+ * So, a list of all methods used:
+ * /obj/item/proc/mob_can_equip() -> mob/equip_to_slot() -> update_inv_[slot]()
+ * get_item_by_slot(), u_equip(), get_all_slots()
+ * obj/screen/inventory -> ??? -> attack_ui()? -> equip_to_slot_if_possible() -> ??????? -> update_inv_[slot]()?
+ * show_inv() -> Topic() -> handle_strip_slot()
+ */
+
 #define is_valid_hand_index(index) ((index > 0) && (index <= held_items.len))
 
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting l_hand = ...etc
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
 //Returns the thing in our active hand
@@ -126,15 +158,12 @@
 	if(!is_valid_hand_index(index) || !is_valid_hand_index(active_hand))
 		return 0
 
-	if(held_items[index])
-		return 0
-
 	if(!put_in_hand_check(W, index))
 		return 0
 
 	if(W.prepickup(src))
 		return 0
-	
+
 	W.forceMove(src)
 	held_items[index] = W
 	W.layer = 20
@@ -157,11 +186,14 @@
 /mob/proc/put_in_r_hand(var/obj/item/W)
 	return put_in_hand(GRASP_RIGHT_HAND, W)
 
-/mob/proc/put_in_hand_check(var/obj/item/W)
+/mob/proc/put_in_hand_check(var/obj/item/W, index)
 	if(lying) //&& !(W.flags & ABSTRACT))
 		return 0
 
 	if(!isitem(W))
+		return 0
+
+	if(held_items[index])
 		return 0
 
 	if(W.flags & MUSTTWOHAND)
@@ -215,7 +247,7 @@
 	return 0
 
 
-/mob/proc/drop_from_inventory(var/obj/item/W)
+/mob/proc/drop_from_inventory(var/obj/item/W) //I'm fairly sure the entirety of this proc is redundant and can be replaced by just u_equip(W,1)
 	if(W)
 		if(client)	client.screen -= W
 		u_equip(W,1)
@@ -308,7 +340,7 @@
 		if(client)
 			client.screen -= W
 		if(dropped)
-			W.loc = loc
+			W.forceMove(loc)
 			W.dropped(src)
 		if(W)
 			W.layer = initial(W.layer)
@@ -339,6 +371,18 @@
 	var/list/equipped = get_all_slots()
 	equipped -= list(get_active_hand(), get_inactive_hand())
 	return equipped
+
+//inventory slots which would be hidden by other clothing items. currently only used for humans because fuck you
+/mob/proc/check_obscured_slots()
+	return null
+
+//currently only used for humans because fuck you
+/mob/proc/has_organ(name)
+	return TRUE
+
+//currently only used for humans because fuck you
+/mob/proc/has_organ_for_slot(slot)
+	return TRUE
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/W, slot, act_on_fail = EQUIP_FAILACTION_DELETE) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
@@ -429,3 +473,47 @@
 		. = I.GetID()
 		if(.)
 			break
+
+/mob/proc/slotID2slotname(slot_id)
+	switch (slot_id)
+		if (slot_back)
+			return "back"
+		if (slot_wear_mask)
+			return "face"
+		if (slot_handcuffed)
+			return "hands"
+		if (slot_belt)
+			return "belt"
+		if (slot_wear_id)
+			return "jumpsuit"
+		if (slot_ears)
+			return "ears"
+		if (slot_glasses)
+			return "face"
+		if (slot_gloves)
+			return "hands"
+		if (slot_head)
+			return "head"
+		if (slot_shoes)
+			return "feet"
+		if (slot_wear_suit)
+			return "suit"
+		if (slot_w_uniform)
+			return "uniform"
+		if (slot_l_store)
+			return "left pocket"
+		if (slot_r_store)
+			return "right pocket"
+		if (slot_s_store)
+			return "suit storage"
+		if (slot_in_backpack)
+			return "backpack"
+		if (slot_legcuffed)
+			return "ankles"
+		else
+			return ""
+
+//Returns 1 if the item is part of the mob's built-in modules, and thus shouldn't be dropped or recycled or whatever.
+//Currently only used for silicons, but I guess you could use this for robot arms with built-in tools or something
+/mob/proc/is_in_modules(var/obj/item/W)
+	return 0

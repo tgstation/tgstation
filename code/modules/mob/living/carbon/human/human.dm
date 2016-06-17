@@ -341,118 +341,8 @@
 
 
 /mob/living/carbon/human/var/co2overloadtime = null
-/mob/living/carbon/human/var/temperature_resistance = T0C+75
+/mob/living/carbon/human/var/temperature_resistance = T0C+75 //but why is this here
 
-/*
-/mob/living/carbon/human/show_inv(mob/user as mob)
-	var/obj/item/clothing/gloves/G
-	var/pickpocket = 0
-	var/list/obscured = check_obscured_slots()
-	if(ishuman(user) && user:gloves)
-		G = user:gloves
-		pickpocket = G.pickpocket
-	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Gloves:</B> <A href='?src=\ref[src];item=gloves'>[(gloves ? gloves : "Nothing")]</A>
-	<BR><B>Eyes:</B> <A href='?src=\ref[src];item=eyes'>[(glasses ? glasses : "Nothing")]</A>
-	<BR><B>Ears:</B> <A href='?src=\ref[src];item=ears'>[(ears ? ears : "Nothing")]</A>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? head : "Nothing")]</A>
-	<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>[(shoes ? shoes : "Nothing")]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];item=belt'>[(belt ? belt : "Nothing")]</A>
-	<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>[(w_uniform ? w_uniform : "Nothing")]</A>
-	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? wear_suit : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR><B>ID:</B> <A href='?src=\ref[src];item=id'>[(wear_id ? wear_id : "Nothing")]</A>
-	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A>
-	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
-	<BR><BR><A href='?src=\ref[src];pockets=left'>Left Pocket ([l_store ? (pickpocket ? l_store.name : "Full") : "Empty"])</A>
-	<BR><A href='?src=\ref[src];pockets=right'>Right Pocket ([r_store ? (pickpocket ? r_store.name : "Full") : "Empty"])</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	<BR>"}
-	user << browse(dat, text("window=mob\ref[src];size=340x480"))
-	onclose(user, "mob\ref[src]")
-	return
-*/
-
-
-/mob/living/carbon/human/show_inv(mob/user)
-	user.set_machine(src)
-	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
-	var/list/obscured = check_obscured_slots()
-	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
-	var/dat
-
-	for(var/i = 1 to held_items.len) //Hands
-		var/obj/item/I = held_items[i]
-		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
-
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
-	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
-		dat += "<BR>[TAB]&#8627;<A href='?src=\ref[src];item=internal'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-	dat += "<BR>"
-	dat += "<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>				[(head && !(src.head.abstract))		? head		: "<font color=grey>Empty</font>"]</A>"
-	if(slot_wear_mask in obscured)
-		dat += "<BR><font color=grey><B>Mask:</B> Obscured by [head]</font>"
-	else
-		dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
-	if(slot_glasses in obscured)
-		dat += "<BR><font color=grey><B>Eyes:</B> Obscured by [head]</font>"
-	else
-		dat += "<BR><B>Eyes:</B> <A href='?src=\ref[src];item=eyes'>			[(glasses && !(src.glasses.abstract))	? glasses	: "<font color=grey>Empty</font>"]</A>"
-	if(slot_ears in obscured)
-		dat += "<BR><font color=grey><B>Ears:</B> Obscured by [head]</font>"
-	else
-		dat += "<BR><B>Ears:</B> <A href='?src=\ref[src];item=ears'>				[(ears && !(src.ears.abstract))		? ears		: "<font color=grey>Empty</font>"]</A>"
-	dat += "<BR>"
-	dat += "<BR><B>Exosuit:</B> <A href='?src=\ref[src];item=suit'> [(wear_suit && !(src.wear_suit.abstract)) ? wear_suit : "<font color=grey>Empty</font>"]</A>"
-	if(wear_suit)
-		dat += "<BR>[TAB]&#8627;<B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store && !(src.s_store.abstract)) ? s_store : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(s_store, /obj/item/weapon/tank))
-			dat += "<BR>[TAB][TAB]&#8627;<A href='?src=\ref[src];item=internal2'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-	if(slot_shoes in obscured)
-		dat += "<BR><font color=grey><B>Shoes:</B> Obscured by [wear_suit]</font>"
-	else
-		dat += "<BR><B>Shoes:</B> <A href='?src=\ref[src];item=shoes'>			[(shoes && !(src.shoes.abstract))		? shoes		: "<font color=grey>Empty</font>"]</A>"
-	if(slot_gloves in obscured)
-		dat += "<BR><font color=grey><B>Gloves:</B> Obscured by [wear_suit]</font>"
-	else
-		dat += "<BR><B>Gloves:</B> <A href='?src=\ref[src];item=gloves'>			[(gloves && !(src.gloves.abstract))		? gloves	: "<font color=grey>Empty</font>"]</A>"
-	if(slot_w_uniform in obscured)
-		dat += "<BR><font color=grey><B>Uniform:</B> Obscured by [wear_suit]</font>"
-	else
-		dat += "<BR><B>Uniform:</B> <A href='?src=\ref[src];item=uniform'>	 [(w_uniform && !(src.w_uniform.abstract)) ? w_uniform : "<font color=grey>Empty</font>"]</A>"
-	if(w_uniform)
-		dat += "<BR>[TAB]&#8627;<B>Belt:</B> <A href='?src=\ref[src];item=belt'> [(belt && !(src.belt.abstract)) ? belt : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(belt, /obj/item/weapon/tank))
-			dat += "<BR>[TAB][TAB]&#8627;<A href='?src=\ref[src];item=internal1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-		if(ishuman(user) && istype(user:gloves, /obj/item/clothing/gloves/black/thief))
-			dat += "<BR>[TAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? l_store : "<font color=grey>Left (Empty)</font>"]</A>"
-			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? r_store : "<font color=grey>Right (Empty)</font>"]</A>"
-		else
-			dat += "<BR>[TAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
-			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A>"
-		dat += "<BR>[TAB]&#8627;<B>ID:</B> <A href='?src=\ref[src];item=id'>[(wear_id && !(src.wear_id.abstract)) ? wear_id : "<font color=grey>Empty</font>"]</A>"
-	dat += "<BR>"
-	if(handcuffed)
-		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
-	if(legcuffed)
-		dat += "<BR><B>Legcuffed:</B> <A href='?src=\ref[src];item=legcuff'>Remove</A>"
-	dat += {"
-	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
-	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
-	popup.set_content(dat)
-	popup.open()
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
 /mob/living/carbon/human/Crossed(var/atom/movable/AM)
@@ -545,152 +435,97 @@
 
 	return ..(shock_damage, source, siemens_coeff, def_zone)
 
-/mob/living/carbon/human/proc/num2slotname(slot_id)
-	switch (slot_id)
-		if (slot_back)
-			return "back"
-		if (slot_wear_mask)
-			return "mask"
-		if (slot_handcuffed)
-			return "handcuffed"
-		if (slot_belt)
-			return "belt"
-		if (slot_wear_id)
-			return "id"
-		if (slot_ears)
-			return "ears"
-		if (slot_glasses)
-			return "eyes"
-		if (slot_gloves)
-			return "gloves"
-		if (slot_head)
-			return "head"
-		if (slot_shoes)
-			return "shoes"
-		if (slot_wear_suit)
-			return "suit"
-		if (slot_w_uniform)
-			return "uniform"
-		if (slot_l_store)
-			return "l_store"
-		if (slot_r_store)
-			return "r_store"
-		if (slot_s_store)
-			return "s_store"
-		if (slot_in_backpack)
-			return "in_backpack"
-		if (slot_legcuffed)
-			return "h_store"
-		else
-			return ""
-
 /mob/living/carbon/human/hear_radio_only()
 	if(!ears) return 0
 	return is_on_ears(/obj/item/device/radio/headset/headset_earmuffs)
 
+/mob/living/carbon/human/show_inv(mob/user)
+	user.set_machine(src)
+	var/pickpocket = usr.isGoodPickpocket()
+	var/list/obscured = check_obscured_slots()
+	var/dat
+
+	for(var/i = 1 to held_items.len) //Hands
+		var/obj/item/I = held_items[i]
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];hands=[i]'>[makeStrippingButton(I)]</A><BR>"
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[makeStrippingButton(back)]</A>"
+	dat += "<BR>"
+	dat += "<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>[makeStrippingButton(head)]</A>"
+	if(slot_wear_mask in obscured)
+		dat += "<BR><font color=grey><B>Mask:</B> Obscured by [head]</font>"
+	else
+		dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>[makeStrippingButton(wear_mask)]</A>"
+	if(has_breathing_mask())
+		dat += "<BR>[HTMLTAB]&#8627;<B>Internals:</B> [src.internal ? "On" : "Off"]  <A href='?src=\ref[src];internals=1'>(Toggle)</A>"
+	if(slot_glasses in obscured)
+		dat += "<BR><font color=grey><B>Eyes:</B> Obscured by [head]</font>"
+	else
+		dat += "<BR><B>Eyes:</B> <A href='?src=\ref[src];item=[slot_glasses]'>[makeStrippingButton(glasses)]</A>"
+	if(slot_ears in obscured)
+		dat += "<BR><font color=grey><B>Ears:</B> Obscured by [head]</font>"
+	else
+		dat += "<BR><B>Ears:</B> <A href='?src=\ref[src];item=[slot_ears]'>[makeStrippingButton(ears)]</A>"
+	dat += "<BR>"
+	dat += "<BR><B>Exosuit:</B> <A href='?src=\ref[src];item=[slot_wear_suit]'>[makeStrippingButton(wear_suit)]</A>"
+	if(wear_suit)
+		dat += "<BR>[HTMLTAB]&#8627;<B>Suit Storage:</B> <A href='?src=\ref[src];item=[slot_s_store]'>[makeStrippingButton(s_store)]</A>"
+	if(slot_shoes in obscured)
+		dat += "<BR><font color=grey><B>Shoes:</B> Obscured by [wear_suit]</font>"
+	else
+		dat += "<BR><B>Shoes:</B> <A href='?src=\ref[src];item=[slot_shoes]'>[makeStrippingButton(shoes)]</A>"
+	if(slot_gloves in obscured)
+		dat += "<BR><font color=grey><B>Gloves:</B> Obscured by [wear_suit]</font>"
+	else
+		dat += "<BR><B>Gloves:</B> <A href='?src=\ref[src];item=[slot_gloves]'>[makeStrippingButton(gloves)]</A>"
+	if(slot_w_uniform in obscured)
+		dat += "<BR><font color=grey><B>Uniform:</B> Obscured by [wear_suit]</font>"
+	else
+		dat += "<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[slot_w_uniform]'>[makeStrippingButton(w_uniform)]</A>"
+	if(w_uniform)
+		dat += "<BR>[HTMLTAB]&#8627; <A href='?src=\ref[src];sensors=1'>Set suit sensors</A>"
+		dat += "<BR>[HTMLTAB]&#8627;<B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'>[makeStrippingButton(belt)]</A>"
+		if(pickpocket)
+			dat += "<BR>[HTMLTAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? l_store : "<font color=grey>Left (Empty)</font>"]</A>"
+			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? r_store : "<font color=grey>Right (Empty)</font>"]</A>"
+		else
+			dat += "<BR>[HTMLTAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
+			dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A>"
+		dat += "<BR>[HTMLTAB]&#8627;<B>ID:</B> <A href='?src=\ref[src];id=1'>[makeStrippingButton(wear_id)]</A>"
+	dat += "<BR>"
+	if(handcuffed)
+		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A>"
+	if(legcuffed)
+		dat += "<BR><B>Legcuffed:</B> <A href='?src=\ref[src];item=[slot_legcuffed]'>Remove</A>"
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
+	popup.set_content(dat)
+	popup.open()
+
 /mob/living/carbon/human/Topic(href, href_list)
-	var/pickpocket = 0
-	var/able = (!usr.incapacitated() && in_range(src, usr) && Adjacent(usr))
-
-	if(href_list["item"])
-		if (!able) return
-		var/slot = href_list["item"]
-		var/obj/item/place_item = usr.get_active_hand()
-		var/obj/item/id_item = src.wear_id
-
-		var/list/obscured_slots = new/list()
-
-		for (var/obscured_slot_num in check_obscured_slots())
-			var/slot_name = num2slotname(obscured_slot_num)
-
-			if (slot_name != "")
-				obscured_slots += slot_name
-
-		if (slot in obscured_slots)
-			to_chat(usr, "<span class='warning'>You can't reach that. Something is covering it.</span>")
+	..() //Slot stripping, hand stripping, and internals setting in /mob/living/carbon/Topic()
+	if(href_list["id"])
+		if(usr.incapacitated() || !Adjacent(usr)|| isanimal(usr))
 			return
-		else
-			if(isanimal(usr)) return //Animals can't do that
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-			if(ishuman(usr) && usr:gloves)
-				var/obj/item/clothing/gloves/G = usr:gloves
-				pickpocket = G.pickpocket
-			O.source = usr
-			O.target = src
-			O.item = usr.get_active_hand()
-			O.s_loc = usr.loc
-			O.t_loc = loc
-			O.place = href_list["item"]
-			O.pickpocket = pickpocket //Stealthy
-			requests += O
-//			to_chat(world, O.place)
-			if(O.place == "id")
-				if(id_item)
-					to_chat(usr, "<span class='notice'>You try to take [src]'s ID.</span>")
-				else if(place_item && place_item.mob_can_equip(src, slot_wear_id, 1))
-					to_chat(usr, "<span class='notice'>You try to place [place_item] on [src].</span>")
+		handle_strip_id(usr)
 
-				if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-					if(id_item)
-						u_equip(id_item,0)
-						if(pickpocket) usr.put_in_hands(id_item)
-					else
-						if(place_item)
-							usr.u_equip(place_item,1)
-							equip_to_slot_if_possible(place_item, slot_wear_id, 0, 1)
-					// Update strip window
-					if(in_range(src, usr))
-						show_inv(usr)
-
-				else if(!pickpocket)
-					// Display a warning if the user mocks up
-					to_chat(src, "<span class='warning'>You feel your ID being fumbled with!</span>")
-			else
-				spawn( 0 )
-					O.process()
-					spawn(HUMAN_STRIP_DELAY)	if(in_range(src, usr)) show_inv(usr)
-					return
-	else if(href_list["pockets"])
-		if (!able) return
-		var/pocket_side = href_list["pockets"]
-		var/pocket_id = (pocket_side == "right" ? slot_r_store : slot_l_store)
-		var/obj/item/pocket_item = (pocket_id == slot_r_store ? src.r_store : src.l_store)
-		var/obj/item/place_item = usr.get_active_hand() // Item to place in the pocket, if it's empty
-		if(isanimal(usr)) return //Animals can't do that
-		if(ishuman(usr) && (usr:gloves))
-			var/obj/item/clothing/gloves/G = usr:gloves
-			pickpocket = G.pickpocket
-
-		if(pocket_item)
-			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-		else if(place_item && place_item.mob_can_equip(src, pocket_id, 1))
-			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
-		else
+	else if(href_list["pockets"]) //href_list "pockets" would be "left" or "right"
+		if(usr.incapacitated() || !Adjacent(usr)|| isanimal(usr))
 			return
+		handle_strip_pocket(usr, href_list["pockets"])
 
-		if(do_mob(usr, src, HUMAN_STRIP_DELAY))
-			if(pocket_item)
-				u_equip(pocket_item,1)
-				pocket_item.stripped(src,usr)
-				if(pickpocket) usr.put_in_hands(pocket_item)
-			else
-				if(place_item)
-					usr.u_equip(place_item,1)
-					equip_to_slot_if_possible(place_item, pocket_id, 0, 1)
-			// Update strip window
-			if(in_range(src, usr))
-				show_inv(usr)
+	else if(href_list["sensors"])
+		if(usr.incapacitated() || !Adjacent(usr)|| isanimal(usr))
+			return
+		toggle_sensors(usr)
 
-		else if(!pickpocket)
-				// Display a warning if the user mocks up
-			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 	else if (href_list["refresh"])
 		if((machine)&&(in_range(src, usr)))
 			show_inv(machine)
-	else if (href_list["mach_close"])
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
+
 	else if (href_list["criminal"])
 		if(hasHUD(usr,"security"))
 			var/perpname = "wot"
@@ -935,9 +770,7 @@
 	else if (href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
 		usr.examination(M)
-	else
-		..()
-	return
+
 /**
  * Returns a number between -1 to 2.
  * TODO: What's the default return value?
@@ -963,6 +796,10 @@
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
 
+/mob/living/carbon/human/isGoodPickpocket()
+	var/obj/item/clothing/gloves/G = gloves
+	if(istype(G))
+		return G.pickpocket
 
 /mob/living/carbon/human/abiotic(var/full_body = 0)
 	for(var/obj/item/I in held_items)

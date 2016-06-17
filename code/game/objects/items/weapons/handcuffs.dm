@@ -30,7 +30,7 @@
 		return
 
 	if((M_CLUMSY in user.mutations) && prob(50))
-		to_chat(usr, "<span class='warning'>Uh ... how do those things work?!</span>")
+		to_chat(usr, "<span class='warning'>Uh... how do these things work?!</span>")
 		handcuffs_apply(M, user, TRUE)
 		return
 
@@ -44,61 +44,46 @@
 	else
 		M.LAssailant = user
 
-	log_attack("<span style='color: red'>[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])</span>")
+	log_attack("[user.name] ([user.ckey]) Attempted to handcuff [M.name] ([M.ckey])")
 
 	handcuffs_apply(M, user)
 
-//Our inventory procs should be able to handle the following, but our inventory code is hot spaghetti bologni, so here we go
+//Our inventory procs should be able to handle the following, but our inventory code is hot spaghetti bologni, so here we go //There's no real reason for this to be a separate proc now but whatever
 /obj/item/weapon/handcuffs/proc/handcuffs_apply(var/mob/living/carbon/C, var/mob/user, var/clumsy = FALSE)
 	if(!istype(C)) //Sanity doesn't hurt, right ?
 		return FALSE
 
 	if(ishuman(C))
-		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-		O.source = user
-		O.target = C
-		O.t_loc = C.loc
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.place = "handcuff"
-		C.requests += O
-		spawn()
-			if(istype(src, /obj/item/weapon/handcuffs/cable))
-				feedback_add_details("handcuffs", "C")
-			else
-				feedback_add_details("handcuffs", "H")
-			playsound(get_turf(src), cuffing_sound, 30, 1, -2)
-			O.process()
-
-	else
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey()
-		O.source = user
-		O.target = C
-		O.item = user.get_active_hand()
-		O.s_loc = user.loc
-		O.t_loc = C.loc
-		O.place = "handcuff"
-		C.requests += O
-		spawn()
-			playsound(get_turf(src), cuffing_sound, 30, 1, -2)
-			O.process()
-
-/obj/item/weapon/handcuffs/proc/handcuffs_remove(var/mob/living/carbon/C)
-	C.handcuffed = null
-	C.update_inv_handcuffed()
-
-/obj/item/weapon/handcuffs/cyborg/attack(var/mob/living/carbon/M, var/mob/living/user, var/def_zone)
-	if (!istype(M) || M.handcuffed)
-		return FALSE
+		var/mob/living/carbon/human/H = C
+		if (!H.has_organ_for_slot(slot_handcuffed))
+			to_chat(user, "<span class='danger'>\The [C] needs at least two wrists before you can cuff them together!</span>")
+			return
 
 	playsound(get_turf(src), cuffing_sound, 30, 1, -2)
-	user.visible_message("<span class='danger'>[user] is trying to handcuff \the [M]!</span>",
-						 "<span class='danger'>You try to handcuff \the [M]!</span>")
-	if(do_after(user, M, 30))
-		M.handcuffed = new/obj/item/weapon/handcuffs(M)
-		M.update_inv_handcuffed()
+	user.visible_message("<span class='danger'>[user] is trying to handcuff \the [C]!</span>",
+						 "<span class='danger'>You try to handcuff \the [C]!</span>")
 
-	return TRUE
+	if(do_after(user, C, 3 SECONDS))
+		if(istype(src, /obj/item/weapon/handcuffs/cable))
+			feedback_add_details("handcuffs", "C")
+		else
+			feedback_add_details("handcuffs", "H")
+
+		user.visible_message("<span class='danger'>\The [user] has put \the [src] on \the [C]!</span>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has put \the [src] on [C.name] ([C.ckey])</font>")
+		C.attack_log += text("\[[time_stamp()]\] <font color='red'>Handcuffed with \the [src] by [user.name] ([user.ckey])</font>")
+		log_attack("[user.name] ([user.ckey]) has cuffed [C.name] ([C.ckey]) with \the [src]")
+
+		var/obj/item/weapon/handcuffs/cuffs = src
+		if(istype(src, /obj/item/weapon/handcuffs/cyborg)) //There's GOT to be a better way to check for this.
+			cuffs = new(get_turf(user))
+		else
+			user.drop_from_inventory(cuffs)
+		C.equip_to_slot(cuffs, slot_handcuffed)
+
+/obj/item/weapon/handcuffs/cyborg
+//This space intentionally left blank
+
 
 //Syndicate Cuffs. Disguised as regular cuffs, they are pretty explosive
 /obj/item/weapon/handcuffs/syndicate
@@ -122,12 +107,13 @@
 	if(slot == slot_handcuffed && mode == SYNDICUFFS_ON_APPLY && !charge_detonated)
 		detonate(1)
 
-/obj/item/weapon/handcuffs/syndicate/handcuffs_remove(mob/living/carbon/C)
+/obj/item/weapon/handcuffs/proc/on_remove(var/mob/living/carbon/C) //Needed for syndicuffs
+	return
+
+/obj/item/weapon/handcuffs/syndicate/on_remove(mob/living/carbon/C)
 	if(mode == SYNDICUFFS_ON_REMOVE && !charge_detonated)
 		detonate(0) //This handles cleaning up the inventory already
 		return //Don't clean up twice, we don't want runtimes
-
-	..()
 
 //C4 and EMPs don't mix, will always explode at severity 1, and likely to explode at severity 2
 /obj/item/weapon/handcuffs/syndicate/emp_act(severity)
@@ -170,16 +156,6 @@
 
 	explosion(get_turf(src), 0, 1, 3, 0)
 	qdel(src)
-
-/obj/item/weapon/handcuffs/Destroy()
-
-	if(iscarbon(loc)) //Inventory shit
-		var/mob/living/carbon/C = loc
-		if(C.handcuffed)
-			C.handcuffed.loc = C.loc //Standby while we delete this shit
-			C.drop_from_inventory(src)
-
-	..()
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"

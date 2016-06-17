@@ -1168,3 +1168,27 @@ What are the archived variables for?
 
 	update_values()
 	return 1
+
+/datum/gas_mixture/proc/english_contents_list()
+	var/all_contents = list()
+	if(oxygen)
+		all_contents += "Oxygen"
+	if(nitrogen)
+		all_contents += "Nitrogen"
+	if(carbon_dioxide)
+		all_contents += "CO<sub>2</sub>"
+	if(toxins)
+		all_contents += "Plasma"
+	if(locate(/datum/gas/sleeping_agent) in trace_gases)
+		all_contents += "N<sub>2</sub>O"
+	return english_list(all_contents)
+
+/datum/gas_mixture/proc/loggable_contents()
+	var/naughty_stuff = list()
+	if(toxins)
+		naughty_stuff += "<b><font color='red'>Plasma</font></b>"
+	if(carbon_dioxide)
+		naughty_stuff += "<b><font color='red'>CO<sub>2</sub></font></b>"
+	if(locate(/datum/gas/sleeping_agent) in trace_gases)
+		naughty_stuff += "<b><font color='red'>N<sub>2</sub>O</font>"
+	return english_list(naughty_stuff, nothing_text = "")

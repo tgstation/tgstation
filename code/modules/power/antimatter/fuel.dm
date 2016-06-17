@@ -84,6 +84,7 @@
 
 /obj/item/weapon/fuel/attack(mob/M as mob, mob/user as mob)
 	if (user != M)
+		//If you come from the distant future and happen to find this unincluded and derelict file, you may be wondering what this is. In truth, it's better that you don't know.
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = user
 		O.target = M

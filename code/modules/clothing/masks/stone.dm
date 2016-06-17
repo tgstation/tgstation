@@ -15,11 +15,11 @@
 /obj/item/clothing/mask/stone/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 	if(spikes_out)
 		to_chat(M, "<span class='warning'>You can't get the mask over your face with its stone spikes in the way!</span>")
-		return 0
+		return CANNOT_EQUIP
 	else
 		if(!istype(M, /mob/living/carbon/human))
 			to_chat(M, "<span class='warning'>You can't seem to get the mask to fit correctly over your face.</span>")
-			return 0
+			return CANNOT_EQUIP
 		else
 			return ..()
 

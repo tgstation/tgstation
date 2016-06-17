@@ -58,21 +58,19 @@
 //		else		client.screen -= hud_used.other		//Not used
 		client.screen |= contents
 
-
-
+//These update icons are essentially derelict and unused
 /mob/living/carbon/alien/humanoid/update_inv_wear_suit(var/update_icons=1)
 	if(wear_suit)
 		var/t_state = wear_suit.item_state
 		if(!t_state)	t_state = wear_suit.icon_state
-		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
-		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
+		//var/image/lying		= image("icon" = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'), "icon_state" = "[t_state]")
+		var/image/standing	= image("icon" = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'), "icon_state" = "[t_state]")
 
 		if(wear_suit.blood_DNA && wear_suit.blood_DNA.len)
-			var/t_suit = "suit"
-			if( istype(wear_suit, /obj/item/clothing/suit/armor) )
-				t_suit = "armor"
-			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_suit]blood2")
-			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_suit]blood")
+			//lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[t_suit]blood")
+			var/image/bloodsies = image("icon" = 'icons/effects/blood.dmi', "icon_state" = "[wear_suit.blood_overlay_type]blood")
+			bloodsies.color = wear_suit.blood_color
+			standing.overlays += bloodsies
 
 		//TODO
 		wear_suit.screen_loc = ui_alien_oclothing
@@ -80,10 +78,10 @@
 			drop_from_inventory(handcuffed)
 			drop_hands()
 
-		overlays_lying[X_SUIT_LAYER]	= lying
+		//overlays_lying[X_SUIT_LAYER]	= lying
 		overlays_standing[X_SUIT_LAYER]	= standing
 	else
-		overlays_lying[X_SUIT_LAYER]	= null
+		//overlays_lying[X_SUIT_LAYER]	= null
 		overlays_standing[X_SUIT_LAYER]	= null
 	if(update_icons)	update_icons()
 
@@ -92,10 +90,10 @@
 	if (head)
 		var/t_state = head.item_state
 		if(!t_state)	t_state = head.icon_state
-		var/image/lying		= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]2")
-		var/image/standing	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "[t_state]")
+		var/image/lying		= image(((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'), "icon_state" = "[t_state]")
+		var/image/standing	= image(((head.icon_override) ? head.icon_override : 'icons/mob/head.dmi'), "icon_state" = "[t_state]")
 		if(head.blood_DNA && head.blood_DNA.len)
-			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood2")
+			lying.overlays		+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 			standing.overlays	+= image("icon" = 'icons/effects/blood.dmi', "icon_state" = "helmetblood")
 		head.screen_loc = ui_alien_head
 		overlays_lying[X_HEAD_LAYER]	= lying

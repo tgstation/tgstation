@@ -206,23 +206,26 @@
 	switch(M.a_intent)
 
 		if(I_HELP)
-			if(health > 0)
+			if(health >= config.health_threshold_crit)
 				help_shake_act(M)
+				return 1
 			else
-				if(M.health >= -75.0)
-					if(((M.head && M.head.flags & 4) || ((M.wear_mask && !( M.wear_mask.flags & 32 )) || ((head && head.flags & 4) || (wear_mask && !( wear_mask.flags & 32))))))
-						to_chat(M, "<span class='notice'>Remove that mask!</span>")
-						return
-					var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-					O.source = M
-					O.target = src
-					O.s_loc = M.loc
-					O.t_loc = loc
-					O.place = "CPR"
-					requests += O
-					spawn(0)
-						O.process()
-						return
+				if(M.check_body_part_coverage(MOUTH))
+					to_chat(M, "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>")
+					return 0
+
+				if (!cpr_time)
+					return 0
+
+				M.visible_message("<span class='danger'>\The [M] is trying perform CPR on \the [src]!</span>")
+
+				cpr_time = 0
+				if(do_after(M, src, 3 SECONDS))
+					adjustOxyLoss(-min(getOxyLoss(), 7))
+					M.visible_message("<span class='danger'>\The [M] performs CPR on \the [src]!</span>")
+					to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+					to_chat(M, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+				cpr_time = 1
 
 		if(I_GRAB)
 			if(M == src)
@@ -325,21 +328,33 @@ In all, this is a lot like the monkey code. /N
 /mob/living/carbon/alien/humanoid/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user as mob)
-
 	user.set_machine(src)
+	var/pickpocket = user.isGoodPickpocket()
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>"}
 
 	for(var/i = 1 to held_items.len) //Hands
 		var/obj/item/I = held_items[i]
-		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];hands=[i]'>[makeStrippingButton(I)]</A><BR>"
 
-	dat+={"<BR><B>Head:</B> <A href='?src=\ref[src];item=head'>[(head ? text("[]", head) : "Nothing")]</A>
-	<BR><B>(Exo)Suit:</B> <A href='?src=\ref[src];item=suit'>[(wear_suit ? text("[]", wear_suit) : "Nothing")]</A>
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pouches</A>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	<BR>"}
+	dat += "<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>[makeStrippingButton(head)]</A>"
+	dat += "<BR><B>Exosuit:</B> <A href='?src=\ref[src];item=[slot_wear_suit]'>[makeStrippingButton(wear_suit)]</A>"
+	if(pickpocket)
+		dat += "<BR><B>Left pouch:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? l_store : "<font color=grey>Left (Empty)</font>"]</A>"
+		dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? r_store : "<font color=grey>Right (Empty)</font>"]</A>"
+	else
+		dat += "<BR><B>Right pouch:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
+		dat += " <A href='?src=\ref[src];pockets=right'>[(r_store && !(src.r_store.abstract)) ? "Right (Full)" : "<font color=grey>Right (Empty)</font>"]</A>"
+	dat += "<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A><BR>"
+
 	user << browse(dat, text("window=mob\ref[src];size=340x480"))
 	onclose(user, "mob\ref[src]")
 	return
+
+/mob/living/carbon/alien/humanoid/Topic(href, href_list)
+	. = ..()
+	if(href_list["pockets"]) //href_list "pockets" would be "left" or "right"
+		if(usr.incapacitated() || !Adjacent(usr)|| isanimal(usr))
+			return
+		handle_strip_pocket(usr, href_list["pockets"])

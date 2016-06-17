@@ -323,3 +323,6 @@
 
 /mob/living/silicon/earprot()
 	return 1
+
+/mob/living/silicon/show_inv(mob/user)
+	return

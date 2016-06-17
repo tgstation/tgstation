@@ -346,8 +346,6 @@
 		return .
 
 	if(href_list["toggle"])
-		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
-
 		if (valve_open)
 			if (holding)
 				investigation_log(I_ATMOS, "had its valve <b>closed</b> by [key_name(usr)], stopping transfer into \the [holding].")
@@ -357,28 +355,21 @@
 			if (holding)
 				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into \the [holding]")
 			else
-				var/list/contents_l=list()
-				if(src.air_contents.toxins > 0)
-					contents_l += "<b><font color='red'>Plasma</font></b>"
-				if(src.air_contents.carbon_dioxide > 0)
-					contents_l += "<b><font color='red'>CO<sub>2</sub></font></b>"
-				if(istype(S))
-					contents_l += "N<sub>2</sub>O</font>"
-				var/contents_str = english_list(contents_l)
-				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into the <font color='red'><b>air</b></font> ([contents_str])")
-				if(contents_l.len>0)
-					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [contents_str] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [contents] at [loc.x], [loc.y], [loc.z]")
+				var/naughty_stuff = air_contents.loggable_contents()
+				investigation_log(I_ATMOS, "had its valve <b>OPENED</b> by [key_name(usr)], starting transfer into the <font color='red'><b>air</b></font> ([naughty_stuff])")
+				if(naughty_stuff)
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [naughty_stuff] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [naughty_stuff] at [loc.x], [loc.y], [loc.z]")
 
 		valve_open = !valve_open
 
 	if (href_list["remove_tank"])
-		var/datum/gas/sleeping_agent/S = locate() in src.air_contents.trace_gases
 		if(holding)
 			if(valve_open)
-				if(src.air_contents.toxins > 0 || (istype(S)))
-					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [formatJumpTo(loc)]!")
-					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains \[[src.air_contents.toxins > 0 ? "Toxins" : ""] [istype(S) ? " N2O" : ""]\] at [loc.x], [loc.y], [loc.z]")
+				var/naughty_stuff = air_contents.loggable_contents()
+				if(naughty_stuff)
+					message_admins("[usr.real_name] ([formatPlayerPanel(usr,usr.ckey)]) opened a canister that contains [naughty_stuff] at [formatJumpTo(loc)]!")
+					log_admin("[usr]([ckey(usr.key)]) opened a canister that contains [naughty_stuff] at [loc.x], [loc.y], [loc.z]")
 
 			if(istype(holding, /obj/item/weapon/tank))
 				holding.manipulated_by = usr.real_name

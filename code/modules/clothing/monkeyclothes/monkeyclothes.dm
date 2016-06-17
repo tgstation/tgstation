@@ -10,15 +10,22 @@
 	throw_range = 5
 	w_class = W_CLASS_MEDIUM
 	flags = FPRINT
+	slot_flags = SLOT_ICLOTHING
 	body_parts_covered = FULL_BODY
+
+/obj/item/clothing/monkeyclothes/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
+	. = ..() //Default return value. If 1, item can be equipped. If 0, it can't be.
+	if(!.) return //Well if it already can't be equipped, we've got nothing else to do here folks, time to call it quits
+
+	if(!ismonkey(M))
+		if(!disable_warning)
+			to_chat(M, "<span class='warning'>These clothes won't fit.</span>")
+		return CANNOT_EQUIP
 
 /obj/item/clothing/monkeyclothes/attack(mob/living/carbon/C as mob, mob/user as mob)	//I thought I'd give people a fast way to put clothes on monkey.
 	if(ismonkey(C))																	//They can do it by opening the monkey's "show inventory" like you'd do for an human as well.
 		var/mob/living/carbon/monkey/M = C
-		if(M.canWearClothes)
-			M.wearclothes(src)
-			return
-		else
+		if(!M.equip_to_slot_if_possible(src, slot_w_uniform))
 			to_chat(user, "Those clothes won't fit.")
 			return
 	..()

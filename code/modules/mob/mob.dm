@@ -498,8 +498,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 		if(W)
 			W.attack_hand(src)
 
-	if(ishuman(src) && W == src:head)
-		src:update_hair()
+	/*if(ishuman(src) && W == src:head) //AAAAAUGH
+		src:update_hair()*/
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj)
 	for(var/index = 1 to held_items.len)
@@ -507,90 +507,43 @@ var/global/obj/screen/fuckstat/FUCK = new
 			return 1
 	return 0
 
-//This is a SAFE proc. Use this instead of equip_to_splot()!
+//This is a SAFE proc. Use this instead of equip_to_slot()!
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, act_on_fail = 0, disable_warning = 0, redraw_mob = 1, automatic = 0)
 	if(!istype(W)) return 0
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		switch(W.mob_can_equip(src, slot, disable_warning, automatic))
-			if(0)
-				switch(act_on_fail)
-					if(EQUIP_FAILACTION_DELETE)
-						qdel(W)
-						W = null
-					if(EQUIP_FAILACTION_DROP)
-						W.loc=get_turf(src) // I think.
-					else
-						if(!disable_warning)
-							to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
-				return 0
-			if(1)
-				equip_to_slot(W, slot, redraw_mob)
-			if(2)
-				var/in_the_hand = (is_holding_item(W))
-				var/obj/item/wearing = get_item_by_slot(slot)
-				if(wearing)
-					if(!in_the_hand) //if we aren't holding it, the proc is abstract so get rid of it
-						switch(act_on_fail)
-							if(EQUIP_FAILACTION_DELETE)
-								qdel(W)
-							if(EQUIP_FAILACTION_DROP)
-								W.loc=get_turf(src) // I think.
-						return
+	if(!W.mob_can_equip(src, slot, disable_warning))
+		switch(act_on_fail)
+			if(EQUIP_FAILACTION_DELETE)
+				qdel(W)
+				W = null
+			if(EQUIP_FAILACTION_DROP)
+				W.forceMove(get_turf(src)) //Should this be using drop_from_inventory instead?
+			else
+				if(!disable_warning)
+					to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
 
-					if(drop_item(W))
-						if(!(put_in_active_hand(wearing)))
-							equip_to_slot(wearing, slot, redraw_mob)
-							switch(act_on_fail)
-								if(EQUIP_FAILACTION_DELETE)
-									qdel(W)
-								else
-									if(!disable_warning && act_on_fail != EQUIP_FAILACTION_DROP)
-										to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
+		return 0
 
-							return
-						else
-							equip_to_slot(W, slot, redraw_mob)
-							u_equip(wearing,0)
-							put_in_active_hand(wearing)
-						if(H.s_store && !H.s_store.mob_can_equip(src, slot_s_store, 1))
-							u_equip(H.s_store,1)
-		return 1
-	else
-		if(!W.mob_can_equip(src, slot, disable_warning))
-			switch(act_on_fail)
-				if(EQUIP_FAILACTION_DELETE)
-					qdel(W)
-					W = null
-				if(EQUIP_FAILACTION_DROP)
-					W.loc=get_turf(src) // I think.
-				else
-					if(!disable_warning)
-						to_chat(src, "<span class='warning'>You are unable to equip that.</span>")//Only print if act_on_fail is NOTHING
-
-			return 0
-
-		equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
-		return 1
+	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	return 1
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
 //In most cases you will want to use equip_to_slot_if_possible()
 /mob/proc/equip_to_slot(obj/item/W as obj, slot)
 	return
 
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W as obj, slot)
 	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DELETE, 1, 0)
 
-//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
+//This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the round starts and when events happen and such.
 /mob/proc/equip_to_slot_or_drop(obj/item/W as obj, slot)
 	return equip_to_slot_if_possible(W, slot, EQUIP_FAILACTION_DROP, 1, 0)
 
-// Convinience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
+// Convenience proc.  Collects crap that fails to equip either onto the mob's back, or drops it.
 // Used in job equipping so shit doesn't pile up at the start loc.
 /mob/living/carbon/human/proc/equip_or_collect(var/obj/item/W, var/slot)
 	if(!equip_to_slot_or_drop(W, slot))
@@ -859,24 +812,25 @@ var/list/slot_equipment_priority = list( \
 
 /mob/proc/show_inv(mob/user as mob)
 	user.set_machine(src)
-	var/dat = {"
-	<B><HR><FONT size=3>[name]</FONT></B>
-	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>"}
+	var/dat = ""
+	dat += "<B><HR><FONT size=3>[name]</FONT></B>"
+	dat += "<BR><HR>"
+	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>[makeStrippingButton(wear_mask)]</A>"
 
 	for(var/i = 1 to held_items.len) //Hands
 		var/obj/item/I = held_items[i]
-		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];hands=[i]'>[makeStrippingButton(I)]</A><BR>"
+
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[makeStrippingButton(back)]</A>"
+
+	dat += "<BR>"
 
 	dat += {"
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
-	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
-	onclose(user, "mob\ref[src]")
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 325, 500)
+	popup.set_content(dat)
+	popup.open()
 	return
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
@@ -990,7 +944,7 @@ var/list/slot_equipment_priority = list( \
 	if(isVentCrawling())
 		to_chat(src, "<span class='danger'>Not while we're vent crawling!</span>")
 		return
-	
+
 	var/obj/item/W = get_held_item_by_index(active_hand)
 	if(W)
 		W.attack_self(src)
@@ -1543,6 +1497,8 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+/mob/proc/isGoodPickpocket() //If the mob gets bonuses when pickpocketing and such. Currently only used for humans with the Pickpocket's Gloves.
+	return 0
 
 /mob/proc/Stun(amount)
 	if(status_flags & CANSTUN)

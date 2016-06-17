@@ -341,100 +341,7 @@
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
-				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
-					if(C.internal)
-						C.internal = null
-						to_chat(C, "<span class='notice'>No longer running on internals.</span>")
-						if(C.internals)
-							C.internals.icon_state = "internal0"
-					else
-						if(!istype(C.wear_mask, /obj/item/clothing/mask))
-							to_chat(C, "<span class='notice'>You are not wearing a mask.</span>")
-							return 1
-						else
-							var/list/nicename = null
-							var/list/tankcheck = null
-							var/breathes = "oxygen"    //default, we'll check later
-							var/list/contents = list()
-
-							if(ishuman(C))
-								var/mob/living/carbon/human/H = C
-								breathes = H.species.breath_type
-								nicename = list ("suit", "back", "belt", "left pocket", "right pocket") //Hands are added below
-								tankcheck = list (H.s_store, C.back, H.belt, H.l_store, H.r_store)
-
-							else
-								nicename = list("back")
-								tankcheck = list(C.back)
-
-							tankcheck = tankcheck + C.held_items
-							for(var/i = 1 to C.held_items.len)
-								nicename.Add(C.get_index_limb_name(i))
-
-							for(var/i=1, i<tankcheck.len+1, ++i)
-								if(istype(tankcheck[i], /obj/item/weapon/tank))
-									var/obj/item/weapon/tank/t = tankcheck[i]
-									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name)
-										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
-										continue					//in it, so we're going to believe the tank is what it says it is
-									switch(breathes)
-																		//These tanks we're sure of their contents
-										if("nitrogen") 							//So we're a bit more picky about them.
-
-											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
-												contents.Add(t.air_contents.nitrogen)
-											else
-												contents.Add(0)
-
-										if ("oxygen")
-											if(t.air_contents.oxygen && !t.air_contents.toxins)
-												contents.Add(t.air_contents.oxygen)
-											else
-												contents.Add(0)
-
-										// No races breath this, but never know about downstream servers.
-										if ("carbon dioxide")
-											if(t.air_contents.carbon_dioxide && !t.air_contents.toxins)
-												contents.Add(t.air_contents.carbon_dioxide)
-											else
-												contents.Add(0)
-
-										// ACK ACK ACK Plasmen
-										if ("toxins")
-											if(t.air_contents.toxins)
-												contents.Add(t.air_contents.toxins)
-											else
-												contents.Add(0)
-
-
-								else
-									//no tank so we set contents to 0
-									contents.Add(0)
-
-							//Alright now we know the contents of the tanks so we have to pick the best one.
-
-							var/best = 0
-							var/bestcontents = 0
-							for(var/i=1, i <  contents.len + 1 , ++i)
-								if(!contents[i])
-									continue
-								if(contents[i] > bestcontents)
-									best = i
-									bestcontents = contents[i]
-
-
-							//We've determined the best container now we set it as our internals
-
-							if(best)
-								to_chat(C, "<span class='notice'>You are now running on internals from [tankcheck[best]] on your [nicename[best]].</span>")
-								C.internal = tankcheck[best]
-
-
-							if(C.internal)
-								if(C.internals)
-									C.internals.icon_state = "internal1"
-							else
-								to_chat(C, "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>")
+				C.toggle_internals(usr)
 		if("act_intent")
 			usr.a_intent_change("right")
 		if("help")
@@ -650,32 +557,6 @@
 		if("Toggle Gun Mode")
 			usr.client.ToggleGunMode()
 
-		if("uniform")
-			if(ismonkey(usr))
-				var/mob/living/carbon/monkey/M = usr
-				if(M.canWearClothes)
-					if (!M.get_active_hand())
-						M.wearclothes(null)
-					else if (istype(M.get_active_hand(), /obj/item/clothing/monkeyclothes))
-						M.wearclothes(M.get_active_hand())
-
-		if("hat")
-			if(ismonkey(usr))
-				var/mob/living/carbon/monkey/M = usr
-				if(M.canWearHats)
-					if (!M.get_active_hand())
-						M.wearhat(null)
-					else if (istype(M.get_active_hand(), /obj/item/clothing/head))
-						M.wearhat(M.get_active_hand())
-
-		if("glasses")
-			if(ismonkey(usr))
-				var/mob/living/carbon/monkey/M = usr
-				if(M.canWearGlasses)
-					if (!M.get_active_hand())
-						M.wearglasses(null)
-					else if (istype(M.get_active_hand(), /obj/item/clothing/glasses))
-						M.wearglasses(M.get_active_hand())
 		else
 			return 0
 	return 1

@@ -1067,12 +1067,9 @@
 			return
 		cultist.unlock_from()
 		if (cultist.handcuffed)
-			cultist.handcuffed.loc = cultist.loc
-			cultist.handcuffed.handcuffs_remove(cultist)
+			cultist.drop_from_inventory(cultist.handcuffed)
 		if (cultist.legcuffed)
-			cultist.legcuffed.loc = cultist.loc
-			cultist.legcuffed = null
-			cultist.update_inv_legcuffed()
+			cultist.drop_from_inventory(cultist.legcuffed)
 		if (istype(cultist.wear_mask, /obj/item/clothing/mask/muzzle))
 			cultist.u_equip(cultist.wear_mask, 1)
 		if(istype(cultist.loc, /obj/structure/closet))
@@ -1320,13 +1317,9 @@
 			var/mob/living/carbon/monkey/K = user
 			K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
 			"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
-			if(!istype(K.uniform, /obj/item/clothing/monkeyclothes/cultrobes))
-				var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(user.loc)
-				K.wearclothes(CR)
-			if(!istype(K.hat, /obj/item/clothing/head/culthood/alt))
-				var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(user.loc)
-				K.wearhat(CH)
-			K.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(K), slot_back)
+			K.equip_to_slot_or_drop(new /obj/item/clothing/monkeyclothes/cultrobes, slot_w_uniform)
+			K.equip_to_slot_or_drop(new /obj/item/clothing/head/culthood/alt, slot_head)
+			K.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/cultpack, slot_back)
 			K.put_in_hands(new /obj/item/weapon/melee/cultblade(K))
 		return
 	else
@@ -1350,11 +1343,9 @@
 					var/mob/living/carbon/monkey/K = M
 					K.visible_message("<span class='warning'> The rune disappears with a flash of red light, [K] now looks like the cutest of all followers of Nar-Sie...</span>", \
 					"<span class='warning'>You are blinded by the flash of red light! After you're able to see again, you see that you are now wearing a set of armor. Might not offer much protection due to its size though.</span>")
-					var/obj/item/clothing/monkeyclothes/cultrobes/CR = new /obj/item/clothing/monkeyclothes/cultrobes(loc)
-					K.wearclothes(CR)
-					var/obj/item/clothing/head/culthood/alt/CH = new /obj/item/clothing/head/culthood/alt(loc)
-					K.wearhat(CH)
-					K.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(K), slot_back)
+					K.equip_to_slot_or_drop(new /obj/item/clothing/monkeyclothes/cultrobes, slot_w_uniform)
+					K.equip_to_slot_or_drop(new /obj/item/clothing/head/culthood/alt, slot_head)
+					K.equip_to_slot_or_drop(new /obj/item/weapon/storage/backpack/cultpack, slot_back)
 					K.put_in_hands(new /obj/item/weapon/melee/cultblade(K))
 				else if(isconstruct(M))
 					var/construct_class

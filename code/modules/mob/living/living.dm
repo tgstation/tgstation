@@ -961,8 +961,10 @@ Thanks.
 						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>",
 										   "<span class='notice'>You successfuly break your handcuffs.</span>")
 						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.handcuffed)
-						CM.handcuffed.handcuffs_remove(CM)
+						var/obj/item/weapon/handcuffs/cuffs = CM.handcuffed
+						CM.drop_from_inventory(cuffs)
+						if(!cuffs.gcDestroyed) //If these were not qdel'd already (exploding cuffs, anyone?)
+							qdel(cuffs)
 					else
 						to_chat(CM, "<span class='warning'>Your cuff breaking attempt was interrupted.</span>")
 
@@ -982,8 +984,7 @@ Thanks.
 						CM.visible_message("<span class='danger'>[CM] manages to remove [HC]!</span>",
 										   "<span class='notice'>You successfuly remove [HC].</span>",
 										   self_drugged_message="<span class='notice'>You successfully regain control of your hands.</span>")
-						CM.handcuffed.loc = usr.loc
-						CM.handcuffed.handcuffs_remove(CM)
+						CM.drop_from_inventory(HC)
 					else
 						CM.simple_message("<span class='warning'>Your uncuffing attempt was interrupted.</span>",
 							"<span class='warning'>Your attempt to regain control of your hands was interrupted. Damn it!</span>")

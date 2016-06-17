@@ -1,3 +1,4 @@
+#define HTMLTAB "&nbsp;&nbsp;&nbsp;&nbsp;"
 /*
  * Holds procs designed to help with filtering text
  * Contains groups:

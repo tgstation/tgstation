@@ -143,55 +143,6 @@
 ///mob/living/carbon/monkey/diona/New()
 //Moved to it's duplicate declaration modules\mob\living\carbon\monkey\diona.dm
 
-/mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
-	user.set_machine(src)
-	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
-	var/TAB = "&nbsp;&nbsp;&nbsp;&nbsp;"
-
-	var/dat
-
-	for(var/i = 1 to held_items.len) //Hands
-		var/obj/item/I = held_items[i]
-		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];item=hand;hand_index=[i]'>		[(I && !I.abstract) ? I : "<font color=grey>Empty</font>"]</A><BR>"
-
-	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=back'> [(back && !(src.back.abstract)) ? back : "<font color=grey>Empty</font>"]</A>"
-	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
-		dat += "<BR>[TAB]&#8627;<A href='?src=\ref[src];item=internal'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-
-	dat += "<BR>"
-
-	if(canWearHats)
-		if(hat)
-			dat +=	"<br><b>Headwear:</b> [hat] (<a href='?src=\ref[src];remove_inv=hat'>Remove</a>)"
-		else
-			dat +=	"<br><b>Headwear:</b> <a href='?src=\ref[src];add_inv=hat'><font color=grey>Empty</font></a>"
-
-	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=mask'>		[(wear_mask && !(src.wear_mask.abstract))	? wear_mask	: "<font color=grey>Empty</font>"]</A>"
-
-	if(canWearGlasses)
-		if(glasses)
-			dat +=	"<br><b>Glasses:</b> [glasses] (<a href='?src=\ref[src];remove_inv=glasses'>Remove</a>)"
-		else
-			dat +=	"<br><b>Glasses:</b> <a href='?src=\ref[src];add_inv=glasses'><font color=grey>Empty</font></a>"
-
-	if(canWearClothes)
-		if(uniform)
-			dat +=	"<br><b>Uniform:</b> [uniform] (<a href='?src=\ref[src];remove_inv=uniform'>Remove</a>)"
-		else
-			dat +=	"<br><b>Uniform:</b> <a href='?src=\ref[src];add_inv=uniform'><font color=grey>Empty</font></a>"
-
-	if(handcuffed)
-		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=handcuff'>Remove</A>"
-
-	dat += {"
-	<BR>
-	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
-	"}
-
-	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
-	popup.set_content(dat)
-	popup.open()
-
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
@@ -213,139 +164,43 @@
 
 	return tally+config.monkey_delay
 
+/mob/living/carbon/monkey/show_inv(mob/living/carbon/user as mob)
+	user.set_machine(src)
 
-/mob/living/carbon/monkey/proc/wearhat(var/obj/item/clothing/head/H as obj)
-	if(H)
-		if(istype(H))
-			var/obj/item/clothing/head/oldhat = null
-			if(hat)
-				oldhat = hat
-				hat = null
-			hat = H
-			usr.drop_item(hat, src, 1)
-			regenerate_icons()
-			if (oldhat)
-				usr.put_in_hands(oldhat)
-	else
-		if(hat)
-			usr.put_in_hands(hat)
-			hat = null
-			regenerate_icons()
+	var/dat
 
-/mob/living/carbon/monkey/proc/wearclothes(var/obj/item/clothing/monkeyclothes/C as obj)
-	if(C)
-		if(istype(C))
-			var/obj/item/clothing/monkeyclothes/olduniform = null
-			if(uniform)
-				olduniform = uniform
-				uniform = null
-			uniform = C
-			usr.drop_item(uniform, src, 1)
-			regenerate_icons()
-			if (olduniform)
-				usr.put_in_hands(olduniform)
-	else
-		if(uniform)
-			usr.put_in_hands(uniform)
-			uniform = null
-			regenerate_icons()
+	for(var/i = 1 to held_items.len) //Hands
+		var/obj/item/I = held_items[i]
+		dat += "<B>[capitalize(get_index_limb_name(i))]</B> <A href='?src=\ref[src];hands=[i]'>[makeStrippingButton(I)]</A><BR>"
 
-/mob/living/carbon/monkey/proc/wearglasses(var/obj/item/clothing/glasses/G as obj)
-	if(G)
-		if(istype(G))
-			var/obj/item/clothing/glasses/oldglasses = null
-			if(glasses)
-				oldglasses = glasses
-				glasses = null
-			glasses = G
-			usr.drop_item(glasses, src, 1)
-			regenerate_icons()
-			if (oldglasses)
-				usr.put_in_hands(oldglasses)
-	else
-		if(glasses)
-			usr.put_in_hands(glasses)
-			glasses = null
-			regenerate_icons()
+	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[makeStrippingButton(back)]</A>"
 
-/mob/living/carbon/monkey/Topic(href, href_list)
-	..()
-	if (href_list["mach_close"])
-		var/t1 = text("window=[]", href_list["mach_close"])
-		unset_machine()
-		src << browse(null, t1)
-	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
-		O.source = usr
-		O.target = src
-		O.item = usr.get_active_hand()
-		O.s_loc = usr.loc
-		O.t_loc = loc
-		O.place = href_list["item"]
-		requests += O
-		spawn( 0 )
-			O.process()
-			return
-	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
-			return
-		var/remove_from = href_list["remove_inv"]
-		switch(remove_from)
-			if("uniform")
-				if(uniform)
-					uniform.loc = src.loc
-					uniform = null
-					regenerate_icons()
-				else
-					to_chat(usr, "<span class='warning'>He has no uniform to remove.</span>")
-					return
-			if("hat")
-				if(hat)
-					hat.loc = src.loc
-					hat = null
-					regenerate_icons()
-				else
-					to_chat(usr, "<span class='warning'>He has no hat to remove</span>")
-					return
-			if("glasses")
-				if(glasses)
-					glasses.loc = src.loc
-					glasses = null
-					regenerate_icons()
-				else
-					to_chat(usr, "<span class='warning'>He has no glasses to remove</span>")
-					return
-		show_inv(usr)
-	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
-			return
+	dat += "<BR>"
 
-		var/add_to = href_list["add_inv"]
-		if(!usr.get_active_hand())
-			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on him.</span>")
-			return
-		switch(add_to)
-			if("uniform")
-				if(uniform)
-					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
-					return
-				else
-					wearclothes(usr.get_active_hand())
-			if("hat")
-				if(hat)
-					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
-					return
-				else
-					wearhat(usr.get_active_hand())
-			if("glasses")
-				if(glasses)
-					to_chat(usr, "<span class='warning'>He's already wearing something.</span>")
-					return
-				else
-					wearglasses(usr.get_active_hand())
-		show_inv(usr)
-	..()
-	return
+	if(canWearHats)
+		dat +=	"<br><b>Headwear:</b> <A href='?src=\ref[src];item=[slot_head]'>[makeStrippingButton(hat)]</A>"
+
+	dat += "<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>[makeStrippingButton(wear_mask)]</A>"
+	if(has_breathing_mask())
+		dat += "<BR>[HTMLTAB]&#8627;<B>Internals:</B> [src.internal ? "On" : "Off"]  <A href='?src=\ref[src];internals=1'>(Toggle)</A>"
+
+	if(canWearGlasses)
+		dat +=	"<br><b>Glasses:</b> <A href='?src=\ref[src];item=[slot_glasses]'>[makeStrippingButton(glasses)]</A>"
+
+	if(canWearClothes)
+		dat +=	"<br><b>Uniform:</b> <A href='?src=\ref[src];item=[slot_w_uniform]'>[makeStrippingButton(uniform)]</A>"
+
+	if(handcuffed)
+		dat += "<BR><B>Handcuffed:</B> <A href='?src=\ref[src];item=[slot_handcuffed]'>Remove</A>"
+
+	dat += {"
+	<BR>
+	<BR><A href='?src=\ref[user];mach_close=mob\ref[src]'>Close</A>
+	"}
+
+	var/datum/browser/popup = new(user, "mob\ref[src]", "[src]", 340, 500)
+	popup.set_content(dat)
+	popup.open()
 
 //mob/living/carbon/monkey/bullet_act(var/obj/item/projectile/Proj)taken care of in living
 

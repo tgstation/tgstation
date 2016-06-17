@@ -233,19 +233,22 @@
 				to_chat(M, "<span class='notice'><B>Remove your [M.get_body_part_coverage(MOUTH)]!</B></span>")
 				return 0
 			if(src.check_body_part_coverage(MOUTH))
-				to_chat(M, "<span class='notice'><B>Remove his [src.get_body_part_coverage(MOUTH)]!</B></span>")
+				to_chat(M, "<span class='notice'><B>Remove their [src.get_body_part_coverage(MOUTH)]!</B></span>")
 				return 0
 
-			var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
-			O.source = M
-			O.target = src
-			O.s_loc = M.loc
-			O.t_loc = loc
-			O.place = "CPR"
-			requests += O
-			spawn(0)
-				O.process()
-			return 1
+			if (!cpr_time)
+				return 0
+
+			M.visible_message("<span class='danger'>\The [M] is trying perform CPR on \the [src]!</span>")
+
+			cpr_time = 0
+			if(do_after(M, src, 3 SECONDS))
+				adjustOxyLoss(-min(getOxyLoss(), 7))
+				M.visible_message("<span class='danger'>\The [M] performs CPR on \the [src]!</span>")
+				to_chat(src, "<span class='notice'>You feel a breath of fresh air enter your lungs. It feels good.</span>")
+				to_chat(M, "<span class='warning'>Repeat at least every 7 seconds.</span>")
+			cpr_time = 1
+
 
 		if(I_GRAB)
 			if(M == src || anchored)

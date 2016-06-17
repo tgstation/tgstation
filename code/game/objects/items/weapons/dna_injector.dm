@@ -5,7 +5,6 @@
 	icon_state = "dnainjector"
 	var/block=0
 	var/datum/dna2/record/buf=null
-	var/s_time = 10.0
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -104,6 +103,24 @@
 				//if(prob(5))
 					//trigger_side_effect(M)
 
+		if(buf.types & DNA2_BUF_SE)
+			if(block)// Isolated injector
+				if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human))
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
+					log_attack("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] (MONKEY)")
+					log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
+				else
+					log_attack("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name]")
+					log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name]")
+			else
+				if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
+					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
+					log_attack("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (MONKEY)")
+					log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] (MONKEY)")
+				else
+					log_attack("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+					log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
+
 	spawn(0)//this prevents the collapse of space-time continuum
 		if(user)
 			user.drop_from_inventory(src)
@@ -127,90 +144,23 @@
 	else
 		M.LAssailant = user
 
-	if (user)
-		if (istype(M, /mob/living/carbon/human))
-			if(!inuse)
-				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
-				O.source = user
-				O.target = M
-				O.item = src
-				O.s_loc = user.loc
-				O.t_loc = M.loc
-				O.place = "dnainjector"
-				src.inuse = 1
-				spawn(50) // Not the best fix. There should be an failure proc, for /effect/equip_e/, which is called when the first initital checks fail
-					inuse = 0
-				M.requests += O
-				if (buf.types & DNA2_BUF_SE)
-					if(block)// Isolated injector
-						//testing("Isolated block [block] injector with contents: [GetValue()]")
-						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
-							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
-						else
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
-					else
-						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
-						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
-							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
-							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
-						else
-	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-							log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
-				else
-	//				message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-					log_attack("[key_name(user)] injected [key_name(M)] with the [name]")
+	if(inuse)
+		return 0
 
-				spawn( 0 )
-					O.process()
-					return
-		else
-			if(!inuse)
+	user.visible_message("<span class='danger'>\The [user] is trying to inject \the [M] with \the [src]!</span>")
 
-				for(var/mob/O in viewers(M, null))
-					O.show_message(text("<span class='warning'>[] has been injected with [] by [].</span>", M, src, user), 1)
-					//Foreach goto(192)
-				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
-					to_chat(user, "<span class='warning'>Apparently it didn't work.</span>")
-					return
+	inuse = 1
+	if(!do_after(user, M, 5 SECONDS))
+		inuse = 0 //If you've got a better idea on how to not repeat this twice I'd like to hear it
+		return
+	inuse = 0
 
-				if (buf.types & DNA2_BUF_SE)
-					if(block)// Isolated injector
-						//testing("Isolated block [block] injector with contents: [GetValue()]")
-						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
-							log_game("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] <span class='warning'>(MONKEY)</span>")
-						else
-							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
-					else
-						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
-						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
-							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] <span class='warning'>(MONKEY)</span>")
-							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
-						else
-	//						message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-							log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-				else
-//					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
-					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
-				inuse = 1
-				inject(M, user)//Now we actually do the heavy lifting.
-				spawn(50)
-					inuse = 0
-				/*
-				A user injecting themselves could mean their own transformation and deletion of mob.
-				I don't have the time to figure out how this code works so this will do for now.
-				I did rearrange things a bit.
-				*/
-				if(user)//If the user still exists. Their mob may not.
-					if(M)//Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
-						user.show_message(text("<span class='warning'>You inject [M.name].</span>"))
-					else
-						user.show_message(text("<span class='warning'>You finish the injection.</span>"))
-	return
+	M.visible_message("<span class='danger'>\The [M] has been injected with \the [src] by \the [user].</span>")
+	if (!istype(M, /mob/living/carbon/human) && !istype(M, /mob/living/carbon/monkey))
+		to_chat(user, "<span class='warning'>Apparently, the DNA injector didn't work...</span>")
+		return
+
+	inject(M, user)
 
 /obj/item/weapon/dnainjector/nofail
 	nofail = MUTCHK_FORCED

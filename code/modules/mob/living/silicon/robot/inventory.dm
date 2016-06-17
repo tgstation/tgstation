@@ -15,6 +15,10 @@
 /mob/living/silicon/robot/get_equipped_items()
 	return get_all_slots()
 
+//May need work
+/mob/living/silicon/robot/is_in_modules(var/obj/item/W)
+	return (W in module.modules)
+
 /mob/living/silicon/robot/proc/uneq_module(const/obj/item/module)
 	if(!istype(module))
 		return 0

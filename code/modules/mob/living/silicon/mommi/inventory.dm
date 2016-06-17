@@ -11,7 +11,7 @@
 /mob/living/silicon/robot/mommi/get_equipped_items()
 	return head_state
 
-/mob/living/silicon/robot/mommi/proc/is_in_modules(obj/item/W, var/permit_sheets=0)
+/mob/living/silicon/robot/mommi/is_in_modules(obj/item/W, var/permit_sheets=0)
 	if(istype(W, src.module.emag.type))
 		return src.module.emag
 	// Exact matching for stacks (so we can load machines)

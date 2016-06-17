@@ -73,7 +73,7 @@
 	//Forbid wearing bags with something inside!
 	.=..()
 	if(contents.len && (slot == slot_head))
-		return 0
+		return CANNOT_EQUIP
 
 /obj/item/weapon/storage/bag/plasticbag/can_be_inserted()
 	if(ishuman(loc))

@@ -11,9 +11,9 @@
 	var/cold_speed_protection = 300 //that cloth allows its wearer to keep walking at normal speed at lower temperatures
 
 //BS12: Species-restricted clothing check.
-/obj/item/clothing/mob_can_equip(mob/M, slot)
+/obj/item/clothing/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 
-	. = ..(M, slot, 1) //Default return value. If 1, item can be equipped. If 0, it can't be.
+	. = ..() //Default return value. If 1, item can be equipped. If 0, it can't be.
 	if(!.) return //Default return value is 0 - don't check for species
 
 	if(species_restricted && istype(M,/mob/living/carbon/human) && (slot != slot_l_store && slot != slot_r_store))
@@ -55,19 +55,35 @@
 					wearable = 1
 				else
 					to_chat(M, "<span class='warning'>Your misshapen [OE.display_name] prevents you from wearing \the [src].</span>")
-					return 0
+					return CANNOT_EQUIP
 			else
 				if(species_restricted.Find(OE.species.name))
 					wearable = 1
 				else
 					to_chat(M, "<span class='warning'>Your misshapen [OE.display_name] prevents you from wearing \the [src].</span>")
-					return 0
+					return CANNOT_EQUIP
 
 		if(!wearable) //But we are a species that CAN'T wear it (sidenote: slots 15 and 16 are pockets)
 			to_chat(M, "<span class='warning'>Your species cannot wear [src].</span>")//Let us know
-			return 0
+			return CANNOT_EQUIP
 
 	//return ..()
+
+/obj/item/clothing/before_stripped(mob/wearer as mob, mob/stripper as mob, slot)
+	..()
+	if(slot == slot_w_uniform) //this will cause us to drop our belt, ID, and pockets!
+		for(var/slotID in list(slot_wear_id, slot_belt, slot_l_store, slot_r_store))
+			var/obj/item/I = wearer.get_item_by_slot(slotID)
+			if(I)
+				I.on_found(stripper)
+
+/obj/item/clothing/stripped(mob/wearer as mob, mob/stripper as mob, slot)
+	..()
+	if(slot == slot_w_uniform) //this will cause us to drop our belt, ID, and pockets!
+		for(var/slotID in list(slot_wear_id, slot_belt, slot_l_store, slot_r_store))
+			var/obj/item/I = wearer.get_item_by_slot(slotID)
+			if(I)
+				I.stripped(stripper)
 
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
@@ -436,33 +452,43 @@ BLIND     // can't see anything
 	for(var/obj/item/clothing/accessory/A in accessories)
 		to_chat(user, "<span class='info'>\A [A] is clipped to it.</span>")
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr as mob)
-	var/mob/M = usr
-	if (istype(M, /mob/dead/)) return
-	if (usr.incapacitated()) return
+/obj/item/clothing/under/proc/set_sensors(mob/user as mob)
+	if(user.incapacitated()) return
 	if(has_sensor >= 2)
-		to_chat(usr, "<span class='warning'>The controls are locked.</span>")
+		to_chat(user, "<span class='warning'>The controls are locked.</span>")
 		return 0
 	if(has_sensor <= 0)
-		to_chat(usr, "<span class='warning'>This suit does not have any sensors.</span>")
+		to_chat(user, "<span class='warning'>This suit does not have any sensors.</span>")
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, "<span class='warning'>You have moved too far away.</span>")
+	if(get_dist(user, src) > 1)
+		to_chat(user, "<span class='warning'>You have moved too far away.</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	switch(sensor_mode)
-		if(0)
-			to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
-		if(1)
-			to_chat(usr, "<span class='notice'>Your suit will now report whether you are live or dead.</span>")
-		if(2)
-			to_chat(usr, "<span class='notice'>Your suit will now report your vital lifesigns.</span>")
-		if(3)
-			to_chat(usr, "<span class='notice'>Your suit will now report your vital lifesigns as well as your coordinate position.</span>")
+	if(is_holder_of(user, src))
+		switch(sensor_mode) //i'm sure there's a more compact way to write this but c'mon
+			if(0)
+				to_chat(user, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
+			if(1)
+				to_chat(user, "<span class='notice'>Your suit will now report whether you are live or dead.</span>")
+			if(2)
+				to_chat(user, "<span class='notice'>Your suit will now report your vital lifesigns.</span>")
+			if(3)
+				to_chat(user, "<span class='notice'>Your suit will now report your vital lifesigns as well as your coordinate position.</span>")
+	else
+		switch(sensor_mode)
+			if(0)
+				to_chat(user, "<span class='notice'>You disable the suit's remote sensing equipment.</span>")
+			if(1)
+				to_chat(user, "<span class='notice'>The suit sensors will now report whether the wearer is live or dead.</span>")
+			if(2)
+				to_chat(user, "<span class='notice'>The suit sensors will now report the wearer's vital lifesigns.</span>")
+			if(3)
+				to_chat(user, "<span class='notice'>The suit sensors will now report the wearer's vital lifesigns as well as their coordinate position.</span>")
+	return switchMode
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Toggle Suit Sensors"
