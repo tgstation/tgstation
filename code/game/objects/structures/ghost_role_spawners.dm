@@ -223,10 +223,6 @@
 	flavour_text = "<font size=3><b>G</b></font><b>ood. It seems as though your ship crashed. You're a prisoner, sentenced to hard work in one of Nanotrasen's labor camps, but it seems as \
 	though fate has other plans for you. You remember that you were convicted of "
 
-/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
-	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
-	L.name = L.real_name
-
 /obj/effect/mob_spawn/human/prisoner_transport/New()
 	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
 	"worship of a forbidden deity", "interspecies relations", "mutiny")
