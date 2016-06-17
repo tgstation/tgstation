@@ -25,9 +25,10 @@
 			pixel_y = PixelY
 		sleep(picked_up_speed)
 
-/obj/item/projectile/rocket/Bump(var/atom/rocket)
-	explosion(rocket, -1, 1, 4, 8)
-	qdel(src)
+/obj/item/projectile/rocket/Bump(var/atom/A)
+	explosion(A, 1, 3, 5, 8) //RPGs pack a serious punch and will cause massive structural damage in your average room, but won't punch through reinforced walls
+	if(!gcDestroyed)
+		qdel(src)
 
 /obj/item/projectile/nikita
 	name = "\improper Nikita missile"
@@ -98,7 +99,7 @@
 /obj/item/projectile/nikita/Bumped(var/atom/A)
 	if(emagged && (A == mob))
 		return
-	detonate()
+	detonate(A)
 
 /obj/item/projectile/nikita/process_step()
 	if(!emagged && !check_user())//if the original user dropped the Nikita and the missile is still in the air, we check if someone picked it up.
@@ -153,9 +154,9 @@
 		return 0
 	return 1
 
-/obj/item/projectile/nikita/proc/detonate(var/explosion = loc)
-	explosion(explosion, -1, 1, 4, 8)
-	if(src)
+/obj/item/projectile/nikita/proc/detonate(var/atom/A)
+	explosion(A, 1, 3, 5, 8) //Nikita rockets pack a serious punch and will cause massive structural damage in your average room, but won't punch through reinforced walls
+	if(!gcDestroyed)
 		qdel(src)
 
 /obj/item/projectile/nikita/proc/reset_view()
