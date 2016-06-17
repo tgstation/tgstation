@@ -1,4 +1,0 @@
-author: Shadowmech88
-delete-after: True
-changes: 
-- rscadd: Borers can now inhabit a human's left arm, right arm, left leg, right leg, and chest in addition to their head. A human may have one borer in each of these limbs. The borer's available evolutions are influenced by the limb it is currently inhabiting.
