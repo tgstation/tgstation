@@ -1124,6 +1124,8 @@ proc/get_mob_with_client_list()
 	This is essentially the same as calling (locate(B) in A), but a little clearer as to what you're doing, and locate() has been known to bug out or be extremely slow in the past.
 */
 /proc/is_holder_of(const/atom/movable/A, const/atom/movable/B)
+	if(istype(A, /turf) || istype(B, /turf)) //Clicking on turfs is a common thing and turfs are also not /atom/movable, so it was causing the assertion to fail.
+		return 0
 	ASSERT(istype(A) && istype(B))
 	var/atom/O = B
 	while(O && !isturf(O))

@@ -465,9 +465,18 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!host || controlling || !src || stat) //Sanity check.
 		return
 
+	if(chem.name == "blood")
+		if(istype(host, /mob/living/carbon/human) && !(host.species.flags & NO_BLOOD))
+			host.vessel.add_reagent(chem.name, units)
+		else
+			to_chat(src, "<span class='notice'>Your host seems to be a species that doesn't use blood.<span>")
+			return
+	else
+		host.reagents.add_reagent(chem.name, units)
+
 	to_chat(src, "<span class='info'>You squirt a measure of [chem.name] from your reservoirs into [host]'s bloodstream.</span>")
 	add_gamelogs(src, "secreted [units]U of '[chemID]' into \the [host]", admin = TRUE, tp_link = TRUE, span_class = "message")
-	host.reagents.add_reagent(chem.name, units)
+
 	chemicals -= chem.cost*units
 
 // We've been moved to someone's head.
@@ -798,6 +807,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		to_chat(src, "That is not an appropriate target.")
 		return
 
+	if(M.has_brain_worms(region))
+		to_chat(src, "This host's [limb_to_name(region)] is already infested!")
+		return
+
 	if(M in view(1, src))
 		to_chat(src, "[region == "head" ? "You wiggle into [M]'s ear." : "You burrow under [M]'s skin."]")
 		src.perform_infestation(M, region)
@@ -1099,6 +1112,9 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 				if(!extend_o_arm)
 					extend_o_arm = new /obj/item/weapon/gun/hookshot/flesh(src, src)
 					extend_o_arm.forceMove(host)
+				if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/offhand) || istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/offhand)) //If the host is two-handing something.
+					to_chat(src, "<span class='warning'>You cannot swing this item while your host holds it with both hands!</span>")
+					return
 				if(host.Adjacent(A))
 					if(hostlimb == "r_arm")
 						if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
@@ -1111,8 +1127,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 									attack_cooldown = 0
 								return
 						else if(istype(A, /obj/item))
-							host.put_in_r_hand(A)
-							return
+							var/obj/item/I = A
+							if(!I.anchored)
+								host.put_in_r_hand(A)
+								return
 					else
 						if(host.get_held_item_by_index(GRASP_LEFT_HAND))
 							if(attack_cooldown)
@@ -1124,8 +1142,10 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 									attack_cooldown = 0
 								return
 						else if(istype(A, /obj/item))
-							host.put_in_l_hand(A)
-							return
+							var/obj/item/I = A
+							if(!I.anchored)
+								host.put_in_l_hand(A)
+								return
 				if(get_turf(A) == get_turf(host) && !istype(A, /obj/item))
 					return
 				if(hostlimb == "r_arm")

@@ -209,7 +209,7 @@ obj/item/weapon/banhammer/admin
 	throwforce = 0
 	w_class = 5
 	sharpness = 0
-	attack_verb = list("bludgeoned", "smashed", "pummeled", "crushed", "slammed")
+	attack_verb = list("bludgeons", "smashes", "pummels", "crushes", "slams")
 	mech_flags = MECH_SCAN_ILLEGAL
 	cant_drop = 1
 	var/mob/living/simple_animal/borer/parent_borer = null

@@ -6,6 +6,8 @@
 	w_class = 5
 	fire_sound = 'sound/effects/flesh_squelch.ogg'
 	empty_sound = null
+	silenced = 1
+	fire_volume = 250
 	maxlength = 10
 	var/mob/living/simple_animal/borer/parent_borer = null
 	var/image/item_overlay = null
