@@ -80,6 +80,11 @@
 	burnt = 1
 	update_icon()
 
+/turf/open/floor/carpet/carpetsymbol
+	icon_state = "carpetsymbol"
+
+/turf/open/floor/carpet/carpetsymbol2
+	icon_state = "carpetsymbol2"
 
 
 /turf/open/floor/fakespace
