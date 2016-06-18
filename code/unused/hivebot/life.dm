@@ -177,7 +177,7 @@
 					src.bodytemp.icon_state = "temp-2"
 
 
-			if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+			update_pull_icon()
 
 			src.client.screen -= src.hud_used.blurry
 			src.client.screen -= src.hud_used.druggy

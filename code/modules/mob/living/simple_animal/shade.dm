@@ -92,8 +92,7 @@
 	if(timestopped) return 0 //under effects of time magick
 	. = ..()
 
-	if(pullin)
-		pullin.icon_state = "pull1"
+	update_pull_icon() //why is this here?
 
 	if(purged)
 		if(purge > 0)							purged.icon_state = "purge1"

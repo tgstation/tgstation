@@ -244,7 +244,7 @@
 			else
 				healths.icon_state = "health7"
 
-		if(pullin)	pullin.icon_state = "pull[pulling ? 1 : 0]"
+		update_pull_icon()
 		if (client)
 			clear_fullscreens()
 

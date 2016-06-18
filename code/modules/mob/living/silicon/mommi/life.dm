@@ -206,7 +206,7 @@
 				src.bodytemp.icon_state = "temp-2"
 
 
-	if(src.pullin)	src.pullin.icon_state = "pull[src.pulling ? 1 : 0]"
+	update_pull_icon()
 //Oxygen and fire does nothing yet!!
 //	if (src.oxygen) src.oxygen.icon_state = "oxy[src.oxygen_alert ? 1 : 0]"
 //	if (src.fire) src.fire.icon_state = "fire[src.fire_alert ? 1 : 0]"
