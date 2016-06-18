@@ -14848,6 +14848,9 @@
 	dir = 8
 	},
 /obj/machinery/recharge_station,
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aGq" = (
@@ -27676,9 +27679,12 @@
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bkI" = (
-/obj/structure/table,
-/obj/item/weapon/aiModule/supplied/freeform,
-/turf/open/floor/bluegrid,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8
+	},
 /area/turret_protected/ai_upload)
 "bkJ" = (
 /obj/structure/grille,
@@ -28131,9 +28137,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
-	},
-/obj/effect/landmark/start{
-	name = "Cyborg"
 	},
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
@@ -29283,17 +29286,10 @@
 /turf/open/floor/plasteel/black,
 /area/engine/gravity_generator)
 "bnV" = (
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 0;
-	pixel_y = 24
-	},
 /obj/machinery/porta_turret/ai{
 	icon_state = "greyOff"
 	},
-/turf/open/floor/plasteel/darkwarning{
-	dir = 1
-	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bnW" = (
 /obj/structure/grille,
@@ -30572,38 +30568,8 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
-	dir = 2;
-	name = "Upload APC";
-	pixel_y = -24
-	},
-/obj/machinery/light/small,
-/obj/structure/table,
-/obj/machinery/door/window{
-	base_state = "left";
-	dir = 4;
-	icon_state = "left";
-	name = "High-Risk Modules";
-	req_access_txt = "20"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/obj/item/weapon/aiModule/supplied/oxygen,
-/obj/item/weapon/aiModule/zeroth/oneHuman,
-/obj/item/weapon/aiModule/reset/purge,
-/obj/item/weapon/aiModule/core/full/antimov,
-/obj/item/weapon/aiModule/supplied/protectStation,
-/turf/open/floor/plasteel/darkwarning/corner{
-	tag = "icon-warndarkcorners (EAST)";
-	icon_state = "warndarkcorners";
-	dir = 4
+/turf/open/floor/plasteel/vault{
+	dir = 8
 	},
 /area/turret_protected/ai_upload)
 "bqE" = (
@@ -30628,33 +30594,7 @@
 	dir = 4;
 	on = 1
 	},
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	listening = 0;
-	name = "Station Intercom (AI Private)";
-	pixel_y = -29
-	},
-/obj/machinery/light/small,
-/obj/structure/table,
-/obj/item/weapon/aiModule/core/full/asimov,
-/obj/item/weapon/aiModule/core/freeformcore,
-/obj/item/weapon/aiModule/core/full/corp,
-/obj/item/weapon/aiModule/core/full/custom,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Core Modules";
-	req_access_txt = "20"
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 1
-	},
-/turf/open/floor/plasteel/darkwarning/corner{
-	tag = "icon-warndarkcorners (WEST)";
-	icon_state = "warndarkcorners";
+/turf/open/floor/plasteel/vault{
 	dir = 8
 	},
 /area/turret_protected/ai_upload)
@@ -31399,13 +31339,29 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/closed/wall/r_wall,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/power/apc{
+	cell_type = 5000;
+	dir = 2;
+	name = "Upload APC";
+	pixel_y = -24
+	},
+/obj/machinery/light/small,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bsb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/closed/wall/r_wall,
+/obj/machinery/porta_turret/ai{
+	tag = "icon-greyOff (EAST)";
+	icon_state = "greyOff";
+	dir = 4
+	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bsc" = (
 /obj/structure/cable{
@@ -31427,7 +31383,15 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/turf/closed/wall/r_wall,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1447;
+	listening = 0;
+	name = "Station Intercom (AI Private)";
+	pixel_y = -29
+	},
+/obj/machinery/light/small,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bsf" = (
 /obj/machinery/camera/motion{
@@ -31441,7 +31405,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/turf/closed/wall/r_wall,
+/obj/machinery/porta_turret/ai{
+	tag = "icon-greyOff (WEST)";
+	icon_state = "greyOff";
+	dir = 8
+	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "bsh" = (
 /turf/closed/wall,
@@ -32798,8 +32767,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/landmark/start{
-	name = "Cyborg"
+/obj/structure/chair/office/dark{
+	dir = 4
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
@@ -33402,6 +33371,9 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
+/obj/machinery/ai_status_display{
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/warning/corner{
 	dir = 4
 	},
@@ -33515,6 +33487,8 @@
 	c_tag = "Gravity Generator Foyer";
 	dir = 1
 	},
+/obj/structure/table,
+/obj/item/weapon/phone,
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai_upload_foyer)
 "bwo" = (
@@ -34775,6 +34749,11 @@
 "byS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/warning/corner{
 	dir = 8
@@ -57836,7 +57815,7 @@
 	pixel_y = 23;
 	req_access_txt = "16"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "cvD" = (
 /obj/structure/cable{
@@ -58185,33 +58164,36 @@
 	},
 /area/turret_protected/ai_upload)
 "cwg" = (
-/turf/open/floor/plasteel/darkwarning{
-	dir = 8
+/obj/machinery/recharge_station,
+/obj/effect/landmark/start{
+	name = "Cyborg"
 	},
-/area/turret_protected/ai_upload)
+/turf/open/floor/plasteel/bot,
+/area/storage/primary)
 "cwh" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "cwi" = (
-/turf/open/floor/plasteel/darkwarning{
-	dir = 4
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 0;
+	pixel_y = 24
 	},
+/obj/machinery/computer/upload/ai,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwj" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwk" = (
-/obj/structure/cable{
-	tag = "icon-1-2";
-	icon_state = "1-2"
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
 	},
-/turf/open/floor/plasteel/black,
+/obj/machinery/computer/upload/borg,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwl" = (
 /obj/machinery/door/airlock/highsecurity{
@@ -58236,26 +58218,53 @@
 /area/turret_protected/ai)
 "cwo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/structure/table,
+/obj/item/weapon/aiModule/supplied/oxygen,
+/obj/item/weapon/aiModule/zeroth/oneHuman,
+/obj/item/weapon/aiModule/reset/purge,
+/obj/item/weapon/aiModule/core/full/antimov,
+/obj/item/weapon/aiModule/supplied/protectStation,
+/obj/machinery/door/window{
+	base_state = "left";
+	dir = 4;
+	icon_state = "left";
+	name = "High-Risk Modules";
+	req_access_txt = "20"
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwp" = (
-/obj/structure/grille,
-/turf/open/floor/plating,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/motion{
+	c_tag = "AI Core";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwq" = (
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "cwr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/structure/table,
-/obj/item/weapon/aiModule/reset,
+/obj/item/weapon/aiModule/core/full/asimov,
+/obj/item/weapon/aiModule/core/freeformcore,
+/obj/item/weapon/aiModule/core/full/corp,
+/obj/item/weapon/aiModule/core/full/custom,
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Core Modules";
+	req_access_txt = "20"
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cws" = (
@@ -58268,25 +58277,30 @@
 /area/turret_protected/ai_upload)
 "cwu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/computer/upload/borg,
+/obj/structure/table,
+/obj/item/weapon/aiModule/supplied/freeform,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/computer/upload/ai,
+/obj/structure/table,
+/obj/item/weapon/aiModule/reset,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cww" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/turf/closed/wall/r_wall,
+/obj/structure/table,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwx" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall/r_wall,
+/obj/structure/table,
+/obj/item/weapon/aiModule/supplied/quarantine,
+/turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "cwy" = (
 /obj/effect/decal/cleanable/dirt,
@@ -78122,7 +78136,7 @@ aDb
 aDo
 aFY
 aDo
-aDo
+cwg
 aKp
 aLE
 aLE
@@ -88172,9 +88186,9 @@ aaa
 aaf
 aaa
 aaf
-bfv
-cwp
-cwp
+aaa
+aaa
+aaa
 cwq
 aXf
 aJq
@@ -88430,8 +88444,8 @@ cwm
 bfv
 bfv
 bfv
-cwp
-cwp
+aaa
+aaa
 cwq
 aXf
 aJq
@@ -88687,8 +88701,8 @@ cwu
 cww
 bsb
 bfv
-cwp
-cwp
+aaf
+aaf
 cwq
 aXf
 aJq
@@ -88939,8 +88953,8 @@ cvp
 cva
 bft
 bkI
-aZR
-cwg
+cwj
+bdh
 bqD
 bsa
 bbk
@@ -89195,11 +89209,11 @@ cvl
 cvp
 cva
 cva
-bfv
+cwi
 bnV
 bbm
 cwj
-bbm
+cwp
 bfv
 buQ
 bwn
@@ -89452,11 +89466,11 @@ bcf
 cvp
 cvX
 cwl
-bdh
-cwa
+cwj
+bbm
 bph
+bbm
 bsc
-cwk
 btF
 cwz
 cwA
@@ -89709,11 +89723,11 @@ cvl
 cvJ
 cva
 cva
-bfv
-cwe
+cwk
+bnV
 bbm
-bbm
-bsf
+cwj
+cwj
 bfv
 buS
 bwp
@@ -89966,9 +89980,9 @@ cvl
 cvp
 cva
 bft
-cvZ
-cwf
-cwi
+bkI
+cwj
+bdh
 bqG
 bse
 bbp
@@ -90229,8 +90243,8 @@ cwv
 cwx
 bsg
 bfv
-cwp
-cwp
+aaf
+aaf
 cwq
 aJq
 aJq
@@ -90486,8 +90500,8 @@ cwm
 bfv
 bfv
 bfv
-cwp
-cwp
+aaa
+aaa
 cwq
 aJq
 aJq
@@ -90742,9 +90756,9 @@ aaa
 aaf
 aaa
 aaf
-bfv
-cwp
-cwp
+aaa
+aaa
+aaa
 cwq
 aJq
 aJq
