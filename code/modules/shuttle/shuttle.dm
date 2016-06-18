@@ -402,11 +402,9 @@
 		if(status == SHUTTLE_ALREADY_DOCKED)
 			return status
 		else if(status)
-			spawn(0)
-				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
-					error: [status]"
-				message_admins(msg)
-				throw EXCEPTION(msg)
+			var/msg = "dock(): shuttle [src] cannot dock at [S1], \
+				error: [status]"
+			message_admins(msg)
 			return status
 
 		if(canMove())
@@ -508,8 +506,7 @@
 	. = ..()
 	if(!.)
 		return
-	spawn(0)
-		close()
+	addtimer(src, "close", 0)
 
 /mob/onShuttleMove()
 	if(!move_on_shuttle)
@@ -578,8 +575,7 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(0)
-				Door.close()
+			addtimer(Door, "close", 0)
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
