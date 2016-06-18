@@ -522,6 +522,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			if(!A.cell.charge && !A.shorted)
 				A.shorted = 1
 				A.visible_message("<span class='warning'>The [A.name]'s screen blurs with static.</span>")
+			A.update()
 			A.update_icon()
 	for(var/obj/machinery/power/smes/S in view(7, invoker))
 		if(S.charge)
