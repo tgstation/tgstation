@@ -782,11 +782,11 @@
 	..()
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health=1)
-	if(TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
 			blood_volume -= 5*amount
 		else
 			blood_volume -= amount
-	..()
+	return ..()
 
