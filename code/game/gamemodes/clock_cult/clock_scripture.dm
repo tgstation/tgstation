@@ -696,7 +696,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/anima_fragment //Anima Fragment: Creates an empty anima fragment
+/datum/clockwork_scripture/create_object/cogscarab //Cogscarab: Creates an empty cogscarab shell
 	descname = "Constructor Soul Vessel Shell"
 	name = "Cogscarab"
 	desc = "Creates a small shell fitted for soul vessels. Adding an active soul vessel to it results in a small construct with tools and an inbuilt proselytizer."
