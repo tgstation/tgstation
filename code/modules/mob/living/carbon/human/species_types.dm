@@ -221,17 +221,16 @@
 			H << "<span class='danger'>You feel drained!</span>"
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
+	H.update_action_buttons_icon()
 
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list("head", "r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
+	var/list/limbs_to_consume = list("r_arm", "l_arm", "r_leg", "l_leg") - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
-	if(!limbs_to_consume)
+	if(!limbs_to_consume.len)
 		H.losebreath++
 		return
-	if(H.get_num_legs()) //Legs go before arms, which go before head
-		limbs_to_consume -= list("head", "r_arm", "l_arm")
-	else if(H.get_num_arms())
-		limbs_to_consume -= list("head")
+	if(H.get_num_legs()) //Legs go before arms
+		limbs_to_consume -= list("r_arm", "l_arm")
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
 	H << "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>"
@@ -241,7 +240,7 @@
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "slimesplit" //to do before merge: Proper icon
+	button_icon_state = "slimeheal"
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
@@ -332,6 +331,13 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
 	background_icon_state = "bg_alien"
+
+/datum/action/innate/split_body/IsAvailable()
+	if(..())
+		var/mob/living/carbon/human/H = owner
+		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+			return 1
+		return 0
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner

@@ -48,14 +48,14 @@
 /obj/item/bodypart/attack(mob/living/carbon/C, mob/user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(H.dna && H.dna.species && EASYLIMBATTACHMENT in H.dna.species.specflags)
+		if(EASYLIMBATTACHMENT in H.dna.species.specflags)
 			if(!H.get_bodypart(body_zone))
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into \his empty socket!</span>",\
 					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
-					"<span class='notice'>[user] force [src] into your empty socket, and it locks into place!</span>")
+					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
 				attach_limb(C)
 				return
 	..()
