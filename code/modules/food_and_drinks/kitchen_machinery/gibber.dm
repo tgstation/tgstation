@@ -219,14 +219,16 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
+		var/list/turf/nearby_turfs = list()
+		for(var/turf/T in orange(3,get_turf(src)))
+			nearby_turfs += T
+		var/obj/item/skin = allskin
+		skin.loc = src.loc
+		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
 		for (var/i=1 to meat_produced)
-			var/list/nearby_turfs = orange(3, get_turf(src))
 			var/obj/item/meatslab = allmeat[i]
-			var/obj/item/skin = allskin
 			meatslab.loc = src.loc
-			skin.loc = src.loc
 			meatslab.throw_at_fast(pick(nearby_turfs),i,3)
-			skin.throw_at_fast(pick(nearby_turfs),i,3)
 			for (var/turfs=1 to meat_produced*3)
 				var/turf/gibturf = pick(nearby_turfs)
 				if (!gibturf.density && src in view(gibturf))
