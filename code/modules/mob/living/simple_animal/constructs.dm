@@ -342,7 +342,9 @@
 	if(layer != MOB_LAYER)
 		overlay_layer=TURF_LAYER+0.2
 
-	overlays += image(icon,"glow-[icon_state]",overlay_layer)
+	var/image/glow = image(icon,"glow-[icon_state]",overlay_layer)
+	glow.plane = PLANE_LIGHTING
+	overlays += glow
 
 ////////////////Powers//////////////////
 

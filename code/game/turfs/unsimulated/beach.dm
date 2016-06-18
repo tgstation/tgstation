@@ -17,7 +17,9 @@
 
 /turf/unsimulated/beach/water/New()
 	..()
-	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1)
+	var/image/water = image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1)
+	water.plane = PLANE_MOB
+	overlays += water
 
 /turf/unsimulated/beach/cultify()
 	return

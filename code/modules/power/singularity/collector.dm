@@ -119,6 +119,7 @@ var/global/list/rad_collectors = list()
 
 	P.loc = get_turf(src)
 	P.layer = initial(P.layer)
+	P.plane = initial(P.plane)
 	P = null
 
 	if(active)

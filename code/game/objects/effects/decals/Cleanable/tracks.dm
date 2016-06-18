@@ -201,7 +201,10 @@ var/global/list/image/fluidtrack_cache=list()
 		var/icon/add = icon('icons/effects/fluidtracks.dmi', state, truedir)
 		add.SwapColor("#FFFFFF",track.basecolor)
 		overlays += add
-
+		if(track.basecolor == "#FF0000"||track.basecolor == "#A10808") // no dirty dumb vox scum allowed
+			plane = PLANE_NOIR_BLOOD
+		else
+			plane = PLANE_TURF
 		track.fresh=0
 		stack[stack_idx]=track
 
@@ -214,6 +217,7 @@ var/global/list/image/fluidtrack_cache=list()
 	coming_state = "human1"
 	going_state  = "human2"
 	amount = 0
+	plane = PLANE_NOIR_BLOOD
 
 /obj/effect/decal/cleanable/blood/tracks/footprints/vox
 	coming_state = "claw1"

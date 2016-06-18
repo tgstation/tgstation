@@ -41,6 +41,7 @@ turf/unsimulated/wall/splashscreen
 	icon = null
 	icon_state = null
 	layer = FLY_LAYER
+	plane = PLANE_EFFECTS
 	canSmoothWith = null
 
 	New()
@@ -65,7 +66,7 @@ turf/unsimulated/wall/splashscreen
 
 /turf/unsimulated/wall/cultify()
 	ChangeTurf(/turf/unsimulated/wall/cult)
-	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
+	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1, anim_plane = PLANE_TURF)
 	return
 
 /turf/unsimulated/wall/cult/cultify()

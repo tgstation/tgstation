@@ -100,6 +100,7 @@
 				W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 
 	return
 

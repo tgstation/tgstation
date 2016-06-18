@@ -114,8 +114,9 @@
 		var/turf/t = turf
 		if(obscuredTurfs[t])
 			if(!t.obscured)
-				t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
-
+				var/image/obscured_static = image('icons/effects/cameravis.dmi', t, "black", 15)
+				obscured_static.plane = PLANE_STATIC
+				t.obscured = obscured_static
 			obscured += t.obscured
 			for(var/eye in seenby)
 				var/mob/camera/aiEye/m = eye
@@ -168,7 +169,9 @@
 	for(var/turf in obscuredTurfs)
 		var/turf/t = turf
 		if(!t.obscured)
-			t.obscured = image('icons/effects/cameravis.dmi', t, "black", 15)
+			var/image/obscured_static = image('icons/effects/cameravis.dmi', t, "black", 15)
+			obscured_static.plane = PLANE_STATIC
+			t.obscured = obscured_static
 		obscured += t.obscured
 
 #undef UPDATE_BUFFER

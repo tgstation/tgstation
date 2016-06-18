@@ -240,8 +240,10 @@
 /obj/structure/bed/chair/vehicle/handle_layer()
 	if(dir == SOUTH)
 		layer = FLY_LAYER
+		layer = PLANE_EFFECTS
 	else
 		layer = OBJ_LAYER
+		layer = PLANE_OBJ
 
 /obj/structure/bed/chair/vehicle/update_dir()
 	. = ..()

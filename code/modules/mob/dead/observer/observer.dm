@@ -19,7 +19,7 @@
 	universal_understand = 1
 	universal_speak = 1
 	//languages = ALL
-
+	plane = PLANE_LIGHTING
 	// For Aghosts dicking with telecoms equipment.
 	var/obj/item/device/multitool/ghostMulti = null
 

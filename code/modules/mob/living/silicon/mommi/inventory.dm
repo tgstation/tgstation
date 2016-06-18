@@ -52,6 +52,7 @@
 			client.screen -= tool_state
 	tool_state = W
 	W.layer = 20
+	W.plane = PLANE_HUD
 	W.forceMove(src)
 
 	// Make crap we pick up active so there's less clicking and carpal. - N3X
@@ -68,6 +69,7 @@
 	if (src.client)
 		src.client.screen -= O
 	O.layer = initial(O.layer)
+	O.plane = initial(O.plane)
 	O.screen_loc = null
 	return 1
 

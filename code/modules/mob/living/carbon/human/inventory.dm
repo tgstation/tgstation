@@ -310,6 +310,7 @@
 				W.dropped(src)
 			if(W)
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 	update_action_buttons()
 	return 1
 
@@ -441,6 +442,7 @@
 	update_hidden_item_icons(W)
 
 	W.layer = 20
+	W.plane = PLANE_HUD
 	W.equipped(src, slot)
 	W.forceMove(src)
 	if(client) client.screen |= W

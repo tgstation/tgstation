@@ -550,7 +550,9 @@
 	if(change)
 		if(change > 0)
 			if(M && !isUnconscious()) // Added check to see if this mob (the corgi) is dead to fix issue 2454
-				flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(M.client), 20)
+				var/image/heart = image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1)
+				heart.plane = PLANE_MOB
+				flick_overlay(heart, list(M.client), 20)
 				emote("yaps happily")
 		else
 			if(M && !isUnconscious()) // Same check here, even though emote checks it as well (poor form to check it only in the help case)

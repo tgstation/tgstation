@@ -247,6 +247,7 @@
 	density = 0
 
 	layer = MOB_LAYER + 0.1
+	plane = PLANE_MOB
 	autoignition_temperature = AUTOIGNITION_WOOD // TODO:  Special ash subtype that looks like charred table legs.
 	fire_fuel = 5
 

@@ -6,6 +6,7 @@
 	damage_type = BURN
 	flag = "energy"
 	fire_sound = 'sound/weapons/Taser.ogg'
+	plane = PLANE_LIGHTING
 
 
 /obj/item/projectile/energy/electrode
@@ -16,6 +17,7 @@
 	weaken = 10
 	stutter = 10
 	hitsound = 'sound/weapons/taserhit.ogg'
+
 /*/vg/ EDIT
 	agony = 40
 	damage_type = HALLOSS

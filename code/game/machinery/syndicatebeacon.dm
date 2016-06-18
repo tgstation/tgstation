@@ -112,6 +112,7 @@
 	density = 1
 	machine_flags = WRENCHMOVE | FIXED2WORK
 	layer = MOB_LAYER
+	plane = PLANE_MOB
 
 	light_color = LIGHT_COLOR_RED
 	light_range_on = 2

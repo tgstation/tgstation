@@ -9,9 +9,11 @@
 
 	if(layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
+		plane = PLANE_TURF
 		visible_message("<span class='danger'>[src] scurries to the ground !</span>", "<span class='alien'>You are now hiding.</span>")
 	else
 		layer = MOB_LAYER
+		plane = PLANE_MOB
 		visible_message("<span class='warning'>[src] slowly peeks up from the ground...</span>", "<span class='alien'>You have stopped hiding.</span>")
 
 /mob/living/carbon/alien/larva/verb/evolve()

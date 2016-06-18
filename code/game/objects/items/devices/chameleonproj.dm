@@ -110,6 +110,7 @@
 			var/mob/M = A
 			M.reset_view(null)
 			M.layer = MOB_LAYER //Reset the mob's layer
+			M.plane = PLANE_MOB
 
 /obj/effect/dummy/chameleon
 	name = ""
@@ -128,6 +129,7 @@
 	dir = O.dir
 	M.loc = src
 	M.layer = OBJ_LAYER //Needed for some things, notably lockers
+	M.plane = PLANE_OBJ
 	master = C
 	master.active_dummy = src
 

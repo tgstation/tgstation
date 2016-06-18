@@ -20,7 +20,6 @@
 	response_harm   = "stamps on the"
 	density = 0
 	var/_color //brown, gray and white, leave blank for random
-	layer = MOB_LAYER
 	min_oxy = 16 //Require atleast 16kPA oxygen
 	minbodytemp = 223		//Below -50 Degrees Celcius
 	maxbodytemp = 323	//Above 50 Degrees Celcius
@@ -97,6 +96,7 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
+		plane = PLANE_TURF
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))
@@ -105,6 +105,7 @@
 		*/
 	else
 		layer = MOB_LAYER
+		plane = PLANE_MOB
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		/*
 		for(var/mob/O in oviewers(src, null))

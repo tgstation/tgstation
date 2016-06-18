@@ -107,7 +107,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 
 /mob/living/simple_animal/rejuvenate(animation = 0)
 	var/turf/T = get_turf(src)
-	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg')
+	if(animation) T.turf_animation('icons/effects/64x64.dmi',"rejuvinate",-16,0,MOB_LAYER+1,'sound/effects/rejuvinate.ogg',anim_plane = PLANE_EFFECTS)
 	src.health = src.maxHealth
 	return 1
 /mob/living/simple_animal/New()

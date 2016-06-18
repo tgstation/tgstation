@@ -1,6 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
+	plane = PLANE_TURF
 
 	luminosity = 0
 
@@ -65,6 +66,8 @@
 
 	// This is the placed to store data for the holomap.
 	var/list/image/holomap_data
+
+
 
 /turf/examine(mob/user)
 	..()

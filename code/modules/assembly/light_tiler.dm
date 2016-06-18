@@ -205,6 +205,7 @@
 
 /obj/item/device/assembly/light_tile_control/proc/highlight_turf(turf/T, mob/user)
 	var/image/tmp_overlay = image('icons/turf/areas.dmi', T, "red", TURF_LAYER+0.01)
+	tmp_overlay.plane = PLANE_OBJ
 
 	image_overlays += tmp_overlay
 	user.client.images += tmp_overlay

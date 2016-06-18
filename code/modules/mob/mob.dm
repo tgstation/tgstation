@@ -1,6 +1,9 @@
 #define MOB_SPACEDRUGS_HALLUCINATING 5
 #define MOB_MINDBREAKER_HALLUCINATING 100
 
+/mob
+	plane = PLANE_MOB
+
 /obj/screen/fuckstat
 	name = "Toggle Stat"
 	desc = "Fuck It"

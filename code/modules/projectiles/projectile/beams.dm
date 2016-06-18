@@ -18,7 +18,7 @@ var/list/beam_master = list()
 	animate_movement = 2
 	linear_movement = 1
 	layer = 13
-
+	plane = PLANE_LIGHTING
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 30
 	damage_type = BURN

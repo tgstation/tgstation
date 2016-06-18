@@ -237,6 +237,7 @@
 
 /obj/item/proc/dropped(mob/user as mob)
 	layer = initial(layer) //nothing bad can come from this right?
+	plane = initial(plane) //wrong
 	if(wielded)
 		unwield(user)
 

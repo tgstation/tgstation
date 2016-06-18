@@ -249,6 +249,7 @@ var/global/datum/controller/gameticker/ticker
 	cinematic.icon = 'icons/effects/station_explosion.dmi'
 	cinematic.icon_state = "station_intact"
 	cinematic.layer = 20
+	cinematic.plane = PLANE_HUD
 	cinematic.mouse_opacity = 0
 	cinematic.screen_loc = "1,0"
 

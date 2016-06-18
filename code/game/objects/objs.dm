@@ -26,6 +26,7 @@ var/global/list/reagents_to_log = list("fuel"  =  "welder fuel", "plasma"=  "pla
 
 	var/holomap = FALSE // Whether we should be on the holomap.
 	var/auto_holomap = FALSE // Whether we automatically soft-add ourselves to the holomap in New(), make sure this is false is something does it manually.
+	plane = PLANE_OBJ
 
 /obj/New()
 	..()

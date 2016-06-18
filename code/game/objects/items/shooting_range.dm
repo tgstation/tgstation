@@ -54,6 +54,7 @@
 				stake.density = 1
 				density = 0
 				layer = OBJ_LAYER
+				plane = PLANE_OBJ
 
 				loc = user.loc
 				if(ishuman(user))

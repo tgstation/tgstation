@@ -722,6 +722,7 @@ var/global/list/loopModeNames=list(
 	light_color = LIGHT_COLOR_BLUE
 	luminosity = 0
 	layer = FLY_LAYER+1
+	plane = PLANE_EFFECTS
 	pixel_x = -32
 	pixel_y = -32
 

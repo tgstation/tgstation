@@ -608,6 +608,8 @@
 
 /mob/living/carbon/monkey/reset_layer()
 	if(lying)
+		plane = PLANE_OBJ
 		layer = MOB_LAYER - 0.1 //so we move under bedsheets
 	else
+		plane = PLANE_MOB
 		layer = MOB_LAYER

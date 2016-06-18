@@ -469,6 +469,7 @@ var/global/list/datum/stack_recipe/snow_recipes = list (
 	density = 0
 	anchored = 1
 	layer = FLY_LAYER
+	plane = PLANE_EFFECTS
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 

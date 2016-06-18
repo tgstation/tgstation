@@ -42,9 +42,11 @@
 
 /obj/structure/bed/chair/proc/handle_layer()
 	if(dir == NORTH)
-		src.layer = FLY_LAYER
+		layer = FLY_LAYER
+		plane = PLANE_EFFECTS
 	else
-		src.layer = OBJ_LAYER
+		layer = OBJ_LAYER
+		plane = PLANE_OBJ
 
 /obj/structure/bed/chair/proc/spin()
 	change_dir(turn(dir, 90))
@@ -138,6 +140,7 @@
 /obj/structure/bed/chair/comfy/New()
 	..()
 	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", MOB_LAYER + 0.1)
+	armrest.plane = PLANE_MOB
 
 /obj/structure/bed/chair/comfy/lock_atom(var/atom/movable/AM)
 	..()
@@ -182,6 +185,7 @@
 /obj/structure/bed/chair/office/New()
 	..()
 	back = image("icons/obj/objects.dmi", "[icon_state]-overlay", MOB_LAYER + 0.1)
+	back.plane = PLANE_MOB
 
 /obj/structure/bed/chair/office/lock_atom(var/atom/movable/AM)
 	. = ..()

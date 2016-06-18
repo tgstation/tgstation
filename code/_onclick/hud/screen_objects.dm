@@ -15,6 +15,7 @@
 	var/gun_click_time = -100 //I'm lazy.
 	var/globalscreen = 0 //This screen object is not unique to one screen, can be seen by many
 	appearance_flags = NO_CLIENT_COLOR
+	plane = PLANE_HUD
 
 /obj/screen/Destroy()
 	master = null

@@ -29,6 +29,7 @@ var/global/list/rune_list = list() // HOLY FUCK WHY ARE WE LOOPING THROUGH THE W
 	var/visibility = 0
 	unacidable = 1
 	layer = TURF_LAYER
+	plane = PLANE_TURF
 
 	var/dead=0 // For cascade and whatnot.
 

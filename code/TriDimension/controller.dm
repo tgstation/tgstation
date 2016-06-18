@@ -140,6 +140,7 @@ atom/movable/Move() //Hackish
 
 					temp.color = rgb(127,127,127)
 					temp.overlays += below.overlays
+					temp.plane = PLANE_TURF
 					t_img += temp
 					T.overlays += t_img
 					T.z_overlays += t_img
@@ -152,6 +153,7 @@ atom/movable/Move() //Hackish
 					new_list = 2
 					var/image/temp2 = image(o, dir=o.dir, layer = TURF_LAYER+0.05*o.layer)
 					temp2.color = rgb(127,127,127)
+					temp2.plane = PLANE_TURF
 					temp2.overlays += o.overlays
 					o_img += temp2
 					// you need to add a list to .overlays or it will not display any because space
@@ -167,6 +169,7 @@ atom/movable/Move() //Hackish
 					if(istype(m, /mob/living)) new_list = 3
 					var/image/temp2 = image(m, dir=m.dir, layer = TURF_LAYER+0.05*m.layer)
 					temp2.color = rgb(127,127,127)
+					temp2.plane = PLANE_TURF
 					temp2.overlays += m.overlays
 					m_img += temp2
 					// you need to add a list to .overlays or it will not display any because space

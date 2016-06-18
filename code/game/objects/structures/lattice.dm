@@ -6,6 +6,8 @@
 	density = 0
 	anchored = 1.0
 	layer = 2.3 //under pipes
+	plane = PLANE_TURF // thanks for using a define up there it's really useful and maintainable.
+
 	//	flags = CONDUCT
 
 	canSmoothWith = "/obj/structure/lattice=0&/obj/structure/catwalk=0&/turf=0"

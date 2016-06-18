@@ -3,6 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
+	plane = PLANE_MOB
 	luminosity = 3
 	use_power = 0
 	var/icon_initial //To get around all that pesky hardcoding of icon states, don't put modifiers on this one

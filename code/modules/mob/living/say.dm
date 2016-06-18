@@ -410,6 +410,7 @@ var/list/department_radio_keys = list(
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)
 		var/image/speech_bubble = image('icons/mob/talk.dmi', get_holder_at_turf_level(src), "h[bubble_type][say_test(message)]",MOB_LAYER+1)
+		speech_bubble.plane = PLANE_BASE
 		speech_bubble.appearance_flags = RESET_COLOR
 		flick_overlay(speech_bubble, speech_bubble_recipients, 30)
 

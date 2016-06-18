@@ -10,6 +10,7 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\_planes.dm"
 #include "code\global.dm"
 #include "code\hub.dm"
 #include "code\names.dm"
@@ -18,7 +19,6 @@
 #include "code\world.dm"
 #include "code\__DEFINES\atom_locking.dm"
 #include "code\__DEFINES\lighting.dm"
-#include "code\__DEFINES\planes.dm"
 #include "code\__HELPERS\_macros.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\constants.dm"

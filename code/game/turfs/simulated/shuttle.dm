@@ -38,7 +38,7 @@
 
 /turf/simulated/shuttle/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
-	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1)
+	turf_animation('icons/effects/effects.dmi',"cultwall",0,0,MOB_LAYER-1, anim_plane = PLANE_OBJ)
 	return
 
 /turf/simulated/shuttle/floor
@@ -63,7 +63,7 @@
 	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
 		name = "engraved floor"
 		icon_state = "cult"
-		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1)
+		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1, anim_plane = PLANE_OBJ)
 	return
 
 /turf/simulated/shuttle/plating
@@ -92,5 +92,5 @@
 	if((icon_state != "cult")&&(icon_state != "cult-narsie"))
 		name = "engraved floor"
 		icon_state = "cult"
-		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1)
+		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1, anim_plane = PLANE_OBJ)
 	return

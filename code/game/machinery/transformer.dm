@@ -4,6 +4,7 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = MOB_LAYER+1 // Overhead
+	plane = PLANE_MOB
 	anchored = 1
 	density = 1
 	var/transform_dead = 0 //This variable doesn't seem to do anything

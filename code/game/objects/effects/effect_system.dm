@@ -706,6 +706,7 @@ steam.start() -- spawns the effect
 	anchored = 1
 	density = 0
 	layer = OBJ_LAYER + 0.9
+	layer = PLANE_EFFECTS
 	var/amount = 3
 	var/expand = 1
 	animate_movement = 0

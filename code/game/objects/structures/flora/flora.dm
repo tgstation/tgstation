@@ -5,6 +5,7 @@
 	density = 1
 
 	layer = FLY_LAYER
+	plane = PLANE_EFFECTS
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
@@ -203,6 +204,7 @@
 	icon = 'icons/obj/plants.dmi'
 	icon_state = "plant-26"
 	layer = FLY_LAYER
+	plane = PLANE_EFFECTS
 
 /obj/structure/flora/pottedplant/Destroy()
 	for(var/I in contents)

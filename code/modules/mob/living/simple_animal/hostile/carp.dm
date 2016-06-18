@@ -129,7 +129,7 @@
 	//Handle eating
 	if(isliving(target))
 		var/mob/living/L = target
-		
+
 		if(!L.meat_type) return
 
 		increase_growth_stage(1)
@@ -149,7 +149,9 @@
 				if(!friends.Find(user))
 					friends.Add(user)
 					to_chat(user, "<span class='info'>You have gained \the [src]'s trust.</span>")
-					flick_overlay(image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1), list(user.client), 20)
+					var/image/heart = image('icons/mob/animal.dmi',src,"heart-ani2",MOB_LAYER+1)
+					heart.plane = PLANE_EFFECTS
+					flick_overlay(heart, list(user.client), 20)
 
 			if(F.reagents)
 				for(var/datum/reagent/N in F.reagents.reagent_list)

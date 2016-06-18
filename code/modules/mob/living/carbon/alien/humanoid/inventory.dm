@@ -77,6 +77,7 @@
 			W.dropped(src)
 		if(W)
 			W.layer = initial(W.layer)
+			W.plane = initial(W.plane)
 	return 1
 
 /mob/living/carbon/alien/humanoid/attack_ui(slot_id)

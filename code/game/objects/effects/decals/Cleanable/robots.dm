@@ -4,6 +4,7 @@
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	basecolor="#030303"
+	plane = PLANE_TURF
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
 /obj/effect/decal/cleanable/blood/gibs/robot/update_icon()

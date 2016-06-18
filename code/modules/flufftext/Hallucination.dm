@@ -48,6 +48,7 @@ mob/living/carbon/proc/handle_hallucinations()
 					if(slots_free.len)
 						halitem.screen_loc = pick(slots_free)
 						halitem.layer = 50
+						halitem.plane = PLANE_HUD
 						switch(rand(1,6))
 							if(1) //revolver
 								halitem.icon = 'icons/obj/gun.dmi'
@@ -89,7 +90,7 @@ mob/living/carbon/proc/handle_hallucinations()
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
-
+						halimage.plane = PLANE_OBJ
 						switch(rand(1,4))
 							if(1) //Space
 								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
@@ -171,6 +172,7 @@ mob/living/carbon/proc/handle_hallucinations()
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
+						halbody.plane = PLANE_MOB
 						switch(rand(1,4))
 							if(1)
 								halbody = image('icons/mob/human.dmi',target,"husk_l",TURF_LAYER)

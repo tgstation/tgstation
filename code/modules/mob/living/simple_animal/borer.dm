@@ -892,9 +892,11 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
+		plane = PLANE_TURF
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 	else
 		layer = MOB_LAYER
+		plane = PLANE_MOB
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 
 

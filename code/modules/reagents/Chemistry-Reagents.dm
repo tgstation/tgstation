@@ -642,6 +642,7 @@
 					qdel(W)
 					continue
 				W.layer = initial(W.layer)
+				W.plane = initial(W.plane)
 				W.loc = C.loc
 				W.dropped(C)
 			var/mob/living/carbon/slime/new_mob = new /mob/living/carbon/slime(C.loc)

@@ -1,6 +1,7 @@
 //This was put here because I don't want to overcomplicate my PR
 /obj/effect/decal
 	//var/global/list/decals = list()
+	plane = PLANE_TURF
 
 /obj/effect/decal/New()
 	..()

@@ -130,6 +130,7 @@
 	for(var/obj/O in src.contents)
 		O.screen_loc = "[cx],[cy]"
 		O.layer = 20
+		O.plane = PLANE_HUD
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -149,6 +150,7 @@
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = 20
+			ND.sample_object.plane = PLANE_HUD
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -159,6 +161,7 @@
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = 20
+			O.plane = PLANE_HUD
 			cx++
 			if (cx > (4+cols))
 				cx = 4
@@ -376,6 +379,7 @@
 	if(W.maptext)
 		W.maptext = ""
 	W.layer = initial(W.layer)
+	W.plane = initial(W.plane)
 	W.on_exit_storage(src)
 	update_icon()
 	W.mouse_opacity = initial(W.mouse_opacity)

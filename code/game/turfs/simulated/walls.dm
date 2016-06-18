@@ -346,7 +346,7 @@
 
 /turf/simulated/wall/cultify()
 	ChangeTurf(/turf/simulated/wall/cult)
-	turf_animation('icons/effects/effects.dmi',"cultwall", 0, 0, MOB_LAYER-1)
+	turf_animation('icons/effects/effects.dmi',"cultwall", 0, 0, MOB_LAYER-1, anim_plane = PLANE_TURF)
 	return
 
 /turf/simulated/wall/attack_construct(mob/user as mob)

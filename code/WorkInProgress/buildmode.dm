@@ -38,6 +38,7 @@
 	density = 1
 	anchored = 1
 	layer = 20
+	plane = PLANE_HUD
 	dir = NORTH
 	icon = 'icons/misc/buildmode.dmi'
 	var/obj/effect/bmode/buildholder/master = null

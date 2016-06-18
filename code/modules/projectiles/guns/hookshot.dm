@@ -323,10 +323,13 @@
 
 /obj/effect/overlay/chain/update_icon()
 	overlays.len = 0
+	var/image/chain_img
 	if(extremity_A && (loc != extremity_A.loc))
-		overlays += image(icon,src,"chain",MOB_LAYER-0.1,get_dir(src,extremity_A))
+		chain_img = image(icon,src,"chain",MOB_LAYER-0.1,get_dir(src,extremity_A))
 	if(extremity_B && (loc != extremity_B.loc))
-		overlays += image(icon,src,"chain",MOB_LAYER-0.1,get_dir(src,extremity_B))
+		chain_img = image(icon,src,"chain",MOB_LAYER-0.1,get_dir(src,extremity_B))
+	chain_img.plane = PLANE_OBJ
+	overlays += chain_img
 
 /obj/effect/overlay/chain/proc/update_overlays(var/obj/effect/overlay/chain/C)
 	var/obj/effect/overlay/chain/C1 = extremity_A

@@ -20,12 +20,14 @@
 
 	if (layer != TURF_LAYER+0.2)
 		layer = TURF_LAYER+0.2
+		plane = PLANE_TURF
 		to_chat(src, text("<span class='notice'>You are now hiding.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
 				to_chat(O, "<B>[src] tries to hide itself!</B>")
 	else
 		layer = MOB_LAYER
+		plane = PLANE_MOB
 		to_chat(src, text("<span class='notice'>You have stopped hiding.</span>"))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
