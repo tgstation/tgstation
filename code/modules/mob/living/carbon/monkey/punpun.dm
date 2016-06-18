@@ -2,6 +2,7 @@
 	name = "Pun Pun" //C A N O N
 	unique_name = 0
 	var/ancestor_name
+	var/randomName = 0
 	var/ancestor_chain = 1
 	var/relic_hat	//Note: these two are paths
 	var/relic_mask
@@ -19,11 +20,13 @@
 		name = ancestor_name
 		if(ancestor_chain > 1)
 			name += " [num2roman(ancestor_chain)]"
-	else
+	else if (randomName)
 		if(prob(5))
 			name = pick(rare_pet_monkey_names)
 		else
 			name = pick(pet_monkey_names)
+		gender = pick(MALE, FEMALE)
+	else
 		gender = pick(MALE, FEMALE)
 	..()
 

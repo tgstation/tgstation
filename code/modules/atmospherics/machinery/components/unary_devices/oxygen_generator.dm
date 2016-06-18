@@ -7,10 +7,18 @@
 
 	dir = SOUTH
 	initialize_directions = SOUTH
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
 
 	var/on = 0
 
 	var/oxygen_content = 10
+
+/obj/machinery/atmospherics/components/unary/nitrogen_generator/attack_hand(mob/user as mob)
+	on = !on
+	user << "you turn on the" + name
+	return
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon_nopipes()
 

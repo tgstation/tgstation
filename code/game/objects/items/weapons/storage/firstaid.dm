@@ -156,6 +156,9 @@
 			return
 	return
 
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/I, mob/user, params)
+	..()
+
 /obj/item/weapon/storage/box/silver_sulf
 	name = "box of silver sulfadiazine patches"
 	desc = "Contains patches used to treat burns."
