@@ -124,7 +124,8 @@ var/global/list/station_suffixes = list("Station", "Frontier",
 	"Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform",
 	"Construct", "Hangar", "Prison", "Center", "Port", "Waystation",
 	"Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object",
-	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp")
+	"Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp",
+	"Airstrip")
 
 var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
 	"Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu",
