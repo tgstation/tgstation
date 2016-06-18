@@ -84,14 +84,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. \
-	It's been modified for extreme power output to crush rocks, but often \
-	serves as a miner's first defense against hostile alien life; it's not \
-	very powerful unless used in a low pressure environment.\n\
-	It uses an experimental self-charging cell powered by the user's \
-	bioelectrical field. The downside of this is that it quickly discharges \
-	when not in direct contact with a user, and multiple accelerators can \
-	interfere with each other."
+	desc = "A kinetic energy rifle, far less effective in a pressurized environment."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
