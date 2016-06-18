@@ -909,7 +909,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			powerful burst of radiation, which, after a short delay, can incapitate all but the most protected \
 			of humanoids. It has two settings: intensity, which controls the power of the radiation, \
 			and wavelength, which controls how long the radiation delay is."
-	item = /obj/item/device/rad_laser
+	item = /obj/item/device/healthanalyzer/rad_laser
 	cost = 3
 
 /datum/uplink_item/device_tools/assault_pod

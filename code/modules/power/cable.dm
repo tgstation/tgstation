@@ -517,8 +517,8 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
 		if(!do_mob(user, H, 50))
 			return
-		item_heal_robotic(H, user, 0, 5)
-		src.use(1)
+		if(item_heal_robotic(H, user, 0, 5))
+			use(1)
 		return
 	else
 		return ..()

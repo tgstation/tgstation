@@ -29,7 +29,7 @@
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 
-	deathmessage = "disintegrates, leaving a glowing core."
+	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/anger_modifier = 0
@@ -114,7 +114,7 @@
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='cult'><font size=5>\"<b>Die</b>\"</font></span>")
+	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
 	sleep(10)
 	spawn()
@@ -220,55 +220,6 @@
 	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/seeking_laser()
-	visible_message("<span class='cult'><font size=5>\"<b>You can't run.</b>\"</font></span>")
-	var/obj/effect/overlay/temp/seeking_beam/B = new(get_turf(src))
-	B.target = target
-	B.firer = src
-
-/obj/effect/overlay/temp/seeking_beam
-	name = "disintegration ball"
-	desc = "Get out of the way!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "shield-cult"
-	density = 1
-	luminosity = 1
-	var/target
-	var/firer
-	duration = 100
-
-/obj/effect/overlay/temp/seeking_beam/New()
-	..()
-	spawn()
-		while(loc)
-			step_towards(src, target)
-			sleep(1)
-
-/obj/effect/overlay/temp/seeking_beam/process()
-	step_towards(src, target)
-
-/obj/effect/overlay/temp/seeking_beam/Crossed(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/Bumped(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/Bump(AM as mob|obj)
-	..()
-	collision(AM)
-
-/obj/effect/overlay/temp/seeking_beam/proc/collision(AM as mob|obj)
-	if(AM == firer)
-		return
-	if(isliving(AM))
-		var/mob/living/M = AM
-		visible_message("<span class='danger'>[M] is disintegrated by the disintegration ball!</span>")
-		M.dust()
-	else if(istype(AM, /obj/item))
-		var/obj/item/I = AM
-		I.burn()
 
 /obj/item/projectile/colossus
 	name ="death bolt"

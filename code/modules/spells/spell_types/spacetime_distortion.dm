@@ -56,6 +56,7 @@
 /obj/effect/cross_action
 	name = "cross me"
 	desc = "for crossing"
+	anchored = 1
 
 /obj/effect/cross_action/spacetime_dist
 	name = "spacetime distortion"

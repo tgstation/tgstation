@@ -184,7 +184,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
-				overlays += facial_hair_image
+				add_overlay(facial_hair_image)
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
@@ -193,7 +193,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
-				overlays += hair_image
+				add_overlay(hair_image)
 				ghostimage.overlays += hair_image
 
 /*
@@ -333,7 +333,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.desc = message
 				var/old_layer = source.layer
 				source.layer = FLOAT_LAYER
-				A.overlays += source
+				A.add_overlay(source)
 				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
@@ -538,6 +538,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+
+	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
+
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -651,3 +656,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_literate()
 	return 1
+
+/mob/dead/observer/on_varedit(var_name)
+	. = ..()
+	switch(var_name)
+		if("icon")
+			ghostimage.icon = icon
+			ghostimage_default.icon = icon
+			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state
+		if("fun_verbs")
+			if(fun_verbs)
+				verbs += /mob/dead/observer/verb/boo
+				verbs += /mob/dead/observer/verb/possess
+			else
+				verbs -= /mob/dead/observer/verb/boo
+				verbs -= /mob/dead/observer/verb/possess

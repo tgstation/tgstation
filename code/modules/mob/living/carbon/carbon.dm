@@ -788,6 +788,5 @@
 			blood_volume -= 5*amount
 		else
 			blood_volume -= amount
-		world << amount
 	..()
 
