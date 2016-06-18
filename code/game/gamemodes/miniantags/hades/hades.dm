@@ -187,26 +187,18 @@
 									E.gib()
 
 /mob/living/simple_animal/hostile/hades/proc/sinShed(var/turf/T)
-	var/obj/effect/overlay/temp/cult/sparks/S = new/obj/effect/overlay/temp/cult/sparks(T)
-	S.density = 0
+	var/obj/effect/overlay/temp/cult/sparks/S = PoolOrNew(/obj/effect/overlay/temp/cult/sparks, T)
 	S.anchored = FALSE
 	S.throw_at_fast(src,10,1)
-	var/obj/effect/overlay/temp/bloodsplatter/BS = new/obj/effect/overlay/temp/bloodsplatter(T)
-	BS.density = 0
+	var/obj/effect/overlay/temp/bloodsplatter/BS = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(src, T)))
 	BS.anchored = FALSE
 	BS.throw_at_fast(src,10,1)
 
 /mob/living/simple_animal/hostile/hades/proc/Transfer(var/mob/living/taken, var/turf/transferTarget)
 	if(transferTarget)
 		playsound(get_turf(taken), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
-		var/atom/movable/overlay/animation = new /atom/movable/overlay(get_turf(taken))
-		animation.name = "water"
-		animation.density = 0
-		animation.anchored = 1
-		animation.icon = 'icons/mob/mob.dmi'
-		animation.layer = FLY_LAYER
+		var/atom/movable/overlay/hadesFlick/animation = new /atom/movable/overlay/hadesFlick(get_turf(taken))
 		animation.master = src
-		animation.icon_state = "liquify"
 		flick("liquify",animation)
 		spawn(15)
 			qdel(animation)
@@ -406,6 +398,16 @@
 
 
 ///Sin related things
+
+/atom/movable/overlay/hadesFlick
+	name = "transdimensional waste"
+	density = 0
+	anchored = 1
+	icon = 'icons/mob/mob.dmi'
+	layer = FLY_LAYER
+	icon_state = "liquify"
+
+
 
 /obj/effect/timestop/hades // custom timeslip to make him immune
 	name = "Frozen Time"
