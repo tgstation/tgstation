@@ -116,6 +116,19 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			else if (src.authenticated==2 && message_cooldown)
 				usr << "Intercomms recharging. Please stand by."
 
+		if("crossserver")
+			if(src.authenticated==2)
+				if(CM.lastTimeUsed + 600 > world.time)
+					usr << "Arrays recycling.  Please stand by."
+					return
+				var/input = stripped_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				if(!input || !(usr in view(1,src)))
+					return
+				send2otherserver(world.name, input,"Comms_Console")
+				minor_announce(input, title = "Outgoing message to allied station")
+				log_say("[key_name(usr)] has sent a message to the other server: [input]")
+				CM.lastTimeUsed = world.time
+
 		if("callshuttle")
 			src.state = STATE_DEFAULT
 			if(src.authenticated)
@@ -384,6 +397,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
