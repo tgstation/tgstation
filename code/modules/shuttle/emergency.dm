@@ -259,8 +259,18 @@
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
 		return
-
 	var/time_left = timeLeft(1)
+
+	// The emergency shuttle doesn't work like others so this
+	// ripple check is slightly different
+	if(!ripples.len && (time_left <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_ESCAPE)))
+		var/destination
+		if(mode == SHUTTLE_CALL)
+			destination = SSshuttle.getDock("emergency_home")
+		else if(mode == SHUTTLE_ESCAPE)
+			destination = SSshuttle.getDock("emergency_away")
+		create_ripples(destination)
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
