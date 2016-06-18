@@ -167,7 +167,7 @@
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+		else if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			var/mob/living/simple_animal/hostile/clockwork/W = M
 			if(W.health == W.maxHealth || W.stat)
 				continue
