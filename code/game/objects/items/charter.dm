@@ -19,6 +19,9 @@
 
 	var/always_usable = FALSE
 
+	var/mob/proposer
+	var/proposed_custom_name
+
 /obj/item/station_charter/New()
 	. = ..()
 	selected_prefix = pick(station_prefixes)
@@ -77,6 +80,7 @@
 	data["numbers"] = numbers
 
 	data["can_pick"] = CAN_CHANGE_NAME
+	data["allow_custom"] = (!proposed_custom_name) && CAN_CHANGE_NAME
 
 	data["potential_name"] = assemble_name()
 	data["current_name"] = world.name
@@ -140,16 +144,33 @@
 			. = TRUE
 		if("rename")
 			designate(usr, assemble_name())
-			used = TRUE
 			. = TRUE
+		if("custom")
+			if(proposed_custom_name) // only get one proposal
+				return
+			var/new_name = stripped_input(usr, message="What do you want \
+				to name [station_name()]? This custom name will be have to \
+				be explicitly approved by your employeers.",
+				max_length=MAX_CHARTER_LEN)
+			proposer = usr
+			proposed_custom_name = new_name
+			var/msg = "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(proposer)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[proposer]'>?</A>) proposes to rename the station to [proposed_custom_name] (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[proposer]'>BSA</A>) (<A HREF='?_src_=holder;approve_custom_name=\ref[src]'>APPROVE</A>)</span>"
+			admins << msg
 
-/obj/item/station_charter/proc/designate(mob/user, new_name)
+
+/obj/item/station_charter/proc/designate(mob/user, new_name, approved_by=null)
 	world.name = new_name
 	station_name = new_name
 	minor_announce("[user.real_name] has designated your station \
 		as [world.name].", "Captain's Charter", 0)
 	log_game("[key_name(user)] designated the station [world.name]")
+	if(approved_by)
+		log_admin("[approved_by] approved [key_name(user)] rename of the \
+			station as [new_name]")
 	used = TRUE
+
+/obj/item/station_charter/proc/admin_approval(approved_by)
+	designate(proposer, proposed_custom_name, approved_by)
 
 /obj/item/station_charter/admin
 	name = "admin station charter"

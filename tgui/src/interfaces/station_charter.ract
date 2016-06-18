@@ -11,6 +11,11 @@
     <span>The ink is still wet though and the station's name could be changed
       to {{data.potential_name}}.</span>
     <ui-button action='rename'>Rename Station</ui-button>
+    <ui-button
+      action='custom'
+      state='{{data.allow_custom ? null : "disabled"}}'>
+        Propose Non-standard Name to Centcom
+    </ui-button>
   </ui-section>
 
   <ui-tabs tabs='{{data.tabs}}'>
