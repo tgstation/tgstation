@@ -28132,6 +28132,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "bly" = (
@@ -32795,6 +32798,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/landmark/start{
+	name = "Cyborg"
+	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
 	icon_state = "darkblue";
@@ -32814,6 +32820,9 @@
 	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/effect/landmark/start{
+	name = "Cyborg"
 	},
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
