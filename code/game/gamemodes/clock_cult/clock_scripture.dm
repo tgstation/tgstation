@@ -1053,8 +1053,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
 	var/list/mindbreaksayings = list("\"Bu, terng. V trg gb funggre fbzr zvaqf.\"", "\"Zber zvaqf gb pehfu.\"", \
-	"\"Ernyyl, guvf vf nyzbfg obevat.\"", "\"Abar bs gurfr zvaqf unir nalguvat vagrerfgvat va gurz.\"", "\"Znlor V pna vafgvyy n yvggyr ovg bs greebe va guvf bar.\"", \
-	"\"Jung n jnfgr bs zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gurfr zvaqf vafgrnq, ohg gurl arire nfx.\"")
+	"\"Ernyyl, guvf vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguvat vagrerfgvat va gur'z.\"", "\"Znlor V pna vafgvyy n yvggyr ovg bs greebe va guv'f bar.\"", \
+	"\"Jung n jnfgr-bs zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
@@ -1084,7 +1084,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				distanceA = round(distanceA * 0.5) //half effect for shielded targets
 				distanceB = round(distanceB * 0.5)
 				distanceC = round(distanceC * 0.5)
-				H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, ohg V'yy uhzbe vg.</span>"
+				H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, V fhccbfr V'yy uhzbe vg.</span>"
 			else if(prob(distanceA))
 				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
 			H.playsound_local(T, hum, distanceC, 1)
