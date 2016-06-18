@@ -9,7 +9,7 @@
 
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(istype(caller, /mob/living))
-		if(istype(caller,/mob/living/simple_animal/bot/mulebot))
+		if(istype(caller,/mob/living/simple_animal/bot))
 			return 1
 
 		var/mob/living/M = caller
