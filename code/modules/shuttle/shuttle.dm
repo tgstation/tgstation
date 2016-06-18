@@ -444,7 +444,7 @@
 			A0.contents += T0
 
 	//move or squish anything in the way ship at destination
-	roadkill(L1, S1.dir)
+	roadkill(L0, L1, S1.dir)
 
 	// Removes ripples
 	for(var/i in ripples)
@@ -581,10 +581,18 @@
 			spawn(0)
 				Door.close()
 
-/obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
+/obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
-	for(var/turf/T in L)
-		for(var/atom/movable/AM in T)
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		var/turf/T1 = L1[i]
+		if(!T0 || !T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		// The corresponding tile will not be changed, so no roadkill
+
+		for(var/atom/movable/AM in T1)
 			if(isliving(AM) && (!(AM in hurt_mobs)))
 				hurt_mobs |= AM
 				var/mob/living/M = AM
@@ -594,7 +602,7 @@
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+						a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
 						crushing pressure as the space around you ripples.</span>")
 				if(M.anchored)
