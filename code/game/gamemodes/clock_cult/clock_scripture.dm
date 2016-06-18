@@ -1076,12 +1076,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
-			if(isloyal(H))
+			var/loyalty = isloyal(H)
+			if(loyalty)
 				distance = round(distance * 0.5) //half effect for shielded targets
+				H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, ohg V'yy uhzbe vg.</span>"
 			var/distanceA = max(200 - distance, 20)
 			var/distanceB = max(150 - distance, 15)
 			var/distanceC = max(100 - distance, 10)
-			if(prob(distanceA))
+			if(!loyalty && prob(distanceA))
 				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
 			H.playsound_local(T, hum, distanceC, 1)
 			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like 2 and a half minutes of color flash
