@@ -1,6 +1,6 @@
 /obj/effect/ripple
-	name = "bluespace ripple"
-	desc = "Something is coming through bluespace, you can see the \
+	name = "hyperspace ripple"
+	desc = "Something is coming through hyperspace, you can see the \
 		visual disturbances. It's probably best not to be on top of these \
 		when whatever is tunneling comes through."
 	icon = 'icons/effects/effects.dmi'

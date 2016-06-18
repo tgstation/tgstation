@@ -382,7 +382,7 @@
 
 	var/list/ripple_turfs = list()
 
-	for(var/i=1, i<=L0.len, ++i)
+	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
 			continue
@@ -451,7 +451,7 @@
 		qdel(i)
 	ripples.Cut()
 
-	for(var/i=1, i<=L0.len, ++i)
+	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
 			continue
