@@ -17,17 +17,21 @@
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified Replicant Alloy, and to be used by a cogscarab, to function."
+	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires liquified Replicant Alloy to function."
 	metal_to_alloy = TRUE
 	item_state = "nothing"
+	w_class = 1
+	var/debug = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
-	if(uses_alloy && !isdrone(user))
+	if(!debug && !isdrone(user))
 		return 0
 	return ..()
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/debug
+	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
 	uses_alloy = FALSE
+	debug = TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
