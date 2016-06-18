@@ -82,9 +82,11 @@
 
 /turf/open/floor/carpet/carpetsymbol
 	icon_state = "carpetsymbol"
+	smooth = SMOOTH_FALSE
 
 /turf/open/floor/carpet/carpetsymbol2
 	icon_state = "carpetsymbol2"
+	smooth = SMOOTH_FALSE
 
 
 /turf/open/floor/fakespace
