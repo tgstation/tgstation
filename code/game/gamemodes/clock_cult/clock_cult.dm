@@ -83,8 +83,14 @@ This file's folder contains:
 			M << "<span class='heavy_brass'>You must not involve yourself in other affairs, but... this one... you see it all. Your world glows a brilliant yellow, and all it once it comes to you. \
 			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>"
 		var/mob/living/simple_animal/drone/D = M
-		D.update_drone_hack(TRUE, TRUE)
-		D.languages |= HUMAN
+		if(!is_eligible_servant(M))
+			if(!silent && !M.stat)
+				D.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>")
+			M << "<span class='warning'><b>Corrupt data purged. Resetting repair processor to factory defaults... complete.</b></span>"
+			return 0
+		else
+			D.update_drone_hack(TRUE, TRUE)
+			D.languages |= HUMAN
 	else if(!silent)
 		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 
