@@ -148,13 +148,13 @@
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(!proselytizer.metal_to_alloy)
 		return 0
-	var/prosel_costtime = -amount*2
+	var/prosel_costtime = -amount
 	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(!proselytizer.metal_to_alloy)
 		return 0
-	var/prosel_costtime = -amount
+	var/prosel_costtime = -amount*2
 	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
 
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)

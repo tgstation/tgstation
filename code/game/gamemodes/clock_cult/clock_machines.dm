@@ -192,7 +192,7 @@
 	return 1
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= 300)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
@@ -328,7 +328,7 @@
 		toggle(0)
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= mania_cost)
 			user << "<span class='warning'>[src] needs more power to function!</span>"
 			return 0
@@ -358,7 +358,7 @@
 		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics."
 
 /obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, BE_CLOSE))
 		disrupt(user)
 
 /obj/structure/clockwork/powered/interdiction_lens/process()
@@ -464,7 +464,7 @@
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
 				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(!input || !user.canUseTopic(src, be_close = 1))
+			if(!input || !user.canUseTopic(src, BE_CLOSE))
 				return
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"

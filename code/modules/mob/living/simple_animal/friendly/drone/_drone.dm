@@ -199,9 +199,11 @@
 	return 1
 
 
-/mob/living/simple_animal/drone/canUseTopic()
-	if(stat)
-		return
+/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 

@@ -108,8 +108,11 @@
 	seeStatic = 0
 	visualAppearence = CLOCKDRONE
 
+/mob/living/simple_animal/drone/cogscarab/ratvar //a subtype for spawning when ratvar is alive, has a slab that it can use and a normal proselytizer
+	default_storage = /obj/item/weapon/storage/box/brass/prefilled/ratvar
+
 /mob/living/simple_animal/drone/cogscarab/admin //an admin-only subtype of cogscarab with a no-cost proselytizer and slab in its box
-	default_storage = /obj/item/weapon/storage/box/brass/prefilled/admin
+	default_storage = /obj/item/weapon/storage/box/brass/prefilled/ratvar/admin
 
 /mob/living/simple_animal/drone/cogscarab/New()
 	. = ..()

@@ -849,9 +849,14 @@
 	new /obj/item/weapon/crowbar/brass(src)
 	new /obj/item/weapon/weldingtool/experimental/brass(src)
 
-/obj/item/weapon/storage/box/brass/prefilled/admin
+/obj/item/weapon/storage/box/brass/prefilled/ratvar
+	var/slab_type = /obj/item/clockwork/slab/scarab
+
+/obj/item/weapon/storage/box/brass/prefilled/ratvar/New()
+	..()
+	new slab_type(src)
+
+/obj/item/weapon/storage/box/brass/prefilled/ratvar/admin
+	slab_type = /obj/item/clockwork/slab/debug
 	proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab/debug
 
-/obj/item/weapon/storage/box/brass/prefilled/admin/New()
-	..()
-	new /obj/item/clockwork/slab/debug(src)

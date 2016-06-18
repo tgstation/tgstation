@@ -76,7 +76,7 @@
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!target || !invoker.canUseTopic(src, be_close = 1))
+	if(!target || !invoker.canUseTopic(src, BE_CLOSE))
 		return 0
 	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
 	if(istargetobelisk)
