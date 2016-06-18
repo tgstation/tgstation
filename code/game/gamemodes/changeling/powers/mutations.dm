@@ -290,7 +290,7 @@
 	..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/changeling/dropped()
 	qdel(src)

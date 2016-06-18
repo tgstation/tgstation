@@ -18,13 +18,13 @@
 /obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
 	..()
 	owner.status_flags |= XENO_HOST
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	owner.med_hud_set_status()
 	spawn(0)
 		AddInfectionImages(owner)
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.status_flags &= ~(XENO_HOST)
 		owner.med_hud_set_status()

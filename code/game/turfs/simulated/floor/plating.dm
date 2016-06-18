@@ -224,12 +224,12 @@
 	burn_stuff()
 	if(!processing)
 		processing = 1
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
 		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/make_plating()
 	return

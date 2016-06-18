@@ -278,7 +278,7 @@
 			damtype = "brute"
 			update_icon()
 			if(!can_off_process)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -378,7 +378,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0

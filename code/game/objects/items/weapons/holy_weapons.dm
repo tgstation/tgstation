@@ -354,10 +354,10 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/nullrod/tribal_knife/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/nullrod/tribal_knife/process()
