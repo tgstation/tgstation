@@ -317,7 +317,7 @@
 //default shuttleRotate
 /atom/proc/shuttleRotate(rotation)
 	//rotate our direction
-	setDir(angle2dir(rotation)+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 	//resmooth if need be.
 	if(smooth)

@@ -53,6 +53,7 @@ h1.alert, h2.alert		{color: #000000;}
 .userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
 .danger					{color: #ff0000;}
 .warning				{color: #ff0000;	font-style: italic;}
+.boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce 				{color: #228b22;	font-weight: bold;}
 .boldannounce			{color: #ff0000;	font-weight: bold;}
 .greenannounce			{color: #00ff00;	font-weight: bold;}
@@ -73,6 +74,18 @@ h1.alert, h2.alert		{color: #000000;}
 .holoparasite			{color: #35333a;}
 .holoparasitebold		{color: #35333a;	font-weight: bold;}
 
+.revennotice			{color: #1d2953;}
+.revenboldnotice		{color: #1d2953;	font-weight: bold;}
+.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
+.revenminor				{color: #823abb}
+.revenwarning			{color: #760fbb;	font-style: italic;}
+.revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
+.umbra					{color: #5000A0;}
+.umbra_bold				{color: #5000A0;	font-weight: bold;}
+.umbra_italics			{color: #5000A0;	font-style: italic;}
+.umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
+.umbra_large			{color: #5000A0;	font-size: 3;}
+
 .brass					{color: #BE8700;}
 .heavy_brass			{color: #BE8700; font-weight: bold; font-style: italic;}
 .large_brass			{color: #BE8700; font-size: 3;}
@@ -90,13 +103,6 @@ h1.alert, h2.alert		{color: #000000;}
 .nzcrentr_small			{color: #BE8700;}
 .neovgre				{color: #13143F; font-weight: bold; font-style: italic;}
 .neovgre_small			{color: #13143F;}
-
-.revennotice			{color: #1d2953;}
-.revenboldnotice		{color: #1d2953;	font-weight: bold;}
-.revenbignotice			{color: #1d2953;	font-weight: bold; font-size: 3;}
-.revenminor				{color: #823abb}
-.revenwarning			{color: #760fbb;	font-style: italic;}
-.revendanger			{color: #760fbb;	font-weight: bold; font-size: 3;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}

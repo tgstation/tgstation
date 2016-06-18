@@ -44,6 +44,8 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -71,6 +73,8 @@
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
+
+#define isumbra(A) (istype(A, /mob/living/simple_animal/umbra))
 
 #define islimb(A) (istype(A, /obj/item/bodypart))
 

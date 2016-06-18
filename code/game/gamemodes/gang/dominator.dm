@@ -77,7 +77,7 @@
 			spark_system.start()
 	else if(!(stat & BROKEN))
 		spark_system.start()
-		overlays += "damage"
+		add_overlay("damage")
 
 	if(!(stat & BROKEN))
 		if(health <= 0)
@@ -112,7 +112,7 @@
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
-	overlays.Cut()
+	cut_overlays()
 	operating = 0
 	stat |= BROKEN
 	SSmachine.processing -= src
