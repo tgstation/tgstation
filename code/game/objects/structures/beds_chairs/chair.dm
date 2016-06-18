@@ -28,10 +28,6 @@
 	if(M.environment_smash)
 		deconstruct()
 
-/obj/structure/chair/Move(atom/newloc, direct)
-	..()
-	handle_rotation()
-
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)
 		if(1)
@@ -49,7 +45,7 @@
 /obj/structure/chair/narsie_act()
 	if(prob(20))
 		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.dir = dir
+		W.setDir(dir)
 		qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
@@ -62,7 +58,7 @@
 		var/obj/item/assembly/shock_kit/SK = W
 		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		E.dir = dir
+		E.setDir(dir)
 		E.part = SK
 		SK.loc = E
 		SK.master = E
@@ -78,31 +74,24 @@
 	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
+	handle_layer()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
-				buckled_mob.buckled = src
-				dir = buckled_mob.dir
-				return 0
-			buckled_mob.buckled = src //Restoring
-	handle_layer()
-	return 1
+			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
 	if(dir == NORTH)
-		layer = FLY_LAYER
+		layer = ABOVE_ALL_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
 /obj/structure/chair/proc/spin()
-	dir = turn(dir, 90)
-	handle_layer()
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
+	setDir(turn(dir, 90))
+
+/obj/structure/chair/setDir(newdir)
+	..()
+	handle_rotation(newdir)
 
 /obj/structure/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -168,7 +157,7 @@
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
-		overlays += armrest
+		add_overlay(armrest)
 	else
 		overlays -= armrest
 
@@ -249,7 +238,7 @@
 /obj/item/chair/narsie_act()
 	if(prob(20))
 		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.dir = dir
+		W.setDir(dir)
 		qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
@@ -266,7 +255,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
-	C.dir = dir
+	C.setDir(dir)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)

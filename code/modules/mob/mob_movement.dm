@@ -83,7 +83,7 @@
 			step(mob.control_object,direct)
 			if(!mob.control_object)
 				return
-			mob.control_object.dir = direct
+			mob.control_object.setDir(direct)
 		else
 			mob.control_object.loc = get_step(mob.control_object,direct)
 	return
@@ -183,7 +183,7 @@
 	switch(L.incorporeal_move)
 		if(1)
 			L.loc = get_step(L, direct)
-			L.dir = direct
+			L.setDir(direct)
 		if(2)
 			if(prob(50))
 				var/locx
@@ -223,17 +223,24 @@
 				spawn(0)
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
-			L.dir = direct
-		if(3) //Incorporeal move, but blocked by holy-watered tiles
+			L.setDir(direct)
+		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles. Used by umbras.
+			if(!isumbra(L))
+				L.incorporeal_move = 1
+				return
+			var/mob/living/simple_animal/umbra/U = L
 			var/turf/open/floor/stepTurf = get_step(L, direct)
+			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
+				U << "<span class='warning'>[S] bars your passage!</span>"
+				U.reveal(2, TRUE)
+				U.immobilize(2, TRUE)
+				return
 			if(stepTurf.flags & NOJAUNT)
-				L << "<span class='warning'>Holy energies block your path.</span>"
-				L.notransform = 1
-				spawn(2)
-					L.notransform = 0
+				U << "<span class='warning'>Holy energies block your path!</span>"
+				U.immobilize(2, TRUE)
 			else
-				L.loc = get_step(L, direct)
-				L.dir = direct
+				U.loc = get_step(L, direct)
+				U.setDir(direct)
 	return 1
 
 

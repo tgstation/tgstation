@@ -11,6 +11,7 @@
 	production = 5
 	yield = 2
 	growthstages = 5
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cocoapod-grow"
 	icon_dead = "cocoapod-dead"
 	mutatelist = list(/obj/item/seeds/cocoapod/vanillapod)

@@ -159,3 +159,9 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 	..()
+
+/obj/effect/decal/cleanable/salt
+	name = "salt pile"
+	desc = "A sizable pile of table salt. Someone must be upset."
+	icon = 'icons/effects/tomatodecal.dmi'
+	icon_state = "salt_pile"

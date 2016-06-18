@@ -2496,7 +2496,7 @@
 	desc = "A altar dedicated to the Wizard's Federation"
 	},
 /obj/item/weapon/kitchen/knife/ritual,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "hM" = (
 /obj/structure/flora/bush,
@@ -3066,7 +3066,7 @@
 	},
 /area/wizard_station)
 "jx" = (
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult/airless,
 /area/wizard_station)
 "jy" = (
 /obj/item/clothing/head/collectable/paper,
@@ -3183,7 +3183,7 @@
 /area/wizard_station)
 "jQ" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult/airless,
 /area/wizard_station)
 "jR" = (
 /turf/closed/indestructible/riveted,
@@ -3311,7 +3311,7 @@
 /area/wizard_station)
 "kk" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult/airless,
 /area/wizard_station)
 "kl" = (
 /obj/structure/showcase{
@@ -3320,9 +3320,7 @@
 	icon_state = "nim";
 	name = "wizard of yendor showcase"
 	},
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage4"
-	},
+/turf/open/floor/engine/cult/airless,
 /area/wizard_station)
 "km" = (
 /turf/closed/indestructible/fakeglass{
@@ -3446,12 +3444,10 @@
 /area/wizard_station)
 "kF" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "kG" = (
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "kH" = (
 /turf/closed/indestructible/fakeglass,
@@ -3536,7 +3532,7 @@
 /area/wizard_station)
 "kT" = (
 /obj/effect/forcefield,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "kU" = (
 /turf/open/floor/plasteel/cult{
@@ -3781,9 +3777,7 @@
 /area/wizard_station)
 "lJ" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/cult{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "lK" = (
 /turf/open/floor/plasteel/darkblue/side{
@@ -3814,14 +3808,14 @@
 	anchored = 1;
 	name = "Break Room"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "lR" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	name = "Break Room"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "lS" = (
 /turf/open/floor/plasteel/blue,
@@ -3844,12 +3838,12 @@
 /obj/structure/table/wood,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "lY" = (
 /obj/structure/table/wood,
 /obj/item/weapon/retractor,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "lZ" = (
 /obj/structure/table/wood,
@@ -3859,26 +3853,24 @@
 /obj/structure/mirror/magic{
 	pixel_y = 28
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "ma" = (
 /obj/structure/table/wood,
 /obj/item/clothing/suit/wizrobe/magusred,
 /obj/item/clothing/head/wizard/magus,
 /obj/item/weapon/staff,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mb" = (
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/hardsuit/wizard,
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mc" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "md" = (
 /obj/effect/forcefield,
@@ -3974,7 +3966,7 @@
 /obj/item/clothing/head/wizard/red,
 /obj/item/weapon/staff,
 /obj/item/clothing/shoes/sandal,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "ms" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -3982,9 +3974,7 @@
 	health = 9999
 	},
 /obj/item/clothing/suit/space/hardsuit/wizard,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mt" = (
 /turf/open/floor/plasteel/cult,
@@ -4041,7 +4031,7 @@
 /area/wizard_station)
 "mA" = (
 /obj/structure/bookcase,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mB" = (
 /obj/structure/grille/broken{
@@ -4057,14 +4047,14 @@
 /obj/item/clothing/suit/wizrobe/marisa,
 /obj/item/clothing/head/wizard/marisa,
 /obj/item/weapon/staff/broom,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mE" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /mob/living/simple_animal/hostile/creature{
 	name = "Experiment 35b"
 	},
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mF" = (
 /obj/machinery/door/poddoor/preopen,
@@ -4156,7 +4146,7 @@
 "mR" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult/airless,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mS" = (
 /turf/open/floor/plasteel/cult,
@@ -4183,19 +4173,17 @@
 	icon_state = "wooden_chair_wings";
 	dir = 1
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mW" = (
 /obj/structure/cult/pylon,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mX" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/structure/rack,
 /obj/item/weapon/staff,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "mY" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -4207,9 +4195,7 @@
 "mZ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/forcefield,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage"
-	},
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "na" = (
 /turf/open/floor/plasteel/cult/airless{
@@ -4221,14 +4207,14 @@
 	anchored = 1;
 	name = "Corridor A"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "nc" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	name = "Corridor A"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "nd" = (
 /obj/structure/barricade/security,
@@ -4358,7 +4344,7 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
 	name = "Personal Quarters"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "nz" = (
 /turf/closed/indestructible/riveted,
@@ -4491,7 +4477,7 @@
 /area/centcom/holding)
 "nV" = (
 /obj/structure/table/wood,
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "nW" = (
 /obj/structure/table/wood,
@@ -4500,7 +4486,7 @@
 	max_charges = 0;
 	name = "wand of emergency engine ignition"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "nX" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -4614,7 +4600,7 @@
 	desc = "A engine used in powering the wizards ship";
 	name = "magma engine"
 	},
-/turf/open/floor/plasteel/cult,
+/turf/open/floor/engine/cult,
 /area/wizard_station)
 "op" = (
 /obj/structure/table,
@@ -5797,19 +5783,20 @@
 	},
 /turf/open/floor/plasteel/delivery,
 /area/centcom/ferry)
+"sa" = (
+/obj/structure/chair/wood/wings,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
+"sb" = (
+/obj/structure/cult/tome,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
+"sc" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "sd" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/holofloor/snow/cold,
-/area/holodeck/rec_center/winterwonderland)
-"sc" = (
-/obj/structure/flora/grass/brown,
-/turf/open/floor/holofloor/snow/cold,
-/area/holodeck/rec_center/winterwonderland)
-"sb" = (
-/obj/structure/flora/bush,
-/turf/open/floor/holofloor/snow/cold,
-/area/holodeck/rec_center/winterwonderland)
-"sa" = (
 /turf/open/floor/holofloor/snow/cold,
 /area/holodeck/rec_center/winterwonderland)
 
@@ -10616,10 +10603,10 @@ aa
 aa
 aa
 jc
-lW
-mp
+sa
+sb
 mA
-mp
+sb
 mV
 jc
 aa
@@ -11902,7 +11889,7 @@ lx
 ju
 jc
 lX
-mq
+kF
 lz
 lI
 mW
@@ -12159,7 +12146,7 @@ ly
 lG
 jc
 lY
-mq
+kF
 ln
 kG
 kG
@@ -12664,7 +12651,7 @@ aa
 ja
 jw
 jP
-jQ
+sc
 kv
 kF
 kU
@@ -13458,7 +13445,7 @@ nL
 jP
 jc
 jc
-ok
+sc
 jc
 jc
 jc
@@ -14218,7 +14205,7 @@ mc
 mt
 mF
 mS
-mY
+mc
 jc
 aa
 aa
@@ -14728,7 +14715,7 @@ aa
 aa
 aa
 ju
-me
+kF
 lx
 mH
 mT

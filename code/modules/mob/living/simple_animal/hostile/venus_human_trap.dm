@@ -82,7 +82,7 @@
 				L.attack_animal(src)
 			else
 				if(prob(grasp_pull_chance))
-					dir = get_dir(src,L) //staaaare
+					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
 					L.Weaken(3) //you can't get away now~
 

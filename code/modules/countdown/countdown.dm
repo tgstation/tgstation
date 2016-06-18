@@ -11,6 +11,7 @@
 	var/text_size = 4
 	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
+	anchored = TRUE
 	layer = GHOST_LAYER
 
 /obj/effect/countdown/New(atom/A)
@@ -107,3 +108,16 @@
 	else if(D.gang && D.gang.dom_timer)
 		var/timer = D.gang.dom_timer
 		return timer
+
+/obj/effect/countdown/clockworkgate
+	name = "gateway countdown"
+	text_size = 1
+	text_color = "#BE8700"
+	layer = POINT_LAYER
+
+/obj/effect/countdown/clockworkgate/get_value()
+	var/obj/structure/clockwork/massive/celestial_gateway/G = attached_to
+	if(!istype(G))
+		return
+	else if(G.health && !G.purpose_fulfilled)
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds]</div>"

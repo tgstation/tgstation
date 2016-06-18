@@ -312,7 +312,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -332,7 +332,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 270)
+	setDir(turn(dir, 270))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -374,7 +374,7 @@
 /obj/structure/window/Move()
 	var/turf/T = loc
 	..()
-	dir = ini_dir
+	setDir(ini_dir)
 	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
@@ -406,7 +406,7 @@
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -446,7 +446,7 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -455,7 +455,7 @@
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -465,7 +465,7 @@
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = 5
+	dir = NORTHEAST
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
@@ -483,7 +483,7 @@
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -512,8 +512,8 @@
 	if(!fulltile)
 		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
 		if(direct)
-			dir = direct
-			E.dir = direct
+			setDir(direct)
+			E.setDir(direct)
 	else
 		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
 	for(var/obj/item/I in debris)
@@ -538,5 +538,5 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	fulltile = 1
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 150

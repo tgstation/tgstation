@@ -185,7 +185,10 @@
 	should_draw_gender = S.sexes
 
 	if(MUTCOLORS in S.specflags)
-		species_color = H.dna.features["mcolor"]
+		if(S.fixed_mut_color)
+			species_color = S.fixed_mut_color
+		else
+			species_color = H.dna.features["mcolor"]
 		should_draw_greyscale = TRUE
 	else
 		species_color = ""
@@ -205,12 +208,12 @@
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = get_limb_icon(1)
 	if(I)
 		I.pixel_x = px_x
 		I.pixel_y = px_y
-		overlays += I
+		add_overlay(I)
 
 //Gives you a proper icon appearance for the dismembered limb
 /obj/item/bodypart/proc/get_limb_icon(dropped)

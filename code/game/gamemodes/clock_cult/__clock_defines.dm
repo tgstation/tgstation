@@ -22,6 +22,24 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 
 #define MAX_COMPONENTS_BEFORE_RAND 10*LOWER_PROB_PER_COMPONENT //the number of each component, times LOWER_PROB_PER_COMPONENT, you need to have before component generation will become random
 
-#define GATEWAY_SUMMON_RATE 3 //The speed multiplier used by the Gateway to the Celestial Derelict; defaults to 3x speed
-
 #define CLOCKWORK_GENERAL_COOLDOWN 3000 //how long clockwork generals go on cooldown after use, defaults to 5 minutes
+
+//porselytizer defines
+#define REPLICANT_ALLOY_UNIT 100 //how much each piece of replicant alloy gives in a clockwork proselytizer
+
+#define REPLICANT_STANDARD REPLICANT_ALLOY_UNIT*0.2 //how much alloy is in anything else; doesn't matter as much as the following
+
+#define REPLICANT_FLOOR REPLICANT_ALLOY_UNIT*0.1 //how much alloy is in a clockwork floor, determines the cost of clockwork floor production
+
+#define REPLICANT_WALL_MINUS_FLOOR REPLICANT_ALLOY_UNIT*0.4 //amount of alloy in a clockwork wall, determines the cost of clockwork wall production
+
+#define REPLICANT_WALL_TOTAL REPLICANT_WALL_MINUS_FLOOR+REPLICANT_FLOOR //how much alloy is in a clockwork wall and the floor under it
+
+//Ark defines
+#define GATEWAY_SUMMON_RATE 2 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 2 per tick
+
+#define GATEWAY_REEBE_FOUND 100 //when progress is at or above this, the gateway finds reebe and begins drawing power
+
+#define GATEWAY_RATVAR_COMING 250 //when progress is at or above this, ratvar has entered and is coming through the gateway
+
+#define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home

@@ -21082,7 +21082,7 @@
 	},
 /area/shuttle/arrival)
 "aZS" = (
-/obj/item/device/soulstone/anybody,
+/obj/item/device/soulstone/anybody/chaplain,
 /turf/open/floor/plating{
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating"

@@ -247,6 +247,8 @@
 	R.weather_immunities += "ash"
 	R.icon_state = "ashborg"
 
+	return 1
+
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
 	desc = "This module will repair the cyborg over time."
@@ -304,6 +306,11 @@
 		return
 
 	if(cyborg && (cyborg.stat != DEAD) && on)
+		if(!cyborg.cell)
+			cyborg << "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>"
+			deactivate()
+			return
+
 		if(cyborg.cell.charge < powercost * 2)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
 			deactivate()

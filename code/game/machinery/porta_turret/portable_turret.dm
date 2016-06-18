@@ -587,7 +587,7 @@
 	if(target)
 		spawn()
 			popUp()				//pop the turret up if it's not already up.
-		dir = get_dir(base, target)	//even if you can't shoot, follow the target
+		setDir(get_dir(base, target)	)//even if you can't shoot, follow the target
 		spawn()
 			shootAt(target)
 		return 1
@@ -701,12 +701,11 @@
 /obj/machinery/turretid/New(loc, ndir = 0, built = 0)
 	..()
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		locked = 0
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
-	return
 
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets
 	if(control_area && istext(control_area))
@@ -779,13 +778,7 @@
 			return
 
 	user.set_machine(src)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		user << text("Turret badly positioned - loc.loc is [].", loc)
-		return
-	var/area/area = loc
+	var/area/area = get_area(src)
 	var/t = ""
 
 	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))

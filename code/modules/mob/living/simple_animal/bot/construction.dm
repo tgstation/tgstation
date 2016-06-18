@@ -293,7 +293,7 @@
 		..()
 		spawn(5)
 			if(skin)
-				overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
+				add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 
 /obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
 
@@ -342,7 +342,7 @@
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))
@@ -398,7 +398,7 @@
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
 				build_step++
-				overlays += "hs_hole"
+				add_overlay("hs_hole")
 				user << "<span class='notice'>You weld a hole in [src]!</span>"
 		else if(build_step == 1)
 			var/obj/item/weapon/weldingtool/WT = I
@@ -412,7 +412,7 @@
 			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
-		overlays += "hs_eye"
+		add_overlay("hs_eye")
 		name = "helmet/signaler/prox sensor assembly"
 		qdel(I)
 
@@ -422,7 +422,7 @@
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += "hs_arm"
+		add_overlay("hs_arm")
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))

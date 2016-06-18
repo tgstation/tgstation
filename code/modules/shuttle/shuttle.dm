@@ -12,7 +12,7 @@
 	anchored = 1
 
 	var/id
-	dir = NORTH		//this should point -away- from the dockingport door, ie towards the ship
+	dir = NORTH//this should point -away- from the dockingport door, ie towards the ship
 	var/width = 0	//size of covered area, perpendicular to dir
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
@@ -317,7 +317,7 @@
 //default shuttleRotate
 /atom/proc/shuttleRotate(rotation)
 	//rotate our direction
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 	//resmooth if need be.
 	if(smooth)
@@ -388,7 +388,7 @@
 
 //		//rotate transit docking ports, so we don't need zillions of variants
 //		if(istype(S1, /obj/docking_port/stationary/transit))
-//			S1.dir = turn(NORTH, -travelDir)
+//			S1.setDir(turn(NORTH, -travelDir))
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
@@ -455,7 +455,7 @@
 		SSair.add_to_active(T0,1)
 
 	loc = S1.loc
-	dir = S1.dir
+	setDir(S1.dir)
 
 /atom/movable/proc/onShuttleMove(turf/T1, rotation)
 	if(rotation)
@@ -681,5 +681,5 @@
 	if(T.color != color)
 		T.color = color
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	return T

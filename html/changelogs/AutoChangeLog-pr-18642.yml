@@ -1,0 +1,7 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Assassin holoparasite attack damage increased from 13 to 15, stealth cooldown decreased from 20 seconds to 16 seconds."
+  - tweak: "Charger holoparasite charge cooldown decreased from 5 seconds to 4 seconds."
+  - tweak: "Chaos holoparasite attack damage decreased from 10 to 7, range decreased from 10 to 7."
+  - tweak: "Lightning holoparasite attack damage increased from 5 to 7, chain damage increased by 33%."

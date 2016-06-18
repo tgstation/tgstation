@@ -198,7 +198,7 @@
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune drawn in crayon."
+		R.desc = "A rune vandalizing the station."
 
 
 //Rite of Disruption: Weaker than rune
@@ -249,12 +249,14 @@
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
 				S.emp_act(1)
-			if(iscarbon(target))
+			else if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.silent += 5
 				C.stuttering += 15
 				C.cultslurring += 15
 				C.Jitter(15)
+			if(is_servant_of_ratvar(target))
+				target.adjustBruteLoss(15)
 		user.drop_item()
 		qdel(src)
 		return
@@ -302,6 +304,11 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
+			if(is_servant_of_ratvar(target))
+				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
+				target.emote("scream")
+				target.confused = max(0, target.confused + 3)
+				target.flash_eyes()
 		qdel(src)
 
 

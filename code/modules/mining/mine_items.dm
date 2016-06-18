@@ -358,9 +358,9 @@
 
 /obj/machinery/sleeper/survival_pod/update_icon()
 	if(state_open)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "sleeper_cover"
+		add_overlay("sleeper_cover")
 
 //Computer
 /obj/item/device/gps/computer

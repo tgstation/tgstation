@@ -53,7 +53,7 @@
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
 	T.loc = src.loc
-	T.dir = turn(src.dir, -90)
+	T.setDir(turn(src.dir, -90))
 	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 

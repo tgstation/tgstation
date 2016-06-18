@@ -40,7 +40,7 @@
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if(power_supply.charge > shot.e_cost)
-		overlays += "decloner_spin"
+		add_overlay("decloner_spin")
 
 /obj/item/weapon/gun/energy/floragun
 	name = "floral somatoray"
@@ -370,8 +370,10 @@
 
 /obj/item/weapon/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
+	icon_state = "gravity_gun"
+	item_state = "gravity_gun"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity"
-	ammo_type = list(/obj/item/ammo_casing/energy/gravipulse, /obj/item/ammo_casing/energy/gravipulse/alt)
+	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
 	item_state = null
 	icon_state = "gravity_gun"

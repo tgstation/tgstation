@@ -48,6 +48,7 @@
 	radio.recalculateChannels()
 
 /obj/machinery/clonepod/Destroy()
+	go_out()
 	qdel(radio)
 	radio = null
 	qdel(countdown)
@@ -87,7 +88,7 @@
 /obj/item/weapon/disk/data/New()
 	..()
 	icon_state = "datadisk[rand(0,6)]"
-	overlays += "datadisk_gene"
+	add_overlay("datadisk_gene")
 
 /obj/item/weapon/disk/data/attack_self(mob/user)
 	read_only = !read_only
@@ -355,7 +356,7 @@
 		if(occupant.mind != clonemind)
 			clonemind.transfer_to(occupant)
 		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, color="#960000", time=100)
+		flash_color(occupant, flash_color="#960000", flash_time=100)
 		occupant << "<span class='warning'><b>Agony blazes across your \
 			consciousness as your body is torn apart.</b><br>\
 			<i>Is this what dying is like? Yes it is.</i></span>"

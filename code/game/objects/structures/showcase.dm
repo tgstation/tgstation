@@ -14,8 +14,8 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakeid/New()
-	overlays += "id"
-	overlays += "id_key"
+	add_overlay("id")
+	add_overlay("id_key")
 
 /obj/structure/showcase/fakesec
 	name = "\improper Centcom security records"
@@ -24,8 +24,8 @@
 	icon_state = "computer"
 
 /obj/structure/showcase/fakesec/New()
-	overlays += "security"
-	overlays += "security_key"
+	add_overlay("security")
+	add_overlay("security_key")
 
 /obj/structure/showcase/horrific_experiment
 	name = "horrific experiment"
