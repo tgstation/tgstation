@@ -377,8 +377,8 @@
 	density = 0
 	takes_damage = FALSE
 	burn_state = LAVA_PROOF
-	var/mobtype
-	var/spawn_message
+	var/mobtype = /mob/living/simple_animal/hostile/clockwork
+	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
 /obj/structure/clockwork/shell/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
