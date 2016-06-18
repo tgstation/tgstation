@@ -42,8 +42,14 @@
 	death = FALSE
 	anchored = 0
 	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
-	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. \
+		Your tribe worships <span class='danger'>the Necropolis</span>. \
+		The wastes are sacred ground, its monsters a blessed bounty. \
+		You have seen lights in the distance... they foreshadow the arrival \
+		of outsiders, no doubt naive softskins, who will shortly perish in \
+		their stupidity and greed. Still, as foes their blood will feed \
+		the soil, but as friends, there is the potential for great trade. \
+		How they will be treated is up to you...</b>"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
@@ -228,8 +234,9 @@
 	L.name = L.real_name
 
 /obj/effect/mob_spawn/human/prisoner_transport/New()
-	var/list/crimes = list("murder", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
-	"worship of a forbidden deity", "interspecies relations", "mutiny")
+	var/list/crimes = list("manslaughter", "larceny", "embezzlement", "unionization", "dereliction of duty", "kidnapping", "gross incompetence", "grand theft", "collaboration with the Syndicate", \
+	"worship of a forbidden deity", "interspecies relations", "mutiny", \
+	"jaywalking", "littering", "hanging outside the brig suspiciously")
 	flavour_text += "[pick(crimes)]. but regardless of that, it seems like your crime doesn't matter now. You don't know where you are, but you know that it's out to kill you, and you're not going \
 	to lose this opportunity. Find a way to get out of this mess and back to where you rightfully belong - your [pick("house", "apartment", "spaceship", "station")]</b>."
 	..()
