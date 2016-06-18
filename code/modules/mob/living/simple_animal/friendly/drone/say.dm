@@ -1,4 +1,3 @@
-
 /////////////
 //DRONE SAY//
 /////////////
@@ -31,5 +30,10 @@
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i>DRONE CHAT: <span class='name'>[name]</span>: [msg]</i>"
+	var/rendered = "<i><span class='game say'>Drone Chat: \
+		<span class='name'>[name]</span>: \
+		<span class='message'>[msg]</span></span></i>"
 	alert_drones(rendered, 1)
+
+/mob/living/simple_animal/drone/binarycheck()
+	return TRUE
