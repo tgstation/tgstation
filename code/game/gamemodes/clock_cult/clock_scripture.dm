@@ -1096,7 +1096,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
-	"<span class='nzcrentr'>\"Gur obff fnlf vg'f bxnl gb qb guvf. Qba'g oynzr zr vs lbh qvr sebz vg.\"</span>\n \
+	"<span class='nzcrentr'>\"Gur obff fnlf vg'f bxnl gb qb guv'f. Qba'g oynzr zr vs lbh qvr sebz vg.\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
@@ -1105,13 +1105,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
 		"<span class='nzcrentr'>\"V gbyq lbh lbh jbhyqa'g or noyr gb unaqyr vg.\"</span>\n \
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
-		playsound(invoker, 'sound/magic/lightningbolt.ogg', 50, 0)
+		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		animate(invoker, color = initial(invoker.color), time = 10)
 		for(var/mob/living/L in view(7, invoker))
 			if(is_servant_of_ratvar(L))
 				continue
 			invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
-			var/randdamage = rand(30, 50)
+			var/randdamage = rand(40, 60)
 			if(iscarbon(L))
 				L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)
 			else
@@ -1122,7 +1122,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				"<span class='italics'>You hear a heavy electrical crack.</span>" \
 				)
 			L.Weaken(8)
-			playsound(L, 'sound/magic/LightningShock.ogg', 50, 0)
+			playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
 		return 1
 	else
 		return 0
