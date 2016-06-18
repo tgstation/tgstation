@@ -85,7 +85,7 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. It's been modified for extreme power output to crush rocks, but often serves as a miner's first defense against hostile alien life; it's not very powerful unless used in a low pressure environment."
+	desc = "Do not point boomy end at face." //Honk
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
