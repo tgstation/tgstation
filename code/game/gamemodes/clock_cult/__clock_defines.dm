@@ -14,7 +14,7 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 #define SCRIPTURE_REVENANT 4
 #define SCRIPTURE_JUDGEMENT 5
 
-#define SLAB_PRODUCTION_TIME 500 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds
+#define SLAB_PRODUCTION_TIME 500 //how long(deciseconds) slabs require to produce a single component; defaults to 50 seconds
 
 #define CACHE_PRODUCTION_TIME 350 //how long(deciseconds) caches require to produce a component; defaults to 35 seconds
 
