@@ -95,7 +95,7 @@ var/list/TAGGERLOCATIONS = list("Disposals",
 
 var/global/list/guitar_notes = flist("sound/guitar/")
 
-var/global/list/station_prefixes = list("Imperium", "Heretical", "Cuban",
+var/global/list/station_prefixes = list("", "Imperium", "Heretical", "Cuban",
 	"Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique",
 	"Houseruled", "Religious", "Atheist", "Traditional", "Houseruled",
 	"Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death",
@@ -116,7 +116,7 @@ var/global/list/station_names = list("", "Stanford", "Dorf", "Alium",
 	"Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional",
 	"Robot", "Hats", "Pizza")
 
-var/global/list/station_suffixes = list("Station", "Fortress", "Frontier",
+var/global/list/station_suffixes = list("Station", "Frontier",
 	"Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk",
 	"Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb",
 	"Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive",
