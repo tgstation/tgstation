@@ -97,6 +97,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 //
 // Generator an admin can spawn
 //
+/obj/machinery/gravity_generator/main/station/admin
+	use_power = 0
 
 /obj/machinery/gravity_generator/main/station/admin/New()
 	..()
