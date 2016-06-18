@@ -129,7 +129,7 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
+			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling \his [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			message_admins("[key_name_admin(user)] triggered a fueltank explosion via welding tool.")
 			log_game("[key_name(user)] triggered a fueltank explosion via welding tool.")
 			boom()
