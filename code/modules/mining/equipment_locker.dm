@@ -233,30 +233,23 @@
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
 		world << "Debug check href"
-		var/alloytype1 = href_list["alloytype1"]
-		var/alloytype2 = href_list["alloytype2"]
-		var/alloytypeout = href_list["alloytypeout"]
+		var/alloytype1 = text2path(href_list["alloytype1"])
+		var/alloytype2 = text2path(href_list["alloytype2"])
+		var/alloytypeout = text2path(href_list["alloytypeout"])
 		if(check_access(inserted_id) || allowed(usr))
 			world << "Debug check access"
 			if(!(alloytype1 in stack_list)) return
 			if(!(alloytype2 in stack_list)) return
 			var/obj/item/stack/sheet/stack1 = stack_list[alloytype1]
 			var/obj/item/stack/sheet/stack2 = stack_list[alloytype2]
-
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/alloyout = new alloytypeout
-			if(alloyout)
-				alloyout exists
-				before alloyout.amount = [alloyout.amount]
 			alloyout.amount = round(min(desired,50,stack1.amount,stack2.amount))
-			after alloyout.amount = [alloyout.amount]
-			if(alloyout.amount >= 1) ++
-				passed alloyout amount check
-					stack1.amount -= alloyout.amount
-					stack2.amount -= alloyout.amount
-					unload_mineral(alloyout)
-			else
-				failed
+			world << "Debug check 3"
+			if(alloyout.amount >= 1)
+				stack1.amount -= alloyout.amount
+				stack2.amount -= alloyout.amount
+				unload_mineral(alloyout)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()
