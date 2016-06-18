@@ -792,7 +792,6 @@
 			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
 		clockwork_component_cache[component_to_generate]++
 		production_time = world.time + production_cooldown + (clockwork_component_cache[component_to_generate] * component_slowdown_mod) //Start it over
-		generate_cache_component(specific_component)
 		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
