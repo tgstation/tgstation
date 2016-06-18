@@ -302,6 +302,18 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 
 		stat("Chemicals", chemicals)
 
+/mob/living/simple_animal/borer/earprot()
+	if(host)
+		return host.earprot()
+	else
+		return ..()
+
+/mob/living/simple_animal/borer/eyecheck()
+	if(host)
+		return host.eyecheck()
+	else
+		return ..()
+
 /mob/living/simple_animal/borer/start_pulling(var/atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
 

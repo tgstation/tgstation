@@ -191,12 +191,12 @@
 		if(M_FAT in mutations)
 			if(nutrition < 100)
 				if(prob(round((50 - nutrition) / 100)))
-					to_chat(src, "<span class='notice'>You feel fit again !</span>")
+					to_chat(src, "<span class='notice'>You feel fit again!</span>")
 					mutations.Add(M_FAT)
 		else
 			if(nutrition > 500)
 				if(prob(5 + round((nutrition - max_grown) / 2)))
-					to_chat(src, "<span class='danger'>You suddenly feel blubbery !</span>")
+					to_chat(src, "<span class='danger'>You suddenly feel blubbery!</span>")
 					mutations.Add(M_FAT)
 
 		burn_calories(2*HUNGER_FACTOR / 3)
