@@ -1,4 +1,8 @@
-/mob/living/simple_animal/hades
+#define STATE_JUDGE 0
+#define STATE_WRATH 1
+#define STATE_FLEE 2
+
+/mob/living/simple_animal/hostile/hades
 	name = "hades"
 	real_name = "hades"
 	desc = "A strange being, clad in dark robes. Their very presence radiates an uneasy power."
@@ -10,6 +14,7 @@
 	icon = 'icons/mob/EvilPope.dmi'
 	icon_state = "EvilPope"
 	icon_living = "EvilPope"
+	icon_dead = "popedeath"
 	speed = 1
 	a_intent = "harm"
 	status_flags = CANPUSH
@@ -20,18 +25,25 @@
 	maxbodytemp = INFINITY
 	faction = list("hades")
 	attacktext = "strikes with an unholy rage at"
-	maxHealth = 500
-	health = 500
+	maxHealth = 1000
+	health = 1000
 	healable = 0
-	environment_smash = 2
-	melee_damage_lower = 75
-	melee_damage_upper = 85
+	environment_smash = 3
+	melee_damage_lower = 15
+	melee_damage_upper = 20
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	loot = list(/obj/effect/decal/cleanable/blood)
-	del_on_death = 1
-	deathmessage = "lets fourth a piercing howl, before sobbing quietly as they're dragged back to whence they came."
+	del_on_death = 0
+	deathmessage = "begins to sizzle and pop, their flesh peeling away like paper."
 
+	var/isDoingDeath = FALSE
+	var/isFleeing = FALSE
+	var/fleeTimes = 0
+	var/currentState = STATE_JUDGE
+	var/rageLevel = 0
+
+	var/list/validSins = list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath")
 	var/lastsinPerson = 0
 	var/sinPersonTime = 300
 	var/fakesinPersonChance = 60
@@ -51,9 +63,18 @@
 	"This is the eve of your last days.",\
 	"Darkness comes.")
 
+	var/list/creepyasssounds = list('sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', \
+								'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg',\
+								'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
+								'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg',\
+								'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
+								'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg')
+
 	var/obj/effect/proc_holder/spell/targeted/lightning/sinLightning
 
-/mob/living/simple_animal/hades/New()
+	var/list/currentAcolytes = list()
+
+/mob/living/simple_animal/hostile/hades/New()
 	..()
 
 	sinLightning = new/obj/effect/proc_holder/spell/targeted/lightning(src)
@@ -65,163 +86,339 @@
 
 	lastsinPerson = world.time
 	var/list/possible_titles = list("Pope","Bishop","Lord","Cardinal","Deacon","Pontiff")
-	var/chosen = "[pick(possible_titles)] of Sin"
+	var/chosen = "Hades, [pick(possible_titles)] of Sin"
 	name = chosen
 	real_name = chosen
 
-	world << "<span class='warning'><font size=6>A [name] has entered your reality. Kneel before them.</font></span>"
+	world << "<span class='warning'><font size=4>[name] has entered your reality. Kneel before them.</font></span>"
 	world << 'sound/effects/pope_entry.ogg'
 
-	Appear()
+	Appear(get_turf(src))
 
-/mob/living/simple_animal/hades/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
+/mob/living/simple_animal/hostile/hades/handle_environment(datum/gas_mixture/environment)
+	//space popes are from space, they need not your fickle "oxygen"
+	return
+
+/mob/living/simple_animal/hostile/hades/handle_temperature_damage()
+	//space popes are from space, they don't uh.. something fire burny death
+	return
+
+/mob/living/simple_animal/hostile/hades/death(gibbed)
+	if(!isDoingDeath)
+		src.visible_message("<span class='warning'><font size=4>[src] begins to twist and distort, before snapping backwards with a sickening crunch.</font></span>")
+		spawn(20)
+			src.visible_message("<span class='warning'><font size=4>[src] is being sucked back to their own realm, destabilizing the fabric of time and space itself!</font></span>")
+		playsound(get_turf(src), 'sound/effects/hyperspace_begin.ogg', 100, 1)
+		isDoingDeath = TRUE
+		AIStatus = AI_OFF
+		SpinAnimation()
+		for(var/i in 1 to 5)
+			spawn(i*10)
+				for(var/turf/T in oview(i,src) - oview((i)-1,src))
+					sinShed(T)
+		spawn(60)
+			SpinAnimation(0,0)
+			explosion(get_turf(src), 0, 2, 4, 6, flame_range = 6)
+			..()
+
+/mob/living/simple_animal/hostile/hades/attackby(obj/item/I, mob/user, params)
 	..()
-	lastsinPerson -= 75
-	Defend(AM)
+	Defend(user,I)
 
-/mob/living/simple_animal/hades/bullet_act(obj/item/projectile/P, def_zone)
+/mob/living/simple_animal/hostile/hades/grabbedby(mob/living/carbon/user, supress_message = 0)
 	..()
-	lastsinPerson -= 75
-	Defend(P.firer)
+	Defend(user,user)
 
-/mob/living/simple_animal/hades/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/hades/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
 	..()
-	lastsinPerson -= 75
-	Defend(M)
+	lastsinPerson -= (sinPersonTime/4)
+	if(istype(AM,/obj/item))
+		var/obj/item/throwCast = AM
+		Defend(throwCast.thrownby,AM)
 
-/mob/living/simple_animal/hades/proc/Defend(var/mob/attacker)
-	src.visible_message("<span class='warning'>[src] rounds on the [attacker], gazing at them with a [pick("cold","frosty","freezing","dark")] [pick("glare","gaze","glower","stare")].</span>")
-	var/chosenDefend = rand(1,3)
-	switch(chosenDefend)
-		if(1)
-			attacker.visible_message("<span class='warning'>[attacker] is lifted from the ground, shadowy powers tossing them aside.</span>")
-			attacker.throw_at_fast(pick(orange(src,7)),10,1)
-		if(2)
-			attacker.visible_message("<span class='warning'>[attacker] crackles with electricity, a bolt leaping from [src] to them.</span>")
-			sinLightning.Bolt(src,attacker,30,5,src)
-		if(3)
-			src.visible_message("<span class='warning'>[src] points his staff at [attacker], a swarm of eyeballs lurching fourth!</span>")
-			for(var/i in 1 to 4)
-				var/mob/living/simple_animal/hostile/carp/eyeball/E = new/mob/living/simple_animal/hostile/carp/eyeball(pick(orange(attacker,1)))
-				E.faction = faction
-				spawn(150)
-					qdel(E)
+/mob/living/simple_animal/hostile/hades/bullet_act(obj/item/projectile/P, def_zone)
+	//don't call ..() because we're going to deflect it
+	lastsinPerson -= (sinPersonTime/4)
+	Defend(P.firer,P)
+	return -1
 
-/mob/living/simple_animal/hades/proc/Appear()
-	new /obj/effect/timestop(get_turf(src))
-
-/mob/living/simple_animal/hades/Life()
+/mob/living/simple_animal/hostile/hades/attack_hand(mob/living/carbon/human/M)
 	..()
-	if(world.time > lastsinPerson + sinPersonTime)
-		if(prob(fakesinPersonChance))
-			lastsinPerson = world.time
-			visible_message("<span class='warning'><font size=4>[pick(sinPersonsayings)]</font></span>")
-			//SUE ME
-			var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
-						'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
-						'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
-						'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
-						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-			playsound(get_turf(src), pick(creepyasssounds), 100, 1)
+	lastsinPerson -= (sinPersonTime/4)
+	Defend(M,M)
+
+/mob/living/simple_animal/hostile/hades/proc/Defend(var/mob/attacker,var/source)
+	if(!isDoingDeath)
+		rageLevel += 5
+		src.visible_message("<span class='warning'>[src] rounds on the [attacker], gazing at them with a [pick("cold","frosty","freezing","dark")] [pick("glare","gaze","glower","stare")].</span>")
+
+		if(istype(source,/obj/item/projectile))
+			src.visible_message("<span class='warning'>[src] [pick("calmly","silently","nonchalantly")] waves their hand, deflecting the [source].</span>")
+			var/obj/item/projectile/P = source
+			if(P.starting)
+				var/new_x = P.starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/new_y = P.starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+				var/turf/curloc = get_turf(src)
+
+				P.original = locate(new_x, new_y, P.z)
+				P.starting = curloc
+				P.current = curloc
+				P.firer = src
+				P.yo = new_y - curloc.y
+				P.xo = new_x - curloc.x
+				P.Angle = null
 		else
-			lastsinPerson = world.time
-			var/mob/living/carbon/human/sinPerson = pick(living_mob_list)
-			var/depth = living_mob_list.len + 1 // just in case
-			if(!sinPerson.ckey)
-				while(!sinPerson.ckey && depth > 0)
-					--depth
-					sinPerson = pick(living_mob_list)
-			if(sinPerson)
-				loc = get_turf(pick(oview(1,sinPerson)))
-				Appear()
-				var/sinPersonchoice = pick(list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath"))
-				switch(sinPersonchoice)
-					if("Greed")
-						src.say("Your sin, [sinPerson], is Greed.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							var/list/greed = list(/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/diamond)
-							for(var/i in 1 to 10)
-								var/greed_type = pick(greed)
-								new greed_type(get_turf(sinPerson))
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							new/obj/structure/closet/statue(get_turf(sinPerson),sinPerson)
-					if("Gluttony")
-						src.say("Your sin, [sinPerson], is Gluttony.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							var/list/allTypes = list()
-							for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
-								var/obj/item/weapon/reagent_containers/food/snacks/O = A
-								if(initial(O.cooked_type))
-									allTypes += A
-							for(var/i in 1 to 10)
-								var/greed_type = pick(allTypes)
-								new greed_type(get_turf(sinPerson))
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							sinPerson.reagents.add_reagent("nutriment",1000)
-					if("Pride")
-						src.say("Your sin, [sinPerson], is Pride.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-							good.pride_direction = FALSE
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-							bad.pride_direction = TRUE
-					if("Lust")
-						src.say("Your sin, [sinPerson], is Lust.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
-							good.lust_direction = FALSE
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
-							bad.lust_direction = TRUE
-					if("Envy")
-						src.say("Your sin, [sinPerson], is Envy.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							for(var/mob/living/carbon/human/H in player_list) // name lottery
-								if(H == sinPerson)
-									continue
-								if(prob(25))
-									spawn(10)
-										sinPerson.name = H.name
-										sinPerson.real_name = H.real_name
-										var/datum/dna/lottery = H.dna
-										lottery.transfer_identity(sinPerson, transfer_SE=1)
-										sinPerson.updateappearance(mutcolor_update=1)
-										sinPerson.domutcheck()
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							var/sinPersonspecies = pick(species_list)
-							var/newtype = species_list[sinPersonspecies]
-							sinPerson.set_species(newtype)
-					if("Sloth")
-						src.say("Your sin, [sinPerson], is Sloth.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							sinPerson.drowsyness += 50
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							sinPerson.reagents.add_reagent("frostoil", 50)
-					if("Wrath")
-						src.say("Your sin, [sinPerson], is Wrath.")
-						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
-							sinPerson.reagents.add_reagent("bath_salts",100)
-						else
-							src.say("Your sin will be punished, [sinPerson]!")
-							sinPerson.reagents.add_reagent("lexorin", 100)
-							sinPerson.reagents.add_reagent("mindbreaker", 100)
+			if(prob(20))
+				var/chosenDefend = rand(1,3)
+				switch(chosenDefend)
+					if(1)
+						attacker.visible_message("<span class='warning'>[attacker] is lifted from the ground, shadowy powers tossing them aside.</span>")
+						attacker.throw_at_fast(pick(orange(src,7)),10,1)
+					if(2)
+						attacker.visible_message("<span class='warning'>[attacker] crackles with electricity, a bolt leaping from [src] to them.</span>")
+						sinLightning.Bolt(src,attacker,30,5,src)
+					if(3)
+						src.visible_message("<span class='warning'>[src] points his staff at [attacker], a swarm of eyeballs lurching fourth!</span>")
+						for(var/i in 1 to 4)
+							var/mob/living/simple_animal/hostile/carp/eyeball/E = new/mob/living/simple_animal/hostile/carp/eyeball(pick(orange(attacker,1)))
+							E.faction = faction
+							spawn(150)
+								if(E)
+									E.gib()
+
+/mob/living/simple_animal/hostile/hades/proc/sinShed(var/turf/T)
+	var/obj/effect/overlay/temp/cult/sparks/S = new/obj/effect/overlay/temp/cult/sparks(T)
+	S.density = 0
+	S.anchored = FALSE
+	S.throw_at_fast(src,10,1)
+	var/obj/effect/overlay/temp/bloodsplatter/BS = new/obj/effect/overlay/temp/bloodsplatter(T)
+	BS.density = 0
+	BS.anchored = FALSE
+	BS.throw_at_fast(src,10,1)
+
+/mob/living/simple_animal/hostile/hades/proc/Transfer(var/mob/living/taken, var/turf/transferTarget)
+	if(transferTarget)
+		playsound(get_turf(taken), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
+		var/atom/movable/overlay/animation = new /atom/movable/overlay(get_turf(taken))
+		animation.name = "water"
+		animation.density = 0
+		animation.anchored = 1
+		animation.icon = 'icons/mob/mob.dmi'
+		animation.layer = FLY_LAYER
+		animation.master = src
+		animation.icon_state = "liquify"
+		flick("liquify",animation)
+		spawn(15)
+			qdel(animation)
+		taken.loc = transferTarget
+		Appear(get_turf(taken))
+
+/mob/living/simple_animal/hostile/hades/proc/Appear(var/turf/where)
+	var/obj/effect/timestop/hades/TS = new /obj/effect/timestop/hades(where)
+	TS.immune = list(src)
+
+/mob/living/simple_animal/hostile/hades/Life()
+	if(..() && !isDoingDeath) // appropriately check if we're alive now we leave a corpse
+		if(health > maxHealth/4 && !isFleeing)
+			if(rageLevel > 50)
+				currentState = STATE_WRATH
+			else if(rageLevel <= 0)
+				currentState = STATE_JUDGE
+		else
+			isFleeing = TRUE
+			currentState = STATE_FLEE
+
+		if(currentState == STATE_WRATH) // we have been enraged.
+			rageLevel -= 0.5 // rage phase starts at 100, meaning roughly 20s of rage.
+			if(currentAcolytes.len == 0)
+				src.say("Rise, Servants. AID YOUR MASTER.")
+				playsound(get_turf(src), 'sound/magic/CastSummon.ogg', 100, 1)
+				for(var/i in 1 to 5)
+					currentAcolytes += new/mob/living/simple_animal/hostile/hadesacolyte(get_turf(src))
+			var/spokenThisTurn = FALSE
+			for(var/mob/living/A in currentAcolytes)
+				if(!A)
+					continue
+				if(A.health <= 0)
+					rageLevel += 5
+					if(!spokenThisTurn)
+						spokenThisTurn = TRUE
+						var/list/lossSayings = list("They were weak.","For every death, two more rise.",\
+						"What is but one servant lost?","Darkness engulf you!","To the Pit with them.",\
+						"Fools! All of you!","You can't stop me. You. Will. Be. JUDGED.")
+						src.say(pick(lossSayings))
+						currentAcolytes -= A
+						A.gib()
+			if(rageLevel >= 100)
+				rageLevel = 50
+				var/list/overboardSayings = list("Ashes! It will all be ashes!","I will bring about the apocolypse!",\
+				"There will be nothing but your withered husks!","Face your doom, cretins!","There. Will. Be. ORDER!",\
+				"I am your Lord, lay down your arms and submit.","Your souls will be cremated!",\
+				"Only in death will you obey!","This is no person's fault but your own!")
+				src.say(pick(overboardSayings))
+				var/turf/StartLoc = get_turf(src)
+				var/list/nearby = orange(6,src)
+				var/slashCount = 0
+				for(var/mob/living/A in nearby)
+					if(A.ckey)
+						slashCount++
+						spawn(slashCount+3)
+							loc = get_turf(A)
+							sinShed(StartLoc)
+							A.attack_animal(src)
+							playsound(get_turf(A), 'sound/magic/SummonItems_generic.ogg', 100, 1)
+				var/obj/effect/timestop/hades/large/TS = new /obj/effect/timestop/hades/large(StartLoc)
+				TS.immune = list(src)
+				spawn((slashCount+1)+3)
+					loc = StartLoc
+
+		if(currentState == STATE_FLEE) // we've been wounded, let us flee and lick our wounds
+			var/area/A = locate(/area/chapel/main) in world
+			if(A)
+				var/turf/T = pick(get_area_turfs(A))
+				if(T)
+					fleeTimes++
+					Transfer(src,T)
+					AIStatus = AI_OFF
+					for(var/i in 1 to 5)
+						spawn(i*10)
+							for(var/turf/S in oview(i,src) - oview((i)-1,src))
+								sinShed(S)
+							health += maxHealth/(10*fleeTimes) // every flee we gain less HP
+					spawn(50)
+						isFleeing = FALSE
+						AIStatus = AI_ON
+						currentState = STATE_JUDGE
+						lastsinPerson = 0 // immediately teleport away to judge
+
+		if(currentState == STATE_JUDGE) // our default state, judge a few people and tell them they're rude or something
+			if(world.time > lastsinPerson + sinPersonTime)
+				if(prob(fakesinPersonChance))
+					lastsinPerson = world.time
+					visible_message("<span class='warning'><font size=3>[pick(sinPersonsayings)]</font></span>")
+					playsound(get_turf(src), pick(creepyasssounds), 100, 1)
+				else
+					lastsinPerson = world.time
+					var/mob/living/carbon/human/sinPerson = pick(living_mob_list)
+					var/depth = living_mob_list.len + 1 // just in case
+					if(sinPerson) // no more finding nullcakes
+						if(!sinPerson.ckey)
+							while(!sinPerson.ckey && depth > 0)
+								--depth
+								var/checkPerson = pick(living_mob_list)
+								if(checkPerson)
+									sinPerson = checkPerson
+						if(!sinPerson.ckey)
+							// double check ensure that if the above loop fails to get a ckey target
+							// we don't go and use the last mob checked, causing odd situations
+							return
+						if(sinPerson)
+							if(prob(65)) // moderately high chance for us to go to them, else they come here.
+								Transfer(src,get_turf(pick(oview(1,sinPerson))))
+							else
+								Transfer(sinPerson,get_turf(pick(oview(1,src))))
+							var/sinPersonchoice = pick(validSins)
+							switch(sinPersonchoice)
+								if("Greed")
+									src.say("Your sin, [sinPerson], is Greed.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										var/list/greed = list(/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/diamond)
+										for(var/i in 1 to 10)
+											var/greed_type = pick(greed)
+											new greed_type(get_turf(sinPerson))
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										var/mob/living/M = sinPerson.change_mob_type(/mob/living/simple_animal/cockroach,get_turf(sinPerson),"Greedroach",1)
+										M.AddSpell(new/obj/effect/proc_holder/spell/targeted/mind_transfer)
+								if("Gluttony")
+									src.say("Your sin, [sinPerson], is Gluttony.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										var/list/allTypes = list()
+										for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
+											var/obj/item/weapon/reagent_containers/food/snacks/O = A
+											if(initial(O.cooked_type))
+												allTypes += A
+										for(var/i in 1 to 10)
+											var/greed_type = pick(allTypes)
+											new greed_type(get_turf(sinPerson))
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										sinPerson.reagents.add_reagent("nutriment",1000)
+								if("Pride")
+									src.say("Your sin, [sinPerson], is Pride.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+										good.pride_direction = FALSE
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+										bad.pride_direction = TRUE
+								if("Lust")
+									src.say("Your sin, [sinPerson], is Lust.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
+										good.lust_direction = FALSE
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
+										bad.lust_direction = TRUE
+								if("Envy")
+									src.say("Your sin, [sinPerson], is Envy.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										for(var/mob/living/carbon/human/H in player_list) // name lottery
+											if(H == sinPerson)
+												continue
+											if(prob(25))
+												spawn(10)
+													sinPerson.name = H.name
+													sinPerson.real_name = H.real_name
+													var/datum/dna/lottery = H.dna
+													lottery.transfer_identity(sinPerson, transfer_SE=1)
+													sinPerson.updateappearance(mutcolor_update=1)
+													sinPerson.domutcheck()
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										var/sinPersonspecies = pick(species_list)
+										var/newtype = species_list[sinPersonspecies]
+										sinPerson.set_species(newtype)
+								if("Sloth")
+									src.say("Your sin, [sinPerson], is Sloth.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										sinPerson.drowsyness += 1000
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										sinPerson.reagents.add_reagent("frostoil", 50)
+								if("Wrath")
+									src.say("Your sin, [sinPerson], is Wrath.")
+									if(prob(50))
+										src.say("I will indulge your sin, [sinPerson].")
+										sinPerson.change_mob_type(/mob/living/simple_animal/slaughter,get_turf(sinPerson),"Wrath Demon",1)
+									else
+										src.say("Your sin will be punished, [sinPerson]!")
+										sinPerson.reagents.add_reagent("lexorin", 100)
+										sinPerson.reagents.add_reagent("mindbreaker", 100)
 
 
 ///Sin related things
+
+/obj/effect/timestop/hades // custom timeslip to make him immune
+	name = "Frozen Time"
+	desc = "Time has slowed to a halt."
+
+/obj/effect/timestop/hades/New()
+	spawn(5)
+		..()
+
+/obj/effect/timestop/hades/large
+	freezerange = 6
+
+
 /obj/item/weapon/twohanded/sin_pride
 	icon_state = "mjollnir0"
 	name = "Pride-struck Hammer"
@@ -281,7 +478,46 @@
 					cast.throw_at_fast(user,10,1)
 			else if(lust_direction == 1)
 				var/mob/living/carbon/human/H = user
-				H << "As you hold the stone, your heart feels heavy and you struggle to breath."
-				H.reagents.add_reagent("initropidril",50)
+				var/mob/living/carbon/human/foundLover = locate(/mob/living/carbon/human) in orange(3,H)
+				if(!foundLover)
+					H << "As you hold the stone, loneliness grips you, your heart feeling heavy and you struggle to breath."
+					for(var/i in 1 to 10)
+						spawn(i*10)
+							H.reagents.add_reagent("initropidril",i)
+				else
+					H << "You take comfort in the presence of [foundLover]"
+					H.reagents.add_reagent("omnizine",25)
+					H.Beam(foundLover,"r_beam",'icons/effects/beam.dmi',10)
+					foundLover << "You take comfort in the presence of [H]"
+					foundLover.reagents.add_reagent("omnizine",25)
 	else
 		user << "The stone lays inert. It is still recharging."
+
+/mob/living/simple_animal/hostile/hadesacolyte
+	name = "Acolyte of Hades"
+	desc = "Darkness seethes from their every pore."
+	icon_state = "faithless"
+	icon_living = "faithless"
+	icon_dead = "faithless_dead"
+	speak_chance = 0
+	turns_per_move = 5
+	response_help = "trembles in fear of"
+	response_disarm = "slaps wildly at"
+	response_harm = "hits"
+	speed = 1
+	maxHealth = 45
+	health = 45
+
+	harm_intent_damage = 5
+	melee_damage_lower = 5
+	melee_damage_upper = 15
+	attacktext = "strikes at"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+
+	unsuitable_atmos_damage = 0
+	del_on_death = 1
+	faction = list("hades")
+
+#undef STATE_JUDGE
+#undef STATE_WRATH
+#undef STATE_FLEE
