@@ -305,11 +305,3 @@
 	icon_state = "asteroidplating"
 /turf/open/floor/plating/airless/astplate
 	icon_state = "asteroidplating"
-/turf/open/floor/plating/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/airless/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/warnplate/corner
-	icon_state = "warnplatecorner"
-/turf/open/floor/plating/airless/warnplate/corner
-	icon_state = "warnplatecorner"
