@@ -20,6 +20,8 @@
 
 	var/obj/screen/alien_plasma_display
 
+	var/obj/screen/devil_soul_display
+
 	var/obj/screen/deity_power_display
 	var/obj/screen/deity_follower_display
 

@@ -422,3 +422,4 @@ var/global/list/lawlorify = list (
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()
+

@@ -25,6 +25,12 @@
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 
+/obj/screen/devil/soul_counter
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "soul_display"
+	name = "souls owned"
+	screen_loc = ui_lingchemdisplay
+
 /obj/screen/ling
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -267,6 +273,8 @@
 	lingstingdisplay = new /obj/screen/ling/sting()
 	infodisplay += lingstingdisplay
 
+	devil_soul_display = new /obj/screen/devil/soul_counter
+	infodisplay += devil_soul_display
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

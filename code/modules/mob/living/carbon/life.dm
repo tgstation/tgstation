@@ -21,6 +21,7 @@
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+	handle_devil()
 
 ///////////////
 // BREATHING //
@@ -225,6 +226,16 @@
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.changeling.chem_charges)]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+
+/mob/living/carbon/proc/handle_devil()
+	if(mind && hud_used && hud_used.lingchemdisplay)
+		if(mind.devilinfo)
+			hud_used.devil_soul_display.invisibility = 0
+			hud_used.devil_soul_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(mind.devilinfo.soulsOwned)]</font></div>"
+		else
+			hud_used.devil_soul_display.invisibility = INVISIBILITY_ABSTRACT
+
+
 
 
 /mob/living/carbon/handle_mutations_and_radiation()

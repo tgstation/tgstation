@@ -52,6 +52,15 @@
 
 	lingchemdisplay = new /obj/screen/ling/chems()
 
+
+
+
+/obj/screen/devil/proc/soul_counter()
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "soul_display"
+	name = "souls owned"
+	screen_loc = ui_alienplasmadisplay
+
 /datum/hud/devil/persistant_inventory_update()
 	if(!mymob)
 		return
