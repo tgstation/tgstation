@@ -2122,7 +2122,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
@@ -6666,6 +6665,9 @@
 /area/hallway/primary/fore)
 "anS" = (
 /obj/machinery/hologram/holopad,
+/mob/living/simple_animal/bot/secbot/beepsky{
+	name = "Officer Beepsky"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "anT" = (
@@ -7151,7 +7153,10 @@
 	},
 /area/shuttle/labor)
 "apb" = (
-/obj/structure/plasticflaps,
+/obj/machinery/door/airlock/glass_security{
+	name = "N2O Storage";
+	req_access_txt = "3"
+	},
 /turf/open/floor/plating,
 /area/security/processing)
 "apc" = (
@@ -7473,10 +7478,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "apR" = (
-/obj/item/weapon/paper{
-	info = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110";
-	name = "Note from Beepsky's Mom"
-	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/security/processing)
 "apS" = (
@@ -7925,11 +7927,6 @@
 "aqS" = (
 /obj/machinery/light/small{
 	dir = 4
-	},
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/potato{
-	name = "\improper Beepsky's emergency battery"
 	},
 /turf/open/floor/plating,
 /area/security/processing)
@@ -60469,13 +60466,6 @@
 /obj/item/clothing/under/burial,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
-"cCa" = (
-/obj/item/weapon/bedsheet/red,
-/mob/living/simple_animal/bot/secbot/beepsky{
-	name = "Officer Beepsky"
-	},
-/turf/open/floor/plating,
-/area/security/processing)
 
 (1,1,1) = {"
 aaa
@@ -84473,9 +84463,9 @@ aiT
 ant
 akI
 aos
-aiT
+aiU
 apR
-cCa
+apR
 arP
 asT
 aqR
