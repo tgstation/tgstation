@@ -81,8 +81,6 @@
 	if(stat & BROKEN || !I || !user)
 		return
 
-	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash) && !istype(user,/mob/living/silicon/robot/mommi))
-		return
 	src.add_fingerprint(user)
 	if(mode<=0) // It's off
 		if(isscrewdriver(I))
@@ -122,6 +120,9 @@
 			else
 				to_chat(user, "You need more welding fuel to complete this task.")
 				return
+
+	if(isrobot(user) && !istype(I, /obj/item/weapon/storage/bag/trash) && !istype(user,/mob/living/silicon/robot/mommi) )
+		return
 
 	if(istype(I, /obj/item/weapon/storage/bag/))
 		var/obj/item/weapon/storage/bag/B = I
