@@ -341,16 +341,19 @@
 		if(!(target in validtargets))
 			lose_target()
 		else
-			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
-			if(ratvar_awakens && target)
-				target.adjust_fire_stacks(damage_per_tick)
-				target.IgniteMob()
-			setDir(get_dir(get_turf(src), get_turf(target)))
+			if(!target.null_rod_check())
+				target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+				if(ratvar_awakens && target)
+					target.adjust_fire_stacks(damage_per_tick)
+					target.IgniteMob()
+				setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+			if(target.null_rod_check() && !ratvar_awakens)
+				target << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
@@ -475,7 +478,11 @@
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
-				if(!iscultist(L))
+				if(L.null_rod_check())
+					var/obj/item/I = L.null_rod_check()
+					L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+					"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+				else if(!iscultist(L))
 					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
 					L.Weaken(8)
@@ -602,7 +609,7 @@
 
 /obj/effect/clockwork/general_marker
 	name = "general marker"
-	desc = "Some big guy."
+	desc = "Some big guy. For you."
 	clockwork_desc = "One of Ratvar's generals."
 	alpha = 200
 	layer = MASSIVE_OBJ_LAYER
@@ -682,6 +689,10 @@
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
+				if(L.null_rod_check())
+					var/obj/item/I = L.null_rod_check()
+					L.visible_message("<span class='warning'>[L]'s [I.name] protects them from [src]'s effects!</span>", "<span class='userdanger'>Your [I.name] protects you!</span>")
+					return
 				sigil_effects(L)
 			return 1
 

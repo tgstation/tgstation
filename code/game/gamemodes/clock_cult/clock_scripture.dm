@@ -233,7 +233,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && L.m_intent != "walk")
+		if(!is_servant_of_ratvar(L) && L.m_intent != "walk" && !L.null_rod_check())
 			if(!iscultist(L))
 				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
 			else //Cultists take extra burn damage
@@ -384,7 +384,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/taunting_tirade/chant_effects(chant_number)
 	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L))
+		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
 			L.Stun(1)
@@ -874,6 +874,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!target)
 		return 0 //wait where'd they go
 	if(iscarbon(target))
+		if(target.null_rod_check())
+			var/obj/item/I = target.null_rod_check()
+			target.visible_message("<span class='warning'>[target]'s [I.name] glows a blazing white!</span>", "<span class='userdanger'>Your [I.name] suddenly glows with intense heat!</span>")
+			invoker << "<span class='userdanger'>[target] had a holy artifact and was unaffected!</span>"
+			playsound(target, 'sound/weapons/sear.ogg', 50, 1)
+			target.adjustFireLoss(10) //Still has *some* effect
+			return
 		if(iscultist(target))
 			target.visible_message("<span class='warning'>Blood sprays from a sudden wound on [target]'s head!</span>", \
 			"<span class='heavy_brass'>\"If you like wasting your own blood so much, pig, why don't you bathe in it?\"</span>\n\

@@ -253,7 +253,7 @@
 	if(try_use_power(mania_cost))
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 		for(var/mob/living/carbon/human/H in range(10, src))
-			if(!is_servant_of_ratvar(H))
+			if(!is_servant_of_ratvar(H) && !H.null_rod_check())
 				var/distance = get_dist(T, get_turf(H))
 				var/falloff_distance = (110) - distance * 10
 				var/sound_distance = falloff_distance * 0.4
