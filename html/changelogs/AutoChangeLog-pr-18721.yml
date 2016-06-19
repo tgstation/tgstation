@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - rscadd: "The comms console now has a new option allowing you to communicate with the other server."
