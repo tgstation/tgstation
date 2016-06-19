@@ -103,6 +103,8 @@
 		if(target_apc.cell.use(50))
 			apcpower -= 50
 			amount -= 50
+			target_apc.update()
+			target_apc.update_icon()
 		else
 			apcpower = 0
 	if(amount)
