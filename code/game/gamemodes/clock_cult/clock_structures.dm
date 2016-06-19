@@ -140,6 +140,8 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
+	max_health = 80
+	health = 80
 	var/wall_generation_cooldown
 	var/wall_found = FALSE //if we've found a wall and finished our windup delay
 
@@ -425,6 +427,8 @@
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
+	max_health = 50
+	health = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"

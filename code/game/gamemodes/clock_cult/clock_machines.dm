@@ -120,6 +120,8 @@
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
+	max_health = 150
+	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
 	var/stored_alloy = 0 //250W = 1 alloy
@@ -223,6 +225,8 @@
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
 	construction_value = 20
+	max_health = 80
+	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
 	var/mania_cost = 150
@@ -428,6 +432,8 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
+	max_health = 200
+	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
