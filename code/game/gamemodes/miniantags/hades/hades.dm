@@ -197,11 +197,7 @@
 /mob/living/simple_animal/hostile/hades/proc/Transfer(var/mob/living/taken, var/turf/transferTarget)
 	if(transferTarget)
 		playsound(get_turf(taken), 'sound/magic/Ethereal_Enter.ogg', 50, 1, -1)
-		var/atom/movable/overlay/temp/hadesFlick/animation = new /atom/movable/overlay/temp/hadesFlick(get_turf(taken))
-		animation.master = src
-		flick("liquify",animation)
-		spawn(15)
-			qdel(animation)
+		PoolOrNew(/obj/effect/overlay/temp/hadesFlick, get_turf(taken))
 		taken.forceMove(transferTarget)
 		Appear(get_turf(taken))
 
@@ -399,11 +395,11 @@
 
 ///Sin related things
 
-/atom/movable/overlay/temp/hadesFlick
+/obj/effect/overlay/temp/hadesFlick
 	name = "transdimensional waste"
-	density = 0
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "liquify"
+	duration = 15
 
 
 
