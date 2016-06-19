@@ -46,6 +46,8 @@
 	var/list/validSins = list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath")
 	var/lastsinPerson = 0
 	var/sinPersonTime = 300
+	var/lastFlee = 0
+	var/fleeTimer = 150
 	var/fakesinPersonChance = 60
 	var/list/sinPersonsayings = list("You revel in only your own greed.",\
 	"There is nothing but your absolution.",\
@@ -105,6 +107,8 @@
 
 /mob/living/simple_animal/hostile/hades/death(gibbed)
 	if(!isDoingDeath)
+		notransform = TRUE
+		anchored = TRUE
 		src.visible_message("<span class='warning'><font size=4>[src] begins to twist and distort, before snapping backwards with a sickening crunch.</font></span>")
 		spawn(20)
 			src.visible_message("<span class='warning'><font size=4>[src] is being sucked back to their own realm, destabilizing the fabric of time and space itself!</font></span>")
@@ -113,7 +117,7 @@
 		AIStatus = AI_OFF
 		SpinAnimation()
 		for(var/i in 1 to 5)
-			for(var/turf/T in oview(i,src) - oview((i)-1,src))
+			for(var/turf/T in spiral_range_turfs(i,src))
 				addtimer(src, "sinShed", i*10, FALSE, T)
 		spawn(60) // required to be spawn so we can call death's ..() to complete death.
 			SpinAnimation(0,0)
@@ -210,30 +214,34 @@
 			else if(rageLevel <= 0)
 				currentState = STATE_JUDGE
 		else
-			isFleeing = TRUE
-			currentState = STATE_FLEE
+			if(world.time > lastFlee + fleeTimer)
+				lastFlee = world.time
+				isFleeing = TRUE
+				currentState = STATE_FLEE
+
+		var/spokenThisTurn = FALSE
+		for(var/mob/living/A in currentAcolytes)
+			if(!A)
+				currentAcolytes -= A
+				continue
+			if(A.health <= 0)
+				rageLevel += 5
+				if(!spokenThisTurn)
+					spokenThisTurn = TRUE
+					var/list/lossSayings = list("They were weak.","For every death, two more rise.",\
+					"What is but one servant lost?","Darkness engulf you!","To the Pit with them.",\
+					"Fools! All of you!","You can't stop me. You. Will. Be. JUDGED.")
+					src.say(pick(lossSayings))
+					currentAcolytes -= A
+					A.gib()
 
 		if(currentState == STATE_WRATH) // we have been enraged.
-			rageLevel -= 0.5 // rage phase starts at 100, meaning roughly 20s of rage.
+			rageLevel -= 0.25 // rage phase starts at 50, meaning roughly 20s of rage.
 			if(currentAcolytes.len == 0)
 				src.say("Rise, Servants. AID YOUR MASTER.")
 				playsound(get_turf(src), 'sound/magic/CastSummon.ogg', 100, 1)
 				for(var/i in 1 to 5)
 					currentAcolytes += new/mob/living/simple_animal/hostile/hadesacolyte(get_turf(src))
-			var/spokenThisTurn = FALSE
-			for(var/mob/living/A in currentAcolytes)
-				if(!A)
-					continue
-				if(A.health <= 0)
-					rageLevel += 5
-					if(!spokenThisTurn)
-						spokenThisTurn = TRUE
-						var/list/lossSayings = list("They were weak.","For every death, two more rise.",\
-						"What is but one servant lost?","Darkness engulf you!","To the Pit with them.",\
-						"Fools! All of you!","You can't stop me. You. Will. Be. JUDGED.")
-						src.say(pick(lossSayings))
-						currentAcolytes -= A
-						A.gib()
 			if(rageLevel >= 100)
 				rageLevel = 50
 				var/list/overboardSayings = list("Ashes! It will all be ashes!","I will bring about the apocolypse!",\
@@ -260,11 +268,15 @@
 		if(currentState == STATE_FLEE) // we've been wounded, let us flee and lick our wounds
 			var/area/A = locate(/area/chapel/main) in world
 			if(A)
-				var/turf/T = pick(get_area_turfs(A))
+				var/turf/T = get_turf(locate(/obj/effect/landmark/event_spawn) in A)
+				if(!T)
+					T = get_turf(src) // no event spawn in chapel, fall back to doing it on the spot.
 				if(T)
 					fleeTimes++
 					Transfer(src,T)
 					AIStatus = AI_OFF
+					notransform = TRUE
+					anchored = TRUE
 					for(var/i in 1 to 5)
 						spawn(i*10)
 							for(var/turf/S in oview(i,src) - oview((i)-1,src))
@@ -272,6 +284,8 @@
 							health += maxHealth/(10*fleeTimes) // every flee we gain less HP
 					spawn(50)
 						isFleeing = FALSE
+						notransform = FALSE
+						anchored = FALSE
 						AIStatus = AI_ON
 						currentState = STATE_JUDGE
 						lastsinPerson = 0 // immediately teleport away to judge
@@ -508,7 +522,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
 	unsuitable_atmos_damage = 0
-	del_on_death = 1
+	del_on_death = 0
 	faction = list("hades")
 
 #undef STATE_JUDGE
