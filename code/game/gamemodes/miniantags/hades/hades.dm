@@ -113,10 +113,9 @@
 		AIStatus = AI_OFF
 		SpinAnimation()
 		for(var/i in 1 to 5)
-			spawn(i*10)
-				for(var/turf/T in oview(i,src) - oview((i)-1,src))
-					sinShed(T)
-		spawn(60)
+			for(var/turf/T in oview(i,src) - oview((i)-1,src))
+				addtimer(src, "sinShed", i*10, FALSE, T)
+		spawn(60) // required to be spawn so we can call death's ..() to complete death.
 			SpinAnimation(0,0)
 			explosion(get_turf(src), 0, 2, 4, 6, flame_range = 6)
 			..()
@@ -182,9 +181,7 @@
 						for(var/i in 1 to 4)
 							var/mob/living/simple_animal/hostile/carp/eyeball/E = new/mob/living/simple_animal/hostile/carp/eyeball(pick(orange(attacker,1)))
 							E.faction = faction
-							spawn(150)
-								if(E)
-									E.gib()
+							addtimer(E, "gib", 150, FALSE)
 
 /mob/living/simple_animal/hostile/hades/proc/sinShed(var/turf/T)
 	var/obj/effect/overlay/temp/cult/sparks/S = PoolOrNew(/obj/effect/overlay/temp/cult/sparks, T)
