@@ -3117,7 +3117,7 @@
 		..()
 		reagents.clear_reagents()
 		reagents.add_reagent(NUTRIMENT, 4)
-		reagents.add_reagent(SPIRITBREAKER, 10) // Screaming
+		reagents.add_reagent(MINDBREAKER, 10) // Screaming
 		reagents.add_reagent(MERCURY,       10) // Idiot
 		bitesize = 3
 

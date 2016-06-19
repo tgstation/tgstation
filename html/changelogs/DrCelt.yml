@@ -1,2 +1,3 @@
 author: DrCelt
-changes: []
+changes:
+  - bugfix: fixes asspies to not contain spiritbreaker to bring behaviour like assburgers
