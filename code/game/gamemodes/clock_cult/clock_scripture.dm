@@ -1076,24 +1076,33 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(H.z == invoker.z && !is_servant_of_ratvar(H))
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
-			var/loyalty = isloyal(H)
-			var/distanceA = max(200 - distance, 20)
-			var/distanceB = max(150 - distance, 15)
-			var/distanceC = max(100 - distance, 10)
-			if(loyalty)
+			var/messaged = FALSE
+			var/distanceA = max(150 - distance, 25)
+			var/distanceB = max(125 - distance, 20)
+			var/distanceC = max(100 - distance, 15)
+			if(H.null_rod_check())
+				distanceA = round(distanceA * 0.25)
+				distanceB = round(distanceB * 0.25)
+				distanceC = round(distanceC * 0.25)
+				H << "<span class='sevtug'>Bu, n ibvq jrncba. Ubj naablvat, V znl nf jryy abg obgure.</span>\n\
+				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
+				messaged = TRUE
+			if(isloyal(H))
 				distanceA = round(distanceA * 0.5) //half effect for shielded targets
 				distanceB = round(distanceB * 0.5)
 				distanceC = round(distanceC * 0.5)
-				H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, V fhccbfr V'yy uhzbe vg.</span>"
-			else if(prob(distanceA))
+				if(!messaged)
+					H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, V fhccbfr V'yy uhzbe vg.</span>"
+					messaged = TRUE
+			if(!messaged && prob(distanceA))
 				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
-			H.playsound_local(T, hum, distanceC, 1)
-			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like 2 and a half minutes of color flash
-			H.set_drugginess(max(distanceA + H.druggy, H.druggy))
-			H.dizziness = max(distanceA + H.dizziness, H.dizziness)
-			H.hallucination = max(distanceB + H.hallucination, H.hallucination)
-			H.confused = max(distanceC + H.confused, H.confused)
-			H.setBrainLoss(max(distanceC + H.getBrainLoss(), H.getBrainLoss()))
+			H.playsound_local(T, hum, distanceA, 1)
+			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like a minute and a half of color flash
+			H.set_drugginess(distanceA + H.druggy)
+			H.dizziness = distanceA + H.dizziness
+			H.hallucination = distanceB + H.hallucination
+			H.confused = distanceC + H.confused
+			H.setBrainLoss(distanceC + H.getBrainLoss())
 	return 1
 
 
