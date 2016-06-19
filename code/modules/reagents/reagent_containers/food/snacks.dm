@@ -2226,6 +2226,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice
 	slices_num = 5
 	food_flags = FOOD_MEAT
+	w_class = W_CLASS_MEDIUM
 
 	New()
 		..()
@@ -2247,6 +2248,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/xenomeatbreadslice
 	slices_num = 5
 	food_flags = FOOD_MEAT
+	w_class = W_CLASS_MEDIUM
 
 	New()
 		..()
@@ -2267,6 +2269,7 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/spidermeatbreadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_MEAT
 
 	New()
@@ -2288,6 +2291,7 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatbreadslice/synth
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_MEAT
 
 	New()
@@ -2309,6 +2313,7 @@
 	icon_state = "bananabread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bananabreadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("banana", 20)
@@ -2328,6 +2333,7 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/tofubreadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("nutriment", 30)
@@ -2347,6 +2353,7 @@
 	icon_state = "carrotcake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/carrotcakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET
 
 	New()
@@ -2369,6 +2376,8 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_MEAT | FOOD_ANIMAL
 
 	New()
@@ -2391,6 +2400,7 @@
 	icon_state = "cheesecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesecakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL //cheese
 
 	New()
@@ -2412,6 +2422,7 @@
 	icon_state = "plaincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/plaincakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL //milk and eggs
 
 	New()
@@ -2432,6 +2443,7 @@
 	icon_state = "orangecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/orangecakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -2452,6 +2464,7 @@
 	icon_state = "limecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/limecakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -2472,6 +2485,7 @@
 	icon_state = "lemoncake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/lemoncakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 	New()
 		..()
@@ -2491,6 +2505,7 @@
 	icon_state = "chocolatecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/chocolatecakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -2512,6 +2527,7 @@
 	filling_color = "#FFCC33"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_ANIMAL
 
 	New()
@@ -2533,6 +2549,7 @@
 	icon_state = "birthdaycake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/birthdaycakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -2555,6 +2572,7 @@
 	icon_state = "bread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("nutriment", 6)
@@ -2574,6 +2592,7 @@
 	icon_state = "creamcheesebread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/creamcheesebreadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("nutriment", 20)
@@ -2601,6 +2620,7 @@
 	icon_state = "applecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/applecakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -2621,6 +2641,7 @@
 	icon_state = "pumpkinpie"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pumpkinpieslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	trash = /obj/item/trash/pietin
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
@@ -2658,6 +2679,7 @@
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/margheritaslice
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_ANIMAL //cheese
 
 	New()
@@ -2679,6 +2701,7 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_MEAT | FOOD_ANIMAL //It has cheese!
 
 	New()
@@ -2700,6 +2723,7 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/meatpizzaslice/synth
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
 
 	New()
 		..()
@@ -2719,6 +2743,7 @@
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/mushroompizzaslice
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("nutriment", 35)
@@ -3195,6 +3220,7 @@
 	icon_state = "flat dough"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	slices_num = 3
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_ANIMAL //eggs
 
 	New()
@@ -3231,6 +3257,7 @@
 	icon_state = "buche"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/bucheslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	trash = /obj/item/trash/tray
 	food_flags = FOOD_SWEET | FOOD_ANIMAL //eggs
 
@@ -3255,6 +3282,7 @@
 	icon_state = "turkey"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	slices_num = 2
+	w_class = W_CLASS_MEDIUM
 	trash = /obj/item/trash/tray
 	food_flags = FOOD_MEAT
 
@@ -3568,6 +3596,7 @@
 	icon_state = "chococherrycake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/chococherrycakeslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
 	New()
@@ -3588,6 +3617,7 @@
 	icon_state = "pumpkinbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pumpkinbreadslice
 	slices_num = 5
+	w_class = W_CLASS_MEDIUM
 	New()
 		..()
 		reagents.add_reagent("nutriment", 15)
