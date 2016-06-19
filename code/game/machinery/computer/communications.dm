@@ -117,11 +117,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				usr << "Intercomms recharging. Please stand by."
 
 		if("crossserver")
-			if(src.authenticated==2)
+			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "Arrays recycling.  Please stand by."
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
+				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				send2otherserver("[station_name()]", input,"Comms_Console")
