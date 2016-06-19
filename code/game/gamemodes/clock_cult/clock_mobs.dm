@@ -41,6 +41,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
+	SetLuminosity(2,1)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -111,6 +112,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
+	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -325,6 +327,8 @@
 	host << "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>"
 	visible_message("<span class='warning'>[src] is yanked into [host]'s body!</span>", "<span class='brass'>You return to [host].</span>")
 	forceMove(host)
+	if(light)
+		light.changed()
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/try_emerge()
@@ -358,6 +362,8 @@
 	else
 		host << "<span class='heavy_brass'>[true_name] emerges from your body to protect you!</span>"
 	forceMove(get_turf(host))
+	if(light)
+		light.changed()
 	visible_message("<span class='warning'>[host]'s skin glows red as [name] emerges from their body!</span>", "<span class='brass'>You exit the safety of [host]'s body!</span>")
 	return 1
 
