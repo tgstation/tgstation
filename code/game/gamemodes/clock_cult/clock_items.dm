@@ -766,6 +766,7 @@
 	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
 	var/production_time = 0 //Progress towards production of the next component in seconds
 	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
+	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
@@ -790,8 +791,11 @@
 	if(servants * 0.2 < clockwork_daemons)
 		return 0
 	if(production_time <= world.time)
-		production_time = world.time + production_cooldown //Start it over
-		generate_cache_component(specific_component)
+		var/component_to_generate = specific_component
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
+		clockwork_component_cache[component_to_generate]++
+		production_time = world.time + production_cooldown + (clockwork_component_cache[component_to_generate] * component_slowdown_mod) //Start it over
 		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
