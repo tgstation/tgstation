@@ -33,7 +33,7 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(istype(A,/mob/living/simple_animal/bot/mulebot)) //mulebots can pass
+		if(istype(A,/mob/living/simple_animal/bot)) //mulebots can pass
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
