@@ -287,8 +287,10 @@ This file's folder contains:
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			feedback_set_details("round_end_result", "win - servants summoned ratvar")
 		else
 			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"
