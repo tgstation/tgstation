@@ -967,13 +967,24 @@
 	crate_name = "hydroponics crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/misc/hydroponics/hydrotank
+/datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	cost = 1000
 	access = access_hydroponics
 	contains = list(/obj/item/weapon/watertank)
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/potted_plants
+	name = "Potted Plants Crate"
+	cost = 700
+	contains = list(/obj/structure/flora/kirbyplants/random,
+					/obj/structure/flora/kirbyplants/random,
+					/obj/structure/flora/kirbyplants/random,
+					/obj/structure/flora/kirbyplants/random,
+					/obj/structure/flora/kirbyplants/random)
+	crate_name = "potted plants crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/seeds
 	name = "Seeds Crate"
