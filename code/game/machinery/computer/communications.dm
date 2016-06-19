@@ -124,7 +124,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/input = stripped_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
-				send2otherserver(world.name, input,"Comms_Console")
+				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				CM.lastTimeUsed = world.time
