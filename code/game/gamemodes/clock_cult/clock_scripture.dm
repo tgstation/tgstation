@@ -1057,34 +1057,68 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/targeted/invoke_sevtug //Invoke Sevtug, the Formless Pariah: Allows the invoker to silently control the mind of a defined target for one minute.
-	descname = "Mind Control"
+/datum/clockwork_scripture/invoke_sevtug //Invoke Sevtug, the Formless Pariah: Causes massive global hallucinations, braindamage, confusion, and dizziness to all humans on the same zlevel.
+	descname = "Global Hallucination"
 	name = "Invoke Sevtug, the Formless Pariah"
-	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to silently dominate the mind of a defined target \
-	for one minute. <b>Note that this process is very delicate and very many things may prevent you from ever returning to your old form!</b>"
+	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to cause mass hallucinations and confusion \
+	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may reduce its effects."
 	invocations = list("V pnyy hcba lbh, Sevtug!!", "Yrg lbhe cbjre fung-gre gur fnavgl bs gur jrnx-zvaqrq!!", "Yrg lbhe graqevyf ubyq fjnl bire nyy!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
-	usage_tip = "Completely silent and functions on silicon lifeforms. There will be no indication to those near the controlled."
+	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
+	var/list/mindbreaksayings = list("\"Bu, terng. V trg gb funggre fbzr zvaqf.\"", "\"Zber zvaqf gb pehfu.\"", \
+	"\"Ernyyl, guvf vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguvat vagrerfgvat va gur'z.\"", "\"Znlor V pna vafgvyy n yvggyr ovg bs greebe va guv'f bar.\"", \
+	"\"Jung n jnfgr-bs zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
 
-/datum/clockwork_scripture/targeted/invoke_sevtug/check_special_requirements()
+/datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
 		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb tenfc gur pbaprcg bs jnvgvat?\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guvax nalguvat v pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
+		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guvax nalguvat V pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
 		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return ..()
 
-/datum/clockwork_scripture/targeted/invoke_sevtug/scripture_effects()
-	if(!target)
-		return 0 //wait where'd they go
+/datum/clockwork_scripture/invoke_sevtug/scripture_effects()
+	new/obj/effect/clockwork/general_marker/sevtug(get_turf(invoker))
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	invoker.dominate_mind(target, 300)
+	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
+	var/turf/T = get_turf(invoker)
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		if(H.z == invoker.z && !is_servant_of_ratvar(H))
+			var/distance = 0
+			distance += get_dist(T, get_turf(H))
+			var/messaged = FALSE
+			var/distanceA = max(150 - distance, 25)
+			var/distanceB = max(125 - distance, 20)
+			var/distanceC = max(100 - distance, 15)
+			if(H.null_rod_check())
+				distanceA = round(distanceA * 0.25)
+				distanceB = round(distanceB * 0.25)
+				distanceC = round(distanceC * 0.25)
+				H << "<span class='sevtug'>Bu, n ibvq jrncba. Ubj naablvat, V znl nf jryy abg obgure.</span>\n\
+				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
+				messaged = TRUE
+			if(isloyal(H))
+				distanceA = round(distanceA * 0.5) //half effect for shielded targets
+				distanceB = round(distanceB * 0.5)
+				distanceC = round(distanceC * 0.5)
+				if(!messaged)
+					H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, V fhccbfr V'yy uhzbe vg.</span>"
+					messaged = TRUE
+			if(!messaged && prob(distanceA))
+				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
+			H.playsound_local(T, hum, distanceA, 1)
+			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like a minute and a half of color flash
+			H.set_drugginess(distanceA + H.druggy)
+			H.dizziness = distanceA + H.dizziness
+			H.hallucination = distanceB + H.hallucination
+			H.confused = distanceC + H.confused
+			H.setBrainLoss(distanceC + H.getBrainLoss())
 	return 1
 
 
