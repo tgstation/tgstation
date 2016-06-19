@@ -60,6 +60,7 @@
 	for(var/obj/O in src.contents)
 		O.screen_loc = text("[cx],[cy]")
 		O.layer = 20
+		O.plane = PLANE_HUD
 		cx++
 		if (cx > mx)
 			cx = tx
@@ -75,6 +76,7 @@
 	for(var/obj/O in src.contents)
 		O.screen_loc = text("[cx]:16,[cy]:16")
 		O.layer = 20
+		O.plane = PLANE_HUD
 		cx++
 		if (cx > (4+cols))
 			cx = 4

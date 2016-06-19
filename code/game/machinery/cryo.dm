@@ -12,6 +12,7 @@ var/global/list/cryo_health_indicator = list(	"full" = image("icon" = 'icons/obj
 	density = 1
 	anchored = 1.0
 	layer = 2.8
+	plane = PLANE_OBJ
 
 	var/on = 0
 	var/ejecting = 0

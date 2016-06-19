@@ -206,6 +206,7 @@
 	icon_state = "tile_soot"
 	anchored = 1
 	layer=2
+	mouse_opacity = 0
 
 
 
