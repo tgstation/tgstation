@@ -9,6 +9,7 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -84,8 +85,11 @@
 
 	alert_drones(DRONE_NET_CONNECT)
 
-	var/datum/action/generic/drone/select_filter/SF = new(src)
-	SF.Grant(src)
+	if(seeStatic)
+		var/datum/action/generic/drone/select_filter/SF = new(src)
+		SF.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
 
 	handcrafting = new()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
@@ -197,9 +201,11 @@
 	return 1
 
 
-/mob/living/simple_animal/drone/canUseTopic()
-	if(stat)
-		return
+/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 

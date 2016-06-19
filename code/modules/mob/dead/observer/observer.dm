@@ -657,3 +657,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_literate()
 	return 1
+
+/mob/dead/observer/on_varedit(var_name)
+	. = ..()
+	switch(var_name)
+		if("icon")
+			ghostimage.icon = icon
+			ghostimage_default.icon = icon
+			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state
+		if("fun_verbs")
+			if(fun_verbs)
+				verbs += /mob/dead/observer/verb/boo
+				verbs += /mob/dead/observer/verb/possess
+			else
+				verbs -= /mob/dead/observer/verb/boo
+				verbs -= /mob/dead/observer/verb/possess

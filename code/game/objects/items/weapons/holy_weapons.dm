@@ -277,7 +277,7 @@
 			H.adjustBruteLoss(8) //Bonus damage
 
 /obj/item/weapon/nullrod/fedora
-	name = "athiest's fedora"
+	name = "atheist's fedora"
 	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"

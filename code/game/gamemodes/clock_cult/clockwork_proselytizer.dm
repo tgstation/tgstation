@@ -10,15 +10,36 @@
 	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
+	var/metal_to_alloy = FALSE
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
 	stored_alloy = REPLICANT_ALLOY_UNIT
+
+/obj/item/clockwork/clockwork_proselytizer/scarab
+	name = "scarab proselytizer"
+	clockwork_desc = "A cogscarab's internal proselytizer. It can only be successfully used by a cogscarab and requires liquified Replicant Alloy to function."
+	metal_to_alloy = TRUE
+	item_state = "nothing"
+	w_class = 1
+	var/debug = FALSE
+
+/obj/item/clockwork/clockwork_proselytizer/scarab/proselytize(atom/target, mob/living/user)
+	if(!debug && !isdrone(user))
+		return 0
+	return ..()
+
+/obj/item/clockwork/clockwork_proselytizer/scarab/debug
+	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
+	uses_alloy = FALSE
+	debug = TRUE
 
 /obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
 		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
+		if(metal_to_alloy)
+			user << "<span class='alloy'>It can convert metal and plasteel to liquified replicant alloy at a very low rate.</span>"
 		if(uses_alloy)
 			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
@@ -53,7 +74,7 @@
 	if(!target || !user)
 		return 0
 	var/target_type = target.type
-	var/list/proselytize_values = target.proselytize_vals(user) //relevant values for proselytizing stuff, given as an associated list
+	var/list/proselytize_values = target.proselytize_vals(user, src) //relevant values for proselytizing stuff, given as an associated list
 	if(!islist(proselytize_values))
 		user << "<span class='warning'>[target] cannot be proselytized!</span>"
 		return 0
@@ -102,38 +123,50 @@
 //list("operation_time" = 15, "new_obj_type" = /obj/structure/window/reinforced/clockwork, "alloy_cost" = 5, "spawn_dir" = dir, "dir_in_new" = TRUE)
 //otherwise, return literally any non-list thing but preferably FALSE
 
-/atom/proc/proselytize_vals(mob/living/proselytizer)
+/atom/proc/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/turf/closed/wall/proselytize_vals(mob/living/proselytizer)
+/turf/closed/wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 50, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = SOUTH)
 
-/turf/closed/wall/r_wall/proselytize_vals(mob/living/proselytizer)
+/turf/closed/wall/r_wall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/turf/closed/wall/clockwork/proselytize_vals(mob/living/proselytizer)
+/turf/closed/wall/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 50, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = -REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
-/turf/open/floor/proselytize_vals(mob/living/proselytizer)
+/turf/open/floor/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 30, "new_obj_type" = /turf/open/floor/clockwork, "alloy_cost" = REPLICANT_FLOOR, "spawn_dir" = SOUTH)
 
-/turf/open/floor/clockwork/proselytize_vals(mob/living/proselytizer)
+/turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	for(var/obj/O in src)
-		if(O.density && !O.CanPass(proselytizer, src, 5))
-			proselytizer << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
+		if(O.density && !O.CanPass(user, src, 5))
+			user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
 			return FALSE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
-/obj/machinery/door/airlock/proselytize_vals(mob/living/proselytizer)
+/obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!proselytizer.metal_to_alloy)
+		return 0
+	var/prosel_costtime = -amount
+	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
+
+/obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!proselytizer.metal_to_alloy)
+		return 0
+	var/prosel_costtime = -amount*2
+	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
+
+/obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/doortype = /obj/machinery/door/airlock/clockwork
 	if(glass)
 		doortype = /obj/machinery/door/airlock/clockwork/brass
 	return list("operation_time" = 40, "new_obj_type" = doortype, "alloy_cost" = REPLICANT_WALL_TOTAL, "spawn_dir" = dir)
 
-/obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/proselytizer)
+/obj/machinery/door/airlock/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/obj/structure/window/proselytize_vals(mob/living/proselytizer)
+/obj/structure/window/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/windowtype = /obj/structure/window/reinforced/clockwork
 	var/new_dir = TRUE
 	var/prosel_time = 15
@@ -145,16 +178,16 @@
 		prosel_cost = REPLICANT_STANDARD
 	return list("operation_time" = prosel_time, "new_obj_type" = windowtype, "alloy_cost" = prosel_cost, "spawn_dir" = dir, "dir_in_new" = new_dir)
 
-/obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/proselytizer)
+/obj/structure/window/reinforced/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/obj/machinery/door/window/proselytize_vals(mob/living/proselytizer)
+/obj/machinery/door/window/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 30, "new_obj_type" = /obj/machinery/door/window/clockwork, "alloy_cost" = REPLICANT_STANDARD, "spawn_dir" = dir, "dir_in_new" = TRUE)
 
-/obj/machinery/door/window/clockwork/proselytize_vals(mob/living/proselytizer)
+/obj/machinery/door/window/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/obj/structure/grille/proselytize_vals(mob/living/proselytizer)
+/obj/structure/grille/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/grilletype = /obj/structure/grille/ratvar
 	var/prosel_time = 15
 	if(destroyed)
@@ -162,14 +195,14 @@
 		prosel_time = 5
 	return list("operation_time" = prosel_time, "new_obj_type" = grilletype, "alloy_cost" = 0, "spawn_dir" = dir)
 
-/obj/structure/grille/ratvar/proselytize_vals(mob/living/proselytizer)
+/obj/structure/grille/ratvar/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return FALSE
 
-/obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/proselytizer)
+/obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 10, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
-/obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/proselytizer)
+/obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 5, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_STANDARD, "spawn_dir" = SOUTH)
 
-/obj/item/clockwork/component/replicant_alloy/proselytize_vals(mob/living/proselytizer)
+/obj/item/clockwork/component/replicant_alloy/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_ALLOY_UNIT, "spawn_dir" = SOUTH)

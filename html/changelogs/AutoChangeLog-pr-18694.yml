@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Clockwork slabs now produce a component every 50 seconds, from 40, Tinkerer's Caches now produce(if near a clockwork wall) a component every 35 seconds, from 30."
+  - experiment: "Tinkerer's daemons have a slightly higher cooldown for each component of the type they chose to produce that's already in the cache: This is very slight, but it'll add up if you have a lot of one component type and are trying to get more of it with daemons; 5 of a component type will add a second of delay."
