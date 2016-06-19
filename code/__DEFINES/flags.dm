@@ -82,6 +82,7 @@
 #define SLIME 16
 #define DRONE 32
 #define SWARMER 64
+#define RATVAR 128
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
