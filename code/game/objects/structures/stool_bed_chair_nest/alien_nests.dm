@@ -95,8 +95,8 @@
 
 	var/mob/M = locked_atoms[1]
 
-	if(iscarbon(M) && (M.stat != DEAD) && (M.reagents.get_reagent_amount("stabilizine") < 1))
-		M.reagents.add_reagent("stabilizine", 2)
+	if(iscarbon(M) && (M.stat != DEAD) && (M.reagents.get_reagent_amount(STABILIZINE) < 1))
+		M.reagents.add_reagent(STABILIZINE, 2)
 	else
 		return
 

@@ -32,7 +32,7 @@
 		gulp_size = 5
 	else
 		gulp_size = max(round(reagents.total_volume / 5), 5)
-	if(reagents.has_reagent("blackcolor"))
+	if(reagents.has_reagent(BLACKCOLOR))
 		viewcontents = 0
 	else
 		viewcontents = 1
@@ -310,7 +310,7 @@
 	vending_cat = "dairy products"
 /obj/item/weapon/reagent_containers/food/drinks/milk/New()
 	..()
-	reagents.add_reagent("milk", 50)
+	reagents.add_reagent(MILK, 50)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -322,7 +322,7 @@
 	item_state = "flour"
 /obj/item/weapon/reagent_containers/food/drinks/flour/New()
 	..()
-	reagents.add_reagent("flour", 50)
+	reagents.add_reagent(FLOUR, 50)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -334,7 +334,7 @@
 	vending_cat = "dairy products"//it's not a dairy product but oh come on who cares
 /obj/item/weapon/reagent_containers/food/drinks/soymilk/New()
 	..()
-	reagents.add_reagent("soymilk", 50)
+	reagents.add_reagent(SOYMILK, 50)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -345,7 +345,7 @@
 	icon_state = "coffee"
 /obj/item/weapon/reagent_containers/food/drinks/coffee/New()
 	..()
-	reagents.add_reagent("coffee", 30)
+	reagents.add_reagent(COFFEE, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -359,15 +359,15 @@
 		if(1)
 			name = "Duke Purple Tea"
 			desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
-			reagents.add_reagent("tea", 30)
+			reagents.add_reagent(TEA, 30)
 		if(2)
 			name = "Century Tea"
 			desc = "In most cultures, if you leave tea out for months it's considered spoiled. Although this tea is black, we still consider it good for cultural reasons. Taste the century."
-			reagents.add_reagent("redtea", 30)
+			reagents.add_reagent(REDTEA, 30)
 		if(3)
 			name = "Hippie Farms Eco-Tea"
 			desc = "Remember when the station was powered by solar panels instead of raping space for its plasma, then creating an engine of destruction? Hippie Farms remembers, maaaan."
-			reagents.add_reagent("greentea", 30)
+			reagents.add_reagent(GREENTEA, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -377,7 +377,7 @@
 	icon_state = "coffee"
 /obj/item/weapon/reagent_containers/food/drinks/ice/New()
 	..()
-	reagents.add_reagent("ice", 30)
+	reagents.add_reagent(ICE, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -388,7 +388,7 @@
 	item_state = "coffee"
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate/New()
 	..()
-	reagents.add_reagent("hot_coco", 30)
+	reagents.add_reagent(HOT_COCO, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -398,7 +398,7 @@
 	icon_state = "ramen"
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/New()
 	..()
-	reagents.add_reagent("dry_ramen", 30)
+	reagents.add_reagent(DRY_RAMEN, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -413,31 +413,31 @@
 			name = "Groans Soda: Cuban Spice Flavor"
 			desc = "Warning: Long exposure to liquid inside may cause you to follow the rumba beat."
 			icon_state += "_hot"
-			reagents.add_reagent("condensedcapsaicin", 10)
-			reagents.add_reagent("rum", 10)
+			reagents.add_reagent(CONDENSEDCAPSAICIN, 10)
+			reagents.add_reagent(RUM, 10)
 		if(2)
 			name = "Groans Soda: Icey Cold Flavor"
 			desc = "Cold in a can. Er, bottle."
 			icon_state += "_cold"
-			reagents.add_reagent("frostoil", 10)
-			reagents.add_reagent("ice", 10)
+			reagents.add_reagent(FROSTOIL, 10)
+			reagents.add_reagent(ICE, 10)
 		if(3)
 			name = "Groans Soda: Zero Calories"
 			desc = "Zero Point Calories. That's right, we fit even MORE nutriment in this thing."
 			icon_state += "_nutriment"
-			reagents.add_reagent("nutriment", 20)
+			reagents.add_reagent(NUTRIMENT, 20)
 		if(4)
 			name = "Groans Soda: Energy Shot"
 			desc = "Warning: The Groans Energy Blend(tm), may be toxic to those without constant exposure to chemical waste. Drink responsibly."
 			icon_state += "_energy"
-			reagents.add_reagent("sugar", 10)
-			reagents.add_reagent("chemical_waste", 10)
+			reagents.add_reagent(SUGAR, 10)
+			reagents.add_reagent(CHEMICAL_WASTE, 10)
 		if(5)
 			name = "Groans Soda: Double Dan"
 			desc = "Just when you thought you've had enough Dan, The 'Double Dan' strikes back with this wonderful mixture of too many flavors. Bring a barf bag, Drink responsibly."
 			icon_state += "_doubledew"
-			reagents.add_reagent("discount", 20)
-	reagents.add_reagent("discount", 10)
+			reagents.add_reagent(DISCOUNT, 20)
+	reagents.add_reagent(DISCOUNT, 10)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -450,22 +450,22 @@
 	switch(pick(1,2,3,4,5))
 		if(1)
 			name = "Filk: Chocolate Edition"
-			reagents.add_reagent("hot_coco", 10)
+			reagents.add_reagent(HOT_COCO, 10)
 		if(2)
 			name = "Filk: Scripture Edition"
-			reagents.add_reagent("holywater", 30)
+			reagents.add_reagent(HOLYWATER, 30)
 		if(3)
 			name = "Filk: Carribean Edition"
-			reagents.add_reagent("rum", 30)
+			reagents.add_reagent(RUM, 30)
 		if(4)
 			name = "Filk: Sugar Blast Editon"
-			reagents.add_reagent("sugar", 30)
-			reagents.add_reagent("radium", 10) // le epik fallout may mays
-			reagents.add_reagent("toxicwaste", 10)
+			reagents.add_reagent(SUGAR, 30)
+			reagents.add_reagent(RADIUM, 10) // le epik fallout may mays
+			reagents.add_reagent(TOXICWASTE, 10)
 		if(5)
 			name = "Filk: Pure Filk Edition"
-			reagents.add_reagent("discount", 20)
-	reagents.add_reagent("discount", 10)
+			reagents.add_reagent(DISCOUNT, 20)
+	reagents.add_reagent(DISCOUNT, 10)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -478,23 +478,23 @@
 	switch(pick(1,2,3,4,5))
 		if(1)
 			name = "Grifeo: Spicy"
-			reagents.add_reagent("condensedcapsaicin", 30)
+			reagents.add_reagent(CONDENSEDCAPSAICIN, 30)
 		if(2)
 			name = "Grifeo: Frozen"
-			reagents.add_reagent("frostoil", 30)
+			reagents.add_reagent(FROSTOIL, 30)
 		if(3)
 			name = "Grifeo: Crystallic"
-			reagents.add_reagent("sugar", 20)
-			reagents.add_reagent("ice", 20)
-			reagents.add_reagent("space_drugs", 20)
+			reagents.add_reagent(SUGAR, 20)
+			reagents.add_reagent(ICE, 20)
+			reagents.add_reagent(SPACE_DRUGS, 20)
 		if(4)
 			name = "Grifeo: Rich"
-			reagents.add_reagent("tequila", 10)
-			reagents.add_reagent("chemical_waste", 10)
+			reagents.add_reagent(TEQUILA, 10)
+			reagents.add_reagent(CHEMICAL_WASTE, 10)
 		if(5)
 			name = "Grifeo: Pure"
-			reagents.add_reagent("discount", 20)
-	reagents.add_reagent("discount", 10)
+			reagents.add_reagent(DISCOUNT, 20)
+	reagents.add_reagent(DISCOUNT, 10)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -507,20 +507,20 @@
 	switch(pick(1,2,3,4,5))
 		if(1)
 			name = "Groans Banned Soda: Fish Suprise"
-			reagents.add_reagent("carpotoxin", 10)
+			reagents.add_reagent(CARPOTOXIN, 10)
 		if(2)
 			name = "Groans Banned Soda: Bitter Suprise"
-			reagents.add_reagent("toxin", 20)
+			reagents.add_reagent(TOXIN, 20)
 		if(3)
 			name = "Groans Banned Soda: Sour Suprise"
-			reagents.add_reagent("pacid", 20)
+			reagents.add_reagent(PACID, 20)
 		if(4)
 			name = "Groans Banned Soda: Sleepy Suprise"
-			reagents.add_reagent("stoxin", 10)
+			reagents.add_reagent(STOXIN, 10)
 		if(5)
 			name = "Groans Banned Soda: Quadruple Dan"
-			reagents.add_reagent("discount", 40)
-	reagents.add_reagent("discount", 10)
+			reagents.add_reagent(DISCOUNT, 40)
+	reagents.add_reagent(DISCOUNT, 10)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -530,8 +530,8 @@
 	icon_state = "mannsdrink"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/mannsdrink/New()
 	..()
-	reagents.add_reagent("discount", 30)
-	reagents.add_reagent("water", 20)
+	reagents.add_reagent(DISCOUNT, 30)
+	reagents.add_reagent(WATER, 20)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -554,10 +554,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen_hot/New()
 	..()
 	name = pick(ddname)
-	reagents.add_reagent("hot_ramen", 20)
-	reagents.add_reagent("discount", 10)
-	reagents.add_reagent("glowingramen", 8)
-	reagents.add_reagent("toxicwaste", 8)
+	reagents.add_reagent(HOT_RAMEN, 20)
+	reagents.add_reagent(DISCOUNT, 10)
+	reagents.add_reagent(GLOWINGRAMEN, 8)
+	reagents.add_reagent(TOXICWASTE, 8)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -569,12 +569,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/discount_ramen/New()
 	..()
 	name = pick(ddname)
-	reagents.add_reagent("dry_ramen", 20)
-	reagents.add_reagent("discount", 10)
-	reagents.add_reagent("toxicwaste", 4)
-	reagents.add_reagent("greenramen", 4)
-	reagents.add_reagent("glowingramen", 4)
-	reagents.add_reagent("deepfriedramen", 4)
+	reagents.add_reagent(DRY_RAMEN, 20)
+	reagents.add_reagent(DISCOUNT, 10)
+	reagents.add_reagent(TOXICWASTE, 4)
+	reagents.add_reagent(GREENRAMEN, 4)
+	reagents.add_reagent(GLOWINGRAMEN, 4)
+	reagents.add_reagent(DEEPFRIEDRAMEN, 4)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -597,7 +597,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/beer/New()
 	..()
-	reagents.add_reagent("beer", 30)
+	reagents.add_reagent(BEER, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -611,7 +611,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/ale/New()
 	..()
-	reagents.add_reagent("ale", 30)
+	reagents.add_reagent(ALE, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -650,7 +650,7 @@
 	icon_state = "cola"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola/New()
 	..()
-	reagents.add_reagent("cola", 30)
+	reagents.add_reagent(COLA, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -660,7 +660,7 @@
 	icon_state = "tonic"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/tonic/New()
 	..()
-	reagents.add_reagent("tonic", 50)
+	reagents.add_reagent(TONIC, 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "Soda Water"
@@ -668,7 +668,7 @@
 	icon_state = "sodawater"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sodawater/New()
 	..()
-	reagents.add_reagent("sodawater", 50)
+	reagents.add_reagent(SODAWATER, 50)
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime
 	name = "Lemon-Lime"
@@ -676,7 +676,7 @@
 	icon_state = "lemon-lime"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
 	..()
-	reagents.add_reagent("lemon_lime", 30)
+	reagents.add_reagent(LEMON_LIME, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -686,7 +686,7 @@
 	icon_state = "space-up"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up/New()
 	..()
-	reagents.add_reagent("space_up", 30)
+	reagents.add_reagent(SPACE_UP, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -696,8 +696,8 @@
 	icon_state = "starkist"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist/New()
 	..()
-	reagents.add_reagent("cola", 15)
-	reagents.add_reagent("orangejuice", 15)
+	reagents.add_reagent(COLA, 15)
+	reagents.add_reagent(ORANGEJUICE, 15)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -707,7 +707,7 @@
 	icon_state = "space_mountain_wind"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind/New()
 	..()
-	reagents.add_reagent("spacemountainwind", 30)
+	reagents.add_reagent(SPACEMOUNTAINWIND, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -717,7 +717,7 @@
 	icon_state = "thirteen_loko"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko/New()
 	..()
-	reagents.add_reagent("thirteenloko", 30)
+	reagents.add_reagent(THIRTEENLOKO, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -727,7 +727,7 @@
 	icon_state = "dr_gibb"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb/New()
 	..()
-	reagents.add_reagent("dr_gibb", 30)
+	reagents.add_reagent(DR_GIBB, 30)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -737,7 +737,7 @@
 	icon_state = "nuka"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/nuka/New()
 	..()
-	reagents.add_reagent("nuka_cola", 30)
+	reagents.add_reagent(NUKA_COLA, 30)
 	src.pixel_x = rand(-10, 10)
 	src.pixel_y = rand(-10, 10)
 
@@ -747,7 +747,7 @@
 	icon_state = "quantum"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/quantum/New()
 	..()
-	reagents.add_reagent("quantum", 30)
+	reagents.add_reagent(QUANTUM, 30)
 	src.pixel_x = rand(-10, 10)
 	src.pixel_y = rand(-10, 10)
 
@@ -757,7 +757,7 @@
 	desc = "It has what plants crave! Electrolytes!"
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/sportdrink/New()
 	..()
-	reagents.add_reagent("sportdrink", 30)
+	reagents.add_reagent(SPORTDRINK, 30)
 	src.pixel_x = rand(-10, 10)
 	src.pixel_y = rand(-10, 10)
 
@@ -769,7 +769,7 @@
 	possible_transfer_amounts = list(1,5)
 /obj/item/weapon/reagent_containers/food/drinks/coloring/New()
 	..()
-	reagents.add_reagent("blackcolor", 25)
+	reagents.add_reagent(BLACKCOLOR, 25)
 	src.pixel_x = rand(-10.0, 10)
 	src.pixel_y = rand(-10.0, 10)
 
@@ -811,7 +811,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/thermos/full/New()
 	..()
-	var/new_reagent = pick("coffee", "hot_coco", "icecoffee", "tea", "icetea", "water", "ice", "iced_beer")
+	var/new_reagent = pick(COFFEE, HOT_COCO, ICECOFFEE, TEA, ICETEA, WATER, ICE, ICED_BEER)
 	reagents.add_reagent(new_reagent, rand(50,100))
 
 /obj/item/weapon/reagent_containers/food/drinks/flask
@@ -893,7 +893,7 @@
 	molotov = -1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin/New()
 	..()
-	reagents.add_reagent("gin", 100)
+	reagents.add_reagent(GIN, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
 	name = "Uncle Git's Special Reserve"
@@ -904,7 +904,7 @@
 	molotov = -1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey/New()
 	..()
-	reagents.add_reagent("whiskey", 100)
+	reagents.add_reagent(WHISKEY, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska Triple Distilled"
@@ -915,7 +915,7 @@
 	molotov = -1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/New()
 	..()
-	reagents.add_reagent("vodka", 100)
+	reagents.add_reagent(VODKA, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila
 	name = "Caccavo Guaranteed Quality Tequila"
@@ -926,7 +926,7 @@
 	molotov = -1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila/New()
 	..()
-	reagents.add_reagent("tequila", 100)
+	reagents.add_reagent(TEQUILA, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
@@ -937,7 +937,7 @@
 	smashtext = ""
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/New()
 	..()
-	reagents.add_reagent("nothing", 100)
+	reagents.add_reagent(NOTHING, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -948,7 +948,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron/New()
 	..()
-	reagents.add_reagent("patron", 100)
+	reagents.add_reagent(PATRON, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
@@ -959,7 +959,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum/New()
 	..()
-	reagents.add_reagent("rum", 100)
+	reagents.add_reagent(RUM, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
@@ -970,7 +970,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth/New()
 	..()
-	reagents.add_reagent("vermouth", 100)
+	reagents.add_reagent(VERMOUTH, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
@@ -981,7 +981,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua/New()
 	..()
-	reagents.add_reagent("kahlua", 100)
+	reagents.add_reagent(KAHLUA, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl Goldschlager"
@@ -991,7 +991,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager/New()
 	..()
-	reagents.add_reagent("goldschlager", 100)
+	reagents.add_reagent(GOLDSCHLAGER, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
@@ -1002,7 +1002,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac/New()
 	..()
-	reagents.add_reagent("cognac", 100)
+	reagents.add_reagent(COGNAC, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine
 	name = "Doublebeard Bearded Special Wine"
@@ -1014,7 +1014,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine/New()
 	..()
-	reagents.add_reagent("wine", 100)
+	reagents.add_reagent(WINE, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
@@ -1025,7 +1025,7 @@
 	isGlass = 1
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
 	..()
-	reagents.add_reagent("absinthe", 100)
+	reagents.add_reagent(ABSINTHE, 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -1039,7 +1039,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/New()
 	..()
-	reagents.add_reagent("orangejuice", 100)
+	reagents.add_reagent(ORANGEJUICE, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
@@ -1051,7 +1051,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream/New()
 	..()
-	reagents.add_reagent("cream", 100)
+	reagents.add_reagent(CREAM, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
@@ -1063,7 +1063,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/New()
 	..()
-	reagents.add_reagent("tomatojuice", 100)
+	reagents.add_reagent(TOMATOJUICE, 100)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
@@ -1076,7 +1076,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/New()
 	..()
-	reagents.add_reagent("limejuice", 100)
+	reagents.add_reagent(LIMEJUICE, 100)
 
 
 

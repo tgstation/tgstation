@@ -115,13 +115,13 @@
 	else if(src.dirty==100) // The microwave is all dirty so can't be used!
 		var/obj/item/weapon/reagent_containers/R = O
 		if(istype(R)) // If they're trying to clean it then let them
-			if(R.reagents.amount_cache.len == 1 && R.reagents.has_reagent("cleaner", 5))
+			if(R.reagents.amount_cache.len == 1 && R.reagents.has_reagent(CLEANER, 5))
 				user.visible_message( \
 					"<span class='notice'>[user] starts to clean the microwave.</span>", \
 					"<span class='notice'>You start to clean the microwave.</span>" \
 				)
 				if (do_after(user, src,20))
-					R.reagents.remove_reagent("cleaner",5)
+					R.reagents.remove_reagent(CLEANER,5)
 					user.visible_message( \
 						"<span class='notice'>[user]  has cleaned  the microwave.</span>", \
 						"<span class='notice'>You have cleaned the microwave.</span>" \
@@ -255,9 +255,9 @@
 
 		for (var/datum/reagent/R in reagents.reagent_list)
 			var/display_name = R.name
-			if (R.id == "capsaicin")
+			if (R.id == CAPSAICIN)
 				display_name = "Hotsauce"
-			if (R.id == "frostoil")
+			if (R.id == FROSTOIL)
 				display_name = "Coldsauce"
 			dat += {"<B>[display_name]:</B> [R.volume] unit\s<BR>"}
 
@@ -424,8 +424,8 @@
 		qdel(O)
 		O = null
 	src.reagents.clear_reagents()
-	ffuu.reagents.add_reagent("carbon", amount)
-	ffuu.reagents.add_reagent("toxin", amount/10)
+	ffuu.reagents.add_reagent(CARBON, amount)
+	ffuu.reagents.add_reagent(TOXIN, amount/10)
 	return ffuu
 
 /obj/machinery/microwave/AltClick(mob/user)

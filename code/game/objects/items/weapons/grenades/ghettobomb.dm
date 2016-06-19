@@ -40,7 +40,7 @@
 				to_chat(user, "<span  class='notice'>There's not enough fuel left to work with.</span>")
 				return
 			var/obj/structure/reagent_dispensers/fueltank/F = target
-			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 50 fuel from the welding fuel tank,
+			F.reagents.remove_reagent(FUEL, 50, 1)//Deleting 50 fuel from the welding fuel tank,
 			assembled = 1
 			to_chat(user, "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>")
 			playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)

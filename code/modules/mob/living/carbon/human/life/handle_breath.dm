@@ -3,7 +3,7 @@
 /mob/living/carbon/human/proc/breathe()
 	if(flags & INVULNERABLE)
 		return
-	if(reagents.has_reagent("lexorin"))
+	if(reagents.has_reagent(LEXORIN))
 		return
 	if(undergoing_hypothermia() == PROFOUND_HYPOTHERMIA) // we're not breathing. see handle_hypothermia.dm for details.
 		return
@@ -139,7 +139,7 @@
 		return 0
 
 	if(!breath || (breath.total_moles() == 0) || suiciding)
-		if(reagents.has_reagent("inaprovaline"))
+		if(reagents.has_reagent(INAPROVALINE))
 			return 0
 		if(suiciding)
 			adjustOxyLoss(2) //If you are suiciding, you should die a little bit faster

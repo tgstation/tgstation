@@ -4,7 +4,7 @@
 	id="botany_centrifuge"
 	req_tech = list ("engineering" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/botany_centrifuge
 
@@ -14,7 +14,7 @@
 	id="botany_bioballistic"
 	req_tech = list ("engineering" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/botany_bioballistic
 
@@ -24,7 +24,7 @@
 	id = "biogenerator"
 	req_tech = list("programming" = 3,"engineering" = 2, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/biogenerator
 
@@ -34,7 +34,7 @@
 	id = "seed_extractor"
 	req_tech = list("programming" = 3,"engineering" = 2, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/seed_extractor
 
@@ -44,6 +44,6 @@
 	id = "hydroponics"
 	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/hydroponics

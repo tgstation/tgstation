@@ -106,7 +106,7 @@
 
 	dry_state = rand(50,80)
 	create_reagents(10)
-	reagents.add_reagent("vomit", rand(2,5))
+	reagents.add_reagent(VOMIT, rand(2,5))
 
 	processing_objects.Add(src)
 

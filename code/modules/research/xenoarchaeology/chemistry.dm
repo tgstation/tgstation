@@ -4,42 +4,42 @@ datum
 	reagent
 		tungsten
 			name = "Tungsten"
-			id = "tungsten"
+			id = TUNGSTEN
 			description = "A chemical element, and a strong oxidising agent."
 			reagent_state = SOLID
 			color = "#DCDCDC"  // rgb: 220, 220, 220, silver
 
 		lithiumsodiumtungstate
 			name = "Lithium Sodium Tungstate"
-			id = "lithiumsodiumtungstate"
+			id = LITHIUMSODIUMTUNGSTATE
 			description = "A reducing agent for geological compounds."
 			reagent_state = LIQUID
 			color = "#C0C0C0"  // rgb: 192, 192, 192, darker silver
 
 		ground_rock
 			name = "Ground Rock"
-			id = "ground_rock"
+			id = GROUND_ROCK
 			description = "A fine dust made of ground up rock."
 			reagent_state = SOLID
 			color = "#A0522D"   //rgb: 160, 82, 45, brown
 
 		density_separated_sample
 			name = "Density separated sample"
-			id = "density_separated_sample"
+			id = DENSITY_SEPARATED_SAMPLE
 			description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 			reagent_state = LIQUID
 			color = "#DEB887"   //rgb: 222, 184, 135, light brown
 
 		analysis_sample
 			name = "Analysis liquid"
-			id = "analysis_sample"
+			id = ANALYSIS_SAMPLE
 			description = "A watery paste used in chemical analysis."
 			reagent_state = LIQUID
 			color = "#F5FFFA"   //rgb: 245, 255, 250, almost white
 
 		chemical_waste
 			name = "Chemical Waste"
-			id = "chemical_waste"
+			id = CHEMICAL_WASTE
 			description = "A viscous, toxic liquid left over from many chemical processes."
 			reagent_state = LIQUID
 			color = "#ADFF2F"   //rgb: 173, 255, 47, toxic green
@@ -48,25 +48,25 @@ datum
 	chemical_reaction
 		lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
 			name = "Lithium Sodium Tungstate"
-			id = "lithiumsodiumtungstate"
-			result = "lithiumsodiumtungstate"
-			required_reagents = list("lithium" = 1, "sodium" = 2, "tungsten" = 1, "oxygen" = 4)
+			id = LITHIUMSODIUMTUNGSTATE
+			result = LITHIUMSODIUMTUNGSTATE
+			required_reagents = list(LITHIUM = 1, SODIUM = 2, TUNGSTEN = 1, OXYGEN = 4)
 			result_amount = 8
 
 		density_separated_liquid
 			name = "Density separated sample"
-			id = "density_separated_sample"
-			result = "density_separated_sample"
-			secondary_results = list("chemical_waste" = 1)
-			required_reagents = list("ground_rock" = 1, "lithiumsodiumtungstate" = 2)
+			id = DENSITY_SEPARATED_SAMPLE
+			result = DENSITY_SEPARATED_SAMPLE
+			secondary_results = list(CHEMICAL_WASTE = 1)
+			required_reagents = list(GROUND_ROCK = 1, LITHIUMSODIUMTUNGSTATE = 2)
 			result_amount = 2
 
 		analysis_liquid
 			name = "Analysis sample"
-			id = "analysis_sample"
-			result = "analysis_sample"
-			secondary_results = list("chemical_waste" = 1)
-			required_reagents = list("density_separated_sample" = 5)
+			id = ANALYSIS_SAMPLE
+			result = ANALYSIS_SAMPLE
+			secondary_results = list(CHEMICAL_WASTE = 1)
+			required_reagents = list(DENSITY_SEPARATED_SAMPLE = 5)
 			result_amount = 4
 			requires_heating = 1
 
@@ -112,21 +112,21 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 	name = "beaker 'tungsten'"
 	New()
 		..()
-		reagents.add_reagent("tungsten",50)
+		reagents.add_reagent(TUNGSTEN,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/oxygen
 	name = "beaker 'oxygen'"
 	New()
 		..()
-		reagents.add_reagent("oxygen",50)
+		reagents.add_reagent(OXYGEN,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sodium
 	name = "beaker 'sodium'"
 	New()
 		..()
-		reagents.add_reagent("sodium",50)
+		reagents.add_reagent(SODIUM,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/lithium
@@ -134,7 +134,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("lithium",50)
+		reagents.add_reagent(LITHIUM,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -142,7 +142,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("water",50)
+		reagents.add_reagent(WATER,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
@@ -150,7 +150,7 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("water",50)
+		reagents.add_reagent(WATER,50)
 		update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/fuel
@@ -158,5 +158,5 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 	New()
 		..()
-		reagents.add_reagent("fuel",50)
+		reagents.add_reagent(FUEL,50)
 		update_icon()

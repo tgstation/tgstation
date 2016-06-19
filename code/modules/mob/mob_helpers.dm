@@ -37,7 +37,7 @@
 	. = ..()
 	if(.)
 		return .
-	else if(has_reagent_in_blood("detcoffee"))
+	else if(has_reagent_in_blood(DETCOFFEE))
 		return NOIRMATRIX
 	var/datum/organ/internal/eyes/eyes = internal_organs_by_name["eyes"]
 	if(eyes && eyes.colourmatrix.len && !(eyes.robotic))

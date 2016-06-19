@@ -121,7 +121,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				turn_off()
 			else
 				turn_on()
-		if("blood")
+		if(BLOOD)
 			src.blood = !src.blood
 			src.get_targets()
 			src.updateUsrDialog()

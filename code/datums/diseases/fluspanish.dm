@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "Airborne"
 	cure = "Spaceacillin or Anti-bodies to the common flu"
-	cure_id = "spaceacillin"
+	cure_id = SPACEACILLIN
 	cure_chance = 10
 	agent = "1nqu1s1t10n flu virion"
 	affected_species = list("Human")

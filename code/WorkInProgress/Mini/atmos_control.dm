@@ -9,7 +9,7 @@ var/global/list/atmos_controllers = list()
 	id = "atmoscontrol"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/atmoscontrol
 

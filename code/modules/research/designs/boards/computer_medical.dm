@@ -6,7 +6,7 @@
 	id = "med_data"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/med_data
 
@@ -16,7 +16,7 @@
 	id = "operating"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/operating
 
@@ -26,7 +26,7 @@
 	id = "pandemic"
 	req_tech = list("programming" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/pandemic
 
@@ -36,7 +36,7 @@
 	id = "crewconsole"
 	req_tech = list("programming" = 3, "magnets" = 2, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/crew
 
@@ -46,6 +46,6 @@
 	id = "clonecontrol"
 	req_tech = list("programming" = 3, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/cloning

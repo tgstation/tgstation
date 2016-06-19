@@ -40,9 +40,9 @@
 				src.updateUsrDialog()
 		else to_chat(user, "<span class='warning'>The [src.name] already has a beaker.</span>")
 	else if(istype(I,/obj/item/weapon/reagent_containers/food/snacks/icecream))
-		if(!I.reagents.has_reagent("sprinkles"))
-			I.reagents.add_reagent("sprinkles",1)
-			I.overlays += image('icons/obj/kitchen.dmi',src,"sprinkles")
+		if(!I.reagents.has_reagent(SPRINKLES))
+			I.reagents.add_reagent(SPRINKLES,1)
+			I.overlays += image('icons/obj/kitchen.dmi',src,SPRINKLES)
 			I.name += " with sprinkles"
 			I.desc += " It has sprinkles on top."
 			. = 1
@@ -110,10 +110,10 @@
 
 	else if(href_list["synthcond"] && href_list["type"])
 		switch(text2num(href_list["type"]))
-			if(2) . = pick("cola","dr_gibb","space_up","spacemountainwind")
-			if(3) . = pick("kahlua","vodka","rum","gin")
-			if(4) . = "cream"
-			if(5) . = "water"
+			if(2) . = pick(COLA,DR_GIBB,SPACE_UP,SPACEMOUNTAINWIND)
+			if(3) . = pick(KAHLUA,VODKA,RUM,GIN)
+			if(4) . = CREAM
+			if(5) . = WATER
 		src.reagents.add_reagent(.,5)
 
 	else if(href_list["createcup"] || href_list["createcone"])

@@ -52,7 +52,7 @@
 			if(O.reagents.total_volume < 1)
 				to_chat(user, "The [O] is empty.")
 			else if(O.reagents.total_volume >= 1)
-				if(O.reagents.has_reagent("pacid", 1))
+				if(O.reagents.has_reagent(PACID, 1))
 					to_chat(user, "The acid chews through the balloon!")
 					O.reagents.reaction(user)
 					qdel(src)
@@ -508,7 +508,7 @@
 /obj/item/toy/waterflower/New()
 	. = ..()
 	create_reagents(10)
-	reagents.add_reagent("water", 10)
+	reagents.add_reagent(WATER, 10)
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M as mob, mob/user as mob)
 	return

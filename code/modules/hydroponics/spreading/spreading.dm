@@ -80,7 +80,7 @@
 	spawn(1) // Plants will sometimes be spawned in the turf adjacent to the one they need to end up in, for the sake of correct dir/etc being set.
 		plant_controller.add_plant(src)
 		// Some plants eat through plating.
-		if(seed.chems && !isnull(seed.chems["pacid"]))
+		if(seed.chems && !isnull(seed.chems[PACID]))
 			var/turf/T = get_turf(src)
 			T.ex_act(prob(80) ? 3 : 2)
 

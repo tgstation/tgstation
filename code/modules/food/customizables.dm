@@ -104,7 +104,7 @@
 	. = ..()
 	topping = image(icon,,"[initial(icon_state)]_top")
 	filling = image(icon,,"[initial(icon_state)]_filling")
-	src.reagents.add_reagent("nutriment",3)
+	src.reagents.add_reagent(NUTRIMENT,3)
 	src.updateName()
 	return
 
@@ -433,28 +433,28 @@
 	name = "wine"
 	desc = "Classy."
 	icon_state = "winecustom"
-	initReagent = "wine"
+	initReagent = WINE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/whiskey
 	name = "whiskey"
 	desc = "A bottle of quite-a-bit-proof whiskey."
 	icon_state = "whiskeycustom"
-	initReagent = "whiskey"
+	initReagent = WHISKEY
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/vermouth
 	name = "vermouth"
 	desc = "Shaken, not stirred."
 	icon_state = "vermouthcustom"
-	initReagent = "vermouth"
+	initReagent = VERMOUTH
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/vodka
 	name = "vodka"
 	desc = "Get drunk, comrade."
 	icon_state = "vodkacustom"
-	initReagent = "vodka"
+	initReagent = VODKA
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/ale
 	name = "ale"
 	desc = "Strike the asteroid!"
 	icon_state = "alecustom"
-	initReagent = "ale"
+	initReagent = ALE

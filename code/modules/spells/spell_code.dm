@@ -265,7 +265,7 @@ var/list/spells = typesof(/spell) //needed for the badmin verb for now
 
 	if(silenced > 0)
 		return
-	if(user.reagents && user.reagents.has_reagent("zombiepowder"))
+	if(user.reagents && user.reagents.has_reagent(ZOMBIEPOWDER))
 		to_chat(user, "<span class='warning'>You just can't seem to focus enough to do this.</span>")
 		return 0
 

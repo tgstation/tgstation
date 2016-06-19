@@ -19,9 +19,9 @@
 	var/recharged = 0
 	var/custom = 0
 	var/useramount = 30 // Last used amount
-	var/list/dispensable_reagents = list("hydrogen","lithium","carbon","nitrogen","oxygen","fluorine",
-	"sodium","aluminum","silicon","phosphorus","sulfur","chlorine","potassium","iron",
-	"copper","mercury","radium","water","ethanol","sugar","sacid","tungsten")
+	var/list/dispensable_reagents = list(HYDROGEN,LITHIUM,CARBON,NITROGEN,OXYGEN,FLUORINE,
+	SODIUM,ALUMINUM,SILICON,PHOSPHORUS,SULFUR,CHLORINE,POTASSIUM,IRON,
+	COPPER,MERCURY,RADIUM,WATER,ETHANOL,SUGAR,SACID,TUNGSTEN)
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | FIXED2WORK
 
@@ -307,7 +307,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/brewer/
 	name = "Space-Brewery"
 	icon_state = "brewer"
-	dispensable_reagents = list("tea","greentea","redtea", "coffee","milk","cream","water","hot_coco", "soymilk")
+	dispensable_reagents = list(TEA,GREENTEA,REDTEA, COFFEE,MILK,CREAM,WATER,HOT_COCO, SOYMILK)
 /obj/machinery/chem_dispenser/brewer/New()
 	. = ..()
 	component_parts = newlist(
@@ -339,7 +339,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/soda_dispenser/
 	name = "Soda Dispenser"
 	icon_state = "soda_dispenser"
-	dispensable_reagents = list("spacemountainwind", "sodawater", "lemon_lime", "dr_gibb", "cola", "ice", "tonic")
+	dispensable_reagents = list(SPACEMOUNTAINWIND, SODAWATER, LEMON_LIME, DR_GIBB, COLA, ICE, TONIC)
 /obj/machinery/chem_dispenser/soda_dispenser/New()
 	. = ..()
 	component_parts = newlist(
@@ -369,7 +369,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 /obj/machinery/chem_dispenser/booze_dispenser/
 	name = "Booze Dispenser"
 	icon_state = "booze_dispenser"
-	dispensable_reagents = list("beer", "whiskey", "tequila", "vodka", "vermouth", "rum", "cognac", "wine", "kahlua", "ale", "ice", "water", "gin", "sodawater", "cola", "cream","tomatojuice","orangejuice","limejuice","tonic")
+	dispensable_reagents = list(BEER, WHISKEY, TEQUILA, VODKA, VERMOUTH, RUM, COGNAC, WINE, KAHLUA, ALE, ICE, WATER, GIN, SODAWATER, COLA, CREAM,TOMATOJUICE,ORANGEJUICE,LIMEJUICE,TONIC)
 /obj/machinery/chem_dispenser/booze_dispenser/New()
 	. = ..()
 	component_parts = newlist(
@@ -996,7 +996,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 
 				if(D)
 					B.name = "[D.name] vaccine bottle"
-					B.reagents.add_reagent("vaccine",15,vaccine_type)
+					B.reagents.add_reagent(VACCINE,15,vaccine_type)
 					wait = 1
 					var/datum/reagents/R = beaker.reagents
 					var/datum/reagent/blood/Blood = null
@@ -1029,7 +1029,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
-			B.reagents.add_reagent("blood",20,data)
+			B.reagents.add_reagent(BLOOD,20,data)
 			src.updateUsrDialog()
 			wait = 1
 			spawn(1000)
@@ -1232,30 +1232,30 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/list/blend_items = list (
 
 		//Sheets
-		/obj/item/stack/sheet/metal           = list("iron" = 20),
-		/obj/item/stack/sheet/mineral/plasma  = list("plasma" = 20),
-		/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
-		/obj/item/stack/sheet/mineral/clown   = list("banana" = 20),
-		/obj/item/stack/sheet/mineral/silver  = list("silver" = 20),
-		/obj/item/stack/sheet/mineral/gold    = list("gold" = 20),
-		/obj/item/weapon/grown/nettle         = list("sacid" = 0),
-		/obj/item/weapon/grown/deathnettle    = list("pacid" = 0),
+		/obj/item/stack/sheet/metal           = list(IRON = 20),
+		/obj/item/stack/sheet/mineral/plasma  = list(PLASMA = 20),
+		/obj/item/stack/sheet/mineral/uranium = list(URANIUM = 20),
+		/obj/item/stack/sheet/mineral/clown   = list(BANANA = 20),
+		/obj/item/stack/sheet/mineral/silver  = list(SILVER = 20),
+		/obj/item/stack/sheet/mineral/gold    = list(GOLD = 20),
+		/obj/item/weapon/grown/nettle         = list(SACID = 0),
+		/obj/item/weapon/grown/deathnettle    = list(PACID = 0),
 		/obj/item/stack/sheet/charcoal        = list("charcoal" = 20),
 
 		//Blender Stuff
-		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = -10), //I have no fucking idea what most of these numbers mean and I hate them.
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = -7),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("cornoil" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list(SOYMILK = -10), //I have no fucking idea what most of these numbers mean and I hate them.
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list(KETCHUP = -7),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list(CORNOIL = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list(FLOUR = -5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list(RICE = -5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list(CHERRYJELLY = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list(PLASTICIDE = 5),
 
-		/obj/item/seeds = list("blackpepper" = 5),
+		/obj/item/seeds = list(BLACKPEPPER = 5),
 
 
 		//archaeology!
-		/obj/item/weapon/rocksliver = list("ground_rock" = 30),
+		/obj/item/weapon/rocksliver = list(GROUND_ROCK = 30),
 
 		//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
 		/obj/item/weapon/reagent_containers/pill = list(),
@@ -1265,18 +1265,18 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	var/list/juice_items = list (
 
 		//Juicer Stuff
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice" = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list(TOMATOJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list(CARROTJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list(BERRYJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list(BANANA = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list(POTATO = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list(APPLEJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list(LEMONJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list(ORANGEJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list(LIMEJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list(WATERMELONJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list(WATERMELONJUICE = 0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list(POISONBERRYJUICE = 0),
 	)
 
 
@@ -1616,13 +1616,13 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			var/amount = allowed[r_id]
 			if(amount <= 0)
 				if(amount == 0)
-					if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-						beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
-						O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
+					if (O.reagents != null && O.reagents.has_reagent(NUTRIMENT))
+						beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount(NUTRIMENT), space))
+						O.reagents.remove_reagent(NUTRIMENT, min(O.reagents.get_reagent_amount(NUTRIMENT), space))
 				else
-					if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-						beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount("nutriment")*abs(amount)), space))
-						O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
+					if (O.reagents != null && O.reagents.has_reagent(NUTRIMENT))
+						beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount(NUTRIMENT)*abs(amount)), space))
+						O.reagents.remove_reagent(NUTRIMENT, min(O.reagents.get_reagent_amount(NUTRIMENT), space))
 
 			else
 				O.reagents.trans_id_to(beaker, r_id, min(amount, space))
@@ -1945,44 +1945,44 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	//We want the all-in-one grinder audience
 
 	var/list/blend_items = list (
-		/obj/item/stack/sheet/metal           = list("iron",20),
-		/obj/item/stack/sheet/mineral/plasma  = list("plasma",20),
-		/obj/item/stack/sheet/mineral/uranium = list("uranium",20),
-		/obj/item/stack/sheet/mineral/clown   = list("banana",20),
-		/obj/item/stack/sheet/mineral/silver  = list("silver",20),
-		/obj/item/stack/sheet/mineral/gold    = list("gold",20),
-		/obj/item/weapon/grown/nettle         = list("sacid",10),
-		/obj/item/weapon/grown/deathnettle    = list("pacid",10),
+		/obj/item/stack/sheet/metal           = list(IRON,20),
+		/obj/item/stack/sheet/mineral/plasma  = list(PLASMA,20),
+		/obj/item/stack/sheet/mineral/uranium = list(URANIUM,20),
+		/obj/item/stack/sheet/mineral/clown   = list(BANANA,20),
+		/obj/item/stack/sheet/mineral/silver  = list(SILVER,20),
+		/obj/item/stack/sheet/mineral/gold    = list(GOLD,20),
+		/obj/item/weapon/grown/nettle         = list(SACID,10),
+		/obj/item/weapon/grown/deathnettle    = list(PACID,10),
 		/obj/item/stack/sheet/charcoal        = list("charcoal",20),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans   = list("soymilk",1),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato     = list("ketchup",2),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/corn       = list("cornoil",3),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat      = list("flour",5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk  = list("rice",5),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries   = list("cherryjelly",1),
-		/obj/item/seeds	                      = list("blackpepper",5),
-		/obj/item/device/flashlight/flare     = list("sulfur",10),
-		/obj/item/stack/cable_coil            = list("copper", 10),
-		/obj/item/weapon/cell                 = list("lithium", 10),
-		/obj/item/clothing/head/butt          = list("mercury", 10),
-		/obj/item/weapon/rocksliver           = list("ground_rock",30),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans   = list(SOYMILK,1),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato     = list(KETCHUP,2),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/corn       = list(CORNOIL,3),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat      = list(FLOUR,5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk  = list(RICE,5),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries   = list(CHERRYJELLY,1),
+		/obj/item/seeds	                      = list(BLACKPEPPER,5),
+		/obj/item/device/flashlight/flare     = list(SULFUR,10),
+		/obj/item/stack/cable_coil            = list(COPPER, 10),
+		/obj/item/weapon/cell                 = list(LITHIUM, 10),
+		/obj/item/clothing/head/butt          = list(MERCURY, 10),
+		/obj/item/weapon/rocksliver           = list(GROUND_ROCK,30),
 
 		//Recipes must include both variables!
 		/obj/item/weapon/reagent_containers/food = list("generic",0)
 	)
 
 	var/list/juice_items = list (
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list("lemonjuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list("orangejuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list("limejuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice",0),
-		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list("poisonberryjuice",0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list(TOMATOJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list(CARROTJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list(BERRYJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list(BANANA,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list(POTATO,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = list(LEMONJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = list(ORANGEJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = list(LIMEJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list(WATERMELONJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list(WATERMELONJUICE,0),
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = list(POISONBERRYJUICE,0),
 	)
 
 

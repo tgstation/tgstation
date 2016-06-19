@@ -76,7 +76,7 @@
 		bodytemperature = initial(bodytemperature)
 	if (monkeyizing)	return
 	if(!loc)			return	// Fixing a null error that occurs when the mob isn't found in the world -- TLE
-	if(reagents && reagents.has_reagent("bustanut"))
+	if(reagents && reagents.has_reagent(BUSTANUT))
 		if(!(M_HARDCORE in mutations))
 			mutations.Add(M_HARDCORE)
 			to_chat(src, "<span class='notice'>You feel like you're the best around.  Nothing's going to get you down.</span>")
@@ -504,7 +504,7 @@ Thanks.
 		var/mob/living/carbon/human/H = src
 		H.timeofdeath = 0
 		H.vessel.reagent_list = list()
-		H.vessel.add_reagent("blood",560)
+		H.vessel.add_reagent(BLOOD,560)
 		H.shock_stage = 0
 		spawn(1)
 			H.fixblood()

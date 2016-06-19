@@ -44,7 +44,7 @@
 		if(!T || !T.Adjacent()) //We can be given a specific tank to connect to
 			T = get_internals_tank()
 			if(!T)
-				var/breathes = "oxygen"
+				var/breathes = OXYGEN
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
 					breathes = H.species.breath_type

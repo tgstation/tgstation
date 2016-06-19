@@ -115,8 +115,8 @@
 /obj/item/weapon/grown/novaflower/New()
 	..()
 	spawn(5) // So potency can be set in the proc that creates these crops
-		reagents.add_reagent("nutriment", 1)
-		reagents.add_reagent("capsaicin", round(potency, 1))
+		reagents.add_reagent(NUTRIMENT, 1)
+		reagents.add_reagent(CAPSAICIN, round(potency, 1))
 		force = round((5 + potency / 5), 1)
 
 /obj/item/weapon/grown/novaflower/attack(mob/living/carbon/M as mob, mob/user as mob)

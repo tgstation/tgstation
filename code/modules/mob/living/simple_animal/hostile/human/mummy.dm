@@ -60,9 +60,9 @@
 	number = n
 	cardinals = c
 
-	chemholder.reagents.add_reagent("toxin", 40)
-	chemholder.reagents.add_reagent("cyanide", 16)
-	chemholder.reagents.add_reagent("blackcolor", 120) //For the color
+	chemholder.reagents.add_reagent(TOXIN, 40)
+	chemholder.reagents.add_reagent(CYANIDE, 16)
+	chemholder.reagents.add_reagent(BLACKCOLOR, 120) //For the color
 
 	if(istype(loca, /turf/))
 		location = loca

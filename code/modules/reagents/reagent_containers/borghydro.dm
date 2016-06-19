@@ -13,8 +13,8 @@
 	var/recharge_time = 5 // time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("tricordrazine", "inaprovaline", "spaceacillin")
-	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
+	var/list/reagent_ids = list(TRICORDRAZINE, INAPROVALINE, SPACEACILLIN)
+	//var/list/reagent_ids = list(DEXALIN, KELOTANE, BICARIDINE, ANTI_TOXIN, INAPROVALINE, SPACEACILLIN)
 
 /obj/item/weapon/reagent_containers/borghypo/New(loc)
 	..(loc)
@@ -61,7 +61,7 @@
 /*
 /obj/item/weapon/reagent_containers/borghypo/verb/add_cyanide()
 	set src in world
-	add_reagent("cyanide")
+	add_reagent(CYANIDE)
 */
 
 /obj/item/weapon/reagent_containers/borghypo/attack(mob/M as mob, mob/user as mob)
@@ -102,6 +102,6 @@
 /obj/item/weapon/reagent_containers/borghypo/upgraded
 	name = "Upgraded Cyborg Hypospray"
 	desc = "An upgraded hypospray with more potent chemicals and a larger storage capacity."
-	reagent_ids = list("doctorsdelight", "dexalinp", "spaceacillin", "charcoal")
+	reagent_ids = list(DOCTORSDELIGHT, DEXALINP, SPACEACILLIN, "charcoal")
 	volume = 50
 	recharge_time = 3 // time it takes for shots to recharge (in seconds)

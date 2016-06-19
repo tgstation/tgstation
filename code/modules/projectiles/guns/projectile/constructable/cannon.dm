@@ -124,7 +124,7 @@
 		return
 	var/pure_fuel = 1
 	for (var/datum/reagent/current_reagent in S.reagents.reagent_list)
-		if (current_reagent.id != "fuel")
+		if (current_reagent.id != FUEL)
 			pure_fuel = 0
 	if(!pure_fuel)
 		to_chat(user, "<span class='warning'>\The [src] won't fire if you fill it with anything but pure welding fuel!</span>")
@@ -134,7 +134,7 @@
 	if((fuel_level + transfer_amount) >= max_fuel)
 		transfer_amount = max_fuel-fuel_level
 		full = 1
-	S.reagents.remove_reagent("fuel", transfer_amount)
+	S.reagents.remove_reagent(FUEL, transfer_amount)
 	fuel_level += transfer_amount
 	if(full)
 		to_chat(user, "<span class='notice'>You fill \the [src] to the brim with fuel from \the [S].</span>")

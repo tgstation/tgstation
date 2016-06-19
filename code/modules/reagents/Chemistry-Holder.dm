@@ -28,7 +28,7 @@ var/const/INGEST = 2
 		//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 		// It is filtered into multiple lists within a list.
 		// For example:
-		// chemical_reaction_list["plasma"] is a list of all reactions relating to plasma
+		// chemical_reaction_list[PLASMA] is a list of all reactions relating to plasma
 
 		chemical_reactions_list = list()
 
@@ -109,7 +109,7 @@ var/const/INGEST = 2
 	for (var/datum/reagent/current_reagent in src.reagent_list)
 		if (!current_reagent)
 			continue
-		if (current_reagent.id == "blood" && iscarbon(target))
+		if (current_reagent.id == BLOOD && iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.inject_blood(my_atom, amount)
 			continue
@@ -477,7 +477,7 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 			my_atom.on_reagent_change()
 
 			// mix dem viruses
-			if(R.id == "blood" && reagent == "blood")
+			if(R.id == BLOOD && reagent == BLOOD)
 				if(R.data && data)
 
 					if(R.data["viruses"] || data["viruses"])

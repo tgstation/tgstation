@@ -47,18 +47,18 @@
 /obj/machinery/radiocarbon_spectrometer/New()
 	..()
 	create_reagents(500)
-	coolant_reagents_purity["water"] = 0.5
-	coolant_reagents_purity["icecoffee"] = 0.6
-	coolant_reagents_purity["icetea"] = 0.6
-	coolant_reagents_purity["milkshake"] = 0.6
-	coolant_reagents_purity["leporazine"] = 0.7
-	coolant_reagents_purity["kelotane"] = 0.7
-	coolant_reagents_purity["sterilizine"] = 0.7
-	coolant_reagents_purity["dermaline"] = 0.7
-	coolant_reagents_purity["hyperzine"] = 0.8
-	coolant_reagents_purity["cryoxadone"] = 0.9
+	coolant_reagents_purity[WATER] = 0.5
+	coolant_reagents_purity[ICECOFFEE] = 0.6
+	coolant_reagents_purity[ICETEA] = 0.6
+	coolant_reagents_purity[MILKSHAKE] = 0.6
+	coolant_reagents_purity[LEPORAZINE] = 0.7
+	coolant_reagents_purity[KELOTANE] = 0.7
+	coolant_reagents_purity[STERILIZINE] = 0.7
+	coolant_reagents_purity[DERMALINE] = 0.7
+	coolant_reagents_purity[HYPERZINE] = 0.8
+	coolant_reagents_purity[CRYOXADONE] = 0.9
 	coolant_reagents_purity["coolant"] = 1
-	coolant_reagents_purity["adminordrazine"] = 2
+	coolant_reagents_purity[ADMINORDRAZINE] = 2
 
 /obj/machinery/radiocarbon_spectrometer/attack_hand(var/mob/user as mob)
 	ui_interact(user)

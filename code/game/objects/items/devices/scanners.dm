@@ -212,8 +212,8 @@ Subject's pulse: ??? BPM"})
 	for(var/datum/disease/D in M.viruses)
 		if(!D.hidden[SCANNER])
 			message += "<br><span class='warning'><b>Warning: [D.form] Detected</b><br>Name: [D.name].<br>Type: [D.spread].<br>Stage: [D.stage]/[D.max_stages].<br>Possible Cure: [D.cure]</span>"
-	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
-		message += "<br><span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span>"
+	if(M.reagents && M.reagents.get_reagent_amount(INAPROVALINE))
+		message += "<br><span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount(INAPROVALINE)] units of rejuvenation chemicals.</span>"
 	if(M.has_brain_worms())
 		message += "<br><span class='warning'>Strange MRI readout. Subject needs further scanning.</span>"
 	else if(M.getBrainLoss() >= 100 || !M.has_brain())
@@ -250,7 +250,7 @@ Subject's pulse: ??? BPM"})
 				message += text("<br><span class='danger'>Serious cancerous growth detected. Advanced scan required for location.</span>")
 				break
 		if(H.vessel)
-			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+			var/blood_volume = round(H.vessel.get_reagent_amount(BLOOD))
 			var/blood_percent =  round((blood_volume / 560) * 100)
 			switch(blood_volume)
 				if(BLOOD_VOLUME_SAFE to 1000000000)
@@ -416,7 +416,7 @@ Subject's pulse: ??? BPM"})
 	if(reagents.total_volume)
 		var/list/blood_traces = list()
 		for(var/datum/reagent/R in reagents.reagent_list)
-			if(R.id != "blood")
+			if(R.id != BLOOD)
 				reagents.clear_reagents()
 				to_chat(user, "<span class='warning'>The sample was contaminated! Please insert another sample.</span>")
 				return

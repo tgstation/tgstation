@@ -24,7 +24,7 @@
 		H.emote("me", 1, "starts turning very red..")
 
 	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("dexalin"))
+		if(!H.reagents.has_reagent(DEXALIN))
 			for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
 				var/datum/organ/external/E = H.get_organ(organ_name)
 				E.take_damage(0, 5, 0)
@@ -40,7 +40,7 @@
 		H.emote("me", 1, "'s limbs start shivering uncontrollably.")
 
 	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("bicaridine"))
+		if(!H.reagents.has_reagent(BICARIDINE))
 			var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
 			var/datum/organ/external/E = H.get_organ(organ_name)
 			E.take_damage(20, 0, 0)
@@ -57,7 +57,7 @@
 		H.emote("me", 1, "has drool running down from his mouth.")
 
 	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("anti_toxin"))
+		if(!H.reagents.has_reagent(ANTI_TOXIN))
 			H.monkeyize()**/
 
 /datum/genetics/side_effect/confuse
@@ -71,7 +71,7 @@
 		H.emote("me", 1, "has drool running down from his mouth.")
 
 	finish(mob/living/carbon/human/H)
-		if(!H.reagents.has_reagent("anti_toxin"))
+		if(!H.reagents.has_reagent(ANTI_TOXIN))
 			H.confused += 100
 
 proc/trigger_side_effect(mob/living/carbon/human/H)

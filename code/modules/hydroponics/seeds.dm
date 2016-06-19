@@ -405,7 +405,7 @@
 	seed_name = "chili"
 	display_name = "chili plants"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/chili)
-	chems = list("capsaicin" = list(3,5), "nutriment" = list(1,25))
+	chems = list(CAPSAICIN = list(3,5), NUTRIMENT = list(1,25))
 	mutants = list("icechili")
 	packet_icon = "seed-chili"
 	plant_icon = "chili"
@@ -425,7 +425,7 @@
 	display_name = "ice-pepper plants"
 	mutants = null
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/icepepper)
-	chems = list("frostoil" = list(3,5), "nutriment" = list(1,50))
+	chems = list(FROSTOIL = list(3,5), NUTRIMENT = list(1,50))
 	packet_icon = "seed-icepepper"
 	plant_icon = "chiliice"
 
@@ -442,7 +442,7 @@
 	packet_icon = "seed-berry"
 	plant_icon = "berry"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 20
 	maturation = 5
@@ -460,7 +460,7 @@
 	mutants = null
 	packet_icon = "seed-glowberry"
 	plant_icon = "glowberry"
-	chems = list("nutriment" = list(1,10), "uranium" = list(3,5))
+	chems = list(NUTRIMENT = list(1,10), URANIUM = list(3,5))
 
 	lifespan = 30
 	maturation = 5
@@ -478,7 +478,7 @@
 	mutants = list("deathberries")
 	packet_icon = "seed-poisonberry"
 	plant_icon = "poisonberry"
-	chems = list("nutriment" = list(1), "toxin" = list(3,5))
+	chems = list(NUTRIMENT = list(1), TOXIN = list(3,5))
 
 /datum/seed/berry/poison/death
 	name = "deathberries"
@@ -488,7 +488,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/deathberries)
 	packet_icon = "seed-deathberry"
 	plant_icon = "deathberry"
-	chems = list("nutriment" = list(1), "toxin" = list(3,3), "lexorin" = list(1,5))
+	chems = list(NUTRIMENT = list(1), TOXIN = list(3,3), LEXORIN = list(1,5))
 
 	yield = 3
 	potency = 50
@@ -503,7 +503,7 @@
 	packet_icon = "seed-nettle"
 	plant_icon = "nettle"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,50), "sacid" = list(0,1))
+	chems = list(NUTRIMENT = list(1,50), SACID = list(0,1))
 	lifespan = 30
 	maturation = 6
 	production = 6
@@ -519,7 +519,7 @@
 	mutants = null
 	packet_icon = "seed-deathnettle"
 	plant_icon = "deathnettle"
-	chems = list("nutriment" = list(1,50), "pacid" = list(0,1))
+	chems = list(NUTRIMENT = list(1,50), PACID = list(0,1))
 
 	maturation = 8
 	yield = 2
@@ -534,7 +534,7 @@
 	packet_icon = "seed-tomato"
 	plant_icon = "tomato"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 25
 	maturation = 8
@@ -556,7 +556,7 @@
 	mutants = list("killer")
 	packet_icon = "seed-bloodtomato"
 	plant_icon = "bloodtomato"
-	chems = list("nutriment" = list(1,10), "blood" = list(10,2))
+	chems = list(NUTRIMENT = list(1,10), BLOOD = list(10,2))
 	yield = 1
 	splat_type = /obj/effect/decal/cleanable/blood/splatter
 
@@ -581,7 +581,7 @@
 	mutants = list("bluespacetomato")
 	packet_icon = "seed-bluetomato"
 	plant_icon = "bluetomato"
-	chems = list("nutriment" = list(1,20), "lube" = list(1,5))
+	chems = list(NUTRIMENT = list(1,20), LUBE = list(1,5))
 	splat_type = /obj/effect/decal/cleanable/blood/oil
 
 /datum/seed/tomato/blue/teleport
@@ -592,7 +592,7 @@
 	mutants = null
 	packet_icon = "seed-bluespacetomato"
 	plant_icon = "bluespacetomato"
-	chems = list("nutriment" = list(1,20), "singulo" = list(1,5))
+	chems = list(NUTRIMENT = list(1,20), SINGULO = list(1,5))
 	teleporting = 1
 
 //Eggplants/varieties.
@@ -605,7 +605,7 @@
 	packet_icon = "seed-eggplant"
 	plant_icon = "eggplant"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 25
 	maturation = 6
@@ -638,7 +638,7 @@
 	packet_icon = "seed-apple"
 	plant_icon = "apple"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 55
 	maturation = 6
@@ -652,7 +652,7 @@
 	name = "poisonapple"
 	mutants = null
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/apple/poisoned)
-	chems = list("cyanide" = list(1,5))
+	chems = list(CYANIDE = list(1,5))
 
 /datum/seed/apple/gold
 	name = "goldapple"
@@ -662,7 +662,7 @@
 	mutants = null
 	packet_icon = "seed-goldapple"
 	plant_icon = "goldapple"
-	chems = list("nutriment" = list(1,10), "gold" = list(1,5))
+	chems = list(NUTRIMENT = list(1,10), GOLD = list(1,5))
 
 	maturation = 10
 	production = 10
@@ -678,7 +678,7 @@
 	packet_icon = "seed-ambrosiavulgaris"
 	plant_icon = "ambrosiavulgaris"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1), "space_drugs" = list(1,8), "kelotane" = list(1,8,1), "bicaridine" = list(1,10,1), "toxin" = list(1,5))
+	chems = list(NUTRIMENT = list(1), SPACE_DRUGS = list(1,8), KELOTANE = list(1,8,1), BICARIDINE = list(1,10,1), TOXIN = list(1,5))
 
 	lifespan = 60
 	maturation = 6
@@ -702,7 +702,7 @@
 	production = 6
 	yield = 6
 	potency = 5
-	chems = list("nutriment" = list(1), "space_drugs" = list(1,8), "kelotane" = list(1,8,1), "bicaridine" = list(1,10,1), "toxin" = list(1,5), spiritbreaker = list(10))
+	chems = list(NUTRIMENT = list(1), SPACE_DRUGS = list(1,8), KELOTANE = list(1,8,1), BICARIDINE = list(1,10,1), TOXIN = list(1,5), spiritbreaker = list(10))
 
 
 /datum/seed/ambrosia/deus
@@ -713,7 +713,7 @@
 	mutants = null
 	packet_icon = "seed-ambrosiadeus"
 	plant_icon = "ambrosiadeus"
-	chems = list("nutriment" = list(1), "bicaridine" = list(1,8), "synaptizine" = list(1), "hyperzine" = list(1,10,1), "space_drugs" = list(1,10))
+	chems = list(NUTRIMENT = list(1), BICARIDINE = list(1,8), SYNAPTIZINE = list(1), HYPERZINE = list(1,10,1), SPACE_DRUGS = list(1,10))
 
 //Mushrooms/varieties.
 /datum/seed/mushroom
@@ -725,7 +725,7 @@
 	mutants = list("reishi","amanita","plumphelmet")
 	packet_icon = "mycelium-chanter"
 	plant_icon = "chanter"
-	chems = list("nutriment" = list(1,25))
+	chems = list(NUTRIMENT = list(1,25))
 
 	lifespan = 35
 	maturation = 7
@@ -758,7 +758,7 @@
 	mutants = list("walkingmushroom","towercap")
 	packet_icon = "mycelium-plump"
 	plant_icon = "plump"
-	chems = list("nutriment" = list(2,10))
+	chems = list(NUTRIMENT = list(2,10))
 
 	lifespan = 25
 	maturation = 8
@@ -773,7 +773,7 @@
 	mutants = list("libertycap","glowshroom")
 	packet_icon = "mycelium-reishi"
 	plant_icon = "reishi"
-	chems = list("nutriment" = list(1), "stoxin" = list(3,3), "space_drugs" = list(1,25))
+	chems = list(NUTRIMENT = list(1), STOXIN = list(3,3), SPACE_DRUGS = list(1,25))
 
 	maturation = 10
 	production = 5
@@ -789,7 +789,7 @@
 	mutants = null
 	packet_icon = "mycelium-liberty"
 	plant_icon = "liberty"
-	chems = list("nutriment" = list(1,50), "psilocybin" = list(3,5))
+	chems = list(NUTRIMENT = list(1,50), PSILOCYBIN = list(3,5))
 
 	lifespan = 25
 	production = 1
@@ -804,7 +804,7 @@
 	mutants = list("destroyingangel","plastic")
 	packet_icon = "mycelium-amanita"
 	plant_icon = "amanita"
-	chems = list("nutriment" = list(1), "amatoxin" = list(3,3), "psilocybin" = list(1,25))
+	chems = list(NUTRIMENT = list(1), AMATOXIN = list(3,3), PSILOCYBIN = list(1,25))
 
 	lifespan = 50
 	maturation = 10
@@ -820,7 +820,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel)
 	packet_icon = "mycelium-angel"
 	plant_icon = "angel"
-	chems = list("nutriment" = list(1,50), "amatoxin" = list(13,3), "psilocybin" = list(1,25))
+	chems = list(NUTRIMENT = list(1,50), AMATOXIN = list(13,3), PSILOCYBIN = list(1,25))
 
 	maturation = 12
 	yield = 2
@@ -847,7 +847,7 @@
 	mutants = null
 	packet_icon = "mycelium-glowshroom"
 	plant_icon = "glowshroom"
-	chems = list("radium" = list(1,20))
+	chems = list(RADIUM = list(1,20))
 
 	lifespan = 120
 	maturation = 15
@@ -865,7 +865,7 @@
 	mutants = null
 	packet_icon = "mycelium-walkingmushroom"
 	plant_icon = "walkingmushroom"
-	chems = list("nutriment" = list(2,10))
+	chems = list(NUTRIMENT = list(2,10))
 
 	lifespan = 30
 	maturation = 5
@@ -881,7 +881,7 @@
 	mutants = null
 	packet_icon = "mycelium-plast"
 	plant_icon = "plastellium"
-	chems = list("plasticide" = list(3,12))
+	chems = list(PLASTICIDE = list(3,12))
 
 	lifespan = 15
 	maturation = 5
@@ -897,7 +897,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/harebell)
 	packet_icon = "seed-harebell"
 	plant_icon = "harebell"
-	chems = list("nutriment" = list(1,20))
+	chems = list(NUTRIMENT = list(1,20))
 
 	lifespan = 100
 	maturation = 7
@@ -913,7 +913,7 @@
 	packet_icon = "seed-poppy"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/poppy)
 	plant_icon = "poppy"
-	chems = list("nutriment" = list(1,20), "bicaridine" = list(1,10))
+	chems = list(NUTRIMENT = list(1,20), BICARIDINE = list(1,10))
 
 	lifespan = 25
 	potency = 20
@@ -952,7 +952,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/moonflower)
 	mutants = null
 	plant_icon = "moonflower"
-	chems = list("nutriment" = list(1), "moonshine" = list(1,5))
+	chems = list(NUTRIMENT = list(1), MOONSHINE = list(1,5))
 
 	lifespan = 25
 	maturation = 6
@@ -971,7 +971,7 @@
 	products = list(/obj/item/weapon/grown/novaflower)
 	mutants = null
 	plant_icon = "novaflower"
-	chems = list("nutriment" = list(1), "capsaicin" = list(1,5))
+	chems = list(NUTRIMENT = list(1), CAPSAICIN = list(1,5))
 
 	lifespan = 25
 	maturation = 6
@@ -992,7 +992,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/grapes)
 	plant_icon = "grape"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10), "sugar" = list(1,5))
+	chems = list(NUTRIMENT = list(1,10), SUGAR = list(1,5))
 
 	lifespan = 50
 	maturation = 3
@@ -1012,7 +1012,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/greengrapes)
 	mutants = null
 	plant_icon = "greengrape"
-	chems = list("nutriment" = list(1,10), "kelotane" = list(3,5))
+	chems = list(NUTRIMENT = list(1,10), KELOTANE = list(3,5))
 
 //Everything else
 /datum/seed/peanuts
@@ -1023,7 +1023,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/peanut)
 	plant_icon = "peanut"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 55
 	maturation = 6
@@ -1039,7 +1039,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cabbage)
 	plant_icon = "cabbage"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 50
 	maturation = 3
@@ -1058,7 +1058,7 @@
 	packet_icon = "seed-shand"
 	products = list(/obj/item/stack/medical/bruise_pack/tajaran)
 	plant_icon = "shand"
-	chems = list("bicaridine" = list(0,10))
+	chems = list(BICARIDINE = list(0,10))
 
 	lifespan = 50
 	maturation = 3
@@ -1074,7 +1074,7 @@
 	packet_icon = "seed-mtear"
 	products = list(/obj/item/stack/medical/ointment/tajaran)
 	plant_icon = "mtear"
-	chems = list("honey" = list(1,10), "kelotane" = list(3,5))
+	chems = list("honey" = list(1,10), KELOTANE = list(3,5))
 
 	lifespan = 50
 	maturation = 3
@@ -1091,7 +1091,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
 	plant_icon = "banana"
 	harvest_repeat = 1
-	chems = list("banana" = list(1,10))
+	chems = list(BANANA = list(1,10))
 
 	lifespan = 50
 	maturation = 6
@@ -1108,7 +1108,7 @@
 	packet_icon = "seed-corn"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/corn)
 	plant_icon = "corn"
-	chems = list("nutriment" = list(1,10))
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 25
 	maturation = 8
@@ -1128,7 +1128,8 @@
 	packet_icon = "seed-potato"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/potato)
 	plant_icon = "potato"
-	chems = list("nutriment" = list(1,10))
+	plant_icon = POTATO
+	chems = list(NUTRIMENT = list(1,10))
 
 	lifespan = 30
 	maturation = 10
@@ -1147,7 +1148,7 @@
 	mutants = list("koibean")
 	plant_icon = "soybean"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,20))
+	chems = list(NUTRIMENT = list(1,20))
 
 	lifespan = 25
 	maturation = 4
@@ -1163,7 +1164,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/koibeans)
 	plant_icon = "soybean"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"carpotoxin" = list(1,25))
+	chems = list(NUTRIMENT = list(1,10),CARPOTOXIN = list(1,25))
 
 	lifespan = 25
 	maturation = 4
@@ -1178,7 +1179,7 @@
 	packet_icon = "seed-wheat"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 	plant_icon = "wheat"
-	chems = list("nutriment" = list(1,25))
+	chems = list(NUTRIMENT = list(1,25))
 
 	lifespan = 25
 	maturation = 6
@@ -1195,7 +1196,7 @@
 	packet_icon = "seed-rice"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk)
 	plant_icon = "rice"
-	chems = list("nutriment" = list(1,25))
+	chems = list(NUTRIMENT = list(1,25))
 
 	lifespan = 25
 	maturation = 6
@@ -1213,7 +1214,7 @@
 	packet_icon = "seed-carrot"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/carrot)
 	plant_icon = "carrot"
-	chems = list("nutriment" = list(1,20), "imidazoline" = list(3,5))
+	chems = list(NUTRIMENT = list(1,20), IMIDAZOLINE = list(3,5))
 
 	lifespan = 25
 	maturation = 10
@@ -1245,7 +1246,7 @@
 	packet_icon = "seed-whitebeet"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet)
 	plant_icon = "whitebeet"
-	chems = list("nutriment" = list(0,20), "sugar" = list(1,5))
+	chems = list(NUTRIMENT = list(0,20), SUGAR = list(1,5))
 
 	lifespan = 60
 	maturation = 6
@@ -1262,7 +1263,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane)
 	plant_icon = "sugarcane"
 	harvest_repeat = 1
-	chems = list("sugar" = list(4,5))
+	chems = list(SUGAR = list(4,5))
 
 	lifespan = 60
 	maturation = 3
@@ -1280,7 +1281,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon)
 	plant_icon = "watermelon"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,6))
+	chems = list(NUTRIMENT = list(1,6))
 
 	lifespan = 50
 	maturation = 6
@@ -1299,7 +1300,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 	plant_icon = "pumpkin"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,6))
+	chems = list(NUTRIMENT = list(1,6))
 
 	lifespan = 50
 	maturation = 6
@@ -1317,7 +1318,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/lime)
 	plant_icon = "lime"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,20))
+	chems = list(NUTRIMENT = list(1,20))
 
 	lifespan = 55
 	maturation = 6
@@ -1335,7 +1336,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/lemon)
 	plant_icon = "lemon"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,20))
+	chems = list(NUTRIMENT = list(1,20))
 
 	lifespan = 55
 	maturation = 6
@@ -1353,7 +1354,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/orange)
 	plant_icon = "orange"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,20))
+	chems = list(NUTRIMENT = list(1,20))
 
 	lifespan = 60
 	maturation = 6
@@ -1388,7 +1389,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod)
 	plant_icon = "cocoapod"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10), "coco" = list(4,5))
+	chems = list(NUTRIMENT = list(1,10), COCO = list(4,5))
 
 	lifespan = 20
 	maturation = 5
@@ -1409,7 +1410,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cherries)
 	plant_icon = "cherry"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,15))
+	chems = list(NUTRIMENT = list(1,15))
 
 	lifespan = 35
 	maturation = 5
@@ -1428,7 +1429,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/cinnamon)
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "cinnamomum"
-	chems = list("cinnamon" = list(4,3))
+	chems = list(CINNAMON = list(4,3))
 
 	lifespan = 80
 	maturation = 15
@@ -1447,7 +1448,7 @@
 	packet_icon = "seed-kudzu"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod)
 	plant_icon = "kudzu"
-	chems = list("nutriment" = list(1,50), "anti_toxin" = list(2,10))
+	chems = list(NUTRIMENT = list(1,50), ANTI_TOXIN = list(2,10))
 
 	lifespan = 20
 	maturation = 6
@@ -1523,7 +1524,7 @@
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	packet_icon = "seed-nofruit"
 	plant_icon = "nofruit"
-	chems = list("nothing" = list(1,20))
+	chems = list(NOTHING = list(1,20))
 
 	lifespan = 30
 	maturation = 5
@@ -1545,7 +1546,7 @@
 	packet_icon = "mycelium-chickenshroom"
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "chickenshroom"
-	chems = list("nutriment" = list(2,10))
+	chems = list(NUTRIMENT = list(2,10))
 	consume_gasses = list("nitrogen"=20) //Really likes its nitrogen. Planting on main station may mess with room air mix.
 
 	lifespan = 30
@@ -1562,7 +1563,7 @@
 	packet_icon = "seed-woodapple"
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "woodapple"
-	chems = list("sugar" = list(1,10))
+	chems = list(SUGAR = list(1,10))
 
 	growth_stages = 3
 	maturation = 4
@@ -1579,7 +1580,7 @@
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "breadfruit"
 	harvest_repeat = 1
-	chems = list("flour" = list(2,10))
+	chems = list(FLOUR = list(2,10))
 
 	potency = 30
 	lifespan = 50
@@ -1599,7 +1600,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/garlic)
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "garlic"
-	chems = list("holywater" = list(1,25),"nutriment" = list(1,10))
+	chems = list(HOLYWATER = list(1,25),NUTRIMENT = list(1,10))
 
 	potency = 15
 	lifespan = 200

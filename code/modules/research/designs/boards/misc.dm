@@ -4,7 +4,7 @@
 	id = "air_alarm"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/air_alarm
 
@@ -14,7 +14,7 @@
 	id = "fire_alarm"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/fire_alarm
 
@@ -24,7 +24,7 @@
 	id = "airlock"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/airlock
 
@@ -34,7 +34,7 @@
 	id = "intercom"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/intercom_electronics
 
@@ -44,7 +44,7 @@
 	id = "conveyor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 200, "sacid" = 5)
+	materials = list(MAT_GLASS = 200, SACID = 5)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/conveyor
 
@@ -54,7 +54,7 @@
 	id = "apc_board"
 	req_tech = list("powerstorage"=2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/power_control
 
@@ -66,7 +66,7 @@
 	id = "access_control"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/ecb/access_controller
 
@@ -76,7 +76,7 @@
 	id = "airlock_control"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/ecb/airlock_controller
 
@@ -86,7 +86,7 @@
 	id = "advanced_airlock_control"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	circuitboard/ecb/access_controller
 	category = "Engineering Boards"
 	build_path = /obj/item/weapon/circuitboard/ecb/advanced_airlock_controller

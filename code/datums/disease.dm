@@ -134,7 +134,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 			return
 	if(affected_mob.reagents != null)
 		if(affected_mob)
-			if(affected_mob.reagents.has_reagent("spaceacillin"))
+			if(affected_mob.reagents.has_reagent(SPACEACILLIN))
 				return // Don't spread if we have spaceacillin in our system.
 
 	var/check_range = airborne_range//defaults to airborne - range 2

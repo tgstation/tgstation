@@ -68,7 +68,7 @@
 		handle_antibiotics()
 
 		//** Handle the effects of infections
-		var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+		var/antibiotics = owner.reagents.get_reagent_amount(SPACEACILLIN)
 
 		if (germ_level > 0 && germ_level < INFECTION_LEVEL_ONE/2 && prob(30))
 			germ_level--
@@ -105,10 +105,10 @@
 							take_damage(rand(2,3))
 						if(201 to 500)
 							take_damage(rand(3,4))
-							owner.reagents.add_reagent("toxin", 1)
+							owner.reagents.add_reagent(TOXIN, 1)
 						if(501 to INFINITY)
 							take_damage(5)
-							owner.reagents.add_reagent("toxin", rand(3,5))
+							owner.reagents.add_reagent(TOXIN, rand(3,5))
 
 		if(cancer_stage)
 			handle_cancer()

@@ -25,7 +25,7 @@
 /obj/item/weapon/extinguisher/New()
 	. = ..()
 	create_reagents(max_water)
-	reagents.add_reagent("water", max_water)
+	reagents.add_reagent(WATER, max_water)
 
 /obj/item/weapon/extinguisher/mini
 	name = "fire extinguisher"
@@ -132,7 +132,7 @@
 
 		if(is_open_container() && reagents.total_volume)
 			to_chat(user, "<span class='notice'>You empty \the [src] onto [target].</span>")
-			if(reagents.has_reagent("fuel"))
+			if(reagents.has_reagent(FUEL))
 				message_admins("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 				log_game("[user.name] ([user.ckey]) poured Welder Fuel onto [target]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			src.reagents.reaction(target, TOUCH)
@@ -223,7 +223,7 @@
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
-						if(W.reagents.has_reagent("water"))
+						if(W.reagents.has_reagent(WATER))
 							if(istype(atm,/obj/machinery/space_heater/campfire))
 								var/obj/machinery/space_heater/campfire/campfire = atm
 								campfire.cell.charge = 0
@@ -320,7 +320,7 @@
 					for(var/atom/atm in get_turf(W))
 						if(!W) return
 						W.reagents.reaction(atm, TOUCH)                      // Touch, since we sprayed it.
-						if(W.reagents.has_reagent("water"))
+						if(W.reagents.has_reagent(WATER))
 							if(isliving(atm)) // For extinguishing mobs on fire
 								var/mob/living/M = atm                           // Why isn't this handled by the reagent? - N3X
 								M.ExtinguishMob()

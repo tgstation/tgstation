@@ -443,7 +443,7 @@
 		R.my_atom = src
 		var/datum/disease/F = new /datum/disease/z_virus(0)
 		var/list/data = list("virus"= F)
-		R.add_reagent("blood", 20, data)
+		R.add_reagent(BLOOD, 20, data)
 
 ///////////////////////////CURE//////////////////////////////////////////
 

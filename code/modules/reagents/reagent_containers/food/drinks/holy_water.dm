@@ -10,7 +10,7 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/New()
 	..()
-	reagents.add_reagent("holywater", 100)
+	reagents.add_reagent(HOLYWATER, 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/attack(mob/living/M as mob, mob/user as mob, def_zone)
 	return

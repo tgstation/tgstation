@@ -71,7 +71,7 @@
 	proc/breathe()
 
 
-		if(reagents.has_reagent("lexorin"))
+		if(reagents.has_reagent(LEXORIN))
 			return
 		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return
@@ -240,7 +240,7 @@
 				//if( health <= 20 && prob(1) )
 				//	spawn(0)
 				//		emote("gasp")
-				if(!reagents.has_reagent("inaprovaline"))
+				if(!reagents.has_reagent(INAPROVALINE))
 					adjustOxyLoss(1)
 				Paralyse(3)
 

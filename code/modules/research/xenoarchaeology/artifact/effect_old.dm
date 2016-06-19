@@ -76,7 +76,7 @@
 						user.nutrition += 50
 						H.bodytemperature = initial(H.bodytemperature)
 						//
-						H.vessel.add_reagent("blood",50)
+						H.vessel.add_reagent(BLOOD,50)
 						spawn(1)
 							H.fixblood()
 						H.regenerate_icons()

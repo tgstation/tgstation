@@ -4,7 +4,7 @@
 	id = "spacepod_main"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = /obj/item/weapon/circuitboard/mecha/pod
 

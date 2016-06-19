@@ -143,7 +143,7 @@
 
 		for(var/this_type in calmers)
 			var/obj/effect/check_effect = locate(this_type) in src.loc
-			if(check_effect && (check_effect.reagents.has_reagent("water") || check_effect.reagents.has_reagent("holywater")))
+			if(check_effect && (check_effect.reagents.has_reagent(WATER) || check_effect.reagents.has_reagent(HOLYWATER)))
 				calming = 1
 				break
 

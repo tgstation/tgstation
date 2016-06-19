@@ -77,7 +77,7 @@
 
 /mob/living/simple_animal/hostile/carp/CanAttack(var/atom/the_target)
 	if(ismob(the_target) && the_target.reagents)
-		if(pheromones_act == PHEROMONES_NEUTRAL && the_target.reagents.has_reagent("carppheromones"))
+		if(pheromones_act == PHEROMONES_NEUTRAL && the_target.reagents.has_reagent(CARPPHEROMONES))
 			return 0 //Carps who avoid pheromones don't target mobs with pheromones in their system. They just ignore them!
 	return ..(the_target)
 
@@ -89,7 +89,7 @@
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	if(!target) return
 
-	if(pheromones_act == PHEROMONES_FOLLOW && target.reagents && target.reagents.has_reagent("carppheromones"))
+	if(pheromones_act == PHEROMONES_FOLLOW && target.reagents && target.reagents.has_reagent(CARPPHEROMONES))
 		return	//This might be a bit hacky. The purpose of this is to prevent carps who are attracted to pheromones from attacking
 				//the source. Instead, it simply follows it.
 
@@ -179,7 +179,7 @@
 /mob/living/simple_animal/hostile/carp/baby/reagent_act(id, method, volume)
 	..()
 
-	if(id == "nutriment" && method == INGEST)
+	if(id == NUTRIMENT && method == INGEST)
 		increase_growth_stage(volume)
 
 /mob/living/simple_animal/hostile/carp/holocarp

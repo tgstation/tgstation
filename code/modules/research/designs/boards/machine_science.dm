@@ -4,7 +4,7 @@
 	id = "destructive_analyzer"
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/destructive_analyzer
 
@@ -14,7 +14,7 @@
 	id = "protolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/protolathe
 
@@ -24,7 +24,7 @@
 	id = "circuit_imprinter"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
@@ -34,7 +34,7 @@
 	id = "autolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/autolathe
 
@@ -44,7 +44,7 @@
 	id = "rdserver"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/rdserver
 
@@ -54,7 +54,7 @@
 	id = "mechfab"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/mechfab
 
@@ -64,7 +64,7 @@
 	id = "monkey"
 	req_tech = list("programming" = 3,"engineering" = 2,"biotech" = 3,"powerstorage" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/monkey_recycler
 
@@ -74,7 +74,7 @@
 	id = "mechapowerport"
 	req_tech = list("engineering" = 2, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_port
 
@@ -84,7 +84,7 @@
 	id = "mechapowerfloor"
 	req_tech = list("materials" = 2, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/mech_bay_recharge_station
 
@@ -94,7 +94,7 @@
 	id = "fourier"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/anom
 

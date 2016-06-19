@@ -103,9 +103,9 @@
 			victim.reagents.add_reagent(rid,injecting)
 		last_special = world.time
 	if(seed.hematophage)
-		var/drawing = min(25, victim.vessel.get_reagent_amount("blood"))
+		var/drawing = min(25, victim.vessel.get_reagent_amount(BLOOD))
 		if(drawing)
-			victim.vessel.remove_reagent("blood", drawing)
+			victim.vessel.remove_reagent(BLOOD, drawing)
 			last_special = world.time
 
 /obj/effect/plantsegment/proc/manual_unbuckle(mob/user as mob)

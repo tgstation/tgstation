@@ -31,19 +31,19 @@
 	create_reagents(max_silicate)
 
 	if(start_filled)
-		reagents.add_reagent("silicate", max_silicate)
+		reagents.add_reagent(SILICATE, max_silicate)
 
 	update_icon()
 
 /obj/item/device/silicate_sprayer/proc/get_amount()
-	return reagents.get_reagent_amount("silicate")
+	return reagents.get_reagent_amount(SILICATE)
 
 /obj/item/device/silicate_sprayer/examine(var/mob/user)
 	. = ..()
 	to_chat(user, "<span class='notice'>It contains [get_amount()]/[max_silicate] units of silicate!</span>")
 
 /obj/item/device/silicate_sprayer/proc/remove_silicate(var/amount = 0)
-	reagents.remove_reagent("silicate", amount)
+	reagents.remove_reagent(SILICATE, amount)
 
 	update_icon()
 

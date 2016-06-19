@@ -254,94 +254,94 @@
 	// Reagent information for process(), consider moving this to a controller along
 	// with cycle information under 'mechanical concerns' at some point.
 	var/global/list/toxic_reagents = list( //TODO
-		"anti_toxin" =     -2,
-		"toxin" =           2,
-		"fluorine" =        2.5,
-		"chlorine" =        1.5,
-		"sacid" =           1.5,
-		"pacid" =           3,
-		"plantbgone" =      3,
-		"cryoxadone" =     -3,
-		"radium" =          2
+		ANTI_TOXIN =     -2,
+		TOXIN =           2,
+		FLUORINE =        2.5,
+		CHLORINE =        1.5,
+		SACID =           1.5,
+		PACID =           3,
+		PLANTBGONE =      3,
+		CRYOXADONE =     -3,
+		RADIUM =          2
 		)
 	var/global/list/nutrient_reagents = list(
-		"milk" =            0.1,
-		"beer" =            0.25,
-		"phosphorus" =      0.1,
-		"sugar" =           0.1,
-		"sodawater" =       0.1,
-		"ammonia" =         1,
-		"diethylamine" =    2,
-		"nutriment" =       1,
-		"adminordrazine" =  1,
-		"eznutrient" =      1,
-		"robustharvest" =   1,
-		"left4zed" =        1
+		MILK =            0.1,
+		BEER =            0.25,
+		PHOSPHORUS =      0.1,
+		SUGAR =           0.1,
+		SODAWATER =       0.1,
+		AMMONIA =         1,
+		DIETHYLAMINE =    2,
+		NUTRIMENT =       1,
+		ADMINORDRAZINE =  1,
+		EZNUTRIENT =      1,
+		ROBUSTHARVEST =   1,
+		LEFT4ZED =        1
 		)
 	var/global/list/weedkiller_reagents = list(
-		"fluorine" =       4,
-		"chlorine" =       3,
-		"phosphorus" =     2,
-		"sugar" =         -2,
-		"sacid" =          2,
-		"pacid" =          4,
-		"plantbgone" =     8,
-		"adminordrazine" = 5
+		FLUORINE =       4,
+		CHLORINE =       3,
+		PHOSPHORUS =     2,
+		SUGAR =         -2,
+		SACID =          2,
+		PACID =          4,
+		PLANTBGONE =     8,
+		ADMINORDRAZINE = 5
 		)
 	var/global/list/pestkiller_reagents = list(
-		"sugar" =         -2,
-		"diethylamine" =   2,
-		"adminordrazine" = 5
+		SUGAR =         -2,
+		DIETHYLAMINE =   2,
+		ADMINORDRAZINE = 5
 		)
 	var/global/list/water_reagents = list(
-		"water" =           1,
-		"adminordrazine" =  1,
-		"milk" =            0.9,
-		"beer" =            0.7,
+		WATER =           1,
+		ADMINORDRAZINE =  1,
+		MILK =            0.9,
+		BEER =            0.7,
 		"flourine" =       -0.5,
-		"chlorine" =       -0.5,
-		"phosphorus" =     -0.5,
-		"water" =           1,
-		"sodawater" =       1,
+		CHLORINE =       -0.5,
+		PHOSPHORUS =     -0.5,
+		WATER =           1,
+		SODAWATER =       1,
 		)
 	var/global/list/mutagenic_reagents = list(
-		"radium" =  0.6,
-		"mutagen" = 1
+		RADIUM =  0.6,
+		MUTAGEN = 1
 		)
 	var/global/list/aging_reagents = list(
-		"clonexadone" =  -2
+		CLONEXADONE =  -2
 		)
 	var/global/list/growspeed_reagents = list( //TODO
-		"radium" =  0.6,
-		"mutagen" = 1
+		RADIUM =  0.6,
+		MUTAGEN = 1
 		)
 
 	// Beneficial reagents have values for modifying health, yield_mod and mut_mod (in that order).
 	var/global/list/beneficial_reagents = list(
-		"beer" =           list( -0.05, 0,   0   ),
-		"fluorine" =       list( -2,    0,   0   ),
-		"chlorine" =       list( -1,    0,   0   ),
-		"phosphorus" =     list( -0.75, 0,   0   ),
-		"sodawater" =      list(  0.1,  0,   0   ),
-		"sacid" =          list( -1,    0,   0   ),
-		"pacid" =          list( -2,    0,   0   ),
-		"plantbgone" =     list( -2,    0,   0.2 ),
-		"cryoxadone" =     list(  3,    0,   0   ),
-		"clonexadone" =    list(  5,    0,   0   ),
-		"ammonia" =        list(  0.5,  0,   0   ),
-		"diethylamine" =   list(  1,    0,   0   ),
-		"nutriment" =      list(  0.5,  0,   0 	 ),
-		"radium" =         list( -1.5,  0,   0.2 ),
-		"adminordrazine" = list(  1,    1,   1   ),
-		"robustharvest" =  list(  0,    0,   0   ),
-		"left4zed" =       list( -0.1,  0,   2   )
+		BEER =           list( -0.05, 0,   0   ),
+		FLUORINE =       list( -2,    0,   0   ),
+		CHLORINE =       list( -1,    0,   0   ),
+		PHOSPHORUS =     list( -0.75, 0,   0   ),
+		SODAWATER =      list(  0.1,  0,   0   ),
+		SACID =          list( -1,    0,   0   ),
+		PACID =          list( -2,    0,   0   ),
+		PLANTBGONE =     list( -2,    0,   0.2 ),
+		CRYOXADONE =     list(  3,    0,   0   ),
+		CLONEXADONE =    list(  5,    0,   0   ),
+		AMMONIA =        list(  0.5,  0,   0   ),
+		DIETHYLAMINE =   list(  1,    0,   0   ),
+		NUTRIMENT =      list(  0.5,  0,   0 	 ),
+		RADIUM =         list( -1.5,  0,   0.2 ),
+		ADMINORDRAZINE = list(  1,    1,   1   ),
+		ROBUSTHARVEST =  list(  0,    0,   0   ),
+		LEFT4ZED =       list( -0.1,  0,   2   )
 		)
 
 	//Stat-altering reagents have values for modifying: Endurance, Lifespan, Potency, Yield, Nutrient Consumption, in that order.
 	//The stats listed here are only the base amount, the actual effect they have is later randomized and potentially affected by diminishing returns.
 	var/global/list/stat_altering_reagents = list( //TODO
-		"robustharvest" =  list( -0.4, -0,4,  1, 0, 0) ,
-		"diethylamine"  =  list(  0.4,  0,4,  0, 0, 0)
+		ROBUSTHARVEST =  list( -0.4, -0,4,  1, 0, 0) ,
+		DIETHYLAMINE  =  list(  0.4,  0,4,  0, 0, 0)
 		)
 */
 

@@ -1,5 +1,5 @@
 // Reagents to log when splashing non-mobs (all mob splashes are logged automatically)
-var/list/LOGGED_SPLASH_REAGENTS = list("fuel", "thermite")
+var/list/LOGGED_SPLASH_REAGENTS = list(FUEL, THERMITE)
 
 /obj/item/weapon/reagent_containers
 	name = "Container"

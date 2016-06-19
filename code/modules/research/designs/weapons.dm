@@ -132,7 +132,7 @@
 	id = "decloner"
 	req_tech = list("combat" = 4, "materials" = 4, "biotech" = 5, "powerstorage" = 4, "syndicate" = 3) //More reasonable
 	build_type = PROTOLATHE
-	materials = list(MAT_IRON = 5000, MAT_GOLD = 5000,MAT_URANIUM = 10000) //, "mutagen" = 40)
+	materials = list(MAT_IRON = 5000, MAT_GOLD = 5000,MAT_URANIUM = 10000) //, MUTAGEN = 40)
 	category = "Weapons"
 	build_path = /obj/item/weapon/gun/energy/decloner
 	locked = 1

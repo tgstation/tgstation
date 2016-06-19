@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "Airborne"
 	cure = "Rest & Spaceacillin"
-	cure_id = "spaceacillin"
+	cure_id = SPACEACILLIN
 	agent = "XY-rhinovirus"
 	affected_species = list("Human", "Monkey")
 	permeability_mod = 0.5

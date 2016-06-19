@@ -60,8 +60,8 @@
 					M.poisonsacs.forceMove(loc)
 					M.poisonsacs = null
 					M.desc = "An excellent [src]!"
-					M.reagents.del_reagent("toxin")
-					M.reagents.del_reagent("carpotoxin")
+					M.reagents.del_reagent(TOXIN)
+					M.reagents.del_reagent(CARPOTOXIN)
 				what.forceMove(loc)
 
 	poison/spiderleg

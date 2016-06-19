@@ -5,7 +5,7 @@
 // A plant analyzer, a bucket, a mini-hoe and then a proximity sensor (in that order)
 
 // Will water, weed and fertilize plants that need it
-// When emagged, it will "water", "weed" and "fertilize" humans instead
+// When emagged, it will WATER, "weed" and "fertilize" humans instead
 // Holds up to 10 fertilizers (only the type dispensed by the machines, not chemistry bottles)
 // It will fill up it's water tank at a sink when low.
 
@@ -144,7 +144,7 @@
 		else
 			turn_on()
 
-	else if((href_list["water"]) && (!src.locked))
+	else if((href_list[WATER]) && (!src.locked))
 		setting_water = !setting_water
 	else if((href_list["refill"]) && (!src.locked))
 		setting_refill = !setting_refill
@@ -485,11 +485,11 @@
 			mode = 0
 	else
 		var /obj/machinery/portable_atmospherics/hydroponics/tray = target
-		var/b_amount = tank.reagents.get_reagent_amount("water")
+		var/b_amount = tank.reagents.get_reagent_amount(WATER)
 		if(b_amount > 0 && tray.waterlevel < 100)
 			if(b_amount + tray.waterlevel > 100)
 				b_amount = 100 - tray.waterlevel
-			tank.reagents.remove_reagent("water", b_amount)
+			tank.reagents.remove_reagent(WATER, b_amount)
 			tray.adjust_water(b_amount)
 			playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 
@@ -510,7 +510,7 @@
 	spawn(300)
 		src.visible_message("<span class='notice'>[src] finishes filling it's tank.</span>")
 		src.mode = 0
-		tank.reagents.add_reagent("water", tank.reagents.maximum_volume - tank.reagents.total_volume )
+		tank.reagents.add_reagent(WATER, tank.reagents.maximum_volume - tank.reagents.total_volume )
 		playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
 
 

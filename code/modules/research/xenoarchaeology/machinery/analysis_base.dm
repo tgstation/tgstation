@@ -42,8 +42,8 @@
 	for(var/turf/unsimulated/mineral/diamond/M in world)
 		D = M
 		break
-	S.reagents.add_reagent("analysis_sample", 1, D.geological_data)
-	S.reagents.add_reagent("chlorine", 1, null)*/
+	S.reagents.add_reagent(ANALYSIS_SAMPLE, 1, D.geological_data)
+	S.reagents.add_reagent(CHLORINE, 1, null)*/
 
 /obj/machinery/anomaly/RefreshParts()
 	var/scancount = 0

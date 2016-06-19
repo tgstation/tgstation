@@ -406,7 +406,7 @@
 		watersource.reagents.reaction(O, TOUCH)
 		if(istype(O, /obj/item/weapon/reagent_containers/glass))
 			var/obj/item/weapon/reagent_containers/glass/G = O
-			G.reagents.add_reagent("water", 5)
+			G.reagents.add_reagent(WATER, 5)
 	watersource.reagents.reaction(get_turf(src), TOUCH)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C as mob)
@@ -492,7 +492,7 @@
 	M.clean_blood()
 	if(M.reagents.maximum_volume > M.reagents.total_volume)
 		playsound(get_turf(src), 'sound/effects/slosh.ogg', 25, 1)
-		M.reagents.add_reagent("water", min(M.reagents.maximum_volume - M.reagents.total_volume, 50))
+		M.reagents.add_reagent(WATER, min(M.reagents.maximum_volume - M.reagents.total_volume, 50))
 		user.visible_message("<span class='notice'>[user] finishes soaking \the [M], \he could clean the entire station with that.</span>","<span class='notice'>You finish soaking \the [M], you feel as if you could clean anything now, even the Chef's backroom...</span>")
 	else
 		user.visible_message("<span class='notice'>[user] removes \the [M], cleaner than before.</span>","<span class='notice'>You remove \the [M] from \the [src], it's all nice and sparkly now but somehow didnt get it any wetter.</span>")
@@ -518,9 +518,9 @@
 			return
 		if (istype(RG, /obj/item/weapon/reagent_containers/chempack)) //Chempack can't use amount_per_transfer_from_this, so it needs its own if statement.
 			var/obj/item/weapon/reagent_containers/chempack/C = RG
-			C.reagents.add_reagent("water", C.fill_amount)
+			C.reagents.add_reagent(WATER, C.fill_amount)
 		else
-			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
+			RG.reagents.add_reagent(WATER, min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("<span class='notice'>[user] fills \the [RG] using \the [src].</span>","<span class='notice'>You fill the [RG] using \the [src].</span>")
 		return
 

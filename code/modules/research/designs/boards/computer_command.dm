@@ -6,7 +6,7 @@
 	id = "aiupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/aiupload
 	locked = 1
@@ -18,7 +18,7 @@
 	id = "borgupload"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/borgupload
 	locked = 1
@@ -30,7 +30,7 @@
 	id = "comconsole"
 	req_tech = list("programming" = 2, "magnets" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/communications
 
@@ -40,7 +40,7 @@
 	id = "idcardconsole"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/card
 
@@ -50,6 +50,6 @@
 	id = "teleconsole"
 	req_tech = list("programming" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/teleporter

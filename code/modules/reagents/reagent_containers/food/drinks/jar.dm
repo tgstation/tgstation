@@ -12,7 +12,7 @@
 	w_type=RECYK_GLASS
 	New()
 		..()
-		reagents.add_reagent("slimejelly", 50)
+		reagents.add_reagent(SLIMEJELLY, 50)
 
 	on_reagent_change()
 		if (reagents.reagent_list.len > 0)

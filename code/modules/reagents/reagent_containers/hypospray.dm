@@ -20,13 +20,13 @@
 
 /obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
 	..()
-	reagents.add_reagent("doctorsdelight", 30)
+	reagents.add_reagent(DOCTORSDELIGHT, 30)
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/creatine/New() // TESTING!
 	..()
-	reagents.remove_reagent("doctorsdelight", 30)
-	reagents.add_reagent("creatine", 30)
+	reagents.remove_reagent(DOCTORSDELIGHT, 30)
+	reagents.add_reagent(CREATINE, 30)
 	return
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/M as mob, mob/user as mob)

@@ -6,7 +6,7 @@
 	id = "robocontrol"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/robotics
 
@@ -16,7 +16,7 @@
 	id = "mechacontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha_control
 
@@ -26,7 +26,7 @@
 	id = "mechapower"
 	req_tech = list("programming" = 2, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/mech_bay_power_console
 
@@ -36,7 +36,7 @@
 	id = "rdconsole_core"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/rdconsole
 
@@ -66,7 +66,7 @@
 	id = "aifixer"
 	req_tech = list("programming" = 3, "biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/aifixer
 
@@ -76,7 +76,7 @@
 	id = "bhangmeter"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/bhangmeter
 
@@ -86,6 +86,6 @@
 	id = "rdservercontrol"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/rdservercontrol

@@ -351,7 +351,7 @@
 								if(!W || !W.reagents)
 									return
 								W.reagents.reaction(atm, TOUCH) // Touch, since we sprayed it.
-								if(W.reagents.has_reagent("water"))
+								if(W.reagents.has_reagent(WATER))
 									if(isliving(atm)) // For extinguishing mobs on fire
 										var/mob/living/M = atm // Why isn't this handled by the reagent? - N3X
 										M.ExtinguishMob()
@@ -385,7 +385,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/New()
 	. = ..()
 	create_reagents(200)
-	reagents.add_reagent("water", 200)
+	reagents.add_reagent(WATER, 200)
 
 
 /obj/item/mecha_parts/mecha_equipment/jetpack

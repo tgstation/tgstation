@@ -8,7 +8,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent(NUTRIMENT, 4)
 	src.bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -61,8 +61,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/weapon/reagent_containers))
-		if(W.reagents.amount_cache.len == 1 && W.reagents.has_reagent("flour", 5))
-			W.reagents.remove_reagent("flour",5)
+		if(W.reagents.amount_cache.len == 1 && W.reagents.has_reagent(FLOUR, 5))
+			W.reagents.remove_reagent(FLOUR,5)
 			new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
 			to_chat(user, "You make some dough.")
 			qdel(src)

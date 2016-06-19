@@ -23,7 +23,7 @@
 
 		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=list(),"antibodies"=0)
 		data["virus2"] |= I:virus2
-		product.reagents.add_reagent("blood",30,data)
+		product.reagents.add_reagent(BLOOD,30,data)
 
 		virusing = 1
 		spawn(1200) virusing = 0

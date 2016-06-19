@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "A whole banana."
-	cure_id = "banana"
+	cure_id = BANANA
 	cure_chance = 75
 	curable=1
 	agent = "H0NI<42 Virus"

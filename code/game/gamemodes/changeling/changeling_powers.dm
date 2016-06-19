@@ -257,7 +257,7 @@
 
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/thechangeling = src
-		var/avail_blood = T.vessel.get_reagent_amount("blood")
+		var/avail_blood = T.vessel.get_reagent_amount(BLOOD)
 		for(var/datum/reagent/blood/B in thechangeling.vessel.reagent_list)
 			B.volume = min(BLOOD_VOLUME_MAX, avail_blood + B.volume)
 
@@ -941,7 +941,7 @@ var/list/datum/dna/hivemind_bank = list()
 	T.silent = 10
 	T.Paralyse(10)
 	T.Jitter(1000)
-	if(T.reagents)	T.reagents.add_reagent("cyanide", 20)
+	if(T.reagents)	T.reagents.add_reagent(CYANIDE, 20)
 	feedback_add_details("changeling_powers","DTHS")
 	return 1
 

@@ -35,7 +35,7 @@
 	spread = "None"
 	spread_type = SPECIAL
 	cure = "Unknown"
-	cure_id = list("lexorin","toxin","gargleblaster")
+	cure_id = list(LEXORIN,TOXIN,GARGLEBLASTER)
 	cure_chance = 50
 	affected_species = list("Human", "Monkey")
 	permeability_mod = 15//likely to infect

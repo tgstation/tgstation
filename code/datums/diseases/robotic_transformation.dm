@@ -7,7 +7,7 @@
 	spread_type = SPECIAL
 	curable = 1
 	cure = "Copper."
-	cure_id = "copper"
+	cure_id = COPPER
 	cure_chance = 50
 	agent = "R2D2 Nanomachines"
 	affected_species = list("Human")

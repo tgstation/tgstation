@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "Iron"
-	cure_id = "iron"
+	cure_id = IRON
 	agent = "Fukkos Miracos"
 	affected_species = list("Human")
 	curable = 0

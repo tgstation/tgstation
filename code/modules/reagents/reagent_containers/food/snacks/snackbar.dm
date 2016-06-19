@@ -39,6 +39,6 @@
 
 	New()
 		..()
-		reagents.add_reagent("nutriment", 10)
+		reagents.add_reagent(NUTRIMENT, 10)
 		update_icon()
 		update_name()

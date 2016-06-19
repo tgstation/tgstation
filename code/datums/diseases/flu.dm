@@ -3,7 +3,7 @@
 	max_stages = 3
 	spread = "Airborne"
 	cure = "Spaceacillin"
-	cure_id = "spaceacillin"
+	cure_id = SPACEACILLIN
 	cure_chance = 10
 	agent = "H13N1 flu virion"
 	affected_species = list("Human", "Monkey")

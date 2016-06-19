@@ -238,7 +238,7 @@
 	. = ..()
 	create_reagents(max_fuel)
 	if(start_fueled)
-		reagents.add_reagent("fuel", max_fuel)
+		reagents.add_reagent(FUEL, max_fuel)
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
@@ -352,7 +352,7 @@
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel")
+	return reagents.get_reagent_amount(FUEL)
 
 
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
@@ -360,7 +360,7 @@
 	if(!welding || !check_fuel())
 		return 0
 	if(get_fuel() >= amount)
-		reagents.remove_reagent("fuel", amount)
+		reagents.remove_reagent(FUEL, amount)
 		check_fuel()
 		if(M)
 			eyecheck(M)
@@ -648,7 +648,7 @@
 
 /obj/item/weapon/solder/update_icon()
 	..()
-	switch(reagents.get_reagent_amount("sacid"))
+	switch(reagents.get_reagent_amount(SACID))
 		if(16 to INFINITY)
 			icon_state = "solder-20"
 		if(11 to 15)
@@ -662,7 +662,7 @@
 
 /obj/item/weapon/solder/examine(mob/user)
 	..()
-	to_chat(user, "It contains [reagents.get_reagent_amount("sacid")]/[src.max_fuel] units of fuel!")
+	to_chat(user, "It contains [reagents.get_reagent_amount(SACID)]/[src.max_fuel] units of fuel!")
 
 /obj/item/weapon/solder/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W,/obj/item/weapon/reagent_containers/glass/))
@@ -671,7 +671,7 @@
 			user.simple_message("<span class='warning'>The mixture is rejected by the tool.</span>",
 				"<span class='warning'>The tool isn't THAT thirsty.</span>")
 			return
-		if(!G.reagents.has_reagent("sacid", 1))
+		if(!G.reagents.has_reagent(SACID, 1))
 			user.simple_message("<span class='warning'>The tool is not compatible with that.</span>",
 				"<span class='warning'>The tool won't drink that.</span>")
 			return
@@ -684,14 +684,14 @@
 			var/transfer_amount = min(G.amount_per_transfer_from_this,space)
 			user.simple_message("<span class='info'>You transfer [transfer_amount] units to the [src].</span>",
 				"<span class='info'>The tool gulps down your drink!</span>")
-			G.reagents.trans_id_to(src,"sacid",transfer_amount)
+			G.reagents.trans_id_to(src,SACID,transfer_amount)
 			update_icon()
 	else
 		return ..()
 
 /obj/item/weapon/solder/proc/remove_fuel(var/amount, mob/user as mob)
-	if(reagents.get_reagent_amount("sacid") >= amount)
-		reagents.remove_reagent("sacid", amount)
+	if(reagents.get_reagent_amount(SACID) >= amount)
+		reagents.remove_reagent(SACID, amount)
 		update_icon()
 		return 1
 	else
@@ -720,7 +720,7 @@
 	slotzero = reagents
 	slotone = new/datum/reagents(volume)
 	slotone.my_atom = src
-	reagents.add_reagent("fuel", 50)
+	reagents.add_reagent(FUEL, 50)
 
 /obj/item/weapon/reagent_containers/glass/fuelcan/attack_self(mob/user as mob)
 	if(!slot)

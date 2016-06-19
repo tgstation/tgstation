@@ -269,7 +269,7 @@ var/paperwork_library
 /obj/item/weapon/pen/sleepypen/New()
 	. = ..()
 	create_reagents(30) // Used to be 300
-	reagents.add_reagent("chloralhydrate", 22) // Used to be 100 sleep toxin // 30 Chloral seems to be fatal, reducing it to 22. /N
+	reagents.add_reagent(CHLORALHYDRATE, 22) // Used to be 100 sleep toxin // 30 Chloral seems to be fatal, reducing it to 22. /N
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M as mob, mob/user as mob)
 	if(!(istype(M,/mob)))
@@ -302,8 +302,8 @@ var/paperwork_library
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("zombiepowder", 10)
-	R.add_reagent("impedrezene", 25)
-	R.add_reagent("cryptobiolin", 15)
+	R.add_reagent(ZOMBIEPOWDER, 10)
+	R.add_reagent(IMPEDREZENE, 25)
+	R.add_reagent(CRYPTOBIOLIN, 15)
 	..()
 	return

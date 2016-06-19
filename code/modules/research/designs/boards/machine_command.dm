@@ -6,7 +6,7 @@
 	id = "aicore"
 	req_tech = list("programming" = 4, "biotech" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/aicore
 	locked = 1
@@ -18,7 +18,7 @@
 	id = "pdapainter"
 	req_tech = list("programming" = 3, "engineering" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/pdapainter
 
@@ -28,7 +28,7 @@
 	id = "telehub"
 	req_tech = list("programming" = 4, "engineering"=3, "bluespace" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telehub
 
@@ -38,6 +38,6 @@
 	id = "telestation"
 	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telestation

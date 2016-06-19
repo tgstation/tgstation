@@ -872,10 +872,10 @@
 						src.visible_message("<span class='warning'>[src] throws up into \the [G]!</span>", "<span class='danger'>You throw up into \the [G]!</span>")
 
 						if(G.reagents.total_volume <= G.reagents.maximum_volume-7) //Container can fit 7 more units of chemicals - vomit into it
-							G.reagents.add_reagent("vomit", rand(3,10))
+							G.reagents.add_reagent(VOMIT, rand(3,10))
 							if(src.reagents) reagents.trans_to(G, 1 + reagents.total_volume * 0.1)
 						else //Container is nearly full - fill it to the brim with vomit and spawn some more on the floor
-							G.reagents.add_reagent("vomit", 10)
+							G.reagents.add_reagent(VOMIT, 10)
 							spawn_vomit_on_floor = 1
 							to_chat(src, "<span class='warning'>\The [G] overflows!</span>")
 
@@ -1038,7 +1038,7 @@
 	h.disfigured = 0
 
 	if(species && !(species.flags & NO_BLOOD))
-		vessel.add_reagent("blood",560-vessel.total_volume)
+		vessel.add_reagent(BLOOD,560-vessel.total_volume)
 		fixblood()
 
 	var/datum/organ/internal/brain/BBrain = internal_organs_by_name["brain"]
@@ -1534,7 +1534,7 @@
 	if (stat != CONSCIOUS)
 		return 0
 
-	if(reagents.has_reagent("methylin"))
+	if(reagents.has_reagent(METHYLIN))
 		return 1
 
 	if(getBrainLoss() >= 60)

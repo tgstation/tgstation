@@ -654,7 +654,7 @@
 						if(wearing_suit)
 							if(!wearing_mask)
 								to_chat(src, "<span class = 'warning'>You gas yourself!</span>")
-								reagents.add_reagent("space_drugs", rand(10,50))
+								reagents.add_reagent(SPACE_DRUGS, rand(10,50))
 						else
 							// Was /turf/, now /mob/
 							for(var/mob/living/M in view(location,aoe_range))
@@ -670,7 +670,7 @@
 								// <[REDACTED]> the user, of course, isn't impacted because it's not an actual smoke cloud
 								// So, let's give 'em space drugs.
 								if(M.reagents)
-									M.reagents.add_reagent("space_drugs",rand(1,50))
+									M.reagents.add_reagent(SPACE_DRUGS,rand(1,50))
 							/*
 							var/datum/effect/effect/system/smoke_spread/chem/fart/S = new /datum/effect/effect/system/smoke_spread/chem/fart
 							S.attach(location)

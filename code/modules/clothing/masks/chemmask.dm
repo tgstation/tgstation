@@ -40,7 +40,7 @@
 	var/beaker_time_interval = 970
 	var/beaker_injection_rate = 10
 	var/beaker_threshold = 10
-	var/beaker_threshold_reagent = "creatine"
+	var/beaker_threshold_reagent = CREATINE
 	var/beaker_has_injected_time = 0
 	var/firstalert_tank = 0
 	var/firstalert_beaker = 0

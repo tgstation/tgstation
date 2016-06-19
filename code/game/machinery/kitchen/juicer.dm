@@ -11,17 +11,17 @@
 	active_power_usage = 100
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/global/list/allowed_items = list (
-		/obj/item/weapon/reagent_containers/food/snacks/grown/apple  = "applejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = "lemonjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = "orangejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = "limejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown/apple  = APPLEJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = TOMATOJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = CARROTJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = BERRYJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = BANANA,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = POTATO,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lemon = LEMONJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/orange = ORANGEJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/lime = LIMEJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = WATERMELONJUICE,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = POISONBERRYJUICE,
 	)
 	machine_flags = WRENCHMOVE
 

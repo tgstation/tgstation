@@ -62,7 +62,7 @@
 /obj/item/projectile/energy/neurotox
 	damage = 10
 	damage_type = TOX
-	icon_state = "toxin"
+	icon_state = TOXIN
 
 /mob/living/simple_animal/hostile/monster/cyber_horror
 	name = "cyber horror"
@@ -114,7 +114,7 @@
 	if(L.reagents)
 		if(prob(nanobot_chance))
 			visible_message("<b><span class='warning'>[src] injects something from its flailing arm!</span>")
-			L.reagents.add_reagent("mednanobots", 2)
+			L.reagents.add_reagent(MEDNANOBOTS, 2)
 
 /mob/living/simple_animal/hostile/monster/cyber_horror/Die()
 	..()

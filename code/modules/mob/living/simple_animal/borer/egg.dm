@@ -17,7 +17,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/borer_egg/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
+	reagents.add_reagent(NUTRIMENT, 4)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 

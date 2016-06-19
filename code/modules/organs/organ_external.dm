@@ -412,7 +412,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		handle_germ_effects()
 
 /datum/organ/external/proc/handle_germ_sync()
-	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = owner.reagents.get_reagent_amount(SPACEACILLIN)
 	for(var/datum/wound/W in wounds)
 		//Open wounds can become infected
 		if(owner.germ_level > W.germ_level && W.infection_check())
@@ -426,7 +426,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				break //Limit increase to a maximum of one per second
 
 /datum/organ/external/proc/handle_germ_effects()
-	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = owner.reagents.get_reagent_amount(SPACEACILLIN)
 
 	if(germ_level > 0 && germ_level < INFECTION_LEVEL_ONE && prob(60))	//This could be an else clause, but it looks cleaner this way
 		germ_level-- //Since germ_level increases at a rate of 1 per second with dirty wounds, prob(60) should give us about 5 minutes before level one.
@@ -501,16 +501,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		//Internal wounds get worse over time. Low temperatures (cryo) stop them.
 		if(W.internal && !W.is_treated() && owner.bodytemperature >= 170 && !(owner.species && owner.species.flags & NO_BLOOD))
-			if(!owner.reagents.has_reagent("bicaridine") && !owner.reagents.has_reagent("inaprovaline") && !owner.reagents.has_reagent("clotting_agent"))	//Bicard, inaprovaline, and clotting agent stops internal wounds from growing bigger with time, and also stop bleeding
+			if(!owner.reagents.has_reagent(BICARIDINE) && !owner.reagents.has_reagent(INAPROVALINE) && !owner.reagents.has_reagent(CLOTTING_AGENT))	//Bicard, inaprovaline, and clotting agent stops internal wounds from growing bigger with time, and also stop bleeding
 				W.open_wound(0.1 * wound_update_accuracy)
-				owner.vessel.remove_reagent("blood", 0.05 * W.damage * wound_update_accuracy)
+				owner.vessel.remove_reagent(BLOOD, 0.05 * W.damage * wound_update_accuracy)
 
-			owner.vessel.remove_reagent("blood", 0.02 * W.damage * wound_update_accuracy) //Bicaridine slows Internal Bleeding
+			owner.vessel.remove_reagent(BLOOD, 0.02 * W.damage * wound_update_accuracy) //Bicaridine slows Internal Bleeding
 			if(prob(1 * wound_update_accuracy))
 				owner.custom_pain("You feel a stabbing pain in your [display_name]!", 1)
 
 			//overdose of bicaridine begins healing IB
-			if(owner.reagents.get_reagent_amount("bicaridine") >= 30)
+			if(owner.reagents.get_reagent_amount(BICARIDINE) >= 30)
 				W.damage = max(0, W.damage - 0.2)
 
 		// slow healing
@@ -557,14 +557,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 		if(is_organic() && W.bleeding() && !(owner.species.flags & NO_BLOOD))
 			W.bleed_timer--
-			if(!owner.reagents.has_reagent("clotting_agent"))
+			if(!owner.reagents.has_reagent(CLOTTING_AGENT))
 				status |= ORGAN_BLEEDING
 
 		clamped |= W.clamped
 		number_wounds += W.amount
 
 	if(open && !clamped && is_organic() && !(owner.species.flags & NO_BLOOD)) //Things tend to bleed if they are CUT OPEN
-		if(!owner.reagents.has_reagent("clotting_agent"))
+		if(!owner.reagents.has_reagent(CLOTTING_AGENT))
 			status |= ORGAN_BLEEDING
 
 

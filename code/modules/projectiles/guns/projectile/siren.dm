@@ -21,7 +21,7 @@
 /obj/item/weapon/gun/siren/New()
 	..()
 	create_reagents(max_reagents)
-	reagents.add_reagent("water", max_reagents)
+	reagents.add_reagent(WATER, max_reagents)
 
 /obj/item/weapon/gun/siren/verb/flush_reagents()
 	set name = "Flush siren"

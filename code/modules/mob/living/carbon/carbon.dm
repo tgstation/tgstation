@@ -241,7 +241,7 @@
 				"<span class='notice'>[M] gives [src] a [pick("hug","warm embrace")].</span>", \
 				"<span class='notice'>You hug [src].</span>", \
 				)
-			reagents.add_reagent("paracetamol", 1)
+			reagents.add_reagent(PARACETAMOL, 1)
 
 			share_contact_diseases(M)
 

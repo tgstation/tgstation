@@ -25,16 +25,16 @@
 			side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	if(src.reagents.has_reagent("cryoxadone") || src.reagents.get_reagent_amount("bicaridine") >= 15 || src.reagents.get_reagent_amount("tricordrazine") >= 15)
+	if(src.reagents.has_reagent(CRYOXADONE) || src.reagents.get_reagent_amount(BICARIDINE) >= 15 || src.reagents.get_reagent_amount(TRICORDRAZINE) >= 15)
 		src.add_side_effect("Headache")
 
-	if(src.reagents.get_reagent_amount("kelotane") >= 30 || src.reagents.get_reagent_amount("dermaline") >= 15)
+	if(src.reagents.get_reagent_amount(KELOTANE) >= 30 || src.reagents.get_reagent_amount(DERMALINE) >= 15)
 		src.add_side_effect("Bad Stomach")
 
-	if(src.reagents.get_reagent_amount("tramadol") >= 16 || src.reagents.get_reagent_amount("anti_toxin") >= 30)
+	if(src.reagents.get_reagent_amount(TRAMADOL) >= 16 || src.reagents.get_reagent_amount(ANTI_TOXIN) >= 30)
 		src.add_side_effect("Cramps")
 
-	if(src.reagents.get_reagent_amount("space_drugs") >= 10)
+	if(src.reagents.get_reagent_amount(SPACE_DRUGS) >= 10)
 		src.add_side_effect("Itch")
 
 	// One full cycle(in terms of strength) every 10 minutes
@@ -71,7 +71,7 @@
 			O.take_damage(0, 1, 0, "Headache")
 
 /datum/medical_effect/headache/cure(mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("alkysine") || H.reagents.has_reagent("tramadol"))
+	if(H.reagents.has_reagent(ALKYSINE) || H.reagents.has_reagent(TRAMADOL))
 //		to_chat(H, "<span class='warning'>Your head stops throbbing..</span>")// Halt spam.
 
 		return 1
@@ -94,7 +94,7 @@
 			H.vomit()
 
 /datum/medical_effect/bad_stomach/cure(mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("anti_toxin"))
+	if(H.reagents.has_reagent(ANTI_TOXIN))
 		to_chat(H, "<span class='warning'>Your stomach feels a little better now..</span>")
 		return 1
 	return 0
@@ -119,7 +119,7 @@
 			H.apply_damage(1, used_weapon = "Cramps")
 
 /datum/medical_effect/cramps/cure(mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("inaprovaline"))
+	if(H.reagents.has_reagent(INAPROVALINE))
 		to_chat(H, "<span class='warning'>The cramps let up..</span>")
 		return 1
 	return 0
@@ -144,7 +144,7 @@
 			H.drip(1)
 
 /datum/medical_effect/itch/cure(mob/living/carbon/human/H)
-	if(H.reagents.has_reagent("inaprovaline"))
+	if(H.reagents.has_reagent(INAPROVALINE))
 		to_chat(H, "<span class='warning'>The itching stops..</span>")
 		return 1
 	return 0

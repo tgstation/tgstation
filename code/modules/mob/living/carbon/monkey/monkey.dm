@@ -146,9 +146,9 @@
 /mob/living/carbon/monkey/movement_delay()
 	var/tally = 0
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) return -1
+		if(reagents.has_reagent(HYPERZINE)) return -1
 
-		if(reagents.has_reagent("nuka_cola")) return -1
+		if(reagents.has_reagent(NUKA_COLA)) return -1
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
@@ -602,7 +602,7 @@
 		return 0
 	if(ticker.mode.name == "monkey")
 		return 1
-	if(reagents.has_reagent("methylin"))
+	if(reagents.has_reagent(METHYLIN))
 		return 1
 	return 0
 

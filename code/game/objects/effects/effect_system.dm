@@ -407,7 +407,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke/chem/Move()
 	..()
 	for(var/atom/A in view(2, src))
-		if(reagents.has_reagent("radium")||reagents.has_reagent("uranium")||reagents.has_reagent("carbon")||reagents.has_reagent("thermite"))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
+		if(reagents.has_reagent(RADIUM)||reagents.has_reagent(URANIUM)||reagents.has_reagent(CARBON)||reagents.has_reagent(THERMITE))//Prevents unholy radium spam by reducing the number of 'greenglows' down to something reasonable -Sieve
 			if(prob(5))
 				reagents.reaction(A)
 		else
@@ -512,7 +512,7 @@ steam.start() -- spawns the effect
 		number = n
 		cardinals = c
 
-		chemholder.reagents.add_reagent("space_drugs", rand(1,10))
+		chemholder.reagents.add_reagent(SPACE_DRUGS, rand(1,10))
 
 		if(istype(loca, /turf/))
 			location = loca
@@ -749,7 +749,7 @@ steam.start() -- spawns the effect
 		icon += ccolor
 	var/savedtemp
 	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
-	if(reagents.has_reagent("water"))
+	if(reagents.has_reagent(WATER))
 		var/turf/simulated/T = get_turf(src)
 		var/datum/gas_mixture/old_air = T.return_air()
 		savedtemp = old_air.temperature
@@ -885,7 +885,7 @@ steam.start() -- spawns the effect
 					for(var/id in carried_reagents)
 						F.reagents.add_reagent(id,1)
 				else
-					F.reagents.add_reagent("water", 1)
+					F.reagents.add_reagent(WATER, 1)
 
 // wall formed by metal foams
 // dense and opaque, but easy to break

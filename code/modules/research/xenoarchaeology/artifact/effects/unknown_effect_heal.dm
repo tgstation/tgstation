@@ -17,7 +17,7 @@
 					if(affecting && istype(affecting))
 						affecting.heal_damage(25 * weakness, 25 * weakness)
 				//H:heal_organ_damage(25, 25)
-				H.vessel.add_reagent("blood",5)
+				H.vessel.add_reagent(BLOOD,5)
 				H.nutrition += 50 * weakness
 				H.adjustBrainLoss(-25 * weakness)
 				H.radiation -= min(H.radiation, 25 * weakness)

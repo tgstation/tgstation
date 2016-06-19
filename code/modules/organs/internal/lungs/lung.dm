@@ -14,7 +14,7 @@
 	var/list/datum/lung_gas/gasses = list(
 		new /datum/lung_gas/metabolizable("oxygen",            min_pp=16, max_pp=140),
 		new /datum/lung_gas/waste("carbon_dioxide",            max_pp=10),
-		new /datum/lung_gas/toxic("toxins",                    max_pp=0.5, max_pp_mask=5, reagent_id="plasma", reagent_mult=0.1),
+		new /datum/lung_gas/toxic("toxins",                    max_pp=0.5, max_pp_mask=5, reagent_id=PLASMA, reagent_mult=0.1),
 		new /datum/lung_gas/sleep_agent("/datum/gas/sleeping_agent", trace_gas=1, min_giggle_pp=0.15, min_para_pp=1, min_sleep_pp=5),
 	)
 
@@ -103,7 +103,7 @@
 	gasses = list(
 		new /datum/lung_gas/metabolizable("nitrogen",          min_pp=16, max_pp=140),
 		new /datum/lung_gas/waste("carbon_dioxide",            max_pp=10), // I guess? Ideally it'd be some sort of nitrogen compound.  Maybe N2O?
-		new /datum/lung_gas/toxic("oxygen",                    max_pp=0.5, max_pp_mask=0, reagent_id="oxygen", reagent_mult=0.1),
+		new /datum/lung_gas/toxic(OXYGEN,                    max_pp=0.5, max_pp_mask=0, reagent_id=OXYGEN, reagent_mult=0.1),
 		new /datum/lung_gas/sleep_agent("/datum/gas/sleeping_agent", trace_gas=1, min_giggle_pp=0.15, min_para_pp=1, min_sleep_pp=5),
 	)
 

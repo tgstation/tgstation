@@ -55,7 +55,7 @@
 /obj/structure/bed/chair/vehicle/clowncart/New()
 	. = ..()
 	create_reagents(5000)
-	reagents.add_reagent("banana", 175)
+	reagents.add_reagent(BANANA, 175)
 
 	processing_objects |= src
 
@@ -88,14 +88,14 @@
 		"<span class='notice'>You honk at [src].</span>", \
 		"<span class='notice'>You hear honking.</span>")
 		playsound(get_turf(src), W.hitsound, 50, 1)
-		if(reagents.get_reagent_amount("banana") <= 5 && max_health < HEALTH_FOR_FREE_MOVEMENT)
+		if(reagents.get_reagent_amount(BANANA) <= 5 && max_health < HEALTH_FOR_FREE_MOVEMENT)
 			if(activated)
 				visible_message("<span class='warning'>[nick] lets out a last honk before running out of fuel and activating its ejection seat.</span>")
 				if(ishuman(user)) //This shouldn't be needed, but fucks sakes
 					user.Weaken(5)
 				playsound(get_turf(src), 'sound/items/bikehorn.ogg', 50, 1)
 				activated = 0
-				reagents.remove_reagent("banana", 5)
+				reagents.remove_reagent(BANANA, 5)
 			else
 				to_chat(user, "<span class='warning'>[src] doesn't have enough banana essence!</span>")
 		else
@@ -200,14 +200,14 @@
 		if(max_health >= HEALTH_FOR_FLOWER_RECHARGE)
 			if(do_after(user, src, 5))
 				W.reagents.remove_any(10)
-				var/tmp/bananas = reagents.get_reagent_amount("banana")
-				reagents.remove_reagent("banana", bananas) //removing banan so it doesn't get transferred into the water flower
+				var/tmp/bananas = reagents.get_reagent_amount(BANANA)
+				reagents.remove_reagent(BANANA, bananas) //removing banan so it doesn't get transferred into the water flower
 				if(reagents.total_volume >= 10)
 					visible_message("<span class='notice'>The HONKTech pump has recharged [W].</span>")
 					reagents.trans_to(W, 10)
 				else
 					to_chat(user, "<span class='warning'>There doesn't seem to be anything other than banana juice in [src]!</span>")
-				reagents.add_reagent("banana", bananas) //adding banan back
+				reagents.add_reagent(BANANA, bananas) //adding banan back
 		else
 			to_chat(user, "<span class='warning'>The HONKTech pump is not strong enough to do that yet. Reinforce it with more bananium sheets first.</span>")
 	else if(istype(W, /obj/item/weapon/card/emag)) //emag
@@ -275,7 +275,7 @@
 			return
 
 		if(max_health < HEALTH_FOR_FREE_MOVEMENT)
-			reagents.remove_reagent("banana", BANANA_FOR_MOVEMENT) //10 sheets of bananium required to drive without using fuel
+			reagents.remove_reagent(BANANA, BANANA_FOR_MOVEMENT) //10 sheets of bananium required to drive without using fuel
 		if(trail > 0)
 			new /obj/effect/decal/cleanable/pie_smudge/(old_pos)
 			trail--
@@ -285,10 +285,10 @@
 		else if(mode == MODE_PEELS)
 			if(!emagged)
 				new /obj/item/weapon/bananapeel/(old_pos)
-				reagents.remove_reagent("banana",BANANA_FOR_NORMAL_PEEL)
+				reagents.remove_reagent(BANANA,BANANA_FOR_NORMAL_PEEL)
 			else
 				new /obj/item/weapon/bananapeel/traitorpeel/(old_pos)
-				reagents.remove_reagent("banana",BANANA_FOR_TRAITOR_PEEL)
+				reagents.remove_reagent(BANANA,BANANA_FOR_TRAITOR_PEEL)
 	else
 		to_chat(user, "<span class='notice'>You have to honk to be able to ride [src].</span>")
 
@@ -311,9 +311,9 @@
 				return
 	if(!istype(pos,/turf/simulated/floor)) //no drawing in open space
 		return
-	if(printing_text == "nothing" || printing_text == "")	//"nothing" and "" won't draw anything
+	if(printing_text == NOTHING || printing_text == "")	//NOTHING and "" won't draw anything
 		return
-	reagents.remove_reagent("banana", BANANA_FOR_DRAWING)//"graffiti" and "rune" will draw graffiti and runes
+	reagents.remove_reagent(BANANA, BANANA_FOR_DRAWING)//"graffiti" and "rune" will draw graffiti and runes
 	if(printing_text == "graffiti" || printing_text == "rune") //"paint" will paint floor tiles with selected colour
 		new /obj/effect/decal/cleanable/crayon(pos, colour1, colour2, printing_text)
 	else
@@ -342,8 +342,8 @@
 /obj/structure/bed/chair/vehicle/clowncart/proc/feed(obj/item/W, mob/living/user)
 	var/datum/reagents/R=W.reagents
 	if(!R) return
-	if(R.has_reagent("banana"))
-		var/added_banana=R.get_reagent_amount("banana")
+	if(R.has_reagent(BANANA))
+		var/added_banana=R.get_reagent_amount(BANANA)
 		if(reagents.total_volume + added_banana > 5000)
 			to_chat(user, "<span class='notice'>\The [src] can't hold any more banana essence!</span>")
 			return 0
@@ -354,7 +354,7 @@
 			if(max_health>=HEALTH_FOR_80X_MODIFIER) //Should be 500, i.e. 20 bananium
 				modifier=100
 
-		reagents.add_reagent("banana", added_banana*modifier)
+		reagents.add_reagent(BANANA, added_banana*modifier)
 		if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/pie))
 			playsound(get_turf(src), 'sound/effects/bubbles.ogg', 50, 1)
 			to_chat(user, "<span class='warning'>[W] starts boiling inside \the [src]!</span>")

@@ -9,7 +9,7 @@
 	packet_icon = "seed-telriis"
 	plant_icon = "telriis"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"pwine" = list(0,2))
+	chems = list(NUTRIMENT = list(1,10),PWINE = list(0,2))
 
 	lifespan = 60
 	maturation = 6
@@ -37,7 +37,7 @@
 	packet_icon = "seed-thaadra"
 	plant_icon = "thaadra"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"frostoil" = list(5,7))
+	chems = list(NUTRIMENT = list(1,10),FROSTOIL = list(5,7))
 
 	lifespan = 50
 	maturation = 3
@@ -64,7 +64,7 @@
 	mutants = null
 	packet_icon = "seed-jurlmah"
 	plant_icon = "jurlmah"
-	chems = list("nutriment" = list(1,10),"serotrotium" = list(0,10))
+	chems = list(NUTRIMENT = list(1,10),SEROTROTIUM = list(0,10))
 
 	lifespan = 25
 	maturation = 6
@@ -95,7 +95,7 @@
 	mutants = null
 	packet_icon = "seed-amauri"
 	plant_icon = "amauri"
-	chems = list("nutriment" = list(1,10),"zombiepowder" = list(0,2),"condensedcapsaicin" = list(0,5))
+	chems = list(NUTRIMENT = list(1,10),ZOMBIEPOWDER = list(0,2),CONDENSEDCAPSAICIN = list(0,5))
 
 	lifespan = 25
 	maturation = 10
@@ -128,7 +128,7 @@
 	packet_icon = "seed-gelthi"
 	plant_icon = "gelthi"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"stoxin" = list(0,1),"capsaicin" = list(0,1))
+	chems = list(NUTRIMENT = list(1,10),STOXIN = list(0,1),CAPSAICIN = list(0,1))
 
 	lifespan = 55
 	maturation = 6
@@ -159,7 +159,7 @@
 	packet_icon = "seed-vale"
 	plant_icon = "vale"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"sportdrink" = list(0,2),"dexalin" = list(0,5))
+	chems = list(NUTRIMENT = list(1,10),SPORTDRINK = list(0,2),DEXALIN = list(0,5))
 
 	lifespan = 100
 	maturation = 6
@@ -189,7 +189,7 @@
 	packet_icon = "seed-surik"
 	plant_icon = "surik"
 	harvest_repeat = 1
-	chems = list("nutriment" = list(1,10),"impedrezene" = list(0,3),"synaptizine" = list(0,5))
+	chems = list(NUTRIMENT = list(1,10),IMPEDREZENE = list(0,3),SYNAPTIZINE = list(0,5))
 
 	lifespan = 55
 	maturation = 7

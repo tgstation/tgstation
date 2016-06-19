@@ -260,7 +260,7 @@ obj/machinery/gibber/New()
 		newmeat.name = sourcename + newmeat.name
 		newmeat.subjectname = sourcename
 		newmeat.subjectjob = sourcejob
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+		newmeat.reagents.add_reagent (NUTRIMENT, sourcenutriment / totalslabs) // Thehehe. Fat guys go first
 
 		if(src.occupant.reagents)
 			src.occupant.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
@@ -331,7 +331,7 @@ obj/machinery/gibber/New()
 
 		if(newmeat==null)
 			return
-		newmeat.reagents.add_reagent ("nutriment", sourcenutriment / totalslabs) // Thehehe. Fat guys go first
+		newmeat.reagents.add_reagent (NUTRIMENT, sourcenutriment / totalslabs) // Thehehe. Fat guys go first
 
 		if(victim.reagents)
 			victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the

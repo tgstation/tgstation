@@ -4,7 +4,7 @@
 	id = "s-receiver"
 	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/receiver
 
@@ -14,7 +14,7 @@
 	id = "s-bus"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/bus
 
@@ -24,7 +24,7 @@
 	id = "s-hub"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/hub
 
@@ -34,7 +34,7 @@
 	id = "s-relay"
 	req_tech = list("programming" = 3, "engineering" = 4, "bluespace" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/relay
 
@@ -44,7 +44,7 @@
 	id = "s-processor"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/processor
 
@@ -54,7 +54,7 @@
 	id = "s-server"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/server
 
@@ -64,6 +64,6 @@
 	id = "s-broadcaster"
 	req_tech = list("programming" = 4, "engineering" = 4, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster

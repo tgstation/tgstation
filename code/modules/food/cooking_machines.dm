@@ -364,7 +364,7 @@ var/global/ingredientLimit = 10
 
 /obj/machinery/cooking/deepfryer/initialize()
 	..()
-	reagents.add_reagent("cornoil", 300)
+	reagents.add_reagent(CORNOIL, 300)
 
 /obj/machinery/cooking/deepfryer/proc/empty_icon() //sees if the value is empty, and changes the icon if it is
 	reagents.update_total() //make the values refresh
@@ -480,7 +480,7 @@ var/global/ingredientLimit = 10
 		src.transfer_reagents_to_food()
 	if(istype(src.ingredient,/obj/item/weapon/reagent_containers/food))
 		var/obj/item/weapon/reagent_containers/food/F = src.ingredient
-		F.reagents.add_reagent("nutriment",10)
+		F.reagents.add_reagent(NUTRIMENT,10)
 		F.reagents.trans_to(src.ingredient,src.ingredient.reagents.total_volume)
 	src.ingredient.mouse_opacity = 1
 	if(!(findtext(src.ingredient.name,"rotisserie")))

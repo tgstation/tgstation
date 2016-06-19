@@ -384,17 +384,17 @@
 /obj/item/weapon/reagent_containers/glass/fertilizer/ez
 	name = "bottle of E-Z-Nutrient"
 	icon_state = "bottle16"
-	fertilizer = "eznutrient"
+	fertilizer = EZNUTRIENT
 
 /obj/item/weapon/reagent_containers/glass/fertilizer/l4z
 	name = "bottle of Left 4 Zed"
 	icon_state = "bottle18"
-	fertilizer = "left4zed"
+	fertilizer = LEFT4ZED
 
 /obj/item/weapon/reagent_containers/glass/fertilizer/rh
 	name = "bottle of Robust Harvest"
 	icon_state = "bottle15"
-	fertilizer = "robustharvest"
+	fertilizer = ROBUSTHARVEST
 
 //Hatchets and things to kill kudzu
 /obj/item/weapon/hatchet

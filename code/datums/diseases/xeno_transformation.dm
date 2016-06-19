@@ -7,7 +7,7 @@
 	spread_type = SPECIAL
 	curable = 1
 	cure = "Spaceacillin & Glycerol"
-	cure_list = list("spaceacillin", "glycerol")
+	cure_list = list(SPACEACILLIN, GLYCEROL)
 	cure_chance = 50
 	agent = "Rip-LEY Alien Microbes"
 	affected_species = list("Human")

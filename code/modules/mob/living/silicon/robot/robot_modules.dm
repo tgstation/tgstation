@@ -146,7 +146,7 @@ obj/item/weapon/robot_module/proc/fix_modules() //call this proc to enable click
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 	sensor_augs = list("Medical", "Disable")
 
-	src.emag.reagents.add_reagent("pacid", 250)
+	src.emag.reagents.add_reagent(PACID, 250)
 	src.emag.name = "Polyacid spray"
 
 	var/obj/item/stack/medical/advanced/bruise_pack/B = new /obj/item/stack/medical/advanced/bruise_pack(src)
@@ -291,7 +291,7 @@ obj/item/weapon/robot_module/proc/fix_modules() //call this proc to enable click
 	src.modules += new /obj/item/weapon/crowbar(src)
 	src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-	src.emag.reagents.add_reagent("lube", 250)
+	src.emag.reagents.add_reagent(LUBE, 250)
 	src.emag.name = "Lube spray"
 	fix_modules()
 
@@ -353,7 +353,7 @@ obj/item/weapon/robot_module/proc/fix_modules() //call this proc to enable click
 	var/datum/reagents/R = new/datum/reagents(50)
 	src.emag.reagents = R
 	R.my_atom = src.emag
-	R.add_reagent("beer2", 50)
+	R.add_reagent(BEER2, 50)
 	src.emag.name = "Mickey Finn's Special Brew"
 	fix_modules()
 

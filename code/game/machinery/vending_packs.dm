@@ -33,7 +33,7 @@
 /obj/structure/vendomatpack/coffee
 	name = "Hot Drinks machine recharge pack"
 	targetvendomat = /obj/machinery/vending/coffee
-	icon_state = "coffee"
+	icon_state = COFFEE
 
 /obj/structure/vendomatpack/snack
 	name = "Getmore Chocolate Corp recharge pack"
@@ -128,7 +128,7 @@
 /obj/structure/vendomatpack/discount
 	name = "Discount Dan's recharge pack"
 	targetvendomat = /obj/machinery/vending/discount
-	icon_state = "discount"
+	icon_state = DISCOUNT
 
 /obj/structure/vendomatpack/groans
 	name = "Groans Soda recharge pack"

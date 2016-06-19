@@ -6,7 +6,7 @@
 	id = "atmosalerts"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/atmos_alert
 
@@ -16,7 +16,7 @@
 	id = "air_management"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/air_management
 
@@ -26,7 +26,7 @@
 	id = "atmos_automation"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/atmos_automation
 
@@ -36,7 +36,7 @@
 	id = "large_tank_control"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/large_tank_control
 
@@ -47,7 +47,7 @@
 	id = "general_alert"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	build_path = /obj/item/weapon/circuitboard/general_alert
 */
 
@@ -57,7 +57,7 @@
 	id = "powermonitor"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/powermonitor
 
@@ -67,7 +67,7 @@
 	id = "solarcontrol"
 	req_tech = list("programming" = 2, "powerstorage" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/solar_control
 
@@ -79,7 +79,7 @@
 	id = "comm_monitor"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/comm_monitor
 
@@ -89,7 +89,7 @@
 	id = "comm_server"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/comm_server
 
@@ -99,7 +99,7 @@
 	id = "traffic_control"
 	req_tech = list("programming" = 5)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/comm_traffic
 
@@ -109,7 +109,7 @@
 	id = "message_monitor"
 	req_tech = list("programming" = 5)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/message_monitor
 
@@ -121,7 +121,7 @@
 	id = "rust_gyrotron_control"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_gyrotron_control"
 
@@ -131,7 +131,7 @@
 	id = "rust_fuel_control"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_fuel_control"
 
@@ -141,7 +141,7 @@
 	id = "rust_core_monitor"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core_monitor"
 
@@ -151,6 +151,6 @@
 	id = "rust_core_control"
 	req_tech = list("programming" = 4, "engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = "/obj/item/weapon/circuitboard/rust_core_control"

@@ -20,7 +20,7 @@
 	if(beaker)
 		var/datum/reagents/reagents = beaker.reagents
 		if(reagents.total_volume)
-			var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
+			var/image/filling = image('icons/obj/iv_drip.dmi', src, REAGENT)
 
 			var/percent = round((reagents.total_volume / beaker.volume) * 100)
 			switch(percent)
@@ -100,7 +100,7 @@
 		if(mode)
 			if(src.beaker.volume > 0)
 				var/transfer_amount = REAGENTS_METABOLISM
-				if(beaker.reagents.reagent_list.len == 1 && beaker.reagents.has_reagent("blood"))
+				if(beaker.reagents.reagent_list.len == 1 && beaker.reagents.has_reagent(BLOOD))
 					// speed up transfer if the container has ONLY blood
 					transfer_amount = 4
 				src.beaker.reagents.trans_to(src.attached, transfer_amount)
@@ -124,7 +124,7 @@
 				return
 
 			// If the human is losing too much blood, beep.
-			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
+			if(T.vessel.get_reagent_amount(BLOOD) < BLOOD_VOLUME_SAFE) if(prob(5))
 				visible_message("\The [src] beeps loudly.")
 
 			var/datum/reagent/B = T.take_blood(beaker,amount)

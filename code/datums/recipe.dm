@@ -39,8 +39,8 @@
 //And yes indeed I know it's a lot of comments, but if you're not here to understand how recipes work, why are you here ?
 /datum/recipe
 
-	var/list/reagents //List of reagents needed and their amount, reagents = list("berryjuice" = 5)
-	var/list/reagents_forbidden //List of reagents that will not be transfered to the cooked item under any circumstance, use smartly and sparringly. reagents_forbidden = list("toxin", "water")
+	var/list/reagents //List of reagents needed and their amount, reagents = list(BERRYJUICE = 5)
+	var/list/reagents_forbidden //List of reagents that will not be transfered to the cooked item under any circumstance, use smartly and sparringly. reagents_forbidden = list(TOXIN, WATER)
 	var/list/items //List of items needed, items = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder)
 	var/result //Well gee, what we output, result = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100 //In tenths of a second, this is how long it takes for the magic to happen. The machine producing the recipe handles this value, but the recipe defines it

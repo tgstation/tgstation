@@ -88,7 +88,7 @@
 		armor_modifier = 0.5
 		damage += rand(0,7)
 		attack_verb = "stomps on"
-	else if(M.reagents && M.reagents.has_reagent("gyro"))
+	else if(M.reagents && M.reagents.has_reagent(GYRO))
 		damage += rand(0,4)
 		knockout += rand(0,3)
 		attack_verb = "roundhouse kicks"

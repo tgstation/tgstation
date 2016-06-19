@@ -17,7 +17,7 @@
 		if(locate(/obj/effect/plantsegment) in floor.contents)
 			continue
 		if(floor.density)
-			if(!isnull(seed.chems["pacid"]))
+			if(!isnull(seed.chems[PACID]))
 				spawn(rand(5,25)) floor.ex_act(3)
 			continue
 		if(!Adjacent(floor) || !floor.Enter(src))

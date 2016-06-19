@@ -26,9 +26,9 @@
 	category="Food"
 
 /datum/biogen_recipe/food/milk
-	id="milk"
-	name="milk"
-	reagent="milk"
+	id=MILK
+	name=MILK
+	reagent=MILK
 	cost=20
 	amount_per_unit=10
 	other_amounts=list(5)
@@ -53,7 +53,7 @@
 /datum/biogen_recipe/nutrient/ez
 	id="ez"
 	name="E-Z-Nutrient"
-	reagent="eznutrient"
+	reagent=EZNUTRIENT
 	cost=10
 	amount_per_unit=10
 	other_amounts=list(5)
@@ -61,7 +61,7 @@
 /datum/biogen_recipe/nutrient/l4z
 	id="l4z"
 	name="Left 4 Zed"
-	reagent="left4zed"
+	reagent=LEFT4ZED
 	cost=20
 	amount_per_unit=10
 	other_amounts=list(5)
@@ -69,7 +69,7 @@
 /datum/biogen_recipe/nutrient/rh
 	id="rh"
 	name="Robust Harvest"
-	reagent="robustharvest"
+	reagent=ROBUSTHARVEST
 	cost=25
 	amount_per_unit=10
 	other_amounts=list(5)
@@ -427,9 +427,9 @@
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
-		if(I.reagents.get_reagent_amount("nutriment") < 0.1)
+		if(I.reagents.get_reagent_amount(NUTRIMENT) < 0.1)
 			points += 1
-		else points += I.reagents.get_reagent_amount("nutriment")*biomass_coefficient
+		else points += I.reagents.get_reagent_amount(NUTRIMENT)*biomass_coefficient
 		qdel(I)
 	if(S)
 		processing = 1

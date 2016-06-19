@@ -51,7 +51,7 @@ var/global/list/spider_types = typesof(/mob/living/simple_animal/hostile/giant_s
 	var/icon_aggro = null // for swapping to when we get aggressive
 	var/busy = 0
 	var/poison_per_bite = 5
-	var/poison_type = "toxin"
+	var/poison_type = TOXIN
 
 	//Spider aren't affected by atmos.
 	min_oxy = 0

@@ -12,70 +12,70 @@
 /datum/borer_chem/leg
 
 /datum/borer_chem/head/bicaridine
-	name = "bicaridine"
+	name = BICARIDINE
 
 /datum/borer_chem/head/tramadol
-	name = "tramadol"
+	name = TRAMADOL
 
 /datum/borer_chem/head/alkysine
-	name = "alkysine"
+	name = ALKYSINE
 	//cost = 0
 
 /datum/borer_chem/head/ryetalyn
-	name = "ryetalyn"
+	name = RYETALYN
 
 /datum/borer_chem/head/hyperzine
-	name = "hyperzine"
+	name = HYPERZINE
 
 /datum/borer_chem/head/charcoal
-	name = "charcoal"
+	name = CHARCOAL
 	cost = 2
 
 /datum/borer_chem/head/anti_toxin
-	name = "anti_toxin"
+	name = ANTI_TOXIN
 
 /datum/borer_chem/head/leporazine
-	name = "leporazine"
+	name = LEPORAZINE
 
 /datum/borer_chem/head/inaprovaline
-	name = "inaprovaline"
+	name = INAPROVALINE
 	cost = 2
 
 /datum/borer_chem/head/kelotane
-	name = "kelotane"
+	name = KELOTANE
 	cost = 2
 
 /datum/borer_chem/chest/blood
-	name = "blood"
+	name = BLOOD
 
 /datum/borer_chem/chest/imidazoline
-	name = "imidazoline"
+	name = IMIDAZOLINE
 
 /datum/borer_chem/chest/inacusiate
-	name = "inacusiate"
+	name = INACUSIATE
 
 /datum/borer_chem/chest/lipozine
-	name = "Lipozine" // SIC
+	name = LIPOZINE
 
 /datum/borer_chem/chest/ethylredoxrazine
-	name = "ethylredoxrazine"
+	name = ETHYLREDOXRAZINE
 
 /datum/borer_chem/chest/oxycodone
-	name = "oxycodone"
+	name = OXYCODONE
 
 /datum/borer_chem/chest/radium
-	name = "radium"
+	name = RADIUM
 
 /datum/borer_chem/arm/bicaridine
-	name = "bicaridine"
+	name = BICARIDINE
 	cost = 2
 
 /datum/borer_chem/arm/kelotane
-	name = "kelotane"
+	name = KELOTANE
 	cost = 2
 
 /datum/borer_chem/leg/hyperzine
-	name = "hyperzine"
+	name = HYPERZINE
 
 ////////////////////////////
 // UNLOCKABLES
@@ -94,69 +94,69 @@
 	unlockable=1
 
 /datum/borer_chem/head/unlockable/space_drugs
-	name = "space_drugs"
+	name = SPACE_DRUGS
 	cost = 2
 
 /datum/borer_chem/head/unlockable/paracetamol
-	name = "paracetamol"
+	name = PARACETAMOL
 	cost = 2
 
 /datum/borer_chem/head/unlockable/dermaline
-	name = "dermaline"
+	name = DERMALINE
 	cost = 2
 
 /datum/borer_chem/head/unlockable/dexalin
-	name = "dexalin"
+	name = DEXALIN
 	cost = 2
 
 /datum/borer_chem/head/unlockable/dexalinp
-	name = "dexalinp"
+	name = DEXALINP
 	cost = 2
 
 /datum/borer_chem/head/unlockable/peridaxon
-	name = "peridaxon"
+	name = PERIDAXON
 	cost = 2
 
 /datum/borer_chem/head/unlockable/rezadone
-	name = "rezadone"
+	name = REZADONE
 	cost = 2
 
 /datum/borer_chem/chest/unlockable/nutriment
-	name = "nutriment"
+	name = NUTRIMENT
 	cost = 2
 
 /datum/borer_chem/chest/unlockable/paismoke
-	name = "paismoke"
+	name = PAISMOKE
 	cost = 15
 
 /datum/borer_chem/chest/unlockable/arithrazine
-	name = "arithrazine"
+	name = ARITHRAZINE
 	cost = 2
 
 /datum/borer_chem/chest/unlockable/capsaicin
-	name = "capsaicin"
+	name = CAPSAICIN
 	cost = 2
 
 /datum/borer_chem/chest/unlockable/frostoil
-	name = "frostoil"
+	name = FROSTOIL
 	cost = 2
 
 /datum/borer_chem/chest/unlockable/clottingagent
-	name = "clotting_agent"
+	name = CLOTTING_AGENT
 	cost = 10
 
 /datum/borer_chem/arm/unlockable/cafe_latte
-	name = "cafe_latte"
+	name = CAFE_LATTE
 	cost = 1
 
 /datum/borer_chem/arm/unlockable/iron
-	name = "iron"
+	name = IRON
 	cost = 1
 
 /datum/borer_chem/leg/unlockable/bustanut
-	name = "bustanut"
+	name = BUSTANUT
 	cost = 2
 
 /datum/borer_chem/leg/unlockable/synaptizine
-	name = "synaptizine"
+	name = SYNAPTIZINE
 	cost = 2

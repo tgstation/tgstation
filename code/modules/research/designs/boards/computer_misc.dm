@@ -6,7 +6,7 @@
 	id = "arcademachine"
 	req_tech = list("programming" = 1)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/arcade
 
@@ -16,7 +16,7 @@
 	id = "ordercomp"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/ordercomp
 
@@ -26,7 +26,7 @@
 	id = "supplycomp"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/supplycomp
 
@@ -36,7 +36,7 @@
 	id = "mining"
 	req_tech = list("programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/mining
 
@@ -46,7 +46,7 @@
 	id = "pda_terminal"
 	req_tech = list("programming" = 3, "bluespace"= 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/pda_terminal
 
@@ -56,7 +56,7 @@
 	id = "pod"
 	req_tech = list("programming" = 2,"engineering" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/pod
 
@@ -66,7 +66,7 @@
 	id = "smeltcomp"
 	req_tech = list("materials" = 2, "programming" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/smeltcomp
 
@@ -76,7 +76,7 @@
 	id = "stackconsole"
 	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/stacking_machine_console
 
@@ -86,6 +86,6 @@
 	id = "shuttlecontrol"
 	req_tech = list("programming" = 4, "engineering" = 3, "bluespace" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Console Boards"
 	build_path = /obj/item/weapon/circuitboard/shuttle_control

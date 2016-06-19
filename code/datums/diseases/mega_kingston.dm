@@ -2,7 +2,7 @@
 	name = "Yildun Infectious Fusobacter Syndrome" // lolbackronym
 	max_stages = 4
 	cure = "The Manly Dorf"
-	cure_id = "manlydorf"
+	cure_id = MANLYDORF
 	cure_chance = 100
 	agent = "Baccilli Yiffus"
 	affected_species = list("Human")

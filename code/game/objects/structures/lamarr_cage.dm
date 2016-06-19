@@ -101,7 +101,7 @@
 		var/mob/living/carbon/human/H = loc
 		if(src.reagents)
 			for (var/datum/reagent/current_reagent in src.reagents.reagent_list)
-				if (current_reagent.id == "creatine")
+				if (current_reagent.id == CREATINE)
 					to_chat(H, "<span class='warning'>[src]'s body contorts and expands!</span>")
 					var/index = H.is_holding_item(src)
 

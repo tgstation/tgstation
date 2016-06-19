@@ -154,7 +154,7 @@ emp_act
 		newmeat.name = src.real_name + newmeat.name
 		newmeat.subjectname = src.real_name
 		newmeat.subjectjob = src.job
-		newmeat.reagents.add_reagent ("nutriment", (src.nutrition / 15) / 3)
+		newmeat.reagents.add_reagent (NUTRIMENT, (src.nutrition / 15) / 3)
 		src.reagents.trans_to (newmeat, round ((src.reagents.total_volume) / 3, 1))
 		src.loc.add_blood(src)
 		--src.meatleft

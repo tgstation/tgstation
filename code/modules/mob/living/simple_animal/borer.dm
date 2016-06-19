@@ -477,7 +477,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!host || controlling || !src || stat) //Sanity check.
 		return
 
-	if(chem.name == "blood")
+	if(chem.name == BLOOD)
 		if(istype(host, /mob/living/carbon/human) && !(host.species.flags & NO_BLOOD))
 			host.vessel.add_reagent(chem.name, units)
 		else
@@ -1051,7 +1051,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		var/dat = ""
 		if(host.reagents.reagent_list.len > 0)
 			for (var/datum/reagent/R in host.reagents.reagent_list)
-				if(R.id == "blood") continue // Like we need to know that blood contains blood.
+				if(R.id == BLOOD) continue // Like we need to know that blood contains blood.
 				dat += "\n \t <span class='notice'>[R] ([R.volume] units)</span>"
 		if(dat)
 			to_chat(src, "<span class='notice'>Chemicals found: [dat]</span>")

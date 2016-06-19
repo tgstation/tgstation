@@ -448,12 +448,12 @@
 		"borer_present_l_arm" = H.has_brain_worms("l_arm"),
 		"borer_present_r_leg" = H.has_brain_worms("r_leg"),
 		"borer_present_l_leg" = H.has_brain_worms("l_leg"),
-		"inaprovaline_amount" = H.reagents.get_reagent_amount("inaprovaline"),
-		"dexalin_amount" = H.reagents.get_reagent_amount("dexalin"),
-		"stoxin_amount" = H.reagents.get_reagent_amount("stoxin"),
-		"bicaridine_amount" = H.reagents.get_reagent_amount("bicaridine"),
-		"dermaline_amount" = H.reagents.get_reagent_amount("dermaline"),
-		"blood_amount" = H.vessel.get_reagent_amount("blood"),
+		"inaprovaline_amount" = H.reagents.get_reagent_amount(INAPROVALINE),
+		"dexalin_amount" = H.reagents.get_reagent_amount(DEXALIN),
+		"stoxin_amount" = H.reagents.get_reagent_amount(STOXIN),
+		"bicaridine_amount" = H.reagents.get_reagent_amount(BICARIDINE),
+		"dermaline_amount" = H.reagents.get_reagent_amount(DERMALINE),
+		"blood_amount" = H.vessel.get_reagent_amount(BLOOD),
 		"all_chems" = H.reagents.reagent_list,
 		"btype" = H.dna.b_type,
 		"disabilities" = H.sdisabilities,
@@ -515,7 +515,7 @@
 
 	if(connected.scanning>2)
 		for(var/datum/reagent/R in occ["all_chems"])
-			if(R.id == "blood" || R.id == "inaprovaline" || R.id == "stoxin" || R.id == "dermaline" || R.id == "bicaridine" || R.id == "dexalin") continue //no repeats
+			if(R.id == BLOOD || R.id == INAPROVALINE || R.id == STOXIN || R.id == DERMALINE || R.id == BICARIDINE || R.id == DEXALIN) continue //no repeats
 			else
 				dat += text("<font color='black'>Detected</font> <font color='blue'>[R.volume]</font> <font color='black'>units of</font> <font color='blue'>[R.name]</font><BR>")
 	for(var/datum/disease/D in occ["tg_diseases_list"])

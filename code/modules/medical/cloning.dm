@@ -307,13 +307,13 @@
 			src.occupant.adjustBrainLoss(-1*time_coeff) //Ditto above
 
 			//So clones don't die of oxyloss in a running pod.
-			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
-				src.occupant.reagents.add_reagent("inaprovaline", 60)
+			if (src.occupant.reagents.get_reagent_amount(INAPROVALINE) < 30)
+				src.occupant.reagents.add_reagent(INAPROVALINE, 60)
 
 			var/mob/living/carbon/human/H = src.occupant
 
 			if(istype(H.species, /datum/species/vox))
-				src.occupant.reagents.add_reagent("nitrogen", 10)
+				src.occupant.reagents.add_reagent(NITROGEN, 10)
 
 			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
 			src.occupant.adjustOxyLoss(-4)

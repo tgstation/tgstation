@@ -4,7 +4,7 @@
 	spread = "On contact"
 	spread_type = CONTACT_GENERAL
 	cure = "Ryetalyn"
-	cure_id = "ryetalyn"
+	cure_id = RYETALYN
 	curable = 1
 	agent = "S4E1 retrovirus"
 	affected_species = list("Human")

@@ -44,7 +44,7 @@
 
 		if(stat == CONSCIOUS)
 			if(udder && prob(5))
-				udder.add_reagent("milk", rand(5, 10))
+				udder.add_reagent(MILK, rand(5, 10))
 
 		if(locate(/obj/effect/plantsegment) in loc)
 			var/obj/effect/plantsegment/SV = locate(/obj/effect/plantsegment) in loc
@@ -77,7 +77,7 @@
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
-		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
+		var/transfered = udder.trans_id_to(G, MILK, rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
 			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
@@ -119,7 +119,7 @@
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
-		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
+		var/transfered = udder.trans_id_to(G, MILK, rand(5,10))
 		if(G.reagents.total_volume >= G.volume)
 			to_chat(user, "<span class='warning'>[O] is full.</span>")
 		if(!transfered)
@@ -132,7 +132,7 @@
 	. = ..()
 	if(stat == CONSCIOUS)
 		if(udder && prob(5))
-			udder.add_reagent("milk", rand(5, 10))
+			udder.add_reagent(MILK, rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
 	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)

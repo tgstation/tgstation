@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "The Manly Dorf"
-	cure_id = "manlydorf"
+	cure_id = MANLYDORF
 	cure_chance = 100
 	agent = "Rincewindus Vulgaris"
 	affected_species = list("Human")

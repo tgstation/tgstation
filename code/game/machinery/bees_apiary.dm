@@ -108,7 +108,7 @@
 					health -= HONEYCOMB_COST
 					var/obj/item/weapon/reagent_containers/food/snacks/honeycomb/H = new(src.loc)
 					if(toxic > 0)
-						H.reagents.add_reagent("toxin", toxic)
+						H.reagents.add_reagent(TOXIN, toxic)
 				if(honey_level >= 3)
 					new/obj/item/queen_bee(src.loc)
 				to_chat(user, "<span class='notice'>You successfully harvest the honeycombs. The empty apiary can be relocated.</span>")

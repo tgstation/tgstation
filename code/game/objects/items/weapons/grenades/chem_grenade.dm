@@ -206,27 +206,27 @@
 	if (E != null)
 		extract_uses = E.Uses
 		for(var/i=1,i<=extract_uses,i++)//<-------//exception for slime extracts injected with steroids. The grenade will repeat its checks untill all its remaining uses are gone
-			if (reservoir.reagents.has_reagent("plasma", 5))
-				reservoir.reagents.trans_id_to(E, "plasma", 5)		//If the grenade contains a slime extract, the grenade will check in this order
-			else if (reservoir.reagents.has_reagent("blood", 5))	//for any Plasma -> Blood ->or Water among the reagents of the other containers
-				reservoir.reagents.trans_id_to(E, "blood", 5)		//and inject 5u of it into the slime extract.
-			else if (reservoir.reagents.has_reagent("water", 5))
-				reservoir.reagents.trans_id_to(E, "water", 5)
-			else if (reservoir.reagents.has_reagent("sugar", 5))
-				reservoir.reagents.trans_id_to(E, "sugar", 5)
+			if (reservoir.reagents.has_reagent(PLASMA, 5))
+				reservoir.reagents.trans_id_to(E, PLASMA, 5)		//If the grenade contains a slime extract, the grenade will check in this order
+			else if (reservoir.reagents.has_reagent(BLOOD, 5))	//for any Plasma -> Blood ->or Water among the reagents of the other containers
+				reservoir.reagents.trans_id_to(E, BLOOD, 5)		//and inject 5u of it into the slime extract.
+			else if (reservoir.reagents.has_reagent(WATER, 5))
+				reservoir.reagents.trans_id_to(E, WATER, 5)
+			else if (reservoir.reagents.has_reagent(SUGAR, 5))
+				reservoir.reagents.trans_id_to(E, SUGAR, 5)
 		if(E.reagents.total_volume)						  //<-------//exception for slime reactions that produce new reagents. The grenade checks if any
 			E.reagents.trans_to(reservoir, E.reagents.total_volume)	//reagents are left in the slime extracts after the slime reactions occured
 		if (C != null)
 			extract_uses = C.Uses
 			for(var/j=1,j<=extract_uses,j++)	//why don't anyone ever uses "while" directives anyway?
-				if (reservoir.reagents.has_reagent("plasma", 5))
-					reservoir.reagents.trans_id_to(C, "plasma", 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
-				else if (reservoir.reagents.has_reagent("blood", 5))//this allow users to plannify which reagent will get into which extract.
-					reservoir.reagents.trans_id_to(C, "blood", 5)
-				else if (reservoir.reagents.has_reagent("water", 5))
-					reservoir.reagents.trans_id_to(C, "water", 5)
-				else if (reservoir.reagents.has_reagent("sugar", 5))
-					reservoir.reagents.trans_id_to(C, "sugar", 5)
+				if (reservoir.reagents.has_reagent(PLASMA, 5))
+					reservoir.reagents.trans_id_to(C, PLASMA, 5)	//since the order in which slime extracts are inserted matters (in the case of an Ex grenade)
+				else if (reservoir.reagents.has_reagent(BLOOD, 5))//this allow users to plannify which reagent will get into which extract.
+					reservoir.reagents.trans_id_to(C, BLOOD, 5)
+				else if (reservoir.reagents.has_reagent(WATER, 5))
+					reservoir.reagents.trans_id_to(C, WATER, 5)
+				else if (reservoir.reagents.has_reagent(SUGAR, 5))
+					reservoir.reagents.trans_id_to(C, SUGAR, 5)
 			if(C.reagents.total_volume)
 				C.reagents.trans_to(reservoir, C.reagents.total_volume)
 
@@ -350,9 +350,9 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminum", 30)
-	B2.reagents.add_reagent("foaming_agent", 10)
-	B2.reagents.add_reagent("pacid", 10)
+	B1.reagents.add_reagent(ALUMINUM, 30)
+	B2.reagents.add_reagent(FOAMING_AGENT, 10)
+	B2.reagents.add_reagent(PACID, 10)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 
@@ -371,11 +371,11 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("aluminum", 15)
-	//B1.reagents.add_reagent("fuel",20)
-	B2.reagents.add_reagent("plasma", 15)
-	B2.reagents.add_reagent("sacid", 15)
-	//B1.reagents.add_reagent("fuel",20)
+	B1.reagents.add_reagent(ALUMINUM, 15)
+	//B1.reagents.add_reagent(FUEL,20)
+	B2.reagents.add_reagent(PLASMA, 15)
+	B2.reagents.add_reagent(SACID, 15)
+	//B1.reagents.add_reagent(FUEL,20)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 
@@ -394,10 +394,10 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("plantbgone", 25)
-	B1.reagents.add_reagent("potassium", 25)
-	B2.reagents.add_reagent("phosphorus", 25)
-	B2.reagents.add_reagent("sugar", 25)
+	B1.reagents.add_reagent(PLANTBGONE, 25)
+	B1.reagents.add_reagent(POTASSIUM, 25)
+	B2.reagents.add_reagent(PHOSPHORUS, 25)
+	B2.reagents.add_reagent(SUGAR, 25)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 
@@ -416,9 +416,9 @@ obj/item/weapon/grenade/chem_grenade/exgrenade/attackby(obj/item/weapon/W as obj
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 
-	B1.reagents.add_reagent("fluorosurfactant", 40)
-	B2.reagents.add_reagent("water", 40)
-	B2.reagents.add_reagent("cleaner", 10)
+	B1.reagents.add_reagent(FLUOROSURFACTANT, 40)
+	B2.reagents.add_reagent(WATER, 40)
+	B2.reagents.add_reagent(CLEANER, 10)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 

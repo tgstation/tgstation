@@ -92,7 +92,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("creatine", 50)
+		reagents.add_reagent(CREATINE, 50)
 
 /obj/item/weapon/reagent_containers/pill/antitox
 	name = "Anti-toxins pill"
@@ -101,7 +101,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("anti_toxin", 25)
+		reagents.add_reagent(ANTI_TOXIN, 25)
 
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"
@@ -110,7 +110,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("toxin", 50)
+		reagents.add_reagent(TOXIN, 50)
 
 /obj/item/weapon/reagent_containers/pill/cyanide
 	name = "Cyanide pill"
@@ -119,7 +119,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("cyanide", 50)
+		reagents.add_reagent(CYANIDE, 50)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
 	name = "Adminordrazine pill"
@@ -128,7 +128,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("adminordrazine", 50)
+		reagents.add_reagent(ADMINORDRAZINE, 50)
 
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill"
@@ -137,7 +137,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("stoxin", 30)
+		reagents.add_reagent(STOXIN, 30)
 
 /obj/item/weapon/reagent_containers/pill/kelotane
 	name = "Kelotane pill"
@@ -146,7 +146,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("kelotane", 30)
+		reagents.add_reagent(KELOTANE, 30)
 
 /obj/item/weapon/reagent_containers/pill/tramadol
 	name = "Tramadol pill"
@@ -155,7 +155,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("tramadol", 15)
+		reagents.add_reagent(TRAMADOL, 15)
 
 
 /obj/item/weapon/reagent_containers/pill/methylphenidate
@@ -174,7 +174,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("citalopram", 15)
+		reagents.add_reagent(CITALOPRAM, 15)
 
 
 /obj/item/weapon/reagent_containers/pill/inaprovaline
@@ -184,7 +184,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("inaprovaline", 30)
+		reagents.add_reagent(INAPROVALINE, 30)
 
 /obj/item/weapon/reagent_containers/pill/dexalin
 	name = "Dexalin pill"
@@ -193,7 +193,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("dexalin", 30)
+		reagents.add_reagent(DEXALIN, 30)
 
 /obj/item/weapon/reagent_containers/pill/bicaridine
 	name = "Bicaridine pill"
@@ -202,7 +202,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("bicaridine", 30)
+		reagents.add_reagent(BICARIDINE, 30)
 
 /obj/item/weapon/reagent_containers/pill/happy
 	name = "Happy pill"
@@ -211,8 +211,8 @@
 
 	New()
 		..()
-		reagents.add_reagent("space_drugs", 15)
-		reagents.add_reagent("sugar", 15)
+		reagents.add_reagent(SPACE_DRUGS, 15)
+		reagents.add_reagent(SUGAR, 15)
 
 /obj/item/weapon/reagent_containers/pill/zoom
 	name = "Zoom pill"
@@ -221,9 +221,9 @@
 
 	New()
 		..()
-		reagents.add_reagent("impedrezene", 10)
-		reagents.add_reagent("synaptizine", 1)
-		reagents.add_reagent("hyperzine", 10)
+		reagents.add_reagent(IMPEDREZENE, 10)
+		reagents.add_reagent(SYNAPTIZINE, 1)
+		reagents.add_reagent(HYPERZINE, 10)
 
 /obj/item/weapon/reagent_containers/pill/hyperzine
 	name = "Hyperzine pill"
@@ -232,7 +232,7 @@
 	icon_state = "pill18"
 	New()
 		..()
-		reagents.add_reagent("hyperzine", 10)
+		reagents.add_reagent(HYPERZINE, 10)
 
 /obj/item/weapon/reagent_containers/pill/creatine_safe
 	name = "Creatine Pill (26 units)"
@@ -241,7 +241,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("creatine", 26)
+		reagents.add_reagent(CREATINE, 26)
 
 /obj/item/weapon/reagent_containers/pill/creatine_supplement
 	name = "Creatine Supplement (5 units)"
@@ -250,7 +250,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("creatine", 5)
+		reagents.add_reagent(CREATINE, 5)
 
 
 /obj/item/weapon/storage/pill_bottle/time_release
@@ -271,10 +271,10 @@
 /obj/item/weapon/reagent_containers/pill/time_release/injest(mob/M as mob)
 	if(!reagents) return
 	if(!M) return
-	var/timer = round(reagents.get_reagent_amount("sugar"),1)
+	var/timer = round(reagents.get_reagent_amount(SUGAR),1)
 	forceMove(M)
 	spawn(timer*30)
-		reagents.del_reagent("sugar")
+		reagents.del_reagent(SUGAR)
 		reagents.reaction(M, INGEST)
 		reagents.trans_to(M, reagents.total_volume)
 		qdel(src)
@@ -294,7 +294,7 @@
 
 /obj/item/weapon/reagent_containers/pill/random/New()
 	..()
-	var/chemical = pick("hyperzine", "oxycodone", "doctorsdelight", "lexorin", "leporazine", "mutagen", "ryetalyn", "pacid", "cornoil", "tonio", "space_drugs","zombiepowder")
+	var/chemical = pick(HYPERZINE, OXYCODONE, DOCTORSDELIGHT, LEXORIN, LEPORAZINE, MUTAGEN, RYETALYN, PACID, CORNOIL, TONIO, SPACE_DRUGS,ZOMBIEPOWDER)
 	reagents.add_reagent(chemical, 10)
 	/* Possible choices:
 	Good: Hyperzine, Oxycodone, Doctor's Delight, Leporazine

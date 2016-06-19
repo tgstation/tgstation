@@ -6,7 +6,7 @@
 	id = "recharge_station"
 	req_tech = list("programming" = 4, "powerstorage" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/recharge_station
 
@@ -16,7 +16,7 @@
 	id = "photocopier"
 	req_tech = list ("powerstorage" = 2, "engineering" = 2, "programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/photocopier
 
@@ -26,7 +26,7 @@
 	id = "fax"
 	req_tech = list ("bluespace" = 2, "materials" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/fax
 
@@ -36,7 +36,7 @@
 	id="condimaster"
 	req_tech = list ("engineering" = 3, "biotech" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/condimaster
 
@@ -46,7 +46,7 @@
 	id="snackbarmachine"
 	req_tech = list ("engineering" = 3, "biotech" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/snackbar_machine
 
@@ -56,7 +56,7 @@
 	id = "smelter"
 	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/processing_unit
 
@@ -72,7 +72,7 @@
 	id = "stackingmachine"
 	req_tech = list("programming" = 2, "materials" = 3, "engineering" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Machine Boards"
 	build_path = /obj/item/weapon/circuitboard/stacking_unit
 
@@ -82,7 +82,7 @@
 	id = "vendomat"
 	req_tech = list("materials" = 1, "engineering" = 1, "powerstorage" = 1)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Misc"
 	build_path = /obj/item/weapon/circuitboard/vendomat
 
@@ -92,7 +92,7 @@
 	id = "sortingmachine"
 	req_tech = list("materials" = 3, "engineering" = 3, "programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	build_path = /obj/item/weapon/circuitboard/sorting_machine/recycling
 
 /datum/design/sorting_machine/destination
@@ -107,5 +107,5 @@
 	id = "washingmachine"
 	req_tech = list("materials" = 1)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	build_path = /obj/item/weapon/circuitboard/washing_machine

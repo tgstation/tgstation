@@ -162,7 +162,7 @@
 							for(var/datum/organ/external/E in h.organs)
 								E.droplimb(1)
 						if(3)
-							user.reagents.add_reagent("amutationtoxin", 1)
+							user.reagents.add_reagent(AMUTATIONTOXIN, 1)
 							to_chat(user, "<span class=danger><B>You've been turned into a slime! </span></B>")
 				if(6 to 9)
 					to_chat(user, "<span class=sinister></B>You have rolled low and shall recieve a curse! It could be a lot worse however! </span></B>")
@@ -217,7 +217,7 @@
 												E.droplimb(1)
 						if(4)
 							h.adjustBrainLoss(200)
-							user.reagents.add_reagent("nutriment", 1000)
+							user.reagents.add_reagent(NUTRIMENT, 1000)
 							user.overeatduration = 1000
 
 							to_chat(user, "<span class=danger><B>In this moment you feel euphoric! </span></B>")

@@ -110,77 +110,77 @@
 
 		switch(reagents.get_master_reagent_id())
 
-			if("ketchup")
-				name = "ketchup"
+			if(KETCHUP)
+				name = KETCHUP
 				desc = "You feel more American already."
-				icon_state = "ketchup"
+				icon_state = KETCHUP
 				item_state = null
-			if("capsaicin")
+			if(CAPSAICIN)
 				name = "hotsauce"
 				desc = "You can almost TASTE the stomach ulcers now!"
 				icon_state = "hotsauce"
 				item_state = null
-			if("enzyme")
+			if(ENZYME)
 				name = "universal enzyme"
 				desc = "Used in cooking various dishes."
-				icon_state = "enzyme"
+				icon_state = ENZYME
 				item_state = null
-			if("flour")
+			if(FLOUR)
 				name = "flour sack"
 				desc = "A big bag of flour. Good for baking!"
-				icon_state = "flour"
+				icon_state = FLOUR
 				item_state = null
-			if("milk")
+			if(MILK)
 				name = "space milk"
 				desc = "It's milk. White and nutritious goodness!"
-				icon_state = "milk"
+				icon_state = MILK
 				item_state = "carton"
-			if("soymilk")
+			if(SOYMILK)
 				name = "soy milk"
 				desc = "It's soy milk. White and nutritious goodness!"
-				icon_state = "soymilk"
+				icon_state = SOYMILK
 				item_state = "carton"
-			if("rice")
+			if(RICE)
 				name = "rice sack"
 				desc = "A taste of Asia in the kitchen."
-				icon_state = "rice"
+				icon_state = RICE
 				item_state = null
-			if("soysauce")
+			if(SOYSAUCE)
 				name = "soy sauce"
 				desc = "A salty soy-based flavoring."
-				icon_state = "soysauce"
+				icon_state = SOYSAUCE
 				item_state = null
-			if("frostoil")
+			if(FROSTOIL)
 				name = "coldsauce"
 				desc = "Leaves the tongue numb in its passage."
 				icon_state = "coldsauce"
 				item_state = null
-			if("sodiumchloride")
+			if(SODIUMCHLORIDE)
 				name = "salt shaker"
 				desc = "Salt. From space oceans, presumably."
 				icon_state = "saltshakersmall"
 				item_state = null
-			if("blackpepper")
+			if(BLACKPEPPER)
 				name = "pepper mill"
 				desc = "Often used to flavor food or make people sneeze."
 				icon_state = "peppermillsmall"
 				item_state = null
-			if("cornoil")
+			if(CORNOIL)
 				name = "corn oil"
 				desc = "A delicious oil used in cooking. Made from corn."
-				icon_state = "cornoil"
+				icon_state = CORNOIL
 				item_state = null
-			if("sugar")
-				name = "sugar"
+			if(SUGAR)
+				name = SUGAR
 				desc = "Tasty space sugar!"
-				icon_state = "sugar"
+				icon_state = SUGAR
 				item_state = null
-			if("chefspecial")
+			if(CHEFSPECIAL)
 				name = "\improper Chef Excellence's Special Sauce"
 				desc = "A potent sauce distilled from the toxin glands of 1000 Space Carp."
 				icon_state = "emptycondiment"
 				item_state = null
-			if("vinegar")
+			if(VINEGAR)
 				name = "malt vinegar bottle"
 				desc = "Perfect for fish and chips!"
 				icon_state = "vinegar_container"
@@ -190,15 +190,15 @@
 				desc = "Sweet and healthy!"
 				icon_state = "honey"
 				item_state = null
-			if("cinnamon")
+			if(CINNAMON)
 				name = "cinnamon shaker"
 				desc = "A spice, obtained from the bark of cinnamomum trees."
-				icon_state = "cinnamon"
+				icon_state = CINNAMON
 				item_state = null
-			if("gravy")
+			if(GRAVY)
 				name = "gravy boat"
 				desc = "Too small to set sail on."
-				icon_state = "gravy"
+				icon_state = GRAVY
 				item_state = null
 			else
 				name = "misc condiment bottle"
@@ -222,23 +222,23 @@
 /obj/item/weapon/reagent_containers/food/condiment/enzyme
 	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
-	icon_state = "enzyme"
+	icon_state = ENZYME
 
 /obj/item/weapon/reagent_containers/food/condiment/enzyme/New()
 	..()
-	reagents.add_reagent("enzyme", 50)
+	reagents.add_reagent(ENZYME, 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/enzyme/restock()
 	if(istype(src,/obj/item/weapon/reagent_containers/food/condiment/enzyme))
-		if(reagents.get_reagent_amount("enzyme") < 50)
-			reagents.add_reagent("enzyme", 2)
+		if(reagents.get_reagent_amount(ENZYME) < 50)
+			reagents.add_reagent(ENZYME, 2)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
 	desc = "Tasty space sugar!"
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar/New()
 	..()
-	reagents.add_reagent("sugar", 50)
+	reagents.add_reagent(SUGAR, 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker
 	name = "salt shaker"
@@ -249,7 +249,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/New()
 	..()
-	reagents.add_reagent("sodiumchloride", 50)
+	reagents.add_reagent(SODIUMCHLORIDE, 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -260,7 +260,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill/New()
 	..()
-	reagents.add_reagent("blackpepper", 50)
+	reagents.add_reagent(BLACKPEPPER, 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/syndisauce
 	name = "Chef Excellence's Special Sauce"
@@ -269,7 +269,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/syndisauce/New()
 	..()
-	reagents.add_reagent("chefspecial", 20)
+	reagents.add_reagent(CHEFSPECIAL, 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/vinegar
 	name = "malt vinegar bottle"
@@ -277,7 +277,7 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/vinegar/New()
 	..()
-	reagents.add_reagent("vinegar", 50)
+	reagents.add_reagent(VINEGAR, 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/gravy
 	name = "gravy boat"
@@ -286,13 +286,13 @@
 
 /obj/item/weapon/reagent_containers/food/condiment/gravy/New()
 	..()
-	reagents.add_reagent("gravy", 10)
+	reagents.add_reagent(GRAVY, 10)
 
 /obj/item/weapon/reagent_containers/food/condiment/exotic
 	name = "exotic bottle"
 	desc = "If you can see this label, something is wrong."
 	//~9% chance of anything but special sauce, which is .09 chance
-	var/global/list/possible_exotic_condiments = list("enzyme"=10,"blackpepper"=10,"vinegar"=10,"sodiumchloride"=10,"cinnamon"=10,"chefspecial"=1,"frostoil"=10,"soysauce"=10,"capsaicin"=10,"honey"=10,"ketchup"=10,"coco"=10)
+	var/global/list/possible_exotic_condiments = list(ENZYME=10,BLACKPEPPER=10,VINEGAR=10,SODIUMCHLORIDE=10,CINNAMON=10,CHEFSPECIAL=1,FROSTOIL=10,SOYSAUCE=10,CAPSAICIN=10,"honey"=10,KETCHUP=10,COCO=10)
 
 /obj/item/weapon/reagent_containers/food/condiment/exotic/New()
 	..()

@@ -4,7 +4,7 @@
 	id = "safeguard_module"
 	req_tech = list("programming" = 3, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/targetted/safeguard
 
@@ -14,7 +14,7 @@
 	id = "onehuman_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/targetted/oneHuman
 	locked = 1
@@ -26,7 +26,7 @@
 	id = "protectstation_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/standard/protectStation
 
@@ -36,7 +36,7 @@
 	id = "notele_module"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/standard/teleporterOffline
 
@@ -46,7 +46,7 @@
 	id = "quarantine_module"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/standard/quarantine
 
@@ -56,7 +56,7 @@
 	id = "oxygen_module"
 	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/standard/oxygen
 	locked = 1
@@ -68,7 +68,7 @@
 	id = "freeform_module"
 	req_tech = list("programming" = 4, "materials" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/freeform
 
@@ -78,7 +78,7 @@
 	id = "reset_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_GOLD = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_GOLD = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/reset
 
@@ -88,7 +88,7 @@
 	id = "purge_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/purge
 
@@ -98,7 +98,7 @@
 	id = "freeformcore_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/freeform/core
 
@@ -108,7 +108,7 @@
 	id = "asimov_module"
 	req_tech = list("programming" = 3, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/asimov
 
@@ -118,7 +118,7 @@
 	id = "paladin_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/paladin
 
@@ -128,7 +128,7 @@
 	id = "tyrant_module"
 	req_tech = list("programming" = 4, "syndicate" = 2, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/tyrant
 	locked = 1
@@ -140,7 +140,7 @@
 	id = "celtic_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/celtic
 	
@@ -150,7 +150,7 @@
 	id = "hogan_module"
 	req_tech = list("programming" = 4, "materials" = 6)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20, MAT_DIAMOND = 100)
+	materials = list(MAT_GLASS = 2000, SACID = 20, MAT_DIAMOND = 100)
 	category = "Module Boards"
 	build_path = /obj/item/weapon/aiModule/core/hogan
 	

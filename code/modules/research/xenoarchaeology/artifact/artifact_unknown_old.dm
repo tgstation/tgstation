@@ -39,7 +39,7 @@
 	// Power randomisation
 	my_effect.trigger = pick("force","energy","chemical","heat","touch","presence")
 	if (my_effect.trigger == "chemical")
-		my_effect.triggerX = pick("hydrogen","corrosive","volatile","toxic")
+		my_effect.triggerX = pick(HYDROGEN,"corrosive","volatile","toxic")
 
 	my_effect.effecttype = pick("healing","injure","stun","roboheal","robohurt","cellcharge","celldrain","planthelper","forcefield","teleport","dnaswitch","emp","sleepy")
 
@@ -116,20 +116,20 @@
 		return*/
 	if (my_effect.trigger == "chemical" && istype(W, /obj/item/weapon/reagent_containers/))
 		switch(my_effect.triggerX)
-			if("hydrogen")
-				if (W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
+			if(HYDROGEN)
+				if (W.reagents.has_reagent(HYDROGEN, 1) || W.reagents.has_reagent(WATER, 1))
 					src.Artifact_Activate()
 					return
 			if("corrosive")
-				if (W.reagents.has_reagent("acid", 1) || W.reagents.has_reagent("pacid", 1) || W.reagents.has_reagent("diethylamine", 1))
+				if (W.reagents.has_reagent("acid", 1) || W.reagents.has_reagent(PACID, 1) || W.reagents.has_reagent(DIETHYLAMINE, 1))
 					src.Artifact_Activate()
 					return
 			if("volatile")
-				if (W.reagents.has_reagent("plasma", 1) || W.reagents.has_reagent("thermite", 1))
+				if (W.reagents.has_reagent(PLASMA, 1) || W.reagents.has_reagent(THERMITE, 1))
 					src.Artifact_Activate()
 					return
 			if("toxic")
-				if (W.reagents.has_reagent("toxin", 1) || W.reagents.has_reagent("cyanide", 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent("neurotoxin", 1))
+				if (W.reagents.has_reagent(TOXIN, 1) || W.reagents.has_reagent(CYANIDE, 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent(NEUROTOXIN, 1))
 					src.Artifact_Activate()
 					return
 	..()

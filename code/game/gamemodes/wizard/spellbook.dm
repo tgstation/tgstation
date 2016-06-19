@@ -714,7 +714,7 @@
 
 /obj/item/weapon/spellbook/oneuse/subjugate/recoil(mob/living/carbon/user as mob)
 	if(istype(user, /mob/living/carbon/human))
-		user.reagents.add_reagent("rum", 200)
+		user.reagents.add_reagent(RUM, 200)
 		to_chat(user, "<span class = 'warning'>You feel very drunk all of a sudden.</span>")
 		qdel(src)
 

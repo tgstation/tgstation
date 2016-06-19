@@ -12,7 +12,7 @@
 	var/vol_temp
 	// see libs/IconProcs/IconProcs.dm
 	for(var/datum/reagent/reagent in reagent_list)
-		if(reagent.id == "blood" && reagent.data["blood_colour"])
+		if(reagent.id == BLOOD && reagent.data["blood_colour"])
 			reagent_color = reagent.data["blood_colour"]
 		else
 			reagent_color = reagent.color

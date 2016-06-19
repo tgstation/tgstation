@@ -1,5 +1,5 @@
 // Reagents to log when sprayed
-var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
+var/global/list/logged_sprayed_reagents = list(SACID, PACID, LUBE, FUEL)
 
 /obj/item/weapon/reagent_containers/spray
 	name = "spray bottle"
@@ -92,9 +92,9 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 /obj/item/weapon/reagent_containers/spray/restock()
 	if(name == "Polyacid spray")
-		reagents.add_reagent("pacid", 2)
+		reagents.add_reagent(PACID, 2)
 	else if(name == "Lube spray")
-		reagents.add_reagent("lube", 2)
+		reagents.add_reagent(LUBE, 2)
 
 /obj/item/weapon/reagent_containers/spray/proc/make_puff(var/atom/target, var/mob/user)
 	// Create the chemical puff
@@ -124,7 +124,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 /obj/item/weapon/reagent_containers/spray/cleaner/New()
 	..()
-	reagents.add_reagent("cleaner", 250)
+	reagents.add_reagent(CLEANER, 250)
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
@@ -139,7 +139,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 /obj/item/weapon/reagent_containers/spray/pepper/New()
 	..()
-	reagents.add_reagent("condensedcapsaicin", 40)
+	reagents.add_reagent(CONDENSEDCAPSAICIN, 40)
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
@@ -152,7 +152,7 @@ var/global/list/logged_sprayed_reagents = list("sacid", "pacid", "lube", "fuel")
 
 /obj/item/weapon/reagent_containers/spray/plantbgone/New()
 	..()
-	reagents.add_reagent("plantbgone", 100)
+	reagents.add_reagent(PLANTBGONE, 100)
 
 
 //chemsprayer

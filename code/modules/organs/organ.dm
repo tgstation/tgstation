@@ -46,7 +46,7 @@
 
 //Germs
 /datum/organ/proc/handle_antibiotics()
-	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
+	var/antibiotics = owner.reagents.get_reagent_amount(SPACEACILLIN)
 
 	if(!germ_level || antibiotics < 5)
 		return
@@ -122,12 +122,12 @@
 	if(species.has_organ["liver"])
 		var/datum/organ/internal/liver = internal_organs_by_name["liver"]
 		if(!liver || liver.status & ORGAN_CUT_AWAY)
-			reagents.add_reagent("toxin", rand(1, 3))
+			reagents.add_reagent(TOXIN, rand(1, 3))
 
 	if(species.has_organ["kidneys"])
 		var/datum/organ/internal/kidney = internal_organs_by_name["kidneys"]
 		if(!kidney || kidney.status & ORGAN_CUT_AWAY)
-			reagents.add_reagent("toxin", rand(1, 3))
+			reagents.add_reagent(TOXIN, rand(1, 3))
 
 	if(!force_process && !bad_external_organs.len) //Nothing to update, just drop it
 		return
@@ -225,12 +225,12 @@
 	//List of reagents which will affect cancerous growth
 	//Phalanximine and Medical Nanobots are the only reagent which can reverse cancerous growth in high doses, the others can stall it, some can even accelerate it
 	//Every "unit" here corresponds to a tick of cancer growth, so for example 20 units of Phalanximine counters one unit of cancer growth
-	var/phalanximine = owner.reagents.get_reagent_amount("phalanximine") / 5 //Phalanximine only works in large doses, but can actually cure cancer past the threshold unlike all other reagents below
-	var/medbots = owner.reagents.get_reagent_amount("mednanobots") * 2 //Medical nanobots for a cancer-free future tomorrow. Try not to overdose them, powerful enough to not risk going above 5u
-	var/hardcores = owner.reagents.get_reagent_amount("bustanut") //Bustanuts contain the very essence of Bustatime, stalling even the most robust ailments with a small dose
-	var/ryetalyn = owner.reagents.get_reagent_amount("ryetalyn") //Ryetalin will very easily suppress the rogue DNA in cancer cells, but cannot actually cure it, you need to destroy the cells
-	var/holywater = owner.reagents.get_reagent_amount("holywater") / 10 //Holy water has very potent effects with stalling cancer
-	var/mutagen = owner.reagents.get_reagent_amount("mutagen") / 5 //Mutagen will cause disastrous cancer growth if there already is one. It's the virus food of tumors
+	var/phalanximine = owner.reagents.get_reagent_amount(PHALANXIMINE) / 5 //Phalanximine only works in large doses, but can actually cure cancer past the threshold unlike all other reagents below
+	var/medbots = owner.reagents.get_reagent_amount(MEDNANOBOTS) * 2 //Medical nanobots for a cancer-free future tomorrow. Try not to overdose them, powerful enough to not risk going above 5u
+	var/hardcores = owner.reagents.get_reagent_amount(BUSTANUT) //Bustanuts contain the very essence of Bustatime, stalling even the most robust ailments with a small dose
+	var/ryetalyn = owner.reagents.get_reagent_amount(RYETALYN) //Ryetalin will very easily suppress the rogue DNA in cancer cells, but cannot actually cure it, you need to destroy the cells
+	var/holywater = owner.reagents.get_reagent_amount(HOLYWATER) / 10 //Holy water has very potent effects with stalling cancer
+	var/mutagen = owner.reagents.get_reagent_amount(MUTAGEN) / 5 //Mutagen will cause disastrous cancer growth if there already is one. It's the virus food of tumors
 
 	var/cancerous_growth = 1 //Every tick, cancer grows by one tick, without any external factors
 

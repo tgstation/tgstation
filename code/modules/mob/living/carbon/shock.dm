@@ -11,17 +11,17 @@
 	1.7	* src.getCloneLoss() + 		\
 	2	* src.halloss
 
-	if(reagents.has_reagent("alkysine"))
+	if(reagents.has_reagent(ALKYSINE))
 		src.traumatic_shock -= 10
-	if(reagents.has_reagent("inaprovaline"))
+	if(reagents.has_reagent(INAPROVALINE))
 		src.traumatic_shock -= 25
-	if(reagents.has_reagent("synaptizine"))
+	if(reagents.has_reagent(SYNAPTIZINE))
 		src.traumatic_shock -= 40
-	if(reagents.has_reagent("paracetamol"))
+	if(reagents.has_reagent(PARACETAMOL))
 		src.traumatic_shock -= 50
-	if(reagents.has_reagent("tramadol"))
+	if(reagents.has_reagent(TRAMADOL))
 		src.traumatic_shock -= 80 // make synaptizine function as good painkiller
-	if(reagents.has_reagent("oxycodone"))
+	if(reagents.has_reagent(OXYCODONE))
 		src.traumatic_shock -= 200 // make synaptizine function as good painkiller
 	if(src.slurring)
 		src.traumatic_shock -= 20

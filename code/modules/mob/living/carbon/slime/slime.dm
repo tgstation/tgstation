@@ -111,10 +111,10 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(reagents)
-		if(reagents.has_reagent("hyperzine")) // hyperzine slows slimes down
+		if(reagents.has_reagent(HYPERZINE)) // hyperzine slows slimes down
 			tally *= 2 // moves twice as slow
 
-		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
+		if(reagents.has_reagent(FROSTOIL)) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
 	if(health <= 0) // if damaged, the slime moves twice as slow
@@ -1282,8 +1282,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/New()
 	..()
-	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("slimejelly", 1)
+	reagents.add_reagent(NUTRIMENT, 4)
+	reagents.add_reagent(SLIMEJELLY, 1)
 	spawn(rand(1200,1500))//the egg takes a while to "ripen"
 		Grow()
 

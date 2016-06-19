@@ -6,7 +6,7 @@
 	id = "ripley_main"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/main
 
@@ -16,7 +16,7 @@
 	id = "ripley_peri"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/ripley/peripherals
 
@@ -28,7 +28,7 @@
 	id = "odysseus_main"
 	req_tech = list("programming" = 3,"biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/main
 
@@ -38,7 +38,7 @@
 	id = "odysseus_peri"
 	req_tech = list("programming" = 3,"biotech" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/odysseus/peripherals
 
@@ -50,7 +50,7 @@
 	id = "phazon_main"
 	req_tech = list("materials" = 9,"bluespace" = 10)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/main
 
@@ -60,7 +60,7 @@
 	id = "phazon_peri"
 	req_tech = list("materials" = 9,"bluespace" = 10)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/phazon/peripherals
 
@@ -72,7 +72,7 @@
 	id = "gygax_main"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/main
 
@@ -82,7 +82,7 @@
 	id = "gygax_peri"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/peripherals
 
@@ -92,7 +92,7 @@
 	id = "gygax_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/gygax/targeting
 
@@ -104,7 +104,7 @@
 	id = "durand_main"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/main
 
@@ -114,7 +114,7 @@
 	id = "durand_peri"
 	req_tech = list("programming" = 4)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/peripherals
 
@@ -124,7 +124,7 @@
 	id = "durand_targ"
 	req_tech = list("programming" = 4, "combat" = 2)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/durand/targeting
 
@@ -136,7 +136,7 @@
 	id = "honker_main"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
 
@@ -146,7 +146,7 @@
 	id = "honker_peri"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
 
@@ -156,6 +156,6 @@
 	id = "honker_targ"
 	req_tech = list("programming" = 3)
 	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	materials = list(MAT_GLASS = 2000, SACID = 20)
 	category = "Mecha Boards"
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting

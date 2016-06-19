@@ -112,8 +112,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb/New()
 	. = ..()
 	reagents.add_reagent("honey",10)
-	reagents.add_reagent("nutriment", 0.5)
-	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent(NUTRIMENT, 0.5)
+	reagents.add_reagent(SUGAR, 2)
 	bitesize = 2
 
 /datum/reagent/honey

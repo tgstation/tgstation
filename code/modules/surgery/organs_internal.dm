@@ -408,7 +408,7 @@
 				O.organ_data.rejecting = null
 
 				// Transfer over some blood data, if the organ doesn't have data.
-				var/datum/reagent/blood/organ_blood = O.reagents.reagent_list["blood"]
+				var/datum/reagent/blood/organ_blood = O.reagents.reagent_list[BLOOD]
 				if(!organ_blood || !organ_blood.data["blood_DNA"])
 					target.vessel.trans_to(O, 5, 1, 1)
 
@@ -496,7 +496,7 @@
 
 	if(istype(O))
 
-		var/datum/reagent/blood/transplant_blood = O.reagents.reagent_list["blood"]
+		var/datum/reagent/blood/transplant_blood = O.reagents.reagent_list[BLOOD]
 		if(!transplant_blood)
 			O.organ_data.transplant_data = list()
 			O.organ_data.transplant_data["species"] =    target.species.name

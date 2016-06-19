@@ -73,7 +73,7 @@
 
 	if(!src || !target || target.weedlevel == 0) return //Sanity check.
 
-	src.reagents.add_reagent("nutriment", target.weedlevel)
+	src.reagents.add_reagent(NUTRIMENT, target.weedlevel)
 	target.weedlevel = 0
 	src.visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
 

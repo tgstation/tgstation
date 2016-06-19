@@ -22,7 +22,7 @@
 
 	//(/vg/ EDIT disabling for now) handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	if(reagents.has_reagent("nuka_cola")) tally -= 10
+	if(reagents.has_reagent(NUKA_COLA)) tally -= 10
 
 	if((M_RUN in mutations)) tally -= 10
 
@@ -63,13 +63,13 @@
 		skate_bonus = max(skate_bonus, dispenser.speed_bonus)//if the player is carrying multiple BBD for some reason, he'll benefit from the speed bonus of the most upgraded one
 	tally = tally - skate_bonus + (6 * disease_slow)
 
-	if(reagents.has_reagent("hyperzine"))
+	if(reagents.has_reagent(HYPERZINE))
 		if(dna.mutantrace == "slime")
 			tally *= 2
 		else
 			tally -= 10
 
-	if(reagents.has_reagent("frostoil") && dna.mutantrace == "slime")
+	if(reagents.has_reagent(FROSTOIL) && dna.mutantrace == "slime")
 		tally *= 5
 
 	return max((tally+config.human_delay), -1) //cap at -1 as the 'fastest'

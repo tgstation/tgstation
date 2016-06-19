@@ -260,9 +260,9 @@ hi
 	icon_state = "pill9"
 	New()
 		..()
-		reagents.add_reagent("stoxin", 5)
-		reagents.add_reagent("sugar", 10)
-		reagents.add_reagent("ethanol", 5)
+		reagents.add_reagent(STOXIN, 5)
+		reagents.add_reagent(SUGAR, 10)
+		reagents.add_reagent(ETHANOL, 5)
 
 /obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
 	name = "Electronic cigarette"
@@ -287,8 +287,8 @@ hi
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/New()
 	..()
-	reagents.remove_reagent("tricordrazine", 30)
-	reagents.add_reagent("oxycodone", 15)
+	reagents.remove_reagent(TRICORDRAZINE, 30)
+	reagents.add_reagent(OXYCODONE, 15)
 	update_icon()
 	return
 

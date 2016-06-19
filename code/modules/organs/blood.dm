@@ -25,14 +25,14 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(species && species.flags & NO_BLOOD) //We want the var for safety but we can do without the actual blood.
 		return
 
-	vessel.add_reagent("blood",560)
+	vessel.add_reagent(BLOOD,560)
 	spawn(1)
 		fixblood()
 
 //Resets blood data
 /mob/living/carbon/human/proc/fixblood()
 	for(var/datum/reagent/blood/B in vessel.reagent_list)
-		if(B.id == "blood")
+		if(B.id == BLOOD)
 			B.data = list(	"donor"=src,"viruses"=null,"blood_DNA"=dna.unique_enzymes,"blood_colour"= species.blood_color,"blood_type"=dna.b_type,	\
 							"resistances"=null,"trace_chem"=null, "virus2" = null, "antibodies" = null)
 			B.color = B.data["blood_color"]
@@ -46,7 +46,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 	if(stat != DEAD && bodytemperature >= 170)	//Dead or cryosleep people do not pump the blood.
 
-		var/blood_volume = round(vessel.get_reagent_amount("blood"))
+		var/blood_volume = round(vessel.get_reagent_amount(BLOOD))
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_MAX && blood_volume)
@@ -59,12 +59,12 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 							break
 
 				B.volume += 0.1 // regenerate blood VERY slowly
-				if (reagents.has_reagent("nutriment"))	//Getting food speeds it up
+				if (reagents.has_reagent(NUTRIMENT))	//Getting food speeds it up
 					B.volume += 0.6
-					reagents.remove_reagent("nutriment", 0.5)
-				if (reagents.has_reagent("iron"))	//Hematogen candy anyone?
+					reagents.remove_reagent(NUTRIMENT, 0.5)
+				if (reagents.has_reagent(IRON))	//Hematogen candy anyone?
 					B.volume += 1.2
-					reagents.remove_reagent("iron", 0.5)
+					reagents.remove_reagent(IRON, 0.5)
 
 		// Damaged heart virtually reduces the blood volume, as the blood isn't
 		// being pumped properly anymore.
@@ -163,7 +163,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			blood_max = blood_max * BLOODLOSS_SPEED_MULTIPLIER
 			if(lying)
 				blood_max = blood_max * 0.7
-			/*if(reagents.has_reagent("inaprovaline"))
+			/*if(reagents.has_reagent(INAPROVALINE))
 				blood_max = blood_max * 0.7*/
 		drip(blood_max)
 
@@ -177,7 +177,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(!amt)
 		return
 
-	vessel.remove_reagent("blood",amt)
+	vessel.remove_reagent(BLOOD,amt)
 	blood_splatter(src,src)
 	stat_collection.blood_spilled += amt
 
@@ -225,11 +225,11 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if(species && species.flags & NO_BLOOD)
 		return null
 
-	if(vessel.get_reagent_amount("blood") < amount)
+	if(vessel.get_reagent_amount(BLOOD) < amount)
 		return null
 
 	. = ..()
-	vessel.remove_reagent("blood",amount) // Removes blood if human
+	vessel.remove_reagent(BLOOD,amount) // Removes blood if human
 
 //Transfers blood from container ot vessels
 /mob/living/carbon/proc/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
@@ -245,7 +245,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
 	reagents.update_total()
 
-	container.reagents.remove_reagent("blood", amount)
+	container.reagents.remove_reagent(BLOOD, amount)
 
 //Transfers blood from container ot vessels, respecting blood types compatability.
 /mob/living/carbon/human/inject_blood(obj/item/weapon/reagent_containers/container, var/amount)
@@ -253,7 +253,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/datum/reagent/blood/injected = get_blood(container.reagents)
 
 	if(species && species.flags & NO_BLOOD)
-		reagents.add_reagent("blood", amount, injected.data)
+		reagents.add_reagent(BLOOD, amount, injected.data)
 		reagents.update_total()
 		return
 
@@ -262,10 +262,10 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	if (!injected || !our)
 		return
 	if(blood_incompatible(injected.data["blood_type"],our.data["blood_type"]) )
-		reagents.add_reagent("toxin",amount * 0.5)
+		reagents.add_reagent(TOXIN,amount * 0.5)
 		reagents.update_total()
 	else
-		vessel.add_reagent("blood", amount, injected.data)
+		vessel.add_reagent(BLOOD, amount, injected.data)
 		vessel.update_total()
 	..()
 

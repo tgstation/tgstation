@@ -12,8 +12,8 @@ var/global/cockroach_egg_amount = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/roach_eggs/New()
 	..()
-	reagents.add_reagent("nutriment", 2)
-	reagents.add_reagent("toxin", 0.2)
+	reagents.add_reagent(NUTRIMENT, 2)
+	reagents.add_reagent(TOXIN, 0.2)
 	src.bitesize = 1.1
 
 	icon_state = "roach_eggs[rand(1,3)]"

@@ -766,7 +766,7 @@ Pressure: [env.return_pressure()]"}
 
 			M.put_in_hands(new /obj/item/weapon/mop(M))
 			var/obj/item/weapon/reagent_containers/glass/bucket/bucket = new(M)
-			bucket.reagents.add_reagent("water", 70)
+			bucket.reagents.add_reagent(WATER, 70)
 			M.put_in_hands(bucket)
 
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/chem_grenade/cleaner(M), slot_r_store)
