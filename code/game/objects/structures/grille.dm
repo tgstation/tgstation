@@ -262,7 +262,7 @@
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
 				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
-				tesla_zap(src, 3, C.powernet.avail * 0.08) //ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
+				tesla_zap(src, 1, C.powernet.avail * 0.08) //ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
 	take_damage(tforce)
 
 /obj/structure/grille/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
