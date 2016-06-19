@@ -1718,8 +1718,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		spawn(0)
-			S.start_recharge()
+		addtimer(S, "start_recharge", 0)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

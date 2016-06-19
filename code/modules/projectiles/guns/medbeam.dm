@@ -47,8 +47,7 @@
 	current_target = target
 	active = 1
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	spawn(0)
-		current_beam.Start()
+	addtimer(current_beam, "Start", 0)
 
 	feedback_add_details("gun_fired","[src.type]")
 
