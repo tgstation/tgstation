@@ -118,7 +118,7 @@
 	range = -2 //the world
 	max_targets = 1
 	selection_type = "view"
-	spell_flags = SELECTABLE
+	spell_flags = SELECTABLE|NAME_CAST
 
 	override_base = "genetic"
 	hud_state = "gen_project"
@@ -135,6 +135,9 @@
 		return
 
 	for(var/mob/living/carbon/human/target in targets)
+		if(tinfoil_check(target))
+			to_chat(user, "<span class='warning'>You are unable to target this person.</span>")
+			return
 		if(M_REMOTE_TALK in target.mutations)
 			target.show_message("<span class='notice'>You hear [user.real_name]'s voice: [say]</span>")
 		else
