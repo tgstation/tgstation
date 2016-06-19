@@ -219,9 +219,8 @@
 	spawn(src.gibtime)
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
-		var/list/turf/nearby_turfs = list()
-		for(var/turf/T in orange(3,get_turf(src)))
-			nearby_turfs += T
+		var/turf/T = get_turf(src)
+		var/list/turf/nearby_turfs = RANGE_TURFS(3,T) - T
 		var/obj/item/skin = allskin
 		skin.loc = src.loc
 		skin.throw_at_fast(pick(nearby_turfs),meat_produced,3)
