@@ -491,7 +491,7 @@
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
 	if(slot in no_equip)
-		if(!(type in I.species_exception))
+		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
 
 	var/R = H.has_right_hand()
