@@ -21,33 +21,50 @@
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
 
-/obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
-	if(!istype(C))
-		return
-	if(user.disabilities & CLUMSY && prob(50))
-		user << "<span class='warning'>Uh... how do those things work?!</span>"
-		apply_cuffs(user,user)
-		return
+obj/item/weapon/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
+    var/cuffTime = 30
 
-	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2)
-			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+    if(!istype(C))
+        return
+    if(user.disabilities & CLUMSY && prob(50))
+        user << "<span class='warning'>Uh... how do those things work?!</span>"
+        apply_cuffs(user,user)
+        return
 
-			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && C.get_num_arms() >= 2)
-				apply_cuffs(C,user)
-				user << "<span class='notice'>You handcuff [C].</span>"
-				if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
-					feedback_add_details("handcuffs","C")
-				else
-					feedback_add_details("handcuffs","H")
+    if(!C.handcuffed)
+        if(C.get_num_arms() >= 2)
 
-				add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
-		else
-			user << "<span class='warning'>[C] doesn't have two hands...</span>"
+            C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
+                                "<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+            playsound(loc, cuffsound, 30, 1, -2)
+
+            switch(user.mind.assigned_role)
+                if("Security Officer")
+                    cuffTime = 20
+                if("Warden")
+                    cuffTime = 20
+                if("Head of Security")
+                    cuffTime = 20
+                if("Captain")
+                    cuffTime = 20
+                else
+                    cuffTime = 30
+
+            if(do_mob(user, C, cuffTime ) && C.get_num_arms() >= 2)
+                apply_cuffs(C,user)
+                user << "<span class='notice'>You handcuff [C].</span>"
+                if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
+                    feedback_add_details("handcuffs","C")
+                else
+                    feedback_add_details("handcuffs","H")
+
+                add_logs(user, C, "handcuffed")
+            else
+                user << "<span class='warning'>You fail to handcuff [C]!</span>"
+        else
+            user << "<span class='warning'>[C] doesn't have two hands...</span>"
+    else
+        return
 
 /obj/item/weapon/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, var/dispense = 0)
 	if(target.handcuffed)
