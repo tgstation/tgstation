@@ -834,10 +834,12 @@
 	name = "brass box"
 	desc = "A huge brass box with several indentations in its surface."
 	icon_state = "brassbox"
-	w_class = 4
+	w_class = 5
 	max_w_class = 3
-	max_combined_w_class = 21
-	storage_slots = 21
+	max_combined_w_class = 28
+	storage_slots = 28
+	slowdown = 1
+	flags = HANDSLOW
 	var/proselytizer_type = /obj/item/clockwork/clockwork_proselytizer/scarab
 
 /obj/item/weapon/storage/box/brass/prefilled/New()
