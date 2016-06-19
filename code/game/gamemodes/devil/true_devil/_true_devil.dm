@@ -17,7 +17,8 @@
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	languages = ALL //The devil speaks all languages meme
+	languages_spoken = ALL //The devil speaks all languages meme
+	languages_understood = ALL //The devil speaks all languages meme
 	mob_size = MOB_SIZE_LARGE
 	var/mob/living/oldform
 	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]

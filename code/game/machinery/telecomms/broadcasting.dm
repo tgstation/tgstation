@@ -70,7 +70,8 @@
 	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
 	virt.name = name
 	virt.job = job
-	virt.languages = AM.languages
+	virt.languages_spoken = AM.languages_spoken
+	virt.languages_understood = AM.languages_understood
 	virt.source = AM
 	virt.radio = radio
 	virt.verb_say = verb_say
@@ -135,9 +136,9 @@
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
 			receive |= M
 
-	var/rendered = virt.compose_message(virt, virt.languages, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
+	var/rendered = virt.compose_message(virt, virt.languages_spoken, message, freq, spans) //Always call this on the virtualspeaker to advoid issues.
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, AM.languages, message, freq, spans)
+		hearer.Hear(rendered, virt, AM.languages_spoken, message, freq, spans)
 
 	if(length(receive))
 		// --- This following recording is intended for research and feedback in the use of department radio channels ---
@@ -258,7 +259,7 @@
 
 		// --- Can understand the speech ---
 
-		if (R.languages & M.languages)
+		if (R.languages_understood & M.languages_spoken)
 
 			heard_normal += R
 
