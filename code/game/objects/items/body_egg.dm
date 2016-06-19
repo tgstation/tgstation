@@ -20,16 +20,14 @@
 	owner.status_flags |= XENO_HOST
 	SSobj.processing |= src
 	owner.med_hud_set_status()
-	spawn(0)
-		AddInfectionImages(owner)
+	addtimer(src, "AddInfectionImages", 0, FALSE, owner)
 
 /obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
 	SSobj.processing.Remove(src)
 	if(owner)
 		owner.status_flags &= ~(XENO_HOST)
 		owner.med_hud_set_status()
-		spawn(0)
-			RemoveInfectionImages(owner)
+		addtimer(src, "RemoveInfectionImages", 0, FALSE, owner)
 	..()
 
 /obj/item/organ/body_egg/process()
