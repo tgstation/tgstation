@@ -128,6 +128,7 @@
 
 	if(health > -100)
 		visible_message("<span class='danger'>\The [M] glomps [src]!</span>")
+		add_logs(M, src, "glomped on", 0)
 
 		var/damage = rand(1, 3)
 

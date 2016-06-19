@@ -482,6 +482,7 @@ var/global/list/animal_count = list() //Stores types, and amount of animals of t
 	if(M.Victim) return // can't attack while eating!
 
 	visible_message("<span class='danger'>[M.name] glomps [src]!</span>")
+	add_logs(M, src, "glomped on", 0)
 
 	var/damage = rand(1, 3)
 

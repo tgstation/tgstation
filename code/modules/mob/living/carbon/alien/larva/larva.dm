@@ -142,6 +142,8 @@
 		for(var/mob/O in viewers(src, null))
 			visible_message("<span class='danger'>\The [M] glomps \the [src]!</span>")
 
+		add_logs(M, src, "glomped on", 0)
+
 		var/damage = rand(1, 3)
 
 		if(istype(src, /mob/living/carbon/slime/adult))

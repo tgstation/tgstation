@@ -428,6 +428,7 @@
 		for(var/mob/O in viewers(src, null))
 			if ((O.client && !( O.blinded )))
 				O.show_message(text("<span class='danger'>The [M.name] glomps []!</span>", src), 1)
+		add_logs(M, src, "glomped on", 0)
 
 		var/damage = rand(1, 3)
 
