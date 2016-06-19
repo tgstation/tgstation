@@ -40,6 +40,12 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	toolspeed = 2
 
+/obj/item/weapon/wrench/brass
+	name = "brass wrench"
+	desc = "A brass wrench. It's faintly warm to the touch."
+	icon_state = "wrench_brass"
+	toolspeed = 2
+
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
@@ -123,6 +129,12 @@
 		M = user
 	return eyestab(M,user)
 
+/obj/item/weapon/screwdriver/brass
+	name = "brass screwdriver"
+	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	icon_state = "screwdriver_brass"
+	toolspeed = 2
+
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
 	desc = "An electrical screwdriver, designed to be both precise and quick."
@@ -174,6 +186,11 @@
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wirecutters/brass
+	name = "brass wirecutters"
+	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	icon_state = "cutters_brass"
+	toolspeed = 2
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -477,6 +494,12 @@
 	light_intensity = 1
 	toolspeed = 2
 
+/obj/item/weapon/weldingtool/experimental/brass
+	name = "brass welding tool"
+	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
+
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 //i don't think this is actually used, yaaaaay -Pete
@@ -521,6 +544,12 @@
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
 	force = 8
+
+/obj/item/weapon/crowbar/brass
+	name = "brass crowbar"
+	desc = "A brass crowbar. It feels faintly warm to the touch."
+	icon_state = "crowbar_brass"
+	toolspeed = 2
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

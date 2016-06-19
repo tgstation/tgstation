@@ -30,6 +30,7 @@
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 
 /obj/item/clockwork/slab/starter
@@ -40,8 +41,12 @@
 	no_cost = TRUE
 	produces_components = FALSE
 
+/obj/item/clockwork/slab/scarab
+	nonhuman_usable = TRUE
+
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
+	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
@@ -110,6 +115,9 @@
 		return 0
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
+		return 0
+	if(!nonhuman_usable && !ishuman(user))
+		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
 		return 0
 	access_display(user)
 
