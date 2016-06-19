@@ -12,7 +12,7 @@
 
 /obj/item/device/paicard/New()
 	..()
-	overlays += "pai-off"
+	overlays += image(icon=icon, icon_state = "pai-off")
 
 #ifdef DEBUG_ROLESELECT
 /obj/item/device/paicard/test/New()
@@ -118,12 +118,12 @@
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
 	src.pai = personality
-	src.overlays += "pai-happy"
+	src.overlays += image(icon=icon, icon_state = "pai-happy")
 
 /obj/item/device/paicard/proc/removePersonality()
 	src.pai = null
 	src.overlays.len = 0
-	src.overlays += "pai-off"
+	src.overlays += image(icon=icon, icon_state = "pai-off")
 
 /obj/item/device/paicard/proc/setEmotion(var/emotion)
 	if(pai)
@@ -149,8 +149,8 @@
 			if(16) face = "pai-nose"
 			if(17) face = "pai-kawaii"
 			if(18) face = "pai-cry"
-		src.overlays += "[face]"
-		pai.overlays += "[face]"//we also update the mob's overlay so it appears properly on the scoreboard.
+		src.overlays += image(icon=icon, icon_state = "[face]")
+		pai.overlays += image(icon=icon, icon_state = "[face]")//we also update the mob's overlay so it appears properly on the scoreboard.
 
 /obj/item/device/paicard/proc/alertUpdate()
 	var/turf/T = get_turf(src.loc)
