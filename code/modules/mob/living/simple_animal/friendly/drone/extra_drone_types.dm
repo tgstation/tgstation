@@ -94,7 +94,8 @@
 	icon_state = "drone_clock"
 	icon_living = "drone_clock"
 	picked = TRUE
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	health = 60
 	maxHealth = 60
 	hacked = 1
