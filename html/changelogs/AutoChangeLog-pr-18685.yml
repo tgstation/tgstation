@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Servants of ratvar can now create cogscarab shells with a Script scripture. Adding a soul vessel to one will produce a small, drone-like being with an inbuilt proselytizer and tools."
+  - imageadd: "Clockwork mobs have their own speechbubble icons."
