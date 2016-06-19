@@ -214,9 +214,9 @@
 	soundeffect = 'sound/effects/attackblob.ogg'
 
 /obj/machinery/door/mineral/resin/TryToSwitchState(atom/user)
-	if(isalien(user))
-		..()
-	return
+	if(isalien(user) && !operating)
+		add_fingerprint(user)
+		SwitchState()
 
 /obj/machinery/door/mineral/resin/open()
 	..()
