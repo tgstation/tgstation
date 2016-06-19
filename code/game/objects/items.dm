@@ -342,6 +342,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
