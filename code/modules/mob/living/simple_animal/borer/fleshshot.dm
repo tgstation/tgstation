@@ -350,12 +350,18 @@
 					var/mob/living/carbon/human/L = parent_borer.host
 					if(parent_borer.hostlimb == "r_arm")
 						if(L.get_held_item_by_index(GRASP_RIGHT_HAND))
-							A.attackby(L.get_held_item_by_index(GRASP_RIGHT_HAND), L, 1, parent_borer)
+							if(!parent_borer.attack_cooldown)
+								A.attackby(L.get_held_item_by_index(GRASP_RIGHT_HAND), L, 1, parent_borer)
+								parent_borer.attack_cooldown = 1
+								parent_borer.reset_attack_cooldown()
 							bullet_die()
 							return
 					else
 						if(L.get_held_item_by_index(GRASP_LEFT_HAND))
-							A.attackby(L.get_held_item_by_index(GRASP_LEFT_HAND), L, 1, parent_borer)
+							if(!parent_borer.attack_cooldown)
+								A.attackby(L.get_held_item_by_index(GRASP_LEFT_HAND), L, 1, parent_borer)
+								parent_borer.attack_cooldown = 1
+								parent_borer.reset_attack_cooldown()
 							bullet_die()
 							return
 		if(isturf(A))					//if we hit a wall or an anchored atom, we pull ourselves to it

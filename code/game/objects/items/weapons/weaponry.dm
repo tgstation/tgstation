@@ -205,7 +205,7 @@ obj/item/weapon/banhammer/admin
 	flags = FPRINT
 	siemens_coefficient = 0
 	slot_flags = null
-	force = 35
+	force = 25
 	throwforce = 0
 	w_class = 5
 	sharpness = 0

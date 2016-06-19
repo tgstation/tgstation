@@ -282,6 +282,30 @@
 				showmessage = 1
 			passout(time_spent_channeling, showmessage)
 
+/obj/item/verbs/borer/attached_arm/em_pulse/verb/em_pulse()
+	set category = "Alien"
+	set name = "Electromagnetic Pulse"
+	set desc = "Expend a great deal of chemicals to produce a small electromagnetic pulse."
+
+	var/mob/living/simple_animal/borer/B=loc
+	if(!istype(B)) return
+	B.em_pulse()
+
+/mob/living/simple_animal/borer/proc/em_pulse()
+	set category = "Alien"
+	set name = "Electromagnetic Pulse"
+	set desc = "Expend a great deal of chemicals to produce a small electromagnetic pulse."
+
+	if(!check_can_do())
+		return
+
+	if(chemicals < 100)
+		to_chat(src, "<span class='warning'>You need at least 100 chemicals to do this.</span>")
+		return
+	else
+		chemicals -= 100
+		empulse(get_turf(src), 1, 2, 0)
+
 //////////UTILITY TREE/////////////////////
 /obj/item/verbs/borer/attached_arm/repair_bone/verb/repair_bone()
 	set category = "Alien"

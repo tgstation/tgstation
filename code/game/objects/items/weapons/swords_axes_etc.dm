@@ -220,7 +220,7 @@
 	flags = FPRINT
 	siemens_coefficient = 0
 	slot_flags = null
-	force = 20
+	force = 18
 	throwforce = 0
 	w_class = 5
 	sharpness = 1.5

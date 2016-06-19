@@ -149,10 +149,6 @@
 	name = "cafe_latte"
 	cost = 1
 
-/datum/borer_chem/arm/unlockable/hamserum
-	name = "hamserum"
-	cost = 100
-
 /datum/borer_chem/arm/unlockable/iron
 	name = "iron"
 	cost = 1

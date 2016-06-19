@@ -1137,8 +1137,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 							else
 								A.attackby(host.get_held_item_by_index(GRASP_RIGHT_HAND), host, 1, src)
 								attack_cooldown = 1
-								spawn(10)
-									attack_cooldown = 0
+								reset_attack_cooldown()
 								return
 						else if(istype(A, /obj/item))
 							var/obj/item/I = A
@@ -1152,8 +1151,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 							else
 								A.attackby(host.get_held_item_by_index(GRASP_LEFT_HAND), host, 1, src)
 								attack_cooldown = 1
-								spawn(10)
-									attack_cooldown = 0
+								reset_attack_cooldown()
 								return
 						else if(istype(A, /obj/item))
 							var/obj/item/I = A
@@ -1169,3 +1167,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 					if(host.get_held_item_by_index(GRASP_LEFT_HAND) && istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/weapon/gun/hookshot))
 						return
 				extend_o_arm.afterattack(A, host)
+
+/mob/living/simple_animal/borer/proc/reset_attack_cooldown()
+	spawn(10)
+		attack_cooldown = 0

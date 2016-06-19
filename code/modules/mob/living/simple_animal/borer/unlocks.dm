@@ -207,15 +207,6 @@
 	chem_type = /datum/borer_chem/arm/unlockable/cafe_latte
 	prerequisites=list("bone_sword")
 
-/datum/unlockable/borer/arm/chem_unlock/hamserum
-	id = "hamserum"
-	name = "Ham Serum Secretion"
-	desc = "Learn how to synthesize electromagnetic ham serum."
-	cost = 150
-	time = 60 SECONDS
-	chem_type = /datum/borer_chem/arm/unlockable/hamserum
-	prerequisites=list("bone_shield")
-
 /datum/unlockable/borer/arm/chem_unlock/iron
 	id = "iron"
 	name = "Iron Secretion"
@@ -642,6 +633,16 @@
 	cost=200
 	time=1 MINUTES
 	verb_type = /obj/item/verbs/borer/attached_arm/bone_cocoon
+	give_when_attached=1
+	prerequisites=list("bone_shield")
+
+/datum/unlockable/borer/arm/verb_unlock/em_pulse
+	id="em_pulse"
+	name = "Electromagnetic Pulse"
+	desc = "Learn how to expend a great deal of chemicals to produce a small electromagnetic pulse."
+	cost=150
+	time=60 SECONDS
+	verb_type = /obj/item/verbs/borer/attached_arm/em_pulse
 	give_when_attached=1
 	prerequisites=list("bone_shield")
 
