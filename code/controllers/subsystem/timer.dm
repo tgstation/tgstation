@@ -83,9 +83,8 @@ var/datum/subsystem/timer/SStimer
 			return hash_event.id
 	SStimer.hashes[event.hash] = event
 	if (wait <= 0)
-		spawn
-			SStimer.runevent(event)
-			SStimer.hashes -= event.hash
+		SStimer.runevent(event)
+		SStimer.hashes -= event.hash
 		return
 	// If we are unique (or we're not checking that), add the timer and return the id.
 	SStimer.processing += event
