@@ -100,8 +100,8 @@
 					continue
 				if(O.invisibility)
 					continue
-				if(istype(scanned_object, /obj/machinery/artifact))
-					var/obj/machinery/artifact/A = scanned_object
+				if(istype(O, /obj/machinery/artifact))
+					var/obj/machinery/artifact/A = O
 					if(A.being_used)
 						artifact_in_use = 1
 					else
@@ -121,6 +121,10 @@
 	if(href_list["halt_scan"])
 		scan_in_progress = 0
 		src.visible_message("<b>[name]</b> states, \"Scanning halted.\"")
+		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
+			var/obj/machinery/artifact/A = scanned_object
+			A.anchored = 0
+			A.being_used = 0
 
 	if(href_list["close"])
 		usr.unset_machine(src)
