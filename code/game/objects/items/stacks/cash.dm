@@ -12,6 +12,15 @@
 	w_class = 1
 	burn_state = FLAMMABLE
 	var/value = 1
+	var/cooldown = 0
+
+/obj/item/stack/spacecash/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(cooldown < world.time - 15)
+			cooldown = world.time
+			if(do_after(user, 15))
+				user.visible_message("<span class='rose'>[user] sniffs [src].</span>")
+				playsound(user, 'sound/misc/sniff.ogg', 20, 1)
 
 /obj/item/stack/spacecash/c10
 	icon_state = "spacecash10"
