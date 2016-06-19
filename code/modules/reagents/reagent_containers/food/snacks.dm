@@ -2377,7 +2377,6 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/braincakeslice
 	slices_num = 5
 	w_class = W_CLASS_MEDIUM
-	w_class = W_CLASS_MEDIUM
 	food_flags = FOOD_MEAT | FOOD_ANIMAL
 
 	New()
@@ -2672,6 +2671,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/margherita
 	name = "Margherita"
@@ -2761,6 +2761,8 @@
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/vegetablepizzaslice
 	slices_num = 6
+	w_class = W_CLASS_MEDIUM
+
 	New()
 		..()
 		reagents.add_reagent("nutriment", 30)
