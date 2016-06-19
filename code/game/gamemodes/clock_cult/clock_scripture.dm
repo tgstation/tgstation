@@ -46,6 +46,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				else
 					clockwork_component_cache[i] -= consumed_components[i]
 					used_cache_components[i]++
+		else
+			channel_time *= 0.5 //if ratvar has awoken or the slab has no cost, half channel time
 		if(!check_special_requirements() || !recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
 			for(var/i in used_slab_components)
 				if(used_slab_components[i])
