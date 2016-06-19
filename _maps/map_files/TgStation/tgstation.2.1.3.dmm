@@ -36235,7 +36235,7 @@
 /obj/machinery/light_switch{
 	pixel_y = -23
 	},
-/obj/structure/flora/kirbyplants/dead,
+/obj/item/weapon/twohanded/required/kirbyplants/dead,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "bCg" = (

@@ -2006,7 +2006,7 @@
 /turf/open/space,
 /area/space)
 "afl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -2829,7 +2829,7 @@
 	control_area = "AI Core Lobby";
 	pixel_x = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -3166,7 +3166,7 @@
 	name = "\improper Telecommunications Chamber"
 	})
 "aif" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -3448,7 +3448,7 @@
 	name = "\improper Command Hallway"
 	})
 "aiP" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -3885,7 +3885,7 @@
 	name = "\improper Command Hallway"
 	})
 "ajQ" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -4227,7 +4227,7 @@
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai_upload)
 "akD" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -4265,7 +4265,7 @@
 	},
 /area/gateway)
 "akI" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -4279,7 +4279,7 @@
 /turf/open/floor/plasteel/black,
 /area/maintenance/fsmaint)
 "akK" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -4372,7 +4372,7 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "akY" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -4387,7 +4387,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/fsmaint)
 "ala" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -4499,7 +4499,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "alq" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -4508,7 +4508,7 @@
 	name = "\improper Command Hallway"
 	})
 "alr" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -4546,7 +4546,7 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai_upload)
 "alu" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -4596,7 +4596,7 @@
 	name = "\improper Command Hallway"
 	})
 "alz" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-04";
 	layer = 4.1
 	},
@@ -5199,13 +5199,13 @@
 	name = "\improper Northwest Hallway"
 	})
 "anc" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port{
 	name = "\improper Northwest Hallway"
 	})
 "and" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /obj/machinery/camera/autoname{
 	dir = 8
 	},
@@ -5347,7 +5347,7 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "ant" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -6093,7 +6093,7 @@
 	name = "Emergency Air Pumps"
 	})
 "apd" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -6263,7 +6263,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -6281,7 +6281,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -7323,7 +7323,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -7351,7 +7351,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -7592,7 +7592,7 @@
 	name = "\improper AI Core"
 	})
 "asG" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -7851,7 +7851,7 @@
 	name = "Emergency Air Pumps"
 	})
 "atn" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -7988,7 +7988,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "atC" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -8417,7 +8417,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "auM" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -8642,7 +8642,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "avm" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -8809,7 +8809,7 @@
 	icon_state = "term";
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -9218,7 +9218,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "awN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -9371,7 +9371,7 @@
 /turf/open/floor/wood,
 /area/library)
 "axl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -9402,7 +9402,7 @@
 /turf/closed/wall,
 /area/library)
 "axs" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -10160,7 +10160,7 @@
 /turf/open/floor/wood,
 /area/library)
 "azo" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -10458,7 +10458,7 @@
 /turf/open/floor/wood,
 /area/hallway/primary/central)
 "aAd" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/camera/autoname{
@@ -11251,7 +11251,7 @@
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint2)
 "aBW" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -11464,7 +11464,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "aCu" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -12501,7 +12501,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "aET" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/shuttle,
@@ -12831,7 +12831,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit)
 "aFM" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -12982,7 +12982,7 @@
 	name = "\improper Bar and Kitchen"
 	})
 "aGc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -13219,7 +13219,7 @@
 /turf/open/floor/plasteel/stairs/right,
 /area/crew_quarters/theatre)
 "aGM" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -13465,7 +13465,7 @@
 	name = "\improper Bar and Kitchen"
 	})
 "aHt" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -13608,7 +13608,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aHS" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -14429,7 +14429,7 @@
 	},
 /area/shuttle/escape)
 "aJO" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -14483,7 +14483,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
 "aJV" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-21";
 	layer = 4.1;
@@ -14520,7 +14520,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -14530,7 +14530,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/central)
 "aKd" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -14690,7 +14690,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aKB" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -14714,7 +14714,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
 "aKF" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-21";
 	layer = 4.1;
@@ -15009,7 +15009,7 @@
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aLq" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -15023,7 +15023,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
 "aLs" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -15035,7 +15035,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
 "aLt" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-05";
 	layer = 4.1;
@@ -15045,7 +15045,7 @@
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
 "aLu" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	anchored = 1;
 	icon_state = "plant-21";
 	layer = 4.1;
@@ -15860,7 +15860,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "aNm" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -15880,7 +15880,7 @@
 /turf/open/floor/plasteel/bot,
 /area/security/brig)
 "aNp" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -16049,7 +16049,7 @@
 /turf/open/floor/plasteel/black,
 /area/toxins/misc_lab)
 "aNN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -16080,7 +16080,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aNR" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -16177,7 +16177,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -16898,7 +16898,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "aPX" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -18299,7 +18299,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aTe" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -18414,7 +18414,7 @@
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
 "aTs" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -18478,7 +18478,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aTz" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -18672,7 +18672,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -18681,7 +18681,7 @@
 	name = "Security Maintenance"
 	})
 "aTZ" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -18800,7 +18800,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aUl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -18973,7 +18973,7 @@
 /turf/open/space,
 /area/space)
 "aUI" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/whitebot,
@@ -19182,7 +19182,7 @@
 /turf/open/space,
 /area/space)
 "aVk" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -19354,7 +19354,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -19363,7 +19363,7 @@
 	name = "Security Maintenance"
 	})
 "aVF" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -19549,7 +19549,7 @@
 /turf/closed/wall/mineral/sandstone,
 /area/maintenance/asmaint2)
 "aWc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -19599,7 +19599,7 @@
 /area/maintenance/asmaint2)
 "aWk" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -19973,7 +19973,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -20206,7 +20206,7 @@
 	name = "Security Maintenance"
 	})
 "aXL" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -20307,7 +20307,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/maintenance/asmaint2)
 "aXY" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -21089,7 +21089,7 @@
 	},
 /area/maintenance/asmaint2)
 "aZT" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1
 	},
@@ -22107,7 +22107,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bcd" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/wood,
 /area/maintenance/fore{
 	name = "Security Maintenance"
@@ -22179,7 +22179,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bcp" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},
@@ -22971,7 +22971,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "ben" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
 	layer = 4.1
 	},

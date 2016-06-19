@@ -978,11 +978,11 @@
 /datum/supply_pack/organic/potted_plants
 	name = "Potted Plants Crate"
 	cost = 700
-	contains = list(/obj/structure/flora/kirbyplants/random,
-					/obj/structure/flora/kirbyplants/random,
-					/obj/structure/flora/kirbyplants/random,
-					/obj/structure/flora/kirbyplants/random,
-					/obj/structure/flora/kirbyplants/random)
+	contains = list(/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random)
 	crate_name = "potted plants crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
