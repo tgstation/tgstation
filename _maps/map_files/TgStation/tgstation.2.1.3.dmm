@@ -21577,6 +21577,13 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
 /turf/open/floor/plating,
 /area/storage/emergency2)
 "aWA" = (
@@ -22389,6 +22396,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aYi" = (
@@ -23005,9 +23018,7 @@
 /area/quartermaster/storage)
 "aZJ" = (
 /obj/structure/table/wood,
-/obj/item/device/camera/detective{
-	pixel_x = -6
-	},
+/obj/item/device/camera/detective,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aZK" = (
@@ -23495,7 +23506,7 @@
 "baV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
-	name = "Detective";
+	name = "Detective's Office";
 	req_access_txt = "4"
 	},
 /turf/open/floor/plasteel/grimy,
@@ -60623,6 +60634,36 @@
 	},
 /turf/closed/wall,
 /area/security/detectives_office)
+"cCn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Detective's Office APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port)
+"cCm" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
+"cCl" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 
 (1,1,1) = {"
 aaa
@@ -82591,12 +82632,12 @@ aRc
 aSm
 aTJ
 aPK
-aSg
+cCl
 aYh
-aSg
-aSg
-aSg
-aWv
+cCm
+cCm
+cCm
+cCn
 aPz
 bdW
 aSg
