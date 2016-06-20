@@ -83,6 +83,16 @@
 		var/mob/living/carbon/human/vox = raider.current
 		raider.name = vox.name
 		vox.age = rand(12,20)
+		if(vox.overeatduration) //We need to do this here and now, otherwise a lot of gear will fail to spawn
+			vox.overeatduration = 0 //Fat-B-Gone
+			if(vox.nutrition > 400) //We are also overeating nutriment-wise
+				vox.nutrition = 400 //Fix that
+			vox.mutations.Remove(M_FAT)
+			vox.update_mutantrace(0)
+			vox.update_mutations(0)
+			vox.update_inv_w_uniform(0)
+			vox.update_inv_wear_suit()
+
 		vox.s_tone = random_skin_tone("Vox")
 		vox.dna.mutantrace = "vox"
 		vox.set_species("Vox")
