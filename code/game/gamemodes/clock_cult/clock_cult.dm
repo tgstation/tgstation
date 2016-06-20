@@ -153,8 +153,8 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "escape" //The objective that the servants must fulfill
-	var/clockwork_explanation = "Ensure that the meme levels of the station remain high." //The description of the current objective
+	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
