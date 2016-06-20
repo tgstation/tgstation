@@ -93,6 +93,7 @@
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
 	icon_state = "drone_clock"
 	icon_living = "drone_clock"
+	icon_dead = "drone_clock_dead"
 	picked = TRUE
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
