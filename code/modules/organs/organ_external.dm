@@ -1352,6 +1352,12 @@ obj/item/weapon/organ/head
 	var/brain_op_stage = 0
 	var/mob/living/carbon/human/origin_body = null
 
+obj/item/weapon/organ/head/Destroy()
+	if(brainmob)
+		qdel(brainmob)
+		brainmob = null
+	..()
+
 //obj/item/weapon/organ/head/with_teeth starts with 32 human teeth!
 /obj/item/weapon/organ/head/with_teeth/New()
 	.=..()
