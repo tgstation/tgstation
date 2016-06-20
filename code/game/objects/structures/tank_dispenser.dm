@@ -30,11 +30,11 @@
 /obj/structure/dispenser/update_icon()
 	overlays.len = 0
 	switch(oxygentanks)
-		if(1 to 3)	overlays += "oxygen-[oxygentanks]"
-		if(4 to INFINITY) overlays += "oxygen-4"
+		if(1 to 3)	overlays += image(icon = icon, icon_state = "oxygen-[oxygentanks]")
+		if(4 to INFINITY) overlays += image(icon = icon, icon_state = "oxygen-4")
 	switch(plasmatanks)
-		if(1 to 4)	overlays += "plasma-[plasmatanks]"
-		if(5 to INFINITY) overlays += "plasma-5"
+		if(1 to 4)	overlays += image(icon = icon, icon_state = "plasma-[plasmatanks]")
+		if(5 to INFINITY) overlays += image(icon = icon, icon_state = "plasma-5")
 
 
 /obj/structure/dispenser/attack_robot(mob/user as mob)

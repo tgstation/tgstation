@@ -49,9 +49,9 @@
 	..()
 	overlays.len = 0
 	if(wired)
-		overlays += "gloves_wire"
+		overlays += image(icon = icon, icon_state = "gloves_wire")
 	if(cell)
-		overlays += "gloves_cell"
+		overlays += image(icon = icon, icon_state = "gloves_cell")
 	if(wired && cell)
 		item_state = "stungloves"
 	else

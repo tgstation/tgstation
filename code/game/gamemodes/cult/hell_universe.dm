@@ -34,10 +34,10 @@ In short:
 
 /datum/universal_state/hell/OnTurfChange(var/turf/T)
 	if(T.name == "space")
-		T.overlays += "hell01"
+		T.overlays += image(icon = T.icon, icon_state = "hell01")
 		T.underlays -= "hell01"
 	else
-		T.overlays -= "hell01"
+		T.overlays -= image(icon = T.icon, icon_state = "hell01")
 
 // Apply changes when entering state
 /datum/universal_state/hell/OnEnter()
@@ -109,7 +109,7 @@ In short:
 		count++
 		if(!(count % 50000)) sleep(world.tick_lag)
 		if(istype(T, /turf/space))
-			T.overlays += "hell01"
+			T.overlays += image(icon = T.icon, icon_state = "hell01")
 		else
 			if(!T.holy && prob(1))
 				new /obj/effect/gateway/active/cult(T)

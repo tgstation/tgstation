@@ -258,6 +258,6 @@
 	..()
 	overlays = 0
 	if(pda_device)
-		overlays += "pdaterm-full"
+		overlays += image(icon = icon, icon_state = "pdaterm-full")
 		if(stat == 0)
-			overlays += "pdaterm-light"
+			overlays += image(icon = icon, icon_state = "pdaterm-light")

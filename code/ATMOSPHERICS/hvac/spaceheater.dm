@@ -69,7 +69,7 @@
 	icon_state = "[base_state][on]"
 	set_light(on ? light_range_on : 0, light_power_on)
 	if(panel_open)
-		overlays  += "[base_state]-open"
+		overlays += image(icon = icon, icon_state = "[base_state]-open")
 	return
 
 /obj/machinery/space_heater/campfire/update_icon()

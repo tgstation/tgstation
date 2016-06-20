@@ -22,7 +22,7 @@
 	if(bombassembly)
 		overlays += bombassembly.icon_state
 		overlays += bombassembly.overlays
-		overlays += "bomb_assembly"
+		overlays += image(icon = icon, icon_state = "bomb_assembly")
 
 /obj/item/device/onetankbomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/analyzer))

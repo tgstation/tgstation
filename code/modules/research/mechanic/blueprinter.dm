@@ -87,7 +87,7 @@
 		return
 
 	busy = 1
-	overlays += "[base_state]_ani"
+	overlays += image(icon = icon, icon_state = "[base_state]_ani")
 	sleep(30)
 	busy = 0
 	if(use_nano)
@@ -98,5 +98,5 @@
 		paper_loaded -= 1
 	src.visible_message("[bicon(src)]<span class='notice'>\The [src] beeps: 'Successfully printed the [design.name] design'.</span>")
 	spawn(20)
-		overlays -= "[base_state]_ani"
+		overlays -= image(icon = icon, icon_state = "[base_state]_ani")
 	return 1

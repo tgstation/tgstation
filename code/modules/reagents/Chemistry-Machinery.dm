@@ -1081,7 +1081,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		else
 			beaker.loc = beaker:holder
 	beaker = null
-	overlays -= "mixer_overlay"
+	overlays -= image(icon = icon, icon_state = "mixer_overlay")
 	src.updateUsrDialog()
 
 /obj/machinery/computer/pandemic/attack_ai(mob/user as mob)
@@ -1205,7 +1205,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 		to_chat(user, "You add the beaker to the machine!")
 
 		src.updateUsrDialog()
-		overlays += "mixer_overlay"
+		overlays += image(icon = icon, icon_state = "mixer_overlay")
 
 	else
 		..()

@@ -54,8 +54,8 @@
 	overlays.len = 0
 	attached_overlays = list()
 	if(on)
-		overlays += "infrared_on"
 		attached_overlays += "infrared_on"
+		overlays += image(icon = icon, icon_state = "infrared_on")
 
 	if(holder)
 		holder.update_icon()

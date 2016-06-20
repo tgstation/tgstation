@@ -316,18 +316,18 @@
 
 	//Draw the cover.
 	if(closed_system)
-		overlays += "hydrocover"
+		overlays += image(icon = icon, icon_state = "hydrocover")
 
 	//Updated the various alert icons.
 	if(draw_warnings)
 		if(waterlevel <= 10)
-			overlays += "over_lowwater3"
+			overlays += image(icon = icon, icon_state = "over_lowwater3")
 		if(nutrilevel <= 2)
-			overlays += "over_lownutri3"
+			overlays += image(icon = icon, icon_state = "over_lownutri3")
 		if(weedlevel >= 5 || pestlevel >= 5 || toxins >= 40 || improper_heat || improper_light || improper_kpa || missing_gas)
-			overlays += "over_alert3"
+			overlays += image(icon = icon, icon_state = "over_alert3")
 		if(harvest)
-			overlays += "over_harvest3"
+			overlays += image(icon = icon, icon_state = "over_harvest3")
 
 	// Update bioluminescence and tray light
 	calculate_light()

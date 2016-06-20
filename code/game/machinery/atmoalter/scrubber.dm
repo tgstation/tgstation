@@ -86,10 +86,10 @@
 		icon_state = "pscrubber:0"
 
 	if(holding)
-		overlays += "scrubber-open"
+		overlays += image(icon = icon, icon_state = "scrubber-open")
 
 	if(connected_port)
-		overlays += "scrubber-connector"
+		overlays += image(icon = icon, icon_state = "scrubber-connector")
 
 	return
 

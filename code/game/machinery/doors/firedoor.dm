@@ -368,9 +368,9 @@ var/global/list/alert_overlays_global = list()
 	if(density)
 		icon_state = "door_closed"
 		if(blocked)
-			overlays += "welded"
+			overlays += image(icon = icon, icon_state = "welded")
 		if(pdiff_alert)
-			overlays += "palert"
+			overlays += image(icon = icon, icon_state = "palert")
 		if(dir_alerts)
 			for(var/d=1;d<=4;d++)
 				var/cdir = cardinal[d]
@@ -386,7 +386,7 @@ var/global/list/alert_overlays_global = list()
 	else
 		icon_state = "door_open"
 		if(blocked)
-			overlays += "welded_open"
+			overlays += image(icon = icon, icon_state = "welded_open")
 	return
 
 // CHECK PRESSURE

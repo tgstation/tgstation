@@ -444,7 +444,7 @@ var/global/mr_clean_targets = list(
 	overlays = 0
 
 	if (target && !isturf(target))
-		overlays += "eyes"
+		overlays += image(icon = icon, icon_state = "eyes")
 
 /obj/machinery/singularity/narsie/large/clean/acquire(var/mob/food)
 	..()

@@ -89,30 +89,30 @@
 
 		update_charge()
 			if (crit_fail)
-				overlays += "nucgun-whee"
+				overlays += image(icon = icon, icon_state = "nucgun-whee")
 				return
 			var/ratio = power_supply.charge / power_supply.maxcharge
 			ratio = round(ratio, 0.25) * 100
-			overlays += "nucgun-[ratio]"
+			overlays += image(icon = icon, icon_state = "nucgun-[ratio]")
 
 
 		update_reactor()
 			if(crit_fail)
-				overlays += "nucgun-crit"
+				overlays += image(icon = icon, icon_state = "nucgun-crit")
 				return
 			if(lightfail)
-				overlays += "nucgun-medium"
+				overlays += image(icon = icon, icon_state = "nucgun-medium")
 			else if ((power_supply.charge/power_supply.maxcharge) <= 0.5)
-				overlays += "nucgun-light"
+				overlays += image(icon = icon, icon_state = "nucgun-light")
 			else
-				overlays += "nucgun-clean"
+				overlays += image(icon = icon, icon_state = "nucgun-clean")
 
 
 		update_mode()
 			if (mode == 0)
-				overlays += "nucgun-stun"
+				overlays += image(icon = icon, icon_state = "nucgun-stun")
 			else if (mode == 1)
-				overlays += "nucgun-kill"
+				overlays += image(icon = icon, icon_state = "nucgun-kill")
 
 
 	emp_act(severity)

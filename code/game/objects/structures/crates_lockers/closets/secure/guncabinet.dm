@@ -66,4 +66,4 @@
 
 	overlays += cabinet_door
 	if(welded)
-		overlays += "welded"
+		overlays += image(icon = icon, icon_state = "welded")

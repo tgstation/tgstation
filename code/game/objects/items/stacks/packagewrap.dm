@@ -149,7 +149,7 @@
 			sortTag = tag
 			playsound(get_turf(src), 'sound/machines/twobeep.ogg', 100, 1)
 			overlays = 0
-			overlays += "deliverytag"
+			overlays += image(icon = icon, icon_state = "deliverytag")
 			src.desc = "A small wrapped package. It has a label reading [tag]"
 
 	else if(istype(W, /obj/item/weapon/pen))

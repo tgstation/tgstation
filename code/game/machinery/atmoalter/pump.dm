@@ -23,10 +23,10 @@
 		icon_state = "psiphon:0"
 
 	if(holding)
-		overlays += "siphon-open"
+		overlays += image(icon = icon, icon_state = "siphon-open")
 
 	if(connected_port)
-		overlays += "siphon-connector"
+		overlays += image(icon = icon, icon_state = "siphon-connector")
 
 	return
 

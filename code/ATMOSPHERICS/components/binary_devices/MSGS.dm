@@ -224,19 +224,19 @@
 
 	overlays.Cut()
 	if(node1)
-		overlays += "node-1"
+		overlays += image(icon = icon, icon_state = "node-1")
 
 	if(node2)
-		overlays += "node-2"
+		overlays += image(icon = icon, icon_state = "node-2")
 
 	if(!(stat & (NOPOWER | BROKEN)))
 
-		overlays += "o-[i]"
+		overlays += image(icon = icon, icon_state = "o-[i]")
 
-		overlays += "p"
+		overlays += image(icon = icon, icon_state = "p")
 
 		if(on)
-			overlays += "i"
+			overlays += image(icon = icon, icon_state = "i")
 
 /obj/machinery/atmospherics/binary/msgs/wrenchAnchor(mob/user)
 	..()

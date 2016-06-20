@@ -2783,7 +2783,7 @@
 					if(F.z == 1)
 						F.name = "lava"
 						F.desc = "The floor is LAVA!"
-						F.overlays += "lava"
+						F.overlays += image(icon = F.icon, icon_state = "lava")
 						F.lava = 1
 						lavaturfs += F
 

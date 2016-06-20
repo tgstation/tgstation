@@ -264,6 +264,6 @@
 	if(..() == 1)
 		overlays.len = 0
 		if(anchored)
-			src.overlays += "[base_state]-s"
+			src.overlays += image(icon = icon, icon_state = "[base_state]-s")
 
 

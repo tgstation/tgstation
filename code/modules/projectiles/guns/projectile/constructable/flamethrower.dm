@@ -65,11 +65,11 @@
 /obj/item/weapon/gun/projectile/flamethrower/update_icon()
 	overlays.len = 0
 	if(igniter)
-		overlays += "+igniter[status]"
+		overlays += image(icon = icon, icon_state = "+igniter[status]")
 	if(ptank)
-		overlays += "+ptank"
+		overlays += image(icon = icon, icon_state = "+ptank")
 	if(lit)
-		overlays += "+lit"
+		overlays += image(icon = icon, icon_state = "+lit")
 		item_state = "flamethrower_1"
 	else
 		item_state = "flamethrower_0"

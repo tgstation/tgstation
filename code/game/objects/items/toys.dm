@@ -380,11 +380,11 @@
 
 /obj/item/toy/bomb/New()
 	..()
-	overlays += "plasma"
+	overlays += image(icon = icon, icon_state = "plasma")
 	var/icon/J = new(icon, icon_state = "oxygen")
 	J.Shift(WEST, 13)
 	underlays += J
-	overlays += "device"
+	overlays += image(icon = icon, icon_state = "device")
 	rendered = getFlatIcon(src)
 
 /obj/item/toy/bomb/examine(mob/user)

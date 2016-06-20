@@ -412,7 +412,7 @@
 	if(!opened)
 		icon_state = icon_closed
 		if(welded)
-			overlays += "welded"
+			overlays += image(icon = icon, icon_state = "welded")
 	else
 		icon_state = icon_opened
 

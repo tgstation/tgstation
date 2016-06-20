@@ -15,7 +15,7 @@ var/list/SPS_list = list()
 
 /obj/item/device/gps/New()
 	..()
-	overlays += "working"
+	overlays += image(icon = icon, icon_state = "working")
 	handle_list()
 
 
@@ -32,12 +32,12 @@ var/list/SPS_list = list()
 
 /obj/item/device/gps/emp_act(severity)
 	emped = 1
-	overlays -= "working"
-	overlays += "emp"
+	overlays -= image(icon = icon, icon_state = "working")
+	overlays += image(icon = icon, icon_state = "emp")
 	spawn(300)
 		emped = 0
-		overlays -= "emp"
-		overlays += "working"
+		overlays -= image(icon = icon, icon_state = "emp")
+		overlays += image(icon = icon, icon_state = "working")
 
 /obj/item/device/gps/attack_self(mob/user as mob)
 	var/obj/item/device/gps/t = ""

@@ -271,7 +271,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/dossier = files[href_list["identifier"]]
 				P.name = "\improper Database File ([dossier[2]])"
-				P.overlays += "paper_words"
+				P.overlays += image(icon = P.icon, icon_state = "paper_words")
 
 				P.info = {"<b>Criminal Evidence Database</b><br><br>
 					Consolidated data points: [dossier[2]]<br>"}
@@ -351,7 +351,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				var/list/outputs = misc[href_list["identifier"]]
 				P.name = "\improper Auxiliary Database File ([outputs[3]])"
-				P.overlays += "paper_words"
+				P.overlays += image(icon = P.icon, icon_state = "paper_words")
 
 				P.info = {"<b>Auxiliary Evidence Database</b><br><br>
 					<big><b>Consolidated data points:</b> [outputs[3]]</big><br>"}
@@ -448,7 +448,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 				var/obj/item/weapon/paper/P = new(loc)
 				P.name = "\improper Scan Data ([scan_name])"
 				P.info = "<tt>[scan_data]</tt>"
-				P.overlays += "paper_words"
+				P.overlays += image(icon = P.icon, icon_state = "paper_words")
 			else
 				temp = "Print Failed: No Data"
 		if("erase")

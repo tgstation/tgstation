@@ -158,7 +158,7 @@
 	var/obj/item/weapon/paper/P = new(usr.loc)
 	P.name = "Autopsy Data ([target_name])"
 	P.info = "<tt>[scan_data]</tt>"
-	P.overlays += "paper_words"
+	P.overlays += image(icon = P.icon, icon_state = "paper_words")
 
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible

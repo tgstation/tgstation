@@ -365,9 +365,9 @@
 		return
 	if(..())
 		if(panel_open)
-			overlays += "biogen-open"
+			overlays += image(icon = icon, icon_state = "biogen-open")
 		else
-			overlays -= "biogen-open"
+			overlays -= image(icon = icon, icon_state = "biogen-open")
 		update_icon()
 		return 1
 	return

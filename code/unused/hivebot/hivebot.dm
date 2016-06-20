@@ -278,9 +278,9 @@
 	src.overlays.len = 0
 
 	if(src.stat == 0)
-		src.overlays += "eyes"
+		src.overlays += image(icon = icon, icon_state = "eyes")
 	else
-		src.overlays -= "eyes"
+		src.overlays -= image(icon = icon, icon_state = "eyes")
 
 
 /mob/living/silicon/hivebot/proc/installed_modules()

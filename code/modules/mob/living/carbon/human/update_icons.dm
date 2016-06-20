@@ -380,8 +380,8 @@ var/global/list/damage_icon_parts = list()
 				add_image = 1
 			*/
 			if(M_LASER)
-				//standing.overlays	+= "lasereyes_s"
-				O.overlays += "lasereyes_s"
+				//standing.overlays += image(icon = standing.icon, icon_state = "lasereyes_s")
+				O.overlays += image(icon = O.icon, icon_state = "lasereyes_s")
 				add_image = 1
 	if((M_RESIST_COLD in mutations) && (M_RESIST_HEAT in mutations))
 		//standing.underlays	-= "cold[fat]_s"

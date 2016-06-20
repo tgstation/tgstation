@@ -37,8 +37,8 @@
 		overlays += toppaper.icon_state
 		overlays += toppaper.overlays
 	if(haspen)
-		overlays += "clipboard_pen"
-	overlays += "clipboard_over"
+		overlays += image(icon = icon, icon_state = "clipboard_pen")
+	overlays += image(icon = icon, icon_state = "clipboard_over")
 	return
 
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)

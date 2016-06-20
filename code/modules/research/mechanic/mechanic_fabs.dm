@@ -99,11 +99,11 @@
 		else if(RB.stored_design)
 			if(src.AddBlueprint(RB, user))
 				if(src.AddMechanicDesign(RB.stored_design, user))
-					overlays += "[base_state]-bp"
+					overlays += image(icon = icon, icon_state = "[base_state]-bp")
 					to_chat(user, "<span class='notice'>You successfully load \the [RB.name] into \the [src].</span>")
 					if(RB.delete_on_use)	qdel(RB) //we delete if the thing is set to delete. Always set to 1 right now
 					spawn(10)
-						overlays -= "[base_state]-bp"
+						overlays -= image(icon = icon, icon_state = "[base_state]-bp")
 		return 1
 
 /obj/machinery/r_n_d/fabricator/mechanic_fab/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)

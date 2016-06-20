@@ -26,7 +26,7 @@
 /mob/living/simple_animal/hostile/slime/New()
 	..()
 	overlays = 0
-	overlays += "bloodlust"
+	overlays += image(icon = icon, icon_state = "bloodlust")
 
 
 /mob/living/simple_animal/hostile/slime/adult
@@ -39,7 +39,7 @@
 /mob/living/simple_animal/hostile/slime/adult/New()
 	..()
 	overlays = 0
-	overlays += "bloodlust-adult"
+	overlays += image(icon = icon, icon_state = "bloodlust-adult")
 
 
 /mob/living/simple_animal/hostile/slime/adult/Die()

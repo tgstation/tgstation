@@ -14,7 +14,7 @@
 			else
 				icon_state = icon_closed
 			if(welded)
-				overlays += "welded"
+				overlays += image(icon = icon, icon_state = "welded")
 		else
 			if(exploded)
 				icon_state = icon_exploded

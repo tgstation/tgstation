@@ -78,7 +78,7 @@
 		emagged = !src.emagged
 		if(emagged)
 			to_chat(user, "<span class='warning'>You short out [src]'s safety protocols.</span>")
-			overlays += "defib_emag"
+			overlays += image(icon = icon, icon_state = "defib_emag")
 		else
 			to_chat(user, "<span class='notice'>You reset [src]'s safety protocols.</span>")
 			overlays.len = 0

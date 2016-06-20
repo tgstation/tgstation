@@ -675,9 +675,9 @@ var/list/transparent_icons = list("diagonalWall3","swall_f5","swall_f6","swall_f
 							if(istype(T, /turf/space))
 								switch(universe.name)	//for some reason using OnTurfChange doesn't actually do anything in this case.
 									if("Hell Rising")
-										T.overlays += "hell01"
+										T.overlays += image(icon = T.icon, icon_state = "hell01")
 									if("Supermatter Cascade")
-										T.overlays += "end01"
+										T.overlays += image(icon = T.icon, icon_state = "end01")
 
 
 					refined_src -= T

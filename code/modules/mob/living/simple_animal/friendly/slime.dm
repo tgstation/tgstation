@@ -42,7 +42,7 @@
 
 /mob/living/simple_animal/slime/adult/New()
 	..()
-	overlays += "aslime-:33"
+	overlays += image(icon = icon, icon_state = "aslime-:33")
 
 
 /mob/living/simple_animal/slime/adult/Die()

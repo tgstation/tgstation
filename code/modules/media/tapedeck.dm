@@ -72,9 +72,9 @@
 	icon_state = state_base
 	if(playing)
 		if(emagged)
-			overlays += "[state_base]-emagged"
+			overlays += image(icon = icon, icon_state = "[state_base]-emagged")
 		else
-			overlays += "[state_base]-running"
+			overlays += image(icon = icon, icon_state = "[state_base]-running")
 
 /obj/machinery/media/tapedeck/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN

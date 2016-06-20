@@ -16,10 +16,10 @@
 
 /datum/universal_state/supermatter_cascade/OnTurfChange(var/turf/T)
 	if(T.name == "space")
-		T.overlays += "end01"
+		T.overlays += image(icon = T.icon, icon_state = "end01")
 		T.underlays -= "end01"
 	else
-		T.overlays -= "end01"
+		T.overlays -= image(icon = T.icon, icon_state = "end01")
 
 /datum/universal_state/supermatter_cascade/DecayTurf(var/turf/T)
 	if(istype(T,/turf/simulated/wall))
@@ -152,7 +152,7 @@ The access requirements on the Asteroid Shuttles' consoles have now been revoked
 		count++
 		if(!(count % 50000)) sleep(world.tick_lag)
 		if(istype(T, /turf/space))
-			T.overlays += "end01"
+			T.overlays += image(icon = T.icon, icon_state = "end01")
 		else
 			if(T.z != map.zCentcomm)
 				T.underlays += "end01"

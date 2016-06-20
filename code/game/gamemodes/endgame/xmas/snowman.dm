@@ -78,7 +78,7 @@
 		if(user.drop_item(W, src))
 			visible_message("<span class='notice'>[user] puts \a [W] on \the [src]'s nose.</span>")
 			carrot = W
-			overlays += "snowman_carrot"
+			overlays += image(icon = icon, icon_state = "snowman_carrot")
 			speak -= "Would you happen to have a carrot for my nose?"
 			src.say("Ah, most excellent!")
 			if(prob(30))

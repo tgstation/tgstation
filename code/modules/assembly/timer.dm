@@ -61,8 +61,8 @@
 	overlays.len = 0
 	attached_overlays = list()
 	if(timing)
-		overlays += "timer_timing"
 		attached_overlays += "timer_timing"
+		overlays += image(icon = icon, icon_state = "timer_timing")
 	if(holder)
 		holder.update_icon()
 	return

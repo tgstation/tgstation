@@ -39,16 +39,16 @@ var/global/list/obj/machinery/field_generator/field_gen_list = list()
 	overlays.len = 0
 	if(!active)
 		if(warming_up)
-			overlays += "+a[warming_up]"
+			overlays += image(icon = icon, icon_state = "+a[warming_up]")
 	if(fields.len)
-		overlays += "+on"
+		overlays += image(icon = icon, icon_state = "+on")
 	// Power level indicator
 	// Scale % power to % num_power_levels and truncate value
 	var/level = round(num_power_levels * power / field_generator_max_power)
 	// Clamp between 0 and num_power_levels for out of range power values
 	level = Clamp(level, 0, num_power_levels)
 	if(level)
-		overlays += "+p[level]"
+		overlays += image(icon = icon, icon_state = "+p[level]")
 
 	return
 

@@ -28,7 +28,7 @@
 /obj/item/weapon/folder/update_icon()
 	overlays.len = 0
 	if(contents.len)
-		overlays += "folder_paper"
+		overlays += image(icon = icon, icon_state = "folder_paper")
 	return
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob)

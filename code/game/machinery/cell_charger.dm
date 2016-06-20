@@ -53,7 +53,7 @@
 
 		if(chargelevel != newlevel)
 			overlays.len = 0
-			overlays += "ccharger-o[newlevel]"
+			overlays += image(icon = icon, icon_state = "ccharger-o[newlevel]")
 			chargelevel = newlevel
 	else
 		overlays.len = 0

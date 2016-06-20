@@ -48,7 +48,7 @@ Feel free to do whatever with this if you think it lacks.
 		return
 
 	if(storedpda)
-		overlays += "[initial(icon_state)]-closed"
+		overlays += image(icon = icon, icon_state = "[initial(icon_state)]-closed")
 
 	if(powered())
 		icon_state = initial(icon_state)

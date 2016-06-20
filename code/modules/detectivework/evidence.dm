@@ -50,7 +50,7 @@
 	I.pixel_x = xx		//and then return it
 	I.pixel_y = yy
 	overlays += img
-	overlays += "evidence"	//should look nicer for transparent stuff. not really that important, but hey.
+	overlays += image(icon = icon, icon_state = "evidence")	//should look nicer for transparent stuff. not really that important, but hey.
 
 	desc = "An evidence bag containing [I]. [I.desc]"
 	I.loc = src

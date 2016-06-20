@@ -168,7 +168,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(alert) //new message alert overlay
-		src.overlays += "newscaster_alert"
+		src.overlays += image(icon = icon, icon_state = "newscaster_alert")
 
 	if(hitstaken > 0) //Cosmetic damage overlay
 		src.overlays += image(src.icon, "crack[hitstaken]")

@@ -205,9 +205,9 @@
 
 	last_charge = spell.charge_counter
 
-	overlays -= "silence"
+	overlays -= image(icon = icon, icon_state = "silence")
 	if(spell.silenced)
-		overlays += "silence"
+		overlays += image(icon = icon, icon_state = "silence")
 
 /obj/screen/spell/Click()
 	if(!usr || !spell)

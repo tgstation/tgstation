@@ -460,6 +460,6 @@
 	overlays = 0
 	if(!(stat & (NOPOWER | BROKEN)))
 		if(scanner && scanner.occupant)
-			overlays += "cloning-scan"
+			overlays += image(icon = icon, icon_state = "cloning-scan")
 		if(pod1 && pod1.occupant)
-			overlays += "cloning-pod"
+			overlays += image(icon = icon, icon_state = "cloning-pod")

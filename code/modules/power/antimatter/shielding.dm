@@ -147,7 +147,7 @@ proc/cardinalrange(var/center)
 	icon_state = "[prefix]shield_[icondirs]"
 
 	if(core_check())
-		overlays += "core[control_unit && control_unit.active]"
+		overlays += image(icon = icon, icon_state = "core[control_unit && control_unit.active]")
 		if(!processing) setup_core()
 	else if(processing) shutdown_core()
 

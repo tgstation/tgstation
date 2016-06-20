@@ -363,9 +363,9 @@ var/const/POS_HEADER = {"<html>
 	overlays = 0
 	if(stat & (NOPOWER|BROKEN)) return
 	if(logged_in)
-		overlays += "pos-working"
+		overlays += image(icon = icon, icon_state = "pos-working")
 	else
-		overlays += "pos-standby"
+		overlays += image(icon = icon, icon_state = "pos-standby")
 
 /obj/machinery/pos/attack_robot(var/mob/user)
 	if(isMoMMI(user))

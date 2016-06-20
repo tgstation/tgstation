@@ -64,7 +64,7 @@
 	else
 		i = Ceiling(amount / silicate_per_state, 1)
 
-	overlays += "silicate sprayer [i]"
+	overlays += image(icon = icon, icon_state = "silicate sprayer [i]")
 
 /obj/item/device/silicate_sprayer/on_reagent_change()
 	update_icon()
@@ -126,7 +126,7 @@
 /obj/item/device/silicate_sprayer/advanced/update_icon()
 	. = ..()
 	if(mode == MODE_REINFORCE)
-		overlays += "silicate sprayer reinforce"
+		overlays += image(icon = icon, icon_state = "silicate sprayer reinforce")
 
 /obj/item/device/silicate_sprayer/advanced/examine(var/mob/user)
 	. = ..()

@@ -67,5 +67,5 @@ var/list/obj/machinery/power/photocollector/photocollector_list = list()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(anchored && beams.len>0)
-		overlays += "lasergen-on"
+		overlays += image(icon = icon, icon_state = "lasergen-on")
 

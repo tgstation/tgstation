@@ -26,11 +26,11 @@
 	// Add a panel image if the MoMMI is open
 	if(opened) // TODO:  Open the front "head" panel
 		if(wiresexposed)
-			overlays += "ov-openpanel +w"
+			overlays += image(icon = icon, icon_state = "ov-openpanel +w")
 		else if(cell)
-			overlays += "ov-openpanel +c"
+			overlays += image(icon = icon, icon_state = "ov-openpanel +c")
 		else
-			overlays += "ov-openpanel -c"
+			overlays += image(icon = icon, icon_state = "ov-openpanel -c")
 
 	// Add the MoMMI eyes
 	// Put our eyes just on top of the lighting, so it looks emissive in maint tunnels.

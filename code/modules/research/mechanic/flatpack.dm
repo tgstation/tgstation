@@ -47,7 +47,7 @@
 					break
 
 /*	if(assembling)
-		overlays += "assembly" */
+		overlays += image(icon = icon, icon_state = "assembly") */
 	else if(stacked.len)
 		for(var/i = 1 to stacked.len)
 			var/image/stack_image = stacked[stacked[i]] //because it's an assoc list
@@ -68,13 +68,13 @@
 		if(do_after(user, src, rand(10,40)))
 			if(machine)
 				to_chat(user, "<span class='notice'>[bicon(src)]You successfully unpack \the [machine]!</span>")
-//				overlays += "assembly"
+//				overlays += image(icon = icon, icon_state = "assembly")
 /*				var/obj/item/weapon/paper/instructions = new (get_turf(src))
 				var/list/inst_list = unpacking.GenerateInstructions()
 				instructions.name = "instructions ([machine.name])"
 				instructions.info = inst_list["instructions"]
 				if(inst_list["misprint"])
-					instructions.overlays += "paper_stamped_denied"
+					instructions.overlays += image(icon = icon, icon_state = "paper_stamped_denied")
 					instructions.name = "misprinted " + instructions.name
 				instructions.update_icon()
 */
