@@ -177,7 +177,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "aaB" = (
-/obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/potato,
 /turf/open/floor/plasteel/green/side{
@@ -189,7 +188,6 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "aaD" = (
-/obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
 /obj/item/seeds/grass,
 /turf/open/floor/plasteel/green/side{
@@ -197,7 +195,6 @@
 	},
 /area/security/prison)
 "aaE" = (
-/obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
 /obj/item/weapon/cultivator,
 /turf/open/floor/plasteel/green/side{
@@ -205,7 +202,6 @@
 	},
 /area/security/prison)
 "aaF" = (
-/obj/structure/window/reinforced,
 /obj/machinery/hydroponics/soil,
 /obj/item/weapon/cultivator,
 /turf/open/floor/plasteel/green/side{
@@ -232,9 +228,6 @@
 /area/security/prison)
 "aaK" = (
 /obj/machinery/washing_machine,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/open/floor/plasteel/barber,
 /area/security/prison)
 "aaL" = (
@@ -13078,11 +13071,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
-	},
-/obj/structure/window,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -21413,11 +21401,6 @@
 	})
 "aWj" = (
 /obj/structure/grille,
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/structure/window,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aWk" = (
@@ -22618,10 +22601,6 @@
 "aYH" = (
 /obj/structure/table,
 /obj/item/weapon/razor,
-/obj/structure/window{
-	icon_state = "window";
-	dir = 1
-	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYI" = (
@@ -22701,10 +22680,6 @@
 	pixel_x = -2;
 	pixel_y = 0
 	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 1
-	},
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/locker)
 "aYT" = (
@@ -22727,9 +22702,6 @@
 /turf/open/floor/carpet,
 /area/library)
 "aYX" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/warning{
 	dir = 8
@@ -23681,9 +23653,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bbs" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/warning{
@@ -26327,9 +26296,6 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/window{
@@ -26430,10 +26396,6 @@
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -30277,10 +30239,6 @@
 /obj/item/device/mmi,
 /obj/item/device/mmi,
 /obj/item/device/mmi,
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "bpU" = (
@@ -30413,10 +30371,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
-/obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
-	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
 	},
@@ -34007,9 +33961,6 @@
 	pixel_x = -2;
 	pixel_y = 30
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "bxj" = (
@@ -34509,9 +34460,6 @@
 /area/crew_quarters/hor)
 "byp" = (
 /obj/machinery/computer/robotics,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "byq" = (
@@ -35122,9 +35070,6 @@
 /area/medical/sleeper)
 "bzJ" = (
 /obj/machinery/computer/mecha,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/hor)
 "bzK" = (
@@ -37393,9 +37338,6 @@
 /area/toxins/mixing)
 "bEx" = (
 /obj/machinery/portable_atmospherics/canister,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 2;
 	pixel_y = 24
@@ -37412,9 +37354,6 @@
 /area/toxins/mixing)
 "bEy" = (
 /obj/machinery/portable_atmospherics/pump,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 2
 	},
@@ -41219,9 +41158,6 @@
 /obj/item/stack/cable_coil,
 /obj/item/device/multitool,
 /obj/item/weapon/stock_parts/cell/high/plus,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "bMg" = (
@@ -41614,9 +41550,6 @@
 /turf/closed/wall/r_wall,
 /area/medical/virology)
 "bNe" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
 /obj/item/clothing/glasses/science,
@@ -43255,9 +43188,6 @@
 /area/hallway/primary/aft)
 "bQR" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/clothing/ears/earmuffs,
 /obj/machinery/camera{
@@ -43807,9 +43737,6 @@
 /area/tcommsat/computer)
 "bSe" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/device/electropack,
 /obj/item/device/healthanalyzer,
 /obj/item/device/assembly/signaler,
@@ -44590,7 +44517,6 @@
 "bTK" = (
 /obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
-/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/caution{
 	dir = 6
 	},
@@ -46304,9 +46230,6 @@
 /area/toxins/misc_lab)
 "bXs" = (
 /obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -46319,9 +46242,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/magnetic_controller{
 	autolink = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 1
 	},
 /obj/item/device/radio/intercom{
 	freerange = 0;
@@ -46714,9 +46634,6 @@
 /area/toxins/misc_lab)
 "bYm" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/open/floor/plasteel/bot{
 	dir = 2
 	},
@@ -60634,17 +60551,12 @@
 	},
 /turf/closed/wall,
 /area/security/detectives_office)
-"cCn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+"cCl" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Detective's Office APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cCm" = (
@@ -60656,12 +60568,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"cCl" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+"cCn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Detective's Office APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 
@@ -76464,7 +76381,7 @@ aQL
 aSg
 aSg
 aSg
-aWl
+aWj
 aSg
 aZs
 baN
@@ -78786,7 +78703,7 @@ aPA
 bdL
 aPz
 bgt
-bhR
+bhS
 bjk
 aZE
 blW
@@ -79043,7 +78960,7 @@ aPA
 bdM
 aPz
 aSg
-bhT
+bhS
 bjk
 aZE
 blY
@@ -86432,7 +86349,7 @@ aaf
 aaj
 aao
 aax
-aaC
+aay
 aat
 aat
 adO
@@ -87718,9 +87635,9 @@ aam
 aav
 aav
 aav
-aaL
 aaQ
-aaY
+aaQ
+aaQ
 aav
 abE
 acg
@@ -87977,7 +87894,7 @@ aaA
 aaG
 aaK
 aaP
-aaX
+aaK
 aat
 aat
 acd
@@ -92416,8 +92333,8 @@ bpm
 bqH
 bsn
 btL
-buY
-buY
+buX
+buX
 bqH
 aJq
 aJq
@@ -101378,7 +101295,7 @@ anf
 alP
 arA
 anf
-aCz
+cqM
 asw
 aCJ
 aGT
