@@ -714,7 +714,7 @@ var/global/list/whitelisted_species = list("Human")
 	flesh_color = "#907E4A"
 
 	has_mutant_race = 0
-	burn_mod = 2.5 //treeeeees
+	burn_mod = 6.2 //treeeeees
 
 	move_speed_mod = 7
 

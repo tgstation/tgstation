@@ -1,0 +1,6 @@
+author: DrCelt / Intigracy
+delete-after: True
+changes: 
+- bugfix: "(DrCelt) Fixed a bug where species damage modifiers were applied twice."
+- tweak: "(DrCelt) As a result of this, brute/burn modifiers are slightly less effective when it comes to resistance/weakness (less damage resisted, less damage taken, respectively)"
+- tweak: "(Intigracy) Dionae burn damage is an exception, it has changed from 6.25 to 6.2"

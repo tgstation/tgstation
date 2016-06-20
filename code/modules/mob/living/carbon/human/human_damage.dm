@@ -46,8 +46,6 @@
 
 
 /mob/living/carbon/human/adjustBruteLoss(var/amount)
-	if(species && species.brute_mod)
-		amount = amount*species.brute_mod
 
 	amount = amount * brute_damage_modifier
 
@@ -58,9 +56,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/adjustFireLoss(var/amount)
-	if(species && species.burn_mod)
-		amount = amount*species.burn_mod
-
 	amount = amount * burn_damage_modifier
 
 	if(amount > 0)
@@ -70,9 +65,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/proc/adjustBruteLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
-	if(species && species.brute_mod)
-		amount = amount*species.brute_mod
-
 	amount = amount * brute_damage_modifier
 
 	if (organ_name in organs_by_name)
@@ -87,9 +79,6 @@
 	hud_updateflag |= 1 << HEALTH_HUD
 
 /mob/living/carbon/human/proc/adjustFireLossByPart(var/amount, var/organ_name, var/obj/damage_source = null)
-	if(species && species.burn_mod)
-		amount = amount*species.burn_mod
-
 	amount = amount * burn_damage_modifier
 
 	if (organ_name in organs_by_name)
@@ -220,6 +209,11 @@ In most cases it makes more sense to use apply_damage() instead! And make sure t
 
 // damage MANY external organs, in random order
 /mob/living/carbon/human/take_overall_damage(var/brute, var/burn, var/sharp = 0, var/edge = 0, var/used_weapon = null)
+	if(species && species.burn_mod)
+		burn = burn*species.burn_mod
+	if(species && species.brute_mod)
+		brute = brute*species.brute_mod
+
 	if(status_flags & GODMODE)	return	//godmode
 	var/list/datum/organ/external/parts = get_damageable_organs()
 	var/update = 0
@@ -297,15 +291,11 @@ This function restores all organs.
 	switch(damagetype)
 		if(BRUTE)
 			damageoverlaytemp = 20
-			if(species && species.brute_mod)
-				damage = damage*species.brute_mod
 			damage = damage * brute_damage_modifier
 			if(organ.take_damage(damage, 0, sharp, edge, used_weapon))
 				UpdateDamageIcon(1)
 		if(BURN)
 			damageoverlaytemp = 20
-			if(species && species.burn_mod)
-				damage = damage*species.burn_mod
 			damage = damage * burn_damage_modifier
 			if(organ.take_damage(0, damage, sharp, edge, used_weapon))
 				UpdateDamageIcon(1)
