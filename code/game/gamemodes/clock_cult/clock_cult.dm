@@ -48,6 +48,8 @@ This file's folder contains:
 		return 0
 	if(iscultist(M) || isconstruct(M))
 		return 0
+	if(isbrain(M))
+		return 1
 	if(ishuman(M))
 		if(isloyal(M) || (M.mind.assigned_role in list("Captain", "Chaplain")))
 			return 0
