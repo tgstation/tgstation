@@ -541,9 +541,7 @@
 "bC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 140;
 	on = 1;
-	pressure_checks = 0
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
@@ -678,14 +676,7 @@
 "bU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
 	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
 	},
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
@@ -713,14 +704,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
 	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
@@ -810,14 +794,7 @@
 "cn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "n2o_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
 	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
