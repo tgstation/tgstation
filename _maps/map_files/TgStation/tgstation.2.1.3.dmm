@@ -9720,7 +9720,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/apc{
-	dir = 1;
+	dir = 8;
 	name = "Vacant Office B APC";
 	pixel_x = -24;
 	pixel_y = 0
@@ -29183,12 +29183,7 @@
 "bnL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 0;
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
@@ -60634,17 +60629,12 @@
 	},
 /turf/closed/wall,
 /area/security/detectives_office)
-"cCn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+"cCl" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Detective's Office APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "cCm" = (
@@ -60656,12 +60646,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"cCl" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+"cCn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Detective's Office APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
 
