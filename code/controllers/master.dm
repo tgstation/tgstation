@@ -140,10 +140,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
 	world.log << "Initializations complete."
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	Icon_test = icon('icons/BadAss.dmi')
 	if(!istype(Icon_test))
 		world.log << "Bad Icon at world post init end"
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	Sound_test = sound('sound/misc/null.ogg')
 	if(!istype(Sound_test))
 		world.log << "Bad Sound at world post init end"
 	// Sort subsystems by display setting for easy access.
@@ -154,10 +154,10 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	world.fps = config.fps
 
 	sleep(1)
-	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	Icon_test = icon('icons/BadAss.dmi')
 	if(!istype(Icon_test))
 		world.log << "Bad Icon at MC launch"
-	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	Sound_test = sound('sound/misc/null.ogg')
 	if(!istype(Sound_test))
 		world.log << "Bad Sound at MC launch"
 	// Loop.
