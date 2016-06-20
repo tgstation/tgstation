@@ -128,7 +128,7 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		user.visible_message("<span class='notice'>[user] starts securing \the [I] to the top of \the [src].</span>",\
 		"<span class='info'>You attempt to create a spear by securing \the [I] to \the [src].</span>")
 
-		if(do_after(user, src, 5 SECONDS))
+		if(do_after(user, get_turf(src), 5 SECONDS))
 			if(!I || !src) return
 
 			if(!user.drop_item(I))
