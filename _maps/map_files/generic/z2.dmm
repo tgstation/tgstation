@@ -3879,9 +3879,9 @@
 	},
 /area/wizard_station)
 "me" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult/airless,
-/area/wizard_station)
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mf" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/black,
@@ -3954,9 +3954,9 @@
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mq" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult,
-/area/wizard_station)
+/obj/structure/chair/wood/wings,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mr" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -4186,12 +4186,9 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "mY" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage4"
-	},
-/area/wizard_station)
+/obj/structure/chair/wood,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mZ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/forcefield,
@@ -5797,6 +5794,13 @@
 /area/wizard_station)
 "sd" = (
 /obj/structure/flora/tree/pine,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sf" = (
+/obj/structure/flora/bush,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"se" = (
 /turf/open/floor/holofloor/snow/cold,
 /area/holodeck/rec_center/winterwonderland)
 
@@ -60543,16 +60547,16 @@ ab
 "}
 (214,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -60800,16 +60804,16 @@ ab
 "}
 (215,1,1) = {"
 ae
-sa
-sb
-sa
-sa
-sa
+se
+sf
+se
+se
+mq
 sd
-sc
-sa
-sa
-sa
+me
+se
+se
+se
 aV
 ag
 ag
@@ -61057,16 +61061,16 @@ ab
 "}
 (216,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -61314,16 +61318,16 @@ ab
 "}
 (217,1,1) = {"
 ae
-sa
-sa
-sc
-sa
-sa
-sa
-sa
-sa
-sc
-sa
+se
+se
+me
+se
+se
+mY
+se
+se
+me
+se
 aV
 ag
 ag
@@ -61571,16 +61575,16 @@ ab
 "}
 (218,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sb
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+sf
+se
+se
+se
+se
 aV
 ag
 ag
