@@ -46,6 +46,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
+	SetLuminosity(2,1)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -116,6 +117,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
+	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
