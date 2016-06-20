@@ -1430,6 +1430,8 @@ obj/item/weapon/organ/head/proc/transfer_identity(var/mob/living/carbon/human/H)
 	brainmob.dna = H.dna.Clone()
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
+	brainmob.languages = H.languages
+	brainmob.default_language = H.default_language
 	brainmob.container = src
 
 obj/item/weapon/organ/head/attackby(obj/item/weapon/W as obj, mob/user as mob)

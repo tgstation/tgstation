@@ -208,6 +208,8 @@
 	var/obj/item/weapon/organ/head/B = tool
 	if (B.brainmob.mind)
 		B.brainmob.mind.transfer_to(target)
+	target.languages = B.brainmob.languages
+	target.default_language = B.brainmob.default_language
 
 	if (B.butchering_drops.len) //Transferring teeth and other stuff
 		for(var/datum/butchering_product/BP in B.butchering_drops) //First, search for all "stuff" inside the head
