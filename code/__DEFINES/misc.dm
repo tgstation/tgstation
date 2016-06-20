@@ -184,10 +184,10 @@
 #define ZLEVEL_CENTCOM 2
 #define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_EMPTY_SPACE 10
+#define ZLEVEL_EMPTY_SPACE 11
 
 #define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_SPACEMAX 10
+#define ZLEVEL_SPACEMAX 11
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
