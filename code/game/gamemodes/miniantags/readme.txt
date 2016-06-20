@@ -7,5 +7,4 @@ Currently, that list consists of:
 	-Morphs
 	-Sintouched crewmembers
 	-Slaughter demons
-	-Umbras (formerly revenants)
 Please update this if you add another mini-antagonist.
