@@ -907,6 +907,10 @@ var/list/teleportlocs = list()
 	name = "Vacant Office"
 	icon_state = "security"
 
+/area/security/vacantoffice2
+	name = "Vacant Office B"
+	icon_state = "security"
+
 /area/quartermaster
 	name = "Quartermasters"
 	icon_state = "quart"
