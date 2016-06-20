@@ -735,13 +735,12 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm == "Yes")
-		if (istype(mob, /mob/dead/observer)) // so they don't spam gibs everywhere
-			return
-		else
-			mob.gib()
-
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='notice'>[key_name_admin(usr)] used gibself.</span>", 1)
+		if(!istype(mob, /mob/dead/observer))
+			mob.gib()
+		else
+			gibs(mob.loc, mob.viruses)
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*
 /client/proc/cmd_manual_ban()
