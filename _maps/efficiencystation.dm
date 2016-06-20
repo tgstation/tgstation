@@ -17,7 +17,7 @@ z7 = empty space
 
 		#define TITLESCREEN "title" //Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
 
-		#ifdef NOLAVALAND
+		#if NOLAVALAND
 			#define MINETYPE "mining"
 		#else
 			#define MINETYPE "lavaland"
@@ -27,7 +27,7 @@ z7 = empty space
 		#include "map_files\generic\z2.dmm"
 		#include "map_files\generic\z3.dmm"
 		#include "map_files\generic\z4.dmm"
-		#ifdef NOLAVALAND
+		#if NOLAVALAND
 			#include "map_files\generic\z5.dmm"
 			#define MINE_LINK CROSSLINKED
 		#else

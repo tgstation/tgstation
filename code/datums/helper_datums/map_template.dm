@@ -107,7 +107,8 @@
 		map_templates[R.name] = R
 		ruins_templates[R.name] = R
 
-		if(istype(R, /datum/map_template/ruin/lavaland))
+
+		if(istype(R, /datum/map_template/ruin/lavaland) && !NOLAVALAND)
 			lava_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
