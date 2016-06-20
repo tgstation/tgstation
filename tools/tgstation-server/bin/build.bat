@@ -15,6 +15,9 @@ echo #define MAP_OVERRIDE >>%MDME_LOCATION%
 echo #include "_maps\%MAPFILE%.dm" >>%MDME_LOCATION%
 
 :BUILD
+if defined NOLAVALAND (
+echo #define NOLAVALAND 1 >>%MDME_LOCATION%
+)
 echo #define SERVERTOOLS 1 >>%MDME_LOCATION%
 type %DME_LOCATION% >>%MDME_LOCATION%
 

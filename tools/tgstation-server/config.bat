@@ -20,6 +20,9 @@ set MAPFILE=tgstation2
 REM set MAPFILE=metastation
 REM set MAPFILE=ministation
 
+REM Disables lavaland and loads the mining asteroid if set to anything other than a null string
+set NOLAVALAND=
+
 
 REM port to use (only used to start the server in the start-server script)
 set PORT=1337
