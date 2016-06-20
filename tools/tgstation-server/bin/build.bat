@@ -8,6 +8,9 @@ set DME_LOCATION=%DME_FOLDER%%PROJECTNAME%.dme
 set MDME_LOCATION=%DME_FOLDER%%PROJECTNAME%.mdme
 
 @del %MDME_LOCATION% >nul 2>nul
+if defined NOLAVALAND (
+echo #define NOLAVALAND 1 >>%MDME_LOCATION%
+)
 if defined MAPROTATE set MAPFILE=%MAPROTATE%
 if not defined MAPFILE goto BUILD
 
@@ -15,9 +18,6 @@ echo #define MAP_OVERRIDE >>%MDME_LOCATION%
 echo #include "_maps\%MAPFILE%.dm" >>%MDME_LOCATION%
 
 :BUILD
-if defined NOLAVALAND (
-echo #define NOLAVALAND 1 >>%MDME_LOCATION%
-)
 echo #define SERVERTOOLS 1 >>%MDME_LOCATION%
 type %DME_LOCATION% >>%MDME_LOCATION%
 

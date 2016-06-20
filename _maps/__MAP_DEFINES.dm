@@ -13,7 +13,3 @@
 		#define AWAY_MISSION "Away Mission"
 		#define AWAY_MISSION_LIST list(AWAY_MISSION = SELFLOOPING)
 		#define MINE_LINK SELFLOOPING
-
-#ifndef NOLAVALAND
-#define NOLAVALAND 0
-#endif
