@@ -25819,6 +25819,9 @@
 	pixel_x = -30;
 	pixel_y = 0
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
