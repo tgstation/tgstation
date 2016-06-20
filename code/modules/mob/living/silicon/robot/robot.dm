@@ -914,18 +914,7 @@
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
-		if(!opened)
-			to_chat(user, "You must access the borgs internals!")
-		else if(!src.module && U.require_module)
-			to_chat(user, "The borg must choose a module before he can be upgraded!")
-		else if(U.locked)
-			to_chat(user, "The upgrade is locked and cannot be used yet!")
-		else
-			if(U.action(src))
-				to_chat(user, "You apply the upgrade to [src]!")
-				user.drop_item(U, src)
-			else
-				to_chat(user, "Upgrade error!")
+		U.attempt_action(src,user)
 
 	else if(istype(W, /obj/item/device/camera_bug))
 		help_shake_act(user)
