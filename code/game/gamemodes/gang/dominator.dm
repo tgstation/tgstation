@@ -55,7 +55,7 @@
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 		else
-			SSmachine.processing -= src
+			STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
@@ -77,7 +77,7 @@
 			spark_system.start()
 	else if(!(stat & BROKEN))
 		spark_system.start()
-		overlays += "damage"
+		add_overlay("damage")
 
 	if(!(stat & BROKEN))
 		if(health <= 0)
@@ -112,10 +112,10 @@
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
-	overlays.Cut()
+	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	SSmachine.processing -= src
+	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -125,7 +125,7 @@
 	qdel(spark_system)
 	qdel(countdown)
 	countdown = null
-	SSmachine.processing -= src
+	STOP_PROCESSING(SSmachine, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -199,7 +199,7 @@
 		countdown.start()
 
 		SetLuminosity(3)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)

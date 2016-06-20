@@ -136,7 +136,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	else
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
-	if(!(message_langs & languages) || force_compose) //force_compose is so AIs don't end up without their hrefs.
+	if(!(message_langs & languages_understood) || force_compose) //force_compose is so AIs don't end up without their hrefs.
 		message = compose_message(speaker, message_langs, raw_message, radio_freq, spans)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
@@ -147,9 +147,9 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
 			listening |= M
 
-	var/rendered = compose_message(src, languages, message, , spans)
+	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in listening)
-		AM.Hear(rendered, src, languages, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()

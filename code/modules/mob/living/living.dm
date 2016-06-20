@@ -1029,6 +1029,9 @@ Sorry Giacom. Please don't be mad :(
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in, is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
+	new_mob.name = name
+	new_mob.real_name = real_name
+
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
@@ -1039,4 +1042,4 @@ Sorry Giacom. Please don't be mad :(
 		G.summoner = new_mob
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
-			form to [new_mob]!</span>"
+			form!</span>"

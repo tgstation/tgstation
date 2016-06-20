@@ -23,6 +23,7 @@
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	var/health = 50
 
+
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
@@ -56,11 +57,11 @@
 			icon_state = "firex"
 			return
 
-		overlays += "overlay_[security_level]"
+		add_overlay("overlay_[security_level]")
 		if(detecting)
-			overlays += "overlay_[A.fire ? "fire" : "clear"]"
+			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
-			overlays += "overlay_fire"
+			add_overlay("overlay_fire")
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -223,3 +224,67 @@
 			update_icon()
 		else if(prob(33))
 			alarm()
+
+/*
+ * Party button
+ */
+
+/obj/machinery/firealarm/partyalarm
+	name = "\improper PARTY BUTTON"
+	desc = "Cuban Pete is in the house!"
+
+/obj/machinery/firealarm/partyalarm/attack_hand(mob/user)
+	if((user.stat && !IsAdminGhost(user)) || stat & (NOPOWER|BROKEN))
+		return
+
+	if (buildstage != 2)
+		return
+
+	user.set_machine(src)
+	var/area/A = src.loc
+	var/d1
+	var/dat
+	if (istype(user, /mob/living/carbon/human) || user.has_unlimited_silicon_privilege)
+		A = A.loc
+
+		if (A.party)
+			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
+		else
+			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []</BODY></HTML>", d1)
+
+	else
+		A = A.loc
+		if (A.fire)
+			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
+		else
+			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
+		dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []", stars("Party Button"), d1)
+
+	var/datum/browser/popup = new(user, "firealarm", "Party Alarm")
+	popup.set_content(dat)
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.open()
+	return
+
+/obj/machinery/firealarm/partyalarm/reset()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyreset()
+	return
+
+/obj/machinery/firealarm/partyalarm/alarm()
+	if (stat & (NOPOWER|BROKEN))
+		return
+	var/area/A = src.loc
+	A = A.loc
+	if (!( istype(A, /area) ))
+		return
+	for(var/area/RA in A.related)
+		RA.partyalert()
+	return

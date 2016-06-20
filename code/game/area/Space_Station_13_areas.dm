@@ -843,6 +843,9 @@ var/list/teleportlocs = list()
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 
+/area/security/detectives_office/old
+	name = "Old Detective's Office"
+
 /area/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"

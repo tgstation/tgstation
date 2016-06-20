@@ -148,7 +148,7 @@
 /obj/item/weapon/melee/supermatter_sword/New()
 	..()
 	shard = new /obj/machinery/power/supermatter_shard(src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
 /obj/item/weapon/melee/supermatter_sword/process()

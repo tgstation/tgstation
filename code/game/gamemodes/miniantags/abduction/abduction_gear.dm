@@ -72,7 +72,7 @@
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
-		M.overlays.Cut()
+		M.cut_overlays()
 		M.regenerate_icons()
 	return
 
@@ -105,12 +105,12 @@
 		M.SetStunned(0)
 		M.SetWeakened(0)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown==initial(combat_cooldown))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))
@@ -262,7 +262,7 @@
 	if(cooldown == initial(cooldown))
 		home.Retrieve(imp_in,1)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
 	return
@@ -271,7 +271,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/abductor/implant(var/mob/source, var/mob/user)
 	if(..())
@@ -511,6 +511,7 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/restraints/handcuffs/energy/used
 	desc = "energy discharge"
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s [src] break in a discharge of energy!</span>", \
@@ -518,7 +519,7 @@ Congratulations! You are now trained for xenobiology research!"}
 	var/datum/effect_system/spark_spread/S = new
 	S.set_up(4,0,user.loc)
 	S.start()
-	qdel(src)
+	. = ..()
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()

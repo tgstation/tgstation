@@ -180,7 +180,7 @@
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null, triggered_by_explosion = 0)
 	if(stage == 0)
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_active", layer = ON_EDGED_TURF_LAYER)
-		overlays += I
+		add_overlay(I)
 		activated_image = I
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
@@ -220,7 +220,7 @@
 	if(stage == 1)
 		overlays -= activated_image
 		var/image/I = image('icons/turf/smoothrocks.dmi', loc = src, icon_state = "rock_Gibtonite_inactive", layer = ON_EDGED_TURF_LAYER)
-		overlays += I
+		add_overlay(I)
 		desc = "An inactive gibtonite reserve. The ore can be extracted."
 		stage = 2
 		if(det_time < 0)
@@ -263,7 +263,8 @@
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goldgrub = 10, /mob/living/simple_animal/hostile/asteroid/goliath/beast = 50, /mob/living/simple_animal/hostile/asteroid/basilisk/watcher = 40, /mob/living/simple_animal/hostile/asteroid/hivelord/legion = 30,
-		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, /mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2, /mob/living/simple_animal/hostile/megafauna/colossus = 2)
+		/mob/living/simple_animal/hostile/spawner/lavaland = 2, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
+		/mob/living/simple_animal/hostile/megafauna/dragon = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = 2, /mob/living/simple_animal/hostile/megafauna/colossus = 2)
 
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
@@ -587,7 +588,7 @@
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
 			var/obj/item/device/wormhole_jaunter/J = H.belt
 			// To freak out any bystanders
-			visible_message("[H] falls into [src]!")
+			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
 			return
 		if(H.dna.species && (FLYING in H.dna.species.specflags))
@@ -599,9 +600,10 @@
 	/*visible_message("[AM] falls into [src]!")
 	qdel(AM)*/
 	AM.forceMove(locate(drop_x, drop_y, drop_z))
-	AM.visible_message("[AM] falls from above!")
+	AM.visible_message("<span class='boldwarning'>[AM] falls from above!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
 	if(istype(AM, /mob/living))
 		var/mob/living/L = AM
+		L.Weaken(5)
 		L.adjustBruteLoss(30)
 
 /turf/open/chasm/straight_down/New()
@@ -625,7 +627,20 @@
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	if(!AM.invisibility)
-		visible_message("[AM] falls into [src]!")
+		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
+		into the enveloping dark.</span>")
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.notransform = TRUE
+			L.Stun(10)
+			L.resting = TRUE
+		animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+		for(var/i in 1 to 5)
+			AM.pixel_y--
+			sleep(2)
+		if(isrobot(AM))
+			var/mob/living/silicon/robot/S = AM
+			qdel(S.mmi)
 		qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface

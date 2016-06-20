@@ -6,7 +6,8 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages = 0 //For say() and Hear()
+	var/languages_spoken = 0 //For say() and Hear()
+	var/languages_understood = 0
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
