@@ -31,9 +31,9 @@ var/list/freqtospan = list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
-	var/rendered = compose_message(src, languages, message, , spans)
+	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -78,7 +78,7 @@ var/list/freqtospan = list(
 	return "[verb_say], \"[input]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
-	if(languages & message_langs)
+	if(languages_understood & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
 			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed

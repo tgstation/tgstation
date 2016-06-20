@@ -103,6 +103,8 @@
 		if(target_apc.cell.use(50))
 			apcpower -= 50
 			amount -= 50
+			target_apc.update()
+			target_apc.update_icon()
 		else
 			apcpower = 0
 	if(amount)
@@ -120,6 +122,8 @@
 	active_icon = "mending_motor"
 	inactive_icon = "mending_motor_inactive"
 	construction_value = 20
+	max_health = 150
+	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
 	var/stored_alloy = 0 //250W = 1 alloy
@@ -167,7 +171,7 @@
 				break
 			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
 			E.fatigue = max(0, E.fatigue - 15)
-		else if(istype(M, /mob/living/simple_animal/hostile/clockwork))
+		else if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			var/mob/living/simple_animal/hostile/clockwork/W = M
 			if(W.health == W.maxHealth || W.stat)
 				continue
@@ -192,7 +196,7 @@
 	return 1
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= 300)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
@@ -223,6 +227,8 @@
 	active_icon = "mania_motor"
 	inactive_icon = "mania_motor_inactive"
 	construction_value = 20
+	max_health = 80
+	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
 	var/mania_cost = 150
@@ -328,7 +334,7 @@
 		toggle(0)
 
 /obj/structure/clockwork/powered/mania_motor/attack_hand(mob/living/user)
-	if(user.canUseTopic(src, be_close = 1))
+	if(user.canUseTopic(src, BE_CLOSE))
 		if(!total_accessable_power() >= mania_cost)
 			user << "<span class='warning'>[src] needs more power to function!</span>"
 			return 0
@@ -358,7 +364,7 @@
 		user << "<span class='nezbere_small'>It requires [disrupt_cost]W of power to disrupt electronics."
 
 /obj/structure/clockwork/powered/interdiction_lens/attack_hand(mob/living/user)
-	if(user.canUseTopic(src))
+	if(user.canUseTopic(src, BE_CLOSE))
 		disrupt(user)
 
 /obj/structure/clockwork/powered/interdiction_lens/process()
@@ -428,6 +434,8 @@
 	active_icon = "obelisk"
 	inactive_icon = "obelisk_inactive"
 	construction_value = 20
+	max_health = 200
+	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
 	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
@@ -464,7 +472,7 @@
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"
 				return
 			var/input = stripped_input(usr, "Please choose a message to send over the Hierophant Network.", "Hierophant Broadcast", "")
-			if(!input || !user.canUseTopic(src, be_close = 1))
+			if(!input || !user.canUseTopic(src, BE_CLOSE))
 				return
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is sustaining a gateway and cannot broadcast!</span>"

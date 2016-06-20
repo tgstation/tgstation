@@ -147,7 +147,8 @@
 	laws = "1. Serve drinks.\n\
 		2. Talk to patrons.\n\
 		3. Don't get messed up in their affairs."
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	status_flags = GODMODE // Please don't punch the barkeeper
 	unique_name = FALSE // disables the (123) number suffix
 
@@ -161,7 +162,8 @@
 	desc = "A barmaid, a maiden found in a bar."
 	pass_flags = PASSTABLE
 	status_flags = GODMODE
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	unique_name = FALSE
 	AIStatus = AI_OFF
 	stop_automated_movement = TRUE
@@ -198,6 +200,10 @@
 		M << "<span class='notice'>No climbing on the bar please.</span>"
 	else
 		. = ..()
+
+/obj/structure/table/wood/bar/shuttleRotate(rotation)
+	. = ..()
+	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
 
 /obj/structure/table/wood/bar/proc/is_barstaff(mob/living/user)
 	. = FALSE

@@ -343,7 +343,8 @@
 		"vermouth",
 		"cognac",
 		"ale",
-		"absinthe"
+		"absinthe",
+		"hcider"
 	)
 	emagged_reagents = list(
 		"ethanol",

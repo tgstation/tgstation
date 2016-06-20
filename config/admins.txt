@@ -83,7 +83,6 @@ mandurrh = Game Master
 thurgatar = Game Master
 xerux = Game Master
 dannno = Game Master
-allura = Game Master
 lo6a4evskiy = Game Master
 vekter = Game Master
 Ahammer18 = Game Master
@@ -117,4 +116,5 @@ RandomMarine = Game Master
 PKPenguin321 = Game Master
 TechnoAlchemist = Game Master
 Aloraydrel = Game Master
+Quiltyquilty = Game Master
 

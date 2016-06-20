@@ -140,9 +140,12 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
 	soulCounter = SOULVALUE
+	var/mob/living/carbon/human/H = owner.current
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
+	H.nutrition = NUTRITION_LEVEL_FULL
+	owner.current << "<span class='warning'>You feel satiated as you received a new soul.</span>"
 	switch(SOULVALUE)
 		if(0)
 			owner.current << "<span class='warning'>Your hellish powers have been restored."
