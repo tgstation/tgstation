@@ -180,7 +180,7 @@
 		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
 			var/image/I = image(icon = 'icons/mob/robots.dmi' , icon_state = "robot", loc = H)
 			I.override = 1
-			I.overlays += image(icon = 'icons/mob/robots.dmi' , icon_state = "eyes-standard") //gotta look realistic
+			I.add_overlay(image(icon = 'icons/mob/robots.dmi' , icon_state = "eyes-standard")) //gotta look realistic
 			H.add_alt_appearance("standard_borg_disguise", I, silicon_mobs+H) //you look like a robot to robots! (including yourself because you're totally a robot)
 
 
