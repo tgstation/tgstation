@@ -155,6 +155,13 @@
 	list_reagents = list("coffee" = 30)
 	spillable = 1
 
+/obj/item/weapon/reagent_containers/food/drinks/coffe
+	name = "cup of coffe"
+	desc = "cup of coffe. does nothing. handed out by gms at random."
+	icon_state = "coffee"
+	list_reagents = list("coffee" = 30)
+	spillable = 0    
+    
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
