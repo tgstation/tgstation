@@ -130,7 +130,7 @@
 	..()
 	add_servant_of_ratvar(src, TRUE)
 	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, \
-	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, \
+	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with <i>:b</i>, \
 	and are immune to extreme temperatures and pressures. \n Your goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	You yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
 
