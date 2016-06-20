@@ -17,8 +17,8 @@
 		user << "<span class='[powered ? "brass":"alloy"]'>It has access to [powered == INFINITY ? "INFINITY":"[powered]"]W of power.</span>"
 
 /obj/structure/clockwork/powered/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	STOP_PROCESSING(SSobj, src)
+	SSfastprocess.processing -= src
+	SSobj.processing -= src
 	return ..()
 
 /obj/structure/clockwork/powered/process()
@@ -39,8 +39,10 @@
 			START_PROCESSING(SSobj, src)
 	else
 		icon_state = inactive_icon
-		STOP_PROCESSING(SSfastprocess, src)
-		STOP_PROCESSING(SSobj, src)
+		if(fast_process)
+			STOP_PROCESSING(SSfastprocess, src)
+		else
+			STOP_PROCESSING(SSobj, src)
 
 
 /obj/structure/clockwork/powered/proc/total_accessable_power() //how much power we have and can use
