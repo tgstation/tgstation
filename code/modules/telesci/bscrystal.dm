@@ -6,16 +6,14 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "bluespace_crystal"
 	w_class = 1
-	origin_tech = "bluespace=4;materials=3"
+	origin_tech = "bluespace=6;materials=3"
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
-
 
 /obj/item/weapon/ore/bluespace_crystal/New()
 	..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-
 
 /obj/item/weapon/ore/bluespace_crystal/attack_self(mob/user)
 	user.visible_message("<span class='warning'>[user] crushes [src]!</span>", "<span class='danger'>You crush [src]!</span>")
@@ -43,6 +41,6 @@
 /obj/item/weapon/ore/bluespace_crystal/artificial
 	name = "artificial bluespace crystal"
 	desc = "An artificially made bluespace crystal, it looks delicate."
-	origin_tech = "bluespace=2"
+	origin_tech = "bluespace=3;plasmatech=4"
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 // nice try

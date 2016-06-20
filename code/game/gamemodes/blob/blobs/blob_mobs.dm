@@ -67,7 +67,8 @@
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 
 ////////////////
 // BLOB SPORE //
@@ -132,7 +133,7 @@
 	H.update_hair()
 	human_overlays = H.overlays
 	update_icons()
-	H.loc = src
+	H.forceMove(src)
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -169,13 +170,13 @@
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	..()
 	if(is_zombie)
-		overlays.Cut()
+		cut_overlays()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
 			I.color = overmind.blob_reagent_datum.color
 		color = initial(color)//looks better.
-		overlays += I
+		add_overlay(I)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"

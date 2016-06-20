@@ -36,7 +36,7 @@
 		return 0
 	cooldown = world.time + 10
 	if(toggle)
-		overlays.Cut()
+		cut_overlays()
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
@@ -47,7 +47,7 @@
 		var/image/I = new('icons/effects/effects.dmi', "shield-grey")
 		if(namedatum)
 			I.color = namedatum.colour
-		overlays += I
+		add_overlay(I)
 		melee_damage_lower = 2
 		melee_damage_upper = 2
 		speed = 1

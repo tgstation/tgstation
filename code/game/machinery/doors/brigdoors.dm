@@ -23,7 +23,7 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	desc = "A remote control for a door."
-	req_access = list(access_brig)
+	req_access = list(access_security)
 	anchored = 1
 	density = 0
 	var/id = null // id of linked machinery/lockers
@@ -183,8 +183,8 @@
 /obj/machinery/door_timer/proc/set_picture(state)
 	if(maptext)
 		maptext = ""
-	overlays.Cut()
-	overlays += image('icons/obj/status_display.dmi', icon_state=state)
+	cut_overlays()
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=state))
 
 
 //Checks to see if there's 1 line or 2, adds text-icons-numbers/letters over display

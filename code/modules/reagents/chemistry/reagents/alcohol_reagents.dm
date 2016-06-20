@@ -190,6 +190,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 35
 
+/datum/reagent/consumable/ethanol/lizardwine
+	name = "Lizard wine"
+	id = "lizardwine"
+	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
+	color = "#7E4043" // rgb: 126, 64, 67
+	boozepwr = 45
+
 /datum/reagent/consumable/ethanol/grappa
 	name = "Grappa"
 	id = "grappa"
@@ -696,6 +703,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = rgb(255, 201, 49)
 	boozepwr = 35
 
+/datum/reagent/consumable/ethanol/hcider
+	name = "Hard Cider"
+	id = "hcider"
+	description = "Apple juice, for adults."
+	color = "#CD6839"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 25
+
+
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
 	id = "fetching_fizz"
@@ -709,7 +725,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		step_towards(O, get_turf(M))
 	return ..()
 
-// Another reference. Heals those in critical condition extremely quickly.
+//Another reference. Heals those in critical condition extremely quickly.
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"

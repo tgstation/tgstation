@@ -11,7 +11,7 @@
 	throw_range = 7
 	w_class = 4
 	materials = list(MAT_METAL = 500)
-	origin_tech = "combat=1"
+	origin_tech = "combat=1;engineering=1"
 	attack_verb = list("robusted")
 	hitsound = 'sound/weapons/smash.ogg'
 
@@ -71,14 +71,14 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	item_state = "toolbox_syndi"
-	origin_tech = "combat=1;syndicate=1"
+	origin_tech = "combat=2;syndicate=1;engineering=2"
 	silent = 1
 	force = 15
 	throwforce = 18
 
 /obj/item/weapon/storage/toolbox/syndicate/New()
 	..()
-	new /obj/item/weapon/screwdriver(src, "red")
+	new /obj/item/weapon/screwdriver/nuke(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool/largetank(src)
 	new /obj/item/weapon/crowbar/red(src)

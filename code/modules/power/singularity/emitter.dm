@@ -37,7 +37,7 @@
 /obj/item/weapon/circuitboard/machine/emitter
 	name = "circuit board (Emitter)"
 	build_path = /obj/machinery/power/emitter
-	origin_tech = "programming=4;powerstorage=5;engineering=5"
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
@@ -68,7 +68,7 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/power/emitter/AltClick(mob/user)
@@ -170,7 +170,7 @@
 
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
-		A.dir = src.dir
+		A.setDir(src.dir)
 		playsound(src.loc, projectile_sound, 25, 1)
 
 		if(prob(35))

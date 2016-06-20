@@ -38,12 +38,12 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if(selfcharge)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	update_icon()
 	return
 
 /obj/item/weapon/gun/energy/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/gun/energy/process()
@@ -99,7 +99,7 @@
 	return
 
 /obj/item/weapon/gun/energy/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/ratio = Ceiling((power_supply.charge / power_supply.maxcharge) * charge_sections)
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
@@ -107,23 +107,23 @@
 	if(!initial(item_state))
 		itemState = icon_state
 	if (modifystate)
-		overlays += "[icon_state]_[shot.select_name]"
+		add_overlay("[icon_state]_[shot.select_name]")
 		iconState += "_[shot.select_name]"
 		if(itemState)
 			itemState += "[shot.select_name]"
 	if(power_supply.charge < shot.e_cost)
-		overlays += "[icon_state]_empty"
+		add_overlay("[icon_state]_empty")
 	else
 		if(!shaded_charge)
 			for(var/i = ratio, i >= 1, i--)
-				overlays += image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1))
+				add_overlay(image(icon = icon, icon_state = iconState, pixel_x = ammo_x_offset * (i -1)))
 		else
-			overlays += image(icon = icon, icon_state = "[icon_state]_charge[ratio]")
+			add_overlay(image(icon = icon, icon_state = "[icon_state]_charge[ratio]"))
 	if(F && can_flashlight)
 		var/iconF = "flight"
 		if(F.on)
 			iconF = "flight_on"
-		overlays += image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset)
+		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
@@ -161,7 +161,12 @@
 /obj/item/weapon/gun/energy/on_varedit(modified_var)
 	if(modified_var == "selfcharge")
 		if(selfcharge)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
-			SSobj.processing -= src
+			STOP_PROCESSING(SSobj, src)
 	..()
+
+/obj/item/weapon/gun/energy/burn()
+	if(power_supply)
+		qdel(power_supply)
+	.=..()

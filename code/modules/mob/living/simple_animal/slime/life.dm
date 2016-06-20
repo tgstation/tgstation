@@ -437,62 +437,84 @@
 			else if (findtext(phrase, "follow"))
 				if (Leader)
 					if (Leader == who) // Already following him
-						to_say = pick("Yes...", "Lead...", "Following...")
+						to_say = pick("Yes...", "Lead...", "Follow...")
 					else if (Friends[who] > Friends[Leader]) // VIVA
 						Leader = who
 						to_say = "Yes... I follow [who]..."
 					else
 						to_say = "No... I follow [Leader]..."
 				else
-					if (Friends[who] > 2)
+					if (Friends[who] >= SLIME_FRIENDSHIP_FOLLOW)
 						Leader = who
 						to_say = "I follow..."
 					else // Not friendly enough
-						to_say = pick("No...", "I won't follow...")
+						to_say = pick("No...", "I no follow...")
 			else if (findtext(phrase, "stop"))
 				if (buckled) // We are asked to stop feeding
-					if (Friends[who] > 4)
+					if (Friends[who] >= SLIME_FRIENDSHIP_STOPEAT)
 						Feedstop()
 						Target = null
-						if (Friends[who] < 7)
+						if (Friends[who] < SLIME_FRIENDSHIP_STOPEAT_NOANGRY)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
 				else if (Target) // We are asked to stop chasing
-					if (Friends[who] > 3)
+					if (Friends[who] >= SLIME_FRIENDSHIP_STOPCHASE)
 						Target = null
-						if (Friends[who] < 6)
+						if (Friends[who] < SLIME_FRIENDSHIP_STOPCHASE_NOANGRY)
 							--Friends[who]
 							to_say = "Grrr..." // I'm angry but I do it
 						else
 							to_say = "Fine..."
 				else if (Leader) // We are asked to stop following
 					if (Leader == who)
-						to_say = "Yes... I'll stay..."
+						to_say = "Yes... I stay..."
 						Leader = null
 					else
 						if (Friends[who] > Friends[Leader])
 							Leader = null
-							to_say = "Yes... I'll stop..."
+							to_say = "Yes... I stop..."
 						else
-							to_say = "No... I'll keep following..."
+							to_say = "No... keep follow..."
 			else if (findtext(phrase, "stay"))
 				if (Leader)
 					if (Leader == who)
 						holding_still = Friends[who] * 10
-						to_say = "Yes... Staying..."
+						to_say = "Yes... stay..."
 					else if (Friends[who] > Friends[Leader])
 						holding_still = (Friends[who] - Friends[Leader]) * 10
-						to_say = "Yes... Staying..."
+						to_say = "Yes... stay..."
 					else
-						to_say = "No... I'll keep following..."
+						to_say = "No... keep follow..."
 				else
-					if (Friends[who] > 2)
+					if (Friends[who] >= SLIME_FRIENDSHIP_STAY)
 						holding_still = Friends[who] * 10
-						to_say = "Yes... Staying..."
+						to_say = "Yes... stay..."
 					else
-						to_say = "No... I won't stay..."
+						to_say = "No... won't stay..."
+			else if (findtext(phrase, "attack"))
+				if (rabid && prob(20))
+					Target = who
+					AIprocess() //Wake up the slime's Target AI, needed otherwise this doesn't work
+					to_say = "ATTACK!?!?"
+				else if (Friends[who] >= SLIME_FRIENDSHIP_ATTACK)
+					for (var/mob/living/L in view(7,src)-list(src,who))
+						if (findtext(phrase, lowertext(L.name)))
+							if (isslime(L))
+								to_say = "NO... [L] slime friend"
+								--Friends[who] //Don't ask a slime to attack its friend
+							else if(!Friends[L] || Friends[L] < 1)
+								Target = L
+								AIprocess()//Wake up the slime's Target AI, needed otherwise this doesn't work
+								to_say = "Ok... I attack [Target]"
+							else
+								to_say = "No... like [L] ..."
+								--Friends[who] //Don't ask a slime to attack its friend
+							break
+				else
+					to_say = "No... no listen"
+
 		speech_buffer = list()
 
 	//Speech starts here
@@ -520,7 +542,7 @@
 		if (prob(2) && prob(t))
 			var/phrases = list()
 			if (Target)
-				phrases += "[Target]... looks tasty..."
+				phrases += "[Target]... look yummy..."
 			if (nutrition < get_starve_nutrition())
 				phrases += "So... hungry..."
 				phrases += "Very... hungry..."
@@ -528,7 +550,7 @@
 				phrases += "Must... eat..."
 			else if (nutrition < get_hunger_nutrition())
 				phrases += "Hungry..."
-				phrases += "Where is the food?"
+				phrases += "Where food?"
 				phrases += "I want to eat..."
 			phrases += "Rawr..."
 			phrases += "Blop..."
@@ -551,7 +573,7 @@
 				phrases += "C... c..."
 			if (buckled)
 				phrases += "Nom..."
-				phrases += "Tasty..."
+				phrases += "Yummy..."
 			if (powerlevel > 3)
 				phrases += "Bzzz..."
 			if (powerlevel > 5)
@@ -561,9 +583,9 @@
 			if (mood == "sad")
 				phrases += "Bored..."
 			if (slimes_near)
-				phrases += "Brother..."
+				phrases += "Slime friend..."
 			if (slimes_near > 1)
-				phrases += "Brothers..."
+				phrases += "Slime friends..."
 			if (dead_slimes)
 				phrases += "What happened?"
 			if (!slimes_near)

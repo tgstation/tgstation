@@ -66,7 +66,7 @@
 /obj/structure/closet/body_bag/update_icon()
 	..()
 	if (tagged)
-		overlays += "bodybag_label"
+		add_overlay("bodybag_label")
 
 /obj/structure/closet/body_bag/close()
 	if(..())
@@ -99,6 +99,7 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = 2
+	origin_tech = "bluespace=4;materials=4;plasmatech=4"
 
 /obj/structure/closet/body_bag/bluespace
 	name = "bluespace body bag"

@@ -14,8 +14,10 @@
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
 	status_flags = NONE //no default canpush
-
-	speak_emote = list("states")
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
 	bubble_icon = "machine"
 
 	faction = list("neutral", "silicon")
@@ -72,6 +74,7 @@
 	var/beacon_freq = 1445		// navigation beacon frequency
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
+	var/data_hud_type = DATA_HUD_DIAGNOSTIC //The type of data HUD the bot uses. Diagnostic by default.
 	var/list/mode_name = list("In Pursuit","Preparing to Arrest", "Arresting", \
 	"Beginning Patrol", "Patrolling", "Summoned by PDA", \
 	"Cleaning", "Repairing", "Proceeding to work site", "Healing", \
@@ -124,12 +127,17 @@
 
 	bot_core = new bot_core_type(src)
 
+	//Adds bot to the diagnostic HUD system
 	prepare_huds()
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
+
+	//Gives a HUD view to player bots that use a HUD.
+	activate_data_hud()
+
 
 /mob/living/simple_animal/bot/update_canmove()
 	. = ..()
@@ -335,7 +343,7 @@
 	if((!on) || (!message))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
-		Radio.talk_into(src, message, channel)
+		Radio.talk_into(src, message, channel, get_spans())
 	else
 		say(message)
 	return
@@ -483,6 +491,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message=TRUE)
 	bot_reset() //Reset a bot before setting it to call mode.
 	var/area/end_area = get_area(waypoint)
+
+	if(client) //Player bots instead get a location command from the AI
+		src << "<span class='noticebig'>Priority waypoint set by \icon[caller] <b>[caller]</b>. Proceed to <b>[end_area.name]<\b>."
 
 	//For giving the bot temporary all-access.
 	var/obj/item/weapon/card/id/all_access = new /obj/item/weapon/card/id
@@ -882,6 +893,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	access_card.access += player_access
 	diag_hud_set_botmode()
+	activate_data_hud()
 
 /mob/living/simple_animal/bot/Logout()
 	. = ..()
@@ -900,3 +912,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/sentience_act()
 	faction -= "silicon"
+
+/mob/living/simple_animal/bot/proc/activate_data_hud()
+//If a bot has its own HUD (for player bots), provide it.
+	if(!data_hud_type)
+		return
+	var/datum/atom_hud/datahud = huds[data_hud_type]
+	datahud.add_hud_to(src)

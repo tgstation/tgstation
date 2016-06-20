@@ -12,6 +12,7 @@
 	var/operating = 0	//0=standby or broken, 1=takeover
 	var/warned = 0	//if this device has set off the warning at <3 minutes yet
 	var/datum/effect_system/spark_spread/spark_system
+	var/obj/effect/countdown/dominator/countdown
 
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
@@ -22,6 +23,7 @@
 	poi_list |= src
 	spark_system = new
 	spark_system.set_up(5, 1, src)
+	countdown = new(src)
 
 /obj/machinery/dominator/examine(mob/user)
 	..()
@@ -53,7 +55,7 @@
 					if(G != gang)
 						G.message_gangtools("WARNING: [gang.name] Gang takeover imminent. Their dominator at [domloc.map_name] must be destroyed!",1,1)
 		else
-			SSmachine.processing -= src
+			STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)
@@ -75,7 +77,7 @@
 			spark_system.start()
 	else if(!(stat & BROKEN))
 		spark_system.start()
-		overlays += "damage"
+		add_overlay("damage")
 
 	if(!(stat & BROKEN))
 		if(health <= 0)
@@ -110,10 +112,10 @@
 
 	SetLuminosity(0)
 	icon_state = "dominator-broken"
-	overlays.Cut()
+	cut_overlays()
 	operating = 0
 	stat |= BROKEN
-	SSmachine.processing -= src
+	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/dominator/Destroy()
 	if(!(stat & BROKEN))
@@ -121,6 +123,9 @@
 	poi_list.Remove(src)
 	gang = null
 	qdel(spark_system)
+	qdel(countdown)
+	countdown = null
+	STOP_PROCESSING(SSmachine, src)
 	return ..()
 
 /obj/machinery/dominator/emp_act(severity)
@@ -189,8 +194,12 @@
 		src.name = "[gang.name] Gang [src.name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"
+
+		countdown.text_color = gang.color_hex
+		countdown.start()
+
 		SetLuminosity(3)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 
 		gang.message_gangtools("Hostile takeover in progress: Estimated [time] minutes until victory.[gang.dom_attempts ? "" : " This is your final attempt."]")
 		for(var/datum/gang/G in ticker.mode.gangs)

@@ -62,6 +62,8 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 
+	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
+
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
@@ -1041,12 +1043,12 @@
 	else if(href_list["clockcult"])
 		switch(href_list["clockcult"])
 			if("clear")
-				remove_servant_of_ratvar(current)
+				remove_servant_of_ratvar(current, TRUE)
 				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
 				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
 			if("servant")
-				if(!(src in ticker.mode.servants_of_ratvar))
-					add_servant_of_ratvar(current)
+				if(!is_servant_of_ratvar(current))
+					add_servant_of_ratvar(current, TRUE)
 					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
@@ -1464,8 +1466,7 @@
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in ticker.mode.cult))
-		ticker.mode.cult += src
-		ticker.mode.update_cult_icons_added(src)
+		ticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"

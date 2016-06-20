@@ -6,7 +6,7 @@ var/global/posibrain_notif_cooldown = 0
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	w_class = 3
-	origin_tech = "biotech=3;programming=2"
+	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/notified = 0
 	var/askDelay = 10 * 60 * 1
 	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
@@ -35,7 +35,7 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/ping_ghosts(msg)
 	if(!posibrain_notif_cooldown)
-		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, attack_not_jump = 1)
+		notify_ghosts("[name] [msg] in [get_area(src)]!", 'sound/effects/ghost2.ogg', enter_link="<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action=NOTIFY_ATTACK)
 		posibrain_notif_cooldown = 1
 		spawn(askDelay) //Global one minute cooldown to avoid spam.
 			posibrain_notif_cooldown = 0

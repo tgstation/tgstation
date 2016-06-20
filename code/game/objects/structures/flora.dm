@@ -13,7 +13,7 @@
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
-	if(!cut && log_amount)
+	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
@@ -230,6 +230,27 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+
+/obj/structure/flora/kirbyplants/random
+	var/list/static/states
+
+/obj/structure/flora/kirbyplants/random/New()
+	. = ..()
+	if(!states)
+		generate_states()
+	icon_state = pick(states)
+
+/obj/structure/flora/kirbyplants/random/proc/generate_states()
+	states = list()
+	for(var/i in 1 to 25)
+		var/number
+		if(i < 10)
+			number = "0[i]"
+		else
+			number = "[i]"
+		states += "plant-[number]"
+	states += "applebush"
+
 
 /obj/structure/flora/kirbyplants/dead
 	name = "RD's potted plant"

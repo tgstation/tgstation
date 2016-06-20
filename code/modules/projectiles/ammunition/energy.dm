@@ -167,10 +167,6 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
 
-/obj/item/ammo_casing/energy/trap/cyborg
-	projectile_type = /obj/item/projectile/energy/trap/cyborg
-	e_cost = 50
-
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/item/projectile/beam/instakill
 	e_cost = 0
@@ -187,3 +183,37 @@ obj/item/ammo_casing/energy/net
 	e_cost = 200
 	select_name = "stun"
 	projectile_type = /obj/item/projectile/energy/shock_revolver
+
+/obj/item/ammo_casing/energy/gravityrepulse
+	projectile_type = /obj/item/projectile/gravityrepulse
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "repulse"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravityrepulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
+/obj/item/ammo_casing/energy/gravityattract
+	projectile_type = /obj/item/projectile/gravityattract
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "attract"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+
+/obj/item/ammo_casing/energy/gravityattract/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
+/obj/item/ammo_casing/energy/gravitychaos
+	projectile_type = /obj/item/projectile/gravitychaos
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "chaos"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G

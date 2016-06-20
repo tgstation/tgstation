@@ -76,7 +76,7 @@
 /obj/item/weapon/circuitboard/machine/power_compressor
 	name = "circuit board (Power Compressor)"
 	build_path = /obj/machinery/power/compressor
-	origin_tech = "programming=4;powerstorage=5;engineering=4"
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/manipulator = 6)
@@ -141,7 +141,7 @@
 		return
 	if(!starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
@@ -169,13 +169,13 @@
 
 
 	if(rpm>50000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o4", FLY_LAYER))
 	else if(rpm>10000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o3", FLY_LAYER))
 	else if(rpm>2000)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o2", FLY_LAYER))
 	else if(rpm>500)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "comp-o1", FLY_LAYER))
 	 //TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
@@ -195,7 +195,7 @@
 /obj/item/weapon/circuitboard/machine/power_turbine
 	name = "circuit board (Power Turbine)"
 	build_path = /obj/machinery/power/turbine
-	origin_tech = "programming=4;powerstorage=4;engineering=5"
+	origin_tech = "programming=4;powerstorage=4;engineering=4"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/capacitor = 6)
@@ -231,7 +231,7 @@
 		return
 	if(!compressor.starter)
 		return
-	overlays.Cut()
+	cut_overlays()
 
 	// This is the power generation function. If anything is needed it's good to plot it in EXCEL before modifying
 	// the TURBGENQ and TURBGENG values
@@ -257,7 +257,7 @@
 // If it works, put an overlay that it works!
 
 	if(lastgen > 100)
-		overlays += image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER)
+		add_overlay(image('icons/obj/atmospherics/pipes/simple.dmi', "turb-o", FLY_LAYER))
 
 	updateDialog()
 

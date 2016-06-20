@@ -113,6 +113,12 @@ var/next_external_rsc = 0
 	directory[ckey] = src
 
 	//Admin Authorisation
+	var/localhost_addresses = list("127.0.0.1", "::1")
+	if(address && (address in localhost_addresses))
+		var/datum/admin_rank/localhost_rank = new("!localhost!", 65535)
+		if(localhost_rank)
+			var/datum/admins/localhost_holder = new(localhost_rank, ckey)
+			localhost_holder.associate(src)
 	if(protected_config.autoadmin)
 		if(!admin_datums[ckey])
 			var/datum/admin_rank/autorank
@@ -127,7 +133,7 @@ var/next_external_rsc = 0
 				admin_datums[ckey] = D
 	holder = admin_datums[ckey]
 	if(holder)
-		admins += src
+		admins |= src
 		holder.owner = src
 
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
@@ -203,6 +209,8 @@ var/next_external_rsc = 0
 	findJoinDate()
 
 	sync_client_with_db()
+
+	check_ip_intel()
 
 	send_resources()
 
@@ -316,6 +324,15 @@ var/next_external_rsc = 0
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
 
+/client/proc/check_ip_intel()
+	set waitfor = 0 //we sleep when getting the intel, no need to hold up the client connection while we sleep
+	if (config.ipintel_email)
+		var/datum/ipintel/res = get_ip_intel(address)
+		if (res.intel >= config.ipintel_rating_bad)
+			message_admins("<span class='adminnotice'>Proxy Detection: [key_name_admin(src)] IP intel rated [res.intel*100]% likely to be a Proxy/VPN.</span>")
+		ip_intel = res.intel
+
+
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
 		verbs += /client/proc/self_notes
@@ -357,3 +374,9 @@ var/next_external_rsc = 0
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+
+//Hook, override it to run code when dir changes
+//Like for /atoms, but clients are their own snowflake FUCK
+/client/proc/setDir(newdir)
+	dir = newdir

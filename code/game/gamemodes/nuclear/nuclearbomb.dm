@@ -33,14 +33,24 @@ var/bomb_set
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/image/lights = null
 	var/image/interior = null
+	var/obj/effect/countdown/nuclearbomb/countdown
 
 /obj/machinery/nuclearbomb/New()
 	..()
+	countdown = new(src)
 	nuke_list += src
 	core = new /obj/item/nuke_core(src)
-	SSobj.processing -= core
+	STOP_PROCESSING(SSobj, core)
 	update_icon()
+	poi_list |= src
 	previous_level = get_security_level()
+
+/obj/machinery/nuclearbomb/Destroy()
+	poi_list -= src
+	nuke_list -= src
+	qdel(countdown)
+	countdown = null
+	. = ..()
 
 /obj/machinery/nuclearbomb/selfdestruct
 	name = "station self-destruct terminal"
@@ -108,7 +118,7 @@ var/bomb_set
 					user << "<span class='notice'>You pry off [src]'s inner plate. You can see the core's green glow!</span>"
 					deconstruction_state = NUKESTATE_CORE_EXPOSED
 					update_icon()
-					SSobj.processing += core
+					START_PROCESSING(SSobj, core)
 				return
 		if(NUKESTATE_CORE_EXPOSED)
 			if(istype(I, /obj/item/nuke_core_container))
@@ -131,7 +141,7 @@ var/bomb_set
 						if(M.use(20))
 							user << "<span class='notice'>You repair [src]'s inner metal plate. The radiation is contained.</span>"
 							deconstruction_state = NUKESTATE_PANEL_REMOVED
-							SSobj.processing -= core
+							STOP_PROCESSING(SSobj, core)
 							update_icon()
 						else
 							user << "<span class='warning'>You need more metal to do that!</span>"
@@ -158,10 +168,10 @@ var/bomb_set
 				update_icon_interior()
 				update_icon_lights()
 			if(NUKE_ON_TIMING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_timing"
 			if(NUKE_ON_EXPLODING)
-				overlays.Cut()
+				cut_overlays()
 				icon_state = "nuclearbomb_exploding"
 	else
 		icon_state = "nuclearbomb_base"
@@ -183,7 +193,7 @@ var/bomb_set
 			interior = image(icon,"core-removed")
 		if(NUKESTATE_INTACT)
 			interior = null
-	overlays += interior
+	add_overlay(interior)
 
 /obj/machinery/nuclearbomb/proc/update_icon_lights()
 	overlays -= lights
@@ -196,10 +206,11 @@ var/bomb_set
 			lights = image(icon,"lights-timing")
 		if(NUKE_ON_EXPLODING)
 			lights = image(icon,"lights-exploding")
-	overlays += lights
+	add_overlay(lights)
 
 /obj/machinery/nuclearbomb/process()
 	if (timing > 0)
+		countdown.start()
 		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
 		timeleft--
 		if (timeleft <= 0)
@@ -210,7 +221,8 @@ var/bomb_set
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
 				attack_hand(M)
-	return
+	else
+		countdown.stop()
 
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
@@ -304,18 +316,19 @@ var/bomb_set
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
 	if(safety)
+		if(timing)
+			set_security_level(previous_level)
 		timing = 0
 		bomb_set = 0
-		set_security_level(previous_level)
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety)
+	if(safety && !bomb_set)
 		usr << "<span class='danger'>The safety is still on.</span>"
 		return
 	timing = !timing
-	previous_level = get_security_level()
 	if(timing)
+		previous_level = get_security_level()
 		bomb_set = 1
 		set_security_level("delta")
 	else
@@ -421,7 +434,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)

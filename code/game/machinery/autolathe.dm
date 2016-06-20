@@ -22,7 +22,7 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	var/busy = 0
-	var/prod_coeff
+	var/prod_coeff = 1
 
 	var/datum/design/being_built
 	var/datum/research/files
@@ -47,7 +47,7 @@
 
 /obj/machinery/autolathe/New()
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
+	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
 	B.apply_default_parts(src)
 
@@ -196,18 +196,18 @@
 				return
 			/////////////////
 
-			var/coeff = (is_stack ? 1 : 2 ** prod_coeff) //stacks are unaffected by production coefficient
+			var/coeff = (is_stack ? 1 : prod_coeff) //stacks are unaffected by production coefficient
 			var/metal_cost = being_built.materials[MAT_METAL]
 			var/glass_cost = being_built.materials[MAT_GLASS]
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
-			if((materials.amount(MAT_METAL) >= metal_cost*multiplier/coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier/coeff))
+			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = 1
 				use_power(power)
 				icon_state = "autolathe"
 				flick("autolathe_n",src)
-				spawn(32/coeff)
+				spawn(32*coeff)
 					use_power(power)
 					if(is_stack)
 						var/list/materials_used = list(MAT_METAL=metal_cost*multiplier, MAT_GLASS=glass_cost*multiplier)
@@ -221,7 +221,7 @@
 							if(istype(S, N.merge_type))
 								N.merge(S)
 					else
-						var/list/materials_used = list(MAT_METAL=metal_cost/coeff, MAT_GLASS=glass_cost/coeff)
+						var/list/materials_used = list(MAT_METAL=metal_cost*coeff, MAT_GLASS=glass_cost*coeff)
 						materials.use_amount(materials_used)
 						var/obj/item/new_item = new being_built.build_path(T)
 						new_item.materials = materials_used.Copy()
@@ -244,20 +244,18 @@
 	return
 
 /obj/machinery/autolathe/RefreshParts()
-	var/tot_rating = 0
-	prod_coeff = 0
+	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
-		tot_rating += MB.rating
-	tot_rating *= 25000
-	materials.max_amount = tot_rating * 3
+		T += MB.rating*75000
+	materials.max_amount = T
+	T=1.2
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		prod_coeff += M.rating - 1
+		T -= M.rating*0.2
+	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	dat += "<form name='search' action='?src=\ref[src]'>\
 	<input type='hidden' name='src' value='\ref[src]'>\
@@ -284,9 +282,7 @@
 /obj/machinery/autolathe/proc/category_win(mob/user,selected_category)
 	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
@@ -315,9 +311,7 @@
 /obj/machinery/autolathe/proc/search_win(mob/user)
 	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Search results:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	for(var/v in matching_designs)
 		var/datum/design/D = v
@@ -340,22 +334,29 @@
 	dat += "</div>"
 	return dat
 
-/obj/machinery/autolathe/proc/can_build(datum/design/D)
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
+/obj/machinery/autolathe/proc/materials_printout()
+	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
+	for(var/mat_id in materials.materials)
+		var/datum/material/M = materials.materials[mat_id]
+		dat += "<b>[M.name] amount:</b> [M.amount] cm<sup>3</sup><br>"
+	return dat
 
-	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] / coeff)))
+/obj/machinery/autolathe/proc/can_build(datum/design/D)
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
+
+	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff)))
 		return 0
-	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] / coeff)))
+	if(D.materials[MAT_GLASS] && (materials.amount(MAT_GLASS) < (D.materials[MAT_GLASS] * coeff)))
 		return 0
 	return 1
 
 /obj/machinery/autolathe/proc/get_design_cost(datum/design/D)
-	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : 2 ** prod_coeff)
+	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
 	var/dat
 	if(D.materials[MAT_METAL])
-		dat += "[D.materials[MAT_METAL] / coeff] metal "
+		dat += "[D.materials[MAT_METAL] * coeff] metal "
 	if(D.materials[MAT_GLASS])
-		dat += "[D.materials[MAT_GLASS] / coeff] glass"
+		dat += "[D.materials[MAT_GLASS] * coeff] glass"
 	return dat
 
 /obj/machinery/autolathe/proc/reset(wire)

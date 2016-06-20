@@ -19,7 +19,7 @@
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
-
+#define DROPDEL			1024 // When dropped, it calls qdel on itself
 
 #define HEADBANGPROTECT		4096
 #define EARBANGPROTECT		1024
@@ -67,6 +67,10 @@
 #define NODISMEMBER		16
 #define NOHUNGER		17
 #define NOCRITDAMAGE	18
+#define NOZOMBIE		19
+#define EASYDISMEMBER	20
+#define EASYLIMBATTACHMENT 21
+#define TOXINLOVER		22
 
 #define FLYING	65536
 

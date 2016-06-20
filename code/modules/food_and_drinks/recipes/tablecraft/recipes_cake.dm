@@ -101,3 +101,17 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice
 	category = CAT_FOOD
+
+/datum/crafting_recipe/food/cak
+	name = "Living cat/cake hybrid"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 3,
+		/datum/reagent/blood = 30,
+		/datum/reagent/consumable/sprinkles = 5,
+		/datum/reagent/toxin/teslium = 1 //To shock the whole thing into life
+	)
+	result = /mob/living/simple_animal/pet/cat/cak
+	category = CAT_FOOD //Cat! Haha, get it? CAT? GET IT???

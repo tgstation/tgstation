@@ -29,6 +29,10 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
+	if(mind.enslaved_to)
+		return 0
+	if(is_servant_of_ratvar(mind.current))
+		return 0
 	return 1
 
 /datum/game_mode/cult
@@ -96,7 +100,7 @@
 				else
 					explanation = "Free objective."
 			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes around and on it. You must do this after sacrificing your target."
+				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
 		cult_mind.current << "<B>Objective #[obj_count]</B>: [explanation]"
 		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
 

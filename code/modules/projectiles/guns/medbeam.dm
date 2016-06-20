@@ -18,9 +18,13 @@
 
 /obj/item/weapon/gun/medbeam/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/medbeam/dropped(mob/user)
+	..()
+	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/equipped(mob/user)
 	..()
 	LoseTarget()
 
@@ -121,4 +125,4 @@
 
 /obj/item/weapon/gun/medbeam/mech/New()
 	..()
-	SSobj.processing -= src //Mech mediguns do not process until installed, and are controlled by the holder obj
+	STOP_PROCESSING(SSobj, src) //Mech mediguns do not process until installed, and are controlled by the holder obj

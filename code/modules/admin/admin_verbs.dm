@@ -65,7 +65,8 @@ var/list/admin_verbs_admin = list(
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/customiseSNPC, /* Customise any interactive crewmembers in the world */
 	/client/proc/resetSNPC, /* Resets any interactive crewmembers in the world */
-	/client/proc/toggleSNPC /* Toggles an npc's processing mode */
+	/client/proc/toggleSNPC, /* Toggles an npc's processing mode */
+	/client/proc/open_shuttle_manipulator /* Opens shuttle manipulator UI */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -93,7 +94,10 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke
+	/client/proc/toggle_nuke,
+	/client/proc/mass_zombie_infection,
+	/client/proc/mass_zombie_cure,
+	/client/proc/polymorph_all
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -546,10 +550,10 @@ var/list/admin_verbs_hideable = list(
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
 	if(!message)
 		return
-	var/templanguages = O.languages
-	O.languages |= ALL
+	var/templanguages = O.languages_spoken
+	O.languages_spoken |= ALL
 	O.say(message)
-	O.languages = templanguages
+	O.languages_spoken = templanguages
 	log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z] say \"[message]\"")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z]. say \"[message]\"</span>")
 	feedback_add_details("admin_verb","OS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

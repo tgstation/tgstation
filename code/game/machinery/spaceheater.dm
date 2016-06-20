@@ -31,7 +31,7 @@
 /obj/item/weapon/circuitboard/machine/space_heater
 	name = "circuit board (Space Heater)"
 	build_path = /obj/machinery/space_heater
-	origin_tech = "programming=2;engineering=2"
+	origin_tech = "programming=2;engineering=2;plasmatech=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/micro_laser = 1,
 							/obj/item/weapon/stock_parts/capacitor = 1,
@@ -64,9 +64,9 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())

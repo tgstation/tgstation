@@ -14,7 +14,7 @@
 		else
 			Wall.thermite = Wall.thermite+(reac_volume*10)
 		Wall.overlays = list()
-		Wall.overlays += image('icons/effects/effects.dmi',"thermite")
+		Wall.add_overlay(image('icons/effects/effects.dmi',"thermite"))
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
@@ -62,7 +62,8 @@
 			F.burn_tile()
 		if(istype(F, /turf/open/floor/))
 			for(var/turf/turf in range(1,F))
-				PoolOrNew(/obj/effect/hotspot, F)
+				if(!locate(/obj/effect/hotspot) in turf)
+					PoolOrNew(/obj/effect/hotspot, F)
 	if(istype(T, /turf/closed/wall/))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
@@ -73,7 +74,8 @@
 		if(method != INGEST && method != INJECT)
 			M.adjust_fire_stacks(min(reac_volume/5, 10))
 			M.IgniteMob()
-			PoolOrNew(/obj/effect/hotspot, M.loc)
+			if(!locate(/obj/effect/hotspot) in M.loc)
+				PoolOrNew(/obj/effect/hotspot, M.loc)
 
 /datum/reagent/sorium
 	name = "Sorium"

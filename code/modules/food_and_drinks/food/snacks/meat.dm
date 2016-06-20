@@ -18,7 +18,7 @@
 	..()
 	var/image/I = new(icon, "rawcutlet_coloration")
 	I.color = filling_color
-	slice.overlays += I
+	slice.add_overlay(I)
 	slice.filling_color = filling_color
 	slice.name = "raw [name] cutlet"
 	slice.meat_type = name
@@ -181,6 +181,14 @@
 	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
 	SSobj.burning -= src
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
+	name = "meatwheat clump"
+	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
+	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)
+	filling_color = rgb(150, 0, 0)
+	icon_state = "meatwheat_clump"
+	bitesize = 4
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 

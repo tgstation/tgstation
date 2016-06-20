@@ -275,7 +275,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		for(var/para in guardians)
 			para << my_message
 		for(var/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [my_message]"
 
 		log_say("[src.real_name]/[src.key] : [input]")
 
@@ -296,7 +297,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+		var/link = FOLLOW_LINK(M, src)
+		M << "[link] [my_message]"
 
 	log_say("[src.real_name]/[src.key] : [text]")
 
@@ -497,7 +499,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>

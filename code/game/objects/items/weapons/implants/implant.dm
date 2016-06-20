@@ -4,12 +4,13 @@
 	icon_state = "generic" //Shows up as the action button icon
 	origin_tech = "materials=2;biotech=3;programming=2"
 	actions_types = list(/datum/action/item_action/hands_free/activate)
-	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like loyalty implants
+	var/activated = 1 //1 for implant types that can be activated, 0 for ones that are "always on" like mindshield implants
 	var/implanted = null
 	var/mob/living/imp_in = null
 	item_color = "b"
 	var/allow_multiple = 0
 	var/uses = -1
+	flags = DROPDEL
 
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
@@ -73,12 +74,9 @@
 		removed(imp_in)
 	return ..()
 
-
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
 /obj/item/weapon/implant/dropped(mob/user)
-	..()
 	. = 1
-	qdel(src)
-
+	..()

@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "lit match"
 		desc = "A match. This one is lit."
 		attack_verb = list("burnt","singed")
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		update_icon()
 	return
 
@@ -64,7 +64,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
 		attack_verb = null
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/match/dropped(mob/user)
 	matchburnout()
@@ -73,7 +73,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/match/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!isliving(M))
 		return
-	M.IgniteMob()
+	if(M.IgniteMob())
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)
@@ -128,7 +130,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/Destroy()
 	if(reagents)
 		qdel(reagents)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user, params)
@@ -212,7 +214,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(flavor_text)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 	//can't think of any other way to update the overlays :<
 	if(ismob(loc))
@@ -383,7 +385,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
 	if(reagents)
 		qdel(reagents)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/pipe/process()
@@ -400,7 +402,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			M.update_inv_wear_mask()
 			packeditem = 0
 			name = "empty [initial(name)]"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	open_flame()
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
@@ -441,7 +443,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(!lit && smoketime > 0)
 		user << "<span class='notice'>You empty [src] onto [location].</span>"
@@ -485,7 +487,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/greyscale/New()
 	var/image/I = image(icon,"lighter-overlay")
 	I.color = color2hex(randomColor(1))
-	overlays += I
+	add_overlay(I)
 
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
@@ -510,7 +512,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
 			user.AddLuminosity(1)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
 			update_icon()
@@ -522,14 +524,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
 			user.AddLuminosity(-1)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()
 	return
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(lit)
-		M.IgniteMob()
+	if(lit && M.IgniteMob())
+		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
+		log_game("[key_name(user)] set [key_name(M)] on fire")
 	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)

@@ -275,7 +275,7 @@
 
 
 /obj/structure/divine/nexus/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/structure/divine/nexus/process()
@@ -287,7 +287,7 @@
 
 
 /obj/structure/divine/nexus/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 

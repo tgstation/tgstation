@@ -114,14 +114,14 @@
 	icon_state = "closed"
 
 /obj/structure/c_transit_tube/station/tube_turn(var/angle)
-	src.dir = turn(src.dir, angle)
+	src.setDir(turn(src.dir, angle))
 
 /obj/structure/c_transit_tube/station/tube_flip()
 	src.tube_turn(180)
 
 /obj/structure/c_transit_tube/station/buildtube()
 	var/obj/structure/transit_tube/station/R = new/obj/structure/transit_tube/station(src.loc)
-	R.dir = src.dir
+	R.setDir(src.dir)
 	R.init_dirs()
 	return R
 
@@ -131,7 +131,7 @@
 
 /obj/structure/c_transit_tube/station/reverse/buildtube()
 	var/obj/structure/transit_tube/station/reverse/R = new/obj/structure/transit_tube/station/reverse(src.loc)
-	R.dir = src.dir
+	R.setDir(src.dir)
 	R.init_dirs()
 	return R
 
@@ -146,7 +146,7 @@
 /obj/structure/c_transit_tube/station/block/buildtube()
 	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
 	R.icon_state = src.icon_state
-	R.dir = src.dir
+	R.setDir(src.dir)
 	R.init_dirs()
 	return R
 

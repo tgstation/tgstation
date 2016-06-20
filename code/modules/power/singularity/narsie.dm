@@ -20,7 +20,6 @@
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
-	move_self = 1 //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
@@ -32,7 +31,7 @@
 	var/area/A = get_area(src)
 	if(A)
 		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
 
@@ -47,13 +46,20 @@
 
 /obj/singularity/narsie/process()
 	if(clashing)
-		return 0
+		return
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	move()
+	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+		move(get_dir(src, target)) //Oh, it's you again.
+	else
+		move()
 	if(prob(25))
 		mezzer()
+
+
+/obj/singularity/narsie/Process_Spacemove()
+	return clashing
 
 
 /obj/singularity/narsie/Bump(atom/A)
@@ -62,7 +68,7 @@
 
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
@@ -145,7 +151,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

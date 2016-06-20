@@ -63,7 +63,7 @@
 	return
 
 /obj/effect/mob_spawn/proc/create(ckey)
-	var/mob/living/M = new mob_type(loc) //living mobs only
+	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
 		M.gender = mob_gender
@@ -96,6 +96,8 @@
 	//Human specific stuff.
 	var/mob_species = null //Set to make them a mutant race such as lizard or skeleton. Uses the datum typepath instead of the ID.
 	var/uniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/r_hand = null
+	var/l_hand = null
 	var/suit = null
 	var/shoes = null
 	var/gloves = null
@@ -146,6 +148,10 @@
 		H.equip_to_slot_or_del(new pocket2(H), slot_l_store)
 	if(back)
 		H.equip_to_slot_or_del(new back(H), slot_back)
+	if(l_hand)
+		H.equip_to_slot_or_del(new l_hand(H), slot_l_hand)
+	if(r_hand)
+		H.equip_to_slot_or_del(new r_hand(H), slot_r_hand)
 	if(has_id)
 		var/obj/item/weapon/card/id/W = new(H)
 		if(id_icon)
@@ -216,7 +222,6 @@
 	O.Die() //call the facehugger's death proc
 	qdel(src)
 
-
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
 	mob_type = 	/mob/living/simple_animal/mouse
@@ -233,8 +238,6 @@
 	mob_gender = FEMALE
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
-
-
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
@@ -425,7 +428,7 @@
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
 	uniform = /obj/item/clothing/under/rank/centcom_commander
-	suit = /obj/item/clothing/suit/armor
+	suit = /obj/item/clothing/suit/armor/bulletproof
 	radio = /obj/item/device/radio/headset/heads/captain
 	glasses = /obj/item/clothing/glasses/eyepatch
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
@@ -494,24 +497,6 @@
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
 
-///Prisoner
-
-/obj/effect/mob_spawn/human/prisoner_transport
-	name = "prisoner sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	roundstart = FALSE
-	death = FALSE
-	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
-
-/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	new_spawn << "You were convincted of: [crime]."
-
 //For ghost bar.
 /obj/effect/mob_spawn/human/alive/space_bar_patron
 	name = "Bar cryogenics"
@@ -524,7 +509,6 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	suit = /obj/item/clothing/suit/armor/vest
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-
 
 /obj/effect/mob_spawn/human/alive/space_bar_patron/attack_hand(mob/user)
 	var/despawn = alert("Return to cryosleep? (Warning, Your mob will be deleted!)",,"Yes","No")

@@ -1,7 +1,6 @@
 /obj/item/bodypart/head
 	name = "head"
 	desc = "Didn't make sense not to live for fun, your brain gets smart but your head gets dumb."
-	icon_state = "head"
 	max_damage = 200
 	body_zone = "head"
 	body_part = HEAD
@@ -113,10 +112,10 @@
 	for(var/image/I in standing)
 		I.pixel_x = px_x
 		I.pixel_y = px_y
-	overlays += standing
+	add_overlay(standing)
 
 /obj/item/bodypart/head/get_limb_icon(dropped)
-	overlays.Cut()
+	cut_overlays()
 	var/image/I = ..()
 	var/list/standing = list()
 	standing += I

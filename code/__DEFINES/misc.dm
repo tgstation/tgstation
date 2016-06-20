@@ -23,25 +23,23 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			28		//mutations. Tk headglows, cold resistance glow, etc
-#define SPECIES_LAYER			27		// mutantrace colors... these are on a seperate layer in order to prvent
-#define BODY_BEHIND_LAYER		26		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			25		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			24		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				23		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	22		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			21		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			20
-#define ID_LAYER				19
-#define SHOES_LAYER				18
-#define GLOVES_LAYER			17
-#define SUIT_LAYER				16
-#define BELT_LAYER				15		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		14
-#define BODY_WING_LAYER			13		//Optimum layer for wing mutant parts. below hair and headgear, and above shit on the body. Can't do better without directional layers
-#define BACK_LAYER				12
-#define EARS_LAYER				11
-#define GLASSES_LAYER			10
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			19
+#define ID_LAYER				18
+#define SHOES_LAYER				17
+#define GLOVES_LAYER			16
+#define EARS_LAYER				15
+#define SUIT_LAYER				14
+#define GLASSES_LAYER			13
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		11
+#define BACK_LAYER				10
 #define HAIR_LAYER				9		//TODO: make part of head layer?
 #define FACEMASK_LAYER			8
 #define HEAD_LAYER				7
@@ -51,12 +49,11 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			28		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SPECIES_LAYER			SPECIES_LAYER+1
 #define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
 #define UNDER_BODY_LAYER			BODY_LAYER+1
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
@@ -84,7 +81,6 @@
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SPECIES_LAYER			SPECIES_LAYER-1
 #define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
 #define ABOVE_BODY_LAYER			BODY_LAYER-1
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
@@ -166,6 +162,11 @@
 #define MOB_SIZE_SMALL 1
 #define MOB_SIZE_HUMAN 2
 #define MOB_SIZE_LARGE 3
+
+//Cuff resist speeds
+
+#define FAST_CUFFBREAK 1
+#define INSTANT_CUFFBREAK 2
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -433,3 +434,27 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
+
+//Slime commands defines
+#define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
+#define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
+#define SLIME_FRIENDSHIP_STOPEAT_NOANGRY	7 //Min friendship to order it to stop eating someone without it losing friendship
+#define SLIME_FRIENDSHIP_STOPCHASE			4 //Min friendship to order it to stop chasing someone (their target)
+#define SLIME_FRIENDSHIP_STOPCHASE_NOANGRY	6 //Min friendship to order it to stop chasing someone (their target) without it losing friendship
+#define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
+#define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
+
+#define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+
+//debug printing macros
+#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
+#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
