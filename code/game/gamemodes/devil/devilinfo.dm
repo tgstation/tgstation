@@ -86,6 +86,7 @@ var/global/list/lawlorify = list (
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
 	var/exists = 0
+	var/soulCounter //I need this for the soulcounter to work.
 
 /proc/randomDevilInfo(name = randomDevilName())
 	var/datum/devilinfo/devil = new
@@ -138,6 +139,7 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
+	soulCounter = SOULVALUE
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
@@ -153,6 +155,7 @@ var/global/list/lawlorify = list (
 			increase_arch_devil()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
+	soulCounter = SOULVALUE
 	if(soulsOwned.Remove(soul))
 		check_regression()
 
