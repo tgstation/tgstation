@@ -422,7 +422,7 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 			del_reagent(R.id,update_totals=0)
 		else
 			total_volume += R.volume
-			amount_cache[R.id] = R.volume
+			amount_cache += list(R.id = R.volume)
 	return 0
 
 /datum/reagents/proc/clear_reagents()
