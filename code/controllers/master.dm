@@ -49,6 +49,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
 
 /datum/controller/master/New()
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		world.log << "Bad Icon at world init"
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		world.log << "Bad Sound at world init"
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	subsystems = list()
 	if (Master != src)
@@ -112,6 +118,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // Please don't stuff random bullshit here,
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/proc/Setup()
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		world.log << "Bad Icon at world post init start"
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		world.log << "Bad Sound at world post init start"
 	world << "<span class='boldannounce'>Initializing subsystems...</span>"
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
@@ -128,7 +140,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	world << "<span class='boldannounce'>Initializations complete!</span>"
 	world.log << "Initializations complete."
-
+	Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		world.log << "Bad Icon at world post init end"
+	Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		world.log << "Bad Sound at world post init end"
 	// Sort subsystems by display setting for easy access.
 	sortTim(subsystems, /proc/cmp_subsystem_display)
 
@@ -137,7 +154,12 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	world.fps = config.fps
 
 	sleep(1)
-
+	Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		world.log << "Bad Icon at MC launch"
+	Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		world.log << "Bad Sound at MC launch"
 	// Loop.
 	Master.StartProcessing()
 
