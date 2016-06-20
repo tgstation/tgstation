@@ -18,19 +18,20 @@
 #define NODECONSTRUCT  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
 #define FPRINT			256		// takes a fingerprint
 #define ON_BORDER		512		// item has priority to check when entering or leaving
-#define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 #define DROPDEL			1024 // When dropped, it calls qdel on itself
 
+#define EARBANGPROTECT		2048
 #define HEADBANGPROTECT		4096
-#define EARBANGPROTECT		1024
 
-#define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
+#define NOSLIP		8192	//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
-#define OPENCONTAINER	4096	// is an open container for chemistry purposes
+#define OPENCONTAINER	16384	// is an open container for chemistry purposes
 
 // BLOCK_GAS_SMOKE_EFFECT only used in masks at the moment.
-#define BLOCK_GAS_SMOKE_EFFECT 8192	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
-#define THICKMATERIAL 8192		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+#define BLOCK_GAS_SMOKE_EFFECT 32768	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with THICKMATERIAL)
+#define THICKMATERIAL 32768		//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body. (NOTE: flag shared with BLOCK_GAS_SMOKE_EFFECT)
+
+#define HOLOGRAM		65536	// HOlodeck shit should not be used in any fucking things
 
 //turf-only flags
 #define NOJAUNT		1
