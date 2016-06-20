@@ -320,33 +320,21 @@ var/global/obj/screen/fuckstat/FUCK = new
 // blind_drugged_message (optional) is shown to blind hallucinating people
 
 /mob/visible_message(var/message, var/self_message, var/blind_message, var/drugged_message, var/self_drugged_message, var/blind_drugged_message)
-	var/list/L //Go through mobs in this list and show them the message. Unless the mob is picked up (and is in a "holder" item), this equals to viewers(src).
+	var/hallucination = hallucinating()
+	var/msg = message
+	var/msg2 = blind_message
 
-	if(istype(loc, /obj/item/weapon/holder))
-		L = viewers(get_turf(src))
-	else
-		L = viewers(src)
+	if(self_message)
+		msg = self_message
+	if(hallucination)
+		if(self_drugged_message)
+			msg = self_drugged_message
+		if(blind_drugged_message)
+			msg2 = blind_drugged_message
 
-	for(var/mob/M in L)
-		if(M.see_invisible < invisibility)
-			continue
-		var/hallucination = M.hallucinating()
-		var/msg = message
-		var/msg2 = blind_message
+	show_message( msg, 1, msg2, 2)
 
-		if(hallucination && drugged_message)
-			if(drugged_message)
-				msg = drugged_message
-			if(blind_drugged_message)
-				msg2 = blind_drugged_message
-
-		if(M==src)
-			if(self_message)
-				msg = self_message
-			if(hallucination && self_drugged_message)
-				msg = self_drugged_message
-
-		M.show_message( msg, 1, msg2, 2)
+	..(message, blind_message, drugged_message, blind_drugged_message)
 
 // Show a message to all mobs in sight of this atom
 // Use for objects performing visible actions
@@ -357,6 +345,8 @@ var/global/obj/screen/fuckstat/FUCK = new
 	for(var/mob/virtualhearer/hearer in viewers(src))
 		if(istype(hearer.attached, /mob))
 			var/mob/M = hearer.attached
+			if(M.see_invisible < invisibility)
+				continue
 			var/hallucination = M.hallucinating()
 			var/msg = message
 			var/msg2 = blind_message
@@ -367,6 +357,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 				if(blind_drugged_message)
 					msg2 = blind_drugged_message
 			M.show_message( msg, 1, msg2, 2)
+
 		else if(istype(hearer.attached, /obj/machinery/hologram/holopad))
 			var/obj/machinery/hologram/holopad/holo = hearer.attached
 			if(holo.master)
