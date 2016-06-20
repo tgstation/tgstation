@@ -93,25 +93,25 @@
 		in vacuumed environments, obliterating them instantly while maintaining \
 		the structure of the ores buried within them. Additionally, volunteers \
 		were called from the crowd to have the gun used on them, only proving that \
-		the gun caused little harm to objects in standard pressure. \
+		the gun caused little harm to objects in standard pressure. \n\
 		An official from an unnamed, now long dissipated company observed this \
 		presentation and offered to share their self-recharger cells, powered \
 		by the user's bioelectrical field, another new and unknown technology. \
 		They warned that the cells were incredibly experimental and several times \
 		had injured workers, but the scientists as Nanotrasen were unable to resist \
-		the money-saving potential of cell recharging cells. Upon accepting this \
+		the money-saving potential of self recharging cells. Upon accepting this \
 		offer, it took only a matter of days to prove the volatility of these cells, \
 		as they exploded left and right whenever inserted into the prototype devices, \
-		only throwing more money in the bin. Whenever the Nanotrasen scientists \
-		were on the edge of giving up, a breakthrough was made by head researcher \
-		Miles Parks McCollum, who demonstrated that the cells could be stabilized \
-		when exposed to radium then cooled with cryostylane. After this discovery, \
-		the low pressure gun, now named the Kinetic Accelerator, was hastily completed \
-		and made compatible with the self-recharging cells. As a result of poor testing, \
-		the currently used guns lose their charge when not in use, and when two Kinetic \
-		Accelerators come in proximity of one another, they will interfere with each \
-		other. Despite this, the shoddy guns still see use in the mining of plasma to \
-		this day."
+		only throwing more money in the bin. \n\
+		Whenever the Nanotrasen scientists were on the edge of giving up, a \
+		breakthrough was made by head researcher Miles Parks McCollum, who \
+		demonstrated that the cells could be stabilized when exposed to radium \
+		then cooled with cryostylane. After this discovery, the low pressure gun, \
+		now named the Kinetic Accelerator, was hastily completed and made compatible \
+		with the self-recharging cells. As a result of poor testing, the currently \
+		used guns lose their charge when not in use, and when two Kinetic Accelerators \
+		come in proximity of one another, they will interfere with each other. Despite \
+		this, the shoddy guns still see use in the mining of plasma to this day."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
