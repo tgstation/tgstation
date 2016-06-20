@@ -153,7 +153,7 @@ var/list/z_levels_list = list()
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
 				S.destination_z = zdestination
-				S.maptext = "[zdestination]" // XXX
+				//S.maptext = "[zdestination]" // for debugging
 
 	for(var/A in grid)
 		z_levels_list[A] = grid[A]
