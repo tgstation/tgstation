@@ -66,10 +66,10 @@
 
 /obj/structure/table/abductor/wabbajack/New()
 	. = ..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/table/abductor/wabbajack/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/structure/table/abductor/wabbajack/process()

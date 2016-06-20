@@ -37,7 +37,7 @@
 	countdown = new(src)
 	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	for(var/M in mob_list)
 		if(is_servant_of_ratvar(M) || isobserver(M))
@@ -50,7 +50,7 @@
 		SSshuttle.emergency.timer = world.time
 		if(!purpose_fulfilled)
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		for(var/M in mob_list)
@@ -190,7 +190,7 @@
 	ratvar_awakens = TRUE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
@@ -204,7 +204,7 @@
 	ratvar_awakens = FALSE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	return ..()
 

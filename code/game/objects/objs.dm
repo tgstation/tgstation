@@ -30,7 +30,7 @@
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	return ..()
 
