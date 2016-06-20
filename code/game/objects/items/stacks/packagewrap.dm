@@ -134,10 +134,10 @@
 /obj/item/delivery/attack_self(mob/user as mob)
 	if(wrapped)
 		if(ishuman(user))
+			qdel(src)
 			user.put_in_hands(wrapped)
 		else
 			wrapped.forceMove(get_turf(src))
-	qdel(src)
 
 /obj/item/delivery/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/device/destTagger))
