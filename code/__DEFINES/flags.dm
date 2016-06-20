@@ -21,8 +21,8 @@
 #define HOLOGRAM		32768	// HOlodeck shit should not be used in any fucking things
 #define DROPDEL			1024 // When dropped, it calls qdel on itself
 
+#define EARBANGPROTECT		2048
 #define HEADBANGPROTECT		4096
-#define EARBANGPROTECT		1024
 
 #define NOSLIP		1024 		//prevents from slipping on wet floors, in space etc (NOTE: flag shared with THICKMATERIAL for external suits and helmet)
 
