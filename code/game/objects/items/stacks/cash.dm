@@ -20,9 +20,9 @@
 
 	else
 		if(user.r_hand == src || user.l_hand == src)
-			if(cooldown < world.time - 15)
+			if(cooldown < world.time - 30)
 				cooldown = world.time
-				if(do_after(user, 15))
+				if(do_after(user, 30))
 					user.visible_message("<span class='rose'>[user] sniffs [src].</span>")
 					playsound(user, 'sound/misc/sniff.ogg', 20, 1)
 
