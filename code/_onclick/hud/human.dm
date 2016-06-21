@@ -27,9 +27,25 @@
 
 /obj/screen/devil/soul_counter
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "soul_display"
+	icon_state = "Devil-1"
 	name = "souls owned"
 	screen_loc = ui_lingchemdisplay
+
+/obj/screen/devil/soul_counter/proc/update(mob/living/carbon/human/H)
+	if (H.mind.devilinfo)
+		if (H.mind.devilinfo.soulCounter == 0)
+			icon_state = "Devil-1"
+		if (H.mind.devilinfo.soulCounter == 1 || (H.mind.devilinfo.soulCounter == 2))
+			icon_state = "Devil-2"
+		if (H.mind.devilinfo.soulCounter == 3 || (H.mind.devilinfo.soulCounter == 4 || (H.mind.devilinfo.soulCounter == 5)))
+			icon_state = "Devil-3"
+		if (H.mind.devilinfo.soulCounter == 6 || (H.mind.devilinfo.soulCounter == 7 || (H.mind.devilinfo.soulCounter == 8)))
+			icon_state = "Devil-4"
+		if (H.mind.devilinfo.soulCounter > 8)
+			icon_state = "Devil-5"
+		else
+			icon_state = "Devil-6" //If this happens it's obviously broken and it went negative, tag @timkoster1
+
 
 /obj/screen/ling
 	invisibility = INVISIBILITY_ABSTRACT

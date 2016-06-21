@@ -139,7 +139,13 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
+
+	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
+	K.update()
 	soulCounter = SOULVALUE
+	var/mob/living/carbon/D = new /mob/living/carbon
+	D.handle_devil()
+
 	var/mob/living/carbon/human/H = owner.current
 	if(soulsOwned.Find(soul))
 		return
@@ -158,7 +164,13 @@ var/global/list/lawlorify = list (
 			increase_arch_devil()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
+
+	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
+	K.update()
 	soulCounter = SOULVALUE
+	var/mob/living/carbon/D = new /mob/living/carbon
+	D.handle_devil()
+
 	if(soulsOwned.Remove(soul))
 		check_regression()
 
