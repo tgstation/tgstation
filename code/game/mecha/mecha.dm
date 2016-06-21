@@ -383,7 +383,6 @@
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
 			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-	return
 
 ////////////////////////////
 ///// Action processing ////
@@ -430,7 +429,6 @@
 		melee_can_hit = 0
 		spawn(melee_cooldown)
 			melee_can_hit = 1
-	return
 
 
 /obj/mecha/proc/range_action(atom/target)

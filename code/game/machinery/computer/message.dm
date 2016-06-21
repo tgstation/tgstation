@@ -48,7 +48,8 @@
 			MK.loc = src.loc
 			// Will help make emagging the console not so easy to get away with.
 			MK.info += "<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>"
-			spawn(100*length(src.linkedServer.decryptkey)) UnmagConsole()
+			var/time = 100 * length(src.linkedServer.decryptkey)
+			addtimer(src, "UnmagConsole", time)
 			message = rebootmsg
 		else
 			user << "<span class='notice'>A no server error appears on the screen.</span>"

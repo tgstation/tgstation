@@ -196,8 +196,7 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	spawn(50)
-		SSshuttle.emergency.request(null, 0.3)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()

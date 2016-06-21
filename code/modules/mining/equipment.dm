@@ -154,9 +154,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.vomit(20)
+					addtimer(L, "vomit", 20)
 
 /**********************Resonator**********************/
 
