@@ -91,7 +91,7 @@
 				for(var/mob/living/L in view(grasp_range, src))
 					if(L == src || faction_check(L) || (L in grasping) || L == target)
 						continue
-					for(var/t in getline(user,L))
+					for(var/t in getline(src,L))
 						for(var/a in t)
 							var/atom/A = a
 							if(A.density && A != L)
