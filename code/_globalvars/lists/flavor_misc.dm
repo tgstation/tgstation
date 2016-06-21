@@ -146,3 +146,11 @@ var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
 	"Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
 	"Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
 	"Eighteen", "Nineteen")
+
+/proc/generate_number_strings()
+	var/list/L
+	for(var/i in 1 to 99)
+		L += "[i]"
+	return L
+
+var/global/list/station_numerals = greek_letters + roman_numerals + phonetic_alphabet + numbers_as_words + generate_number_strings()

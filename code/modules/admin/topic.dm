@@ -1779,9 +1779,12 @@
 		message_admins("[src.owner] replied to [key_name(H)]'s Syndicate message with: \"[input]\"")
 		H << "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. [input].  Message ends.\""
 
-	else if(href_list["approve_custom_name"])
-		var/obj/item/station_charter/charter = locate(href_list["approve_custom_name"])
-		charter.admin_approval()
+	else if(href_list["reject_custom_name"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/obj/item/station_charter/charter = locate(href_list["reject_custom_name"])
+		if(istype(charter))
+			charter.reject_proposed(usr)
 	else if(href_list["jumpto"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
