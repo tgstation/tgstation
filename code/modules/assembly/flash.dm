@@ -14,14 +14,14 @@
 
 
 /obj/item/device/assembly/flash/update_icon(var/flash = 0)
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(crit_fail)
-		overlays += "flashburnt"
+		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 
 	if(flash)
-		overlays += "flash-f"
+		add_overlay("flash-f")
 		attached_overlays += "flash-f"
 		spawn(5)
 			update_icon()
@@ -150,6 +150,7 @@
 					if(!isloyal(M))
 						if(user.mind in ticker.mode.head_revolutionaries)
 							if(ticker.mode.add_revolutionary(M.mind))
+								M.Stun(3)
 								times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 							else
 								resisted = 1

@@ -11,7 +11,7 @@
 	throw_range = 5
 	w_class = 3
 	materials = list(MAT_METAL=500)
-	origin_tech = "combat=1;plasmatech=1"
+	origin_tech = "combat=1;plasmatech=2;engineering=2"
 	var/status = 0
 	var/throw_amount = 100
 	var/lit = 0	//on or off
@@ -47,13 +47,13 @@
 
 
 /obj/item/weapon/flamethrower/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(igniter)
-		overlays += "+igniter[status]"
+		add_overlay("+igniter[status]")
 	if(ptank)
-		overlays += "+ptank"
+		add_overlay("+ptank")
 	if(lit)
-		overlays += "+lit"
+		add_overlay("+lit")
 		item_state = "flamethrower_1"
 	else
 		item_state = "flamethrower_0"
@@ -66,7 +66,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf)
 			var/turflist = getline(user, target_turf)
-			add_logs(user, target, "flamethrowered", src, "at [target.x],[target.y],[target.z]")
+			add_logs(user, target, "flamethrowered", src)
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/W, mob/user, params)
@@ -170,7 +170,8 @@
 	update_icon()
 	return
 
-/obj/item/weapon/flamethrower/CheckParts()
+/obj/item/weapon/flamethrower/CheckParts(list/parts_list)
+	..()
 	weldtool = locate(/obj/item/weapon/weldingtool) in contents
 	igniter = locate(/obj/item/device/assembly/igniter) in contents
 	weldtool.status = 0

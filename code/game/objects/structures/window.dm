@@ -3,7 +3,7 @@
 	desc = "A window."
 	icon_state = "window"
 	density = 1
-	layer = 3.2//Just above doors
+	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1 //initially is 0 for tile smoothing
 	flags = ON_BORDER
@@ -14,10 +14,10 @@
 	var/reinf = 0
 	var/wtype = "glass"
 	var/fulltile = 0
-	var/list/storeditems = list()
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 	var/image/crack_overlay
+	var/list/debris = list()
 	can_be_unanchored = 1
 
 /obj/structure/window/examine(mob/user)
@@ -32,21 +32,25 @@
 	if(reinf)
 		state = 2*anchored
 
-	spawn(5) // The NODECONSTRUCT flag gets added immediately by the holodeck (but not immediately enough)
-		if(!(flags & NODECONSTRUCT))
-			storeditems.Add(new/obj/item/weapon/shard(src))
-			if(fulltile)
-				storeditems.Add(new/obj/item/weapon/shard(src))
-			if(reinf)
-				var/obj/item/stack/rods/R = new/obj/item/stack/rods(src)
-				storeditems.Add(R)
-				if(fulltile)
-					R.add(1)
-
 	ini_dir = dir
 	air_update_turf(1)
 
-	return
+	// Precreate our own debris
+
+	var/shards = 1
+	if(fulltile)
+		shards++
+	var/rods = 0
+	if(reinf)
+		rods++
+		if(fulltile)
+			rods++
+
+	for(var/i in 1 to shards)
+		debris += new /obj/item/weapon/shard(src)
+	if(rods)
+		debris += new /obj/item/stack/rods(src, rods)
+
 
 /obj/structure/window/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -65,7 +69,17 @@
 	shatter()
 
 /obj/structure/window/narsie_act()
-	color = "#7D1919"
+	color = NARSIE_WINDOW_COLOUR
+	for(var/obj/item/weapon/shard/shard in debris)
+		shard.color = NARSIE_WINDOW_COLOUR
+
+/obj/structure/window/ratvar_act()
+	if(prob(20))
+		if(!fulltile)
+			new/obj/structure/window/reinforced/clockwork(get_turf(src), dir)
+		else
+			new/obj/structure/window/reinforced/clockwork/fulltile(get_turf(src))
+		qdel(src)
 
 /obj/structure/window/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
@@ -185,7 +199,7 @@
 			else if(!reinf)
 				user << (anchored ? "<span class='notice'>You begin to unscrew the window from the floor...</span>" : "<span class='notice'>You begin to screw the window to the floor...</span>")
 
-			if(do_after(user, 40/I.toolspeed, target = src))
+			if(do_after(user, 30/I.toolspeed, target = src))
 				if(reinf && (state == 1 || state == 2))
 					//If state was unfastened, fasten it, else do the reverse
 					state = (state == 1 ? 2 : 1)
@@ -276,9 +290,13 @@
 		return
 	playsound(src, "shatter", 70, 1)
 	var/turf/T = loc
-	for(var/obj/item/I in storeditems)
-		I.loc = T
-		transfer_fingerprints_to(I)
+
+	if(!(flags & NODECONSTRUCT))
+		for(var/i in debris)
+			var/obj/item/I = i
+
+			I.loc = T
+			transfer_fingerprints_to(I)
 	qdel(src)
 	update_nearby_icons()
 
@@ -294,7 +312,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -314,7 +332,7 @@
 		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
 		return 0
 
-	dir = turn(dir, 270)
+	setDir(turn(dir, 270))
 //	updateSilicate()
 	air_update_turf(1)
 	ini_dir = dir
@@ -356,7 +374,7 @@
 /obj/structure/window/Move()
 	var/turf/T = loc
 	..()
-	dir = ini_dir
+	setDir(ini_dir)
 	move_update_air(T)
 
 /obj/structure/window/CanAtmosPass(turf/T)
@@ -388,7 +406,7 @@
 		if(ratio > 75)
 			return
 		crack_overlay = image('icons/obj/structures.dmi',"damage[ratio]",-(layer+0.1))
-		overlays += crack_overlay
+		add_overlay(crack_overlay)
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -428,7 +446,7 @@
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 50
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -437,7 +455,7 @@
 /obj/structure/window/reinforced/fulltile
 	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "r_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	fulltile = 1
 	smooth = SMOOTH_TRUE
@@ -447,7 +465,7 @@
 /obj/structure/window/reinforced/tinted/fulltile
 	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
 	icon_state = "tinted_window"
-	dir = 5
+	dir = NORTHEAST
 	fulltile = 1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile/)
@@ -465,7 +483,7 @@
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
 	icon_state = "shuttle_window"
-	dir = 5
+	dir = NORTHEAST
 	maxhealth = 100
 	wtype = "shuttle"
 	fulltile = 1
@@ -477,3 +495,48 @@
 
 /obj/structure/window/shuttle/narsie_act()
 	color = "#3C3434"
+
+/obj/structure/window/shuttle/tinted
+	opacity = TRUE
+
+/obj/structure/window/reinforced/clockwork
+	name = "brass window"
+	desc = "A paper-thin pane of translucent yet reinforced brass."
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
+	icon_state = "clockwork_window_single"
+	maxhealth = 100
+	explosion_block = 2 //fancy AND hard to destroy. the most useful combination.
+
+/obj/structure/window/reinforced/clockwork/New(loc, direct)
+	..()
+	if(!fulltile)
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/window/single, get_turf(src))
+		if(direct)
+			setDir(direct)
+			E.setDir(direct)
+	else
+		PoolOrNew(/obj/effect/overlay/temp/ratvar/window, get_turf(src))
+	for(var/obj/item/I in debris)
+		debris -= I
+		qdel(I)
+	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+
+/obj/structure/window/reinforced/clockwork/ratvar_act()
+	health = maxhealth
+	update_icon()
+	return 0
+
+/obj/structure/window/reinforced/clockwork/narsie_act()
+	take_damage(rand(25, 75), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/window/reinforced/clockwork/fulltile
+	icon_state = "clockwork_window"
+	smooth = SMOOTH_TRUE
+	canSmoothWith = null
+	fulltile = 1
+	dir = NORTHEAST
+	maxhealth = 150

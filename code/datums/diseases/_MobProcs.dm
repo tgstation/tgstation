@@ -140,6 +140,6 @@
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && VIRUSIMMUNE in dna.species.specflags)
+	if(dna && (VIRUSIMMUNE in dna.species.specflags))
 		return 0
 	return ..()

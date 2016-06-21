@@ -5,6 +5,8 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return
@@ -401,7 +403,7 @@
 		if(!G.key || !G.client)
 			continue
 		if(be_special_flag)
-			if(!(G.client.prefs.be_special & be_special_flag))
+			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))

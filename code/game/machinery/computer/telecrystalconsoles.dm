@@ -8,6 +8,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_state = "tcstation"
 	icon_keyboard = "tcstation_key"
 	icon_screen = "syndie"
+	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
@@ -47,7 +48,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
 	if(uplinkholder)
-		overlays += "[initial(icon_state)]-closed"
+		add_overlay("[initial(icon_state)]-closed")
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)

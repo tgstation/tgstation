@@ -5,7 +5,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	circuit = /obj/item/weapon/circuitboard/pandemic
+	circuit = /obj/item/weapon/circuitboard/computer/pandemic
 	use_power = 1
 	idle_power_usage = 20
 	var/temp_html = ""
@@ -58,9 +58,9 @@
 	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
 
 	if(wait)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "waitlight"
+		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	if(..())

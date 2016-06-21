@@ -9,7 +9,7 @@
 	flags = NOBLUDGEON
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
-	origin_tech = "programming=4;materials=4"
+	origin_tech = "programming=3;materials=3"
 
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()
@@ -30,12 +30,12 @@
 		else
 			icon_state = "aicard-full"
 		if(!AI.control_disabled)
-			overlays += image('icons/obj/aicards.dmi', "aicard-on")
+			add_overlay(image('icons/obj/aicards.dmi', "aicard-on"))
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
-		overlays.Cut()
+		cut_overlays()
 
 /obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)

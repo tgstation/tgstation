@@ -9,7 +9,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(access_heads)
-	circuit = /obj/item/weapon/circuitboard/communications
+	circuit = /obj/item/weapon/circuitboard/computer/communications
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
 	var/list/messagetitle = list()
@@ -57,7 +57,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	if(!href_list["operation"])
 		return
-	var/obj/item/weapon/circuitboard/communications/CM = circuit
+	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
 	switch(href_list["operation"])
 		// main interface
 		if("main")
@@ -505,7 +505,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "Current login: None"
 			dat += "<BR><BR><B>General Functions</B>"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
-			if(SSshuttle.emergency.mode <= SHUTTLE_IDLE)
+			if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
 			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
@@ -611,5 +611,5 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return ..()
 
 /obj/machinery/computer/communications/proc/overrideCooldown()
-	var/obj/item/weapon/circuitboard/communications/CM = circuit
+	var/obj/item/weapon/circuitboard/computer/communications/CM = circuit
 	CM.lastTimeUsed = 0

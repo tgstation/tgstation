@@ -8,7 +8,7 @@
 	w_class = 2
 
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=1"
+	origin_tech = "engineering=2"
 
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
@@ -16,6 +16,7 @@
 	var/obj/item/device/toner/ink = null
 
 /obj/item/weapon/airlock_painter/New()
+	..()
 	ink = new /obj/item/device/toner(src)
 
 //This proc doesn't just check if the painter can be used, but also uses it.
@@ -42,7 +43,7 @@
 		return 1
 
 /obj/item/weapon/airlock_painter/suicide_act(mob/user)
-	var/obj/item/organ/internal/lungs/L = user.getorganslot("lungs")
+	var/obj/item/organ/lungs/L = user.getorganslot("lungs")
 
 	if(can_use(user) && L)
 		user.visible_message("<span class='suicide'>[user] is inhaling toner from \the [name]! It looks like \he's trying to commit suicide.</span>")

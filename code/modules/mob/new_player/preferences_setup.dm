@@ -65,15 +65,15 @@
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
 
-	mannequin.dir = NORTH
+	mannequin.setDir(NORTH)
 	var/icon/stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
 
-	mannequin.dir = WEST
+	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
 
-	mannequin.dir = SOUTH
+	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
 

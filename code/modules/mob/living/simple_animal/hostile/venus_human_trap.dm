@@ -5,7 +5,7 @@
 	desc = "a large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
-	layer = MOB_LAYER + 0.9
+	layer = SPACEVINE_MOB_LAYER
 	opacity = 0
 	canSmoothWith = list()
 	smooth = SMOOTH_FALSE
@@ -49,7 +49,7 @@
 	name = "venus human trap"
 	desc = "now you know how the fly feels"
 	icon_state = "venus_human_trap"
-	layer = MOB_LAYER + 0.9
+	layer = SPACEVINE_MOB_LAYER
 	health = 50
 	maxHealth = 50
 	ranged = 1
@@ -82,7 +82,7 @@
 				L.attack_animal(src)
 			else
 				if(prob(grasp_pull_chance))
-					dir = get_dir(src,L) //staaaare
+					setDir(get_dir(src,L) )//staaaare
 					step(L,get_dir(L,src)) //reel them in
 					L.Weaken(3) //you can't get away now~
 

@@ -32,13 +32,18 @@ var/list/announcement_systems = list()
 	announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/announcement_system(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 2)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
+	B.apply_default_parts(src)
 
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/announcement_system
+	name = "circuit board (Announcement System)"
+	build_path = /obj/machinery/announcement_system
+	origin_tech = "programming=3;bluespace=3;magnets=2"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())
@@ -47,19 +52,19 @@ var/list/announcement_systems = list()
 		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
 
 
-	overlays.Cut()
+	cut_overlays()
 	if(arrivalToggle)
-		overlays |= greenlight
+		add_overlay(greenlight)
 	else
 		overlays -= greenlight
 
 	if(newheadToggle)
-		overlays |= pinklight
+		add_overlay(pinklight)
 	else
 		overlays -= pinklight
 
 	if(broken)
-		overlays |= errorlight
+		add_overlay(errorlight)
 	else
 		overlays -= errorlight
 
@@ -153,7 +158,6 @@ var/list/announcement_systems = list()
 
 	add_fingerprint(usr)
 	interact(usr)
-	return
 
 /obj/machinery/announcement_system/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))

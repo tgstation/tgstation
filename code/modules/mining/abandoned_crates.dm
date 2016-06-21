@@ -106,11 +106,11 @@
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
-			new /obj/item/organ/internal/brain(src)
+			new /obj/item/organ/brain(src)
 		if(89)
-			new /obj/item/organ/internal/brain/alien(src)
+			new /obj/item/organ/brain/alien(src)
 		if(90)
-			new /obj/item/organ/internal/heart(src)
+			new /obj/item/organ/heart(src)
 		if(91)
 			new /obj/item/device/soulstone/anybody(src)
 		if(92)
@@ -158,8 +158,8 @@
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
-				overlays.Cut()
-				overlays += "securecrateg"
+				cut_overlays()
+				add_overlay("securecrateg")
 			else if (input == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else
@@ -173,6 +173,11 @@
 
 /obj/structure/closet/crate/secure/loot/attack_animal(mob/user)
 	boom(user)
+
+/obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
+	if(!user.canUseTopic(src))
+		return
+	attack_hand(user)
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)

@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees
 	name = "bee"
-	desc = "buzzy buzzy bee, stingy sti- Ouch!"
+	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
@@ -32,7 +32,7 @@
 	environment_smash = 0
 	mouse_opacity = 2
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	mob_size = MOB_SIZE_TINY
 	flying = 1
 	gold_core_spawnable = 1
 	search_objects = 1 //have to find those plant trays!
@@ -83,7 +83,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
-	overlays.Cut()
+	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
 	if(beegent && beegent.color)
@@ -93,20 +93,20 @@
 	if(!bee_icons["[icon_base]_base"])
 		bee_icons["[icon_base]_base"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_base")
 	base = bee_icons["[icon_base]_base"]
-	overlays += base
+	add_overlay(base)
 
 	var/image/greyscale
 	if(!bee_icons["[icon_base]_grey_[col]"])
 		bee_icons["[icon_base]_grey_[col]"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_grey")
 	greyscale = bee_icons["[icon_base]_grey_[col]"]
 	greyscale.color = col
-	overlays += greyscale
+	add_overlay(greyscale)
 
 	var/image/wings
 	if(!bee_icons["[icon_base]_wings"])
 		bee_icons["[icon_base]_wings"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_wings")
 	wings = bee_icons["[icon_base]_wings"]
-	overlays += wings
+	add_overlay(wings)
 
 
 //We don't attack beekeepers/people dressed as bees//Todo: bee costume
@@ -114,8 +114,8 @@
 	. = ..()
 	if(!.)
 		return 0
-	if(ishuman(the_target))
-		var/mob/living/carbon/human/H = the_target
+	if(isliving(the_target))
+		var/mob/living/H = the_target
 		return !H.bee_friendly()
 
 
@@ -125,8 +125,8 @@
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
 			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
 			return 1
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
+	if(isliving(A))
+		var/mob/living/H = A
 		return !H.bee_friendly()
 	return 0
 
@@ -205,10 +205,14 @@
 			BB.bees |= src
 			beehome = BB
 
+/mob/living/simple_animal/hostile/poison/bees/toxin/New()
+	. = ..()
+	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
+	assign_reagent(chemical_reagents_list[initial(R.id)])
 
  /mob/living/simple_animal/hostile/poison/bees/queen
  	name = "queen bee"
- 	desc = "she's the queen of bees, BZZ BZZ"
+ 	desc = "She's the queen of bees, BZZ BZZ!"
  	icon_base = "queen"
  	isqueen = TRUE
 
@@ -242,7 +246,7 @@
 
 /obj/item/queen_bee
 	name = "queen bee"
-	desc = "she's the queen of bees, BZZ BZZ"
+	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
 	item_state = ""
 	icon = 'icons/mob/bees.dmi'

@@ -14,16 +14,10 @@
 	if(..())
 		. = 1
 
-		for(var/obj/item/organ/internal/O in internal_organs)
-			O.on_life()
+		handle_blood()
 
-	//grab processing
-	if(istype(l_hand, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = l_hand
-		G.process()
-	if(istype(r_hand, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = r_hand
-		G.process()
+		for(var/obj/item/organ/O in internal_organs)
+			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -54,7 +48,7 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit)
+	if(health <= config.health_threshold_crit || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate
@@ -123,7 +117,7 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases("o2","plasma","co2","n2o")
+	breath.assert_gases("o2","plasma","co2","n2o", "bz")
 
 	var/O2_partialpressure = (breath_gases["o2"][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
@@ -188,6 +182,15 @@
 		else if(SA_partialpressure > 0.01)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
+
+	//BZ (Facepunch port of their Agent B)
+	if(breath_gases["bz"])
+		var/bz_partialpressure = (breath_gases["bz"][MOLES]/breath.total_moles())*breath_pressure
+		if(bz_partialpressure > 1)
+			hallucination += 20
+		else if(bz_partialpressure > 0.01)
+			hallucination += 5//Removed at 2 per tick so this will slowly build up
+
 	breath.garbage_collect()
 
 	//BREATH TEMPERATURE
@@ -211,8 +214,11 @@
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
 
+/mob/living/carbon/proc/handle_blood()
+	return
+
 /mob/living/carbon/proc/handle_changeling()
-	if(mind && hud_used)
+	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)
 			mind.changeling.regenerate(src)
 			hud_used.lingchemdisplay.invisibility = 0

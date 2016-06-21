@@ -117,8 +117,7 @@
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
 				mob << "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>"
-				if(beep)
-					playsound(mob.loc, 'sound/machines/twobeep.ogg', 50, 1)
+			return
 
 
 //////////////////////////////////////////// INCOME

@@ -58,6 +58,9 @@
 			return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["middle"])
+		ShiftMiddleClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -74,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened || sleeping)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
@@ -84,7 +87,7 @@
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A,src,params)
 
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
@@ -264,6 +267,10 @@
 	A.CtrlShiftClick(src)
 	return
 
+/mob/proc/ShiftMiddleClickOn(atom/A)
+	src.pointed(A)
+	return
+
 /atom/proc/CtrlShiftClick(mob/user)
 	return
 
@@ -302,25 +309,25 @@
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			dir = NORTH
+			setDir(NORTH)
 		else if(A.pixel_y < -16)
-			dir = SOUTH
+			setDir(SOUTH)
 		else if(A.pixel_x > 16)
-			dir = EAST
+			setDir(EAST)
 		else if(A.pixel_x < -16)
-			dir = WEST
+			setDir(WEST)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			setDir(NORTH)
 		else
-			dir = SOUTH
+			setDir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			setDir(EAST)
 		else
-			dir = WEST
+			setDir(WEST)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'

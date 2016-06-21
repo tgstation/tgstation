@@ -31,9 +31,9 @@
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(manifest)
-		overlays += "manifest"
+		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)
@@ -70,6 +70,23 @@
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+
+/obj/structure/closet/crate/freezer/blood
+	name = "blood freezer"
+	desc = "A freezer containing packs of blood."
+
+/obj/structure/closet/crate/freezer/blood/New()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/AMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BPlus(src)
+	new /obj/item/weapon/reagent_containers/blood/OMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/OPlus(src)
+	new /obj/item/weapon/reagent_containers/blood/lizard(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

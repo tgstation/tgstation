@@ -19,6 +19,7 @@
 	var/scrub_CO2 = 1
 	var/scrub_Toxins = 0
 	var/scrub_N2O = 0
+	var/scrub_BZ = 0
 
 	var/volume_rate = 200
 	var/widenet = 0 //is this scrubber acting on the 3x3 area around it.
@@ -60,24 +61,26 @@
 	var/amount = idle_power_usage
 
 	if(scrubbing & SCRUBBING)
-		if (scrub_CO2)
+		if(scrub_CO2)
 			amount += idle_power_usage
-		if (scrub_Toxins)
+		if(scrub_Toxins)
 			amount += idle_power_usage
-		if (scrub_N2O)
+		if(scrub_N2O)
+			amount += idle_power_usage
+		if(scrub_BZ)
 			amount += idle_power_usage
 	else //scrubbing == SIPHONING
 		amount = active_power_usage
 
-	if (widenet)
+	if(widenet)
 		amount += amount * (adjacent_turfs.len * (adjacent_turfs.len / 2))
 	use_power(amount, power_channel)
 	return 1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions))
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -115,6 +118,7 @@
 		"filter_co2" = scrub_CO2,
 		"filter_toxins" = scrub_Toxins,
 		"filter_n2o" = scrub_N2O,
+		"filter_bz" = scrub_BZ,
 		"sigtype" = "status"
 	)
 
@@ -200,6 +204,11 @@
 				filtered_out.gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
 				removed.gases["n2o"][MOLES] = 0
 
+			if(scrub_BZ && removed_gases["bz"])
+				filtered_out.assert_gas("bz")
+				filtered_out.gases["bz"][MOLES] = removed_gases["bz"][MOLES]
+				removed.gases["bz"][MOLES] = 0
+
 			removed.garbage_collect()
 
 			//Remix the resulting gases
@@ -275,6 +284,11 @@
 	if("toggle_n2o_scrub" in signal.data)
 		scrub_N2O = !scrub_N2O
 
+	if("bz_scrub" in signal.data)
+		scrub_BZ = text2num(signal.data["bz_scrub"])
+	if("toggle_bz_scrub" in signal.data)
+		scrub_BZ = !scrub_BZ
+
 	if("init" in signal.data)
 		name = signal.data["init"]
 		return
@@ -308,7 +322,7 @@
 					user.visible_message("[user] unwelds the scrubber.", "You unweld the scrubber.", "You hear welding.")
 					welded = 0
 				update_icon()
-				pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+				pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 			return 0
 	else
 		return ..()
@@ -329,7 +343,7 @@
 	user.visible_message("[user] furiously claws at [src]!", "You manage to clear away the stuff blocking the scrubber.", "You hear loud scraping noises.")
 	welded = 0
 	update_icon()
-	pipe_vision_img = image(src, loc, layer = 20, dir = dir)
+	pipe_vision_img = image(src, loc, layer = ABOVE_HUD_LAYER, dir = dir)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 

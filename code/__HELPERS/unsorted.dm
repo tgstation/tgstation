@@ -355,6 +355,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //		mob_list.Add(M)
 //	for(var/mob/living/silicon/hive_mainframe/M in world)
 //		mob_list.Add(M)
+	for(var/mob/living/carbon/true_devil/M in sortmob)
+		moblist.Add(M)
 	return moblist
 
 //E = MC^2
@@ -500,7 +502,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //The variables should be apparent enough.
 	var/atom/movable/overlay/animation = new(location)
 	if(direction)
-		animation.dir = direction
+		animation.setDir(direction)
 	animation.icon = a_icon
 	animation.layer = target:layer+1
 	if(a_icon_state)
@@ -1300,7 +1302,7 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I)
 	sleep(duration)
 	A.overlays -= I
 
@@ -1367,3 +1369,22 @@ proc/pick_closest_path(value)
 			sleep(world.tick_lag*4)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
+
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
+	var/client/C
+	if(istype(mob_or_client, /mob))
+		var/mob/M = mob_or_client
+		if(M.client)
+			C = M.client
+		else
+			return
+	else if(istype(mob_or_client, /client))
+		C = mob_or_client
+
+	if(!istype(C))
+		return
+
+	var/old_color = C.color
+	C.color = flash_color
+	spawn(0)
+		animate(C, color = old_color, time = flash_time)

@@ -162,7 +162,7 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = 1
 	density = 0
-	layer = TURF_LAYER + 0.09
+	layer = TURF_LAYER
 	icon_state = "weeds"
 	health = 15
 	var/obj/structure/alien/weeds/node/linked_node = null
@@ -275,7 +275,7 @@
 	return attack_hand(user)
 
 /obj/structure/alien/egg/attack_hand(mob/living/user)
-	if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURST)
 				user << "<span class='notice'>You clear the hatched egg.</span>"
@@ -343,7 +343,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			return
 
 		Burst(0)

@@ -67,7 +67,8 @@
 		if(isovermind(M) || istype(M, /mob/living/simple_animal/hostile/blob))
 			M << rendered
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [rendered]"
 
 ////////////////
 // BLOB SPORE //
@@ -90,7 +91,7 @@
 	attack_sound = 'sound/weapons/genhit1.ogg'
 	flying = 1
 	del_on_death = 1
-	deathmessage = "The blob spore explodes into a cloud of gas!"
+	deathmessage = "explodes into a cloud of gas!"
 	var/death_cloud_size = 1 //size of cloud produced from a dying spore
 	var/list/human_overlays = list()
 	var/is_zombie = 0
@@ -132,7 +133,7 @@
 	H.update_hair()
 	human_overlays = H.overlays
 	update_icons()
-	H.loc = src
+	H.forceMove(src)
 	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
 
 /mob/living/simple_animal/hostile/blob/blobspore/death(gibbed)
@@ -169,13 +170,13 @@
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	..()
 	if(is_zombie)
-		overlays.Cut()
+		cut_overlays()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
 			I.color = overmind.blob_reagent_datum.color
 		color = initial(color)//looks better.
-		overlays += I
+		add_overlay(I)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
@@ -212,13 +213,17 @@
 	mob_size = MOB_SIZE_LARGE
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 8
+	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/New()
 	..()
-	verbs -= /mob/living/verb/pulled //no pulling people deep into the blob
+	if(!independent) //no pulling people deep into the blob
+		verbs -= /mob/living/verb/pulled
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
+		if(independent)
+			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
 		if(!(locate(/obj/effect/blob) in range(2, src)))
 			damagesources++
@@ -271,3 +276,7 @@
 		factory.naut = null //remove this naut from its factory
 		factory.maxhealth = initial(factory.maxhealth)
 	flick("blobbernaut_death", src)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/independent
+	independent = TRUE
+	gold_core_spawnable = 1

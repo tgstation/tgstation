@@ -32,14 +32,14 @@
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
-	overlays.Cut()
+	cut_overlays()
 	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
 		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
 		colored.color = colour
 		icon_state = "lipstick_uncap"
-		overlays += colored
+		add_overlay(colored)
 	else
 		icon_state = "lipstick"
 
@@ -124,7 +124,7 @@
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
 		if(location == "mouth")
-			if(!(H.dna.species.specflags & FACEHAIR))
+			if(!(FACEHAIR in H.dna.species.specflags))
 				user << "<span class='warning'>There is no facial hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))
@@ -152,7 +152,7 @@
 						shave(H, location)
 
 		else if(location == "head")
-			if(!(H.dna.species.specflags & HAIR))
+			if(!(HAIR in H.dna.species.specflags))
 				user << "<span class='warning'>There is no hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))

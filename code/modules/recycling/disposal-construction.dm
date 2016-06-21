@@ -24,7 +24,7 @@
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-	dir = direction
+	setDir(direction)
 
 // update iconstate and dpdir due to dir and type
 /obj/structure/disposalconstruct/update_icon()
@@ -103,7 +103,7 @@
 		usr << "<span class='warning'>You must unfasten the pipe before rotating it!</span>"
 		return
 
-	dir = turn(dir, -90)
+	setDir(turn(dir, -90))
 	update_icon()
 
 /obj/structure/disposalconstruct/AltClick(mob/user)
@@ -127,7 +127,7 @@
 		usr << "<span class='warning'>You must unfasten the pipe before flipping it!</span>"
 		return
 
-	dir = turn(dir, 180)
+	setDir(turn(dir, 180))
 	switch(ptype)
 		if(DISP_JUNCTION)
 			ptype = DISP_JUNCTION_FLIP

@@ -24,13 +24,18 @@
 /obj/machinery/space_heater/New()
 	..()
 	cell = new(src)
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 3)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/space_heater(null)
+	B.apply_default_parts(src)
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/space_heater
+	name = "circuit board (Space Heater)"
+	build_path = /obj/machinery/space_heater
+	origin_tech = "programming=2;engineering=2;plasmatech=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil = 3)
 
 /obj/machinery/space_heater/construction()
 	qdel(cell)
@@ -59,9 +64,9 @@
 	else
 		icon_state = "sheater-off"
 
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
-		overlays += "sheater-open"
+		add_overlay("sheater-open")
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
@@ -219,6 +224,7 @@
 			if(target == "input")
 				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
 				if(!isnull(target) && !..())
+					target += T0C
 					. = TRUE
 			else if(adjust)
 				target = targetTemperature + adjust

@@ -132,7 +132,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/old_dir = dir
 	var/turf/open/floor/W = ..()
 	W.icon_regular_floor = old_icon
-	W.dir = old_dir
+	W.setDir(old_dir)
 	W.update_icon()
 	return W
 
@@ -179,6 +179,10 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/narsie_act()
 	if(prob(20))
 		ChangeTurf(/turf/open/floor/engine/cult)
+
+/turf/open/floor/ratvar_act()
+	if(prob(20))
+		ChangeTurf(/turf/open/floor/clockwork)
 
 /turf/open/floor/can_have_cabling()
 	return !burnt && !broken

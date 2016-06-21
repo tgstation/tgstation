@@ -211,7 +211,7 @@ var/global/list/crematoriums = new/list()
 /obj/structure/tray
 	icon = 'icons/obj/stationobjs.dmi'
 	density = 1
-	layer = 2.9
+	layer = BELOW_OBJ_LAYER
 	var/obj/structure/bodycontainer/connected = null
 	anchored = 1
 	pass_flags = LETPASSTHROW

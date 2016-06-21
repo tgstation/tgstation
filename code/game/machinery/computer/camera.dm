@@ -3,7 +3,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
-	circuit = /obj/item/weapon/circuitboard/security
+	circuit = /obj/item/weapon/circuitboard/computer/security
 	var/last_pic = 1
 	var/list/network = list("SS13")
 	var/mapping = 0//For the overview file, interesting bit of code.
@@ -147,6 +147,7 @@
 	network = list("thunder")
 	density = 0
 	circuit = null
+	clockwork = TRUE //it'd look very weird
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -169,6 +170,7 @@
 	icon_state = "television"
 	icon_keyboard = null
 	icon_screen = "detective_tv"
+	clockwork = TRUE //it'd look weird
 
 
 /obj/machinery/computer/security/mining
@@ -177,4 +179,4 @@
 	icon_screen = "mining"
 	icon_keyboard = "mining_key"
 	network = list("MINE")
-	circuit = "/obj/item/weapon/circuitboard/mining"
+	circuit = /obj/item/weapon/circuitboard/computer/mining

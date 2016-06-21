@@ -22,7 +22,6 @@
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
-		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)
@@ -79,13 +78,12 @@
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if (!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
 
 	if(candidates.len)
 		var/numChanglings = min(candidates.len, 3)
@@ -113,15 +111,12 @@
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_REV in applicant.client.prefs.be_special)
-			if(applicant.stat == CONSCIOUS)
-				var/turf/T = get_turf(applicant)
-				if(T.z == ZLEVEL_STATION)
-					if(applicant.mind)
-						if(!applicant.mind.special_role)
-							if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
-								if(temp.age_check(applicant.client))
-									if(!(applicant.job in temp.restricted_jobs))
-										candidates += applicant
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
 
 	if(candidates.len)
 		var/numRevs = min(candidates.len, 3)
@@ -135,41 +130,14 @@
 	return 0
 
 /datum/admins/proc/makeWizard()
-	var/datum/game_mode/wizard/temp = new
-	var/list/mob/dead/observer/candidates = list()
-	var/mob/dead/observer/theghost = null
-	var/time_passed = world.time
 
-	for(var/mob/dead/observer/G in player_list)
-		if(!jobban_isbanned(G, "wizard") && !jobban_isbanned(G, "Syndicate"))
-			if(temp.age_check(G.client))
-				spawn(0)
-					switch(alert(G, "Do you wish to be considered for the position of Space Wizard Foundation 'diplomat'?","Please answer in 30 seconds!","Yes","No"))
-						if("Yes")
-							if((world.time-time_passed)>300)//If more than 30 game seconds passed.
-								return
-							candidates += G
-						if("No")
-							return
-						else
-							return
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for the position of a Wizard Foundation 'diplomat'?", "wizard", null)
 
-	sleep(300)
+	var/mob/dead/observer/selected = popleft(candidates)
 
-	if(candidates.len)
-		shuffle(candidates)
-		for(var/mob/i in candidates)
-			if(!i || !i.client) continue //Dont bother removing them from the list since we only grab one wizard
-
-			theghost = i
-			break
-
-	if(theghost)
-		var/mob/living/carbon/human/new_character=makeBody(theghost)
-		new_character.mind.make_Wizard()
-		return 1
-
-	return 0
+	var/mob/living/carbon/human/new_character = makeBody(selected)
+	new_character.mind.make_Wizard()
+	return TRUE
 
 
 /datum/admins/proc/makeCult()
@@ -185,13 +153,12 @@
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_CULTIST in applicant.client.prefs.be_special)
-			if(applicant.stat == CONSCIOUS)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
 
 	if(candidates.len)
 		var/numCultists = min(candidates.len, 4)
@@ -269,11 +236,15 @@
 
 
 /datum/admins/proc/makeAliens()
-	new /datum/round_event/alien_infestation{spawncount=3}()
-	return 1
+	var/datum/round_event/ghost_role/alien_infestation/E = new(FALSE)
+	E.spawncount = 3
+	// TODO The fact we have to do this rather than just have events start
+	// when we ask them to, is bad.
+	E.processing = TRUE
+	return TRUE
 
 /datum/admins/proc/makeSpaceNinja()
-	new /datum/round_event/ninja()
+	new /datum/round_event/ghost_role/ninja()
 	return 1
 
 // DEATH SQUADS
@@ -363,13 +334,12 @@
 
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_GANG in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									candidates += applicant
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							candidates += applicant
 
 	if(candidates.len >= 2)
 		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
@@ -540,22 +510,8 @@
 
 //Abductors
 /datum/admins/proc/makeAbductorTeam()
-	new /datum/round_event/abductor
+	new /datum/round_event/ghost_role/abductor
 	return 1
-
-/datum/admins/proc/makeRevenant()
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for becoming a revenant?", "revenant", null)
-	if(candidates.len >= 1)
-		var/spook_op = pick(candidates)
-		var/mob/dead/observer/O = spook_op
-		candidates -= spook_op
-		var/mob/living/simple_animal/revenant/revvie = new /mob/living/simple_animal/revenant(get_turf(O))
-		revvie.key = O.key
-		revvie.mind.assigned_role = "revenant"
-		revvie.mind.special_role = "Revenant"
-		return 1
-	else
-		return
 
 //Shadowling
 /datum/admins/proc/makeShadowling()
@@ -568,14 +524,13 @@
 	var/mob/living/carbon/human/H = null
 	for(var/mob/living/carbon/human/applicant in player_list)
 		if(ROLE_SHADOWLING in applicant.client.prefs.be_special)
-			if(!applicant.stat)
-				if(applicant.mind)
-					if(!applicant.mind.special_role)
-						if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
-							if(temp.age_check(applicant.client))
-								if(!(applicant.job in temp.restricted_jobs))
-									if(!(is_shadow_or_thrall(applicant)))
-										candidates += applicant
+			var/turf/T = get_turf(applicant)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+				if(!jobban_isbanned(applicant, "shadowling") && !jobban_isbanned(applicant, "Syndicate"))
+					if(temp.age_check(applicant.client))
+						if(!(applicant.job in temp.restricted_jobs))
+							if(!(is_shadow_or_thrall(applicant)))
+								candidates += applicant
 
 	if(candidates.len)
 		H = pick(candidates)

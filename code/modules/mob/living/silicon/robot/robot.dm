@@ -84,7 +84,7 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = 19	//Objects that appear on screen are on layer 20, UI should be just below it.
+	robot_modules_background.layer = HUD_LAYER	//Objects that appear on screen are on layer ABOVE_HUD_LAYER, UI should be just below it.
 
 	ident = rand(1, 999)
 	update_icons()
@@ -116,7 +116,7 @@
 	//MMI stuff. Held togheter by magic. ~Miauw
 	if(!mmi || !mmi.brainmob)
 		mmi = new (src)
-		mmi.brain = new /obj/item/organ/internal/brain(mmi)
+		mmi.brain = new /obj/item/organ/brain(mmi)
 		mmi.brain.name = "[real_name]'s brain"
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
@@ -167,6 +167,8 @@
 		return
 
 	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	if(!config.forbid_peaceborg)
+		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
@@ -235,6 +237,16 @@
 			status_flags &= ~CANPUSH
 			feedback_inc("cyborg_security",1)
 
+		if("Peacekeeper")
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			hands.icon_state = "standard"
+			icon_state = "peaceborg"
+			animation_length = 54
+			modtype = "Peace"
+			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+			status_flags &= ~CANPUSH
+			feedback_inc("cyborg_peacekeeper",1)
+
 		if("Engineering")
 			module = new /obj/item/weapon/robot_module/engineering(src)
 			hands.icon_state = "engineer"
@@ -264,7 +276,7 @@
 	if(!animation_length)
 		return
 	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
+	src.setDir(SOUTH)
 	notransform = 1
 	flick(icon_state, src)
 	sleep(animation_length+1)
@@ -378,8 +390,8 @@
 		if(connected_ai)
 			stat("Master AI:", connected_ai.name)
 
-/mob/living/silicon/robot/restrained()
-	return 0
+/mob/living/silicon/robot/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
@@ -555,7 +567,10 @@
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
-		MOD.install(src, user) //Proc includes a success mesage so we don't need another one
+		if(!mind) //A player mind is required for law procs to run antag checks.
+			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			return
+		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
@@ -609,7 +624,7 @@
 /mob/living/silicon/robot/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(I.force && I.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
-	..()
+	return ..()
 
 
 /mob/living/silicon/robot/emag_act(mob/user)
@@ -794,41 +809,44 @@
 	return update_icons()
 
 /mob/living/silicon/robot/update_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 		switch(icon_state)
 			if("robot")
-				overlays += "eyes-standard"
+				add_overlay("eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]") //Cyborgs converted by Ratvar have yellow eyes rather than blue
 				state_name = "standard"
 			if("mediborg")
-				overlays += "eyes-mediborg"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("toiletbot")
-				overlays += "eyes-mediborg"
+				add_overlay("eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 				state_name = "mediborg"
 			if("secborg")
-				overlays += "eyes-secborg"
+				add_overlay("eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("engiborg")
-				overlays += "eyes-engiborg"
+				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("janiborg")
-				overlays += "eyes-janiborg"
-			if("minerborg")
-				overlays += "eyes-minerborg"
+				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+			if("minerborg","ashborg")
+				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+				state_name = "minerborg"
+			if("peaceborg")
+				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
-				overlays += "eyes-syndie_bloodhound"
+				add_overlay("eyes-syndie_bloodhound")
 			else
-				overlays += "eyes"
+				add_overlay("eyes")
 				state_name = "serviceborg"
 		if(lamp_intensity > 2)
-			overlays += "eyes-[state_name]-lights"
+			add_overlay("eyes-[state_name]-lights")
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-opencover +w"
+			add_overlay("ov-opencover +w")
 		else if(cell)
-			overlays += "ov-opencover +c"
+			add_overlay("ov-opencover +c")
 		else
-			overlays += "ov-opencover -c"
+			add_overlay("ov-opencover -c")
 
 	update_fire()
 
@@ -956,6 +974,7 @@
 								cleaned_human.shoes.clean_blood()
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
+							cleaned_human.wash_cream()
 							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
 			return
 

@@ -80,6 +80,8 @@
 /area/holodeck/rec_center/pet_lounge
 	name = "Holodeck - Pet Playground"
 
+/area/holodeck/rec_center/winterwonderland
+	name = "Holodeck - Winter Wonderland"
 
 // Bad programs
 
@@ -95,3 +97,6 @@
 	name = "Holodeck - Holdout Bunker"
 	restricted = 1
 
+/area/holodeck/rec_center/anthophila
+	name = "Holodeck - Anthophila"
+	restricted = 1

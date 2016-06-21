@@ -14,15 +14,15 @@
 	var/image/nest_overlay
 
 /obj/structure/bed/nest/New()
-	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=MOB_LAYER - 0.2)
+	nest_overlay = image('icons/mob/alien.dmi', "nestoverlay", layer=LYING_MOB_LAYER)
 	return ..()
 
 /obj/structure/bed/nest/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/buck in buckled_mobs) //breaking a nest releases all the buckled mobs, because the nest isn't holding them down anymore
 			var/mob/living/M = buck
 
-			if(user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+			if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 				unbuckle_mob(M)
 				add_fingerprint(user)
 				return
@@ -55,12 +55,12 @@
 	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
 		return
 
-	if(M.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.getorgan(/obj/item/organ/alien/plasmavessel))
 		return
 
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs()
 
 	if(buckle_mob(M))
@@ -73,8 +73,8 @@
 	if(M in buckled_mobs)
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
-		M.layer = MOB_LAYER - 0.3
-		overlays += nest_overlay
+		M.layer = BELOW_MOB_LAYER
+		add_overlay(nest_overlay)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)

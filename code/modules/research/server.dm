@@ -16,13 +16,17 @@
 
 /obj/machinery/r_n_d/server/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
-	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
-	initialize(); //Agouri
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+	B.apply_default_parts(src)
+	initialize() //Agouri
+
+/obj/item/weapon/circuitboard/machine/rdserver
+	name = "circuit board (R&D Server)"
+	build_path = /obj/machinery/r_n_d/server
+	origin_tech = "programming=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/scanning_module = 1)
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -177,7 +181,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
-	circuit = /obj/item/weapon/circuitboard/rdservercontrol
+	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -237,7 +241,7 @@
 		temp_server.files.RefreshResearch()
 
 	else if(href_list["reset_design"])
-		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
+		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)

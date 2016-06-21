@@ -64,21 +64,28 @@
 		if(copy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 0 && !busy && copy)
-					var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
-					if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
-						if(toner > 10)	//lots of toner, make it dark
-							c.info = "<font color = #101010>"
-						else			//no toner? shitty copies for you!
-							c.info = "<font color = #808080>"
-						var/copied = copy.info
-						copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
-						copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-						c.info += copied
-						c.info += "</font>"
-						c.name = copy.name
-						c.fields = copy.fields
-						c.updateinfolinks()
-						toner--
+					var/copy_as_paper = 1
+					if(istype(copy, /obj/item/weapon/paper/contract/employment))
+						var/obj/item/weapon/paper/contract/employment/E = copy
+						var/obj/item/weapon/paper/contract/employment/C = new /obj/item/weapon/paper/contract/employment (loc, E.target.current)
+						if(C)
+							copy_as_paper = 0
+					if(copy_as_paper)
+						var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+						if(length(copy.info) > 0)	//Only print and add content if the copied doc has words on it
+							if(toner > 10)	//lots of toner, make it dark
+								c.info = "<font color = #101010>"
+							else			//no toner? shitty copies for you!
+								c.info = "<font color = #808080>"
+							var/copied = copy.info
+							copied = replacetext(copied, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")	//state of the art techniques in action
+							copied = replacetext(copied, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+							c.info += copied
+							c.info += "</font>"
+							c.name = copy.name
+							c.fields = copy.fields
+							c.updateinfolinks()
+							toner--
 					busy = 1
 					sleep(15)
 					busy = 0
@@ -120,7 +127,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(src, doccopy)
+					new /obj/item/documents/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -167,25 +174,17 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			if(!istype(usr,/mob/living/silicon/ai)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
-				copy.loc = usr.loc
-				usr.put_in_hands(copy)
-			else
-				copy.loc = src.loc
-			usr << "<span class='notice'>You take [copy] out of [src].</span>"
+			remove_photocopy(copy)
 			copy = null
-			updateUsrDialog()
 		else if(photocopy)
-			if(!istype(usr,/mob/living/silicon/ai)) //same with this one, wtf
-				photocopy.loc = usr.loc
-				usr.put_in_hands(photocopy)
-			else
-				photocopy.loc = src.loc
-			usr << "<span class='notice'>You take [photocopy] out of [src].</span>"
+			remove_photocopy(photocopy)
 			photocopy = null
-			updateUsrDialog()
+		else if(doccopy)
+			remove_photocopy(doccopy)
+			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
+		updateUsrDialog()
 	else if(href_list["min"])
 		if(copies > 1)
 			copies--
@@ -233,18 +232,30 @@
 		updateUsrDialog()
 
 /obj/machinery/photocopier/proc/do_insertion(obj/item/O, mob/user)
-		O.loc = src
-		user << "<span class='notice'>You insert [O] into [src].</span>"
-		flick("photocopier1", src)
-		updateUsrDialog()
+	O.loc = src
+	user << "<span class ='notice'>You insert [O] into [src].</span>"
+	flick("photocopier1", src)
+	updateUsrDialog()
+
+/obj/machinery/photocopier/proc/remove_photocopy(obj/item/O, mob/user)
+	if(!issilicon(user)) //surprised this check didn't exist before, putting stuff in AI's hand is bad
+		O.loc = user.loc
+		user.put_in_hands(O)
+	else
+		O.loc = src.loc
+	user << "<span class='notice'>You take [O] out of [src].</span>"
 
 /obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
-			if(!user.drop_item())
-				return
-			copy = O
-			do_insertion(O)
+			if(istype(O,/obj/item/weapon/paper/contract/infernal))
+				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
+				burn_state = ON_FIRE
+			else
+				if(!user.drop_item())
+					return
+				copy = O
+				do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 

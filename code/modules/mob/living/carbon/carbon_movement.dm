@@ -1,5 +1,6 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
+	. += grab_state * 3
 	if(legcuffed)
 		. += legcuffed.slowdown
 
@@ -20,7 +21,7 @@ var/const/GALOSHES_DONT_HELP = 4
 		return 0
 
 	// Do we have a jetpack implant (and is it on)?
-	var/obj/item/organ/internal/cyberimp/chest/thrusters/T = getorganslot("thrusters")
+	var/obj/item/organ/cyberimp/chest/thrusters/T = getorganslot("thrusters")
 	if(istype(T) && movement_dir && T.allow_thrust(0.01))
 		return 1
 

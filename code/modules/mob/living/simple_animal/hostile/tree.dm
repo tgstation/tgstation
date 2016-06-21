@@ -33,6 +33,7 @@
 	maxbodytemp = 1200
 
 	faction = list("hostile")
+	deathmessage = "is hacked into pieces!"
 	loot = list(/obj/item/stack/sheet/mineral/wood)
 	gold_core_spawnable = 1
 	del_on_death = 1
@@ -57,10 +58,6 @@
 			C.Weaken(3)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
-
-/mob/living/simple_animal/hostile/tree/New()
-	..()
-	deathmessage = "[src] is hacked into pieces!"
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"

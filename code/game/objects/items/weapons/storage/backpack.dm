@@ -33,7 +33,7 @@
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
-	origin_tech = "bluespace=4"
+	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
 	max_w_class = 6
 	max_combined_w_class = 35
@@ -50,12 +50,6 @@
 	qdel(user)
 	return
 
-/obj/item/weapon/storage/backpack/holding/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(crit_fail)
-		user << "<span class='danger'>The Bluespace generator isn't working.</span>"
-		return
-	return ..()
-
 /obj/item/weapon/storage/backpack/holding/content_can_dump(atom/dest_object, mob/user)
 	if(Adjacent(user))
 		if(get_dist(user, dest_object) < 8)
@@ -71,7 +65,7 @@
 	return 0
 
 /obj/item/weapon/storage/backpack/holding/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
-	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)) && !W.crit_fail)
+	if((istype(W, /obj/item/weapon/storage/backpack/holding) || count_by_type(W.GetAllContents(), /obj/item/weapon/storage/backpack/holding)))
 		var/safety = alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [name]?", "Proceed", "Abort")
 		if(safety == "Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
 			return
@@ -85,18 +79,7 @@
 		qdel(src)
 		singulo.process()
 		return
-	..()
-
-/obj/item/weapon/storage/backpack/holding/proc/failcheck(mob/user)
-	if (prob(src.reliability)) return 1 //No failure
-	if (prob(src.reliability))
-		user << "<span class='danger'>The Bluespace portal resists your attempt to add another item.</span>" //light failure
-	else
-		user << "<span class='danger'>The Bluespace generator malfunctions!</span>"
-		for (var/obj/O in src.contents) //it broke, delete what was in it
-			qdel(O)
-		crit_fail = 1
-		icon_state = "brokenpack"
+	. = ..()
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
@@ -128,6 +111,12 @@
 	desc = "It's a backpack made by Honk! Co."
 	icon_state = "clownpack"
 	item_state = "clownpack"
+
+/obj/item/weapon/storage/backpack/explorer
+	name = "explorer bag"
+	desc = "A robust backpack for stashing your loot."
+	icon_state = "explorerpack"
+	item_state = "explorerpack"
 
 /obj/item/weapon/storage/backpack/mime
 	name = "Parcel Parceaux"
@@ -262,6 +251,12 @@
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
+/obj/item/weapon/storage/backpack/satchel_explorer
+	name = "explorer satchel"
+	desc = "A robust satchel for stashing your loot."
+	icon_state = "satchel-explorer"
+	item_state = "securitypack"
+
 /obj/item/weapon/storage/backpack/satchel_cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
@@ -351,6 +346,10 @@
 	icon_state = "duffle-clown"
 	item_state = "duffle-clown"
 
+/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/New()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
 /obj/item/weapon/storage/backpack/dufflebag/syndie
 	name = "suspicious looking dufflebag"

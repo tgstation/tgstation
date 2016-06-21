@@ -87,7 +87,18 @@ Doesn't work on other aliens/AI.*/
 	if(msg)
 		log_say("AlienWhisper: [key_name(user)]->[M.key] : [msg]")
 		M << "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]"
-		user << {"<span class='noticealien'>You said: "[msg]" to [M]</span>"}
+		user << "<span class='noticealien'>You said: \"[msg]\" to [M]</span>"
+		for(var/ded in dead_mob_list)
+			if(!isobserver(ded))
+				continue
+			var/follow_link_user = FOLLOW_LINK(ded, user)
+			var/follow_link_whispee = FOLLOW_LINK(ded, M)
+			ded << "[follow_link_user] \
+				<span class='name'>[user]</span> \
+				<span class='alertalien'>Alien Whisper --> </span> \
+				[follow_link_whispee] \
+				<span class='name'>[M]</span> \
+				<span class='noticealien'>[msg]</span>"
 	else
 		return 0
 	return 1
@@ -101,7 +112,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
 	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/internal/alien/plasmavessel))
+		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
 			aliens_around.Add(A)
 	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in aliens_around
 	if(!M)
@@ -113,7 +124,7 @@ Doesn't work on other aliens/AI.*/
 			M.adjustPlasma(amount)
 			user.adjustPlasma(-amount)
 			M << "<span class='noticealien'>[user] has transfered [amount] plasma to you.</span>"
-			user << {"<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"}
+			user << "<span class='noticealien'>You trasfer [amount] plasma to [M]</span>"
 		else
 			user << "<span class='noticealien'>You need to be closer!</span>"
 	return
@@ -179,24 +190,54 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	plasma_cost = 50
-	action_icon_state = "alien_neurotoxin"
+	action_icon_state = "alien_neurotoxin_0"
+	var/active = 0
 
-/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/alien/user)
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
+/obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
+	if(active)
+		user.ranged_ability = null
+		user << "<span class='notice'>You empty your neurotoxin gland.</span>"
+		active = 0
+	else if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'>You already have another aimed ability readied! Cancel it first."
+		return
+	else
+		user.ranged_ability = src
+		active = 1
+		user << "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+
+	user.client.click_intercept = user.ranged_ability
+	action.button_icon_state = "alien_neurotoxin_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	var/p_cost = 50
+	if(!iscarbon(user) || user.lying || user.stat)
+		return
+	user.next_click = world.time + 6
+	user.face_atom(target)
+	if(user.getPlasma() < p_cost)
+		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
+		return
 
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
 		return 0
 
+	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
 	A.current = U
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, get_turf(target), user, params)
 	A.fire()
+	user.newtonian_move(get_dir(U, T))
+	user.adjustPlasma(-p_cost)
 
 	return 1
+
+/obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
+	if(user.ranged_ability == src)
+		user.ranged_ability = null
 
 
 /obj/effect/proc_holder/alien/resin
@@ -285,13 +326,13 @@ Doesn't work on other aliens/AI.*/
 
 
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = getorgan(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
 	if(!vessel) return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0

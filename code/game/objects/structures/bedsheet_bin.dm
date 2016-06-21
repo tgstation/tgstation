@@ -11,7 +11,7 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
 	slot_flags = SLOT_BACK
-	layer = 4
+	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -28,9 +28,11 @@ LINEN BINS
 /obj/item/weapon/bedsheet/attack_self(mob/user)
 	user.drop_item()
 	if(layer == initial(layer))
-		layer = 5
+		layer = ABOVE_MOB_LAYER
+		user << "<span class='notice'>You cover yourself with [src].</span>"
 	else
 		layer = initial(layer)
+		user << "<span class='notice'>You smooth [src] out beneath you.</span>"
 	add_fingerprint(user)
 	return
 
@@ -176,6 +178,19 @@ LINEN BINS
 	icon_state = "sheetian"
 	item_color = "ian"
 
+/obj/item/weapon/bedsheet/random
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
+	name = "random bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/weapon/bedsheet/random/New()
+	var/obj/item/weapon/bedsheet/B = pick(subtypesof(/obj/item/weapon/bedsheet) - /obj/item/weapon/bedsheet/random)
+	name = initial(B.name)
+	desc = initial(B.desc)
+	icon_state = initial(B.icon_state)
+	item_state = initial(B.item_state)
+	item_color = initial(B.item_color)
 
 /obj/structure/bedsheetbin
 	name = "linen bin"

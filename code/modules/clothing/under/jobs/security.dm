@@ -12,22 +12,32 @@
 /obj/item/clothing/under/rank/security
 	name = "security jumpsuit"
 	desc = "A tactical security jumpsuit for officers complete with nanotrasen belt buckle."
-	icon_state = "security"
+	icon_state = "rsecurity"
 	item_state = "r_suit"
-	item_color = "security"
+	item_color = "rsecurity"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/rank/security/grey
+	icon_state = "security"
+	item_state = "gy_suit"
+	item_color = "security"
+
 /obj/item/clothing/under/rank/warden
-	name = "warden's jumpsuit"
-	desc = "A tactical security jumpsuit for the warden with silver desginations and '/Warden/' stiched into the shoulders."
-	icon_state = "warden"
+	name = "security suit"
+	desc = "A formal security suit for officers complete with nanotrasen belt buckle."
+	icon_state = "rwarden"
 	item_state = "r_suit"
-	item_color = "warden"
+	item_color = "rwarden"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 50
 	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/warden/grey
+	icon_state = "warden"
+	item_state = "gy_suit"
+	item_color = "warden"
 
 /*
  * Detective
@@ -56,12 +66,17 @@
 /obj/item/clothing/under/rank/head_of_security
 	name = "head of security's jumpsuit"
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
-	icon_state = "hos"
+	icon_state = "rhos"
 	item_state = "r_suit"
-	item_color = "hos"
+	item_color = "rhos"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	strip_delay = 60
 	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/head_of_security/grey
+	icon_state = "hos"
+	item_state = "gy_suit"
+	item_color = "hos"
 
 /obj/item/clothing/under/rank/head_of_security/alt
 	name = "head of security's turtleneck"

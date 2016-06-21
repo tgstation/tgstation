@@ -78,7 +78,7 @@ Shaft Miner
 
 	belt = /obj/item/device/pda/shaftminer
 	ears = /obj/item/device/radio/headset/headset_cargo
-	shoes = /obj/item/clothing/shoes/jackboots
+	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	uniform = /obj/item/clothing/under/rank/miner/lavaland
 	l_pocket = /obj/item/weapon/reagent_containers/pill/patch/styptic
@@ -88,9 +88,9 @@ Shaft Miner
 		/obj/item/weapon/kitchen/knife/combat/survival=1,\
 		/obj/item/weapon/mining_voucher=1)
 
-	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
-	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
+	backpack = /obj/item/weapon/storage/backpack/explorer
+	satchel = /obj/item/weapon/storage/backpack/satchel_explorer
+	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	box = /obj/item/weapon/storage/box/engineer
 
 /*
@@ -196,7 +196,7 @@ Botanist
 	uniform = /obj/item/clothing/under/rank/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	gloves  =/obj/item/clothing/gloves/botanic_leather
-	suit_store = /obj/item/device/analyzer/plant_analyzer
+	suit_store = /obj/item/device/plant_analyzer
 
 	backpack = /obj/item/weapon/storage/backpack/botany
 	satchel = /obj/item/weapon/storage/backpack/satchel_hyd

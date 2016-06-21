@@ -48,6 +48,19 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 	..()
 
+/mob/living/simple_animal/hostile/guardian/med_hud_set_health()
+	if(summoner)
+		var/image/holder = hud_list[HEALTH_HUD]
+		holder.icon_state = "hud[RoundHealth(summoner)]"
+
+/mob/living/simple_animal/hostile/guardian/med_hud_set_status()
+	if(summoner)
+		var/image/holder = hud_list[STATUS_HUD]
+		if(summoner.stat == DEAD)
+			holder.icon_state = "huddead"
+		else
+			holder.icon_state = "hudhealthy"
+
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	parasites -= src
 	return ..()
@@ -103,8 +116,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
 	..()
-	update_health_hud() //we need to update our health display to match our summoner and we can't practically give the summoner a hook to do it
-
+	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
+	med_hud_set_health()
+	med_hud_set_status()
 	if(summoner)
 		if(summoner.stat == DEAD)
 			src << "<span class='danger'>Your summoner has died!</span>"
@@ -261,7 +275,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		for(var/para in guardians)
 			para << my_message
 		for(var/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [my_message]"
 
 		log_say("[src.real_name]/[src.key] : [input]")
 
@@ -282,7 +297,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G << "<font color=\"[G.namedatum.colour]\"><b><i>[src]:</i></b></font> [preliminary_message]" //but for guardians, use their color for the source instead
 	for(var/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [my_message]"
+		var/link = FOLLOW_LINK(M, src)
+		M << "[link] [my_message]"
 
 	log_say("[src.real_name]/[src.key] : [text]")
 
@@ -367,7 +383,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
 	var/random = TRUE
 	var/allowmultiple = 0
-	var/allowling = 0
+	var/allowling = 1
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
 	var/list/guardians = user.hasparasites()
@@ -483,7 +499,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
- <b>Assassin</b>: Does low damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
  <br>
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>

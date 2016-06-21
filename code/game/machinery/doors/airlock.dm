@@ -42,7 +42,7 @@ var/list/airlock_overlays = list()
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
 	var/lockdownbyai = 0
-	var/doortype = /obj/structure/door_assembly/door_assembly_0
+	assemblytype = /obj/structure/door_assembly/door_assembly_0
 	var/justzap = 0
 	normalspeed = 1
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -116,10 +116,14 @@ var/list/airlock_overlays = list()
 				new/obj/machinery/door/airlock/cult(T)
 			else
 				new/obj/machinery/door/airlock/cult/unruned(T)
-		if(runed)
-			PoolOrNew(/obj/effect/overlay/temp/cult/door, T)
+		qdel(src)
+
+/obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	if(prob(20))
+		if(glass)
+			new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
 		else
-			PoolOrNew(/obj/effect/overlay/temp/cult/door/unruned, T)
+			new/obj/machinery/door/airlock/clockwork(get_turf(src))
 		qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
@@ -156,7 +160,7 @@ var/list/airlock_overlays = list()
 		return 1
 	return 0
 
-/obj/machinery/door/airlock/proc/canAIControl()
+/obj/machinery/door/airlock/proc/canAIControl(mob/user)
 	return ((aiControlDisabled != 1) && (!isAllPowerCut()));
 
 /obj/machinery/door/airlock/proc/canAIHack()
@@ -331,30 +335,30 @@ var/list/airlock_overlays = list()
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	//doesn't use overlays.Cut() for performance reasons
+	//doesn't use cut_overlays() for performance reasons
 	if(frame_overlay != old_frame_overlay)
 		overlays -= old_frame_overlay
-		overlays += frame_overlay
+		add_overlay(frame_overlay)
 		old_frame_overlay = frame_overlay
 	if(filling_overlay != old_filling_overlay)
 		overlays -= old_filling_overlay
-		overlays += filling_overlay
+		add_overlay(filling_overlay)
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		overlays -= old_lights_overlay
-		overlays += lights_overlay
+		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
 	if(panel_overlay != old_panel_overlay)
 		overlays -= old_panel_overlay
-		overlays += panel_overlay
+		add_overlay(panel_overlay)
 		old_panel_overlay = panel_overlay
 	if(weld_overlay != old_weld_overlay)
 		overlays -= old_weld_overlay
-		overlays += weld_overlay
+		add_overlay(weld_overlay)
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		overlays -= old_sparks_overlay
-		overlays += sparks_overlay
+		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -385,7 +389,7 @@ var/list/airlock_overlays = list()
 		user << "<span class='warning'>Something is wired up to the airlock's electronics!</span>"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-	if(!src.canAIControl())
+	if(!src.canAIControl(user))
 		if(src.canAIHack())
 			src.hack(user)
 			return
@@ -509,7 +513,7 @@ var/list/airlock_overlays = list()
 		src.aiHacking = 1
 		user << "Airlock AI control has been blocked. Beginning fault-detection."
 		sleep(50)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -521,7 +525,7 @@ var/list/airlock_overlays = list()
 		sleep(20)
 		user << "Attempting to hack into airlock. This may take some time."
 		sleep(200)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -531,7 +535,7 @@ var/list/airlock_overlays = list()
 			return
 		user << "Upload access confirmed. Loading control program into airlock software."
 		sleep(170)
-		if(src.canAIControl())
+		if(src.canAIControl(user))
 			user << "Alert cancelled. Airlock control has been restored without our assistance."
 			src.aiHacking=0
 			return
@@ -566,10 +570,10 @@ var/list/airlock_overlays = list()
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
-				var/obj/item/organ/limb/affecting = H.get_organ("head")
+				var/obj/item/bodypart/affecting = H.get_bodypart("head")
 				H.Stun(5)
 				H.Weaken(5)
-				if(affecting.take_damage(10, 0))
+				if(affecting && affecting.take_damage(10, 0))
 					H.update_damage_overlays(0)
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
@@ -601,7 +605,7 @@ var/list/airlock_overlays = list()
 
 
 
-	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
+	if((istype(usr, /mob/living/silicon) && src.canAIControl(usr)) || IsAdminGhost(usr))
 		//AI
 		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 emergency access
 		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 emergency access
@@ -724,8 +728,8 @@ var/list/airlock_overlays = list()
 					else if(src.secondsElectrified!=0)
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
-						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
+						add_logs(usr, src, "electrified")
 						src.secondsElectrified = 30
 						spawn(10)
 							while (src.secondsElectrified>0)
@@ -744,7 +748,7 @@ var/list/airlock_overlays = list()
 						usr << text("The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
 					else
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
-						add_logs(usr, src, "electrified", addition="at [x],[y],[z]")
+						add_logs(usr, src, "electrified")
 						src.secondsElectrified = -1
 
 				if (8) // Not in order >.>
@@ -850,7 +854,7 @@ var/list/airlock_overlays = list()
 			playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 			if(do_after(user,40/W.toolspeed, 1, target = src))
 				if(density && !operating)//Door must be closed to weld.
-					if( !istype(src, /obj/machinery/door/airlock) || !user || !W || !W.isOn() || !user.loc )
+					if(!user || !W || !W.isOn() || !user.loc )
 						return
 					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					welded = !welded
@@ -883,12 +887,12 @@ var/list/airlock_overlays = list()
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40/I.toolspeed, target = src))
 			if(src.loc)
-				if(src.doortype)
-					var/obj/structure/door_assembly/A = new src.doortype(src.loc)
+				if(assemblytype)
+					var/obj/structure/door_assembly/A = new assemblytype(src.loc)
 					A.heat_proof_finished = src.heat_proof //tracks whether there's rglass in
 				else
 					new /obj/structure/door_assembly/door_assembly_0(src.loc)
-					//If you come across a null doortype, it will produce the default assembly instead of disintegrating.
+					//If you come across a null assemblytype, it will produce the default assembly instead of disintegrating.
 
 				if(emagged)
 					user << "<span class='warning'>You discard the damaged electronics.</span>"
@@ -986,7 +990,7 @@ var/list/airlock_overlays = list()
 	sleep(5)
 	src.density = 0
 	sleep(9)
-	src.layer = 2.7
+	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
 	SetOpacity(0)
 	operating = 0
@@ -1023,7 +1027,7 @@ var/list/airlock_overlays = list()
 		return 1
 	operating = 1
 	update_icon(AIRLOCK_CLOSING, 1)
-	src.layer = 3.1
+	src.layer = CLOSED_DOOR_LAYER
 	sleep(5)
 	src.density = 1
 	if(!safe)
@@ -1065,51 +1069,51 @@ var/list/airlock_overlays = list()
 		if("Public")
 			icon = 'icons/obj/doors/airlocks/station/public.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_0
+			assemblytype = /obj/structure/door_assembly/door_assembly_0
 		if("Public2")
 			icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_glass
+			assemblytype = /obj/structure/door_assembly/door_assembly_glass
 		if("Engineering")
 			icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_eng
+			assemblytype = /obj/structure/door_assembly/door_assembly_eng
 		if("Atmospherics")
 			icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_atmo
+			assemblytype = /obj/structure/door_assembly/door_assembly_atmo
 		if("Security")
 			icon = 'icons/obj/doors/airlocks/station/security.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_sec
+			assemblytype = /obj/structure/door_assembly/door_assembly_sec
 		if("Command")
 			icon = 'icons/obj/doors/airlocks/station/command.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_com
+			assemblytype = /obj/structure/door_assembly/door_assembly_com
 		if("Medical")
 			icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_med
+			assemblytype = /obj/structure/door_assembly/door_assembly_med
 		if("Research")
 			icon = 'icons/obj/doors/airlocks/station/research.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_research
+			assemblytype = /obj/structure/door_assembly/door_assembly_research
 		if("Mining")
 			icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_min
+			assemblytype = /obj/structure/door_assembly/door_assembly_min
 		if("Maintenance")
 			icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_mai
+			assemblytype = /obj/structure/door_assembly/door_assembly_mai
 		if("External")
 			icon = 'icons/obj/doors/airlocks/external/external.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_ext
+			assemblytype = /obj/structure/door_assembly/door_assembly_ext
 		if("High Security")
 			icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 			overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
-			doortype = /obj/structure/door_assembly/door_assembly_highsecurity
+			assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
 	update_icon()
 
 /obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID)

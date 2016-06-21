@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	14
+#define SAVEFILE_VERSION_MAX	15
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -49,9 +49,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/B_gang = 4096
 		var/B_shadowling = 8192
 		var/B_abductor = 16384
-		var/B_revenant = 32768
 
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor,B_revenant)
+		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor)
 
 		be_special = list()
 
@@ -89,8 +88,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_SHADOWLING
 					if(16384)
 						be_special += ROLE_ABDUCTOR
-					if(32768)
-						be_special += ROLE_REVENANT
 
 
 /datum/preferences/proc/update_preferences(current_version)
@@ -101,6 +98,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles = TOGGLES_DEFAULT
 	if(current_version < 12)
 		ignoring = list()
+	if(current_version < 15)
+		toggles |= SOUND_ANNOUNCEMENTS
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -223,7 +222,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
-	S["adminmusicvolume"]	>> adminmusicvolume
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 
 	//try to fix any outdated data if necessary
@@ -275,7 +273,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["preferred_map"]		<< preferred_map
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
-	S["adminmusicvolume"]	<< adminmusicvolume
 	S["inquisitive_ghost"]	<< inquisitive_ghost
 
 	return 1

@@ -2,6 +2,7 @@
 	vision_range = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	environment_smash = 2
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -76,8 +77,8 @@
 	aggro_vision_range = 9
 	idle_vision_range = 2
 	turns_per_move = 5
-	loot = list(/obj/item/weapon/ore/diamond{layer = 4.1},
-				/obj/item/weapon/ore/diamond{layer = 4.1})
+	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
+				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -91,10 +92,7 @@
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
 	if(..()) //we have a target
 		if(isliving(target))
-			var/mob/living/L = target
-			if(L.bodytemperature > 200)
-				L.bodytemperature = 200
-				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
+			OpenFire(target)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
@@ -129,16 +127,17 @@
 	a_intent = "help"
 	speak_emote = list("screeches")
 	throw_message = "sinks in slowly, before being pushed out of "
+	deathmessage = "spits up the contents of its stomach before dying!"
 	status_flags = CANPUSH
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
 
 	var/chase_time = 100
+	var/will_burrow = TRUE
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/New()
 	..()
-	deathmessage = "[src] spits up the contents of its stomach before dying!"
 	var/i = rand(1,3)
 	while(i)
 		loot += pick(/obj/item/weapon/ore/silver, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/diamond)
@@ -154,8 +153,9 @@
 			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
-			spawn(chase_time)
-				Burrow()
+			if(will_burrow)
+				spawn(chase_time)
+					Burrow()
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -214,7 +214,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/internal/hivelord_core)
+	loot = list(/obj/item/organ/hivelord_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
@@ -233,26 +233,50 @@
 	mouse_opacity = 1
 	..(gibbed)
 
-/obj/item/organ/internal/hivelord_core
+/obj/item/organ/hivelord_core
 	name = "hivelord remains"
 	desc = "All that remains of a hivelord, it seems to be what allows it to break pieces of itself off without being hurt... its healing properties will soon become inert if not used quickly."
 	icon_state = "roro core 2"
 	flags = NOBLUDGEON
 	slot = "hivecore"
 	force = 0
+	actions_types = list(/datum/action/item_action/organ_action/use)
 	var/inert = 0
 	var/preserved = 0
+	var/list/spawned_brood = list()
 
-/obj/item/organ/internal/hivelord_core/New()
+/obj/item/organ/hivelord_core/New()
 	..()
 	spawn(2400)
 		if(!owner && !preserved)
-			inert = 1
-			desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+			go_inert()
 		else
-			preserved = 1
+			preserved = TRUE
+			feedback_add_details("hivelord_core", "[src.type]|implanted")
 
-/obj/item/organ/internal/hivelord_core/on_life()
+/obj/item/organ/hivelord_core/proc/go_inert()
+	inert = TRUE
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+	feedback_add_details("hivelord_core", "[src.type]|inert")
+
+/obj/item/organ/hivelord_core/ui_action_click()
+	var/spawn_amount = 1
+	if(!inert)
+		spawn_amount++
+
+	for(var/a in spawned_brood)
+		if(!istype(a, /mob/living/simple_animal/hostile/asteroid/hivelordbrood) || qdeleted(a))
+			spawned_brood -= a
+			continue
+	spawn_amount -= spawned_brood.len
+
+	for(var/i = 1 to spawn_amount)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/B = new (owner.loc)
+		B.link_host(owner)
+		spawned_brood |= B
+
+
+/obj/item/organ/hivelord_core/on_life()
 	..()
 	if(owner)
 		owner.adjustBruteLoss(-1)
@@ -260,16 +284,18 @@
 		owner.adjustOxyLoss(-2)
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
-		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-		if(B && blood_volume < 560 && blood_volume)
-			B.volume += 2 // Fast blood regen
+		CHECK_DNA_AND_SPECIES(H)
+		if(NOBLOOD in H.dna.species.specflags)
+			return
 
-/obj/item/organ/internal/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
+		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume += 2 // Fast blood regen
+
+/obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] have become inert, its healing properties are no more.</span>"
+			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
 			return
 		else
 			if(H.stat == DEAD)
@@ -277,13 +303,15 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
+				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
 				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/prepare_eat()
+/obj/item/organ/hivelord_core/prepare_eat()
 	return null
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood
@@ -302,6 +330,7 @@
 	speed = 3
 	maxHealth = 1
 	health = 1
+	flying = 1
 	harm_intent_damage = 5
 	melee_damage_lower = 2
 	melee_damage_upper = 2
@@ -316,7 +345,71 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
 	spawn(100)
-		qdel(src)
+		death()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
+	name = "blood brood"
+	desc = "A living string of blood and alien materials."
+	icon_state = "bloodbrood"
+	icon_living = "bloodbrood"
+	icon_aggro = "bloodbrood"
+	attacktext = "pierces"
+	color = "#C80000"
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/death()
+	if(loc) // Splash the turf we are on with blood
+		reagents.reaction(get_turf(src))
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/New()
+	create_reagents(30)
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/AttackingTarget()
+	..()
+	if(iscarbon(target))
+		transfer_reagents(target, 1)
+
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_hand(mob/living/carbon/human/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_paw(mob/living/carbon/monkey/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if("\ref[M]" in faction)
+		reabsorb_host(M)
+	else
+		return ..()
+
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/reabsorb_host(mob/living/carbon/C)
+	C.visible_message("<span class='notice'>[src] is reabsorbed by [C]'s body.</span>", \
+								"<span class='notice'>[src] is reabsorbed by your body.</span>")
+	transfer_reagents(C)
+	death()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, volume = 30)
+	if(!reagents.total_volume)
+		return
+
+	volume = min(volume, reagents.total_volume)
+
+	var/fraction = min(volume/reagents.total_volume, 1)
+	reagents.reaction(C, INJECT, fraction)
+	reagents.trans_to(C, volume)
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
+	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
+	C.transfer_blood_to(src, 30)
+	color = mix_color_from_reagents(reagents.reagent_list)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
 	name = "goliath"
@@ -350,7 +443,7 @@
 	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
-	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = 4.1})
+	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -445,7 +538,7 @@
 	icon_state = "goliath_hide"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 
 /obj/item/stack/sheet/animalhide/goliath_hide/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -516,7 +609,7 @@
 	environment_smash = 0
 	var/wumbo = 0
 	var/inflate_cooldown = 0
-	loot = list(/obj/item/asteroid/fugu_gland{layer = 4.1})
+	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Life()
 	if(!wumbo)
@@ -592,7 +685,7 @@
 	icon_state = "fugu_gland"
 	flags = NOBLUDGEON
 	w_class = 3
-	layer = 4
+	layer = MOB_LAYER
 	origin_tech = "biotech=6"
 	var/list/banned_mobs()
 
@@ -618,7 +711,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
-	desc = "Its stare causes victims to freeze from the inside."
+	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
 	icon = 'icons/mob/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
@@ -628,7 +721,7 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "stares into the soul of"
+	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -641,7 +734,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
@@ -673,7 +766,7 @@
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
-	loot = list(/obj/item/organ/internal/hivelord_core/legion)
+	loot = list(/obj/item/organ/hivelord_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = 1
@@ -681,7 +774,7 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
 		stored_mob.loc = get_turf(src)
 		stored_mob.adjustBruteLoss(1000)
@@ -727,11 +820,28 @@
 				qdel(src)
 	..()
 
-/obj/item/organ/internal/hivelord_core/legion
-	name = "legion's heart"
-	desc = "A demonic, still beating heart... its healing properties will soon become inert if not used quickly."
+/obj/item/organ/hivelord_core/legion
+	name = "legion's soul"
+	desc = "A strange rock that still crackles with power... its \
+		healing properties will soon become inert if not used quickly."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "demon_heart"
+	icon_state = "legion_soul"
+
+/obj/item/organ/hivelord_core/legion/New()
+	..()
+	update_icon()
+
+/obj/item/organ/hivelord_core/update_icon()
+	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	cut_overlays()
+	if(!inert)
+		add_overlay(image(icon, "legion_soul_crackle"))
+
+/obj/item/organ/hivelord_core/legion/go_inert()
+	. = ..()
+	desc = "[src] has become inert, it crackles no more and is useless for \
+		healing injuries."
+	update_icon()
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"
@@ -752,6 +862,8 @@
 	speak_emote = list("warbles", "quavers")
 	emote_hear = list("trills.")
 	emote_see = list("sniffs.", "burps.")
+	weather_immunities = list("lava","ash")
+	faction = list("mining", "ashwalker")
 	density = 0
 	speak_chance = 1
 	turns_per_move = 8
@@ -767,23 +879,22 @@
 	stat_attack = 1
 	gender = NEUTER
 	stop_automated_movement = FALSE
+	stop_automated_movement_when_pulled = TRUE
 	stat_exclusive = TRUE
 	robust_searching = TRUE
 	search_objects = TRUE
 	del_on_death = TRUE
+	loot = list(/obj/effect/decal/cleanable/blood/gibs)
+	deathmessage = "is pulped into bugmash."
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
-	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/female = 55)
+	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)
 
-	loot = list(/obj/effect/decal/cleanable/blood/gibs)
-	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/, /obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/,
-						  /obj/effect/decal/cleanable/blood/gibs/, /obj/effect/decal/cleanable/blood/drip/,/obj/effect/decal/cleanable/trail_holder)
+	wanted_objects = list(/obj/effect/decal/cleanable/xenoblood/xgibs, /obj/effect/decal/cleanable/blood/gibs/)
 	var/obj/item/udder/gutlunch/udder = null
-
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/New()
 	udder = new()
-	deathmessage = "[src] is pulped into bugmash."
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/Destroy()
@@ -792,11 +903,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
-		overlays += "gl_full"
+		add_overlay("gl_full")
 	..()
-
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -829,10 +939,11 @@
 
 
 //Male gutlunch. They're smaller and more colorful!
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck
+	name = "gubbuck"
 	gender = MALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/male/New()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck/New()
 	..()
 	color = pick("#E39FBB", "#D97D64", "#CF8C4A")
 	resize = 0.85
@@ -840,16 +951,16 @@
 
 
 //Lady gutlunch. They make the babby.
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen
 	name = "guthen"
 	gender = FEMALE
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/Life()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/Life()
 	..()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume) //Only breed when we're full.
 		make_babies()
 
-/mob/living/simple_animal/hostile/asteroid/gutlunch/female/make_babies()
+/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen/make_babies()
 	if(..())
 		udder.reagents.clear_reagents()
 		regenerate_icons()
@@ -864,6 +975,7 @@
 	icon_living = "tendril"
 	icon_dead = "tendril"
 	faction = list("mining")
+	weather_immunities = list("lava","ash")
 	health = 250
 	maxHealth = 250
 	max_mobs = 3
@@ -873,7 +985,6 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	layer = MOB_LAYER-0.1
 	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
 	del_on_death = 1
 	var/gps = null
@@ -882,25 +993,28 @@
 	..()
 	gps = new /obj/item/device/gps/internal(src)
 
+/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
+	qdel(gps)
+	. = ..()
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
 	anchored = TRUE
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
-	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)

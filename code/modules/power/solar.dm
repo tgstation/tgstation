@@ -109,12 +109,12 @@
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
-		src.dir = angle2dir(adir)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		src.setDir(angle2dir(adir))
 	return
 
 //calculates the fraction of the sunlight that the panel recieves
@@ -364,17 +364,17 @@
 	set_panels(currentdir)
 
 /obj/machinery/power/solar_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & NOPOWER)
-		overlays += "[icon_keyboard]_off"
+		add_overlay("[icon_keyboard]_off")
 		return
-	overlays += icon_keyboard
+	add_overlay(icon_keyboard)
 	if(stat & BROKEN)
-		overlays += "[icon_state]_broken"
+		add_overlay("[icon_state]_broken")
 	else
-		overlays += icon_screen
+		add_overlay(icon_screen)
 	if(currentdir > -1)
-		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir))
+		add_overlay(image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir)))
 
 /obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -442,9 +442,9 @@
 		if(do_after(user, 20/I.toolspeed, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
+				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -454,8 +454,8 @@
 				qdel(src)
 			else
 				user << "<span class='notice'>You disconnect the monitor.</span>"
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
+				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M

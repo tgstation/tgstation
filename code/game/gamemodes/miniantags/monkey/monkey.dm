@@ -15,7 +15,7 @@
 	var/carriers_to_make = 1
 	var/list/carriers = list()
 
-	var/monkeys_to_win = 0
+	var/monkeys_to_win = 1
 	var/escaped_monkeys = 0
 
 	var/players_per_carrier = 30
@@ -66,7 +66,7 @@
 	..()
 
 /datum/game_mode/monkey/check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 
 	if(!round_converted)

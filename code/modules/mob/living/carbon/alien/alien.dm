@@ -2,6 +2,7 @@
 #define HEAT_DAMAGE_LEVEL_2 3 //Amount of damage applied when your body temperature passes the 400K point
 #define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point and you are on fire
 
+
 /mob/living/carbon/alien
 	name = "alien"
 	voice_name = "alien"
@@ -29,15 +30,17 @@
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
 
+	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
+
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	internal_organs += new /obj/item/organ/internal/brain/alien
-	internal_organs += new /obj/item/organ/internal/alien/hivenode
-	internal_organs += new /obj/item/organ/internal/tongue/alien
+	internal_organs += new /obj/item/organ/brain/alien
+	internal_organs += new /obj/item/organ/alien/hivenode
+	internal_organs += new /obj/item/organ/tongue/alien
 
-	for(var/obj/item/organ/internal/I in internal_organs)
+	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
 	AddAbility(new/obj/effect/proc_holder/alien/nightvisiontoggle(null))
@@ -47,7 +50,7 @@
 	return -10
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
-	return
+	return 0
 
 /mob/living/carbon/alien/adjustFireLoss(amount) // Weak to Fire
 	if(amount > 0)
@@ -150,7 +153,7 @@ Des: Gives the client of the alien an image on each infected mob.
 	if (client)
 		for (var/mob/living/C in mob_list)
 			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/internal/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/internal/body_egg/alien_embryo)
+				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
 					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
 					client.images += I
@@ -177,6 +180,10 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	new_xeno.setDir(dir)
+	if(!alien_name_regex.Find(name))
+		new_xeno.name = name
+		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
@@ -210,7 +217,7 @@ Des: Removes all infected images from the alien.
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	for(var/obj/item/organ/internal/cyberimp/eyes/E in internal_organs)
+	for(var/obj/item/organ/cyberimp/eyes/E in internal_organs)
 		sight |= E.sight_flags
 		if(E.dark_view)
 			see_in_dark = max(see_in_dark, E.dark_view)

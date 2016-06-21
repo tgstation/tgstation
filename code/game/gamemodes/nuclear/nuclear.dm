@@ -5,8 +5,8 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 30 // 30 players - 5 players to be the nuke ops = 25 players remaining
-	required_enemies = 5
+	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
@@ -23,21 +23,17 @@
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
 /datum/game_mode/nuclear/pre_setup()
-	var/agent_number = 0
-	if(antag_candidates.len > agents_possible)
-		agent_number = agents_possible
-	else
-		agent_number = antag_candidates.len
-
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	var/n_agents = min(round(n_players / 10, 1), agents_possible)
 
-	while(agent_number > 0)
+	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
+		n_agents = antag_candidates.len
+
+	while(n_agents > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		agent_number--
+		n_agents--
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "Syndicate"
@@ -85,7 +81,7 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
-		if (nuke_code)
+		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
@@ -128,7 +124,7 @@
 	if(A)
 		A.command = TRUE
 
-	if (nuke_code)
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -149,7 +145,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
-	if (you_are)
+	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
@@ -181,7 +177,7 @@
 /datum/game_mode/nuclear/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 	if(are_operatives_dead())
 		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
@@ -194,7 +190,7 @@
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break
-	var/crew_evacuated = (SSshuttle.emergency.mode >= SHUTTLE_ENDGAME)
+	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
 	//var/operatives_are_dead = is_operatives_are_dead()
 
 
@@ -223,7 +219,7 @@
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ((disk_rescued || SSshuttle.emergency.mode < SHUTTLE_ENDGAME) && are_operatives_dead())
+	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
@@ -303,7 +299,7 @@
 	l_pocket = /obj/item/weapon/pinpointer/nukeop
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
 
 	var/tc = 25
 
@@ -338,7 +334,7 @@
 	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
 		/obj/item/weapon/gun/projectile/automatic/pistol=1)
 
@@ -348,7 +344,5 @@
 
 	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
 	suit.ToggleHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
-	helmet.attack_self(H)
 
 	H.internal = H.r_store

@@ -19,6 +19,7 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/fyellow/New()
+	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/black
@@ -173,3 +174,30 @@
 
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+
+/obj/item/clothing/gloves/color/random
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon_state = "white"
+	item_state = "wgloves"
+	item_color = "mime"
+
+/obj/item/clothing/gloves/color/random/New()
+	..()
+	var/list/gloves = list(
+		/obj/item/clothing/gloves/color/orange = 1,
+		/obj/item/clothing/gloves/color/red = 1,
+		/obj/item/clothing/gloves/color/blue = 1,
+		/obj/item/clothing/gloves/color/purple = 1,
+		/obj/item/clothing/gloves/color/green = 1,
+		/obj/item/clothing/gloves/color/grey = 1,
+		/obj/item/clothing/gloves/color/light_brown = 1,
+		/obj/item/clothing/gloves/color/brown = 1)
+
+	var/obj/item/clothing/gloves/color/selected = pick(gloves)
+
+	name = initial(selected.name)
+	desc = initial(selected.desc)
+	icon_state = initial(selected.icon_state)
+	item_state = initial(selected.item_state)
+	item_color = initial(selected.item_color)

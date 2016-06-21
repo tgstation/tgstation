@@ -125,14 +125,26 @@
 
 /obj/item/weapon/robot_module/standard/New()
 	..()
-	modules += new /obj/item/weapon/melee/baton/loaded(src)
-	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/epi(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+
+	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
 	modules += new /obj/item/weapon/wrench/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/device/healthanalyzer(src)
+	add_module(new /obj/item/stack/sheet/metal/cyborg())
+	modules += new /obj/item/weapon/extinguisher(src)
+
+	modules += new /obj/item/weapon/pickaxe(src)
+	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+
+	modules += new /obj/item/weapon/soap/nanotrasen(src)
+
+	modules += new /obj/item/borg/cyborghug(src)
+
 	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	fix_modules()
-
 
 
 /obj/item/weapon/robot_module/medical
@@ -154,6 +166,7 @@
 	modules += new /obj/item/weapon/circular_saw(src)
 	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/roller/robo(src)
+	modules += new /obj/item/borg/cyborghug(src)
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())
 
@@ -218,6 +231,20 @@
 		else
 			T.charge_tick = 0
 
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/New()
+	..()
+	modules += new /obj/item/weapon/cookiesynth(src)
+	modules += new /obj/item/device/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/holosign_creator/cyborg(src)
+	modules += new /obj/item/borg/cyborghug/peacekeeper(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+
+	emag = new /obj/item/weapon/reagent_containers/borghypo/peace/hacked(src)
+
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 	var/obj/item/weapon/reagent_containers/spray/drying_agent
@@ -261,6 +288,8 @@
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 	modules += new /obj/item/weapon/pen(src)
+	modules += new /obj/item/toy/crayon/spraycan/borg(src)
+	modules += new /obj/item/weapon/hand_labeler/borg(src)
 	modules += new /obj/item/weapon/razor(src)
 	modules += new /obj/item/device/instrument/violin(src)
 	modules += new /obj/item/device/instrument/guitar(src)
@@ -291,7 +320,8 @@
 	modules += new /obj/item/weapon/shovel(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
-	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
+	modules += new /obj/item/device/gps/cyborg(src)
 	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate

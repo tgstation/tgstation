@@ -1,8 +1,0 @@
-author: Lzimann
-delete-after: True
-changes: 
-  - tweak: "Automatic nexus placing time changed from 2 to 15 minutes."
-  - tweak: "Prophet's gear(hat and staff) prioritizes the backpack instead of automatically equipping."
-  - rscadd: "Divine telepathy and prophet to god speak now have a follow button for ghosts."
-  - rscadd: "Divine telepathy and prophet to god speak now has the god's color."
-  - bugfix: "CTF spawn protection trap is no longer constructable"

@@ -101,7 +101,7 @@
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window( user.loc, 0 )
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.air_update_turf(1)
@@ -203,7 +203,7 @@
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )
 			W.state = 0
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.add_fingerprint(user)
@@ -252,16 +252,16 @@
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.setDir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.setDir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.setDir(WEST)
 					WD.ini_dir = WEST
 				else //If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.setDir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1
@@ -317,8 +317,8 @@
 		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
 			H << "<span class='warning'>[src] cuts into your hand!</span>"
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
-			var/obj/item/organ/limb/affecting = H.get_organ(organ)
-			if(affecting.take_damage(force / 2))
+			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+			if(affecting && affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
@@ -348,9 +348,13 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(PIERCEIMMUNE in H.dna.species.specflags)
-				return 0
+				return
+			var/picked_def_zone = pick("l_leg", "r_leg")
+			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
+			if(!istype(O))
+				return
 			if(!H.shoes)
-				H.apply_damage(5,BRUTE,(pick("l_leg", "r_leg")))
+				H.apply_damage(5, BRUTE, picked_def_zone)
 				H.Weaken(3)
 				if(cooldown < world.time - 10) //cooldown to avoid message spam.
 					H.visible_message("<span class='danger'>[H] steps in the broken glass!</span>", \

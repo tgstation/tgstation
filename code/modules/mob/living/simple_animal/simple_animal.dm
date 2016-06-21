@@ -61,7 +61,6 @@
 	//simple_animal access
 	var/obj/item/weapon/card/id/access_card = null	//innate access uses an internal ID card
 	var/flying = 0 //whether it's flying or touching the ground.
-
 	var/buffed = 0 //In the event that you want to have a buffing effect on the mob, but don't want it to stack with other effects, any outside force that applies a buff to a simple mob should at least set this to 1, so we have something to check against
 	var/gold_core_spawnable = 0 //if 1 can be spawned by plasma with gold core, 2 are 'friendlies' spawned with blood
 
@@ -75,6 +74,8 @@
 	var/death_sound = null //The sound played on death
 
 	var/allow_movement_on_non_turfs = FALSE
+
+	var/attacked_sound = "punch" //Played when someone punches the creature
 
 
 /mob/living/simple_animal/New()
@@ -111,6 +112,7 @@
 			death()
 		else
 			stat = CONSCIOUS
+	med_hud_set_status()
 
 
 /mob/living/simple_animal/handle_status_effects()
@@ -170,6 +172,9 @@
 
 /mob/living/simple_animal/handle_environment(datum/gas_mixture/environment)
 	var/atmos_suitable = 1
+
+	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
+		atmos_suitable = 0 //getting choked
 
 	var/atom/A = src.loc
 	if(isturf(A))
@@ -315,7 +320,7 @@
 		if("harm", "disarm")
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			playsound(loc, "punch", 25, 1, -1)
+			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
@@ -397,9 +402,9 @@
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
 		if(deathmessage)
-			visible_message("<span class='danger'>[deathmessage]</span>")
+			visible_message("<span class='danger'>\The [src] [deathmessage]</span>")
 		else if(!del_on_death)
-			visible_message("<span class='danger'>\the [src] stops moving...</span>")
+			visible_message("<span class='danger'>\The [src] stops moving...</span>")
 	if(del_on_death)
 		ghostize()
 		qdel(src)
@@ -408,6 +413,7 @@
 		icon_state = icon_dead
 		stat = DEAD
 		density = 0
+		lying = 1
 	..()
 
 /mob/living/simple_animal/ex_act(severity, target)
@@ -422,7 +428,6 @@
 
 		if(3)
 			adjustBruteLoss(30)
-	updatehealth()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -444,7 +449,7 @@
 	return
 
 /mob/living/simple_animal/IgniteMob()
-	return
+	return FALSE
 
 /mob/living/simple_animal/ExtinguishMob()
 	return
@@ -454,6 +459,7 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
+		lying = 0
 		. = 1
 
 /mob/living/simple_animal/fully_heal(admin_revive = 0)
@@ -470,16 +476,17 @@
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's concious FIRSTER.
+		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
 			continue
-		else if(istype(M, childtype)) //Check for children FIRST.
+		else if(istype(M, childtype)) //Check for children SECOND.
 			children++
 		else if(istype(M, animal_species))
 			if(M.ckey)
 				continue
 			else if(!istype(M, childtype) && M.gender == MALE) //Better safe than sorry ;_;
 				partner = M
-		else if(istype(M, /mob/))
+
+		else if(istype(M, /mob/living) && !faction_check(M)) //shyness check. we're not shy in front of things that share a faction with us.
 			alone = 0
 			continue
 	if(alone && partner && children < 3)
@@ -556,3 +563,6 @@
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
+
+/mob/living/simple_animal/get_idcard()
+	return access_card

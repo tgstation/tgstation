@@ -4,7 +4,7 @@
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
-	circuit = /obj/item/weapon/circuitboard/aifixer
+	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 
@@ -106,15 +106,15 @@
 		return
 	else
 		if(active)
-			overlays += "ai-fixer-on"
+			add_overlay("ai-fixer-on")
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += "ai-fixer-full"
+					add_overlay("ai-fixer-full")
 				if (2)
-					overlays += "ai-fixer-404"
+					add_overlay("ai-fixer-404")
 		else
-			overlays += "ai-fixer-empty"
+			add_overlay("ai-fixer-empty")
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())

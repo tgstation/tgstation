@@ -124,20 +124,8 @@
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/pickup(mob/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/beaker/dropped(mob/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
-	..()
-	update_icon()
-
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
@@ -160,7 +148,7 @@
 				filling.icon_state = "[icon_state]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -174,22 +162,31 @@
 
 /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions. Can hold up to 50 units."
+	desc = "A cryostasis beaker that allows for chemical storage without \
+		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
-	materials = list(MAT_GLASS=500)
+	materials = list(MAT_METAL=3000)
 	volume = 50
 	amount_per_transfer_from_this = 10
-	flags = OPENCONTAINER | NOREACT
+	origin_tech = "materials=2;engineering=3;plasmatech=3"
+	flags = OPENCONTAINER
+
+/obj/item/weapon/reagent_containers/glass/beaker/noreact/New()
+	..()
+	reagents.set_reacting(FALSE)
 
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete. Can hold up to 300 units."
+	desc = "A bluespace beaker, powered by experimental bluespace technology \
+		and Element Cuban combined with the Compound Pete. Can hold up to \
+		300 units."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=5000)
+	materials = list(MAT_GLASS=3000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 	flags = OPENCONTAINER
+	origin_tech = "bluespace=5;materials=4;plasmatech=4"
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 	list_reagents = list("cryoxadone" = 30)

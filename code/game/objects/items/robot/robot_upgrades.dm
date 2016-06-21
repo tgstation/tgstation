@@ -6,7 +6,7 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	origin_tech = "programming=4"
+	origin_tech = "programming=2"
 	var/locked = 0
 	var/installed = 0
 	var/require_module = 0
@@ -49,6 +49,7 @@
 	R.speed = 0 // Remove upgrades.
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
+	R.weather_immunities = initial(R.weather_immunities)
 
 	R.status_flags |= CANPUSH
 
@@ -96,7 +97,7 @@
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
 	require_module = 1
-	origin_tech = "engineering=4;materials=5"
+	origin_tech = "engineering=4;materials=5;programming=4"
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
 	if(..())
@@ -116,7 +117,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/security
-	origin_tech = "engineering=4;powerstorage=4"
+	origin_tech = "engineering=4;powerstorage=4;combat=4"
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R)
 	if(..())
@@ -158,7 +159,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=5;materials=5"
+	origin_tech = "engineering=4;materials=5"
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
 	if(..())
@@ -180,7 +181,7 @@
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=5;materials=5;bluespace=3"
+	origin_tech = "engineering=4;materials=4;bluespace=4"
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	if(..())
@@ -194,12 +195,32 @@
 
 	return 1
 
+/obj/item/borg/upgrade/hyperka
+	name = "mining cyborg hyper-kinetic accelerator"
+	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
+
+/obj/item/borg/upgrade/hyperka/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	for(var/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg/H in R.module.modules)
+		qdel(H)
+
+	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.rebuild()
+
+	return 1
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg"
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	origin_tech = "combat=4;syndicate=2"
+	origin_tech = "combat=4;syndicate=1"
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
 	if(..())
@@ -209,6 +230,22 @@
 		return
 
 	R.SetEmagged(1)
+
+	return 1
+
+/obj/item/borg/upgrade/ashplating
+	name = "mining cyborg ash storm plating"
+	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
+	icon_state = "ash_plating"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "engineering=4;materials=4;plasmatech=4"
+
+/obj/item/borg/upgrade/ashplating/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	R.weather_immunities += "ash"
+	R.icon_state = "ashborg"
 
 	return 1
 
@@ -269,6 +306,11 @@
 		return
 
 	if(cyborg && (cyborg.stat != DEAD) && on)
+		if(!cyborg.cell)
+			cyborg << "<span class='warning'>Self-repair module deactivated. Please, insert the power cell.</span>"
+			deactivate()
+			return
+
 		if(cyborg.cell.charge < powercost * 2)
 			cyborg << "<span class='warning'>Self-repair module deactivated. Please recharge.</span>"
 			deactivate()

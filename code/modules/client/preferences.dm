@@ -47,7 +47,6 @@ var/list/preferences_datums = list()
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
@@ -59,10 +58,9 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
-	var/adminmusicvolume = 50
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -93,7 +91,6 @@ var/list/preferences_datums = list()
 	var/list/ignoring = list()
 
 /datum/preferences/New(client/C)
-	blood_type = random_blood_type()
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -191,7 +188,6 @@ var/list/preferences_datums = list()
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
-			dat += "<b>Blood Type:</b> [blood_type]<BR>"
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
@@ -321,6 +317,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Ears</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Wings</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -946,6 +951,12 @@ var/list/preferences_datums = list()
 					if(new_ears)
 						features["ears"] = new_ears
 
+				if("wings")
+					var/new_wings
+					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
+					if(new_wings)
+						features["wings"] = new_wings
+
 				if("frills")
 					var/new_frills
 					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
@@ -1178,7 +1189,6 @@ var/list/preferences_datums = list()
 
 	character.backbag = backbag
 
-	character.dna.blood_type = blood_type
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
@@ -1191,4 +1201,4 @@ var/list/preferences_datums = list()
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
-		character.update_mutcolor()
+		character.update_body_parts()

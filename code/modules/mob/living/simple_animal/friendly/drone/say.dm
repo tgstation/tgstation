@@ -1,4 +1,3 @@
-
 /////////////
 //DRONE SAY//
 /////////////
@@ -26,9 +25,15 @@
 		if(istype(M) && M.stat != DEAD && faction_check(M)) //if it's a living drone with matching factions, it gets a message
 			M << msg
 		if(dead_can_hear && (M in dead_mob_list))
-			M << "<a href='?src=\ref[M];follow=\ref[src]'>(F)</a> [msg]"
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [msg]"
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i>DRONE CHAT: <span class='name'>[name]</span>: [msg]</i>"
+	var/rendered = "<i><span class='game say'>Drone Chat: \
+		<span class='name'>[name]</span>: \
+		<span class='message'>[msg]</span></span></i>"
 	alert_drones(rendered, 1)
+
+/mob/living/simple_animal/drone/binarycheck()
+	return TRUE

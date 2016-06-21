@@ -8,6 +8,8 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
+	weather_immunities = list("ash")
+
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user
@@ -95,8 +97,8 @@
 /mob/living/silicon/pai/blob_act(obj/effect/blob/B)
 	return 0
 
-/mob/living/silicon/pai/restrained()
-	return 0
+/mob/living/silicon/pai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/pai/emp_act(severity)
 	// 20% chance to kill

@@ -185,7 +185,7 @@
 		SSobj.burning += src
 		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
-			overlays += fire_overlay
+			add_overlay(fire_overlay)
 		return 1
 
 /obj/proc/burn()

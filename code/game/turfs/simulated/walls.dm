@@ -5,7 +5,6 @@
 	icon_state = "wall"
 	var/mineral = "metal"
 	explosion_block = 1
-	layer = TURF_LAYER + 0.05
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -38,7 +37,8 @@
 	else
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		var/newgirder = break_wall()
-		transfer_fingerprints_to(newgirder)
+		if(newgirder) //maybe we don't /want/ a girder!
+			transfer_fingerprints_to(newgirder)
 
 	for(var/obj/O in src.contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
@@ -222,7 +222,7 @@
 	O.anchored = 1
 	O.opacity = 1
 	O.density = 1
-	O.layer = 5
+	O.layer = FLY_LAYER
 
 	playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
@@ -253,7 +253,11 @@
 
 /turf/closed/wall/narsie_act()
 	if(prob(20))
-		ChangeTurf(/turf/closed/wall/cult)
+		ChangeTurf(/turf/closed/wall/mineral/cult)
+
+/turf/closed/wall/ratvar_act()
+	if(prob(20))
+		ChangeTurf(/turf/closed/wall/clockwork)
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
