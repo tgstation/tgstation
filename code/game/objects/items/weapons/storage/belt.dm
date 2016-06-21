@@ -309,6 +309,7 @@
 		NM.faction = "lazarus \ref[user]"
 		NM.friends += user
 		MC.contained_mob = NM
+		MC.name = "lazarus capsule - [NM.name]"
 	..()
 
 /obj/item/weapon/storage/belt/thunderdome
