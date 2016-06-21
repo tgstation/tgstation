@@ -1,0 +1,6 @@
+author: Icantthinkofanameritenow
+delete-after: True
+
+changes: 
+- bugfix: Fixed Vox Engineer hardsuit helmets lacking welding protection.
+- bugfix: "Vox atmospherics hardsuits should protect against plasma exposure and fires like they're supposed to."

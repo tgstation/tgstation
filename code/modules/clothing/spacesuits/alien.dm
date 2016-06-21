@@ -216,18 +216,22 @@
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 50)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	pressure_resistance = 200 * ONE_ATMOSPHERE
+	eyeprot = 3
 
 /obj/item/clothing/suit/space/vox/civ/engineer/atmos
 	name = "vox atmos pressure suit"
 	desc = "A cheap and oddly-shaped pressure suit made for vox crewmembers. Has some heat protection."
 	icon_state = "vox-civ-atmos"
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 10)
+	flags = FPRINT  | PLASMAGUARD
+	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/head/helmet/space/vox/civ/engineer/atmos
 	name = "vox atmos pressure helmet"
 	icon_state = "vox-civ-atmos"
 	desc = "A very alien-looking helmet for vox crewmembers. Has some heat protection."
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 0, bio = 100, rad = 10)
+	flags = FPRINT  | PLASMAGUARD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/suit/space/vox/civ/engineer/ce
