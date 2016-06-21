@@ -208,9 +208,6 @@
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/obj/structure/chair{
-	dir = 4
-	},
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "aI" = (
@@ -502,34 +499,47 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bS" = (
-/obj/machinery/door/airlock/glass_medical,
-/turf/open/floor/plasteel/airless/shuttle/white,
+"bF" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/restraints/handcuffs,
+/turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
-"bR" = (
-/obj/structure/sign/poster,
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
+"bG" = (
+/obj/structure/flora/kirbyplants{
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
 	},
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
-"bQ" = (
+"bH" = (
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"bI" = (
+/obj/structure/table/wood/bar,
+/obj/item/device/instrument/guitar,
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bJ" = (
+/obj/structure/table/wood/bar,
+/obj/item/weapon/storage/fancy/donut_box,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"bK" = (
 /obj/structure/chair/wood/normal{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
-"bP" = (
+"bL" = (
 /obj/structure/table/wood/bar,
-/obj/item/toy/cards/deck/cas,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_y = 6
-	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
-"bO" = (
-/obj/structure/table/wood/bar,
-/obj/item/weapon/folder/red,
+"bM" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "bN" = (
@@ -542,48 +552,35 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
-"bM" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
+"bO" = (
+/obj/structure/table/wood/bar,
+/obj/item/weapon/folder/red,
+/turf/open/floor/plasteel/grimy,
+/area/shuttle/escape)
+"bP" = (
+/obj/structure/table/wood/bar,
+/obj/item/toy/cards/deck/cas,
+/obj/item/toy/cards/deck/cas/black{
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
-"bL" = (
-/obj/structure/table/wood/bar,
-/turf/open/floor/plasteel/grimy,
-/area/shuttle/escape)
-"bK" = (
+"bQ" = (
 /obj/structure/chair/wood/normal{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
-"bJ" = (
-/obj/structure/table/wood/bar,
-/obj/item/weapon/storage/fancy/donut_box,
-/turf/open/floor/plasteel/grimy,
-/area/shuttle/escape)
-"bI" = (
-/obj/structure/table/wood/bar,
-/obj/item/device/instrument/guitar,
-/turf/open/floor/plasteel/bar,
-/area/shuttle/escape)
-"bH" = (
-/turf/open/floor/plasteel/grimy,
-/area/shuttle/escape)
-"bG" = (
-/obj/structure/flora/kirbyplants{
-	icon_state = "plant-21";
-	layer = 4.1;
-	pixel_x = -3;
-	pixel_y = 3
+"bR" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
-"bF" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs,
-/turf/open/floor/plasteel/shuttle/red,
+"bS" = (
+/obj/machinery/door/airlock/glass_medical,
+/turf/open/floor/plasteel/airless/shuttle/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -616,7 +613,7 @@ ab
 ak
 ak
 av
-bF
+aC
 aH
 aL
 aw
@@ -650,7 +647,7 @@ ba
 bL
 bO
 bQ
-aE
+bR
 aw
 bp
 bt
