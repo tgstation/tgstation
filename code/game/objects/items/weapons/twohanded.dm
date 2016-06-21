@@ -383,14 +383,14 @@
 	var/on = 0
 	var/on_text = "it begins to whirr."
 	var/off_text = "the chain stops moving."
-	var/force_off = 13
-	var/force_on = 21
+	force_weilded = 21
+	force_unweilded = 13
 
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? on_text : off_text]"
-	force = on ? force_on : force_off
+	force = on ? force_weilded : force_unweilded
 	throwforce = on ? force_on : force_off
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
@@ -416,8 +416,8 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	force = 20
 	armour_penetration = 100
-	force_on = 80
-	force_off = 20
+	force_weilded = 80
+	force_unweilded = 20
 	on_text = "and it roars to life, screaming along with your bloodlust."
 	off_text = "grows dormant."
 
