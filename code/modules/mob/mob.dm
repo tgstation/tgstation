@@ -345,7 +345,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 	for(var/mob/virtualhearer/hearer in viewers(src))
 		if(istype(hearer.attached, /mob))
 			var/mob/M = hearer.attached
-			if(M.see_invisible < invisibility)
+			if(M.see_invisible < invisibility || M == src)
 				continue
 			var/hallucination = M.hallucinating()
 			var/msg = message
