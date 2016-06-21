@@ -654,7 +654,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Teleport Gate"
 	name = "Spatial Gateway"
 	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
-	Each servant assisting in the invocation adds uses and duration to the gateway. Lasts for ten or more seconds or until it is out of uses."
+	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Gryrcbegre...", "...pbzva evtug-hc!")
 	channel_time = 80
 	required_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -685,10 +685,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in range(1, invoker))
 		if(!L.stat && is_servant_of_ratvar(L))
 			portal_uses++
-			duration += 20 //2 seconds
+			duration += 40 //4 seconds
 	if(ratvar_awakens)
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
-		duration = max(duration, 30)
+		duration = max(duration, 100)
 	return invoker.procure_gateway(invoker, duration, portal_uses)
 
 
