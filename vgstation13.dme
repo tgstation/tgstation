@@ -786,6 +786,7 @@
 #include "code\game\objects\structures\electricchair.dm"
 #include "code\game\objects\structures\extinguisher.dm"
 #include "code\game\objects\structures\false_walls.dm"
+#include "code\game\objects\structures\fitness.dm"
 #include "code\game\objects\structures\fullwindow.dm"
 #include "code\game\objects\structures\girders.dm"
 #include "code\game\objects\structures\grille.dm"

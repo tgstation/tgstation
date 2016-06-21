@@ -232,3 +232,8 @@
 	name = "Escape Arm"
 	desc = "A direction sign, pointing out which way escape shuttle dock is."
 	icon_state = "direction_evac"
+
+/obj/structure/sign/crime
+	name = "CRIME DOES NOT PAY"
+	desc = "A warning sign which suggests that you reconsider your poor life choices."
+	icon_state = "crime"

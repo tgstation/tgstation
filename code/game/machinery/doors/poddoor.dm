@@ -16,10 +16,27 @@ var/list/poddoors = list()
 	animation_delay = 18
 	animation_delay_2 = 5
 
+	var/closedicon = "pdoor1"
+	var/openicon = "pdoor0"
+	var/closingicon = "pdoorc1"
+	var/openingicon = "pdoorc0"
+
 /obj/machinery/door/poddoor/preopen
 	icon_state = "pdoor0"
 	density = 0
 	opacity = 0
+
+/obj/machinery/door/poddoor/glass
+	icon_state = "gpdoor1"
+	closedicon = "gpdoor1"
+	openicon = "gpdoor0"
+	closingicon = "gpdoorc1"
+	openingicon = "gpdoorc0"
+	opacity = 0
+
+/obj/machinery/door/poddoor/glass/preopen
+	icon_state = "gpdoor0"
+	density = 0
 
 /obj/machinery/door/poddoor/New()
 	. = ..()
@@ -44,11 +61,11 @@ var/list/poddoors = list()
 	src.add_fingerprint(user)
 	if (!( iscrowbar(C) || (istype(C, /obj/item/weapon/fireaxe) && C.wielded == 1) ))
 		return
-	if ((src.density && (stat & NOPOWER) && !( src.operating )))
+	if ((density && (stat & NOPOWER) && !( operating )))
 		spawn( 0 )
 			src.operating = 1
-			flick("pdoorc0", src)
-			src.icon_state = "pdoor0"
+			flick(openingicon, src)
+			src.icon_state = openicon
 			src.set_opacity(0)
 			sleep(15)
 			src.density = 0
@@ -63,8 +80,8 @@ var/list/poddoors = list()
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	flick("pdoorc0", src)
-	src.icon_state = "pdoor0"
+	flick(openingicon, src)
+	src.icon_state = openicon
 	src.set_opacity(0)
 	sleep(10)
 	layer = initial(layer)
@@ -83,8 +100,8 @@ var/list/poddoors = list()
 		return
 	src.operating = 1
 	layer = 3.3
-	flick("pdoorc1", src)
-	src.icon_state = "pdoor1"
+	flick(closingicon, src)
+	src.icon_state = closedicon
 	src.density = 1
 	src.set_opacity(initial(opacity))
 	update_nearby_tiles()
