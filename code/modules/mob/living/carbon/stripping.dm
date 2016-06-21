@@ -29,7 +29,7 @@
 	var/obj/item/held = user.get_active_hand()
 
 	if(do_mob(user, src, HUMAN_STRIP_DELAY)) //Fails if the user moves, changes held item, is incapacitated, etc.
-		if(held.mob_can_equip(src, slot, disable_warning = 1))
+		if(held.mob_can_equip(src, slot, disable_warning = 1) == CAN_EQUIP) //Do not accept CAN_EQUIP_BUT_SLOT_TAKEN as valid!
 			user.drop_from_inventory(held)
 			src.equip_to_slot(held, slot) //Not using equip_to_slot_if_possible() because we want to check that the guy can wear this before dropping it
 
