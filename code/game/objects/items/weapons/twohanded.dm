@@ -390,8 +390,8 @@
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? on_text : off_text]"
-	force = on ? force_weilded : force_unweilded
-	throwforce = on ? force_on : force_off
+	force = on ? force_wielded : force_unwielded
+	throwforce = on ? force_wielded : force_wielded
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 	if(hitsound == "swing_hit")
