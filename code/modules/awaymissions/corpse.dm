@@ -316,7 +316,7 @@
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseshoes = /obj/item/clothing/shoes/white
 	corpseid = 0
-	
+
 /obj/effect/landmark/corpse/miner
 	corpseradio = /obj/item/device/radio/headset/headset_mining
 	corpseuniform = /obj/item/clothing/under/rank/miner
@@ -451,6 +451,11 @@
 		corpsegloves = null
 	if(prob(80))
 		corpseglasses = null
+
+/obj/effect/landmark/corpse/mutilated
+	husk = 1
+	brute_dmg = 250
+	burn_dmg = 100
 
 #undef G_MALE
 #undef G_FEMALE

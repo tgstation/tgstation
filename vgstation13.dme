@@ -1467,6 +1467,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\crab.dm"
 #include "code\modules\mob\living\simple_animal\hostile\creature.dm"
 #include "code\modules\mob\living\simple_animal\hostile\faithless.dm"
+#include "code\modules\mob\living\simple_animal\hostile\frog.dm"
 #include "code\modules\mob\living\simple_animal\hostile\gingerbreadman.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hivebot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hostile.dm"

@@ -10,6 +10,8 @@
 	var/global_search = 1 //If 1, search for all hidden doors in the world. Otherwise, only search for those in current area
 	var/reset_name = 1
 
+	var/state = 0 //When the button is pressed, this variable switches from 0 to 1 and vice versa
+
 	var/one_time = 0 //If this button can only be used once
 	var/used = 0
 
@@ -28,17 +30,25 @@
 	visible_message("<span class='info'>[user] presses \the [src].</span>")
 	activate()
 
+/obj/structure/button/attack_tk(mob/user)
+	return attack_hand(user)
+
 /obj/structure/button/proc/activate()
 	if(global_search)
 		for(var/obj/effect/hidden_door/hidden_door in hidden_doors)
-			if(hidden_door.icon_state == activate_id && hidden_door.z == src.z)
+			if(is_valid_door(hidden_door))
 				hidden_door.toggle()
 				used = 1
 	else
 		for(var/obj/effect/hidden_door/hidden_door in get_area(src))
-			if(hidden_door.icon_state == activate_id && hidden_door.z == src.z)
+			if(is_valid_door(hidden_door))
 				hidden_door.toggle()
 				used = 1
+
+	state = !state
+
+/obj/structure/button/proc/is_valid_door(obj/effect/hidden_door/D)
+	return (D.icon_state == activate_id && (D.z == z))
 
 var/list/hidden_doors = list()
 
@@ -54,6 +64,8 @@ var/list/hidden_doors = list()
 	var/floor_typepath = /turf/simulated/floor
 
 	var/opened = 0
+
+	var/fade_animation = 0
 
 /obj/effect/hidden_door/New()
 	..()
@@ -78,19 +90,22 @@ var/list/hidden_doors = list()
 	door_typepath = T.type
 
 /obj/effect/hidden_door/proc/toggle()
+
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
 
 	if(opened)
 		T.ChangeTurf(door_typepath)
 
-		spawn()
-			for(var/V in door_appearance)
-				T.vars[V] = door_appearance[V]
+		for(var/V in door_appearance)
+			T.vars[V] = door_appearance[V]
 
 		opened = 0
 	else
 		steal_appearance()
 		T.ChangeTurf(floor_typepath)
+
+		if(fade_animation)
+			T.turf_animation('icons/effects/96x96.dmi',"beamin",-32,0,MOB_LAYER+1)
 
 		opened = 1

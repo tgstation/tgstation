@@ -55,7 +55,7 @@
 /mob/living/simple_animal/hostile/humanoid/jackal/embalmer/AttackingTarget()
 	if(!ismob(target)) return
 
-	visible_message("<span class='danger'>\The [src] performs a ritual over \the [target].</span>")
+	visible_message("<span class='danger'>\The [src] performs a ritual over \the [target]'s body.</span>")
 
 	if(prob(15))
 		var/mob/living/L = target
@@ -101,7 +101,7 @@
 /mob/living/simple_animal/hostile/humanoid/jackal/firebreather/pyromaniac/New()
 	..()
 
-	overlays.Add("pyromaniac_eyes")
+	overlays.Add(image(icon = icon, icon_state = "pyromaniac_eyes", layer = LIGHTING_LAYER + 1))
 
 /mob/living/simple_animal/hostile/humanoid/jackal/firebreather/pyromaniac/Shoot()
 	var/old_target = src.target

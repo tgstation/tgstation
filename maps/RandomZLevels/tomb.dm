@@ -25,9 +25,13 @@
 /area/awaymission/tomb/tower_of_madness
 	name = "Tower of Madness"
 
+/area/awaymission/tomb/sewers
+	name = "Water Gallery"
+
 /obj/effect/narration/tomb/intro
 	msg = {"<span class='info'>You appear on the surface of an unknown to you planet. This appears to be a desert; trees are few and scarce and there's no water in sight. The sun is setting.
-	The first thing that catches your eye is the massive pyramid in front of you. Behind it you see an expedition camp of some sort.</span>"}
+	The first thing that catches your eye is the massive pyramid in front of you. Behind it you see an expedition camp of some sort.
+	To the left, you see a massive cliff with what looks like an entrance in it.</span>"}
 
 /obj/effect/trap/cage_trap //When triggered, spawns a cage and unleashes monsters
 	name = "cage trap"
@@ -44,6 +48,37 @@
 	for(var/obj/effect/ddr_loot/DL in get_area(src))
 		var/turf/T = get_turf(DL)
 		T.ChangeTurf(/turf/unsimulated/floor)
+
+/obj/effect/trap/frog_trap //When triggered, spawns 4 frogs around you
+	name = "frog trap"
+
+/obj/effect/trap/frog_trap/activate(atom/movable/AM)
+	to_chat(AM, "<span class='userdanger'>An ambush! Curse them!</span>")
+
+	for(var/dir in cardinal)
+		var/turf/T = get_step(AM, dir)
+		new /mob/living/simple_animal/hostile/frog(T)
+
+		sleep(rand(2,8))
+
+/obj/effect/trap/door_trap
+	name = "door trap"
+	var/activate_id = ""
+	var/global_search = 0
+	var/only_open = 1
+
+/obj/effect/trap/door_trap/proc/is_valid_door(obj/effect/hidden_door/D)
+	return (D.icon_state == activate_id && (D.z == z) && !(only_open && D.opened))
+
+/obj/effect/trap/door_trap/activate()
+	if(global_search)
+		for(var/obj/effect/hidden_door/hidden_door in hidden_doors)
+			if(is_valid_door(hidden_door))
+				hidden_door.toggle()
+	else
+		for(var/obj/effect/hidden_door/hidden_door in get_area(src))
+			if(is_valid_door(hidden_door))
+				hidden_door.toggle()
 
 /obj/item/weapon/skull/rigged/Crossed(atom/movable/L)
 	..()
@@ -261,3 +296,76 @@
 		AM.ex_act(1)
 
 	explosion(T, -1, -1, 1)
+
+
+//SPECIAL BUTTONS
+//Only two can be activated at once
+//Activating a third button when two are activated toggles the first one off
+/obj/structure/button/door_switch
+	var/global/list/last_pressed = list() //List of areas associated with lists that contain buttons, e.g. [AWAY MISSION AREA] = list(BUTTON A, BUTTON B)
+
+	global_search = 0 //Only current area
+	var/maximum_activated_at_once = 2
+
+/obj/structure/button/door_switch/Destroy()
+	var/list/L = last_pressed[get_area(src)]
+	if(L)
+		L.Remove(src)
+
+	..()
+
+/obj/structure/button/door_switch/activate(force = 0)
+	//Get my area's list of button presses. If no such list exists, create one
+	var/list/L = last_pressed[get_area(src)]
+	if(!L)
+		L = list()
+		last_pressed[get_area(src)] = L
+
+	//This button can't be deactivated by pushing it. Deactivate it by calling this proc with the force argument set to 1
+	if(state == 1)
+		if(!force)
+			return
+
+		return ..()
+
+	//Attempting to activate the button - check how many buttons in this area have already been activated. Deactivate the oldest pressed button
+	else if(L.len == maximum_activated_at_once)
+		var/obj/structure/button/door_switch/button_to_toggle_off = L[1]
+
+		if(button_to_toggle_off.state == 1)
+			button_to_toggle_off.activate(1)
+			L.Remove(button_to_toggle_off)
+
+	..()
+	L.Add(src)
+
+/obj/structure/button/door_switch/is_valid_door(obj/effect/hidden_door/D)
+	return (..() || (D.icon_state == "wildcard")) //Activate wildcard doors too
+
+/obj/item/weapon/paper/tomb_notes
+	name = "paper- 'My Notes'"
+	info = {"<i>You can't go through this room without a partner, so I can't advance any further. I hope these notes will help you.<BR>
+	The water is powered by magic, there is no better explanation for its behaviour. I can't touch it or jump into it. In the water there are metal platforms that you can walk on. There are also 6 buttons on the wall.<BR>
+	There are also 7 groups of platforms, one for each button, plus to one rogue group. Pressing a button raises its group of platforms above the water. Only two platform groups can be raised at once; pressing a third button will cause one group to lower. I think the one which was raised the earlier is lowered, but maybe not.<BR>
+	There are <s>5 6</s> 7 rogue platforms, they are lowered and raised whenever a button is pressed. Any button. You may want to find them immediately, because they look exactly like normal platforms<BR>
+	To get to the other side, one man must control the buttons while the other one must hop from platform to platform. Coordination is required - I don't know what would happen if a platform is lowered from beneath your feet, and frankly I'd rather not.</i>"}
+
+/obj/effect/landmark/water_puzzle
+	name = "water puzzle sewers"
+
+/turf/unsimulated/beach/water/deep/teleport
+	var/turf/teleport_destination
+
+/turf/unsimulated/beach/water/deep/teleport/Entered(atom/movable/AM)
+	..()
+
+	if(!teleport_destination)
+		var/obj/effect/landmark/water_puzzle/WP = locate(/obj/effect/landmark/water_puzzle) in get_area(src)
+		if(WP)
+			teleport_destination = get_turf(WP)
+		else
+			teleport_destination = src
+
+	if(istype(AM, /obj/item) || istype(AM, /obj/machinery) || istype(AM, /obj/structure) || istype(AM, /obj/mecha) || istype(AM, /obj/spacepod) || isliving(AM))
+		AM.visible_message("<span class='danger'>\The [AM] falls into \the [src]!</span>")
+		AM.forceMove(teleport_destination)

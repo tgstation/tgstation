@@ -15,6 +15,10 @@
 	name = "Water"
 	icon_state = "water"
 
+/turf/unsimulated/beach/water/deep
+	name = "deep water"
+	density = 1
+
 /turf/unsimulated/beach/water/New()
 	..()
 	var/image/water = image("icon"='icons/misc/beach.dmi',"icon_state"="water2","layer"=MOB_LAYER+0.1)

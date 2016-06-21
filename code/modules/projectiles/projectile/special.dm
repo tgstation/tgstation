@@ -339,8 +339,8 @@ obj/item/projectile/kinetic/New()
 	var/max_range = 9
 
 	var/fire_damage = 10
-	var/pressure = ONE_ATMOSPHERE * 5
-	var/temperature = T0C + 200
+	var/pressure = ONE_ATMOSPHERE * 4.5
+	var/temperature = T0C + 175
 
 /obj/item/projectile/fire_breath/process_step()
 	..()

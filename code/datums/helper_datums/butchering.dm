@@ -171,6 +171,18 @@
 	if(!amount)
 		return "Its claws have been cut off. "
 
+//======frog legs
+
+/datum/butchering_product/frog_leg
+	result = /obj/item/weapon/reagent_containers/food/snacks/frog_leg
+	verb_name = "remove legs from"
+	verb_gerund = "removing legs from"
+	amount = 2 //not a magic number, frogs have 2 legs
+
+/datum/butchering_product/frog_leg/desc_modifier()
+	if(amount < 2)
+		return "It only has [amount] [amount==1 ? "leg" : "legs"]. "
+
 #define TEETH_FEW		/datum/butchering_product/teeth/few		//4-8
 #define TEETH_BUNCH		/datum/butchering_product/teeth/bunch	//8-16
 #define TEETH_LOTS		/datum/butchering_product/teeth/lots	//16-24
@@ -187,6 +199,7 @@ var/global/list/animal_butchering_products = list(
 	/mob/living/simple_animal/hostile/alien				= list(/datum/butchering_product/xeno_claw, /datum/butchering_product/skin/xeno, TEETH_BUNCH), //Same as the player-controlled aliens
 	/mob/living/simple_animal/hostile/retaliate/cluwne	= list(TEETH_BUNCH), //honk
 	/mob/living/simple_animal/hostile/creature			= list(TEETH_LOTS),
+	/mob/living/simple_animal/hostile/frog				= list(/datum/butchering_product/frog_leg),
 	/mob/living/carbon/monkey							= list(/datum/butchering_product/skin/monkey, TEETH_FEW),
 
 	/mob/living/carbon/human							= list(TEETH_HUMAN),

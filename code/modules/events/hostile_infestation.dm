@@ -17,6 +17,7 @@
 #define MONSTER_ZOMBIE    4
 #define MONSTER_SKRITE  5
 #define MONSTER_SQUEEN  6
+#define MONSTER_FROG 7
 
 /datum/event/hostile_infestation
 	announceWhen = 2  //Should notify crew much quicker than normal infestation event because of the danger posed by these mobs
@@ -63,7 +64,7 @@
 
 	var/spawn_monster_type
 	var/max_number
-	var/monster = pick(MONSTER_BEAR, MONSTER_CREATURE, MONSTER_XENO, MONSTER_HIVEBOT, MONSTER_ZOMBIE, MONSTER_SKRITE, MONSTER_SQUEEN)
+	var/monster = pick(MONSTER_BEAR, MONSTER_CREATURE, MONSTER_XENO, MONSTER_HIVEBOT, MONSTER_ZOMBIE, MONSTER_SKRITE, MONSTER_SQUEEN, MONSTER_FROG)
 	switch(monster)
 		if(MONSTER_BEAR)
 			spawn_monster_type = pick(/mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bear/panda, /mob/living/simple_animal/hostile/bear/polarbear)
@@ -93,6 +94,10 @@
 			spawn_monster_type = /mob/living/simple_animal/hostile/giant_spider/nurse/queen_spider
 			monsterstring = "monstrous size"
 			max_number = 1
+		if(MONSTER_FROG)
+			spawn_monster_type = /mob/living/simple_animal/hostile/frog
+			monsterstring = "slimey skin"
+			max_number = 8
 
 	var/number = rand(1, max_number)
 
@@ -128,3 +133,4 @@
 #undef MONSTER_HIVEBOT
 #undef MONSTER_ZOMBIE
 #undef MONSTER_SKRITE
+#undef MONSTER_FROG

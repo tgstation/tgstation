@@ -27,6 +27,14 @@
 	var/scan_state = null //Holder for the image we display when we're pinged by a mining scanner
 	var/busy = 0 //Used for a bunch of do_after actions, because we can walk into the rock to trigger them
 
+	var/mined_type = /turf/unsimulated/floor/asteroid
+
+/turf/unsimulated/mineral/air
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	temperature = T20C
+	mined_type = /turf/unsimulated/floor/asteroid/air
+
 /turf/unsimulated/mineral/Destroy()
 	return
 
@@ -409,7 +417,7 @@ turf/unsimulated/mineral/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_l
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
 		DropAbandonedCrate()
 
-	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(/turf/unsimulated/floor/asteroid)
+	var/turf/unsimulated/floor/asteroid/N = ChangeTurf(mined_type)
 	N.fullUpdateMineralOverlays()
 
 /turf/unsimulated/mineral/proc/DropAbandonedCrate()
@@ -498,6 +506,11 @@ turf/unsimulated/mineral/ChangeTurf(var/turf/N, var/tell_universe=1, var/force_l
 	temperature = TCMB
 	//icon_plating = "asteroid"
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
+
+/turf/unsimulated/floor/asteroid/air
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	temperature = T20C
 
 /turf/unsimulated/floor/asteroid/New()
 	var/proper_name = name

@@ -101,6 +101,9 @@ var/list/ladders = list()
 	return attack_hand(user)
 
 /obj/structure/ladder/attackby(obj/item/weapon/W, mob/user as mob)
+	if(isrobot(user))
+		return
+
 	return attack_hand(user)
 
 /obj/structure/ladder/attack_slime(mob/user)

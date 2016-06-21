@@ -167,9 +167,11 @@ proc/move_mining_shuttle()
 	light_color = LIGHT_COLOR_TUNGSTEN
 
 //Explicit
-/obj/item/device/flashlight/lantern/on
+/obj/item/device/flashlight/lantern/on/New()
+	..()
 
 	on = 1
+	update_brightness()
 
 /*****************************Pickaxe********************************/
 

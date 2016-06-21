@@ -83,7 +83,7 @@
 /obj/item/weapon/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
 	if(!proximity) return
 	..()
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
+	if(A && wielded && (istype(A,/obj/structure/window))) //destroys windows and grilles in one hit
 		user.delayNextAttack(8)
 		if(istype(A,/obj/structure/window))
 			var/pdiff=performWallPressureCheck(A.loc)

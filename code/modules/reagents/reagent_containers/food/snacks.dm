@@ -4187,3 +4187,13 @@
 		reagents.clear_reagents()
 		reagents.add_reagent(NUTRIMENT, 30)
 		reagents.add_reagent(HOLYWATER, 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/frog_leg
+	name = "frog leg"
+	desc = "A thick, delicious legionnaire frog leg, its taste and texture resemble chicken."
+	icon_state = "frog_leg"
+	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/frog_leg/New()
+	..()
+	reagents.add_reagent(NUTRIMENT, 6)

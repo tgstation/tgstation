@@ -195,6 +195,10 @@
 			"<span class='notice'>You place \a [WD] on \the [src].</span>")
 		return
 
+	if(istype(W, /obj/item/weapon/fireaxe)) //Fireaxes instantly kill grilles
+		health = 0
+		healthcheck()
+
 	switch(W.damtype)
 		if("fire")
 			health -= W.force //Fire-based tools like welding tools are ideal to work through small metal rods !
