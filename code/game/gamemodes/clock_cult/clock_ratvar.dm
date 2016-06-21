@@ -23,6 +23,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = TRUE
+	can_be_repaired = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
