@@ -24,13 +24,13 @@
 
 /obj/effect/countdown/proc/start()
 	if(!started)
-		SSfastprocess.processing |= src
+		START_PROCESSING(SSfastprocess, src)
 		started = TRUE
 
 /obj/effect/countdown/proc/stop()
 	if(started)
 		overlays.Cut()
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		started = FALSE
 
 /obj/effect/countdown/proc/get_value()
@@ -59,7 +59,7 @@
 
 /obj/effect/countdown/Destroy()
 	attached_to = null
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
 /obj/effect/countdown/syndicatebomb

@@ -23,6 +23,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = TRUE
+	can_be_repaired = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
@@ -37,7 +38,7 @@
 	countdown = new(src)
 	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	for(var/M in mob_list)
 		if(is_servant_of_ratvar(M) || isobserver(M))
@@ -50,7 +51,7 @@
 		SSshuttle.emergency.timer = world.time
 		if(!purpose_fulfilled)
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		for(var/M in mob_list)
@@ -190,21 +191,20 @@
 	ratvar_awakens = TRUE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	spawn(50)
-		SSshuttle.emergency.request(null, 0.3)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
 	ratvar_awakens = FALSE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	return ..()
 

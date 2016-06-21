@@ -362,9 +362,8 @@
 			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
-		spawn(10)
-			detonate() // Detonate it again in one second, until it's out of juice.
-
+		// Detonate it again in one second, until it's out of juice.
+		addtimer(src, "detonate", 10)
 
 	// If it's not a time release bomb, do normal explosion
 
