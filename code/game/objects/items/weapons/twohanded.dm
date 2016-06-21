@@ -381,13 +381,17 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = 0
+	var/on_text = "it begins to whirr."
+	var/off_text = "the chain stops moving."
+	var/force_off = 13
+	var/force_on = 21
 
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
-	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
-	force = on ? 21 : 13
-	throwforce = on ? 21 : 13
+	user << "As you pull the starting cord dangling from \the [src], [on ? on_text : off_text]"
+	force = on ? force_on : force_off
+	throwforce = on ? force_on : force_off
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 	if(hitsound == "swing_hit")
@@ -409,28 +413,15 @@
 
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "OOOH BABY"
-	desc = "<span class='warn'>VRRRRRRR!!!</span>"
+	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	force = 20
 	armour_penetration = 100
+	force_on = 80
+	force_off = 20
+	on_text = "and it roars to life, screaming along with your bloodlust."
+	off_text = "grows dormant."
 
-/obj/item/weapon/twohanded/required/chainsaw/doomslayer/attack_self(mob/user)
-	on = !on
-	user << "You viciously yank the cord dangling from \the [src], [on ? "and it roars to life, screaming along with your bloodlust." : "grows dormant."]"
-	force = on ? 80 : 20
-	throwforce = on ? 80 : 20
-	icon_state = "chainsaw_[on ? "on" : "off"]"
 
-	if(hitsound == "swing_hit")
-		hitsound = 'sound/weapons/chainsawhit.ogg'
-	else
-		hitsound = "swing_hit"
-
-	if(src == user.get_active_hand()) //update inhands
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
