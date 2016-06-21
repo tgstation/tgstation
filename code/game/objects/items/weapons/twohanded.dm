@@ -383,8 +383,8 @@
 	var/on = 0
 	var/on_text = "it begins to whirr."
 	var/off_text = "the chain stops moving."
-	force_weilded = 21
-	force_unweilded = 13
+	force_wielded = 21
+	force_unwielded = 13
 
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
@@ -416,8 +416,8 @@
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	force = 20
 	armour_penetration = 100
-	force_weilded = 80
-	force_unweilded = 20
+	force_wielded = 80
+	force_unweielded = 20
 	on_text = "and it roars to life, screaming along with your bloodlust."
 	off_text = "grows dormant."
 
