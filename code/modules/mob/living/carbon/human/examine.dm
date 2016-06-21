@@ -468,6 +468,7 @@
 		msg += "\n[t_He] is [pose]"
 
 	to_chat(user, msg)
+	user.heard(src)
 
 //Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M as mob, hudtype)

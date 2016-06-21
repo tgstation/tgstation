@@ -69,6 +69,7 @@
 
 	//fix scrying raging mages issue.
 	var/isScrying = 0
+	var/list/heard_before = list()
 
 
 /datum/mind/New(var/key)

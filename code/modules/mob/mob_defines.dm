@@ -197,6 +197,7 @@
 
 	var/movement_speed_modifier = 1 //To allow on-the-fly editing of a human mob's base move speed
 	var/has_penalized_speed = 0 //does nothing, merely for checking
+	var/list/heard_by = list()
 
 //Generic list for proc holders. Only way I can see to enable certain verbs/procs. Should be modified if needed.
 	var/proc_holder_list[] = list()//Right now unused.

@@ -406,6 +406,7 @@ var/list/department_radio_keys = list(
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in hearers)
+		M.heard(src)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	spawn(0)

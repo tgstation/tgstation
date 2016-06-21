@@ -22,6 +22,10 @@ var/global/obj/screen/fuckstat/FUCK = new
 /mob/burnFireFuel(var/used_fuel_ratio,var/used_reactants_ratio)
 
 /mob/Destroy() // This makes sure that mobs with clients/keys are not just deleted from the game.
+	for(var/datum/mind/mind in heard_by)
+		for(var/M in mind.heard_before)
+			if(mind.heard_before[M] == src)
+				mind.heard_before[M] = null
 	if(on_uattack) on_uattack.holder = null
 	unset_machine()
 	if(mind && mind.current == src)
@@ -62,6 +66,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 		on_uattack = null
 	qdel(on_logout)
 	on_logout = null
+
 	..()
 
 /mob/projectile_check()
@@ -1747,6 +1752,17 @@ mob/proc/on_foot()
 		thespell.channel_spell(force_remove = 1)
 		return 1
 	return 0
+
+/mob/proc/heard(var/mob/living/M)
+	return
+
+/mob/living/carbon/heard(var/mob/living/carbon/human/M)
+	if(M == src || !istype(M))
+		return
+	if(!ear_deaf && !stat)
+		if(!(mind.heard_before[M.name]))
+			mind.heard_before[M.name] = M
+			M.heard_by |= mind
 
 #undef MOB_SPACEDRUGS_HALLUCINATING
 #undef MOB_MINDBREAKER_HALLUCINATING
