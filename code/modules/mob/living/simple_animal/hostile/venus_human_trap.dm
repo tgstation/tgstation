@@ -95,7 +95,7 @@
 						for(var/a in t)
 							var/atom/A = a
 							if(A.density && A != L)
-								break grasping
+								continue grasping
 					if(prob(grasp_chance))
 						L << "<span class='userdanger'>\the [src] has you entangled!</span>"
 						grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
