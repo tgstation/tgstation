@@ -44,6 +44,10 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))

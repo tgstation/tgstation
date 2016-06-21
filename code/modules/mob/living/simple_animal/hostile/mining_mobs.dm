@@ -154,8 +154,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				spawn(chase_time)
-					Burrow()
+				addtimer(src, "Burrow", chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -344,8 +343,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	spawn(100)
-		death()
+	addtimer(src, "death", 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
@@ -501,8 +499,7 @@
 	if(istype(turftype, /turf/closed/mineral))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
-	spawn(10)
-		Trip()
+	addtimer(src, "Trip", 10)
 
 /obj/effect/goliath_tentacle/original
 
@@ -653,8 +650,7 @@
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
-	spawn(100)
-		Deflate()
+	addtimer(src, "Deflate", 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)

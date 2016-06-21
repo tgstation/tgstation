@@ -1,0 +1,4 @@
+author: "Cheridan"
+delete-after: True
+changes: 
+  - tweak: "Flashes no longer stun cyborgs, instead working almost exactly like a human, causing them to become confused and unequip their current module."

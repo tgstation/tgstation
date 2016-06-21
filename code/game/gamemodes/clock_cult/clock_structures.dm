@@ -14,6 +14,8 @@
 	layer = BELOW_OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
+	var/repair_amount = 5 //how much a proselytizer can repair each cycle
+	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
@@ -140,17 +142,19 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
+	max_health = 80
+	health = 80
 	var/wall_generation_cooldown
 	var/wall_found = FALSE //if we've found a wall and finished our windup delay
 
 /obj/structure/clockwork/cache/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -183,25 +187,6 @@
 		user << "<span class='notice'>You add [C] to [src].</span>"
 		user.drop_item()
 		qdel(C)
-		return 1
-	else if(istype(I, /obj/item/clockwork/clockwork_proselytizer))
-		var/obj/item/clockwork/clockwork_proselytizer/P = I
-		if(P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy)
-			if(clockwork_component_cache["replicant_alloy"])
-				user.visible_message("<span class='notice'>[user] places the end of [P] in the hole in [src]...</span>", \
-				"<span class='notice'>You start filling [P] with liquified alloy...</span>")
-				while(P && P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"] && do_after(user, 10, target = src) \
-				&& P && P.uses_alloy &&  P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"]) //hugeass check because we need to re-check after the do_after
-					P.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
-					clockwork_component_cache["replicant_alloy"]--
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				if(P && user)
-					user.visible_message("<span class='notice'>[user] removes [P] from the hole in [src], apparently satisfied.</span>", \
-					"<span class='brass'>You finish filling [P] with liquified alloy. It now contains [P.stored_alloy]/[P.max_alloy] units of liquified alloy.</span>")
-			else
-				user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
-		else
-			user << "<span class='warning'>[P]'s containers of liquified alloy are full!</span>"
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -322,10 +307,10 @@
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/clockwork/ocular_warden/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
@@ -370,18 +355,17 @@
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/clockwork/anima_fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
-	name = "anima fragment"
-	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
-	icon_state = "anime_fragment"
+
+/obj/structure/clockwork/shell
 	construction_value = 0
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
 	burn_state = LAVA_PROOF
+	var/mobtype = /mob/living/simple_animal/hostile/clockwork
+	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
-/obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/clockwork/shell/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
 		if(!is_servant_of_ratvar(user))
 			..()
@@ -394,11 +378,10 @@
 			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
-		var/mob/living/simple_animal/hostile/clockwork/fragment/A = new(get_turf(src))
-		A.visible_message("[src] whirs and rises from the ground on a flickering jet of reddish fire.")
+		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
+		A.visible_message("[src][spawn_message]")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
-		A << A.playstyle_string
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -406,12 +389,29 @@
 	else
 		return ..()
 
+/obj/structure/clockwork/shell/cogscarab
+	name = "cogscarab shell"
+	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	icon_state = "clockdrone_shell"
+	mobtype = /mob/living/simple_animal/drone/cogscarab
+	spawn_message = "'s eyes blink open, glowing bright red."
+
+/obj/structure/clockwork/shell/fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
+	name = "fragment shell"
+	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
+	icon_state = "anime_fragment"
+	mobtype = /mob/living/simple_animal/hostile/clockwork/fragment
+	spawn_message = " whirs and rises from the ground on a flickering jet of reddish fire."
 
 
 /obj/structure/clockwork/wall_gear
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
+	max_health = 50
+	health = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -425,7 +425,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
+	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -667,7 +667,7 @@
 	burn_state = FIRE_PROOF
 	burntime = 1
 	var/affects_servants = FALSE
-	var/affects_stat = FALSE
+	var/stat_affected = CONSCIOUS
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == "harm")))
@@ -680,7 +680,7 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!L.stat || affects_stat)
+		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				sigil_effects(L)
 			return 1
@@ -718,6 +718,7 @@
 	icon_state = "sigilsubmission"
 	color = "#FAE48C"
 	alpha = 125
+	stat_affected = UNCONSCIOUS
 	var/convert_time = 50
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
@@ -761,7 +762,7 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
+			M <<  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
 				M << "<span class='heavy_brass'>[message] you!</span>"
@@ -835,7 +836,7 @@
 	color = "#123456"
 	alpha = 75
 	affects_servants = TRUE
-	affects_stat = TRUE
+	stat_affected = DEAD
 	var/vitality = 0
 	var/base_revive_cost = 25
 	var/sigil_active = FALSE

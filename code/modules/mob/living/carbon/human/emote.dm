@@ -131,8 +131,7 @@
 				m_type = 2
 				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
 					OpenWings()
-					spawn(20)
-						CloseWings()
+					addtimer(src, "CloseWings", 20)
 
 		if ("wings")
 			if (!src.restrained())

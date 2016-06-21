@@ -5,8 +5,11 @@
 	unique_name = 1
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
+	languages_spoken = RATVAR
+	languages_understood = HUMAN|RATVAR
 	healable = FALSE
 	del_on_death = TRUE
+	bubble_icon = "clock"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/obj/item/clockwork/slab/internalslab //an internal slab for running scripture
@@ -19,6 +22,10 @@
 	qdel(internalslab)
 	internalslab = null
 	return ..()
+
+/mob/living/simple_animal/hostile/clockwork/Login()
+	..()
+	src << playstyle_string
 
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
@@ -35,12 +42,13 @@
 	weather_immunities = list("lava")
 	flying = 1
 	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
-	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. Your goal is to serve the Justiciar and his servants \
+	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. \n Your goal is to serve the Justiciar and his servants \
 	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
 	var/movement_delay_time //how long the fragment is slowed after being hit
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
+	SetLuminosity(2,1)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -111,6 +119,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
+	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()

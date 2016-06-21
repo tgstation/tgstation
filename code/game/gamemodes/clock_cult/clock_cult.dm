@@ -44,23 +44,23 @@ This file's folder contains:
 		return 0
 	if(!M.mind)
 		return 0
-	if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
-		return 0
-	if(iscultist(M))
-		return 0
-	if(isconstruct(M))
-		return 0
-	if(isguardian(M))
-		var/mob/living/simple_animal/hostile/guardian/G = M
-		if(!is_servant_of_ratvar(G.summoner))
-			return 0 //can't convert it unless the owner is converted
-	if(isloyal(M))
-		return 0
 	if(M.mind.enslaved_to)
 		return 0
-	if(isdrone(M))
+	if(iscultist(M) || isconstruct(M))
 		return 0
-	return 1
+	if(isbrain(M))
+		return 1
+	if(ishuman(M))
+		if(isloyal(M) || (M.mind.assigned_role in list("Captain", "Chaplain")))
+			return 0
+		return 1
+	if(isguardian(M))
+		var/mob/living/simple_animal/hostile/guardian/G = M
+		if(is_servant_of_ratvar(G.summoner))
+			return 1 //can't convert it unless the owner is converted
+	if(issilicon(M) || isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+		return 1
+	return 0
 
 /proc/add_servant_of_ratvar(mob/M, silent = FALSE)
 	if(is_servant_of_ratvar(M) || !ticker || !ticker.mode)
@@ -78,13 +78,6 @@ This file's folder contains:
 				M.visible_message("<span class='warning'>[M] whirs as it resists an outside influence!</span>")
 			M << "<span class='warning'><b>Corrupt data purged. Resetting cortex chip to factory defaults... complete.</b></span>" //silicons have a custom fail message
 			return 0
-	else if(istype(M, /mob/living/simple_animal/drone))
-		if(!silent)
-			M << "<span class='heavy_brass'>You must not involve yourself in other affairs, but... this one... you see it all. Your world glows a brilliant yellow, and all it once it comes to you. \
-			Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm.</span>"
-		var/mob/living/simple_animal/drone/D = M
-		D.update_drone_hack(TRUE, TRUE)
-		D.languages |= HUMAN
 	else if(!silent)
 		M << "<span class='heavy_brass'>Your world glows a brilliant yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>"
 
@@ -101,6 +94,8 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
+	M.languages_spoken |= RATVAR
+	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
@@ -129,6 +124,8 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
+	M.languages_spoken &= ~RATVAR
+	M.languages_understood &= ~RATVAR
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -162,8 +159,8 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "escape" //The objective that the servants must fulfill
-	var/clockwork_explanation = "Ensure that the meme levels of the station remain high." //The description of the current objective
+	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
@@ -296,8 +293,10 @@ This file's folder contains:
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			feedback_set_details("round_end_result", "win - servants summoned ratvar")
 		else
 			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

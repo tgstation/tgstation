@@ -30,7 +30,8 @@
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags = CONDUCT | HEAR
 	slot_flags = SLOT_BELT
-	languages = HUMAN | ROBOT
+	languages_spoken = HUMAN | ROBOT
+	languages_understood = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
 	w_class = 2
@@ -315,7 +316,7 @@
 			"server" = null,
 			"reject" = 0,
 			"level" = 0,
-			"languages" = languages,
+			"languages" = languages_spoken,
 			"spans" = spans,
 			"verb_say" = M.verb_say,
 			"verb_ask" = M.verb_ask,
@@ -360,7 +361,7 @@
 			"server" = null, // the last server to log this signal
 			"reject" = 0,	// if nonzero, the signal will not be accepted by any broadcasting machinery
 			"level" = position.z, // The source's z level
-			"languages" = M.languages, //The languages M is talking in.
+			"languages" = M.languages_spoken, //The languages M is talking in.
 			"spans" = spans, //the span classes of this message.
 			"verb_say" = M.verb_say, //the verb used when talking normally
 			"verb_ask" = M.verb_ask, //the verb used when asking
@@ -410,7 +411,7 @@
 		"server" = null,
 		"reject" = 0,
 		"level" = position.z,
-		"languages" = languages,
+		"languages" = languages_spoken,
 		"spans" = spans,
 		"verb_say" = M.verb_say,
 		"verb_ask" = M.verb_ask,

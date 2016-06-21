@@ -46,7 +46,7 @@
 		qdel(src)
 		return
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	..()
 	icon = L.icon
 	icon_state = L.icon_state
@@ -63,7 +63,7 @@
 		M.Stun(1) //So they can't do anything while petrified
 	if(timer <= 0)
 		dump_contents()
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 
 /obj/structure/closet/statue/dump_contents()

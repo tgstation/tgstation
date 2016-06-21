@@ -22,8 +22,6 @@
 	..()
 	spawn(5)
 		updatemodules()
-		return
-	return
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pod1 && autoprocess))

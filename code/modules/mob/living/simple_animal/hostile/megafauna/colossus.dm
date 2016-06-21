@@ -117,10 +117,8 @@
 	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
 	sleep(10)
-	spawn()
-		spiral_shoot()
-	spawn()
-		spiral_shoot(1)
+	addtimer(src, "spiral_shoot", 0)
+	addtimer(src, "spiral_shoot", 0, FALSE, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
 	spawn()

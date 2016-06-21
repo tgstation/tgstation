@@ -39,7 +39,7 @@
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
 				M << "<span class='userdanger'>\The [src] has been returned to base!</span>"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
 	if (!user)
@@ -59,12 +59,12 @@
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))
 			M << "<span class='userdanger'>\The [src] has been taken!</span>"
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/required/ctf/dropped(mob/user)
 	..()
 	reset_cooldown = world.time + 200 //20 seconds
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	for(var/mob/M in player_list)
 		var/area/mob_area = get_area(M)
 		if(istype(mob_area, /area/ctf))

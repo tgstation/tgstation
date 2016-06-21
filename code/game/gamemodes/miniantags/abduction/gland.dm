@@ -230,11 +230,11 @@
 
 /obj/effect/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/cocoon/abductor/process()
 	if(world.time > hatch_time)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc

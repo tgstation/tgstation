@@ -404,9 +404,10 @@
 						H.dna.features["ears"] = "Cat"
 					var/seifuku = pick(typesof(/obj/item/clothing/under/schoolgirl))
 					var/obj/item/clothing/under/schoolgirl/I = new seifuku
-					var/list/honorifics = list(MALE = list("kun"), FEMALE = list("chan","tan"), NEUTER = list("san")) //John Robust -> Robust-kun
+					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
-					var/newname = "[names[2]]-[pick(honorifics[H.gender])]"
+					var/forename = names.len > 1 ? names[2] : names[1]
+					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
 					H.unEquip(H.w_uniform)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
