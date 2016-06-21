@@ -64,6 +64,8 @@
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -573,6 +575,18 @@
 				CTF.TellGhost()
 			message_admins("[key_name_admin(usr)] has [ctf_enabled? "enabled" : "disabled"] CTF!")
 			notify_ghosts("CTF has been [ctf_enabled? "enabled" : "disabled"]!",'sound/effects/ghost2.ogg')
+		if("masspurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_purrbation()
+			message_admins("[key_name_admin(usr)] has put everyone on \
+				purrbation!")
+		if("massremovepurrbation")
+			if(!check_rights(R_FUN))
+				return
+			mass_remove_purrbation()
+			message_admins("[key_name_admin(usr)] has removed everyone from \
+				purrbation.")
 
 	if(E)
 		E.processing = 0
