@@ -278,7 +278,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/surgicaldrill,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -286,7 +288,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/hemostat,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -297,7 +301,9 @@
 	},
 /obj/item/weapon/circular_saw,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -305,7 +311,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/retractor,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -313,7 +321,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/cautery,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -389,7 +399,9 @@
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (WEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
@@ -400,7 +412,9 @@
 /area/holodeck/rec_center/medical)
 "bp" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (EAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 4
 	},
 /area/holodeck/rec_center/medical)
@@ -460,25 +474,30 @@
 /area/holodeck/rec_center/dodgeball)
 "bB" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "bC" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bD" = (
 /obj/structure/table/optable,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bE" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bF" = (
@@ -487,7 +506,9 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -526,14 +547,18 @@
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "bL" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
-	dir = 8
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 5
 	},
 /area/holodeck/rec_center/medical)
 "bM" = (
@@ -623,7 +648,9 @@
 "bY" = (
 /obj/machinery/chem_master,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -770,7 +797,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -782,7 +811,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -812,21 +843,26 @@
 "cz" = (
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhitecorner";
-	dir = 8
+	dir = 8;
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn_corner";
+	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/medical)
 "cA" = (
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
-	dir = 5
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "cB" = (
-/obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -836,7 +872,9 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -847,7 +885,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -859,7 +899,8 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "cG" = (
@@ -872,7 +913,8 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "cH" = (
@@ -881,7 +923,9 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -3879,9 +3923,9 @@
 	},
 /area/wizard_station)
 "me" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult/airless,
-/area/wizard_station)
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mf" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/black,
@@ -3954,9 +3998,9 @@
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mq" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult,
-/area/wizard_station)
+/obj/structure/chair/wood/wings,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mr" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -4186,12 +4230,9 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "mY" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage4"
-	},
-/area/wizard_station)
+/obj/structure/chair/wood,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mZ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/forcefield,
@@ -5799,6 +5840,25 @@
 /obj/structure/flora/tree/pine,
 /turf/open/floor/holofloor/snow/cold,
 /area/holodeck/rec_center/winterwonderland)
+"se" = (
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-white_warn (WEST)";
+	icon_state = "white_warn";
+	dir = 8
+	},
+/area/holodeck/rec_center/medical)
+"sf" = (
+/obj/structure/flora/bush,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sg" = (
+/turf/open/floor/holofloor{
+	tag = "icon-white_warn (WEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 8
+	},
+/area/holodeck/rec_center/medical)
 
 (1,1,1) = {"
 aa
@@ -60543,16 +60603,16 @@ ab
 "}
 (214,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -60800,16 +60860,16 @@ ab
 "}
 (215,1,1) = {"
 ae
-sa
-sb
-sa
-sa
-sa
+se
+sf
+se
+se
+mq
 sd
-sc
-sa
-sa
-sa
+me
+se
+se
+se
 aV
 ag
 ag
@@ -61057,16 +61117,16 @@ ab
 "}
 (216,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -61314,16 +61374,16 @@ ab
 "}
 (217,1,1) = {"
 ae
-sa
-sa
-sc
-sa
-sa
-sa
-sa
-sa
-sc
-sa
+se
+se
+me
+se
+se
+mY
+se
+se
+me
+se
 aV
 ag
 ag
@@ -61571,16 +61631,16 @@ ab
 "}
 (218,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sb
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+sf
+se
+se
+se
+se
 aV
 ag
 ag
@@ -63646,7 +63706,7 @@ bK
 bY
 cm
 cu
-bL
+sg
 cE
 cS
 cT
@@ -63900,7 +63960,7 @@ bo
 bC
 bo
 bL
-bL
+cB
 cm
 cv
 cz
@@ -64417,7 +64477,7 @@ bo
 bo
 bo
 bo
-cB
+cA
 cG
 cS
 cT
