@@ -1,0 +1,8 @@
+author: Shadowmech88
+delete-after: True
+changes: 
+- tweak: The utility borer's fleshshot now requires 10 chems to fire if the borer is using it to swing an item. It costs nothing if the host's hand is empty.
+- tweak: Utility borers are now incapable of using their fleshshot while their host is stunned, or has silicate in their system.
+- rscadd: Borers will now take damage while their host has sodium chloride in their system, and will die from it after roughly 40 seconds.
+- rscadd: Borers now slowly regenerate health while inside a host.
+- rscadd: Borers can now see their health in the status tab.

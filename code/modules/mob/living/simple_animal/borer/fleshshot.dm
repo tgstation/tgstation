@@ -9,6 +9,11 @@
 	silenced = 1
 	fire_volume = 250
 	maxlength = 10
+	clumsy_check = 0
+	advanced_tool_user_check = 0
+	nymph_check = 0
+	hulk_check = 0
+	golem_check = 0
 	var/mob/living/simple_animal/borer/parent_borer = null
 	var/image/item_overlay = null
 	var/obj/item/to_be_dropped = null //to allow items to be dropped at range
@@ -352,6 +357,9 @@
 						if(L.get_held_item_by_index(GRASP_RIGHT_HAND))
 							if(!parent_borer.attack_cooldown)
 								A.attackby(L.get_held_item_by_index(GRASP_RIGHT_HAND), L, 1, parent_borer)
+								if(!parent_borer)	//There's already a check for this above, but for some reason when it hits an airlock it gets qdel()'d before it gets to this point.
+									bullet_die()
+									return
 								parent_borer.attack_cooldown = 1
 								parent_borer.reset_attack_cooldown()
 							bullet_die()
@@ -360,6 +368,9 @@
 						if(L.get_held_item_by_index(GRASP_LEFT_HAND))
 							if(!parent_borer.attack_cooldown)
 								A.attackby(L.get_held_item_by_index(GRASP_LEFT_HAND), L, 1, parent_borer)
+								if(!parent_borer)
+									bullet_die()
+									return
 								parent_borer.attack_cooldown = 1
 								parent_borer.reset_attack_cooldown()
 							bullet_die()

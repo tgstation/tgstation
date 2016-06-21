@@ -134,6 +134,8 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	..()
 	if(host)
 		if(!stat && !host.stat)
+			if(health < 20)
+				health += 0.5
 			if(chemicals < 250 && !channeling)
 				chemicals++
 			if(controlling)
@@ -300,6 +302,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 				if (timeleft)
 					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
+		stat("Health", health)
 		stat("Chemicals", chemicals)
 
 /mob/living/simple_animal/borer/earprot()
@@ -1129,6 +1132,14 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 				if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/offhand) || istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/offhand)) //If the host is two-handing something.
 					to_chat(src, "<span class='warning'>You cannot swing this item while your host holds it with both hands!</span>")
 					return
+				if(host.stunned)
+					to_chat(src, "<span class='warning'>Your host's muscles are tightened. You can't extend your arm!</span>")
+					return
+				var/datum/reagents/R = host.reagents
+				if(R)
+					if(R.has_reagent(SILICATE))
+						to_chat(src, "<span class='warning'>Something in your host's bloodstream is tightening their muscles. You can't extend your arm!</span>")
+						return
 				if(host.Adjacent(A))
 					if(hostlimb == "r_arm")
 						if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
@@ -1161,11 +1172,25 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 				if(get_turf(A) == get_turf(host) && !istype(A, /obj/item))
 					return
 				if(hostlimb == "r_arm")
-					if(host.get_held_item_by_index(GRASP_RIGHT_HAND) && istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/gun/hookshot)) //I don't want to deal with the fleshshot interacting with hookshots
-						return
+					if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
+						if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/gun/hookshot)) //I don't want to deal with the fleshshot interacting with hookshots
+							return
+						if(chemicals < 10)
+							to_chat(src, "<span class='warning'>You don't have enough chemicals stored to swing an item with this arm!</span>")
+							return
+						else
+							if(!(extend_o_arm.hook || extend_o_arm.chain_datum || extend_o_arm.rewinding))	//If the arm is not currently extended.
+								chemicals -= 10		//It costs 10 chems to fire the fleshshot while holding an item.
 				else if(hostlimb == "l_arm")
-					if(host.get_held_item_by_index(GRASP_LEFT_HAND) && istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/weapon/gun/hookshot))
-						return
+					if(host.get_held_item_by_index(GRASP_LEFT_HAND))
+						if(istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/weapon/gun/hookshot))
+							return
+						if(chemicals < 10)
+							to_chat(src, "<span class='warning'>You don't have enough chemicals stored to swing an item with this arm!</span>")
+							return
+						else
+							if(!(extend_o_arm.hook || extend_o_arm.chain_datum || extend_o_arm.rewinding))
+								chemicals -= 10
 				extend_o_arm.afterattack(A, host)
 
 /mob/living/simple_animal/borer/proc/reset_attack_cooldown()

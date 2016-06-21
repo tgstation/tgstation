@@ -870,7 +870,7 @@
 	description = "A compound that can be used to repair and reinforce glass."
 	reagent_state = LIQUID
 	color = "#C7FFFF" //rgb: 199, 255, 255
-	overdose = REAGENTS_OVERDOSE
+	overdose = 0
 
 /datum/reagent/oxygen
 	name = "Oxygen"
@@ -2860,6 +2860,16 @@
 	description = "A salt made of sodium chloride. Commonly used to season food."
 	reagent_state = SOLID
 	color = "#FFFFFF" //rgb: 255, 255, 255
+
+/datum/reagent/sodiumchloride/on_mob_life(var/mob/living/M)
+
+	if(..()) return 1
+
+	var/list/borers = M.get_brain_worms()
+	if(borers)
+		for(var/mob/living/simple_animal/borer/B in borers)
+			B.health -= 1
+			to_chat(B, "<span class='warning'>Something in your host's bloodstream burns you!</span>")
 
 /datum/reagent/creatine
 	name = "Creatine"
