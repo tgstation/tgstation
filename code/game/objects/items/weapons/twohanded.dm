@@ -417,7 +417,7 @@
 	force = 20
 	armour_penetration = 100
 	force_wielded = 80
-	force_unweielded = 20
+	force_unwielded = 20
 	on_text = "and it roars to life, screaming along with your bloodlust."
 	off_text = "grows dormant."
 
