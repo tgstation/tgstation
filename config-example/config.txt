@@ -261,6 +261,11 @@ RESPAWN_AS_MOMMI
 #MEDIA_BASE_URL http://yoursite.tld/media
 
 
+##Dectalk SERVER
+##Uncomment to enable it after setting the URL
+#TTS_SERVER http://localhost/
+
+
 ##  Media Server 2 requires a secret key in order to tell the jukebox
 ## where the music files are. It's set in config with MEDIA_SECRET_KEY
 ## and MUST be the same as the media server's.

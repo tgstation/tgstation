@@ -182,6 +182,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/test_movable_UI,
 	/client/proc/test_snap_UI,
 	/client/proc/configFood,
+	/client/proc/cmd_dectalk,
 	/client/proc/debug_reagents,
 	/client/proc/create_awaymission,
 	/client/proc/make_invulnerable,
@@ -1215,3 +1216,36 @@ var/list/admin_verbs_mod = list(
 	to_chat(src, "Attempting to load [AM.name] ([AM.file_path])...")
 	createRandomZlevel(override, AM, usr)
 	to_chat(src, "The away mission has been generated on z-level [world.maxz] [AM.location ? "([formatJumpTo(AM.location)])" : ""]")
+
+/client/proc/cmd_dectalk()
+	set name = "Dectalk"
+	set category = "Special Verbs"
+	set desc = "Sends a message as voice to all players"
+	set popup_menu = 0
+	
+	if(!check_rights(R_DEBUG)) return 0
+
+	var/msg
+	if (args && args.len > 0)
+		msg = args[1]
+
+	msg = input(src, "Sends a message as voice to all players", "Dectalk", msg) as null|message
+	if (!msg) return 0
+
+	var/audio = dectalk(msg)
+	if (audio && audio["audio"])
+		message_admins("[key_name(src)] has used the dectalk verb with message: [audio["message"]]")
+		log_admin("[key_name(src)] has used the dectalk verb with message: [audio["message"]]")
+
+		for (var/client/C in clients)
+			var/trigger = src.key
+			chatOutput.ehjax_send(C, "browseroutput", list("dectalk" = audio["audio"], "decTalkTrigger" = trigger))
+		return 1
+	else if (audio && audio["cooldown"])
+		alert(src, "There is a [nextDecTalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDecTalkDelay * 10) - world.timeofday)/10] seconds.")
+		src.cmd_dectalk(msg)
+		return 0
+	else
+		alert(src, "An external server error has occurred. Please report this.")
+		return 0
+

@@ -6,6 +6,7 @@
 	var/nudge_script_path = "nudge.py"  // where the nudge.py script is located
 
 	var/log_ooc = 0						// log OOC channel
+	var/tts_server = ""					// TTS Server
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
@@ -224,7 +225,10 @@
 			switch (name)
 				if ("resource_urls")
 					config.resource_urls = splittext(value, " ")
-
+					
+				if("tts_server")	
+					config.tts_server = value
+					
 				if ("admin_legacy_system")
 					config.admin_legacy_system = 1
 
