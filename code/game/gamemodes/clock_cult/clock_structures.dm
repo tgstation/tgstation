@@ -363,7 +363,7 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND))
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check())
 			. += L
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
