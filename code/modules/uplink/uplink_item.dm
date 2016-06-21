@@ -711,6 +711,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/cutouts
+	name = "Adaptive Cardboard Cutouts"
+	desc = "These cardboard cutouts are coated with a thin material that prevents discoloration and makes the images on them appear more lifelike. This pack contains three as well as a \
+	crayon for changing their appearances."
+	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
+	cost = 1
+	surplus = 20
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"

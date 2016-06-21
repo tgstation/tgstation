@@ -200,9 +200,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	new/datum/stack_recipe("folder", /obj/item/weapon/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
 )
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap
+/obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
