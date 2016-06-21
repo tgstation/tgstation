@@ -136,14 +136,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)

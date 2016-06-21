@@ -195,22 +195,6 @@
 	icon_state = "cautioncorner"
 
 
-/turf/open/floor/plasteel/warning
-	icon_state = "warning"
-/turf/open/floor/plasteel/airless/warning
-	icon_state = "warning"
-/turf/open/floor/plasteel/warning/corner
-	icon_state = "warningcorner"
-/turf/open/floor/plasteel/airless/warning/corner
-	icon_state = "warningcorner"
-
-
-/turf/open/floor/plasteel/warnwhite
-	icon_state = "warnwhite"
-/turf/open/floor/plasteel/warnwhite/corner
-	icon_state = "warnwhitecorner"
-
-
 /turf/open/floor/plasteel/whitebot
 	icon_state = "whitebot"
 /turf/open/floor/plasteel/whitebot/delivery
@@ -254,11 +238,6 @@
 /turf/open/floor/plasteel/blueyellow/side
 	icon_state = "blueyellow"
 
-
-/turf/open/floor/plasteel/darkwarning
-	icon_state = "warndark"
-/turf/open/floor/plasteel/darkwarning/corner
-	icon_state = "warndarkcorners"
 
 /turf/open/floor/plasteel/warningline
 	icon_state = "warningline"
@@ -326,11 +305,6 @@
 	icon_state = "asteroidfloor"
 /turf/open/floor/plasteel/airless/asteroid
 	icon_state = "asteroidfloor"
-/turf/open/floor/plasteel/asteroid/warning
-	icon_state = "asteroidwarning"
-/turf/open/floor/plasteel/airless/asteroid/warning
-	icon_state = "asteroidwarning"
-
 
 /turf/open/floor/plasteel/recharge_floor
 	icon_state = "recharge_floor"

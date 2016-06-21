@@ -29,14 +29,17 @@
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
 	var/obj/effect/clockwork/gateway_glow/glow
+	var/obj/effect/countdown/clockworkgate/countdown
 
 /obj/structure/clockwork/massive/celestial_gateway/New()
 	..()
 	glow = new(get_turf(src))
+	countdown = new(src)
+	countdown.start()
 	SSshuttle.emergencyNoEscape = TRUE
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
-	for(var/mob/M in mob_list)
+	for(var/M in mob_list)
 		if(is_servant_of_ratvar(M) || isobserver(M))
 			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
 
@@ -47,18 +50,21 @@
 		SSshuttle.emergency.timer = world.time
 		if(!purpose_fulfilled)
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
-		for(var/mob/M in mob_list)
+		for(var/M in mob_list)
 			if(is_servant_of_ratvar(M) || isobserver(M))
 				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
 		world << sound(null, 0, channel = 8)
 	qdel(glow)
 	glow = null
+	qdel(countdown)
+	countdown = null
 	return ..()
 
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
+	countdown.stop()
 	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
 	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
 	make_glow()
@@ -78,8 +84,8 @@
 	return 0 //Nice try, Toxins!
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
-	if(prob(5))
-		for(var/mob/M in mob_list)
+	if(!progress_in_seconds || prob(5))
+		for(var/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!health)
 		return 0
@@ -105,6 +111,7 @@
 			glow.icon_state = "clockwork_gateway_closing"
 		if(GATEWAY_RATVAR_ARRIVAL to INFINITY)
 			if(!purpose_fulfilled)
+				countdown.stop()
 				takes_damage = FALSE
 				purpose_fulfilled = TRUE
 				make_glow()
@@ -121,7 +128,7 @@
 	icon_state = "spatial_gateway" //cheat wildly by pretending to have an icon
 	..()
 	icon_state = initial(icon_state)
-	if(is_servant_of_ratvar(user))
+	if(is_servant_of_ratvar(user) || isobserver(user))
 		var/arrival_text = "IMMINENT"
 		if(GATEWAY_RATVAR_ARRIVAL - progress_in_seconds > 0)
 			arrival_text = "[round(max((GATEWAY_RATVAR_ARRIVAL - progress_in_seconds) / (GATEWAY_SUMMON_RATE * 0.5), 0), 1)]"
@@ -183,7 +190,7 @@
 	ratvar_awakens = TRUE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
@@ -197,7 +204,7 @@
 	ratvar_awakens = FALSE
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	world << "<span class='heavy_brass'><font size=6>\"NO! I will not... be...</font> <font size=5>banished...</font> <font size=4>again...\"</font></span>"
 	return ..()
 
@@ -205,7 +212,7 @@
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
 	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
 		return 0
-	var/mob/living/simple_animal/hostile/clockwork_reclaimer/R = new(get_turf(src))
+	var/mob/living/simple_animal/hostile/clockwork/reclaimer/R = new(get_turf(src))
 	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
 	R.key = O.key
 
@@ -277,6 +284,8 @@
 			shake_camera(M, 4, 3)
 		var/r_success_modifier = (ticker.mode.servants_of_ratvar.len * 2) //2% for each cultist
 		var/n_success_modifier = (ticker.mode.cult.len * 2)
+		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
+			n_success_modifier += 2
 		if(prob(base_victory_chance + r_success_modifier))
 			winner = "Ratvar"
 			break
@@ -295,7 +304,7 @@
 		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "RAAAAAAAAAAAAAHH!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>"
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'

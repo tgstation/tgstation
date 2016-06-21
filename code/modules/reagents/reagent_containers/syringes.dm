@@ -148,7 +148,7 @@
 
 /obj/item/weapon/reagent_containers/syringe/update_icon()
 	var/rounded_vol = Clamp(round((reagents.total_volume / volume * 15),5), 0, 15)
-	overlays.Cut()
+	cut_overlays()
 	if(ismob(loc))
 		var/injoverlay
 		switch(mode)
@@ -156,7 +156,7 @@
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		overlays += injoverlay
+		add_overlay(injoverlay)
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
 
@@ -164,7 +164,7 @@
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "syringe10")
 		filling.icon_state = "syringe[rounded_vol]"
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"

@@ -132,7 +132,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	flood_turfs += get_turf(src.loc)
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/hallucination/fake_flood/process()
 	if(next_expand <= world.time)
@@ -153,7 +153,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target.client.images |= flood_images
 
 /obj/effect/hallucination/fake_flood/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	qdel(flood_turfs)
 	flood_turfs = list()
 	if(target.client)
@@ -518,13 +518,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 				person = H
 		people += H
 	if(person) //Basic talk
-		target << target.compose_message(person,person.languages,pick(speak_messages),null,person.get_spans())
+		target << target.compose_message(person,person.languages_understood,pick(speak_messages),null,person.get_spans())
 	else // Radio talk
 		var/list/humans = list()
 		for(var/mob/living/carbon/human/H in living_mob_list)
 			humans += H
 		person = pick(humans)
-		target << target.compose_message(person,person.languages,pick(radio_messages),"1459",person.get_spans())
+		target << target.compose_message(person,person.languages_understood,pick(radio_messages),"1459",person.get_spans())
 	qdel(src)
 
 /obj/effect/hallucination/message

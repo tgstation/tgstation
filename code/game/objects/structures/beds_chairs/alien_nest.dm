@@ -74,7 +74,7 @@
 		M.pixel_y = 0
 		M.pixel_x = initial(M.pixel_x) + 2
 		M.layer = BELOW_MOB_LAYER
-		overlays += nest_overlay
+		add_overlay(nest_overlay)
 	else
 		M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
 		M.pixel_y = M.get_standard_pixel_y_offset(M.lying)

@@ -45,7 +45,7 @@
 	var/del_new_on_log = 1				// del's new players if they log before they spawn in
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
-	var/fps = 10
+	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 
 	var/hostedby = null
@@ -69,6 +69,13 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
+
+	//IP Intel vars
+	var/ipintel_email
+	var/ipintel_rating_bad = 1
+	var/ipintel_save_good = 12
+	var/ipintel_save_bad = 1
+	var/ipintel_domain = "check.getipintel.net"
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -389,6 +396,17 @@
 					config.notify_new_player_age = text2num(value)
 				if("irc_first_connection_alert")
 					config.irc_first_connection_alert = 1
+				if("ipintel_email")
+					if (value != "ch@nge.me")
+						config.ipintel_email = value
+				if("ipintel_rating_bad")
+					config.ipintel_rating_bad = text2num(value)
+				if("ipintel_domain")
+					config.ipintel_domain = value
+				if("ipintel_save_good")
+					config.ipintel_save_good = text2num(value)
+				if("ipintel_save_bad")
+					config.ipintel_save_bad = text2num(value)
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
 				if("log_runtimes")

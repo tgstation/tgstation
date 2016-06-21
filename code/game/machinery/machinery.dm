@@ -124,17 +124,17 @@ Class Procs:
 	..()
 	machines += src
 	if(!speed_process)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing += src
+		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
 	if(!speed_process)
-		SSmachine.processing -= src
+		STOP_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
 	return ..()
 

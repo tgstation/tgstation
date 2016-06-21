@@ -13,13 +13,13 @@
 
 /obj/structure/closet/crate/bin/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len == 0)
-		overlays += "largebing"
+		add_overlay("largebing")
 	else if(contents.len >= storage_capacity)
-		overlays += "largebinr"
+		add_overlay("largebinr")
 	else
-		overlays += "largebino"
+		add_overlay("largebino")
 
 /obj/structure/closet/crate/bin/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bag/trash))

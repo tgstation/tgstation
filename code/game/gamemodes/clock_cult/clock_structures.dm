@@ -82,24 +82,25 @@
 	..()
 	desc = initial(desc)
 	if(takes_damage)
-		var/servant_message = "It is at [health]/[max_health] integrity"
+		var/servant_message = "It is at <b>[health]/[max_health]</b> integrity"
 		var/other_message = "It seems pristine and undamaged"
 		var/heavily_damaged = FALSE
-		switch(health/max_health)
-			if(100)
-				other_message = "It seems pristine and undamaged"
-			if(100 to 60)
-				other_message = "It looks slightly dented"
-			if(60 to 25)
-				other_message = "It appears heavily damaged"
-				heavily_damaged = TRUE
-			if(25 to 0)
-				other_message = "It's falling apart"
-				heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork  ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		var/healthpercent = (health/max_health) * 100
+		if(healthpercent >= 100)
+			other_message = "It seems pristine and undamaged"
+		else if(healthpercent >= 50)
+			other_message = "It looks slightly dented"
+		else if(healthpercent >= 25)
+			other_message = "It appears heavily damaged"
+			heavily_damaged = TRUE
+		else if(healthpercent >= 0)
+			other_message = "It's falling apart"
+			heavily_damaged = TRUE
+		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
+	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
@@ -139,17 +140,19 @@
 	icon_state = "tinkerers_cache"
 	construction_value = 10
 	break_message = "<span class='warning'>The cache's fire winks out before it falls in on itself!</span>"
+	max_health = 80
+	health = 80
 	var/wall_generation_cooldown
 	var/wall_found = FALSE //if we've found a wall and finished our windup delay
 
 /obj/structure/clockwork/cache/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -317,25 +320,27 @@
 	var/damage_per_tick = 3
 	var/sight_range = 3
 	var/mob/living/target
+	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/clockwork/ocular_warden/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
 	..()
-	user << "[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"]."
+	user << "<span class='brass'>[target ? "<b>It's fixated on [target]!</b>" : "Its gaze is wandering aimlessly."]</span>"
 
 /obj/structure/clockwork/ocular_warden/process()
+	var/list/validtargets = acquire_nearby_targets()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
 		damage_per_tick = 10
 		sight_range = 5
 	if(target)
-		if(target.stat || get_dist(get_turf(src), get_turf(target)) > sight_range || is_servant_of_ratvar(target))
+		if(!(target in validtargets))
 			lose_target()
 		else
 			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
@@ -343,25 +348,22 @@
 				target.adjust_fire_stacks(damage_per_tick)
 				target.IgniteMob()
 			setDir(get_dir(get_turf(src), get_turf(target)))
-	else
-		if(!acquire_nearby_target() && prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
-			var/list/idle_messages = list("[src] sulkily glares around.", "[src] lazily drifts from side to side.", "[src] looks around for something to burn.", "[src] slowly turns in circles.")
+	if(!target)
+		if(validtargets.len)
+			target = pick(validtargets)
+			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
+			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
-				visible_message("<span class='notice'>[pick(idle_messages)]</span>")
+				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
 			else
-				setDir(pick(NORTH, EAST, SOUTH, WEST) )//Random rotation
+				setDir(pick(cardinal))//Random rotation
 
-/obj/structure/clockwork/ocular_warden/proc/acquire_nearby_target()
-	var/list/possible_targets = list()
+/obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
+	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind)
-			possible_targets += L
-	if(!possible_targets.len)
-		return 0
-	target = pick(possible_targets)
-	visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-	target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
-	return 1
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND))
+			. += L
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
@@ -370,18 +372,17 @@
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
 
-/obj/structure/clockwork/anima_fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
-	name = "anima fragment"
-	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
-	icon_state = "anime_fragment"
+
+/obj/structure/clockwork/shell
 	construction_value = 0
 	anchored = 0
 	density = 0
 	takes_damage = FALSE
 	burn_state = LAVA_PROOF
+	var/mobtype = /mob/living/simple_animal/hostile/clockwork
+	var/spawn_message = " is an error and you should yell at whoever spawned this shell."
 
-/obj/structure/clockwork/anima_fragment/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/clockwork/shell/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/device/mmi/posibrain/soul_vessel))
 		if(!is_servant_of_ratvar(user))
 			..()
@@ -393,11 +394,11 @@
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
 			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
 			return 0
-		user.visible_message("<span class='notice'>[user] clicks [S] into place on [src].</span>", "<span class='brass'>You insert [S] into [src]. It whirs and begins to rise.</span>")
-		var/mob/living/simple_animal/hostile/anima_fragment/A = new(get_turf(src))
+		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
+		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
+		A.visible_message("[src][spawn_message]")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
-		A << A.playstyle_string
 		user.drop_item()
 		qdel(S)
 		qdel(src)
@@ -405,12 +406,29 @@
 	else
 		return ..()
 
+/obj/structure/clockwork/shell/cogscarab
+	name = "cogscarab shell"
+	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	icon_state = "clockdrone_shell"
+	mobtype = /mob/living/simple_animal/drone/cogscarab
+	spawn_message = "'s eyes blink open, glowing bright red."
+
+/obj/structure/clockwork/shell/fragment //Anima fragment: Useless on its own, but can accept an active soul vessel to create a powerful construct.
+	name = "fragment shell"
+	desc = "A massive brass shell with a small cube-shaped receptable in its center. It gives off an aura of contained power."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a powerful construct."
+	icon_state = "anime_fragment"
+	mobtype = /mob/living/simple_animal/hostile/clockwork/fragment
+	spawn_message = " whirs and rises from the ground on a flickering jet of reddish fire."
 
 
 /obj/structure/clockwork/wall_gear
 	name = "massive gear"
 	icon_state = "wall_gear"
 	climbable = TRUE
+	max_health = 50
+	health = 50
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
@@ -424,7 +442,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "":"un"]secured to the floor.</span>"
+	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -467,10 +485,10 @@
 /obj/effect/clockwork/judicial_marker/New()
 	..()
 	flick("judicial_marker", src)
-	spawn(25) //Utilizes spawns due to how it works with Ratvar's flame
+	spawn(16) //Utilizes spawns due to how it works with Ratvar's flame
 		layer = ABOVE_ALL_MOB_LAYER
 		flick("judicial_explosion", src)
-		spawn(15)
+		spawn(14)
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
@@ -666,7 +684,7 @@
 	burn_state = FIRE_PROOF
 	burntime = 1
 	var/affects_servants = FALSE
-	var/affects_stat = FALSE
+	var/stat_affected = CONSCIOUS
 
 /obj/effect/clockwork/sigil/attack_hand(mob/user)
 	if(iscarbon(user) && !user.stat && (!is_servant_of_ratvar(user) || (is_servant_of_ratvar(user) && user.a_intent == "harm")))
@@ -679,7 +697,7 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		if(!L.stat || affects_stat)
+		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				sigil_effects(L)
 			return 1
@@ -715,26 +733,40 @@
 	desc = "A luminous golden sigil. Something about it really bothers you."
 	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
 	icon_state = "sigilsubmission"
-	luminosity = 2
 	color = "#FAE48C"
 	alpha = 125
+	stat_affected = UNCONSCIOUS
 	var/convert_time = 50
+	var/glow_light = 2 //soft light
+	var/glow_falloff = 1
+	var/delete_on_finish = TRUE
+	var/sigil_name = "Sigil of Submission"
+	var/glow_type
 
 /obj/effect/clockwork/sigil/submission/New()
 	..()
-	SetLuminosity(2,1) //soft light
+	SetLuminosity(glow_light,glow_falloff)
+
+/obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
 	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
 	animate(src, color = "#AF0AAF", time = convert_time)
+	var/obj/effect/overlay/temp/ratvar/sigil/glow
+	if(glow_type)
+		glow = PoolOrNew(glow_type, get_turf(src))
+		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
 	while(I < convert_time && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
 	if(get_turf(L) != get_turf(src))
+		if(glow)
+			qdel(glow)
 		animate(src, color = initial(color), time = 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return 0
+	post_channel(L)
 	if(is_eligible_servant(L))
 		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
 	add_servant_of_ratvar(L)
@@ -743,18 +775,45 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5
-	var/message = "Sigil of Submission in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
+	var/message = "[sigil_name] in [get_area(src)] <span class='sevtug'>[is_servant_of_ratvar(L) ? "successfully converted" : "failed to convert"]</span>"
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "<span class='heavy_brass'>[link] [message] [L.real_name]!</span>"
+			M <<  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>"
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
 				M << "<span class='heavy_brass'>[message] you!</span>"
 			else
 				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
-	qdel(src)
+	if(delete_on_finish)
+		qdel(src)
+	else
+		animate(src, color = initial(color), time = 20)
+		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 	return 1
+
+/obj/effect/clockwork/sigil/submission/accession //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
+	name = "terrifying sigil"
+	desc = "A luminous brassy sigil. Something about it makes you want to flee."
+	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for five seconds. \n\
+	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
+	icon_state = "sigiltransgression"
+	color = "#A97F1B"
+	alpha = 200
+	glow_light = 4 //bright light
+	glow_falloff = 3
+	delete_on_finish = FALSE
+	sigil_name = "Sigil of Accession"
+	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
+
+/obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
+	if(isloyal(L))
+		delete_on_finish = TRUE
+		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
+		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guvf chal gevaxrg jvyy abg fgbc zr.</span>")
+		for(var/obj/item/weapon/implant/mindshield/M in L)
+			if(M.implanted)
+				qdel(M)
 
 /obj/effect/clockwork/sigil/transmission
 	name = "suspicious sigil"
@@ -794,7 +853,7 @@
 	color = "#123456"
 	alpha = 75
 	affects_servants = TRUE
-	affects_stat = TRUE
+	stat_affected = DEAD
 	var/vitality = 0
 	var/base_revive_cost = 25
 	var/sigil_active = FALSE

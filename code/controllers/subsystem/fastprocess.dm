@@ -2,13 +2,9 @@ var/datum/subsystem/fastprocess/SSfastprocess
 
 /datum/subsystem/fastprocess
 	name = "Fast Process"
-	priority = 12
-	wait = 1
-	dynamic_wait = 1
-	dwait_upper = 10
-	dwait_buffer = 0
-	dwait_lower = 1
-	dwait_delta = 6
+	priority = 25
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
+	wait = 2
 
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -27,8 +23,8 @@ var/datum/subsystem/fastprocess/SSfastprocess
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process(wait)
 		else

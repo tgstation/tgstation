@@ -14,14 +14,14 @@
 
 
 /obj/item/device/assembly/flash/update_icon(var/flash = 0)
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(crit_fail)
-		overlays += "flashburnt"
+		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 
 	if(flash)
-		overlays += "flash-f"
+		add_overlay("flash-f")
 		attached_overlays += "flash-f"
 		spawn(5)
 			update_icon()
@@ -112,10 +112,13 @@
 		return 1
 
 	else if(issilicon(M))
-		add_logs(user, M, "flashed", src)
+		var/mob/living/silicon/robot/R = M
+		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(rand(5,10))
-		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
+		R.confused += 5
+		R.uneq_active()
+		R.flash_eyes(affect_silicon = 1)
+		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")

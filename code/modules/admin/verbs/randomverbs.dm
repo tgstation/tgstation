@@ -1043,30 +1043,22 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	var/keep_name = alert(src, "Do you want mobs to retain their names?", "Keep The Names?", "Yes", "No")
-
 	var/list/mobs = shuffle(living_mob_list.Copy()) // might change while iterating
 	var/who_did_it = key_name_admin(usr)
-	spawn(5) // let other things clear this tick
-		for(var/mob/living/M in mobs)
-			CHECK_TICK
-
-			if(!M || !M.name || !M.real_name)
-				continue
-
-			M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-			playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
-			var/name = M.name
-			var/real_name = M.real_name
-
-			var/mob/living/new_mob = wabbajack(M)
-			if(keep_name == "Yes" && new_mob)
-				new_mob.name = name
-				new_mob.real_name = real_name
-
-
-		message_admins("Mass polymorph started by [who_did_it] is complete.")
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
 	feedback_add_details("admin_verb","MASSWABBAJACK")
+
+	for(var/mob/living/M in mobs)
+		CHECK_TICK
+
+		if(!M)
+			continue
+
+		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
+		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+
+		wabbajack(M)
+
+	message_admins("Mass polymorph started by [who_did_it] is complete.")

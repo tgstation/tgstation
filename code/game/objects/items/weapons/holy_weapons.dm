@@ -49,14 +49,11 @@
 	item_state = "disintegrate"
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
-
-/obj/item/weapon/nullrod/godhand/dropped(mob/user)
-	qdel(src)
 
 /obj/item/weapon/nullrod/staff
 	icon_state = "godstaff-red"
@@ -277,7 +274,7 @@
 			H.adjustBruteLoss(8) //Bonus damage
 
 /obj/item/weapon/nullrod/fedora
-	name = "athiest's fedora"
+	name = "atheist's fedora"
 	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
@@ -354,10 +351,10 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/nullrod/tribal_knife/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/nullrod/tribal_knife/process()

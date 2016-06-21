@@ -12,7 +12,8 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	ventcrawler = 2
 	var/is_adult = 0
 	var/docile = 0
-	languages = SLIME | HUMAN
+	languages_spoken = SLIME | HUMAN
+	languages_understood = SLIME | HUMAN
 	faction = list("slime")
 
 	harm_intent_damage = 5
@@ -112,13 +113,13 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	set_colour(pick(slime_colours))
 
 /mob/living/simple_animal/slime/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
 	icon_dead = "[icon_text] dead"
 	if(stat != DEAD)
 		icon_state = icon_text
 		if(mood && !stat)
-			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
+			add_overlay(image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]"))
 	else
 		icon_state = icon_dead
 	..()
@@ -419,4 +420,4 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		return 3
 
 /mob/living/simple_animal/slime/random/New(loc, new_colour, new_is_adult)
-	. = ..(loc, pick(slime_colours), new_is_adult)
+	. = ..(loc, pick(slime_colours), prob(50))
