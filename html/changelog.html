@@ -86,6 +86,16 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.06.21</h2>
+			<h3 class="author">Shadowmech88 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The utility borer's fleshshot now requires 10 chems to fire if the borer is using it to swing an item. It costs nothing if the host's hand is empty.</li>
+				<li class="tweak">Utility borers are now incapable of using their fleshshot while their host is stunned, or has silicate in their system.</li>
+				<li class="rscadd">Borers will now take damage while their host has sodium chloride in their system, and will die from it after roughly 40 seconds.</li>
+				<li class="rscadd">Borers now slowly regenerate health while inside a host.</li>
+				<li class="rscadd">Borers can now see their health in the status tab.</li>
+			</ul>
+
 			<h2 class="date">2016.06.20</h2>
 			<h3 class="author">DrCelt updated:</h3>
 			<ul class="changes bgimages16">
@@ -1639,42 +1649,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<h3 class="author">Zth updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Fixed flatpacks dissapearing when unstacking them.</li>
-			</ul>
-
-			<h2 class="date">2016.01.25</h2>
-			<h3 class="author">DrCelt updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">SUMMARY</li>
-				<li class="rscadd">Heat transfer Rehaul</li>
-				<li class="rscadd">Hypothermia added</li>
-				<li class="rscadd">changes to things that cause cold damage</li>
-				<li class="rscadd">space blankets</li>
-				<li class="rscadd">ghetto space suits with space blankets</li>
-				<li class="rscadd">thermal homeostasis regulator that when emagged becomes the mancrowave</li>
-				<li class="tweak">changes to cryo</li>
-				<li class="experiment">INDEPTH EXPLANATION OF HEAT TRANSFER</li>
-				<li class="tweak">removes useless variables heat_protection & cold_protection as these were in 99% of circumstances the exact same as body_parts_covered</li>
-				<li class="rscadd">added a new variable, heat_conductivity to all items, determining how fast they conduct heat away from you</li>
-				<li class="rscadd">added new procs to humans, sweat() & burn_calories() - Now whenever you use up nutriment, you generate heat, but can also expend nutriment to decrease heat.</li>
-				<li class="rscadd">refactored how heat transfer away from humans worked ( see above)</li>
-				<li class="experiment">INDEPTH EXPLANATION OF HYPOTHERMIA</li>
-				<li class="rscadd">added Mild Hypothermia (between 32 and 35C) - this results in shivering, minor slowdown and messages informing the player that they are cold.</li>
-				<li class="rscadd">added Moderate hypothermia (between 28 and 32C) - Shivering stops, slowdown increases, may slur/stutter words, chance of dropping items in hand and collapsing temporarily, as well as a 25% chance of forgetting how to use machines like when braindamaged</li>
-				<li class="rscadd">added severe hypothermia (24 to 28C), shivering stops, player is unconcious, pulse decreases to 30BPM and has a 25% chance of taking 5 oxygen damage, which decreases over time as you are still breathing.</li>
-				<li class="rscadd">added profound hypothermia (less than 24C), pulse stops, player has a 25% chance of taking 5 oxygen damage, does not decrease over time as they are not breathing.</li>
-				<li class="tweak">CHANGES THINGS WHICH CAUSE COLD DAMAGE, including but not limited to coldingtons, cryokinesis, showers, goliaths, temperature gun, and chemicals which chill people. Foam fire extinguishers are not affected.</li>
-				<li class="experiment">THERMAL HOMEOSTASIS REGULATOR</li>
-				<li class="experiment">Please use this when taking someone out of cryo</li>
-				<li class="tweak">When a person is dragged in, it will automatically begin stabilising, there is no need for more buttons to be pressed</li>
-				<li class="tweak">Takes 5 seconds to heat/cool someone to 37C, which works out as quicker than shaking someone up.</li>
-				<li class="rscadd">Can be emagged to allow for three extra settings - this process is extremely visible, and there is a different sprite for when an emagged function is used</li>
-				<li class="rscadd">Can reenable security features to quickly unemag the device and Can bring the device to an emergency stop.</li>
-				<li class="experiment">CHANGES TO CRYO</li>
-				<li class="tweak">Cryo now releases someone at 23C instead of -12C (or 25C if they manually eject)</li>
-				<li class="experiment">PLEASE USE THE THERMAL HOMEOSTASIS REGULATOR AFTER TAKING PEOPLE OUT OF CRYO</li>
-				<li class="tweak">Manual eject time brought down from 2 minutes to 30 seconds to make it time-neutral</li>
-				<li class="tweak">This means that, as the person is ejected below profound hypothermia, they will not breathe until they heat up a wee bit further. This is a positive change, as vox & plasmamen will no longer die from toxin damage/fire immediately after leaving cryo.</li>
-				<li class="rscadd">People inside a cryo cell do not suffer from hypothermia until leaving.</li>
 			</ul>
 		</div>
 		<!--
