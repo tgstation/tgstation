@@ -40,7 +40,7 @@
 		user << "<span class='brass'>Can be used to convert walls, floors, windows, airlocks, windoors, and grilles to clockwork variants.</span>"
 		user << "<span class='brass'>Can also form some objects into Replicant Alloy, as well as reform Clockwork Walls into Clockwork Floors, and vice versa.</span>"
 		if(metal_to_alloy)
-			user << "<span class='alloy'>It can convert metal and plasteel to liquified replicant alloy at a very low rate.</span>"
+			user << "<span class='alloy'>It can convert rods, metal, and plasteel to liquified replicant alloy at a low rate.</span>"
 		if(uses_alloy)
 			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
@@ -162,16 +162,22 @@
 			return FALSE
 	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "alloy_cost" = REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
-/obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+/obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(!proselytizer.metal_to_alloy)
 		return 0
 	var/prosel_costtime = -amount
 	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
 
-/obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+/obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(!proselytizer.metal_to_alloy)
 		return 0
 	var/prosel_costtime = -amount*2
+	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
+
+/obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	if(!proselytizer.metal_to_alloy)
+		return 0
+	var/prosel_costtime = -amount*3
 	return list("operation_time" = -prosel_costtime, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = prosel_costtime, "spawn_dir" = SOUTH)
 
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
