@@ -563,7 +563,8 @@ Class Procs:
 				to_chat(user, "\The [src] has to be unwelded from the floor first.")
 				return -1 //state set to 2, can't do it
 			else
-				if(wrenchAnchor(user) && machine_flags && FIXED2WORK) //wrenches/unwrenches into place if possible, the updates the power
+				if(wrenchAnchor(user) && machine_flags && FIXED2WORK) //wrenches/unwrenches into place if possible, then updates the power and state if necessary
+					state = anchored
 					power_change() //updates us to turn on or off as necessary
 					return 1
 		else
@@ -598,7 +599,7 @@ Class Procs:
 
 	if(istype(O, /obj/item/weapon/storage/bag/gadgets/part_replacer))
 		return exchange_parts(user, O)
-
+		
 /obj/machinery/proc/wirejack(var/mob/living/silicon/pai/P)
 	if(!(machine_flags & WIREJACK))
 		return 0
@@ -654,7 +655,7 @@ Class Procs:
 	
 /obj/machinery/can_wrench_shuttle()
 	return (machine_flags & SHUTTLEWRENCH)
-	
+
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/bag/gadgets/part_replacer/W)
 	var/shouldplaysound = 0
 	if(component_parts)
