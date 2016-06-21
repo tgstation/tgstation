@@ -382,6 +382,7 @@
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = 0
 
+
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
@@ -404,6 +405,32 @@
 /obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
+
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+	name = "OOOH BABY"
+	desc = "<span class='warn'>VRRRRRRR!!!</span>"
+	force = 20
+	armour_penetration = 100
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/attack_self(mob/user)
+	on = !on
+	user << "You viciously yank the cord dangling from \the [src], [on ? "and it roars to life, screaming along with your bloodlust." : "grows dormant."]"
+	force = on ? 80 : 20
+	throwforce = on ? 80 : 20
+	icon_state = "chainsaw_[on ? "on" : "off"]"
+
+	if(hitsound == "swing_hit")
+		hitsound = 'sound/weapons/chainsawhit.ogg'
+	else
+		hitsound = "swing_hit"
+
+	if(src == user.get_active_hand()) //update inhands
+		user.update_inv_l_hand()
+		user.update_inv_r_hand()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
