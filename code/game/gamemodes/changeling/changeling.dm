@@ -99,7 +99,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		greet_changeling(changeling)
 		ticker.mode.update_changeling_icons_added(changeling)
 	..()
-	return
 
 /datum/game_mode/changeling/make_antag_chance(mob/living/carbon/human/character) //Assigns changeling to latejoiners
 	var/changelingcap = min( round(joined_player_list.len/(config.changeling_scaling_coeff*2))+2, round(joined_player_list.len/config.changeling_scaling_coeff) )
@@ -298,6 +297,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/datum/cellular_emporium/cellular_emporium
+	var/datum/action/innate/cellular_emporium/emporium_action
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -313,9 +314,17 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 
+	cellular_emporium = new(src)
+	emporium_action = new(cellular_emporium)
+
+/datum/changeling/Destroy()
+	qdel(cellular_emporium)
+	cellular_emporium = null
+	. = ..()
 
 /datum/changeling/proc/regenerate(var/mob/living/carbon/the_ling)
 	if(istype(the_ling))
+		emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -486,7 +495,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/changelingprofile/Destroy()
 	qdel(dna)
-	return ..()
+	. = ..()
 
 /datum/changelingprofile/proc/copy_profile(datum/changelingprofile/newprofile)
 	newprofile.name = name
