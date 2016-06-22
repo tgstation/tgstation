@@ -12,3 +12,4 @@
 		#define EMPTY_AREA_4 "Empty Area 4"
 		#define AWAY_MISSION "Away Mission"
 		#define AWAY_MISSION_LIST list(AWAY_MISSION = SELFLOOPING)
+		#define MINE_LINK SELFLOOPING

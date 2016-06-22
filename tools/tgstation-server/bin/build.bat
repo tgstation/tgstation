@@ -8,6 +8,9 @@ set DME_LOCATION=%DME_FOLDER%%PROJECTNAME%.dme
 set MDME_LOCATION=%DME_FOLDER%%PROJECTNAME%.mdme
 
 @del %MDME_LOCATION% >nul 2>nul
+if defined NOLAVALAND (
+echo #define NOLAVALAND 1 >>%MDME_LOCATION%
+)
 if defined MAPROTATE set MAPFILE=%MAPROTATE%
 if not defined MAPFILE goto BUILD
 
