@@ -527,11 +527,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			A.update_icon()
 	for(var/obj/machinery/power/smes/S in view(7, invoker))
 		if(S.charge)
-			power_drained += min(S.charge, 1000)
-			S.charge = max(0, S.charge - 1000)
+			power_drained += min(S.charge, 500)
+			S.charge = max(0, S.charge - 50000)
 			if(!S.charge && !S.panel_open)
 				S.panel_open = TRUE
-				S.update_icon()
+				S.icon_state = "[initial(S.icon_state)]-o"
 				var/datum/effect_system/spark_spread/spks = new(get_turf(S))
 				spks.set_up(10, 0, get_turf(S))
 				spks.start()
@@ -543,9 +543,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			C.charge = C.use(max(0, C.charge - 500))
 			C.updateicon()
 	for(var/obj/machinery/light/L in view(7, invoker))
-		playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
-		L.flicker(2)
-		power_drained += 50
+		if(L.on)
+			playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
+			L.flicker(2)
+			power_drained += 50
 	for(var/mob/living/silicon/robot/R in view(7, invoker))
 		if(!is_servant_of_ratvar(R) && R.cell.charge)
 			power_drained += min(R.cell.charge, 500)
@@ -921,20 +922,20 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/interdiction_lens //Interdiction Lens: Creates a powerful obelisk that can perform a variety of powerful sabotages every five minutes.
+/datum/clockwork_scripture/create_object/interdiction_lens //Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils.
 	descname = "Structure, Disables Machinery"
 	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that can sabotage a variety of mechanical apparatus. Requires a lengthy recharge between uses."
+	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission."
 	invocations = list("Znl guvf gbgrz...", "...fuebhq gur snyfr fhaf!")
 	channel_time = 60
 	required_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	object_path = /obj/structure/clockwork/powered/interdiction_lens
-	creator_message = "<span class='brass'>You form an interdiction lens, which can disrupt machinery every few minutes.</span>"
-	observer_message = "<span class='warning'>A brass obelisk rises from the ground, a purple gem appearing in its center!</span>"
+	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
+	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Can disrupt telecommunications, disable all cameras, or disable all cyborgs."
+	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 
