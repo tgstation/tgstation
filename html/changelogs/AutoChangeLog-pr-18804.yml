@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Tinkerer's Caches generate components(when near clockwork walls) every minute and a half, from every 35 seconds. Clockwork Slabs generate components once per minute, from once per 50 seconds."
