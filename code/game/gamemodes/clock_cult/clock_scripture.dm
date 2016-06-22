@@ -300,19 +300,17 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/sentinels_compromise //Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
 	descname = "Convert Brute/Burn to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby friendly cultist, but deals 50% of that amount as toxin damage."
+	desc = "Heals all brute and burn damage on a nearby living, friendly cultist, but deals 50% of that amount as toxin damage."
 	invocations = list("Zraq gur jbhaqf-bs...", "...zl vasrevbe syrfu.") //"Mend the wounds of my inferior flesh."
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "You cannot target yourself with the Compromise."
+	usage_tip = "The Compromise is very fast to invoke."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/sentinels_compromise/scripture_effects()
 	var/list/nearby_cultists = list()
 	for(var/mob/living/C in range(7, invoker))
-		if(C == invoker)
-			continue
 		if(C.stat != DEAD && is_servant_of_ratvar(C))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
@@ -327,15 +325,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!totaldamage)
 		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
 		return 0
-	L.adjustToxLoss(brutedamage / 2)
-	L.adjustToxLoss(burndamage / 2)
+	L.adjustToxLoss(totaldamage * 0.5)
 	L.adjustBruteLoss(-brutedamage)
 	L.adjustFireLoss(-burndamage)
 	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 	var/targetturf = get_turf(L)
 	for(var/i in 1 to healseverity)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
-	invoker << "<span class='brass'>You bathe [L] with Inath-Neq's power!</span>"
+	invoker << "<span class='brass'>You bathe [L] in Inath-Neq's power!</span>"
 	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Inath-Neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
