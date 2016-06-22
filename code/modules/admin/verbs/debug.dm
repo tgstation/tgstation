@@ -735,3 +735,21 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)
 		return
 	debug_variables(huds[i])
+
+
+/client/proc/world_repop()
+	set category = "Debug"
+	set name = "Repopulate world"
+	set desc = "Remakes any object or mob (NOT TURF) that was destroyed to the initial state."
+
+	if(!check_rights(R_DEBUG)) return
+
+	if(alert("Are you sure? This will NOT remake any turfs or anything not defined in the map itself. It will also cause lag",,"Yes","No") != "Yes")
+		return
+
+	world.Repop()
+
+	log_admin("[key_name(usr)] triggered a world  repopulation.")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] triggered a world repopulation.</span>")
+	feedback_add_details("admin_verb","REPOPW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
