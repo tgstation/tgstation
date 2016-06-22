@@ -12,7 +12,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "ac" = (
 /obj/structure/grille,
@@ -40,7 +40,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "ae" = (
 /obj/machinery/shieldwallgen{
@@ -58,7 +58,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "af" = (
 /obj/machinery/shieldwallgen{
@@ -70,7 +70,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "ag" = (
 /obj/structure/grille,
@@ -665,7 +665,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/shieldwallgen,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bu" = (
 /obj/structure/flora/ausbushes/sunnybush,
@@ -715,21 +715,21 @@
 /area/ruin/unpowered)
 "bB" = (
 /obj/structure/alien/weeds,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bC" = (
 /obj/structure/alien/weeds/node,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bD" = (
 /obj/item/clothing/mask/facehugger{
 	icon_state = "facehugger_dead";
 	stat = 2
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bE" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -745,7 +745,7 @@
 /area/ruin/unpowered)
 "bH" = (
 /obj/structure/alien/resin/wall,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bI" = (
 /obj/structure/flora/ausbushes/reedbush,
@@ -759,7 +759,7 @@
 /area/ruin/unpowered)
 "bK" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "bL" = (
 /obj/machinery/light/small{
@@ -781,11 +781,11 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bO" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bP" = (
 /obj/structure/lattice,
@@ -804,14 +804,14 @@
 	tag = ""
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bR" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /obj/structure/disposaloutlet,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space)
 "bS" = (
 /obj/structure/cable{
@@ -821,21 +821,21 @@
 	},
 /obj/structure/cable,
 /obj/machinery/shieldwallgen,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bT" = (
 /obj/structure/grille,
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bU" = (
 /obj/structure/grille{
 	density = 0;
 	icon_state = "brokengrille"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "bV" = (
 /obj/machinery/shieldwallgen,
@@ -845,6 +845,9 @@
 /obj/item/weapon/shard,
 /turf/open/space,
 /area/space)
+"bX" = (
+/turf/open/floor/plating/airless,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 aa
@@ -1172,7 +1175,7 @@ ac
 bC
 bH
 bH
-bv
+bX
 bT
 aa
 "}
@@ -1193,7 +1196,7 @@ aL
 aD
 bD
 bB
-bv
+bX
 bO
 bU
 bW
@@ -1215,8 +1218,8 @@ aQ
 ac
 bB
 bB
-bv
-bv
+bX
+bX
 bP
 aa
 "}

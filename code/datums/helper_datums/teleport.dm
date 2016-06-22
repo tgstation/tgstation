@@ -172,9 +172,14 @@
 /proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
 	if(!zlevels)
 		zlevels = list(zlevel)
-	for(var/cycle in 1 to 100)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
-		var/random_location = locate(rand(37,202),rand(75,192),pick(zlevels))
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
+
 		if(!(istype(random_location, /turf/open/floor)))
 			continue
 		var/turf/open/floor/F = random_location
