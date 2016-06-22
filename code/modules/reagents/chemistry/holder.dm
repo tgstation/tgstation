@@ -542,7 +542,10 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-
+	
+	if(isnull(amount))
+		amount = INFINITY
+		
 	if(!isnum(amount))
 		return 1
 

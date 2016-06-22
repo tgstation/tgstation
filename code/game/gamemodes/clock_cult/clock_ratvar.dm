@@ -23,6 +23,7 @@
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "nothing"
 	density = TRUE
+	can_be_repaired = FALSE
 	var/progress_in_seconds = 0 //Once this reaches GATEWAY_RATVAR_ARRIVAL, it's game over
 	var/purpose_fulfilled = FALSE
 	var/first_sound_played = FALSE
@@ -196,8 +197,7 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	spawn(50)
-		SSshuttle.emergency.request(null, 0.3)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()

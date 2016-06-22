@@ -94,6 +94,8 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
+	M.languages_spoken |= RATVAR
+	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
@@ -122,6 +124,8 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
+	M.languages_spoken &= ~RATVAR
+	M.languages_understood &= ~RATVAR
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))

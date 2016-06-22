@@ -95,8 +95,8 @@
 	icon_living = "drone_clock"
 	icon_dead = "drone_clock_dead"
 	picked = TRUE
-	languages_spoken = HUMAN
-	languages_understood = HUMAN
+	languages_spoken = RATVAR
+	languages_understood = HUMAN|RATVAR
 	health = 60
 	maxHealth = 60
 	hacked = 1
@@ -129,10 +129,10 @@
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, \
-	an inbuilt proselytizer that can convert metal and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with <i>:b</i>, \
-	and are immune to extreme temperatures and pressures. \n Your goal is to serve the Justiciar and his servants by repairing and defending all they create. \
-	You yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
+	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
+	metal, and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, and are immune to extreme \
+	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
+	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
 
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
