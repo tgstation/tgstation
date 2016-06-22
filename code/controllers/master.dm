@@ -152,6 +152,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		timer += world.tick_lag * rand(1, 5)
 		SS.next_fire = timer
 
+
 // Starts the mc, and sticks around to restart it if the loop ever ends.
 /datum/controller/master/proc/StartProcessing()
 	set waitfor = 0
