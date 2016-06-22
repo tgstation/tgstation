@@ -42,7 +42,8 @@
 	name = "NT Recovery White-Ship";
 	roundstart_move = "whiteship_away";
 	travelDir = 180;
-	width = 27
+	width = 27;
+	timid = 1
 	},
 /obj/machinery/door/airlock/shuttle{
 	name = "recovery shuttle external airlock"
@@ -577,6 +578,8 @@
 	},
 /area/shuttle/abandoned)
 "ba" = (
+/obj/structure/frame/machine,
+/obj/item/weapon/circuitboard/machine/cyborgrecharger,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -724,6 +727,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "br" = (
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -810,12 +814,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
+/obj/structure/fluff/empty_sleeper/nanotrasen{
 	dir = 1;
-	icon = 'icons/obj/Cryogenic2.dmi';
-	icon_state = "sleeper-o";
-	name = "broken hypersleep chamber";
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -829,12 +829,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
+/obj/structure/fluff/empty_sleeper/nanotrasen{
 	dir = 1;
-	icon = 'icons/obj/Cryogenic2.dmi';
-	icon_state = "sleeper-o";
-	name = "broken hypersleep chamber";
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -1084,12 +1080,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
+/obj/structure/fluff/empty_sleeper/nanotrasen{
 	dir = 2;
-	icon = 'icons/obj/Cryogenic2.dmi';
-	icon_state = "sleeper-o";
-	name = "broken hypersleep chamber";
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -1103,12 +1095,8 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/machinery/constructable_frame/machine_frame{
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. There are exposed bolts for easy detachment using a wrench.";
+/obj/structure/fluff/empty_sleeper/nanotrasen{
 	dir = 2;
-	icon = 'icons/obj/Cryogenic2.dmi';
-	icon_state = "sleeper-o";
-	name = "broken hypersleep chamber";
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -1180,7 +1168,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "cf" = (
-/obj/structure/computerframe,
+/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1349,6 +1337,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "cw" = (
+/obj/structure/fluff/empty_sleeper/nanotrasen,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1357,8 +1346,8 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "cx" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/autolathe,
+/obj/structure/fluff/empty_sleeper/nanotrasen,
+/obj/item/weapon/circuitboard/machine/autolathe,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1472,8 +1461,8 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "cH" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/chem_dispenser,
+/obj/structure/fluff/empty_sleeper/nanotrasen,
+/obj/item/weapon/circuitboard/machine/chem_dispenser,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1493,7 +1482,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "cJ" = (
-/obj/machinery/constructable_frame/machine_frame,
+/obj/structure/fluff/empty_sleeper/nanotrasen,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -1948,9 +1937,9 @@ aL
 aY
 bh
 aL
-bx
+bA
 bL
-bx
+bX
 aL
 ac
 ap
@@ -1965,13 +1954,13 @@ aM
 aZ
 bi
 aL
-bz
+bB
 bM
-bz
+bY
 ce
 aF
 cw
-bx
+cH
 cV
 ad
 "}
@@ -2004,8 +1993,8 @@ bO
 ax
 aL
 bh
-bx
-bx
+cx
+cJ
 cX
 ad
 "}
@@ -2016,9 +2005,9 @@ aO
 aZ
 bk
 aL
-bx
+bA
 bP
-bx
+bX
 aL
 ac
 ap
@@ -2033,9 +2022,9 @@ aP
 ba
 aF
 aL
-bx
+bA
 bQ
-bz
+bY
 aL
 cn
 cy
@@ -2087,7 +2076,7 @@ br
 bC
 aL
 bZ
-bx
+cf
 ad
 cA
 cN
