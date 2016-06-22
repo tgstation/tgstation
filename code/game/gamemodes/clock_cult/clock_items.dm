@@ -577,7 +577,9 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
 	w_class = 3
-	flags = NOSLIP
+	strip_delay = 50
+	put_on_delay = 50
+	burn_state = FIRE_PROOF
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
