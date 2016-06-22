@@ -36,6 +36,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft = 1200						//pregame timer
 
@@ -88,8 +89,8 @@ var/datum/subsystem/ticker/ticker
 			timeLeft -= wait
 
 			if(timeLeft <= 300 && !tipped)
-				send_random_tip()
-				tipped = 1
+				send_tip_of_the_round()
+				tipped = TRUE
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
@@ -447,13 +448,21 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
-/datum/subsystem/ticker/proc/send_random_tip()
-	var/list/randomtips = file2list("config/tips.txt")
-	var/list/memetips = file2list("config/sillytips.txt")
-	if(randomtips.len && prob(95))
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
-	else if(memetips.len)
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
+/datum/subsystem/ticker/proc/send_tip_of_the_round()
+	var/m
+	if(selected_tip)
+		m = selected_tip
+	else
+		var/list/randomtips = file2list("config/tips.txt")
+		var/list/memetips = file2list("config/sillytips.txt")
+		if(randomtips.len && prob(95))
+			m = pick(randomtips)
+		else if(memetips.len)
+			m = pick(memetips)
+
+	if(m)
+		world << "<font color='purple'><b>Tip of the round: \
+			</b>[html_encode(m)]</font>"
 
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
@@ -525,6 +534,7 @@ var/datum/subsystem/ticker/ticker
 
 	triai = ticker.triai
 	tipped = ticker.tipped
+	selected_tip = ticker.selected_tip
 
 	timeLeft = ticker.timeLeft
 

@@ -1064,7 +1064,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
 /client/proc/show_tip()
-	set category = "Fun"
+	set category = "Admin"
 	set name = "Show Tip"
 	set desc = "Sends a tip (that you specify) to all players. After all \
 		you're the experienced player here."
@@ -1076,13 +1076,16 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(!input)
 		return
 
-	if(ticker)
-		ticker.tipped = TRUE
+	if(!ticker)
+		return
 
-	world << "<font color='purple'><b>Tip of the round: </b>\
-		[html_encode(input)]</font>"
+	ticker.selected_tip = input
 
-	message_admins("[key_name_admin(usr)] sent \"[input]\" as the \
-		Tip of the Round.")
+	// If we've already tipped, then send it straight away.
+	if(ticker.tipped)
+		ticker.send_tip_of_the_round()
+
+
+	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	feedback_add_details("admin_verb","TIP")
