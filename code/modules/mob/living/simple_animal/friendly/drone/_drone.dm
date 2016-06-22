@@ -58,10 +58,15 @@
 	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
+
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
+	var/obj/item/device/radio/radio
+
 	var/obj/item/default_storage = /obj/item/weapon/storage/backpack/dufflebag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
+	var/obj/item/device/radio/default_radio
+
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
@@ -80,6 +85,9 @@
 	if(default_hatmask)
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
+	if(default_radio)
+		radio = new default_radio(src)
+		radio.flags |= NODROP
 
 	access_card.flags |= NODROP
 
@@ -114,6 +122,9 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
+	if(radio)
+		qdel(radio)
+	radio = null
 	return ..()
 
 /mob/living/simple_animal/drone/Login()

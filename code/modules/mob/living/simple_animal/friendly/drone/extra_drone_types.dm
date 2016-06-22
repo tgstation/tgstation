@@ -15,8 +15,8 @@
 	icon_state = "drone_synd"
 	icon_living = "drone_synd"
 	picked = TRUE //the appearence of syndrones is static, you don't get to change it.
-	health = 30
-	maxHealth = 120 //If you murder other drones and cannibalize them you can get much stronger
+	health = 50
+	maxHealth = 50
 	faction = list("syndicate")
 	speak_emote = list("hisses")
 	bubble_icon = "syndibot"
@@ -27,15 +27,14 @@
 	"3. Destroy."
 	default_storage = /obj/item/device/radio/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	default_radio = /obj/item/device/radio/headset/syndicate
 	seeStatic = 0 //Our programming is superior.
 
 /mob/living/simple_animal/drone/syndrone/New()
 	..()
 	internal_storage.hidden_uplink.telecrystals = 10
-
-/mob/living/simple_animal/drone/syndrone/Login()
-	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	access_card.access |= access_syndicate
+	access_card.access |= access_syndicate_leader
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
