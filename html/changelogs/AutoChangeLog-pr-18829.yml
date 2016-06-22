@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Flame produced by a Judicial Visor is no longer an effective melee weapon and will trigger on all intents, not just harm intent."
