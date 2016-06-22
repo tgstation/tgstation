@@ -193,7 +193,7 @@ var/paperwork_library
 	origin_tech = "materials=1"
 	sharpness = 0.5
 	flags = FPRINT
-	slot_flags = SLOT_BELT | slot_ears
+	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
