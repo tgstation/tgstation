@@ -82,6 +82,14 @@
 /mob/living/simple_animal/hostile/hades/New()
 	..()
 
+	//helper_datums/map_template.dmm make this a generic function
+
+	var/list/bounds = maploader.load_map('_maps/map_files/generic/chapel.dmm')
+	initTemplateZLevel(bounds)
+	log_game("Chapel of Sin loaded by [src] spawning.")
+
+	//
+
 	sinLightning = new/obj/effect/proc_holder/spell/targeted/lightning(src)
 
 	sinLightning.charge_max = 1
