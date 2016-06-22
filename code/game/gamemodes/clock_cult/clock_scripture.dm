@@ -494,6 +494,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 
+/datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
+	for(var/obj/structure/clockwork/ocular_warden/W in range(3, invoker))
+		user << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+		return 0
+	return ..()
 
 
 /datum/clockwork_scripture/channeled/volt_void //Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
