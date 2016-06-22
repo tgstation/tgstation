@@ -6,7 +6,7 @@
 	name = "Unknown"
 	var/mob_type = null
 	var/mob_name = ""
-	var/mob_gender = MALE
+	var/mob_gender = null
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
@@ -20,6 +20,10 @@
 	var/oxy_damage = 0
 	density = 1
 	anchored = 1
+
+/obj/effect/mob_spawn/New()
+	if(!mob_gender)
+		mob_gender = pick(MALE, FEMALE)
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
