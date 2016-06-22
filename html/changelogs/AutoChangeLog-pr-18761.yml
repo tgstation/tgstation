@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Scarab proselytizers are more efficient and will reap more alloy from metal and plasteel."
-  - rscadd: "They can also directly convert rods to alloy."
