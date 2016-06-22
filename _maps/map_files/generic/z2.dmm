@@ -2188,7 +2188,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "gD" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -2849,7 +2849,7 @@
 	},
 /area/tdome/tdomeobserve)
 "iH" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
@@ -5793,7 +5793,7 @@
 /turf/open/space/transit,
 /area/space)
 "rU" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},

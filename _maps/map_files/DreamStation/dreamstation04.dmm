@@ -64658,7 +64658,7 @@
 	},
 /area/crew_quarters/hor)
 "cxY" = (
-/obj/structure/flora/kirbyplants/dead,
+/obj/item/weapon/twohanded/required/kirbyplants/dead,
 /obj/structure/cable/pink{
 	tag = "icon-4-8";
 	icon_state = "4-8"
