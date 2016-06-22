@@ -454,8 +454,7 @@
 					spks.start()
 		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
 			successfulprocess = FALSE
-		if(total_accessable_power() >= disrupt_cost)
-			var/costused = 0
+		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
 			for(var/M in atoms_to_test)
 				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
 					var/obj/machinery/light/L = M
@@ -464,30 +463,31 @@
 						L.flicker(3)
 				if(istype(M, /obj/machinery/camera))
 					var/obj/machinery/camera/C = M
-					if(C.emped || C.isEmpProof())
+					if(C.isEmpProof())
+						continue
+					successfulprocess = TRUE
+					if(C.emped)
 						continue
 					if(!try_use_power(disrupt_cost))
 						break
-					costused += disrupt_cost
-					successfulprocess = TRUE
 					C.emp_act(1)
 				else if(istype(M, /obj/item/device/radio))
 					var/obj/item/device/radio/O = M
+					successfulprocess = TRUE
 					if(O.emped)
 						continue
 					if(!try_use_power(disrupt_cost))
 						break
 					costused += disrupt_cost
-					successfulprocess = TRUE
 					O.emp_act(1)
 				else //there's probably not another radio in that radio, right?
 					var/atom/movable/A = M
 					for(var/obj/item/device/radio/O in A.GetAllContents())
+						successfulprocess = TRUE
 						if(O.emped)
 							continue
 						if(!try_use_power(disrupt_cost))
 							break
-						successfulprocess = TRUE
 						costused += disrupt_cost
 						O.emp_act(1)
 		if(!successfulprocess)
