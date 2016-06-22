@@ -356,6 +356,8 @@
 		else
 			return //Don't make blood
 	var/obj/effect/decal/cleanable/blood/B = getFromPool(/obj/effect/decal/cleanable/blood, get_turf(src))
+	B.basecolor = species.blood_color
+	B.update_icon()
 	B.New(B.loc)
 	B.blood_DNA = list()
 	B.blood_DNA[src.dna.unique_enzymes] = src.dna.b_type
