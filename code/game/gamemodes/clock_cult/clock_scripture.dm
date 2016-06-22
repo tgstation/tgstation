@@ -496,7 +496,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
 	for(var/obj/structure/clockwork/ocular_warden/W in range(3, invoker))
-		user << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+		invoker << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
 		return 0
 	return ..()
 
