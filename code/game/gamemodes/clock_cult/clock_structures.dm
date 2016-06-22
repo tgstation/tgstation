@@ -569,6 +569,9 @@
 		qdel(linked_gateway)
 		qdel(src)
 		return 1
+	if(istype(I, /obj/item/clockwork/slab))
+		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
+		return 1
 	if(user.drop_item())
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
 		pass_through_gateway(I)
