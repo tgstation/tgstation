@@ -42,8 +42,7 @@
 	name = "NT Recovery White-Ship";
 	roundstart_move = "whiteship_away";
 	travelDir = 180;
-	width = 27;
-	timid = 1
+	width = 27
 	},
 /obj/machinery/door/airlock/shuttle{
 	name = "recovery shuttle external airlock"
@@ -578,8 +577,6 @@
 	},
 /area/shuttle/abandoned)
 "ba" = (
-/obj/machinery/constructable_frame/machine_frame,
-/obj/item/weapon/circuitboard/cyborgrecharger,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -727,7 +724,6 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/abandoned)
 "br" = (
-/obj/structure/computerframe,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1353,7 +1349,6 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "cw" = (
-/obj/machinery/constructable_frame/machine_frame,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1953,9 +1948,9 @@ aL
 aY
 bh
 aL
-bA
+bx
 bL
-bX
+bx
 aL
 ac
 ap
@@ -1970,13 +1965,13 @@ aM
 aZ
 bi
 aL
-bB
+bz
 bM
-bY
+bz
 ce
 aF
 cw
-cH
+bx
 cV
 ad
 "}
@@ -2009,8 +2004,8 @@ bO
 ax
 aL
 bh
-cx
-cJ
+bx
+bx
 cX
 ad
 "}
@@ -2021,9 +2016,9 @@ aO
 aZ
 bk
 aL
-bA
+bx
 bP
-bX
+bx
 aL
 ac
 ap
@@ -2038,9 +2033,9 @@ aP
 ba
 aF
 aL
-bA
+bx
 bQ
-bY
+bz
 aL
 cn
 cy
@@ -2092,7 +2087,7 @@ br
 bC
 aL
 bZ
-cf
+bx
 ad
 cA
 cN
