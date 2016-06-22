@@ -8,4 +8,4 @@ if [ ! -d "/tmp/nvm" ]; then
 fi
 
 source /tmp/nvm/nvm.sh
-gulp --min
+gulp
