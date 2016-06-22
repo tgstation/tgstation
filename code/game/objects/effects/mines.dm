@@ -115,12 +115,15 @@
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
 	color = "red"
+	var/songplaying = 0
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
 		return
 	victim << "<span class='reallybig redtext'>RIP AND TEAR</span>"
-	world << 'sound/misc/e1m1.ogg' //let everybody know theres a psycho with basically an energy axe running around
+	if(!songplaying)//if songplaying is zero
+		world << 'sound/misc/e1m1.ogg' //let everybody know theres a psycho with basically an energy axe running around
+		songplaying = 1
 	var/old_color = victim.client.color
 	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
 	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
@@ -142,6 +145,7 @@
 	animate(victim.client,color = old_color, time = duration)//, easing = SINE_EASING|EASE_OUT)
 	sleep(duration)
 	victim << "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.<span>"
+	songplaying = 0
 	qdel(chainsaw)
 	qdel(src)
 
