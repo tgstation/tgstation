@@ -1672,6 +1672,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else if((!isnull(cartridge)) && (cartridge.access_mechanic))
 					if(!dev_analys)
 						dev_analys = new(src) //let's create that device analyser
+						dev_analys.cant_drop = 1
 						dev_analys.max_designs = 5
 					scanmode = 6
 
@@ -2211,6 +2212,7 @@ obj/item/device/pda/AltClick()
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 	if(scanmode == 5)
 		if(atmos_analys)
+			atmos_analys.cant_drop = 1
 			if(A.Adjacent(user))
 				if(!A.attackby(atmos_analys, user))
 					atmos_analys.afterattack(A, user, 1)

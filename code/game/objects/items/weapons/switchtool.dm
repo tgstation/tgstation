@@ -116,6 +116,7 @@
 	playsound(get_turf(src), "sound/weapons/switchblade.ogg", 10, 1)
 	deployed = null
 	overlays.len = 0
+	deployed.cant_drop = 0
 	w_class = initial(w_class)
 
 /obj/item/weapon/switchtool/proc/deploy(var/module)
@@ -127,6 +128,7 @@
 
 	playsound(get_turf(src), "sound/weapons/switchblade.ogg", 10, 1)
 	deployed = stored_modules[module]
+	deployed.cant_drop = 1
 	overlays += get_module_name(module)
 	w_class = max(w_class, deployed.w_class)
 
