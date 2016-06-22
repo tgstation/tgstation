@@ -413,7 +413,6 @@
 		var/list/atoms_to_test = list()
 		for(var/atom/movable/M in urange(interdiction_range, src))
 			atoms_to_test |= M
-			CHECK_TICK
 		for(var/M in atoms_to_test)
 			if(istype(M, /obj/machinery/power/apc))
 				var/obj/machinery/power/apc/A = M
@@ -455,8 +454,11 @@
 		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
 			successfulprocess = FALSE
 		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
+			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 			for(var/M in atoms_to_test)
-				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
+				if(ismob(M))
+					flash_color(M, flash_color="#EE54DE", flash_time=5)
+				else if(istype(M, /obj/machinery/light)) //cosmetic light flickering
 					var/obj/machinery/light/L = M
 					if(L.on)
 						playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
@@ -474,7 +476,7 @@
 				else if(istype(M, /obj/item/device/radio))
 					var/obj/item/device/radio/O = M
 					successfulprocess = TRUE
-					if(O.emped)
+					if(O.emped || !O.on)
 						continue
 					if(!try_use_power(disrupt_cost))
 						break
@@ -483,7 +485,7 @@
 					var/atom/movable/A = M
 					for(var/obj/item/device/radio/O in A.GetAllContents())
 						successfulprocess = TRUE
-						if(O.emped)
+						if(O.emped || !O.on)
 							continue
 						if(!try_use_power(disrupt_cost))
 							break
