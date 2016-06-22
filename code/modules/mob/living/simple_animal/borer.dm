@@ -91,9 +91,13 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	// Event handles
 	var/eh_emote
 
-/mob/living/simple_animal/borer/New(var/loc)
+	var/static/list/name_prefixes = list("Primary","Secondary","Tertiary","Quaternary","Quinary","Senary","Septenary","Octonary","Nonary","Denary")
+	var/name_prefix_index = 1
+
+/mob/living/simple_animal/borer/New(var/loc, var/egg_prefix_index = 1)
 	..(loc)
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	name_prefix_index = min(egg_prefix_index, 10)
+	truename = "[name_prefixes[name_prefix_index]] [capitalize(pick(borer_names))]"
 	host_brain = new/mob/living/captive_brain(src)
 
 	if(name == initial(name)) // Easier reporting of griff.
@@ -284,7 +288,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 			var/controls = "<a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>Follow</a>"
 			if(M.client.holder)
 				controls+= " | <A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>"
-			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) -> <b>[host]:</b> [encoded_message]</span>"
+			var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[truename]</b> ([controls]) in <b>[host]</b>'s [limb_to_name(hostlimb)]: [encoded_message]</span>"
 			M.show_message(rendered, 2) //Takes into account blindness and such.
 
 	/*
@@ -954,7 +958,8 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 			playsound(T, 'sound/effects/splat.ogg', 50, 1)
 			if(istype(T, /turf/simulated))
 				T.add_vomit_floor(null, 1)
-			new /obj/item/weapon/reagent_containers/food/snacks/borer_egg(T)
+			var/obj/item/weapon/reagent_containers/food/snacks/borer_egg/E = new (T)
+			E.child_prefix_index = (name_prefix_index + 1)
 		busy=0
 
 	else
