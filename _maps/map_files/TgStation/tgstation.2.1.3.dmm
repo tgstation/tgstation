@@ -57804,14 +57804,6 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/ai_slipper{
 	icon_state = "motion0";
 	uses = 10
@@ -58118,11 +58110,6 @@
 "cvU" = (
 /obj/structure/cable{
 	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
@@ -60207,11 +60194,6 @@
 	d2 = 4;
 	icon_state = "1-4";
 	tag = "90Curve"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
