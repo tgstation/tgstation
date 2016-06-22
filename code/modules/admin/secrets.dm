@@ -581,12 +581,14 @@
 			mass_purrbation()
 			message_admins("[key_name_admin(usr)] has put everyone on \
 				purrbation!")
+			log_admin("[key_name(usr)] has put everyone on purrbation.")
 		if("massremovepurrbation")
 			if(!check_rights(R_FUN))
 				return
 			mass_remove_purrbation()
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
+			log_admin("[key_name(usr)] has removed everyone from purrbation.")
 
 	if(E)
 		E.processing = 0
