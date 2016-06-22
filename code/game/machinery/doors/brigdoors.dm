@@ -92,8 +92,7 @@
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(door.density)
 			continue
-		spawn(0)
-			door.close()
+		addtimer(door, "close", 0)
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)
@@ -122,8 +121,7 @@
 	for(var/obj/machinery/door/window/brigdoor/door in targets)
 		if(!door.density)
 			continue
-		spawn(0)
-			door.open()
+		addtimer(door, "open", 0)
 
 	for(var/obj/structure/closet/secure_closet/brig/C in targets)
 		if(C.broken)

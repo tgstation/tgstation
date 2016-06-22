@@ -126,17 +126,17 @@
 	clockwork_construction_value++
 
 /turf/open/floor/clockwork/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_construction_value--
 	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/process()
 	if(!healservants())
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/clockwork/proc/healservants()
 	for(var/mob/living/L in src)

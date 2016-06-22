@@ -1,7 +1,0 @@
-author: "Wizard's Federation"
-delete-after: True
-changes: 
-  - bugfix: "We've fired the old Pope, who was actually an apprentice in disguise. We've a-pope-riately replaced him with a much more experienced magic user."
-  - rscadd: "Some less-then-sane people have been sighted forming mysterious cults in lieu of recent Pope sightings, lashing out at anyone who speaks ill of him."
-  - bugfix: "We've rejiggered our trans-dimensional rifts, and almost all cases of clergy members being flung into nothingness should be resolved."
-  - bugfix: "All members of the Space Wizard's Clergy have been appropriately warned about usage of skin-to-stone spells, and such there should be no more instances of permanent statueification."

@@ -14,6 +14,8 @@
 	layer = BELOW_OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
+	var/repair_amount = 5 //how much a proselytizer can repair each cycle
+	var/can_be_repaired = TRUE //if a proselytizer can repair it at all
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
@@ -147,12 +149,12 @@
 
 /obj/structure/clockwork/cache/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_caches++
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -185,25 +187,6 @@
 		user << "<span class='notice'>You add [C] to [src].</span>"
 		user.drop_item()
 		qdel(C)
-		return 1
-	else if(istype(I, /obj/item/clockwork/clockwork_proselytizer))
-		var/obj/item/clockwork/clockwork_proselytizer/P = I
-		if(P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy)
-			if(clockwork_component_cache["replicant_alloy"])
-				user.visible_message("<span class='notice'>[user] places the end of [P] in the hole in [src]...</span>", \
-				"<span class='notice'>You start filling [P] with liquified alloy...</span>")
-				while(P && P.uses_alloy && P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"] && do_after(user, 10, target = src) \
-				&& P && P.uses_alloy &&  P.stored_alloy + REPLICANT_ALLOY_UNIT <= P.max_alloy && clockwork_component_cache["replicant_alloy"]) //hugeass check because we need to re-check after the do_after
-					P.modify_stored_alloy(REPLICANT_ALLOY_UNIT)
-					clockwork_component_cache["replicant_alloy"]--
-					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				if(P && user)
-					user.visible_message("<span class='notice'>[user] removes [P] from the hole in [src], apparently satisfied.</span>", \
-					"<span class='brass'>You finish filling [P] with liquified alloy. It now contains [P.stored_alloy]/[P.max_alloy] units of liquified alloy.</span>")
-			else
-				user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
-		else
-			user << "<span class='warning'>[P]'s containers of liquified alloy are full!</span>"
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
@@ -324,10 +307,10 @@
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
-	SSfastprocess.processing += src
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/clockwork/ocular_warden/Destroy()
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
@@ -343,16 +326,19 @@
 		if(!(target in validtargets))
 			lose_target()
 		else
-			target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
-			if(ratvar_awakens && target)
-				target.adjust_fire_stacks(damage_per_tick)
-				target.IgniteMob()
-			setDir(get_dir(get_turf(src), get_turf(target)))
+			if(!target.null_rod_check())
+				target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+				if(ratvar_awakens && target)
+					target.adjust_fire_stacks(damage_per_tick)
+					target.IgniteMob()
+				setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
 			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+			if(target.null_rod_check() && !ratvar_awakens)
+				target << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
@@ -362,7 +348,7 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND))
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check())
 			. += L
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
@@ -492,7 +478,11 @@
 			for(var/mob/living/L in range(1, src))
 				if(is_servant_of_ratvar(L))
 					continue
-				if(!iscultist(L))
+				if(L.null_rod_check())
+					var/obj/item/I = L.null_rod_check()
+					L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+					"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+				else if(!iscultist(L))
 					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
 					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
 					L.Weaken(8)
@@ -619,7 +609,7 @@
 
 /obj/effect/clockwork/general_marker
 	name = "general marker"
-	desc = "Some big guy."
+	desc = "Some big guy. For you."
 	clockwork_desc = "One of Ratvar's generals."
 	alpha = 200
 	layer = MASSIVE_OBJ_LAYER
@@ -699,6 +689,10 @@
 		var/mob/living/L = AM
 		if(L.stat <= stat_affected)
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
+				if(L.null_rod_check())
+					var/obj/item/I = L.null_rod_check()
+					L.visible_message("<span class='warning'>[L]'s [I.name] protects them from [src]'s effects!</span>", "<span class='userdanger'>Your [I.name] protects you!</span>")
+					return
 				sigil_effects(L)
 			return 1
 

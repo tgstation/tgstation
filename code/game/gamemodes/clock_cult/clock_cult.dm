@@ -48,6 +48,8 @@ This file's folder contains:
 		return 0
 	if(iscultist(M) || isconstruct(M))
 		return 0
+	if(isbrain(M))
+		return 1
 	if(ishuman(M))
 		if(isloyal(M) || (M.mind.assigned_role in list("Captain", "Chaplain")))
 			return 0
@@ -92,6 +94,8 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
+	M.languages_spoken |= RATVAR
+	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
@@ -120,6 +124,8 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
+	M.languages_spoken &= ~RATVAR
+	M.languages_understood &= ~RATVAR
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -153,8 +159,8 @@ This file's folder contains:
 	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
 	var/required_escapees = 0 //How many servants need to escape, if applicable
 	var/required_silicon_converts = 0 //How many robotic lifeforms need to be converted, if applicable
-	var/clockwork_objective = "escape" //The objective that the servants must fulfill
-	var/clockwork_explanation = "Ensure that the meme levels of the station remain high." //The description of the current objective
+	var/clockwork_objective = "gateway" //The objective that the servants must fulfill
+	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
@@ -287,8 +293,10 @@ This file's folder contains:
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			feedback_set_details("round_end_result", "win - servants summoned ratvar")
 		else
 			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

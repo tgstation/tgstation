@@ -34,7 +34,7 @@
 				if(WEST)
 					buckled_mob.pixel_x = 2
 			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 4
+				buckled_mob.pixel_y = 5
 			else
 				buckled_mob.pixel_y = -4
 
@@ -73,6 +73,18 @@
 		H.adjustStaminaLoss(40)
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
+
+/obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)
+	var/mob/living/carbon/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
+		return
+	if(has_buckled_mobs() && over_object == M)
+		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
+		return
+	if(over_object == M)
+		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
+		M.put_in_hands(board)
+		qdel(src)
 
 //CONSTRUCTION
 /obj/item/scooter_frame

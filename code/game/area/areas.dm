@@ -117,8 +117,7 @@
 					if(D.operating)
 						D.nextstate = CLOSED
 					else if(!D.density)
-						spawn(0)
-							D.close()
+						addtimer(D, "close", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 		for (var/obj/machinery/camera/C in RA)
@@ -143,8 +142,7 @@
 					if(D.operating)
 						D.nextstate = OPEN
 					else if(D.density)
-						spawn(0)
-							D.open()
+						addtimer(D, "open", 0)
 			for(var/obj/machinery/firealarm/F in RA)
 				F.update_icon()
 
@@ -177,8 +175,7 @@
 	for (var/mob/living/silicon/SILICON in player_list)
 		if(SILICON.triggerAlarm("Burglar", src, cameras, trigger))
 			//Cancel silicon alert after 1 minute
-			spawn(600)
-				SILICON.cancelAlarm("Burglar", src, trigger)
+			addtimer(SILICON, "cancelAlarm", 600, FALSE,"Burglar",src,trigger)
 
 /area/proc/set_fire_alarm_effect()
 	fire = 1
@@ -218,9 +215,7 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
-	return
+					addtimer(D, "open", 0)
 
 /area/proc/updateicon()
 	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.

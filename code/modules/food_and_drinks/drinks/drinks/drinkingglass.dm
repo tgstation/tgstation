@@ -511,6 +511,10 @@
 				icon_state = "arnold_palmer"
 				name = "Arnold Palmer"
 				desc = "You feel like taking a few golf swings after a few swigs of this."
+			if("hcider")
+				icon_state = "whiskeyglass"
+				name = "Hard Cider"
+				desc = "Tastes like autumn."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -561,6 +565,10 @@
 				icon_state = "shotglassbrown"
 				name = "shot of whiskey"
 				desc = "Just like the old west."
+			if("hcider")
+				icon_state = "shotglassbrown"
+				name = "shot of hard cider"
+				desc = "Not meant to be drinken from a shot glass."
 			if("rum")
 				icon_state = "shotglassbrown"
 				name = "shot of rum"

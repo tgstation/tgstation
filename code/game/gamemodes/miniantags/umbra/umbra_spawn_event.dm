@@ -1,7 +1,7 @@
 /datum/round_event_control/spawn_umbra
 	name = "Spawn Umbra"
 	typepath = /datum/round_event/ghost_role/umbra
-	weight = 15
+	weight = 0 //Admin-only for the time being
 	earliest_start = 6000
 	max_occurrences = 3
 

@@ -5,6 +5,8 @@
 	unique_name = 1
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
+	languages_spoken = RATVAR
+	languages_understood = HUMAN|RATVAR
 	healable = FALSE
 	del_on_death = TRUE
 	bubble_icon = "clock"
@@ -46,6 +48,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
+	SetLuminosity(2,1)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -116,6 +119,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
 	true_name = pick(possible_true_names)
+	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
