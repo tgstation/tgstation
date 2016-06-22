@@ -146,7 +146,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload
+	/client/proc/map_template_upload,
+	/client/proc/analyze_air
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

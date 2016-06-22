@@ -735,3 +735,17 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)
 		return
 	debug_variables(huds[i])
+
+/client/proc/analyze_air()
+	set category = "Debug"
+	set name = "Analyze Air"
+	set desc = "Displays what an air analyzer would output if used on this \
+		turf."
+	if(!holder)
+		return
+
+	var/turf/location = get_turf(usr)
+	if(!istype(location))
+		return
+	var/datum/gas_mixture/environment = location.return_air()
+	print_environment(usr, environment)
