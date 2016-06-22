@@ -112,7 +112,7 @@
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-//Clockwork floor: Slowly heals conventional damage on nearby servants.
+//Clockwork floor: Slowly heals toxin damage on nearby servants.
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
@@ -126,8 +126,24 @@
 	clockwork_construction_value++
 
 /turf/open/floor/clockwork/Destroy()
+	SSobj.processing -= src
 	clockwork_construction_value--
 	return ..()
+
+/turf/open/floor/clockwork/Entered(atom/movable/AM)
+	..()
+	SSobj.processing |= src
+
+/turf/open/floor/clockwork/process()
+	if(!healservants())
+		SSobj.processing -= src
+
+/turf/open/floor/clockwork/proc/healservants()
+	for(var/mob/living/L in src)
+		if(L.stat == DEAD || !is_servant_of_ratvar(L))
+			continue
+		L.adjustToxLoss(-3)
+		. = 1
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
