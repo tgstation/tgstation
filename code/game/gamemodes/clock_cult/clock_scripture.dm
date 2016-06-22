@@ -258,7 +258,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used. In addition, the flame itself is a powerful melee weapon."
+	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
 	tier = SCRIPTURE_DRIVER
 
 
