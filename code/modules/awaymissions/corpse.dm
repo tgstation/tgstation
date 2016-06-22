@@ -21,10 +21,6 @@
 	density = 1
 	anchored = 1
 
-/obj/effect/mob_spawn/New()
-	if(!mob_gender)
-		mob_gender = pick(MALE, FEMALE)
-
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
@@ -70,6 +66,8 @@
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
+		if(!mob_gender)
+			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
