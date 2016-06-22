@@ -132,6 +132,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_debug_del_all,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
+	/client/proc/world_repop,
 	/client/proc/callproc,
 	/client/proc/callproc_datum,
 	/client/proc/SDQL2_query,
