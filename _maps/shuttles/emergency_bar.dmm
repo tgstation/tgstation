@@ -174,7 +174,7 @@
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -324,7 +324,7 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -505,7 +505,7 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "bG" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;

@@ -2030,7 +2030,7 @@
 	name = "UO45 Central Hall"
 	})
 "do" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3814,7 +3814,7 @@
 	name = "UO45 Central Hall"
 	})
 "fT" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6672,7 +6672,7 @@
 	name = "UO45 Gateway"
 	})
 "kh" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8742,7 +8742,7 @@
 	})
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -10726,7 +10726,7 @@
 	name = "UO45 Research"
 	})
 "pl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12210,7 +12210,7 @@
 	name = "UO45 Engineering"
 	})
 "rk" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -16005,7 +16005,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
