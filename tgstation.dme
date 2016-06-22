@@ -1699,6 +1699,7 @@
 #include "code\modules\shuttle\emergency.dm"
 #include "code\modules\shuttle\ferry.dm"
 #include "code\modules\shuttle\manipulator.dm"
+#include "code\modules\shuttle\ripple.dm"
 #include "code\modules\shuttle\shuttle.dm"
 #include "code\modules\shuttle\special.dm"
 #include "code\modules\shuttle\supply.dm"
