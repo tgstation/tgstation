@@ -23,7 +23,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/proc/initTemplateZLevel(var/list/bounds)
+/proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -59,7 +59,7 @@
 		return 0
 
 	//initialize things that are normally initialized after map load
-	initTemplateZLevel(bounds)
+	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return 1

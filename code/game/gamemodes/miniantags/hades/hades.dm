@@ -85,7 +85,7 @@
 	//helper_datums/map_template.dmm make this a generic function
 
 	var/list/bounds = maploader.load_map('_maps/map_files/generic/chapel.dmm')
-	initTemplateZLevel(bounds)
+	initTemplateBounds(bounds)
 	log_game("Chapel of Sin loaded by [src] spawning.")
 
 	//
