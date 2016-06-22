@@ -126,25 +126,8 @@
 	clockwork_construction_value++
 
 /turf/open/floor/clockwork/Destroy()
-	SSobj.processing -= src
 	clockwork_construction_value--
 	return ..()
-
-/turf/open/floor/clockwork/Entered(atom/movable/AM)
-	..()
-	SSobj.processing |= src
-
-/turf/open/floor/clockwork/process()
-	if(!healservants())
-		SSobj.processing -= src
-
-/turf/open/floor/clockwork/proc/healservants()
-	for(var/mob/living/L in src)
-		if(L.stat == DEAD || !is_servant_of_ratvar(L))
-			continue
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-		. = 1
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
