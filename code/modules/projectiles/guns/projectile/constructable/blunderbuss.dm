@@ -97,7 +97,7 @@
 	for(var/i=1, i<=prohibited_items.len, i++)
 		if(istype(W,prohibited_items[i]))
 			item_prohibited = 1
-	if(!loaded_item && istype(W,/obj/item) && !istype(W,/obj/item/weapon/reagent_containers) && !item_prohibited)
+	if(!loaded_item && istype(W,/obj/item) && !W.is_open_container() && !item_prohibited)
 		if(istype(W, /obj/item/stack))
 			var/obj/item/stack/S = W
 			S.use(1)
@@ -113,10 +113,10 @@
 	else if(!loaded_item && item_prohibited)
 		to_chat(user, "<span class='warning'>That won't fit into the muzzle!</span>")
 		return 1
-	else if(loaded_item && istype(W,/obj/item/weapon/reagent_containers))
+	else if(loaded_item && W.is_open_container())
 		to_chat(user, "<span class='warning'>You can't reach the fuel chamber when there's something stuck in the barrel!</span>")
 		return 1
-	else if(!loaded_item && istype(W,/obj/item/weapon/reagent_containers))
+	else if(!loaded_item && W.is_open_container())
 		transfer_fuel(W, user)
 		return 1
 	else if(loaded_item && istype(W,/obj/item))
@@ -127,6 +127,8 @@
 
 /obj/item/weapon/blunderbuss/proc/transfer_fuel(obj/item/weapon/reagent_containers/S, mob/user as mob)
 	if(!S.is_open_container())
+		return
+	if(!istype(S))
 		return
 	if(S.is_empty())
 		to_chat(user, "<span class='warning'>\The [S] is empty.</span>")
