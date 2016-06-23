@@ -4737,7 +4737,8 @@
 /area/awaymission/snowdin/sekret)
 "mu" = (
 /mob/living/simple_animal/bot/medbot{
-	name = "Accidents Happen",faction=list("syndicate")
+	name = "Accidents Happen";
+	faction = list("syndicate")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;

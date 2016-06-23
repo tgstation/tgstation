@@ -1260,7 +1260,6 @@
 	name = "\improper BMP Asteroid Level 2"
 	})
 "cJ" = (
-/mob/living/simple_animal/hostile/zombie,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},

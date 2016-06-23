@@ -98,7 +98,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "ar" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/shuttle,
@@ -217,7 +217,7 @@
 	},
 /area/shuttle/escape)
 "aM" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},

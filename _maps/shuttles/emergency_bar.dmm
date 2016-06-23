@@ -175,8 +175,10 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-21";
-	icon_state = "plant-21"
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -323,8 +325,10 @@
 /area/shuttle/escape)
 "bc" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-10";
-	icon_state = "plant-10"
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
@@ -502,8 +506,10 @@
 /area/shuttle/escape)
 "bG" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
-	tag = "icon-plant-21";
-	icon_state = "plant-21"
+	icon_state = "plant-21";
+	layer = 4.1;
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)

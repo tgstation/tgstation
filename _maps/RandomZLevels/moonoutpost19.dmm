@@ -2811,7 +2811,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a4{
@@ -2859,7 +2858,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a4{
@@ -2872,7 +2870,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
@@ -7033,7 +7030,7 @@
 	name = "MO19 Research"
 	})
 "jq" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
 	pixel_y = 3
@@ -9709,7 +9706,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a1{
@@ -10113,7 +10109,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a1{
@@ -10158,7 +10153,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
@@ -10182,7 +10176,7 @@
 	name = "MO19 Arrivals"
 	})
 "ob" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
 	pixel_y = 3
@@ -10206,7 +10200,6 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	 = 5;
 	temperature = 251
 	},
 /area/awaycontent/a3{
