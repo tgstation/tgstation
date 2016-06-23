@@ -381,12 +381,16 @@
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = 0
+	var/on_text = "it begins to whirr."
+	var/off_text = "the chain stops moving."
+	force_wielded = 21
+	force_unwielded = 13
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
-	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
-	force = on ? 21 : 13
-	throwforce = on ? 21 : 13
+	user << "As you pull the starting cord dangling from \the [src], [on ? on_text : off_text]"
+	force = on ? force_wielded : force_unwielded
+	throwforce = on ? force_wielded : force_wielded
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 	if(hitsound == "swing_hit")
@@ -404,6 +408,17 @@
 /obj/item/weapon/twohanded/required/chainsaw/get_dismemberment_chance()
 	if(wielded)
 		. = ..()
+
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+	name = "OOOH BABY"
+	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	force = 20
+	armour_penetration = 30
+	force_wielded = 45
+	force_unwielded = 20
+	on_text = "and it roars to life, screaming along with your bloodlust."
+	off_text = "grows dormant."
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
