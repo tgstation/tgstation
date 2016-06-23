@@ -72,8 +72,10 @@
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
 	..()
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in mob_list)
+		if(src.z==2)
+			break
 		if(B != src)
-			//qdel(src) //There can be only one
+			qdel(src) //There can be only one
 			break
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
