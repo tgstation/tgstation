@@ -1061,6 +1061,7 @@
 #include "code\modules\events\brand_intelligence.dm"
 #include "code\modules\events\camerafailure.dm"
 #include "code\modules\events\carp_migration.dm"
+#include "code\modules\events\coffee.dm"
 #include "code\modules\events\communications_blackout.dm"
 #include "code\modules\events\devil.dm"
 #include "code\modules\events\disease_outbreak.dm"
