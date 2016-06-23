@@ -22,6 +22,16 @@ The console is located at computer/gulag_teleporter.dm
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
 
+/obj/machinery/gulag_teleporter/New()
+	..()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
+	B.apply_default_parts(src)
+
+/obj/machinery/gulag_teleporter/power_change()
+	..()
+	update_icon()
+
+
 /obj/machinery/gulag_teleporter/interact(mob/user)
 	if(locked)
 		user << "[src] is locked."
@@ -31,23 +41,37 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/updateUsrDialog()
 	return
 
+/obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
+	if(!state_open && !occupant)
+		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",I))
+			return
+
+	if(default_deconstruction_crowbar(I))
+		return
+
+	if(default_pry_open(I))
+		return
+
+	return ..()
+
 /obj/machinery/gulag_teleporter/update_icon()
-	//no power or maintenance -- no sprites currently
-/*	if(stat & (NOPOWER|BROKEN))
-		icon_state = initial(icon_state) + (state_open ? "_open" : "") + "_unpowered"
+	icon_state = initial(icon_state)
+	//no power or maintenance
+	if(stat & (NOPOWER|BROKEN))
+		icon_state += (state_open ? "_open" : "") + "_unpowered"
 		return
 
 	if((stat & MAINT) || panel_open)
-		icon_state = initial(icon_state) + (state_open ? "_open" : "") + "_maintenance"
-		return */
+		icon_state += "_maintenance"
+		return
 
 	//running and someone in there
 	if(occupant)
-		icon_state = initial(icon_state) + "_occupied"
+		icon_state += "_occupied"
 		return
 
 	//open/closed with no occupant
-	icon_state = initial(icon_state) + (state_open ? "_open" : "")
+	icon_state += (state_open ? "_open" : "")
 
 /obj/machinery/gulag_teleporter/relaymove(mob/user)
 	if(user.stat != CONSCIOUS)
@@ -118,9 +142,16 @@ The console is located at computer/gulag_teleporter.dm
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
 
-//beacon that receives the teleported prisoner
+/obj/item/weapon/circuitboard/machine/gulag_teleporter
+	name = "circuit board (Labor Camp teleporter)"
+	build_path = /obj/machinery/gulag_teleporter
+	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
+	req_components = list(/obj/item/weapon/ore/bluespace_crystal = 2)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+
+/*  beacon that receives the teleported prisoner */
 /obj/structure/gulag_beacon
-	name = "labor camp bluespace receiver pad"
-	desc = "A recieving zone for bluespace teleportations."
+	name = "labor camp bluespace beacon"
+	desc = "A recieving beacon for bluespace teleportations."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "light_on-w"

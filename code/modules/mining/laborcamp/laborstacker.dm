@@ -19,13 +19,20 @@
 	..()
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
-	//addtimer("locate_stacking_machine") //
-	spawn(7)
-		stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if(stacking_machine)
-			stacking_machine.CONSOLE = src
+	addtimer(src, "locate_stacking_machine", 7)
+
+/obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id/prisoner))
+		if(!inserted_id)
+			if(!user.drop_item())
+				return
+			I.loc = src
+			inserted_id = I
+			user << "<span class='notice'>You insert [I].</span>"
+			return
 		else
-			qdel(src)
+			user << "<span class='notice'>There's an ID inserted already.</span>"
+	return ..()
 
 /obj/machinery/mineral/labor_claim_console/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -41,6 +48,7 @@
 	data["emagged"] = emagged
 	if(inserted_id)
 		data["id"] = inserted_id
+		data["id_name"] = inserted_id.registered_name
 		data["points"] = inserted_id.points
 		data["goal"] = inserted_id.goal
 	if(check_auth())
@@ -105,11 +113,12 @@
 		return 1 //Shuttle is emagged, let any ol' person through
 	return (istype(inserted_id) && inserted_id.points >= inserted_id.goal) //Otherwise, only let them out if the prisoner's reached his quota.
 
-/obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id))
-		return ..() // to do: insert id
+/obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
+	stacking_machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+	if(stacking_machine)
+		stacking_machine.CONSOLE = src
 	else
-		return ..()
+		qdel(src)
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
@@ -123,14 +132,6 @@
 /obj/machinery/mineral/stacking_machine/laborstacker
 	var/points = 0 //The unclaimed value of ore stacked.  Value for each ore loosely relative to its rarity.
 	var/list/ore_values = list("glass" = 1, "metal" = 2, "solid plasma" = 20, "plasteel" = 23, "reinforced glass" = 4, "gold" = 20, "silver" = 20, "uranium" = 20, "diamond" = 25, "bananium" = 50)
-
-/*/obj/machinery/mineral/stacking_machine/laborstacker/proc/get_ore_values()
-	var/ore_name
-	var/value
-	for(var/ore in ore_values)
-		var/value = ore_values[ore]
-		ores += "<tr><td>[capitalize(ore)]</td><td>[value]</td></tr>"
-	return ores*/
 
 /obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/inp)
 	if(istype(inp))

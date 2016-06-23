@@ -5,6 +5,7 @@
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
 	req_access = list(access_security)
+	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null
 	var/obj/machinery/gulag_teleporter/teleporter = null
@@ -50,6 +51,8 @@
 	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
 		prisoner = teleporter.occupant
 		prisoner_list["name"] = prisoner.name
+		if(id)
+			can_teleport = TRUE
 		if(!isnull(data_core.general))
 			for(var/r in data_core.security)
 				var/datum/data/record/R = r
@@ -68,10 +71,8 @@
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
 	if(id)
 		data["id"] = id
-		data["id_name"] = id.name
+		data["id_name"] = id.registered_name
 		data["goal"] = id.goal
-		if((teleporter && beacon) && data["prisoner"])
-			can_teleport = TRUE
 	data["can_teleport"] = can_teleport
 
 	return data
