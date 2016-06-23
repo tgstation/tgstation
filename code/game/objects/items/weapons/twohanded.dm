@@ -414,7 +414,7 @@
 	name = "OOOH BABY"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	force = 20
-	armour_penetration = 30
+	armour_penetration = 100
 	force_wielded = 45
 	force_unwielded = 20
 	on_text = "and it roars to life, screaming along with your bloodlust."
