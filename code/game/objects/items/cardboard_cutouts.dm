@@ -35,6 +35,16 @@
 	else
 		return ..()
 
+/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
+	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
+	if(prob(P.damage))
+		name = initial(name)
+		desc = "[initial(desc)] It's been pushed over."
+		icon_state = "cutout_pushed_over"
+		color = initial(color)
+		pushed_over = TRUE
+
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
 		return
