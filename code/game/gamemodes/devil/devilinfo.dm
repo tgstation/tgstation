@@ -435,5 +435,6 @@ var/global/list/lawlorify = list (
 	soulCounter = SOULVALUE
 	var/obj/screen/devil/soul_counter/K = new()
 	K.update()
+	var/mob/living/carbon/D = new()
 	D.handle_devil()
 	world.log << "13"
