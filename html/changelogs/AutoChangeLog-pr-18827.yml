@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "You can no longer place ocular wardens very close to other ocular wardens."
