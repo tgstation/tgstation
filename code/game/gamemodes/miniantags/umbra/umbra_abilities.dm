@@ -98,7 +98,7 @@
 		user << "<span class='warning'>[target] is mindless and incapable of higher thought!</span>"
 		revert_cast()
 		return
-	if(target.type == /mob/living/simple_animal/hostile/guardian)
+	if(isguardian(target))
 		user << "<span class='warning'>You see a confusing overlay of memories from two seperate viewpoints. Useless.</span>"
 		revert_cast()
 		return
