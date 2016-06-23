@@ -360,10 +360,10 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bi" = (
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/table/reinforced,
@@ -372,7 +372,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bk" = (
 /obj/machinery/vending/cigarette,
@@ -413,14 +413,14 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/firstaid/brute,
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock{
@@ -446,7 +446,7 @@
 "bw" = (
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
@@ -465,7 +465,7 @@
 /obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
 /obj/item/weapon/surgicaldrill,
-/turf/open/floor/plasteel/airless/shuttle/white,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bA" = (
 /turf/closed/wall/shuttle{
@@ -500,9 +500,9 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bF" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/restraints/handcuffs,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bG" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -580,7 +580,27 @@
 /area/shuttle/escape)
 "bS" = (
 /obj/machinery/door/airlock/glass_medical,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"bV" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/obj/structure/sign/bluecross_2,
 /turf/open/floor/plasteel/airless/shuttle/white,
+/area/shuttle/escape)
+"bU" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/closed/wall/shuttle/smooth,
+/area/shuttle/escape)
+"bT" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	tag = "icon-plant-10";
+	icon_state = "plant-10"
+	},
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -744,7 +764,7 @@ aN
 aN
 aE
 aE
-bR
+bU
 ak
 ak
 bf
@@ -768,7 +788,7 @@ aR
 bd
 aN
 aE
-ay
+bV
 bh
 bw
 bz
@@ -814,9 +834,9 @@ aY
 bb
 bN
 be
-bG
+bT
 bk
-aB
+bF
 br
 br
 bq

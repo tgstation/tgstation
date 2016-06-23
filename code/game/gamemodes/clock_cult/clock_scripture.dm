@@ -258,7 +258,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	whispered = TRUE
 	object_path = /obj/item/clothing/glasses/judicial_visor
 	creator_message = "<span class='brass'>You form a judicial visor, which is capable of smiting the unworthy.</span>"
-	usage_tip = "The visor has a thirty-second cooldown once used. In addition, the flame itself is a powerful melee weapon."
+	usage_tip = "The visor has a thirty-second cooldown once used, and the marker it creates has a delay of 3 seconds before exploding."
 	tier = SCRIPTURE_DRIVER
 
 
@@ -494,6 +494,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_SCRIPT
 	one_per_tile = TRUE
 
+/datum/clockwork_scripture/create_object/ocular_warden/check_special_requirements()
+	for(var/obj/structure/clockwork/ocular_warden/W in range(3, invoker))
+		invoker << "<span class='alloy'>You sense another ocular warden too near this location. Placing another this close would cause them to fight.</span>" //fluff message
+		return 0
+	return ..()
 
 
 /datum/clockwork_scripture/channeled/volt_void //Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
@@ -653,7 +658,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Teleport Gate"
 	name = "Spatial Gateway"
 	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
-	Each servant assisting in the invocation adds uses and duration to the gateway. Lasts for ten or more seconds or until it is out of uses."
+	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
 	invocations = list("Gryrcbegre...", "...pbzva evtug-hc!")
 	channel_time = 80
 	required_components = list("replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -684,10 +689,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in range(1, invoker))
 		if(!L.stat && is_servant_of_ratvar(L))
 			portal_uses++
-			duration += 20 //2 seconds
+			duration += 40 //4 seconds
 	if(ratvar_awakens)
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
-		duration = max(duration, 30)
+		duration = max(duration, 100)
 	return invoker.procure_gateway(invoker, duration, portal_uses)
 
 
@@ -1102,32 +1107,32 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
 			var/messaged = FALSE
-			var/distanceA = max(150 - distance, 25)
-			var/distanceB = max(125 - distance, 20)
-			var/distanceC = max(100 - distance, 15)
+			var/visualsdistance = max(175 - distance, 15)
+			var/minordistance = max(125 - distance, 10)
+			var/majordistance = max(75 - distance, 5)
 			if(H.null_rod_check())
-				distanceA = round(distanceA * 0.25)
-				distanceB = round(distanceB * 0.25)
-				distanceC = round(distanceC * 0.25)
+				visualsdistance = round(visualsdistance * 0.25)
+				minordistance = round(minordistance * 0.25)
+				majordistance = round(majordistance * 0.25)
 				H << "<span class='sevtug'>Bu, n ibvq jrncba. Ubj naablvat, V znl nf jryy abg obgure.</span>\n\
 				<span class='warning'>Your holy weapon glows a faint orange in an attempt to defend your mind!</span>"
 				messaged = TRUE
 			if(isloyal(H))
-				distanceA = round(distanceA * 0.5) //half effect for shielded targets
-				distanceB = round(distanceB * 0.5)
-				distanceC = round(distanceC * 0.5)
+				visualsdistance = round(visualsdistance * 0.5) //half effect for shielded targets
+				minordistance = round(minordistance * 0.5)
+				majordistance = round(majordistance * 0.5)
 				if(!messaged)
 					H << "<span class='sevtug'>Bu, ybbx, n zvaqfuvryq. Phgr, V fhccbfr V'yy uhzbe vg.</span>"
 					messaged = TRUE
-			if(!messaged && prob(distanceA))
+			if(!messaged && prob(visualsdistance))
 				H << "<span class='sevtug'>[pick(mindbreaksayings)]</span>"
-			H.playsound_local(T, hum, distanceA, 1)
-			flash_color(H, flash_color="#AF0AAF", flash_time=distanceC*15) //if you're right up next to the invoker this is like a minute and a half of color flash
-			H.set_drugginess(distanceA + H.druggy)
-			H.dizziness = distanceA + H.dizziness
-			H.hallucination = distanceB + H.hallucination
-			H.confused = distanceC + H.confused
-			H.setBrainLoss(distanceC + H.getBrainLoss())
+			H.playsound_local(T, hum, visualsdistance, 1)
+			flash_color(H, flash_color="#AF0AAF", flash_time=visualsdistance*10)
+			H.set_drugginess(visualsdistance + H.druggy)
+			H.dizziness = minordistance + H.dizziness
+			H.hallucination = minordistance + H.hallucination
+			H.confused = majordistance + H.confused
+			H.setBrainLoss(majordistance + H.getBrainLoss())
 	return 1
 
 

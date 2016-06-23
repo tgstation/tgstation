@@ -341,7 +341,7 @@
 				target << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
-				visible_message("<span class='notice'>[src] [pick(idle_messages)]</span>")
+				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
 			else
 				setDir(pick(cardinal))//Random rotation
 
@@ -382,7 +382,7 @@
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
-		A.visible_message("[src][spawn_message]")
+		A.visible_message("<span class='brass'>[src][spawn_message]</span>")
 		S.brainmob.mind.transfer_to(A)
 		add_servant_of_ratvar(A, TRUE)
 		user.drop_item()
@@ -568,6 +568,9 @@
 		user.visible_message("<span class='warning'>[user] dispels [src] with [I]!</span>", "<span class='danger'>You close [src] with [I]!</span>")
 		qdel(linked_gateway)
 		qdel(src)
+		return 1
+	if(istype(I, /obj/item/clockwork/slab))
+		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
 		return 1
 	if(user.drop_item())
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")

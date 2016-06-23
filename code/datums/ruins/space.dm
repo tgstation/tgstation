@@ -1,6 +1,7 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -155,3 +156,79 @@
 	suffix = "way_home.dmm"
 	name = "Salvation"
 	description = "In the darkest times, we will find our way home."
+
+/datum/map_template/ruin/space/djstation
+	id = "djstation"
+	suffix = "djstation.dmm"
+	name = "DJ Station"
+	description = "Until very recently this pirate radio station was used \
+		to harangue local space stations over a variety of perceived \
+		\"ethics violations\". It seems like someone finally got sick of \
+		it, but the equipment still works."
+
+/datum/map_template/ruin/space/thederelict
+	id = "thederelict"
+	suffix = "thederelict.dmm"
+	name = "Kosmicheskaya Stantsiya 13"
+	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open \
+		question to this day. Most corporations deny its existence, \
+		for fear of questioning on what became of its crew."
+
+/datum/map_template/ruin/space/abandonedteleporter
+	id = "abandonedteleporter"
+	suffix = "abandonedteleporter.dmm"
+	name = "Abandoned Teleporter"
+	description = "In space construction the teleporter is often the \
+		first system brought online. This lonely half built teleporter \
+		is a sign of a proposed structure that for one reason or another \
+		just never got built."
+
+/datum/map_template/ruin/space/crashedclownship
+	id = "crashedclownship"
+	suffix = "crashedclownship.dmm"
+	name = "Crashed Clown Ship"
+	description = "For centuries the promise of a new clown homeworld \
+		has been the siren call for countless clown vessels. Alas the \
+		clown's lust for shinanagans means that successful voyages \
+		are almost unheard of, with most vessels falling to hilarious \
+		consequences almost immediately."
+
+/datum/map_template/ruin/space/crashedship
+	id = "crashedship"
+	suffix = "crashedship.dmm"
+	name = "Crashed Ship"
+	description = "Among civilian vessels the most common cause of \
+		tragedy is lack of food. This ship was outfited with a \
+		multitude of food generating features, then summarily ran \
+		into an asteroid shortly after takeoff."
+
+/datum/map_template/ruin/space/listeningstation
+	id = "listeningstation"
+	suffix = "listeningstation.dmm"
+	name = "Syndicate Listening Station"
+	description = "Listening stations form the backbone of the \
+		syndicate's information gathering operations. Assignment to \
+		these stations is dreaded by most agents, as it entails long \
+		and lonely shifts listening to nearby stations chatter \
+		incessently about the most meaningless things."
+
+/datum/map_template/ruin/space/oldAIsat
+	id = "oldAIsat"
+	suffix = "oldAIsat.dmm"
+	name = "Abandoned Telecommunications Satellite"
+	description = "When the inspector told the employees that they \
+		were all fired, and that their jobs \"could be done by \
+		trained lizards anyway\", they reacted badly. This event and \
+		others is the reason why Central always sends an ERT squad with \
+		their competent inspectors. Incompetent inspectors are told \
+		they can \"do it alone\" because they're \"that pro\". \
+		Incompetent inspectors believe this."
+
+/datum/map_template/ruin/space/oldteleporter
+	id = "oldteleporter"
+	suffix = "oldteleporter.dmm"
+	name = "Detached Teleporter"
+	description = "The structure of this surprisingly intact \
+		teleporter suggests that it was once part of a larger structure, \
+		but what remains of said structure, if anything, can \
+		only be guessed at."
