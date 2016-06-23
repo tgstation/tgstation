@@ -1823,3 +1823,13 @@ client/proc/check_convertables()
 		spiral_block(epicenter,max_range,1,1)
 	else
 		spiral_block(epicenter,max_range,0,1)
+
+/client/proc/view_runtimes()
+	set category = "Debug"
+	set name = "View Runtimes"
+	set desc = "Open the Runtime Viewer"
+
+	if (!check_rights(R_DEBUG))
+		return
+
+	error_cache.show_to(src)

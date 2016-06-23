@@ -1382,10 +1382,6 @@ proc/rotate_icon(file, state, step = 1, aa = FALSE)
 	B.fingerprintshidden = A.fingerprintshidden
 	B.fingerprintslast = A.fingerprintslast
 
-/world/Error(exception/e)
-	print_runtime(e)
-	..()
-
 //Checks if any of the atoms in the turf are dense
 //Returns 1 is anything is dense, 0 otherwise
 /turf/proc/has_dense_content()

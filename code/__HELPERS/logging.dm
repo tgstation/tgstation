@@ -135,3 +135,27 @@
 /proc/log_startup_progress(var/message)
 	to_chat(world, "<span class='danger'>[message]</span>")
 	world.log << message
+
+/proc/datum_info_line(var/datum/D)
+	if (!istype(D))
+		return
+
+	if (!istype(D, /mob))
+		return "[D] ([D.type])"
+
+	var/mob/M = D
+	return "[M] ([M.ckey]) ([M.type])"
+
+/proc/atom_loc_line(var/atom/A)
+	if (!istype(A))
+		return
+
+	var/turf/T = get_turf(A)
+	if (isturf(T))
+		return "[T] ([T.x], [T.y], [T.z]) ([T.type])"
+
+	else if (A.loc)
+		return "[A.loc] (nullspace) ([A.loc.type])"
+
+	else
+		return "(nullspace)"

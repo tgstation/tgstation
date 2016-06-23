@@ -198,7 +198,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_dump_macprofile,
 #endif
 	/client/proc/debugNatureMapGenerator,
-	/client/proc/callatomproc
+	/client/proc/callatomproc,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

@@ -31,7 +31,7 @@ JOBS_HAVE_MINIMAL_ACCESS
 ## log OOC channel
 LOG_OOC
 
-## log client Say 
+## log client Say
 LOG_SAY
 
 ## log admin actions
@@ -77,7 +77,7 @@ LOG_PDA
 # KICK_INACTIVE
 
 ## probablities for game modes chosen in "secret" and "random" modes
-## 
+##
 ## default probablity is 1, increase to make that mode more likely to be picked
 ## set to 0 to disable that mode
 ## Cult mode is in alpha test, enable at your own risk
@@ -180,7 +180,7 @@ GUEST_BAN
 ##Remove the # mark infront of this to forbid admins from posssessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM. 
+## Remove the # to show a popup 'reply to' window to every non-admin that recieves an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -270,7 +270,7 @@ RESPAWN_AS_MOMMI
 ## where the music files are. It's set in config with MEDIA_SECRET_KEY
 ## and MUST be the same as the media server's.
 ##
-##  If you're using older code that doesn't require a password, just 
+##  If you're using older code that doesn't require a password, just
 ## leave this blank.
 ##
 ##  Do NOT share this, it's like a password.
@@ -294,6 +294,16 @@ SKIP_MINIMAP_GENERATION
 ## ENABLE_ROUNDSTART_AWAY_MISSIONS
 ## Uncomment to genereate an away mission at the beginning of each round
 #ENABLE_ROUNDSTART_AWAY_MISSIONS
+
+## Error handling related options.
+## The "cooldown" time for each occurrence of a unique error
+# ERROR_COOLDOWN 600
+## How many occurrences before the next will silence them
+# ERROR_LIMIT 9
+## How long a unique error will be silenced for
+# ERROR_SILENCE_TIME 6000
+## How long to wait between messaging admins about occurrences of a unique error
+# ERROR_MSG_DELAY 50
 
 ## ENABLE_WAGES
 ## Comment out to disable wages being enabled by default.
