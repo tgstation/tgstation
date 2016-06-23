@@ -139,7 +139,9 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
+
 	var/mob/living/carbon/human/H = owner.current
+
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
@@ -155,22 +157,12 @@ var/global/list/lawlorify = list (
 			increase_true_devil()
 		if(ARCH_THRESHOLD)
 			increase_arch_devil()
-
-	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
-	K.update()
-	var/mob/living/carbon/D = new /mob/living/carbon
-	D.handle_devil()
-	soulCounter = SOULVALUE
+	update_hud()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
-
-	soulCounter = SOULVALUE
-	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
-	K.update()
-	var/mob/living/carbon/D = new /mob/living/carbon
-	D.handle_devil()
+	update_hud()
 
 /datum/devilinfo/proc/check_regression()
 	if (form == ARCH_DEVIL)
@@ -439,3 +431,9 @@ var/global/list/lawlorify = list (
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()
 
+/datum/devilinfo/proc/update_hud()
+	soulCounter = SOULVALUE
+	var/obj/screen/devil/soul_counter/K = new()
+	K.update()
+	D.handle_devil()
+	world.log << "13"
