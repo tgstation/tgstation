@@ -88194,6 +88194,7 @@
 	pixel_y = 8
 	},
 /obj/machinery/power/apc{
+	cell_type = 10000;
 	dir = 1;
 	name = "Xenobiology APC";
 	pixel_x = 0;
