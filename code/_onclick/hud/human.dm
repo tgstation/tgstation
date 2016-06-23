@@ -25,28 +25,42 @@
 	var/mob/living/carbon/human/H = usr
 	H.quick_equip()
 
+/obj/screen/devil
+	invisibility = INVISIBILITY_ABSTRACT
+
 /obj/screen/devil/soul_counter
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "Devil-1"
 	name = "souls owned"
-	screen_loc = ui_lingchemdisplay
+	icon_state = "Devil-1"
+	screen_loc = ui_devilsouldisplay
 
-/obj/screen/devil/soul_counter/proc/update(mob/living/carbon/human/H)
+
+/obj/screen/devil/soul_counter/proc/update()
+	world.log << "1"
+	var/mob/living/carbon/human/H = usr
 	if (H.mind.devilinfo)
+		invisibility = 0
+		world.log << "2"
 		if(H.mind.devilinfo.soulCounter < 0)
 			icon_state = "Devil-6"
+			world.log << "3"
 			return
 		switch(H.mind.devilinfo.soulCounter)
-			if (0)
+			if (0,null)
 				icon_state = "Devil-1"
+				world.log << "4"
 			if (1,2)
 				icon_state = "Devil-2"
+				world.log << "5"
 			if (3 to 5)
 				icon_state = "Devil-3"
+				world.log << "6"
 			if (6 to 8)
 				icon_state = "Devil-4"
+				world.log << "7"
 			else
 				icon_state = "Devil-5"
+				world.log << "8"
 	else
 		return
 
@@ -292,8 +306,8 @@
 	lingstingdisplay = new /obj/screen/ling/sting()
 	infodisplay += lingstingdisplay
 
-	devil_soul_display = new /obj/screen/devil/soul_counter
-	infodisplay += devil_soul_display
+	devilsouldisplay = new /obj/screen/devil/soul_counter
+	infodisplay += devilsouldisplay
 
 	zone_select =  new /obj/screen/zone_sel()
 	zone_select.icon = ui_style

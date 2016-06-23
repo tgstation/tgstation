@@ -16,11 +16,13 @@
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
 
+	var/obj/screen/devil/soul_counter
+
 	var/obj/screen/blobpwrdisplay
 
 	var/obj/screen/alien_plasma_display
 
-	var/obj/screen/devil_soul_display
+	var/obj/screen/devilsouldisplay
 
 	var/obj/screen/deity_power_display
 	var/obj/screen/deity_follower_display
@@ -92,6 +94,7 @@
 	healthdoll = null
 	internals = null
 	lingchemdisplay = null
+	soul_counter = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null

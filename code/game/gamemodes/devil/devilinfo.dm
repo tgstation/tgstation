@@ -139,12 +139,6 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
-	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
-	K.update(owner.current)
-	var/mob/living/carbon/D = new /mob/living/carbon
-	D.handle_devil(owner.current)
-	soulCounter = SOULVALUE
-
 	var/mob/living/carbon/human/H = owner.current
 	if(soulsOwned.Find(soul))
 		return
@@ -162,15 +156,21 @@ var/global/list/lawlorify = list (
 		if(ARCH_THRESHOLD)
 			increase_arch_devil()
 
-/datum/devilinfo/proc/remove_soul(datum/mind/soul)
-	soulCounter = SOULVALUE
 	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
-	K.update(owner.current)
+	K.update()
 	var/mob/living/carbon/D = new /mob/living/carbon
-	D.handle_devil(owner.current)
+	D.handle_devil()
+	soulCounter = SOULVALUE
 
+/datum/devilinfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
+
+	soulCounter = SOULVALUE
+	var/obj/screen/devil/soul_counter/K = new /obj/screen/devil/soul_counter
+	K.update()
+	var/mob/living/carbon/D = new /mob/living/carbon
+	D.handle_devil()
 
 /datum/devilinfo/proc/check_regression()
 	if (form == ARCH_DEVIL)

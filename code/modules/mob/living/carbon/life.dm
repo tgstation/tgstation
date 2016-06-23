@@ -21,6 +21,7 @@
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+	handle_devil()
 
 ///////////////
 // BREATHING //
@@ -227,12 +228,16 @@
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/proc/handle_devil()
-	if(mind && hud_used && hud_used.lingchemdisplay)
+	world.log << "9"
+	if(mind && hud_used && hud_used.devilsouldisplay)
+		world.log << "10"
 		if(mind.devilinfo)
-			hud_used.devil_soul_display.invisibility = 0
-			hud_used.devil_soul_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(mind.devilinfo.soulCounter)]</font></div>"
+			world.log << "11"
+			hud_used.devilsouldisplay.invisibility = 0
+			hud_used.devilsouldisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(mind.devilinfo.soulCounter)]</font></div>"
 		else
-			hud_used.devil_soul_display.invisibility = INVISIBILITY_ABSTRACT
+			hud_used.devilsouldisplay.invisibility = INVISIBILITY_ABSTRACT
+			world.log << "12"
 
 
 
