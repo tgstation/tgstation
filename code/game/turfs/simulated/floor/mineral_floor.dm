@@ -6,6 +6,7 @@
  * Bananium floor
  * Diamond floor
  * Uranium floor
+ * Shuttle floor (Titanium)
  */
 
 /turf/open/floor/mineral

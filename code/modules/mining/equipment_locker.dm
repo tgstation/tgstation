@@ -160,25 +160,20 @@
 
 	var/obj/item/stack/sheet/metalstack
 	if(/obj/item/stack/sheet/metal in stack_list)
-		world << "Debug check metalstack"
 		metalstack = stack_list[/obj/item/stack/sheet/metal]
 
 	var/obj/item/stack/sheet/plasmastack
 	if((/obj/item/stack/sheet/mineral/plasma in stack_list))
-		world << "Debug check plasmastack"
 		plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
 
 	var/obj/item/stack/sheet/mineral/titaniumstack
 	if((/obj/item/stack/sheet/mineral/titanium in stack_list))
-		world << "Debug check titanstack"
 		titaniumstack = stack_list[/obj/item/stack/sheet/mineral/titanium]
 
 	if(metalstack && plasmastack && min(metalstack.amount, plasmastack.amount))
 		dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];alloytype1=/obj/item/stack/sheet/metal;alloytype2=/obj/item/stack/sheet/mineral/plasma;alloytypeout=/obj/item/stack/sheet/plasteel'>Smelt</A><BR>")
-		world << "Debug check alloysmeltplasteel"
 	if(titaniumstack && plasmastack && min(titaniumstack.amount, plasmastack.amount))
 		dat += text("Plastitanium Alloy (Titanium + Plasma): <A href='?src=\ref[src];alloytype1=/obj/item/stack/sheet/mineral/titanium;alloytype2=/obj/item/stack/sheet/mineral/plasma;alloytypeout=/obj/item/stack/sheet/mineral/plastitanium'>Smelt</A><BR>")
-		world << "Debug check alloytitasmelt"
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
@@ -232,12 +227,10 @@
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
-		world << "Debug check href"
 		var/alloytype1 = text2path(href_list["alloytype1"])
 		var/alloytype2 = text2path(href_list["alloytype2"])
 		var/alloytypeout = text2path(href_list["alloytypeout"])
 		if(check_access(inserted_id) || allowed(usr))
-			world << "Debug check access"
 			if(!(alloytype1 in stack_list)) return
 			if(!(alloytype2 in stack_list)) return
 			var/obj/item/stack/sheet/stack1 = stack_list[alloytype1]
@@ -245,7 +238,6 @@
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
 			var/obj/item/stack/sheet/alloyout = new alloytypeout
 			alloyout.amount = round(min(desired,50,stack1.amount,stack2.amount))
-			world << "Debug check 3"
 			if(alloyout.amount >= 1)
 				stack1.amount -= alloyout.amount
 				stack2.amount -= alloyout.amount
