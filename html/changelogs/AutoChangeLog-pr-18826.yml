@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Clockwork floors now only heal toxin damage on servants of Ratvar."
