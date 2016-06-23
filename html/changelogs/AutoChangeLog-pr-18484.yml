@@ -1,8 +1,0 @@
-author: "coiax, incoming"
-delete-after: True
-changes: 
-  - rscadd: "Due to budget cuts, the builtin anti-orbit engines on the station have been removed. As such, expect the station to start orbiting the system again, and encounter an unpredictable stellar environment."
-  - rscdel: "All permanent structures (not on station, Centcom or lavaland) have been removed."
-  - rscadd: "All removed structures are now space ruins, and can be placed randomly in space ruin zlevels."
-  - wip: "The White Ship remains at its current location, but has lost any reliable landmarks near it. Its starting position will be made more random in a coming update."
-  - rscadd: "The Space Bar has a small atmos system added and a teleporter. Some other ruins have been cleaned up to not have atmos active turfs."

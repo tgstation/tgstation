@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Due to budget cuts, the shuttle's hyperspace engines now create a visual distortion at their destination, a few seconds before arrival. Crewmembers are encouraged to use these \"ripples\" as an indication of where not to stand."
-  - bugfix: "Shuttles now only run over mobs in turfs they are moving into, rather than the entire rectangle."

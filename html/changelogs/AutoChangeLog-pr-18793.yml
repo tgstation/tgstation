@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "If you are an observer, you can click on transition edges of a Z-level in order to move as a mob would."
