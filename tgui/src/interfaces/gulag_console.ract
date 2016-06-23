@@ -29,9 +29,11 @@
 	<ui-section label='Prisoner ID'>
 		<ui-button action="handle_id">{{data.id ? data.id_name : "-------------"}}</ui-button>
 	</ui-section>
+	{{#if data.id}}
 	<ui-section label='Set ID goal'>
-			<ui-button action="set_goal" state={{data.can_change_goal ? null : 'disabled'}}>{{data.goal}}</ui-button>
+			<ui-button action="set_goal">{{data.goal}}</ui-button>
 	</ui-section>
+	{{/if}}
 	<ui-section label='Occupant'>
 		<span>{{data.prisoner.name ? data.prisoner.name : "No Occupant"}}</span>
 	</ui-section>

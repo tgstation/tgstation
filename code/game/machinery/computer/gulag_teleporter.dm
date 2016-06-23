@@ -38,14 +38,13 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gulag_console", name, 440, 650, master_ui, state)
+		ui = new(user, src, ui_key, "gulag_console", name, 455, 430, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
 	var/list/data = list()
 
 	var/list/prisoner_list = list()
-	var/can_change_goal = FALSE
 	var/can_teleport = FALSE
 
 	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
@@ -68,13 +67,11 @@
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
 	if(id)
-		can_change_goal = TRUE
 		data["id"] = id
 		data["id_name"] = id.name
 		data["goal"] = id.goal
 		if((teleporter && beacon) && data["prisoner"])
 			can_teleport = TRUE
-	data["can_change_goal"] = can_change_goal
 	data["can_teleport"] = can_teleport
 
 	return data
