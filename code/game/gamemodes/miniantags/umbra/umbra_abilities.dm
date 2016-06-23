@@ -98,6 +98,10 @@
 		user << "<span class='warning'>[target] is mindless and incapable of higher thought!</span>"
 		revert_cast()
 		return
+	if(target.type == /mob/living/simple_animal/hostile/guardian)
+		user << "<span class='warning'>You see a confusing overlay of memories from two seperate viewpoints. Useless.</span>"
+		revert_cast()
+		return
 	if(user.possessed)
 		user << "<span class='warning'>Unpossess [user.possessed] first!</span>"
 		revert_cast()
