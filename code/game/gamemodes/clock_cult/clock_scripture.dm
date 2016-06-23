@@ -515,7 +515,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
 	var/power_drained = 0
 	for(var/obj/machinery/power/apc/A in view(7, invoker))
-		if(A.cell.charge)
+		if(A.cell && A.cell.charge)
 			playsound(A, "sparks", 50, 1)
 			flick("apc-spark", A)
 			power_drained += min(A.cell.charge, 500)
@@ -548,7 +548,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			L.flicker(2)
 			power_drained += 50
 	for(var/mob/living/silicon/robot/R in view(7, invoker))
-		if(!is_servant_of_ratvar(R) && R.cell.charge)
+		if(!is_servant_of_ratvar(R) && R.cell && R.cell.charge)
 			power_drained += min(R.cell.charge, 500)
 			R.cell.charge = max(0, R.cell.charge - 500)
 			R << "<span class='userdanger'>ERROR: Power loss detected!</span>"
