@@ -92,7 +92,7 @@
 		return
 //	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 //	if(!msg)	return
-	var/original_msg = msg
+	var/original_msg = sanitize_russian(copytext(msg,1,MAX_MESSAGE_LEN))
 
 	//remove our adminhelp verb temporarily to prevent spamming of admins.
 	src.verbs -= /client/verb/adminhelp
