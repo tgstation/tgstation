@@ -923,7 +923,7 @@ Sorry Giacom. Please don't be mad :(
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
 					if(G.is_dominating)
-						stat(null, "[G.name] Gang Takeover: [max(G.dominating_time_remaining(), 0)]")
+						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 
 /mob/living/cancel_camera()
 	..()
