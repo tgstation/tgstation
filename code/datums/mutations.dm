@@ -236,8 +236,8 @@
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Paralyse(10)
 		owner.Jitter(1000)
-		spawn(90)
-			owner.jitteriness = 10
+		sleep(90)
+		owner.jitteriness = 10
 
 /datum/mutation/human/bad_dna
 

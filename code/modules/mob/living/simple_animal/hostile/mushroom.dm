@@ -64,9 +64,11 @@
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		spawn(30)
-			retreat_distance = null
+		addtimer(src, "stop_retreat", 30)
 	. = ..()
+
+/mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
+	retreat_distance = null
 
 /mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
@@ -108,8 +110,10 @@
 	revive(full_heal = 1)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	spawn(300)
-		recovery_cooldown = 0
+	addtimer(src, "recovery_recharge", 300)
+
+/mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
+	recovery_cooldown = 0
 
 /mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
 	if(powerlevel <= 9)

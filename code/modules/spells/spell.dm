@@ -220,8 +220,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
 			spell.density = 0
-			spawn(overlay_lifespan)
-				qdel(spell)
+			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
@@ -266,8 +265,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
-	return
-
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
@@ -286,7 +283,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			target.AdjustParalysis(amount)
 		else
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
-	return
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
@@ -360,8 +356,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	perform(targets,user=user)
 
-	return
-
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
@@ -374,8 +368,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		return
 
 	perform(targets,user=user)
-
-	return
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))

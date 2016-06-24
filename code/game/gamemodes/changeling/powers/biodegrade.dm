@@ -22,12 +22,14 @@
 			return 0
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid on \his [O]!</span>", \
 							 "<span class='warning'>We vomit acidic ooze onto our restraints!</span>")
-		spawn(30)
-			if(O && user.handcuffed == O)
-				user.unEquip(O)
-				O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
-				O.loc = get_turf(user)
-				qdel(O)
+
+		sleep(30)
+
+		if(O && user.handcuffed == O)
+			user.unEquip(O)
+			O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
+			O.loc = get_turf(user)
+			qdel(O)
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
 		used = 1
@@ -36,12 +38,13 @@
 			return 0
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of \his [S]!</span>", \
 							 "<span class='warning'>We vomit acidic ooze onto our straight jacket!</span>")
-		spawn(30)
-			if(S && user.wear_suit == S)
-				user.unEquip(S)
-				S.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
-				S.loc = get_turf(user)
-				qdel(S)
+		sleep(30)
+
+		if(S && user.wear_suit == S)
+			user.unEquip(S)
+			S.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
+			S.loc = get_turf(user)
+			qdel(S)
 
 	if(istype(user.loc, /obj/structure/closet) && !used)
 		used = 1
@@ -50,14 +53,14 @@
 			return 0
 		C.visible_message("<span class='warning'>[C]'s hinges suddenly begin to melt and run!</span>")
 		user << "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>"
-		spawn(70)
-			if(C && user.loc == C)
-				C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
-				C.welded = 0
-				C.locked = 0
-				C.broken = 1
-				C.open()
-				user << "<span class='warning'>We open the container restraining us!</span>"
+		sleep(70)
+		if(C && user.loc == C)
+			C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
+			C.welded = 0
+			C.locked = 0
+			C.broken = 1
+			C.open()
+			user << "<span class='warning'>We open the container restraining us!</span>"
 
 	feedback_add_details("changeling_powers","BD")
 	return 1
