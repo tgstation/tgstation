@@ -444,7 +444,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	while(world.time < end_time)
 		if(!user)
 			return
-		user.color = RANDOM_COLOR
+		user.color = RANDOM_COLOUR
 		sleep(1)
 	user.color = orig_color
 	user.visible_message("<span class='suicide'>[user] was destroyed \
