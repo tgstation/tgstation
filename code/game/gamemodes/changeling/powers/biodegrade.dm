@@ -11,6 +11,7 @@
 
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
+	var/used = FALSE // only one form of shackles removed per use
 	if(!user.restrained() && !istype(user.loc, /obj/structure/closet))
 		user << "<span class='warning'>We are already free!</span>"
 		return 0
@@ -25,6 +26,7 @@
 			restraints!</span>")
 
 		addtimer(src, "dissolve_handcuffs", 30, FALSE, user, O)
+		used = TRUE
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
 		var/obj/item/clothing/suit/S = user.get_item_by_slot(slot_wear_suit)
@@ -35,6 +37,7 @@
 			"<span class='warning'>We vomit acidic ooze onto our straight \
 			jacket!</span>")
 		addtimer(src, "dissolve_straightjacket", 30, FALSE, user, S)
+		used = TRUE
 
 
 	if(istype(user.loc, /obj/structure/closet) && !used)
@@ -46,8 +49,10 @@
 		user << "<span class='warning'>We vomit acidic goop onto the \
 			interior of [C]!</span>"
 		addtimer(src, "open_closet", 70, FALSE, user, C)
+		used = TRUE
 
-	feedback_add_details("changeling_powers","BD")
+	if(used)
+		feedback_add_details("changeling_powers","BD")
 	return 1
 
 /obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
