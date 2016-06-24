@@ -25,14 +25,14 @@
 	Warp(target)
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
-	new/obj/effect/overlay/temp/teleport_abductor(place)
+	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
 	sleep(80)
 	flick("alien-pad", src)
 	target.forceMove(place)
 	anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
-	new/obj/effect/overlay/temp/teleport_abductor(place)
+	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
 	sleep(80)
 	flick("alien-pad", src)
 	for(var/mob/living/target in src.loc)

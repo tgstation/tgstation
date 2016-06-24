@@ -96,7 +96,7 @@
 	spawn()
 		var/turf/T = get_turf(src)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
+		var/obj/effect/overlay/temp/fireball/F = PoolOrNew(/obj/effect/overlay/temp/fireball,src.loc)
 		animate(F, pixel_z = 0, time = 12)
 		sleep(12)
 		explosion(T, 0, 0, 1, 0, 0, 0, 1)
@@ -127,7 +127,7 @@
 	visible_message("<span class='danger'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
-			new /obj/effect/overlay/temp/target(turf)
+			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
@@ -181,7 +181,7 @@
 	else
 		tturf = get_turf(src)
 	forceMove(tturf)
-	new/obj/effect/overlay/temp/dragon_swoop(tturf)
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
