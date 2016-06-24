@@ -443,7 +443,7 @@
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
 	else if(iscultist(user)) //Cultists spontaneously combust
-		user << "<span class='heavy_brass'>Consider yourself judged, whelp.</span>"
+		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
 		user << "<span class='userdanger'>You suddenly catch fire!</span>"
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
@@ -551,7 +551,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 65, bullet = 50, laser = -25, energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/clockwork/reclaimer //Used when a reclaimer mindjacks someone
 	name = "clockwork reclaimer"
@@ -562,14 +562,85 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_head && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(20, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>"
+			user << "<span class='userdanger'>The helmet tries to drive a spike through you head as you scramble to remove it!</span>"
+			user.emote("scream")
+			user.apply_damage(30, BRUTE, "head")
+			user.adjustBrainLoss(30)
+			user.unEquip(src, 1)
+
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
 	w_class = 4
-	armor = list(melee = 80, bullet = 40, laser = -10, energy = 5, bomb = 0, bio = 0, rad = 0)
+	body_parts_covered = CHEST|GROIN|LEGS
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
 	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
+
+/obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_wear_suit && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(20, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>"
+			user << "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>"
+			user.emote("scream")
+			user.apply_damage(15, BURN, "chest")
+			user.adjust_fire_stacks(2)
+			user.IgniteMob()
+			user.unEquip(src, 1)
+
+/obj/item/clothing/gloves/clockwork
+	name = "clockwork gauntlets"
+	desc = "Heavy, shock-resistant gauntlets with brass reinforcement."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_gauntlets"
+	item_state = "clockwork_gauntlets"
+	item_color = null	//So they don't wash.
+	strip_delay = 50
+	put_on_delay = 30
+	body_parts_covered = ARMS
+	burn_state = FIRE_PROOF
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/gloves/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_gloves && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their hands!</span>", "<span class='warning'>The gauntlets flicker off your hands, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(10, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"Did you like having hands?\"</span>"
+			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your hands before you can get them off!</span>"
+			user.emote("scream")
+			user.apply_damage(7, BRUTE, "l_arm")
+			user.apply_damage(7, BRUTE, "r_arm")
+			user.unEquip(src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -580,6 +651,24 @@
 	strip_delay = 50
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
+
+/obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_shoes && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(10, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>"
+			user << "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>"
+			user.emote("scream")
+			user.apply_damage(7, BURN, "l_leg")
+			user.apply_damage(7, BURN, "r_leg")
+			user.unEquip(src, 1)
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
