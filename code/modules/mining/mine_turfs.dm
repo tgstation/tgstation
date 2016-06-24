@@ -338,7 +338,7 @@
 	new turf_type(T)
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/labor_camp))
 			return
 		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))

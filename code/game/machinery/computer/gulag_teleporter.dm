@@ -81,6 +81,9 @@
 /obj/machinery/computer/gulag_teleporter_computer/ui_act(action, list/params)
 	if(..())
 		return
+	if(!allowed(usr))
+		usr << "<span class='warning'>You don't have the required access use it.</span>"
+		return
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()

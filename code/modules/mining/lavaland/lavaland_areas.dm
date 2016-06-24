@@ -27,3 +27,6 @@
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
 	outdoors = 1
+
+/area/lavaland/surface/outdoors/labor_camp
+	name = "Lavaland Labor Camp"
