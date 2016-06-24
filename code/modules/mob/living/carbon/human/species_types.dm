@@ -87,6 +87,22 @@
 	name = "Ash Walker"
 	id = "lizard"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS)
+	var/time_home = 0
+	var/time_away = 0
+
+/datum/species/lizard/ashwalker/spec_life(mob/living/carbon/human/H)
+	if(H.stat == DEAD)
+		return
+	if(H.z != ZLEVEL_LAVALAND)
+		if(time_away > time_home)
+			return //Just so an ashwalker who comes home can't end up in homesickness debt
+		time_away++
+		if(time_away == time_home)
+			H.ForceContractDisease(new /datum/disease/homesickness(0))
+	else
+		time_home++
+
+
 /*
  PODPEOPLE
 */
