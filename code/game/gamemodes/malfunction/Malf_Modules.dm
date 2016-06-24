@@ -214,8 +214,9 @@
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/obj/item/RCD in rcd_list)
-		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+	for(var/I in rcd_list)
+		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/rcd/RCD = I
 			RCD.detonate_pulse()
 
 	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
