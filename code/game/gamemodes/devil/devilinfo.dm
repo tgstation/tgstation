@@ -1,6 +1,6 @@
-#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
-#define TRUE_THRESHOLD 7
-#define ARCH_THRESHOLD 12
+#define BLOOD_THRESHOLD 2 //How many souls are needed per stage.
+#define TRUE_THRESHOLD 3
+#define ARCH_THRESHOLD 4
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -9,7 +9,7 @@
 
 #define SOULVALUE soulsOwned.len-reviveNumber
 
-#define DEVILRESURRECTTIME 600
+#define DEVILRESURRECTTIME 20
 
 var/global/list/allDevils = list()
 var/global/list/lawlorify = list (
@@ -147,6 +147,7 @@ var/global/list/lawlorify = list (
 	soulsOwned += soul
 	H.nutrition = NUTRITION_LEVEL_FULL
 	owner.current << "<span class='warning'>You feel satiated as you received a new soul.</span>"
+	update_hud()
 	switch(SOULVALUE)
 		if(0)
 			owner.current << "<span class='warning'>Your hellish powers have been restored."
@@ -157,12 +158,12 @@ var/global/list/lawlorify = list (
 			increase_true_devil()
 		if(ARCH_THRESHOLD)
 			increase_arch_devil()
-	update_hud()
 
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
-	update_hud()
+		owner.current << "<span class='warning'>You feel as though a soul has slipped from your grasp.</span>"
+		update_hud()
 
 /datum/devilinfo/proc/check_regression()
 	if (form == ARCH_DEVIL)
@@ -204,6 +205,7 @@ var/global/list/lawlorify = list (
 	give_lizard_spells()
 	qdel(D)
 	form = BLOOD_LIZARD
+	update_hud()
 
 
 /datum/devilinfo/proc/increase_blood_lizard()
@@ -235,6 +237,7 @@ var/global/list/lawlorify = list (
 	A.set_name()
 	give_true_spells()
 	form = TRUE_DEVIL
+	update_hud()
 
 
 /datum/devilinfo/proc/increase_arch_devil()
@@ -388,6 +391,7 @@ var/global/list/lawlorify = list (
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
+		update_hud()
 	if(body)
 		body.revive(1,0)
 		if(istype(body.loc, /obj/effect/dummy/slaughter/))
@@ -432,9 +436,6 @@ var/global/list/lawlorify = list (
 	check_regression()
 
 /datum/devilinfo/proc/update_hud()
-	soulCounter = SOULVALUE
-	var/obj/screen/devil/soul_counter/K = new()
-	K.update()
-	var/mob/living/carbon/D = new()
-	D.handle_devil()
-	world.log << "13"
+	if(istype(owner.current, /mob/living/carbon))
+		var/mob/living/carbon/C = owner.current
+		C.handle_devil(SOULVALUE)
