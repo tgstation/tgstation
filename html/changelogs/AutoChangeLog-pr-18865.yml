@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Flashes will once again stun borgs, but for a much shorter time than they previously did; average stun time is reduced from the previous average of 15 seconds to about 6 seconds. The confusion remains, but it will no longer unequip borg modules."

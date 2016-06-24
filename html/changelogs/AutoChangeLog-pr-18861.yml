@@ -1,4 +1,0 @@
-author: "SnipeDragon"
-delete-after: True
-changes: 
-  - bugfix: "Changelings created at round start now correctly receive their Antag HUD."
