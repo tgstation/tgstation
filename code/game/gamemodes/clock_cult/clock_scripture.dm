@@ -617,7 +617,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
 	It grows faster to invoke with more nearby servants."
 	invocations = list("Fuvryq zr...", "...jvgu gur sentzragf...", "...bs Ratvar!")
-	channel_time = 110
+	channel_time = 110 //effectively 100 because it counts the invoker
 	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
 	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
