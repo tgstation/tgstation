@@ -14,7 +14,4 @@
 	. = ..()
 	animate(src, alpha=255, time=SHUTTLE_RIPPLE_TIME)
 	// In case something goes wrong, delete us in a bit
-	addtimer(src, "delself", 3 * SHUTTLE_RIPPLE_TIME, FALSE)
-
-/obj/effect/ripple/proc/delself()
-	qdel(src)
+	QDEL_IN(src, 3 * SHUTTLE_RIPPLE_TIME)
