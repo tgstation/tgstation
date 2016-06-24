@@ -151,6 +151,7 @@
 	..()
 	START_PROCESSING(SSobj, src)
 	clockwork_caches++
+	SetLuminosity(2,1)
 
 /obj/structure/clockwork/cache/Destroy()
 	clockwork_caches--
