@@ -93,7 +93,7 @@
 	icon_state = "paint_neutral"
 
 /obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
-		if(!proximity)
-			return
-		if(istype(target) && target.color != initial(target.color))
-			target.color = initial(target.color)
+	if(!proximity)
+		return
+	if(istype(target) && target.color != initial(target.color))
+		target.color = initial(target.color)
