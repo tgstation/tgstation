@@ -103,7 +103,11 @@ var/list/freqtospan = list(
 	else if(message_langs & SWARMER)
 		return "hums."
 	else if(message_langs & RATVAR)
-		return "sounds like grinding cogs."
+		var/atom/movable/AM = speaker.GetSource()
+		if(AM)
+			return AM.say_quote(rot13(raw_message), spans)
+		else
+			return speaker.say_quote(rot13(raw_message), spans)
 	else
 		return "makes a strange sound."
 
