@@ -1,5 +1,2 @@
 author: Sood
-changes:
-  - rscadd: Aliens can now alt-click on mobs to spit neurotoxin at them.
-  - rscadd: Aliens can now ctrl-click on other aliens to transfer plasma to them.
-  - tweak: Spit neurotoxin now has a cooldown. Yes, it didn't before. That's how clunky that menu was.
+changes: []
