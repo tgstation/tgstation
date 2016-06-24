@@ -226,14 +226,14 @@
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
-/mob/living/carbon/proc/handle_devil()
+/mob/living/carbon/proc/handle_devil(souls = 0)
 	world.log << "9"
 	if(mind && hud_used && hud_used.devilsouldisplay)
 		world.log << "10"
 		if(mind.devilinfo)
 			world.log << "11"
 			hud_used.devilsouldisplay.invisibility = 0
-			hud_used.devilsouldisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[round(mind.devilinfo.soulCounter)]</font></div>"
+			hud_used.devilsouldisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#FF0000'>[souls]</font></div>"
 		else
 			hud_used.devilsouldisplay.invisibility = INVISIBILITY_ABSTRACT
 			world.log << "12"
