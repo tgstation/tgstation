@@ -116,7 +116,9 @@ Doesn't work on other aliens/AI.*/
 	set name = "Spit Neurotoxin (50)"
 	set desc = "Spits neurotoxin at someone, paralyzing them for a short time if they are not wearing protective gear."
 	set category = "Alien"
-
+	if(neurotoxin_cooldown)
+		to_chat(src, "<span class='alien'>You aren't ready to spit more neurotoxin yet.")
+		return
 	if(powerc(50))
 		if(isalien(target))
 			to_chat(src, "<span class='alien'>Your allies are not valid targets.</span>")
@@ -150,6 +152,10 @@ Doesn't work on other aliens/AI.*/
 		spawn()
 			A.OnFired()
 			A.process()
+		neurotoxin_cooldown = 1
+		spawn(50)
+			neurotoxin_cooldown = 0
+
 	return
 
 /mob/living/carbon/alien/humanoid/proc/resin() // -- TLE
@@ -182,3 +188,16 @@ Doesn't work on other aliens/AI.*/
 		drop_stomach_contents()
 		src.visible_message("<span class='alien'>\The [src] hurls out the contents of their stomach!</span>")
 	return
+
+
+/mob/living/carbon/alien/humanoid/AltClickOn(var/atom/A)
+	if(ismob(A))
+		neurotoxin(A)
+		return
+	. = ..()
+
+/mob/living/carbon/alien/humanoid/CtrlClickOn(var/atom/A)
+	if(isalien(A))
+		transfer_plasma(A)
+		return
+	. = ..()
