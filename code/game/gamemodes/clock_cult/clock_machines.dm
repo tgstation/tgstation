@@ -456,14 +456,12 @@
 		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
 			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 			for(var/M in atoms_to_test)
-				if(ismob(M))
-					flash_color(M, flash_color="#EE54DE", flash_time=5)
-				else if(istype(M, /obj/machinery/light)) //cosmetic light flickering
+				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
 					var/obj/machinery/light/L = M
 					if(L.on)
 						playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
 						L.flicker(3)
-				if(istype(M, /obj/machinery/camera))
+				else if(istype(M, /obj/machinery/camera))
 					var/obj/machinery/camera/C = M
 					if(C.isEmpProof() || !C.status)
 						continue
