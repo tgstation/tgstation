@@ -117,7 +117,6 @@
 		update_icon(1)
 		M.Weaken(3)
 		R.confused += 5
-		R.uneq_active()
 		R.flash_eyes(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1
