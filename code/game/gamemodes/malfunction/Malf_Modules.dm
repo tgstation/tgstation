@@ -174,8 +174,7 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	spawn(900) //90 Seconds.
-		disablelockdown() //Reset the lockdown after 90 seconds.
+	addtimer(src, "disablelockdown", 900)
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
@@ -217,11 +216,7 @@
 
 	for(var/obj/item/RCD in rcd_list)
 		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
-			spawn(50) //5 seconds to get rid of it!
-				if(RCD) //Make sure it still exists (In case of chain-reaction)
-					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
-					qdel(RCD)
+			RCD.detonate_pulse()
 
 	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
 	malf_cooldown = 1
@@ -425,7 +420,6 @@
 	if(success)
 		return 1
 	alert(src, alert_msg)
-	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -568,7 +562,6 @@
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /datum/module_picker/Topic(href, href_list)
 	..()
@@ -612,7 +605,6 @@
 			if(AM.mod_pick_name == href_list["showdesc"])
 				temp = AM.description
 	src.use(usr)
-	return
 
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"

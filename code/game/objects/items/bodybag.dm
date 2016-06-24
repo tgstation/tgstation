@@ -9,9 +9,9 @@
 	w_class = 2
 
 /obj/item/bodybag/attack_self(mob/user)
-		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
-		R.add_fingerprint(user)
-		qdel(src)
+	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
+	R.add_fingerprint(user)
+	qdel(src)
 
 
 /obj/item/weapon/storage/box/bodybags
@@ -21,13 +21,8 @@
 
 /obj/item/weapon/storage/box/bodybags/New()
 	..()
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
-	new /obj/item/bodybag(src)
+	for(var/i in 1 to 7)
+		new /obj/item/bodybag(src)
 
 
 /obj/structure/closet/body_bag

@@ -215,7 +215,6 @@ RCD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
-	return
 
 
 /obj/item/weapon/rcd/Destroy()
@@ -288,7 +287,6 @@ RCD
 
 	if(prob(20))
 		src.spark_system.start()
-	return
 
 /obj/item/weapon/rcd/proc/activate()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -472,15 +470,34 @@ RCD
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	return matter >= amount
+
+/obj/item/weapon/rcd/proc/detonate_pulse()
+	audible_message("<span class='danger'><b>[src] begins to vibrate and \
+		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
+		vibrating violently!</b></span>")
+	// 5 seconds to get rid of it
+	addtimer(src, "detonate_pulse_explode", 50)
+
+/obj/item/weapon/rcd/proc/detonate_pulse_explode()
+	explosion(src, 0, 0, 3, 1, flame_range = 1)
+	qdel(src)
+
+
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:use(amount * 72) //borgs get 1.3x the use of their RCDs
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	return borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
-	return user:cell:charge >= (amount * 72)
+	var/mob/living/silicon/robot/borgy = user
+	if(!borgy.cell)
+		return 0
+	return borgy.cell.charge >= (amount * 72)
 
 /obj/item/weapon/rcd/borg/New()
 	..()

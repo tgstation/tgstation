@@ -99,7 +99,6 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
-	return
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
@@ -156,21 +155,16 @@
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			if(src.hacked) // That's right, we'll only check the "original" esword.
-				newSaber.hacked = 1
-				newSaber.item_color = "rainbow"
-			user.unEquip(W)
-			user.unEquip(src)
-			qdel(W)
-			qdel(src)
-			user.put_in_hands(newSaber)
+		user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
+		if(src.hacked) // That's right, we'll only check the "original" esword.
+			newSaber.hacked = 1
+			newSaber.item_color = "rainbow"
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1
