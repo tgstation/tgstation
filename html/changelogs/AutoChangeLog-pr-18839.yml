@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "The Interdiction Lens has been reworked; instead of allowing you to disable Telecomms, Cameras, or non-Servant Cyborgs, it drains power from all APCs, SMES units, and non-Servant cyborgs in a relatively large area, funneling that power into nearby Sigils of Transmission, then disables all cameras and radios in that same area."
+  - wip: "If it fails to find anything it could disable or drain any power, it turns off for 2 minutes."
