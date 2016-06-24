@@ -123,7 +123,7 @@
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/awaymission/research/interior/engineering)
 "ax" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-20";
 	layer = 4.1;
 	pixel_y = 3
@@ -1385,7 +1385,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/research/interior/secure)
 "dN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -3001,7 +3001,7 @@
 /turf/open/floor/plasteel/purple,
 /area/awaymission/research/interior/genetics)
 "hV" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-10";
 	layer = 4.1
 	},
@@ -3086,8 +3086,8 @@
 /turf/open/floor/plasteel/red,
 /area/awaymission/research/interior/security)
 "ii" = (
-/obj/structure/flora/kirbyplants/dead{
-	desc = "A potted plant, it doesn't look very healthy..";
+/obj/item/weapon/twohanded/required/kirbyplants{
+	desc = "A potted plant, it doesn't look very healthy...";
 	name = "dead potted plant"
 	},
 /turf/open/floor/plasteel/whitered/corner{
@@ -3508,7 +3508,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jm" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-14";
 	layer = 4.1
 	},
@@ -3978,7 +3978,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
 "kC" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellowsiding{
@@ -4316,7 +4316,7 @@
 	},
 /area/awaymission/research/interior/medbay)
 "ly" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -4773,7 +4773,7 @@
 	},
 /area/awaymission/research/interior/escapepods)
 "mJ" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -4809,7 +4809,7 @@
 /turf/open/floor/grass,
 /area/awaymission/research/interior/escapepods)
 "mN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "applebush";
 	layer = 4.1
 	},

@@ -189,6 +189,8 @@
 	// All shuttle templates are timid
 	var/timid = FALSE
 
+	var/list/ripples = list()
+
 /obj/docking_port/mobile/New()
 	..()
 	if(!timid)
@@ -296,6 +298,10 @@
 /obj/docking_port/mobile/proc/cancel()
 	if(mode != SHUTTLE_CALL)
 		return
+	if(ripples.len)
+		for(var/i in ripples)
+			qdel(i)
+		ripples.Cut()
 
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
@@ -365,6 +371,28 @@
 
 	qdel(src, force=TRUE)
 
+/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
+	var/list/turfs = ripple_area(S1)
+	for(var/i in turfs)
+		ripples += new /obj/effect/ripple(i)
+
+/obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+
+	var/list/ripple_turfs = list()
+
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		if(!T0)
+			continue
+		var/turf/T1 = L1[i]
+		if(!T1)
+			continue
+		if(T0.type != T0.baseturf)
+			ripple_turfs += T1
+
+	return ripple_turfs
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
@@ -374,11 +402,9 @@
 		if(status == SHUTTLE_ALREADY_DOCKED)
 			return status
 		else if(status)
-			spawn(0)
-				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
-					error: [status]"
-				message_admins(msg)
-				throw EXCEPTION(msg)
+			var/msg = "dock(): shuttle [src] cannot dock at [S1], \
+				error: [status]"
+			message_admins(msg)
 			return status
 
 		if(canMove())
@@ -416,9 +442,14 @@
 			A0.contents += T0
 
 	//move or squish anything in the way ship at destination
-	roadkill(L1, S1.dir)
+	roadkill(L0, L1, S1.dir)
 
-	for(var/i=1, i<=L0.len, ++i)
+	// Removes ripples
+	for(var/i in ripples)
+		qdel(i)
+	ripples.Cut()
+
+	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
 			continue
@@ -475,8 +506,7 @@
 	. = ..()
 	if(!.)
 		return
-	spawn(0)
-		close()
+	addtimer(src, "close", 0)
 
 /mob/onShuttleMove()
 	if(!move_on_shuttle)
@@ -545,13 +575,20 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(0)
-				Door.close()
+			addtimer(Door, "close", 0)
 
-/obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
+/obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
-	for(var/turf/T in L)
-		for(var/atom/movable/AM in T)
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		var/turf/T1 = L1[i]
+		if(!T0 || !T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		// The corresponding tile will not be changed, so no roadkill
+
+		for(var/atom/movable/AM in T1)
 			if(isliving(AM) && (!(AM in hurt_mobs)))
 				hurt_mobs |= AM
 				var/mob/living/M = AM
@@ -561,7 +598,7 @@
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+						a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
 						crushing pressure as the space around you ripples.</span>")
 				if(M.anchored)
@@ -597,6 +634,9 @@
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	var/timeLeft = timeLeft(1)
+	if(!ripples.len && (timeLeft <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL)))
+		create_ripples(destination)
+
 	if(timeLeft <= 0)
 		switch(mode)
 			if(SHUTTLE_CALL)

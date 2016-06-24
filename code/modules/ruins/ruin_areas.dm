@@ -46,3 +46,9 @@
 /area/ruin/onehalf/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+
+/area/ruin/powered/dinner_for_two
+	name = "Dinner for Two"
+
+/area/ruin/powered/authorship
+	name = "Authorship"

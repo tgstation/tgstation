@@ -1063,6 +1063,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
+
 /client/proc/show_tip()
 	set category = "Admin"
 	set name = "Show Tip"
@@ -1089,3 +1090,50 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	message_admins("[key_name_admin(usr)] sent a tip of the round.")
 	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
 	feedback_add_details("admin_verb","TIP")
+
+#define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
+
+/proc/mass_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_apply(M)
+		CHECK_TICK
+
+/proc/mass_remove_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_remove(M)
+		CHECK_TICK
+
+/proc/purrbation_toggle(mob/living/carbon/human/H)
+	if(!ishumanbasic(H))
+		return
+	if(!ON_PURRBATION(H))
+		purrbation_apply(H)
+		. = TRUE
+	else
+		purrbation_remove(H)
+		. = FALSE
+
+/proc/purrbation_apply(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(ON_PURRBATION(H))
+		return
+	H << "Something is nya~t right."
+	H.dna.features["tail_human"] = "Cat"
+	H.dna.features["ears"] = "Cat"
+	H.regenerate_icons()
+	playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
+
+/proc/purrbation_remove(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(!ON_PURRBATION(H))
+		return
+	H << "You are no longer a cat."
+	H.dna.features["tail_human"] = "None"
+	H.dna.features["ears"] = "None"
+	H.regenerate_icons()
+
+#undef ON_PURRBATION

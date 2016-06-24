@@ -226,7 +226,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-03";
 	layer = 4.1
 	},
@@ -248,7 +248,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1304,7 +1304,7 @@
 	dir = 1;
 	initialize_directions = 11
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-13"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -2934,7 +2934,7 @@
 	dir = 9;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -3222,7 +3222,7 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarport)
 "afL" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "applebush";
 	layer = 4.1
 	},
@@ -14634,7 +14634,7 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "azv" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/effect/decal/cleanable/cobweb2,
@@ -16184,7 +16184,7 @@
 /area/maintenance/starboard)
 "aBU" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-20";
 	layer = 4.1;
 	pixel_y = 3
@@ -20904,7 +20904,7 @@
 	name = "Law Office APC";
 	pixel_y = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -22143,7 +22143,7 @@
 	c_tag = "AI Upload Chamber - Fore";
 	network = list("SS13","RD","AIUpload")
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-07";
 	name = "Photosynthetic Potted plant";
 	pixel_y = 10
@@ -25191,7 +25191,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-03";
 	layer = 4.1
 	},
@@ -27964,7 +27964,7 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aWN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-13";
 	layer = 4.1
 	},
@@ -28361,7 +28361,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "applebush";
 	layer = 4.1
 	},
@@ -28458,7 +28458,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -29952,7 +29952,7 @@
 	name = "Arrivals"
 	})
 "bae" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-05";
 	layer = 4.1
 	},
@@ -43119,7 +43119,7 @@
 	name = "Arrivals"
 	})
 "bvU" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-18";
 	layer = 4.1
 	},
@@ -43155,7 +43155,7 @@
 	name = "Arrivals"
 	})
 "bvX" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-08";
 	layer = 4.1
 	},
@@ -43168,7 +43168,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bvZ" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-03";
 	layer = 4.1
 	},
@@ -44075,7 +44075,7 @@
 	name = "\improper Telecoms Control Room"
 	})
 "bxE" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-20";
 	layer = 4.1
 	},
@@ -47386,7 +47386,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bDC" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -51696,7 +51696,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -51911,7 +51911,7 @@
 	},
 /area/tcommsat/server)
 "bLp" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -52861,7 +52861,7 @@
 	name = "\improper MiniSat Exterior"
 	})
 "bNc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-06";
 	level = 4.1
 	},
@@ -53869,7 +53869,7 @@
 	icon_state = "map-right-MS";
 	pixel_y = -32
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-03";
 	layer = 4.1
 	},
@@ -60397,7 +60397,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "applebush";
 	layer = 4.1
 	},
@@ -60503,7 +60503,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-10";
 	layer = 4.1
 	},
@@ -64511,7 +64511,7 @@
 	name = "Medbay Central"
 	})
 "cgU" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-11"
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -64632,7 +64632,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-08";
 	layer = 4.1
 	},
@@ -70065,7 +70065,7 @@
 	name = "Research Division"
 	})
 "cqv" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-10";
 	layer = 4.1
 	},
@@ -75397,7 +75397,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants/dead,
+/obj/item/weapon/twohanded/required/kirbyplants/dead,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -80773,7 +80773,7 @@
 	name = "Medbay Aft"
 	})
 "cIc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -83329,7 +83329,7 @@
 	name = "Research Division"
 	})
 "cMc" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-10";
 	layer = 4.1
 	},
@@ -84786,7 +84786,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-14";
 	layer = 4.1
 	},
@@ -86886,7 +86886,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-04";
 	layer = 4.1
 	},
@@ -86966,7 +86966,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 29
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-16";
 	layer = 4.1
 	},
@@ -87502,7 +87502,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-24";
 	layer = 4.1
 	},
@@ -87878,10 +87878,6 @@
 	icon_state = "alarm0";
 	pixel_x = 24
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -87889,6 +87885,9 @@
 	c_tag = "Xenobiology Lab - Airlock";
 	dir = 8;
 	network = list("SS13","RD")
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 4
@@ -88195,6 +88194,7 @@
 	pixel_y = 8
 	},
 /obj/machinery/power/apc{
+	cell_type = 10000;
 	dir = 1;
 	name = "Xenobiology APC";
 	pixel_x = 0;
@@ -88671,10 +88671,6 @@
 	},
 /area/toxins/xenobiology)
 "cVq" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/delivery{
 	name = "floor"
@@ -89052,11 +89048,10 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "cVZ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/warnwhite{
 	dir = 8
 	},
@@ -89346,9 +89341,6 @@
 	},
 /area/toxins/xenobiology)
 "cWy" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/button/door{
 	id = "xenobio1";
 	name = "Containment Blast Doors";
@@ -89703,6 +89695,9 @@
 	dir = 4;
 	network = list("SS13","RD")
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
 	},
@@ -89748,10 +89743,6 @@
 	},
 /area/toxins/xenobiology)
 "cWZ" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 4
-	},
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
@@ -89765,6 +89756,9 @@
 	c_tag = "Xenobiology Lab - Aft-Starboard";
 	dir = 8;
 	network = list("SS13","RD")
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 8
@@ -89927,7 +89921,7 @@
 	dir = 2;
 	initialize_directions = 11
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -93461,9 +93455,7 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "deL" = (
-/obj/machinery/light{
-	dir = 2
-	},
+/obj/machinery/light/small,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "deM" = (
@@ -93847,9 +93839,8 @@
 /turf/open/floor/engine/vacuum,
 /area/atmos)
 "dfz" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light/small,
 /turf/open/floor/bluegrid{
 	name = "Killroom Floor";
 	initial_gas_mix = "n2=500;TEMP=80"
@@ -125015,7 +125006,7 @@ cVB
 cTC
 bxW
 cTC
-dfz
+dds
 dfA
 cTC
 aaf
@@ -125530,8 +125521,8 @@ cTC
 deR
 deS
 deW
-deW
-deX
+dfz
+cTC
 cXl
 aaa
 aaa
@@ -126043,7 +126034,7 @@ deN
 cTC
 cXs
 cTC
-dfz
+dds
 dds
 cTC
 aaa
