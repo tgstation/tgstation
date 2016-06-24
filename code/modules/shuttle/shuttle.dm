@@ -176,7 +176,7 @@
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
-	var/callTime = 50				//time spent in transit (deciseconds)
+	var/callTime = 150				//time spent in transit (deciseconds)
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0				//direction the shuttle would travel in
 
