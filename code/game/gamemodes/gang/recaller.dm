@@ -41,8 +41,8 @@
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
-		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
+		if(gang.is_dominating)
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dominating_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points

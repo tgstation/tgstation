@@ -252,7 +252,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gang_bosses += G.bosses
 	return gang_bosses
 
-/proc/get_domination_time(var/datum/gang/G)
+/proc/determine_domination_time(var/datum/gang/G)
 	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
@@ -298,9 +298,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		if(world.time > next_point_time)
 			G.income()
 
-		if(isnum(G.dom_timer))
-			G.dom_timer -= seconds/10
-			if(G.dom_timer < 0)
+		if(G.is_dominating)
+			if(G.domination_time_remaining() < 0)
 				winners += G
 
 	if(world.time > next_point_time)

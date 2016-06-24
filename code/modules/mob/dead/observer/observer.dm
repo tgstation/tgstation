@@ -302,8 +302,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(ticker)
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+					if(G.is_dominating)
+						stat(null, "[G.name] Gang Takeover: [max(G.dominating_time_remaining(), 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"

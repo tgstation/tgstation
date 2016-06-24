@@ -105,9 +105,11 @@
 	var/obj/machinery/dominator/D = attached_to
 	if(!istype(D))
 		return
-	else if(D.gang && D.gang.dom_timer)
-		var/timer = D.gang.dom_timer
+	else if(D.gang && D.gang.is_dominating)
+		var/timer = D.gang.domination_time_remaining()
 		return timer
+	else
+		return "OFFLINE"
 
 /obj/effect/countdown/clockworkgate
 	name = "gateway countdown"
