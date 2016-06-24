@@ -6,14 +6,14 @@
 	icon_state = "flood00"
 	density = 1
 	var/on = 0
-	var/obj/item/weapon/cell/high/cell = null
+	var/obj/item/weapon/cell/high/cell = /obj/item/weapon/cell/high
 	var/powercost = 5
 	var/brightness_on = 8	//This time justified in balance. Encumbering but nice lightning
 
 	machine_flags = SCREWTOGGLE | WRENCHMOVE
 
 /obj/machinery/floodlight/New()
-	src.cell = new(src)
+	cell = new cell(src)
 	..()
 
 /obj/machinery/floodlight/update_icon()

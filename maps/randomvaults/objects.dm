@@ -143,13 +143,14 @@
 	name = "paper- 'IOU'"
 	info = "I owe you a rod of destruction. Redeemable at Milliway's at the end of time."
 
-/obj/machinery/floodlight/on
+/obj/machinery/floodlight/on/New()
+	..()
+	on = 1
+	set_light(brightness_on)
+	update_icon()
 
-	New()
-		..()
-		on = 1
-		set_light(brightness_on)
-		update_icon()
+/obj/machinery/floodlight/on/infinite
+	cell = /obj/item/weapon/cell/infinite
 
 /obj/machinery/bot/farmbot/duey
 	name = "Duey"
