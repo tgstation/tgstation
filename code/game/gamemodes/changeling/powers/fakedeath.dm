@@ -18,14 +18,15 @@
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
 
-	feedback_add_details("changeling_powers","FD")
+	addtimer(src, "ready_to_regenerate", LING_FAKEDEATH_TIME, FALSE, user)
 
-	sleep(LING_FAKEDEATH_TIME)
+	feedback_add_details("changeling_powers","FD")
+	return 1
+
+/obj/effect/proc_holder/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind && user.mind.changeling && user.mind.changeling.purchasedpowers)
 		user << "<span class='notice'>We are ready to regenerate.</span>"
 		user.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
-
-	return 1
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/user)
 	if(user.status_flags & FAKEDEATH)

@@ -96,14 +96,14 @@
 	duration = 8
 	var/target
 
-/obj/effect/overlay/temp/at_shield/New()
+/obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
-	orbit(target, 0, FALSE, 0, 0, FALSE, TRUE)
+	target = new_target
+	addtimer(src, "orbit", 0, FALSE, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc)
-		AT.target = src
+		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
