@@ -42,9 +42,9 @@ The console is located at computer/gulag_teleporter.dm
 	return
 
 /obj/machinery/gulag_teleporter/attackby(obj/item/I, mob/user)
-	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",I))
-			return
+	if(!occupant && default_deconstruction_screwdriver(user, "[icon_state]", "[icon_state]",I))
+		update_icon()
+		return
 
 	if(default_deconstruction_crowbar(I))
 		return
@@ -55,10 +55,12 @@ The console is located at computer/gulag_teleporter.dm
 	return ..()
 
 /obj/machinery/gulag_teleporter/update_icon()
-	icon_state = initial(icon_state)
+	icon_state = initial(icon_state) + (state_open ? "_open" : "")
 	//no power or maintenance
 	if(stat & (NOPOWER|BROKEN))
-		icon_state += (state_open ? "_open" : "") + "_unpowered"
+		icon_state += "_unpowered"
+		if((stat & MAINT) || panel_open)
+			icon_state += "_maintenance"
 		return
 
 	if((stat & MAINT) || panel_open)
@@ -70,14 +72,13 @@ The console is located at computer/gulag_teleporter.dm
 		icon_state += "_occupied"
 		return
 
-	//open/closed with no occupant
-	icon_state += (state_open ? "_open" : "")
 
 /obj/machinery/gulag_teleporter/relaymove(mob/user)
 	if(user.stat != CONSCIOUS)
 		return
 	if(locked)
 		user << "[src] is locked!"
+		return
 	open_machine()
 
 /obj/machinery/gulag_teleporter/container_resist(mob/living/user)
@@ -100,22 +101,27 @@ The console is located at computer/gulag_teleporter.dm
 
 		open_machine()
 
-/obj/machinery/gulag_teleporter/proc/toggle_open(mob/user)
-	/*if(panel_open)
-		user << "<span class='notice'>Close the maintenance panel first.</span>"
+/obj/machinery/gulag_teleporter/proc/toggle_open(force_unlock = 0)
+	if(panel_open)
+		usr << "<span class='notice'>Close the maintenance panel first.</span>"
 		return
-	*/
+
 	if(state_open)
 		close_machine()
 		return
-
-	open_machine()
+	if(!locked || force_unlock)
+		open_machine()
 
 // strips and stores all occupant's items
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
 	stored_items[occupant] = list()
 	for(var/obj/item/W in occupant)
 		if(occupant.unEquip(W))
+			if(istype(W, /obj/item/weapon/restraints/handcuffs))
+				W.loc = get_turf(src)
+				continue
+			if(istype(W, /obj/item/weapon/implant/storage))
+				continue
 			stored_items[occupant] += W
 			W.loc = null //temporary
 

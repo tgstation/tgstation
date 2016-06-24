@@ -39,7 +39,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gulag_console", name, 455, 430, master_ui, state)
+		ui = new(user, src, ui_key, "gulag_console", name, 455, 440, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/gulag_teleporter_computer/ui_data(mob/user)
@@ -66,6 +66,7 @@
 		data["teleporter"] = teleporter
 		data["teleporter_location"] = "([teleporter.x], [teleporter.y], [teleporter.z])"
 		data["teleporter_lock"] = teleporter.locked
+		data["teleporter_state_open"] = teleporter.state_open
 	if(beacon)
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
@@ -107,12 +108,20 @@
 			if(!new_goal)
 				new_goal = default_goal
 			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
+		if("toggle_open")
+			if(teleporter.locked)
+				usr << "The teleporter is locked"
+				return
+			teleporter.toggle_open()
 		if("teleporter_lock")
+			if(teleporter.state_open)
+				usr << "Close the teleporter before!"
+				return
 			teleporter.locked = !teleporter.locked
 		if("teleport")
-			if(!(teleporter && beacon))
+			if(!teleporter || !beacon)
 				return
-			teleport()
+			addtimer(src, "teleport", 5, FALSE, usr)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
@@ -129,10 +138,15 @@
 /obj/machinery/computer/gulag_teleporter_computer/proc/findbeacon()
 	return locate(/obj/structure/gulag_beacon)
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/teleport()
+/obj/machinery/computer/gulag_teleporter_computer/proc/teleport(mob/user)
+	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
+	playsound(loc, "sound/weapons/emitter.ogg", 50, 1)
 	prisoner.loc = get_turf(beacon)
 	prisoner.Weaken(2) // small travel dizziness
-	teleporter.toggle_open()
+	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
+	PoolOrNew(/obj/effect/particle_effect/sparks, prisoner.loc)
+	playsound(src.loc, "sparks", 50, 1)
+	teleporter.toggle_open(1)
 	id = null
 	temporary_record = null
