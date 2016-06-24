@@ -574,7 +574,7 @@
 				C.vomit(20, 1, 1, 0, 1)
 		else
 			user << "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>"
-			user << "<span class='userdanger'>The helmet tries to drive a spike through you head as you scramble to remove it!</span>"
+			user << "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>"
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
