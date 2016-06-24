@@ -579,7 +579,6 @@
 
 	stat |= BROKEN
 	icon_state = "[initial(icon_state)]-broken"
-	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()

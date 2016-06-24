@@ -121,3 +121,14 @@
 		return
 	else if(G.health && !G.purpose_fulfilled)
 		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds]</div>"
+
+/obj/effect/countdown/transformer
+	name = "transformer countdown"
+
+/obj/effect/countdown/transformer/get_value()
+	var/obj/machinery/transformer/T = attached_to
+	if(!istype(T))
+		return
+	else if(T.cooldown)
+		var/seconds_left = (T.cooldown_timer - world.time) / 10
+		return "[max(seconds_left, 0)]"

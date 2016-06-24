@@ -66,7 +66,6 @@
 		hulk.changeNext_move(CLICK_CD_MELEE)
 		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
-	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -141,7 +140,6 @@
 			return 1
 	else if(src in container)
 		return 1
-	return
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)

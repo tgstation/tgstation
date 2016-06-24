@@ -74,7 +74,6 @@
 					D.cancelAlarm("Power", src, source)
 				else
 					D.triggerAlarm("Power", src, cameras, source)
-	return
 
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
@@ -129,7 +128,6 @@
 		aiPlayer.triggerAlarm("Fire", src, cameras, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.triggerAlarm("Fire", src, cameras, source)
-	return
 
 /area/proc/firereset(obj/source)
 	for(var/area/RA in related)
@@ -152,7 +150,6 @@
 		a.cancelAlarm("Fire", src, source)
 	for (var/mob/living/simple_animal/drone/D in mob_list)
 		D.cancelAlarm("Fire", src, source)
-	return
 
 /area/proc/burglaralert(obj/trigger)
 	if(always_unpowered == 1) //no burglar alarms in space/asteroid
@@ -188,13 +185,11 @@
 	if(!eject)
 		eject = 1
 		updateicon()
-	return
 
 /area/proc/readyreset()
 	if(eject)
 		eject = 0
 		updateicon()
-	return
 
 /area/proc/partyalert()
 	if(src.name == "Space") //no parties in space!!!
@@ -203,7 +198,6 @@
 		src.party = 1
 		src.updateicon()
 		src.mouse_opacity = 0
-	return
 
 /area/proc/partyreset()
 	if (src.party)

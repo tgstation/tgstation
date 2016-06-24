@@ -95,7 +95,6 @@
 			return
 
 	src.attack_hand(usr)
-	return
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)
@@ -112,4 +111,3 @@
 	if (uses >= 0)
 		cooldown_on = 0
 	src.power_change()
-	return

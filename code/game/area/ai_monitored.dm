@@ -11,8 +11,6 @@
 			if(M.isMotion())
 				motioncamera = M
 				M.area_motion = src
-				return
-	return
 
 /area/ai_monitored/Entered(atom/movable/O)
 	..()
