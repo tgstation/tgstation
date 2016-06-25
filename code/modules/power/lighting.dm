@@ -149,7 +149,7 @@ var/global/list/obj/machinery/light/alllights = list()
 
 /obj/machinery/light/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet)||istype(Proj,/obj/item/projectile/ricochet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			broken()
 
 /obj/machinery/light/kick_act(mob/living/carbon/human/H)

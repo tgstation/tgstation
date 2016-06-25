@@ -87,11 +87,11 @@
 
 /obj/machinery/bot/ed209/bluetag
 	lasercolor = "b"
-	projectile = /obj/item/projectile/beam/lastertag/blue
+	projectile = /obj/item/projectile/beam/lasertag/blue
 
 /obj/machinery/bot/ed209/redtag
 	lasercolor = "r"
-	projectile = /obj/item/projectile/beam/lastertag/red
+	projectile = /obj/item/projectile/beam/lasertag/red
 
 /obj/machinery/bot/ed209/New(loc,created_name,created_lasercolor)
 	..()
@@ -271,7 +271,7 @@ Auto Patrol: []"},
 		src.on = 1
 		src.icon_state = "[lasercolor][icon_initial][src.on]"
 		if(lasercolor)
-			projectile = /obj/item/projectile/beam/lastertag/omni
+			projectile = /obj/item/projectile/beam/lasertag/omni
 		else
 			projectile = /obj/item/projectile/beam
 		mode = SECBOT_IDLE
@@ -1075,7 +1075,7 @@ Auto Patrol: []"},
 
 /obj/machinery/bot/ed209/bullet_act(var/obj/item/projectile/Proj)
 	if((src.lasercolor == "b") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/beam/lastertag/red))
+		if(istype(Proj, /obj/item/projectile/beam/lasertag/red))
 			src.disabled = 1
 			//del (Proj)
 			returnToPool(Proj)
@@ -1084,7 +1084,7 @@ Auto Patrol: []"},
 		else
 			..()
 	else if((src.lasercolor == "r") && (src.disabled == 0))
-		if(istype(Proj, /obj/item/projectile/beam/lastertag/blue))
+		if(istype(Proj, /obj/item/projectile/beam/lasertag/blue))
 			src.disabled = 1
 			//del (Proj)
 			returnToPool(Proj)

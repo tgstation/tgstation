@@ -577,7 +577,7 @@ var/list/beam_master = list()
 /obj/item/projectile/beam/emitter/singularity_pull()
 	return
 
-/obj/item/projectile/beam/lastertag/blue
+/obj/item/projectile/beam/lasertag/blue
 	name = "lasertag beam"
 	icon_state = "bluelaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -592,7 +592,7 @@ var/list/beam_master = list()
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/beam/lastertag/red
+/obj/item/projectile/beam/lasertag/red
 	name = "lasertag beam"
 	icon_state = "laser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -607,7 +607,7 @@ var/list/beam_master = list()
 				M.Weaken(5)
 		return 1
 
-/obj/item/projectile/beam/lastertag/omni//A laser tag bolt that stuns EVERYONE
+/obj/item/projectile/beam/lasertag/omni//A laser tag bolt that stuns EVERYONE
 	name = "lasertag beam"
 	icon_state = "omnilaser"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE

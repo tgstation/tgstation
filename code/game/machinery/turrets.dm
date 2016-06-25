@@ -221,9 +221,9 @@
 				A = getFromPool(/obj/item/projectile/change, loc)
 				fire_sound = 'sound/weapons/radgun.ogg'
 			if(5)
-				A = getFromPool(/obj/item/projectile/beam/lastertag/blue, loc)
+				A = getFromPool(/obj/item/projectile/beam/lasertag/blue, loc)
 			if(6)
-				A = getFromPool(/obj/item/projectile/beam/lastertag/red, loc)
+				A = getFromPool(/obj/item/projectile/beam/lasertag/red, loc)
 		use_power(500)
 	else
 		A = new /obj/item/projectile/energy/electrode( loc )

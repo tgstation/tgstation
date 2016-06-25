@@ -19,7 +19,7 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(iswrench(W) && wrenchable())
 		return wrenchAnchor(user)
-		
+
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>It contains:</span>")
@@ -163,7 +163,7 @@
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(var/obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet)||istype(Proj,/obj/item/projectile/ricochet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
 			log_attack("<font color='red'>[key_name(Proj.firer)] shot [src]/([formatJumpTo(src)]) with a [Proj.type]</font>")
 			if(Proj.firer)//turrets don't have "firers"
 				Proj.firer.attack_log += "\[[time_stamp()]\] <b>[key_name(Proj.firer)]</b> shot <b>[src]([x],[y],[z])</b> with a <b>[Proj.type]</b>"
@@ -231,7 +231,7 @@
 	. = ..()
 	reagents.add_reagent(WATER, addedliquid)
 	desc = "[initial(desc)] There's [paper_cups] paper cups stored inside."
-	
+
 /obj/structure/reagent_dispensers/water_cooler/wrenchable()
 	return 1
 
@@ -265,7 +265,7 @@
 /obj/structure/reagent_dispensers/beerkeg/New()
 	. = ..()
 	reagents.add_reagent(BEER, 1000)
-	
+
 /obj/structure/reagent_dispensers/beerkeg/wrenchable()
 	return 1
 
@@ -279,7 +279,7 @@
 /obj/structure/reagent_dispensers/bloodkeg/New()
 	. = ..()
 	reagents.add_reagent(BLOOD, 1000)
-	
+
 /obj/structure/reagent_dispensers/bloodkeg/wrenchable()
 	return 1
 
@@ -340,4 +340,4 @@
 		to_chat(user, "<span class='notice'>Sprayer refilled.</span>")
 		playsound(get_turf(src), 'sound/effects/refill.ogg', 50, 1, -6)
 		return 1
-		
+

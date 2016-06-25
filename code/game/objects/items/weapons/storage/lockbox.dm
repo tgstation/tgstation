@@ -66,7 +66,7 @@
 	// WHY MUST WE DO THIS
 	// WHY
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lastertag) && !istype(Proj ,/obj/item/projectile/beam/practice) && !Proj.nodamage)
+		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) && !Proj.nodamage)
 			health -= Proj.damage
 	..()
 	if(health <= 0)

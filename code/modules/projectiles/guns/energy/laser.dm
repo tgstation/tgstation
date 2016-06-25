@@ -262,7 +262,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "Standard issue weapon of the Imperial Guard."
-	projectile_type = "/obj/item/projectile/beam/lastertag/blue"
+	projectile_type = "/obj/item/projectile/beam/lasertag/blue"
 	origin_tech = "magnets=2"
 	mech_flags = null // So it can be scanned by the Device Analyser
 	clumsy_check = 0
@@ -302,7 +302,7 @@ obj/item/weapon/gun/energy/laser/retro
 	item_state = null
 	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/guninhands_left.dmi', "right_hand" = 'icons/mob/in-hand/right/guninhands_right.dmi')
 	desc = "Standard issue weapon of the Imperial Guard."
-	projectile_type = "/obj/item/projectile/beam/lastertag/red"
+	projectile_type = "/obj/item/projectile/beam/lasertag/red"
 	origin_tech = "magnets=2"
 	mech_flags = null // So it can be scanned by the Device Analyser
 	clumsy_check = 0
