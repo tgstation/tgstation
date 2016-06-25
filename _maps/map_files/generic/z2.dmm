@@ -5859,72 +5859,251 @@
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
-"wH" = (
+"sh" = (
+/turf/open/floor/wood,
+/area/centcom/prison)
+"si" = (
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"sj" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/centcom/prison)
+"sk" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"sl" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"sm" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"sn" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/wood,
+/area/centcom/prison)
+"so" = (
+/obj/structure/closet,
+/turf/open/floor/wood,
+/area/centcom/prison)
+"sp" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/centcom/prison)
+"sq" = (
+/obj/structure/showcase/fakesec,
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"sr" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/centcom/prison)
+"ss" = (
+/obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "adminshut";
+	name = "Administrative Shutter-Control";
+	pixel_y = -30
+	},
+/turf/open/floor/wood,
+/area/centcom/prison)
+"st" = (
+/obj/structure/showcase/fakesec,
+/turf/open/floor/wood,
+/area/centcom/prison)
+"su" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
-	dir = 4
+	dir = 8
 	},
-/area/centcom/holding)
-"wG" = (
+/area/centcom/prison)
+"sv" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 8
 	},
-/area/centcom/holding)
-"wF" = (
+/area/centcom/prison)
+"sw" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
+/area/centcom/prison)
+"sx" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 8
 	},
-/area/centcom/holding)
-"wE" = (
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 1
-	},
-/area/centcom/holding)
-"wD" = (
-/turf/open/floor/plasteel/neutral/corner{
+/area/centcom/prison)
+"sy" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
 	dir = 4
 	},
-/area/centcom/holding)
-"wC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+/area/centcom/prison)
+"sz" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
 	},
-/turf/open/floor/plasteel/neutral/corner{
+/area/centcom/prison)
+"sA" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/centcom/prison)
+"sB" = (
+/turf/open/floor/plating,
+/area/centcom/prison)
+"sC" = (
+/obj/structure/chair{
 	dir = 1
 	},
-/area/centcom/holding)
-"wB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
+/turf/open/floor/plating,
+/area/centcom/prison)
+"sD" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/centcom/prison)
+"sE" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sF" = (
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 4
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
 	},
-/area/centcom/holding)
-"wA" = (
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sG" = (
+/obj/structure/sign/poster{
+	official = 1;
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sH" = (
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sI" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sJ" = (
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sK" = (
+/obj/structure/closet/crate/medical,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/warnplate{
+	dir = 8
+	},
+/area/centcom/prison)
+"sL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"wz" = (
-/obj/machinery/vending/snack,
+/area/centcom/prison)
+"sM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sO" = (
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 0;
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"wy" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"wx" = (
-/obj/machinery/vending/cola,
-/turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"ww" = (
+/area/centcom/prison)
+"sP" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plating,
+/area/centcom/prison)
+"sQ" = (
+/obj/structure/closet/crate/internals,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/warnplate{
+	dir = 8
+	},
+/area/centcom/prison)
+"sR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"sS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sT" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sV" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -5932,7 +6111,214 @@
 	icon_state = "window";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"sW" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"sX" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4;
+	initialize_directions = 11
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"sY" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"sZ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"ta" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 0;
+	frequency = 1441;
+	id_tag = "n2_out";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"tb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tc" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"td" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"te" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tf" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"tg" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"th" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"ti" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"tk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/prison)
+"tl" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tm" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tn" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"to" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 1
+	},
+/area/centcom/prison)
+"tp" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"tq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"tr" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "window";
 	dir = 4
 	},
 /obj/effect/landmark{
@@ -5941,38 +6327,1311 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
-"wv" = (
+/area/centcom/prison)
+"ts" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"tt" = (
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Lounge North";
+	dir = 1;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tu" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark{
+	name = "JoinLate"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"tv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"wu" = (
+/area/centcom/prison)
+"tw" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/power/apc{
+	cell_type = 15000;
+	dir = 2;
+	name = "Centcom North Arrivals APC";
+	pixel_x = 0;
+	pixel_y = -24;
+	req_access = list(201)
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"ty" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tz" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tA" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tB" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 1
+	},
+/area/centcom/prison)
+"tC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"tD" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/centcom/prison)
+"tE" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/prison)
+"tF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/indestructible/riveted,
+/area/centcom/prison)
+"tG" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/prison)
+"tH" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/prison)
+"tI" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/prison)
+"tJ" = (
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Dock North";
+	dir = 2;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/prison)
+"tK" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/prison)
+"tL" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/prison)
+"tM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"tN" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"tO" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"tP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"tQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tR" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tU" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"tW" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tX" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"tZ" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"ua" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/warning,
+/area/centcom/prison)
+"ub" = (
+/turf/open/floor/plasteel/warning,
+/area/centcom/prison)
+"uc" = (
+/obj/structure/sign/vacuum{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/warning,
+/area/centcom/prison)
+"ud" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Transfer North";
+	dir = 4;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"ue" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"uf" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/space,
+/area/space)
+"ug" = (
+/obj/machinery/door/poddoor/shuttledock,
+/turf/open/floor/engine,
+/area/centcom/prison)
+"uh" = (
+/obj/structure/lattice,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/open/space,
+/area/space)
+"ui" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"uj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"uk" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"ul" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"um" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"un" = (
+/obj/docking_port/stationary{
+	dwidth = 5;
+	height = 7;
+	id = "arrival_away";
+	name = "Centcom arrival shuttle dock";
+	width = 15
+	},
+/turf/open/space,
+/area/space)
+"uo" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"up" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"uq" = (
+/obj/machinery/door/poddoor/shuttledock,
+/turf/open/floor/engine,
+/area/centcom/holding)
+"ur" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"us" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/power/smes/magical,
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"ut" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/holding)
+"uu" = (
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/holding)
+"uv" = (
+/obj/structure/sign/vacuum{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/holding)
+"uw" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Transfer South";
+	dir = 4;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/prison)
+"ux" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"uy" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"uz" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"uA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"uB" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"uC" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"uD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uE" = (
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uG" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uH" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"uI" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4;
+	frequency = 1441;
+	id = "air_in"
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"uJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"uK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/holding)
+"uL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/holding)
+"uM" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"uN" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"uR" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"uS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/prison)
+"uT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/prison)
+"uU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/indestructible/riveted,
+/area/centcom/holding)
+"uV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uW" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uX" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"uY" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"uZ" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"va" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/black,
+/area/centcom/prison)
+"vb" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/centcom/holding)
+"vc" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/green/side,
+/area/centcom/holding)
+"vd" = (
+/turf/open/floor/plasteel/green/corner{
+	dir = 8
+	},
+/area/centcom/holding)
+"ve" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"vf" = (
+/turf/open/floor/plasteel/green/corner,
+/area/centcom/holding)
+"vg" = (
+/obj/machinery/light,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22;
+	req_access = list(201)
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Dock South";
+	dir = 1;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/green/side,
+/area/centcom/holding)
+"vh" = (
+/turf/open/floor/plasteel/green/side,
+/area/centcom/holding)
+"vi" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/green/side{
+	dir = 6
+	},
+/area/centcom/holding)
+"vj" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vk" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vl" = (
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/centcom/holding)
+"vm" = (
+/turf/open/floor/plasteel/green/side{
+	dir = 6
+	},
+/area/centcom/holding)
+"vn" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vp" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vr" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vs" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vt" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vu" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vv" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vw" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vx" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 1
+	},
+/area/centcom/holding)
+"vy" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vz" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vA" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vB" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vC" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 1
+	},
+/area/centcom/holding)
+"vD" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vE" = (
+/obj/structure/sign/poster{
+	official = 1;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vG" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/holding)
+"vH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = 15000;
+	dir = 4;
+	name = "Centcom South Arrivals APC";
+	pixel_x = 24;
+	pixel_y = 0;
+	req_access = list(201)
+	},
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vJ" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vL" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vM" = (
+/obj/structure/rack,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/sign/poster{
+	official = 1;
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vP" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vQ" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vS" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/holding)
+"vT" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/holding)
+"vU" = (
+/turf/open/floor/plasteel/black,
+/area/centcom/holding)
+"vV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"vW" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/black,
+/area/centcom/holding)
+"vX" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/centcom/holding)
+"vY" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"vZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Lobby South";
+	dir = 2;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/centcom/holding)
+"wa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/centcom/holding)
+"wb" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"wc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"wd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	external_pressure_bound = 0;
+	frequency = 1441;
+	id_tag = "co2_out";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/centcom/holding)
+"we" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/centcom/holding)
+"wf" = (
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"wg" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel/black,
+/area/centcom/holding)
+"wh" = (
+/turf/open/space,
+/area/centcom/holding)
+"wi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"wj" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"wk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"wl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
 /area/centcom/holding)
-"wt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+"wm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"ws" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"wr" = (
-/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/black,
 /area/centcom/holding)
-"wq" = (
+"wn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/holding)
+"wo" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -5980,6 +7639,7 @@
 	icon_state = "window";
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark{
 	name = "JoinLate"
 	},
@@ -6002,7 +7662,7 @@
 	dir = 8
 	},
 /area/centcom/holding)
-"wo" = (
+"wq" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -6010,7 +7670,6 @@
 	icon_state = "window";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark{
 	name = "JoinLate"
 	},
@@ -6018,1778 +7677,119 @@
 	dir = 4
 	},
 /area/centcom/holding)
-"wn" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"wm" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
+"wr" = (
+/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/black,
 /area/centcom/holding)
-"wl" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"ws" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"wt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+/turf/open/floor/plating/airless,
+/area/centcom/holding)
+"wu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
 /area/centcom/holding)
-"wk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+"wv" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"wj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"wi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"wh" = (
-/turf/open/space,
-/area/centcom/holding)
-"wg" = (
-/obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/black,
 /area/centcom/holding)
-"wf" = (
-/obj/structure/sign/nosmoking_2{
-	pixel_x = 0;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"we" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	pixel_y = 23;
-	req_access = list(201)
-	},
-/turf/open/floor/plasteel/neutral/corner{
+"ww" = (
+/obj/structure/chair{
 	dir = 8
 	},
-/area/centcom/holding)
-"wd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "co2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
-/turf/open/floor/plasteel/neutral/corner,
-/area/centcom/holding)
-"wc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/structure/window{
+	icon_state = "window";
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"wb" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"wa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/neutral/corner{
-	dir = 8
-	},
-/area/centcom/holding)
-"vZ" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Lobby South";
-	dir = 2;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel/neutral/corner,
-/area/centcom/holding)
-"vY" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"vX" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vW" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"vV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"vU" = (
-/turf/open/floor/plasteel/black,
-/area/centcom/holding)
-"vT" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
+/obj/effect/landmark{
+	name = "JoinLate"
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
 /area/centcom/holding)
-"vS" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vQ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vP" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vM" = (
-/obj/structure/rack,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vL" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24;
-	req_access = list(201)
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/holding)
-"vK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vJ" = (
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/holding)
-"vI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
-	dir = 4;
-	name = "Centcom South Arrivals APC";
-	pixel_x = 24;
-	pixel_y = 0;
-	req_access = list(201)
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vG" = (
-/turf/closed/indestructible/fakeglass,
-/area/centcom/holding)
-"vF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/holding)
-"vE" = (
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vD" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vC" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
-	},
-/area/centcom/holding)
-"vB" = (
-/obj/structure/grille/broken,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vA" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vz" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vy" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vx" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
-	},
-/area/centcom/holding)
-"vw" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vv" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/holding)
-"vu" = (
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vt" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vs" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/machinery/meter,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vr" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/holding)
-"vp" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"vo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vn" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vm" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 6
-	},
-/area/centcom/holding)
-"vl" = (
-/turf/open/floor/plasteel/green/side{
-	dir = 10
-	},
-/area/centcom/holding)
-"vk" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vj" = (
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"vi" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/green/side{
-	dir = 6
-	},
-/area/centcom/holding)
-"vh" = (
-/turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
-"vg" = (
-/obj/machinery/light,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22;
-	req_access = list(201)
-	},
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Dock South";
-	dir = 1;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
-"vf" = (
-/turf/open/floor/plasteel/green/corner,
-/area/centcom/holding)
-"ve" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"vd" = (
-/turf/open/floor/plasteel/green/corner{
-	dir = 8
-	},
-/area/centcom/holding)
-"vc" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_x = 0;
-	pixel_y = -26
-	},
-/turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
-"vb" = (
-/obj/machinery/computer/arcade,
-/turf/open/floor/plasteel/green/side{
-	dir = 10
-	},
-/area/centcom/holding)
-"va" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"uZ" = (
+"wx" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"uY" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/green/side{
-	dir = 4
-	},
 /area/centcom/holding)
-"uX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uW" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/indestructible/riveted,
-/area/centcom/holding)
-"uT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"uS" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"uR" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"uQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"uP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uN" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uM" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/centcom/holding)
-"uL" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/holding)
-"uK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/holding)
-"uJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
-	name = "Centcom Monitor";
-	network = list("Centcom");
-	pixel_x = 0;
-	pixel_y = 2
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"uI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "air_in"
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"uH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"uG" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uE" = (
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/plasteel,
-/area/centcom/holding)
-"uC" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 8
-	},
-/area/centcom/holding)
-"uB" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"uA" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"uz" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/centcom/holding)
-"uy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"ux" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"uw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Transfer South";
-	dir = 4;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"uv" = (
-/obj/structure/sign/vacuum{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/warning{
-	dir = 1
-	},
-/area/centcom/holding)
-"uu" = (
-/turf/open/floor/plasteel/warning{
-	dir = 1
-	},
-/area/centcom/holding)
-"ut" = (
-/obj/structure/sign/vacuum{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/warning{
-	dir = 1
-	},
-/area/centcom/holding)
-"us" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
-	},
-/obj/machinery/power/smes/magical,
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"ur" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/centcom/holding)
-"uq" = (
-/obj/machinery/door/poddoor/shuttledock,
-/turf/open/floor/engine,
-/area/centcom/holding)
-"up" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"uo" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8;
-	initialize_directions = 11
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"un" = (
-/obj/docking_port/stationary{
-	dwidth = 5;
-	height = 7;
-	id = "arrival_centcom";
-	name = "arrival centcom";
-	width = 15
-	},
-/turf/open/space,
-/area/space)
-"um" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24;
-	req_access = list(201)
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"ul" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"uk" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"uj" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"ui" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"uh" = (
-/obj/structure/lattice,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA";
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/turf/open/space,
-/area/space)
-"ug" = (
-/obj/machinery/door/poddoor/shuttledock,
-/turf/open/floor/engine,
-/area/centcom/prison)
-"uf" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA";
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/turf/open/space,
-/area/space)
-"ue" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"ud" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Transfer North";
-	dir = 4;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"uc" = (
-/obj/structure/sign/vacuum{
-	pixel_x = 32
-	},
-/turf/open/floor/plasteel/warning,
-/area/centcom/prison)
-"ub" = (
-/turf/open/floor/plasteel/warning,
-/area/centcom/prison)
-"ua" = (
-/obj/structure/sign/vacuum{
-	pixel_x = -32
-	},
-/turf/open/floor/plasteel/warning,
-/area/centcom/prison)
-"tZ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"tY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tX" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"tU" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tT" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tR" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tQ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 1;
-	scrub_Toxins = 1
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tP" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"tO" = (
-/obj/structure/closet/emcloset,
+"wy" = (
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"tN" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"tM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"tL" = (
-/obj/machinery/computer/arcade,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 1
-	},
-/area/centcom/prison)
-"tK" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	pixel_y = 23;
-	req_access = list(201)
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 1
-	},
-/area/centcom/prison)
-"tJ" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Dock North";
-	dir = 2;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 1
-	},
-/area/centcom/prison)
-"tI" = (
-/obj/structure/chair,
-/turf/open/floor/plasteel/green/side{
-	dir = 1
-	},
-/area/centcom/prison)
-"tH" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 1
-	},
-/area/centcom/prison)
-"tG" = (
-/turf/closed/indestructible/fakeglass,
-/area/centcom/prison)
-"tF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/indestructible/riveted,
-/area/centcom/prison)
-"tE" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tD" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
-	},
-/area/centcom/prison)
-"tC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24;
-	req_access = list(201)
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"tB" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 1
-	},
-/area/centcom/prison)
-"tA" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tz" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/machinery/meter,
-/turf/open/floor/plating,
-/area/centcom/prison)
-"ty" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tx" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/apc{
-	cell_type = 15000;
-	dir = 2;
-	name = "Centcom North Arrivals APC";
-	pixel_x = 0;
-	pixel_y = -24;
-	req_access = list(201)
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tw" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tv" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"tu" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"tt" = (
-/obj/machinery/camera{
-	c_tag = "Centcom Arrivals Lounge North";
-	dir = 1;
-	network = list("Centcom")
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"ts" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"tr" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"tq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"tp" = (
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"to" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 1
-	},
-/area/centcom/prison)
-"tn" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tm" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tl" = (
-/obj/structure/grille/broken,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"tk" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/indestructible/riveted,
-/area/centcom/prison)
-"tj" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"ti" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"th" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"tg" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"tf" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"te" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"td" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tc" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"tb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"ta" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "n2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"sZ" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sY" = (
+/area/centcom/holding)
+"wz" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sX" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sW" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 8
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"sV" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/structure/window{
-	icon_state = "window";
-	dir = 4
-	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 4
-	},
-/area/centcom/prison)
-"sU" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sT" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Centcom Arrivals";
-	opacity = 1;
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sS" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel/neutral/side{
-	dir = 8
-	},
-/area/centcom/prison)
-"sQ" = (
-/obj/structure/closet/crate/internals,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/warnplate{
-	dir = 8
-	},
-/area/centcom/prison)
-"sP" = (
-/obj/structure/closet/wardrobe/grey,
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sO" = (
-/obj/machinery/vending/cigarette,
-/obj/structure/sign/nosmoking_2{
-	pixel_x = 0;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sM" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sL" = (
+/area/centcom/holding)
+"wA" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sK" = (
-/obj/structure/closet/crate/medical,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating/warnplate{
-	dir = 8
+/area/centcom/holding)
+"wB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
-/area/centcom/prison)
-"sJ" = (
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sI" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	pixel_y = 23;
-	req_access = list(201)
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sH" = (
-/turf/open/floor/plasteel,
-/area/centcom/prison)
-"sG" = (
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sF" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sE" = (
-/obj/structure/closet/crate/bin,
-/turf/open/floor/plasteel/black,
-/area/centcom/prison)
-"sD" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sC" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sB" = (
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sA" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/centcom/prison)
-"sz" = (
-/turf/closed/indestructible/fakedoor{
-	name = "Centcom"
-	},
-/area/centcom/prison)
-"sy" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
+/turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/centcom/prison)
-"sx" = (
+/area/centcom/holding)
+"wC" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/centcom/holding)
+"wD" = (
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/centcom/holding)
+"wE" = (
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/centcom/holding)
+"wF" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 8
 	},
-/area/centcom/prison)
-"sw" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "adminshut";
-	name = "Administrative Shutters"
-	},
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows";
-	dir = 4
-	},
-/area/centcom/prison)
-"sv" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "adminshut";
-	name = "Administrative Shutters"
-	},
+/area/centcom/holding)
+"wG" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 8
 	},
-/area/centcom/prison)
-"su" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "adminshut";
-	name = "Administrative Shutters"
-	},
+/area/centcom/holding)
+"wH" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
-	dir = 8
+	dir = 4
 	},
-/area/centcom/prison)
-"st" = (
-/obj/structure/showcase/fakesec,
-/turf/open/floor/wood,
-/area/centcom/prison)
-"ss" = (
-/obj/machinery/light/small,
-/obj/machinery/button/door{
-	id = "adminshut";
-	name = "Administrative Shutter-Control";
-	pixel_y = -30
-	},
-/turf/open/floor/wood,
-/area/centcom/prison)
-"sr" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sq" = (
-/obj/structure/showcase/fakesec,
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sp" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small,
-/turf/open/floor/wood,
-/area/centcom/prison)
-"so" = (
-/obj/structure/closet,
-/turf/open/floor/wood,
-/area/centcom/prison)
-"sn" = (
-/obj/structure/filingcabinet,
-/turf/open/floor/wood,
-/area/centcom/prison)
-"sm" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen{
-	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
-	name = "Centcom Monitor";
-	network = list("Centcom");
-	pixel_x = 0;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sl" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sk" = (
-/obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sj" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/centcom/prison)
-"si" = (
-/turf/open/floor/carpet,
-/area/centcom/prison)
-"sh" = (
-/turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/holding)
 
 (1,1,1) = {"
 aa
