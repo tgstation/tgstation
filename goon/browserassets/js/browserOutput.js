@@ -621,7 +621,7 @@ $(function() {
 		}
 
 		e.preventDefault()
-		
+
 		var k = e.which;
 		var command; // Command to execute through winset.
 
@@ -716,6 +716,7 @@ $(function() {
 		var messagesHeight = $messages.outerHeight();
 		$('body,html').scrollTop(messagesHeight);
 		$('#newMessages').remove();
+		runByond('byond://winset?mapwindow.map.focus=true');
 	});
 
 	$('#toggleOptions').click(function(e) {
