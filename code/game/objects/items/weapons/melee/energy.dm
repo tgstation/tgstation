@@ -9,8 +9,8 @@
 	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on [src]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -155,10 +155,13 @@
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-		var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-		if(src.hacked) // That's right, we'll only check the "original" esword.
-			newSaber.hacked = 1
+		user << "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>"
+		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		if(hacked || other_esword.hacked)
+			newSaber.hacked = TRUE
 			newSaber.item_color = "rainbow"
 		user.unEquip(W)
 		user.unEquip(src)
