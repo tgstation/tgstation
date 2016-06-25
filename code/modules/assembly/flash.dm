@@ -94,7 +94,7 @@
 			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
 			if(M.weakeyes)
 				M.Stun(2)
-				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shields your eyes!</span>")
+				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shield your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
@@ -115,8 +115,8 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
+		M.Weaken(3)
 		R.confused += 5
-		R.uneq_active()
 		R.flash_eyes(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")
 		return 1

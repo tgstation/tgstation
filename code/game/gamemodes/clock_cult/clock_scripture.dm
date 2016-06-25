@@ -96,16 +96,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/mob/living/L in range(1, invoker))
 				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 					for(var/invocation in invocations)
-						if(!whispered)
-							L.say(invocation)
-						else
-							L.whisper(invocation)
+						clockwork_say(L, invocation, whispered)
 		else
 			for(var/invocation in invocations)
-				if(!whispered)
-					invoker.say(invocation)
-				else
-					invoker.whisper(invocation)
+				clockwork_say(L, invocation, whispered)
 	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
 	if(!channel_time)
 		return 1
@@ -116,15 +110,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
 				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
-					if(!whispered)
-						L.say(invocation)
-					else
-						L.whisper(invocation)
+					clockwork_say(L, invocation, whispered)
 		else
-			if(!whispered)
-				invoker.say(invocation)
-			else
-				invoker.whisper(invocation)
+			clockwork_say(L, invocation, whispered)
 	return 1
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
@@ -142,10 +130,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			break
 		if(!do_after(invoker, chant_interval, target = invoker))
 			break
-		if(!whispered)
-			invoker.say(pick(chant_invocations))
-		else
-			invoker.whisper(pick(chant_invocations))
+		clockwork_say(L, pick(chant_invocations), whispered)
 		chant_effects(i)
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"

@@ -231,9 +231,7 @@
 	\
 	The third functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
 	\
-	The fourth functionality is the Repository, which will display all components stored within the slab.<br><br>\
-	\
-	The fifth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
+	The fourth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
 	\
 	A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
 	specified.</i><br><br>"
@@ -536,7 +534,7 @@
 		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 		V.update_status()
 		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
-	user.say("Xarry, urn'guraf!")
+	clockwork_say(user, "Xarry, urn'guraf!")
 	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 	new/obj/effect/clockwork/judicial_marker(get_turf(target))
 	user.update_action_buttons_icon()

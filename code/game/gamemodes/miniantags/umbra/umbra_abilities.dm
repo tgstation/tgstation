@@ -98,6 +98,10 @@
 		user << "<span class='warning'>[target] is mindless and incapable of higher thought!</span>"
 		revert_cast()
 		return
+	if(isguardian(target))
+		user << "<span class='warning'>You see a confusing overlay of memories from two seperate viewpoints. Useless.</span>"
+		revert_cast()
+		return
 	if(user.possessed)
 		user << "<span class='warning'>Unpossess [user.possessed] first!</span>"
 		revert_cast()
