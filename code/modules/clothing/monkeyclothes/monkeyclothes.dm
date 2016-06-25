@@ -22,14 +22,6 @@
 			to_chat(M, "<span class='warning'>These clothes won't fit.</span>")
 		return CANNOT_EQUIP
 
-/obj/item/clothing/monkeyclothes/attack(mob/living/carbon/C as mob, mob/user as mob)	//I thought I'd give people a fast way to put clothes on monkey.
-	if(ismonkey(C))																	//They can do it by opening the monkey's "show inventory" like you'd do for an human as well.
-		var/mob/living/carbon/monkey/M = C
-		if(!M.equip_to_slot_if_possible(src, slot_w_uniform))
-			to_chat(user, "Those clothes won't fit.")
-			return
-	..()
-
 /obj/item/clothing/monkeyclothes/cultrobes
 	name = "size S cult robes"
 	desc = "Adorably crazy."
