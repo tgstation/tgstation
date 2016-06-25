@@ -674,7 +674,7 @@
 		turfs_to_update += new_turf
 
 		//Delete the old turf
-		var/replacing_turf_type = get_base_turf(old_turf.z)
+		var/replacing_turf_type = old_turf.get_underlying_turf()
 		var/obj/docking_port/destination/D = linked_port.docked_with
 
 		if(D && istype(D)) replacing_turf_type = D.base_turf_type

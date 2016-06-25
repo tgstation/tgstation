@@ -10,11 +10,22 @@
 
 //Optional area: Tower of Madness. Contains many mummy priests and faithless, in the end there's an altar. Praying at the altar will cause you to completely lose your mind and gain many superpowers.
 
-/area/awaymission/tomb/expedition_camp
+
+/area/awaymission/tomb/outside
+	name = "desert"
+	base_turf_type = /turf/unsimulated/beach/sand
+	dynamic_lighting = 0
+
+/area/awaymission/tomb/outside/expedition_camp
 	name = "expedition camp"
 
-/area/awaymission/tomb/pyramid_outside
+/area/awaymission/tomb/outside/pyramid_outside
 	name = "great pyramid"
+	dynamic_lighting = 1
+
+
+/area/awaymission/tomb
+	base_turf_type = /turf/unsimulated/floor/asteroid/air
 
 /area/awaymission/tomb/tomb_of_rafid
 	name = "Tomb of Rafid"

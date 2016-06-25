@@ -503,8 +503,15 @@
 				S.air.update_values()
 */
 
+/turf/proc/get_underlying_turf()
+	var/area/A = loc
+	if(A.base_turf_type)
+		return A.base_turf_type
+
+	return get_base_turf(z)
+
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(get_base_turf(src.z))
+	src.ChangeTurf(get_underlying_turf())
 	if(istype(src, /turf/space))
 		new /obj/structure/lattice(src)
 
@@ -623,7 +630,7 @@
 
 
 /turf/proc/cultify()
-	if(istype(src, get_base_turf(src.z))) //Don't cultify the base turf, ever
+	if(istype(src, get_underlying_turf())) //Don't cultify the base turf, ever
 		return
 	ChangeTurf(get_base_turf(src.z))
 
@@ -631,7 +638,7 @@
 	return PROJREACT_WALLS
 
 /turf/singularity_act()
-	if(istype(src, get_base_turf(src.z))) //Don't singulo the base turf, ever
+	if(istype(src, get_underlying_turf())) //Don't singulo the base turf, ever
 		return
 	if(intact)
 		for(var/obj/O in contents)
@@ -639,7 +646,7 @@
 				continue
 			if(O.invisibility == 101)
 				O.singularity_act()
-	ChangeTurf(get_base_turf(src.z))
+	ChangeTurf(get_underlying_turf())
 	return(2)
 
 //Return a lattice to allow catwalk building

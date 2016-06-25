@@ -10,6 +10,8 @@
 	var/turret_protected = 0
 	var/list/turretTargets = list()
 
+	var/base_turf_type = null
+
 /area/New()
 	area_turfs = list()
 	icon_state = ""
