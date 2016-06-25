@@ -3,6 +3,7 @@
 	desc = "Apply butt."
 	icon = 'icons/obj/stools-chairs-beds.dmi'
 	icon_state = "stool"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/newsprites_lefthand.dmi', "right_hand" = 'icons/mob/in-hand/right/newsprites_righthand.dmi')
 	force = 10
 	throwforce = 10
 	w_class = W_CLASS_HUGE
