@@ -3,10 +3,7 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/overspace,
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
@@ -20,10 +17,7 @@
 	},
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table/wood,
@@ -57,10 +51,10 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
 	},
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/computer/atmos_alert,
@@ -272,8 +266,7 @@
 	pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/drinkingglasses,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine,
+/obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aT" = (
@@ -416,11 +409,13 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "br" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
-	dir = 8
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 10;
+	tag = "icon-sink (EAST)"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock{
@@ -444,13 +439,16 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/structure/statue/silver/janitor{
+	anchored = 1
+	},
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
-	dir = 4
+	tag = "icon-toilet00 (NORTH)";
+	icon_state = "toilet00";
+	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -459,13 +457,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/surgicaldrill,
-/turf/open/floor/plasteel/shuttle/white,
+/obj/structure/closet/jcloset{
+	name = "cleaning supplies closet"
+	},
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bA" = (
 /turf/closed/wall/shuttle{
@@ -544,11 +539,7 @@
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
-/obj/item/weapon/lighter{
-	pixel_x = -4;
-	pixel_y = 6
-	},
+/obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -582,25 +573,30 @@
 /obj/machinery/door/airlock/glass_medical,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
-"bV" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/obj/structure/sign/bluecross_2,
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle/escape)
-"bU" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
-	pixel_y = -30
-	},
-/turf/closed/wall/shuttle/smooth,
-/area/shuttle/escape)
 "bT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	tag = "icon-plant-10";
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bU" = (
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 10;
+	tag = "icon-sink (EAST)"
+	},
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/turf/open/floor/plasteel/freezer,
+/area/shuttle/escape)
+"bV" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/obj/structure/sign/bluecross_2,
+/turf/open/floor/plasteel/airless/shuttle/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -609,34 +605,34 @@ aa
 aa
 aa
 ab
-ak
-ak
+bt
+bt
 aK
-aQ
+bt
 aT
-ak
+bt
 ac
 ac
 ac
-bf
+bt
 bg
-bl
+bt
 bo
-ak
-bf
+bt
+bt
 bA
 aa
 "}
 (2,1,1) = {"
 aa
 ab
-ak
-ak
-av
+bt
+bt
+bt
 aC
 aH
 aL
-aw
+bt
 aE
 bH
 aZ
@@ -644,7 +640,7 @@ bc
 aZ
 bH
 aE
-aw
+bt
 bp
 bs
 bx
@@ -656,11 +652,11 @@ ab
 ae
 al
 aq
-aw
+bt
 aC
 aI
 aM
-aw
+bt
 aE
 aW
 ba
@@ -668,10 +664,10 @@ bL
 bO
 bQ
 bR
-aw
+bt
 bp
 bt
-bf
+bt
 bC
 bE
 "}
@@ -680,11 +676,11 @@ ac
 af
 am
 ar
-aw
+bt
 aC
 aI
 aM
-aw
+bt
 aE
 aW
 bJ
@@ -692,7 +688,7 @@ bM
 bP
 bQ
 aE
-aw
+bt
 bp
 bu
 bx
@@ -704,7 +700,7 @@ ac
 ag
 an
 as
-ax
+bt
 ac
 aJ
 ac
@@ -716,10 +712,10 @@ bH
 bK
 bH
 aE
-aw
+bt
 bp
 bt
-bf
+bt
 bC
 bE
 "}
@@ -728,7 +724,7 @@ ac
 ah
 an
 at
-ay
+bt
 aD
 aE
 aE
@@ -740,7 +736,7 @@ aE
 aE
 aE
 aE
-bm
+bt
 bp
 bv
 by
@@ -764,10 +760,10 @@ aN
 aN
 aE
 aE
-bU
+bt
 ak
-ak
-bf
+bt
+bt
 bC
 bE
 "}
@@ -788,19 +784,19 @@ aR
 bd
 aN
 aE
-bV
-bh
+bt
+bp
 bw
 bz
 bC
 bE
 "}
 (9,1,1) = {"
-ad
-aj
+ab
+ae
 ap
 au
-aB
+bt
 aF
 bH
 aP
@@ -812,19 +808,19 @@ aE
 be
 aE
 aE
-bS
-bi
-bi
-bj
+bm
+bp
+bp
+bp
 bC
 bE
 "}
 (10,1,1) = {"
 aa
-ad
-ak
-ak
-av
+ab
+bt
+bt
+bt
 aG
 bH
 bI
@@ -836,10 +832,10 @@ bN
 be
 bT
 bk
-bF
+bt
 br
+bU
 br
-bq
 bB
 bB
 "}
@@ -848,21 +844,21 @@ aa
 aa
 aa
 aa
-ad
+ab
 ac
-ak
+bt
 ac
-ak
-ak
-ak
+bt
+bt
+bt
 ac
 ac
 ac
-ak
-ak
-bn
+bt
+bt
+bt
 ac
-ak
+bt
 ac
 bD
 aa
