@@ -5861,24 +5861,24 @@
 /area/holodeck/rec_center/medical)
 "sh" = (
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "si" = (
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sj" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sk" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sl" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sm" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen{
@@ -5889,30 +5889,30 @@
 	pixel_y = 2
 	},
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sn" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "so" = (
 /obj/structure/closet,
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sp" = (
 /obj/structure/table/wood,
 /obj/machinery/light/small,
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sq" = (
 /obj/structure/showcase/fakesec,
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sr" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ss" = (
 /obj/machinery/light/small,
 /obj/machinery/button/door{
@@ -5921,11 +5921,11 @@
 	pixel_y = -30
 	},
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "st" = (
 /obj/structure/showcase/fakesec,
 /turf/open/floor/wood,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "su" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "adminshut";
@@ -5935,7 +5935,7 @@
 	icon_state = "fakewindows";
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sv" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "adminshut";
@@ -5945,7 +5945,7 @@
 	icon_state = "fakewindows2";
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sw" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "adminshut";
@@ -5955,47 +5955,47 @@
 	icon_state = "fakewindows";
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sx" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sy" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sz" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sA" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sB" = (
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sC" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sD" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sE" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sF" = (
 /obj/machinery/light{
 	dir = 1
@@ -6005,7 +6005,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sG" = (
 /obj/structure/sign/poster{
 	official = 1;
@@ -6013,10 +6013,10 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sH" = (
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sI" = (
 /obj/machinery/light{
 	dir = 1
@@ -6027,31 +6027,31 @@
 	req_access = list(201)
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sJ" = (
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sK" = (
 /obj/structure/closet/crate/medical,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sL" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sO" = (
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/nosmoking_2{
@@ -6059,18 +6059,18 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sP" = (
 /obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sQ" = (
 /obj/structure/closet/crate/internals,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/warnplate{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -6078,13 +6078,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -6095,14 +6095,14 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sV" = (
 /obj/structure/chair{
 	dir = 8
@@ -6120,7 +6120,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sW" = (
 /obj/structure/chair{
 	dir = 4
@@ -6138,24 +6138,24 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4;
 	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sY" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "sZ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0"
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ta" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6174,13 +6174,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -6191,17 +6191,17 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "td" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "te" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tf" = (
 /obj/structure/chair{
 	dir = 8
@@ -6219,7 +6219,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tg" = (
 /obj/structure/chair{
 	dir = 4
@@ -6237,7 +6237,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "th" = (
 /obj/structure/chair{
 	dir = 4
@@ -6255,38 +6255,38 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ti" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/closed/indestructible/riveted,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tl" = (
 /obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tm" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tn" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
@@ -6295,24 +6295,24 @@
 	icon_state = "cobweb2"
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "to" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tp" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tr" = (
 /obj/structure/chair{
 	dir = 8
@@ -6327,7 +6327,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ts" = (
 /obj/structure/chair{
 	dir = 4
@@ -6342,7 +6342,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tt" = (
 /obj/machinery/camera{
 	c_tag = "Centcom Arrivals Lounge North";
@@ -6350,7 +6350,7 @@
 	network = list("Centcom")
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tu" = (
 /obj/structure/chair{
 	dir = 4
@@ -6368,13 +6368,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tw" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0"
@@ -6383,7 +6383,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -6401,7 +6401,7 @@
 	req_access = list(201)
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ty" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -6413,26 +6413,26 @@
 	tag = ""
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tz" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /obj/machinery/meter,
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tA" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tB" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
@@ -6444,13 +6444,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tD" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tE" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0"
@@ -6462,14 +6462,14 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/indestructible/riveted,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tG" = (
 /turf/closed/indestructible/fakeglass,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tH" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light{
@@ -6478,13 +6478,13 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tI" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tJ" = (
 /obj/machinery/firealarm{
 	dir = 2;
@@ -6498,7 +6498,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tK" = (
 /obj/machinery/airalarm{
 	frequency = 1439;
@@ -6508,7 +6508,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tL" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/light{
@@ -6517,7 +6517,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 1
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -6526,16 +6526,16 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tN" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tO" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tP" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -6543,7 +6543,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -6552,7 +6552,7 @@
 	scrub_Toxins = 1
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tR" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -6560,7 +6560,7 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -6569,7 +6569,7 @@
 	pressure_checks = 1
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6581,11 +6581,11 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tU" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -6593,7 +6593,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tW" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
@@ -6602,7 +6602,7 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tX" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/cable{
@@ -6611,7 +6611,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tY" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -6623,7 +6623,7 @@
 	tag = ""
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "tZ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -6632,22 +6632,22 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ua" = (
 /obj/structure/sign/vacuum{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/warning,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ub" = (
 /turf/open/floor/plasteel/warning,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uc" = (
 /obj/structure/sign/vacuum{
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/warning,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ud" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -6663,13 +6663,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ue" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uf" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
@@ -6682,7 +6682,7 @@
 "ug" = (
 /obj/machinery/door/poddoor/shuttledock,
 /turf/open/floor/engine,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uh" = (
 /obj/structure/lattice,
 /obj/structure/sign/securearea{
@@ -6703,7 +6703,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
@@ -6720,7 +6720,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -6728,7 +6728,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ul" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -6741,7 +6741,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "um" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -6756,7 +6756,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "un" = (
 /obj/docking_port/stationary{
 	dwidth = 5;
@@ -6780,7 +6780,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "up" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
@@ -6792,7 +6792,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uq" = (
 /obj/machinery/door/poddoor/shuttledock,
 /turf/open/floor/engine,
@@ -6802,7 +6802,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "us" = (
 /obj/structure/cable{
 	icon_state = "0-2";
@@ -6811,7 +6811,7 @@
 	},
 /obj/machinery/power/smes/magical,
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "ut" = (
 /obj/structure/sign/vacuum{
 	pixel_x = -32
@@ -6819,12 +6819,12 @@
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uu" = (
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uv" = (
 /obj/structure/sign/vacuum{
 	pixel_x = 32
@@ -6832,7 +6832,7 @@
 /turf/open/floor/plasteel/warning{
 	dir = 1
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -6848,13 +6848,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "ux" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -6865,7 +6865,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uz" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0"
@@ -6878,7 +6878,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uA" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -6890,7 +6890,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uB" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -6902,7 +6902,7 @@
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uC" = (
 /obj/structure/chair{
 	dir = 4
@@ -6910,7 +6910,7 @@
 /turf/open/floor/plasteel/green/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/plasteel,
@@ -6940,7 +6940,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4;
@@ -6948,7 +6948,7 @@
 	id = "air_in"
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -6961,19 +6961,19 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/indestructible/riveted,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /turf/closed/indestructible/riveted,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6982,7 +6982,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uN" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -6994,7 +6994,7 @@
 	tag = ""
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7006,7 +7006,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7019,7 +7019,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7048,7 +7048,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7059,7 +7059,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
@@ -7068,11 +7068,11 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/prison)
+/area/centcom/arrivals)
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/indestructible/riveted,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -7081,11 +7081,11 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uW" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -7094,27 +7094,27 @@
 	scrub_Toxins = 0
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uY" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/green/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "uZ" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "va" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/black,
-/area/centcom/prison)
+/area/centcom/arrivals)
 "vb" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vc" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -7124,19 +7124,19 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vd" = (
 /turf/open/floor/plasteel/green/corner{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "ve" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vf" = (
 /turf/open/floor/plasteel/green/corner,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vg" = (
 /obj/machinery/light,
 /obj/machinery/airalarm{
@@ -7150,22 +7150,22 @@
 	network = list("Centcom")
 	},
 /turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vh" = (
 /turf/open/floor/plasteel/green/side,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vi" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/green/side{
 	dir = 6
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vj" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vk" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "0"
@@ -7177,22 +7177,22 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vl" = (
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vm" = (
 /turf/open/floor/plasteel/green/side{
 	dir = 6
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vn" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -7201,7 +7201,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vp" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -7211,7 +7211,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/centcom{
@@ -7222,13 +7222,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vr" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vs" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -7240,7 +7240,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vt" = (
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
@@ -7250,7 +7250,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vu" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
@@ -7266,7 +7266,7 @@
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vx" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -7283,14 +7283,14 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vz" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vA" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -7303,7 +7303,7 @@
 /obj/structure/grille/broken,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vC" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
@@ -7314,7 +7314,7 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vE" = (
 /obj/structure/sign/poster{
 	official = 1;
@@ -7323,7 +7323,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1;
@@ -7334,7 +7334,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vG" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/holding)
@@ -7351,7 +7351,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
@@ -7367,16 +7367,16 @@
 	req_access = list(201)
 	},
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vJ" = (
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vL" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -7390,13 +7390,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vM" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump,
 /obj/structure/sign/poster{
@@ -7406,18 +7406,18 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vP" = (
 /obj/structure/closet/wardrobe/grey,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vQ" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -7426,13 +7426,13 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vS" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -7443,7 +7443,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Centcom Arrivals";
@@ -7453,14 +7453,14 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vU" = (
 /turf/open/floor/plasteel/black,
 /area/centcom/holding)
 "vV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vW" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/black,
@@ -7476,7 +7476,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vY" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -7487,7 +7487,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "vZ" = (
 /obj/machinery/light{
 	dir = 1
@@ -7506,7 +7506,7 @@
 	network = list("Centcom")
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7514,7 +7514,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wb" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
@@ -7538,7 +7538,7 @@
 	pump_direction = 0
 	},
 /turf/open/floor/plasteel/neutral/corner,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "we" = (
 /obj/machinery/light{
 	dir = 1
@@ -7551,25 +7551,25 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wf" = (
 /obj/structure/sign/nosmoking_2{
 	pixel_x = 0;
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wg" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wh" = (
 /turf/open/space,
 /area/centcom/holding)
 "wi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7580,7 +7580,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7592,7 +7592,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7606,7 +7606,7 @@
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -7618,7 +7618,7 @@
 	pixel_x = 0
 	},
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
@@ -7630,7 +7630,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wo" = (
 /obj/structure/chair{
 	dir = 8
@@ -7646,7 +7646,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wp" = (
 /obj/structure/chair{
 	dir = 4
@@ -7680,19 +7680,19 @@
 "wr" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/black,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "ws" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -7700,7 +7700,7 @@
 /turf/closed/indestructible/fakedoor{
 	name = "Centcom"
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -7724,7 +7724,7 @@
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wx" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/black,
@@ -7750,7 +7750,7 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
@@ -7761,17 +7761,17 @@
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wD" = (
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wE" = (
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
-/area/centcom/holding)
+/area/centcom/arrivals)
 "wF" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -7779,11 +7779,8 @@
 	},
 /area/centcom/holding)
 "wG" = (
-/turf/closed/indestructible/fakeglass{
-	icon_state = "fakewindows2";
-	dir = 8
-	},
-/area/centcom/holding)
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
 "wH" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
@@ -62472,22 +62469,22 @@ ab
 ab
 ab
 ab
-nU
+wG
 uz
 uK
 ab
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
 ab
 ab
 ab
@@ -62729,7 +62726,7 @@ ab
 ab
 ab
 ab
-nU
+wG
 uA
 uL
 uU
@@ -62986,7 +62983,7 @@ ab
 ab
 ab
 ab
-nU
+wG
 uB
 uM
 uM
@@ -63225,15 +63222,15 @@ ab
 ab
 ab
 ab
-fh
-fh
-fh
+wG
+wG
+wG
 to
 tB
 tG
-fh
-fh
-fh
+wG
+wG
+wG
 ab
 ab
 ab
@@ -63243,25 +63240,25 @@ ab
 ab
 ab
 ab
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-vx
-vC
-vC
-vG
-nU
-nU
-nU
-nU
-nU
-nU
-nU
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+to
+tB
+tB
+tG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
 wk
 wt
 ab
@@ -63482,7 +63479,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sR
 ta
 tp
@@ -63490,7 +63487,7 @@ tp
 tp
 tP
 tp
-fh
+wG
 ab
 ab
 ab
@@ -63518,7 +63515,7 @@ rW
 rW
 rW
 rW
-nU
+wG
 wk
 wt
 ab
@@ -63739,7 +63736,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sS
 tb
 tq
@@ -63747,7 +63744,7 @@ tC
 tq
 tQ
 sH
-fh
+wG
 uf
 ab
 ab
@@ -63775,7 +63772,7 @@ rW
 ab
 ab
 ab
-nU
+wG
 wk
 wt
 ab
@@ -63995,17 +63992,17 @@ ab
 ab
 ab
 ab
-fh
-fh
+wG
+wG
 sT
 tc
-fh
-fh
-fh
+wG
+wG
+wG
 tR
 tR
-fh
-fh
+wG
+wG
 ab
 ab
 ab
@@ -64013,13 +64010,13 @@ ab
 ab
 ab
 ab
-nU
-nU
-nU
-nU
-nU
-nU
-nU
+wG
+wG
+wG
+wG
+wG
+wG
+wG
 rW
 rW
 ab
@@ -64031,12 +64028,12 @@ rW
 rW
 rW
 rW
-nU
-nU
+wG
+wG
 wl
 wu
-nU
-nU
+wG
+wG
 ab
 ab
 ab
@@ -64251,13 +64248,13 @@ ab
 ab
 ab
 ab
-fh
-fh
+wG
+wG
 sL
 sS
 td
 sL
-fh
+wG
 tH
 sH
 sH
@@ -64270,31 +64267,31 @@ ab
 ab
 ab
 ab
-uq
+ug
 ut
 uC
 uC
 uC
 vb
-nU
-nU
-nU
-nU
-vx
-vG
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-vU
+wG
+wG
+wG
+wG
+to
+tG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+sJ
 wm
-wv
-wy
-nU
-nU
+tv
+sE
+wG
+wG
 ab
 ab
 ab
@@ -64508,7 +64505,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sE
 sM
 sU
@@ -64527,9 +64524,9 @@ ab
 ab
 ab
 un
-uq
+ug
 uu
-uD
+sN
 uN
 uV
 uV
@@ -64548,10 +64545,10 @@ vo
 vk
 vY
 wn
-uG
-uE
-wA
-nU
+td
+sH
+sL
+wG
 ab
 ab
 ab
@@ -64765,7 +64762,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sF
 sH
 sV
@@ -64784,11 +64781,11 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uE
+sH
 uO
-uF
+tb
 vc
 uU
 uU
@@ -64808,7 +64805,7 @@ wo
 ww
 wo
 wB
-wF
+sx
 ab
 ab
 ab
@@ -65022,7 +65019,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sG
 sH
 sW
@@ -65041,31 +65038,31 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uE
+sH
 uO
-uG
+td
 vd
 vl
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-nU
-vU
-wa
-wp
-wp
-wp
-wC
 wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+sJ
+wa
+ts
+ts
+ts
+wC
+tD
 ab
 ab
 ab
@@ -65285,7 +65282,7 @@ sH
 sS
 td
 sH
-fh
+wG
 tJ
 sH
 td
@@ -65298,31 +65295,31 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uE
+sH
 uO
-uG
-uE
-uE
+td
+sH
+sH
 vp
-vu
-vA
+tp
+tP
 vE
-vu
-vu
-vu
+tp
+tp
+tp
 vN
 vQ
 vR
 vS
 vV
-wb
-uE
-uE
-uE
-uE
-wG
+tU
+sH
+sH
+sH
+sH
+tD
 ab
 ab
 ab
@@ -65542,7 +65539,7 @@ sH
 sS
 td
 tt
-fh
+wG
 tK
 sH
 td
@@ -65555,16 +65552,16 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uF
+tb
 uP
 uW
 ve
 ve
 vq
-vv
-vv
+tq
+tq
 vF
 vJ
 vL
@@ -65573,13 +65570,13 @@ vJ
 vJ
 vJ
 vT
-uE
-wc
-uE
-uE
-uE
-uE
-wG
+sH
+sS
+sH
+sH
+sH
+sH
+tD
 ab
 ab
 ab
@@ -65793,7 +65790,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 sG
 sH
 sV
@@ -65812,31 +65809,31 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uG
+td
 uO
 uX
 vf
 vm
-nU
-nU
-vx
-vC
-vG
-nU
-vx
-vC
-vG
-nU
-nU
-vW
-wd
-wq
-wq
-wq
-wD
 wG
+wG
+to
+tB
+tG
+wG
+to
+tB
+tG
+wG
+wG
+tO
+wd
+tr
+tr
+tr
+wD
+tD
 ab
 ab
 ab
@@ -66045,12 +66042,12 @@ ab
 ab
 ab
 ab
-fh
-fh
-fh
-fh
-fh
-fh
+wG
+wG
+wG
+wG
+wG
+wG
 sI
 sH
 sW
@@ -66069,14 +66066,14 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uG
+td
 uO
-uE
+sH
 vg
+wG
 nU
-nU
 ab
 ab
 ab
@@ -66086,14 +66083,14 @@ ab
 ab
 ab
 ab
-nU
-nU
+wG
+wG
 we
-wp
-wp
-wp
+ts
+ts
+ts
 wE
-wH
+sy
 ab
 ab
 ab
@@ -66298,16 +66295,16 @@ ab
 ab
 ab
 ab
-fh
-fh
-fh
-fh
-fh
+wG
+wG
+wG
+wG
+wG
 rW
 rW
 rW
 rW
-fh
+wG
 sJ
 sN
 sX
@@ -66326,13 +66323,13 @@ ab
 ab
 ab
 ab
-uq
+ug
 uu
-uG
+td
 uO
-uE
+sH
 vh
-nU
+wG
 ab
 ab
 ab
@@ -66344,13 +66341,13 @@ ab
 ab
 ab
 ab
-nU
+wG
 wf
-uE
-uE
-uE
-wA
-nU
+sH
+sH
+sH
+sL
+wG
 ab
 ab
 ab
@@ -66555,22 +66552,22 @@ ab
 ab
 ab
 ab
-fh
+wG
 sh
 sh
 so
-fh
+wG
 ab
 ab
 rW
-fh
-fh
-fh
+wG
+wG
+wG
 sO
 sY
 tj
 tv
-fh
+wG
 tL
 sS
 td
@@ -66583,13 +66580,13 @@ ab
 ab
 ab
 ab
-uq
+ug
 uv
-uG
+td
 uO
 uY
 vi
-nU
+wG
 ab
 ab
 ab
@@ -66601,13 +66598,13 @@ ab
 ab
 ab
 ab
-nU
+wG
 wg
 wr
-wx
-wz
-nU
-nU
+uZ
+sY
+wG
+wG
 ab
 ab
 ab
@@ -66812,27 +66809,27 @@ ab
 ab
 ab
 ab
-fh
+wG
 sh
 sj
 sp
-fh
+wG
 rW
 rW
 rW
-fh
+wG
 sA
-fh
-fh
-fh
+wG
+wG
+wG
 tk
 tw
-fh
-fh
+wG
+wG
 sS
 td
-fh
-fh
+wG
+wG
 ab
 ab
 ab
@@ -66840,13 +66837,13 @@ ab
 ab
 ab
 ab
-nU
-fh
+wG
+wG
 td
-uQ
-fh
-nU
-nU
+uO
+wG
+wG
+wG
 ab
 ab
 ab
@@ -66858,12 +66855,12 @@ ab
 ab
 ab
 ab
-nU
-nU
-nU
-nU
-nU
-nU
+wG
+wG
+wG
+wG
+wG
+wG
 ab
 ab
 ab
@@ -67069,7 +67066,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 si
 sk
 sq
@@ -67081,14 +67078,14 @@ sx
 sB
 sB
 sP
-fh
+wG
 tl
 tx
-fh
-fh
+wG
+wG
 sT
 tc
-fh
+wG
 uh
 ab
 ab
@@ -67098,10 +67095,10 @@ ab
 ab
 ab
 uh
-fh
+wG
 tc
 uR
-fh
+wG
 ab
 ab
 ab
@@ -67326,7 +67323,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 si
 sl
 sr
@@ -67345,8 +67342,8 @@ tE
 tM
 tT
 tX
-fh
-fh
+wG
+wG
 to
 tB
 tB
@@ -67354,12 +67351,12 @@ tB
 tB
 tB
 tG
-fh
-fh
+wG
+wG
 td
-uQ
-fh
-fh
+uO
+wG
+wG
 ab
 ab
 ab
@@ -67583,7 +67580,7 @@ ab
 ab
 ab
 ab
-fh
+wG
 si
 sm
 si
@@ -67591,11 +67588,11 @@ sw
 rW
 ab
 rW
-fh
+wG
 sD
 sD
 sD
-fh
+wG
 tm
 tz
 tF
@@ -67616,7 +67613,7 @@ uw
 uH
 uS
 uZ
-fh
+wG
 ab
 ab
 ab
@@ -67840,22 +67837,22 @@ ab
 ab
 ab
 ab
-fh
+wG
 sh
 sh
 ss
-fh
+wG
 rW
 ab
 rW
-fh
-fh
+wG
+wG
 sK
 sQ
-fh
+wG
 tn
 tA
-fh
+wG
 tO
 tV
 tZ
@@ -67873,7 +67870,7 @@ ue
 tZ
 uT
 va
-fh
+wG
 ab
 ab
 ab
@@ -68097,40 +68094,40 @@ ab
 ab
 ab
 ab
-fh
+wG
 sh
 sn
 st
-fh
+wG
 ab
 ab
 rW
 rW
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
-fh
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
+wG
 to
 tB
 tG
-fh
+wG
 to
 tB
 tG
-fh
+wG
 to
 tB
 tG
-fh
-fh
-fh
-fh
+wG
+wG
+wG
+wG
 ab
 ab
 ab
@@ -68354,22 +68351,22 @@ ab
 ab
 ab
 ab
-fh
-fh
-fh
-fh
-fh
+wG
+wG
+wG
+wG
+wG
 rW
 ab
 rW
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
@@ -68615,18 +68612,18 @@ ab
 ab
 ab
 ab
-fh
+wG
 rW
 ab
 rW
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
@@ -68872,18 +68869,18 @@ ab
 ab
 ab
 ab
-fh
+wG
 rW
 rW
 rW
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
@@ -69129,18 +69126,18 @@ ab
 ab
 ab
 ab
-fh
+wG
 rW
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
@@ -69386,18 +69383,18 @@ ab
 ab
 ab
 ab
-fh
+wG
 rW
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
@@ -69643,18 +69640,18 @@ ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab
 ab
 ab
-fh
+wG
 ab
 ab
 ab

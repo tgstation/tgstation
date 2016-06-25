@@ -197,6 +197,8 @@ var/list/teleportlocs = list()
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/arrivals
+	name = "Centcom Departure Facility"
 //SYNDICATES
 
 /area/syndicate_mothership
