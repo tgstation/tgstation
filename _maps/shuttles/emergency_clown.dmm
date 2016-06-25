@@ -72,7 +72,7 @@
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "an" = (
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "ao" = (
@@ -105,7 +105,7 @@
 	pixel_x = 0;
 	pixel_y = -29
 	},
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "at" = (
@@ -225,7 +225,7 @@
 	pixel_x = -5;
 	pixel_y = 30
 	},
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aN" = (
@@ -233,7 +233,7 @@
 	pixel_x = 27;
 	pixel_y = 0
 	},
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aO" = (
@@ -276,12 +276,11 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aU" = (
-/obj/item/toy/snappop,
-/obj/item/toy/snappop,
+/obj/item/toy/snappop/phoenix,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
 "aV" = (

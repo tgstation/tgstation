@@ -593,10 +593,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bV" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/obj/structure/sign/bluecross_2,
-/turf/open/floor/plasteel/airless/shuttle/white,
+/obj/structure/table/wood/bar{
+	boot_dir = 8
+	},
+/obj/effect/fun_balloon/sentience/emergency_shuttle,
+/turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -736,7 +737,7 @@ aE
 aE
 aE
 aE
-bt
+aA
 bp
 bv
 by
@@ -777,7 +778,7 @@ bG
 aE
 aO
 aR
-aR
+bV
 aR
 aR
 aR
