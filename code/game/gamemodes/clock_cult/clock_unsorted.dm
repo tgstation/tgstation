@@ -118,6 +118,26 @@
 		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
 		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
 
+/proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
+	// When servants invoke ratvar's power, they speak in ways that non
+	// servants do not comprehend.
+	// Our ratvarian chants are stored in their ratvar forms
+
+	var/list/spans = list(SPAN_ROBOT)
+
+	var/old_languages_spoken = AM.languages_spoken
+	AM.languages_spoken = ALL // Everyone understands
+	// In that no one does.
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!whisper)
+			L.say(message, "clock", spans)
+		else
+			L.whisper(message)
+	else
+		AM.say(message)
+	AM.languages_spoken = old_languages_spoken
+
 /*
 
 The Ratvarian Language
