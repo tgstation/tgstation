@@ -564,8 +564,7 @@
 				if(!foundLover)
 					H << "As you hold the stone, loneliness grips you, your heart feeling heavy and you struggle to breath."
 					for(var/i in 1 to 10)
-						spawn(i*10)
-							H.reagents.add_reagent("initropidril",i)
+						addtimer(H.reagents, "add_reagent", i*10, FALSE, "initropidril", i)
 				else
 					H << "You take comfort in the presence of [foundLover]"
 					H.reagents.add_reagent("omnizine",25)

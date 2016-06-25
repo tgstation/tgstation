@@ -519,11 +519,7 @@
 			clockwork_desc = "A gateway in reality. It can both send and receive objects."
 		else
 			clockwork_desc = "A gateway in reality. It can only [sender ? "send" : "receive"] objects."
-		addtimer(src, "selfdel", lifetime)
-
-/obj/effect/clockwork/spatial_gateway/proc/selfdel()
-	if(src)
-		qdel(src)
+		QDEL_IN(src, lifetime)
 
 //set up a gateway with another gateway
 /obj/effect/clockwork/spatial_gateway/proc/setup_gateway(obj/effect/clockwork/spatial_gateway/gatewayB, set_duration, set_uses, two_way)
@@ -622,10 +618,7 @@
 	..()
 	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	animate(src, alpha = 0, time = 10)
-	addtimer(src, "selfdel", 10)
-
-/obj/effect/clockwork/general_marker/proc/selfdel()
-	qdel(src)
+	QDEL_IN(src, 10)
 
 /obj/effect/clockwork/general_marker/nezbere
 	name = "Nezbere, the Brass Eidolon"
