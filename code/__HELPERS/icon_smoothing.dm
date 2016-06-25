@@ -46,11 +46,12 @@
 #define DEFAULT_UNDERLAY_IMAGE			image(DEFAULT_UNDERLAY_ICON, DEFAULT_UNDERLAY_ICON_STATE)
 
 /atom/var/smooth = SMOOTH_FALSE
-/atom/var/top_left_corner
+/*/atom/var/top_left_corner
 /atom/var/top_right_corner
 /atom/var/bottom_left_corner
-/atom/var/bottom_right_corner
+/atom/var/bottom_right_corner*/
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
+/atom/var/smooth_overlay_channel = 1 //overlay channel to smooth to.
 /atom/movable/var/can_be_unanchored = 0
 /turf/var/list/fixed_underlay = null
 
@@ -153,12 +154,11 @@
 /turf/closed/wall/diagonal_smooth(adjacencies)
 	adjacencies = reverse_ndir(..())
 	if(adjacencies)
-		underlays.Cut()
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+				underlay_list[UNDERLAY_PRIORITY]["diagonal_turf_underlay"] = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
 			else
-				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
+				underlay_list[UNDERLAY_PRIORITY]["diagonal_turf_underlay"] = image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
 		else
 			var/turf/T = get_step(src, turn(adjacencies, 180))
 			if(T && T.density)
@@ -167,11 +167,12 @@
 					T = get_step(src, turn(adjacencies, 225))
 
 			if(istype(T, /turf/open/space))
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+				underlay_list[UNDERLAY_PRIORITY]["diagonal_turf_underlay"] = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
 			else if(T && !T.density && !T.smooth)
-				underlays += T
+				underlay_list[UNDERLAY_PRIORITY]["diagonal_turf_underlay"] = T
 			else
-				underlays += DEFAULT_UNDERLAY_IMAGE
+				underlay_list[UNDERLAY_PRIORITY]["diagonal_turf_underlay"] = DEFAULT_UNDERLAY_IMAGE
+		redraw_underlays()
 
 /proc/cardinal_smooth(atom/A, adjacencies)
 	//NW CORNER
@@ -226,25 +227,30 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
-	if(A.top_left_corner != nw)
-		A.overlays -= A.top_left_corner
-		A.top_left_corner = nw
-		A.add_overlay(nw)
+	var/list/smooth_overlays = A.overlay_list[A.smooth_overlay_channel]["overlay_smooth"]
+	if(!smooth_overlays)
+		smooth_overlays = list()
+		A.overlay_list[A.smooth_overlay_channel]["overlay_smooth"] = smooth_overlays
 
-	if(A.top_right_corner != ne)
-		A.overlays -= A.top_right_corner
-		A.top_right_corner = ne
-		A.add_overlay(ne)
+	var/changed = FALSE
+	if(smooth_overlays["top_left_corner"] != nw)
+		changed = TRUE
+		smooth_overlays["top_left_corner"] = nw
 
-	if(A.bottom_right_corner != sw)
-		A.overlays -= A.bottom_right_corner
-		A.bottom_right_corner = sw
-		A.add_overlay(sw)
+	if(smooth_overlays["top_right_corner"] != ne)
+		changed = TRUE
+		smooth_overlays["top_right_corner"] = ne
 
-	if(A.bottom_left_corner != se)
-		A.overlays -= A.bottom_left_corner
-		A.bottom_left_corner = se
-		A.add_overlay(se)
+	if(smooth_overlays["bottom_right_corner"] != sw)
+		changed = TRUE
+		smooth_overlays["bottom_right_corner"] = sw
+
+	if(smooth_overlays["bottom_left_corner"] != se)
+		changed = TRUE
+		smooth_overlays["bottom_left_corner"] = se
+
+	if(changed)
+		A.redraw_overlays()
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -293,26 +299,22 @@
 				else
 					queue_smooth(A)
 
+
 /atom/proc/clear_smooth_overlays()
-	overlays -= top_left_corner
-	top_left_corner = null
-	overlays -= top_right_corner
-	top_right_corner = null
-	overlays -= bottom_right_corner
-	bottom_right_corner = null
-	overlays -= bottom_left_corner
-	bottom_left_corner = null
+	overlay_list[smooth_overlay_channel] -= "overlay_smooth"
+	redraw_overlays()
 
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
-	clear_smooth_overlays()
-	top_left_corner = nw
-	add_overlay(nw)
-	top_right_corner = ne
-	add_overlay(ne)
-	bottom_left_corner = sw
-	add_overlay(sw)
-	bottom_right_corner = se
-	add_overlay(se)
+	var/list/smooth_overlays = overlay_list[smooth_overlay_channel]["overlay_smooth"]
+	if(!smooth_overlays)
+		smooth_overlays = list()
+		overlay_list[smooth_overlay_channel]["overlay_smooth"] = smooth_overlays
+
+	smooth_overlays["top_left_corner"] = nw
+	smooth_overlays["top_right_corner"] = ne
+	smooth_overlays["bottom_left_corner"] = sw
+	smooth_overlays["bottom_right_corner"] = se
+	redraw_overlays()
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)
