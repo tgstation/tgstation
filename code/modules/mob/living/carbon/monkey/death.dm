@@ -1,8 +1,8 @@
 /mob/living/carbon/monkey/gib_animation()
-	new /obj/effect/overlay/temp/gib_animation(loc, "gibbed-m")
+	PoolOrNew(/obj/effect/overlay/temp/gib_animation, list(loc, "gibbed-m"))
 
 /mob/living/carbon/monkey/dust_animation()
-	new /obj/effect/overlay/temp/dust_animation(loc, "dust-m")
+	PoolOrNew(/obj/effect/overlay/temp/dust_animation, list(loc, "dust-m"))
 
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)

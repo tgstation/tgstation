@@ -116,7 +116,7 @@
 			return
 		var/T = get_turf(target)
 		if(locate(/mob/living) in T)
-			PoolOrNew(/obj/effect/medical_holosign, list(T,user)) //produce a holographic glow
+			PoolOrNew(/obj/effect/overlay/temp/medical_holosign, list(T,user)) //produce a holographic glow
 			holo_cooldown = world.time + 100
 			return
 	..()
@@ -127,7 +127,7 @@
 	icon_state = "medi_holo"
 	duration = 30
 
-/obj/effect/medical_holosign/New(loc, creator)
+/obj/effect/overlay/temp/medical_holosign/New(loc, creator)
 	..()
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0) //make some noise!
 	if(creator)
