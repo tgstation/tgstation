@@ -303,7 +303,9 @@
 	attached_to.overlays += src
 
 /obj/effect/overlay/temp/sparkle/Destroy()
-	attached_to.overlays -= src
+	if(attached_to)
+		attached_to.overlays -= src
+	attached_to = null
 	. = ..()
 
 /obj/effect/overlay/temp/sparkle/tailsweep

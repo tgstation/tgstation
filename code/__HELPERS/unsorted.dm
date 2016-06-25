@@ -1390,3 +1390,5 @@ proc/pick_closest_path(value)
 		animate(C, color = old_color, time = flash_time)
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
