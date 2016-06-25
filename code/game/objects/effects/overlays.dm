@@ -272,8 +272,8 @@
 	duration = 15
 
 /obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
+	icon_state = gib_icon // Needs to be before ..() so icon is correct
 	..()
-	icon_state = gib_icon
 
 /obj/effect/overlay/temp/gib_animation/ex_act(severity)
 	return //so the overlay isn't deleted by the explosion that gibbed the mob.
@@ -286,8 +286,8 @@
 	duration = 15
 
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
+	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
-	icon_state = dust_icon
 
 /obj/effect/overlay/temp/sparkle
 	icon = 'icons/effects/effects.dmi'
