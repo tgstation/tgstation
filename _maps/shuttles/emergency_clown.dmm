@@ -173,8 +173,8 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/machinery/door/airlock/glass{
-	name = "Emergency Shuttle Brig";
-	req_access_txt = "2"
+	name = "Emergency Shuttle Greentext";
+	req_access_txt = "0"
 	},
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
