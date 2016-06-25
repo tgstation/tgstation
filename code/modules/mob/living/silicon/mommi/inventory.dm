@@ -319,6 +319,7 @@
 			return 0
 	// Set the item layer and update the MoMMI's icons
 	W.layer = 20
+	W.plane = PLANE_HUD
 	update_inv_head()
 	return 1
 

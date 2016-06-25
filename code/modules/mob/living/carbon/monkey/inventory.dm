@@ -36,6 +36,7 @@
 			return
 
 	W.layer = 20
+	W.plane = PLANE_HUD
 	W.equipped(src, slot)
 	W.forceMove(src)
 	if(client) client.screen |= W

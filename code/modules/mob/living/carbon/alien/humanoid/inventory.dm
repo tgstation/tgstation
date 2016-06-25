@@ -23,6 +23,7 @@
 			return
 
 	W.layer = 20
+	W.plane = PLANE_HUD
 	W.equipped(src, slot)
 	W.forceMove(src)
 	if(client) client.screen |= W
@@ -80,36 +81,15 @@
 			W.plane = initial(W.plane)
 	return 1
 
-/mob/living/carbon/alien/humanoid/attack_ui(slot_id)
+//Literally copypasted /mob/proc/attack_ui(slot, hand_index) while replacing attack_hand with attack_alien
+/mob/living/carbon/alien/humanoid/attack_ui(slot, hand_index)
 	var/obj/item/W = get_active_hand()
-	if(W)
-		if(!istype(W))	return
-		switch(slot_id)
-//			if("o_clothing")
-//			if("head")
-			if(slot_l_store)
-				if(l_store)
-					return
-				if(W.w_class > W_CLASS_MEDIUM)
-					return
-				u_equip(W,0)
-				l_store = W
-				update_inv_pockets()
-			if(slot_r_store)
-				if(r_store)
-					return
-				if(W.w_class > W_CLASS_MEDIUM)
-					return
-				u_equip(W,0)
-				r_store = W
-				update_inv_pockets()
+	if(istype(W))
+		if(slot)
+			equip_to_slot_if_possible(W, slot)
+		else if(hand_index)
+			put_in_hand(hand_index, W)
 	else
-		switch(slot_id)
-			if(slot_wear_suit)
-				if(wear_suit)	wear_suit.attack_alien(src)
-			if(slot_head)
-				if(head)		head.attack_alien(src)
-			if(slot_l_store)
-				if(l_store)		l_store.attack_alien(src)
-			if(slot_r_store)
-				if(r_store)		r_store.attack_alien(src)
+		W = get_item_by_slot(slot)
+		if(W)
+			W.attack_alien(src)
