@@ -629,14 +629,14 @@
 	if(slot == slot_gloves && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
-			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their hands!</span>", "<span class='warning'>The gauntlets flicker off your hands, leaving only nausea!</span>")
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
 			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
 		else
-			user << "<span class='heavy_brass'>\"Did you like having hands?\"</span>"
-			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your hands before you can get them off!</span>"
+			user << "<span class='heavy_brass'>\"Did you like having arms?\"</span>"
+			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>"
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
@@ -649,7 +649,7 @@
 	icon_state = "clockwork_treads"
 	w_class = 3
 	strip_delay = 50
-	put_on_delay = 50
+	put_on_delay = 30
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)
