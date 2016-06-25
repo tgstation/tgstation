@@ -14479,9 +14479,6 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/landmark{
-	name = "JoinLate"
-	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
 "aFF" = (
@@ -17788,6 +17785,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aNi" = (
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
 /turf/open/floor/goonplaque,
 /area/hallway/secondary/entry)
 "aNj" = (
@@ -70535,7 +70535,7 @@ awW
 awW
 awW
 aCS
-aEq
+aEr
 aEr
 aEr
 aEr
@@ -70792,7 +70792,7 @@ azz
 aAF
 awW
 aCV
-aEt
+aEr
 aFE
 aFE
 aFE
@@ -71049,9 +71049,9 @@ ayl
 aAE
 awW
 aCV
-aEs
 aEr
-aHt
+aEr
+aEr
 aEr
 aEr
 aCV
@@ -71306,7 +71306,7 @@ ayl
 aAH
 awW
 aCV
-aEv
+aEr
 aFE
 aFE
 aFE
@@ -71563,7 +71563,7 @@ azA
 aAG
 awW
 aCV
-aEu
+aEr
 aEr
 aEr
 aEr
