@@ -299,8 +299,9 @@
 
 /obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
 	..()
-	attached_to = AM
-	attached_to.overlays += src
+	if(istype(AM))
+		attached_to = AM
+		attached_to.overlays += src
 
 /obj/effect/overlay/temp/sparkle/Destroy()
 	if(attached_to)
