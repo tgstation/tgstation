@@ -17129,7 +17129,7 @@
 /obj/docking_port/mobile{
 	dwidth = 5;
 	height = 7;
-	id = "arrival";
+	id = "arrival_away";
 	name = "arrival shuttle";
 	travelDir = -90;
 	width = 15
