@@ -97,7 +97,7 @@ Shaft Miner
 Bartender
 */
 /datum/job/bartender
-	title = "Bartender"
+	title = "Barista"
 	flag = BARTENDER
 	department_head = list("Head of Personnel")
 	department_flag = CIVILIAN
@@ -114,7 +114,7 @@ Bartender
 
 
 /datum/outfit/job/bartender
-	name = "Bartender"
+	name = "Barista"
 
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	belt = /obj/item/device/pda/bar
