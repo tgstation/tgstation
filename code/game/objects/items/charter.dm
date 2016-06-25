@@ -68,7 +68,7 @@
 		return
 	if(!response_timer_id)
 		return
-	var/turf/T = get_turf(user)
+	var/turf/T = get_turf(src)
 	T.visible_message("<span class='warning'>The proposed changes disappear \
 		from [src]; it looks like they've been rejected.</span>")
 	var/m = "[key_name(user)] has rejected the proposed station name."
