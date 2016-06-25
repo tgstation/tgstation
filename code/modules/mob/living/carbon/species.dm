@@ -403,7 +403,7 @@ var/global/list/whitelisted_species = list("Human")
 
 	// Note: Comes BEFORE other stuff.
 	// Trying to remember all the stupid fucking furry memes is hard
-	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger)",
+	filter.addPickReplacement("\\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger)\\b",
 		list(
 			"silly rabbit",
 			"sandwich", // won't work too well with plurals OH WELL
@@ -416,7 +416,7 @@ var/global/list/whitelisted_species = list("Human")
 	filter.addReplacement("fuck","yiff")
 	filter.addReplacement("shit","scat")
 	filter.addReplacement("scratch","scritch")
-	filter.addWordReplacement("(help|assist)\\bmeow","kill meow") // help me(ow) -> kill meow
+	filter.addWordReplacement("(help|assist)\\smeow","kill meow") // help me(ow) -> kill meow
 	filter.addReplacement("god","gosh")
 	filter.addWordReplacement("(ass|butt)", "rump")
 
@@ -429,9 +429,10 @@ var/global/list/whitelisted_species = list("Human")
 
 		speech.message += pick("KILL ME", "END MY SUFFERING", "I CAN'T DO THIS ANYMORE")
 
-		return ..(speech, H)
+		return ..()
 
-	return ..(filter.FilterSpeech(speech), H)
+	speech.message = filter.FilterSpeech(speech.message)
+	return ..()
 
 /datum/species/grey // /vg/
 	name = "Grey"

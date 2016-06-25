@@ -59,24 +59,25 @@
 	..()
 	// Set up wordfilter
 	filter = new
-	filter.addPickReplacement("\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger|security|shitcurity)", list(
+	filter.addPickReplacement("\\b(asshole|comdom|shitter|shitler|retard|dipshit|dipshit|greyshirt|nigger|security|shitcurity)",
+	list(
 		"honker",
 		"fun police",
 		"unfun",
 	))
 	// HELP THEY'RE KILLING ME
 	// FINALLY THEY'RE TICKLING ME
-	var/tickle_prefixes="\b(kill+|murder|beat|wound|hurt|harm)"
+	var/tickle_prefixes="\\b(kill+|murder|beat|wound|hurt|harm)"
 	filter.addReplacement("[tickle_prefixes]ing","tickling")
 	filter.addReplacement("[tickle_prefixes]ed", "tickled")
 	filter.addReplacement(tickle_prefixes,       "tickle")
 
-	filter.addReplacement("^h\[aei\]lp.*","END THE SHOW")
 	filter.addReplacement("h\[aei\]lp\\s+me","end my show")
 	filter.addReplacement("h\[aei\]lp\\s+him","end his show")
 	filter.addReplacement("h\[aei\]lp\\s+her","end her show")
 	filter.addReplacement("h\[aei\]lp\\s+them","end their show")
 	filter.addReplacement("h\[aei\]lp\\s+(\[^\\s\]+)","end $1's show")
+	filter.addReplacement("^h\[aei\]lp.*","END THE SHOW")
 
 /*
 	var/stance = CLOWN_STANCE_IDLE	//Used to determine behavior
