@@ -17,6 +17,12 @@
 	else
 		return 0
 
+/obj/item/weapon/storage/belt/can_quick_store(var/obj/item/I)
+	return can_be_inserted(I,1)
+	
+/obj/item/weapon/storage/belt/quick_store(var/obj/item/I)
+	return handle_item_insertion(I,0)
+
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "It has a tag that rates it for compatibility with standard tools, device analyzers, flashlights, cables, engineering tape, small fire extinguishers, compressed matter cartridges, light replacers, and fuel cans."

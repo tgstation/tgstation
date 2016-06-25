@@ -583,9 +583,13 @@ var/list/slot_equipment_priority = list( \
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 
 	for(var/slot in slot_equipment_priority)
+		var/obj/item/S = get_item_by_slot(slot)
+		if(S && S.can_quick_store(W))
+			return S.quick_store(W)
 		if(equip_to_slot_if_possible(W, slot, 0, 1, 1, 1)) //act_on_fail = 0; disable_warning = 0; redraw_mob = 1
 			return 1
 
