@@ -97,6 +97,7 @@
 		var/turf/T = get_turf(src)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 		var/obj/effect/overlay/temp/fireball/F = PoolOrNew(/obj/effect/overlay/temp/fireball,src.loc)
+		F.pixel_z = 500
 		animate(F, pixel_z = 0, time = 12)
 		sleep(12)
 		explosion(T, 0, 0, 1, 0, 0, 0, 1)
