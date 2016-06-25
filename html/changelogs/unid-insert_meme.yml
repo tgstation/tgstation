@@ -1,0 +1,6 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- bugfix: Fixed mobs standing up when they shouldn't be able to, and not standing up when they should be able to

@@ -92,11 +92,10 @@
 	return 1
 
 //Takes care of organ related updates, such as broken and missing limbs
-/mob/living/carbon/human/proc/handle_organs()
+/mob/living/carbon/human/proc/handle_organs(var/force_process = 0)
 
 	number_wounds = 0
 	var/stand_broken = 0 //We cannot stand because one of our legs or foot is completely broken and unsplinted, or missing
-	var/force_process = 0
 	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
 	if(damage_this_tick > last_dam)
 		force_process = 1

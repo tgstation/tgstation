@@ -688,6 +688,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			step(organ, randomdir)
 
 		owner.update_body(1)
+		owner.handle_organs(1)
 
 		//OK so maybe your limb just flew off, but if it was attached to a pair of cuffs then hooray! Freedom!
 		release_restraints()
@@ -831,10 +832,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 /datum/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
 	owner.update_body()
+	owner.handle_organs(1)
 
 /datum/organ/external/proc/unmutate()
 	src.status &= ~ORGAN_MUTATED
 	owner.update_body()
+	owner.handle_organs(1)
 
 /datum/organ/external/proc/get_damage()	//returns total damage
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
