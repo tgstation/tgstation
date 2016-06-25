@@ -276,7 +276,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	borers_in_host.Remove(src)
 	if(borers_in_host.len)
 		for(var/I in borers_in_host)
-			to_chat(I, "<b>Your host's [limb_to_name(hostlimb)] speaks:</b> <span class='borer2host'>\"[encoded_message]\"</span>")
+			to_chat(I, "<b>[truename]</b> speaks from your host's [limb_to_name(hostlimb)]: <span class='borer2host'>\"[encoded_message]\"</span>")
 
 	var/turf/T = get_turf(src)
 	log_say("[truename] [key_name(src)] (@[T.x],[T.y],[T.z]) -> [host]([key_name(host)]) Borer->Host Speech: [message]")
