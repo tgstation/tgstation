@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "There is now a more noticable difference between knives and kitchen knives now, the former is known as small knife and has a new icon. It still doesn't work for making swords." 

@@ -134,9 +134,10 @@
  * Knives
  */
 /obj/item/weapon/kitchen/utensil/knife
-	name = "knife"
+	name = "small knife"
 	desc = "Can cut through any food."
-	icon_state = "knife"
+	icon_state = "smallknife"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
 	force = 10.0
 	throwforce = 10.0
 	sharpness = 1.2
