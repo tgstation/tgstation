@@ -145,7 +145,7 @@
 	},
 /area/shuttle/escape)
 "az" = (
-/turf/open/chasm/straight_down/lava_land_surface,
+/turf/open/chasm/straight_down/lava_land_surface/normal_air,
 /area/shuttle/escape)
 "aA" = (
 /turf/open/floor/noslip,
