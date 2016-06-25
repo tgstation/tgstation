@@ -373,8 +373,8 @@
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
-	for(var/i in turfs)
-		ripples += new /obj/effect/ripple(i)
+	for(var/t in turfs)
+		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
