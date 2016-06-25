@@ -124,11 +124,12 @@
 
 /obj/effect/countdown/transformer
 	name = "transformer countdown"
+	text_color = "#4C5866"
 
 /obj/effect/countdown/transformer/get_value()
 	var/obj/machinery/transformer/T = attached_to
 	if(!istype(T))
 		return
 	else if(T.cooldown)
-		var/seconds_left = (T.cooldown_timer - world.time) / 10
-		return "[max(seconds_left, 0)]"
+		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
+		return "[round(seconds_left)]"
