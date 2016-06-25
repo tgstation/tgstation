@@ -17,7 +17,6 @@
 		if(3)
 			if (prob(5))
 				qdel(src)
-	return
 
 /obj/effect/spider/attacked_by(obj/item/I, mob/user)
 	..()
