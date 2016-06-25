@@ -330,6 +330,8 @@
 		if("Clown")
 			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
+		if("Mime")
+			chattyness = 0
 		if("Botanist")
 			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
@@ -865,7 +867,7 @@
 	if(prob(10)) // 10% chance to broadcast it over the radio
 		chatmsg = ";"
 
-	if(prob(chattyness) || knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
+	if(prob(chattyness) && knownStrings.len < 10) // say a generic phrase, otherwise draw from our strings.
 		if(doing & INTERACTING)
 			if(prob(chattyness))
 				chatmsg += pick("This [nouns_objects] is a little [adjective_objects].",
@@ -879,7 +881,7 @@
 		else if(doing & FIGHTING)
 			if(prob(chattyness))
 				chatmsg += pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
-				"Rend and [verbs_touch], Rend and [verbs_use]!",
+				"Rend and [verbs_touch], rend and [verbs_use]!",
 				"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 		if(prob(chattyness/2))
 			chatmsg = ";"
