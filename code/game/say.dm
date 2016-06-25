@@ -89,7 +89,7 @@ var/list/freqtospan = list(
 	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
 		if(message_langs & HUMAN)
-			raw_message = stars(raw_message), spans)
+			raw_message = stars(raw_message)
 		if(message_langs & RATVAR)
 			raw_message = rot13(raw_message)
 		if(AM)
