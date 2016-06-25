@@ -121,15 +121,13 @@
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	// When servants invoke ratvar's power, they speak in ways that non
 	// servants do not comprehend.
-	// Our ratvarian chants are stored in their ratvar forms in code
-	// this changes them to english so servants can understand.
-	// Non servants will only hear the original rot13.
-	message = rot13(message)
+	// Our ratvarian chants are stored in their ratvar forms
 
 	var/list/spans = list(SPAN_ROBOT)
 
 	var/old_languages_spoken = AM.languages_spoken
-	AM.languages_spoken = list(RATVAR)
+	AM.languages_spoken = ALL // Everyone understands
+	// In that no one does.
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
