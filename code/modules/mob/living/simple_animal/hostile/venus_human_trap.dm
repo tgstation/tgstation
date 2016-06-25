@@ -87,14 +87,20 @@
 					L.Weaken(3) //you can't get away now~
 
 		if(grasping.len < max_grasps)
-			for(var/mob/living/L in range(grasp_range,src))
-				if(L == src || faction_check(L))
-					continue
-				if(!(L in grasping) && L != target && prob(grasp_chance))
-					L << "<span class='userdanger'>\the [src] has you entangled!</span>"
-					grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
+			grasping:
+				for(var/mob/living/L in view(grasp_range, src))
+					if(L == src || faction_check(L) || (L in grasping) || L == target)
+						continue
+					for(var/t in getline(src,L))
+						for(var/a in t)
+							var/atom/A = a
+							if(A.density && A != L)
+								continue grasping
+					if(prob(grasp_chance))
+						L << "<span class='userdanger'>\the [src] has you entangled!</span>"
+						grasping[L] = Beam(L,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
 
-					break //only take 1 new victim per cycle
+						break //only take 1 new victim per cycle
 
 
 /mob/living/simple_animal/hostile/venus_human_trap/OpenFire(atom/the_target)

@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now repair clockwork structures with a clockwork proselytizer. This is about a third as efficient as a mending motor, costing 2 liquified alloy to 1 health, and also about a third as fast."

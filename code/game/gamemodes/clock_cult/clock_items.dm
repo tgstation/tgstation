@@ -463,7 +463,7 @@
 			if(C.l_hand && C.r_hand)
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
-			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. Direct it at a tile <b>on harm intent</b> to unleash it, or use the action button again to dispel it.</i></span>")
+			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
 			flame = R
 			C.put_in_hands(R)
@@ -508,7 +508,7 @@
 	icon_state = "ratvars_flame"
 	w_class = 5
 	flags = NODROP | ABSTRACT
-	force = 15 //Also serves as a potent melee weapon!
+	force = 5 //Also serves as a weak melee weapon!
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	attack_verb = list("scorched", "seared", "burnt", "judged")
@@ -527,12 +527,6 @@
 /obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
 	if(!visor || (visor && visor.cooldown))
 		qdel(src)
-	if(user.a_intent != "harm")
-		if(isliving(target))
-			var/mob/living/L = target
-			if(iscultist(L))
-				L.adjustFireLoss(10) //Cultists take extra damage
-		return ..()
 	visor.recharging = TRUE
 	visor.flame = null
 	visor.update_status()
@@ -583,7 +577,9 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
 	w_class = 3
-	flags = NOSLIP
+	strip_delay = 50
+	put_on_delay = 50
+	burn_state = FIRE_PROOF
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.

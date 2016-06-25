@@ -347,7 +347,7 @@ var/bomb_set
 	return
 
 
-#define NUKERANGE 80
+#define NUKERANGE 127
 /obj/machinery/nuclearbomb/proc/explode()
 	if (safety)
 		timing = 0
@@ -372,8 +372,11 @@ var/bomb_set
 
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
-	if( bomb_location && (bomb_location.z == ZLEVEL_STATION) )
-		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
+	if(bomb_location && (bomb_location.z == ZLEVEL_STATION))
+		var/area/A = get_area(bomb_location)
+		if(istype(A, /area/space))
+			off_station = 1
+		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = 1
 	else
 		off_station = 2
