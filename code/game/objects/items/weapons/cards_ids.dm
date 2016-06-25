@@ -218,6 +218,9 @@
 /obj/item/weapon/card/id/GetID()
 	return src
 
+/obj/item/weapon/card/id/get_owner_name_from_ID()
+	return registered_name
+
 /obj/item/weapon/card/id/proc/update_virtual_wallet(var/new_funds=0)
 	if(!istype(virtual_wallet))
 		virtual_wallet = new()

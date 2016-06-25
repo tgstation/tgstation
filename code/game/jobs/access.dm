@@ -115,6 +115,9 @@
 /obj/item/proc/GetID()
 	return null
 
+/obj/item/proc/get_owner_name_from_ID()
+	return null
+
 /obj/proc/set_up_access()
 	//These generations have been moved out of /obj/New() because they were slowing down the creation of objects that never even used the access system.
 	if(!src.req_access)

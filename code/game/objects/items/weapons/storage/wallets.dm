@@ -56,6 +56,11 @@
 /obj/item/weapon/storage/wallet/GetID()
 	return front_id
 
+/obj/item/weapon/storage/wallet/get_owner_name_from_ID()
+	if(front_id)
+		return front_id.get_owner_name_from_ID()
+	return ..()
+
 /obj/item/weapon/storage/wallet/GetAccess()
 	var/obj/item/I = GetID()
 	if(I)
