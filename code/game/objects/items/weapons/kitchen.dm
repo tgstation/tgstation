@@ -507,6 +507,7 @@
 			var/image/image = image(icon = null) //image(appearance = ...) doesn't work, and neither does image().
 			image.appearance = I.appearance
 			image.layer = I.layer + 30
+			image.plane = FLOAT_PLANE
 
 			overlays += image
 			//overlays += image("icon" = I.icon, "icon_state" = I.icon_state, "layer" = 30 + I.layer)
