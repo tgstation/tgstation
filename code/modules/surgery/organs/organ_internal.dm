@@ -446,10 +446,10 @@
 
 /obj/item/organ/shadowtumor/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/shadowtumor/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/organ/shadowtumor/process()

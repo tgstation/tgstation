@@ -10,6 +10,7 @@
 	item_color = "b"
 	var/allow_multiple = 0
 	var/uses = -1
+	flags = DROPDEL
 
 
 /obj/item/weapon/implant/proc/trigger(emote, mob/source)
@@ -73,12 +74,9 @@
 		removed(imp_in)
 	return ..()
 
-
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
 
 /obj/item/weapon/implant/dropped(mob/user)
-	..()
 	. = 1
-	qdel(src)
-
+	..()

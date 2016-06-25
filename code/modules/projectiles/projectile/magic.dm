@@ -272,7 +272,8 @@
 	if(!new_mob)
 		return
 
-	new_mob.languages |= HUMAN
+	new_mob.languages_spoken |= HUMAN
+	new_mob.languages_understood |= HUMAN
 	new_mob.attack_log = M.attack_log
 
 	// Some forms can still wear some items

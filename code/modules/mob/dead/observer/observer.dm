@@ -16,7 +16,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -301,8 +302,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(ticker)
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+					if(G.is_dominating)
+						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"

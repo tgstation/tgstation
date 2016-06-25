@@ -58,10 +58,10 @@
 
 	if(program)
 		program.receive_user_command(href_list["command"])
-		spawn(5) program.process()
+		addtimer(program, "process", 5)
 
 	usr.set_machine(src)
-	spawn(5) src.updateDialog()
+	addtimer(src, "updateDialog", 5)
 
 /obj/machinery/embedded_controller/process()
 	if(program)

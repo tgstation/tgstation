@@ -338,6 +338,22 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"bh" = (
+/obj/structure/grille,
+/turf/open/floor/plating/warnplate{
+	dir = 4
+	},
+/area/shuttle/escape)
+"bg" = (
+/obj/structure/grille,
+/turf/open/floor/plating/warnplate{
+	dir = 8
+	},
+/area/shuttle/escape)
+"bf" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -443,7 +459,7 @@ am
 as
 as
 as
-as
+bg
 as
 as
 as
@@ -466,9 +482,9 @@ aj
 an
 at
 at
-at
+bf
 aB
-at
+bf
 at
 at
 aL
@@ -491,7 +507,7 @@ ao
 au
 au
 au
-au
+bh
 au
 au
 au

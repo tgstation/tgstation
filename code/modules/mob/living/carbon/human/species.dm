@@ -491,7 +491,7 @@
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
 	if(slot in no_equip)
-		if(!(type in I.species_exception))
+		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
 
 	var/R = H.has_right_hand()
@@ -1049,7 +1049,8 @@
 		return 0 //item force is zero
 
 	//dismemberment
-	if(prob(I.get_dismemberment_chance(affecting)))
+	var/probability = I.get_dismemberment_chance(affecting)
+	if(prob(probability) || ((EASYDISMEMBER in specflags) && prob(2*probability)))
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)

@@ -30,6 +30,7 @@
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
 
 /obj/item/clockwork/slab/starter
@@ -40,8 +41,12 @@
 	no_cost = TRUE
 	produces_components = FALSE
 
+/obj/item/clockwork/slab/scarab
+	nonhuman_usable = TRUE
+
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
+	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
@@ -50,16 +55,16 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clockwork/slab/process()
 	if(!produces_components)
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(production_time > world.time)
 		return
@@ -110,6 +115,9 @@
 		return 0
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
+		return 0
+	if(!nonhuman_usable && !ishuman(user))
+		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
 		return 0
 	access_display(user)
 
@@ -223,9 +231,7 @@
 	\
 	The third functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
 	\
-	The fourth functionality is the Repository, which will display all components stored within the slab.<br><br>\
-	\
-	The fifth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
+	The fourth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
 	\
 	A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
 	specified.</i><br><br>"
@@ -388,10 +394,10 @@
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/process()
@@ -455,7 +461,7 @@
 			if(C.l_hand && C.r_hand)
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
-			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. Direct it at a tile <b>on harm intent</b> to unleash it, or use the action button again to dispel it.</i></span>")
+			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
 			flame = R
 			C.put_in_hands(R)
@@ -500,7 +506,7 @@
 	icon_state = "ratvars_flame"
 	w_class = 5
 	flags = NODROP | ABSTRACT
-	force = 15 //Also serves as a potent melee weapon!
+	force = 5 //Also serves as a weak melee weapon!
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	attack_verb = list("scorched", "seared", "burnt", "judged")
@@ -519,12 +525,6 @@
 /obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
 	if(!visor || (visor && visor.cooldown))
 		qdel(src)
-	if(user.a_intent != "harm")
-		if(isliving(target))
-			var/mob/living/L = target
-			if(iscultist(L))
-				L.adjustFireLoss(10) //Cultists take extra damage
-		return ..()
 	visor.recharging = TRUE
 	visor.flame = null
 	visor.update_status()
@@ -534,7 +534,7 @@
 		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 		V.update_status()
 		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
-	user.say("Xarry, urn'guraf!")
+	clockwork_say(user, "Xarry, urn'guraf!")
 	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 	new/obj/effect/clockwork/judicial_marker(get_turf(target))
 	user.update_action_buttons_icon()
@@ -575,7 +575,9 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
 	w_class = 3
-	flags = NOSLIP
+	strip_delay = 50
+	put_on_delay = 50
+	burn_state = FIRE_PROOF
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
@@ -758,14 +760,15 @@
 	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
 	var/production_time = 0 //Progress towards production of the next component in seconds
 	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
+	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_daemons++
 
 /obj/item/clockwork/tinkerers_daemon/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_daemons--
 	return ..()
 
@@ -782,8 +785,11 @@
 	if(servants * 0.2 < clockwork_daemons)
 		return 0
 	if(production_time <= world.time)
-		production_time = world.time + production_cooldown //Start it over
-		generate_cache_component(specific_component)
+		var/component_to_generate = specific_component
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
+		clockwork_component_cache[component_to_generate]++
+		production_time = world.time + production_cooldown + (clockwork_component_cache[component_to_generate] * component_slowdown_mod) //Start it over
 		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)

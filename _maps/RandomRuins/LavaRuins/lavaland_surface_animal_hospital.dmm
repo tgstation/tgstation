@@ -516,7 +516,7 @@
 	},
 /area/ruin/powered)
 "bt" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},

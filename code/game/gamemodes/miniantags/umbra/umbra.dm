@@ -50,7 +50,8 @@ Although these umbral ashes make umbras resilient, they can be killed permanentl
 	friendly = "passes through"
 	speak_emote = list("murmurs")
 	emote_hear = list("murmurs")
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	status_flags = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	incorporeal_move = 3

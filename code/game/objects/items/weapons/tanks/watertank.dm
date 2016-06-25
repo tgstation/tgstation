@@ -413,13 +413,13 @@
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 

@@ -5,6 +5,9 @@
 #define MC_AVERAGE_SLOW(average, current) (0.9 * (average) + 0.1 * (current))
 #define NEW_SS_GLOBAL(varname) if(varname != src){if(istype(varname)){Recover();qdel(varname);}varname = src;}
 
+#define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) Datum.isprocessing = 1;Processor.processing += Datum
+#define STOP_PROCESSING(Processor, Datum) if (Datum.isprocessing) Datum.isprocessing = 0;Processor.processing -= Datum
+
 //SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
 //subsystem should fire during pre-game lobby.
@@ -41,3 +44,6 @@
 //	This flag overrides SS_KEEP_TIMING
 #define SS_POST_FIRE_TIMING 128
 
+
+//Timing subsystem
+#define GLOBAL_PROC	"some_magic_bullshit"

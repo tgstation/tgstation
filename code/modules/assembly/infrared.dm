@@ -13,7 +13,7 @@
 
 /obj/item/device/assembly/infra/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/assembly/infra/Destroy()
 	if(first)
@@ -33,12 +33,12 @@
 /obj/item/device/assembly/infra/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		on = 0
 		if(first)
 			qdel(first)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
@@ -102,9 +102,7 @@
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-	return
+	addtimer(src, "process_cooldown", 10)
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))

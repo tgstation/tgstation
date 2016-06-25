@@ -294,6 +294,13 @@
 	icon_state = "lizardwine"
 	list_reagents = list("lizardwine" = 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/hcider
+	name = "Jian Hard Cider"
+	desc = "Apple juice for adults."
+	icon_state = "hcider"
+	volume = 50
+	list_reagents = list("hcider" = 50)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice

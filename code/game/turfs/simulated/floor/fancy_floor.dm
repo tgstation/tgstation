@@ -85,7 +85,7 @@
 	smooth = SMOOTH_FALSE
 
 /turf/open/floor/carpet/carpetsymbol2
-	icon_state = "carpetsymbol2"
+	icon_state = "carpetstar"
 	smooth = SMOOTH_FALSE
 
 

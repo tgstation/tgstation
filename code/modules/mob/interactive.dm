@@ -734,8 +734,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		spawn(processTime)
-			doProcess()
+		addtimer(src, "doProcess", processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()

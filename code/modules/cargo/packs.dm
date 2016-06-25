@@ -122,6 +122,14 @@
 	contains = list(/obj/item/weapon/storage/box/metalfoam)
 	crate_name = "metal foam grenade crate"
 
+/datum/supply_pack/emergency/droneshells
+	name = "Drone Shell Crate"
+	cost = 1000
+	contains = list(/obj/item/drone_shell,
+					/obj/item/drone_shell,
+					/obj/item/drone_shell)
+	crate_name = "drone shell crate"
+
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	hidden = TRUE
@@ -967,13 +975,24 @@
 	crate_name = "hydroponics crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
 
-/datum/supply_pack/misc/hydroponics/hydrotank
+/datum/supply_pack/organic/hydroponics/hydrotank
 	name = "Hydroponics Backpack Crate"
 	cost = 1000
 	access = access_hydroponics
 	contains = list(/obj/item/weapon/watertank)
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
+
+/datum/supply_pack/organic/potted_plants
+	name = "Potted Plants Crate"
+	cost = 700
+	contains = list(/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random,
+					/obj/item/weapon/twohanded/required/kirbyplants/random)
+	crate_name = "potted plants crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
 
 /datum/supply_pack/organic/hydroponics/seeds
 	name = "Seeds Crate"

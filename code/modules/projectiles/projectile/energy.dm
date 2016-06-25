@@ -29,8 +29,7 @@
 		if(C.dna && C.dna.check_mutation(HULK))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(C.status_flags & CANWEAKEN)
-			spawn(5)
-				C.do_jitter_animation(jitter)
+			addtimer(C, "do_jitter_animation", 5, FALSE, jitter)
 
 /obj/item/projectile/energy/electrode/on_range() //to ensure the bolt sparks when it reaches the end of its range if it didn't hit a target yet
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread

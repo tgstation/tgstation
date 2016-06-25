@@ -718,8 +718,7 @@
 			if (prob(85))
 				Stun(2)
 				step(src,get_dir(M,src))
-				spawn(5)
-					step(src,get_dir(M,src))
+				addtimer(src, "step", 5, FALSE, src, get_dir(M, src))
 				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \

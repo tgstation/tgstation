@@ -73,7 +73,7 @@
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches \the [src] to \the [target].</span>", "<span class='notice'>You attach \the [src] to \the [target].</span>")
 			attached = target
-			SSmachine.processing.Add(src)
+			START_PROCESSING(SSmachine, src)
 			update_icon()
 		else
 			usr << "<span class='warning'>There's nothing attached to the IV drip!</span>"

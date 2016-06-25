@@ -154,7 +154,8 @@
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	if(global.cross_allowed)
 		var/list/message = list()
-		message["message"] = "[source]: [msg]"
+		message["message_sender"] = source
+		message["message"] = msg
 		message["source"] = "([config.cross_name])"
 		message["key"] = global.comms_key
 		message["crossmessage"] = type

@@ -59,7 +59,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
+	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
 	var/suittoggled = 0
 	var/hooded = 0
@@ -88,23 +88,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-	var/list/slot_equipment_priority = list( \
-			slot_back,\
-			slot_wear_id,\
-			slot_w_uniform,\
-			slot_wear_suit,\
-			slot_wear_mask,\
-			slot_head,\
-			slot_shoes,\
-			slot_gloves,\
-			slot_ears,\
-			slot_glasses,\
-			slot_belt,\
-			slot_s_store,\
-			slot_l_store,\
-			slot_r_store,\
-			slot_drone_storage\
-		)
+	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
 
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
@@ -358,6 +342,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)

@@ -23,21 +23,7 @@
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/datum/map_template/proc/load(turf/T, centered = FALSE)
-	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
-
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	if(!bounds)
-		return 0
-
-	//initialize things that are normally initialized after map load
+/proc/initTemplateBounds(var/list/bounds)
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
@@ -57,6 +43,23 @@
 	SSobj.setup_template_objects(atoms)
 	SSmachine.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+
+/datum/map_template/proc/load(turf/T, centered = FALSE)
+	if(centered)
+		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
+	if(!T)
+		return
+	if(T.x+width > world.maxx)
+		return
+	if(T.y+height > world.maxy)
+		return
+
+	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
+	if(!bounds)
+		return 0
+
+	//initialize things that are normally initialized after map load
+	initTemplateBounds(bounds)
 
 	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
 	return 1

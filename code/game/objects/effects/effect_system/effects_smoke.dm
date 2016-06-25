@@ -30,15 +30,15 @@
 /obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/effect/particle_effect/smoke/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	spawn(0)
 		fade_out()
 	spawn(10)

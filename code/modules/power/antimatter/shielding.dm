@@ -176,7 +176,7 @@
 /obj/machinery/am_shielding/proc/setup_core()
 	processing = 1
 	machines |= src
-	SSmachine.processing |= src
+	START_PROCESSING(SSmachine, src)
 	if(!control_unit)
 		return
 	control_unit.linked_cores.Add(src)

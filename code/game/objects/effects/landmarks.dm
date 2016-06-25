@@ -273,3 +273,17 @@
 /obj/effect/landmark/event_spawn/Destroy()
 	generic_event_spawns -= src
 	return ..()
+
+/obj/effect/landmark/ruin
+	var/datum/map_template/ruin/ruin_template
+
+/obj/effect/landmark/ruin/New(loc, my_ruin_template)
+	name = "ruin_[ruin_landmarks.len + 1]"
+	..(loc)
+	ruin_template = my_ruin_template
+	ruin_landmarks |= src
+
+/obj/effect/landmark/ruin/Destroy()
+	ruin_landmarks -= src
+	ruin_template = null
+	. = ..()
