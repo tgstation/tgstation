@@ -86,7 +86,6 @@ var/global/list/lawlorify = list (
 	var/reviveNumber = 0
 	var/form = BASIC_DEVIL
 	var/exists = 0
-	var/soulCounter //I need this for the soulcounter to work.
 
 /proc/randomDevilInfo(name = randomDevilName())
 	var/datum/devilinfo/devil = new
@@ -437,5 +436,6 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/update_hud()
 	if(istype(owner.current, /mob/living/carbon))
-		var/mob/living/carbon/C = owner.current
-		C.handle_devil(SOULVALUE)
+		var/mob/living/C = owner.current
+		if(C.hud_used && C.hud_used.devilsouldisplay)
+			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
