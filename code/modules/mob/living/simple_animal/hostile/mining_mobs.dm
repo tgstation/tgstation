@@ -773,8 +773,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
-		stored_mob.loc = get_turf(src)
-		stored_mob.adjustBruteLoss(1000)
+		stored_mob.forceMove(get_turf(src))
 	else
 		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	..(gibbed)
@@ -812,8 +811,9 @@
 				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()
+				H.adjustBruteLoss(1000)
 				L.stored_mob = H
-				H.loc = L
+				H.forceMove(L)
 				qdel(src)
 	..()
 
