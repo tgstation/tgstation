@@ -35,6 +35,12 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper-open"
 
+/obj/structure/fluff/empty_sleeper/nanotrasen
+	name = "broken hypersleep chamber"
+	desc = "A NanoTrasen hypersleep chamber - this one appears broken. \
+		There are exposed bolts for easy disassembly using a wrench."
+	icon_state = "sleeper-o"
+
 /obj/structure/fluff/empty_sleeper/syndicate
 	icon_state = "sleeper_s-open"
 

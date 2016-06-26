@@ -27,7 +27,7 @@
 "ah" = (
 /turf/closed/indestructible{
 	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/closed/walls/cult_wall.dmi';
+	icon = 'icons/turf/walls/cult_wall.dmi';
 	icon_state = "cult"
 	},
 /area/awaymission/wwvault)
@@ -35,7 +35,7 @@
 /turf/open/space,
 /turf/closed/indestructible{
 	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick.";
-	icon = 'icons/turf/closed/walls/cult_wall.dmi';
+	icon = 'icons/turf/walls/cult_wall.dmi';
 	icon_state = "cult"
 	},
 /area/awaymission/wwvault)

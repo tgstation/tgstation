@@ -160,8 +160,7 @@
 	if(device)
 		device.pulsed()
 
-	spawn(15)
-		update_icon()
+	addtimer(src, "update_icon", 15)
 
 /obj/machinery/button/power_change()
 	..()

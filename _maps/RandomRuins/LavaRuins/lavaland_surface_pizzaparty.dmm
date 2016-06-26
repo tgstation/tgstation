@@ -32,7 +32,7 @@
 "g" = (
 /obj/structure/reagent_dispensers/water_cooler{
 	name = "punch cooler";
-	reagent = "bacchus_blessing"
+	reagent_id = "bacchus_blessing"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{

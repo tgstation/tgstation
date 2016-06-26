@@ -312,22 +312,18 @@
 
 /atom/movable/overlay/New()
 	verbs.Cut()
-	return
 
 /atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
 		return src.master.attackby(a, b, c)
-	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)
 		return src.master.attack_paw(a, b, c)
-	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
-	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)

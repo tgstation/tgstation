@@ -246,12 +246,14 @@
 
 /obj/item/organ/hivelord_core/New()
 	..()
-	spawn(2400)
-		if(!owner && !preserved)
-			go_inert()
-		else
-			preserved = TRUE
-			feedback_add_details("hivelord_core", "[src.type]|implanted")
+	addtimer(src, "inert_check", 2400)
+
+/obj/item/organ/hivelord_core/proc/inert_check()
+	if(!owner && !preserved)
+		go_inert()
+	else
+		preserved = TRUE
+		feedback_add_details("hivelord_core", "[src.type]|implanted")
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
@@ -525,8 +527,7 @@
 	if(!latched)
 		qdel(src)
 	else
-		spawn(50)
-			qdel(src)
+		QDEL_IN(src, 50)
 
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"

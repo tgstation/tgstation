@@ -2519,7 +2519,7 @@
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
 "hW" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},

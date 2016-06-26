@@ -135,7 +135,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "B" = (
-/obj/effect/rune/true_sight,
+/obj/effect/rune/convert,
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/decal/cleanable/blood/gibs/core,
@@ -146,7 +146,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "D" = (
-/obj/effect/rune/true_sight,
+/obj/effect/rune/convert,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
