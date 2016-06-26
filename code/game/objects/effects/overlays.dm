@@ -35,7 +35,15 @@
 	if(randomdir)
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
-	QDEL_IN(src, duration)
+
+	// Because some people are sticklers for animation accuracy, we use
+	// spawn() if it's not a multiple of 2 deciseconds, which is the timer
+	// ss accuracy
+	if(duration % 2) //ODD
+		spawn(duration)
+			qdel(src)
+	else //EVEN
+		QDEL_IN(src, duration)
 
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
