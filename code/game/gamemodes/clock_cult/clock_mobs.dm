@@ -240,16 +240,18 @@
 			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
 			if(ratvar_awakens)
-				stat(null, "You are able to deploy!")
-				stat(null, "Block Chance: 80%")
-				stat(null, "Counter Chance: 80%")
+				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > 60)
 					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
 				else
 					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
-				stat(null, "Block Chance: [blockchance]%")
-				stat(null, "Counter Chance: [counterchance]%")
+		if(ratvar_awakens)
+			stat(null, "Block Chance: 80%")
+			stat(null, "Counter Chance: 80%")
+		else
+			stat(null, "Block Chance: [blockchance]%")
+			stat(null, "Counter Chance: [counterchance]%")
 		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
@@ -322,6 +324,7 @@
 			target.do_attack_animation(src)
 			target.changeNext_move(CLICK_CD_MELEE)
 		blockchance = initial(blockchance)
+		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 10, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
 		if(target && prob(counterchance))
@@ -399,7 +402,7 @@
 	if(!marauder)
 		usr << "<span class='warning'>Your marauder seems to have vanished!</span>"
 		return 0
-	message = "<span class='heavy_brass'>Servant [name == real_name ? name : "[real_name] (as [name])"]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
+	message = "<span class='heavy_brass'>Servant [findtextEx(name, real_name) ? "[name]" : "[real_name] (as [name])"]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
 	src << message
 	marauder << message
 	for(var/M in mob_list)
@@ -414,7 +417,7 @@
 	set category = "Marauder"
 
 	verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name
-	var/new_name = stripped_input(usr, "Enter a new true name (10-character limit).", ,"Change True Name", 11)
+	var/new_name = stripped_input(usr, "Enter a new true name (10-character limit).", "Change True Name","", 11)
 	if(!usr)
 		return 0
 	if(!new_name)
@@ -422,9 +425,9 @@
 		verbs += /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name //If they decide against it, let them have another opportunity
 		return 0
 	true_name = new_name
-	usr << "<span class='userdanger'>You have changed your true name to \"[new_name]\"!</span>"
+	usr << "<span class='heavy_brass'>You have changed your true name to </span><span class='sevtug'>\"[new_name]\"</span><span class='heavy_brass'>!</span>"
 	if(host)
-		host << "<span class='userdanger'>Your clockwork marauder has changed their true name to \"[new_name]\"!</span>"
+		host << "<span class='heavy_brass'>Your clockwork marauder has changed their true name to </span><span class='sevtug'>\"[new_name]\"</span><span class='heavy_brass'>!</span>"
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host()
@@ -438,8 +441,8 @@
 		src << "<span class='warning'>You don't have a host!</span>"
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host
 		return 0
-	host << "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>"
-	visible_message("<span class='warning'>[src] is yanked into [host]'s body!</span>", "<span class='brass'>You return to [host].</span>")
+	host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>")
+	visible_message("<span class='warning'>[src] suddenly disappears!</span>", "<span class='heavy_brass'>You return to [host].</span>")
 	forceMove(host)
 	return 1
 
