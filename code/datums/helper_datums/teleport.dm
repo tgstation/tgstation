@@ -82,15 +82,18 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(0)
-				src = null
-				effect.attach(location)
-				effect.start()
+			addtimer(src, "do_effect", 0, FALSE, location, effect)
 		if(sound)
-			spawn(0)
-				src = null
-				playsound(location,sound,60,1)
-	return
+			addtimer(src, "do_sound", 0, FALSE, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
 
 //do the monkey dance
 /datum/teleport/proc/doTeleport()

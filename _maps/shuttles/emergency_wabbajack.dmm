@@ -179,10 +179,8 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "aH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle/smooth,
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/chair{
@@ -334,34 +332,37 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"bh" = (
+/turf/closed/wall/shuttle/smooth/overspace,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+bh
 ab
 ab
 ax
 ab
 aD
-aH
+ab
 as
 as
 as
-aH
+ab
 aV
 ab
 aV
 ab
 ab
-ab
+bh
 aa
 "}
 (2,1,1) = {"
 aa
-ab
+bh
 ab
 ab
 ab
@@ -381,10 +382,10 @@ aW
 ba
 be
 ab
-ab
+bh
 "}
 (3,1,1) = {"
-ab
+bh
 ab
 ag
 ae
@@ -470,7 +471,7 @@ aq
 aq
 aq
 aq
-ab
+aH
 ab
 ab
 ab
@@ -528,11 +529,11 @@ bf
 bg
 "}
 (9,1,1) = {"
-ab
+bh
 ab
 ah
 ae
-ab
+aH
 aq
 aq
 aq
@@ -553,7 +554,7 @@ bg
 "}
 (10,1,1) = {"
 aa
-ab
+bh
 ab
 ab
 ab
@@ -573,14 +574,14 @@ aZ
 bd
 be
 ab
-ab
+bh
 "}
 (11,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+bh
 as
 ab
 as
@@ -596,6 +597,6 @@ ab
 as
 ab
 ab
-ab
+bh
 aa
 "}

@@ -40,7 +40,6 @@
 			M.reagents.add_reagent(forkload.id, 1)
 		icon_state = "fork"
 		forkload = null
-		return
 
 	else if(user.zone_selected == "eyes")
 		if(user.disabilities & CLUMSY && prob(50))

@@ -104,7 +104,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
-	desc = "A sleek, sturdy box"
+	desc = "A sleek, sturdy box."
 	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
@@ -277,3 +277,9 @@
 	new /obj/item/weapon/throwing_star(src)
 	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/weapon/restraints/legcuffs/bola/tactical(src)
+
+/obj/item/weapon/storage/box/syndie_kit/cutouts/New()
+	..()
+	for(var/i in 1 to 3)
+		new/obj/item/cardboard_cutout/adaptive(src)
+	new/obj/item/toy/crayon/rainbow(src)

@@ -164,6 +164,10 @@
 /obj/machinery/computer/emergency_shuttle,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
+"E" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/wood,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -238,7 +242,7 @@ o
 q
 s
 a
-a
+E
 C
 a
 "}

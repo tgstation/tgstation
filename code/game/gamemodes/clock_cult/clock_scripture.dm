@@ -94,18 +94,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L))
+				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 					for(var/invocation in invocations)
-						if(!whispered)
-							L.say(invocation)
-						else
-							L.whisper(invocation)
+						clockwork_say(L, invocation, whispered)
 		else
 			for(var/invocation in invocations)
-				if(!whispered)
-					invoker.say(invocation)
-				else
-					invoker.whisper(invocation)
+				clockwork_say(invoker, invocation, whispered)
 	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
 	if(!channel_time)
 		return 1
@@ -113,10 +107,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!do_after(invoker, channel_time / invocations.len, target = invoker))
 			slab.busy = null
 			return 0
-		if(!whispered)
-			invoker.say(invocation)
+		if(multiple_invokers_used)
+			for(var/mob/living/L in range(1, invoker))
+				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+					clockwork_say(L, invocation, whispered)
 		else
-			invoker.whisper(invocation)
+			clockwork_say(invoker, invocation, whispered)
 	return 1
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
@@ -134,10 +130,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			break
 		if(!do_after(invoker, chant_interval, target = invoker))
 			break
-		if(!whispered)
-			invoker.say(pick(chant_invocations))
-		else
-			invoker.whisper(pick(chant_invocations))
+		clockwork_say(invoker, pick(chant_invocations), whispered)
 		chant_effects(i)
 	if(invoker && slab)
 		invoker << "<span class='brass'>You cease your chant.</span>"
@@ -300,20 +293,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/sentinels_compromise //Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
 	descname = "Convert Brute/Burn to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby friendly cultist, but deals 50% of that amount as toxin damage."
+	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of that amount as toxin damage."
 	invocations = list("Zraq gur jbhaqf-bs...", "...zl vasrevbe syrfu.") //"Mend the wounds of my inferior flesh."
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "You cannot target yourself with the Compromise."
+	usage_tip = "The Compromise is very fast to invoke."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/sentinels_compromise/scripture_effects()
 	var/list/nearby_cultists = list()
 	for(var/mob/living/C in range(7, invoker))
-		if(C == invoker)
-			continue
-		if(C.stat != DEAD && is_servant_of_ratvar(C))
+		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getBruteLoss()))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
 		invoker << "<span class='warning'>There are no eligible servants nearby!</span>"
@@ -327,15 +318,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!totaldamage)
 		invoker << "<span class='warning'>[L] is not burned or bruised!</span>"
 		return 0
-	L.adjustToxLoss(brutedamage / 2)
-	L.adjustToxLoss(burndamage / 2)
+	L.adjustToxLoss(totaldamage * 0.5)
 	L.adjustBruteLoss(-brutedamage)
 	L.adjustFireLoss(-burndamage)
 	var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 	var/targetturf = get_turf(L)
 	for(var/i in 1 to healseverity)
 		PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
-	invoker << "<span class='brass'>You bathe [L] with Inath-Neq's power!</span>"
+	invoker << "<span class='brass'>You bathe [L] in Inath-Neq's power!</span>"
 	L.visible_message("<span class='warning'>A blue light washes over [L], mending their bruises and burns!</span>", \
 	"<span class='heavy_brass'>You feel Inath-Neq's power healing your wounds, but a deep nausea overcomes you!</span>")
 	playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
@@ -520,7 +510,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(invoker, 'sound/effects/EMPulse.ogg', 50, 1)
 	var/power_drained = 0
 	for(var/obj/machinery/power/apc/A in view(7, invoker))
-		if(A.cell.charge)
+		if(A.cell && A.cell.charge)
 			playsound(A, "sparks", 50, 1)
 			flick("apc-spark", A)
 			power_drained += min(A.cell.charge, 500)
@@ -532,11 +522,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			A.update_icon()
 	for(var/obj/machinery/power/smes/S in view(7, invoker))
 		if(S.charge)
-			power_drained += min(S.charge, 1000)
-			S.charge = max(0, S.charge - 1000)
+			power_drained += min(S.charge, 500)
+			S.charge = max(0, S.charge - 50000)
 			if(!S.charge && !S.panel_open)
 				S.panel_open = TRUE
-				S.update_icon()
+				S.icon_state = "[initial(S.icon_state)]-o"
 				var/datum/effect_system/spark_spread/spks = new(get_turf(S))
 				spks.set_up(10, 0, get_turf(S))
 				spks.start()
@@ -548,11 +538,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			C.charge = C.use(max(0, C.charge - 500))
 			C.updateicon()
 	for(var/obj/machinery/light/L in view(7, invoker))
-		playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
-		L.flicker(2)
-		power_drained += 50
+		if(L.on)
+			playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
+			L.flicker(2)
+			power_drained += 50
 	for(var/mob/living/silicon/robot/R in view(7, invoker))
-		if(!is_servant_of_ratvar(R) && R.cell.charge)
+		if(!is_servant_of_ratvar(R) && R.cell && R.cell.charge)
 			power_drained += min(R.cell.charge, 500)
 			R.cell.charge = max(0, R.cell.charge - 500)
 			R << "<span class='userdanger'>ERROR: Power loss detected!</span>"
@@ -606,23 +597,33 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/fellowship_armory //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
 	descname = "Area Servant Armor"
 	name = "Fellowship Armory"
-	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers."
+	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
+	It grows faster to invoke with more nearby servants."
 	invocations = list("Fuvryq zr...", "...jvgu gur sentzragf...", "...bs Ratvar!")
-	channel_time = 100
+	channel_time = 110 //effectively 100 because it counts the invoker
 	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
-	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, and shoes."
+	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
+	multiple_invokers_used = TRUE
+	multiple_invokers_optional = TRUE
+
+/datum/clockwork_scripture/fellowship_armory/run_scripture()
+	for(var/mob/living/L in range(1, invoker))
+		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+			channel_time = max(channel_time - 10, 0)
+	return ..()
 
 /datum/clockwork_scripture/fellowship_armory/scripture_effects()
-	for(var/mob/living/carbon/C in range(1, invoker))
-		if(!is_servant_of_ratvar(C))
+	for(var/mob/living/L in range(1, invoker))
+		if(!is_servant_of_ratvar(L))
 			continue
-		C.visible_message("<span class='warning'>Strange armor appears on [C]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-		playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
-		C.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-		C.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-		C.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
+		L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
+		playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
+		L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
+		L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
+		L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
+		L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
 	return 1
 
 
@@ -926,20 +927,20 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/interdiction_lens //Interdiction Lens: Creates a powerful obelisk that can perform a variety of powerful sabotages every five minutes.
+/datum/clockwork_scripture/create_object/interdiction_lens //Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils.
 	descname = "Structure, Disables Machinery"
 	name = "Interdiction Lens"
-	desc = "Creates a clockwork totem that can sabotage a variety of mechanical apparatus. Requires a lengthy recharge between uses."
+	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission."
 	invocations = list("Znl guvf gbgrz...", "...fuebhq gur snyfr fhaf!")
 	channel_time = 60
 	required_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "replicant_alloy" = 3, "hierophant_ansible" = 1)
 	object_path = /obj/structure/clockwork/powered/interdiction_lens
-	creator_message = "<span class='brass'>You form an interdiction lens, which can disrupt machinery every few minutes.</span>"
-	observer_message = "<span class='warning'>A brass obelisk rises from the ground, a purple gem appearing in its center!</span>"
+	creator_message = "<span class='brass'>You form an interdiction lens, which disrupts cameras and radios and drains power.</span>"
+	observer_message = "<span class='warning'>A brass totem rises from the ground, a purple gem appearing in its center!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
-	usage_tip = "Can disrupt telecommunications, disable all cameras, or disable all cyborgs."
+	usage_tip = "If it fails to funnel power into a nearby Sigil of Transmission and fails to disable even one thing, it will disable itself for two minutes."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 
@@ -1215,7 +1216,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	new/obj/effect/clockwork/general_marker/inathneq(get_turf(invoker))
 	clockwork_generals_invoked["inath-neq"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	if(invoker.real_name == "Lucio")
-		invoker.say("Aww, let's break it DOWN!!")
+		clockwork_say(invoker, rot13("Aww, let's break it DOWN!!"))
 	var/list/affected_servants = list()
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)

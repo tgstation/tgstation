@@ -82,14 +82,6 @@
 /mob/living/simple_animal/hostile/hades/New()
 	..()
 
-	//helper_datums/map_template.dmm make this a generic function
-
-	var/list/bounds = maploader.load_map('_maps/map_files/generic/chapel.dmm')
-	initTemplateBounds(bounds)
-	log_game("Chapel of Sin loaded by [src] spawning.")
-
-	//
-
 	sinLightning = new/obj/effect/proc_holder/spell/targeted/lightning(src)
 
 	sinLightning.charge_max = 1
@@ -564,8 +556,7 @@
 				if(!foundLover)
 					H << "As you hold the stone, loneliness grips you, your heart feeling heavy and you struggle to breath."
 					for(var/i in 1 to 10)
-						spawn(i*10)
-							H.reagents.add_reagent("initropidril",i)
+						addtimer(H.reagents, "add_reagent", i*10, FALSE, "initropidril", i)
 				else
 					H << "You take comfort in the presence of [foundLover]"
 					H.reagents.add_reagent("omnizine",25)

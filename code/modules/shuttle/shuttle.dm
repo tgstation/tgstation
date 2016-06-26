@@ -176,7 +176,7 @@
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
-	var/callTime = 50				//time spent in transit (deciseconds)
+	var/callTime = 150				//time spent in transit (deciseconds)
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0				//direction the shuttle would travel in
 
@@ -373,8 +373,8 @@
 
 /obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
 	var/list/turfs = ripple_area(S1)
-	for(var/i in turfs)
-		ripples += new /obj/effect/ripple(i)
+	for(var/t in turfs)
+		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
