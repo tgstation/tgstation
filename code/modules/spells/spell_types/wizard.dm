@@ -298,7 +298,7 @@
 	selection_type = "view"
 	sound = 'sound/magic/Repulse.ogg'
 	var/maxthrow = 5
-	var/animation = "shieldsparkles"
+	var/sparkle_path = /obj/effect/overlay/temp/sparkle
 
 	action_icon_state = "repulse"
 
@@ -314,12 +314,10 @@
 	for(var/atom/movable/AM in thrownatoms)
 		if(AM == user || AM.anchored) continue
 
-		var/obj/effect/overlay/targeteffect	= new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density = 0}()
-		targeteffect.icon_state = animation
-		AM.add_overlay(targeteffect)
+		// created sparkles will disappear on their own
+		PoolOrNew(sparkle_path, AM)
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
-		addtimer(src, "remove_sparkles", 10, FALSE, AM, targeteffect)
 		if(distfromcaster == 0)
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
@@ -333,10 +331,6 @@
 				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
 			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/proc/remove_sparkles(atom/movable/AM, obj/effect/overlay/targeteffect)
-	AM.overlays -= targeteffect
-	qdel(targeteffect)
-
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno //i fixed conflicts only to find out that this is in the WIZARD file instead of the xeno file?!
 	name = "Tail Sweep"
 	desc = "Throw back attackers with a sweep of your tail."
@@ -346,7 +340,7 @@
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
-	animation = "tailsweep"
+	sparkle_path = /obj/effect/overlay/temp/sparkle/tailsweep
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 

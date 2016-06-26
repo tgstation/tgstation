@@ -44,9 +44,7 @@
 		M.metal = metal
 		M.updateicon()
 	flick("[icon_state]-disolve", src)
-	spawn(5)
-		qdel(src)
-
+	QDEL_IN(src, 5)
 
 /obj/effect/particle_effect/foam/process()
 	lifetime--
@@ -220,7 +218,6 @@
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
-	return
 
 
 /obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)
