@@ -26,8 +26,6 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	height = 7
 	roundstart_move = "supply_away"
 
-	var/list/exports = list()
-
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/emagged = FALSE
@@ -41,10 +39,12 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		return check_blacklist(areaInstance)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(atom/A)
-	for(var/thing in list(A) | A.GetAllContents())
-		if(is_type_in_typecache(thing, blacklisted_cargo_types))
-			return TRUE
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
+	for(var/trf in areaInstance)
+		var/turf/T = trf
+		for(var/a in T.GetAllContents())
+			if(is_type_in_typecache(a, blacklisted_cargo_types))
+				return TRUE
 	return FALSE
 
 /obj/docking_port/mobile/supply/request()
@@ -96,7 +96,8 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
 
-	if(!exports.len) // No exports list? Generate it!
+	if(!exports_list.len) // No exports list? Generate it!
+		setupExports()
 
 	var/msg = ""
 	var/sold_atoms = ""
@@ -104,12 +105,12 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored)
 			continue
-		sold_atoms += export_item_and_contents(AM, exports, contraband, emagged, dry_run = FALSE)
+		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports)
+	for(var/a in exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)
