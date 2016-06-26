@@ -29842,7 +29842,12 @@
 	},
 /area/turret_protected/ai)
 "aZW" = (
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -148218,7 +148223,7 @@ aYi
 aYi
 bbr
 aYi
-aZW
+aYi
 aYi
 bhS
 bjZ
