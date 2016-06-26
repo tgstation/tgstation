@@ -46,6 +46,9 @@
 	var/maxWrathTimer = 150
 	var/lastWrathTimer = 0
 
+	var/timeBetweenGrabs = 60
+	var/lastGrabTime = 0
+
 	var/list/validSins = list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath")
 	var/lastsinPerson = 0
 	var/sinPersonTime = 300
@@ -272,16 +275,18 @@
 					HA.master = src
 					currentAcolytes += HA
 			if(target)
-				if(get_dist(src,target) > 2) // you can't run from us.
-					var/list/fleeSayings = list("There is no escape from your sins, [target]","Fleeing will only make your punishment worse [target]!",\
-					"There is nowhere you can hide, [target]!","You can't run, [target]!","Get back here, [target]!","You coward, [target]!",\
-					"I will find you, [target]!","Return to me, [target]!")
-					src.say(pick(fleeSayings))
-					var/mob/living/toGrab = target
-					toGrab.Beam(src,"blood",'icons/effects/beam.dmi',10)
-					toGrab.Weaken(6)
-					playsound(get_turf(src), 'sound/magic/CastSummon.ogg', 100, 1)
-					toGrab.throw_at_fast(src,10,1)
+				if(world.time > lastGrabTime + timeBetweenGrabs)
+					if(get_dist(src,target) > 4) // you can't run from us. upped to 4 to give more leeway.
+						lastGrabTime = world.time
+						var/list/fleeSayings = list("There is no escape from your sins, [target]","Fleeing will only make your punishment worse [target]!",\
+						"There is nowhere you can hide, [target]!","You can't run, [target]!","Get back here, [target]!","You coward, [target]!",\
+						"I will find you, [target]!","Return to me, [target]!")
+						src.say(pick(fleeSayings))
+						var/mob/living/toGrab = target
+						toGrab.Beam(src,"blood",'icons/effects/beam.dmi',10)
+						toGrab.Weaken(6)
+						playsound(get_turf(src), 'sound/magic/CastSummon.ogg', 100, 1)
+						toGrab.throw_at_fast(src,10,1)
 			if(rageLevel >= 100)
 				rageLevel = 50
 				var/list/overboardSayings = list("Ashes! It will all be ashes!","I will bring about the apocolypse!",\

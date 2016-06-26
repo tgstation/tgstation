@@ -387,7 +387,7 @@
 			correlates to the power of the absorbed beings,\
 			so choose your targets wisely."
 	item_path = /obj/item/hades_summoner
-	cost = 1
+	cost = 2
 	log_name = "DS"
 	limit = 1
 	category = "Assistance"
