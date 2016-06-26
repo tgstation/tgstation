@@ -215,5 +215,4 @@
 	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
 		dark rituals mid-jump isn't the best idea."
 	suffix = "lavaland_surface_cultcrash.dmm"
-	allow_duplicates = FALSE
 	cost = 10
