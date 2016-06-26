@@ -94,7 +94,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L))
+				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
 					for(var/invocation in invocations)
 						clockwork_say(L, invocation, whispered)
 		else
@@ -107,7 +107,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!do_after(invoker, channel_time / invocations.len, target = invoker))
 			slab.busy = null
 			return 0
-		clockwork_say(invoker, invocation, whispered)
+		if(multiple_invokers_used)
+			for(var/mob/living/L in range(1, invoker))
+				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+					clockwork_say(L, invocation, whispered)
+		else
+			clockwork_say(invoker, invocation, whispered)
 	return 1
 
 /datum/clockwork_scripture/proc/scripture_effects() //The actual effects of the recital after its conclusion
@@ -288,7 +293,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/sentinels_compromise //Sentinel's Compromise: Allows the invoker to select a nearby servant convert their brute and burn damage into half as much toxin damage.
 	descname = "Convert Brute/Burn to Half Toxin"
 	name = "Sentinel's Compromise"
-	desc = "Heals all brute and burn damage on a nearby living, friendly cultist, but deals 50% of that amount as toxin damage."
+	desc = "Heals all brute and burn damage on a nearby living, friendly servant, but deals 50% of that amount as toxin damage."
 	invocations = list("Zraq gur jbhaqf-bs...", "...zl vasrevbe syrfu.") //"Mend the wounds of my inferior flesh."
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 2)
@@ -592,23 +597,33 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/fellowship_armory //Fellowship Armory: Arms the invoker and nearby servants with Ratvarian armor.
 	descname = "Area Servant Armor"
 	name = "Fellowship Armory"
-	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers."
+	desc = "Equips the invoker and any nearby servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
+	It grows faster to invoke with more nearby servants."
 	invocations = list("Fuvryq zr...", "...jvgu gur sentzragf...", "...bs Ratvar!")
-	channel_time = 100
+	channel_time = 110 //effectively 100 because it counts the invoker
 	required_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
 	consumed_components = list("vanguard_cogwheel" = 1, "hierophant_ansible" = 1)
-	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, and shoes."
+	usage_tip = "Before using, advise adjacent allies to remove their helmets, external suits, gloves, and shoes."
 	tier = SCRIPTURE_SCRIPT
+	multiple_invokers_used = TRUE
+	multiple_invokers_optional = TRUE
+
+/datum/clockwork_scripture/fellowship_armory/run_scripture()
+	for(var/mob/living/L in range(1, invoker))
+		if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+			channel_time = max(channel_time - 10, 0)
+	return ..()
 
 /datum/clockwork_scripture/fellowship_armory/scripture_effects()
-	for(var/mob/living/carbon/C in range(1, invoker))
-		if(!is_servant_of_ratvar(C))
+	for(var/mob/living/L in range(1, invoker))
+		if(!is_servant_of_ratvar(L))
 			continue
-		C.visible_message("<span class='warning'>Strange armor appears on [C]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
-		playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
-		C.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
-		C.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
-		C.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
+		L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
+		playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
+		L.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork(null), slot_head)
+		L.equip_to_slot_or_del(new/obj/item/clothing/suit/armor/clockwork(null), slot_wear_suit)
+		L.equip_to_slot_or_del(new/obj/item/clothing/gloves/clockwork(null), slot_gloves)
+		L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
 	return 1
 
 
