@@ -201,7 +201,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "aH" = (
-/obj/structure/computerframe{
+/obj/structure/frame/computer{
 	anchored = 1
 	},
 /turf/open/floor/plasteel/shuttle/white,

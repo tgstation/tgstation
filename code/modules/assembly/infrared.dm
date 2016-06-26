@@ -102,9 +102,7 @@
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-	return
+	addtimer(src, "process_cooldown", 10)
 
 /obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
 	if(is_secured(user))

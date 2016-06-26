@@ -84,14 +84,34 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator
 	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. \
-	It's been modified for extreme power output to crush rocks, but often \
-	serves as a miner's first defense against hostile alien life; it's not \
-	very powerful unless used in a low pressure environment.\n\
-	It uses an experimental self-charging cell powered by the user's \
-	bioelectrical field. The downside of this is that it quickly discharges \
-	when not in direct contact with a user, and multiple accelerators can \
-	interfere with each other."
+	desc = "In the year 2544, only a year after the discovery of a potentially \
+		world-changing substance, now colloquially referred to as plasma, the \
+		Nanotrasen-UEG mining conglomerate introduced a prototype of a gun-like \
+		device intended for quick, effective mining of plasma in the low \
+		pressures of the solar system. Included in this presentation were \
+		demonstrations of the gun being fired at collections of rocks contained \
+		in vacuumed environments, obliterating them instantly while maintaining \
+		the structure of the ores buried within them. Additionally, volunteers \
+		were called from the crowd to have the gun used on them, only proving that \
+		the gun caused little harm to objects in standard pressure. \n\
+		An official from an unnamed, now long dissipated company observed this \
+		presentation and offered to share their self-recharger cells, powered \
+		by the user's bioelectrical field, another new and unknown technology. \
+		They warned that the cells were incredibly experimental and several times \
+		had injured workers, but the scientists as Nanotrasen were unable to resist \
+		the money-saving potential of self recharging cells. Upon accepting this \
+		offer, it took only a matter of days to prove the volatility of these cells, \
+		as they exploded left and right whenever inserted into the prototype devices, \
+		only throwing more money in the bin. \n\
+		Whenever the Nanotrasen scientists were on the edge of giving up, a \
+		breakthrough was made by head researcher Miles Parks McCollum, who \
+		demonstrated that the cells could be stabilized when exposed to radium \
+		then cooled with cryostylane. After this discovery, the low pressure gun, \
+		now named the Kinetic Accelerator, was hastily completed and made compatible \
+		with the self-recharging cells. As a result of poor testing, the currently \
+		used guns lose their charge when not in use, and when two Kinetic Accelerators \
+		come in proximity of one another, they will interfere with each other. Despite \
+		this, the shoddy guns still see use in the mining of plasma to this day."
 	icon_state = "kineticgun"
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)

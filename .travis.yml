@@ -16,6 +16,7 @@ env:
     - DM_MAPFILE="dreamstation"
     - DM_MAPFILE="birdstation"
     - DM_MAPFILE="efficiencystation"
+    - DM_MAPFILE="templates"
 
 
 cache:

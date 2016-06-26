@@ -226,21 +226,35 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	..()
 
-/obj/structure/flora/kirbyplants
+/obj/item/weapon/twohanded/required/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	w_class = 5
+	force = 10
+	throwforce = 13
+	throw_speed = 2
+	throw_range = 4
 
-/obj/structure/flora/kirbyplants/random
+/obj/item/weapon/twohanded/flora/kirbyplants/equipped(mob/living/user)
+	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	I.override = 1
+	user.add_alt_appearance("sneaking_mission", I, player_list)
+
+/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("sneaking_mission")
+
+/obj/item/weapon/twohanded/required/kirbyplants/random
 	var/list/static/states
 
-/obj/structure/flora/kirbyplants/random/New()
+/obj/item/weapon/twohanded/required/kirbyplants/random/New()
 	. = ..()
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/structure/flora/kirbyplants/random/proc/generate_states()
+/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -252,7 +266,7 @@
 	states += "applebush"
 
 
-/obj/structure/flora/kirbyplants/dead
+/obj/item/weapon/twohanded/required/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"

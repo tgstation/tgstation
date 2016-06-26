@@ -252,10 +252,14 @@
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 
 /obj/effect/meteor/meaty/New()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/M in meteordrop)
+		meteordrop -= M
+		meteordrop += pick(subtypesof(M))
+
 	for(var/obj/item/organ/tongue/T in meteordrop)
 		meteordrop -= T
 		meteordrop += pick(typesof(T))

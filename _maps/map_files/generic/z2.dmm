@@ -278,7 +278,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/surgicaldrill,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -286,7 +288,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/hemostat,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -297,7 +301,9 @@
 	},
 /obj/item/weapon/circular_saw,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -305,7 +311,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/retractor,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 1
 	},
 /area/holodeck/rec_center/medical)
@@ -313,7 +321,9 @@
 /obj/structure/table/glass,
 /obj/item/weapon/cautery,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -389,7 +399,9 @@
 /obj/item/weapon/surgical_drapes,
 /obj/item/weapon/razor,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (WEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 8
 	},
 /area/holodeck/rec_center/medical)
@@ -400,7 +412,9 @@
 /area/holodeck/rec_center/medical)
 "bp" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (EAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 4
 	},
 /area/holodeck/rec_center/medical)
@@ -460,25 +474,30 @@
 /area/holodeck/rec_center/dodgeball)
 "bB" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
 "bC" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bD" = (
 /obj/structure/table/optable,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bE" = (
 /obj/machinery/computer/operating,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "bF" = (
@@ -487,7 +506,9 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -526,14 +547,18 @@
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
 "bL" = (
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
-	dir = 8
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 5
 	},
 /area/holodeck/rec_center/medical)
 "bM" = (
@@ -623,7 +648,9 @@
 "bY" = (
 /obj/machinery/chem_master,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -770,7 +797,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 9
 	},
 /area/holodeck/rec_center/medical)
@@ -782,7 +811,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -812,21 +843,26 @@
 "cz" = (
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhitecorner";
-	dir = 8
+	dir = 8;
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn_corner";
+	tag = "icon-white_warn (WEST)"
 	},
 /area/holodeck/rec_center/medical)
 "cA" = (
 /obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
-	dir = 5
+	tag = "icon-white_warn (NORTH)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 1
 	},
 /area/holodeck/rec_center/medical)
 "cB" = (
-/obj/machinery/door/window/westleft,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -836,7 +872,9 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (NORTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 5
 	},
 /area/holodeck/rec_center/medical)
@@ -847,7 +885,9 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHWEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 10
 	},
 /area/holodeck/rec_center/medical)
@@ -859,7 +899,8 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/medical,
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "cG" = (
@@ -872,7 +913,8 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite"
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn"
 	},
 /area/holodeck/rec_center/medical)
 "cH" = (
@@ -881,7 +923,9 @@
 	dir = 1
 	},
 /turf/open/floor/holofloor{
-	icon_state = "warnwhite";
+	tag = "icon-white_warn (SOUTHEAST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
 	dir = 6
 	},
 /area/holodeck/rec_center/medical)
@@ -2144,7 +2188,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "gD" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -2805,7 +2849,7 @@
 	},
 /area/tdome/tdomeobserve)
 "iH" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
@@ -3879,9 +3923,9 @@
 	},
 /area/wizard_station)
 "me" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult/airless,
-/area/wizard_station)
+/obj/structure/flora/grass/brown,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mf" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/black,
@@ -3954,9 +3998,9 @@
 /turf/open/floor/plasteel/cult,
 /area/wizard_station)
 "mq" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plasteel/cult,
-/area/wizard_station)
+/obj/structure/chair/wood/wings,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mr" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -4186,12 +4230,9 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "mY" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plasteel/cult/airless{
-	icon_state = "cultdamage4"
-	},
-/area/wizard_station)
+/obj/structure/chair/wood,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
 "mZ" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/forcefield,
@@ -5752,7 +5793,7 @@
 /turf/open/space/transit,
 /area/space)
 "rU" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
@@ -5799,6 +5840,327 @@
 /obj/structure/flora/tree/pine,
 /turf/open/floor/holofloor/snow/cold,
 /area/holodeck/rec_center/winterwonderland)
+"se" = (
+/turf/open/floor/plasteel/warnwhite{
+	tag = "icon-white_warn (WEST)";
+	icon_state = "white_warn";
+	dir = 8
+	},
+/area/holodeck/rec_center/medical)
+"sf" = (
+/obj/structure/flora/bush,
+/turf/open/floor/holofloor/snow/cold,
+/area/holodeck/rec_center/winterwonderland)
+"sg" = (
+/turf/open/floor/holofloor{
+	tag = "icon-white_warn (WEST)";
+	icon = 'icons/turf/floors/warning.dmi';
+	icon_state = "white_warn";
+	dir = 8
+	},
+/area/holodeck/rec_center/medical)
+"ts" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/box/drinkingglasses,
+/turf/open/floor/carpet,
+/area/hades)
+"tr" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/hades)
+"tq" = (
+/obj/structure/table/wood,
+/obj/item/weapon/kitchen/fork,
+/turf/open/floor/carpet,
+/area/hades)
+"tp" = (
+/obj/structure/chair/wood/normal,
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/carpet,
+/area/hades)
+"to" = (
+/obj/machinery/chem_dispenser/drinks,
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/hades)
+"tn" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/box/donkpockets,
+/turf/open/floor/carpet,
+/area/hades)
+"tm" = (
+/obj/structure/table/wood,
+/obj/machinery/microwave,
+/turf/open/floor/carpet,
+/area/hades)
+"tl" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/carpet,
+/area/hades)
+"tk" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/carpet,
+/area/hades)
+"tj" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/carpet,
+/area/hades)
+"ti" = (
+/obj/structure/chair/hades,
+/turf/open/floor/mineral/diamond,
+/area/hades)
+"th" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/carpet,
+/area/hades)
+"tg" = (
+/obj/structure/table/wood,
+/obj/item/weapon/razor,
+/turf/open/floor/carpet,
+/area/hades)
+"tf" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/crayons,
+/turf/open/floor/carpet,
+/area/hades)
+"te" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/hades)
+"td" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/hades)
+"tc" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/fancy/candle_box,
+/turf/open/floor/carpet,
+/area/hades)
+"tb" = (
+/obj/structure/table/wood,
+/obj/item/weapon/lipstick,
+/turf/open/floor/carpet,
+/area/hades)
+"ta" = (
+/obj/machinery/door/airlock/wood,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sZ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plasteel,
+/area/hades)
+"sY" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/box/matches,
+/turf/open/floor/carpet,
+/area/hades)
+"sX" = (
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/carpet,
+/area/hades)
+"sW" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/carpet,
+/area/hades)
+"sV" = (
+/obj/structure/flora/ausbushes/fernybush,
+/turf/open/floor/grass,
+/area/hades)
+"sU" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper/hades_instructions,
+/turf/open/floor/carpet,
+/area/hades)
+"sT" = (
+/obj/structure/closet/cabinet,
+/turf/open/floor/carpet,
+/area/hades)
+"sS" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/carpet,
+/area/hades)
+"sR" = (
+/obj/structure/flora/ausbushes/genericbush,
+/turf/open/floor/grass,
+/area/hades)
+"sQ" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/floor/grass,
+/area/hades)
+"sP" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass,
+/area/hades)
+"sO" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/hades)
+"sN" = (
+/turf/open/floor/mineral/gold,
+/area/hades)
+"sM" = (
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/mineral/gold,
+/area/hades)
+"sL" = (
+/obj/structure/kitchenspike,
+/turf/open/floor/mineral/diamond,
+/area/hades)
+"sK" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/carpet,
+/area/hades)
+"sJ" = (
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/carpet,
+/area/hades)
+"sI" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/carpet,
+/area/hades)
+"sH" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/carpet,
+/area/hades)
+"sG" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/grass,
+/area/hades)
+"sF" = (
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/grass,
+/area/hades)
+"sE" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/floor/grass,
+/area/hades)
+"sD" = (
+/obj/structure/flora/grass/green,
+/turf/open/floor/grass,
+/area/hades)
+"sC" = (
+/obj/structure/table/wood,
+/obj/item/trash/candle,
+/turf/open/floor/carpet,
+/area/hades)
+"sB" = (
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/hades)
+"sA" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/carpet,
+/area/hades)
+"sz" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/carpet,
+/area/hades)
+"sy" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sx" = (
+/obj/structure/chair/wood/normal{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sw" = (
+/turf/open/floor/carpet,
+/area/hades)
+"sv" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/fulltile,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"su" = (
+/obj/structure/table/reinforced/brass,
+/obj/item/candle/infinite,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"st" = (
+/obj/structure/table/reinforced/brass,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"ss" = (
+/obj/structure/table/reinforced/brass,
+/obj/item/candle/infinite,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sr" = (
+/obj/structure/table/reinforced/brass,
+/obj/item/candle/infinite,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sq" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/fulltile,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sp" = (
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"so" = (
+/obj/effect/gibspawner/human,
+/mob/living/simple_animal/hostile/hadesacolyte,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sn" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sm" = (
+/obj/structure/window/fulltile,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sl" = (
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sk" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sj" = (
+/obj/structure/piano,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"si" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plasteel/hades,
+/area/hades)
+"sh" = (
+/turf/closed/indestructible/riveted,
+/area/hades)
 
 (1,1,1) = {"
 aa
@@ -6285,33 +6647,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
 ab
 "}
 (3,1,1) = {"
@@ -6542,33 +6904,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sk
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sk
+sh
+sB
+sw
+sT
+sW
+tb
+sW
+sO
+sW
+sh
+sw
+sw
+td
+sw
+sh
 ab
 "}
 (4,1,1) = {"
@@ -6799,33 +7161,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sl
+sx
+sl
+sy
+sl
+sy
+sl
+sx
+sl
+sh
+sB
+sw
+sw
+sX
+sw
+sw
+sw
+sX
+sh
+sw
+tp
+tq
+tr
+sh
 ab
 "}
 (5,1,1) = {"
@@ -7053,36 +7415,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+si
+sl
+sl
+sy
+sl
+sy
+sk
+sy
+sl
+sy
+sl
+sh
+sB
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+th
+sw
+tp
+sO
+tr
+sh
 ab
 "}
 (6,1,1) = {"
@@ -7310,36 +7672,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sj
+sm
+sq
+sl
+sk
+sy
+sl
+sx
+sl
+sy
+sk
+sy
+sl
+sh
+sB
+sw
+sw
+sw
+sw
+sw
+sX
+sw
+sh
+sw
+sw
+te
+sw
+sh
 ab
 "}
 (7,1,1) = {"
@@ -7567,36 +7929,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sk
+sn
+sr
+sl
+sl
+sy
+sl
+sy
+sl
+sx
+sl
+sy
+sl
+sh
+sB
+sw
+sT
+sW
+sU
+sW
+tg
+sW
+sh
+tj
+sw
+sw
+sw
+sh
 ab
 "}
 (8,1,1) = {"
@@ -7824,36 +8186,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sn
+ss
+sp
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+tk
+sw
+sw
+sw
+sh
 ab
 "}
 (9,1,1) = {"
@@ -8081,36 +8443,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+so
+st
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sC
+sO
+sU
+sY
+tc
+tf
+sO
+sw
+sh
+tl
+sw
+sw
+ts
+sh
 ab
 "}
 (10,1,1) = {"
@@ -8338,36 +8700,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sl
+st
+sw
+sw
+sz
+sw
+sw
+sz
+sw
+sA
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sh
+tm
+sw
+sw
+sO
+sh
 ab
 "}
 (11,1,1) = {"
@@ -8595,36 +8957,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sl
+st
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sz
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sh
+tn
+sw
+sw
+sO
+sh
 ab
 "}
 (12,1,1) = {"
@@ -8852,36 +9214,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sk
+sp
+st
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sh
+to
+sw
+sw
+sU
+sh
 ab
 "}
 (13,1,1) = {"
@@ -9109,36 +9471,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sn
+su
+sp
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+th
+sh
+sh
+sh
+sh
+th
+sh
+sh
 ab
 "}
 (14,1,1) = {"
@@ -9366,36 +9728,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sn
+sr
+sl
+sl
+sx
+sl
+sy
+sl
+sy
+sl
+sy
+sl
+sh
+sD
+sP
+sV
+sZ
+td
+td
+sw
+sw
+sw
+td
+td
+sw
+sw
+sh
 ab
 "}
 (15,1,1) = {"
@@ -9623,36 +9985,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sm
+sv
+sl
+sk
+sy
+sl
+sx
+sk
+sy
+sl
+sx
+sl
+sh
+sE
+sQ
+sE
+sZ
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sh
 ab
 "}
 (16,1,1) = {"
@@ -9880,36 +10242,36 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+si
+sl
+sl
+sy
+sl
+sy
+sl
+sx
+sl
+sy
+sl
+sh
+sF
+sR
+sP
+sZ
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sw
+sh
 ab
 "}
 (17,1,1) = {"
@@ -10140,33 +10502,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sl
+sl
+sx
+sl
+sy
+sl
+sy
+sk
+sy
+sl
+sh
+sG
+sG
+sD
+sZ
+sw
+sw
+sw
+sw
+sw
+sX
+sw
+sw
+sw
+sh
 ab
 "}
 (18,1,1) = {"
@@ -10397,33 +10759,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+si
+sk
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sl
+sk
+sh
+sD
+sE
+sF
+sZ
+te
+te
+sw
+sw
+sw
+te
+te
+sw
+sw
+sh
 ab
 "}
 (19,1,1) = {"
@@ -10654,33 +11016,33 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+th
+sh
+sh
 ab
 "}
 (20,1,1) = {"
@@ -10923,21 +11285,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sH
+sS
+sS
+sK
+sK
+sK
+sh
+sK
+sK
+sH
+sI
+sw
+sS
+sh
 ab
 "}
 (21,1,1) = {"
@@ -11180,21 +11542,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sH
+sw
+sw
+sw
+sw
+sw
+sh
+sH
+sw
+sw
+sw
+sw
+sS
+sh
 ab
 "}
 (22,1,1) = {"
@@ -11437,21 +11799,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sI
+sw
+sw
+sX
+sX
+sw
+th
+sw
+sw
+sw
+sw
+sX
+sH
+sh
 ab
 "}
 (23,1,1) = {"
@@ -11694,21 +12056,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sI
+sw
+sw
+sX
+sX
+sw
+sh
+sI
+sw
+sw
+sw
+sw
+sJ
+sh
 ab
 "}
 (24,1,1) = {"
@@ -11951,21 +12313,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sJ
+sw
+sw
+sw
+sw
+sw
+sh
+sH
+sX
+sw
+sw
+sw
+sI
+sh
 ab
 "}
 (25,1,1) = {"
@@ -12208,21 +12570,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sK
+sS
+sI
+sH
+sH
+sI
+sh
+sK
+sH
+sK
+sS
+sK
+sS
+sh
 ab
 "}
 (26,1,1) = {"
@@ -12465,21 +12827,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+ta
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
 ab
 "}
 (27,1,1) = {"
@@ -12722,21 +13084,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sL
+sl
+sl
+sl
+sl
+sl
+sL
+sl
+sl
+sl
+sl
+sl
+sL
+sh
 ab
 "}
 (28,1,1) = {"
@@ -12979,21 +13341,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sM
+sl
+sl
+sl
+sl
+sl
+sM
+sl
+sl
+sl
+sl
+sl
+sM
+sh
 ab
 "}
 (29,1,1) = {"
@@ -13236,21 +13598,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sN
+sl
+sl
+sl
+sl
+sl
+sN
+sl
+sl
+sl
+sl
+sl
+sN
+sh
 ab
 "}
 (30,1,1) = {"
@@ -13493,21 +13855,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sN
+sN
+sN
+sN
+sN
+sN
+ti
+sN
+sN
+sN
+sN
+sN
+sN
+sh
 ab
 "}
 (31,1,1) = {"
@@ -13750,21 +14112,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sN
+sl
+sl
+sl
+sl
+sl
+sN
+sl
+sl
+sl
+sl
+sl
+sN
+sh
 ab
 "}
 (32,1,1) = {"
@@ -14007,21 +14369,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sM
+sl
+sl
+sl
+sl
+sl
+sM
+sl
+sl
+sl
+sl
+sl
+sM
+sh
 ab
 "}
 (33,1,1) = {"
@@ -14264,21 +14626,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sL
+sl
+sl
+sl
+sl
+sl
+sL
+sl
+sl
+sl
+sl
+sl
+sL
+sh
 ab
 "}
 (34,1,1) = {"
@@ -14521,21 +14883,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
+sh
 ab
 "}
 (35,1,1) = {"
@@ -60543,16 +60905,16 @@ ab
 "}
 (214,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -60800,16 +61162,16 @@ ab
 "}
 (215,1,1) = {"
 ae
-sa
-sb
-sa
-sa
-sa
+se
+sf
+se
+se
+mq
 sd
-sc
-sa
-sa
-sa
+me
+se
+se
+se
 aV
 ag
 ag
@@ -61057,16 +61419,16 @@ ab
 "}
 (216,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+se
+se
+se
+se
+se
 aV
 ag
 ag
@@ -61314,16 +61676,16 @@ ab
 "}
 (217,1,1) = {"
 ae
-sa
-sa
-sc
-sa
-sa
-sa
-sa
-sa
-sc
-sa
+se
+se
+me
+se
+se
+mY
+se
+se
+me
+se
 aV
 ag
 ag
@@ -61571,16 +61933,16 @@ ab
 "}
 (218,1,1) = {"
 ae
-sa
-sa
-sa
-sa
-sa
-sb
-sa
-sa
-sa
-sa
+se
+se
+se
+se
+se
+sf
+se
+se
+se
+se
 aV
 ag
 ag
@@ -63646,7 +64008,7 @@ bK
 bY
 cm
 cu
-bL
+sg
 cE
 cS
 cT
@@ -63900,7 +64262,7 @@ bo
 bC
 bo
 bL
-bL
+cB
 cm
 cv
 cz
@@ -64417,7 +64779,7 @@ bo
 bo
 bo
 bo
-cB
+cA
 cG
 cS
 cT

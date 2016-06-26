@@ -692,6 +692,7 @@
 	if(!(isliving(choice)))
 		user << "[choice] is already dead!"
 		used = FALSE
+		return
 	else
 
 		var/mob/living/L = choice

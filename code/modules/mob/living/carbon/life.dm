@@ -357,9 +357,6 @@
 			AdjustSleeping(1)
 			Paralyse(5)
 
-	if(confused)
-		confused = max(0, confused - 1)
-
 	//Jitteryness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)

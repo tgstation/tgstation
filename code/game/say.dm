@@ -100,6 +100,14 @@ var/list/freqtospan = list(
 		return "beeps rapidly."
 	else if(message_langs & DRONE)
 		return "chitters."
+	else if(message_langs & SWARMER)
+		return "hums."
+	else if(message_langs & RATVAR)
+		var/atom/movable/AM = speaker.GetSource()
+		if(AM)
+			return AM.say_quote(rot13(raw_message), spans)
+		else
+			return speaker.say_quote(rot13(raw_message), spans)
 	else
 		return "makes a strange sound."
 

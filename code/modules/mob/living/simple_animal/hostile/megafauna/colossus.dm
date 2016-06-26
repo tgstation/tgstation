@@ -96,15 +96,14 @@
 	duration = 8
 	var/target
 
-/obj/effect/overlay/temp/at_shield/New()
+/obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
-	spawn()
-		orbit(target, 0, FALSE, 0, 0, FALSE, TRUE)
+	target = new_target
+	addtimer(src, "orbit", 0, FALSE, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = new(src.loc)
-		AT.target = src
+		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
@@ -117,60 +116,57 @@
 	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
 	sleep(10)
-	spawn()
-		spiral_shoot()
-	spawn()
-		spiral_shoot(1)
+	addtimer(src, "spiral_shoot", 0)
+	addtimer(src, "spiral_shoot", 0, FALSE, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
-	spawn()
-		var/counter = 1
-		var/turf/marker
-		for(var/i in 1 to 80)
-			switch(counter)
-				if(1)
-					marker = locate(x,y - 2,z)
-				if(2)
-					marker = locate(x - 1,y - 2,z)
-				if(3)
-					marker = locate(x - 2, y - 2,z)
-				if(4)
-					marker = locate(x - 2,y - 1,z)
-				if(5)
-					marker = locate (x -2 ,y,z)
-				if(6)
-					marker = locate(x - 2, y+1,z)
-				if(7)
-					marker = locate(x - 2, y + 2, z)
-				if(8)
-					marker = locate(x - 1, y + 2,z)
-				if(9)
-					marker = locate(x, y + 2,z)
-				if(10)
-					marker = locate(x + 1, y+2,z)
-				if(11)
-					marker = locate(x+ 2, y + 2,z)
-				if(12)
-					marker = locate(x+2,y+1,z)
-				if(13)
-					marker = locate(x+2,y,z)
-				if(14)
-					marker = locate(x+2, y - 1, z)
-				if(15)
-					marker = locate(x+2, y - 2, z)
-				if(16)
-					marker = locate(x+1, y -2, z)
+	var/counter = 1
+	var/turf/marker
+	for(var/i in 1 to 80)
+		switch(counter)
+			if(1)
+				marker = locate(x,y - 2,z)
+			if(2)
+				marker = locate(x - 1,y - 2,z)
+			if(3)
+				marker = locate(x - 2, y - 2,z)
+			if(4)
+				marker = locate(x - 2,y - 1,z)
+			if(5)
+				marker = locate (x -2 ,y,z)
+			if(6)
+				marker = locate(x - 2, y+1,z)
+			if(7)
+				marker = locate(x - 2, y + 2, z)
+			if(8)
+				marker = locate(x - 1, y + 2,z)
+			if(9)
+				marker = locate(x, y + 2,z)
+			if(10)
+				marker = locate(x + 1, y+2,z)
+			if(11)
+				marker = locate(x+ 2, y + 2,z)
+			if(12)
+				marker = locate(x+2,y+1,z)
+			if(13)
+				marker = locate(x+2,y,z)
+			if(14)
+				marker = locate(x+2, y - 1, z)
+			if(15)
+				marker = locate(x+2, y - 2, z)
+			if(16)
+				marker = locate(x+1, y -2, z)
 
-			if(negative)
-				counter--
-			else
-				counter++
-			if(counter > 16)
-				counter = 0
-			if(counter < 0)
-				counter = 16
-			shoot_projectile(marker)
-			sleep(1)
+		if(negative)
+			counter--
+		else
+			counter++
+		if(counter > 16)
+			counter = 0
+		if(counter < 0)
+			counter = 16
+		shoot_projectile(marker)
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
 	var/turf/startloc = get_turf(src)
@@ -190,9 +186,8 @@
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
-	spawn()
-		for(var/turf/turf in range(1, target))
-			shoot_projectile(turf)
+	for(var/turf/turf in range(1, target))
+		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
 	var/turf/T = locate(x + 2, y + 2, z)
@@ -213,9 +208,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))
 		if(M.client)
-			M.client.color = rgb(200, 0, 0)
-			spawn(1)
-				M.client.color = initial(M.client.color)
+			flash_color(M.client, rgb(200, 0, 0), 1)
 			shake_camera(M, 4, 3)
 	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 

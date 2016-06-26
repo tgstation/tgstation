@@ -97,7 +97,8 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all
+	/client/proc/polymorph_all,
+	/client/proc/show_tip
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -146,7 +147,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/create_outfits,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
-	/client/proc/map_template_upload
+	/client/proc/map_template_upload,
+	/client/proc/jump_to_ruin
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

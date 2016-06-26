@@ -55,8 +55,7 @@
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.throw_mode_on()
-			spawn(det_time)
-				prime()
+			addtimer(src, "prime", det_time)
 
 /obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
 	update_mob()

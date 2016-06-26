@@ -127,7 +127,7 @@ var/global/max_secret_rooms = 6
 			theme = "plantlab"
 			treasureitems = list(/obj/item/weapon/gun/energy/floragun=1,/obj/item/seeds/sunflower/novaflower=2,/obj/item/seeds/tomato/blue/bluespace=2,/obj/item/seeds/tomato/blue=2,
 			/obj/item/seeds/coffee/robusta=2, /obj/item/seeds/cash=2)
-			fluffitems = list(/obj/structure/flora/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
+			fluffitems = list(/obj/item/weapon/twohanded/required/kirbyplants=1,/obj/structure/table/reinforced=2,/obj/machinery/hydroponics/constructable=1,
 							  /obj/effect/glowshroom/single=2,/obj/item/weapon/reagent_containers/syringe/charcoal=2,
 							  /obj/item/weapon/reagent_containers/glass/bottle/diethylamine=3,/obj/item/weapon/reagent_containers/glass/bottle/ammonia=3)
 

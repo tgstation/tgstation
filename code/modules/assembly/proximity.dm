@@ -64,8 +64,7 @@
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
+	addtimer(src, "process_cooldown", 10)
 
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -80,8 +79,7 @@
 /obj/item/device/assembly/prox_sensor/dropped()
 	..()
 	if(scanning)
-		spawn(0)
-			sense()
+		addtimer(src, "sense", 0)
 
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)

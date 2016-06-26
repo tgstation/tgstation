@@ -36,7 +36,10 @@ var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer/proc/runevent(datum/timedevent/event)
 	set waitfor = 0
-	call(event.thingToCall, event.procToCall)(arglist(event.argList))
+	if(event.thingToCall == GLOBAL_PROC && istext(event.procToCall))
+		call("/proc/[event.procToCall]")(arglist(event.argList))
+	else
+		call(event.thingToCall, event.procToCall)(arglist(event.argList))
 
 /datum/subsystem/timer/Recover()
 	processing |= SStimer.processing

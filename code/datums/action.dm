@@ -127,7 +127,7 @@
 
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
-		// of the item appereance
+		// of the item appearence
 		..(current_button)
 	else if(target)
 		var/obj/item/I = target

@@ -63,8 +63,8 @@
 		time_duration *= 2
 	invoker.visible_message("<span class='warning'>The air in front of [invoker] ripples before suddenly tearing open!</span>", \
 	"<span class='brass'>With a word, you rip open a [two_way ? "two-way":"one-way"] rift to [input_target_key]. It will last for [time_duration / 10] seconds and has [gateway_uses] use[gateway_uses > 1 ? "s" : ""].</span>")
-	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? src.loc : get_step(invoker, invoker.dir))
-	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? target.loc : get_step(target, target.dir))
+	var/obj/effect/clockwork/spatial_gateway/S1 = new(istype(src, /obj/structure/clockwork/powered/clockwork_obelisk) ? get_turf(src) : get_step(get_turf(invoker), invoker.dir))
+	var/obj/effect/clockwork/spatial_gateway/S2 = new(istargetobelisk ? get_turf(target) : get_step(get_turf(target), target.dir))
 
 	//Set up the portals now that they've spawned
 	S1.setup_gateway(S2, time_duration, gateway_uses, two_way)
@@ -117,6 +117,26 @@
 		"guvax_capacitor" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["guvax_capacitor"], 1), \
 		"replicant_alloy" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["replicant_alloy"], 1), \
 		"hierophant_ansible" = max(MAX_COMPONENTS_BEFORE_RAND - LOWER_PROB_PER_COMPONENT*clockwork_component_cache["hierophant_ansible"], 1)))
+
+/proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
+	// When servants invoke ratvar's power, they speak in ways that non
+	// servants do not comprehend.
+	// Our ratvarian chants are stored in their ratvar forms
+
+	var/list/spans = list(SPAN_ROBOT)
+
+	var/old_languages_spoken = AM.languages_spoken
+	AM.languages_spoken = ALL // Everyone understands
+	// In that no one does.
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!whisper)
+			L.say(message, "clock", spans)
+		else
+			L.whisper(message)
+	else
+		AM.say(message)
+	AM.languages_spoken = old_languages_spoken
 
 /*
 

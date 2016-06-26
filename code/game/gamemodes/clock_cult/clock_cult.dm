@@ -94,6 +94,8 @@ This file's folder contains:
 	ticker.mode.servants_of_ratvar += M.mind
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
+	M.languages_spoken |= RATVAR
+	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
@@ -122,6 +124,8 @@ This file's folder contains:
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
+	M.languages_spoken &= ~RATVAR
+	M.languages_understood &= ~RATVAR
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -246,7 +250,8 @@ This file's folder contains:
 		new/obj/item/clockwork/slab/starter(get_turf(L))
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
 	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using Report in your slab's interface, and you can find a \
-	concise tutorial in Recollection."
+	concise tutorial in Recollection.</b>"
+	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective

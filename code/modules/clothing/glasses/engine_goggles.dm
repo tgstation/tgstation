@@ -67,8 +67,7 @@
 				O.invisibility = 0
 				invis_objects += O
 
-	spawn(5)
-		invis_update()
+	addtimer(src, "invis_update", 5)
 
 /obj/item/clothing/glasses/meson/engine/proc/invis_update()
 	for(var/obj/O in invis_objects)

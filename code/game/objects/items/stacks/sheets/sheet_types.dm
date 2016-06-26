@@ -163,7 +163,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("chemistry bag", /obj/item/weapon/storage/bag/chemistry, 4), \
 	new/datum/stack_recipe("bio bag", /obj/item/weapon/storage/bag/bio, 4), \
 	null, \
-	new/datum/stack_recipe("bandage", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
+	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
 	new/datum/stack_recipe("rag", /obj/item/weapon/reagent_containers/glass/rag, 1), \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
@@ -200,9 +200,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	new/datum/stack_recipe("folder", /obj/item/weapon/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
 )
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap
+/obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
