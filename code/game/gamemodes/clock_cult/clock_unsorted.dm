@@ -126,8 +126,7 @@
 	var/list/spans = list(SPAN_ROBOT)
 
 	var/old_languages_spoken = AM.languages_spoken
-	AM.languages_spoken = ALL // Everyone understands
-	// In that no one does.
+	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starred out
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
