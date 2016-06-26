@@ -30,8 +30,6 @@
 	flying = 1
 	pressure_resistance = 200
 	gold_core_spawnable = 0 //too spooky for science
-	var/has_facial_hair = 0
-	var/has_hair = 0
 	var/ghost_hair_style
 	var/ghost_hair_color
 	var/image/ghost_hair = null
@@ -42,12 +40,10 @@
 
 /mob/living/simple_animal/retaliate/ghost/New()
 	..()
-	var/type = rand(0,1)
 	if(!random)
 		give_hair()
-		return
 	else
-		switch(type)
+		switch(rand(0,1))
 			if(0)
 				name = "ghost of [pick(first_names_male)] [pick(last_names)]"
 			if(1)
@@ -56,26 +52,15 @@
 
 
 /mob/living/simple_animal/retaliate/ghost/proc/give_hair()
-	if(has_hair)
+	if(ghost_hair_style != null)
 		ghost_hair = image('icons/mob/human_face.dmi', "hair_[ghost_hair_style]_s")
 		ghost_hair.layer = -HAIR_LAYER
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
-	if(has_facial_hair)
+	if(ghost_facial_hair_style != null)
 		ghost_facial_hair = image('icons/mob/human_face.dmi', "facial_[ghost_facial_hair_style]_s")
 		ghost_facial_hair.layer = -HAIR_LAYER
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)
-
-
-/mob/living/simple_animal/retaliate/ghost/test1
-	name = "test ghost please ignore"
-	random = FALSE
-	has_hair = 1
-	has_facial_hair = 1
-	ghost_hair_color = "#996633"
-	ghost_facial_hair_color = "#663300"
-	ghost_hair_style = "pompadour"
-	ghost_facial_hair_style = "watson"
