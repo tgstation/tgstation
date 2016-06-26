@@ -46,6 +46,9 @@
 /obj/structure/chair/hades/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/hades_staff))
+		var/obj/item/weapon/hades_staff/HS = W
+		if(!HS.isKey)
+			return
 		src.visible_message("<span class='warning'>[user] inserts the [W] into the [src], giving it a quick turn.</span>")
 		if(considerReady())
 			qdel(W)
@@ -82,16 +85,25 @@
 	icon = 'icons/obj/guns/magic.dmi'
 	item_state = "staffofchange"
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
-	throwforce = 10
+	force = 25
+	throwforce = 5
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("slapped", "shattered", "blasphemed", "smashed", "whacked", "crushed", "hammered")
-	block_chance = 50
+	block_chance = 25
+	var/isKey = 1
+
+/obj/item/weapon/hades_staff/fake
+	name = "Inert Staff of Hades"
+	desc = "A large, dark staff."
+	isKey = 0
 
 /obj/item/weapon/hades_staff/imbued
 	name = "Imbued Staff of Hades"
 	desc = " Bestowed with the power of wayward souls, this Staff allows the wielder to judge a target."
+	force = 75
+	throwforce = 35
+	block_chance = 75
 	var/lastJudge = 0
 	var/judgeCooldown = 150
 
