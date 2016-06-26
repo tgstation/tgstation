@@ -209,9 +209,7 @@
 	var/obj/effect/overlay/temp/cult/sparks/S = PoolOrNew(/obj/effect/overlay/temp/cult/sparks, T)
 	S.anchored = FALSE
 	S.throw_at_fast(src,10,1)
-	S.density = 0
 	var/obj/effect/overlay/temp/hadesBlood/BS = PoolOrNew(/obj/effect/overlay/temp/hadesBlood, T)
-	BS.density = 0
 
 /mob/living/simple_animal/hostile/hades/proc/Transfer(var/mob/living/taken, var/turf/transferTarget)
 	if(transferTarget)
