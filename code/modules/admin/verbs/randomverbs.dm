@@ -1063,6 +1063,34 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 
 	message_admins("Mass polymorph started by [who_did_it] is complete.")
 
+
+/client/proc/show_tip()
+	set category = "Admin"
+	set name = "Show Tip"
+	set desc = "Sends a tip (that you specify) to all players. After all \
+		you're the experienced player here."
+
+	if(!holder)
+		return
+
+	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	if(!input)
+		return
+
+	if(!ticker)
+		return
+
+	ticker.selected_tip = input
+
+	// If we've already tipped, then send it straight away.
+	if(ticker.tipped)
+		ticker.send_tip_of_the_round()
+
+
+	message_admins("[key_name_admin(usr)] sent a tip of the round.")
+	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
+	feedback_add_details("admin_verb","TIP")
+
 #define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
 
 /proc/mass_purrbation()

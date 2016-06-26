@@ -447,7 +447,7 @@
 	status_flags += GODMODE
 	src << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
 	H << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
-	H.say("ASSIMILATION SUCCESSFUL.")
+	clockwork_say(H, rot13("ASSIMILATION SUCCESSFUL."))
 	if(!H.mind)
 		mind.transfer_to(H)
 	return 1

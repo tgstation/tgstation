@@ -252,7 +252,6 @@ var/bomb_set
 	var/datum/browser/popup = new(user, "nuclearbomb", name, 300, 400)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/nuclearbomb/Topic(href, href_list)
 	if(..())
@@ -344,7 +343,6 @@ var/bomb_set
 		return
 	else
 		return ..()
-	return
 
 
 #define NUKERANGE 127
@@ -397,8 +395,6 @@ var/bomb_set
 		if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 			spawn()
 				world.Reboot("Station destroyed by Nuclear Device.", "end_error", "nuke - unhandled ending")
-			return
-	return
 
 
 /*
@@ -439,20 +435,33 @@ This is here to make the tiles around the station mininuke change when it's arme
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
 
+/obj/item/weapon/disk/nuclear/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is \
+		going delta! It looks like they're comitting suicide.</span>")
+	playsound(user.loc, 'sound/machines/Alarm.ogg', 50, -1, 1)
+	var/end_time = world.time + 100
+	var/orig_color = user.color
+	while(world.time < end_time)
+		if(!user)
+			return
+		user.color = RANDOM_COLOUR
+		sleep(1)
+	user.color = orig_color
+	user.visible_message("<span class='suicide'>[user] was destroyed \
+		by the nuclear blast!</span>")
+	return OXYLOSS
+
 /obj/item/weapon/disk/nuclear/process()
-	var/turf/disk_loc = get_turf(src)
-	if(!disk_loc || disk_loc.z > ZLEVEL_CENTCOM)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
-		qdel(src)
-
-/obj/item/weapon/disk/nuclear/Destroy(force)
 	var/turf/diskturf = get_turf(src)
+	if(diskturf && (diskturf.z == ZLEVEL_CENTCOM || diskturf.z == ZLEVEL_STATION))
+		return
+	else
+		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		var/turf/targetturf = relocate()
+		message_admins("[src] has been moved out of bounds in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
+		log_game("[src] has been moved out of bounds in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 
-	if(force)
-		message_admins("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]).")
-		log_game("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]).")
-		return ..()
-
+/obj/item/weapon/disk/nuclear/proc/relocate()
 	if(blobstart.len > 0)
 		var/turf/targetturf = get_turf(pick(blobstart))
 		if(ismob(loc))
@@ -462,8 +471,21 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/obj/item/weapon/storage/S = loc
 			S.remove_from_storage(src, targetturf)
 		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
-		message_admins("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
-		log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
+		return targetturf
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
+
+/obj/item/weapon/disk/nuclear/Destroy(force)
+	var/turf/diskturf = get_turf(src)
+
+	if(force)
+		message_admins("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]).")
+		log_game("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]).")
+		poi_list -= src
+		STOP_PROCESSING(SSobj, src)
+		return ..()
+
+	var/turf/targetturf = relocate()
+	message_admins("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
+	log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced
