@@ -56,10 +56,10 @@
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
 		if (1)
-			adjustBruteLoss(250)
+			adjustBruteLoss(400)
 
 		if (2)
-			adjustBruteLoss(100)
+			adjustBruteLoss(200)
 
 		if(3)
-			adjustBruteLoss(50)
+			adjustBruteLoss(100)
