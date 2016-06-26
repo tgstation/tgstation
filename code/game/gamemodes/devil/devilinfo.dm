@@ -1,6 +1,6 @@
-#define BLOOD_THRESHOLD 2 //How many souls are needed per stage.
-#define TRUE_THRESHOLD 3
-#define ARCH_THRESHOLD 4
+#define BLOOD_THRESHOLD 3 //How many souls are needed per stage.
+#define TRUE_THRESHOLD 7
+#define ARCH_THRESHOLD 12
 
 #define BASIC_DEVIL 0
 #define BLOOD_LIZARD 1
@@ -9,7 +9,7 @@
 
 #define SOULVALUE soulsOwned.len-reviveNumber
 
-#define DEVILRESURRECTTIME 20
+#define DEVILRESURRECTTIME 600
 
 var/global/list/allDevils = list()
 var/global/list/lawlorify = list (
@@ -138,9 +138,7 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
-
 	var/mob/living/carbon/human/H = owner.current
-
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul

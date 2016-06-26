@@ -226,6 +226,7 @@
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
+
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
 		var/datum/mutation/human/HM
