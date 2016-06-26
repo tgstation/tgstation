@@ -33,7 +33,7 @@
 	if(used)
 		user << "This charter has already been used to name the station."
 		return
-	if(!ignores_timeout && (world.time > CHALLENGE_TIME_LIMIT)) //5 minutes
+	if(!ignores_timeout && (world.time-round_start_time > CHALLENGE_TIME_LIMIT)) //5 minutes
 		user << "The crew has already settled into the shift. \
 			It probably wouldn't be good to rename the station right now."
 		return
