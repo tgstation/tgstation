@@ -43,6 +43,11 @@
 	qdel(internal)
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
+	if(severity == 3)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
 	if(swooping)
 		return 0
