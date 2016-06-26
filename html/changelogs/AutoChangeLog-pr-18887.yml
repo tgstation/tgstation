@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Observers now have a visible countdown for borg factories,
-silicons can examine the factory to determine how long it has remaining
-until it is ready."

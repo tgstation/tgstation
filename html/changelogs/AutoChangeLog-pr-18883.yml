@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Gang domination now uses the same timing method as shuttles, making
-their domination times more accurate."
