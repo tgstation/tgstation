@@ -112,6 +112,7 @@
 	var/recovering = FALSE //If the marauder is recovering from a large amount of fatigue
 	var/blockchance = 15 //chance to block melee attacks entirely
 	var/counterchance = 30 //chance to counterattack after blocking
+	var/combattimer = 50 //after 5 seconds of not being hit ot attacking we count as 'out of combat' and lose block/counter chance
 	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block melee attacks \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
 	Your primary goal is to serve the creature that you are now a part of. You can use the Linked Minds ability in your Marauder tab to communicate silently with your master, \
@@ -122,11 +123,15 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
+	combattimer = 0
 	true_name = pick(possible_true_names)
 	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
+	if(combattimer < world.time)
+		blockchance = max(blockchance - 5, initial(blockchance))
+		counterchance = max(counterchance - 10, initial(counterchance))
 	if(is_in_host())
 		if(!ratvar_awakens && host.stat == DEAD)
 			death()
@@ -236,16 +241,21 @@
 			stat(null, "Host Health: [resulthealth]%")
 			if(ratvar_awakens)
 				stat(null, "You are able to deploy!")
+				stat(null, "Block Chance: 80%")
+				stat(null, "Counter Chance: 80%")
 			else
 				if(resulthealth > 60)
 					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
 				else
 					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
+				stat(null, "Block Chance: [blockchance]%")
+				stat(null, "Counter Chance: [counterchance]%")
 		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
 	var/fatiguedamage = adjust_fatigue(amount)
 	if(amount > 0)
+		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
 			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //Null rods allow direct damage
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
@@ -265,6 +275,7 @@
 /mob/living/simple_animal/hostile/clockwork/marauder/AttackingTarget()
 	if(is_in_host())
 		return 0
+	combattimer = world.time + initial(combattimer)
 	..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/Proj)
