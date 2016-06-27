@@ -115,7 +115,7 @@
 	var/combattimer = 50 //after 5 seconds of not being hit ot attacking we count as 'out of combat' and lose block/counter chance
 	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block melee attacks \
 	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
-	Your primary goal is to serve the creature that you are now a part of. You can use the Linked Minds ability in your Marauder tab to communicate silently with your master, \
+	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
 	but can only exit if your master calls your true name or if they are exceptionally damaged. \
 	\n\n\
 	Taking damage and remaining outside of your master will cause <i>fatigue</i>, which hinders your movement speed and attacks, in addition to forcing you back into your master if it grows \
@@ -350,39 +350,24 @@
 			host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='boldannounce'>Your marauder instinctively reacts to its true name!</span>")
 
 /mob/living/simple_animal/hostile/clockwork/marauder/say(message)
-	if(is_in_host())
+	if(host && (is_in_host() || message_mode == MODE_BINARY)
 		marauder_comms(message)
 		return 1
 	..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/verb/linked_minds() //Discreet communications between a marauder and its host
-	set name = "Linked Minds"
-	set desc = "Silently communicates with your master."
-	set category = "Marauder"
-	if(!host)
-		usr << "<span class='warning'>You don't have a host!</span>"
-		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/linked_minds
-		return 0
-	var/message = stripped_input(usr, "Enter a message to tell your host.", "Telepathy")
-	if(!usr || !message)
-		return 0
-	if(!host)
-		usr << "<span class='warning'>Your host seems to have vanished!</span>"
-		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/linked_minds
-		return 0
-	marauder_comms(message)
-
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/marauder_comms(message)
-	message = "<span class='sevtug'>Marauder [true_name]:</span> <span class='sevtug_small'>\"[message]\"</span>" //Processed output
-	src << message
-	host << message
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			M << "[link] [message]"
-	return 1
+	if(host)
+		message = "<span class='sevtug'>Marauder [true_name]:</span> <span class='sevtug_small'>\"[message]\"</span>" //Processed output
+		src << message
+		host << message
+		for(var/M in mob_list)
+			if(isobserver(M))
+				var/link = FOLLOW_LINK(M, src)
+				M << "[link] [message]"
+		return 1
+	return 0
 
-/mob/living/proc/talk_with_marauder() //See above - this is the host version
+/mob/living/proc/talk_with_marauder() //hosts communicate via a verb, marauders just use :b
 	set name = "Linked Minds"
 	set desc = "Silently communicates with your marauder."
 	set category = "Clockwork"
