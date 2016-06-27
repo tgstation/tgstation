@@ -462,9 +462,10 @@ var/list/rot13_lookup = list()
 	var/t_out = ""
 
 	for(var/i in 1 to length(t_in))
-		if(i in rot13_lookup)
-			t_out += rot13_lookup[i]
+		var/char = copytext(t_in, i, i + 1)
+		if(char in rot13_lookup)
+			t_out += rot13_lookup[char]
 		else
-			t_out += i
+			t_out += char
 
 	return t_out
