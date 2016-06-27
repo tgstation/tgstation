@@ -122,7 +122,7 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-///////////Two hand required objects///////////////
+///////////Two hand required objects///////////////1
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
 	w_class = 5
@@ -380,8 +380,6 @@
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
-	var/on = 0
-	var/off_text = "the chain stops moving."
 	force_wielded = 21
 	force_unwielded = 13
 
