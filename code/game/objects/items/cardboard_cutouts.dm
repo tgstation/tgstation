@@ -57,6 +57,7 @@
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
+	alpha = 255
 	if(!deceptive)
 		color = "#FFD7A7"
 	switch(new_appearance)
