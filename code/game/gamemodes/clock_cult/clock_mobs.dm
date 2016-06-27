@@ -93,8 +93,8 @@
 	name = "clockwork marauder"
 	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
-	health = 400 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
-	maxHealth = 400
+	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
+	maxHealth = 300
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -136,11 +136,11 @@
 		if(!ratvar_awakens && host.stat == DEAD)
 			death()
 			return
-		adjust_fatigue(-1)
+		adjust_fatigue(-1.5)
 		if(ratvar_awakens)
-			adjustHealth(-5)
+			adjustHealth(-5.5)
 		else
-			adjustHealth(-1)
+			adjustHealth(-0.5)
 		if(!fatigue && recovering)
 			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
 			host << "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>"
@@ -259,9 +259,9 @@
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
-			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //Null rods allow direct damage
+			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
-				amount *= 5 //if a wielded null rod is nearby, it takes five times the health damage
+				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
 	return ..() + fatiguedamage
 
