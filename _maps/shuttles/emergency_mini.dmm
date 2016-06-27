@@ -52,23 +52,17 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "i" = (
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/sleeper{
 	dir = 8;
 	icon_state = "sleeper-open"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "k" = (
 /obj/structure/chair{
@@ -91,9 +85,7 @@
 	pixel_x = 28;
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "o" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -112,9 +104,7 @@
 	name = "Escape Shuttle Infirmary";
 	req_access_txt = "0"
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "r" = (
 /turf/closed/wall/shuttle{
@@ -127,9 +117,7 @@
 /area/shuttle/escape)
 "t" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/door/airlock/shuttle{
@@ -141,25 +129,19 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "w" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "x" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "y" = (
 /obj/structure/grille,
@@ -183,9 +165,7 @@
 /obj/item/device/radio/intercom{
 	pixel_x = 25
 	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "B" = (
 /obj/machinery/door/airlock/shuttle{
@@ -203,9 +183,7 @@
 /area/shuttle/escape)
 "C" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "D" = (
 /obj/structure/table,
@@ -216,9 +194,7 @@
 	},
 /obj/item/weapon/crowbar,
 /obj/item/weapon/extinguisher,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "E" = (
 /turf/closed/wall/shuttle{
@@ -254,9 +230,7 @@
 /area/shuttle/escape)
 "J" = (
 /obj/machinery/computer/atmos_alert,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "K" = (
 /obj/structure/chair{
@@ -279,21 +253,15 @@
 /area/shuttle/escape)
 "N" = (
 /obj/machinery/computer/security,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "O" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "P" = (
 /obj/machinery/computer/communications,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "Q" = (
 /turf/open/space,
@@ -312,9 +280,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/extinguisher,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "T" = (
 /obj/structure/chair,
@@ -331,9 +297,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/crowbar,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "W" = (
 /turf/closed/wall/shuttle{

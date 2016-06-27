@@ -170,7 +170,7 @@
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
-		overlays += "Gibtonite_igniter"
+		add_overlay("Gibtonite_igniter")
 		return
 
 	if(wires && !primed)
@@ -241,6 +241,7 @@
 			qdel(src)
 
 /obj/item/weapon/ore/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -267,6 +268,7 @@
 	var/value = 1
 
 /obj/item/weapon/coin/New()
+	..()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
 
@@ -358,7 +360,7 @@
 			return
 
 		if (CC.use(1))
-			overlays += image('icons/obj/economy.dmi',"coin_string_overlay")
+			add_overlay(image('icons/obj/economy.dmi',"coin_string_overlay"))
 			string_attached = 1
 			user << "<span class='notice'>You attach a string to the coin.</span>"
 		else

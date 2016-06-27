@@ -21,6 +21,7 @@
 			if(B.active)
 				holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 				B.timer = 0
+				tell_admins(B)
 		if(WIRE_UNBOLT)
 			holder.visible_message("<span class='notice'>\icon[B] The bolts spin in place for a moment.</span>")
 		if(WIRE_DELAY)
@@ -63,6 +64,7 @@
 				if(B.active)
 					holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 					B.timer = 0
+					tell_admins(B)
 				else
 					B.defused = TRUE
 		if(WIRE_UNBOLT)
@@ -74,9 +76,16 @@
 			if(!mend && B.active)
 				holder.visible_message("<span class='danger'>\icon[B] An alarm sounds! It's go-</span>")
 				B.timer = 0
+				tell_admins(B)
 		if(WIRE_ACTIVATE)
 			if(!mend && B.active)
 				holder.visible_message("<span class='notice'>\icon[B] The timer stops! The bomb has been defused!</span>")
 				B.active = FALSE
 				B.defused = TRUE
 				B.update_icon()
+
+/datum/wires/syndicatebomb/proc/tell_admins(obj/machinery/syndicatebomb/B)
+	if(istype(B, /obj/machinery/syndicatebomb/training))
+		return
+	log_game("A [B.name] was detonated via boom wire at X=[B.x], Y=[B.y], Z=[B.z].")
+	message_admins("A [B.name] was detonated via boom wire at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[B.x];Y=[B.y];Z=[B.z]'> (JMP)</a>.")

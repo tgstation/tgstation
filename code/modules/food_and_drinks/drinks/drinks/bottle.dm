@@ -288,6 +288,19 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
 	return
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
+	name = "Bottle of lizard wine"
+	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
+	icon_state = "lizardwine"
+	list_reagents = list("lizardwine" = 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/hcider
+	name = "Jian Hard Cider"
+	desc = "Apple juice for adults."
+	icon_state = "hcider"
+	volume = 50
+	list_reagents = list("hcider" = 50)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
@@ -366,7 +379,7 @@
 		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 
 		user << "<span class='info'>You light \the [src] on fire.</span>"
-		overlays += fire_overlay
+		add_overlay(fire_overlay)
 		if(!isGlass)
 			spawn(50)
 				if(active)

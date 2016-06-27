@@ -55,28 +55,27 @@
 	name = "any color"
 	icon_state = "paint_neutral"
 
-	attack_self(mob/user)
-		var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
-		if ((user.get_active_hand() != src || user.stat || user.restrained()))
-			return
-		switch(t1)
-			if("red")
-				item_color = "C73232"
-			if("blue")
-				item_color = "5998FF"
-			if("green")
-				item_color = "2A9C3B"
-			if("yellow")
-				item_color = "CFB52B"
-			if("violet")
-				item_color = "AE4CCD"
-			if("white")
-				item_color = "FFFFFF"
-			if("black")
-				item_color = "333333"
-		icon_state = "paint_[t1]"
-		add_fingerprint(user)
+/obj/item/weapon/paint/anycolor/attack_self(mob/user)
+	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "violet", "black", "white")
+	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
+	switch(t1)
+		if("red")
+			item_color = "C73232"
+		if("blue")
+			item_color = "5998FF"
+		if("green")
+			item_color = "2A9C3B"
+		if("yellow")
+			item_color = "CFB52B"
+		if("violet")
+			item_color = "AE4CCD"
+		if("white")
+			item_color = "FFFFFF"
+		if("black")
+			item_color = "333333"
+	icon_state = "paint_[t1]"
+	add_fingerprint(user)
 
 
 /obj/item/weapon/paint/afterattack(turf/target, mob/user, proximity)
@@ -87,15 +86,14 @@
 	if(!istype(target) || istype(target, /turf/open/space))
 		return
 	target.color = "#" + item_color
-	return
 
 /obj/item/weapon/paint/paint_remover
 	gender =  PLURAL
 	name = "paint remover"
 	icon_state = "paint_neutral"
 
-	afterattack(turf/target, mob/user,proximity)
-		if(!proximity) return
-		if(istype(target) && target.color != initial(target.color))
-			target.color = initial(target.color)
+/obj/item/weapon/paint/paint_remover/afterattack(turf/target, mob/user, proximity)
+	if(!proximity)
 		return
+	if(istype(target) && target.color != initial(target.color))
+		target.color = initial(target.color)

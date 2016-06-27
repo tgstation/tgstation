@@ -172,11 +172,12 @@
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
 	return
 
-/mob/living/carbon/set_species(datum/species/mrace = null, icon_update = 1)
+/mob/living/carbon/set_species(datum/species/mrace, icon_update = 1)
 	if(mrace && has_dna())
 		dna.species.on_species_loss(src)
+		var/old_species = dna.species
 		dna.species = new mrace()
-		dna.species.on_species_gain(src)
+		dna.species.on_species_gain(src, old_species)
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
 	..()

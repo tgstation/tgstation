@@ -9,6 +9,7 @@
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = 1
+	luminosity = 1
 
 /obj/effect/particle_effect/sparks/New()
 	..()
@@ -17,8 +18,7 @@
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	spawn(20)
-		qdel(src)
+	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
 	var/turf/T = src.loc

@@ -10,6 +10,17 @@
 	icon = 'icons/turf/walls.dmi'
 	explosion_block = 50
 
+/turf/closed/indestructible/oldshuttle
+	name = "strange shuttle wall"
+	icon = 'icons/turf/shuttleold.dmi'
+	icon_state = "block"
+
+/turf/closed/indestructible/oldshuttle/corner
+	icon_state = "corner"
+
+
+
+
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'

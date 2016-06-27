@@ -21,9 +21,10 @@
 	 "soysauce" = list("soysauce", "soy sauce bottle", "A salty soy-based flavoring"),
 	 "frostoil" = list("coldsauce", "coldsauce bottle", "Leaves the tongue numb in it's passage"),
 	 "sodiumchloride" = list("saltshakersmall", "salt shaker", "Salt. From space oceans, presumably"),
-	 "blackpepper" = list("pepermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
+	 "blackpepper" = list("peppermillsmall", "pepper mill", "Often used to flavor food or make people sneeze"),
 	 "cornoil" = list("oliveoil", "corn oil bottle", "A delicious oil used in cooking. Made from corn"),
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
+	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
@@ -89,7 +90,7 @@
 			desc = temp_list[3]
 
 		else
-			name = "condiment bottle"
+			name = "[originalname] bottle"
 			main_reagent = reagents.get_master_reagent_name()
 			if (reagents.reagent_list.len==1)
 				desc = "Looks like it is [lowertext(main_reagent)], but you are not sure."
@@ -122,6 +123,25 @@
 	volume = 20
 	list_reagents = list("sodiumchloride" = 20)
 	possible_states = list()
+
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like \he's trying to commit suicide.</span>")
+	var/newname = "[name]"
+	name = "[user.name]"
+	user.name = newname
+	user.real_name = newname
+	desc = "Salt. From dead crew, presumably."
+	return (TOXLOSS)
+
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
+	if(!proximity || !isturf(target))
+		return
+	if(!reagents.has_reagent("sodiumchloride", 2))
+		user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
+		return
+	user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
+	reagents.remove_reagent("sodiumchloride", 2)
+	new/obj/effect/decal/cleanable/salt(target)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -184,7 +204,6 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list()
 	possible_states = list("ketchup" = list("condi_ketchup", "Ketchup", "You feel more American already."), "capsaicin" = list("condi_hotsauce", "Hotsauce", "You can almost TASTE the stomach ulcers now!"), "soysauce" = list("condi_soysauce", "Soy Sauce", "A salty soy-based flavoring"), "frostoil" = list("condi_frostoil", "Coldsauce", "Leaves the tongue numb in it's passage"), "sodiumchloride" = list("condi_salt", "Salt Shaker", "Salt. From space oceans, presumably"), "blackpepper" = list("condi_pepper", "Pepper Mill", "Often used to flavor food or make people sneeze"), "cornoil" = list("condi_cornoil", "Corn Oil", "A delicious oil used in cooking. Made from corn"), "sugar" = list("condi_sugar", "Sugar", "Tasty spacey sugar!"))
-	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/attack(mob/M, mob/user, def_zone) //Can't feed these to people directly.
 	return

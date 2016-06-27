@@ -44,28 +44,28 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!opened)
 		if(icon_door)
-			overlays += "[icon_door]_door"
+			add_overlay("[icon_door]_door")
 		else
-			overlays += "[icon_state]_door"
+			add_overlay("[icon_state]_door")
 		if(welded)
-			overlays += "welded"
+			add_overlay("welded")
 		if(secure)
 			if(!broken)
 				if(locked)
-					overlays += "locked"
+					add_overlay("locked")
 				else
-					overlays += "unlocked"
+					add_overlay("unlocked")
 			else
-				overlays += "off"
+				add_overlay("off")
 
 	else
 		if(icon_door_override)
-			overlays += "[icon_door]_open"
+			add_overlay("[icon_door]_open")
 		else
-			overlays += "[icon_state]_open"
+			add_overlay("[icon_state]_open")
 
 /obj/structure/closet/examine(mob/user)
 	..()
@@ -141,7 +141,7 @@
 		if(!isliving(AM)) //let's not put ghosts or camera mobs inside closets...
 			return
 		var/mob/living/L = AM
-		if(L.anchored || L.buckled || L.incorporeal_move || L.buckled_mobs.len)
+		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return
 		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
@@ -160,8 +160,10 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.buckled_mobs.len || (AM.flags & NODROP))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
 			return
+	else
+		return
 
 	AM.forceMove(src)
 	if(AM.pulledby)

@@ -8,6 +8,8 @@
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 
+	weather_immunities = list("ash")
+
 	var/ram = 100	// Used as currency to purchase different abilities
 	var/list/software = list()
 	var/userDNA		// The DNA string of our assigned user

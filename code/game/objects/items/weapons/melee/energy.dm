@@ -9,12 +9,12 @@
 	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on [src]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/melee/energy/rejects_blood()
-	return 1
+/obj/item/weapon/melee/energy/add_blood(list/blood_dna)
+	return 0
 
 /obj/item/weapon/melee/energy/is_sharp()
 	return active * sharpness
@@ -34,7 +34,7 @@
 	w_class_on = 5
 	flags = CONDUCT
 	armour_penetration = 100
-	origin_tech = "combat=3"
+	origin_tech = "combat=4;magnets=3"
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	attack_verb_on = list()
 
@@ -55,7 +55,7 @@
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
-	origin_tech = "magnets=3;syndicate=4"
+	origin_tech = "combat=3;magnets=4;syndicate=4"
 	block_chance = 50
 	var/hacked = 0
 
@@ -99,7 +99,6 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
-	return
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
@@ -124,7 +123,6 @@
 	force_on = 30
 	force = 18 //About as much as a spear
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	origin_tech = "materials=3;biotech=3;syndicate=3"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
 	icon_state_on = "esaw_1"
@@ -157,21 +155,19 @@
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			if(src.hacked) // That's right, we'll only check the "original" esword.
-				newSaber.hacked = 1
-				newSaber.item_color = "rainbow"
-			user.unEquip(W)
-			user.unEquip(src)
-			qdel(W)
-			qdel(src)
-			user.put_in_hands(newSaber)
+		user << "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>"
+		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		if(hacked || other_esword.hacked)
+			newSaber.hacked = TRUE
+			newSaber.item_color = "rainbow"
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1

@@ -1,5 +1,3 @@
-
-
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
 	name = "banhammer"
@@ -145,7 +143,7 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "materials=1"
+	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	var/extended = 0
@@ -284,6 +282,19 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "combat=1"
+	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
 
+/obj/item/weapon/melee/skateboard
+	name = "skateboard"
+	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
+	icon_state = "skateboard"
+	item_state = "skateboard"
+	force = 12
+	throwforce = 4
+	w_class = 5.0
+	attack_verb = list("smacked", "whacked", "slammed", "smashed")
+
+/obj/item/weapon/melee/skateboard/attack_self(mob/user)
+	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	qdel(src)

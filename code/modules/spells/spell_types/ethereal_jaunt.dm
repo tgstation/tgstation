@@ -35,7 +35,7 @@
 			if(target.pulledby)
 				target.pulledby.stop_pulling()
 			target.stop_pulling()
-			if(target.buckled_mobs.len)
+			if(target.has_buckled_mobs())
 				target.unbuckle_all_mobs(force=1)
 			jaunt_disappear(animation, target)
 			target.loc = holder

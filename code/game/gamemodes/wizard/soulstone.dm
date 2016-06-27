@@ -6,14 +6,26 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = 1
 	slot_flags = SLOT_BELT
-	origin_tech = "bluespace=4;materials=4"
+	origin_tech = "bluespace=4;materials=5"
 	var/usability = 0
+
+	var/reusable = TRUE
+	var/spent = FALSE
+
+/obj/item/device/soulstone/proc/was_used()
+	if(!reusable)
+		spent = TRUE
+		name = "dull [name]"
+		desc = "A fragment of the legendary treasure known simply as \
+			the 'Soul Stone'. The shard lies still, dull and lifeless; \
+			whatever spark it once held long extinguished."
 
 /obj/item/device/soulstone/anybody
 	usability = 1
 
 /obj/item/device/soulstone/anybody/chaplain
 	name = "mysterious old shard"
+	reusable = FALSE
 
 /obj/item/device/soulstone/pickup(mob/living/user)
 	..()
@@ -23,9 +35,12 @@
 
 /obj/item/device/soulstone/examine(mob/user)
 	..()
-	if(usability || iscultist(user) || iswizard(user) || user.stat == DEAD)
+	if(usability || iscultist(user) || iswizard(user) || isobserver(user))
 		user << "<span class='cult'>A soulstone, used to capture souls, either from unconscious or sleeping humans or from freed shades.</span>"
 		user << "<span class='cult'>The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.</span>"
+		if(spent)
+			user << "<span class='cult'>This shard is spent; it is now just \
+				a creepy rock.</span>"
 
 //////////////////////////////Capturing////////////////////////////////////////////////////////
 
@@ -33,6 +48,10 @@
 	if(!iscultist(user) && !iswizard(user) && !usability)
 		user.Paralyse(5)
 		user << "<span class='userdanger'>Your body is wracked with debilitating pain!</span>"
+		return
+	if(spent)
+		user << "<span class='warning'>There is no power left in the shard.\
+			</span>"
 		return
 	if(!istype(M, /mob/living/carbon/human))//If target is not a human.
 		return ..()
@@ -42,7 +61,6 @@
 	add_logs(user, M, "captured [M.name]'s soul", src)
 
 	transfer_soul("VICTIM", M, user)
-	return
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
@@ -64,6 +82,7 @@
 			A << "<b>You have been released from your prison, but you are still bound to [user.real_name]'s will. Help them succeed in their goals at all costs.</b>"
 		else if(iscultist(user))
 			A << "<b>You have been released from your prison, but you are still bound to the cult's will. Help them succeed in their goals at all costs.</b>"
+		was_used()
 
 ///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
 /obj/structure/constructshell
@@ -89,6 +108,7 @@
 			user.Dizzy(120)
 			return
 		SS.transfer_soul("CONSTRUCT",src,user)
+		SS.was_used()
 	else
 		return ..()
 
@@ -176,7 +196,6 @@
 				qdel(src)
 			else
 				user << "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!"
-	return
 
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)

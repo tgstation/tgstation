@@ -251,7 +251,7 @@ function checkchangelog($payload, $merge = false) {
 	if (!count($changelogbody))
 		return;
 
-	$file = 'author: '.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username))."\n";
+	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
 	$file .= "delete-after: True\n";
 	$file .= "changes: \n";
 	foreach ($changelogbody as $changelogitem) {
@@ -262,7 +262,7 @@ function checkchangelog($payload, $merge = false) {
 	}
 	$content = array (
 		'branch' 	=> $payload['pull_request']['base']['ref'],
-		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'],
+		'message' 	=> 'Automatic changelog generation for PR #'.$payload['pull_request']['number'].' [ci skip]',
 		'content' 	=> base64_encode($file)
 	);
 	$scontext = array('http' => array(

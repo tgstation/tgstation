@@ -55,7 +55,7 @@
 /obj/machinery/droneDispenser/New()
 	..()
 	health = max_health
-	materials = new(src, list(MAT_METAL=1, MAT_GLASS=1),
+	materials = new(src, list(MAT_METAL, MAT_GLASS),
 		MINERAL_MATERIAL_AMOUNT*MAX_STACK_SIZE*2)
 
 	using_materials = list(MAT_METAL=metal_cost, MAT_GLASS=glass_cost)

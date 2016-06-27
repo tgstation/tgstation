@@ -270,3 +270,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	category = CAT_FOOD
+
+/datum/crafting_recipe/lizardwine
+	name = "Lizard wine"
+	time = 40
+	reqs = list(
+		/obj/item/severedtail = 1,
+		/datum/reagent/consumable/ethanol = 100
+	)
+	result = /obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
+	category = CAT_FOOD

@@ -155,7 +155,6 @@
 	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
-
 // Automatic Shotguns//
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
@@ -166,7 +165,7 @@
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
-	origin_tech = "combat=5;materials=2"
+	origin_tech = "combat=6"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = 5
 
@@ -203,7 +202,6 @@
 		user << "You switch to tube B."
 	else
 		user << "You switch to tube A."
-
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(user.incapacitated() || !Adjacent(user) || !istype(user))

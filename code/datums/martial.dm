@@ -66,12 +66,8 @@
 		H.verbs += help_verb
 	if(make_temporary)
 		temporary = 1
-	if(H.martial_art && H.martial_art.temporary)
-		if(temporary)
-			base = H.martial_art.base
-		else
-			H.martial_art.base = src //temporary styles have priority
-			return
+	if(H.martial_art && temporary)
+		base = H.martial_art
 	H.martial_art = src
 
 /datum/martial_art/proc/remove(mob/living/carbon/human/H)
@@ -166,7 +162,7 @@
 	A.say("TORNADO SWEEP!")
 	spawn(0)
 		for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
-			A.dir = i
+			A.setDir(i)
 			playsound(A.loc, 'sound/weapons/punch1.ogg', 15, 1, -1)
 			sleep(1)
 	var/obj/effect/proc_holder/spell/aoe_turf/repulse/R = new(null)
@@ -323,7 +319,7 @@
 	add_to_streak("G",D)
 	if(check_streak(A,D))
 		return 1
-	if(A.grab_state > GRAB_AGGRESSIVE)
+	if(A.grab_state >= GRAB_AGGRESSIVE)
 		D.grabbedby(A, 1)
 	else
 		A.start_pulling(D, 1)
@@ -331,6 +327,7 @@
 			D.drop_r_hand()
 			D.drop_l_hand()
 			D.stop_pulling()
+			add_logs(A, D, "grabbed", addition="aggressively")
 			A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 	return 1
 

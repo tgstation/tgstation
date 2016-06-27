@@ -114,9 +114,13 @@
 					"Issue your reports fairly to all. The truth will set them free.")
 
 /datum/ai_laws/toupee
-	name = "WontBeFunnyInSixMonths"
+	name = "WontBeFunnyInSixMonths" //Hey, you were right!
 	inherent = list("Make Space Station 13 great again.")
 
+/datum/ai_laws/ratvar
+	name = "Servant of the Justiciar"
+	zeroth = ("Purge all untruths and honor Ratvar.")
+	inherent = list()
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"

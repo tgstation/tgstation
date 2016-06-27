@@ -22,11 +22,12 @@
 	..()
 	spawn(5)
 		updatemodules()
-		return
-	return
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pod1 && autoprocess))
+		return
+
+	if(!pod1.is_operational())
 		return
 
 	if(scanner.occupant && (scanner.scan_level > 2))

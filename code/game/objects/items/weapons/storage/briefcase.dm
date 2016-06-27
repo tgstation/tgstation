@@ -28,7 +28,7 @@
 /obj/item/weapon/storage/briefcase/lawyer/New()
 	new /obj/item/weapon/stamp/law(src)
 	..()
-	
+
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
 	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
@@ -47,7 +47,7 @@
 
 /obj/item/weapon/storage/briefcase/sniperbundle/New()
 	..()
-	new /obj/item/weapon/gun/projectile/sniper_rifle/syndicate(src)
+	new /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/tie/red(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)

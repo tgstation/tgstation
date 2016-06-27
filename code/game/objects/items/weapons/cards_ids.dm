@@ -130,7 +130,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=1"
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()

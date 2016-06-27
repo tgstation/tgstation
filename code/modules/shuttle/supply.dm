@@ -3,7 +3,7 @@
 	id = "supply"
 	callTime = 600
 
-	dir = 8
+	dir = WEST
 	travelDir = 90
 	width = 12
 	dwidth = 5

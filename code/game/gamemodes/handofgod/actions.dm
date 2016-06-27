@@ -20,7 +20,8 @@
 	owner << rendered
 	for(var/mob/M in mob_list)
 		if(isobserver(M))
-			M << "<a href='?src=\ref[M];follow=\ref[owner]'>(F)</a> [rendered]"
+			var/link = FOLLOW_LINK(M, owner)
+			M << "[link] [rendered]"
 
 /datum/action/innate/godspeak/Destroy()
 	god = null

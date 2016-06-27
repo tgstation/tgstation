@@ -9,3 +9,7 @@
 #define QDEL_HINT_PUTINPOOL		5 //qdel will put this object in the atom pool.
 #define QDEL_HINT_FINDREFERENCE	6 //functionally identical to QDEL_HINT_QUEUE if TESTING is not enabled in _compiler_options.dm.
 								  //if TESTING is enabled, qdel will call this object's find_references() verb.
+//defines for the gc_destroyed var
+
+#define GC_QUEUED_FOR_QUEUING -1
+#define GC_QUEUED_FOR_HARD_DEL -2

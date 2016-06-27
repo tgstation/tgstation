@@ -35,7 +35,7 @@ var/global/list/global_handofgod_structuretypes = list()
 	world << "<B>Two cults are onboard the station, seeking to overthrow the other, and anyone who stands in their way.</B>"
 	world << "<B>Followers</B> - Complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. Remember - there is no you, there is only the cult."
 	world << "<B>Prophets</B> - Command your cult by the will of your deity.  You are a high-value target, so be careful!"
-	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Loyalty implants and holy water will revert them to neutral, hopefully nonviolent crew."
+	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Mindshield implants and holy water will revert them to neutral, hopefully nonviolent crew."
 
 
 /////////////
@@ -183,7 +183,7 @@ var/global/list/global_handofgod_structuretypes = list()
 /datum/game_mode/proc/add_hog_follower(datum/mind/follower_mind, colour = "No Colour")
 	var/mob/living/carbon/human/H = follower_mind.current
 	if(isloyal(H))
-		H << "<span class='danger'>Your loyalty implant blocked the influence of the [colour] deity. </span>"
+		H << "<span class='danger'>Your mindshield implant blocked the influence of the [colour] deity. </span>"
 		return 0
 	if((follower_mind in red_deity_followers) || (follower_mind in red_deity_prophets) || (follower_mind in blue_deity_followers) || (follower_mind in blue_deity_prophets))
 		H << "<span class='danger'>You already belong to a deity. Your strong faith has blocked out the conversion attempt by the followers of the [colour] deity.</span>"

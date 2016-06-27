@@ -94,3 +94,6 @@
 		freq_listening |= i
 	..()
 
+/obj/machinery/telecomms/receiver/preset_left/birdstation
+	name = "Receiver"
+	freq_listening = list()

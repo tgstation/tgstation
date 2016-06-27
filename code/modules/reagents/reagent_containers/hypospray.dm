@@ -10,6 +10,7 @@
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
+	var/infinite = FALSE
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
@@ -31,8 +32,12 @@
 			var/list/injected = list()
 			for(var/datum/reagent/R in reagents.reagent_list)
 				injected += R.name
+			var/trans = 0
+			if(!infinite)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this)
+			else
+				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 
-			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
 			user << "<span class='notice'>[trans] unit\s injected.  [reagents.total_volume] unit\s remaining in [src].</span>"
 
 			var/contained = english_list(injected)
@@ -128,3 +133,11 @@
 	volume = 80
 	amount_per_transfer_from_this = 80
 	list_reagents = list("salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
+	name = "species mutator medipen"
+	desc = "Embark on a whirlwind tour of racial insensitivity by \
+		literally appropriating other races."
+	volume = 1
+	amount_per_transfer_from_this = 1
+	list_reagents = list("unstablemutationtoxin" = 1)

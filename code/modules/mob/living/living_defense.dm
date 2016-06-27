@@ -112,6 +112,8 @@
 		src.AddLuminosity(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		return TRUE
+	return FALSE
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
@@ -161,7 +163,8 @@
 	if(on_fire) //Only spread fire stacks if we're on fire
 		fire_stacks /= 2
 		L.fire_stacks += fire_stacks
-		L.IgniteMob()
+		if(L.IgniteMob())
+			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
 		L.fire_stacks /= 2
@@ -225,34 +228,38 @@
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
 		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-		var/old_grab_state = user.grab_state
-		var/grab_upgrade_time = 40
-		visible_message("<span class='danger'>[user] starts to tighten \his grip on [src]!</span>", \
-			"<span class='userdanger'>[user] starts to tighten \his grip on you!</span>")
-		if(do_mob(user, src, grab_upgrade_time))
-			if(user.pulling && user.pulling == src && user.grab_state == old_grab_state && user.a_intent == "grab")
-				user.grab_state++
-				switch(user.grab_state)
-					if(GRAB_AGGRESSIVE)
-						add_logs(user, src, "grabbed", addition="aggressively")
-						visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
-										"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
-						drop_r_hand()
-						drop_l_hand()
-						stop_pulling()
-					if(GRAB_NECK)
-						visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
-										"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
-						update_canmove() //we fall down
-						if(!buckled && !density)
-							Move(user.loc)
-					if(GRAB_KILL)
-						visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
-										"<span class='userdanger'>[user] is strangling you!</span>")
-						update_canmove() //we fall down
-						if(!buckled && !density)
-							Move(user.loc)
-				return 1
+
+		if(user.grab_state) //only the first upgrade is instantaneous
+			var/old_grab_state = user.grab_state
+			var/grab_upgrade_time = 30
+			visible_message("<span class='danger'>[user] starts to tighten \his grip on [src]!</span>", \
+				"<span class='userdanger'>[user] starts to tighten \his grip on you!</span>")
+			if(!do_mob(user, src, grab_upgrade_time))
+				return 0
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
+				return 0
+		user.grab_state++
+		switch(user.grab_state)
+			if(GRAB_AGGRESSIVE)
+				add_logs(user, src, "grabbed", addition="aggressively")
+				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
+								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+				drop_r_hand()
+				drop_l_hand()
+				stop_pulling()
+			if(GRAB_NECK)
+				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
+								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+			if(GRAB_KILL)
+				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
+								"<span class='userdanger'>[user] is strangling you!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+		return 1
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)

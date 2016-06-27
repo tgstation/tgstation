@@ -154,8 +154,7 @@
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
-				spawn(chase_time)
-					Burrow()
+				addtimer(src, "Burrow", chase_time)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/AttackingTarget()
 	if(istype(target, /obj/item/weapon/ore))
@@ -247,12 +246,14 @@
 
 /obj/item/organ/hivelord_core/New()
 	..()
-	spawn(2400)
-		if(!owner && !preserved)
-			go_inert()
-		else
-			preserved = TRUE
-			feedback_add_details("hivelord_core", "[src.type]|implanted")
+	addtimer(src, "inert_check", 2400)
+
+/obj/item/organ/hivelord_core/proc/inert_check()
+	if(!owner && !preserved)
+		go_inert()
+	else
+		preserved = TRUE
+		feedback_add_details("hivelord_core", "[src.type]|implanted")
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
@@ -288,10 +289,8 @@
 		if(NOBLOOD in H.dna.species.specflags)
 			return
 
-		var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
-		var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
-		if(B && blood_volume < 560 && blood_volume)
-			B.volume += 2 // Fast blood regen
+		if(H.blood_volume && H.blood_volume < BLOOD_VOLUME_NORMAL)
+			H.blood_volume += 2 // Fast blood regen
 
 /obj/item/organ/hivelord_core/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag && ishuman(target))
@@ -346,8 +345,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
 	..()
-	spawn(100)
-		death()
+	addtimer(src, "death", 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
@@ -398,7 +396,7 @@
 	transfer_reagents(C)
 	death()
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, var/volume = 30)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/transfer_reagents(mob/living/carbon/C, volume = 30)
 	if(!reagents.total_volume)
 		return
 
@@ -406,29 +404,11 @@
 
 	var/fraction = min(volume/reagents.total_volume, 1)
 	reagents.reaction(C, INJECT, fraction)
-
-	var/datum/reagent/blood/B
-	for(var/datum/reagent/blood/d in reagents.reagent_list)
-		B = d
-		break
-	if(B)
-		C.inject_blood(src, min(B.volume, volume))
-
 	reagents.trans_to(C, volume)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood/proc/link_host(mob/living/carbon/C)
 	faction = list("\ref[src]", "\ref[C]") // Hostile to everyone except the host.
-	var/datum/reagent/B = C.take_blood(src, 30)
-	if(!B)
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.dna.species.exotic_blood && H.reagents.total_volume)
-				H.reagents.trans_to(src, 10)
-
-	else
-		reagents.reagent_list += B
-		reagents.update_total()
-
+	C.transfer_blood_to(src, 30)
 	color = mix_color_from_reagents(reagents.reagent_list)
 
 /mob/living/simple_animal/hostile/asteroid/goliath
@@ -521,8 +501,7 @@
 	if(istype(turftype, /turf/closed/mineral))
 		var/turf/closed/mineral/M = turftype
 		M.gets_drilled()
-	spawn(10)
-		Trip()
+	addtimer(src, "Trip", 10)
 
 /obj/effect/goliath_tentacle/original
 
@@ -548,8 +527,7 @@
 	if(!latched)
 		qdel(src)
 	else
-		spawn(50)
-			qdel(src)
+		QDEL_IN(src, 50)
 
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
@@ -673,8 +651,7 @@
 	environment_smash = 2
 	mob_size = MOB_SIZE_LARGE
 	speed = 1
-	spawn(100)
-		Deflate()
+	addtimer(src, "Deflate", 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
@@ -731,7 +708,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher
 	name = "watcher"
-	desc = "Its stare causes victims to freeze from the inside."
+	desc = "A levitating, eye-like creature held aloft by winglike formations of sinew. A sharp spine of crystal protrudes from its body."
 	icon = 'icons/mob/lavaland/watcher.dmi'
 	icon_state = "watcher"
 	icon_living = "watcher"
@@ -741,7 +718,7 @@
 	throw_message = "bounces harmlessly off of"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	attacktext = "stares into the soul of"
+	attacktext = "impales"
 	a_intent = "harm"
 	speak_emote = list("telepathically cries")
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -754,7 +731,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast
 	name = "goliath"
-	desc = "A massive beast that uses long tentacles to ensare its prey, threatening them is not advised under any conditions."
+	desc = "A hulking, armor-plated beast with long tendrils arching from its back."
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "goliath"
 	icon_living = "goliath"
@@ -794,10 +771,9 @@
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
-	visible_message("<span class='warning'>[src] wails as in anger as they are driven from their form!</span>")
+	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
 	if(stored_mob)
-		stored_mob.loc = get_turf(src)
-		stored_mob.adjustBruteLoss(1000)
+		stored_mob.forceMove(get_turf(src))
 	else
 		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
 	..(gibbed)
@@ -835,8 +811,9 @@
 				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()
+				H.adjustBruteLoss(1000)
 				L.stored_mob = H
-				H.loc = L
+				H.forceMove(L)
 				qdel(src)
 	..()
 
@@ -853,9 +830,9 @@
 
 /obj/item/organ/hivelord_core/update_icon()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	overlays.Cut()
+	cut_overlays()
 	if(!inert)
-		overlays += image(icon, "legion_soul_crackle")
+		add_overlay(image(icon, "legion_soul_crackle"))
 
 /obj/item/organ/hivelord_core/legion/go_inert()
 	. = ..()
@@ -923,9 +900,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(udder.reagents.total_volume == udder.reagents.maximum_volume)
-		overlays += "gl_full"
+		add_overlay("gl_full")
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/gutlunch/attackby(obj/item/O, mob/user, params)
@@ -1027,14 +1004,14 @@
 
 /obj/effect/collapse/New()
 	..()
-	visible_message("<B><span class='danger'>The tendril writhes in pain and anger and the earth around it begins to split! Get back!</span></B>")
-	visible_message("<span class='danger'>A chest falls clear of the tendril!</span>")
+	visible_message("<span class='boldannounce'>The tendril writhes in fury as the earth around it begins to crack and break apart! Get back!</span>")
+	visible_message("<span class='warning'>Something falls free of the tendril!</span>")
 	playsound(get_turf(src),'sound/effects/tendril_destroyed.ogg', 200, 0, 50, 1, 1)
 	spawn(50)
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 15, 1)
 		playsound(get_turf(src),'sound/effects/explosionfar.ogg', 200, 1)
-		visible_message("<B><span class='danger'>The tendril collapes!</span></B>")
+		visible_message("<span class='boldannounce'>The tendril falls inward, the ground around it widening into a yawning chasm!</span>")
 		for(var/turf/T in range(2,src))
 			if(!T.density)
 				T.ChangeTurf(/turf/open/chasm/straight_down/lava_land_surface)

@@ -101,7 +101,7 @@
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window( user.loc, 0 )
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.air_update_turf(1)
@@ -203,7 +203,7 @@
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced( user.loc, 1 )
 			W.state = 0
-			W.dir = dir_to_set
+			W.setDir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.add_fingerprint(user)
@@ -252,16 +252,16 @@
 			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.setDir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.setDir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.setDir(WEST)
 					WD.ini_dir = WEST
 				else //If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.setDir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1

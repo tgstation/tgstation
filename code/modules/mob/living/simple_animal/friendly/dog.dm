@@ -180,7 +180,7 @@
 						if(prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
-							dir = i
+							setDir(i)
 							sleep(1)
 						return
 
@@ -240,7 +240,7 @@
 		if(prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))
-			dir = i
+			setDir(i)
 			sleep(1)
 
 	return valid
@@ -366,15 +366,15 @@
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
 					if (movement_target.loc.x < src.x)
-						dir = WEST
+						setDir(WEST)
 					else if (movement_target.loc.x > src.x)
-						dir = EAST
+						setDir(EAST)
 					else if (movement_target.loc.y < src.y)
-						dir = SOUTH
+						setDir(SOUTH)
 					else if (movement_target.loc.y > src.y)
-						dir = NORTH
+						setDir(NORTH)
 					else
-						dir = SOUTH
+						setDir(SOUTH)
 
 					if(!Adjacent(movement_target)) //can't reach food through windows.
 						return
@@ -389,13 +389,13 @@
 			emote("me", 1, pick("dances around.","chases its tail!"))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
@@ -410,7 +410,7 @@
 		else
 			head_icon = DF.get_image()
 
-		overlays += head_icon
+		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
@@ -425,16 +425,16 @@
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
 			back_icon = DF.get_image()
-		overlays += back_icon
+		add_overlay(back_icon)
 
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 	if(pcollar)
-		overlays += collar
-		overlays += pettag
+		add_overlay(collar)
+		add_overlay(pettag)
 
 	return
 
@@ -508,7 +508,7 @@
 			emote("me", 1, pick("dances around.","chases her tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/pug/Life()
@@ -519,7 +519,7 @@
 			emote("me", 1, pick("chases its tail."))
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					dir = i
+					setDir(i)
 					sleep(1)
 
 /mob/living/simple_animal/pet/dog/attack_hand(mob/living/carbon/human/M)

@@ -6,7 +6,8 @@
 	var/throw_speed = 2
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages = 0 //For say() and Hear()
+	var/languages_spoken = 0 //For say() and Hear()
+	var/languages_understood = 0
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -68,13 +69,14 @@
 		Moved(oldloc, direct)
 
 	last_move = direct
+	setDir(direct)
 
 	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
 		if(loc && direct && last_move == direct)
 			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
 				newtonian_move(last_move)
 
-	if(. && buckled_mobs.len && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
+	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
@@ -137,7 +139,7 @@
 	stop_pulling()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		unbuckle_all_mobs(force=1)
 	. = ..()
 	if(client)
@@ -187,7 +189,7 @@
 
 	var/old_dir = dir
 	. = step(src, direction)
-	dir = old_dir
+	setDir(old_dir)
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -310,22 +312,18 @@
 
 /atom/movable/overlay/New()
 	verbs.Cut()
-	return
 
 /atom/movable/overlay/attackby(a, b, c)
 	if (src.master)
 		return src.master.attackby(a, b, c)
-	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)
 		return src.master.attack_paw(a, b, c)
-	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
 	if (src.master)
 		return src.master.attack_hand(a, b, c)
-	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
