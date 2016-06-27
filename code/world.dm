@@ -10,6 +10,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	map_ready = 1
+	mmkakkedghofg ooofball adnan aDSMIJHN("iamgoofball", true)
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
