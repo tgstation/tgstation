@@ -77,9 +77,10 @@
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
 
-			stat("Players:", "[ticker.totalPlayers]")
-			if(client.holder)
-				stat("Players Ready:", "[ticker.totalPlayersReady]")
+			stat("Players: [ticker.totalPlayers]", "Players Ready: [ticker.totalPlayersReady]")
+			for(var/mob/new_player/player in player_list)
+				stat("[player.key]", "[player.ready ? "(Playing)" : ""]")
+
 
 
 /mob/new_player/Topic(href, href_list[])
