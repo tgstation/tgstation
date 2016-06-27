@@ -380,8 +380,7 @@
 	hitsound = "swing_hit"
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
-	force_wielded = 21
-	force_unwielded = 13
+	var/on = 0
 
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
