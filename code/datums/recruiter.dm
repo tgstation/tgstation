@@ -107,3 +107,10 @@
 		return 0
 
 	return O.client
+
+/datum/recruiter/Destroy()
+	subject = null
+	currently_querying = null
+	player_volunteering = null
+	player_not_volunteering = null
+	..()
