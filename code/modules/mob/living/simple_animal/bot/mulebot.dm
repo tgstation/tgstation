@@ -639,11 +639,12 @@ var/global/mulebot_count = 0
 			if(istype(M,/mob/living/silicon/robot))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
-				add_logs(src, M, "knocked down")
-				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
-				M.stop_pulling()
-				M.Stun(8)
-				M.Weaken(5)
+				if(!paicard)
+					add_logs(src, M, "knocked down")
+					visible_message("<span class='danger'>[src] knocks over [M]!</span>")
+					M.stop_pulling()
+					M.Stun(8)
+					M.Weaken(5)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
