@@ -181,7 +181,12 @@
 	for(var/atom/movable/M in range(5, src))
 		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			var/mob/living/simple_animal/hostile/clockwork/W = M
-			if(W.health == W.maxHealth || W.stat)
+			var/fatigued = FALSE
+			if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
+				var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
+				if(E.fatigue)
+					fatigued = TRUE
+			if((!fatigued && W.health == W.maxHealth) || W.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
