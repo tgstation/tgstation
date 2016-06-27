@@ -113,7 +113,7 @@
 			teleporter.toggle_open()
 		if("teleporter_lock")
 			if(teleporter.state_open)
-				usr << "Close the teleporter before!"
+				usr << "Close the teleporter before locking!"
 				return
 			teleporter.locked = !teleporter.locked
 		if("teleport")
