@@ -290,7 +290,7 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 
 var/global/list/datum/stack_recipe/titanium_recipes = list ( \
-	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
 	)
 
 /obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
@@ -317,7 +317,7 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 	materials = list(MAT_TITANIUM=6000, MAT_PLASMA=6000)
 
 var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
-	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
 	)
 
 /obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)

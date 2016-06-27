@@ -49,6 +49,7 @@
 	var/amt_iron = 0
 	var/amt_plasma = 0
 	var/amt_uranium = 0
+	var/amt_titanium = 0
 	var/amt_clown = 0
 	var/amt_bluespace = 0
 
@@ -69,6 +70,8 @@
 			amt_uranium++;
 		if (istype(C,/obj/item/weapon/ore/bananium))
 			amt_clown++;
+		if (istype(C,/obj/item/weapon/ore/titanium))
+			amt_titanium++;
 		if (istype(C,/obj/item/weapon/ore/bluespace_crystal))
 			amt_bluespace++
 
@@ -88,6 +91,8 @@
 	if (amt_uranium)
 		dat += text("Uranium ore: [amt_uranium]<br>")
 	if (amt_clown)
+		dat += text("Titanium ore: [amt_titanium]<br>")
+	if (amt_titanium)
 		dat += text("Bananium ore: [amt_clown]<br>")
 	if (amt_bluespace)
 		dat += text("Bluespace crystals: [amt_bluespace]<br>")
