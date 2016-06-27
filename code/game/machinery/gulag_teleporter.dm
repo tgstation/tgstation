@@ -18,9 +18,9 @@ The console is located at computer/gulag_teleporter.dm
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/locked = FALSE
-	var/list/stored_items = list()
 	var/jumpsuit_type = /obj/item/clothing/under/rank/prisoner
 	var/shoes_type = /obj/item/clothing/shoes/sneakers/orange
+	var/obj/machinery/gulag_item_reclaimer/linked_reclaimer = null
 
 /obj/machinery/gulag_teleporter/New()
 	..()
@@ -101,7 +101,7 @@ The console is located at computer/gulag_teleporter.dm
 
 		open_machine()
 
-/obj/machinery/gulag_teleporter/proc/toggle_open(force_unlock = 0)
+/obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
 		usr << "<span class='notice'>Close the maintenance panel first.</span>"
 		return
@@ -109,12 +109,12 @@ The console is located at computer/gulag_teleporter.dm
 	if(state_open)
 		close_machine()
 		return
-	if(!locked || force_unlock)
+	if(!locked)
 		open_machine()
 
 // strips and stores all occupant's items
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
-	stored_items[occupant] = list()
+	linked_reclaimer.stored_items[occupant] = list()
 	for(var/obj/item/W in occupant)
 		if(occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
@@ -122,17 +122,10 @@ The console is located at computer/gulag_teleporter.dm
 				continue
 			if(istype(W, /obj/item/weapon/implant/storage))
 				continue
-			stored_items[occupant] += W
-			W.loc = null //temporary
-
-//drops mob's item
-/obj/machinery/gulag_teleporter/proc/drop_items(mob/prisoner)
-	if(!stored_items[prisoner])
-		return
-	for(var/i in stored_items[prisoner])
-		var/obj/item/W = i
-		stored_items[prisoner] -= W
-		W.forceMove(get_turf(src))
+			if(linked_reclaimer)
+				linked_reclaimer.stored_items[occupant] += W
+				linked_reclaimer.contents += W
+				W.loc = linked_reclaimer
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
@@ -149,10 +142,13 @@ The console is located at computer/gulag_teleporter.dm
 		R.fields["criminal"] = "Incarcerated"
 
 /obj/item/weapon/circuitboard/machine/gulag_teleporter
-	name = "circuit board (Labor Camp teleporter)"
+	name = "circuit board (labor camp teleporter)"
 	build_path = /obj/machinery/gulag_teleporter
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
-	req_components = list(/obj/item/weapon/ore/bluespace_crystal = 2)
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/scanning_module,
+							/obj/item/weapon/stock_parts/manipulator)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /*  beacon that receives the teleported prisoner */

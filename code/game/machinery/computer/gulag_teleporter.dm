@@ -30,11 +30,6 @@
 			user << "<span class='notice'>There's an ID inserted already.</span>"
 	return ..()
 
-/obj/machinery/computer/gulag_teleporter_computer/proc/equip_id()
-	if(id && prisoner)
-		prisoner.equip_to_appropriate_slot(id)
-		id = null
-
 /obj/machinery/computer/gulag_teleporter_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -50,7 +45,7 @@
 
 	if(teleporter && (teleporter.occupant && ishuman(teleporter.occupant)))
 		prisoner = teleporter.occupant
-		prisoner_list["name"] = prisoner.name
+		prisoner_list["name"] = prisoner.real_name
 		if(id)
 			can_teleport = TRUE
 		if(!isnull(data_core.general))
@@ -82,7 +77,7 @@
 	if(..())
 		return
 	if(!allowed(usr))
-		usr << "<span class='warning'>You don't have the required access use it.</span>"
+		usr << "<span class='warning'>Access denied.</span>"
 		return
 	switch(action)
 		if("scan_teleporter")
@@ -150,6 +145,15 @@
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
 	PoolOrNew(/obj/effect/particle_effect/sparks, prisoner.loc)
 	playsound(src.loc, "sparks", 50, 1)
-	teleporter.toggle_open(1)
+	if(teleporter.locked)
+		teleporter.locked = FALSE
+	teleporter.toggle_open()
 	id = null
 	temporary_record = null
+
+
+
+
+
+
+
