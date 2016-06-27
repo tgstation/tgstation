@@ -23,7 +23,7 @@
 		if(M.occupant == src)
 			M.go_out()
 
-	if(!gibbed && !(status_flags & FAKEDEATH))
+	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD, unless we were faking it
 
 	dna.species.spec_death(gibbed, src)

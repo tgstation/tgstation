@@ -10,8 +10,8 @@
 
 	stat = DEAD
 
-	if(!gibbed && !(status_flags & FAKEDEATH))
-		visible_message("<b>[src]</b> lets out a faint chimper as it collapses and stops moving...")
+	if(!gibbed)
+		emote("deathgasp")
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

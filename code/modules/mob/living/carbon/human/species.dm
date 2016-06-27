@@ -1329,7 +1329,7 @@
 		return 0
 
 	if(!(NOBREATH in specflags) || (H.health <= config.health_threshold_crit))
-		if(prob(20) && !(status_flags & FAKEDEATH)) //if we're faking deadness, don't gasp and give ourself away
+		if(prob(20))
 			H.emote("gasp")
 		if(breath_pp > 0)
 			var/ratio = safe_breath_min/breath_pp

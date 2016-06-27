@@ -1,4 +1,7 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null)
+	if(stat == DEAD && (act != "deathgasp") || (status_flags & FAKEDEATH)) //if we're faking, don't emote at all
+		return
+
 	var/param = null
 
 	if (findtext(act, "-", 1, null))
@@ -18,8 +21,6 @@
 	if(mind)
 		miming=mind.miming
 
-	if(src.stat == 2 && (act != "deathgasp"))
-		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
 			if (!src.restrained())
