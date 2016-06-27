@@ -400,6 +400,9 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
+	if(dextrous)
+		unEquip(r_hand)
+		unEquip(l_hand)
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
@@ -613,7 +616,7 @@
 		A.attack_hand(src)
 		update_hand_icons()
 
-/mob/living/simple_animal/proc/put_in_hands(obj/item/I)
+/mob/living/simple_animal/put_in_hands(obj/item/I)
 	..()
 	update_hand_icons()
 
