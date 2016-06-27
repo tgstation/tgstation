@@ -350,7 +350,6 @@
 	if(!isslimeperson(H))
 		return
 	CHECK_DNA_AND_SPECIES(H)
-	var/datum/species/jelly/slime/SS = H.dna.species
 	H.visible_message("<span class='notice'>[owner] gains a look of \
 		concentration while standing perfectly still.</span>",
 		"<span class='notice'>You focus intently on moving your body while \
@@ -373,13 +372,12 @@
 /datum/action/innate/split_body/proc/make_dupe()
 	var/mob/living/carbon/human/H = owner
 	CHECK_DNA_AND_SPECIES(H)
-	var/datum/species/jelly/slime/SS = H.dna.species
 
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
-	H.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
 	spare.updateappearance(mutcolor_update=1)
@@ -437,7 +435,8 @@
 			continue
 
 		var/list/L = list()
-		L["mcolor"] = body.dna.features["mcolor"]
+		// remove the # from the #123456 colorhex
+		L["htmlcolor"] = "#[body.dna.features["mcolor"]]"
 		var/area/A = get_area(body)
 		L["area"] = A.name
 		var/stat = "error"
@@ -468,6 +467,7 @@
 		L["swappable"] = !current && is_conscious
 
 		data["bodies"] += list(L)
+
 	return data
 
 /datum/action/innate/swap_body/ui_act(action, params)
