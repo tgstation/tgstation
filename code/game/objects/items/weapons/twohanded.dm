@@ -122,7 +122,7 @@
 /obj/item/weapon/twohanded/offhand/wield()
 	qdel(src)
 
-///////////Two hand required objects///////////////1
+///////////Two hand required objects///////////////
 //This is for objects that require two hands to even pick up
 /obj/item/weapon/twohanded/required/
 	w_class = 5
