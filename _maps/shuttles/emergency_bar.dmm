@@ -188,7 +188,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	can_buckle = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aH" = (
@@ -235,7 +237,10 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	name = "buckable bar stool"
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aO" = (
@@ -266,7 +271,8 @@
 	pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aT" = (
@@ -385,10 +391,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/obj/structure/sign/bluecross_2,
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/door/airlock/shuttle{
@@ -400,22 +406,16 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/door/airlock/glass_medical{
+	name = "Medbay"
 	},
-/obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "br" = (
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 10;
-	tag = "icon-sink (EAST)"
+/obj/machinery/sleeper{
+	dir = 8
 	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock{
@@ -439,16 +439,15 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bw" = (
-/obj/structure/statue/silver/janitor{
-	anchored = 1
-	},
-/turf/open/floor/plasteel/freezer,
+/obj/structure/table/optable,
+/obj/item/weapon/surgical_drapes,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
-	tag = "icon-toilet00 (NORTH)";
+	dir = 4;
 	icon_state = "toilet00";
-	dir = 1
+	tag = "icon-toilet00 (NORTH)"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -457,10 +456,12 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/closet/jcloset{
-	name = "cleaning supplies closet"
-	},
-/turf/open/floor/plasteel/freezer,
+/obj/structure/table,
+/obj/item/weapon/circular_saw,
+/obj/item/weapon/hemostat,
+/obj/item/weapon/retractor,
+/obj/item/weapon/scalpel,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bA" = (
 /turf/closed/wall/shuttle{
@@ -497,7 +498,7 @@
 "bF" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bG" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -541,6 +542,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bO" = (
@@ -570,7 +572,12 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bS" = (
-/obj/machinery/door/airlock/glass_medical,
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bT" = (
@@ -581,16 +588,13 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bU" = (
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 10;
-	tag = "icon-sink (EAST)"
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/structure/mirror{
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel/freezer,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/wood/bar{
@@ -692,7 +696,7 @@ bP
 bQ
 aE
 bt
-bp
+ak
 bu
 bx
 bC
@@ -715,7 +719,7 @@ bH
 bK
 bH
 aE
-bt
+aA
 bp
 bt
 bt
@@ -739,7 +743,7 @@ aE
 aE
 aE
 aE
-aA
+bm
 bp
 bv
 by
@@ -764,7 +768,7 @@ aN
 aE
 aE
 bt
-ak
+bt
 bt
 bt
 bC
@@ -787,8 +791,8 @@ aR
 bd
 aN
 aE
-bt
-bp
+bn
+bi
 bw
 bz
 bC
@@ -811,10 +815,10 @@ aE
 be
 aE
 aE
-bm
-bp
-bp
-bp
+bq
+bi
+bi
+bS
 bC
 bE
 "}
@@ -835,10 +839,10 @@ bN
 be
 bT
 bk
-bt
+bF
+br
 br
 bU
-br
 bB
 bB
 "}
