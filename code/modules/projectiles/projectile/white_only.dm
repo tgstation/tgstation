@@ -13,7 +13,6 @@
 	eyeblur = 2
 
 /obj/item/projectile/white_only/heatgun
-	speed=1.25
 
 /obj/item/projectile/white_only/heatgun/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
 	..()
