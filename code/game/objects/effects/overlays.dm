@@ -17,15 +17,15 @@
 
 /obj/effect/overlay/beam/New()
 	..()
-	spawn(10) qdel(src)
+	QDEL_IN(src, 10)
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
 	mouse_opacity = 0
-	var/duration = 10
-	var/randomdir = 1
+	var/duration = 10 //in deciseconds
+	var/randomdir = TRUE
 
 /obj/effect/overlay/temp/Destroy()
 	..()
@@ -33,10 +33,59 @@
 
 /obj/effect/overlay/temp/New()
 	if(randomdir)
-		dir = pick(cardinal)
+		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
-	spawn(duration)
-		qdel(src)
+
+	// Because some people are sticklers for animation accuracy, we use
+	// spawn() if it's not a multiple of 2 deciseconds, which is the timer
+	// ss accuracy
+	if(duration % 2) //ODD
+		spawn(duration)
+			qdel(src)
+	else //EVEN
+		QDEL_IN(src, duration)
+
+/obj/effect/overlay/temp/bloodsplatter
+	icon = 'icons/effects/blood.dmi'
+	duration = 5
+	randomdir = FALSE
+	layer = BELOW_MOB_LAYER
+
+/obj/effect/overlay/temp/bloodsplatter/New(loc, set_dir)
+	if(set_dir in diagonals)
+		icon_state = "splatter[pick(1, 2, 6)]"
+	else
+		icon_state = "splatter[pick(3, 4, 5)]"
+	..()
+	var/target_pixel_x = 0
+	var/target_pixel_y = 0
+	switch(set_dir)
+		if(NORTH)
+			target_pixel_y = 16
+		if(SOUTH)
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(EAST)
+			target_pixel_x = 16
+		if(WEST)
+			target_pixel_x = -16
+		if(NORTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = 16
+		if(NORTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = 16
+		if(SOUTHEAST)
+			target_pixel_x = 16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+		if(SOUTHWEST)
+			target_pixel_x = -16
+			target_pixel_y = -16
+			layer = ABOVE_MOB_LAYER
+	setDir(set_dir)
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
+
 
 /obj/effect/overlay/temp/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
@@ -85,7 +134,7 @@
 	if(mimiced_atom)
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
-		dir = mimiced_atom.dir
+		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
 
 /obj/effect/overlay/temp/cult
@@ -105,7 +154,7 @@
 /obj/effect/overlay/temp/cult/phase/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 
 /obj/effect/overlay/temp/cult/phase/out
 	icon_state = "cultout"
@@ -184,29 +233,37 @@
 	pixel_y = -16
 	pixel_x = -16
 
-/obj/effect/overlay/temp/ratvar/transgression
+/obj/effect/overlay/temp/ratvar/sigil
+	name = "glowing circle"
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "sigildull"
+
+/obj/effect/overlay/temp/ratvar/sigil/transgression
 	color = "#FAE48C"
 	layer = ABOVE_MOB_LAYER
-	duration = 40
+	duration = 50
 
-/obj/effect/overlay/temp/ratvar/transgression/New()
+/obj/effect/overlay/temp/ratvar/sigil/transgression/New()
 	..()
 	var/oldtransform = transform
 	animate(src, transform = matrix()*2, time = 5)
-	animate(transform = oldtransform, alpha = 0, time = 25)
+	animate(transform = oldtransform, alpha = 0, time = 45)
 
+/obj/effect/overlay/temp/ratvar/sigil/vitality
+	color = "#1E8CE1"
+	icon_state = "sigilactivepulse"
+	layer = BELOW_MOB_LAYER
 
-/obj/effect/overlay/temp/revenant
+/obj/effect/overlay/temp/ratvar/sigil/accession
+	color = "#AF0AAF"
+	layer = ABOVE_MOB_LAYER
+	duration = 50
+	icon_state = "sigilactiveoverlay"
+	alpha = 0
+
+/obj/effect/overlay/temp/purple_sparkles
 	name = "spooky lights"
 	icon_state = "purplesparkles"
-
-/obj/effect/overlay/temp/revenant/cracks
-	name = "glowing cracks"
-	icon_state = "purplecrack"
-	duration = 6
-
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
@@ -223,7 +280,7 @@
 	duration = 15
 
 /obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
-	icon_state = gib_icon
+	icon_state = gib_icon // Needs to be before ..() so icon is correct
 	..()
 
 /obj/effect/overlay/temp/gib_animation/ex_act(severity)
@@ -237,8 +294,31 @@
 	duration = 15
 
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
-	icon_state = dust_icon
+	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
+
+/obj/effect/overlay/temp/sparkle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
+	mouse_opacity = 0
+	density = 0
+	duration = 10
+	var/atom/movable/attached_to
+
+/obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
+	..()
+	if(istype(AM))
+		attached_to = AM
+		attached_to.overlays += src
+
+/obj/effect/overlay/temp/sparkle/Destroy()
+	if(attached_to)
+		attached_to.overlays -= src
+	attached_to = null
+	. = ..()
+
+/obj/effect/overlay/temp/sparkle/tailsweep
+	icon_state = "tailsweep"
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

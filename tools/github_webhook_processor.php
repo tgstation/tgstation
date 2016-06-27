@@ -251,7 +251,7 @@ function checkchangelog($payload, $merge = false) {
 	if (!count($changelogbody))
 		return;
 
-	$file = 'author: '.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username))."\n";
+	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
 	$file .= "delete-after: True\n";
 	$file .= "changes: \n";
 	foreach ($changelogbody as $changelogitem) {

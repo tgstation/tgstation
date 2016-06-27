@@ -32,7 +32,8 @@
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 4)
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/construction()
 	..(dir, dir)

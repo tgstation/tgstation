@@ -8,7 +8,7 @@
 	throw_range = 7
 	force = 4
 	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=3;biotech=3"
+	origin_tech = "combat=2;biotech=3"
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()

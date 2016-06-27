@@ -75,6 +75,8 @@
 
 	var/allow_movement_on_non_turfs = FALSE
 
+	var/attacked_sound = "punch" //Played when someone punches the creature
+
 
 /mob/living/simple_animal/New()
 	..()
@@ -318,7 +320,7 @@
 		if("harm", "disarm")
 			M.do_attack_animation(src)
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			playsound(loc, "punch", 25, 1, -1)
+			playsound(loc, attacked_sound, 25, 1, -1)
 			attack_threshold_check(harm_intent_damage)
 			add_logs(M, src, "attacked")
 			updatehealth()
@@ -426,7 +428,6 @@
 
 		if(3)
 			adjustBruteLoss(30)
-	updatehealth()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -448,7 +449,7 @@
 	return
 
 /mob/living/simple_animal/IgniteMob()
-	return
+	return FALSE
 
 /mob/living/simple_animal/ExtinguishMob()
 	return

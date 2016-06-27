@@ -72,7 +72,7 @@
 	if(target.stat == 0)
 		user << "<span class='warning'>The monkey is struggling far too much to put it in the recycler.</span>"
 		return
-	if(target.buckled || target.buckled_mobs.len)
+	if(target.buckled || target.has_buckled_mobs())
 		user << "<span class='warning'>The monkey is attached to something.</span>"
 		return
 	qdel(target)

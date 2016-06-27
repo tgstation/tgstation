@@ -12,7 +12,7 @@
 	anchored = 1
 
 	var/id
-	dir = NORTH		//this should point -away- from the dockingport door, ie towards the ship
+	dir = NORTH//this should point -away- from the dockingport door, ie towards the ship
 	var/width = 0	//size of covered area, perpendicular to dir
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
@@ -176,7 +176,7 @@
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
-	var/callTime = 50				//time spent in transit (deciseconds)
+	var/callTime = 150				//time spent in transit (deciseconds)
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0				//direction the shuttle would travel in
 
@@ -188,6 +188,8 @@
 	// A timid shuttle will not register itself with the shuttle subsystem
 	// All shuttle templates are timid
 	var/timid = FALSE
+
+	var/list/ripples = list()
 
 /obj/docking_port/mobile/New()
 	..()
@@ -296,6 +298,10 @@
 /obj/docking_port/mobile/proc/cancel()
 	if(mode != SHUTTLE_CALL)
 		return
+	if(ripples.len)
+		for(var/i in ripples)
+			qdel(i)
+		ripples.Cut()
 
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
@@ -317,7 +323,7 @@
 //default shuttleRotate
 /atom/proc/shuttleRotate(rotation)
 	//rotate our direction
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 	//resmooth if need be.
 	if(smooth)
@@ -365,6 +371,28 @@
 
 	qdel(src, force=TRUE)
 
+/obj/docking_port/mobile/proc/create_ripples(obj/docking_port/stationary/S1)
+	var/list/turfs = ripple_area(S1)
+	for(var/t in turfs)
+		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+
+/obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
+	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
+	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
+
+	var/list/ripple_turfs = list()
+
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		if(!T0)
+			continue
+		var/turf/T1 = L1[i]
+		if(!T1)
+			continue
+		if(T0.type != T0.baseturf)
+			ripple_turfs += T1
+
+	return ripple_turfs
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
@@ -374,11 +402,9 @@
 		if(status == SHUTTLE_ALREADY_DOCKED)
 			return status
 		else if(status)
-			spawn(0)
-				var/msg = "dock(): shuttle [src] cannot dock at [S1], \
-					error: [status]"
-				message_admins(msg)
-				throw EXCEPTION(msg)
+			var/msg = "dock(): shuttle [src] cannot dock at [S1], \
+				error: [status]"
+			message_admins(msg)
 			return status
 
 		if(canMove())
@@ -388,7 +414,7 @@
 
 //		//rotate transit docking ports, so we don't need zillions of variants
 //		if(istype(S1, /obj/docking_port/stationary/transit))
-//			S1.dir = turn(NORTH, -travelDir)
+//			S1.setDir(turn(NORTH, -travelDir))
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
@@ -416,9 +442,14 @@
 			A0.contents += T0
 
 	//move or squish anything in the way ship at destination
-	roadkill(L1, S1.dir)
+	roadkill(L0, L1, S1.dir)
 
-	for(var/i=1, i<=L0.len, ++i)
+	// Removes ripples
+	for(var/i in ripples)
+		qdel(i)
+	ripples.Cut()
+
+	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
 		if(!T0)
 			continue
@@ -455,7 +486,7 @@
 		SSair.add_to_active(T0,1)
 
 	loc = S1.loc
-	dir = S1.dir
+	setDir(S1.dir)
 
 /atom/movable/proc/onShuttleMove(turf/T1, rotation)
 	if(rotation)
@@ -475,8 +506,7 @@
 	. = ..()
 	if(!.)
 		return
-	spawn(0)
-		close()
+	addtimer(src, "close", 0)
 
 /mob/onShuttleMove()
 	if(!move_on_shuttle)
@@ -545,13 +575,20 @@
 	if(T)
 		var/obj/machinery/door/Door = locate() in T
 		if(Door)
-			spawn(0)
-				Door.close()
+			addtimer(Door, "close", 0)
 
-/obj/docking_port/mobile/proc/roadkill(list/L, dir, x, y)
+/obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
-	for(var/turf/T in L)
-		for(var/atom/movable/AM in T)
+	for(var/i in 1 to L0.len)
+		var/turf/T0 = L0[i]
+		var/turf/T1 = L1[i]
+		if(!T0 || !T1)
+			continue
+		if(T0.type == T0.baseturf)
+			continue
+		// The corresponding tile will not be changed, so no roadkill
+
+		for(var/atom/movable/AM in T1)
 			if(isliving(AM) && (!(AM in hurt_mobs)))
 				hurt_mobs |= AM
 				var/mob/living/M = AM
@@ -561,7 +598,7 @@
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
 				M.visible_message("<span class='warning'>[M] is hit by \
-						a bluespace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+						a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
 						"<span class='userdanger'>You feel an immense \
 						crushing pressure as the space around you ripples.</span>")
 				if(M.anchored)
@@ -597,6 +634,9 @@
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	var/timeLeft = timeLeft(1)
+	if(!ripples.len && (timeLeft <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL)))
+		create_ripples(destination)
+
 	if(timeLeft <= 0)
 		switch(mode)
 			if(SHUTTLE_CALL)
@@ -681,5 +721,5 @@
 	if(T.color != color)
 		T.color = color
 	if(T.dir != dir)
-		T.dir = dir
+		T.setDir(dir)
 	return T

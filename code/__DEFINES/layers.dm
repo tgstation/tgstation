@@ -12,6 +12,7 @@
 #define WIRE_TERMINAL_LAYER 2.45
 #define LOW_OBJ_LAYER 2.5
 
+#define BELOW_OPEN_DOOR_LAYER 2.6
 #define OPEN_DOOR_LAYER 2.7
 #define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
@@ -38,6 +39,7 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
 #define AREA_LAYER 10

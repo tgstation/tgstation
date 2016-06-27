@@ -46,7 +46,7 @@ Sorry Giacom. Please don't be mad :(
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	return QDEL_HINT_HARDDEL_NOW
+	return QDEL_HINT_HARDDEL
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -121,7 +121,7 @@ Sorry Giacom. Please don't be mad :(
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return 1
 
-	if(!M.buckled && !M.buckled_mobs.len)
+	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap
 		//the puller can always swap with its victim if on grab intent
 		if(M.pulledby == src && a_intent == "grab")
@@ -300,6 +300,7 @@ Sorry Giacom. Please don't be mad :(
 	toxloss = Clamp(toxloss + amount, 0, maxHealth*2)
 	if(updating_health)
 		updatehealth()
+	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health=1)
 	if(status_flags & GODMODE)
@@ -561,6 +562,9 @@ Sorry Giacom. Please don't be mad :(
 
 	var/atom/movable/pullee = pulling
 	if(pullee && get_dist(src, pullee) > 1)
+		stop_pulling()
+	if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
+		log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 		stop_pulling()
 	var/turf/T = loc
 	. = ..()
@@ -918,8 +922,8 @@ Sorry Giacom. Please don't be mad :(
 		if(ticker)
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+					if(G.is_dominating)
+						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 
 /mob/living/cancel_camera()
 	..()
@@ -1025,6 +1029,9 @@ Sorry Giacom. Please don't be mad :(
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in, is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
+	new_mob.name = name
+	new_mob.real_name = real_name
+
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
@@ -1035,4 +1042,4 @@ Sorry Giacom. Please don't be mad :(
 		G.summoner = new_mob
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
-			form to [new_mob]!</span>"
+			form!</span>"

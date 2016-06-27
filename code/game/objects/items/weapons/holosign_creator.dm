@@ -9,7 +9,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	origin_tech = "magnets=3;programming=3"
+	origin_tech = "magnets=1;programming=3"
 	flags = NOBLUDGEON
 	var/list/signs = list()
 	var/max_signs = 10
@@ -240,20 +240,21 @@
 	holo_integrity = 3
 	var/shockcd = 0
 
+/obj/effect/overlay/holograph/barrier/cyborg/hacked/proc/cooldown()
+	shockcd = FALSE
+
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/attack_hand(mob/living/user)
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
-			shockcd = 1
-			spawn(10)
-			shockcd = 0
+			shockcd = TRUE
+			addtimer(src, "cooldown", 10)
 
 /obj/effect/overlay/holograph/barrier/cyborg/hacked/Bumped(atom/user)
 	if(!shockcd)
 		if(ismob(user))
 			var/mob/living/M = user
 			M.electrocute_act(15,"Energy Barrier", safety=1)
-			shockcd = 1
-			spawn(10)
-			shockcd = 0
+			shockcd = TRUE
+			addtimer(src, "cooldown", 10)

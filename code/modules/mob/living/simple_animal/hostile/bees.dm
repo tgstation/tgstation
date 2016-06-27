@@ -83,7 +83,7 @@
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
-	overlays.Cut()
+	cut_overlays()
 
 	var/col = BEE_DEFAULT_COLOUR
 	if(beegent && beegent.color)
@@ -93,20 +93,20 @@
 	if(!bee_icons["[icon_base]_base"])
 		bee_icons["[icon_base]_base"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_base")
 	base = bee_icons["[icon_base]_base"]
-	overlays += base
+	add_overlay(base)
 
 	var/image/greyscale
 	if(!bee_icons["[icon_base]_grey_[col]"])
 		bee_icons["[icon_base]_grey_[col]"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_grey")
 	greyscale = bee_icons["[icon_base]_grey_[col]"]
 	greyscale.color = col
-	overlays += greyscale
+	add_overlay(greyscale)
 
 	var/image/wings
 	if(!bee_icons["[icon_base]_wings"])
 		bee_icons["[icon_base]_wings"] = image(icon = 'icons/mob/bees.dmi', icon_state = "[icon_base]_wings")
 	wings = bee_icons["[icon_base]_wings"]
-	overlays += wings
+	add_overlay(wings)
 
 
 //We don't attack beekeepers/people dressed as bees//Todo: bee costume

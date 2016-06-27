@@ -186,7 +186,7 @@
 			if(istype(I,/obj/item/weapon/implant/tracking))
 				holder = hud_list[IMPTRACK_HUD]
 				holder.icon_state = "hud_imp_tracking"
-			else if(istype(I,/obj/item/weapon/implant/loyalty))
+			else if(istype(I,/obj/item/weapon/implant/mindshield))
 				holder = hud_list[IMPLOYAL_HUD]
 				holder.icon_state = "hud_imp_loyal"
 			else if(istype(I,/obj/item/weapon/implant/chem))

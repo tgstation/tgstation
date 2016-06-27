@@ -12,6 +12,7 @@
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0

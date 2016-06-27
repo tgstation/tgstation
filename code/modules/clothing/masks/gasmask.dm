@@ -26,6 +26,7 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
+	visor_flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/welding/attack_self()
 	toggle()

@@ -47,7 +47,7 @@
 
 /obj/machinery/autolathe/New()
 	..()
-	materials = new /datum/material_container(src, list(MAT_METAL=1, MAT_GLASS=1))
+	materials = new /datum/material_container(src, list(MAT_METAL, MAT_GLASS))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/autolathe(null)
 	B.apply_default_parts(src)
 
@@ -244,7 +244,7 @@
 	return
 
 /obj/machinery/autolathe/RefreshParts()
-	var/T =1.2
+	var/T = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	materials.max_amount = T
@@ -255,9 +255,7 @@
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	dat += "<form name='search' action='?src=\ref[src]'>\
 	<input type='hidden' name='src' value='\ref[src]'>\
@@ -284,9 +282,7 @@
 /obj/machinery/autolathe/proc/category_win(mob/user,selected_category)
 	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	for(var/v in files.known_designs)
 		var/datum/design/D = files.known_designs[v]
@@ -315,9 +311,7 @@
 /obj/machinery/autolathe/proc/search_win(mob/user)
 	var/dat = "<A href='?src=\ref[src];menu=[AUTOLATHE_MAIN_MENU]'>Return to main menu</A>"
 	dat += "<div class='statusDisplay'><h3>Search results:</h3><br>"
-	dat += "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
-	dat += "<b>Metal amount:</b> [materials.amount(MAT_METAL)] cm<sup>3</sup><br>"
-	dat += "<b>Glass amount:</b> [materials.amount(MAT_GLASS)] cm<sup>3</sup><br>"
+	dat += materials_printout()
 
 	for(var/v in matching_designs)
 		var/datum/design/D = v
@@ -338,6 +332,13 @@
 		dat += "[get_design_cost(D)]<br>"
 
 	dat += "</div>"
+	return dat
+
+/obj/machinery/autolathe/proc/materials_printout()
+	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
+	for(var/mat_id in materials.materials)
+		var/datum/material/M = materials.materials[mat_id]
+		dat += "<b>[M.name] amount:</b> [M.amount] cm<sup>3</sup><br>"
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D)

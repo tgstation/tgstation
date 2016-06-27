@@ -200,7 +200,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 /obj/machinery/newscaster/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
@@ -216,7 +216,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	return ..()
 
 /obj/machinery/newscaster/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))
 		icon_state = "newscaster_off"
 	else
@@ -225,16 +225,16 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		else
 			icon_state = "newscaster_normal"
 			if(alert)
-				overlays += "newscaster_alert"
+				add_overlay("newscaster_alert")
 	switch(health)
 		if(45 to 60)
 			return
 		if(30 to 45)
-			overlays += "crack1"
+			add_overlay("crack1")
 		if(15 to 30)
-			overlays += "crack2"
+			add_overlay("crack2")
 		else
-			overlays += "crack3"
+			add_overlay("crack3")
 
 
 /obj/machinery/newscaster/power_change()

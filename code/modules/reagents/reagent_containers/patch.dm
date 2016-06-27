@@ -5,7 +5,7 @@
 	icon_state = "bandaid"
 	item_state = "bandaid"
 	possible_transfer_amounts = list()
-	volume = 50
+	volume = 40
 	apply_type = PATCH
 	apply_method = "apply"
 	self_delay = 30		// three seconds
@@ -21,11 +21,11 @@
 /obj/item/weapon/reagent_containers/pill/patch/styptic
 	name = "brute patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("styptic_powder" = 50)
+	list_reagents = list("styptic_powder" = 20)
 	icon_state = "bandaid_brute"
 
 /obj/item/weapon/reagent_containers/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	list_reagents = list("silver_sulfadiazine" = 50)
+	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"

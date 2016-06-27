@@ -13,6 +13,7 @@
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("chair", /obj/structure/chair, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("swivel chair", /obj/structure/chair/office/dark, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("comfy chair", /obj/structure/chair/comfy/beige, 2, one_per_turf = 1, on_floor = 1), \
@@ -66,6 +67,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
+
+/obj/item/stack/sheet/metal/five
+	amount = 5
 
 /obj/item/stack/sheet/metal/cyborg
 	materials = list()
@@ -159,7 +163,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("chemistry bag", /obj/item/weapon/storage/bag/chemistry, 4), \
 	new/datum/stack_recipe("bio bag", /obj/item/weapon/storage/bag/bio, 4), \
 	null, \
-	new/datum/stack_recipe("bandage", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
+	new/datum/stack_recipe("improvised gauze", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
 	new/datum/stack_recipe("rag", /obj/item/weapon/reagent_containers/glass/rag, 1), \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
@@ -196,9 +200,10 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
 	new/datum/stack_recipe("folder", /obj/item/weapon/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
+	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
 )
 
-/obj/item/stack/sheet/cardboard	//BubbleWrap
+/obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"

@@ -1003,6 +1003,32 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	..()
 	. = 1
 
+/datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
+	name = "Earthsblood"
+	id = "earthsblood"
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	color = rgb(255, 175, 0)
+	overdose_threshold = 25
+
+/datum/reagent/medicine/earthsblood/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-3 * REM, 0)
+	M.adjustFireLoss(-3 * REM, 0)
+	M.adjustOxyLoss(-15 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustCloneLoss(-1 * REM, 0)
+	M.adjustStaminaLoss(-30 * REM, 0)
+	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 10), 50)
+	M.adjustToxLoss(5 * REM, 0)
+	..()
+	. = 1
+
 /datum/reagent/medicine/haloperidol
 	name = "Haloperidol"
 	id = "haloperidol"

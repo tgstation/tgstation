@@ -158,8 +158,8 @@
 			if (input == code)
 				user << "<span class='notice'>The crate unlocks!</span>"
 				locked = 0
-				overlays.Cut()
-				overlays += "securecrateg"
+				cut_overlays()
+				add_overlay("securecrateg")
 			else if (input == null || length(input) != codelen)
 				user << "<span class='notice'>You leave the crate alone.</span>"
 			else

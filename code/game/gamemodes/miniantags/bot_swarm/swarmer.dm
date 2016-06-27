@@ -4,7 +4,7 @@
 	desc = "A currently unactivated swarmer. Swarmers can self activate at any time, it would be wise to immediately dispose of this."
 	icon = 'icons/mob/swarmer.dmi'
 	icon_state = "swarmer_unactivated"
-	origin_tech = "bluespace=4;materials=4;programming=6"
+	origin_tech = "bluespace=4;materials=4;programming=7"
 	materials = list(MAT_METAL=10000, MAT_GLASS=4000)
 
 
@@ -81,7 +81,8 @@
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
-	languages = SWARMER
+	languages_spoken = SWARMER
+	languages_understood = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'

@@ -1,5 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscdel: "The Nar'sie rune cannot be scribed on shuttles or off Z-level."
-  - rscadd: "The Raise Dead rune automatically grabs the ghost of the raised corpse."

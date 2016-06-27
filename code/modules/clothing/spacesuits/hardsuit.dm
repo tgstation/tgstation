@@ -83,6 +83,11 @@
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/weapon/tank/jetpack/suit/jetpack = null
 
+/obj/item/clothing/suit/space/hardsuit/New()
+	if(jetpack && ispath(jetpack))
+		jetpack = new jetpack(src)
+	..()
+
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
@@ -162,6 +167,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 
 	//Mining hardsuit
@@ -171,6 +177,8 @@
 	icon_state = "hardsuit0-mining"
 	item_state = "mining_helm"
 	item_color = "mining"
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator)
@@ -181,6 +189,7 @@
 	name = "mining hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	item_state = "mining_hardsuit"
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
@@ -276,10 +285,7 @@
 	armor = list(melee = 40, bullet = 50, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword/saber,/obj/item/weapon/restraints/handcuffs,/obj/item/weapon/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-
-/obj/item/clothing/suit/space/hardsuit/syndi/New()
-	jetpack = new /obj/item/weapon/tank/jetpack/suit(src)
-	..()
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 
 //Elite Syndie suit
@@ -489,7 +495,7 @@
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
 		recharge_cooldown = world.time + recharge_delay
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("[owner]'s shield overloads!")
 			shield_state = "broken"
@@ -499,7 +505,7 @@
 
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
@@ -508,7 +514,7 @@
 		playsound(loc, 'sound/magic/Charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/C = loc

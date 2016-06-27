@@ -57,7 +57,7 @@
 		return
 	loc = D.trunk
 	active = 1
-	dir = DOWN
+	setDir(DOWN)
 	move()
 
 	return
@@ -134,7 +134,7 @@
 	on_blueprints = TRUE
 	level = 1			// underfloor only
 	var/dpdir = 0		// bitmask of pipe directions
-	dir = 0				// dir will contain dominant direction for junction pipes
+	dir = 0// dir will contain dominant direction for junction pipes
 	var/health = 10 	// health points 0-10
 	layer = DISPOSAL_PIPE_LAYER			// slightly lower than wires and other pipes
 	var/base_icon_state	// initial icon state on map
@@ -146,7 +146,7 @@
 
 	if(make_from && !qdeleted(make_from))
 		base_icon_state = make_from.base_state
-		dir = make_from.dir
+		setDir(make_from.dir)
 		dpdir = make_from.dpdir
 		make_from.loc = src
 		stored = make_from
@@ -209,7 +209,7 @@
 	return transfer_to_dir(H, nextdir)
 
 /obj/structure/disposalpipe/proc/transfer_to_dir(obj/structure/disposalholder/H, nextdir)
-	H.dir = nextdir
+	H.setDir(nextdir)
 	var/turf/T = H.nextloc()
 	var/obj/structure/disposalpipe/P = H.findpipe(T)
 
@@ -298,7 +298,7 @@
 		for(var/D in cardinal)
 			if(D & dpdir)
 				var/obj/structure/disposalpipe/broken/P = new(src.loc)
-				P.dir = D
+				P.setDir(D)
 
 	src.invisibility = INVISIBILITY_MAXIMUM	// make invisible (since we won't delete the pipe immediately)
 	var/obj/structure/disposalholder/H = locate() in src
@@ -386,7 +386,7 @@
 		var/turf/T = loc
 		stored.loc = T
 		transfer_fingerprints_to(stored)
-		stored.dir = dir
+		stored.setDir(dir)
 		stored.density = 0
 		stored.anchored = 1
 		stored.update_icon()
@@ -706,7 +706,7 @@
 	..()
 
 	if(make_from)
-		dir = make_from.dir
+		setDir(make_from.dir)
 		make_from.loc = src
 		stored = make_from
 	else

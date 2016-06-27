@@ -36,10 +36,10 @@
 //if they differ between directions, otherwise use the
 //generic variables
 /obj/vehicle/proc/handle_vehicle_offsets()
-	if(buckled_mobs.len)
+	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
+			buckled_mob.setDir(dir)
 			buckled_mob.pixel_x = generic_pixel_x
 			buckled_mob.pixel_y = generic_pixel_y
 
@@ -123,7 +123,7 @@
 /obj/vehicle/Bump(atom/movable/M)
 	. = ..()
 	if(auto_door_open)
-		if(istype(M, /obj/machinery/door) && buckled_mobs.len)
+		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
 			for(var/m in buckled_mobs)
 				M.Bumped(m)
 

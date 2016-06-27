@@ -8,6 +8,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
 	yield = 2
 	potency = 20
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_grow = "eggplant-grow"
 	icon_dead = "eggplant-dead"
 	mutatelist = list(/obj/item/seeds/eggplant/eggy)

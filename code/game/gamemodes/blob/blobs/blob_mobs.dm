@@ -170,13 +170,13 @@
 /mob/living/simple_animal/hostile/blob/blobspore/update_icons()
 	..()
 	if(is_zombie)
-		overlays.Cut()
+		cut_overlays()
 		overlays = human_overlays
 		var/image/I = image('icons/mob/blob.dmi', icon_state = "blob_head")
 		if(overmind)
 			I.color = overmind.blob_reagent_datum.color
 		color = initial(color)//looks better.
-		overlays += I
+		add_overlay(I)
 
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"

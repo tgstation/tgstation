@@ -114,7 +114,7 @@
 	..()
 	wires = new /datum/wires/airalarm(src)
 	if(ndir)
-		dir = ndir
+		setDir(ndir)
 
 	if(nbuild)
 		buildstage = 0

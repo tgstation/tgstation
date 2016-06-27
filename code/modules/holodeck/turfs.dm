@@ -79,8 +79,7 @@
 
 /turf/open/floor/holofloor/carpet/New()
 	..()
-	spawn(1)
-		update_icon()
+	addtimer(src, "update_icon", 1)
 
 /turf/open/floor/holofloor/carpet/update_icon()
 	if(!..())
@@ -96,7 +95,7 @@
 	slowdown = 2
 
 /turf/open/floor/holofloor/snow/cold
-	temperature = 180
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid sand"

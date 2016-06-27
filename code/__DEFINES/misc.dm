@@ -23,8 +23,7 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
-#define SPECIES_LAYER			26		// mutantrace colors... these are on a seperate layer in order to prvent
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
 #define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
 #define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
@@ -50,12 +49,11 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_SPECIES_LAYER			SPECIES_LAYER+1
 #define UNDER_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER+1
 #define UNDER_BODY_LAYER			BODY_LAYER+1
 #define UNDER_BODY_ADJ_LAYER		BODY_ADJ_LAYER+1
@@ -83,7 +81,6 @@
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
-#define ABOVE_SPECIES_LAYER			SPECIES_LAYER-1
 #define ABOVE_BODY_BEHIND_LAYER		BODY_BEHIND_LAYER-1
 #define ABOVE_BODY_LAYER			BODY_LAYER-1
 #define ABOVE_BODY_ADJ_LAYER		BODY_ADJ_LAYER-1
@@ -183,14 +180,14 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 9
-#define ZLEVEL_MINING 5
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_ABANDONNEDTSAT 3
-#define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+#define ZLEVEL_CENTCOM 2
+#define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_UNDERGROUND 6
+#define ZLEVEL_EMPTY_SPACE 11
+
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_SPACEMAX 11
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -438,7 +435,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
-
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
@@ -448,6 +444,17 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SLIME_FRIENDSHIP_STAY				3 //Min friendship to order it to stay
 #define SLIME_FRIENDSHIP_ATTACK				8 //Min friendship to order it to attack
 
-// Slimeperson
-#define SPLIT_SLIME_MINIMUM 200 // how much slime toxin you need to split
-#define SPLIT_SLIME_COST 120 // how much it actually costs making a dupe
+#define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
+#define DEADCHAT_DEATHRATTLE "deathrattle"
+#define DEADCHAT_REGULAR "regular-deadchat"
+
+// Bluespace shelter deploy checks
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+
+//debug printing macros
+#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
+#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"

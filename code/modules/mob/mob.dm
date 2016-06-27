@@ -25,6 +25,7 @@ var/next_mob_id = 0
 	..()
 
 /atom/proc/prepare_huds()
+	hud_list = list()
 	for(var/hud in hud_possible)
 		var/image/I = image('icons/mob/hud.dmi', src, "")
 		I.appearance_flags = RESET_COLOR
@@ -230,9 +231,22 @@ var/next_mob_id = 0
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
+	var/slot_priority = W.slot_equipment_priority
 
-	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+	if(!slot_priority)
+		slot_priority = list( \
+			slot_back, slot_wear_id,\
+			slot_w_uniform, slot_wear_suit,\
+			slot_wear_mask, slot_head,\
+			slot_shoes, slot_gloves,\
+			slot_ears, slot_glasses,\
+			slot_belt, slot_s_store,\
+			slot_l_store, slot_r_store,\
+			slot_drone_storage\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0
@@ -587,7 +601,6 @@ var/next_mob_id = 0
 			else
 				stat("Failsafe Controller:", "ERROR")
 			if(Master)
-				stat("Subsystems:", "[round(Master.subsystem_cost, 0.01)]ds")
 				stat(null)
 				for(var/datum/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
@@ -700,7 +713,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = EAST
+	setDir(EAST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -709,7 +722,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = WEST
+	setDir(WEST)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -718,7 +731,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = NORTH
+	setDir(NORTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -727,7 +740,7 @@ var/next_mob_id = 0
 	set hidden = 1
 	if(!canface())
 		return 0
-	dir = SOUTH
+	setDir(SOUTH)
 	client.move_delay += movement_delay()
 	return 1
 
@@ -764,7 +777,7 @@ var/next_mob_id = 0
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
-	dir = angle2dir(rotation+dir2angle(dir))
+	setDir(angle2dir(rotation+dir2angle(dir)))
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = 0)

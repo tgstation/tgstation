@@ -290,7 +290,7 @@
 	I.appearance = AM.appearance
 	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 	I.loc = src
-	I.dir = AM.dir
+	I.setDir(AM.dir)
 	I.alpha = 128
 
 	if(!blueprint_data)

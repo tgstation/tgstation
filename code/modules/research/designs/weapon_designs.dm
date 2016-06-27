@@ -12,14 +12,14 @@
 	build_path = /obj/item/device/firing_pin/test_range
 	category = list("Firing Pins")
 
-/datum/design/pin_loyalty
-	name = "loyalty firing pin"
-	desc = "This is a security firing pin which only authorizes users who are loyalty-implanted."
+/datum/design/pin_mindshield
+	name = "mindshield firing pin"
+	desc = "This is a security firing pin which only authorizes users who are mindshield-implanted."
 	id = "pin_loyalty"
 	req_tech = list("combat" = 5, "materials" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_SILVER = 600, MAT_DIAMOND = 600, MAT_URANIUM = 200)
-	build_path = /obj/item/device/firing_pin/implant/loyalty
+	build_path = /obj/item/device/firing_pin/implant/mindshield
 	category = list("Firing Pins")
 
 /datum/design/stunrevolver
@@ -77,7 +77,7 @@
 	name = "Rapid Syringe Gun"
 	desc = "A gun that fires many syringes."
 	id = "rapidsyringe"
-	req_tech = list("combat" = 3, "biotech" = 3)
+	req_tech = list("combat" = 2, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/gun/syringe/rapidsyringe
@@ -87,7 +87,7 @@
 	name = "Energy Crossbow"
 	desc = "A reverse-engineered energy crossbow favored by syndicate infiltration teams and carp hunters."
 	id = "largecrossbow"
-	req_tech = list("combat" = 5, "engineering" = 3, "magnet" = 5, "syndicate" = 3)
+	req_tech = list("combat" = 5, "engineering" = 3, "magnets" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1500, MAT_URANIUM = 1500, MAT_SILVER = 1500)
 	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
@@ -200,7 +200,7 @@
 //WT550 Mags
 
 /datum/design/mag_oldsmg
-	name = "WT-550 Auto Gun Magazine (4.6×30mm)"
+	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
 	desc = "A 20 round magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg"
 	req_tech = list("combat" = 1, "materials" = 1)
@@ -210,22 +210,22 @@
 	category = list("Ammo")
 
 /datum/design/mag_oldsmg/ap_mag
-	name = "WT-550 Auto Gun Armour Piercing Magazine (4.6×30mm AP)"
+	name = "WT-550 Auto Gun Armour Piercing Magazine (4.6x30mm AP)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ap"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtap
 
 /datum/design/mag_oldsmg/ic_mag
-	name = "WT-550 Auto Gun Incendiary Magazine (4.6×30mm IC)"
+	name = "WT-550 Auto Gun Incendiary Magazine (4.6x30mm IC)"
 	desc = "A 20 round armour piercing magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_ic"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_GLASS = 1000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wtic
 
 /datum/design/mag_oldsmg/tx_mag
-	name = "WT-550 Auto Gun Urnaium Magazine (4.6×30mm TX)"
-	desc = "A 20 round urnaium tipped magazine for the out of date security WT-550 Auto Rifle"
+	name = "WT-550 Auto Gun Uranium Magazine (4.6x30mm TX)"
+	desc = "A 20 round uranium tipped magazine for the out of date security WT-550 Auto Rifle"
 	id = "mag_oldsmg_tx"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
@@ -266,6 +266,6 @@
 	id = "gravitygun"
 	req_tech = list("combat" = 4, "materials" = 5, "bluespace" = 4, "powerstorage" = 4, "magnets" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_SILVER = 7000, MAT_GOLD = 7000, MAT_URANIUM = 6000, MAT_GLASS = 6000, MAT_METAL = 6000, MAT_DIAMOND = 3000)
+	materials = list(MAT_SILVER = 8000, MAT_GOLD = 8000, MAT_URANIUM = 8000, MAT_GLASS = 12000, MAT_METAL = 12000, MAT_DIAMOND = 3000)
 	build_path = /obj/item/weapon/gun/energy/gravity_gun
 	category = list("Weapons")

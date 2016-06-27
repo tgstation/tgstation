@@ -112,6 +112,8 @@
 		src.AddLuminosity(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		return TRUE
+	return FALSE
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
@@ -161,7 +163,8 @@
 	if(on_fire) //Only spread fire stacks if we're on fire
 		fire_stacks /= 2
 		L.fire_stacks += fire_stacks
-		L.IgniteMob()
+		if(L.IgniteMob())
+			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
 		L.fire_stacks /= 2

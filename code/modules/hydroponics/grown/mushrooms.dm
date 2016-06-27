@@ -20,6 +20,7 @@
 	oneharvest = 1
 	growthstages = 4
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
@@ -46,6 +47,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0)
 
@@ -74,6 +76,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
 	origin_tech = "biotech=5"
@@ -101,6 +104,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.25, "nutriment" = 0.02)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap
@@ -126,6 +130,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
@@ -149,6 +154,7 @@
 	endurance = 30
 	maturation = 5
 	yield = 1
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list()
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.15)
 	rarity = 30
@@ -191,6 +197,7 @@
 	oneharvest = 1
 	growthstages = 3
 	plant_type = PLANT_MUSHROOM
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle
@@ -220,6 +227,7 @@
 	plant_type = PLANT_MUSHROOM
 	rarity = 20
 	genes = list(/datum/plant_gene/trait/glow)
+	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
 

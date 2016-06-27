@@ -28,14 +28,25 @@
 	w_class = 3
 	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 	var/busy //If the slab is currently being used by something
-	var/production_cycle = 0
+	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
+	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
+	var/produces_components = TRUE //if it produces components at all
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
 
+/obj/item/clockwork/slab/internal //an internal motor for mobs running scripture
+	name = "scripture motor"
+	no_cost = TRUE
+	produces_components = FALSE
+
+/obj/item/clockwork/slab/scarab
+	nonhuman_usable = TRUE
+
 /obj/item/clockwork/slab/debug
 	no_cost = TRUE
+	nonhuman_usable = TRUE
 
 /obj/item/clockwork/slab/debug/attack_hand(mob/living/user)
 	..()
@@ -44,37 +55,43 @@
 
 /obj/item/clockwork/slab/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
+	production_time = world.time + SLAB_PRODUCTION_TIME
 
 /obj/item/clockwork/slab/Destroy()
-	SSobj.processing -= src
-	..()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/clockwork/slab/process()
-	production_cycle++
-	if(production_cycle < SLAB_PRODUCTION_THRESHOLD)
-		return 0
-	var/component_to_generate = pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible") //Possible todo: Generate based on the lowest amount?
-	stored_components[component_to_generate]++
+	if(!produces_components)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(production_time > world.time)
+		return
+	production_time = world.time + SLAB_PRODUCTION_TIME
 	var/mob/living/L
 	if(isliving(loc))
 		L = loc
 	else if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/W = loc
-		if(isliving(W.loc)) //Only goes one level down - otherwise it just doesn't tell you
+		if(isliving(W.loc)) //Only goes one level down - otherwise it won't produce components
 			L = W.loc
 	if(L)
-		L << "<span class='brass'>Your slab clunks as it produces a new component.</span>"
-	production_cycle = 0
-	return 1
+		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
+		stored_components[component_to_generate]++
+		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
+			if(L == src)
+				continue
+			S.production_time = world.time + SLAB_PRODUCTION_TIME
+		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
-		user.visible_message("<span class='notice'>[user] inserts [C] into [src]'s compartments.</span>", "<span class='notice'>You insert [C] into [src].</span>")
-		stored_components[C.component_id]++
+		user.visible_message("<span class='notice'>[user] inserts [C] into [src].</span>", "<span class='notice'>You insert [C] into [src], where it is added to the global cache.</span>")
+		clockwork_component_cache[C.component_id]++
 		user.drop_item()
 		qdel(C)
 		return 1
@@ -93,17 +110,21 @@
 		return 0
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
-		user.confused = max(0, user.confused + 3)
+		user.confused += 5
+		user.dizziness += 5
 		return 0
 	if(busy)
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
+		return 0
+	if(!nonhuman_usable && !ishuman(user))
+		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
 		return 0
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Repository", "Report")
+	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Report")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
@@ -113,28 +134,17 @@
 			show_stats(user)
 		if("Recollection")
 			show_guide(user)
-		if("Repository")
-			show_components(user)
-			access_display(user)
 		if("Report")
 			show_hierophant(user)
 			access_display(user)
 	return 1
 
 /obj/item/clockwork/slab/proc/recite_scripture(mob/living/user)
-	var/servants = 0
-	var/unconverted_ai_exists = FALSE
-	for(var/mob/living/M in living_mob_list)
-		if(is_servant_of_ratvar(M))
-			servants++
-	for(var/mob/living/silicon/ai/ai in living_mob_list)
-		if(!is_servant_of_ratvar(ai) && ai.client)
-			unconverted_ai_exists = TRUE
 	var/list/tiers_of_scripture = list("Drivers")
-	tiers_of_scripture += "Scripts[ratvar_awakens || (servants >= 5 && clockwork_caches >= 1) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Applications[ratvar_awakens || (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Revenant[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100) || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "Judgement[ratvar_awakens || (servants >= 10 && clockwork_construction_value >= 100 && !unconverted_ai_exists) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Scripts[ratvar_awakens || scripture_unlock_check(SCRIPTURE_SCRIPT) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Applications[ratvar_awakens || scripture_unlock_check(SCRIPTURE_APPLICATION) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Revenant[ratvar_awakens || scripture_unlock_check(SCRIPTURE_REVENANT) || no_cost ? "" : " \[LOCKED\]"]"
+	tiers_of_scripture += "Judgement[ratvar_awakens || scripture_unlock_check(SCRIPTURE_JUDGEMENT) || no_cost ? "" : " \[LOCKED\]"]"
 	var/scripture_tier = input(user, "Choose a category of scripture to recite.", "[src]") as null|anything in tiers_of_scripture
 	if(!scripture_tier || !user.canUseTopic(src))
 		return 0
@@ -158,7 +168,7 @@
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
 		if(initial(C.tier) == tier_to_browse)
-			available_scriptures += initial(C.name)
+			available_scriptures += "[initial(C.name)] ([initial(C.descname)])"
 	if(!available_scriptures.len)
 		return 0
 	var/chosen_scripture = input(user, "Choose a piece of scripture to recite.", "[src]") as null|anything in available_scriptures
@@ -166,7 +176,7 @@
 		return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
-		if(initial(C.name) == chosen_scripture)
+		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
 	if(!scripture_to_recite)
 		return 0
@@ -177,18 +187,22 @@
 
 /obj/item/clockwork/slab/proc/show_stats(mob/living/user) //A bit barebones, but there really isn't any more needed
 	var/servants = 0
+	var/validservants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
+			if(ishuman(L) || issilicon(L))
+				validservants++
 	user << "<b>State of the Enlightened</b>"
 	user << "<i>Total servants: </i>[servants]"
+	user << "<i>Servants valid for scripture unlock: </i>[validservants]"
 	user << "<i>Total construction value: </i>[clockwork_construction_value]"
 	user << "<i>Total tinkerer's caches: </i>[clockwork_caches]"
 	user << "<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])"
-	user << "<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
-	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Recovering</span>"]"
+	user << "<i>Nezbere: </i>[!clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Sevtug: </i>[!clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Nzcrentr: </i>[!clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Inath-Neq: </i>[!clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
 	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
@@ -217,9 +231,7 @@
 	\
 	The third functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
 	\
-	The fourth functionality is the Repository, which will display all components stored within the slab.<br><br>\
-	\
-	The fifth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
+	The fourth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
 	\
 	A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
 	specified.</i><br><br>"
@@ -233,57 +245,88 @@
 		var/datum/clockwork_scripture/S = V
 		var/datum/clockwork_scripture/S2 = new V
 		var/list/req_comps = S2.required_components
+		var/list/cons_comps = S2.consumed_components
 		qdel(S2)
 		switch(initial(S.tier))
 			if(SCRIPTURE_DRIVER)
 				drivers += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Component Cost: </b>\
-				[req_comps["belligerent_eye"] ? req_comps["belligerent_eye"] : "No"] belligerent eyes, \
-				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
-				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
-				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_SCRIPT)
 				scripts += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Component Cost: </b>\
-				[req_comps["belligerent_eye"] ? req_comps["belligerent_eye"] : "No"] belligerent eyes, \
-				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
-				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
-				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_APPLICATION)
 				applications += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Component Cost: </b>\
-				[req_comps["belligerent_eye"] ? req_comps["belligerent_eye"] : "No"] belligerent eyes, \
-				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
-				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
-				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_REVENANT)
 				revenant += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Component Cost: </b>\
-				[req_comps["belligerent_eye"] ? req_comps["belligerent_eye"] : "No"] belligerent eyes, \
-				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
-				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
-				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 			if(SCRIPTURE_JUDGEMENT)
 				judgement += "<br><b>[initial(S.name)]:</b> [initial(S.desc)]<br><b>Invocation Time:</b> [initial(S.channel_time) / 10] seconds<br>\
 				\
+				<b>Component Requirement: </b>\
+				[req_comps["belligerent_eye"] ?  "[req_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[req_comps["vanguard_cogwheel"] ? "[req_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[req_comps["guvax_capacitor"] ? "[req_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[req_comps["replicant_alloy"] ? "[req_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[req_comps["hierophant_ansible"] ? "[req_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Component Cost: </b>\
-				[req_comps["belligerent_eye"] ? req_comps["belligerent_eye"] : "No"] belligerent eyes, \
-				[req_comps["vanguard_cogwheel"] ? req_comps["vanguard_cogwheel"] : "no"] vanguard cogwheels, \
-				[req_comps["guvax_capacitor"] ? req_comps["guvax_capacitor"] : "no"] guvax capacitors, \
-				[req_comps["replicant_alloy"] ? req_comps["replicant_alloy"] : "no"] replicant alloys, and \
-				[req_comps["hierophant_ansible"] ? req_comps["hierophant_ansible"] : "no"] hierophant ansibles.<br>\
+				[cons_comps["belligerent_eye"] ?  "[cons_comps["belligerent_eye"]] Belligerent Eyes" : ""] \
+				[cons_comps["vanguard_cogwheel"] ? "[cons_comps["vanguard_cogwheel"]] Vanguard Cogwheels" : ""] \
+				[cons_comps["guvax_capacitor"] ? "[cons_comps["guvax_capacitor"]] Guvax Capacitors" : ""] \
+				[cons_comps["replicant_alloy"] ? "[cons_comps["replicant_alloy"]] Replicant Alloys" : ""] \
+				[cons_comps["hierophant_ansible"] ? "[cons_comps["hierophant_ansible"]] Hierophant Ansibles" : ""]<br>\
 				<b>Tip:</b> [initial(S.usage_tip)]<br>"
 	text_to_add += "[drivers]<br>[scripts]<br>[applications]<br>[revenant]<br>[judgement]<br>"
 	text_to_add += "<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
@@ -293,19 +336,21 @@
 		for(var/i in 1 to 100)
 			text += "HONOR RATVAR "
 		text += "</b></font>"
-	var/datum/browser/popup = new(user, "slab", "", 400, 400)
+	var/datum/browser/popup = new(user, "slab", "", 600, 500)
 	popup.set_content(text)
 	popup.open()
 	return 1
 
-/obj/item/clockwork/slab/proc/show_components(mob/living/user)
-	user << "<b>Stored components:</b>"
-	user << "<i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]]"
-	user << "<i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]]"
-	user << "<i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]]"
-	user << "<i>Replicant Alloys:</i> [stored_components["replicant_alloy"]]"
-	user << "<i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]]"
-	return 1
+/obj/item/clockwork/slab/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
+		user << "<b>Stored components (with global cache):</b>"
+		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
+		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [stored_components["vanguard_cogwheel"]] ([stored_components["vanguard_cogwheel"] + clockwork_component_cache["vanguard_cogwheel"]])</span>"
+		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [stored_components["guvax_capacitor"]] ([stored_components["guvax_capacitor"] + clockwork_component_cache["guvax_capacitor"]])</span>"
+		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [stored_components["replicant_alloy"]] ([stored_components["replicant_alloy"] + clockwork_component_cache["replicant_alloy"]])</span>"
+		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [stored_components["hierophant_ansible"]] ([stored_components["hierophant_ansible"] + clockwork_component_cache["hierophant_ansible"]])</span>"
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -328,10 +373,10 @@
 /obj/item/clothing/glasses/wraith_spectacles/equipped(mob/living/user, slot)
 	..()
 	if(slot != slot_glasses)
-		return 0
+		return
 	if(user.disabilities & BLIND)
 		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
-		return 0
+		return
 	if(iscultist(user)) //Cultists instantly go blind
 		user << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
 		user << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
@@ -339,20 +384,24 @@
 		user.become_blind()
 		user.adjust_blurriness(30)
 		user.adjust_blindness(30)
-		return 0
-	user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? " Your eyes begin to itch - you cannot do this for long." : ""]</span>"
-	return 1
+		return
+	if(is_servant_of_ratvar(user))
+		tint = 0
+		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+	else
+		tint = 3
+		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/glasses/wraith_spectacles/Destroy()
-	SSobj.processing -= src
-	..()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/clothing/glasses/wraith_spectacles/process()
-	if(ratvar_awakens || !ishuman(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
+	if(ratvar_awakens || !ishuman(loc) || !is_servant_of_ratvar(loc)) //If Ratvar is alive, the spectacles don't hurt your eyes
 		return 0
 	var/mob/living/carbon/human/H = loc
 	if(H.glasses != src)
@@ -372,13 +421,14 @@
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
-	desc = "A strange purple-lensed visor. Looking at them inspires an odd sense of guilt."
+	desc = "A strange purple-lensed visor. Looking at it inspires an odd sense of guilt."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "judicial_visor_0"
 	item_state = "sunglasses"
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
+	actions_types = list(/datum/action/item_action/toggle_flame)
 
 /obj/item/clothing/glasses/judicial_visor/equipped(mob/living/user, slot)
 	..()
@@ -386,37 +436,37 @@
 		update_status(FALSE)
 		if(flame)
 			qdel(flame)
+			flame = null
 		return 0
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
 	else if(iscultist(user)) //Cultists spontaneously combust
-		user << "<span class='heavy_brass'>Consider yourself judged, whelp.</span>"
+		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
 		user << "<span class='userdanger'>You suddenly catch fire!</span>"
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
 	return 1
 
-/obj/item/clothing/glasses/judicial_visor/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/ratvars_flame))
-		user.visible_message("<span class='warning'>The flame in [user]'s hand winks out!</span>", "<span class='heavy_brass'>You dispel the power of [src].</span>")
-		qdel(I)
-		return 1
-
-/obj/item/clothing/glasses/judicial_visor/AltClick(mob/living/user)
-	if(is_servant_of_ratvar(user) && iscarbon(user) && active)
-		if(recharging)
-			user << "<span class='warning'>[src] is still gathering power!</span>"
-			return 0
-		var/mob/living/carbon/C = user
-		if(C.l_hand && C.r_hand)
-			C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
-			return 0
-		C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='heavy_brass'>You harness [src]'s power. Direct it at a tile on harm intent to unleash it, or hit your visor with it dispel it.</span>")
-		var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
-		flame = R
-		C.put_in_hands(R)
-		R.visor = src
-		return 1
+/obj/item/clothing/glasses/judicial_visor/attack_self(mob/user)
+	if(is_servant_of_ratvar(user))
+		if(flame)
+			user.visible_message("<span class='warning'>The flame in [user]'s hand winks out!</span>", "<span class='heavy_brass'>You dispel the power of [src].</span>")
+			qdel(flame)
+			flame = null
+		else if(iscarbon(user) && active)
+			if(recharging)
+				user << "<span class='warning'>[src] is still gathering power!</span>"
+				return 0
+			var/mob/living/carbon/C = user
+			if(C.l_hand && C.r_hand)
+				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
+				return 0
+			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile</b> to unleash it, or use the action button again to dispel it.</i></span>")
+			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
+			flame = R
+			C.put_in_hands(R)
+			R.visor = src
+		user.update_action_buttons_icon()
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
 	if(recharging)
@@ -431,13 +481,67 @@
 		return 0
 	active = change_to
 	icon_state = "judicial_visor_[active]"
+	L.update_action_buttons_icon()
 	switch(active)
 		if(TRUE)
 			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
-			<span class='heavy_brass'>Judicial visor active. Alt-click visor to gain the ability to smite the unworthy.</span>"
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
 		if(FALSE)
 			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
 	return 1
+
+/obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
+	if(!src || !user)
+		return 0
+	recharging = FALSE
+	icon_state = "judicial_visor_[active]"
+	user.update_action_buttons_icon()
+	if(loc == user)
+		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+
+/obj/item/weapon/ratvars_flame //Used by the judicial visor
+	name = "Ratvar's flame"
+	desc = "A blazing violet ball of fire that, curiously, doesn't melt your hand off."
+	icon = 'icons/effects/clockwork_effects.dmi'
+	icon_state = "ratvars_flame"
+	w_class = 5
+	flags = NODROP | ABSTRACT
+	force = 5 //Also serves as a weak melee weapon!
+	damtype = BURN
+	hitsound = 'sound/weapons/sear.ogg'
+	attack_verb = list("scorched", "seared", "burnt", "judged")
+	var/obj/item/clothing/glasses/judicial_visor/visor //The linked visor
+	var/examined = FALSE
+
+/obj/item/weapon/ratvars_flame/examine(mob/user)
+	..()
+	user << "<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>"
+	if(prob(10) && examined)
+		user << "<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>"
+		examined = FALSE
+	else
+		examined = TRUE
+
+/obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
+	if(!visor || (visor && visor.cooldown))
+		qdel(src)
+	visor.recharging = TRUE
+	visor.flame = null
+	visor.update_status()
+	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+		if(V == visor)
+			continue
+		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
+		V.update_status()
+		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
+	clockwork_say(user, "Xarry, urn'guraf!")
+	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
+	new/obj/effect/clockwork/judicial_marker(get_turf(target))
+	user.update_action_buttons_icon()
+	addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
+	qdel(src)
+	return 1
+
 
 /obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
 	name = "clockwork helmet"
@@ -445,7 +549,7 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_helmet"
 	w_class = 3
-	armor = list(melee = 65, bullet = 50, laser = -25, energy = 5, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
 
 /obj/item/clothing/head/helmet/clockwork/reclaimer //Used when a reclaimer mindjacks someone
 	name = "clockwork reclaimer"
@@ -456,14 +560,85 @@
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
 	flags_cover = HEADCOVERSEYES
 
+/obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_head && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(20, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>"
+			user << "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>"
+			user.emote("scream")
+			user.apply_damage(30, BRUTE, "head")
+			user.adjustBrainLoss(30)
+			user.unEquip(src, 1)
+
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
 	desc = "A bulky cuirass made of brass."
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_cuirass"
 	w_class = 4
-	armor = list(melee = 80, bullet = 40, laser = -10, energy = 5, bomb = 0, bio = 0, rad = 0)
-	allowed = list(/obj/item/clockwork)
+	body_parts_covered = CHEST|GROIN|LEGS
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+	allowed = list(/obj/item/clockwork, /obj/item/clothing/glasses/wraith_spectacles, /obj/item/clothing/glasses/judicial_visor, /obj/item/device/mmi/posibrain/soul_vessel)
+
+/obj/item/clothing/suit/armor/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_wear_suit && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(20, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>"
+			user << "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>"
+			user.emote("scream")
+			user.apply_damage(15, BURN, "chest")
+			user.adjust_fire_stacks(2)
+			user.IgniteMob()
+			user.unEquip(src, 1)
+
+/obj/item/clothing/gloves/clockwork
+	name = "clockwork gauntlets"
+	desc = "Heavy, shock-resistant gauntlets with brass reinforcement."
+	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon_state = "clockwork_gauntlets"
+	item_state = "clockwork_gauntlets"
+	item_color = null	//So they don't wash.
+	strip_delay = 50
+	put_on_delay = 30
+	body_parts_covered = ARMS
+	burn_state = FIRE_PROOF
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/gloves/clockwork/equipped(mob/living/user, slot)
+	..()
+	if(slot == slot_gloves && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(10, 1, 1, 0, 1)
+		else
+			user << "<span class='heavy_brass'>\"Did you like having arms?\"</span>"
+			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>"
+			user.emote("scream")
+			user.apply_damage(7, BRUTE, "l_arm")
+			user.apply_damage(7, BRUTE, "r_arm")
+			user.unEquip(src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -471,224 +646,28 @@
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
 	w_class = 3
-	flags = NOSLIP
+	strip_delay = 50
+	put_on_delay = 30
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/ratvars_flame //Used by the judicial visor
-	name = "Ratvar's flame"
-	desc = "A blazing violet ball of fire that, curiously, doesn't melt your hand off."
-	icon = 'icons/effects/clockwork_effects.dmi'
-	icon_state = "ratvars_flame" //beware: minecraft-tier sprite
-	item_state = "disintegrate"
-	color = rgb(180, 50, 210)
-	w_class = 5
-	flags = NODROP | ABSTRACT
-	force = 15 //Also serves as a potent melee weapon!
-	damtype = BURN
-	hitsound = 'sound/weapons/sear.ogg'
-	attack_verb = list("scorched")
-	var/obj/item/clothing/glasses/judicial_visor/visor //The linked visor
-
-/obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
-	if(!visor || (visor && visor.cooldown))
-		qdel(src)
-	if(user.a_intent != "harm")
-		if(isliving(target))
-			var/mob/living/L = target
-			if(iscultist(L))
-				L.adjustFireLoss(10) //Cultists take extra damage
-		return ..()
-	visor.recharging = TRUE
-	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
-		if(V == visor)
-			continue
-		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
-	user.say("Xarry, urn'guraf!")
-	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
-	new/obj/effect/clockwork/judicial_marker(get_turf(target))
-	spawn(ratvar_awakens ? 30 : 300) //Cooldown is reduced by 10x if Ratvar is up
-		if(!visor || !user)
-			return 0
-		visor.recharging = FALSE
-		for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
-			if(V == visor)
-				continue
-			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
-		if(visor.loc == user)
-			user << "<span class='brass'>Your [visor.name] hums. It is ready.</span>"
-	qdel(src)
-	return 1
-
-/obj/item/clockwork/clockwork_proselytizer //Clockwork proselytizer (yes, that's a real word): Converts applicable objects to Ratvarian variants.
-	name = "clockwork proselytizer"
-	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires liquified replicant alloy to function."
-	icon_state = "clockwork_proselytizer"
-	item_state = "resonator_u"
-	w_class = 3
-	force = 5
-	flags = NOBLUDGEON
-	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
-	var/max_alloy = 100
-	var/uses_alloy = TRUE
-
-/obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = 25
-
-/obj/item/clockwork/clockwork_proselytizer/examine(mob/living/user)
+/obj/item/clothing/shoes/clockwork/equipped(mob/living/user, slot)
 	..()
-	if((is_servant_of_ratvar(user) || isobserver(user)) && uses_alloy)
-		user << "It has [stored_alloy]/[max_alloy] units of liquified replicant alloy stored."
-
-/obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
-		if(stored_alloy >= max_alloy)
-			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
-			return 0
-		modify_stored_alloy(10)
-		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
-		user.drop_item()
-		qdel(I)
-		return 1
-	else
-		return ..()
-
-/obj/item/clockwork/clockwork_proselytizer/afterattack(atom/target, mob/living/user, proximity_flag, params)
-	if(!target || !user || !proximity_flag)
-		return 0
-	if(user.a_intent == "harm" || !is_servant_of_ratvar(user))
-		return ..()
-	proselytize(target, user)
-
-/obj/item/clockwork/clockwork_proselytizer/proc/modify_stored_alloy(amount)
-	if(ratvar_awakens) //Ratvar makes it free
-		amount = 0
-	stored_alloy = Clamp(stored_alloy + amount, 0, max_alloy)
-	return 1
-
-/obj/item/clockwork/clockwork_proselytizer/proc/proselytize(atom/target, mob/living/user)
-	if(!target || !user)
-		return 0
-	var/operation_time = 0 //In deciseconds, how long the proselytization will take
-	var/new_obj_type //The path of the new type of object to replace the old
-	var/alloy_cost = 0
-	var/spawn_dir = 2
-	var/dir_in_new = FALSE
-	var/valid_target = FALSE //If the proselytizer will actually function on the object
-	var/target_type = target.type
-	if(istype(target, /turf/closed/wall/clockwork))
-		operation_time = 80
-		new_obj_type = /turf/open/floor/clockwork
-		alloy_cost = -4
-		valid_target = TRUE
-	else if(istype(target, /turf/open/floor/clockwork))
-		operation_time = 100
-		new_obj_type = /turf/closed/wall/clockwork
-		alloy_cost = 4
-		valid_target = TRUE
-	else if(istype(target, /turf/closed/wall) && !istype(target, /turf/closed/wall/r_wall))
-		operation_time = 50
-		new_obj_type = /turf/closed/wall/clockwork
-		alloy_cost = 5
-		valid_target = TRUE //Need to change valid_target to 1 or TRUE in each check so that it doesn't return an invalid value
-	else if(istype(target, /turf/open/floor))
-		operation_time = 30
-		new_obj_type = /turf/open/floor/clockwork
-		alloy_cost = 1
-		valid_target = TRUE
-	else if(istype(target, /obj/machinery/door/airlock) && !istype(target, /obj/machinery/door/airlock/clockwork))
-		operation_time = 40
-		var/obj/machinery/door/airlock/A = target
-		if(A.glass)
-			new_obj_type = /obj/machinery/door/airlock/clockwork/brass
+	if(slot == slot_shoes && !is_servant_of_ratvar(user))
+		if(!iscultist(user))
+			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
+			user.unEquip(src, 1)
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.vomit(10, 1, 1, 0, 1)
 		else
-			new_obj_type = /obj/machinery/door/airlock/clockwork
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/window) && !istype(target, /obj/structure/window/reinforced/clockwork))
-		var/obj/structure/window/W = target
-		if(W.fulltile)
-			new_obj_type = /obj/structure/window/reinforced/clockwork/fulltile
-			operation_time = 30
-		else
-			new_obj_type = /obj/structure/window/reinforced/clockwork
-			spawn_dir = W.dir
-			dir_in_new = TRUE
-			operation_time = 15
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/machinery/door/window) && !istype(target, /obj/machinery/door/window/clockwork))
-		var/obj/machinery/door/window/C = target
-		new_obj_type = /obj/machinery/door/window/clockwork
-		spawn_dir = C.dir
-		dir_in_new = TRUE
-		operation_time = 30
-		alloy_cost = 5
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/grille) && !istype(target, /obj/structure/grille/ratvar))
-		var/obj/structure/grille/G = target
-		if(G.destroyed)
-			new_obj_type = /obj/structure/grille/ratvar/broken
-			operation_time = 5
-		else
-			new_obj_type = /obj/structure/grille/ratvar
-			operation_time = 15
-		alloy_cost = 0
-		valid_target = TRUE
-	else if(istype(target, /obj/structure/clockwork/wall_gear))
-		operation_time = 20
-		new_obj_type = /obj/item/clockwork/component/replicant_alloy
-		alloy_cost = 6
-		valid_target = TRUE
-	else if(istype(target, /obj/item/clockwork/alloy_shards))
-		operation_time = 10
-		new_obj_type = /obj/item/clockwork/component/replicant_alloy
-		alloy_cost = 7
-		valid_target = TRUE
-	else if(istype(target, /obj/item/clockwork/component/replicant_alloy))
-		new_obj_type = /obj/effect/overlay/temp/ratvar/beam/itemconsume
-		alloy_cost = -10
-		valid_target = TRUE
-	if(!uses_alloy)
-		alloy_cost = 0
-	if(!valid_target)
-		user << "<span class='warning'>[target] cannot be proselytized!</span>"
-		return 0
-	if(!new_obj_type)
-		user << "<span class='warning'>That object can't be changed into anything!</span>"
-		return 0
-	if(stored_alloy - alloy_cost < 0)
-		user << "<span class='warning'>You need [alloy_cost] replicant alloy to proselytize [target]!</span>"
-		return 0
-	if(stored_alloy - alloy_cost > 100)
-		user << "<span class='warning'>You have too much replicant alloy stored to proselytize [target]!</span>"
-		return 0
-	if(ratvar_awakens) //Ratvar makes it faster
-		operation_time *= 0.5
-	user.visible_message("<span class='warning'>[user]'s [src] begins tearing apart [target]!</span>", "<span class='brass'>You begin proselytizing [target]...</span>")
-	playsound(target, 'sound/machines/click.ogg', 50, 1)
-	if(operation_time && !do_after(user, operation_time, target = target))
-		return 0
-	if(stored_alloy - alloy_cost < 0) //Check again to prevent bypassing via spamclick
-		return 0
-	if(stored_alloy - alloy_cost > 100)
-		return 0
-	if(!target || target.type != target_type)
-		return 0
-	user.visible_message("<span class='warning'>[user]'s [name] disgorges a chunk of metal and shapes it over what's left of [target]!</span>", \
-	"<span class='brass'>You proselytize [target].</span>")
-	playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
-	if(isturf(target))
-		var/turf/T = target
-		T.ChangeTurf(new_obj_type)
-	else
-		if(dir_in_new)
-			new new_obj_type(get_turf(target), spawn_dir)
-		else
-			var/atom/A = new new_obj_type(get_turf(target))
-			A.dir = spawn_dir
-		qdel(target)
-	modify_stored_alloy(-alloy_cost)
-	return 1
+			user << "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>"
+			user << "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>"
+			user.emote("scream")
+			user.apply_damage(7, BURN, "l_leg")
+			user.apply_damage(7, BURN, "r_leg")
+			user.unEquip(src, 1)
+
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
 	name = "ratvarian spear"
@@ -699,43 +678,105 @@
 	item_state = "ratvarian_spear"
 	force = 17 //Extra damage is dealt to silicons in afterattack()
 	throwforce = 40
-	attack_verb = list("stabbed", "poked", "slashed", "impaled")
+	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
+	var/impale_cooldown = 50 //delay, in deciseconds, where you can't impale again
+	var/attack_cooldown = 10 //delay, in deciseconds, where you can't attack with the spear
 
 /obj/item/clockwork/ratvarian_spear/New()
 	..()
+	impale_cooldown = 0
+	update_force()
 	spawn(1)
-		if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
-			force = 30
-			throwforce = 50
 		if(isliving(loc))
 			var/mob/living/L = loc
 			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		spawn(3000) //5 minutes
-			if(src)
-				var/turf/T = get_turf(src)
-				T.visible_message("<span class='warning'>[src] cracks in two and fades away!</span>")
-				PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
-				qdel(src)
+		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
 
-/obj/item/clockwork/ratvarian_spear/afterattack(atom/target, mob/living/user, flag, params)
-	if(!target || !user)
-		return 0
-	if(!ismob(target))
-		return ..()
-	var/mob/living/L = target
-	if(issilicon(L))
-		var/mob/living/silicon/S = L
+/obj/item/clockwork/ratvarian_spear/proc/update_force()
+	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
+		force = 30
+		throwforce = 50
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+
+/obj/item/clockwork/ratvarian_spear/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
+		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target if it's an enemy cultist or silicon.</span>"
+
+/obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
+	var/impaling = FALSE
+	if(attack_cooldown > world.time)
+		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		return
+	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
+		if(impale_cooldown > world.time)
+			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		else
+			impaling = TRUE
+			attack_verb = list("impaled")
+			force += 23 //40 damage if ratvar isn't alive, 53 if he is
+			user.stop_pulling()
+
+	if(impaling)
+		if(hitsound)
+			playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+		user.lastattacked = target
+		target.lastattacker = user
+		if(!target.attacked_by(src, user))
+			impaling = FALSE //if we got blocked, stop impaling
+		add_logs(user, target, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+		add_fingerprint(user)
+	else //todo yell at someone to make attack() use proper return values
+		..()
+
+	if(issilicon(target))
+		var/mob/living/silicon/S = target
 		if(S.stat != DEAD)
 			S.visible_message("<span class='warning'>[S] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")
 			S.adjustFireLoss(25)
-	else if(iscultist(L)) //Cultists take extra fire damage
-		var/mob/living/M = L
-		M << "<span class='userdanger'>Your body flares with agony at [src]'s touch!</span>"
-		M.adjustFireLoss(10)
-	else
-		..()
+	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
+		var/mob/living/M = target
+		if(M.stat != DEAD)
+			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+			M.adjustFireLoss(10)
+	attack_verb = list("stabbed", "poked", "slashed")
+	update_force()
+	if(impaling)
+		impale_cooldown = world.time + initial(impale_cooldown)
+		attack_cooldown = world.time + initial(attack_cooldown)
+		if(target)
+			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+			target.Stun(2)
+			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
+			var/remove_verb = pick("pull", "yank", "drag")
+			if(do_after(user, 10, 1, target))
+				var/turf/T = get_turf(target)
+				var/obj/effect/overlay/temp/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(T, get_dir(target, user)))
+				playsound(T, 'sound/misc/splort.ogg', 200, 1)
+				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
+				if(target.stat != CONSCIOUS)
+					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
+				else
+					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
+					target << "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>"
+					target.emote("scream")
+					step(target, get_dir(user, target))
+					T = get_turf(target)
+					B.forceMove(T)
+					target.Weaken(2)
+					playsound(T, 'sound/weapons/thudswoosh.ogg', 50, 1)
+				flash_color(target, flash_color="#911414", flash_time=8)
+			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
+				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
+				if(target.stat == CONSCIOUS)
+					target << "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>"
+					target.emote("scream")
+				flash_color(target, flash_color="#911414", flash_time=4)
 
 /obj/item/clockwork/ratvarian_spear/throw_impact(atom/target)
 	var/turf/T = get_turf(target)
@@ -745,9 +786,17 @@
 	if(issilicon(L) || iscultist(L))
 		L.Stun(3)
 		L.Weaken(3)
-	T.visible_message("<span class='warning'>[src] snaps in two and dematerializes!</span>")
-	PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, get_turf(T))
-	qdel(src)
+	break_spear(T)
+
+/obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
+	if(src)
+		if(!T)
+			T = get_turf(src)
+		if(T) //make sure we're not in null or something
+			T.visible_message("[pick("<span class='warning'>[src] cracks in two and fades away!</span>", "<span class='warning'>[src] snaps in two and dematerializes!</span>")]")
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
+		qdel(src)
+
 
 /obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
 	name = "soul vessel"
@@ -786,7 +835,7 @@
 /obj/item/clockwork/daemon_shell
 	name = "daemon shell"
 	desc = "A vaguely arachnoid brass shell with a single empty socket in its body."
-	clockwork_desc = "An unpowered daemon. It needs to be attached to a cache."
+	clockwork_desc = "An unpowered daemon. It needs to be attached to a Tinkerer's Cache."
 	icon_state = "daemon_shell"
 	w_class = 3
 
@@ -798,21 +847,22 @@
 	w_class = 3
 	var/specific_component //The type of component that the daemon is set to produce in particular, if any
 	var/obj/structure/clockwork/cache/cache //The cache the daemon is feeding
-	var/production_progress = 0 //Progress towards production of the next component in seconds
-	var/production_interval = 30 //How many seconds it takes to produce a new component
+	var/production_time = 0 //Progress towards production of the next component in seconds
+	var/production_cooldown = 200 //How many deciseconds it takes to produce a new component
+	var/component_slowdown_mod = 2 //how many deciseconds are added to the cooldown when producing a component for each of that component type
 
 /obj/item/clockwork/tinkerers_daemon/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	clockwork_daemons++
 
 /obj/item/clockwork/tinkerers_daemon/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	clockwork_daemons--
-	..()
+	return ..()
 
 /obj/item/clockwork/tinkerers_daemon/process()
-	if(!cache)
+	if(!cache || !istype(loc, /obj/structure/clockwork/cache))
 		visible_message("<span class='warning'>[src] shuts down!</span>")
 		new/obj/item/clockwork/daemon_shell(get_turf(src))
 		qdel(src)
@@ -821,16 +871,15 @@
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants / 5 < clockwork_daemons)
+	if(servants * 0.2 < clockwork_daemons)
 		return 0
-	production_progress = min(production_progress + 1, production_interval)
-	if(production_progress >= production_interval)
-		production_progress = 0 //Start it over
-		if(specific_component)
-			clockwork_component_cache[specific_component]++
-		else
-			clockwork_component_cache[pick("belligerent_eye", "vanguard_cogwheel", "guvax_capacitor", "replicant_alloy", "hierophant_ansible")]++
-		cache.visible_message("<span class='warning'>Something clunks around inside of [cache].</span>")
+	if(production_time <= world.time)
+		var/component_to_generate = specific_component
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id() //more likely to generate components that we have less of
+		clockwork_component_cache[component_to_generate]++
+		production_time = world.time + production_cooldown + (clockwork_component_cache[component_to_generate] * component_slowdown_mod) //Start it over
+		cache.visible_message("<span class='warning'>[cache] hums as the tinkerer's daemon within it produces a component.</span>")
 
 /obj/item/clockwork/tinkerers_daemon/attack_hand(mob/user)
 	return 0
@@ -843,16 +892,23 @@
 	name = "meme component"
 	desc = "A piece of a famous meme."
 	clockwork_desc = null
+	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
 	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
+	var/message_span = "heavy_brass"
 
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
 	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
-		user << "<span class='heavy_brass'>[cultist_message]</span>"
-	if(is_servant_of_ratvar(user) && prob(15))
-		user << "<span class='heavy_brass'>[pick(servant_of_ratvar_messages)]</span>"
+		user << "<span class='[message_span]'>[cultist_message]</span>"
+	if(is_servant_of_ratvar(user) && prob(20))
+		user << "<span class='[message_span]'>[pick(servant_of_ratvar_messages)]</span>"
+
+/obj/item/clockwork/component/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>"
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -860,7 +916,8 @@
 	icon_state = "belligerent_eye"
 	component_id = "belligerent_eye"
 	cultist_message = "The eye gives you an intensely hateful glare."
-	servant_of_ratvar_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.")
+	servant_of_ratvar_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.", "\"...Qvr.\"")
+	message_span = "neovgre"
 
 /obj/item/clockwork/component/belligerent_eye/blind_eye
 	name = "blind eye"
@@ -868,7 +925,7 @@
 	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for a belligerent eye."
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
-	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.")
+	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.", "\"...\"")
 	w_class = 3
 
 /obj/item/clockwork/component/vanguard_cogwheel
@@ -878,6 +935,7 @@
 	component_id = "vanguard_cogwheel"
 	cultist_message = "\"Pray to your god that we never meet.\""
 	servant_of_ratvar_messages = list("\"Be safe, child.\"", "You feel unexplainably comforted.", "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"")
+	message_span = "inathneq"
 
 /obj/item/clockwork/component/vanguard_cogwheel/pinion_lock
 	name = "pinion lock"
@@ -885,7 +943,7 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.")
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggre guna oebxra obqvrf.\"", "\"Vg pbhyq fgvyy or hfrq, vs gurer jnf n qbbe gb cynpr vg ba.\"")
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -895,6 +953,15 @@
 	component_id = "guvax_capacitor"
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
 	servant_of_ratvar_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", "\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
+	message_span = "sevtug"
+
+/obj/item/clockwork/component/guvax_capacitor/antennae
+	name = "mania motor antennae"
+	desc = "A pair of dented and bent antennae. They constantly emit a static hiss."
+	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
+	icon_state = "mania_motor_antennae"
+	cultist_message = "Your head is filled with a burst of static."
+	servant_of_ratvar_messages = list("\"Jub oebxr guvf.\"", "\"Qvq lbh oernx gurfr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guvf gb fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguvat - hayvxr lbh.\"")
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -903,6 +970,12 @@
 	component_id = "replicant_alloy"
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
 	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
+	message_span = "nezbere"
+
+/obj/item/clockwork/component/replicant_alloy/examine(mob/user)
+	..()
+	if(is_servant_of_ratvar(user))
+		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>"
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
@@ -911,6 +984,7 @@
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
 	servant_of_ratvar_messages = list("\"...still fight...\"", "\"...where am I...?\"", "\"...put me... slab...\"")
+	message_span = "heavy_brass"
 	w_class = 3
 
 /obj/item/clockwork/component/replicant_alloy/fallen_armor
@@ -920,6 +994,7 @@
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
 	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
+	message_span = "heavy_brass"
 	w_class = 3
 
 /obj/item/clockwork/component/hierophant_ansible
@@ -928,10 +1003,23 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"")
+	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"", \
+	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guvax gur obff jbhyq abgvpr?\"")
+	message_span = "nzcrentr"
+
+/obj/item/clockwork/component/hierophant_ansible/obelisk
+	name = "obelisk prism"
+	desc = "A prism that occasionally glows brightly. It seems not-quite there."
+	clockwork_desc = "The prism from a clockwork obelisk. Likely suitable as a substitute for a hierophant ansible."
+	cultist_message = "The prism flickers wildly in your hands before resuming its normal glow."
+	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment.","\"Uvrebcu'nag Oe'b'nq pnf'g snvy'her.\"",\
+	"The obelisk flickers wildly, as if trying to open a gateway.", "\"Fcng'vny Tn'g'r jn'l snv'yher.\"")
+	icon_state = "obelisk_prism"
+	w_class = 3
 
 /obj/item/clockwork/alloy_shards
 	name = "replicant alloy shards"
 	desc = "Broken shards of some oddly malleable metal. They occasionally move and seem to glow."
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
+	burn_state = LAVA_PROOF

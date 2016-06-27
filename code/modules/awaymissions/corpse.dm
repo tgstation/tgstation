@@ -6,7 +6,7 @@
 	name = "Unknown"
 	var/mob_type = null
 	var/mob_name = ""
-	var/mob_gender = MALE
+	var/mob_gender = null
 	var/death = TRUE //Kill the mob
 	var/roundstart = TRUE //fires on initialize
 	var/instant = FALSE	//fires on New
@@ -66,6 +66,8 @@
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
+		if(!mob_gender)
+			mob_gender = pick(MALE, FEMALE)
 		M.gender = mob_gender
 	if(faction)
 		M.faction = list(faction)
@@ -496,24 +498,6 @@
 	mob_species = /datum/species/abductor
 	uniform = /obj/item/clothing/under/color/grey
 	shoes = /obj/item/clothing/shoes/combat
-
-///Prisoner
-
-/obj/effect/mob_spawn/human/prisoner_transport
-	name = "prisoner sleeper"
-	icon = 'icons/obj/Cryogenic2.dmi'
-	icon_state = "sleeper"
-	uniform = /obj/item/clothing/under/rank/prisoner
-	mask = /obj/item/clothing/mask/breath
-	shoes = /obj/item/clothing/shoes/sneakers/orange
-	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
-	roundstart = FALSE
-	death = FALSE
-	flavour_text = {"You were a prisoner, sentenced to hard labour in one of Nanotrasen's harsh gulags, but judging by the explosive crash you just survived, fate may have other plans for. First thing is first though: Find a way to survive this mess."}
-
-/obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/new_spawn)
-	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "recieving bribes", "malpractice", "worship of prohbited life forms", "possession of profane texts", "murder", "arson", "insulting your manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	new_spawn << "You were convincted of: [crime]."
 
 //For ghost bar.
 /obj/effect/mob_spawn/human/alive/space_bar_patron

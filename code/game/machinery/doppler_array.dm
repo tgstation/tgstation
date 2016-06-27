@@ -45,7 +45,7 @@ var/list/doppler_arrays = list()
 		return
 	if(usr.stat || usr.restrained() || !usr.canmove)
 		return
-	src.dir = turn(src.dir, 90)
+	src.setDir(turn(src.dir, 90))
 	return
 
 /obj/machinery/doppler_array/AltClick(mob/living/user)
