@@ -349,7 +349,7 @@
 			src << "<span class='boldannounce'>You hear your true name and partially emerge before you can stop yourself!</span>"
 			host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='boldannounce'>Your marauder instinctively reacts to its true name!</span>")
 
-/mob/living/simple_animal/hostile/clockwork/marauder/say(message)
+/mob/living/simple_animal/hostile/clockwork/marauder/say(message, message_mode)
 	if(host && (is_in_host() || message_mode == MODE_BINARY)
 		marauder_comms(message)
 		return 1
