@@ -1036,7 +1036,7 @@ Auto Patrol: []"},
 					if( !istype(W, /obj/item/weapon/gun/energy/laser/redtag) )
 						return
 					name = "redtag ED-209 assembly"
-				if("")
+				if(null)
 					if( !istype(W, /obj/item/weapon/gun/energy/taser) )
 						return
 					name = "taser ED-209 assembly"
