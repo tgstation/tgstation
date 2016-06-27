@@ -63,7 +63,7 @@
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	dir = turn(dir, -90)
+	setDir(turn(dir, -90))
 	return 1
 
 /obj/structure/particle_accelerator/AltClick(mob/user)
@@ -86,7 +86,7 @@
 	if (anchored)
 		usr << "It is fastened to the floor!"
 		return 0
-	dir = turn(dir, 90)
+	setDir(turn(dir, 90))
 	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)

@@ -30,10 +30,10 @@
 
 /obj/item/weapon/papercutter/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	icon_state = (storedcutter ? "[initial(icon_state)]-cutter" : "[initial(icon_state)]")
 	if(storedpaper)
-		overlays += "paper"
+		add_overlay("paper")
 
 
 /obj/item/weapon/papercutter/attackby(obj/item/P, mob/user, params)

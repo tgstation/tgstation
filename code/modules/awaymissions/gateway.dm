@@ -145,7 +145,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 	if(awaygate.calibrated)
 		AM.forceMove(get_step(awaygate.loc, SOUTH))
-		AM.dir = SOUTH
+		AM.setDir(SOUTH)
 		if (ismob(AM))
 			var/mob/M = AM
 			if (M.client)
@@ -155,7 +155,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
 			AM.forceMove(get_turf(dest))
-			AM.dir = SOUTH
+			AM.setDir(SOUTH)
 			use_power(5000)
 		return
 
@@ -258,7 +258,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 				AM << "\black The station gate has detected your exile implant and is blocking your entry."
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
-	AM.dir = SOUTH
+	AM.setDir(SOUTH)
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client)

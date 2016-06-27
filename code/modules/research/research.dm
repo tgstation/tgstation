@@ -116,9 +116,8 @@ research holder datum.
 //Input: Tech's ID and Level; Output: null
 /datum/research/proc/UpdateTech(ID, level)
 	var/datum/tech/KT = known_tech[ID]
-	if(KT)
-		if(KT.level <= level)
-			KT.level = KT.level + 1
+	if(KT && KT.level <= level)
+		KT.level = max(KT.level + 1, level)
 
 //Checks if the origin level can raise current tech levels
 //Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no

@@ -155,7 +155,7 @@
 			if(beaker)
 				beaker.loc = loc
 				beaker = null
-				overlays.Cut()
+				cut_overlays()
 				. = TRUE
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user, params)
@@ -179,7 +179,7 @@
 		if(!icon_beaker)
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
-		overlays += icon_beaker
+		add_overlay(icon_beaker)
 	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
 		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
@@ -343,7 +343,8 @@
 		"vermouth",
 		"cognac",
 		"ale",
-		"absinthe"
+		"absinthe",
+		"hcider"
 	)
 	emagged_reagents = list(
 		"ethanol",

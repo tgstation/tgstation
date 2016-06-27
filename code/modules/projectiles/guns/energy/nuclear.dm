@@ -29,11 +29,11 @@
 /obj/item/weapon/gun/energy/gun/mini/update_icon()
 	..()
 	if(F && F.on)
-		overlays += "mini-light"
+		add_overlay("mini-light")
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
-	desc = "This is a expensive, modern recreation of a antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	origin_tech = null
 	force = 10

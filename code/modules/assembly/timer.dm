@@ -14,7 +14,7 @@
 
 /obj/item/device/assembly/timer/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/assembly/timer/describe()
 	if(timing)
@@ -33,10 +33,10 @@
 /obj/item/device/assembly/timer/toggle_secure()
 	secured = !secured
 	if(secured)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		timing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
@@ -64,10 +64,10 @@
 
 
 /obj/item/device/assembly/timer/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	attached_overlays = list()
 	if(timing)
-		overlays += "timer_timing"
+		add_overlay("timer_timing")
 		attached_overlays += "timer_timing"
 	if(holder)
 		holder.update_icon()

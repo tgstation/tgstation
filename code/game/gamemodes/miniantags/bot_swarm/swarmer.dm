@@ -81,7 +81,8 @@
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
-	languages = SWARMER
+	languages_spoken = SWARMER
+	languages_understood = SWARMER
 	environment_smash = 0
 	attacktext = "shocks"
 	attack_sound = 'sound/effects/EMPulse.ogg'

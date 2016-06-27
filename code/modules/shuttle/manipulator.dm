@@ -22,13 +22,13 @@
 	update_icon()
 
 /obj/machinery/shuttle_manipulator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	var/image/hologram_projection = image(icon, "hologram_on")
 	hologram_projection.pixel_y = 22
 	var/image/hologram_ship = image(icon, "hologram_whiteship")
 	hologram_ship.pixel_y = 27
-	overlays += hologram_projection
-	overlays += hologram_ship
+	add_overlay(hologram_projection)
+	add_overlay(hologram_ship)
 
 /obj/machinery/shuttle_manipulator/process()
 	return

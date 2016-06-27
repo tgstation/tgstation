@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscdel: "Large graffiti now consumes 5 uses from limited use crayons and
+spraycans, as well as taking three times the amount of time to draw."

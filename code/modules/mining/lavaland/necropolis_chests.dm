@@ -228,7 +228,7 @@
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.dir = user.dir
+		Z.setDir(user.dir)
 		user.forceMove(Z)
 		user.notransform = 1
 		user.status_flags |= GODMODE
@@ -488,14 +488,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -692,6 +692,7 @@
 	if(!(isliving(choice)))
 		user << "[choice] is already dead!"
 		used = FALSE
+		return
 	else
 
 		var/mob/living/L = choice

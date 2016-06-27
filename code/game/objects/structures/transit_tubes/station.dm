@@ -19,10 +19,10 @@
 
 /obj/structure/transit_tube/station/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/transit_tube/station/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 // Stations which will send the tube in the opposite direction after their stop.
@@ -53,7 +53,7 @@
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
 	T.loc = src.loc
-	T.dir = turn(src.dir, -90)
+	T.setDir(turn(src.dir, -90))
 	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 

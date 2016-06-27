@@ -232,6 +232,13 @@
 	category = "Assistance"
 	cost = 1
 
+/datum/spellbook_entry/spacetime_dist
+	name = "Spacetime Distortion"
+	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
+	log_name = "STD"
+	category = "Defensive"
+	cost = 1
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
@@ -369,6 +376,20 @@
 	cost = 1 //non-destructive; it's just a jape, sibling!
 	log_name = "HB"
 	limit = 3
+	category = "Assistance"
+
+/datum/spellbook_entry/item/hadesstone
+	name = "Dark Seed"
+	desc = "A small, dark stone that whispers to you menacingly.\
+			The seed calls for the corpses of living beings,\
+			in order to summon an ancient, powerful being.\
+			The power and tenacity of the summoned being directly\
+			correlates to the power of the absorbed beings,\
+			so choose your targets wisely."
+	item_path = /obj/item/hades_summoner
+	cost = 2
+	log_name = "DS"
+	limit = 1
 	category = "Assistance"
 
 /datum/spellbook_entry/item/mjolnir

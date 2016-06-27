@@ -125,7 +125,7 @@
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
@@ -148,7 +148,7 @@
 				filling.icon_state = "[icon_state]100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -228,6 +228,16 @@
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) //Weak melee protection, because you can wear it on your head
+	slot_equipment_priority = list( \
+		slot_back, slot_wear_id,\
+		slot_w_uniform, slot_wear_suit,\
+		slot_wear_mask, slot_head,\
+		slot_shoes, slot_gloves,\
+		slot_ears, slot_glasses,\
+		slot_belt, slot_s_store,\
+		slot_l_store, slot_r_store,\
+		slot_drone_storage
+	)
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/mop))

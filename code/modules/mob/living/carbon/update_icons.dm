@@ -33,7 +33,7 @@
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	if(overlays_standing[cache_index])

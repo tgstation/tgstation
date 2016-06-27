@@ -39,7 +39,7 @@
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.dir = dir
+			buckled_mob.setDir(dir)
 			buckled_mob.pixel_x = generic_pixel_x
 			buckled_mob.pixel_y = generic_pixel_y
 

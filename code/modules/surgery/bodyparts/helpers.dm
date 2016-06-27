@@ -161,3 +161,5 @@
 			. = "471c18"
 		if("albino")
 			. = "fff4e6"
+		if("orange")
+			. = "ffc905"

@@ -27,7 +27,6 @@
 	..()
 	bcell = new(src)
 	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)

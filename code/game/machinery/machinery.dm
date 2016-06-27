@@ -124,17 +124,17 @@ Class Procs:
 	..()
 	machines += src
 	if(!speed_process)
-		SSmachine.processing += src
+		START_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing += src
+		START_PROCESSING(SSfastprocess, src)
 	power_change()
 
 /obj/machinery/Destroy()
 	machines.Remove(src)
 	if(!speed_process)
-		SSmachine.processing -= src
+		STOP_PROCESSING(SSmachine, src)
 	else
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 	dropContents()
 	return ..()
 
@@ -373,7 +373,7 @@ Class Procs:
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
-		dir = turn(dir,-90)
+		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
 	return 0

@@ -91,7 +91,6 @@
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0
-		return
 
 /////////////////////
 
@@ -156,7 +155,6 @@
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
 	if(isliving(A))
 		do_teleport(A, locate(A.x, A.y, A.z), 8)
-	return
 
 /////////////////////
 
@@ -210,7 +208,6 @@
 		affect_coord(x-t, y+r, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x+r, y+t, ex_act_force, pull_chance, turf_removal_chance)
 		affect_coord(x-r, y-t, ex_act_force, pull_chance, turf_removal_chance)
-	return
 
 /obj/effect/anomaly/bhole/proc/affect_coord(x, y, ex_act_force, pull_chance, turf_removal_chance)
 	//Get turf at coordinate
@@ -231,4 +228,3 @@
 	//Damaging the turf
 	if( T && prob(turf_removal_chance) )
 		T.ex_act(ex_act_force)
-	return

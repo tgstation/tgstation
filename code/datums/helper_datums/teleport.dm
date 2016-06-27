@@ -82,15 +82,18 @@
 /datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
 	if(location)
 		if(effect)
-			spawn(0)
-				src = null
-				effect.attach(location)
-				effect.start()
+			addtimer(src, "do_effect", 0, FALSE, location, effect)
 		if(sound)
-			spawn(0)
-				src = null
-				playsound(location,sound,60,1)
-	return
+			addtimer(src, "do_sound", 0, FALSE, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
 
 //do the monkey dance
 /datum/teleport/proc/doTeleport()
@@ -172,9 +175,14 @@
 /proc/find_safe_turf(zlevel = ZLEVEL_STATION, list/zlevels)
 	if(!zlevels)
 		zlevels = list(zlevel)
-	for(var/cycle in 1 to 100)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
 		// DRUNK DIALLING WOOOOOOOOO
-		var/random_location = locate(rand(37,202),rand(75,192),pick(zlevels))
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
+
 		if(!(istype(random_location, /turf/open/floor)))
 			continue
 		var/turf/open/floor/F = random_location

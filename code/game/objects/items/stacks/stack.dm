@@ -130,7 +130,7 @@
 				return
 
 		var/atom/O = new R.result_type( usr.loc )
-		O.dir = usr.dir
+		O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
 		//is it a stack ?

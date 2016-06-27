@@ -154,9 +154,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.vomit(20)
+					addtimer(L, "vomit", 20)
 
 /**********************Resonator**********************/
 
@@ -448,6 +446,8 @@
 	name = "hardsuit jetpack upgrade"
 	icon_state = "jetpack_upgrade"
 	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
+	origin_tech = "materials=4;magnets=4;engineering=5"
+	// Same as jetpack implant minus biotech, makes sense.
 
 
 /obj/item/hardsuit_jetpack/afterattack(var/obj/item/clothing/suit/space/hardsuit/S, mob/user)

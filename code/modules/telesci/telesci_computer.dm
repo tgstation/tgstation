@@ -102,9 +102,9 @@
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<div class='statusDisplay'>[rotation]Â°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<div class='statusDisplay'>[angle]Â°</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
@@ -282,9 +282,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
 	if(teles_left > 0)
 		doteleport(user)

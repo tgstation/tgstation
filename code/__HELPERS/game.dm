@@ -5,6 +5,8 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return

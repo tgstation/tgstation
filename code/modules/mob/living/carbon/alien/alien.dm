@@ -11,7 +11,8 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
-	languages = ALIEN
+	languages_spoken = ALIEN
+	languages_understood = ALIEN
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
@@ -180,7 +181,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	src << "<span class='noticealien'>You begin to evolve!</span>"
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
-	new_xeno.dir = dir
+	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name

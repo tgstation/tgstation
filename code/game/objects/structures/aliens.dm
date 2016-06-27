@@ -186,9 +186,7 @@
 	if(istype(loc, /turf/open/space))
 		qdel(src)
 		return
-	spawn(rand(150, 200))
-		if(src)
-			Life()
+	addtimer(src, "Life", rand(150, 200))
 
 /obj/structure/alien/weeds/Destroy()
 	linked_node = null
@@ -264,8 +262,7 @@
 /obj/structure/alien/egg/New()
 	new /obj/item/clothing/mask/facehugger(src)
 	..()
-	spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
-		Grow()
+	addtimer(src, "Grow", rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/Destroy()
 	remove_from_proximity_list(src, 1)

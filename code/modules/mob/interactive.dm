@@ -132,7 +132,7 @@
 	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
-	..()
+	. = ..()
 	retal = 1
 	retal_target = user
 
@@ -330,6 +330,8 @@
 		if("Clown")
 			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
+		if("Mime")
+			functions -= "chatter"
 		if("Botanist")
 			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
@@ -384,9 +386,7 @@
 /mob/living/carbon/human/interactive/New()
 	..()
 
-	src.set_species(/datum/species/synth)
-	var/datum/species/synth/mSyn = dna.species
-	mSyn.assume_disguise(new/datum/species/human,src)
+	set_species(/datum/species/synth)
 
 	random()
 
@@ -736,8 +736,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		spawn(processTime)
-			doProcess()
+		addtimer(src, "doProcess", processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -882,7 +881,7 @@
 		else if(doing & FIGHTING)
 			if(prob(chattyness))
 				chatmsg += pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
-				"Rend and [verbs_touch], Rend and [verbs_use]!",
+				"Rend and [verbs_touch], rend and [verbs_use]!",
 				"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 		if(prob(chattyness/2))
 			chatmsg = ";"

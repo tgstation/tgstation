@@ -18,7 +18,7 @@
 /obj/machinery/door/window/New(loc, set_dir)
 	..()
 	if(set_dir)
-		dir = set_dir
+		setDir(set_dir)
 	if(src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
@@ -272,7 +272,7 @@
 								WA.secure = 1
 						WA.anchored = 1
 						WA.state= "02"
-						WA.dir = src.dir
+						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name
@@ -348,11 +348,14 @@
 	..()
 	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 	if(set_dir)
-		E.dir = set_dir
+		E.setDir(set_dir)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
 
 /obj/machinery/door/window/clockwork/ratvar_act()
 	health = initial(health)
+
+/obj/machinery/door/window/clockwork/hasPower()
+	return TRUE //yup that's power all right
 
 /obj/machinery/door/window/clockwork/narsie_act()
 	take_damage(rand(30, 60), BRUTE)

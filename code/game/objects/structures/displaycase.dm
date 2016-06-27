@@ -99,9 +99,9 @@
 		I = getFlatIcon(A)
 	else
 		var/old_dir = A.dir
-		A.dir = 2
+		A.setDir(2)
 		I = getFlatIcon(A)
-		A.dir = old_dir
+		A.setDir(old_dir)
 	return I
 
 /obj/structure/displaycase/update_icon()

@@ -7,6 +7,7 @@
 	plantname = "Tomato Plants"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	maturation = 8
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "tomato-grow"
 	icon_dead = "tomato-dead"
 	genes = list(/datum/plant_gene/trait/squash)

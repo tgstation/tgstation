@@ -18,11 +18,11 @@
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
 	icon_state = "pscrubber:[on]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(holding)
-		overlays += "scrubber-open"
+		add_overlay("scrubber-open")
 	if(connected_port)
-		overlays += "scrubber-connector"
+		add_overlay("scrubber-connector")
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()

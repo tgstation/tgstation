@@ -85,6 +85,7 @@
 			stat |= EMPED
 			SetLuminosity(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
+			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
 			spawn(900)
 				if(loc) //qdel limbo
@@ -96,9 +97,7 @@
 						if(can_use())
 							cameranet.addCamera(src)
 						emped = 0 //Resets the consecutive EMP count
-						spawn(100)
-							if(!qdeleted(src))
-								cancelCameraAlarm()
+						addtimer(src, "cancelCameraAlarm", 100)
 			for(var/mob/O in mob_list)
 				if (O.client && O.client.eye == src)
 					O.unset_machine()
@@ -156,7 +155,7 @@
 					assembly = new()
 				assembly.loc = src.loc
 				assembly.state = 1
-				assembly.dir = src.dir
+				assembly.setDir(src.dir)
 				assembly = null
 				qdel(src)
 			return
@@ -282,9 +281,7 @@
 	if(status)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
-		spawn(100)
-			if(!qdeleted(src))
-				cancelCameraAlarm()
+		addtimer(src, "cancelCameraAlarm", 100)
 	if(displaymessage)
 		if(user)
 			visible_message("<span class='danger'>[user] [change_msg] [src]!</span>")
@@ -339,13 +336,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					src.setDir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					src.setDir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					src.setDir(EAST)
 				if(EAST)
-					src.dir = WEST
+					src.setDir(WEST)
 			break
 
 //Return a working camera that can see a given mob

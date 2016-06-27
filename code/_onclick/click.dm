@@ -309,25 +309,25 @@
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
 		if(A.pixel_y > 16)
-			dir = NORTH
+			setDir(NORTH)
 		else if(A.pixel_y < -16)
-			dir = SOUTH
+			setDir(SOUTH)
 		else if(A.pixel_x > 16)
-			dir = EAST
+			setDir(EAST)
 		else if(A.pixel_x < -16)
-			dir = WEST
+			setDir(WEST)
 		return
 
 	if(abs(dx) < abs(dy))
 		if(dy > 0)
-			dir = NORTH
+			setDir(NORTH)
 		else
-			dir = SOUTH
+			setDir(SOUTH)
 	else
 		if(dx > 0)
-			dir = EAST
+			setDir(EAST)
 		else
-			dir = WEST
+			setDir(WEST)
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'

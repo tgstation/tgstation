@@ -53,21 +53,23 @@
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
 	name = "pack of ambrosia gaia seeds"
-	desc = "These seeds grow into ambrosia gaia, incredibly rare but imbued with breathtaking potential."
+	desc = "These seeds grow into ambrosia gaia, filled with infinite potential."
 	icon_state = "seed-ambrosia_gaia"
 	species = "ambrosia_gaia"
 	plantname = "Ambrosia Gaia"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
 	mutatelist = list()
-	reagents_add = list("earthsblood" = 0.4, "nutriment" = 0.2, "vitamin" = 0.1)
-	rarity = 100 //These are some pretty good plants right here
+	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
+	rarity = 30 //These are some pretty good plants right here
 	oneharvest = TRUE
+	weed_rate = 4
+	weed_chance = 100
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/gaia
-	name = "ambrosia gaia"
-	desc = "The bringer of light."
+	name = "ambrosia gaia branch"
+	desc = "Eating this <i>makes</i> you immortal."
 	icon_state = "ambrosia_gaia"
 	filling_color = rgb(255, 175, 0)
-	origin_tech = "biotech=7"
+	origin_tech = "biotech=6;materials=5"
 	luminosity = 3
 	seed = /obj/item/seeds/ambrosia/gaia
