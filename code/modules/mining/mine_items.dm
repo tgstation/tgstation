@@ -393,7 +393,7 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-	icon_state = "bedcomputer"
+	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
@@ -403,7 +403,7 @@
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
-	desc = "A heated storage unit. This ones seen better days."
+	desc = "A heated storage unit. This one's seen better days."
 
 /obj/machinery/smartfridge/survival_pod/empty/New()
 	return()
@@ -474,7 +474,7 @@
 //Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
+	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 
