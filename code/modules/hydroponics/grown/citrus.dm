@@ -98,7 +98,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/moneyfruit
 	seed = /obj/item/seeds/cash
 	name = "Money Fruit"
-	desc = "Looks like a lemon with someone buldging from the inside."
+	desc = "Looks like a lemon with something bulging from the inside."
 	icon_state = "moneyfruit"
 	bitesize_mod = 2
 

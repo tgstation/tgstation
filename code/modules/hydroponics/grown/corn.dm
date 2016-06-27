@@ -74,7 +74,7 @@
 
 /obj/item/weapon/grown/snapcorn/attack_self(mob/user)
 	..()
-	user << "<span class='notice'>You pick up a snap pops from the cob.</span>"
+	user << "<span class='notice'>You pick a snap pop from the cob.</span>"
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)
