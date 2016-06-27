@@ -126,6 +126,9 @@
 	attack_hand(user)
 
 /obj/machinery/recharge_station/attack_hand(var/mob/user)
+	if(occupant == user)
+		apply_cell_upgrade()
+		return
 	if(upgrade_holder.len && !upgrading)
 		var/obj/removed = input(user, "Choose an item to remove.",upgrade_holder[1]) as null|anything in upgrade_holder
 		if(!removed || upgrading)
