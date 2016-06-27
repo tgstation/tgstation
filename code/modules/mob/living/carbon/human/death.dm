@@ -24,7 +24,7 @@
 			M.go_out()
 
 	if(!gibbed)
-		emote("deathgasp") //let the world KNOW WE ARE DEAD, unless we were faking it
+		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 	dna.species.spec_death(gibbed, src)
 
