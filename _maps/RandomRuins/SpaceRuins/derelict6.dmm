@@ -29,6 +29,7 @@
 /area/ruin/unpowered)
 "ae" = (
 /obj/item/stack/sheet/metal,
+/obj/structure/lattice,
 /turf/open/space,
 /area/space)
 "af" = (
@@ -57,16 +58,13 @@
 /turf/closed/wall,
 /area/ruin/unpowered)
 "aj" = (
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg3";
-	icon_state = "platingdmg3"
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (EAST)";
+	icon_state = "pile";
+	dir = 4
 	},
-/obj/item/stack/tile/plasteel,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
-	},
-/area/ruin/unpowered)
+/turf/open/space,
+/area/space)
 "ak" = (
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg3";
@@ -133,9 +131,8 @@
 /area/ruin/unpowered)
 "at" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg1";
-	icon_state = "platingdmg1"
+/turf/open/floor/plasteel{
+	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered)
 "au" = (
@@ -172,16 +169,21 @@
 	},
 /area/ruin/unpowered)
 "az" = (
-/turf/open/floor/plating/airless,
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (WEST)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 8
 	},
+/obj/structure/lattice,
+/turf/open/space,
 /area/ruin/unpowered)
 "aA" = (
-/obj/structure/lattice,
-/obj/item/stack/rods,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (NORTH)";
+	icon_state = "pile";
+	dir = 1
+	},
 /turf/open/space,
 /area/space)
 "aB" = (
@@ -349,12 +351,13 @@
 	},
 /area/ruin/unpowered)
 "aZ" = (
-/obj/item/chair,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg1";
-	icon_state = "platingdmg1"
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (WEST)";
+	icon_state = "pile";
+	dir = 8
 	},
-/area/ruin/unpowered)
+/turf/open/space,
+/area/space)
 "ba" = (
 /mob/living/simple_animal/retaliate/ghost,
 /turf/open/floor/plasteel/cafeteria{
@@ -480,6 +483,152 @@
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
+"bI" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (WEST)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bH" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "plating";
+	name = "broken plating"
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/ruin/unpowered)
+"bG" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular (EAST)";
+	icon_state = "singular";
+	dir = 4
+	},
+/turf/open/space,
+/area/space)
+"bF" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-side (EAST)";
+	icon_state = "side";
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bE" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bD" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular (EAST)";
+	icon_state = "singular";
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered)
+"bC" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-corner (NORTH)";
+	icon_state = "corner";
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bB" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular (EAST)";
+	icon_state = "singular";
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
+"bA" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/space,
+/area/space)
+"bz" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (EAST)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"by" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (EAST)";
+	icon_state = "pile";
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered)
+"bx" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (EAST)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/ruin/unpowered)
+"bw" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (NORTH)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bv" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile"
+	},
+/turf/open/space,
+/area/space)
+"bu" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/space,
+/area/ruin/unpowered)
+"bt" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-side (NORTH)";
+	icon_state = "side";
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/ruin/unpowered)
+"bs" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-singular (NORTH)";
+	icon_state = "singular";
+	dir = 1
+	},
+/turf/open/space,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -491,7 +640,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 aa
@@ -516,6 +665,14 @@ aa
 aa
 aa
 aa
+bA
+aa
+ab
+ab
+aa
+aa
+aa
+aj
 aa
 aa
 aa
@@ -524,15 +681,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aZ
 aa
 "}
 (3,1,1) = {"
@@ -545,9 +694,9 @@ aa
 ab
 aa
 ab
+bC
+bE
 aa
-aa
-ab
 aa
 aa
 ab
@@ -571,11 +720,11 @@ aa
 aa
 ab
 ac
-as
-al
-ay
+aw
+ag
+ag
 aD
-aa
+bH
 aa
 ab
 ab
@@ -596,12 +745,12 @@ aa
 aa
 aa
 aa
-ab
+bw
 ad
+ag
+ag
+ag
 ah
-ah
-ah
-ah
 al
 al
 al
@@ -610,7 +759,7 @@ al
 al
 al
 al
-aa
+bH
 aa
 aa
 aa
@@ -626,8 +775,8 @@ ab
 ac
 ac
 at
-ah
-ah
+bD
+ag
 ai
 ai
 ai
@@ -647,14 +796,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
+ab
+ab
+ab
 al
 ai
-au
-ah
-aB
+aw
+ag
+ag
 aE
 aH
 aQ
@@ -679,8 +828,8 @@ ab
 ac
 am
 ai
-ap
-ah
+ag
+ag
 ag
 ai
 ai
@@ -756,7 +905,7 @@ aa
 aa
 aa
 aa
-ab
+bw
 af
 ai
 ai
@@ -774,16 +923,16 @@ ap
 aq
 ab
 ab
-ab
+bs
 aa
 aa
 "}
 (12,1,1) = {"
 aa
 aa
+bs
 ab
-ab
-ac
+ag
 ag
 an
 ag
@@ -807,12 +956,12 @@ aa
 "}
 (13,1,1) = {"
 aa
+aa
 ab
-ab
-ab
-ac
-ah
-ah
+bt
+ag
+by
+ag
 ag
 ag
 ag
@@ -835,12 +984,12 @@ aa
 (14,1,1) = {"
 aa
 aa
-ab
-ab
-ac
-ah
-ah
-ah
+aa
+bu
+ag
+ag
+ag
+ag
 ag
 ag
 ag
@@ -890,9 +1039,9 @@ aa
 aa
 aa
 aa
-aa
+ab
 ac
-aj
+ap
 ao
 ai
 ag
@@ -900,8 +1049,8 @@ ag
 ag
 aG
 aO
-ah
-aa
+bI
+ab
 be
 ap
 ab
@@ -917,8 +1066,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+ab
+bx
 ak
 ap
 ai
@@ -932,7 +1081,7 @@ aB
 ap
 bk
 bm
-ah
+az
 ab
 bo
 aa
@@ -949,7 +1098,7 @@ ae
 ac
 ap
 aq
-ap
+ag
 ag
 aC
 ai
@@ -957,8 +1106,8 @@ aM
 ap
 ap
 ap
-aa
-ah
+ab
+ac
 ab
 aa
 aa
@@ -973,18 +1122,18 @@ aa
 aa
 aa
 aa
-ab
+bz
 ac
 ai
-ah
-ap
+ag
+ag
 ag
 ai
 aP
 ap
 ab
 be
-aB
+ac
 bn
 aa
 aa
@@ -1003,20 +1152,20 @@ aa
 ab
 ac
 ai
-ah
-ah
-ap
+ag
+ag
+ag
 ai
 ap
 aV
 aY
-ah
+ac
 ab
 ab
 aa
 aa
 aa
-aa
+aA
 aa
 aa
 aa
@@ -1030,13 +1179,13 @@ aa
 aa
 af
 ar
-al
-ay
-ah
+ag
+ag
+ag
 ai
 au
 ap
-aZ
+ac
 bf
 ab
 ab
@@ -1057,9 +1206,9 @@ aa
 aa
 ab
 ac
-as
-az
-al
+aw
+at
+ag
 ai
 ai
 ai
@@ -1079,17 +1228,17 @@ aa
 aa
 aa
 aa
+bv
 aa
 aa
 aa
 aa
-aa
+bB
 ab
-aA
+bF
+ai
 ab
-aa
-aa
-aa
+ab
 aa
 aa
 aa
@@ -1140,7 +1289,7 @@ aa
 aa
 aa
 aa
-aa
+bG
 aa
 aa
 aa
