@@ -100,6 +100,8 @@
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 	var/obj/effect/overlay/temp/fireball/F = PoolOrNew(/obj/effect/overlay/temp/fireball,src.loc)
 	F.pixel_z = 500
+	T.color = rgb(255, 0, 0)
+	animate(T, color = initial(color), time = 20)
 	animate(F, pixel_z = 0, time = 12)
 	sleep(12)
 	explosion(T, 0, 0, 1, 0, 0, 0, 1)
@@ -127,7 +129,7 @@
 		fire_walls()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
-	visible_message("<span class='danger'>Fire rains from the sky!</span>")
+	visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
 			PoolOrNew(/obj/effect/overlay/temp/target, turf)
@@ -153,7 +155,7 @@
 		for(var/mob/living/L in J)
 			if(L != src)
 				L.adjustFireLoss(20)
-				L << "<span class='danger'>You're hit by the drake's \
+				L << "<span class='userdanger'>You're hit by the drake's \
 					fire breath!</span>"
 		sleep(1)
 
@@ -170,7 +172,7 @@
 	swooping = 1
 	density = 0
 	icon_state = "swoop"
-	visible_message("<span class='danger'>[src] swoops up high!</span>")
+	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 	if(prob(50))
 		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
 	else
@@ -193,14 +195,14 @@
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message("<span class='danger'>[src] slams down on [L], crushing them!</span>")
+			visible_message("<span class='warning'>[src] slams down on [L], crushing them!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
 			if(L && !qdeleted(L)) // Some mobs are deleted on death
 				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 				L.throw_at_fast(throwtarget)
-				visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
+				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
@@ -213,7 +215,7 @@
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "You need to wait 20 seconds between swoop attacks!"
+		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!M/span>"
 		return
 	swoop_attack(1, A)
 
