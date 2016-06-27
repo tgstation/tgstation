@@ -311,7 +311,7 @@ macro "hotkeys"
 		is-disabled = false
 	elem 
 		name = "F"
-		command = "a-intent left"
+		command = "get-weapon"
 		is-disabled = false
 	elem 
 		name = "CTRL+F"
