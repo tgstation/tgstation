@@ -84,7 +84,6 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	message = ruscapitalize(message)
 	message = pointization(message)
-	message = intonation(message)
 
 	if(stat == DEAD)
 		say_dead(message)

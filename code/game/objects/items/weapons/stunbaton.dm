@@ -7,6 +7,7 @@
 	force = 10
 	throwforce = 7
 	w_class = 3
+	var/mob/foundmob = ""
 	origin_tech = "combat=2"
 	attack_verb = list("beaten")
 	var/stunforce = 7
@@ -82,6 +83,26 @@
 			update_icon()
 	else
 		return ..()
+
+
+
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	if (prob(70))
+		if(istype(hit_atom, /mob/living))
+			var/mob/living/carbon/human/H = hit_atom
+			if(status)
+				H.Stun(stunforce)
+				H.Weaken(stunforce)
+				H.apply_effect(STUTTER, stunforce)
+				deductcharge(hitcost)
+
+				H.visible_message("<span class='danger'>[src] strikes [H] and stuns them!</span>")
+
+				H.attack_log += "\[[time_stamp()]\]<font color='orange'> Stunned by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+				log_attack("Flying [src.name], last touched by ([src.fingerprintslast]) stunned [H.name] ([H.ckey])" )
+
+				return
+	return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)

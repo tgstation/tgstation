@@ -21,11 +21,6 @@
 			s+=2
 	return upperrustext(copytext(t, 1, s)) + copytext(t, s)
 
-/proc/intonation(text)
-	if (copytext(text,-1) == "!")
-		text = "<b>[text]</b>"
-	return text
-
 /proc/upperrustext(text as text)
 	var/t = ""
 	for(var/i = 1, i <= length(text), i++)
