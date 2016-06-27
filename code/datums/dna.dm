@@ -176,7 +176,10 @@
 	if(mrace && has_dna())
 		dna.species.on_species_loss(src)
 		var/old_species = dna.species
-		dna.species = new mrace()
+		if(ispath(mrace))
+			dna.species = new mrace()
+		else
+			dna.species = mrace
 		dna.species.on_species_gain(src, old_species)
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)

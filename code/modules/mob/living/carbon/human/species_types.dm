@@ -295,7 +295,7 @@
 	coldmod = 2
 	heatmod = 0.5
 	var/datum/action/innate/split_body/slime_split
-	var/list/mob/living/carbon/bodies = list()
+	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
@@ -318,7 +318,10 @@
 		swap_body = new
 		swap_body.Grant(C)
 
-		bodies = list(C)
+		if(!bodies || !bodies.len)
+			bodies = list(C)
+		else
+			bodies |= C
 
 	C.faction |= "slime"
 
@@ -429,13 +432,14 @@
 
 	var/list/data = list()
 	data["bodies"] = list()
-	for(var/mob/living/carbon/human/body in SS.bodies)
-		if(!body || qdeleted(body) || !isslimeperson(body))
-			SS.bodies -= body
+	for(var/b in SS.bodies)
+		if(!b || qdeleted(b) || !isslimeperson(b))
+			SS.bodies -= b
 			continue
+		var/mob/living/carbon/human/body = b
 
 		var/list/L = list()
-		// remove the # from the #123456 colorhex
+		// HTML colors need a # prefix
 		L["htmlcolor"] = "#[body.dna.features["mcolor"]]"
 		var/area/A = get_area(body)
 		L["area"] = A.name
@@ -493,6 +497,7 @@
 			if(!(selected in SS.bodies))
 				return
 			if(!selected || qdeleted(selected) || !isslimeperson(selected))
+				SS.bodies -= selected
 				return
 			if(M.current == selected)
 				return
