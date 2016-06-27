@@ -32,13 +32,19 @@
 		)
 
 /obj/item/stack/package_wrap/afterattack(var/attacked, mob/user as mob, var/proximity_flag)
-	if(ishuman(attacked)) return try_wrap_human(attacked,user)
-	if(!istype(attacked,/obj)) return
 	var/obj/target = attacked
-	if(is_type_in_list(target, cannot_wrap)) return
-	if(target.anchored) return
-	if(target in user) return
-	if(!proximity_flag) return
+	if(is_type_in_list(target, cannot_wrap))
+		return
+	if(target.anchored)
+		return
+	if(target in user)
+		return
+	if(!proximity_flag)
+		return
+	if(ishuman(attacked))
+		return try_wrap_human(attacked,user)
+	if(!istype(target))
+		return
 
 	user.attack_log += "\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>"
 	target.add_fingerprint(user)
