@@ -39,7 +39,7 @@
 	if(mat_list[MAT_BANANIUM])
 		materials[MAT_BANANIUM] = new /datum/material/bananium()
 	if(mat_list[MAT_TITANIUM])
-		materials[MAT_TITANIUM] = new /datum/material/bananium()
+		materials[MAT_TITANIUM] = new /datum/material/titanium()
 
 /datum/material_container/Destroy()
 	owner = null

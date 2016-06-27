@@ -73,7 +73,7 @@
 	material_id = MAT_SILVER
 	message = "cm3 of silver"
 
-// Silver.
+// Titanium.
 /datum/export/material/titanium
 	cost = 250
 	material_id = MAT_TITANIUM
