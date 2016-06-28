@@ -192,7 +192,7 @@
 		return
 	else
 	    //prevents remote "kicks" with TK
-		if (abs(usr.x-src.x) > 1 || abs(usr.y-src.y) > 1)
+		if (!Adjacent(user))
 			return
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
