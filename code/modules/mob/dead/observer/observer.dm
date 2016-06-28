@@ -57,7 +57,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
-
+	
+	if(global.cross_allowed)
+		verbs += /mob/dead/observer/proc/server_hop
+	
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -554,6 +557,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	return 1
 
+/mob/dead/observer/proc/ServerHop()
+	set category = "Ghost"
+	set name = "Server Hop!"
+	set desc= "Jump to the other server"
+	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
+		return 0
+	if (client && global.cross_allowed) 
+		src << "<span class='notice'>Sending you to [global.cross_address]</span>"
+		client << link(global.cross_address)
+	else
+		src << "<span class='error'>There is no other server configured!</span>"
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
