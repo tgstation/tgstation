@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Fixes issue where the AI core APC on Metastation would not charge."
