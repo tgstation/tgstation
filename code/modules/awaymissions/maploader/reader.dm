@@ -134,10 +134,11 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-			var/turf/T = t
-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-			T.AfterChange(TRUE)
+		if(!measureOnly)
+			for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+				var/turf/T = t
+				//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+				T.AfterChange(TRUE)
 		return bounds
 
 /**
