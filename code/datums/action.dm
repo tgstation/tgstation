@@ -184,6 +184,7 @@
 
 /datum/action/item_action/toggle_flame
 	name = "Summon/Dismiss Ratvar's Flame"
+	background_icon_state = "bg_clock"
 
 /datum/action/item_action/toggle_flame/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
@@ -194,6 +195,15 @@
 			return 0
 	return ..()
 
+/datum/action/item_action/hierophant
+	name = "Hierophant Network"
+	button_icon_state = "hierophant"
+	background_icon_state = "bg_clock"
+
+/datum/action/item_action/hierophant/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"
