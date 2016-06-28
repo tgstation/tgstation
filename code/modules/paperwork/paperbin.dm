@@ -1,5 +1,6 @@
 /obj/item/weapon/paper_bin
 	name = "paper bin"
+	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"

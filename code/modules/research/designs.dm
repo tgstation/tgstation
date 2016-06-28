@@ -214,7 +214,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bag_holding
 	name = "Bag of Holding"
-	desc = "A backpack that opens into a localized pocket of Blue Space."
+	desc = "A backpack that opens into a localized pocket of bluespace."
 	id = "bag_holding"
 	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
@@ -460,7 +460,7 @@ datum/design/diagnostic_hud_night
 
 /datum/design/blutrash
 	name = "Trashbag of Holding"
-	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
+	desc = "An advanced trash bag with bluespace properties; capable of holding a plethora of garbage."
 	id = "blutrash"
 	req_tech = list("materials" = 5, "bluespace" = 4, "engineering" = 4, "plasmatech" = 3)
 	build_type = PROTOLATHE
