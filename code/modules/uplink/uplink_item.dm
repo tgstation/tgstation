@@ -312,6 +312,18 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 	player_minimum = 25
 
+/datum/uplink_item/dangerous/holocarp
+	name = "Holocarp Bundle"
+	desc = "At the edges of space exist a mad cult, obsessed with worshiping \
+		space carp, and a whole host of associated deities. They claim \
+		that these \"magical fishsticks\" summon fishy spirits from byond \
+		the veil. It seems likely that it's some sort of hologram projection \
+		but the fishy guardians are useful, none the less."
+	item = /obj/item/weapon/storage/box/syndie_kit/holofish
+	cost = 20
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	player_minimum = 25
+
 // Ammunition
 /datum/uplink_item/ammo
 	category = "Ammunition"
