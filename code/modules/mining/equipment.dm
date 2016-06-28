@@ -478,7 +478,7 @@
 	if(!istype(C, /obj/item/organ/hivelord_core))
 		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
-	C.preserved = 1
-	feedback_add_details("hivelord_core", "[C.type]|stabilizer") // preserved
+
+	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)

@@ -1,3 +1,7 @@
+
+//Soul counter is stored with the humans, it does weird when you place it here apparently...
+
+
 /datum/hud/devil/New(mob/owner, ui_style = 'icons/mob/screen_midnight.dmi')
 	..()
 	var/obj/screen/using
@@ -51,6 +55,9 @@
 	zone_select.update_icon(mymob)
 
 	lingchemdisplay = new /obj/screen/ling/chems()
+	devilsouldisplay = new /obj/screen/devil/soul_counter
+	infodisplay += devilsouldisplay
+
 
 /datum/hud/devil/persistant_inventory_update()
 	if(!mymob)

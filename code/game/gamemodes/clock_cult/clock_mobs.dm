@@ -5,6 +5,7 @@
 	unique_name = 1
 	minbodytemp = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	healable = FALSE
@@ -92,8 +93,8 @@
 	name = "clockwork marauder"
 	desc = "A stalwart apparition of a soldier, blazing with crimson flames. It's armed with a gladius and shield."
 	icon_state = "clockwork_marauder"
-	health = 25 //Health is governed by fatigue, but can be directly reduced by the presence of certain objects
-	maxHealth = 25
+	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
+	maxHealth = 300
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 10
@@ -106,40 +107,52 @@
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
 	var/fatigue = 0 //Essentially what determines the marauder's power
-	var/fatigue_recall_threshold = 100 //In variable form due to changed effects once Ratvar awakens
+	var/fatigue_recall_threshold = 100 //In variable form due to changed effects when Ratvar awakens
 	var/mob/living/host //The mob that the marauder is living inside of
 	var/recovering = FALSE //If the marauder is recovering from a large amount of fatigue
-	playstyle_string = "<span class='heavy_brass'>You are a clockwork marauder</span><b>, a living extension of Ratvar's will. As a marauder, you are slow but sturdy and decently powerful \
-	in addition to being immune to extreme temperatures and pressures. Your primary goal is to serve the creature that you are now a part of. You can use the Linked Minds ability in your \
-	Marauder tab to communicate silently with your master, but can only exit if your master calls your true name.\n\n\
-	\
+	var/blockchance = 15 //chance to block melee attacks entirely
+	var/counterchance = 30 //chance to counterattack after blocking
+	var/combattimer = 50 //after 5 seconds of not being hit ot attacking we count as 'out of combat' and lose block/counter chance
+	playstyle_string = "<span class='sevtug'>You are a clockwork marauder</span><b>, a living extension of Sevtug's will. As a marauder, you are somewhat slow, but may block melee attacks \
+	and have a chance to also counter blocked melee attacks for extra damage, in addition to being immune to extreme temperatures and pressures. \
+	Your primary goal is to serve the creature that you are now a part of. You can use <span class='sevtug_small'><i>:b</i></span> to communicate silently with your master, \
+	but can only exit if your master calls your true name or if they are exceptionally damaged. \
+	\n\n\
 	Taking damage and remaining outside of your master will cause <i>fatigue</i>, which hinders your movement speed and attacks, in addition to forcing you back into your master if it grows \
 	too high. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/New()
 	..()
+	combattimer = 0
 	true_name = pick(possible_true_names)
 	SetLuminosity(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
+	if(combattimer < world.time)
+		blockchance = max(blockchance - 5, initial(blockchance))
+		counterchance = max(counterchance - 10, initial(counterchance))
 	if(is_in_host())
 		if(!ratvar_awakens && host.stat == DEAD)
 			death()
 			return
-		adjust_fatigue(-2)
+		adjust_fatigue(-1.5)
+		if(ratvar_awakens)
+			adjustHealth(-5.5)
+		else
+			adjustHealth(-0.5)
 		if(!fatigue && recovering)
 			src << "<span class='userdanger'>Your strength has returned. You can once again come forward!</span>"
 			host << "<span class='userdanger'>Your marauder is now strong enough to come forward again!</span>"
 			recovering = FALSE
 	else
-		if(ratvar_awakens) //If Ratvar is alive, marauders both don't take fatigue loss and move at sanic speeds
-			update_fatigue()
-		else
-			if(host)
-				if(host.stat == DEAD)
-					death()
-					return
+		if(ratvar_awakens)
+			adjustHealth(-2)
+		else if(host) //If Ratvar is alive, marauders both don't take fatigue loss and move at fast speed
+			if(host.stat == DEAD)
+				death()
+				return
+			if(z && host.z && z == host.z)
 				switch(get_dist(get_turf(src), get_turf(host)))
 					if(2 to 4)
 						adjust_fatigue(1)
@@ -150,25 +163,30 @@
 						src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
 					else //right next to or on top of host
 						adjust_fatigue(-1)
+			else //well then, you're not even in the same zlevel
+				adjust_fatigue(10)
+				src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
 	return 1
+
+//DAMAGE and FATIGUE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/update_fatigue()
 	if(!ratvar_awakens && host && host.stat == DEAD)
 		death()
 		return
 	if(ratvar_awakens)
-		speed = -1
-		melee_damage_lower = 30
-		melee_damage_upper = 30
+		speed = 0
+		melee_damage_lower = 20
+		melee_damage_upper = 20
 		attacktext = "devastates"
 	else
-		switch(fatigue)
+		switch((fatigue/fatigue_recall_threshold) * 100)
 			if(0 to 10) //Bonuses to speed and damage at normal fatigue levels
 				speed = 0
-				melee_damage_lower = 15
-				melee_damage_upper = 15
+				melee_damage_lower = 13
+				melee_damage_upper = 13
 				attacktext = "viciously slashes"
 			if(10 to 25)
 				speed = initial(speed)
@@ -176,31 +194,39 @@
 				melee_damage_upper = initial(melee_damage_upper)
 				attacktext = initial(attacktext)
 			if(25 to 50) //Damage decrease, but not speed
+				speed = initial(speed)
 				melee_damage_lower = 7
 				melee_damage_upper = 7
 				attacktext = "lightly slashes"
 			if(50 to 75) //Speed decrease
 				speed = 2
+				melee_damage_lower = 7
+				melee_damage_upper = 7
+				attacktext = "lightly slashes"
 			if(75 to 99) //Massive speed decrease and weak melee attacks
 				speed = 3
-				melee_damage_lower = 5
-				melee_damage_upper = 5
+				melee_damage_lower = 4
+				melee_damage_upper = 4
 				attacktext = "weakly slashes"
-			if(99 to fatigue_recall_threshold)
-				src << "<span class='userdanger'>The fatigue becomes too much!</span>"
+			if(99 to 100) //we are at maximum fatigue, we're either useless or recalling
 				if(host)
+					src << "<span class='userdanger'>The fatigue becomes too much!</span>"
 					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
 					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
 					recovering = TRUE
 					return_to_host()
 				else
-					death() //Shouldn't ever happen, but...
+					speed = 4
+					melee_damage_lower = 1
+					melee_damage_upper = 1
+					attacktext = "taps"
+
 
 /mob/living/simple_animal/hostile/clockwork/marauder/death(gibbed)
-	..(TRUE)
 	emerge_from_host(0, 1)
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
+	..()
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Stat()
@@ -213,11 +239,106 @@
 			var/resulthealth
 			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
-			if(resulthealth > 60)
-				stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing True Name"]!")
+			if(ratvar_awakens)
+				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
-				stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
-		stat(null, "You do [melee_damage_upper] on melee attacks.")
+				if(resulthealth > 60)
+					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
+				else
+					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
+		if(ratvar_awakens)
+			stat(null, "Block Chance: 80%")
+			stat(null, "Counter Chance: 80%")
+		else
+			stat(null, "Block Chance: [blockchance]%")
+			stat(null, "Counter Chance: [counterchance]%")
+		stat(null, "You do [melee_damage_upper] damage on melee attacks.")
+
+/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
+	var/fatiguedamage = adjust_fatigue(amount)
+	if(amount > 0)
+		combattimer = world.time + initial(combattimer)
+		for(var/mob/living/L in view(2, src))
+			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
+				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
+				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
+				break
+	return ..() + fatiguedamage
+
+/mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
+	if(status_flags & GODMODE)
+		return 0
+	fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
+	update_fatigue()
+	return amount
+
+//ATTACKING, BLOCKING, and COUNTERING
+
+/mob/living/simple_animal/hostile/clockwork/marauder/AttackingTarget()
+	if(is_in_host())
+		return 0
+	combattimer = world.time + initial(combattimer)
+	..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/Proj)
+	if(ratvar_awakens && blockOrCounter(null, Proj))
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
+	if(ratvar_awakens && blockOrCounter(null, AM))
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder) || !blockOrCounter(M, M))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attack_paw(mob/living/carbon/monkey/M)
+	if(!blockOrCounter(M, M))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attack_alien(mob/living/carbon/alien/humanoid/M)
+	if(!blockOrCounter(M, M))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attack_slime(mob/living/simple_animal/slime/M)
+	if(!blockOrCounter(M, M))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attack_hand(mob/living/carbon/human/M)
+	if(!blockOrCounter(M, M))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/nullrod) || !blockOrCounter(user, I))
+		return ..()
+
+/mob/living/simple_animal/hostile/clockwork/marauder/proc/blockOrCounter(mob/target, atom/textobject)
+	if(ratvar_awakens) //if ratvar has woken, we block nearly everything at a very high chance
+		blockchance = 80
+		counterchance = 80
+	if(prob(blockchance))
+		. = TRUE
+		if(target)
+			target.do_attack_animation(src)
+			target.changeNext_move(CLICK_CD_MELEE)
+		blockchance = initial(blockchance)
+		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 10, 1, 0, 1) //clang
+		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
+		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
+		if(target && prob(counterchance))
+			counterchance = initial(counterchance)
+			var/previousattacktext = attacktext
+			attacktext = "counters"
+			target.attack_animal(src)
+			attacktext = previousattacktext
+		else
+			counterchance = min(counterchance + initial(counterchance), 100)
+	else
+		blockchance = min(blockchance + initial(blockchance), 100)
+
+//COMMUNICATION and EMERGENCE
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	..()
@@ -225,57 +346,28 @@
 		if(speaker == host)
 			emerge_from_host(1)
 		else
-			src << "<span class='warning'><b>You hear your true name and partially emerge before you can stop yourself!</b></span>"
-			host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='warning'><b>Your marauder instinctively reacts to its true name!</b></span>")
+			src << "<span class='boldannounce'>You hear your true name and partially emerge before you can stop yourself!</span>"
+			host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='boldannounce'>Your marauder instinctively reacts to its true name!</span>")
 
-/mob/living/simple_animal/hostile/clockwork/marauder/say(message)
-	if(is_in_host())
-		message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Automatic linked minds
-		src << message
-		host << message
+/mob/living/simple_animal/hostile/clockwork/marauder/say(message, message_mode)
+	if(host && (is_in_host() || message_mode == MODE_BINARY))
+		marauder_comms(message)
 		return 1
 	..()
 
-/mob/living/simple_animal/hostile/clockwork/marauder/adjustHealth(amount) //Fatigue damage
-	for(var/mob/living/L in range(1, src))
-		if(L.null_rod_check()) //Null rods allow direct damage
-			src << "<span class='userdanger'>The power of a holy artifact bypasses your armor and wounds you directly!</span>"
-			return ..()
-	return adjust_fatigue(amount)
+/mob/living/simple_animal/hostile/clockwork/marauder/proc/marauder_comms(message)
+	if(host)
+		message = "<span class='sevtug'>Marauder [true_name]:</span> <span class='sevtug_small'>\"[message]\"</span>" //Processed output
+		src << message
+		host << message
+		for(var/M in mob_list)
+			if(isobserver(M))
+				var/link = FOLLOW_LINK(M, src)
+				M << "[link] [message]"
+		return 1
+	return 0
 
-/mob/living/simple_animal/hostile/clockwork/marauder/AttackingTarget()
-	if(is_in_host())
-		return 0
-	..()
-
-/mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
-	if(!ratvar_awakens || amount < 0)
-		fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
-		update_fatigue()
-	else
-		amount = 0
-	return amount
-
-/mob/living/simple_animal/hostile/clockwork/marauder/verb/linked_minds() //Discreet communications between a marauder and its host
-	set name = "Linked Minds"
-	set desc = "Silently communicates with your master."
-	set category = "Marauder"
-
-	if(!host) //Verb isn't removed because they might gain one... somehow
-		usr << "<span class='warning'>You don't have a host!</span>"
-		return 0
-	var/message = stripped_input(usr, "Enter a message to tell your host.", "Telepathy")// as null|anything
-	if(!usr || !message)
-		return 0
-	if(!host)
-		usr << "<span class='warning'>Your host seems to have vanished!</span>"
-		return 0
-	message = "<span class='heavy_brass'>Marauder [true_name]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
-	usr << message
-	host << message
-	return 1
-
-/mob/living/proc/talk_with_marauder() //See above - this is the host version
+/mob/living/proc/talk_with_marauder() //hosts communicate via a verb, marauders just use :b
 	set name = "Linked Minds"
 	set desc = "Silently communicates with your marauder."
 	set category = "Clockwork"
@@ -287,7 +379,7 @@
 				marauder = C
 		if(!marauder) //Double-check afterwards
 			src << "<span class='warning'>You aren't hosting any marauders!</span>"
-			verbs -= src
+			verbs -= /mob/living/proc/talk_with_marauder
 			return 0
 	var/message = stripped_input(src, "Enter a message to tell your marauder.", "Telepathy")// as null|anything
 	if(!src || !message)
@@ -295,9 +387,13 @@
 	if(!marauder)
 		usr << "<span class='warning'>Your marauder seems to have vanished!</span>"
 		return 0
-	message = "<span class='heavy_brass'>Servant [name == real_name ? name : "[real_name] (as [name])"]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
+	message = "<span class='heavy_brass'>Servant [findtextEx(name, real_name) ? "[name]" : "[real_name] (as [name])"]:</span> <span class='brass'>\"[message]\"</span>" //Processed output
 	src << message
 	marauder << message
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, src)
+			M << "[link] [message]"
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name()
@@ -306,18 +402,17 @@
 	set category = "Marauder"
 
 	verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name
-	var/new_name = stripped_input(usr, "Enter a new true name (20-character limit).", "Change True Name")// as null|anything
+	var/new_name = stripped_input(usr, "Enter a new true name (10-character limit).", "Change True Name","", 11)
 	if(!usr)
 		return 0
 	if(!new_name)
 		usr << "<span class='notice'>You decide against changing your true name for now.</span>"
 		verbs += /mob/living/simple_animal/hostile/clockwork/marauder/verb/change_true_name //If they decide against it, let them have another opportunity
 		return 0
-	new_name = dd_limittext(new_name, 20)
 	true_name = new_name
-	usr << "<span class='userdanger'>You have changed your true name to \"[new_name]\"!</span>"
+	usr << "<span class='heavy_brass'>You have changed your true name to </span><span class='sevtug'>\"[new_name]\"</span><span class='heavy_brass'>!</span>"
 	if(host)
-		host << "<span class='userdanger'>Your clockwork marauder has changed their true name to \"[new_name]\"!</span>"
+		host << "<span class='heavy_brass'>Your clockwork marauder has changed their true name to </span><span class='sevtug'>\"[new_name]\"</span><span class='heavy_brass'>!</span>"
 	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host()
@@ -331,8 +426,8 @@
 		src << "<span class='warning'>You don't have a host!</span>"
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/return_to_host
 		return 0
-	host << "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>"
-	visible_message("<span class='warning'>[src] is yanked into [host]'s body!</span>", "<span class='brass'>You return to [host].</span>")
+	host.visible_message("<span class='warning'>[host]'s skin flashes crimson!</span>", "<span class='heavy_brass'>You feel [true_name]'s consciousness settle in your mind.</span>")
+	visible_message("<span class='warning'>[src] suddenly disappears!</span>", "<span class='heavy_brass'>You return to [host].</span>")
 	forceMove(host)
 	return 1
 
