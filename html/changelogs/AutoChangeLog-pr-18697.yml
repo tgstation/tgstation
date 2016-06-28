@@ -1,0 +1,7 @@
+author: "CoreOverload"
+delete-after: True
+changes: 
+  - rscadd: "Kinetic accelerator now supports seclite attachment."
+  - rscadd: "All cyborgs have been outfitted with ash-proof plating."
+  - rscadd: "Mining cyborg module now includes a welder and a fire extinguisher."
+  - rscadd: "Mining cyborgs now have a new upgrade: lavaproof tracks."
