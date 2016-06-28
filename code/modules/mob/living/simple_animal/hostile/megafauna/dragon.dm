@@ -66,21 +66,25 @@
 	return 1
 
 /obj/effect/overlay/temp/fireball
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
 	randomdir = 0
-	duration = 10
+	duration = 12
 	pixel_z = 500
+
+/obj/effect/overlay/temp/fireball/New(loc)
+	..()
+	animate(src, pixel_z = 0, time = 12)
 
 /obj/effect/overlay/temp/target
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
 	luminosity = 2
-	duration = 10
+	duration = 12
 
 /obj/effect/overlay/temp/dragon_swoop
 	name = "certain death"
@@ -96,22 +100,16 @@
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/New()
+/obj/effect/overlay/temp/target/New(loc)
 	..()
 	addtimer(src, "fall", 0)
 
 /obj/effect/overlay/temp/target/proc/fall()
 	var/turf/T = get_turf(src)
-	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-	var/obj/effect/overlay/temp/fireball/F = PoolOrNew(/obj/effect/overlay/temp/fireball,src.loc)
-	F.pixel_z = 500
-	T.color = rgb(255, 0, 0)
-	animate(T, color = initial(color), time = 20)
-	animate(F, pixel_z = 0, time = 12)
+	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+	PoolOrNew(/obj/effect/overlay/temp/fireball,T)
 	sleep(12)
 	explosion(T, 0, 0, 1, 0, 0, 0, 1)
-	qdel(F)
-	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -160,8 +158,7 @@
 		for(var/mob/living/L in J)
 			if(L != src)
 				L.adjustFireLoss(20)
-				L << "<span class='userdanger'>You're hit by the drake's \
-					fire breath!</span>"
+				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)

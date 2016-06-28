@@ -515,9 +515,6 @@
 	else if(is_revolutionary_in_general(user))
 		ticker.mode.add_revolutionary(G.mind)
 		golem_becomes_antag = TRUE
-	else if(is_shadow_or_thrall(user))
-		ticker.mode.add_thrall(G.mind)
-		golem_becomes_antag = TRUE
 	else if(is_servant_of_ratvar(user))
 		add_servant_of_ratvar(G)
 		golem_becomes_antag = TRUE

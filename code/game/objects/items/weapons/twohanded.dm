@@ -405,6 +405,12 @@
 	if(wielded)
 		. = ..()
 
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+	name = "OOOH BABY"
+	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	armour_penetration = 100
+
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
 	icon_state = "spearglass0"

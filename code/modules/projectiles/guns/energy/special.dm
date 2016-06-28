@@ -118,10 +118,13 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/emproof
 	// Apparently these are safe to carry? I'm sure goliaths would disagree.
 	needs_permit = 0
-	var/overheat_time = 16
 	unique_rename = 1
 	origin_tech = "combat=3;powerstorage=3;engineering=3"
 	weapon_weight = WEAPON_LIGHT
+	can_flashlight = 1
+	flight_x_offset = 15
+	flight_y_offset = 9
+	var/overheat_time = 16
 	var/holds_charge = FALSE
 	var/unique_frequency = FALSE // modified by KA modkits
 	var/overheat = FALSE
@@ -208,10 +211,16 @@
 	overheat = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
+	cut_overlays()
 	if(!can_shoot())
-		icon_state = "[initial(icon_state)]_empty"
-	else
-		icon_state = initial(icon_state)
+		add_overlay("kineticgun_empty")
+
+	if(F && can_flashlight)
+		var/iconF = "flight"
+		if(F.on)
+			iconF = "flight_on"
+		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
+
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
 	name = "mini energy crossbow"
@@ -228,6 +237,7 @@
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
+	can_flashlight = 0
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
 	name = "energy crossbow"

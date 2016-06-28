@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Adds some ruins for space and lavaland. Balance not included."
+  - rscadd: "Adds spooky ghosts."

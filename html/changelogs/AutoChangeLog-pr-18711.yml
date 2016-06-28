@@ -1,0 +1,4 @@
+author: "timkoster1"
+delete-after: True
+changes: 
+  - rscadd: "adds a hud soul counter for devils. Sprites by PouFrou and special thanks to lordpidey for about everything."

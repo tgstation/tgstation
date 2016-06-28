@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -213,7 +213,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "minerborg"
+			icon_state = "ashborg"
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
