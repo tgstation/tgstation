@@ -144,6 +144,7 @@ var/global/list/lawlorify = list (
 	soulsOwned += soul
 	H.nutrition = NUTRITION_LEVEL_FULL
 	owner.current << "<span class='warning'>You feel satiated as you received a new soul.</span>"
+	update_hud()
 	switch(SOULVALUE)
 		if(0)
 			owner.current << "<span class='warning'>Your hellish powers have been restored."
@@ -158,6 +159,8 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/remove_soul(datum/mind/soul)
 	if(soulsOwned.Remove(soul))
 		check_regression()
+		owner.current << "<span class='warning'>You feel as though a soul has slipped from your grasp.</span>"
+		update_hud()
 
 /datum/devilinfo/proc/check_regression()
 	if (form == ARCH_DEVIL)
@@ -199,6 +202,7 @@ var/global/list/lawlorify = list (
 	give_lizard_spells()
 	qdel(D)
 	form = BLOOD_LIZARD
+	update_hud()
 
 
 /datum/devilinfo/proc/increase_blood_lizard()
@@ -230,6 +234,7 @@ var/global/list/lawlorify = list (
 	A.set_name()
 	give_true_spells()
 	form = TRUE_DEVIL
+	update_hud()
 
 
 /datum/devilinfo/proc/increase_arch_devil()
@@ -383,6 +388,7 @@ var/global/list/lawlorify = list (
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber++
+		update_hud()
 	if(body)
 		body.revive(1,0)
 		if(istype(body.loc, /obj/effect/dummy/slaughter/))
@@ -426,3 +432,8 @@ var/global/list/lawlorify = list (
 			throw EXCEPTION("Unable to find a blobstart landmark for hellish resurrection")
 	check_regression()
 
+/datum/devilinfo/proc/update_hud()
+	if(istype(owner.current, /mob/living/carbon))
+		var/mob/living/C = owner.current
+		if(C.hud_used && C.hud_used.devilsouldisplay)
+			C.hud_used.devilsouldisplay.update_counter(SOULVALUE)
