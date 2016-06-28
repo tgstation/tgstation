@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Faked deaths are now effectively indistinguishable from real deaths."
