@@ -46,11 +46,21 @@
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
 	description = "Features include sentient bar staff (a Bardrone and a \
-		Barmaid), bathroom, a quality lounge for the heads, and a \
-		small gambling table."
+		Barmaid), bathroom, a quality lounge for the heads, and a large table.\
+		Comes with a full medbay."
+	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically \
+		sentienced by the fun balloon at 60 seconds before arrival. Has \
+		medical facilities."
+
+/datum/map_template/shuttle/emergency/bar2
+	suffix = "bar2"
+	name = "The Emergency Escape Bar2"
+	description = "An alternative to the other emergency bar. \
+		It has a full bathroom with sinks instead of a medical bay.  It has a statue in the bridge and \
+		wooden chairs instead of buckable bar stools.  Minor design differences to the other shuttle bar."
 	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically \
 		sentienced by the fun balloon at 60 seconds before arrival. No \
-		medical facilities."
+		medical facilities in this version."
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
