@@ -1,6 +1,2 @@
 author: Sood
-changes:
-    - rscadd: Adds a marker. The necromorph kind. Currently admin spawn only.
-    - rscadd: Players can click on the marker with their bare hand to become a necromorph, or drag another mob onto it to turn it into a necromorph.
-    - rscadd: Ghosts can sign up to be a necromorph by clicking on the marker. They will take control of the next mindless necromorph to spawn.
-    - tweak: Player necromorphs can now open doors.
+changes: []
