@@ -49,3 +49,9 @@
 	desc = "Although comfortable, this sleeper won't function as anything but a bed ever again."
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper_open"
+
+/obj/structure/fluff/broken_flooring
+	name = "broken tiling"
+	desc = "A segment of broken flooring"
+	icon = 'icons/obj/brokentiling.dmi'
+	icon_state = "corner"
