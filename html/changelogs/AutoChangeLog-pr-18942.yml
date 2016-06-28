@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "All items inside the supply shuttle will now be sold, regardless of whether they're inside a container or not."
