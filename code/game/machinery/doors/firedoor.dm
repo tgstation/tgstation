@@ -215,9 +215,6 @@ var/global/list/alert_overlays_global = list()
 /obj/machinery/door/firedoor/attack_hand(mob/user as mob)
 	return attackby(null, user)
 
-/obj/machinery/door/firedoor/attack_animal(mob/user as mob)
-	return attackby(null, user)
-
 /obj/machinery/door/firedoor/attackby(obj/item/weapon/C as obj, mob/user as mob)
 	add_fingerprint(user)
 	if(operating)
@@ -269,6 +266,9 @@ var/global/list/alert_overlays_global = list()
 		if(check_access(ID))
 			access_granted = 1
 
+	var/answer = "Yes"
+	if(answer == "No")
+		return
 	if(user.locked_to)
 		if(!istype(user.locked_to, /obj/structure/bed/chair/vehicle))
 			to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
@@ -276,11 +276,6 @@ var/global/list/alert_overlays_global = list()
 	if(user.incapacitated() || get_dist(src, user) > 1)
 		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
 		return
-
-	if(isanimal(user))
-		var/mob/living/simple_animal/SA = user
-		if(SA.can_open_doors)
-			access_granted = 1
 
 	if(alarmed && density && lockdown && !access_granted/* && !( users_name in users_to_open ) */)
 		// Too many shitters on /vg/ for the honor system to work.

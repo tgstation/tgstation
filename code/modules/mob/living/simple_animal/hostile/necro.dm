@@ -78,7 +78,6 @@
 	minbodytemp = 0
 
 	environment_smash = 1
-	can_open_doors = 1
 
 /mob/living/simple_animal/hostile/necro/New(loc, mob/living/Owner, datum/mind/Controller)
 	..()

@@ -114,10 +114,6 @@ var/list/all_doors = list()
 
 	if(allowed(user))
 		open()
-	else if(isanimal(user))
-		var/mob/living/simple_animal/SA = user
-		if(SA.can_open_doors)
-			open()
 	else if(!operating)
 		playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 		door_animate("deny")
@@ -132,9 +128,6 @@ var/list/all_doors = list()
 /obj/machinery/door/attack_paw(mob/user as mob)
 	attack_hand(user)
 	return
-
-/obj/machinery/door/attack_animal(mob/user as mob)
-	attack_hand(user)
 
 /obj/machinery/door/attack_hand(mob/user as mob)
 	if (prob(HEADBUTT_PROBABILITY) && density && ishuman(user))
@@ -188,10 +181,6 @@ var/list/all_doors = list()
 			return close()
 		else
 			return open()
-	else if(isanimal(user))
-		var/mob/living/simple_animal/SA = user
-		if(SA.can_open_doors)
-			open()
 
 	playsound(src.loc, 'sound/machines/denied.ogg', 50, 1)
 	if(density) //Why are we playing a denied animation on an OPEN DOOR
