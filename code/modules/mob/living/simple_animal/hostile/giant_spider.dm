@@ -48,6 +48,29 @@
 	gold_core_spawnable = 1
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
+	var/playable_spider = FALSE
+
+/mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
+	if(href_list["activate"])
+		var/mob/dead/observer/ghost = usr
+		if(istype(ghost) && playable_spider)
+			humanize_spider(ghost)
+
+/mob/living/simple_animal/hostile/poison/giant_spider/attack_ghost(mob/user)
+	if(!humanize_spider(user))
+		return ..()
+
+/mob/living/simple_animal/hostile/poison/giant_spider/proc/humanize_spider(mob/user)
+	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
+		return 0
+	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
+	if(spider_ask == "No" || !src || qdeleted(src))
+		return 1
+	if(key)
+		user << "<span class='notice'>Someone else already took this spider.</span>"
+		return 1
+	key = user.key
+	return 1
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse
@@ -85,7 +108,7 @@
 		//1% chance to skitter madly away
 		if(!busy && prob(1))
 			stop_automated_movement = 1
-			Goto(pick(ultra_range(20, src, 1)), move_to_delay)
+			Goto(pick(urange(20, src, 1)), move_to_delay)
 			spawn(50)
 				stop_automated_movement = 0
 				walk(src,0)
@@ -116,13 +139,11 @@
 			//second, spin a sticky spiderweb on this tile
 			var/obj/effect/spider/stickyweb/W = locate() in get_turf(src)
 			if(!W)
-				spawn()
-					Web()
+				Web()
 			else
 				//third, lay an egg cluster there
 				if(fed)
-					spawn()
-						LayEggs()
+					LayEggs()
 				else
 					//fourthly, cocoon any nearby items so those pesky pinkskins can't use them
 					for(var/obj/O in can_see)
@@ -140,8 +161,7 @@
 
 		else if(busy == MOVING_TO_TARGET && cocoon_target)
 			if(get_dist(src, cocoon_target) <= 1)
-				spawn()
-					Wrap()
+				Wrap()
 
 	else
 		busy = 0
@@ -186,7 +206,7 @@
 				choices += O
 		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
 
-	if(cocoon_target && busy != SPINNING_COCOON)
+	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		busy = SPINNING_COCOON
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
@@ -199,26 +219,26 @@
 					C.pixel_x = cocoon_target.pixel_x
 					C.pixel_y = cocoon_target.pixel_y
 					for(var/obj/item/I in C.loc)
-						I.loc = C
+						I.forceMove(C)
 					for(var/obj/structure/S in C.loc)
 						if(!S.anchored)
-							S.loc = C
+							S.forceMove(C)
 							large_cocoon = 1
 					for(var/obj/machinery/M in C.loc)
 						if(!M.anchored)
-							M.loc = C
+							M.forceMove(C)
 							large_cocoon = 1
 					for(var/mob/living/L in C.loc)
 						if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
 							continue
 						large_cocoon = 1
-						L.loc = C
+						L.forceMove(C)
 						C.pixel_x = L.pixel_x
 						C.pixel_y = L.pixel_y
 						fed++
 						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
-
 						break
+
 					if(large_cocoon)
 						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 		cocoon_target = null
@@ -250,7 +270,7 @@
 						C.player_spiders = 1
 					C.poison_type = poison_type
 					C.poison_per_bite = poison_per_bite
-					C.faction = faction
+					C.faction = faction.Copy()
 					fed--
 		busy = 0
 		stop_automated_movement = 0

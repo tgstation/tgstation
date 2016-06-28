@@ -18,9 +18,9 @@ var/admin_substr  = "admins=" // search for this to locate # of admins
 world
 	name = "TGstation Redirector"
 
-	New()
-		..()
-		gen_configs()
+world/New()
+	..()
+	gen_configs()
 
 /datum/server
 	var/players = 0

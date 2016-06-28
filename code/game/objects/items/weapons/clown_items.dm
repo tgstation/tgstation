@@ -16,6 +16,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "soap"
 	w_class = 1
+	flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -63,7 +64,7 @@
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You scrub \the [target.name] out.</span>"
 			qdel(target)
-	else if(ishuman(target) && user.zone_sel && user.zone_sel.selecting == "mouth")
+	else if(ishuman(target) && user.zone_selected == "mouth")
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
 	else if(istype(target, /obj/structure/window))
@@ -79,6 +80,7 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.clean_blood()
+			target.wash_cream()
 	return
 
 
@@ -133,3 +135,28 @@
 	icon_state = "air_horn"
 	honksound = 'sound/items/AirHorn2.ogg'
 	cooldowntime = 50
+	origin_tech = "materials=4;engineering=4"
+
+/obj/item/weapon/bikehorn/golden
+	name = "golden bike horn"
+	desc = "Golden? Clearly, its made with bananium! Honk!"
+	icon_state = "gold_horn"
+	item_state = "gold_horn"
+
+/obj/item/weapon/bikehorn/golden/attack()
+	flip_mobs()
+	return ..()
+
+/obj/item/weapon/bikehorn/golden/attack_self(mob/user)
+	flip_mobs()
+	..()
+
+/obj/item/weapon/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
+	if (!spam_flag)
+		var/turf/T = get_turf(src)
+		for(M in ohearers(7, T))
+			if(istype(M, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = M
+				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
+					continue
+			M.emote("flip")

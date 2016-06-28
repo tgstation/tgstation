@@ -24,12 +24,10 @@
 	..(loc)
 	if(pipe_type)
 		ptype = pipe_type
-		if(!is_pipe())    // bins/chutes/outlets are dense
-			density = 1
-	dir = direction
+	setDir(direction)
 
 // update iconstate and dpdir due to dir and type
-/obj/structure/disposalconstruct/proc/update()
+/obj/structure/disposalconstruct/update_icon()
 	var/flip = turn(dir, 180)
 	var/left = turn(dir, 90)
 	var/right = turn(dir, -90)
@@ -88,8 +86,8 @@
 // hide called by levelupdate if turf intact status changes
 // change visibility status and force update of icon
 /obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-	update()
+	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
+	update_icon()
 
 
 // flip and rotate verbs
@@ -105,8 +103,8 @@
 		usr << "<span class='warning'>You must unfasten the pipe before rotating it!</span>"
 		return
 
-	dir = turn(dir, -90)
-	update()
+	setDir(turn(dir, -90))
+	update_icon()
 
 /obj/structure/disposalconstruct/AltClick(mob/user)
 	..()
@@ -129,7 +127,7 @@
 		usr << "<span class='warning'>You must unfasten the pipe before flipping it!</span>"
 		return
 
-	dir = turn(dir, 180)
+	setDir(turn(dir, 180))
 	switch(ptype)
 		if(DISP_JUNCTION)
 			ptype = DISP_JUNCTION_FLIP
@@ -140,7 +138,7 @@
 		if(DISP_SORTJUNCTION_FLIP)
 			ptype = DISP_SORTJUNCTION
 
-	update()
+	update_icon()
 
 // returns the type path of disposalpipe corresponding to this item dtype
 /obj/structure/disposalconstruct/proc/dpipetype()
@@ -184,11 +182,11 @@
 			nicetype = "pipe"
 
 	var/turf/T = loc
-	if(T.intact && istype(T, /turf/simulated/floor))
+	if(T.intact && istype(T, /turf/open/floor))
 		user << "<span class='warning'>You can only attach the [nicetype] if the floor plating is removed!</span>"
 		return
 
-	if(!ispipe && istype(T, /turf/simulated/wall))
+	if(!ispipe && istype(T, /turf/closed/wall))
 		user << "<span class='warning'>You can't build [nicetype]s on walls, only disposal pipes!</span>"
 		return
 
@@ -199,9 +197,7 @@
 			anchored = 0
 			if(ispipe)
 				level = 2
-				density = 0
-			else
-				density = 1
+			density = 0
 			user << "<span class='notice'>You detach the [nicetype] from the underfloor.</span>"
 		else
 			if(!is_pipe()) // Disposal or outlet
@@ -214,7 +210,7 @@
 					return
 			else
 				if(CP)
-					update()
+					update_icon()
 					var/pdir = CP.dpdir
 					if(istype(CP, /obj/structure/disposalpipe/broken))
 						pdir = CP.dir
@@ -224,12 +220,10 @@
 			anchored = 1
 			if(ispipe)
 				level = 1 // We don't want disposal bins to disappear under the floors
-				density = 0
-			else
-				density = 1 // We don't want disposal bins or outlets to go density 0
+			density = 0
 			user << "<span class='notice'>You attach the [nicetype] to the underfloor.</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-		update()
+		update_icon()
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
@@ -241,7 +235,7 @@
 					if(!loc || !W.isOn())
 						return
 					user << "<span class='notice'>The [nicetype] has been welded in place.</span>"
-					update() // TODO: Make this neat
+					update_icon() // TODO: Make this neat
 
 					if(ispipe)
 						var/pipetype = dpipetype()

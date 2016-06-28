@@ -57,14 +57,14 @@
 	result = "salglu_solution"
 	required_reagents = list("sodiumchloride" = 1, "water" = 1, "sugar" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve
 	name = "Miner's Salve"
 	id = "mine_salve"
 	result = "mine_salve"
 	required_reagents = list("oil" = 1, "water" = 1, "iron" = 1)
 	result_amount = 3
-	
+
 /datum/chemical_reaction/mine_salve2
 	name = "Miner's Salve"
 	id = "mine_salve"
@@ -213,5 +213,38 @@
 	required_reagents = list("stable_plasma" = 1, "acetone" = 1, "mutagen" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/haloperidol
+	name = "Haloperidol"
+	id = "haloperidol"
+	result = "haloperidol"
+	required_reagents = list("chlorine" = 1, "fluorine" = 1, "aluminium" = 1, "potass_iodide" = 1, "oil" = 1)
+	result_amount = 5
+
+/datum/chemical_reaction/bicaridine
+	name = "Bicaridine"
+	id = "bicaridine"
+	result = "bicaridine"
+	required_reagents = list("carbon" = 1, "oxygen" = 1, "sugar" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/kelotane
+	name = "Kelotane"
+	id = "kelotane"
+	result = "kelotane"
+	required_reagents = list("carbon" = 1, "silicon" = 1)
+	result_amount = 2
 
 
+/datum/chemical_reaction/antitoxin
+	name = "Antitoxin"
+	id = "antitoxin"
+	result = "antitoxin"
+	required_reagents = list("nitrogen" = 1, "silicon" = 1, "potassium" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/tricordrazine
+	name = "Tricordrazine"
+	id = "tricordrazine"
+	result = "tricordrazine"
+	required_reagents = list("bicaridine" = 1, "kelotane" = 1, "antitoxin" = 1)
+	result_amount = 3

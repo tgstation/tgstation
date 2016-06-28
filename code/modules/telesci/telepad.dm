@@ -12,14 +12,19 @@
 
 /obj/machinery/telepad/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/ore/bluespace_crystal/artificial(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/stack/cable_coil(null, 1)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/telesci_pad(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/telesci_pad
+	name = "circuit board (Telepad)"
+	build_path = /obj/machinery/telepad
+	origin_tech = "programming=4;engineering=3;plasmatech=4;bluespace=4"
+	req_components = list(
+							/obj/item/weapon/ore/bluespace_crystal = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
 /obj/machinery/telepad/RefreshParts()
 	var/E
@@ -36,11 +41,15 @@
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			user << "<span class='caution'>You save the data in the [I.name]'s buffer.</span>"
+			return 1
 
 	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
+	if(default_deconstruction_crowbar(I))
+		return
+
+	return ..()
 
 
 //CARGO TELEPAD//
@@ -64,7 +73,7 @@
 		else if(!anchored)
 			anchored = 1
 			user << "<span class='caution'>\The [src] is now secured.</span>"
-	if(istype(W, /obj/item/weapon/screwdriver))
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='caution'>You unscrew the telepad's tracking beacon.</span>"
@@ -73,12 +82,20 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			user << "<span class='caution'>You screw in the telepad's tracking beacon.</span>"
 			stage = 0
-	if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
-		playsound(src, 'sound/items/Welder.ogg', 50, 1)
-		user << "<span class='caution'>You disassemble the telepad.</span>"
-		new /obj/item/stack/sheet/metal(get_turf(src))
-		new /obj/item/stack/sheet/glass(get_turf(src))
-		qdel(src)
+	else if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.remove_fuel(0,user))
+			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			user << "<span class='notice'>You start disassembling [src]...</span>"
+			if(do_after(user,20/WT.toolspeed, target = src))
+				if(!WT.isOn())
+					return
+				user << "<span class='notice'>You disassemble [src].</span>"
+				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/stack/sheet/glass(get_turf(src))
+				qdel(src)
+	else
+		return ..()
 
 ///TELEPAD CALLER///
 /obj/item/device/telepad_beacon
@@ -119,14 +136,14 @@
 
 /obj/item/weapon/rcs/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	user << "There are [rcharges] charge\s left."
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 /obj/item/weapon/rcs/process()
 	if(rcharges > 10)

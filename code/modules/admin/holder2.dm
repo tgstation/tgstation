@@ -16,12 +16,12 @@ var/list/admin_datums = list()
 
 /datum/admins/New(datum/admin_rank/R, ckey)
 	if(!ckey)
-		spawn(-1)
+		spawn(0)
 			del(src)
 		throw EXCEPTION("Admin datum created without a ckey")
 		return
 	if(!istype(R))
-		spawn(-1)
+		spawn(0)
 			del(src)
 		throw EXCEPTION("Admin datum created without a rank")
 		return
@@ -86,13 +86,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 				return 1
 			return usr.client.holder.check_if_greater_rights_than_holder(other.holder)
 	return 0
-
-/client/proc/deadmin()
-	admin_datums -= ckey
-	if(holder)
-		holder.disassociate()
-		del(holder)
-	return 1
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)

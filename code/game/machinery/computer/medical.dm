@@ -6,7 +6,7 @@
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(access_medical, access_forensics_lockers)
-	circuit = /obj/item/weapon/circuitboard/med_data
+	circuit = /obj/item/weapon/circuitboard/computer/med_data
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -28,7 +28,7 @@
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/med_data/attack_hand(mob/user)
 	if(..())
@@ -171,7 +171,8 @@
 					dat += "<br><b>Medical Robots:</b>"
 					var/bdat = null
 					for(var/mob/living/simple_animal/bot/medbot/M in living_mob_list)
-						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
+						if(M.z != src.z)
+							continue	//only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
 						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
@@ -562,35 +563,31 @@
 	return
 
 /obj/machinery/computer/med_data/emp_act(severity)
-	if(stat & (BROKEN|NOPOWER))
-		..(severity)
-		return
+	if(!(stat & (BROKEN|NOPOWER)))
+		for(var/datum/data/record/R in data_core.medical)
+			if(prob(10/severity))
+				switch(rand(1,6))
+					if(1)
+						if(prob(10))
+							R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
+						else
+							R.fields["name"] = random_unique_name(R.fields["sex"],1)
+					if(2)
+						R.fields["sex"]	= pick("Male", "Female")
+					if(3)
+						R.fields["age"] = rand(AGE_MIN, AGE_MAX)
+					if(4)
+						R.fields["blood_type"] = random_blood_type()
+					if(5)
+						R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					if(6)
+						R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
+				continue
 
-	for(var/datum/data/record/R in data_core.medical)
-		if(prob(10/severity))
-			switch(rand(1,6))
-				if(1)
-					if(prob(10))
-						R.fields["name"] = random_unique_lizard_name(R.fields["sex"],1)
-					else
-						R.fields["name"] = random_unique_name(R.fields["sex"],1)
-				if(2)
-					R.fields["sex"]	= pick("Male", "Female")
-				if(3)
-					R.fields["age"] = rand(AGE_MIN, AGE_MAX)
-				if(4)
-					R.fields["blood_type"] = random_blood_type()
-				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
-				if(6)
-					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
-			continue
-
-		else if(prob(1))
-			qdel(R)
-			continue
-
-	..(severity)
+			else if(prob(1))
+				qdel(R)
+				continue
+	..()
 
 /obj/machinery/computer/med_data/proc/canUseMedicalRecordsConsole(mob/user, message = 1, record1, record2)
 	if(user)
@@ -608,3 +605,4 @@
 	icon_state = "laptop"
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
+	clockwork = TRUE //it'd look weird

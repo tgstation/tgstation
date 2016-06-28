@@ -1,12 +1,12 @@
 /proc/attempt_initiate_surgery(obj/item/I, mob/living/M, mob/user)
 	if(istype(M))
 		var/mob/living/carbon/human/H
-		var/obj/item/organ/limb/affecting
-		var/selected_zone = user.zone_sel.selecting
+		var/obj/item/bodypart/affecting
+		var/selected_zone = user.zone_selected
 
 		if(istype(M, /mob/living/carbon/human))
 			H = M
-			affecting = H.get_organ(check_zone(selected_zone))
+			affecting = H.get_bodypart(check_zone(selected_zone))
 
 		if(M.lying || isslime(M))	//if they're prone or a slime
 			var/datum/surgery/current_surgery
@@ -22,11 +22,15 @@
 				for(var/datum/surgery/S in all_surgeries)
 					if(!S.possible_locs.Find(selected_zone))
 						continue
-					if(affecting && S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+					if(affecting)
+						if(!S.requires_bodypart)
+							continue
+						if(S.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+							continue
+					else if(H && S.requires_bodypart) //human with no limb in surgery zone when we need a limb
 						continue
 					if(!S.can_start(user, M))
 						continue
-
 					for(var/path in S.species)
 						if(istype(M, path))
 							available_surgeries[S.name] = S
@@ -35,9 +39,28 @@
 				var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
 				if(P && user && user.Adjacent(M) && (I in user))
 					var/datum/surgery/S = available_surgeries[P]
+
+					for(var/datum/surgery/other in M.surgeries)
+						if(other.location == S.location)
+							return //during the input() another surgery was started at the same location.
+
 					var/datum/surgery/procedure = new S.type
 					if(procedure)
 						procedure.location = selected_zone
+
+						//we check that the surgery is still doable after the input() wait.
+						if(H)
+							affecting = H.get_bodypart(check_zone(selected_zone))
+						if(affecting)
+							if(!procedure.requires_bodypart)
+								return
+							if(procedure.requires_organic_bodypart && affecting.status == ORGAN_ROBOTIC)
+								return
+						else if(H && procedure.requires_bodypart)
+							return
+						if(!procedure.can_start(user, M))
+							return
+
 						if(procedure.ignore_clothes || get_location_accessible(M, selected_zone))
 							M.surgeries += procedure
 							procedure.organ = affecting
@@ -81,9 +104,9 @@ proc/get_location_modifier(mob/M)
 
 
 /proc/get_location_accessible(mob/M, location)
-	var/covered_locations	= 0	//based on body_parts_covered
-	var/face_covered		= 0	//based on flags_inv
-	var/eyesmouth_covered	= 0	//based on flags
+	var/covered_locations = 0	//based on body_parts_covered
+	var/face_covered = 0	//based on flags_inv
+	var/eyesmouth_covered = 0	//based on flags_cover
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		for(var/obj/item/clothing/I in list(C.back, C.wear_mask, C.head))

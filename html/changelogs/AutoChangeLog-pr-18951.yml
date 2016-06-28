@@ -1,0 +1,4 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - rscdel: "Shadowlings have been completely removed."

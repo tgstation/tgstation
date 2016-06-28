@@ -20,6 +20,8 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else
+		return ..()
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -38,7 +40,7 @@
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(!src.buckled_mob)
+		if(!has_buckled_mobs())
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
 				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
@@ -48,42 +50,40 @@
 				qdel(src)
 		else
 			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
-		return
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(istype(G.affecting, /mob/living/))
-			if(!buckled_mob)
-				if(do_mob(user, src, 120))
-					if(buckled_mob) //to prevent spam/queing up attacks
-						return
-					if(G.affecting.buckled)
-						return
-					var/mob/living/H = G.affecting
-					playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
-					H.visible_message("<span class='danger'>[user] slams [G.affecting] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-					H.loc = src.loc
-					H.emote("scream")
-					if(istype(H, /mob/living/carbon/human)) //So you don't get human blood when you spike a giant spidere
-						var/turf/pos = get_turf(H)
-						pos.add_blood_floor(H)
-					H.adjustBruteLoss(30)
-					H.buckled = src
-					H.dir = 2
-					buckled_mob = H
-					var/matrix/m180 = matrix(H.transform)
-					m180.Turn(180)
-					animate(H, transform = m180, time = 3)
-					H.pixel_y = H.get_standard_pixel_y_offset(180)
-					return
-		user << "<span class='danger'>You can't use that on the spike!</span>"
-		return
-	..()
+	else
+		return ..()
+
+/obj/structure/kitchenspike/attack_hand(mob/user)
+	if(isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
+		var/mob/living/L = user.pulling
+		if(do_mob(user, src, 120))
+			if(has_buckled_mobs()) //to prevent spam/queing up attacks
+				return
+			if(L.buckled)
+				return
+			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+			L.loc = src.loc
+			L.emote("scream")
+			L.add_splatter_floor()
+			L.adjustBruteLoss(30)
+			L.buckled = src
+			L.setDir(2)
+			buckle_mob(L, force=1)
+			var/matrix/m180 = matrix(L.transform)
+			m180.Turn(180)
+			animate(L, transform = m180, time = 3)
+			L.pixel_y = L.get_standard_pixel_y_offset(180)
+	else
+		..()
+
+
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
 
-/obj/structure/kitchenspike/user_unbuckle_mob(mob/living/carbon/human/user)
-	if(buckled_mob && buckled_mob.buckled == src)
+/obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/living/carbon/human/user)
+	if(buckled_mob)
 		var/mob/living/M = buckled_mob
 		if(M != user)
 			M.visible_message(\
@@ -115,6 +115,6 @@
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
-		unbuckle_mob()
+		unbuckle_mob(M,force=1)
 		M.emote("scream")
 		M.AdjustWeakened(10)

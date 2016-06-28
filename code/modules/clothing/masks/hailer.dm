@@ -4,15 +4,15 @@
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
 	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device. Plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
-	action_button_name = "HALT!"
+	actions_types = list(/datum/action/item_action/halt, /datum/action/item_action/adjust)
 	icon_state = "sechailer"
-	ignore_maskadjust = 0
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACIALHAIR|HIDEFACE
 	w_class = 2
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -21,10 +21,11 @@
 /obj/item/clothing/mask/gas/sechailer/swat
 	name = "\improper SWAT mask"
 	desc = "A close-fitting tactical mask with an especially aggressive Compli-o-nator 3000."
-	action_button_name = "HALT!"
+	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
 	aggressiveness = 3
-	ignore_maskadjust = 1
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
+	visor_flags_inv = 0
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
 	name = "security hailer"
@@ -32,11 +33,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "taperecorder_idle"
 	aggressiveness = 1 //Borgs are nicecurity!
-	ignore_maskadjust = 1
-
-/obj/item/clothing/mask/gas/sechailer/cyborg/New()
-	..()
-	verbs -= /obj/item/clothing/mask/gas/sechailer/verb/adjust
+	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
@@ -59,10 +56,11 @@
 	else
 		..()
 
-/obj/item/clothing/mask/gas/sechailer/verb/adjust()
-	set category = "Object"
-	set name = "Adjust Mask"
-	adjustmask(usr)
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/halt)
+		halt()
+	else
+		adjustmask(user)
 
 /obj/item/clothing/mask/gas/sechailer/attack_self()
 	halt()
@@ -165,7 +163,7 @@
 				phrase_text = "I am, the LAW!"
 				phrase_sound = "dredd"
 
-		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
+		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time

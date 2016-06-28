@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	origin_tech = "programming=3;bluespace=2;syndicate=5"
+	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
@@ -41,8 +41,8 @@
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
-		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
+		if(gang.is_dominating)
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
@@ -107,30 +107,6 @@
 
 			dat += "<br>"
 
-		//////////////////
-		// MARTIAL ARTS //
-		//////////////////
-
-		else if(gang.fighting_style == "martial")
-			dat += "(10 Influence) "
-			if(points >= 10)
-				dat += "<a href='?src=\ref[src];purchase=bostaff'>Bo Staff</a><br>"
-			else
-				dat += "Bo Staff<br>"
-
-			dat += "(20 Influence) "
-			if(points >= 20)
-				dat += "<a href='?src=\ref[src];purchase=wrestlingbelt'>Wrestling Belt</a><br>"
-			else
-				dat += "Wrestling Belt<br>"
-
-			dat += "(30 Influence) "
-			if(points >= 30)
-				dat += "<a href='?src=\ref[src];purchase=scroll'>Sleeping Carp Scroll (one-use)</a><br>"
-			else
-				dat += "Sleeping Carp Scroll (one-use)<br>"
-			dat += "<br>"
-
 		////////////////////////
 		// STANDARD EQUIPMENT //
 		////////////////////////
@@ -181,7 +157,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -252,7 +228,7 @@
 					pointcost = 10
 			if("C4")
 				if(gang.points >= 10)
-					item_type = /obj/item/weapon/c4
+					item_type = /obj/item/weapon/grenade/plastic/c4
 					pointcost = 10
 			if("pen")
 				if((gang.points >= 50) || free_pen)
@@ -282,7 +258,7 @@
 
 				var/area/usrarea = get_area(usr.loc)
 				var/usrturf = get_turf(usr.loc)
-				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/space) || usr.z != 1)
+				if(initial(usrarea.name) == "Space" || istype(usrturf,/turf/open/space) || usr.z != 1)
 					usr << "<span class='warning'>You can only use this on the station!</span>"
 					return
 
@@ -305,7 +281,7 @@
 			if(ispath(item_type))
 				var/obj/purchased = new item_type(get_turf(usr),gang)
 				var/mob/living/carbon/human/H = usr
-				H.put_in_any_hand_if_possible(purchased)
+				H.put_in_hands(purchased)
 				if(pointcost)
 					gang.message_gangtools("A [href_list["purchase"]] was purchased by [usr.real_name] for [pointcost] Influence.")
 			log_game("A [href_list["purchase"]] was purchased by [key_name(usr)] ([gang.name] Gang) for [pointcost] Influence.")
@@ -358,7 +334,8 @@
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << ping
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [ping]"
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 

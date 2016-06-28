@@ -77,25 +77,25 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 2
+						T.setDir(2)
 		if("koran")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 4
+						T.setDir(4)
 		if("scientology")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 8
-		if("athiest")
+						T.setDir(8)
+		if("atheist")
 			for(var/area/chapel/main/A in world)
 				for(var/turf/T in A.contents)
 					if(T.icon_state == "carpetsymbol")
-						T.dir = 10
+						T.setDir(10)
 
 /obj/item/weapon/storage/book/bible/Topic(href, href_list)
-	if(href_list["seticon"])
+	if(href_list["seticon"] && ticker && !ticker.Bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 
 		var/biblename = biblenames[iconi]
@@ -118,7 +118,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/heal_amt = 10
-		for(var/obj/item/organ/limb/affecting in H.organs)
+		for(var/obj/item/bodypart/affecting in H.bodyparts)
 			if(affecting.status == ORGAN_ORGANIC) //No Bible can heal a robotic arm!
 				if(affecting.heal_damage(heal_amt, heal_amt, 0))
 					H.update_damage_overlays(0)
@@ -155,7 +155,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/message_halt = 0
-				for(var/obj/item/organ/limb/affecting in H.organs)
+				for(var/obj/item/bodypart/affecting in H.bodyparts)
 					if(affecting.status == ORGAN_ORGANIC)
 						if(message_halt == 0)
 							M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
@@ -186,7 +186,7 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)
 	if(!proximity)
 		return
-	if (istype(A, /turf/simulated/floor))
+	if (istype(A, /turf/open/floor))
 		user << "<span class='notice'>You hit the floor with the bible.</span>"
 		if(user.mind && (user.mind.assigned_role == "Chaplain"))
 			for(var/obj/effect/rune/R in orange(2,user))
@@ -205,4 +205,4 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 
 /obj/item/weapon/storage/book/bible/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
-	..()
+	return ..()

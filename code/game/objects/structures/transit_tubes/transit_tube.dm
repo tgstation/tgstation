@@ -6,7 +6,7 @@
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = 1
-	layer = 3.1
+	layer = ABOVE_OBJ_LAYER
 	anchored = 1
 	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
@@ -54,9 +54,11 @@ obj/structure/transit_tube/ex_act(severity, target)
 				R.add_fingerprint(user)
 				src.destroy_diagonals()
 				qdel(src)
-	if(istype(W, /obj/item/weapon/crowbar))
+	else if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
+	else
+		return ..()
 
 //destroys disconnected decorative diagonals
 /obj/structure/transit_tube/proc/destroy_diagonals()
@@ -262,7 +264,7 @@ obj/structure/transit_tube/ex_act(severity, target)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = text2list(text, "-")
+	var/list/split_text = splittext(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually

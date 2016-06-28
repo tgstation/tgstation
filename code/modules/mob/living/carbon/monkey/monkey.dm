@@ -6,7 +6,8 @@
 	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
-	languages = MONKEY
+	languages_spoken = MONKEY
+	languages_understood = MONKEY
 	ventcrawler = 1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
 	type_of_meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/monkey
@@ -17,16 +18,27 @@
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
 
-	gender = pick(MALE, FEMALE)
+	if(unique_name) //used to exclude pun pun
+		gender = pick(MALE, FEMALE)
 	real_name = name
+
+	//initialize limbs, currently only used to handle cavity implant surgery, no dismemberment.
+	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
+					 /obj/item/bodypart/r_arm, /obj/item/bodypart/r_leg, /obj/item/bodypart/l_leg)
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/O = X
+		O.owner = src
+
 	if(good_mutations.len) //genetic mutations have been set up.
 		initialize()
 
-	internal_organs += new /obj/item/organ/internal/appendix
-	internal_organs += new /obj/item/organ/internal/heart
-	internal_organs += new /obj/item/organ/internal/brain
+	internal_organs += new /obj/item/organ/appendix
+	internal_organs += new /obj/item/organ/lungs
+	internal_organs += new /obj/item/organ/heart
+	internal_organs += new /obj/item/organ/brain
+	internal_organs += new /obj/item/organ/tongue
 
-	for(var/obj/item/organ/internal/I in internal_organs)
+	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
 	..()
@@ -34,13 +46,6 @@
 /mob/living/carbon/monkey/initialize()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
-
-/mob/living/carbon/monkey/prepare_data_huds()
-	//Prepare our med HUD...
-	..()
-	//...and display it.
-	for(var/datum/atom_hud/data/human/medical/hud in huds)
-		hud.add_to_hud(src)
 
 /mob/living/carbon/monkey/movement_delay()
 	if(reagents)
@@ -96,10 +101,8 @@
 					damage = rand(10, 15)
 					if ( (paralysis < 5)  && (health > 0) )
 						Paralyse(rand(10, 15))
-						spawn( 0 )
-							visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
+						visible_message("<span class='danger'>[M] has knocked out [name]!</span>", \
 									"<span class='userdanger'>[M] has knocked out [name]!</span>")
-							return
 				adjustBruteLoss(damage)
 				add_logs(M, src, "attacked")
 				updatehealth()
@@ -107,7 +110,6 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [name]!</span>", \
 						"<span class='userdanger'>[M] has attempted to punch [name]!</span>")
-
 		if("disarm")
 			if (!( paralysis ))
 				M.do_attack_animation(src)
@@ -122,7 +124,6 @@
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						visible_message("<span class='danger'>[M] has disarmed [src]!</span>", \
 								"<span class='userdanger'>[M] has disarmed [src]!</span>")
-	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(..()) //if harm or disarm intent.
@@ -264,7 +265,7 @@
 		if(judgebot.check_for_weapons(r_hand))
 			threatcount += 4
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -303,3 +304,20 @@
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
 	return number
+
+/mob/living/carbon/monkey/fully_heal(admin_revive = 0)
+	if(!getorganslot("lungs"))
+		var/obj/item/organ/lungs/L = new()
+		L.Insert(src)
+	if(!getorganslot("tongue"))
+		var/obj/item/organ/tongue/T = new()
+		T.Insert(src)
+	..()
+
+/mob/living/carbon/monkey/IsVocal()
+	if(!getorganslot("lungs"))
+		return 0
+	return 1
+
+/mob/living/carbon/monkey/can_use_guns(var/obj/item/weapon/gun/G)
+	return 1

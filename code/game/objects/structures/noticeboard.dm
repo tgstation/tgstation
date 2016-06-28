@@ -29,6 +29,8 @@
 			user << "<span class='notice'>You pin the paper to the noticeboard.</span>"
 		else
 			user << "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>"
+	else
+		return ..()
 
 /obj/structure/noticeboard/attack_hand(mob/user)
 	var/dat = "<B>Noticeboard</B><BR>"

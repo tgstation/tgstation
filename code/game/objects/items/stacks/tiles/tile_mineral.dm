@@ -4,7 +4,7 @@
 	desc = "A tile made out of highly flammable plasma. This can only end well."
 	icon_state = "tile_plasma"
 	origin_tech = "plasmatech=1"
-	turf_type = /turf/simulated/floor/mineral/plasma
+	turf_type = /turf/open/floor/mineral/plasma
 	mineralType = "plasma"
 	materials = list(MAT_PLASMA=500)
 
@@ -13,8 +13,7 @@
 	singular_name = "uranium floor tile"
 	desc = "A tile made out of uranium. You feel a bit woozy."
 	icon_state = "tile_uranium"
-	origin_tech = "materials=1"
-	turf_type = /turf/simulated/floor/mineral/uranium
+	turf_type = /turf/open/floor/mineral/uranium
 	mineralType = "uranium"
 	materials = list(MAT_URANIUM=500)
 
@@ -23,8 +22,7 @@
 	singular_name = "gold floor tile"
 	desc = "A tile made out of gold, the swag seems strong here."
 	icon_state = "tile_gold"
-	origin_tech = "materials=1"
-	turf_type = /turf/simulated/floor/mineral/gold
+	turf_type = /turf/open/floor/mineral/gold
 	mineralType = "gold"
 	materials = list(MAT_GOLD=500)
 
@@ -33,8 +31,7 @@
 	singular_name = "silver floor tile"
 	desc = "A tile made out of silver, the light shining from it is blinding."
 	icon_state = "tile_silver"
-	origin_tech = "materials=1"
-	turf_type = /turf/simulated/floor/mineral/silver
+	turf_type = /turf/open/floor/mineral/silver
 	mineralType = "silver"
 	materials = list(MAT_SILVER=500)
 
@@ -44,7 +41,7 @@
 	desc = "A tile made out of diamond. Wow, just, wow."
 	icon_state = "tile_diamond"
 	origin_tech = "materials=2"
-	turf_type = /turf/simulated/floor/mineral/diamond
+	turf_type = /turf/open/floor/mineral/diamond
 	mineralType = "diamond"
 	materials = list(MAT_DIAMOND=500)
 
@@ -53,8 +50,16 @@
 	singular_name = "bananium floor tile"
 	desc = "A tile made out of bananium, HOOOOOOOOONK!"
 	icon_state = "tile_bananium"
-	origin_tech = "materials=1"
-	turf_type = /turf/simulated/floor/mineral/bananium
+	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
 	materials = list(MAT_BANANIUM=500)
 
+/obj/item/stack/tile/mineral/abductor
+	name = "alien floor tile"
+	singular_name = "alien floor tile"
+	desc = "A tile made out of alien alloy."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "tile_abductor"
+	origin_tech = "materials=6;abductor=1"
+	turf_type = /turf/open/floor/mineral/abductor
+	mineralType = "abductor"

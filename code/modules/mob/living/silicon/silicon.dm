@@ -1,12 +1,15 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages = ROBOT | HUMAN
+	languages_spoken = ROBOT | HUMAN
+	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
+	see_in_dark = 8
+	bubble_icon = "machine"
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -33,14 +36,22 @@
 
 /mob/living/silicon/New()
 	..()
+	silicon_mobs |= src
 	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
 
+/mob/living/silicon/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/silicon/med_hud_set_status()
+	return //we use a different hud
+
 /mob/living/silicon/Destroy()
 	radio = null
 	aicamera = null
+	silicon_mobs -= src
 	return ..()
 
 /mob/living/silicon/contents_explosion(severity, target)
@@ -132,18 +143,17 @@
 	switch(severity)
 		if(1)
 			src.take_organ_damage(20)
-			Stun(8)
 		if(2)
 			src.take_organ_damage(10)
-			Stun(3)
-	flick("noise", src:flash)
 	src << "<span class='userdanger'>*BZZZT*</span>"
 	src << "<span class='danger'>Warning: Electromagnetic pulse detected.</span>"
+	flash_eyes(affect_silicon = 1)
 	..()
 
 /mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = 0)
 	blocked = (100-blocked)/100
-	if(!damage || (blocked <= 0))	return 0
+	if(!damage || (blocked <= 0))
+		return 0
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage * blocked)
@@ -174,7 +184,8 @@
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
 /*
-	if(!effect || (blocked >= 2))	return 0
+	if(!effect || (blocked >= 2))
+		return 0
 	switch(effecttype)
 		if(STUN)
 			stunned = max(stunned,(effect/(blocked+1)))
@@ -187,7 +198,7 @@
 		if(STUTTER)
 			stuttering = max(stuttering,(effect/(blocked+1)))
 		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
+			blur_eyes(effect/(blocked+1))
 		if(DROWSY)
 			drowsyness = max(drowsyness,(effect/(blocked+1)))
 	updatehealth()
@@ -366,7 +377,8 @@
 	diagsensor.add_hud_to(src)
 
 /mob/living/silicon/proc/sensor_mode()
-	set name = "Set Sensor Augmentation"
+	if(incapacitated())
+		return
 	var/sensor_type = input("Please select sensor type.", "Sensor Integration", null) in list("Security", "Medical","Diagnostic","Disable")
 	remove_med_sec_hud()
 	switch(sensor_type)
@@ -392,7 +404,7 @@
 			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
 							"<span class='userdanger'>[M] has slashed at [src]!</span>")
 			if(prob(8))
-				flick("noise", flash)
+				flash_eyes(affect_silicon = 1)
 			add_logs(M, src, "attacked")
 			adjustBruteLoss(damage)
 			updatehealth()
@@ -452,20 +464,14 @@
 						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
 	return 0
 
-/mob/living/silicon/adjustEarDamage()
-	return
-
-/mob/living/silicon/setEarDamage()
-	return
-
 /mob/living/silicon/proc/GetPhoto()
 	if (aicamera)
 		return aicamera.selectpicture(aicamera)
 
-/mob/living/silicon/grabbedby(mob/living/user)
+/mob/living/silicon/grippedby(mob/living/user)
 	return
 
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
 
@@ -483,3 +489,6 @@
 	if(changed)
 		animate(src, transform = ntransform, time = 2,easing = EASE_IN|EASE_OUT)
 	return ..()
+
+/mob/living/silicon/is_literate()
+	return 1

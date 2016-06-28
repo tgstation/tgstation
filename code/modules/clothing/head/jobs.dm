@@ -9,6 +9,8 @@
 	strip_delay = 10
 	put_on_delay = 10
 
+	dog_fashion = /datum/dog_fashion/head/chef
+
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to become a chef.</span>")
 	user.say("Bork Bork Bork!")
@@ -28,11 +30,15 @@
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
+	dog_fashion = /datum/dog_fashion/head/captain
+
 //Captain: This is no longer space-worthy
 /obj/item/clothing/head/caphat/parade
 	name = "captain's parade cap"
 	desc = "Worn only by Captains with an abundance of class."
 	icon_state = "capcap"
+
+	dog_fashion = null
 
 
 //Head of Personnel
@@ -42,12 +48,14 @@
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor = list(melee = 25, bullet = 15, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
 
+	dog_fashion = /datum/dog_fashion/head/hop
+
 //Chaplain
 /obj/item/clothing/head/nun_hood
 	name = "nun hood"
 	desc = "Maximum piety in this star system."
 	icon_state = "nun_hood"
-	flags = BLOCKHAIR
+	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
 /obj/item/clothing/head/det_hat
@@ -56,6 +64,8 @@
 	icon_state = "detective"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	var/candy_cooldown = 0
+
+	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/det_hat/AltClick()
 	..()
@@ -76,6 +86,9 @@
 	desc = "A beret, a mime's favorite headwear."
 	icon_state = "beret"
 
+	dog_fashion = /datum/dog_fashion/head/beret
+
+
 //Security
 
 /obj/item/clothing/head/HoS
@@ -94,15 +107,18 @@
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "policehelm"
-	armor = list(melee = 30, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
+
+	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
 	icon_state = "beret_badge"
-	armor = list(melee = 25, bullet = 15, laser = 25,energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
+	dog_fashion = null
 
 /obj/item/clothing/head/beret/sec/navyhos
 	name = "head of security's beret"
@@ -113,7 +129,7 @@
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "wardenberet"
-	armor = list(melee = 30, bullet = 5, laser = 25, energy = 10, bomb = 25, bio = 0, rad = 0)
+	armor = list(melee = 40, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	strip_delay = 60
 
 /obj/item/clothing/head/beret/sec/navyofficer

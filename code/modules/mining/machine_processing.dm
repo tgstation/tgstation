@@ -8,6 +8,7 @@
 	anchored = 1
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
+	speed_process = 1
 
 /obj/machinery/mineral/processing_unit_console/New()
 	..()

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 from __future__ import print_function
 import yaml, os, glob, sys, re, time, argparse
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from time import time
 
 today = date.today()
@@ -36,6 +36,7 @@ dateformat = "%d %B %Y"
 
 opt = argparse.ArgumentParser()
 opt.add_argument('-d', '--dry-run', dest='dryRun', default=False, action='store_true', help='Only parse changelogs and, if needed, the targetFile. (A .dry_changelog.yml will be output for debugging purposes.)')
+opt.add_argument('-t', '--time-period', dest='timePeriod', default=9, type=int, help='Define how many weeks back the changelog should display')
 opt.add_argument('targetFile', help='The HTML changelog we wish to update.')
 opt.add_argument('ymlDir', help='The directory of YAML changelogs we will use.')
 
@@ -172,8 +173,11 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
     with open(os.path.join(targetDir, 'templates', 'header.html'), 'r') as h:
         for line in h:
             changelog.write(line)
-    
+
+    weekstoshow = timedelta(weeks=args.timePeriod)
     for _date in reversed(sorted(all_changelog_entries.keys())):
+        if not (today - _date < weekstoshow):
+            continue
         entry_htm = '\n'
         entry_htm += '\t\t\t<h2 class="date">{date}</h2>\n'.format(date=_date.strftime(dateformat))
         write_entry = False

@@ -1,6 +1,8 @@
 /datum/round_event_control/anomaly/anomaly_flux
 	name = "Anomaly: Hyper-Energetic Flux"
 	typepath = /datum/round_event/anomaly/anomaly_flux
+
+	min_players = 10
 	max_occurrences = 5
 	weight = 20
 
@@ -15,7 +17,7 @@
 
 
 /datum/round_event/anomaly/anomaly_flux/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
 

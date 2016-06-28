@@ -33,7 +33,7 @@
 /mob/living/carbon/proc/apply_overlay(cache_index)
 	var/image/I = overlays_standing[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 /mob/living/carbon/proc/remove_overlay(cache_index)
 	if(overlays_standing[cache_index])
@@ -46,8 +46,8 @@
 		drop_r_hand()
 		return
 	if(r_hand)
-		r_hand.screen_loc = ui_rhand
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			r_hand.screen_loc = ui_rhand
 			client.screen += r_hand
 
 		var/t_state = r_hand.item_state
@@ -61,12 +61,12 @@
 
 /mob/living/carbon/update_inv_l_hand()
 	remove_overlay(L_HAND_LAYER)
-	if (handcuffed)
+	if(handcuffed)
 		drop_l_hand()
 		return
 	if(l_hand)
-		l_hand.screen_loc = ui_lhand
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			l_hand.screen_loc = ui_lhand
 			client.screen += l_hand
 
 		var/t_state = l_hand.item_state
@@ -85,11 +85,6 @@
 
 	apply_overlay(FIRE_LAYER)
 
-/mob/living/carbon/update_hud()
-	if(client)
-		client.screen |= contents
-		return 1
-
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
 		return 1
@@ -101,53 +96,60 @@
 
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
-
 	if(istype(wear_mask, /obj/item/clothing/mask))
-
 		if(!(head && (head.flags_inv & HIDEMASK)))
-
 			var/image/standing = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
-			overlays_standing[FACEMASK_LAYER]	= standing
-		return wear_mask
+			overlays_standing[FACEMASK_LAYER] = standing
+		update_hud_wear_mask(wear_mask)
+	apply_overlay(FACEMASK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
-	if(back)
 
+	if(client && hud_used && hud_used.inv_slots[slot_back])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_back]
+		inv.update_icon()
+
+	if(back)
 		var/image/standing = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
 		overlays_standing[BACK_LAYER] = standing
-		return back
-
+		update_hud_back(back)
+	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/update_inv_head()
 	remove_overlay(HEAD_LAYER)
 	if(head)
-
 		var/image/standing = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
 		overlays_standing[HEAD_LAYER] = standing
-		return head
+		update_hud_head(head)
+	apply_overlay(HEAD_LAYER)
 
 /mob/living/carbon/update_inv_handcuffed()
-	remove_overlay(HANDCUFF_LAYER)
-	clear_alert("handcuffed")
-	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
-		stop_pulling()	//TODO: should be handled elsewhere
-		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
-		if(hud_used)	//hud handcuff icons
-			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
-			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
-			R.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="markus")
-			L.overlays += image("icon"='icons/mob/screen_gen.dmi', "icon_state"="gabrielle")
-		return 1
-	else
-		if(hud_used)
-			var/obj/screen/inventory/R = hud_used.r_hand_hud_object
-			var/obj/screen/inventory/L = hud_used.l_hand_hud_object
-			R.overlays = null
-			L.overlays = null
+	return
 
+
+//mob HUD updates for items in our inventory
+
+//update whether handcuffs appears on our hud.
+/mob/living/carbon/proc/update_hud_handcuffed()
+	if(hud_used)
+		var/obj/screen/inventory/R = hud_used.inv_slots[slot_r_hand]
+		var/obj/screen/inventory/L = hud_used.inv_slots[slot_l_hand]
+		if(R && L)
+			R.update_icon()
+			L.update_icon()
+
+//update whether our head item appears on our hud.
+/mob/living/carbon/proc/update_hud_head(obj/item/I)
+	return
+
+//update whether our mask item appears on our hud.
+/mob/living/carbon/proc/update_hud_wear_mask(obj/item/I)
+	return
+
+//update whether our back item appears on our hud.
+/mob/living/carbon/proc/update_hud_back(obj/item/I)
+	return
 
 
 //Overlays for the worn overlay so you can overlay while you overlay

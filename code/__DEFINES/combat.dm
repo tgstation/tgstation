@@ -22,6 +22,7 @@
 #define FIRELOSS 2
 #define TOXLOSS 4
 #define OXYLOSS 8
+#define SHAME 16
 
 //Bitflags defining which status effects could be or are inflicted on a mob
 #define CANSTUN		1
@@ -38,11 +39,10 @@
 
 
 //Grab levels
-#define GRAB_PASSIVE	1
-#define GRAB_AGGRESSIVE	2
-#define GRAB_NECK		3
-#define GRAB_UPGRADING	4
-#define GRAB_KILL		5
+#define GRAB_PASSIVE				0
+#define GRAB_AGGRESSIVE				1
+#define GRAB_NECK					2
+#define GRAB_KILL					3
 
 
 //Hostile Mob AI Status
@@ -69,3 +69,12 @@
 #define UNARMED_ATTACK 2
 #define PROJECTILE_ATTACK 3
 #define THROWN_PROJECTILE_ATTACK 4
+
+
+//Gun Stuff
+ #define SAWN_INTACT  0
+ #define SAWN_OFF     1
+
+ #define WEAPON_LIGHT 0
+ #define WEAPON_MEDIUM 1
+ #define WEAPON_HEAVY 2

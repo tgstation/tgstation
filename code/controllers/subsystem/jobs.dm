@@ -2,7 +2,8 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	priority = 5
+	init_order = 5
+	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
@@ -13,9 +14,7 @@ var/datum/subsystem/job/SSjob
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/job/Initialize(timeofday)
 	SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
@@ -31,34 +30,44 @@ var/datum/subsystem/job/SSjob
 
 	for(var/J in all_jobs)
 		var/datum/job/job = new J()
-		if(!job)	continue
-		if(job.faction != faction)	continue
-		if(!job.config_check()) continue
+		if(!job)
+			continue
+		if(job.faction != faction)
+			continue
+		if(!job.config_check())
+			continue
 		occupations += job
 
 	return 1
 
 
 /datum/subsystem/job/proc/Debug(text)
-	if(!Debug2)	return 0
+	if(!Debug2)
+		return 0
 	job_debug.Add(text)
 	return 1
 
 
 /datum/subsystem/job/proc/GetJob(rank)
-	if(!rank)	return null
+	if(!rank)
+		return null
 	for(var/datum/job/J in occupations)
-		if(!J)	continue
-		if(J.title == rank)	return J
+		if(!J)
+			continue
+		if(J.title == rank)
+			return J
 	return null
 
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
 	if(player && player.mind && rank)
 		var/datum/job/job = GetJob(rank)
-		if(!job)	return 0
-		if(jobban_isbanned(player, rank))	return 0
-		if(!job.player_old_enough(player.client)) return 0
+		if(!job)
+			return 0
+		if(jobban_isbanned(player, rank))
+			return 0
+		if(!job.player_old_enough(player.client))
+			return 0
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
@@ -104,7 +113,7 @@ var/datum/subsystem/job/SSjob
 		if(istype(job, GetJob("Assistant"))) // We don't want to give him assistant, that's boring!
 			continue
 
-		if(job in command_positions) //If you want a command position, select it!
+		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 
 		if(jobban_isbanned(player, job.title))
@@ -147,10 +156,13 @@ var/datum/subsystem/job/SSjob
 	for(var/level = 1 to 3)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)
-			if(!job)	continue
-			if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
+			if(!job)
+				continue
+			if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+				continue
 			var/list/candidates = FindOccupationCandidates(job, level)
-			if(!candidates.len)	continue
+			if(!candidates.len)
+				continue
 			var/mob/new_player/candidate = pick(candidates)
 			if(AssignRole(candidate, command_position))
 				return 1
@@ -162,10 +174,13 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/CheckHeadPositions(level)
 	for(var/command_position in command_positions)
 		var/datum/job/job = GetJob(command_position)
-		if(!job)	continue
-		if((job.current_positions >= job.total_positions) && job.total_positions != -1)	continue
+		if(!job)
+			continue
+		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+			continue
 		var/list/candidates = FindOccupationCandidates(job, level)
-		if(!candidates.len)	continue
+		if(!candidates.len)
+			continue
 		var/mob/new_player/candidate = pick(candidates)
 		AssignRole(candidate, command_position)
 	return
@@ -212,7 +227,8 @@ var/datum/subsystem/job/SSjob
 	initial_players_to_assign = unassigned.len
 
 	Debug("DO, Len: [unassigned.len]")
-	if(unassigned.len == 0)	return 0
+	if(unassigned.len == 0)
+		return 0
 
 	//Scale number of open security officer slots to population
 	setup_officer_positions()
@@ -378,8 +394,6 @@ var/datum/subsystem/job/SSjob
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
 		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
-
-	H.update_hud() 	// Tmp fix for Github issue 1006. TODO: make all procs in update_icons.dm do client.screen |= equipment no matter what.
 	return 1
 
 
@@ -402,7 +416,7 @@ var/datum/subsystem/job/SSjob
 	for(var/i=equip_needed-5, i>0, i--)
 		if(secequipment.len)
 			var/spawnloc = secequipment[1]
-			new /obj/structure/closet/secure_closet/security(spawnloc)
+			new /obj/structure/closet/secure_closet/security/sec(spawnloc)
 			secequipment -= spawnloc
 		else //We ran out of spare locker spawns!
 			break
@@ -411,10 +425,10 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/LoadJobs()
 	var/jobstext = return_file_text("config/jobs.txt")
 	for(var/datum/job/J in occupations)
-		var/regex = "[J.title]=(-1|\\d+),(-1|\\d+)"
-		var/datum/regex/results = regex_find(jobstext, regex)
-		J.total_positions = text2num(results.str(2))
-		J.spawn_positions = text2num(results.str(3))
+		var/regex/jobs = new("[J.title]=(-1|\\d+),(-1|\\d+)")
+		jobs.Find(jobstext)
+		J.total_positions = text2num(jobs.group[1])
+		J.spawn_positions = text2num(jobs.group[2])
 
 /datum/subsystem/job/proc/HandleFeedbackGathering()
 	for(var/datum/job/job in occupations)
@@ -460,3 +474,16 @@ var/datum/subsystem/job/SSjob
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player
 	player.ready = 0
+
+
+/datum/subsystem/job/Recover()
+	var/oldjobs = SSjob.occupations
+	spawn(20)
+		for (var/datum/job/J in oldjobs)
+			spawn(-1)
+				var/datum/job/newjob = GetJob(J.title)
+				if (!istype(newjob))
+					return
+				newjob.total_positions = J.total_positions
+				newjob.spawn_positions = J.spawn_positions
+				newjob.current_positions = J.current_positions

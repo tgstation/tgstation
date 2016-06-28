@@ -14,7 +14,7 @@
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()
-	gland_types = subtypesof(/obj/item/organ/internal/gland)
+	gland_types = subtypesof(/obj/item/organ/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
@@ -25,7 +25,7 @@
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
 	if(..())
 		return
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 	user.set_machine(src)
 	var/box_css = {"
@@ -59,13 +59,15 @@
 	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/organ/internal/gland))
+	if(istype(W, /obj/item/organ/gland))
 		if(!user.drop_item())
 			return
 		W.loc = src
 		for(var/i=1,i<=gland_colors.len,i++)
 			if(gland_types[i] == W.type)
 				amounts[i]++
+	else
+		return ..()
 
 /obj/machinery/abductor/gland_dispenser/Topic(href, href_list)
 	if(..())

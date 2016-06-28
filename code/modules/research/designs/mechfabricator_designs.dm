@@ -536,7 +536,7 @@
 	id = "mech_generator"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/generator
-	materials = list(MAT_METAL=10000,MAT_GLASS=1000,MAT_SILVER=500)
+	materials = list(MAT_METAL=10000,MAT_GLASS=1000,MAT_SILVER=2000,MAT_PLASMA=5000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -603,8 +603,18 @@
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	req_tech = list("engineering" = 4, "materials" = 5)
+	req_tech = list("engineering" = 4, "materials" = 5, "programming" = 4)
 	materials = list(MAT_METAL=80000 , MAT_GLASS=6000 , MAT_URANIUM= 5000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_thrusters
+	name = "Cyborg Upgrade (Ion Thrusters)"
+	id = "borg_upgrade_thrusters"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/thrusters
+	req_tech = list("engineering" = 4, "powerstorage" = 4)
+	materials = list(MAT_METAL=10000, MAT_PLASMA=5000, MAT_URANIUM = 6000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -613,18 +623,8 @@
 	id = "borg_upgrade_disablercooler"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/disablercooler
-	req_tech = list("combat" = 5, "powerstorage" = 4)
+	req_tech = list("combat" = 5, "powerstorage" = 4, "engineering" = 4)
 	materials = list(MAT_METAL=80000 , MAT_GLASS=6000 , MAT_GOLD= 2000, MAT_DIAMOND = 500)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_jetpack
-	name = "Cyborg Upgrade (Mining Jetpack)"
-	id = "borg_upgrade_jetpack"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/jetpack
-	req_tech = list("engineering" = 4, "powerstorage" = 4)
-	materials = list(MAT_METAL=10000, MAT_PLASMA=5000, MAT_URANIUM = 6000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
@@ -633,7 +633,7 @@
 	id = "borg_upgrade_diamonddrill"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/ddrill
-	req_tech = list("engineering" = 5, "materials" = 5)
+	req_tech = list("engineering" = 5, "materials" = 6)
 	materials = list(MAT_METAL=10000, MAT_DIAMOND=2000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
@@ -643,17 +643,36 @@
 	id = "borg_upgrade_holding"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/soh
-	req_tech = list("engineering" = 5, "materials" = 5, "bluespace" = 3)
+	req_tech = list("engineering" = 4, "materials" = 4, "bluespace" = 4)
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 250, MAT_URANIUM = 500)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/borg_upgrade_hyperka
+	name = "Cyborg (Hyper-Kinetic Accelerator)"
+	id = "borg_upgrade_hyperka"
+	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
+	build_type = MECHFAB //Reqs same as human Hyper KA
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/borg/upgrade/hyperka
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_upgrade_ashplating
+	name = "Cyborg Upgrade (Ash Storm Plating)"
+	id = "borg_upgrade_ashplating"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/ashplating
+	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
+	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
+
 /datum/design/borg_syndicate_module
-	name = "Cyborg Illegal Upgrades Module"
-	desc = "Allows for the construction of restricted upgrades for cyborgs"
+	name = "Cyborg Upgrade (Illegal Modules)"
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
-	req_tech = list("combat" = 4, "syndicate" = 3)
+	req_tech = list("combat" = 4, "syndicate" = 2)
 	build_path = /obj/item/borg/upgrade/syndicate
 	materials = list(MAT_METAL=10000,MAT_GLASS=15000,MAT_DIAMOND = 10000)
 	construction_time = 120
@@ -684,8 +703,19 @@
 	desc = "A shell of a maintenance drone, an expendable robot built to perform station repairs."
 	id = "drone_shell"
 	req_tech = list("programming" = 2, "biotech" = 4)
-	build_type = MECHFAB
+	build_type = MECHFAB | PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 350)
 	construction_time=150
 	build_path = /obj/item/drone_shell
+	category = list("Misc")
+
+/datum/design/synthetic_flash
+	name = "Flash"
+	desc = "When a problem arises, SCIENCE is the solution."
+	id = "sflash"
+	req_tech = list("magnets" = 3, "combat" = 2)
+	build_type = MECHFAB
+	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
+	construction_time = 100
+	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")

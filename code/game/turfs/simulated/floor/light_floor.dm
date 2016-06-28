@@ -1,4 +1,4 @@
-/turf/simulated/floor/light
+/turf/open/floor/light
 	name = "Light floor"
 	luminosity = 5
 	icon_state = "light_on"
@@ -10,7 +10,7 @@
 	var/currentcolor = 1
 
 
-/turf/simulated/floor/light/New()
+/turf/open/floor/light/New()
 	..()
 	spawn(5) //needed because when placing a light floor tile it will take a short while before setting state
 		if(istype(builtin_tile, /obj/item/stack/tile/light))
@@ -18,7 +18,7 @@
 			L.state = state
 	update_icon()
 
-/turf/simulated/floor/light/update_icon()
+/turf/open/floor/light/update_icon()
 	..()
 	if(on)
 		switch(state)
@@ -40,11 +40,11 @@
 		icon_state = "light_off"
 
 
-/turf/simulated/floor/light/ChangeTurf(turf/T)
+/turf/open/floor/light/ChangeTurf(turf/T)
 	SetLuminosity(0)
 	..()
 
-/turf/simulated/floor/light/attack_hand(mob/user)
+/turf/open/floor/light/attack_hand(mob/user)
 	if(!on)
 		on = 1
 		currentcolor = 1
@@ -56,10 +56,10 @@
 	update_icon()
 	..()  //I am not sure what the parent procs have for attack_hand, best to check later.
 
-/turf/simulated/floor/light/attack_ai(mob/user)
+/turf/open/floor/light/attack_ai(mob/user)
 	attack_hand(user)
 
-/turf/simulated/floor/light/attackby(obj/item/C, mob/user, params)
+/turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
 		return
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles

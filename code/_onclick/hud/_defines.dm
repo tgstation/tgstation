@@ -23,6 +23,7 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST:6,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+#define ui_crafting	"12:-10,1:5"
 
 //Lower center, persistant menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
@@ -39,6 +40,7 @@
 
 #define ui_borg_sensor "CENTER-3:16, SOUTH:5"	//borgs
 #define ui_borg_lamp "CENTER-4:16, SOUTH:5"		//borgies
+#define ui_borg_thrusters "CENTER-5:16, SOUTH:5"//borgies
 #define ui_inv1 "CENTER-2:16,SOUTH:5"			//borgs
 #define ui_inv2 "CENTER-1  :16,SOUTH:5"			//borgs
 #define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs

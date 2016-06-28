@@ -4,31 +4,43 @@
 	var/can_buckle = 0
 	var/buckle_lying = -1 //bed-like behaviour, forces mob.lying = buckle_lying if != -1
 	var/buckle_requires_restraints = 0 //require people to be handcuffed before being able to buckle. eg: pipes
-	var/mob/living/buckled_mob = null
-
+	var/list/mob/living/buckled_mobs = null //list()
+	var/max_buckled_mobs = 1
 
 //Interaction
 /atom/movable/attack_hand(mob/living/user)
 	. = ..()
-	if(can_buckle && buckled_mob)
-		if(user_unbuckle_mob(user))
-			return 1
+	if(can_buckle && has_buckled_mobs())
+		if(buckled_mobs.len > 1)
+			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in buckled_mobs
+			if(user_unbuckle_mob(unbuckled,user))
+				return 1
+		else
+			if(user_unbuckle_mob(buckled_mobs[1],user))
+				return 1
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
-	if(can_buckle && istype(M) && !buckled_mob)
+	if(can_buckle && istype(M))
 		if(user_buckle_mob(M, user))
 			return 1
-
 
 //Cleanup
 /atom/movable/Destroy()
 	. = ..()
-	unbuckle_mob(force=1)
+	unbuckle_all_mobs(force=1)
+
+/atom/movable/proc/has_buckled_mobs()
+	if(!buckled_mobs)
+		return FALSE
+	if(buckled_mobs.len)
+		return TRUE
 
 //procs that handle the actual buckling and unbuckling
 /atom/movable/proc/buckle_mob(mob/living/M, force = 0)
-	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || M.buckled_mob || (buckle_requires_restraints && !M.restrained()) || M == src)
+	if(!buckled_mobs)
+		buckled_mobs = list()
+	if((!can_buckle && !force) || !istype(M) || (M.loc != loc) || M.buckled || (buckled_mobs.len >= max_buckled_mobs) || (buckle_requires_restraints && !M.restrained()) || M == src)
 		return 0
 	if(!M.can_buckle() && !force)
 		if(M == usr)
@@ -38,8 +50,8 @@
 		return 0
 
 	M.buckled = src
-	M.dir = dir
-	buckled_mob = M
+	M.setDir(dir)
+	buckled_mobs |= M
 	M.update_canmove()
 	post_buckle_mob(M)
 	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
@@ -53,17 +65,22 @@
 			M.adjust_fire_stacks(1)
 			M.IgniteMob()
 
-/atom/movable/proc/unbuckle_mob(force=0)
-	if(buckled_mob && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force=0)
+	if(istype(buckled_mob) && buckled_mob.buckled == src && (buckled_mob.can_unbuckle() || force))
 		. = buckled_mob
 		buckled_mob.buckled = null
 		buckled_mob.anchored = initial(buckled_mob.anchored)
 		buckled_mob.update_canmove()
 		buckled_mob.clear_alert("buckled")
-		buckled_mob = null
+		buckled_mobs -= buckled_mob
 
 		post_buckle_mob(.)
 
+/atom/movable/proc/unbuckle_all_mobs(force=0)
+	if(!has_buckled_mobs())
+		return
+	for(var/m in buckled_mobs)
+		unbuckle_mob(m, force)
 
 //Handle any extras after buckling/unbuckling
 //Called on buckle_mob() and unbuckle_mob()
@@ -92,8 +109,8 @@
 		return 1
 
 
-/atom/movable/proc/user_unbuckle_mob(mob/user)
-	var/mob/living/M = unbuckle_mob()
+/atom/movable/proc/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	var/mob/living/M = unbuckle_mob(buckled_mob)
 	if(M)
 		if(M != user)
 			M.visible_message(\

@@ -22,7 +22,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	density = 1
-	circuit = /obj/item/weapon/circuitboard/scan_consolenew
+	circuit = /obj/item/weapon/circuitboard/computer/scan_consolenew
 	var/radduration = 2
 	var/radstrength = 1
 
@@ -49,8 +49,7 @@
 			src.updateUsrDialog()
 			return
 	else
-		..()
-	return
+		return ..()
 
 /obj/machinery/computer/scan_consolenew/New()
 	..()
@@ -88,9 +87,12 @@
 			if(viable_occupant.has_dna() && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3)))	//occupent is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
-					if(CONSCIOUS)	occupant_status += "<span class='good'>Conscious</span>"
-					if(UNCONSCIOUS)	occupant_status += "<span class='average'>Unconscious</span>"
-					else			occupant_status += "<span class='bad'>DEAD</span>"
+					if(CONSCIOUS)
+						occupant_status += "<span class='good'>Conscious</span>"
+					if(UNCONSCIOUS)
+						occupant_status += "<span class='average'>Unconscious</span>"
+					else
+						occupant_status += "<span class='bad'>DEAD</span>"
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation] %</div></div>"
@@ -133,10 +135,14 @@
 		stddev = RADIATION_ACCURACY_MULTIPLIER/radduration
 	var/chance_to_hit
 	switch(stddev)	//hardcoded values from a z-table for a normal distribution
-		if(0 to 0.25)			chance_to_hit = ">95 %"
-		if(0.25 to 0.5)			chance_to_hit = "68-95 %"
-		if(0.5 to 0.75)			chance_to_hit = "55-68 %"
-		else					chance_to_hit = "<38 %"
+		if(0 to 0.25)
+			chance_to_hit = ">95 %"
+		if(0.25 to 0.5)
+			chance_to_hit = "68-95 %"
+		if(0.5 to 0.75)
+			chance_to_hit = "55-68 %"
+		else
+			chance_to_hit = "<38 %"
 	status += "<div class='line'><div class='statusLabel'>Pulse Duration:</div><div class='statusValue'>[radduration]</div></div>"
 	status += "<div class='line'><div class='statusLabel'>&nbsp;&nbsp;\> Accuracy:</div><div class='statusValue'>[chance_to_hit]</div></div>"
 	status += "<br></div>" // Close statusDisplay div
@@ -147,13 +153,20 @@
 			buttons += "<span class='linkOff'>[connected.locked ? "Unlock" : "Lock"] Scanner</span> "
 		else
 			buttons += "<a href='?src=\ref[src];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a> "
-	else				buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
-	if(viable_occupant)	buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
-	else				buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
-	if(diskette)		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
-	else				buttons += "<span class='linkOff'>Eject Disk</span> "
-	if(current_screen == "buffer")	buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
-	else							buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
+	else
+		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span> "
+	if(viable_occupant)
+		buttons += "<a href='?src=\ref[src];task=rejuv'>Inject Rejuvenators</a> "
+	else
+		buttons += "<span class='linkOff'>Inject Rejuvenators</span> "
+	if(diskette)
+		buttons += "<a href='?src=\ref[src];task=ejectdisk'>Eject Disk</a> "
+	else
+		buttons += "<span class='linkOff'>Eject Disk</span> "
+	if(current_screen == "buffer")
+		buttons += "<a href='?src=\ref[src];task=screen;text=mainmenu;'>Radiation Emitter Menu</a> "
+	else
+		buttons += "<a href='?src=\ref[src];task=screen;text=buffer;'>Buffer Menu</a> "
 
 	switch(current_screen)
 		if("working")
@@ -171,11 +184,15 @@
 					var/list/buffer_slot = buffer[i]
 					if( !buffer_slot || !buffer_slot.len || !buffer_slot["name"] || !((buffer_slot["UI"] && buffer_slot["UE"]) || buffer_slot["SE"]) )
 						temp_html += "<br>\tNo Data"
-						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
-						else				temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
+						if(viable_occupant)
+							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+						else
+							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
 						temp_html += "<span class='linkOff'>Clear Buffer</span> "
-						if(diskette)		temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
-						else				temp_html += "<span class='linkOff'>Load from Disk</span> "
+						if(diskette)
+							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+						else
+							temp_html += "<span class='linkOff'>Load from Disk</span> "
 						temp_html += "<span class='linkOff'>Save to Disk</span> "
 					else
 						var/ui = buffer_slot["UI"]
@@ -189,46 +206,68 @@
 						if(ue && name && blood_type)
 							temp_html += "<br>\tBlood Type: [blood_type]"
 							temp_html += "<br>\tUE: [ue] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
-							else				temp_html += "<span class='linkOff'>Occupant</span>"
+							if(viable_occupant)
+								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ue'>Occupant</a> "
+							else
+								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UE]'>Occupant:Delayed</a> "
-							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
-							else				temp_html += "<span class='linkOff'>Injector</span>"
+							if(injectorready)
+								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ue'>Injector</a>"
+							else
+								temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tBlood Type: No Data"
 							temp_html += "<br>\tUE: No Data"
 						if(ui)
 							temp_html += "<br>\tUI: [ui] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
-							else				temp_html += "<span class='linkOff'>Occupant</span>"
+							if(viable_occupant)
+								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=ui'>Occupant</a> "
+							else
+								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_UI]'>Occupant:Delayed</a> "
-							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
-							else				temp_html += "<span class='linkOff'>Injector</span>"
+							if(injectorready)
+								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=ui'>Injector</a>"
+							else
+								temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tUI: No Data"
 						if(ue && name && blood_type && ui)
 							temp_html += "<br>\tUI+UE: [ui]/[ue] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
-							else				temp_html += "<span class='linkOff'>Occupant</span>"
+							if(viable_occupant)
+								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=mixed'>Occupant</a> "
+							else
+								temp_html += "<span class='linkOff'>Occupant</span>"
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_MIXED]'>Occupant:Delayed</a> "
-							if(injectorready)	temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
-							else				temp_html += "<span class='linkOff'>UI+UE Injector</span>"
+							if(injectorready)
+								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
+							else
+								temp_html += "<span class='linkOff'>UI+UE Injector</span>"
 						if(se)
 							temp_html += "<br>\tSE: [se] "
-							if(viable_occupant)	temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
-							else												temp_html += "<span class='linkOff'>Occupant</span> "
+							if(viable_occupant)
+								temp_html += "<a href='?src=\ref[src];task=transferbuffer;num=[i];text=se'>Occupant</a> "
+							else
+								temp_html += "<span class='linkOff'>Occupant</span> "
 							temp_html += "<a href='?src=\ref[src];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a> "
-							if(injectorready)									temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
-							else												temp_html += "<span class='linkOff'>Injector</span>"
+							if(injectorready)
+								temp_html += "<a href='?src=\ref[src];task=injector;num=[i];text=se'>Injector</a>"
+							else
+								temp_html += "<span class='linkOff'>Injector</span>"
 						else
 							temp_html += "<br>\tSE: No Data"
-						if(viable_occupant)	temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
-						else				temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
+						if(viable_occupant)
+							temp_html += "<br><a href='?src=\ref[src];task=setbuffer;num=[i];'>Save to Buffer</a> "
+						else
+							temp_html += "<br><span class='linkOff'>Save to Buffer</span> "
 						temp_html += "<a href='?src=\ref[src];task=clearbuffer;num=[i];'>Clear Buffer</a> "
-						if(diskette)		temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
-						else				temp_html += "<span class='linkOff'>Load from Disk</span> "
-						if(diskette && !diskette.read_only)	temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
-						else								temp_html += "<span class='linkOff'>Save to Disk</span> "
+						if(diskette)
+							temp_html += "<a href='?src=\ref[src];task=loaddisk;num=[i];'>Load from Disk</a> "
+						else
+							temp_html += "<span class='linkOff'>Load from Disk</span> "
+						if(diskette && !diskette.read_only)
+							temp_html += "<a href='?src=\ref[src];task=savedisk;num=[i];'>Save to Disk</a> "
+						else
+							temp_html += "<span class='linkOff'>Save to Disk</span> "
 		else
 			temp_html += status
 			temp_html += buttons
@@ -292,9 +331,11 @@
 	var/last_change
 	switch(href_list["task"])
 		if("togglelock")
-			if(connected)	connected.locked = !connected.locked
+			if(connected)
+				connected.locked = !connected.locked
 		if("toggleopen")
-			if(connected)	connected.toggle_open(usr)
+			if(connected)
+				connected.toggle_open(usr)
 		if("setduration")
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
@@ -357,11 +398,17 @@
 						if("se")
 							if(buffer_slot["SE"])
 								I = new /obj/item/weapon/dnainjector/timed(loc)
+								var/powers = 0
 								for(var/datum/mutation/human/HM in good_mutations + bad_mutations + not_good_mutations)
 									if(HM.check_block_string(buffer_slot["SE"]))
 										I.add_mutations.Add(HM)
+										if(HM in good_mutations)
+											powers += 1
+										if(HM in bad_mutations + not_good_mutations)
+											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
 									else
 										I.remove_mutations.Add(HM)
+								I.origin_tech = "biotech=2;engineering=[max(1,min(6,powers))]" //With 6 powers available this tech level will be 1-6, also safety check if new powers get added
 								var/time_coeff
 								for(var/datum/mutation/human/HM in I.add_mutations)
 									if(!time_coeff)
@@ -471,9 +518,12 @@
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
-	if(ran == 0)		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-change makes people mad though
-	else if(ran < 0)	ran = round(ran)	//negative, so floor it
-	else				ran = -round(-ran)	//positive, so ceiling it
+	if(ran == 0)
+		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-change makes people mad though
+	else if(ran < 0)
+		ran = round(ran)	//negative, so floor it
+	else
+		ran = -round(-ran)	//positive, so ceiling it
 	return num2hex(Wrap(hex2num(input)+ran, 0, 16**length), length)
 
 /obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position_we_were_supposed_to_hit, radduration, number_of_blocks)
@@ -492,7 +542,7 @@
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))
-		viable_occupant.radiation += rand(10/(connected.damage_coeff ** 2),25/(connected.damage_coeff ** 2)) 
+		viable_occupant.radiation += rand(10/(connected.damage_coeff ** 2),25/(connected.damage_coeff ** 2))
 		//15 and 40 are just magic numbers that were here before so i didnt touch them, they are initial boundaries of damage
 		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove

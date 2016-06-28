@@ -42,31 +42,21 @@
 
 
 /obj/structure/mirror/proc/shatter()
-	if(shattered)
-		return
-	shattered = 1
 	icon_state = "mirror_broke"
 	playsound(src, "shatter", 70, 1)
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
-	if(prob(Proj.damage * 2))
-		if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-			if(!shattered)
-				shatter()
-			else
-				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-	..()
+/obj/structure/mirror/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 
 /obj/structure/mirror/attackby(obj/item/I, mob/living/user, params)
-	user.do_attack_animation(src)
-	if(I.damtype == STAMINA)
-		return
-	if(shattered)
-		if(istype(I, /obj/item/weapon/weldingtool))
-			var/obj/item/weapon/weldingtool/WT = I
+	if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		var/obj/item/weapon/weldingtool/WT = I
+		if(shattered)
+			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
 				user << "<span class='notice'>You begin repairing [src]...</span>"
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -77,56 +67,60 @@
 					shattered = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
-				return
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-
-	if(prob(I.force * 2))
-		visible_message("<span class='warning'>[user] smashes [src] with [I].</span>")
-		shatter()
 	else
-		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 70, 1)
+		return ..()
 
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
+
+/obj/structure/mirror/ex_act(severity)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				qdel(src)
+			else
+				take_damage(5)
+		if(3)
+			if(prob(75))
+				take_damage(5)
+
+/obj/structure/mirror/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+		if(BURN)
+		else
+			return
+	if(!shattered)
+		if(damage)
+			shatter()
+	else if(sound_effect)
+		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+
+/obj/structure/mirror/proc/attack_generic(mob/living/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
+	take_damage(5)
 
 /obj/structure/mirror/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	if(islarva(user))
-		return
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
+	attack_generic(user)
 
-
-/obj/structure/mirror/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
+/obj/structure/mirror/attack_animal(mob/living/simple_animal/M)
 	if(M.melee_damage_upper <= 0)
 		return
-	M.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
-
+	attack_generic(M)
 
 /obj/structure/mirror/attack_slime(mob/living/user)
-	user.do_attack_animation(src)
-	if(shattered)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
-		return
-	user.visible_message("<span class='danger'>[user] smashes [src]!</span>")
-	shatter()
+	attack_generic(user)
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
-	var/list/races_blacklist = list("skeleton")
+	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth")
 	var/list/choosable_races = list()
 
 /obj/structure/mirror/magic/New()
@@ -155,13 +149,17 @@
 
 	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
 
+	if(!Adjacent(user))
+		return
+
 	switch(choice)
 		if("name")
 			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
 
 			if(!newname)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.real_name = newname
 			H.name = newname
 			if(H.dna)
@@ -176,7 +174,8 @@
 
 			if(!newrace)
 				return
-
+			if(!Adjacent(user))
+				return
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
@@ -199,13 +198,14 @@
 
 			H.update_body()
 			H.update_hair()
-			H.update_mutcolor()
+			H.update_body_parts()
 			H.update_mutations_overlay() // no hulk lizard
 
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
-
+			if(!Adjacent(user))
+				return
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
@@ -223,10 +223,10 @@
 			H.update_body()
 			H.update_mutations_overlay() //(hulk male/female)
 
-
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
-
+			if(!Adjacent(user))
+				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
@@ -243,7 +243,14 @@
 
 		if("eyes")
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color") as null|color
+			if(!Adjacent(user))
+				return
 			if(new_eye_color)
 				H.eye_color = sanitize_hexcolor(new_eye_color)
 				H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 				H.update_body()
+	if(choice)
+		curse(user)
+
+/obj/structure/mirror/magic/proc/curse(mob/living/user)
+	return

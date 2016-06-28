@@ -13,16 +13,21 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	burn_state = FLAMMABLE
 	burntime = 20
+	var/folder_path = /obj/item/weapon/folder //this is the path of the folder that gets spawned in New()
 
 /obj/item/weapon/storage/briefcase/New()
 	..()
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
-	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
+	var/obj/item/weapon/folder/folder = new folder_path(src)
+	for(var/i in 1 to 6)
+		new /obj/item/weapon/paper(folder)
+
+/obj/item/weapon/storage/briefcase/lawyer
+	folder_path = /obj/item/weapon/folder/blue
+
+/obj/item/weapon/storage/briefcase/lawyer/New()
+	new /obj/item/weapon/stamp/law(src)
+	..()
 
 /obj/item/weapon/storage/briefcase/sniperbundle
 	name = "briefcase"
@@ -42,7 +47,7 @@
 
 /obj/item/weapon/storage/briefcase/sniperbundle/New()
 	..()
-	new /obj/item/weapon/gun/projectile/sniper_rifle/syndicate(src)
+	new /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate(src)
 	new /obj/item/clothing/tie/red(src)
 	new /obj/item/clothing/under/syndicate/sniper(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)

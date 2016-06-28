@@ -12,3 +12,4 @@ var/global/list/mob_list = list()					//all mobs, including clientless
 var/global/list/living_mob_list = list()			//all alive mobs, including clientless. Excludes /mob/new_player
 var/global/list/dead_mob_list = list()				//all dead mobs, including clientless. Excludes /mob/new_player
 var/global/list/joined_player_list = list()			//all clients that have joined the game at round-start or as a latejoin.
+var/global/list/silicon_mobs = list()				//all silicon mobs

@@ -7,17 +7,22 @@
 	use_power = 1
 	idle_power_usage = 40
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/desired_temp = 300
+	var/target_temperature = 300
 	var/heater_coefficient = 0.10
 	var/on = FALSE
 
 /obj/machinery/chem_heater/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/chem_heater(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_heater(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/chem_heater
+	name = "circuit board (Chemical Heater)"
+	build_path = /obj/machinery/chem_heater
+	origin_tech = "programming=2;engineering=2;biotech=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1)
 
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.10
@@ -30,80 +35,52 @@
 		return
 	if(on)
 		if(beaker)
-			if(beaker.reagents.chem_temp > desired_temp)
-				beaker.reagents.chem_temp += min(-1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
-			if(beaker.reagents.chem_temp < desired_temp)
-				beaker.reagents.chem_temp += max(1, (desired_temp - beaker.reagents.chem_temp) * heater_coefficient)
-			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp) //stops stuff like 456.12312312302
+			if(beaker.reagents.chem_temp > target_temperature)
+				beaker.reagents.chem_temp += min(-1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
+			if(beaker.reagents.chem_temp < target_temperature)
+				beaker.reagents.chem_temp += max(1, (target_temperature - beaker.reagents.chem_temp) * heater_coefficient)
 
+			beaker.reagents.chem_temp = round(beaker.reagents.chem_temp)
 			beaker.reagents.handle_reactions()
 
-/obj/machinery/chem_heater/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		spawn(rand(0, 15))
-			stat |= NOPOWER
-
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
-	if(isrobot(user))
-		return
-
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
-			return
-
-		if(user.drop_item())
-			beaker = I
-			I.loc = src
-			user << "<span class='notice'>You add the beaker to the machine.</span>"
-			icon_state = "mixer1b"
-
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
 		return
 
 	if(exchange_parts(user, I))
 		return
 
-	if(panel_open)
-		if(istype(I, /obj/item/weapon/crowbar))
-			eject_beaker()
-			default_deconstruction_crowbar(I)
-			return 1
-
-/obj/machinery/chem_heater/attack_hand(mob/user)
-	if (!user)
-		return
-	interact(user)
-
-/obj/machinery/chem_heater/ui_act(action, params)
-	if(..())
+	if(default_deconstruction_crowbar(I))
 		return
 
-	switch(action)
-		if("power")
-			on = !on
-		if("temperature")
-			desired_temp = Clamp(input("Please input the target temperature", name) as num, 0, 1000)
-		if("eject")
-			eject_beaker()
-	return 1
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
+		. = 1 //no afterattack
+		if(beaker)
+			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
+			return
 
-/obj/machinery/chem_heater/interact(mob/user)
-	if(stat & BROKEN)
+		if(!user.drop_item())
+			return
+		beaker = I
+		I.loc = src
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
+		icon_state = "mixer1b"
 		return
-	ui_interact(user)
+	return ..()
 
-/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, 350, 400)
+/obj/machinery/chem_heater/deconstruction()
+	eject_beaker()
+
+/obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+										datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "chem_heater", name, 275, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/chem_heater/get_ui_data()
+/obj/machinery/chem_heater/ui_data()
 	var/data = list()
-	data["targetTemp"] = desired_temp
+	data["targetTemp"] = target_temperature
 	data["isActive"] = on
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 
@@ -117,6 +94,32 @@
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beakerContents
 	return data
+
+/obj/machinery/chem_heater/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("power")
+			on = !on
+			. = TRUE
+		if("temperature")
+			var/target = params["target"]
+			var/adjust = text2num(params["adjust"])
+			if(target == "input")
+				target = input("New target temperature:", name, target_temperature) as num|null
+				if(!isnull(target) && !..())
+					. = TRUE
+			else if(adjust)
+				target = target_temperature + adjust
+			else if(text2num(target) != null)
+				target = text2num(target)
+				. = TRUE
+			if(.)
+				target_temperature = Clamp(target, 0, 1000)
+		if("eject")
+			on = FALSE
+			eject_beaker()
+			. = TRUE
 
 /obj/machinery/chem_heater/proc/eject_beaker()
 	if(beaker)

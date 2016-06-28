@@ -3,7 +3,7 @@
 	anchored = 1
 	opacity = 0
 	density = 0
-	layer = 3.5
+	layer = SIGN_LAYER
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -13,7 +13,7 @@
 /obj/structure/sign/ex_act(severity, target)
 	qdel(src)
 
-/obj/structure/sign/blob_act()
+/obj/structure/sign/blob_act(obj/effect/blob/B)
 	qdel(src)
 	return
 
@@ -27,12 +27,14 @@
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
-		new /obj/item/sign_backing(get_turf(user))
+		var/obj/item/sign_backing/SB = new (get_turf(user))
+		SB.icon_state = icon_state
+		SB.sign_path = type
 		qdel(src)
-	if(istype(O, /obj/item/weapon/pen))
+	else if(istype(O, /obj/item/weapon/pen))
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
-		var/sign_type
+		var/obj/structure/sign/sign_type
 		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types)
 			if("Blank")
 				sign_type = /obj/structure/sign/basic
@@ -62,34 +64,44 @@
 				sign_type = /obj/structure/sign/botany
 			if("Xenobiology")
 				sign_type = /obj/structure/sign/xenobio
+
+		//Make sure user is adjacent still
+		if(!Adjacent(user))
+			return
+
 		if(!sign_type)
 			return
-		new sign_type(get_turf(src))
+
+		//It's import to clone the pixel layout information
+		//Otherwise signs revert to being on the turf and
+		//move jarringly
+		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
+		newsign.pixel_x = pixel_x
+		newsign.pixel_y = pixel_y
 		qdel(src)
+	else
+		return ..()
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A blank sign with adhesive backing."
+	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = 3
 	burn_state = FLAMMABLE
+	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
-	if(!isturf(target))
+	if(isturf(target) && proximity)
+		var/turf/T = target
+		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+							 "<span class='notice'>You attach a blank sign to [T].</span>")
+		playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+		new sign_path(T)
+		user.drop_item()
+		qdel(src)
+	else
 		return ..()
-	if(!user.Adjacent(target))
-		return ..()
-	var/turf/T = target
-	if(!T || !istype(T))
-		return ..()
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach a blank sign to [T].</span>")
-	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
-	new /obj/structure/sign/basic(T)
-	user.drop_item()
-	qdel(src)
-	return
 
 /obj/structure/sign/map
 	name = "station map"
@@ -98,8 +110,14 @@
 /obj/structure/sign/map/left
 	icon_state = "map-left"
 
+/obj/structure/sign/map/left/dream
+	icon_state = "map-left-DS"
+
 /obj/structure/sign/map/right
 	icon_state = "map-right"
+
+/obj/structure/sign/map/right/dream
+	icon_state = "map-right-DS"
 
 /obj/structure/sign/securearea
 	name = "\improper SECURE AREA"

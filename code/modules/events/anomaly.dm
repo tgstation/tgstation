@@ -1,6 +1,8 @@
 /datum/round_event_control/anomaly
 	name = "Anomaly: Energetic Flux"
 	typepath = /datum/round_event/anomaly
+
+	min_players = 1
 	max_occurrences = 0 //This one probably shouldn't occur! It'd work, but it wouldn't be very fun.
 	weight = 15
 
@@ -26,7 +28,7 @@
 	priority_announce("Localized energetic flux wave detected on long range scanners. Expected location of impact: [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
+	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
 

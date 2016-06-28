@@ -5,7 +5,8 @@
 	set category = "Object"
 	set src in view(1)
 	usr.set_machine(src)
-	if(!mapping)	return
+	if(!mapping)
+		return
 
 	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 
@@ -50,24 +51,24 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/space")
+					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor")
+					if("/turf/open/floor")
 						colour = rgb(150,150,150)
-						var/turf/simulated/floor/TF = T
+						var/turf/open/floor/TF = T
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
-					if("/turf/simulated/floor/engine")
+					if("/turf/open/floor/engine")
 						colour = rgb(128,128,128)
 
-					if("/turf/simulated/wall")
+					if("/turf/closed/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
 					else
@@ -87,7 +88,7 @@
 							else
 								colour = rgb(128,192,128)
 
-						if(istype(AM, /obj/machinery/alarm))
+						if(istype(AM, /obj/machinery/airalarm))
 							colour = rgb(0,255,0)
 							colour2 = colour
 							if(AM.icon_state=="alarm:1")
@@ -177,7 +178,7 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = 25
+		H.layer = ABOVE_HUD_LAYER
 		usr.mapobjs += H
 #else
 
@@ -198,11 +199,11 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
-					if("/turf/space")
+					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
-					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
+					if("/turf/open/floor", "/turf/open/floor/engine")
 						var/datum/gas_mixture/environment = T.return_air()
 						var/turf_total = environment.total_moles()
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
@@ -213,10 +214,10 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
-					if("/turf/simulated/wall")
+					if("/turf/closed/wall")
 						colour = rgb(96,96,96)
 
-					if("/turf/simulated/wall/r_wall")
+					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
 					else
@@ -233,7 +234,7 @@
 							else
 								colour = rgb(96,192,128)
 
-						if(istype(AM, /obj/machinery/alarm))
+						if(istype(AM, /obj/machinery/airalarm))
 							colour = rgb(0,255,0)
 
 							if(AM.icon_state=="alarm:1")
@@ -295,7 +296,7 @@
 
 		H.icon = I
 		qdel(I)
-		H.layer = 25
+		H.layer = ABOVE_HUD_LAYER
 		usr.mapobjs += H
 
 #endif

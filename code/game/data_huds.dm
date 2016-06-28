@@ -16,7 +16,7 @@
 /datum/atom_hud/data
 
 /datum/atom_hud/data/human/medical
-	hud_icons = list(HEALTH_HUD, STATUS_HUD)
+	hud_icons = list(STATUS_HUD, HEALTH_HUD)
 
 /datum/atom_hud/data/human/medical/basic
 
@@ -67,24 +67,52 @@
 	return 0
 
 //helper for getting the appropriate health status
-/proc/RoundHealth(health)
-	switch(health)
+/proc/RoundHealth(mob/living/M)
+	if(M.stat == DEAD)
+		return "health-100" //what's our health? it doesn't matter, we're dead
+	var/maxhealth = M.maxHealth
+	if(iscarbon(M) && M.health < 0)
+		maxhealth = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
+	var/resulthealth = (M.health / maxhealth) * 100
+	switch(resulthealth)
 		if(100 to INFINITY)
 			return "health100"
-		if(70 to 100)
-			return "health80"
-		if(50 to 70)
-			return "health60"
-		if(30 to 50)
-			return "health40"
-		if(18 to 30)
+		if(90.625 to 100)
+			return "health93.75"
+		if(84.375 to 90.625)
+			return "health87.5"
+		if(78.125 to 84.375)
+			return "health81.25"
+		if(71.875 to 78.125)
+			return "health75"
+		if(65.625 to 71.875)
+			return "health68.75"
+		if(59.375 to 65.625)
+			return "health62.5"
+		if(53.125 to 59.375)
+			return "health56.25"
+		if(46.875 to 53.125)
+			return "health50"
+		if(40.625 to 46.875)
+			return "health43.75"
+		if(34.375 to 40.625)
+			return "health37.5"
+		if(28.125 to 34.375)
+			return "health31.25"
+		if(21.875 to 28.125)
 			return "health25"
-		if(5 to 18)
-			return "health10"
-		if(1 to 5)
-			return "health1"
-		if(-99 to 0)
+		if(15.625 to 21.875)
+			return "health18.75"
+		if(9.375 to 15.625)
+			return "health12.5"
+		if(1 to 9.375)
+			return "health6.25"
+		if(-50 to 1)
 			return "health0"
+		if(-85 to -50)
+			return "health-50"
+		if(-99 to -85)
+			return "health-85"
 		else
 			return "health-100"
 	return "0"
@@ -99,24 +127,33 @@
 	var/turf/T = get_turf(src)
 	if (T) crewmonitor.queueUpdate(T.z)
 
-//called when a carbon changes health
-/mob/living/carbon/proc/med_hud_set_health()
+//called when a living mob changes health
+/mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
-	if(stat == 2)
-		holder.icon_state = "hudhealth-100"
-	else
-		holder.icon_state = "hud[RoundHealth(health)]"
+	holder.icon_state = "hud[RoundHealth(src)]"
+
+//for carbon suit sensors
+/mob/living/carbon/med_hud_set_health()
+	..()
 
 	var/turf/T = get_turf(src)
-	if (T) crewmonitor.queueUpdate(T.z)
+	if(T)
+		crewmonitor.queueUpdate(T.z)
 
 //called when a carbon changes stat, virus or XENO_HOST
-/mob/living/carbon/proc/med_hud_set_status()
+/mob/living/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	if(stat == 2)
+	if(stat == DEAD)
 		holder.icon_state = "huddead"
-	else if(status_flags & XENO_HOST)
+	else
+		holder.icon_state = "hudhealthy"
+
+/mob/living/carbon/med_hud_set_status()
+	var/image/holder = hud_list[STATUS_HUD]
+	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
+	else if(stat == DEAD)
+		holder.icon_state = "huddead"
 	else if(check_virus())
 		holder.icon_state = "hudill"
 	else
@@ -149,7 +186,7 @@
 			if(istype(I,/obj/item/weapon/implant/tracking))
 				holder = hud_list[IMPTRACK_HUD]
 				holder.icon_state = "hud_imp_tracking"
-			else if(istype(I,/obj/item/weapon/implant/loyalty))
+			else if(istype(I,/obj/item/weapon/implant/mindshield))
 				holder = hud_list[IMPLOYAL_HUD]
 				holder.icon_state = "hud_imp_loyal"
 			else if(istype(I,/obj/item/weapon/implant/chem))

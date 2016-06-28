@@ -20,23 +20,19 @@
 	ventcrawler = 2
 	gold_core_spawnable = 2
 	var/squish_chance = 50
+	loot = list(/obj/effect/decal/cleanable/deadcockroach)
+	del_on_death = 1
 
 /mob/living/simple_animal/cockroach/death(gibbed)
 	if(ticker.cinematic) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
 		return
-	if(!ckey || gibbed)// stupid staff of change fucking everything up.
-		..(1)
-		new /obj/effect/decal/cleanable/deadcockroach(src.loc)
-		qdel(src)
-		return
-	else
-		..()
+	..()
 
 /mob/living/simple_animal/cockroach/Crossed(var/atom/movable/AM)
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
-			if(A.mob_size > MOB_SIZE_TINY)
+			if(A.mob_size > MOB_SIZE_SMALL)
 				if(prob(squish_chance))
 					A.visible_message("<span class='notice'>\The [A] squashed \the [name].</span>", "<span class='notice'>You squashed \the [name].</span>")
 					death()
@@ -57,3 +53,4 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	layer = ABOVE_OPEN_TURF_LAYER

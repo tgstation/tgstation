@@ -11,9 +11,6 @@ Hello and welcome to /tg/station's contributing page. You are here because you a
 But first we want to make it clear how you can contribute, if contributing is a new experience for you, and what powers the team has over your pull request so you do not get any surprises when submitting pull requests, and it is closed for a reason you did not anticipate.
 
 ##Getting Started
-
-####EOF settings of main repo are forbidden territory one must avoid wandering into
-
 At /tg/station we do not have a list of goals and features to add, we instead allow freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
@@ -44,7 +41,7 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-###Object Oriented code 
+###Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 ###All Byond paths must contain the full path.
@@ -66,7 +63,7 @@ datum
 				code
 			proc2()
 				code
-		
+
 		datum2
 			varname1 = 0
 			proc
@@ -102,9 +99,7 @@ The previous code made compliant:
 ```
 
 ###No overriding type safety checks.
-The use of the : operator to override type safety checks is strongly discouraged. You must cast the variable to the proper type.
-
-Exceptions are only made when used in loops that require the performance boost from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
+The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ###Type paths must began with a /
 eg: `/datum/thing` not `datum/thing`
@@ -138,9 +133,20 @@ Copying code from one place to another maybe suitable for small short time proje
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
+###Startup/Runtime tradeoffs with lists and the "hidden" init proc
+First, read the comments in this byond thread, starting here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
+
+There are two key points here:
+
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New() and avoid the overhead of a second call (init() and then new())
+
+2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
+
+Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
+
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
-	
+
 ###Control statements:
 (if,while,for,etc)
 
@@ -193,6 +199,14 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Do not divide when you can easily convert it to a multiplication. (ie `4/2` should be done as `4*0.5`)
 
+####Enforced not enforced
+The following different coding styles are not only not enforced, but it is generally frowned upon to change them over from one to the other for little reason:
+
+* English/British spelling on var/proc names
+	* Color/Colour nobody cares,
+* Spaces after control statements
+	* if() if () nobody cares.
+
 ####Operators and spaces:
 (this is not strictly enforced, but more a guideline for readability's sake)
 
@@ -208,6 +222,50 @@ This prevents nesting levels from getting deeper then they need to be.
 
 Math operators like +, -, /, *, etc are up in the air, just choose which version looks more readable.
 
+###Dream Maker Quirks/Tricks:
+Like all languages, Dream Maker has its quirks, some of them are beneficial to us, like these
+
+* In-To for loops: ```for(var/i = 1, i <= some_value, i++)``` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family) however DM's ```for(var/i in 1 to some_value)``` syntax is oddly faster than its implementation of the former syntax; where possible it's advised to use DM's syntax. (Note, the ```to``` keyword is inclusive, so it automatically defaults to replacing ```<=```, if you want ```<``` then you should write it as ```1 to some_value-1```).
+HOWEVER, if either ```some_value``` or ```i``` changes within the body of the for (underneath the ```for(...)``` header) or if you are looping over a list AND changing the length of the list then you can NOT use this type of for loop!
+
+
+* Istypeless for loops: a name for a differing syntax for writing for-each style loops in DM, however it is NOT DM's standard syntax hence why this is considered a quirk. Take a look at this:
+```
+var/list/bag_of_items = list(sword, apple, coinpouch, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/obj/item/sword/S in bag_of_items)
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+The above is a simple proc for checking all swords in a container and returning the one with the highest damage, it uses DM's standard syntax for a for loop, it does this by specifying a type in the variable of the for header which byond interprets as a type to filter by, it performs this filter using ```istype()``` (or some internal-magic similar to ```istype()```, I wouldn't put it past byond), the above example is fine with the data currently contained in ```bag_of_items```, however if ```bag_of_items``` contained ONLY swords, or only SUBTYPES of swords, then the above is inefficient, for example:
+```
+var/list/bag_of_swords = list(sword, sword, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/obj/item/sword/S in bag_of_swords)
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+specifies a type for DM to filter by, with the previous example that's perfectly fine, we only want swords, but here the bag only contains swords? is DM still going to try to filter because we gave it a type to filter by? YES, and here comes the inefficiency. Whereever a list (or other container, such as an atom (in which case you're technically accessing their special contents list but I digress)) contains datums of the same datatype or subtypes of the datatype you require for your for body
+you can circumvent DM's filtering and automatic ```istype()``` checks by writing the loop as such:
+```
+var/list/bag_of_swords = list(sword, sword, sword, sword)
+var/obj/item/sword/best_sword = null
+for(var/s in bag_of_swords)
+	var/obj/item/sword/S = s
+	if(!best_sword || S.damage > best_sword.damage)
+    		best_sword = S
+```
+Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type! which will cause runtime errors.
+
+* Dot variable: like other languages in the C family, Dream maker has a ```.``` or "Dot" operator, used for accessing variables/members/functions of an object instance.
+eg:
+```
+var/mob/living/carbon/human/H = YOU_THE_READER
+H.gib()
+```
+however DM also has a dot variable, accessed just as ```.``` on it's own, defaulting to a value of null, now what's special about the dot operator is that it is automatically returned (as in the ```return``` statment) at the end of a proc, provided the proc does not already manually return (```return count``` for example). Why is this special? well the ```return``` statement should ideally be free from overhead (functionally free, of course nothing's free) but DM fails to fulfill this,  DM's return statement is actually fairly costly for what it does and for what it's used for.
+With ```.``` being everpresent in every proc can we use it as a temporary variable? Of course we can! However the ```.``` operator cannot replace a typecasted variable, it can hold data any other var in DM can, it just can't be accessed as one, however the ```.``` operator is compatible with a few operators that look weird but work perfectly fine, such as: ```.++``` for incrementing ```.'s``` value, or ```.[1]``` for accessing the first element of ```.``` (provided it's a list).
+
 ##Pull Request Process
 
 There is no strict process when it comes to merging pull requests, pull requests will sometimes take a while before they are looked at by a maintainer, the bigger the change the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be nice. Here are some helpful ways to make it easier for you and for the maintainer when making a pull request.
@@ -220,4 +278,16 @@ There is no strict process when it comes to merging pull requests, pull requests
 
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
-* If your pull request is accepted, the code you add is no longer exclusively yours but everyones, everyone is free to work on it but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly told but there have been cases where this would've saved some trouble.
+* If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+
+####Merge tokens
+At the moment there is a system in place for feature/balance pull requests that intend to change gameplay in some form. This system works such that for every feature/balance pull request, you must have a valid bugfix. (Pull requests can have multiple bugfixes, so these pull requests would count as N tokens, instead of just one.) This system is in place indefinitely, it may be removed in the future if we take the number of bugs down to a reasonable number, or it may never be removed.
+
+## Banned content
+Do not add any of the following in a Pull Request or risk getting the PR closed:
+ - National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
+
+##A word on git
+Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
+
+Therefore EOF settings of main repo are forbidden territory one must avoid wandering into

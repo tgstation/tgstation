@@ -6,7 +6,7 @@
 	use_power = 1
 	idle_power_usage = 250
 	active_power_usage = 500
-	circuit = "/obj/item/weapon/circuitboard/crew"
+	circuit = /obj/item/weapon/circuitboard/computer/crew
 
 /obj/machinery/computer/crew/attack_ai(mob/user)
 	if(stat & (BROKEN|NOPOWER))
@@ -229,8 +229,8 @@ var/global/datum/crewmonitor/crewmonitor = new
 
 					var/obj/machinery/camera/C = locate(/obj/machinery/camera) in range(5, tile)
 
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(10, tile)
-					if (!C) C = locate(/obj/machinery/camera) in ultra_range(15, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(10, tile)
+					if (!C) C = locate(/obj/machinery/camera) in urange(15, tile)
 
 					if (C)
 						var/turf/current_loc = AI.eyeobj.loc
@@ -256,4 +256,4 @@ var/global/datum/crewmonitor/crewmonitor = new
 /datum/crewmonitor/proc/sendResources(var/client/client)
 	send_asset(client, "crewmonitor.js")
 	send_asset(client, "crewmonitor.css")
-	SSminimap.sendMinimaps(client)
+	SSminimap.send(client)

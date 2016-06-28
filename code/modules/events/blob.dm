@@ -4,15 +4,15 @@
 	weight = 5
 	max_occurrences = 1
 
-	earliest_start = 48000 // 1 hour 20 minutes
+	min_players = 20
+	earliest_start = 18000 //30 minutes
 
-	gamemode_blacklist = list("blob") // Just in case blob survives that long
+	gamemode_blacklist = list("blob") //Just in case a blob survives that long
 
 /datum/round_event/blob
 	announceWhen	= 12
 	endWhen			= 120
 	var/new_rate = 2
-	var/obj/effect/blob/core/Blob
 
 /datum/round_event/blob/New(var/strength)
 	..()
@@ -27,14 +27,4 @@
 	var/turf/T = pick(blobstart)
 	if(!T)
 		return kill()
-	Blob = new /obj/effect/blob/core(T, 200, null, new_rate)
-	for(var/i = 1; i < rand(3, 6), i++)
-		Blob.process()
-
-
-/datum/round_event/blob/tick()
-	if(!Blob)
-		kill()
-		return
-	if(IsMultiple(activeFor, 3))
-		Blob.process()
+	new/obj/effect/blob/core(T, null, new_rate)

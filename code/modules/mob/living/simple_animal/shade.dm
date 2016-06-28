@@ -26,16 +26,29 @@
 	faction = list("cult")
 	status_flags = CANPUSH
 	flying = 1
+	loot = list(/obj/item/weapon/ectoplasm)
+	del_on_death = 1
+	deathmessage = "lets out a contented sigh as their form unwinds."
 
+/mob/living/simple_animal/shade/canSuicide()
+	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
+		return 0
+	return ..()
 
-/mob/living/simple_animal/shade/death()
-	..(1)
-	new /obj/item/weapon/ectoplasm (src.loc)
-	visible_message("<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>")
-	ghostize()
-	qdel(src)
-	return
+/mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
+	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't
 
+/mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/M)
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+		if(health < maxHealth)
+			adjustHealth(-25)
+			Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
+			M.visible_message("<span class='danger'>[M] heals \the <b>[src]</b>.</span>", \
+					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+		else
+			M << "<span class='cult'>You cannot heal <b>[src]</b>, as it is unharmed!</span>"
+	else if(src != M)
+		..()
 
 /mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
 	if(istype(O, /obj/item/device/soulstone))
@@ -43,4 +56,3 @@
 		SS.transfer_soul("SHADE", src, user)
 	else
 		..()
-	return

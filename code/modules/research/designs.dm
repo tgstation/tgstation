@@ -1,6 +1,6 @@
 /***************************************************************
 **						Design Datums						  **
-**	All the data for building stuff and tracking reliability. **
+**	All the data for building stuff.						  **
 ***************************************************************/
 /*
 For the materials datum, it assumes you need reagents unless specified otherwise. To designate a material that isn't a reagent,
@@ -20,9 +20,6 @@ The currently supporting non-reagent materials. All material amounts are set as 
 Don't add new keyword/IDs if they are made from an existing one (such as rods which are made from metal). Only add raw materials.
 
 Design Guidlines
-- The reliability formula for all R&D built items is reliability (a fixed number) + total tech levels required to make it +
-reliability_mod (starts at 0, gets improved through experimentation). Example: PACMAN generator. 79 base reliablity + 6 tech
-(3 plasmatech, 3 powerstorage) + 0 (since it's completely new) = 85% reliability. Reliability is the chance it works CORRECTLY.
 - When adding new designs, check rdreadme.dm to see what kind of things have already been made and where new stuff is needed.
 - A single sheet of anything is 2000 units of material. Materials besides metal/glass require help from other jobs (mining for
 other types of metals and chemistry for reagents).
@@ -33,26 +30,14 @@ other types of metals and chemistry for reagents).
 	var/name = "Name"					//Name of the created object.
 	var/desc = "Desc"					//Description of the created object.
 	var/id = "id"						//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
-	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.			//Reliability modifier of the device at it's starting point.
-	var/reliability = 100				//Reliability of the device.
+	var/list/req_tech = list()			//IDs of that techs the object originated from and the minimum level requirements.
 	var/build_type = null				//Flag as to what kind machine the design is built in. See defines.
 	var/list/materials = list()			//List of materials. Format: "id" = amount.
 	var/construction_time				//Amount of time required for building the object
 	var/build_path = ""					//The file path of the object that gets created
 	var/list/category = null 			//Primarily used for Mech Fabricators, but can be used for anything
 	var/list/reagents = list()			//List of reagents. Format: "id" = amount.
-
-
-//A proc to calculate the reliability of a design based on tech levels and innate modifiers.
-//Input: A list of /datum/tech; Output: The new reliabilty.
-/datum/design/proc/CalcReliability(list/temp_techs)
-	var/new_reliability
-	for(var/datum/tech/T in temp_techs)
-		if(T.id in req_tech)
-			new_reliability += T.level
-	new_reliability = Clamp(new_reliability, reliability, 100)
-	reliability = new_reliability
-	return
+	var/maxstack = 1
 
 
 ////////////////////////////////////////
@@ -62,11 +47,8 @@ other types of metals and chemistry for reagents).
 /obj/item/weapon/disk/design_disk
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
-	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk2"
-	item_state = "card-id"
-	w_class = 1
-	materials = list(MAT_METAL=30, MAT_GLASS=10)
+	icon_state = "datadisk1"
+	materials = list(MAT_METAL=100, MAT_GLASS=100)
 	var/datum/design/blueprint
 
 /obj/item/weapon/disk/design_disk/New()
@@ -81,7 +63,7 @@ other types of metals and chemistry for reagents).
 	name = "Intellicard AI Transportation System"
 	desc = "Allows for the construction of an intellicard."
 	id = "intellicard"
-	req_tech = list("programming" = 4, "materials" = 4)
+	req_tech = list("programming" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
 	build_path = /obj/item/device/aicard
@@ -107,7 +89,7 @@ other types of metals and chemistry for reagents).
 	id = "design_disk"
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/disk/design_disk
 	category = list("Electronics")
 
@@ -117,7 +99,7 @@ other types of metals and chemistry for reagents).
 	id = "tech_disk"
 	req_tech = list("programming" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/disk/tech_disk
 	category = list("Electronics")
 
@@ -130,7 +112,7 @@ other types of metals and chemistry for reagents).
 	name = "Mining Drill"
 	desc = "Yours is the drill that will pierce through the rock walls."
 	id = "drill"
-	req_tech = list("materials" = 2, "powerstorage" = 3, "engineering" = 2)
+	req_tech = list("materials" = 2, "powerstorage" = 2, "engineering" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
 	build_path = /obj/item/weapon/pickaxe/drill
@@ -140,10 +122,9 @@ other types of metals and chemistry for reagents).
 	name = "Diamond-Tipped Mining Drill"
 	desc = "Yours is the drill that will pierce the heavens!"
 	id = "drill_diamond"
-	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
+	req_tech = list("materials" = 6, "powerstorage" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000, MAT_DIAMOND = 2000) //Yes, a whole diamond is needed.
-	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamonddrill
 	category = list("Mining Designs")
 
@@ -151,10 +132,9 @@ other types of metals and chemistry for reagents).
 	name = "Plasma Cutter"
 	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
 	id = "plasmacutter"
-	req_tech = list("materials" = 2, "plasmatech" = 2, "engineering" = 2, "combat" = 1, "magnets" = 2)
+	req_tech = list("materials" = 3, "plasmatech" = 3, "magnets" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_PLASMA = 400)
-	reliability = 79
 	build_path = /obj/item/weapon/gun/energy/plasmacutter
 	category = list("Mining Designs")
 
@@ -162,10 +142,9 @@ other types of metals and chemistry for reagents).
 	name = "Advanced Plasma Cutter"
 	desc = "It's an advanced plasma cutter, oh my god."
 	id = "plasmacutter_adv"
-	req_tech = list("materials" = 4, "plasmatech" = 3, "engineering" = 3, "combat" = 3, "magnets" = 3)
+	req_tech = list("materials" = 4, "plasmatech" = 4, "engineering" = 2, "combat" = 3, "magnets" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_PLASMA = 2000, MAT_GOLD = 500)
-	reliability = 79
 	build_path = /obj/item/weapon/gun/energy/plasmacutter/adv
 	category = list("Mining Designs")
 
@@ -173,10 +152,20 @@ other types of metals and chemistry for reagents).
 	name = "Sonic Jackhammer"
 	desc = "Essentially a handheld planet-cracker. Can drill through walls with ease as well."
 	id = "jackhammer"
-	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6)
+	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 6, "magnets" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_SILVER = 2000, MAT_DIAMOND = 6000)
 	build_path = /obj/item/weapon/pickaxe/drill/jackhammer
+	category = list("Mining Designs")
+
+/datum/design/modkit
+	name = "Modification Kit"
+	desc = "A device which allows kinetic accelerators to be wielded with one hand, and by any organism."
+	id = "modkit"
+	req_tech = list("materials" = 5, "powerstorage" = 4, "engineering" = 4, "magnets" = 4, "combat" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_GOLD = 1500, MAT_URANIUM = 1000)
+	build_path = /obj/item/modkit
 	category = list("Mining Designs")
 
 /datum/design/superaccelerator
@@ -193,7 +182,7 @@ other types of metals and chemistry for reagents).
 	name = "Hyper-Kinetic Accelerator"
 	desc = "An upgraded version of the proto-kinetic accelerator, with even more superior damage, speed and range."
 	id = "hyperaccelerator"
-	req_tech = list("materials" = 6, "powerstorage" = 6, "engineering" = 5, "magnets" = 6, "combat" = 4)
+	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
@@ -205,7 +194,7 @@ other types of metals and chemistry for reagents).
 	id = "superresonator"
 	req_tech = list("materials" = 4, "powerstorage" = 3, "engineering" = 3, "magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_URANIUM = 2000)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 1500, MAT_SILVER = 1000, MAT_URANIUM = 1000)
 	build_path = /obj/item/weapon/resonator/upgraded
 	category = list("Mining Designs")
 
@@ -219,7 +208,7 @@ other types of metals and chemistry for reagents).
 	id = "beacon"
 	req_tech = list("bluespace" = 1)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 20, MAT_GLASS = 10)
+	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
 	build_path = /obj/item/device/radio/beacon
 	category = list("Bluespace Designs")
 
@@ -227,10 +216,9 @@ other types of metals and chemistry for reagents).
 	name = "Bag of Holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	id = "bag_holding"
-	req_tech = list("bluespace" = 4, "materials" = 6)
+	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
-	reliability = 80
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
@@ -238,10 +226,9 @@ other types of metals and chemistry for reagents).
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
-	req_tech = list("bluespace" = 4, "materials" = 6)
+	req_tech = list("bluespace" = 3, "materials" = 6, "plasmatech" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
-	reliability = 100
 	build_path = /obj/item/weapon/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
 
@@ -249,7 +236,7 @@ other types of metals and chemistry for reagents).
 	name = "GPS Device"
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
-	req_tech = list("materials" = 2, "magnets" = 3, "bluespace" = 3)
+	req_tech = list("materials" = 2, "bluespace" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
 	build_path = /obj/item/device/gps
@@ -259,10 +246,9 @@ other types of metals and chemistry for reagents).
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
 	id = "minerbag_holding"
-	req_tech = list("bluespace" = 3, "materials" = 4)
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500) //quite cheap, for more convenience
-	reliability = 100
 	build_path = /obj/item/weapon/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 
@@ -277,7 +263,7 @@ other types of metals and chemistry for reagents).
 	id = "health_hud"
 	req_tech = list("biotech" = 2, "magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/health
 	category = list("Equipment")
 
@@ -285,9 +271,9 @@ other types of metals and chemistry for reagents).
 	name = "Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	id = "health_hud_night"
-	req_tech = list("biotech" = 4, "magnets" = 5)
+	req_tech = list("biotech" = 4, "magnets" = 5, "plasmatech" = 4, "engineering" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 1000, MAT_SILVER = 250)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_SILVER = 350)
 	build_path = /obj/item/clothing/glasses/hud/health/night
 	category = list("Equipment")
 
@@ -297,7 +283,7 @@ other types of metals and chemistry for reagents).
 	id = "security_hud"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/security
 	category = list("Equipment")
 
@@ -305,9 +291,9 @@ other types of metals and chemistry for reagents).
 	name = "Night Vision Security HUD"
 	desc = "A heads-up display which provides id data and vision in complete darkness."
 	id = "security_hud_night"
-	req_tech = list("magnets" = 5, "combat" = 4)
+	req_tech = list("combat" = 4, "magnets" = 5, "plasmatech" = 4, "engineering" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 200, MAT_URANIUM = 1000, MAT_GOLD = 350)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_GOLD = 350)
 	build_path = /obj/item/clothing/glasses/hud/security/night
 	category = list("Equipment")
 
@@ -315,9 +301,9 @@ datum/design/diagnostic_hud
 	name = "Diagnostic HUD"
 	desc = "A HUD used to analyze and determine faults within robotic machinery."
 	id = "dianostic_hud"
-	req_tech = list("magnets" = 3, "engineering" = 3, "powerstorage" = 2)
+	req_tech = list("magnets" = 3, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 50, "$glass" = 50)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic
 	category = list("Equipment")
 
@@ -325,9 +311,9 @@ datum/design/diagnostic_hud_night
 	name = "Night Vision Diagnostic HUD"
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "dianostic_hud_night"
-	req_tech = list("magnets" = 5, "engineering" = 4, "powerstorage" = 4)
+	req_tech = list("magnets" = 5, "plasmatech" = 4, "engineering" = 6, "powerstorage" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 200, "$glass" = 200, "$uranium" = 1000, "$plasma" = 300)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_URANIUM = 1000, MAT_PLASMA = 300)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
@@ -353,17 +339,26 @@ datum/design/diagnostic_hud_night
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
 	id = "weldingmask"
-	req_tech = list("materials" = 2, "engineering" = 2)
+	req_tech = list("materials" = 2, "engineering" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
+	category = list("Equipment")
+
+/datum/design/portaseeder
+	name = "Portable Seed Extractor"
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	build_type = PROTOLATHE
+	req_tech = list("biotech" = 3, "engineering" = 2)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 400)
+	build_path = /obj/item/weapon/storage/bag/plants/portaseeder
 	category = list("Equipment")
 
 /datum/design/air_horn
 	name = "Air Horn"
 	desc = "Damn son, where'd you find this?"
 	id = "air_horn"
-	req_tech = list("materials" = 2, "engineering" = 2)
+	req_tech = list("materials" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_BANANIUM = 1000)
 	build_path = /obj/item/weapon/bikehorn/airhorn
@@ -373,9 +368,9 @@ datum/design/diagnostic_hud_night
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	id = "mesons"
-	req_tech = list("materials" = 3, "magnets" = 2, "engineering" = 2)
+	req_tech = list("magnets" = 2, "engineering" = 2, "plasmatech" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/meson
 	category = list("Equipment")
 
@@ -383,9 +378,9 @@ datum/design/diagnostic_hud_night
 	name = "Engineering Scanner Goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, regardless of lighting condition. The T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	id = "engine_goggles"
-	req_tech = list("materials" = 4, "magnets" = 3, "engineering" = 4)
+	req_tech = list("materials" = 4, "magnets" = 3, "engineering" = 4, "plasmatech" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 300, MAT_PLASMA = 100)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 100)
 	build_path = /obj/item/clothing/glasses/meson/engine
 	category = list("Equipment")
 
@@ -395,7 +390,7 @@ datum/design/diagnostic_hud_night
 	id = "tray_goggles"
 	req_tech = list("materials" = 3, "magnets" = 2, "engineering" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/meson/engine/tray
 	category = list("Equipment")
 
@@ -403,9 +398,9 @@ datum/design/diagnostic_hud_night
 	name = "Night Vision Optical Meson Scanners"
 	desc = "Prototype meson scanners fitted with an extra sensor which amplifies the visible light spectrum and overlays it to the UHD display."
 	id = "nvgmesons"
-	req_tech = list("materials" = 5, "magnets" = 5, "engineering" = 4)
+	req_tech = list("magnets" = 5, "plasmatech" = 5, "engineering" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 300, MAT_GLASS = 400, MAT_PLASMA = 250, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
 	build_path = /obj/item/clothing/glasses/meson/night
 	category = list("Equipment")
 
@@ -413,9 +408,9 @@ datum/design/diagnostic_hud_night
 	name = "Night Vision Goggles"
 	desc = "Goggles that let you see through darkness unhindered."
 	id = "night_visision_goggles"
-	req_tech = list("magnets" = 4)
+	req_tech = list("materials" = 4, "magnets" = 5, "plasmatech" = 5, "engineering" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_URANIUM = 1000)
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
 	build_path = /obj/item/clothing/glasses/night
 	category = list("Equipment")
 
@@ -433,11 +428,21 @@ datum/design/diagnostic_hud_night
 	name = "Science Goggles"
 	desc = "Goggles fitted with a portable analyzer capable of determining the research worth of an item or components of a machine."
 	id = "scigoggles"
-	req_tech = list("materials" = 3, "magnets" = 3, "engineering" = 2)
+	req_tech = list("magnets" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 250, MAT_GLASS = 300)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/science
 	category = list("Equipment")
+
+/datum/design/diskplantgene
+	name = "Plant data disk"
+	desc = "A disk for storing plant genetic data."
+	id = "diskplantgene"
+	req_tech = list("programming" = 4, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL=200, MAT_GLASS=100)
+	build_path = /obj/item/weapon/disk/plantgene
+	category = list("Electronics")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -457,7 +462,7 @@ datum/design/diagnostic_hud_night
 	name = "Trashbag of Holding"
 	desc = "An advanced trashabg with bluespace properties; capable of holding a plethora of garbage."
 	id = "blutrash"
-	req_tech = list("materials" = 5, "bluespace" = 3)
+	req_tech = list("materials" = 5, "bluespace" = 4, "engineering" = 4, "plasmatech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PLASMA = 1500)
 	build_path = /obj/item/weapon/storage/bag/trash/bluespace
@@ -467,7 +472,7 @@ datum/design/diagnostic_hud_night
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."
 	id = "buffer"
-	req_tech = list("materials" = 5, "engineering" = 3)
+	req_tech = list("materials" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 200)
 	build_path = /obj/item/janiupgrade
@@ -477,7 +482,7 @@ datum/design/diagnostic_hud_night
 	name = "Holographic Sign Projector"
 	desc = "A holograpic projector used to project various warning signs."
 	id = "holosign"
-	req_tech = list("magnets" = 3, "powerstorage" = 2)
+	req_tech = list("programming" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/holosign_creator
@@ -491,8 +496,19 @@ datum/design/diagnostic_hud_night
 	name = "Experimental Welding Tool"
 	desc = "An experimental welder capable of self-fuel generation."
 	id = "exwelder"
-	req_tech = list("materials" = 4, "engineering" = 4, "bluespace" = 3, "plasmatech" = 3)
+	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 3, "plasmatech" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PLASMA = 1500, MAT_URANIUM = 200)
 	build_path = /obj/item/weapon/weldingtool/experimental
 	category = list("Equipment")
+
+
+/datum/design/alienalloy
+	name = "Alien Alloy"
+	desc = "A sheet of reverse-engineered alien alloy."
+	id = "alienalloy"
+	req_tech = list("abductor" = 1, "materials" = 7, "plasmatech" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_PLASMA = 4000)
+	build_path = /obj/item/stack/sheet/mineral/abductor
+	category = list("Stock Parts")

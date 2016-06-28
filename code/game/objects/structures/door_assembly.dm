@@ -292,6 +292,28 @@
 	anchored = 1
 	state = 1
 
+/obj/structure/door_assembly/door_assembly_cult
+	name = "cult airlock assembly"
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
+	typetext = "cult"
+	icontext = "cult"
+	airlock_type = /obj/machinery/door/airlock/cult
+	anchored = 1
+	state = 1
+
+/obj/structure/door_assembly/door_assembly_cult/glass
+	mineral = "glass"
+	material = "glass"
+
+/obj/structure/door_assembly/door_assembly_cult/unruned
+	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
+
+/obj/structure/door_assembly/door_assembly_cult/unruned/glass
+	mineral = "glass"
+	material = "glass"
+
 /obj/structure/door_assembly/door_assembly_wood
 	name = "wooden airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
@@ -331,7 +353,6 @@
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		created_name = t
-		return
 
 	else if(istype(W, /obj/item/weapon/airlock_painter)) // |- Ricotez
 	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
@@ -486,42 +507,41 @@
 						new M(get_turf(src))
 						new M(get_turf(src))
 				qdel(src)
+
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(!anchored )
+			var/door_check = 1
+			for(var/obj/machinery/door/D in loc)
+				if(!D.sub_door)
+					door_check = 0
+					break
+
+			if(door_check)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				user.visible_message("[user] secures the airlock assembly to the floor.", \
+									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
+									 "<span class='italics'>You hear wrenching.</span>")
+
+				if(do_after(user, 40/W.toolspeed, target = src))
+					if( src.anchored )
+						return
+					user << "<span class='notice'>You secure the airlock assembly.</span>"
+					src.name = "secured airlock assembly"
+					src.anchored = 1
+			else
+				user << "There is another door here!"
+
 		else
-			return
-
-	else if(istype(W, /obj/item/weapon/wrench) && !anchored )
-		var/door_check = 1
-		for(var/obj/machinery/door/D in loc)
-			if(!D.sub_door)
-				door_check = 0
-				break
-
-		if(door_check)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user.visible_message("[user] secures the airlock assembly to the floor.", \
-								 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
+			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
+								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
 								 "<span class='italics'>You hear wrenching.</span>")
-
 			if(do_after(user, 40/W.toolspeed, target = src))
-				if( src.anchored )
+				if(!anchored )
 					return
-				user << "<span class='notice'>You secure the airlock assembly.</span>"
-				src.name = "secured airlock assembly"
-				src.anchored = 1
-		else
-			user << "There is another door here!"
-
-	else if(istype(W, /obj/item/weapon/wrench) && anchored )
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-		user.visible_message("[user] unsecures the airlock assembly from the floor.", \
-							 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-							 "<span class='italics'>You hear wrenching.</span>")
-		if(do_after(user, 40/W.toolspeed, target = src))
-			if( !src.anchored )
-				return
-			user << "<span class='notice'>You unsecure the airlock assembly.</span>"
-			src.name = "airlock assembly"
-			src.anchored = 0
+				user << "<span class='notice'>You unsecure the airlock assembly.</span>"
+				name = "airlock assembly"
+				anchored = 0
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
 		var/obj/item/stack/cable_coil/C = W
@@ -655,13 +675,13 @@
 				src.electronics.loc = door
 				qdel(src)
 	else
-		..()
+		return ..()
 	update_icon()
 
 /obj/structure/door_assembly/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(!material)
-		overlays += get_airlock_overlay("fill_construction", icon)
+		add_overlay(get_airlock_overlay("fill_construction", icon))
 	else
-		overlays += get_airlock_overlay("[material]_construction", overlays_file)
-	overlays += get_airlock_overlay("panel_c[state+1]", overlays_file)
+		add_overlay(get_airlock_overlay("[material]_construction", overlays_file))
+	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))

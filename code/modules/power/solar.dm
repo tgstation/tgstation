@@ -12,7 +12,7 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 	var/id = 0
-	var/health = 10
+	var/health = 20
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH // actual dir
@@ -53,8 +53,6 @@
 		health *= 2 								 //this need to be placed here, because panels already on the map don't have an assembly linked to
 	update_icon()
 
-
-
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/crowbar))
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -68,33 +66,55 @@
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			user.visible_message("[user] takes the glass off the solar panel.", "<span class='notice'>You take the glass off the solar panel.</span>")
 			qdel(src)
-		return
-	else if (W)
-		src.add_fingerprint(user)
-		src.health -= W.force
-		src.healthcheck()
+	else
+		return ..()
+
+/obj/machinery/power/solar/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
+
+/obj/machinery/power/solar/hitby(AM as mob|obj)
 	..()
+	var/tforce = 0
+	if(ismob(AM))
+		tforce = 20
+	else if(isobj(AM))
+		var/obj/item/I = AM
+		tforce = I.throwforce
+	take_damage(tforce)
 
-/obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
-		if(!(stat & BROKEN))
-			set_broken()
+/obj/machinery/power/solar/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(stat & BROKEN)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, 1)
+				else
+					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			qdel(src)
 			return
-	return
-
+	health -= damage
+	if(health <= 0)
+		playsound(src, "shatter", 70, 1)
+		new /obj/item/weapon/shard(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+	else if(health <= 10)
+		if(!(stat & BROKEN))
+			playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+			set_broken()
 
 /obj/machinery/power/solar/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & BROKEN)
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel-b", layer = FLY_LAYER))
 	else
-		overlays += image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER)
-		src.dir = angle2dir(adir)
+		add_overlay(image('icons/obj/power.dmi', icon_state = "solar_panel", layer = FLY_LAYER))
+		src.setDir(angle2dir(adir))
 	return
 
 //calculates the fraction of the sunlight that the panel recieves
@@ -134,19 +154,16 @@
 	stat |= BROKEN
 	unset_control()
 	update_icon()
-	return
 
 
 /obj/machinery/power/solar/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				if(prob(50))
-					set_broken()
+				take_damage(rand(10,20), BRUTE, 0)
 			if(3)
-				if(prob(25))
-					set_broken()
+				take_damage(rand(5,15), BRUTE, 0)
 
 /obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
 	..(loc, S, 0)
@@ -257,7 +274,7 @@
 			tracker = 0
 			user.visible_message("[user] takes out the electronics from the solar assembly.", "<span class='notice'>You take out the electronics from the solar assembly.</span>")
 			return 1
-	..()
+	return ..()
 
 //
 // Solar Control Computer
@@ -272,10 +289,11 @@
 	density = 1
 	use_power = 1
 	idle_power_usage = 250
+	var/health = 25
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0
-	var/cdir = 0
+	var/currentdir = 0
 	var/targetdir = 0		// target angle in manual tracking (since it updates every game minute)
 	var/gen = 0
 	var/lastgen = 0
@@ -331,56 +349,46 @@
 	switch(track)
 		if(1)
 			if(trackrate) //we're manual tracking. If we set a rotation speed...
-				cdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
+				currentdir = targetdir //...the current direction is the targetted one (and rotates panels to it)
 		if(2) // auto-tracking
 			if(connected_tracker)
 				connected_tracker.set_angle(SSsun.angle)
 
-	set_panels(cdir)
+	set_panels(currentdir)
 	updateDialog()
 
 
 /obj/machinery/power/solar_control/initialize()
 	..()
 	if(!powernet) return
-	set_panels(cdir)
+	set_panels(currentdir)
 
 /obj/machinery/power/solar_control/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(stat & NOPOWER)
-		overlays += "[icon_keyboard]_off"
+		add_overlay("[icon_keyboard]_off")
 		return
-	overlays += icon_keyboard
+	add_overlay(icon_keyboard)
 	if(stat & BROKEN)
-		overlays += "[icon_state]_broken"
+		add_overlay("[icon_state]_broken")
 	else
-		overlays += icon_screen
-	if(cdir > -1)
-		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
+		add_overlay(icon_screen)
+	if(currentdir > -1)
+		add_overlay(image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(currentdir)))
 
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	if (..() || !user)
-		return
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/power/solar_control/interact(mob/user)
-	if (stat & BROKEN)
-		return
-	ui_interact(user)
-
-/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 0)
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, force_open = force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "solar_control", name, 515, 425)
+/obj/machinery/power/solar_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+												datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "solar_control", name, 500, 400, master_ui, state)
 		ui.open()
 
-/obj/machinery/power/solar_control/get_ui_data()
+/obj/machinery/power/solar_control/ui_data()
 	var/data = list()
 
 	data["generated"] = round(lastgen)
-	data["angle"] = cdir
-	data["direction"] = angle2text(cdir)
+	data["angle"] = currentdir
+	data["direction"] = angle2text(currentdir)
 
 	data["tracking_state"] = track
 	data["tracking_rate"] = trackrate
@@ -390,15 +398,53 @@
 	data["connected_tracker"] = (connected_tracker ? 1 : 0)
 	return data
 
+/obj/machinery/power/solar_control/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("direction")
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				currentdir = Clamp((360 + adjust + currentdir) % 360, 0, 359)
+				targetdir = currentdir
+				set_panels(currentdir)
+				. = TRUE
+		if("rate")
+			var/adjust = text2num(params["adjust"])
+			if(adjust)
+				trackrate = Clamp(trackrate + adjust, -7200, 7200)
+				if(trackrate)
+					nexttime = world.time + 36000 / abs(trackrate)
+				. = TRUE
+		if("tracking")
+			var/mode = text2num(params["mode"])
+			if(mode)
+				track = mode
+				. = TRUE
+			if(mode == 2 && connected_tracker)
+				connected_tracker.set_angle(SSsun.angle)
+				set_panels(currentdir)
+			else if(mode == 1)
+				targetdir = currentdir
+				if(trackrate)
+					nexttime = world.time + 36000 / abs(trackrate)
+				set_panels(targetdir)
+		if("refresh")
+			search_for_connected()
+			if(connected_tracker && track == 2)
+				connected_tracker.set_angle(SSsun.angle)
+			set_panels(currentdir)
+			. = TRUE
+
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20/I.toolspeed, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
+				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -408,8 +454,8 @@
 				qdel(src)
 			else
 				user << "<span class='notice'>You disconnect the monitor.</span>"
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
+				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
+				var/obj/item/weapon/circuitboard/computer/solar_control/M = new /obj/item/weapon/circuitboard/computer/solar_control( A )
 				for (var/obj/C in src)
 					C.loc = src.loc
 				A.circuit = M
@@ -417,9 +463,33 @@
 				A.icon_state = "4"
 				A.anchored = 1
 				qdel(src)
-	else
+	else if(user.a_intent != "harm" && !(I.flags & NOBLUDGEON))
 		src.attack_hand(user)
-	return
+	else
+		return ..()
+
+/obj/machinery/power/solar_control/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type)
+
+/obj/machinery/power/solar_control/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(stat & BROKEN)
+					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+				else
+					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	health -= damage
+	if(health <= 0 && !(stat & BROKEN))
+		playsound(loc, 'sound/effects/Glassbr3.ogg', 100, 1)
+		stat |= BROKEN
+		update_icon()
 
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
@@ -437,45 +507,11 @@
 			targetdir = (targetdir + trackrate/abs(trackrate) + 360) % 360 	//... do it
 			nexttime += 36000/abs(trackrate) //reset the counter for the next 1°
 
-/obj/machinery/power/solar_control/ui_act(action, params)
-	if(..())
-		return
-
-	switch(action)
-		if("control")
-			if(params["cdir"])
-				src.cdir = dd_range(0,359,(360+src.cdir+text2num(params["cdir"]))%360)
-				src.targetdir = src.cdir
-				if(track == 2) //manual update, so losing auto-tracking
-					track = 0
-				spawn(1)
-					set_panels(cdir)
-			if(params["tdir"])
-				src.trackrate = dd_range(-7200,7200,src.trackrate+text2num(params["tdir"]))
-				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-		if("tracking")
-			track = text2num(params["mode"])
-			if(track == 2)
-				if(connected_tracker)
-					connected_tracker.set_angle(SSsun.angle)
-					set_panels(cdir)
-			else if (track == 1) //begin manual tracking
-				src.targetdir = src.cdir
-				if(src.trackrate) nexttime = world.time + 36000/abs(trackrate)
-				set_panels(targetdir)
-		if("refresh")
-			search_for_connected()
-			if(connected_tracker && track == 2)
-				connected_tracker.set_angle(SSsun.angle)
-			set_panels(cdir)
-	return 1
-
-
 //rotates the panel to the passed angle
-/obj/machinery/power/solar_control/proc/set_panels(cdir)
+/obj/machinery/power/solar_control/proc/set_panels(currentdir)
 
 	for(var/obj/machinery/power/solar/S in connected_panels)
-		S.adir = cdir //instantly rotates the panel
+		S.adir = currentdir //instantly rotates the panel
 		S.occlusion()//and
 		S.update_icon() //update it
 
@@ -494,16 +530,14 @@
 
 /obj/machinery/power/solar_control/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
-				if(prob(50))
-					set_broken()
+				take_damage(rand(20,30), BRUTE, 0)
 			if(3)
-				if(prob(25))
-					set_broken()
+				take_damage(rand(10,20), BRUTE, 0)
 
-/obj/machinery/power/solar_control/blob_act()
+/obj/machinery/power/solar_control/blob_act(obj/effect/blob/B)
 	if (prob(75))
 		set_broken()
 		src.density = 0

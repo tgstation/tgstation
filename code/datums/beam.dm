@@ -19,13 +19,9 @@
 /datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam)
 	endtime = world.time+time
 	origin = beam_origin
-	origin_oldloc = origin.loc
-	if(isarea(origin_oldloc))
-		origin_oldloc = origin
+	origin_oldloc =	get_turf(origin)
 	target = beam_target
-	target_oldloc = target.loc
-	if(isarea(target_oldloc))
-		target_oldloc = target
+	target_oldloc = get_turf(target)
 	if(origin_oldloc == origin && target_oldloc == target)
 		static_beam = 1
 	max_distance = maxdistance
@@ -38,9 +34,11 @@
 /datum/beam/proc/Start()
 	Draw()
 	while(!finished && origin && target && world.time < endtime && get_dist(origin,target)<max_distance && origin.z == target.z)
-		if(!static_beam && (origin.loc != origin_oldloc || target.loc != target_oldloc))
-			origin_oldloc = origin.loc //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
-			target_oldloc = target.loc
+		var/origin_turf = get_turf(origin)
+		var/target_turf = get_turf(target)
+		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
+			origin_oldloc = origin_turf //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
+			target_oldloc = target_turf
 			Reset()
 			Draw()
 		sleep(sleep_time)
@@ -116,6 +114,7 @@
 
 		X.pixel_x = Pixel_x
 		X.pixel_y = Pixel_y
+		CHECK_TICK
 
 
 /obj/effect/ebeam

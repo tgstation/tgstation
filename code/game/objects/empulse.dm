@@ -14,7 +14,8 @@
 	if(heavy_range > light_range)
 		light_range = heavy_range
 
-	for(var/atom/T in range(light_range, epicenter))
+	for(var/A in spiral_range(light_range, epicenter))
+		var/atom/T = A
 		var/distance = get_dist(epicenter, T)
 		if(distance < 0)
 			distance = 0

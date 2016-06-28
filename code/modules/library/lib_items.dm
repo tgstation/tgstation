@@ -77,7 +77,7 @@
 				user << "<span class='notice'>You empty \the [I] into \the [src].</span>"
 				update_icon()
 			else if(istype(I, /obj/item/weapon/pen))
-				var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
 				if(!newname)
 					return
 				else
@@ -92,7 +92,7 @@
 					state = 1
 					icon_state = "bookempty"
 			else
-				..()
+				return ..()
 
 
 /obj/structure/bookcase/attack_hand(mob/user)
@@ -111,7 +111,7 @@
 
 /obj/structure/bookcase/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		for(var/obj/item/weapon/book/b in contents)
 			b.loc = (get_turf(src))
 		if(prob(50))
@@ -175,7 +175,6 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
-
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
@@ -201,8 +200,11 @@
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
+				if (length(newtitle) > 20)
+					usr << "That title won't fit on the cover!"
+					return
 				if(!newtitle)
-					usr << "The title is invalid."
+					usr << "That title is invalid."
 					return
 				else
 					name = newtitle

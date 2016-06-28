@@ -6,14 +6,10 @@
 /mob/proc/throw_alert(category, type, severity, obj/new_master)
 
 /* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
-
  category is a text string. Each mob may only have one alert per category; the previous one will be replaced
-
  path is a type path of the actual alert type to throw
-
  severity is an optional number that will be placed at the end of the icon_state for this alert
  For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
-
  new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
  Clicks are forwarded to master */
 
@@ -27,17 +23,17 @@
 			WARNING("[src] threw alert [category] with new_master [new_master] while already having that alert with master [alert.master]")
 			clear_alert(category)
 			return .()
-		else if(alert.type == type && (!severity || severity == alert.severity))
+		else if(alert.type != type)
+			clear_alert(category)
+			return .()
+		else if(!severity || severity == alert.severity)
 			if(alert.timeout)
 				clear_alert(category)
 				return .()
-			else
-//				src << "threw alert not in need of update [category] [type] [severity]"
+			else //no need to update
 				return 0
-//		src << "updating alert [category] [type] [severity]"
 	else
 		alert = PoolOrNew(type)
-//		src << "throwing new alert [category] [type] [severity]"
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -83,10 +79,11 @@
 	mouse_opacity = 1
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
+	var/alerttooltipstyle = ""
 
 
 /obj/screen/alert/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc,theme = alerttooltipstyle)
 
 
 /obj/screen/alert/MouseExited()
@@ -111,7 +108,7 @@ The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = "not_enough_co2"
 
 /obj/screen/alert/too_much_co2
-	name = "Chocking (CO2)"
+	name = "Choking (CO2)"
 	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_co2"
 
@@ -140,7 +137,7 @@ The box in your backpack has an oxygen tank and gas mask in it."
 
 /obj/screen/alert/starving
 	name = "Starving"
-	desc = "Some food would be to kill for right about now. The hunger pains make moving around a chore."
+	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
 
 /obj/screen/alert/hot
@@ -165,13 +162,13 @@ The box in your backpack has an oxygen tank and gas mask in it."
 
 /obj/screen/alert/blind
 	name = "Blind"
-	desc = "For whatever reason, you can't see. This may be caused by a genetic defect, eye trauma, being unconscious, \
+	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
 or something covering your eyes."
 	icon_state = "blind"
 
 /obj/screen/alert/high
 	name = "High"
-	desc = "Woah man, you're tripping balls! Careful you don't get addicted to this... if you aren't already."
+	desc = "Whoa man, you're tripping balls! Careful you don't get addicted... if you aren't already."
 	icon_state = "high"
 
 /obj/screen/alert/drunk //Not implemented
@@ -198,9 +195,9 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 /obj/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
-wall or lattice structure, to push yourself off of if you want to move. A jetpack would enable free range of motion. A pair of \
+wall or lattice, to push yourself off if you want to move. A jetpack would enable free range of motion. A pair of \
 magboots would let you walk around normally on the floor. Barring those, you can throw things, use a fire extinguisher, \
-or shoot a gun to move around via Newton's 3rd Law of motion."
+or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "weightless"
 
 /obj/screen/alert/fire
@@ -220,13 +217,48 @@ or shoot a gun to move around via Newton's 3rd Law of motion."
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
 	icon_state = "alien_tox"
+	alerttooltipstyle = "alien"
 
 /obj/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
-	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
+	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
 	icon_state = "alien_fire"
+	alerttooltipstyle = "alien"
 
+/obj/screen/alert/alien_vulnerable
+	name = "Severed Matriarchy"
+	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
+	icon_state = "alien_noqueen"
+	alerttooltipstyle = "alien"
+
+//BLOBS
+
+/obj/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut_nofactory"
+	alerttooltipstyle = "blob"
+
+//GUARDIANS
+
+/obj/screen/alert/cancharge
+	name = "Charge Ready"
+	desc = "You are ready to charge at a location!"
+	icon_state = "guardian_charge"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/canstealth
+	name = "Stealth Ready"
+	desc = "You are ready to enter stealth!"
+	icon_state = "guardian_canstealth"
+	alerttooltipstyle = "parasite"
+
+/obj/screen/alert/instealth
+	name = "In Stealth"
+	desc = "You are in stealth and your next attack will do bonus damage!"
+	icon_state = "guardian_instealth"
+	alerttooltipstyle = "parasite"
 
 //SILICONS
 
@@ -238,12 +270,12 @@ or shoot a gun to move around via Newton's 3rd Law of motion."
 /obj/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Recharging stations are available in robotics, the dormitory's bathrooms. and the AI satellite."
+Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "emptycell"
 
 /obj/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory's bathrooms. and the AI satellite."
+	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "lowcell"
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
@@ -254,8 +286,8 @@ Recharging stations are available in robotics, the dormitory's bathrooms. and th
 
 /obj/screen/alert/locked
 	name = "Locked Down"
-	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \
-office by your AI master or any qualified human may resolve this matter. Robotics my provide further assistance if necessary."
+	desc = "Unit has been remotely locked down. Usage of a Robotics Control Console like the one in the Research Director's \
+office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
 	icon_state = "locked"
 
 /obj/screen/alert/newlaw
@@ -278,7 +310,7 @@ so as to remain in compliance with the most up-to-date laws."
 /obj/screen/alert/notify_cloning
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
@@ -286,31 +318,34 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/alert/notify_jump
+/obj/screen/alert/notify_action
 	name = "Body created"
 	desc = "A body was created. You can enter it."
-	icon_state = "ghost_frame"
+	icon_state = "template"
 	timeout = 300
-	var/atom/jump_target = null
-	var/attack_not_jump = null
+	var/atom/target = null
+	var/action = NOTIFY_JUMP
 
-/obj/screen/alert/notify_jump/Click()
+/obj/screen/alert/notify_action/Click()
 	if(!usr || !usr.client) return
-	if(!jump_target) return
+	if(!target) return
 	var/mob/dead/observer/G = usr
 	if(!istype(G)) return
-	if(attack_not_jump)
-		jump_target.attack_ghost(G)
-	else
-		var/turf/T = get_turf(jump_target)
-		if(T && isturf(T))
-			G.loc = T
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(G)
+		if(NOTIFY_JUMP)
+			var/turf/T = get_turf(target)
+			if(T && isturf(T))
+				G.loc = T
+		if(NOTIFY_ORBIT)
+			G.ManualFollow(target)
 
 //OBJECT-BASED
 
 /obj/screen/alert/restrained/buckled
 	name = "Buckled"
-	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
+	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
 
 /obj/screen/alert/restrained/handcuffed
 	name = "Handcuffed"

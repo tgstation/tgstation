@@ -359,5 +359,14 @@ CREATE TABLE `SS13_notes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
+DROP TABLE IF EXISTS `SS13_ipintel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE  `SS13_ipintel` (
+`ip` INT UNSIGNED NOT NULL ,
+`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
+`intel` REAL NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `ip` )
+) ENGINE = INNODB;
+/*!40101 SET character_set_client = @saved_cs_client */;
 -- Dump completed on 2013-03-24 18:02:35

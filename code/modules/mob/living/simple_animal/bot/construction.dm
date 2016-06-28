@@ -26,11 +26,11 @@
 		user.unEquip(src, 1)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 
@@ -51,8 +51,10 @@
 
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)	return
-		if(!in_range(src, usr) && loc != usr)	return
+		if(!t)
+			return
+		if(!in_range(src, usr) && loc != usr)
+			return
 		created_name = t
 		return
 
@@ -133,12 +135,12 @@
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
-				if (coil.get_amount() < 1)
+				if(coil.get_amount() < 1)
 					user << "<span class='warning'>You need one length of cable to wire the ED-209!</span>"
 					return
 				user << "<span class='notice'>You start to wire [src]...</span>"
-				if (do_after(user, 40, target = src))
-					if (coil.get_amount() >= 1 && build_step == 6)
+				if(do_after(user, 40, target = src))
+					if(coil.get_amount() >= 1 && build_step == 6)
 						coil.use(1)
 						build_step = 7
 						user << "<span class='notice'>You wire the ED-209 assembly.</span>"
@@ -248,11 +250,11 @@
 		user.unEquip(src, 1)
 		qdel(src)
 
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t
@@ -267,11 +269,11 @@
 		user << "<span class='notice'>You add the robot arm to the odd looking toolbox assembly. Boop beep!</span>"
 		user.unEquip(src, 1)
 		qdel(src)
-	else if (istype(W, /obj/item/weapon/pen))
+	else if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 
 		created_name = t
@@ -291,11 +293,11 @@
 		..()
 		spawn(5)
 			if(skin)
-				overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
+				add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 
 /obj/item/weapon/storage/firstaid/attackby(obj/item/robot_parts/S, mob/user, params)
 
-	if ((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
+	if((!istype(S, /obj/item/robot_parts/l_arm)) && (!istype(S, /obj/item/robot_parts/r_arm)))
 		..()
 		return
 
@@ -325,9 +327,9 @@
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if (!t)
+		if(!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		created_name = t
 	else
@@ -340,7 +342,7 @@
 					build_step++
 					user << "<span class='notice'>You add the health sensor to [src].</span>"
 					name = "First aid/robot arm/health analyzer assembly"
-					overlays += image('icons/obj/aibots.dmi', "na_scanner")
+					add_overlay(image('icons/obj/aibots.dmi', "na_scanner"))
 
 			if(1)
 				if(isprox(W))
@@ -396,7 +398,7 @@
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.remove_fuel(0, user))
 				build_step++
-				overlays += "hs_hole"
+				add_overlay("hs_hole")
 				user << "<span class='notice'>You weld a hole in [src]!</span>"
 		else if(build_step == 1)
 			var/obj/item/weapon/weldingtool/WT = I
@@ -410,7 +412,7 @@
 			return
 		build_step++
 		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
-		overlays += "hs_eye"
+		add_overlay("hs_eye")
 		name = "helmet/signaler/prox sensor assembly"
 		qdel(I)
 
@@ -420,7 +422,7 @@
 		build_step++
 		user << "<span class='notice'>You add the robot arm to [src]!</span>"
 		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += "hs_arm"
+		add_overlay("hs_arm")
 		qdel(I)
 
 	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))

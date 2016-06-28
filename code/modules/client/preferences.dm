@@ -27,11 +27,15 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
-	var/nanoui_fancy = TRUE
+	var/hotkeys = FALSE
+	var/tgui_fancy = TRUE
+	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
+	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
@@ -43,11 +47,10 @@ var/list/preferences_datums = list()
 	var/be_random_body = 0				//whether we'll have a random body every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/blood_type = "A+"				//blood type (not-chooseable)
 	var/underwear = "Nude"				//underwear type
 	var/undershirt = "Nude"				//undershirt type
 	var/socks = "Nude"					//socks type
-	var/backbag = 1						//backpack type
+	var/backbag = DBACKPACK				//backpack type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -55,10 +58,9 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
-
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -89,7 +91,6 @@ var/list/preferences_datums = list()
 	var/list/ignoring = list()
 
 /datum/preferences/New(client/C)
-	blood_type = random_blood_type()
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -114,7 +115,8 @@ var/list/preferences_datums = list()
 
 
 /datum/preferences/proc/ShowChoices(mob/user)
-	if(!user || !user.client)	return
+	if(!user || !user.client)
+		return
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
@@ -139,7 +141,8 @@ var/list/preferences_datums = list()
 					for(var/i=1, i<=max_save_slots, i++)
 						S.cd = "/character[i]"
 						S["real_name"] >> name
-						if(!name)	name = "Character[i]"
+						if(!name)
+							name = "Character[i]"
 						//if(i!=1) dat += " | "
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
 					dat += "</center>"
@@ -185,11 +188,10 @@ var/list/preferences_datums = list()
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
-			dat += "<b>Blood Type:</b> [blood_type]<BR>"
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><BR></td>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
 
 			if(pref_species.use_skintones)
 
@@ -318,6 +320,15 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
+				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Wings</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
+
+					dat += "</td>"
+
 			dat += "</tr></table>"
 
 
@@ -325,7 +336,9 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
-			dat += "<b>Fancy NanoUI:</b> <a href='?_src_=prefs;preference=nanoui'>[(nanoui_fancy) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
@@ -350,6 +363,27 @@ var/list/preferences_datums = list()
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
 					dat += "<b>Ghost Form:</b> <a href='?_src_=prefs;task=input;preference=ghostform'>[ghost_form]</a><br>"
 					dat += "<B>Ghost Orbit: </B> <a href='?_src_=prefs;task=input;preference=ghostorbit'>[ghost_orbit]</a><br>"
+
+			var/button_name = "If you see this something went wrong."
+			switch(ghost_accs)
+				if(GHOST_ACCS_FULL)
+					button_name = GHOST_ACCS_FULL_NAME
+				if(GHOST_ACCS_DIR)
+					button_name = GHOST_ACCS_DIR_NAME
+				if(GHOST_ACCS_NONE)
+					button_name = GHOST_ACCS_NONE_NAME
+
+			dat += "<b>Ghost Accessories:</b> <a href='?_src_=prefs;task=input;preference=ghostaccs'>[button_name]</a><br>"
+
+			switch(ghost_others)
+				if(GHOST_OTHERS_THEIR_SETTING)
+					button_name = GHOST_OTHERS_THEIR_SETTING_NAME
+				if(GHOST_OTHERS_DEFAULT_SPRITE)
+					button_name = GHOST_OTHERS_DEFAULT_SPRITE_NAME
+				if(GHOST_OTHERS_SIMPLE)
+					button_name = GHOST_OTHERS_SIMPLE_NAME
+
+			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
 			if (SERVERTOOLS && config.maprotation)
 				var/p_map = preferred_map
@@ -409,7 +443,8 @@ var/list/preferences_datums = list()
 	popup.open(0)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 17, list/splitJobs = list("Chief Engineer"), widthPerColumn = 295, height = 620)
-	if(!SSjob)	return
+	if(!SSjob)
+		return
 
 	//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 	//splitJobs - Allows you split the table by job. You can make different tables for each department by including their heads. Defaults to CE to make it look nice.
@@ -630,7 +665,8 @@ var/list/preferences_datums = list()
 
 
 /datum/preferences/proc/GetJobDepartment(datum/job/job, level)
-	if(!job || !level)	return 0
+	if(!job || !level)
+		return 0
 	switch(job.department_flag)
 		if(CIVILIAN)
 			switch(level)
@@ -721,13 +757,13 @@ var/list/preferences_datums = list()
 				if("undershirt")
 					undershirt = random_undershirt(gender)
 				if("socks")
-					socks = random_socks(gender)
+					socks = random_socks()
 				if("eyes")
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
 				if("bag")
-					backbag = rand(1,2)
+					backbag = pick(backbaglist)
 				if("all")
 					random_character()
 
@@ -743,6 +779,26 @@ var/list/preferences_datums = list()
 						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
 						if(new_orbit)
 							ghost_orbit = new_orbit
+
+				if("ghostaccs")
+					var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,GHOST_ACCS_FULL_NAME, GHOST_ACCS_DIR_NAME, GHOST_ACCS_NONE_NAME)
+					switch(new_ghost_accs)
+						if(GHOST_ACCS_FULL_NAME)
+							ghost_accs = GHOST_ACCS_FULL
+						if(GHOST_ACCS_DIR_NAME)
+							ghost_accs = GHOST_ACCS_DIR
+						if(GHOST_ACCS_NONE_NAME)
+							ghost_accs = GHOST_ACCS_NONE
+
+				if("ghostothers")
+					var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,GHOST_OTHERS_THEIR_SETTING_NAME, GHOST_OTHERS_DEFAULT_SPRITE_NAME, GHOST_OTHERS_SIMPLE_NAME)
+					switch(new_ghost_others)
+						if(GHOST_OTHERS_THEIR_SETTING_NAME)
+							ghost_others = GHOST_OTHERS_THEIR_SETTING
+						if(GHOST_OTHERS_DEFAULT_SPRITE_NAME)
+							ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
+						if(GHOST_OTHERS_SIMPLE_NAME)
+							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
 					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
@@ -834,10 +890,7 @@ var/list/preferences_datums = list()
 
 				if("socks")
 					var/new_socks
-					if(gender == MALE)
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_m
-					else
-						new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_f
+					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_list
 					if(new_socks)
 						socks = new_socks
 
@@ -898,6 +951,12 @@ var/list/preferences_datums = list()
 					if(new_ears)
 						features["ears"] = new_ears
 
+				if("wings")
+					var/new_wings
+					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
+					if(new_wings)
+						features["wings"] = new_wings
+
 				if("frills")
 					var/new_frills
 					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
@@ -929,7 +988,7 @@ var/list/preferences_datums = list()
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 					if(new_backbag)
-						backbag = backbaglist.Find(new_backbag)
+						backbag = new_backbag
 
 				if("clown_name")
 					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
@@ -1001,7 +1060,7 @@ var/list/preferences_datums = list()
 						gender = MALE
 					underwear = random_underwear(gender)
 					undershirt = random_undershirt(gender)
-					socks = random_socks(gender)
+					socks = random_socks()
 					facial_hair_style = random_facial_hair_style(gender)
 					hair_style = random_hair_style(gender)
 
@@ -1011,11 +1070,20 @@ var/list/preferences_datums = list()
 							UI_style = "Plasmafire"
 						if("Plasmafire")
 							UI_style = "Retro"
+						if("Retro")
+							UI_style = "Slimecore"
+						if("Slimecore")
+							UI_style = "Operative"
 						else
 							UI_style = "Midnight"
 
-				if("nanoui")
-					nanoui_fancy = !nanoui_fancy
+				if("hotkeys")
+					hotkeys = !hotkeys
+
+				if("tgui_fancy")
+					tgui_fancy = !tgui_fancy
+				if("tgui_lock")
+					tgui_lock = !tgui_lock
 
 				if("hear_adminhelps")
 					toggles ^= SOUND_ADMINHELP
@@ -1121,7 +1189,6 @@ var/list/preferences_datums = list()
 
 	character.backbag = backbag
 
-	character.dna.blood_type = blood_type
 	character.dna.features = features.Copy()
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
@@ -1134,4 +1201,4 @@ var/list/preferences_datums = list()
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
-		character.update_mutcolor()
+		character.update_body_parts()

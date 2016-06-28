@@ -16,7 +16,7 @@
 	icon_state = "table_frame"
 	density = 0
 	anchored = 0
-	layer = 2.8
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	var/framestack = /obj/item/stack/rods
 	var/framestackamount = 2
 
@@ -29,8 +29,7 @@
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
-			return
-	if(istype(I, /obj/item/stack/sheet/plasteel))
+	else if(istype(I, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/sheet/plasteel/P = I
 		if(P.get_amount() < 1)
 			user << "<span class='warning'>You need one plasteel sheet to do this!</span>"
@@ -40,8 +39,7 @@
 			P.use(1)
 			new /obj/structure/table/reinforced(src.loc)
 			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/metal))
+	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.get_amount() < 1)
 			user << "<span class='warning'>You need one metal sheet to do this!</span>"
@@ -51,8 +49,7 @@
 			M.use(1)
 			new /obj/structure/table(src.loc)
 			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/glass))
+	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 1)
 			user << "<span class='warning'>You need one glass sheet to do this!</span>"
@@ -63,8 +60,7 @@
 
 			new /obj/structure/table/glass(src.loc)
 			qdel(src)
-		return
-	if(istype(I, /obj/item/stack/sheet/mineral/silver))
+	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/mineral/silver/S = I
 		if(S.get_amount() < 1)
 			user << "<span class='warning'>You need one silver sheet to do this!</span>"
@@ -74,7 +70,18 @@
 			S.use(1)
 			new /obj/structure/table/optable(src.loc)
 			qdel(src)
-		return
+	else
+		return ..()
+
+/obj/structure/table_frame/narsie_act()
+	if(prob(20))
+		new /obj/structure/table_frame/wood(src.loc)
+		qdel(src)
+
+/obj/structure/table_frame/ratvar_act()
+	if(prob(20))
+		new /obj/structure/table_frame/brass(src.loc)
+		qdel(src)
 
 /*
  * Wooden Frames
@@ -89,8 +96,6 @@
 	burn_state = FLAMMABLE
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		..()
 	if(istype(I, /obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
 		if(W.get_amount() < 1)
@@ -102,7 +107,7 @@
 			new /obj/structure/table/wood(src.loc)
 			qdel(src)
 		return
-	if(istype(I, /obj/item/stack/tile/carpet))
+	else if(istype(I, /obj/item/stack/tile/carpet))
 		var/obj/item/stack/tile/carpet/C = I
 		if(C.get_amount() < 1)
 			user << "<span class='warning'>You need one carpet sheet to do this!</span>"
@@ -112,4 +117,18 @@
 			C.use(1)
 			new /obj/structure/table/wood/poker(src.loc)
 			qdel(src)
-		return
+	else
+		return ..()
+
+/obj/structure/table_frame/brass
+	name = "brass table frame"
+	desc = "Four pieces of brass arranged in a square. It's slightly warm to the touch."
+	icon_state = "brass_frame"
+	framestackamount = 0
+
+/obj/structure/table_frame/brass/narsie_act()
+	..()
+	if(src) //do we still exist?
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)

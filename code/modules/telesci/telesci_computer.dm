@@ -3,7 +3,7 @@
 	desc = "Used to teleport objects to and from the telescience telepad."
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/telesci_console
+	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -78,7 +78,7 @@
 			M.buffer = null
 			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
 	src.attack_hand(user)
@@ -102,9 +102,9 @@
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
 		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
+		t += "<div class='statusDisplay'>[rotation]Â°</div>"
 		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<div class='statusDisplay'>[angle]Â°</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
@@ -282,9 +282,9 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == 2 || z_co < 1 || z_co > 6)
+	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
 		telefail()
-		temp_msg = "ERROR! Sector is less than 1, <BR>greater than 6, or equal to 2."
+		temp_msg = "ERROR! Sector is outside known time and space!"
 		return
 	if(teles_left > 0)
 		doteleport(user)

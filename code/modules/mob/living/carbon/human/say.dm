@@ -12,7 +12,7 @@
 	message = dna.species.handle_speech(message,src)
 	if(viruses.len)
 		for(var/datum/disease/pierrot_throat/D in viruses)
-			var/list/temp_message = text2list(message, " ") //List each word in the message
+			var/list/temp_message = splittext(message, " ") //List each word in the message
 			var/list/pick_list = list()
 			for(var/i = 1, i <= temp_message.len, i++) //Create a second list for excluding words down the line
 				pick_list += i
@@ -22,7 +22,7 @@
 					if(findtext(temp_message[H], "*") || findtext(temp_message[H], ";") || findtext(temp_message[H], ":")) continue
 					temp_message[H] = "HONK"
 					pick_list -= H //Make sure that you dont HONK the same word twice
-				message = list2text(temp_message, " ")
+				message = jointext(temp_message, " ")
 	message = ..(message)
 	message = dna.mutations_say_mods(message)
 	return message
@@ -31,8 +31,8 @@
 	return ..() | dna.mutations_get_spans() | dna.species_get_spans()
 
 /mob/living/carbon/human/GetVoice()
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice))
-		var/obj/item/clothing/mask/gas/voice/V = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
+		var/obj/item/clothing/mask/chameleon/V = wear_mask
 		if(V.vchange && wear_id)
 			var/obj/item/weapon/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
@@ -48,6 +48,11 @@
 	return real_name
 
 /mob/living/carbon/human/IsVocal()
+	CHECK_DNA_AND_SPECIES(src)
+
+	// how do species that don't breathe talk? magic, that's what.
+	if(!(NOBREATH in dna.species.specflags) && !getorganslot("lungs"))
+		return 0
 	if(mind)
 		return !mind.miming
 	return 1

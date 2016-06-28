@@ -8,23 +8,29 @@
 		return 0
 
 	var/toxins_used = 0
+	var/tox_detect_threshold = 0.02
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/list/breath_gases = breath.gases
+
+	breath.assert_gases("plasma", "o2")
 
 	//Partial pressure of the toxins in our breath
-	var/Toxins_pp = (breath.toxins/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (breath_gases["plasma"][MOLES]/breath.total_moles())*breath_pressure
 
-	if(Toxins_pp) // Detect toxins in air
-		adjustPlasma(breath.toxins*250)
+	if(Toxins_pp > tox_detect_threshold) // Detect toxins in air
+		adjustPlasma(breath_gases["plasma"][MOLES]*250)
 		throw_alert("alien_tox", /obj/screen/alert/alien_tox)
 
-		toxins_used = breath.toxins
+		toxins_used = breath_gases["plasma"][MOLES]
 
 	else
 		clear_alert("alien_tox")
 
 	//Breathe in toxins and out oxygen
-	breath.toxins -= toxins_used
-	breath.oxygen += toxins_used
+	breath_gases["plasma"][MOLES] -= toxins_used
+	breath_gases["o2"][MOLES] += toxins_used
+
+	breath.garbage_collect()
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -34,36 +40,6 @@
 	//natural reduction of movement delay due to stun.
 	if(move_delay_add > 0)
 		move_delay_add = max(0, move_delay_add - rand(1, 2))
-
-/mob/living/carbon/alien/update_sight()
-	if(stat == DEAD)
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else
-		sight |= SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		if(nightvision)
-			see_in_dark = 8
-			see_invisible = SEE_INVISIBLE_MINIMUM
-		else if(!nightvision)
-			see_in_dark = 4
-			see_invisible = 45
-		if(see_override)
-			see_invisible = see_override
-
-/mob/living/carbon/alien/handle_hud_icons()
-
-	handle_hud_icons_health()
-
-	return 1
-
-/mob/living/carbon/alien/CheckStamina()
-	setStaminaLoss(max((staminaloss - 2), 0))
-	return
 
 /mob/living/carbon/alien/handle_changeling()
 	return

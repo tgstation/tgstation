@@ -5,11 +5,15 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
+
+	if(!has_active_hand()) //can't attack without a hand.
+		src << "<span class='notice'>You look at your arm and sigh.</span>"
+		return
 
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
+	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
@@ -18,11 +22,15 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		override += HM.on_attack_hand(src, A)
 
-	if(override)	return
+	if(override)
+		return
 
 	A.attack_hand(src)
 
 /atom/proc/attack_hand(mob/user)
+	return
+
+/atom/proc/interact(mob/user)
 	return
 
 /*
@@ -79,20 +87,23 @@
 /mob/living/carbon/monkey/RestrainedClickOn(atom/A)
 	if(..())
 		return
-	if(a_intent != "harm" || !ismob(A)) return
+	if(a_intent != "harm" || !ismob(A))
+		return
 	if(is_muzzled())
 		return
 	var/mob/living/carbon/ML = A
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-	var/obj/item/organ/limb/affecting = null
-	if(ishuman(ML)) // why the hell is this not more general
-		affecting = ML:get_organ(ran_zone(dam_zone))
+	var/obj/item/bodypart/affecting = null
+	if(ishuman(ML))
+		var/mob/living/carbon/human/H = ML
+		affecting = H.get_bodypart(ran_zone(dam_zone))
 	var/armor = ML.run_armor_check(affecting, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
 		ML.visible_message("<span class='danger'>[name] bites [ML]!</span>", \
 						"<span class='userdanger'>[name] bites [ML]!</span>")
-		if(armor >= 2) return
+		if(armor >= 2)
+			return
 		for(var/datum/disease/D in viruses)
 			ML.ForceContractDisease(D)
 	else

@@ -9,6 +9,7 @@
 #define MAINTDRONE	"drone_maint"
 #define REPAIRDRONE	"drone_repair"
 #define SCOUTDRONE	"drone_scout"
+#define CLOCKDRONE	"drone_clock"
 
 #define MAINTDRONE_HACKED "drone_maint_red"
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
@@ -35,13 +36,19 @@
 	status_flags = (CANPUSH | CANSTUN | CANWEAKEN)
 	gender = NEUTER
 	voice_name = "synthesized chirp"
-	languages = DRONE
+	speak_emote = list("chirps")
+	bubble_icon = "machine"
+	languages_spoken = DRONE
+	languages_understood = DRONE|HUMAN
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	staticOverlays = list()
+	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
+	unique_name = TRUE
+	faction = list("silicon")
 	var/staticChoice = "static"
-	var/list/staticChoices = list("static", "blank", "letter")
+	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
 	var/laws = \
@@ -53,18 +60,15 @@
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
 	var/obj/item/head
-	var/obj/item/default_storage = /obj/item/weapon/storage/toolbox/drone //If this exists, it will spawn in internal storage
+	var/obj/item/default_storage = /obj/item/weapon/storage/backpack/dufflebag/drone //If this exists, it will spawn in internal storage
 	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
 	var/seeStatic = 1 //Whether we see static instead of mobs
 	var/visualAppearence = MAINTDRONE //What we appear as
 	var/hacked = 0 //If we have laws to destroy the station
-
+	var/datum/personal_crafting/handcrafting
 
 /mob/living/simple_animal/drone/New()
-	..()
-
-	name = name + " ([rand(100,999)])"
-	real_name = name
+	. = ..()
 
 	access_card = new /obj/item/weapon/card/id(src)
 	var/datum/job/captain/C = new /datum/job/captain
@@ -77,10 +81,36 @@
 		var/obj/item/I = new default_hatmask(src)
 		equip_to_slot_or_del(I, slot_head)
 
-	scanner.Grant(src)
+	access_card.flags |= NODROP
 
 	alert_drones(DRONE_NET_CONNECT)
 
+	if(seeStatic)
+		var/datum/action/generic/drone/select_filter/SF = new(src)
+		SF.Grant(src)
+	else
+		verbs -= /mob/living/simple_animal/drone/verb/toggle_statics
+
+	handcrafting = new()
+	var/datum/atom_hud/data/diagnostic/diag_hud = huds[DATA_HUD_DIAGNOSTIC]
+	diag_hud.add_to_hud(src)
+
+
+/mob/living/simple_animal/drone/med_hud_set_health()
+	var/image/holder = hud_list[DIAG_HUD]
+	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+
+/mob/living/simple_animal/drone/med_hud_set_status()
+	var/image/holder = hud_list[DIAG_STAT_HUD]
+	if(stat == DEAD)
+		holder.icon_state = "huddead2"
+	else if(incapacitated())
+		holder.icon_state = "hudoffline"
+	else
+		holder.icon_state = "hudstat"
+
+/mob/living/simple_animal/drone/OpenCraftingMenu()
+	handcrafting.ui_interact(src)
 
 /mob/living/simple_animal/drone/Destroy()
 	qdel(access_card) //Otherwise it ends up on the floor!
@@ -88,9 +118,6 @@
 
 /mob/living/simple_animal/drone/Login()
 	..()
-	update_inv_hands()
-	update_inv_head()
-	update_inv_internal_storage()
 	check_laws()
 
 	updateSeeStaticMobs()
@@ -174,9 +201,11 @@
 	return 1
 
 
-/mob/living/simple_animal/drone/canUseTopic()
-	if(stat)
-		return
+/mob/living/simple_animal/drone/canUseTopic(atom/movable/M, be_close = 0)
+	if(incapacitated())
+		return 0
+	if(be_close && !in_range(M, src))
+		return 0
 	return 1
 
 
@@ -239,3 +268,10 @@
 
 /mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
 	return
+
+/mob/living/simple_animal/drone/fully_heal(admin_revive = 0)
+	adjustBruteLoss(-getBruteLoss()) //Heal all brute damage
+
+/mob/living/simple_animal/drone/bee_friendly()
+	// Why would bees pay attention to drones?
+	return 1

@@ -7,7 +7,7 @@
 		gender = pick(MALE,FEMALE)
 	underwear = random_underwear(gender)
 	undershirt = random_undershirt(gender)
-	socks = random_socks(gender)
+	socks = random_socks()
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
@@ -15,7 +15,8 @@
 	facial_hair_color = hair_color
 	eye_color = random_eye_color()
 	if(!pref_species)
-		pref_species = new /datum/species/human()
+		var/rando_race = pick(config.roundstart_races)
+		pref_species = new rando_race()
 	backbag = 1
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
@@ -64,15 +65,15 @@
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
 
-	mannequin.dir = NORTH
+	mannequin.setDir(NORTH)
 	var/icon/stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
 
-	mannequin.dir = WEST
+	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
 
-	mannequin.dir = SOUTH
+	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
 	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
 

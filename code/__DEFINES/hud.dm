@@ -15,7 +15,7 @@
 #define DIAG_MECH_HUD	"11"// Mech health bar
 #define DIAG_BOT_HUD	"12"// Bot HUDs
 //for antag huds. these are used at the /mob level
-#define ANTAG_HUD		"12"
+#define ANTAG_HUD		"13"
 
 //data HUD (medhud, sechud) defines
 //Don't forget to update human/New() if you change these!
@@ -25,10 +25,23 @@
 #define DATA_HUD_MEDICAL_ADVANCED	4
 #define DATA_HUD_DIAGNOSTIC			5
 //antag HUD defines
-#define ANTAG_HUD_CULT		6
-#define ANTAG_HUD_REV		7
-#define ANTAG_HUD_OPS		8
-#define ANTAG_HUD_WIZ		9
-#define ANTAG_HUD_SHADOW    10
-#define ANTAG_HUD_HOG_BLUE 11
-#define ANTAG_HUD_HOG_RED 12
+#define ANTAG_HUD_CULT			6
+#define ANTAG_HUD_REV			7
+#define ANTAG_HUD_OPS			8
+#define ANTAG_HUD_WIZ			9
+#define ANTAG_HUD_SHADOW    	10
+#define ANTAG_HUD_HOG_BLUE 		11
+#define ANTAG_HUD_HOG_RED 		12
+#define ANTAG_HUD_TRAITOR 		13
+#define ANTAG_HUD_NINJA 		14
+#define ANTAG_HUD_CHANGELING 	15
+#define ANTAG_HUD_ABDUCTOR 		16
+#define ANTAG_HUD_DEVIL			17
+#define ANTAG_HUD_SINTOUCHED	18
+#define ANTAG_HUD_SOULLESS		19
+#define ANTAG_HUD_CLOCKWORK		20
+
+// Notification action types
+#define NOTIFY_JUMP "jump"
+#define NOTIFY_ATTACK "attack"
+#define NOTIFY_ORBIT "orbit"

@@ -6,11 +6,11 @@
 	var/list/organs = list()
 	switch(operation)
 		if("add organ")
-			for(var/path in subtypesof(/obj/item/organ/internal))
-				var/dat = replacetext("[path]", "/obj/item/organ/internal/", ":")
+			for(var/path in subtypesof(/obj/item/organ))
+				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/internal/organ = input("Select organ type:", "Organ Manipulation", null) in organs
+			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			organ = new organ
 			organ.Insert(C)
@@ -26,7 +26,7 @@
 			organ.implant(C)
 
 		if("drop organ/implant", "remove organ/implant")
-			for(var/obj/item/organ/internal/I in C.internal_organs)
+			for(var/obj/item/organ/I in C.internal_organs)
 				organs["[I.name] ([I.type])"] = I
 
 			for(var/obj/item/weapon/implant/I in C)
@@ -35,7 +35,7 @@
 			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) in organs
 			organ = organs[organ]
 			if(!organ) return
-			var/obj/item/organ/internal/O
+			var/obj/item/organ/O
 			var/obj/item/weapon/implant/I
 
 			if(isorgan(organ))

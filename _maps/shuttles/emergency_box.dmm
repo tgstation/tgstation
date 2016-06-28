@@ -1,0 +1,656 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"aa" = (
+/turf/open/space,
+/area/space)
+"ab" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
+/area/shuttle/escape)
+"ac" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"ad" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/escape)
+"ae" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f9"
+	},
+/area/shuttle/escape)
+"af" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"ag" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"ah" = (
+/obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"ai" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/weapon/crowbar,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aj" = (
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f5"
+	},
+/area/shuttle/escape)
+"ak" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/shuttle/escape)
+"al" = (
+/obj/machinery/computer/atmos_alert,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"am" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"an" = (
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"ao" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"ap" = (
+/obj/machinery/computer/security,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aq" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"ar" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"as" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 0;
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"at" = (
+/obj/machinery/button/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"au" = (
+/obj/machinery/computer/communications,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"av" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall13";
+	dir = 2
+	},
+/area/shuttle/escape)
+"aw" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle/escape)
+"ax" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle/escape)
+"ay" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Cockpit";
+	req_access_txt = "19"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"az" = (
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/shuttle/escape)
+"aA" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"aB" = (
+/obj/machinery/flasher{
+	id = "cockpit_flasher";
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aC" = (
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aD" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aE" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/weapon/crowbar,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aF" = (
+/obj/machinery/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"aG" = (
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"aH" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Brig";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"aI" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aJ" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/red,
+/area/shuttle/escape)
+"aK" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aL" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aM" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aN" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
+	},
+/area/shuttle/escape)
+"aO" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swallc4";
+	dir = 2
+	},
+/area/shuttle/escape)
+"aP" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	timid = 1;
+	name = "Box emergency shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aQ" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"aR" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"aS" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aT" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aU" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"aV" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"aW" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"aX" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Cargo"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"aY" = (
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle/escape)
+"aZ" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Infirmary"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/shuttle/escape)
+"ba" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bb" = (
+/turf/open/floor/plasteel/shuttle/yellow,
+/area/shuttle/escape)
+"bc" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle/yellow,
+/area/shuttle/escape)
+"bd" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper-open";
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"be" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/weapon/crowbar,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"bf" = (
+/obj/structure/closet,
+/turf/open/floor/plasteel/shuttle/yellow,
+/area/shuttle/escape)
+"bg" = (
+/obj/structure/closet/crate,
+/turf/open/floor/plasteel/shuttle/yellow,
+/area/shuttle/escape)
+"bh" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s5";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bi" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/shuttle/engine/heater,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"bj" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s9";
+	dir = 2
+	},
+/area/shuttle/escape)
+"bk" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ak
+ak
+aI
+aN
+aP
+ak
+ac
+ac
+ac
+ak
+aV
+aN
+aV
+ak
+ak
+bh
+aa
+"}
+(2,1,1) = {"
+aa
+ab
+ak
+ak
+av
+aA
+aF
+aG
+aw
+an
+aL
+aL
+aL
+aL
+aL
+an
+aw
+bb
+bb
+bf
+ax
+bh
+"}
+(3,1,1) = {"
+ab
+ae
+al
+aq
+aw
+aA
+aG
+aJ
+aw
+aQ
+an
+an
+an
+an
+an
+aW
+aw
+bb
+bb
+bf
+bi
+bk
+"}
+(4,1,1) = {"
+ac
+af
+am
+ar
+aw
+aA
+aG
+aJ
+aw
+an
+aS
+aS
+aS
+aS
+aS
+an
+aX
+bb
+bb
+bg
+bi
+bk
+"}
+(5,1,1) = {"
+ac
+ag
+an
+as
+ax
+ac
+aH
+ac
+aO
+an
+aT
+aT
+aT
+aT
+aT
+an
+aw
+bc
+bb
+bg
+bi
+bk
+"}
+(6,1,1) = {"
+ac
+ah
+an
+at
+aw
+aB
+an
+aK
+aM
+an
+an
+an
+an
+an
+an
+an
+aY
+ak
+ak
+ak
+bi
+bk
+"}
+(7,1,1) = {"
+ac
+ag
+an
+an
+ay
+an
+an
+aL
+aM
+an
+aS
+aS
+aS
+aS
+aS
+an
+ac
+aD
+aC
+aD
+bi
+bk
+"}
+(8,1,1) = {"
+ac
+ai
+ao
+ao
+az
+aC
+an
+aM
+aM
+an
+aT
+aT
+aT
+aT
+aT
+an
+aZ
+aC
+aC
+aC
+bi
+bk
+"}
+(9,1,1) = {"
+ad
+aj
+ap
+au
+aw
+aD
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+ac
+aC
+aC
+aC
+bi
+bk
+"}
+(10,1,1) = {"
+aa
+ad
+ak
+ak
+av
+aE
+aC
+aC
+aC
+aR
+aU
+aU
+aU
+aU
+aU
+aR
+ac
+bd
+be
+bd
+ax
+bj
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+ac
+ak
+ac
+ak
+ak
+ak
+ac
+ac
+ac
+ak
+ak
+ba
+ac
+ak
+ac
+bj
+aa
+"}

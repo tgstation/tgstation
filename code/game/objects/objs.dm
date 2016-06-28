@@ -1,5 +1,6 @@
 /obj
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	var/crit_fail = 0
 	var/unacidable = 0 //universal "unacidabliness" var, here so you can use it in any obj.
 	animate_movement = 2
@@ -14,9 +15,23 @@
 	var/burn_world_time //What world time the object will burn up completely
 	var/being_shocked = 0
 
+	var/on_blueprints = FALSE //Are we visible on the station blueprints at roundstart?
+	var/force_blueprints = FALSE //forces the obj to be on the blueprints, regardless of when it was created.
+
+/obj/New()
+	..()
+
+	if(on_blueprints && isturf(loc))
+		var/turf/T = loc
+		if(force_blueprints)
+			T.add_blueprints(src)
+		else
+			T.add_blueprints_preround(src)
+
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+	SStgui.close_uis(src)
 	return ..()
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -49,9 +64,6 @@
 		return remove_air(environment.total_moles() * breath_percentage)
 	else
 		return null
-
-/atom/movable/proc/initialize()
-	return
 
 /obj/proc/updateUsrDialog()
 	if(in_use)
@@ -97,8 +109,6 @@
 	if(ui_interact(user) != -1)
 		return
 	..()
-/obj/proc/interact(mob/user)
-	return
 
 /obj/proc/container_resist()
 	return
@@ -107,7 +117,13 @@
 	return
 
 /mob/proc/unset_machine()
-	src.machine = null
+	if(machine)
+		machine.on_unset_machine(src)
+		machine = null
+
+//called when the user unsets the machine.
+/atom/movable/proc/on_unset_machine(mob/user)
+	return
 
 /mob/proc/set_machine(obj/O)
 	if(src.machine)
@@ -134,7 +150,7 @@
 	else if(severity == 2)
 		if(prob(50))
 			qdel(src)
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		..()
 
 //If a mob logouts/logins in side of an object you can use this proc
@@ -146,7 +162,7 @@
 
 /obj/singularity_act()
 	ex_act(1)
-	if(src && isnull(gc_destroyed))
+	if(src && !qdeleted(src))
 		qdel(src)
 	return 2
 
@@ -170,7 +186,7 @@
 		SSobj.burning += src
 		burn_world_time = world.time + burntime*rand(10,20)
 		if(global_overlay)
-			overlays += fire_overlay
+			add_overlay(fire_overlay)
 		return 1
 
 /obj/proc/burn()
@@ -195,6 +211,13 @@
 /obj/proc/tesla_act(var/power)
 	being_shocked = 1
 	var/power_bounced = power / 2
-	tesla_zap(src, 5, power_bounced)
-	spawn(10)
-		being_shocked = 0
+	tesla_zap(src, 3, power_bounced)
+	addtimer(src, "reset_shocked", 10)
+
+/obj/proc/reset_shocked()
+	being_shocked = 0
+
+/obj/proc/CanAStarPass()
+	. = !density
+
+

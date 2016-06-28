@@ -8,11 +8,11 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 
 /obj/item/ammo_casing/energy/laser
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
 
 /obj/item/ammo_casing/energy/lasergun
-	projectile_type = /obj/item/projectile/beam
+	projectile_type = /obj/item/projectile/beam/laser
 	e_cost = 83
 	select_name = "kill"
 
@@ -26,11 +26,11 @@
 /obj/item/ammo_casing/energy/laser/scatter
 	projectile_type = /obj/item/projectile/beam/scatter
 	pellets = 5
-	variance = 0.8
+	variance = 25
 	select_name = "scatter"
 
 /obj/item/ammo_casing/energy/laser/heavy
-	projectile_type = /obj/item/projectile/beam/heavylaser
+	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
 
@@ -161,8 +161,59 @@ obj/item/ammo_casing/energy/net
 	projectile_type = /obj/item/projectile/energy/net
 	select_name = "netting"
 	pellets = 6
-	variance = 1
+	variance = 40
 
 /obj/item/ammo_casing/energy/trap
 	projectile_type = /obj/item/projectile/energy/trap
 	select_name = "snare"
+
+/obj/item/ammo_casing/energy/instakill
+	projectile_type = /obj/item/projectile/beam/instakill
+	e_cost = 0
+	select_name = "DESTROY"
+
+/obj/item/ammo_casing/energy/instakill/blue
+	projectile_type = /obj/item/projectile/beam/instakill/blue
+
+/obj/item/ammo_casing/energy/instakill/red
+	projectile_type = /obj/item/projectile/beam/instakill/red
+
+/obj/item/ammo_casing/energy/shock_revolver
+	fire_sound = 'sound/magic/lightningbolt.ogg'
+	e_cost = 200
+	select_name = "stun"
+	projectile_type = /obj/item/projectile/energy/shock_revolver
+
+/obj/item/ammo_casing/energy/gravityrepulse
+	projectile_type = /obj/item/projectile/gravityrepulse
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "repulse"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravityrepulse/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
+/obj/item/ammo_casing/energy/gravityattract
+	projectile_type = /obj/item/projectile/gravityattract
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "attract"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+
+/obj/item/ammo_casing/energy/gravityattract/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G
+
+/obj/item/ammo_casing/energy/gravitychaos
+	projectile_type = /obj/item/projectile/gravitychaos
+	e_cost = 0
+	fire_sound = "sound/weapons/wave.ogg"
+	select_name = "chaos"
+	delay = 50
+	var/obj/item/weapon/gun/energy/gravity_gun/gun = null
+
+/obj/item/ammo_casing/energy/gravitychaos/New(var/obj/item/weapon/gun/energy/gravity_gun/G)
+	gun = G

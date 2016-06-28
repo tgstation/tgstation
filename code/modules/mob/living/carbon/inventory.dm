@@ -29,10 +29,13 @@
 	else if(I == r_hand)
 		r_hand = null
 
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+
 	I.screen_loc = null // will get moved if inventory is visible
 	I.loc = src
 	I.equipped(src, slot)
-	I.layer = 20
+	I.layer = ABOVE_HUD_LAYER
 
 	switch(slot)
 		if(slot_back)
@@ -40,13 +43,13 @@
 			update_inv_back()
 		if(slot_wear_mask)
 			wear_mask = I
-			wear_mask_update(I, unequip=0)
+			wear_mask_update(I, toggle_off = 0)
 		if(slot_head)
 			head = I
 			head_update(I)
 		if(slot_handcuffed)
 			handcuffed = I
-			update_inv_handcuffed()
+			update_handcuffed()
 		if(slot_legcuffed)
 			legcuffed = I
 			update_inv_legcuffed()
@@ -77,22 +80,31 @@
 		update_inv_back()
 	else if(I == wear_mask)
 		wear_mask = null
-		wear_mask_update(I, unequip=1)
+		wear_mask_update(I, toggle_off = 1)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed()
+			buckled.unbuckle_mob(src)
+		update_handcuffed()
 	else if(I == legcuffed)
 		legcuffed = null
 		update_inv_legcuffed()
 
 //handle stuff to update when a mob equips/unequips a mask.
-/mob/living/carbon/proc/wear_mask_update(obj/item/I, unequip = 1)
+/mob/living/proc/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
+	update_inv_wear_mask()
+
+/mob/living/carbon/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
+	if(C.tint || initial(C.tint))
+		update_tint()
 	update_inv_wear_mask()
 
 //handle stuff to update when a mob equips/unequips a headgear.
 /mob/living/carbon/proc/head_update(obj/item/I, forced)
+	if(istype(I, /obj/item/clothing))
+		var/obj/item/clothing/C = I
+		if(C.tint || initial(C.tint))
+			update_tint()
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()

@@ -54,11 +54,36 @@
 	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_deathrattle()
+	set name = "Toggle Deathrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when sentient mobs \
+		die."
+	prefs.toggles ^= DISABLE_DEATHRATTLE
+	prefs.save_preferences()
+	usr << "You will \
+		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
+		messages when a sentient mob dies."
+	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
+/client/verb/toggle_arrivalrattle()
+	set name = "Toggle Arrivalrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when someone joins \
+		the station."
+	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
+		messages when someone joins the station."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
 	set desc = "Toggle hearing a notification when admin PMs are received"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= SOUND_ADMINHELP
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
@@ -68,7 +93,8 @@
 	set name = "Do/Don't Announce Login"
 	set category = "Preferences"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
-	if(!holder)	return
+	if(!holder)
+		return
 	prefs.toggles ^= ANNOUNCE_LOGIN
 	prefs.save_preferences()
 	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
@@ -209,26 +235,24 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
-							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
-/client/verb/pick_form()
-	set name = "Choose Ghost Form"
-	set category = "Preferences"
-	set desc = "Choose your preferred ghostly appearance."
-	if(!is_content_unlocked())	return
+							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")
+/client/proc/pick_form()
+	if(!is_content_unlocked())
+		alert("This setting is for accounts with BYOND premium only.")
+		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
 		prefs.save_preferences()
 		if(istype(mob,/mob/dead/observer))
-			mob.icon_state = new_form
+			var/mob/dead/observer/O = mob
+			O.update_icon(new_form)
 
 var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
 
-/client/verb/pick_ghost_orbit()
-	set name = "Choose Ghost Orbit"
-	set category = "Preferences"
-	set desc = "Choose your preferred ghostly orbit."
+/client/proc/pick_ghost_orbit()
 	if(!is_content_unlocked())
+		alert("This setting is for accounts with BYOND premium only.")
 		return
 	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
 	if(new_orbit)
@@ -237,6 +261,54 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		if(istype(mob, /mob/dead/observer))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
+
+/client/proc/pick_ghost_accs()
+	var/new_ghost_accs = alert("Do you want your ghost to show full accessories where possible, hide accessories but still use the directional sprites where possible, or also ignore the directions and stick to the default sprites?",,"full accessories", "only directional sprites", "default sprites")
+	if(new_ghost_accs)
+		switch(new_ghost_accs)
+			if("full accessories")
+				prefs.ghost_accs = GHOST_ACCS_FULL
+			if("only directional sprites")
+				prefs.ghost_accs = GHOST_ACCS_DIR
+			if("default sprites")
+				prefs.ghost_accs = GHOST_ACCS_NONE
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.update_icon()
+
+/client/verb/pick_ghost_customization()
+	set name = "Ghost Customization"
+	set category = "Preferences"
+	set desc = "Customize your ghastly appearance."
+	if(is_content_unlocked())
+		switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
+			if("Ghost Form")
+				pick_form()
+			if("Ghost Orbit")
+				pick_ghost_orbit()
+			if("Ghost Accessories")
+				pick_ghost_accs()
+	else
+		pick_ghost_accs()
+
+/client/verb/pick_ghost_others()
+	set name = "Ghosts of Others"
+	set category = "Preferences"
+	set desc = "Change display settings for the ghosts of other players."
+	var/new_ghost_others = alert("Do you want the ghosts of others to show up as their own setting, as their default sprites or always as the default white ghost?",,"Their Setting", "Default Sprites", "White Ghost")
+	if(new_ghost_others)
+		switch(new_ghost_others)
+			if("Their Setting")
+				prefs.ghost_others = GHOST_OTHERS_THEIR_SETTING
+			if("Default Sprites")
+				prefs.ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
+			if("White Ghost")
+				prefs.ghost_others = GHOST_OTHERS_SIMPLE
+		prefs.save_preferences()
+		if(istype(mob, /mob/dead/observer))
+			var/mob/dead/observer/O = mob
+			O.updateghostsight()
 
 /client/verb/toggle_intent_style()
 	set name = "Toggle Intent Selection Style"
@@ -258,12 +330,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Toggle Ghost HUD"
 	set category = "Preferences"
 	set desc = "Hide/Show Ghost HUD"
-	
+
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
 	prefs.save_preferences()
 	if(istype(mob,/mob/dead/observer))
-		mob.hud_used.ghost_hud()
+		mob.hud_used.show_hud()
 
 /client/verb/toggle_inquisition() // warning: unexpected inquisition
 	set name = "Toggle Inquisitiveness"
@@ -276,3 +348,12 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 		src << "<span class='notice'>You will now examine everything you click on.</span>"
 	else
 		src << "<span class='notice'>You will no longer examine things you click on.</span>"
+
+/client/verb/toggle_announcement_sound()
+	set name = "Hear/Silence Announcements"
+	set category = "Preferences"
+	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
+	prefs.toggles ^= SOUND_ANNOUNCEMENTS
+	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -8,10 +8,10 @@
 /obj/screen/human/toggle/Click()
 	if(usr.hud_used.inventory_shown)
 		usr.hud_used.inventory_shown = 0
-		usr.client.screen -= usr.hud_used.other
+		usr.client.screen -= usr.hud_used.toggleable_inventory
 	else
 		usr.hud_used.inventory_shown = 1
-		usr.client.screen += usr.hud_used.other
+		usr.client.screen += usr.hud_used.toggleable_inventory
 
 	usr.hud_used.hidden_inventory_update()
 
@@ -26,10 +26,11 @@
 	H.quick_equip()
 
 /obj/screen/ling
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling/sting
 	name = "current sting"
+	screen_loc = ui_lingstingdisplay
 
 /obj/screen/ling/sting/Click()
 	var/mob/living/carbon/U = usr
@@ -38,145 +39,138 @@
 /obj/screen/ling/chems
 	name = "chemical storage"
 	icon_state = "power_display"
+	screen_loc = ui_lingchemdisplay
+
+/mob/living/carbon/human/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/human(src, ui_style2icon(client.prefs.UI_style))
 
 
-/datum/hud/proc/human_hud(ui_style = 'icons/mob/screen_midnight.dmi')
-	adding = list()
-	other = list()
-	hotkeybuttons = list()	//These can be disabled for hotkey users
+/datum/hud/human/New(mob/living/carbon/human/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+	..()
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
+	using = new /obj/screen/inventory/craft
+	using.icon = ui_style
+	static_inventory += using
+
 	using = new /obj/screen/act_intent()
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_acti
-	adding += using
+	static_inventory += using
 	action_intent = using
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
 	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
-	adding += using
-	move_intent = using
+	static_inventory += using
 
 	using = new /obj/screen/drop()
 	using.icon = ui_style
 	using.screen_loc = ui_drop_throw
-	hotkeybuttons += using
+	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
 	inv_box.icon_state = "uniform"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_iclothing
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "o_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_wear_suit
 	inv_box.icon_state = "suit"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_oclothing
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "r_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "right hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_r_inactive"
-	if(mymob && !mymob.hand)	//This being 0 or null means the right hand is in use
-		inv_box.icon_state = "hand_r_active"
+	inv_box.icon_state = "hand_r"
 	inv_box.screen_loc = ui_rhand
 	inv_box.slot_id = slot_r_hand
-	inv_box.layer = 19
-	r_hand_hud_object = inv_box
-	adding += inv_box
+	static_inventory += inv_box
 
-	inv_box = new /obj/screen/inventory()
-	inv_box.name = "l_hand"
+	inv_box = new /obj/screen/inventory/hand()
+	inv_box.name = "left hand"
 	inv_box.icon = ui_style
-	inv_box.icon_state = "hand_l_inactive"
-	if(mymob && mymob.hand)	//This being 1 means the left hand is in use
-		inv_box.icon_state = "hand_l_active"
+	inv_box.icon_state = "hand_l"
 	inv_box.screen_loc = ui_lhand
 	inv_box.slot_id = slot_l_hand
-	inv_box.layer = 19
-	l_hand_hud_object = inv_box
-	adding += inv_box
+	static_inventory += inv_box
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_1"
 	using.screen_loc = ui_swaphand1
-	using.layer = 19
-	adding += using
+	static_inventory += using
 
-	using = new /obj/screen/inventory()
-	using.name = "hand"
+	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
-	using.layer = 19
-	adding += using
+	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "id"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "id"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_id
 	inv_box.slot_id = slot_wear_id
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "mask"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "mask"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_mask
 	inv_box.slot_id = slot_wear_mask
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "back"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_back
 	inv_box.slot_id = slot_back
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "storage1"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage1
 	inv_box.slot_id = slot_l_store
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "storage2"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "pocket"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_storage2
 	inv_box.slot_id = slot_r_store
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "suit storage"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "suit_storage"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_sstore1
 	inv_box.slot_id = slot_s_store
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
@@ -186,132 +180,195 @@
 	using = new /obj/screen/human/toggle()
 	using.icon = ui_style
 	using.screen_loc = ui_inventory
-	adding += using
+	static_inventory += using
 
 	using = new /obj/screen/human/equip()
 	using.icon = ui_style
 	using.screen_loc = ui_equip
-	adding += using
+	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "gloves"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "gloves"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_gloves
 	inv_box.slot_id = slot_gloves
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "eyes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "glasses"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_glasses
 	inv_box.slot_id = slot_glasses
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "ears"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "ears"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_ears
 	inv_box.slot_id = slot_ears
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "head"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "head"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_head
 	inv_box.slot_id = slot_head
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "shoes"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "shoes"
+//	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_shoes
 	inv_box.slot_id = slot_shoes
-	inv_box.layer = 19
-	other += inv_box
+	toggleable_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
 	inv_box.name = "belt"
 	inv_box.icon = ui_style
 	inv_box.icon_state = "belt"
+//	inv_box.icon_full = "template_small"
 	inv_box.screen_loc = ui_belt
 	inv_box.slot_id = slot_belt
-	inv_box.layer = 19
-	adding += inv_box
+	static_inventory += inv_box
 
-	mymob.throw_icon = new /obj/screen/throw_catch()
-	mymob.throw_icon.icon = ui_style
-	mymob.throw_icon.screen_loc = ui_drop_throw
-	hotkeybuttons += mymob.throw_icon
+	throw_icon = new /obj/screen/throw_catch()
+	throw_icon.icon = ui_style
+	throw_icon.screen_loc = ui_drop_throw
+	hotkeybuttons += throw_icon
 
+	internals = new /obj/screen/internals()
+	infodisplay += internals
 
-	mymob.internals = new /obj/screen/internals()
-	mymob.internals.screen_loc = ui_internal
+	healths = new /obj/screen/healths()
+	infodisplay += healths
 
-	mymob.healths = new /obj/screen()
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_health
+	healthdoll = new /obj/screen/healthdoll()
+	infodisplay += healthdoll
 
-	mymob.healthdoll = new /obj/screen()
-	mymob.healthdoll.name = "health doll"
-	mymob.healthdoll.screen_loc = ui_healthdoll
-
-	mymob.pullin = new /obj/screen/pull()
-	mymob.pullin.icon = ui_style
-	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_pull_resist
-	hotkeybuttons += mymob.pullin
+	pull_icon = new /obj/screen/pull()
+	pull_icon.icon = ui_style
+	pull_icon.update_icon(mymob)
+	pull_icon.screen_loc = ui_pull_resist
+	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
-	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	infodisplay += lingchemdisplay
 
 	lingstingdisplay = new /obj/screen/ling/sting()
-	lingstingdisplay.screen_loc = ui_lingstingdisplay
+	infodisplay += lingstingdisplay
 
-	mymob.blind = new /obj/screen()
-	mymob.blind.icon = 'icons/mob/screen_full.dmi'
-	mymob.blind.icon_state = "blackimageoverlay"
-	mymob.blind.name = " "
-	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.mouse_opacity = 0
-	mymob.blind.layer = 0
 
-	mymob.damageoverlay = new /obj/screen()
-	mymob.damageoverlay.icon = 'icons/mob/screen_full.dmi'
-	mymob.damageoverlay.icon_state = "oxydamageoverlay0"
-	mymob.damageoverlay.name = "dmg"
-	mymob.damageoverlay.blend_mode = BLEND_MULTIPLY
-	mymob.damageoverlay.screen_loc = "CENTER-7,CENTER-7"
-	mymob.damageoverlay.mouse_opacity = 0
-	mymob.damageoverlay.layer = 18.1 //The black screen overlay sets layer to 18 to display it, this one has to be just on top.
+	zone_select =  new /obj/screen/zone_sel()
+	zone_select.icon = ui_style
+	zone_select.update_icon(mymob)
+	static_inventory += zone_select
 
-	mymob.flash = new /obj/screen()
-	mymob.flash.icon_state = "blank"
-	mymob.flash.name = "flash"
-	mymob.flash.blend_mode = BLEND_ADD
-	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	mymob.flash.layer = 17
+	inventory_shown = 0
 
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = ui_style
-	mymob.zone_sel.update_icon()
+	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id)
+			inv.hud = src
+			inv_slots[inv.slot_id] = inv
+			inv.update_icon()
 
-	mymob.client.screen = list()
+/datum/hud/human/hidden_inventory_update()
+	if(!mymob)
+		return
+	var/mob/living/carbon/human/H = mymob
+	if(inventory_shown && hud_shown)
+		if(H.shoes)
+			H.shoes.screen_loc = ui_shoes
+			H.client.screen += H.shoes
+		if(H.gloves)
+			H.gloves.screen_loc = ui_gloves
+			H.client.screen += H.gloves
+		if(H.ears)
+			H.ears.screen_loc = ui_ears
+			H.client.screen += H.ears
+		if(H.glasses)
+			H.glasses.screen_loc = ui_glasses
+			H.client.screen += H.glasses
+		if(H.w_uniform)
+			H.w_uniform.screen_loc = ui_iclothing
+			H.client.screen += H.w_uniform
+		if(H.wear_suit)
+			H.wear_suit.screen_loc = ui_oclothing
+			H.client.screen += H.wear_suit
+		if(H.wear_mask)
+			H.wear_mask.screen_loc = ui_mask
+			H.client.screen += H.wear_mask
+		if(H.head)
+			H.head.screen_loc = ui_head
+			H.client.screen += H.head
+	else
+		if(H.shoes)		H.shoes.screen_loc = null
+		if(H.gloves)	H.gloves.screen_loc = null
+		if(H.ears)		H.ears.screen_loc = null
+		if(H.glasses)	H.glasses.screen_loc = null
+		if(H.w_uniform)	H.w_uniform.screen_loc = null
+		if(H.wear_suit)	H.wear_suit.screen_loc = null
+		if(H.wear_mask)	H.wear_mask.screen_loc = null
+		if(H.head)		H.head.screen_loc = null
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.blind, mymob.flash, mymob.damageoverlay, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
-	mymob.client.screen += adding + hotkeybuttons
-	mymob.client.screen += mymob.client.void
-	inventory_shown = 0;
+/datum/hud/human/persistant_inventory_update()
+	if(!mymob)
+		return
+	var/mob/living/carbon/human/H = mymob
+	if(hud_shown)
+		if(H.s_store)
+			H.s_store.screen_loc = ui_sstore1
+			H.client.screen += H.s_store
+		if(H.wear_id)
+			H.wear_id.screen_loc = ui_id
+			H.client.screen += H.wear_id
+		if(H.belt)
+			H.belt.screen_loc = ui_belt
+			H.client.screen += H.belt
+		if(H.back)
+			H.back.screen_loc = ui_back
+			H.client.screen += H.back
+		if(H.l_store)
+			H.l_store.screen_loc = ui_storage1
+			H.client.screen += H.l_store
+		if(H.r_store)
+			H.r_store.screen_loc = ui_storage2
+			H.client.screen += H.r_store
+	else
+		if(H.s_store)
+			H.s_store.screen_loc = null
+		if(H.wear_id)
+			H.wear_id.screen_loc = null
+		if(H.belt)
+			H.belt.screen_loc = null
+		if(H.back)
+			H.back.screen_loc = null
+		if(H.l_store)
+			H.l_store.screen_loc = null
+		if(H.r_store)
+			H.r_store.screen_loc = null
 
+	if(hud_version != HUD_STYLE_NOHUD)
+		if(H.r_hand)
+			H.r_hand.screen_loc = ui_rhand
+			H.client.screen += H.r_hand
+		if(H.l_hand)
+			H.l_hand.screen_loc = ui_lhand
+			H.client.screen += H.l_hand
+	else
+		if(H.r_hand)
+			H.r_hand.screen_loc = null
+		if(H.l_hand)
+			H.l_hand.screen_loc = null
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

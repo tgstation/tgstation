@@ -34,7 +34,7 @@
 		else
 			return
 
-	if(istype(I, /obj/item/weapon/wirecutters))
+	else if(istype(I, /obj/item/weapon/wirecutters))
 		if(salvage_num <= 0)
 			user << "<span class='warning'>You don't see anything that can be cut with [I]!</span>"
 			return
@@ -47,7 +47,7 @@
 			else
 				user << "<span class='warning'>You fail to salvage anything valuable from [src]!</span>"
 
-	if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/weapon/crowbar))
 		if(crowbar_salvage && crowbar_salvage.len)
 			var/obj/S = pick(crowbar_salvage)
 			if(S)
@@ -59,7 +59,7 @@
 			user << "<span class='warning'>You don't see anything that can be pried with [I]!</span>"
 
 	else
-		..()
+		return ..()
 
 
 /obj/structure/mecha_wreckage/gygax

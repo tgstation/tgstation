@@ -7,30 +7,30 @@
 //Wild West Areas
 
 /area/awaymission/wwmines
-	name = "\improper Wild West Mines"
+	name = "Wild West Mines"
 	icon_state = "away1"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwgov
-	name = "\improper Wild West Mansion"
+	name = "Wild West Mansion"
 	icon_state = "away2"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwrefine
-	name = "\improper Wild West Refinery"
+	name = "Wild West Refinery"
 	icon_state = "away3"
 	luminosity = 1
 	requires_power = 0
 
 /area/awaymission/wwvault
-	name = "\improper Wild West Vault"
+	name = "Wild West Vault"
 	icon_state = "away3"
 	luminosity = 0
 
 /area/awaymission/wwvaultdoors
-	name = "\improper Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
+	name = "Wild West Vault Doors"  // this is to keep the vault area being entirely lit because of requires_power
 	icon_state = "away2"
 	requires_power = 0
 	luminosity = 0
@@ -109,9 +109,7 @@
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
 				user << "You feel as if you just narrowly avoided a terrible fate..."
 				for(var/mob/living/simple_animal/hostile/faithless/F in mob_list)
-					F.health = -10
-					F.stat = 2
-					F.icon_state = "faithless_dead"
+					F.death()
 
 
 ///////////////Meatgrinder//////////////
@@ -122,13 +120,9 @@
 	desc = "What is that thing?"
 	density = 1
 	anchored = 1
-	layer = 3
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blobpod"
 	var/triggered = 0
-
-/obj/effect/meatgrinder/New()
-	icon_state = "blobpod"
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)
 	Bumped(AM)
@@ -162,7 +156,7 @@
 	C << "<span class='notice'>Death is not your end!</span>"
 
 	spawn(rand(80,120))
-		C.revive()
+		C.revive(full_heal = 1, admin_revive = 1)
 		C << "<span class='notice'>You have regenerated.</span>"
 		C.visible_message("<span class='warning'>[usr] appears to wake from the dead, having healed all wounds.</span>")
 		C.update_canmove()

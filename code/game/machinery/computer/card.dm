@@ -10,7 +10,7 @@ var/time_last_changed_position = 0
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(access_heads, access_change_ids)
-	circuit = /obj/item/weapon/circuitboard/card
+	circuit = /obj/item/weapon/circuitboard/computer/card
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/authenticated = 0
@@ -65,7 +65,7 @@ var/time_last_changed_position = 0
 				idcard.loc = src
 				modify = idcard
 	else
-		..()
+		return ..()
 
 //Check if you can't open a new position for a certain job
 /obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
@@ -102,7 +102,8 @@ var/time_last_changed_position = 0
 
 	user.set_machine(src)
 	var/dat
-	if(!ticker)	return
+	if(!ticker)
+		return
 	if (mode == 1) // accessing crew manifest
 		var/crew = ""
 		for(var/datum/data/record/t in sortRecord(data_core.general))
@@ -482,18 +483,18 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card/centcom
 	name = "\improper Centcom identification console"
-	circuit = /obj/item/weapon/circuitboard/card/centcom
+	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
 	req_access = list(access_cent_captain)
 
 /obj/machinery/computer/card/minor
 	name = "department management console"
 	desc = "You can use this to change ID's for specific departments."
 	icon_screen = "idminor"
-	circuit = /obj/item/weapon/circuitboard/card/minor
+	circuit = /obj/item/weapon/circuitboard/computer/card/minor
 
 /obj/machinery/computer/card/minor/New()
 	..()
-	var/obj/item/weapon/circuitboard/card/minor/typed_circuit = circuit
+	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
 	if(target_dept)
 		typed_circuit.target_dept = target_dept
 	else
@@ -503,12 +504,16 @@ var/time_last_changed_position = 0
 
 /obj/machinery/computer/card/minor/hos
 	target_dept = 2
+	icon_screen = "idhos"
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
+	icon_screen = "idcmo"
 
 /obj/machinery/computer/card/minor/rd
 	target_dept = 4
+	icon_screen = "idrd"
 
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
+	icon_screen = "idce"

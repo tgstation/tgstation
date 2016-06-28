@@ -7,16 +7,6 @@
 		playsound(user, 'sound/weapons/genhit2.ogg', 50, 1)
 	return(BRUTELOSS)
 
-/obj/item/clothing/shoes/sneakers/syndigaloshes
-	desc = "A pair of brown shoes."
-	name = "brown shoes"
-	icon_state = "brown"
-	item_state = "brown"
-	permeability_coefficient = 0.05
-	flags = NOSLIP
-	origin_tech = "syndicate=3"
-	burn_state = FIRE_PROOF
-
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
@@ -30,6 +20,7 @@
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 25, bomb = 50, bio = 10, rad = 0)
 	strip_delay = 70
 	burn_state = FIRE_PROOF
+	can_hold_items = 1
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -68,9 +59,10 @@
 	icon_state = "galoshes_dry"
 
 /obj/item/clothing/shoes/galoshes/dry/step_action()
-	var/turf/simulated/t_loc = get_turf(src)
+	var/turf/open/t_loc = get_turf(src)
 	if(istype(t_loc) && t_loc.wet)
 		t_loc.MakeDry(TURF_WET_WATER)
+		t_loc.wet_time = 0
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
@@ -80,6 +72,8 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	var/footstep = 1	//used for squeeks whilst walking
+	can_hold_items = 1
+	valid_held_items = list(/obj/item/weapon/bikehorn)
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -97,6 +91,10 @@
 	strip_delay = 50
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
+	can_hold_items = 1
+
+/obj/item/clothing/shoes/jackboots/fast
+	slowdown = -1
 
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
@@ -107,6 +105,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	can_hold_items = 1
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -115,6 +114,13 @@
 	item_state = "jackboots"
 	strip_delay = 40
 	put_on_delay = 40
+	can_hold_items = 1
+
+/obj/item/clothing/shoes/workboots/mining
+	name = "mining boots"
+	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
+	icon_state = "explorer"
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
@@ -155,3 +161,4 @@
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
+	can_hold_items = 1

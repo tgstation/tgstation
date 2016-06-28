@@ -36,14 +36,13 @@
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(3)
 
-
 /obj/screen/robot/radio
 	name = "radio"
 	icon_state = "radio"
 
 /obj/screen/robot/radio/Click()
 	var/mob/living/silicon/robot/R = usr
-	R.radio_menu()
+	R.radio.interact(R)
 
 /obj/screen/robot/store
 	name = "store"
@@ -61,115 +60,97 @@
 	var/mob/living/silicon/robot/R = usr
 	R.control_headlamp()
 
+/obj/screen/robot/thrusters
+	name = "ion thrusters"
+	icon_state = "ionpulse0"
 
-/datum/hud/proc/robot_hud()
-	adding = list()
-	other = list()
+/obj/screen/robot/thrusters/Click()
+	var/mob/living/silicon/robot/R = usr
+	R.toggle_ionpulse()
 
+/datum/hud/robot/New(mob/owner)
+	..()
+	var/mob/living/silicon/robot/mymobR = mymob
 	var/obj/screen/using
-
 
 //Radio
 	using = new /obj/screen/robot/radio()
 	using.screen_loc = ui_borg_radio
-	adding += using
+	static_inventory += using
 
 //Module select
-
-	var/mob/living/silicon/robot/mymobR = mymob
-
 	using = new /obj/screen/robot/module1()
 	using.screen_loc = ui_inv1
-	adding += using
+	static_inventory += using
 	mymobR.inv1 = using
 
 	using = new /obj/screen/robot/module2()
 	using.screen_loc = ui_inv2
-	adding += using
+	static_inventory += using
 	mymobR.inv2 = using
 
 	using = new /obj/screen/robot/module3()
 	using.screen_loc = ui_inv3
-	adding += using
+	static_inventory += using
 	mymobR.inv3 = using
 
 //End of module select
 
 //Photography stuff
-
 	using = new /obj/screen/ai/image_take()
 	using.screen_loc = ui_borg_camera
-	adding += using
+	static_inventory += using
 
 	using = new /obj/screen/ai/image_view()
 	using.screen_loc = ui_borg_album
-	adding += using
+	static_inventory += using
 
 //Sec/Med HUDs
 	using = new /obj/screen/ai/sensors()
 	using.screen_loc = ui_borg_sensor
-	adding += using
+	static_inventory += using
 
 //Headlamp control
 	using = new /obj/screen/robot/lamp()
 	using.screen_loc = ui_borg_lamp
-	adding += using
+	static_inventory += using
 	mymobR.lamp_button = using
 
+//Thrusters
+	using = new /obj/screen/robot/thrusters()
+	using.screen_loc = ui_borg_thrusters
+	static_inventory += using
+	mymobR.thruster_button = using
+
 //Intent
-	using = new /obj/screen/act_intent()
-	using.icon = 'icons/mob/screen_cyborg.dmi'
+	using = new /obj/screen/act_intent/robot()
 	using.icon_state = mymob.a_intent
-	using.screen_loc = ui_borg_intents
-	adding += using
+	static_inventory += using
 	action_intent = using
 
 //Health
-	mymob.healths = new /obj/screen()
-	mymob.healths.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.healths.icon_state = "health0"
-	mymob.healths.name = "health"
-	mymob.healths.screen_loc = ui_borg_health
+	healths = new /obj/screen/healths/robot()
+	infodisplay += healths
 
 //Installed Module
 	mymob.hands = new /obj/screen/robot/module()
 	mymob.hands.screen_loc = ui_borg_module
+	static_inventory += mymob.hands
 
 //Store
-	mymob.throw_icon = new /obj/screen/robot/store()
-	mymob.throw_icon.screen_loc = ui_borg_store
+	module_store_icon = new /obj/screen/robot/store()
+	module_store_icon.screen_loc = ui_borg_store
 
-	mymob.pullin = new /obj/screen/pull()
-	mymob.pullin.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.pullin.update_icon(mymob)
-	mymob.pullin.screen_loc = ui_borg_pull
+	pull_icon = new /obj/screen/pull()
+	pull_icon.icon = 'icons/mob/screen_cyborg.dmi'
+	pull_icon.update_icon(mymob)
+	pull_icon.screen_loc = ui_borg_pull
+	hotkeybuttons += pull_icon
 
-	mymob.blind = new /obj/screen()
-	mymob.blind.icon = 'icons/mob/screen_full.dmi'
-	mymob.blind.icon_state = "blackimageoverlay"
-	mymob.blind.name = " "
-	mymob.blind.screen_loc = "CENTER-7,CENTER-7"
-	mymob.blind.layer = 0
-	mymob.blind.mouse_opacity = 0
 
-	mymob.flash = new /obj/screen()
-	mymob.flash.icon = 'icons/mob/screen_gen.dmi'
-	mymob.flash.icon_state = "blank"
-	mymob.flash.name = "flash"
-	mymob.flash.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	mymob.flash.layer = 17
-
-	mymob.zone_sel = new /obj/screen/zone_sel()
-	mymob.zone_sel.icon = 'icons/mob/screen_cyborg.dmi'
-	mymob.zone_sel.update_icon()
-
-	mymob.client.screen = list()
-
-	mymob.client.screen += list(mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.blind, mymob.flash) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += adding + other
-	mymob.client.screen += mymob.client.void
-
-	return
+	zone_select = new /obj/screen/zone_sel/robot()
+	zone_select.update_icon(mymob)
+	static_inventory += zone_select
 
 
 /datum/hud/proc/toggle_show_robot_modules()
@@ -185,49 +166,77 @@
 
 	var/mob/living/silicon/robot/r = mymob
 
-	if(r.client)
-		if(r.shown_robot_modules)
-			//Modules display is shown
-			r.client.screen += r.throw_icon	//"store" icon
+	if(!r.client)
+		return
 
-			if(!r.module)
-				usr << "<span class='danger'>No module selected</span>"
-				return
+	if(!r.module)
+		return
 
-			if(!r.module.modules)
-				usr << "<span class='danger'>Selected module has no modules to select</span>"
-				return
+	if(r.shown_robot_modules && hud_shown)
+		//Modules display is shown
+		r.client.screen += module_store_icon	//"store" icon
 
-			if(!r.robot_modules_background)
-				return
+		if(!r.module.modules)
+			usr << "<span class='danger'>Selected module has no modules to select</span>"
+			return
 
-			var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
-			r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-			r.client.screen += r.robot_modules_background
+		if(!r.robot_modules_background)
+			return
 
-			var/x = -4	//Start at CENTER-4,SOUTH+1
-			var/y = 1
+		var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
+		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		r.client.screen += r.robot_modules_background
 
-			for(var/atom/movable/A in r.module.get_inactive_modules())
-				//Module is not currently active
-				r.client.screen += A
-				if(x < 0)
-					A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
-				else
-					A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
-				A.layer = 20
+		var/x = -4	//Start at CENTER-4,SOUTH+1
+		var/y = 1
 
-				x++
-				if(x == 4)
-					x = -4
-					y++
+		for(var/atom/movable/A in r.module.get_inactive_modules())
+			//Module is not currently active
+			r.client.screen += A
+			if(x < 0)
+				A.screen_loc = "CENTER[x]:16,SOUTH+[y]:7"
+			else
+				A.screen_loc = "CENTER+[x]:16,SOUTH+[y]:7"
+			A.layer = ABOVE_HUD_LAYER
 
-		else
-			//Modules display is hidden
-			r.client.screen -= r.throw_icon	//"store" icon
+			x++
+			if(x == 4)
+				x = -4
+				y++
 
-			for(var/atom/A in r.module.get_inactive_modules())
-				//Module is not currently active
-				r.client.screen -= A
-			r.shown_robot_modules = 0
-			r.client.screen -= r.robot_modules_background
+	else
+		//Modules display is hidden
+		r.client.screen -= module_store_icon	//"store" icon
+
+		for(var/atom/A in r.module.get_inactive_modules())
+			//Module is not currently active
+			r.client.screen -= A
+		r.shown_robot_modules = 0
+		r.client.screen -= r.robot_modules_background
+
+/mob/living/silicon/robot/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/robot(src)
+
+
+/datum/hud/robot/persistant_inventory_update()
+	if(!mymob)
+		return
+	var/mob/living/silicon/robot/R = mymob
+	if(hud_shown)
+		if(R.module_state_1)
+			R.module_state_1.screen_loc = ui_inv1
+			R.client.screen += R.module_state_1
+		if(R.module_state_2)
+			R.module_state_2.screen_loc = ui_inv2
+			R.client.screen += R.module_state_2
+		if(R.module_state_3)
+			R.module_state_3.screen_loc = ui_inv3
+			R.client.screen += R.module_state_3
+	else
+		if(R.module_state_1)
+			R.module_state_1.screen_loc = null
+		if(R.module_state_2)
+			R.module_state_2.screen_loc = null
+		if(R.module_state_3)
+			R.module_state_3.screen_loc = null

@@ -19,23 +19,6 @@
 	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
-
-/obj/item/weapon/nullrod
-	name = "null rod"
-	desc = "A rod of pure obsidian, its very presence disrupts and dampens the powers of Nar-Sie's followers."
-	icon_state = "nullrod"
-	item_state = "nullrod"
-	slot_flags = SLOT_BELT
-	force = 15
-	throw_speed = 3
-	throw_range = 4
-	throwforce = 10
-	w_class = 1
-
-/obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS|FIRELOSS)
-
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
@@ -49,8 +32,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/sord/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is impaling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
-	return(BRUTELOSS)
+	user.visible_message("<span class='suicide'>[user] is trying to impale \himself with \the [name]! It might be a suicide attempt if it weren't so shitty.</span>", "<span class='suicide'>You try to impale yourself with \the [name], but it's USELESS...</span>")
+	return(SHAME)
 
 /obj/item/weapon/claymore
 	name = "claymore"
@@ -65,6 +48,7 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
+	sharpness = IS_SHARP
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -83,6 +67,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
+	sharpness = IS_SHARP
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
@@ -100,11 +85,10 @@
 	force = 9
 	throwforce = 10
 	w_class = 3
-	materials = list(MAT_METAL=1000)
+	materials = list(MAT_METAL=1150, MAT_GLASS=75)
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
 
 /obj/item/weapon/wirerod/attackby(obj/item/I, mob/user, params)
-	..()
 	if(istype(I, /obj/item/weapon/shard))
 		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
 
@@ -117,7 +101,7 @@
 		qdel(I)
 		qdel(src)
 
-	else if(istype(I, /obj/item/weapon/wirecutters) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		if(!remove_item_from_storage(user))
@@ -125,9 +109,11 @@
 		user.unEquip(I)
 
 		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>"
+		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
 		qdel(I)
 		qdel(src)
+	else
+		return ..()
 
 
 /obj/item/weapon/throwing_star
@@ -145,18 +131,6 @@
 	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 
-//5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
-//Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
-/obj/item/weapon/storage/box/throwing_stars/New()
-	..()
-	contents = list()
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-	new /obj/item/weapon/throwing_star(src)
-
-
 
 /obj/item/weapon/switchblade
 	name = "switchblade"
@@ -169,7 +143,7 @@
 	throw_speed = 3
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
-	origin_tech = "materials=1"
+	origin_tech = "engineering=3;combat=2"
 	hitsound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("stubbed", "poked")
 	var/extended = 0
@@ -184,6 +158,7 @@
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
+		sharpness = IS_SHARP
 	else
 		force = 3
 		w_class = 2
@@ -191,6 +166,7 @@
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/Genhit.ogg'
+		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -210,10 +186,10 @@
 	hitsound = 'sound/weapons/ring.ogg'
 
 /obj/item/weapon/phone/suicide_act(mob/user)
-	if(locate(/obj/structure/bed/stool) in user.loc)
-		user.visible_message("<span class='notice'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+	if(locate(/obj/structure/chair/stool) in user.loc)
+		user.visible_message("<span class='suicide'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
-		user.visible_message("<span class='notice'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/cane
@@ -277,7 +253,7 @@
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
 	item_state = "mounted_chainsaw"
-	flags = NODROP
+	flags = NODROP | ABSTRACT
 	w_class = 5.0
 	force = 21
 	throwforce = 0
@@ -288,6 +264,7 @@
 	hitsound = "sound/weapons/chainsawhit.ogg"
 
 /obj/item/weapon/mounted_chainsaw/dropped()
+	..()
 	new /obj/item/weapon/twohanded/required/chainsaw(get_turf(src))
 	qdel(src)
 
@@ -305,5 +282,19 @@
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	origin_tech = "combat=1"
+	origin_tech = "engineering=3;combat=3;biotech=3"
 	needs_permit = 0
+
+/obj/item/weapon/melee/skateboard
+	name = "skateboard"
+	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
+	icon_state = "skateboard"
+	item_state = "skateboard"
+	force = 12
+	throwforce = 4
+	w_class = 5.0
+	attack_verb = list("smacked", "whacked", "slammed", "smashed")
+
+/obj/item/weapon/melee/skateboard/attack_self(mob/user)
+	new /obj/vehicle/scooter/skateboard(get_turf(user))
+	qdel(src)

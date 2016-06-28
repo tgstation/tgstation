@@ -61,7 +61,8 @@
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
 		return attack_hand(user)
-	..()
+	else
+		return ..()
 
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
@@ -169,5 +170,5 @@
 			user << "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>"
 		else
 			user << "<span class='warning'>Error: Invalid ID</span>"
-		return
-	..()
+	else
+		return ..()

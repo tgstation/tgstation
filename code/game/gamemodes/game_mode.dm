@@ -71,15 +71,17 @@
 
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(report=1)
+/datum/game_mode/proc/post_setup(report=0) //Gamemodes can override the intercept report. Passing a 1 as the argument will force a report.
+	if(!report)
+		report = config.intercept
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
 	feedback_set_details("round_start","[time2text(world.realtime)]")
 	if(ticker && ticker.mode)
 		feedback_set_details("game_mode","[ticker.mode]")
-	if(revdata.revision)
-		feedback_set_details("revision","[revdata.revision]")
+	if(revdata.commit)
+		feedback_set_details("revision","[revdata.commit]")
 	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		spawn (rand(waittime_l, waittime_h))
@@ -170,8 +172,10 @@
 /datum/game_mode/proc/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
-		return 1
+	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if(station_was_nuked)
+		return TRUE
 	if(!round_converted && (!config.continuous[config_tag] || (config.continuous[config_tag] && config.midround_antag[config_tag]))) //Non-continuous or continous with replacement antags
 		if(!continuous_sanity_checked) //make sure we have antags to be checking in the first place
 			for(var/mob/Player in mob_list)
@@ -461,8 +465,7 @@
 						continue //Dead mob, ghost abandoned
 				else
 					if(D.can_reenter_corpse)
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>This shouldn't appear.</span>)\n"
-						continue //Lolwhat
+						continue //Adminghost, or cult/wizard ghost
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (<span class='boldannounce'>Ghosted</span>)\n"
 						continue //Ghosted while alive
@@ -529,7 +532,8 @@
 		M.key = theghost.key
 
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
-	ticker.mode.remove_cultist(newborgie, 0)
+	ticker.mode.remove_cultist(newborgie, 0, 0)
 	ticker.mode.remove_revolutionary(newborgie, 0)
 	ticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 	ticker.mode.remove_hog_follower(newborgie, 0)
+	remove_servant_of_ratvar(newborgie.current, TRUE)

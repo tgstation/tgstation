@@ -121,12 +121,6 @@
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(target), slot_back)
 	target.equip_to_slot_or_del(new /obj/item/weapon/storage/box(target), slot_in_backpack)
 	target.equip_to_slot_or_del(new /obj/item/weapon/teleportation_scroll/apprentice(target), slot_r_store)
-
-
-
-
-
-
 ///////////BORGS AND OPERATIVES
 
 
@@ -135,7 +129,6 @@
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
-	var/TC_cost = 0
 	var/borg_to_spawn
 	var/list/possible_types = list("Assault", "Medical")
 
@@ -164,25 +157,27 @@
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
+		qdel(src)
 	else
 		user << "<span class='warning'>Unable to connect to Syndicate command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>"
 
 /obj/item/weapon/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T)
-	var/nuke_code = "Ask your leader!"
+	var/new_op_code = "Ask your leader!"
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
 	if(nuke)
-		nuke.r_code = nuke_code
-	M.mind.make_Nuke(T, nuke_code, 0, FALSE)
-
-
+		new_op_code = nuke.r_code
+	M.mind.make_Nuke(T, new_op_code, 0, FALSE)
+	var/newname = M.dna.species.random_name(M.gender,0,ticker.mode.nukeops_lastname)
+	M.mind.name = newname
+	M.real_name = newname
+	M.name = newname
 
 
 
 //////SYNDICATE BORG
-
 /obj/item/weapon/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
 	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
@@ -203,6 +198,20 @@
 			R = new /mob/living/silicon/robot/syndicate/medical(T)
 		else
 			R = new /mob/living/silicon/robot/syndicate(T) //Assault borg by default
+
+	var/brainfirstname = pick(first_names_male)
+	if(prob(50))
+		brainfirstname = pick(first_names_female)
+	var/brainopslastname = pick(last_names)
+	if(ticker.mode.nukeops_lastname)  //the brain inside the syndiborg has the same last name as the other ops.
+		brainopslastname = ticker.mode.nukeops_lastname
+	var/brainopsname = "[brainfirstname] [brainopslastname]"
+
+	R.mmi.name = "Man-Machine Interface: [brainopsname]"
+	R.mmi.brain.name = "[brainopsname]'s brain"
+	R.mmi.brainmob.real_name = brainopsname
+	R.mmi.brainmob.name = brainopsname
+
 	R.key = C.key
 	ticker.mode.syndicates += R.mind
 	ticker.mode.update_synd_icons_added(R.mind)
@@ -211,19 +220,20 @@
 
 
 
-
-
-
-
-
 ///////////SLAUGHTER DEMON
-
 
 /obj/item/weapon/antag_spawner/slaughter_demon //Warning edgiest item in the game
 	name = "vial of blood"
 	desc = "A magically infused bottle of blood, distilled from countless murder victims. Used in unholy rituals to attract horrifying creatures."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "vial"
+
+	var/shatter_msg = "<span class='notice'>You shatter the bottle, no \
+		turning back now!</span>"
+	var/veil_msg = "<span class='warning'>You sense a dark presence lurking \
+		just beyond the veil...</span>"
+	var/objective_verb = "Kill"
+	var/mob/living/demon_type = /mob/living/simple_animal/slaughter
 
 
 /obj/item/weapon/antag_spawner/slaughter_demon/attack_self(mob/user)
@@ -234,9 +244,9 @@
 	if(demon_candidates.len > 0)
 		used = 1
 		var/client/C = pick(demon_candidates)
-		spawn_antag(C, get_turf(src.loc), "Slaughter Demon")
-		user << "<span class='notice'>You shatter the bottle, no turning back now!</span>"
-		user << "<span class='notice'>You sense a dark presence lurking just beyond the veil...</span>"
+		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
+		user << shatter_msg
+		user << veil_msg
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
 		qdel(src)
 	else
@@ -246,22 +256,39 @@
 /obj/item/weapon/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
 
 	var /obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,T)
-	var/mob/living/simple_animal/slaughter/S = new /mob/living/simple_animal/slaughter/(holder)
+	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key
-	S.mind.assigned_role = "Slaughter Demon"
-	S.mind.special_role = "Slaughter Demon"
+	S.mind.assigned_role = S.name
+	S.mind.special_role = S.name
 	ticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective = new /datum/objective/assassinate
 	new_objective.owner = S.mind
 	new_objective.target = usr.mind
-	new_objective.explanation_text = "Kill [usr.real_name], the one who summoned you."
+	new_objective.explanation_text = "[objective_verb] [usr.real_name], \
+		the one who summoned you."
 	S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "Kill everyone else while you're at it."
+	new_objective2.explanation_text = "[objective_verb] everyone else \
+		while you're at it."
 	S.mind.objectives += new_objective2
 	S << S.playstyle_string
-	S << "<B>You are currently not currently in the same plane of existence as the station. Ctrl+Click a blood pool to manifest.</B>"
+	S << "<B>You are currently not currently in the same plane of \
+		existence as the station. Ctrl+Click a blood pool to manifest.</B>"
 	S << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 	S << "<B>Objective #[2]</B>: [new_objective2.explanation_text]"
+
+/obj/item/weapon/antag_spawner/slaughter_demon/laughter
+	name = "vial of tickles"
+	desc = "A magically infused bottle of clown love, distilled from \
+		countless hugging attacks. Used in funny rituals to attract \
+		adorable creatures."
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+	color = "#FF69B4" // HOT PINK
+
+	veil_msg = "<span class='warning'>You sense an adorable presence \
+		lurking just beyond the veil...</span>"
+	objective_verb = "Hug and Tickle"
+	demon_type = /mob/living/simple_animal/slaughter/laughter

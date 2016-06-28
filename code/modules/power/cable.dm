@@ -25,14 +25,15 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable
 	level = 1 //is underfloor
 	anchored =1
+	on_blueprints = TRUE
 	var/datum/powernet/powernet
 	name = "power cable"
-	desc = "A flexible superconducting cable for heavy-duty power transfer"
+	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/power_cond_red.dmi'
 	icon_state = "0-1"
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
-	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
+	layer = WIRE_LAYER //Above pipes, which are at GAS_PIPE_LAYER
 	var/cable_color = "red"
 	var/obj/item/stack/cable_coil/stored
 
@@ -105,7 +106,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/hide(i)
 
 	if(level == 1 && istype(loc, /turf))
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	updateicon()
 
 /obj/structure/cable/proc/updateicon()
@@ -113,11 +114,6 @@ By design, d1 is the smallest direction and d2 is the highest
 		icon_state = "[d1]-[d2]-f"
 	else
 		icon_state = "[d1]-[d2]"
-
-
-// returns the powernet this cable belongs to
-/obj/structure/cable/proc/get_powernet()			//TODO: remove this as it is obsolete
-	return powernet
 
 //Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
@@ -155,10 +151,6 @@ By design, d1 is the smallest direction and d2 is the highest
 			user << "<span class='danger'>The cable is not powered.</span>"
 		shock(user, 5, 0.2)
 
-	else
-		if (W.flags & CONDUCT)
-			shock(user, 50, 0.7)
-
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
@@ -176,7 +168,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //explosion handling
 /obj/structure/cable/ex_act(severity, target)
 	..()
-	if(!gc_destroyed)
+	if(!qdeleted(src))
 		switch(severity)
 			if(2)
 				if(prob(50))
@@ -329,7 +321,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(istype(AM,/obj/structure/cable))
 			var/obj/structure/cable/C = AM
 			if(C.d1 == d1 || C.d2 == d1 || C.d1 == d2 || C.d2 == d2) //only connected if they have a common direction
-				if(C.powernet == powernet)	continue
+				if(C.powernet == powernet)
+					continue
 				if(C.powernet)
 					merge_powernets(powernet, C.powernet)
 				else
@@ -337,7 +330,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		else if(istype(AM,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/N = AM
-			if(!N.terminal)	continue // APC are connected through their terminal
+			if(!N.terminal)
+				continue // APC are connected through their terminal
 
 			if(N.terminal.powernet == powernet)
 				continue
@@ -416,7 +410,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/cut_cable_from_powernet()
 	var/turf/T1 = loc
 	var/list/P_list
-	if(!T1)	return
+	if(!T1)
+		return
 	if(d1)
 		T1 = get_step(T1, d1)
 		P_list = power_list(T1, src, turn(d1,180),0,cable_only = 1)	// what adjacently joins on to cut cable...
@@ -468,13 +463,14 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	item_state = "coil_red"
 	max_amount = MAXCOIL
 	amount = MAXCOIL
+	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
 	item_color = "red"
-	desc = "A coil of power cable."
+	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = 2
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=50, MAT_GLASS=20)
+	materials = list(MAT_METAL=10, MAT_GLASS=5)
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
@@ -491,7 +487,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	update_icon()
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
-	if(locate(/obj/structure/bed/stool) in user.loc)
+	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -516,20 +512,22 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	if(!istype(H))
 		return ..()
 
-	var/obj/item/organ/limb/affecting = H.get_organ(check_zone(user.zone_sel.selecting))
-	if(affecting.status == ORGAN_ROBOTIC)
-		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.getDisplayName()].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.getDisplayName()].</span>")
-		if(!do_mob(user, H, 50))	return
-		item_heal_robotic(H, user, 0, 5)
-		src.use(1)
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	if(affecting && affecting.status == ORGAN_ROBOTIC)
+		user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
+		if(!do_mob(user, H, 50))
+			return
+		if(item_heal_robotic(H, user, 0, 5))
+			use(1)
 		return
 	else
 		return ..()
 
 
 /obj/item/stack/cable_coil/update_icon()
-	if (!item_color)
+	if(!item_color)
 		item_color = pick("red", "yellow", "blue", "green")
+	item_state = "coil_[item_color]"
 	if(amount == 1)
 		icon_state = "coil_[item_color]1"
 		name = "cable piece"
@@ -782,6 +780,6 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list ( \
 	icon_state = "coil_white"
 
 /obj/item/stack/cable_coil/random/New()
-	item_color = pick("red","yellow","green","blue","pink")
+	item_color = pick("red","orange","yellow","green","cyan","blue","pink","white")
 	icon_state = "coil_[item_color]"
 	..()

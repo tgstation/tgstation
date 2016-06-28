@@ -15,8 +15,12 @@
 	density = 1
 	use_power = 0
 
-	var/obj/machinery/atmospherics/components/binary/circulator/circ1
-	var/obj/machinery/atmospherics/components/binary/circulator/circ2
+	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
+	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
+
+	//note: these currently only support EAST and WEST
+	var/cold_dir = WEST
+	var/hot_dir = EAST
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -24,22 +28,28 @@
 
 
 /obj/machinery/power/generator/initialize()
-
-	circ1 = null
-	circ2 = null
-
-	circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
-	circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,EAST)
+	var/obj/machinery/atmospherics/components/binary/circulator/circpath = /obj/machinery/atmospherics/components/binary/circulator
+	cold_circ = locate(circpath) in get_step(src, cold_dir)
+	hot_circ = locate(circpath) in get_step(src, hot_dir)
 	connect_to_network()
 
-	if(circ1)
-		circ1.side = 1
-		circ1.update_icon()
-	if(circ2)
-		circ2.side = 2
-		circ2.update_icon()
+	if(cold_circ)
+		switch(cold_dir)
+			if(EAST)
+				cold_circ.side = circpath.CIRC_RIGHT
+			if(WEST)
+				cold_circ.side = circpath.CIRC_LEFT
+		cold_circ.update_icon()
 
-	if(!circ1 || !circ2)
+	if(hot_circ)
+		switch(hot_dir)
+			if(EAST)
+				hot_circ.side = circpath.CIRC_RIGHT
+			if(WEST)
+				hot_circ.side = circpath.CIRC_LEFT
+		hot_circ.update_icon()
+
+	if(!cold_circ || !hot_circ)
 		stat |= BROKEN
 
 	update_icon()
@@ -48,30 +58,30 @@
 /obj/machinery/power/generator/update_icon()
 
 	if(stat & (NOPOWER|BROKEN))
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays.Cut()
+		cut_overlays()
 
 		if(lastgenlev != 0)
-			overlays += image('icons/obj/power.dmi', "teg-op[lastgenlev]")
+			add_overlay(image('icons/obj/power.dmi', "teg-op[lastgenlev]"))
 
-		overlays += image('icons/obj/power.dmi', "teg-oc[lastcirc]")
+		add_overlay(image('icons/obj/power.dmi', "teg-oc[lastcirc]"))
 
 
 #define GENRATE 800		// generator output coefficient from Q
 
 /obj/machinery/power/generator/process()
 
-	if(!circ1 || !circ2)
+	if(!cold_circ || !hot_circ)
 		return
 
 	lastgen = 0
 
 	if(powernet)
-		//world << "circ1 and circ2 pass"
+		//world << "cold_circ and hot_circ pass"
 
-		var/datum/gas_mixture/cold_air = circ1.return_transfer_air()
-		var/datum/gas_mixture/hot_air = circ2.return_transfer_air()
+		var/datum/gas_mixture/cold_air = cold_circ.return_transfer_air()
+		var/datum/gas_mixture/hot_air = hot_circ.return_transfer_air()
 
 		//world << "hot_air = [hot_air]; cold_air = [cold_air];"
 
@@ -106,15 +116,15 @@
 		// update icon overlays only if displayed level has changed
 
 		if(hot_air)
-			var/datum/gas_mixture/circ2_air1 = circ2.AIR1
-			circ2_air1.merge(hot_air)
+			var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
+			hot_circ_air1.merge(hot_air)
 
 		if(cold_air)
-			var/datum/gas_mixture/circ1_air1 = circ1.AIR1
-			circ1_air1.merge(cold_air)
+			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
+			cold_circ_air1.merge(cold_air)
 
 	var/genlev = max(0, min( round(11*lastgen / 100000), 11))
-	var/circ = "[circ1 && circ1.last_pressure_delta > 0 ? "1" : "0"][circ2 && circ2.last_pressure_delta > 0 ? "1" : "0"]"
+	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
 	if((genlev != lastgenlev) || (circ != lastcirc))
 		lastgenlev = genlev
 		lastcirc = circ
@@ -132,11 +142,11 @@
 	var/t = ""
 	if(!powernet)
 		t += "<span class='bad'>Unable to connect to the power network!</span>"
-	else if(circ1 && circ2)
-		var/datum/gas_mixture/circ1_air1 = circ1.AIR1
-		var/datum/gas_mixture/circ1_air2 = circ1.AIR2
-		var/datum/gas_mixture/circ2_air1 = circ2.AIR1
-		var/datum/gas_mixture/circ2_air2 = circ2.AIR2
+	else if(cold_circ && hot_circ)
+		var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
+		var/datum/gas_mixture/cold_circ_air2 = cold_circ.AIR2
+		var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
+		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
 
 		t += "<div class='statusDisplay'>"
 
@@ -145,12 +155,12 @@
 		t += "<BR>"
 
 		t += "<B><font color='blue'>Cold loop</font></B><BR>"
-		t += "Temperature Inlet: [round(circ1_air2.temperature, 0.1)] K / Outlet: [round(circ1_air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(circ1_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(circ1_air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Temperature Inlet: [round(cold_circ_air2.temperature, 0.1)] K / Outlet: [round(cold_circ_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(cold_circ_air2.return_pressure(), 0.1)] kPa /  Outlet: [round(cold_circ_air1.return_pressure(), 0.1)] kPa<BR>"
 
 		t += "<B><font color='red'>Hot loop</font></B><BR>"
-		t += "Temperature Inlet: [round(circ2_air2.temperature, 0.1)] K / Outlet: [round(circ2_air1.temperature, 0.1)] K<BR>"
-		t += "Pressure Inlet: [round(circ2_air2.return_pressure(), 0.1)] kPa / Outlet: [round(circ2_air1.return_pressure(), 0.1)] kPa<BR>"
+		t += "Temperature Inlet: [round(hot_circ_air2.temperature, 0.1)] K / Outlet: [round(hot_circ_air1.temperature, 0.1)] K<BR>"
+		t += "Pressure Inlet: [round(hot_circ_air2.return_pressure(), 0.1)] kPa / Outlet: [round(hot_circ_air1.return_pressure(), 0.1)] kPa<BR>"
 
 		t += "</div>"
 	else

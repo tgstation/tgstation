@@ -9,9 +9,9 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
-	action_button_name = "Adjust Breath Mask"
-	ignore_maskadjust = 0
+	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
@@ -19,10 +19,8 @@
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src, be_close=TRUE))
 		user << "<span class='warning'>You can't do that right now!</span>"
-		return
-	if(!in_range(src, user))
 		return
 	else
 		adjustmask(user)

@@ -1,11 +1,10 @@
-
 /mob/camera/god/proc/ability_cost(cost = 0,structures = 0, requires_conduit = 0, can_place_near_enemy_nexus = 0)
 	if(faith < cost)
 		src << "<span class='danger'>You lack the faith!</span>"
 		return 0
 
 	if(structures)
-		if(!isturf(loc) || istype(loc, /turf/space))
+		if(!isturf(loc) || istype(loc, /turf/open/space))
 			src << "<span class='danger'>Your structure would just float away, you need stable ground!</span>"
 			return 0
 
@@ -43,9 +42,11 @@
 		var/datum/mind/enemy
 		switch(side)
 			if("red")
-				enemy = ticker.mode.blue_deities[1]
+				if(ticker.mode.blue_deities.len)
+					enemy = ticker.mode.blue_deities[1]
 			if("blue")
-				enemy = ticker.mode.red_deities[1]
+				if(ticker.mode.red_deities.len)
+					enemy = ticker.mode.red_deities[1]
 
 		if(enemy && is_handofgod_god(enemy.current))
 			var/mob/camera/god/enemy_god = enemy.current
@@ -117,13 +118,15 @@
 	if(choice && choice.current && choice.current.stat != DEAD)
 		src << "You choose [choice.current] as your prophet."
 		choice.make_Handofgod_prophet(side)
-
+		speak2god = new()
+		speak2god.god = src
+		speak2god.Grant(choice.current)
 
 		//Prophet gear
 		var/mob/living/carbon/human/H = choice.current
 		var/popehat = null
 		var/popestick = null
-
+		var/success = ""
 		switch(side)
 			if("red")
 				popehat = /obj/item/clothing/head/helmet/plate/crusader/prophet/red
@@ -134,28 +137,33 @@
 
 		if(popehat)
 			var/obj/item/clothing/head/helmet/plate/crusader/prophet/P = new popehat()
-			P.assign_deity(src)
 
-			H.unEquip(H.head)
-			H << "<span class='boldnotice'>A powerful hat has been bestowed upon your head, you will need to wear this to speak with your god...</span>"
-			H.equip_to_slot_or_del(P,slot_head)
+			if(H.equip_to_slot_if_possible(P,slot_in_backpack,0,1,1))
+				success = "It is in your backpack."
+			else
+				H.unEquip(H.head)
+				H.equip_to_slot_or_del(P,slot_head)
+				success = "It is on your head."
+
+			if(success)
+				H << "<span class='boldnotice'>A powerful hat has been bestowed upon you, you will need to wear it to utilize your staff fully.</span>"
+				H << "<span class='boldnotice'>[success]</span>"
 
 		if(popestick)
 			var/obj/item/weapon/godstaff/G = new popestick()
 			G.god = src
-			var/success = ""
-			if(!H.put_in_any_hand_if_possible(G, qdel_on_fail = 0, disable_warning = 1, redraw_mob = 1))
-				if(!H.equip_to_slot_if_possible(G,slot_in_backpack,0,1,1))
+			if(!H.equip_to_slot_if_possible(G,slot_in_backpack,0,1,1))
+				if(!H.put_in_hands(G))
 					G.loc = get_turf(H)
 					success = "It is on the floor..."
 				else
-					success = "It is in your backpack..."
+					success = "It is in your hands..."
 			else
-				success = "It is in your hands..."
+				success = "It is in your backpack..."
 
 			if(success)
 				H << "<span class='boldnotice'>A powerful staff has been bestowed upon you, you can use this to convert the false god's structures!</span>"
-				H << "<span class=boldnotice'>[success]</span>"
+				H << "<span class='boldnotice'>[success]</span>"
 		//end prophet gear
 
 		add_faith(-100)
@@ -303,3 +311,53 @@
 
 	var/itemtype = item_types[item]
 	new itemtype (get_turf(src))
+
+
+
+/mob/camera/god/verb/veil_structures()
+	set category = "Deity"
+	set name = "Veil Structures (20)"
+	set desc = "Hide your structures from sight and touch, but prevent yourself from using them."
+
+	if(!ability_cost(20,1,1))
+		return
+
+	src << "You focus your powers and start dragging your influence into the spiritual plane."
+	for(var/mob/M in orange(3,src))//Yes I know this is terrible, but visible message doesnt work for this
+		M << "<span class='warning'>The air begins to shimmer...</span>"
+	if(do_after(src, 30, 0, src))
+		for(var/obj/structure/divine/R in orange(3,src))
+			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(src.side != R.side))
+				continue
+			R.visible_message("<span class='danger'>[R] fades away.</span>")
+			R.invisibility = 55
+			R.alpha = 100 //To help ghosts distinguish hidden structures
+			R.density = 0
+			R.deactivate()
+		src << "You hide your influence from view"
+		add_faith(-20)
+
+
+/mob/camera/god/verb/reveal_structures()
+	set category = "Deity"
+	set name = "Reveal Structures (20)"
+	set desc = "Make your structures visible again and allow them to be used."
+
+	if(!ability_cost(20,1,1))
+		return
+
+	src << "You focus your powers and start dragging your influence into the material plane."
+	for(var/mob/M in orange(3,src))//Yes I know this is terrible, but visible message doesnt work for this
+		M << "<span class='warning'>The air begins to shimmer...</span>"
+	if(do_after(src, 40, 0, src))
+		for(var/obj/structure/divine/R in orange(3,src))
+			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(src.side != R.side))
+				continue
+			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
+			R.invisibility = 0
+			R.alpha = initial(R.alpha)
+			R.density = initial(R.density)
+			R.activate()
+		src << "You bring your influence into view"
+		add_faith(-20)
+

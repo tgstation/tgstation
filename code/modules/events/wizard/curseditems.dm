@@ -21,7 +21,8 @@
 		if("wizardmimic")
 			loadout = list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/shoes/sandal, /obj/item/clothing/head/wizard)
 			ruins_spaceworthiness = 1
-		if("swords")		loadout[5] = /obj/item/weapon/katana/cursed
+		if("swords")
+			loadout[5] = /obj/item/weapon/katana/cursed
 		if("bigfatdoobie")
 			loadout[4] = /obj/item/clothing/mask/cigarette/rollie/trippy/
 			ruins_spaceworthiness = 1
@@ -29,15 +30,18 @@
 			loadout[4] = /obj/item/clothing/mask/luchador
 			loadout[6] = /obj/item/clothing/gloves/boxing
 			ruins_spaceworthiness = 1
-		if("voicemodulators")	loadout[4] = /obj/item/clothing/mask/gas/voice
+		if("voicemodulators")
+			loadout[4] = /obj/item/clothing/mask/chameleon
 		if("catgirls2015")
 			loadout[3] = /obj/item/clothing/head/kitty
 			ruins_spaceworthiness = 1
 			ruins_wizard_loadout = 1
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/space)))	continue	//#savetheminers
-		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))		continue
+		if(ruins_spaceworthiness && (H.z != 1 || istype(H.loc, /turf/open/space)))
+			continue	//#savetheminers
+		if(ruins_wizard_loadout && H.mind && ((H.mind in ticker.mode.wizards) || (H.mind in ticker.mode.apprentices)))
+			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
 		var/list/slots		= list(H.wear_suit, H.shoes, H.head, H.wear_mask, H.r_hand, H.gloves, H.ears) //add new slots as needed to back

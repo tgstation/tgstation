@@ -13,9 +13,10 @@
 /obj/machinery/the_singularitygen/process()
 	var/turf/T = get_turf(src)
 	if(src.energy >= 200)
+		feedback_add_details("engine_started","[src.type]")
 		var/obj/singularity/S = new creation_type(T, 50)
 		transfer_fingerprints_to(S)
-		if(src) qdel(src)
+		qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
@@ -32,5 +33,5 @@
 				"<span class='italics'>You hear a ratchet.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
-		return
-	return ..()
+	else
+		return ..()

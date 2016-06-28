@@ -35,8 +35,10 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	name = "\improper AI holopad"
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
+	layer = LOW_OBJ_LAYER
 	flags = HEAR
-	languages = ROBOT | HUMAN
+	languages_spoken = ROBOT | HUMAN
+	languages_understood = ROBOT | HUMAN
 	var/list/masters = list()//List of AIs that use the holopad
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
@@ -44,10 +46,15 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 
 /obj/machinery/hologram/holopad/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/holopad(null)
+	B.apply_default_parts(src)
+
+/obj/item/weapon/circuitboard/machine/holopad
+	name = "circuit board (AI Holopad)"
+	build_path = /obj/machinery/hologram/holopad
+	origin_tech = "programming=1"
+	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+
 
 /obj/machinery/hologram/holopad/RefreshParts()
 	var/holograph_range = 4
@@ -68,7 +75,9 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	if(default_unfasten_wrench(user, P))
 		return
 
-	default_deconstruction_crowbar(P)
+	if(default_deconstruction_crowbar(P))
+		return
+	return ..()
 
 
 /obj/machinery/hologram/holopad/AltClick(mob/living/carbon/human/user)
@@ -145,10 +154,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(speaker && masters.len && !radio_freq)//Master is mostly a safety in case lag hits or something. Radio_freq so AIs dont hear holopad stuff through radios.
 		for(var/mob/living/silicon/ai/master in masters)
 			if(masters[master] && speaker != master)
-				raw_message = master.lang_treat(speaker, message_langs, raw_message, spans)
-				var/name_used = speaker.GetVoice()
-				var/rendered = "<i><span class='game say'>Holopad received, <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
-				master.show_message(rendered, 2)
+				master.relay_speech(message, speaker, message_langs, raw_message, radio_freq, spans)
 
 /obj/machinery/hologram/holopad/proc/create_holo(mob/living/silicon/ai/A, turf/T = loc)
 	var/obj/effect/overlay/holo_pad_hologram/h = new(T)//Spawn a blank effect at the location.

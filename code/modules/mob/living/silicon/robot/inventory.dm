@@ -1,4 +1,4 @@
-//These procs handle putting s tuff in your hand. It's probably best to use these rather than setting stuff manually
+//These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
 //Returns the thing in our active hand (whatever is in our active module-slot, in this case)
@@ -15,6 +15,7 @@
 	if(istype(O,/obj/item/borg/sight))
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
+		update_sight()
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		T.do_quick_empty()
@@ -47,27 +48,33 @@
 	if(!module_state_1)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_1 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv1.screen_loc
 		contents += O
 		if(istype(module_state_1,/obj/item/borg/sight))
-			sight_mode |= module_state_1:sight_mode
+			var/obj/item/borg/sight/S = module_state_1
+			sight_mode |= S.sight_mode
+			update_sight()
 	else if(!module_state_2)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_2 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv2.screen_loc
 		contents += O
 		if(istype(module_state_2,/obj/item/borg/sight))
-			sight_mode |= module_state_2:sight_mode
+			var/obj/item/borg/sight/S = module_state_2
+			sight_mode |= S.sight_mode
+			update_sight()
 	else if(!module_state_3)
 		O.mouse_opacity = initial(O.mouse_opacity)
 		module_state_3 = O
-		O.layer = 20
+		O.layer = ABOVE_HUD_LAYER
 		O.screen_loc = inv3.screen_loc
 		contents += O
 		if(istype(module_state_3,/obj/item/borg/sight))
-			sight_mode |= module_state_3:sight_mode
+			var/obj/item/borg/sight/S = module_state_3
+			sight_mode |= S.sight_mode
+			update_sight()
 	else
 		src << "<span class='warning'>You need to disable a module first!</span>"
 
@@ -191,25 +198,25 @@
 //cycle_modules() - Cycles through the list of selected modules.
 /mob/living/silicon/robot/proc/cycle_modules()
 	var/slot_start = get_selected_module()
-	if(slot_start) deselect_module(slot_start) //Only deselect if we have a selected slot.
+	if(slot_start)
+		deselect_module(slot_start) //Only deselect if we have a selected slot.
 
 	var/slot_num
 	if(slot_start == 0)
 		slot_num = 1
-		slot_start = 2
+		slot_start = 4
 	else
 		slot_num = slot_start + 1
 
-	while(slot_start != slot_num) //If we wrap around without finding any free slots, just give up.
+	while(slot_num != slot_start) //If we wrap around without finding any free slots, just give up.
 		if(module_active(slot_num))
 			select_module(slot_num)
 			return
 		slot_num++
-		if(slot_num > 3) slot_num = 1 //Wrap around.
+		if(slot_num > 4) // not >3 otherwise cycling with just one item on module 3 wouldn't work
+			slot_num = 1 //Wrap around.
 
-	return
 
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()
-	return

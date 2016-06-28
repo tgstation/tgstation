@@ -72,6 +72,7 @@
 	var/parrot_stuck_threshold = 10 //if this == parrot_stuck, it'll force the parrot back to wandering
 
 	var/list/speech_buffer = list()
+	var/speech_shuffle_rate = 20
 	var/list/available_channels = list()
 
 	//Headset for Poly to yell at engineers :)
@@ -84,7 +85,7 @@
 	//Parrots will generally sit on their perch unless something catches their eye.
 	//These vars store their preffered perch and if they dont have one, what they can use as a perch
 	var/obj/parrot_perch = null
-	var/obj/desired_perches = list(/obj/structure/computerframe, 		/obj/structure/displaycase, \
+	var/obj/desired_perches = list(/obj/structure/frame/computer, 		/obj/structure/displaycase, \
 									/obj/structure/filingcabinet,		/obj/machinery/teleport, \
 									/obj/machinery/computer,			/obj/machinery/clonepod, \
 									/obj/machinery/dna_scannernew,		/obj/machinery/telecomms, \
@@ -116,6 +117,11 @@
 			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
 
 
+/mob/living/simple_animal/parrot/examine(mob/user)
+	..()
+	if(stat)
+		user << pick("This parrot is no more", "This is a late parrot", "This is an ex-parrot")
+
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
 		held_item.loc = src.loc
@@ -123,7 +129,7 @@
 	walk(src,0)
 
 	if(buckled)
-		buckled.buckled_mob = null
+		buckled.unbuckle_mob(src,force=1)
 	buckled = null
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
@@ -137,10 +143,11 @@
 		stat("Mode",a_intent)
 
 /mob/living/simple_animal/parrot/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker != src && prob(20)) //Dont imitate ourselves
-		if(speech_buffer.len >= 20)
-			speech_buffer -= pick(speech_buffer)
-		speech_buffer |= html_decode(raw_message)
+	if(speaker != src && prob(50)) //Dont imitate ourselves
+		if(!radio_freq || prob(10))
+			if(speech_buffer.len >= 500)
+				speech_buffer -= pick(speech_buffer)
+			speech_buffer |= html_decode(raw_message)
 	..()
 
 /mob/living/simple_animal/parrot/radio(message, message_mode, list/spans) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
@@ -284,6 +291,8 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
+	if(!stat && M.a_intent == "help")
+		handle_automated_speech(1) //assured speak/emote
 	return
 
 /mob/living/simple_animal/parrot/attack_paw(mob/living/carbon/monkey/M)
@@ -327,6 +336,8 @@
 		user.drop_item()
 		if(health < maxHealth)
 			adjustBruteLoss(-10)
+		speak_chance *= 1.27 // 20 crackers to go from 1% to 100%
+		speech_shuffle_rate += 10
 		user << "<span class='notice'>[src] eagerly devours the cracker.</span>"
 	..()
 	return
@@ -363,16 +374,14 @@
 //-----SPEECH
 	/* Parrot speech mimickry!
 	   Phrases that the parrot Hear()s get added to speach_buffer.
-	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list.
-	   Then it clears the buffer to make sure they dont magically remember something from hours ago. */
+	   Every once in a while, the parrot picks one of the lines from the buffer and replaces an element of the 'speech' list. */
 /mob/living/simple_animal/parrot/handle_automated_speech()
 	..()
-	if(speech_buffer.len && prob(10))
+	if(speech_buffer.len && prob(speech_shuffle_rate)) //shuffle out a phrase and add in a new one
 		if(speak.len)
 			speak.Remove(pick(speak))
 
 		speak.Add(pick(speech_buffer))
-		clearlist(speech_buffer)
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
@@ -623,7 +632,7 @@
 			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
 				item = C
 		if(item)
-			if(!AStar(loc, get_turf(item), src, /turf/proc/Distance_cardinal))
+			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
 				item = null
 				continue
 			return item
@@ -802,7 +811,7 @@
 
 	if(icon_state == "parrot_fly")
 		for(var/mob/living/carbon/human/H in view(src,1))
-			if(H.buckled_mob) //Already has a parrot, or is being eaten by a slime
+			if(H.has_buckled_mobs() && H.buckled_mobs.len >= H.max_buckled_mobs) //Already has a parrot, or is being eaten by a slime
 				continue
 			perch_on_human(H)
 			return
@@ -812,7 +821,7 @@
 		parrot_state = PARROT_WANDER
 		if(buckled)
 			src << "<span class='notice'>You are no longer sitting on [buckled]'s shoulder.</span>"
-			buckled.buckled_mob = null
+			buckled.unbuckle_mob(src,force=1)
 		buckled = null
 		pixel_x = initial(pixel_x)
 		pixel_y = initial(pixel_y)
@@ -856,8 +865,90 @@
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the singlo, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS FREE CALL THE SHUTTLE")
 	gold_core_spawnable = 0
+	speak_chance = 3
+	var/memory_saved = 0
+	var/rounds_survived = 0
+	var/longest_survival = 0
+	var/longest_deathstreak = 0
 
 /mob/living/simple_animal/parrot/Poly/New()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
+	Read_Memory()
+	if(rounds_survived == longest_survival)
+		speak += pick("...[longest_survival].", "The things I've seen!", "I have lived many lives!", "What are you before me?")
+		desc += " Old as sin, and just as loud. Claimed to be [rounds_survived]."
+		speak_chance = 20 //His hubris has made him more annoying/easier to justify killing
+		color = "#EEEE22"
+	else if(rounds_survived == longest_deathstreak)
+		speak += pick("What are you waiting for!", "Violence breeds violence!", "Blood! Blood!", "Strike me down if you dare!")
+		desc += " The squawks of [-rounds_survived] dead parrots ring out in your ears..."
+		color = "#BB7777"
+	else if(rounds_survived > 0)
+		speak += pick("...again?", "No, It was over!", "Let me out!", "It never ends!")
+		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
+	else
+		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
+	..()
+
+/mob/living/simple_animal/parrot/Poly/Life()
+	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+		rounds_survived = max(++rounds_survived,1)
+		if(rounds_survived > longest_survival)
+			longest_survival = rounds_survived
+		Write_Memory()
+	..()
+
+/mob/living/simple_animal/parrot/Poly/death(gibbed)
+	if(!memory_saved)
+		var/go_ghost = 0
+		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak)
+			go_ghost = 1
+		rounds_survived = min(--rounds_survived,0)
+		if(rounds_survived < longest_deathstreak)
+			longest_deathstreak = rounds_survived
+		Write_Memory()
+		if(go_ghost)
+			var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+			if(mind)
+				mind.transfer_to(G)
+			else
+				G.key = key
+	..(gibbed)
+
+/mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	S["phrases"] 			>> speech_buffer
+	S["roundssurvived"]		>> rounds_survived
+	S["longestsurvival"]	>> longest_survival
+	S["longestdeathstreak"] >> longest_deathstreak
+
+	if(!islist(speech_buffer))
+		speech_buffer = list()
+
+/mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
+	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
+	if(islist(speech_buffer))
+		S["phrases"] 			<< speech_buffer
+	S["roundssurvived"]		<< rounds_survived
+	S["longestsurvival"]	<< longest_survival
+	S["longestdeathstreak"] << longest_deathstreak
+	memory_saved = 1
+
+/mob/living/simple_animal/parrot/Poly/ghost
+	name = "The Ghost of Poly"
+	desc = "Doomed to squawk the earth."
+	color = "#FFFFFF77"
+	speak_chance = 20
+	status_flags = GODMODE
+	incorporeal_move = 1
+	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+
+/mob/living/simple_animal/parrot/Poly/ghost/New()
+	memory_saved = 1 //At this point nothing is saved
+	..()
+
+/mob/living/simple_animal/parrot/Poly/ghost/handle_automated_movement()
+	if(isliving(parrot_interest))
+		parrot_interest = null
 	..()

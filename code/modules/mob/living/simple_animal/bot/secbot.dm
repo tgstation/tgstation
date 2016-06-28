@@ -3,7 +3,6 @@
 	desc = "A little security robot.  He looks less than thrilled."
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "secbot0"
-	layer = 5
 	density = 0
 	anchored = 0
 	health = 25
@@ -11,13 +10,15 @@
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB
 
-	radio_key = /obj/item/device/encryptionkey/headset_sec
+	radio_key = /obj/item/device/encryptionkey/secbot //AI Priv + Security
 	radio_channel = "Security" //Security channel
 	bot_type = SEC_BOT
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
+	allow_pai = 0
+	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 
 	var/mob/living/carbon/target
 	var/oldtarget_name
@@ -36,6 +37,14 @@
 	idcheck = 0
 	weaponscheck = 0
 	auto_patrol = 1
+
+/mob/living/simple_animal/bot/secbot/beepsky/explode()
+	var/turf/Tsec = get_turf(src)
+	new /obj/item/weapon/stock_parts/cell/potato(Tsec)
+	var/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
+	S.reagents.add_reagent("whiskey", 15)
+	S.on_reagent_change()
+	..()
 
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
@@ -79,6 +88,7 @@
 /mob/living/simple_animal/bot/secbot/get_controls(mob/user)
 	var/dat
 	dat += hack(user)
+	dat += showpai(user)
 	dat += text({"
 <TT><B>Securitron v1.6 controls</B></TT><BR><BR>
 Status: []<BR>
@@ -102,7 +112,7 @@ Auto Patrol: []"},
 "<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
 "<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
 "<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-	
+
 	return	dat
 
 /mob/living/simple_animal/bot/secbot/Topic(href, href_list)
@@ -145,9 +155,8 @@ Auto Patrol: []"},
 	if(!istype(W, /obj/item/weapon/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 
-/mob/living/simple_animal/bot/secbot/Emag(mob/user)
+/mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
-
 	if(emagged == 2)
 		if(user)
 			user << "<span class='danger'>You short out [src]'s target assessment circuits.</span>"
@@ -159,7 +168,7 @@ Auto Patrol: []"},
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
-			if (!Proj.nodamage && Proj.damage < src.health)
+			if(!Proj.nodamage && Proj.damage < src.health)
 				retaliate(Proj.firer)
 	..()
 
@@ -176,6 +185,16 @@ Auto Patrol: []"},
 	else
 		..()
 
+
+/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+	if(istype(AM, /obj/item))
+		var/obj/item/I = AM
+		if(I.throwforce < src.health && I.thrownby && (istype(I.thrownby, /mob/living/carbon/human)))
+			var/mob/living/carbon/human/H = I.thrownby
+			retaliate(H)
+	..()
+
+
 /mob/living/simple_animal/bot/secbot/proc/cuff(mob/living/carbon/C)
 	mode = BOT_ARREST
 	playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
@@ -186,7 +205,7 @@ Auto Patrol: []"},
 			return
 		if(!C.handcuffed)
 			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-			C.update_inv_handcuffed(0)	//update the handcuffs overlay
+			C.update_handcuffed()
 			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 			back_to_idle()
 
@@ -206,6 +225,7 @@ Auto Patrol: []"},
 		C.Weaken(5)
 		C.stuttering = 5
 		C.Stun(5)
+		threat = C.assess_threat()
 	add_logs(src,C,"stunned")
 	if(declare_arrests)
 		var/area/location = get_area(src)
@@ -214,7 +234,7 @@ Auto Patrol: []"},
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
-	if (!..())
+	if(!..())
 		return
 
 	switch(mode)
@@ -272,7 +292,7 @@ Auto Patrol: []"},
 				return
 
 		if(BOT_ARREST)
-			if (!target)
+			if(!target)
 				anchored = 0
 				mode = BOT_IDLE
 				last_found = world.time
@@ -283,7 +303,7 @@ Auto Patrol: []"},
 				back_to_idle()
 				return
 
-			if( !Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.weakened < 2) ) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.weakened < 2)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.
@@ -357,7 +377,7 @@ Auto Patrol: []"},
 
 	var/obj/item/weapon/secbot_assembly/Sa = new /obj/item/weapon/secbot_assembly(Tsec)
 	Sa.build_step = 1
-	Sa.overlays += "hs_hole"
+	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/weapon/melee/baton(Tsec)
@@ -393,102 +413,6 @@ Auto Patrol: []"},
 		C.Weaken(2)
 		return
 	..()
-
-//Secbot Construction
-
-/obj/item/clothing/head/helmet/attackby(obj/item/device/assembly/signaler/S, mob/user, params)
-	..()
-	if(!issignaler(S))
-		..()
-		return
-
-	if(type != /obj/item/clothing/head/helmet/sec) //Eh, but we don't want people making secbots out of space helmets.
-		return
-
-	if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
-		user << "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>"
-		return
-
-	if(S.secured)
-		qdel(S)
-		var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
-		user.put_in_hands(A)
-		user << "<span class='notice'>You add the signaler to the helmet.</span>"
-		user.unEquip(src, 1)
-		qdel(src)
-	else
-		return
-
-/obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/weapon/weldingtool))
-		if(!build_step)
-			var/obj/item/weapon/weldingtool/WT = I
-			if(WT.remove_fuel(0, user))
-				build_step++
-				overlays += "hs_hole"
-				user << "<span class='notice'>You weld a hole in [src]!</span>"
-		else if(build_step == 1)
-			var/obj/item/weapon/weldingtool/WT = I
-			if(WT.remove_fuel(0, user))
-				build_step--
-				overlays -= "hs_hole"
-				user << "<span class='notice'>You weld the hole in [src] shut!</span>"
-
-	else if(isprox(I) && (build_step == 1))
-		if(!user.unEquip(I))
-			return
-		build_step++
-		user << "<span class='notice'>You add the prox sensor to [src]!</span>"
-		overlays += "hs_eye"
-		name = "helmet/signaler/prox sensor assembly"
-		qdel(I)
-
-	else if(((istype(I, /obj/item/robot_parts/l_arm)) || (istype(I, /obj/item/robot_parts/r_arm))) && (build_step == 2))
-		if(!user.unEquip(I))
-			return
-		build_step++
-		user << "<span class='notice'>You add the robot arm to [src]!</span>"
-		name = "helmet/signaler/prox sensor/robot arm assembly"
-		overlays += "hs_arm"
-		qdel(I)
-
-	else if((istype(I, /obj/item/weapon/melee/baton)) && (build_step >= 3))
-		if(!user.unEquip(I))
-			return
-		build_step++
-		user << "<span class='notice'>You complete the Securitron! Beep boop.</span>"
-		var/mob/living/simple_animal/bot/secbot/S = new/mob/living/simple_animal/bot/secbot(get_turf(src))
-		S.name = created_name
-		qdel(I)
-		qdel(src)
-
-	else if(istype(I, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && loc != usr)
-			return
-		created_name = t
-
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		if(!build_step)
-			new /obj/item/device/assembly/signaler(get_turf(src))
-			new /obj/item/clothing/head/helmet/sec(get_turf(src))
-			user << "<span class='notice'>You disconnect the signaler from the helmet.</span>"
-			qdel(src)
-
-		else if(build_step == 2)
-			overlays -= "hs_eye"
-			new /obj/item/device/assembly/prox_sensor(get_turf(src))
-			user << "<span class='notice'>You detach the proximity sensor from [src].</span>"
-			build_step--
-
-		else if(build_step == 3)
-			overlays -= "hs_arm"
-			new /obj/item/robot_parts/l_arm(get_turf(src))
-			user << "<span class='notice'>You remove the robot arm from [src].</span>"
-			build_step--
 
 /obj/machinery/bot_core/secbot
 	req_access = list(access_security)

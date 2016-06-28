@@ -1,183 +1,199 @@
-/obj/structure/constructshell/large
-	name = "large empty shell"
-	icon = 'icons/obj/cult_large.dmi'
-	icon_state = "shell_narsie_grey"
-	desc = "An oversized construct shell, fit for an elder god. Only a lunatic would even dream of such a crazed contraption."
-	pixel_x = -16
-	pixel_y = -16
-	density = 1
-	layer = 4.5
-	anchored = 0
-	var/maxhealth = 200
-	var/health = 200
-	var/image/black_overlay = null
-	var/orbs = 0
-	var/orbs_needed = 1
-	var/time_to_win = 1800 //3 minutes
-	var/timer_id = null
-
-/obj/structure/constructshell/large/New()
-	..()
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult = ticker.mode
-		orbs_needed = cult.orbs_needed
-	black_overlay = image('icons/obj/cult_large.dmi', "shell_narsie_black")
-
-/obj/structure/constructshell/large/Destroy()
-	priority_announce("The extra-dimensional flow has ceased. All personnel should return to their routine activities.","Central Command Higher Dimensions Affairs")
-	if(get_security_level() == "delta")
-		set_security_level("red")
-	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult = ticker.mode
-		cult.large_shell_summoned = 0
-	black_overlay = null
-	if(timer_id)
-		deltimer(timer_id)
-	..()
-
-/obj/structure/constructshell/large/examine(mob/user)
-	..()
-	user << "<span class='cult'>You see a number of round holes on the surface of the shell. They number [orbs_needed], and [orbs ? orbs : "none"] of them [orbs > 1 ? "are" : "is"] filled.</span>"
-
-/obj/structure/constructshell/large/update_icon()
-	var/new_alpha = round((orbs/orbs_needed)*255)
-	if(new_alpha)
-		overlays -= black_overlay
-		black_overlay.alpha = new_alpha
-		overlays += black_overlay
-
-/obj/structure/constructshell/large/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/summoning_orb) && (orbs < orbs_needed))
-		if(!iscultist(user))
-			return
-		visible_message("<span class='cult'>\The [src] glows.</span>")
-		orbs++
-		qdel(O)
-		update_icon()
-		if(orbs >= orbs_needed)
-			start_takeover()
-		return
-
-	if( (O.flags&NOBLUDGEON) || !O.force )
-		return
-	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	playsound(src, 'sound/weapons/smash.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] has hit \the [src] with [O].</span>")
-	if(O.damtype == BURN || O.damtype == BRUTE)
-		damaged(O.force)
-
-//this stuff is mostly copy-pasted from gang dominators, with some changes
-/obj/structure/constructshell/large/proc/start_takeover()
-	anchored = 1
-	overlays -= black_overlay
-	icon_state = "shell_narsie_active"
-	flick("shell_narsie_activation", src)
-	set_security_level("delta")
-	var/area/A = get_area(src)
-	var/locname = initial(A.name)
-	priority_announce("Figments from an eldritch god have begun pouring into [locname] from an unknown dimension. Eliminate its vessel before it reaches a critical point.","Central Command Higher Dimensions Affairs")
-	timer_id = addtimer(src, "summon_narnar", time_to_win)
-
-/obj/structure/constructshell/large/proc/damaged(damage)
-	health -= damage
-	if(health <= 0)
-		new /obj/item/stack/sheet/plasteel(get_turf(src))
-		qdel(src)
-
-/obj/structure/constructshell/large/bullet_act(obj/item/projectile/P)
-	if(P.damage)
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		visible_message("<span class='danger'>[src] was hit by [P].</span>")
-		damaged(P.damage)
-
-/obj/structure/constructshell/large/attack_alien(mob/living/user)
-	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\
-	"<span class='danger'>You smash against [src] with your claws.</span>")
-	damaged(15)
-
-/obj/structure/constructshell/large/attack_animal(mob/living/user)
-	if(!isanimal(user))
-		return
-	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	damaged(M.melee_damage_upper)
-
-/obj/structure/constructshell/large/mech_melee_attack(obj/mecha/M)
-	if(M.damtype == "brute")
-		playsound(src, 'sound/effects/bang.ogg', 50, 1)
-		visible_message("<span class='danger'>[M.name] has hit [src].</span>")
-		damaged(M.force)
-
-/obj/structure/constructshell/large/attack_hulk(mob/user)
-	playsound(src, 'sound/effects/bang.ogg', 50, 1)
-	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
-	"<span class='danger'>You punch [src].</span>")
-	damaged(5)
-
-/obj/structure/constructshell/large/ex_act()
-	return //nope
-
-/obj/structure/constructshell/large/singularity_pull()
-	return //nope
-
-/obj/structure/constructshell/large/singularity_act(current_size, obj/singularity/S)
-	var/atom/target = get_edge_target_turf(src, get_dir(src, S))
-	S.throw_at(target, 5, 1) //aaand nope
-
-/obj/structure/constructshell/large/proc/summon_narnar()
-	if(ticker.mode.name != "cult")
-		visible_message("<span class='warning'>\The [src] glows brightly once, then falls dark. It looks strangely dull and lifeless...</span>")
-		log_game("Summon Nar-Sie rune failed - gametype is not cult")
-		return
-	var/datum/game_mode/cult/cult_mode = ticker.mode
-	if(cult_mode.eldergod)
-		return //this should never happen, so we don't need any special fluff
-	world << 'sound/effects/dimensional_rend.ogg'
-	world << "<span class='cultitalic'><b>Rip... <span class='big'>Rrrip...</span> <span class='reallybig'>RRRRRRRRRR--</span></b></span>"
-	var/turf/target_turf = get_turf(src)
-	spawn(40)
-		new /obj/singularity/narsie/large(target_turf) //Causes Nar-Sie to spawn even if the rune has been removed
-		cult_mode.eldergod = 1
-		if(src)
-			qdel(src)
-
-
 /obj/structure/cult
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
+	var/cooldowntime = 0
+	var/health = 100
+	var/maxhealth = 100
+
+/obj/structure/cult/examine(mob/user)
+	..()
+	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
+	if(iscultist(user) && cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+
+/obj/structure/cult/attackby(obj/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
+		anchored = !anchored
+		user << "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>"
+		if(!anchored)
+			icon_state = "[initial(icon_state)]_off"
+		else
+			icon_state = initial(icon_state)
+	else
+		return ..()
+
+/obj/structure/cult/proc/getETA()
+	var/time = (cooldowntime - world.time)/600
+	var/eta = "[round(time, 1)] minutes"
+	if(time <= 1)
+		time = (cooldowntime - world.time)*0.1
+		eta = "[round(time, 1)] seconds"
+	return eta
 
 /obj/structure/cult/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie"
+	desc = "A bloodstained altar dedicated to Nar-Sie."
 	icon_state = "talismanaltar"
+
+/obj/structure/cult/talisman/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
+	var/pickedtype
+	switch(choice)
+		if("Eldritch Whetstone")
+			pickedtype = /obj/item/weapon/sharpener/cult
+		if("Zealot's Blindfold")
+			pickedtype = /obj/item/clothing/glasses/night/cultblind
+		if("Flask of Unholy Water")
+			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
+
 
 /obj/structure/cult/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
+	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
+	luminosity = 3
+
+/obj/structure/cult/forge/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>The heat radiating from [src] pushes you back.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/pickedtype
+	switch(choice)
+		if("Shielded Robe")
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
+		if("Flagellant's Robe")
+			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
+		if("Nar-Sien Hardsuit")
+			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
+
+
+var/list/blacklisted_pylon_turfs = typecacheof(list(
+	/turf/closed,
+	/turf/open/floor/engine/cult,
+	/turf/open/space,
+	/turf/open/floor/plating/lava,
+	/turf/open/chasm))
 
 /obj/structure/cult/pylon
 	name = "pylon"
-	desc = "A floating crystal that hums with an unearthly energy"
+	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
 	icon_state = "pylon"
 	luminosity = 5
+	var/heal_delay = 25
+	var/last_heal = 0
+	var/corrupt_delay = 50
+	var/last_corrupt = 0
+
+/obj/structure/cult/pylon/New()
+	START_PROCESSING(SSfastprocess, src)
+	..()
+
+/obj/structure/cult/pylon/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/structure/cult/pylon/process()
+	if(!anchored)
+		return
+	if(last_heal <= world.time)
+		last_heal = world.time + heal_delay
+		for(var/mob/living/L in range(5, src))
+			if(iscultist(L) || isshade(L) || isconstruct(L))
+				if(L.health != L.maxHealth)
+					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
+					if(ishuman(L))
+						L.adjustBruteLoss(-1, 0)
+						L.adjustFireLoss(-1, 0)
+						L.updatehealth()
+					if(isshade(L) || isconstruct(L))
+						var/mob/living/simple_animal/M = L
+						if(M.health < M.maxHealth)
+							M.adjustHealth(-1)
+			CHECK_TICK
+	if(last_corrupt <= world.time)
+		var/list/validturfs = list()
+		var/list/cultturfs = list()
+		for(var/T in circleviewturfs(src, 5))
+			if(istype(T, /turf/open/floor/engine/cult))
+				cultturfs |= T
+				continue
+			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
+				continue
+			else
+				validturfs |= T
+
+		last_corrupt = world.time + corrupt_delay
+
+		var/turf/T = safepick(validturfs)
+		if(T)
+			T.ChangeTurf(/turf/open/floor/engine/cult)
+		else
+			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
+			if(F)
+				PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, F)
+			else
+				// Are we in space or something? No cult turfs or
+				// convertable turfs?
+				last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/cult/tome
-	name = "desk"
-	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
+	name = "archives"
+	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
 	luminosity = 1
 
+/obj/structure/cult/tome/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		user << "<span class='warning'>All of these books seem to be gibberish.</span>"
+		return
+	if(!anchored)
+		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
+		return
+	if(cooldowntime > world.time)
+		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
+		return
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Shifter")
+	var/pickedtype
+	switch(choice)
+		if("Supply Talisman")
+			pickedtype = /obj/item/weapon/paper/talisman/supply/weak
+		if("Shuttle Curse")
+			pickedtype = /obj/item/device/shuttle_curse
+		if("Veil Shifter")
+			pickedtype = /obj/item/device/cult_shift
+	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		var/obj/item/N = new pickedtype(get_turf(src))
+		user << "<span class='cultitalic'>You summon [N] from the archives!</span>"
+
 /obj/effect/gateway
 	name = "gateway"
-	desc = "You're pretty sure that abyss is staring back"
+	desc = "You're pretty sure that abyss is staring back."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1

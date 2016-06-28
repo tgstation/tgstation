@@ -8,11 +8,14 @@
 #define MOLES_O2STANDARD		(MOLES_CELLSTANDARD*O2STANDARD)	// O2 standard value (21%)
 #define MOLES_N2STANDARD		(MOLES_CELLSTANDARD*N2STANDARD)	// N2 standard value (79%)
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
+//indices of values in gas lists. used by listmos.
+#define MOLES			1
+#define ARCHIVE			2
+#define GAS_META		3
+#define META_GAS_SPECIFIC_HEAT	1
+#define META_GAS_NAME			2
+#define META_GAS_OVERLAY		4
+#define META_GAS_MOLES_VISIBLE	3
 
 //stuff you should probably leave well alone!
 //ATMOS
@@ -24,12 +27,15 @@
 #define HEATPIPERATE						8		//heat-exch pipe insulation
 #define FLOWFRAC							0.99	//fraction of gas transfered per process
 #define TANK_LEAK_PRESSURE					(30.*ONE_ATMOSPHERE)	//Tank starts leaking
-#define TANK_RUPTURE_PRESSURE				(40.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
-#define TANK_FRAGMENT_PRESSURE				(50.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
-#define TANK_FRAGMENT_SCALE	    			(10.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
-#define MINIMUM_AIR_RATIO_TO_SUSPEND		0.005	//Minimum ratio of air that must move to/from a tile to suspend group processing
+#define TANK_RUPTURE_PRESSURE				(35.*ONE_ATMOSPHERE)	//Tank spills all contents into atmosphere
+#define TANK_FRAGMENT_PRESSURE				(40.*ONE_ATMOSPHERE)	//Boom 3x3 base explosion
+#define TANK_FRAGMENT_SCALE	    			(6.*ONE_ATMOSPHERE)	//+1 for each SCALE kPa aboe threshold
+#define MINIMUM_AIR_RATIO_TO_SUSPEND		0.1		//Ratio of air that must move to/from a tile to reset group processing
+#define MINIMUM_AIR_RATIO_TO_MOVE			0.001	//Minimum ratio of air that must move to/from a tile
 #define MINIMUM_AIR_TO_SUSPEND				(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)	//Minimum amount of air that has to move before a group processing can be suspended
-#define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND) //Either this must be active
+#define MINIMUM_MOLES_DELTA_TO_MOVE			(MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE) //Either this must be active
+#define EXCITED_GROUP_BREAKDOWN_CYCLES		4
+#define EXCITED_GROUP_DISMANTLE_CYCLES		16
 #define MINIMUM_TEMPERATURE_TO_MOVE			(T20C+100)			//or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND		0.012
 #define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND		4		//Minimum temperature difference before group processing is suspended
@@ -54,7 +60,7 @@
 #define CARBON_LIFEFORM_FIRE_DAMAGE			4		//Fire damage
 	//Plasma fire properties
 #define OXYGEN_BURN_RATE_BASE				1.4
-#define PLASMA_BURN_RATE_DELTA				8
+#define PLASMA_BURN_RATE_DELTA				9
 #define PLASMA_MINIMUM_BURN_TEMPERATURE		100+T0C
 #define PLASMA_UPPER_TEMPERATURE			1370+T0C
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
@@ -152,3 +158,8 @@
 #define PARENT2		parents[2]
 #define PARENT3		parents[3]
 #define PARENT_I	parents[I]
+
+//Tanks
+#define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
+#define TANK_MIN_RELEASE_PRESSURE 0
+#define TANK_DEFAULT_RELEASE_PRESSURE 16

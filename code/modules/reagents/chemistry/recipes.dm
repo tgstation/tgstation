@@ -14,7 +14,8 @@
 	var/mob_react = 0 //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
-	var/mix_message = "The solution begins to bubble."
+	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
+	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
 
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
@@ -63,21 +64,21 @@ var/list/chemical_mob_spawn_nicecritters = list() // and possible friendly mobs
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(C, pick(NORTH,SOUTH,EAST,WEST))
 
-/datum/chemical_reaction/proc/goonchem_vortex(turf/simulated/T, setting_type, range)
+/datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(istype(X, /obj/effect))
 			continue
 		if(!X.anchored)
 			var/distance = get_dist(X, T)
 			var/moving_power = max(range - distance, 1)
-			spawn(0) //so everything moves at the same time.
-				if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
-					if(setting_type)
-						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
-						X.throw_at(throw_target, moving_power, 1)
-					else
-						X.throw_at(T, moving_power, 1)
+			if(moving_power > 2) //if the vortex is powerful and we're close, we get thrown
+				if(setting_type)
+					var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, T)))
+					X.throw_at_fast(throw_target, moving_power, 1)
 				else
+					X.throw_at_fast(T, moving_power, 1)
+			else
+				spawn(0) //so everything moves at the same time.
 					if(setting_type)
 						for(var/i = 0, i < moving_power, i++)
 							sleep(2)

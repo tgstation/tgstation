@@ -5,7 +5,7 @@ var/list/forbidden_varedit_object_types = list(
 										/datum/admin_rank					//editing my own rank? it's more likely than you think
 									)
 
-var/list/VVlocked = list("vars", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y", "force_ending")
+var/list/VVlocked = list("vars", "var_edited", "client", "virus", "viruses", "cuffed", "last_eaten", "unlock_content", "step_x", "step_y", "force_ending")
 var/list/VVicon_edit_lock = list("icon", "icon_state", "overlays", "underlays", "resize")
 var/list/VVckey_edit = list("key", "ckey")
 
@@ -33,10 +33,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "marked datum ([holder.marked_datum.type])")
 	else
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 	if(!class)
 		return
@@ -72,6 +72,14 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("marked datum")
 			var_value = holder.marked_datum
 
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var_value = new type()
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var_value = new type()
+
 	if(!var_value) return
 
 	if(istext(var_value))
@@ -90,10 +98,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum","marked datum ([holder.marked_datum.type])")
 	else
 		class = input("What kind of variable?","Variable Type") as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 	if(!class)
 		return
@@ -129,6 +137,14 @@ var/list/VVckey_edit = list("key", "ckey")
 		if("marked datum")
 			var_value = holder.marked_datum
 
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var_value = new type()
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var_value = new type()
+
 	if(!var_value) return
 
 	if(istext(var_value))
@@ -149,8 +165,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	message_admins("[key_name_admin(src)] modified [original_name]'s [objectvar]: ADDED=[var_value]")
 
 /client/proc/mod_list(list/L, atom/O, original_name, objectvar)
-	if(!check_rights(R_VAREDIT))	return
-	if(!istype(L,/list)) src << "Not a List."
+	if(!check_rights(R_VAREDIT))
+		return
+	if(!istype(L,/list))
+		src << "Not a List."
 
 	if(L.len > 1000)
 		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
@@ -191,11 +209,14 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/dir
 
 	if(variable in VVlocked)
-		if(!check_rights(R_DEBUG))	return
+		if(!check_rights(R_DEBUG))
+			return
 	if(variable in VVckey_edit)
-		if(!check_rights(R_SPAWN|R_DEBUG)) return
+		if(!check_rights(R_SPAWN|R_DEBUG))
+			return
 	if(variable in VVicon_edit_lock)
-		if(!check_rights(R_FUN|R_DEBUG)) return
+		if(!check_rights(R_FUN|R_DEBUG))
+			return
 
 	if(isnull(variable))
 		usr << "Unable to determine variable type."
@@ -203,7 +224,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	else if(isnum(variable))
 		usr << "Variable appears to be <b>NUM</b>."
 		default = "num"
-		dir = 1
+		setDir(1)
 
 	else if(istext(variable))
 		usr << "Variable appears to be <b>TEXT</b>."
@@ -238,23 +259,23 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(dir)
 		switch(variable)
 			if(1)
-				dir = "NORTH"
+				setDir("NORTH")
 			if(2)
-				dir = "SOUTH"
+				setDir("SOUTH")
 			if(4)
-				dir = "EAST"
+				setDir("EAST")
 			if(8)
-				dir = "WEST"
+				setDir("WEST")
 			if(5)
-				dir = "NORTHEAST"
+				setDir("NORTHEAST")
 			if(6)
-				dir = "SOUTHEAST"
+				setDir("SOUTHEAST")
 			if(9)
-				dir = "NORTHWEST"
+				setDir("NORTHWEST")
 			if(10)
-				dir = "SOUTHWEST"
+				setDir("SOUTHWEST")
 			else
-				dir = null
+				setDir(null)
 
 		if(dir)
 			usr << "If a direction, direction is: [dir]"
@@ -262,10 +283,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])", "DELETE FROM LIST")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum","marked datum ([holder.marked_datum.type])", "DELETE FROM LIST")
 	else
 		class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "DELETE FROM LIST")
+			"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "DELETE FROM LIST")
 
 	if(!class)
 		return
@@ -367,18 +388,34 @@ var/list/VVckey_edit = list("key", "ckey")
 			else
 				L[L.Find(variable)] = new_var
 
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			new_var = new type()
+			if(assoc)
+				L[assoc_key] = new_var
+			else
+				L[L.Find(variable)] = new_var
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			new_var = new type()
+			if(assoc)
+				L[assoc_key] = new_var
+			else
+				L[L.Find(variable)] = new_var
+
 	O.on_varedit(objectvar)
 	world.log << "### ListVarEdit by [src]: [O.type] [objectvar]: [original_var]=[new_var]"
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
+		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
 		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
@@ -394,11 +431,14 @@ var/list/VVckey_edit = list("key", "ckey")
 			return
 
 		if(param_var_name in VVlocked)
-			if(!check_rights(R_DEBUG))	return
+			if(!check_rights(R_DEBUG))
+				return
 		if(param_var_name in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(param_var_name in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 		variable = param_var_name
 
@@ -412,7 +452,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			else if(isnum(var_value))
 				usr << "Variable appears to be <b>NUM</b>."
 				class = "num"
-				dir = 1
+				setDir(1)
 
 			else if(istext(var_value))
 				usr << "Variable appears to be <b>TEXT</b>."
@@ -452,15 +492,19 @@ var/list/VVckey_edit = list("key", "ckey")
 		names = sortList(names)
 
 		variable = input("Which var?","Var") as null|anything in names
-		if(!variable)	return
+		if(!variable)
+			return
 		var_value = O.vars[variable]
 
 		if(variable in VVlocked)
-			if(!check_rights(R_DEBUG)) return
+			if(!check_rights(R_DEBUG))
+				return
 		if(variable in VVckey_edit)
-			if(!check_rights(R_SPAWN|R_DEBUG)) return
+			if(!check_rights(R_SPAWN|R_DEBUG))
+				return
 		if(variable in VVicon_edit_lock)
-			if(!check_rights(R_FUN|R_DEBUG)) return
+			if(!check_rights(R_FUN|R_DEBUG))
+				return
 
 	if(!autodetect_class)
 
@@ -472,7 +516,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		else if(isnum(var_value))
 			usr << "Variable appears to be <b>NUM</b>."
 			default = "num"
-			dir = 1
+			setDir(1)
 
 		else if(istext(var_value))
 			usr << "Variable appears to be <b>TEXT</b>."
@@ -507,32 +551,32 @@ var/list/VVckey_edit = list("key", "ckey")
 		if(dir)
 			switch(var_value)
 				if(1)
-					dir = "NORTH"
+					setDir("NORTH")
 				if(2)
-					dir = "SOUTH"
+					setDir("SOUTH")
 				if(4)
-					dir = "EAST"
+					setDir("EAST")
 				if(8)
-					dir = "WEST"
+					setDir("WEST")
 				if(5)
-					dir = "NORTHEAST"
+					setDir("NORTHEAST")
 				if(6)
-					dir = "SOUTHEAST"
+					setDir("SOUTHEAST")
 				if(9)
-					dir = "NORTHWEST"
+					setDir("NORTHWEST")
 				if(10)
-					dir = "SOUTHWEST"
+					setDir("SOUTHWEST")
 				else
-					dir = null
+					setDir(null)
 			if(dir)
 				usr << "If a direction, direction is: [dir]"
 
 		if(src.holder && src.holder.marked_datum)
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default","marked datum ([holder.marked_datum.type])")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum", "marked datum ([holder.marked_datum.type])")
 		else
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default")
+				"num","type","reference","mob reference", "icon","file","list","edit referenced object","restore to default", "new atom", "new datum")
 
 		if(!class)
 			return
@@ -593,8 +637,14 @@ var/list/VVckey_edit = list("key", "ckey")
 				O.vars[variable] = var_new
 
 		if("type")
-			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
-			if(var_new==null) return
+			var/target_path = input("Enter type:", "Type", O.vars[variable]) as null|text
+			if(!target_path)
+				return
+			var/var_new = text2path(target_path)
+			if(!ispath(var_new))
+				var_new = pick_closest_path(target_path)
+			if(!var_new)
+				return
 			O.vars[variable] = var_new
 
 		if("reference")
@@ -619,6 +669,18 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
+
+		if("new atom")
+			var/type = input("Enter type:","Type") as null|anything in typesof(/obj,/mob,/area,/turf)
+			var/var_new = new type()
+			if(var_new==null) return
+			O.vars[variable] = var_new
+
+		if("new datum")
+			var/type = input("Enter type:","Type") as null|anything in (typesof(/datum)-typesof(/obj,/mob,/area,/turf))
+			var/var_new = new type()
+			if(var_new==null) return
+			O.vars[variable] = var_new
 
 	O.on_varedit(variable)
 	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"

@@ -9,8 +9,14 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
+
+/obj/item/stack/tile/New(loc, amount)
+	..()
+	pixel_x = rand(-3, 3)
+	pixel_y = rand(-3, 3) //randomize a little
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -28,7 +34,7 @@
 		if(WT.remove_fuel(0,user))
 
 			if(mineralType == "plasma")
-				atmos_spawn_air(SPAWN_HEAT | SPAWN_TOXINS, 5)
+				atmos_spawn_air("plasma=5;TEMP=1000")
 				user.visible_message("<span class='warning'>[user.name] sets the plasma tiles on fire!</span>", \
 									"<span class='warning'>You set the plasma tiles on fire!</span>")
 				qdel(src)
@@ -58,9 +64,8 @@
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
-		return
 	else
-		..()
+		return ..()
 
 //Grass
 /obj/item/stack/tile/grass
@@ -69,7 +74,7 @@
 	desc = "A patch of grass like they often use on golf courses."
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/grass
+	turf_type = /turf/open/floor/grass
 	burn_state = FLAMMABLE
 
 
@@ -80,7 +85,7 @@
 	desc = "an easy to fit wood floor tile."
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
-	turf_type = /turf/simulated/floor/wood
+	turf_type = /turf/open/floor/wood
 	burn_state = FLAMMABLE
 
 
@@ -90,7 +95,7 @@
 	singular_name = "carpet"
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
-	turf_type = /turf/simulated/floor/carpet
+	turf_type = /turf/open/floor/carpet
 	burn_state = FLAMMABLE
 
 
@@ -99,7 +104,7 @@
 	singular_name = "astral carpet"
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
-	turf_type = /turf/simulated/floor/fakespace
+	turf_type = /turf/open/floor/fakespace
 	burn_state = FLAMMABLE
 
 /obj/item/stack/tile/fakespace/loaded
@@ -111,9 +116,33 @@
 	singular_name = "high-traction floor tile"
 	desc = "A high-traction floor tile. It feels rubbery in your hand."
 	icon_state = "tile_noslip"
-	turf_type = /turf/simulated/floor/noslip
+	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
 
+/obj/item/stack/tile/noslip/thirty
+	amount = 30
+
+//Pod floor
+/obj/item/stack/tile/pod
+	name = "pod floor tile"
+	singular_name = "pod floor tile"
+	desc = "A grooved floor tile."
+	icon_state = "tile_pod"
+	turf_type = /turf/open/floor/pod
+
+/obj/item/stack/tile/pod/light
+	name = "light pod floor tile"
+	singular_name = "light pod floor tile"
+	desc = "A lightly colored grooved floor tile."
+	icon_state = "tile_podlight"
+	turf_type = /turf/open/floor/pod/light
+
+/obj/item/stack/tile/pod/dark
+	name = "dark pod floor tile"
+	singular_name = "dark pod floor tile"
+	desc = "A darkly colored grooved floor tile."
+	icon_state = "tile_poddark"
+	turf_type = /turf/open/floor/pod/dark
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -125,8 +154,7 @@
 	materials = list(MAT_METAL=500)
 	throwforce = 10
 	flags = CONDUCT
-	max_amount = 60
-	turf_type = /turf/simulated/floor/plasteel
+	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
 
 /obj/item/stack/tile/plasteel/cyborg

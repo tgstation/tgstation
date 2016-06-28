@@ -3,7 +3,8 @@ var/datum/subsystem/server_maint/SSserver
 /datum/subsystem/server_maint
 	name = "Server Tasks"
 	wait = 6000
-	priority = 19
+	init_order = 19
+	flags = SS_NO_TICK_CHECK|SS_NO_INIT
 
 /datum/subsystem/server_maint/New()
 	NEW_SS_GLOBAL(SSserver)

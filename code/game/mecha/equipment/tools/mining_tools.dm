@@ -13,7 +13,7 @@
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
 		return
-	if(istype(target, /turf) && !istype(target, /turf/simulated))
+	if(istype(target, /turf/open/space))
 		return
 	if(isobj(target))
 		var/obj/target_obj = target
@@ -24,35 +24,9 @@
 					 "<span class='italics'>You hear drilling.</span>")
 
 	if(do_after_cooldown(target))
-		if(istype(target, /turf/simulated/wall/r_wall))
-			if(istype(src , /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
-				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
-					log_message("Drilled through [target]")
-					target.ex_act(3)
-			else
-				occupant_message("<span class='danger'>[target] is too durable to drill through.</span>")
-		else if(istype(target, /turf/simulated/mineral))
-			for(var/turf/simulated/mineral/M in range(chassis,1))
-				if(get_dir(chassis,M)&chassis.dir)
-					M.gets_drilled(chassis.occupant)
-			log_message("Drilled through [target]")
-			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
-				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(1, chassis))
-						if(get_dir(chassis,ore)&chassis.dir)
-							ore.Move(ore_box)
-		else if(istype(target, /turf/simulated/floor/plating/asteroid))
-			for(var/turf/simulated/floor/plating/asteroid/M in range(1, chassis))
-				if(get_dir(chassis,M)&chassis.dir)
-					M.gets_dug()
-			log_message("Drilled through [target]")
-			if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
-				var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
-				if(ore_box)
-					for(var/obj/item/weapon/ore/ore in range(1, chassis))
-						if(get_dir(chassis,ore)&chassis.dir)
-							ore.Move(ore_box)
+		if(isturf(target))
+			var/turf/T = target
+			T.drill_act(src)
 		else
 			log_message("Drilled through [target]")
 			if(isliving(target))
@@ -63,6 +37,39 @@
 			else
 				target.ex_act(2)
 
+/turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	return
+
+/turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
+		if(drill.do_after_cooldown(src))//To slow down how fast mechs can drill through the station
+			drill.log_message("Drilled through [src]")
+			ex_act(3)
+	else
+		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
+
+/turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/closed/mineral/M in range(drill.chassis,1))
+		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+			M.gets_drilled()
+	drill.log_message("Drilled through [src]")
+	drill.move_ores()
+
+/turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
+		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+			M.gets_dug()
+	drill.log_message("Drilled through [src]")
+	drill.move_ores()
+
+
+/obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
+	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
+		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
+		if(ore_box)
+			for(var/obj/item/weapon/ore/ore in range(1, chassis))
+				if(get_dir(chassis,ore)&chassis.dir)
+					ore.Move(ore_box)
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
 	if(..())
@@ -76,41 +83,54 @@
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/limb/affecting = H.get_organ("chest")
+		var/obj/item/bodypart/affecting = H.get_bodypart("chest")
 		affecting.take_damage(drill_damage)
 		H.update_damage_overlays(0)
+	else if(target.stat == DEAD && target.butcher_results)
+		target.harvest(chassis) // Butcher the mob with our drill.
 	else
 		target.take_organ_damage(drill_damage)
+
 	if(target)
 		target.Paralyse(10)
 		target.updatehealth()
-
 
 
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = "materials=4;engineering=4"
 	equip_cooldown = 20
 	force = 15
-
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	origin_tech = "materials=3;engineering=2"
+	selectable = 0
 	equip_cooldown = 30
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
+	..()
+	M.occupant_sight_flags |= SEE_TURFS
+	if(M.occupant)
+		M.occupant.update_sight()
+
+/obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
+	chassis.occupant_sight_flags &= ~SEE_TURFS
+	if(chassis.occupant)
+		chassis.occupant.update_sight()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	if(scanning)
 		return
@@ -118,13 +138,8 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/mob/pilot = mecha.occupant
-		var/list/occupant = list()
-		occupant |= pilot
-		pilot.sight |= SEE_TURFS
+		var/list/L = list(mecha.occupant)
 		scanning = 1
-		mineral_scan_pulse(occupant,get_turf(loc))
+		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
-			pilot.sight -= SEE_TURFS
-

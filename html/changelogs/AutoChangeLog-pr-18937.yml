@@ -1,0 +1,7 @@
+author: "Wizard's Federation"
+delete-after: True
+changes: 
+  - rscadd: "Acolytes of Hades have been scolded for gluing their clothes to themselves, and their clothes can now be cut off them."
+  - rscadd: "Hades has learned a few new tricks, to ensure the ultimate demise of his target."
+  - bugfix: "Hades has faced a council of his repeated use of time magic inside chapels, and as it was deemed unholy, he will no longer do it."
+  - rscadd: "Wizards of the Wizard's Federation have been granted access to Dark Seeds, ancient relics used to call upon Hades in a time of need."

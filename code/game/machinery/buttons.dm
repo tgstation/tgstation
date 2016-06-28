@@ -19,13 +19,13 @@
 /obj/machinery/button/New(loc, ndir = 0, built = 0)
 	..()
 	if(built)
-		dir = ndir
+		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		panel_open = 1
 		update_icon()
 
-	
+
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
@@ -41,13 +41,13 @@
 
 
 /obj/machinery/button/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
 		icon_state = "button-open"
 		if(device)
-			overlays += "button-device"
+			add_overlay("button-device")
 		if(board)
-			overlays += "button-board"
+			add_overlay("button-board")
 
 	else
 		if(stat & (NOPOWER|BROKEN))
@@ -56,9 +56,6 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
-
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
@@ -101,7 +98,10 @@
 		update_icon()
 		return
 
-	return src.attack_hand(user)
+	if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
+		return src.attack_hand(user)
+	else
+		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
 	req_access = list()
@@ -160,8 +160,7 @@
 	if(device)
 		device.pulsed()
 
-	spawn(15)
-		update_icon()
+	addtimer(src, "update_icon", 15)
 
 /obj/machinery/button/power_change()
 	..()
@@ -174,16 +173,15 @@
 	var/normaldoorcontrol = 0
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 
-/obj/machinery/button/door/New(loc, ndir = 0, built = 0)
-	..()
-	if(id && !built && !device)
+/obj/machinery/button/door/setup_device()
+	if(!device)
 		if(normaldoorcontrol)
 			var/obj/item/device/assembly/control/airlock/A = new(src)
 			device = A
 			A.specialfunctions = specialfunctions
 		else
 			device = new /obj/item/device/assembly/control(src)
-
+	..()
 
 /obj/machinery/button/massdriver
 	name = "mass driver button"

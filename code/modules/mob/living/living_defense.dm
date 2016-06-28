@@ -8,8 +8,7 @@
 			src << "<span class='userdanger'>[penetrated_text]</span>"
 		else
 			src << "<span class='userdanger'>Your armor was penetrated!</span>"
-
-	if(armor >= 100)
+	else if(armor >= 100)
 		if(absorb_text)
 			src << "<span class='userdanger'>[absorb_text]</span>"
 		else
@@ -79,6 +78,7 @@
 
 /mob/living/mech_melee_attack(obj/mecha/M)
 	if(M.occupant.a_intent == "harm")
+		M.do_attack_animation(src)
 		if(M.damtype == "brute")
 			step_away(src,M,15)
 		switch(M.damtype)
@@ -102,8 +102,6 @@
 		add_logs(M.occupant, src, "pushed", M)
 		visible_message("<span class='warning'>[M] pushes [src] out of the way.</span>")
 
-		return
-
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
@@ -114,6 +112,8 @@
 		src.AddLuminosity(3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
+		return TRUE
+	return FALSE
 
 /mob/living/proc/ExtinguishMob()
 	if(on_fire)
@@ -142,7 +142,7 @@
 		ExtinguishMob()
 		return
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
@@ -163,7 +163,8 @@
 	if(on_fire) //Only spread fire stacks if we're on fire
 		fire_stacks /= 2
 		L.fire_stacks += fire_stacks
-		L.IgniteMob()
+		if(L.IgniteMob())
+			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
 	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
 		L.fire_stacks /= 2
@@ -172,30 +173,93 @@
 
 //Mobs on Fire end
 
+/mob/living/proc/dominate_mind(mob/living/target, duration = 100, silent) //Allows one mob to assume control of another while imprisoning the old consciousness for a time
+	if(!target)
+		return 0
+	if(target.mental_dominator)
+		src << "<span class='warning'>[target] is already being controlled by someone else!</span>"
+		return 0
+	if(!target.mind)
+		src << "<span class='warning'>[target] is mindless and would make you permanently catatonic!</span>"
+		return 0
+	if(!silent)
+		src << "<span class='userdanger'>You pounce upon [target]'s mind and seize control of their body!</span>"
+		target << "<span class='userdanger'>Your control over your body is wrenched away from you!</span>"
+	target.mind_control_holder = new/mob/living/mind_control_holder(target)
+	target.mind_control_holder.real_name = "imprisoned mind of [target.real_name]"
+	target.mind.transfer_to(target.mind_control_holder)
+	mind.transfer_to(target)
+	target.mental_dominator = src
+	spawn(duration)
+		if(!src)
+			if(!silent)
+				target << "<span class='userdanger'>You try to return to your own body, but sense nothing! You're being forced out!</span>"
+			target.ghostize(1)
+			target.mind_control_holder.mind.transfer_to(target)
+			if(!silent)
+				target << "<span class='userdanger'>You take control of your own body again!</span>"
+			return 0
+		if(!silent)
+			target << "<span class='userdanger'>You're forced out! You return to your own body.</span>"
+		target.mind.transfer_to(src)
+		target.mind_control_holder.mind.transfer_to(target)
+		qdel(mind_control_holder)
+		if(!silent)
+			target << "<span class='userdanger'>You take control of your own body again!</span>"
+		return 1
 
 /mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
-/mob/living/proc/grabbedby(mob/living/carbon/user,supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src || anchored)
 		return 0
+	if(!user.pulling || user.pulling != src)
+		user.start_pulling(src, supress_message)
+		return
+
 	if(!(status_flags & CANPUSH))
+		user << "<span class='warning'>[src] can't be grabbed more aggressively!</span>"
 		return 0
+	grippedby(user)
 
-	add_logs(user, src, "grabbed", addition="passively")
+//proc to upgrade a simple pull into a more aggressive grab.
+/mob/living/proc/grippedby(mob/living/carbon/user)
+	if(user.grab_state < GRAB_KILL)
+		user.changeNext_move(CLICK_CD_GRABBING)
+		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
-	var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(user, src)
-	if(buckled)
-		user << "<span class='warning'>You cannot grab [src], \he is buckled in!</span>"
-	if(!G)	//the grab will delete itself in New if src is anchored
-		return 0
-	user.put_in_active_hand(G)
-	G.synch()
-	LAssailant = user
-
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-	if(!supress_message)
-		visible_message("<span class='warning'>[user] has grabbed [src] passively!</span>")
+		if(user.grab_state) //only the first upgrade is instantaneous
+			var/old_grab_state = user.grab_state
+			var/grab_upgrade_time = 30
+			visible_message("<span class='danger'>[user] starts to tighten \his grip on [src]!</span>", \
+				"<span class='userdanger'>[user] starts to tighten \his grip on you!</span>")
+			if(!do_mob(user, src, grab_upgrade_time))
+				return 0
+			if(!user.pulling || user.pulling != src || user.grab_state != old_grab_state || user.a_intent != "grab")
+				return 0
+		user.grab_state++
+		switch(user.grab_state)
+			if(GRAB_AGGRESSIVE)
+				add_logs(user, src, "grabbed", addition="aggressively")
+				visible_message("<span class='danger'>[user] has grabbed [src] aggressively!</span>", \
+								"<span class='userdanger'>[user] has grabbed [src] aggressively!</span>")
+				drop_r_hand()
+				drop_l_hand()
+				stop_pulling()
+			if(GRAB_NECK)
+				visible_message("<span class='danger'>[user] has grabbed [src] by the neck!</span>",\
+								"<span class='userdanger'>[user] has grabbed you by the neck!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+			if(GRAB_KILL)
+				visible_message("<span class='danger'>[user] is strangling [src]!</span>", \
+								"<span class='userdanger'>[user] is strangling you!</span>")
+				update_canmove() //we fall down
+				if(!buckled && !density)
+					Move(user.loc)
+		return 1
 
 
 /mob/living/attack_slime(mob/living/simple_animal/slime/M)
@@ -204,7 +268,7 @@
 		return
 
 	if(M.buckled)
-		if(M == buckled_mob)
+		if(M in buckled_mobs)
 			M.Feedstop()
 		return // can't attack while eating!
 
@@ -295,8 +359,22 @@
 			M.do_attack_animation(src)
 			return 1
 
-/mob/living/incapacitated()
-	if(stat || paralysis || stunned || weakened || restrained())
+/mob/living/incapacitated(ignore_restraints, ignore_grab)
+	if(stat || paralysis || stunned || weakened || (!ignore_restraints && restrained(ignore_grab)))
 		return 1
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
+
+/mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()
+
+/mob/living/Weaken(amount, updating = 1, ignore_canweaken = 0)
+	if(stun_absorption && !stat)
+		visible_message("<span class='warning'>[src]'s yellow aura momentarily intensifies!</span>", "<span class='userdanger'>Your ward absorbs the stun!</span>")
+		stun_absorption_count += amount
+		return 0
+	..()

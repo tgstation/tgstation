@@ -22,7 +22,7 @@
 	desc = "An advanced spacesuit equipped with teleportation and anti-compression technology"
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
-	action_button_name = "Toggle Chronosuit"
+	actions_types = list(/datum/action/item_action/toggle)
 	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
 	var/hands_nodrop_states
@@ -93,8 +93,7 @@
 		if(camera)
 			camera.remove_target_ui()
 			camera.loc = user
-		if(teleport_now.button)
-			teleport_now.button.UpdateIcon()
+		teleport_now.UpdateButtonIcon()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
@@ -108,8 +107,7 @@
 		if(camera)
 			camera.remove_target_ui()
 
-		if(teleport_now.button)
-			teleport_now.button.UpdateIcon()
+		teleport_now.UpdateButtonIcon()
 
 		var/list/nonsafe_slots = list(slot_belt, slot_back, slot_l_hand, slot_r_hand)
 		for(var/slot in nonsafe_slots)
@@ -119,7 +117,7 @@
 
 		user.ExtinguishMob()
 		if(user.buckled)
-			user.buckled.unbuckle_mob()
+			user.buckled.unbuckle_mob(user,force=1)
 
 		phase_underlay = create_phase_underlay(user)
 
@@ -187,7 +185,7 @@
 			else
 				new_camera(user)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
@@ -208,7 +206,7 @@
 					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
 					user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
 					new_camera(user)
-					SSobj.processing |= src
+					START_PROCESSING(SSobj, src)
 					activated = 1
 				else
 					user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet"
@@ -253,7 +251,7 @@
 	name = "Chronosuit View"
 	density = 0
 	anchored = 1
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
 	mouse_opacity = 0
 	var/mob/holder = null
@@ -281,7 +279,7 @@
 				loc = get_turf(user)
 			if(user.client && user.client.eye != src)
 				src.loc = get_turf(user)
-				user.reset_view(src)
+				user.reset_perspective(src)
 				user.set_machine(src)
 			var/atom/step = get_step(src, direction)
 			if(step)
@@ -300,10 +298,11 @@
 		qdel(src)
 
 /obj/effect/chronos_cam/check_eye(mob/user)
-	if(user == holder)
-		return 1
-	user.unset_machine()
-	user.reset_view(null)
+	if(user != holder)
+		user.unset_machine()
+
+/obj/effect/chronos_cam/on_unset_machine(mob/user)
+	user.reset_perspective(null)
 
 /obj/effect/chronos_cam/Destroy()
 	if(holder)
@@ -311,7 +310,6 @@
 			holder.remote_control = null
 		if(holder.client && (holder.client.eye == src))
 			holder.unset_machine()
-			holder.reset_view(null)
 	return ..()
 
 /obj/screen/chronos_target
@@ -331,16 +329,13 @@
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
 	button_icon_state = "chrono_phase"
-	check_flags = AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
 	var/obj/item/clothing/suit/space/chronos/chronosuit = null
 
 /datum/action/innate/chrono_teleport/IsAvailable()
-	return (!CheckRemoval(owner) && !chronosuit.teleporting)
+	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
 
 /datum/action/innate/chrono_teleport/Activate()
 	if(IsAvailable())
 		if(chronosuit.camera)
 			chronosuit.chronowalk(chronosuit.camera)
-
-/datum/action/innate/chrono_teleport/CheckRemoval()
-	return (..() && !(chronosuit && chronosuit.activated && chronosuit.camera))

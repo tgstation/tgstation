@@ -17,7 +17,7 @@
 	icon = 'icons/obj/card.dmi'
 	w_class = 1
 
-	var/list/files = list(  )
+	var/list/files = list()
 
 /obj/item/weapon/card/data
 	name = "data disk"
@@ -43,16 +43,6 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/item/weapon/card/data/clown
-	name = "\proper the coordinates to clown planet"
-	icon_state = "data"
-	item_state = "card-id"
-	layer = 3
-	level = 2
-	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
-	function = "teleporter"
-	data = "Clown Land"
-
 /*
  * ID CARDS
  */
@@ -63,13 +53,22 @@
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 	flags = NOBLUDGEON
+	var/prox_check = TRUE //If the emag requires you to be in range
+
+/obj/item/weapon/card/emag/bluespace
+	name = "bluespace cryptographic sequencer"
+	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
+	color = rgb(40, 130, 255)
+	origin_tech = "bluespace=4;magnets=4;syndicate=5"
+	prox_check = FALSE
 
 /obj/item/weapon/card/emag/attack()
 	return
 
 /obj/item/weapon/card/emag/afterattack(atom/target, mob/user, proximity)
 	var/atom/A = target
-	if(!proximity) return
+	if(!proximity && prox_check)
+		return
 	A.emag_act(user)
 
 /obj/item/weapon/card/id
@@ -77,11 +76,10 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
+	slot_flags = SLOT_ID
 	var/mining_points = 0 //For redeeming at mining equipment vendors
 	var/list/access = list()
 	var/registered_name = null // The name registered_name on the card
-	slot_flags = SLOT_ID
-
 	var/assignment = null
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
@@ -118,11 +116,13 @@ update_label("John Doe", "Clowny")
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 
 /obj/item/weapon/card/id/silver
+	name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
+	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
@@ -130,10 +130,18 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate)
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=1"
+
+/obj/item/weapon/card/id/syndicate/New()
+	..()
+	var/datum/action/item_action/chameleon/change/chameleon_action = new(src)
+	chameleon_action.chameleon_type = /obj/item/weapon/card/id
+	chameleon_action.chameleon_name = "ID Card"
+	chameleon_action.initialize_disguises()
 
 /obj/item/weapon/card/id/syndicate/afterattack(obj/item/weapon/O, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
 		src.access |= I.access
@@ -176,10 +184,11 @@ update_label("John Doe", "Clowny")
 	item_state = "gold_id"
 	registered_name = "Captain"
 	assignment = "Captain"
-	New()
-		var/datum/job/captain/J = new/datum/job/captain
-		access = J.get_access()
-		..()
+
+/obj/item/weapon/card/id/captains_spare/New()
+	var/datum/job/captain/J = new/datum/job/captain
+	access = J.get_access()
+	..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper Centcom ID"
@@ -187,31 +196,41 @@ update_label("John Doe", "Clowny")
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	New()
-		access = get_all_centcom_access()
-		..()
+
+/obj/item/weapon/card/id/centcom/New()
+	access = get_all_centcom_access()
+	..()
+
 /obj/item/weapon/card/id/ert
 	name = "\improper Centcom ID"
 	desc = "A ERT ID card"
 	icon_state = "centcom"
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
-	New() access = get_all_accesses()+get_ert_access("commander")-access_change_ids
+
+/obj/item/weapon/card/id/ert/New()
+	access = get_all_accesses()+get_ert_access("commander")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Security
 	registered_name = "Security Response Officer"
 	assignment = "Security Response Officer"
-	New() access = get_all_accesses()+get_ert_access("sec")-access_change_ids
+
+/obj/item/weapon/card/id/ert/Security/New()
+	access = get_all_accesses()+get_ert_access("sec")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Engineer
 	registered_name = "Engineer Response Officer"
 	assignment = "Engineer Response Officer"
-	New() access = get_all_accesses()+get_ert_access("eng")-access_change_ids
+
+/obj/item/weapon/card/id/ert/Engineer/New()
+	access = get_all_accesses()+get_ert_access("eng")-access_change_ids
 
 /obj/item/weapon/card/id/ert/Medical
 	registered_name = "Medical Response Officer"
 	assignment = "Medical Response Officer"
-	New() access = get_all_accesses()+get_ert_access("med")-access_change_ids
+
+/obj/item/weapon/card/id/ert/Medical/New()
+	access = get_all_accesses()+get_ert_access("med")-access_change_ids
 
 /obj/item/weapon/card/id/prisoner
 	name = "prisoner ID card"
@@ -253,3 +272,7 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
+
+/obj/item/weapon/card/id/mining
+	name = "mining ID"
+	access = list(access_mining, access_mining_station, access_mineral_storeroom)

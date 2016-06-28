@@ -14,6 +14,7 @@
 	icon_state = "tactifool"
 	item_state = "bl_suit"
 	item_color = "tactifool"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "Tactical turtleneck suit"
@@ -21,6 +22,19 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
-	has_sensor = 0
+
+/obj/item/clothing/under/syndicate/camo
+	name = "camouflage fatigues"
+	desc = "A green military camouflage uniform."
+	icon_state = "camogreen"
+	item_state = "g_suit"
+	item_color = "camogreen"
+
+/obj/item/clothing/under/syndicate/soviet
+	name = "Ratnik 5 tracksuit"
+	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
+	icon_state = "trackpants"
+	item_color = "trackpants"
+	can_adjust = 0
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	alt_covers_chest = 1
+	burn_state = FIRE_PROOF

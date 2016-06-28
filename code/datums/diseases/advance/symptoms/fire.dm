@@ -33,15 +33,25 @@ Bonus
 			if(3)
 				M << "<span class='warning'>[pick("You feel hot.", "You hear a crackling noise.", "You smell smoke.")]</span>"
 			if(4)
-				M.adjust_fire_stacks(5)
+				Firestacks_stage_4(M, A)
 				M.IgniteMob()
 				M << "<span class='userdanger'>Your skin bursts into flames!</span>"
-				M.adjustFireLoss(5)
 				M.emote("scream")
 			if(5)
-				M.adjust_fire_stacks(10)
+				Firestacks_stage_5(M, A)
 				M.IgniteMob()
 				M << "<span class='userdanger'>Your skin erupts into an inferno!</span>"
-				M.adjustFireLoss(10)
 				M.emote("scream")
 	return
+
+/datum/symptom/fire/proc/Firestacks_stage_4(mob/living/M, datum/disease/advance/A)
+	var/get_stacks = (sqrt(20+A.totalStageSpeed()*2))-(sqrt(16+A.totalStealth()))
+	M.adjust_fire_stacks(get_stacks)
+	M.adjustFireLoss(get_stacks/2)
+	return 1
+
+/datum/symptom/fire/proc/Firestacks_stage_5(mob/living/M, datum/disease/advance/A)
+	var/get_stacks = (sqrt(20+A.totalStageSpeed()*3))-(sqrt(16+A.totalStealth()))
+	M.adjust_fire_stacks(get_stacks)
+	M.adjustFireLoss(get_stacks)
+	return 1

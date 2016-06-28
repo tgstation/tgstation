@@ -25,9 +25,9 @@
 
 
 /obj/item/weapon/folder/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(contents.len)
-		overlays += "folder_paper"
+		add_overlay("folder_paper")
 
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
@@ -40,7 +40,7 @@
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
 		if((in_range(src,user) && user.stat == CONSCIOUS))
-			name = "folder[(n_name ? "- '[n_name]'" : null)]"
+			name = "folder[(n_name ? " - '[n_name]'" : null)]"
 
 
 /obj/item/weapon/folder/attack_self(mob/user)
@@ -85,6 +85,7 @@
 	update_icon()
 
 /obj/item/weapon/folder/syndicate
+	icon_state = "folder_syndie"
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
 
@@ -102,4 +103,9 @@
 /obj/item/weapon/folder/syndicate/blue/New()
 	..()
 	new /obj/item/documents/syndicate/blue(src)
+	update_icon()
+
+/obj/item/weapon/folder/syndicate/mining/New()
+	..()
+	new /obj/item/documents/syndicate/mining(src)
 	update_icon()

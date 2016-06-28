@@ -27,7 +27,7 @@
 /obj/machinery/camera_assembly/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 
 /obj/machinery/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
@@ -78,7 +78,7 @@
 					usr << "<span class='warning'>No input found, please hang up and try your call again!</span>"
 					return
 
-				var/list/tempnetwork = text2list(input, ",")
+				var/list/tempnetwork = splittext(input, ",")
 				if(tempnetwork.len < 1)
 					usr << "<span class='warning'>No network found, please hang up and try your call again!</span>"
 					return
@@ -87,7 +87,7 @@
 				var/obj/machinery/camera/C = new(src.loc)
 				src.loc = C
 				C.assembly = src
-				C.dir = src.dir
+				C.setDir(src.dir)
 
 				C.network = tempnetwork
 				var/area/A = get_area_master(src)
@@ -120,7 +120,7 @@
 			upgrades -= U
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/living/user)
 	if(busy)

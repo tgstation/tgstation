@@ -24,7 +24,7 @@
 				for(var/datum/surgery/S in surgeries)
 					if(S.next_step(user, src))
 						return 1
-	..()
+	return ..()
 
 
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
@@ -94,3 +94,15 @@
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
 		return 1
+
+/mob/living/carbon/proc/devour_mob(mob/living/carbon/C, devour_time = 130)
+	C.visible_message("<span class='danger'>[src] is attempting to devour [C]!</span>", \
+					"<span class='userdanger'>[src] is attempting to devour you!</span>")
+	if(!do_mob(src, C, devour_time))
+		return
+	if(pulling && pulling == C && grab_state >= GRAB_AGGRESSIVE && a_intent == "grab")
+		C.visible_message("<span class='danger'>[src] devours [C]!</span>", \
+						"<span class='userdanger'>[src] devours you!</span>")
+		C.forceMove(src)
+		stomach_contents.Add(C)
+		add_logs(src, C, "devoured")

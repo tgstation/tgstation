@@ -1,4 +1,3 @@
-
 /datum/AI_Module
 	var/uses = 0
 	var/module_name
@@ -10,14 +9,11 @@
 
 	var/power_type
 
-
 /datum/AI_Module/large/
 	uses = 1
 
 /datum/AI_Module/small/
 	uses = 5
-
-//////DOOMSDAY DEVICE
 
 /datum/AI_Module/large/nuke_station
 	module_name = "Doomsday Device"
@@ -32,8 +28,9 @@
 	set category = "Malfunction"
 	set name = "Doomsday Device"
 
-	for(var/turf/simulated/floor/bluegrid/T in orange(5, src))
-		T.icon_state = "rcircuitanim" //Causes blue tiles near the AI to change to flashing red
+	for(var/N in nuke_tiles)
+		var/turf/T = N
+		T.icon_state = "rcircuitanim" //This causes all blue "circuit" tiles on the map to change to animated red icon state.
 
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
@@ -43,6 +40,10 @@
 	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
 	doomsday_device = DOOM
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
+	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+		for(var/mob/living/silicon/ai/A in ai_list)
+			if((A.stat != DEAD) && A.nuking)
+				point.the_disk = A //The pinpointer now tracks the AI core
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
@@ -56,10 +57,18 @@
 	var/timer = 450
 
 /obj/machinery/doomsday_device/process()
+	var/turf/T = get_turf(src)
+	if(!T || T.z != ZLEVEL_STATION)
+		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
+		SSshuttle.emergencyNoEscape = 0
+		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
+			SSshuttle.emergency.mode = SHUTTLE_DOCKED
+			SSshuttle.emergency.timer = world.time
+			priority_announce("Hostile environment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		qdel(src)
 	if(!timing)
 		return
 	if(timer <= 0)
-		var/turf/T = get_turf(src)
 		timing = 0
 		detonate(T.z)
 		qdel(src)
@@ -68,7 +77,6 @@
 		if(!(timer%60))
 			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
-
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
 	for(var/mob/M in player_list)
@@ -94,11 +102,6 @@
 
 	power_type = /mob/living/silicon/ai/proc/fireproof_core
 
-
-
-//////END DOOMSDAY DEVICE
-
-
 /mob/living/silicon/ai/proc/fireproof_core()
 	set category = "Malfunction"
 	set name = "Fireproof Core"
@@ -111,7 +114,7 @@
 	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"
 	description = "Improves the power and health of all AI turrets. This effect is permanent."
-	cost = 50
+	cost = 30
 	one_time = 1
 
 	power_type = /mob/living/silicon/ai/proc/upgrade_turrets
@@ -124,11 +127,11 @@
 		return
 
 	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
-	for(var/obj/machinery/porta_turret/turret in machines)
-		if(turret.ai) //Make sure only the AI's turrets are affected.
-			turret.health += 30
-			turret.eprojectile = /obj/item/projectile/beam/heavylaser //Once you see it, you will know what it means to FEAR.
-			turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
+	//Upgrade AI turrets around the world
+	for(var/obj/machinery/porta_turret/ai/turret in machines)
+		turret.health += 30
+		turret.eprojectile = /obj/item/projectile/beam/laser/heavylaser //Once you see it, you will know what it means to FEAR.
+		turret.eshot_sound = 'sound/weapons/lasercannonfire.ogg'
 	src << "<span class='notice'>Turrets upgraded.</span>"
 
 /datum/AI_Module/large/lockdown
@@ -149,17 +152,18 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION && D.z != ZLEVEL_MINING)
+		if(D.z != ZLEVEL_STATION)
 			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
-				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
 					AL.locked = 0 //For airlocks that were bolted open.
 					AL.safe = 0 //DOOR CRUSH
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
+					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -170,8 +174,7 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	spawn(900) //90 Seconds.
-		disablelockdown() //Reset the lockdown after 90 seconds.
+	addtimer(src, "disablelockdown", 900)
 
 /mob/living/silicon/ai/proc/disablelockdown()
 	set category = "Malfunction"
@@ -179,10 +182,12 @@
 
 	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
+		if(D.z != ZLEVEL_STATION)
+			continue
 		spawn()
 			if(istype(D, /obj/machinery/door/airlock))
 				AL = D
-				if(AL.canAIControl() && !AL.stat) //Must be powered and have working AI wire.
+				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
 					AL.unbolt()
 					AL.secondsElectrified = 0
 					AL.open()
@@ -209,13 +214,10 @@
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/obj/item/RCD in rcd_list)
-		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
-			spawn(50) //5 seconds to get rid of it!
-				if(RCD) //Make sure it still exists (In case of chain-reaction)
-					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
-					qdel(RCD)
+	for(var/I in rcd_list)
+		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/rcd/RCD = I
+			RCD.detonate_pulse()
 
 	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
 	malf_cooldown = 1
@@ -241,7 +243,6 @@
 	can_dominate_mechs = 1 //Yep. This is all it does. Honk!
 	src << "Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. Loss of signal will result in total system lockout.</b>"
 	verbs -= /mob/living/silicon/ai/proc/mech_takeover
-
 
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
@@ -284,21 +285,19 @@
 	if(!canUseTopic())
 		return
 
-	for(var/obj/machinery/alarm/A in machines)
-		if(A.z != ZLEVEL_STATION)
+	for(var/obj/machinery/airalarm/AA in machines)
+		if(AA.z != ZLEVEL_STATION)
 			continue
-		A.emagged = 1
+		AA.emagged = 1
 	src << "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode."
 	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
-
-
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine Overload"
 	mod_pick_name = "overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
-	cost = 15
+	cost = 20
 
 	power_type = /mob/living/silicon/ai/proc/overload_machine
 
@@ -327,7 +326,7 @@
 	mod_pick_name = "override"
 	description = "Overrides a machine's programming, causing it to rise up and attack everyone except other machines. 4 uses."
 	uses = 4
-	cost = 15
+	cost = 30
 
 	power_type = /mob/living/silicon/ai/proc/override_machine
 
@@ -340,13 +339,15 @@
 		return
 
 	if (istype(M, /obj/machinery))
+		if(!M.can_be_overridden())
+			src << "Can't override this device."
 		for(var/datum/AI_Module/small/override_machine/override in current_modules)
 			if(override.uses > 0)
 				override.uses --
 				audible_message("<span class='italics'>You hear a loud electrical buzzing sound!</span>")
 				src << "<span class='warning'>Reprogramming machine behaviour...</span>"
 				spawn(50)
-					if(M && !M.gc_destroyed)
+					if(M && !qdeleted(M))
 						new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(M), M, src, 1)
 			else src << "<span class='notice'>Out of uses.</span>"
 	else src << "<span class='notice'>That's not a machine.</span>"
@@ -397,7 +398,7 @@
 		for(var/n=1;n<4,n++)
 			var/fail
 			var/turf/T = turfs[n]
-			if(!istype(T, /turf/simulated/floor))
+			if(!istype(T, /turf/open/floor))
 				fail = 1
 			var/datum/camerachunk/C = cameranet.getCameraChunk(T.x, T.y, T.z)
 			if(!C.visibleTurfs[T])
@@ -420,7 +421,6 @@
 	if(success)
 		return 1
 	alert(src, alert_msg)
-	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -471,7 +471,7 @@
 			var/initial_range = initial(C.view_range) //To prevent calling the proc twice
 			if(camera.uses > 0)
 				if(!C.status)
-					C.deactivate(src, 0) //Reactivates the camera based on status. Badly named proc.
+					C.toggle_cam(src, 0) //Reactivates the camera based on status. Badly named proc.
 					fixedcams++
 					camera.uses--
 				if(C.view_range != initial_range)
@@ -508,6 +508,7 @@
 
 	var/upgradedcams = 0
 	see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
+	update_sight()
 
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		if(C.assembly)
@@ -562,7 +563,6 @@
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /datum/module_picker/Topic(href, href_list)
 	..()
@@ -596,6 +596,7 @@
 					break
 
 			// Give the power and take away the money.
+			A.view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description
@@ -605,4 +606,21 @@
 			if(AM.mod_pick_name == href_list["showdesc"])
 				temp = AM.description
 	src.use(usr)
-	return
+
+/datum/AI_Module/large/eavesdrop
+	module_name = "Enhanced Surveillance"
+	mod_pick_name = "eavesdrop"
+	description = "Via a combination of hidden microphones and lip reading software, you are able to use your cameras to listen in on conversations."
+	cost = 30
+	one_time = 1
+
+	power_type = /mob/living/silicon/ai/proc/surveillance
+
+/mob/living/silicon/ai/proc/surveillance()
+	set category = "Malfunction"
+	set name = "Enhanced Surveillance"
+
+	if(eyeobj)
+		eyeobj.relay_speech = TRUE
+	src << "<span class='notice'>OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.</span>"
+	verbs -= /mob/living/silicon/ai/proc/surveillance

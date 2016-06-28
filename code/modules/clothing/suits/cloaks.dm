@@ -5,9 +5,18 @@
 	desc = "It's a cape that can be worn on your back."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
+	item_state = "qmcloak"
 	w_class = 2
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/clothing/head/cloakhood
+	name = "cloak hood"
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "golhood"
+	desc = "A hood for a cloak"
+	body_parts_covered = HEAD
+	flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling themself with [src]! It looks like they're trying to commit suicide.</span>")
@@ -17,6 +26,7 @@
 	name = "head of security's cloak"
 	desc = "Worn by Securistan, ruling the station with an iron fist. It's slightly armored."
 	icon_state = "hoscloak"
+	allowed = list(/obj/item/weapon/gun/energy/gun/hos)
 	armor = list(melee = 30, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/cloak/qm
@@ -27,25 +37,51 @@
 	name = "chief medical officer's cloak"
 	desc = "Worn by Meditopia, the valiant men and women keeping pestilence at bay. It's slightly shielded from contaminants."
 	icon_state = "cmocloak"
+	allowed = list(/obj/item/weapon/reagent_containers/hypospray/CMO)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 25, rad = 0)
 
 /obj/item/clothing/suit/cloak/ce
 	name = "chief engineer's cloak"
 	desc = "Worn by Engitopia, wielders of an unlimited power. It's slightly shielded against radiation."
 	icon_state = "cecloak"
+	allowed = list(/obj/item/weapon/rcd, /obj/item/weapon/pipe_dispenser)
 	armor = list(melee = 10, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 10)
 
 /obj/item/clothing/suit/cloak/rd
 	name = "research director's cloak."
 	desc = "Worn by Sciencia, thaumaturges and researchers of the universe. It's slightly shielded from contaminants."
 	icon_state = "rdcloak"
+	allowed = list(/obj/item/weapon/hand_tele, /obj/item/weapon/storage/part_replacer)
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0)
 
 /obj/item/clothing/suit/cloak/cap
 	name = "captain's cloak"
 	desc = "Worn by the commander of Space Station 13."
 	icon_state = "capcloak"
+	allowed = list(/obj/item/weapon/gun/energy/laser/captain)
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 10, rad = 10)
+
+/obj/item/clothing/suit/hooded/cloak/drake
+	name = "drake armour"
+	icon_state = "dragon"
+	desc = "A suit of armour fashioned from the remains of an ash drake. "
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe, /obj/item/weapon/twohanded/spear)
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	hooded = 1
+	hoodtype = /obj/item/clothing/head/cloakhood/drake
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	unacidable = 1
+
+/obj/item/clothing/head/cloakhood/drake
+	name = "drake helm"
+	icon_state = "dragon"
+	desc = "The skull of a dragon."
+	armor = list(melee = 70, bullet = 30, laser = 50, energy = 40, bomb = 70, bio = 60, rad = 50)
+	heat_protection = HEAD
+	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	unacidable = 1
 
 /* //wip
 /obj/item/clothing/cloak/wizard //Not actually obtainable until proper balancing can be done

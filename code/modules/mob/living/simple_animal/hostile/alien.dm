@@ -12,13 +12,14 @@
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
-	maxHealth = 100
-	health = 100
+	maxHealth = 125
+	health = 125
 	harm_intent_damage = 5
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	attacktext = "slashes"
 	speak_emote = list("hisses")
+	bubble_icon = "alien"
 	a_intent = "harm"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -30,13 +31,14 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
 	gold_core_spawnable = 0
+	death_sound = 'sound/voice/hiss6.ogg'
+	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
 	icon_state = "aliend_s"
 	icon_living = "aliend_s"
 	icon_dead = "aliend_dead"
-	health = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	var/plant_cooldown = 30
@@ -56,7 +58,8 @@
 	icon_state = "aliens_s"
 	icon_living = "aliens_s"
 	icon_dead = "aliens_dead"
-	health = 120
+	health = 150
+	maxHealth = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	ranged = 1
@@ -104,7 +107,7 @@
 			LayEggs()
 
 /mob/living/simple_animal/hostile/alien/proc/SpreadPlants()
-	if(!isturf(loc) || istype(loc, /turf/space))
+	if(!isturf(loc) || istype(loc, /turf/open/space))
 		return
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
 		return
@@ -112,7 +115,7 @@
 	new /obj/structure/alien/weeds/node(loc)
 
 /mob/living/simple_animal/hostile/alien/proc/LayEggs()
-	if(!isturf(loc) || istype(loc, /turf/space))
+	if(!isturf(loc) || istype(loc, /turf/open/space))
 		return
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
 		return
@@ -125,6 +128,7 @@
 	icon_state = "alienq"
 	icon_living = "alienq"
 	icon_dead = "alienq_dead"
+	bubble_icon = "alienroyal"
 	move_to_delay = 4
 	maxHealth = 400
 	health = 400
@@ -138,13 +142,31 @@
 	damage = 30
 	icon_state = "toxin"
 
-/mob/living/simple_animal/hostile/alien/death(gibbed)
-	..(gibbed)
-	visible_message("[src] lets out a waning guttural screech, green blood bubbling from its maw...")
-	playsound(src, 'sound/voice/hiss6.ogg', 100, 1)
-
 /mob/living/simple_animal/hostile/alien/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+
+
+/mob/living/simple_animal/hostile/alien/maid
+	name = "lusty xenomorph maid"
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	a_intent = "help"
+	friendly = "caresses"
+	environment_smash = 0
+	gold_core_spawnable = 1
+	icon_state = "maid"
+	icon_living = "maid"
+	icon_dead = "maid_dead"
+
+/mob/living/simple_animal/hostile/alien/maid/AttackingTarget()
+	if(istype(target, /atom/movable))
+		if(istype(target, /obj/effect/decal/cleanable))
+			visible_message("[src] cleans up \the [target].")
+			qdel(target)
+			return
+		var/atom/movable/M = target
+		M.clean_blood()
+		visible_message("[src] polishes \the [target].")

@@ -32,7 +32,7 @@
 		L.dna.species.mutant_bodyparts -= "waggingtail_lizard"
 	if("spines" in L.dna.features)
 		L.dna.features -= "spines"
-	var/obj/item/organ/severedtail/S = new(get_turf(target))
+	var/obj/item/severedtail/S = new(get_turf(target))
 	S.color = "#[L.dna.features["mcolor"]]"
 	S.markings = "[L.dna.features["tail"]]"
 	L.update_body()
@@ -54,7 +54,7 @@
 
 /datum/surgery_step/attach_tail
 	name = "attach tail"
-	implements = list(/obj/item/organ/severedtail = 100)
+	implements = list(/obj/item/severedtail = 100)
 	time = 64
 
 /datum/surgery_step/attach_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -65,7 +65,7 @@
 	user.visible_message("[user] gives [L] a tail!", "<span class='notice'>You give [L] a tail. It adjusts to [L]'s melanin.</span>") // fluff for color
 	if(!(L.dna.features["mcolor"]))
 		L.dna.features["mcolor"] = tool.color
-	var/obj/item/organ/severedtail/T = tool
+	var/obj/item/severedtail/T = tool
 	L.dna.features["tail_lizard"] = T.markings
 	L.dna.species.mutant_bodyparts += "tail_lizard"
 	qdel(tool)

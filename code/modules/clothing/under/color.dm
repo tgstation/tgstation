@@ -8,7 +8,6 @@
 	icon_state = initial(C.icon_state)
 	item_state = initial(C.item_state)
 	item_color = initial(C.item_color)
-	suit_color = initial(C.item_color)
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
@@ -23,6 +22,14 @@
 	icon_state = "grey"
 	item_state = "gy_suit"
 	item_color = "grey"
+
+/obj/item/clothing/under/color/grey/glorf
+	name = "ancient jumpsuit"
+	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
+
+/obj/item/clothing/under/color/grey/glorf/hit_reaction(mob/living/carbon/human/owner)
+	owner.forcesay(hit_appends)
+	return 0
 
 /obj/item/clothing/under/color/blue
 	name = "blue jumpsuit"

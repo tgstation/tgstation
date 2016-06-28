@@ -52,11 +52,15 @@
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
-	if(client.buildmode)
-		build_click(src, client.buildmode, params, A)
-		return
+
+	if(client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers["shift"] && modifiers["middle"])
+		ShiftMiddleClickOn(A)
+		return
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -73,7 +77,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || paralysis || stunned || weakened)
+	if(incapacitated(ignore_restraints = 1))
 		return
 
 	face_atom(A)
@@ -83,7 +87,7 @@
 
 	if(istype(loc,/obj/mecha))
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A,src,params)
 
 	if(restrained())
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
@@ -221,10 +225,8 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
-/atom/proc/CtrlClick(mob/user)
-	return
 
-/atom/movable/CtrlClick(mob/living/user)
+/atom/proc/CtrlClick(mob/user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
@@ -265,6 +267,10 @@
 	A.CtrlShiftClick(src)
 	return
 
+/mob/proc/ShiftMiddleClickOn(atom/A)
+	src.pointed(A)
+	return
+
 /atom/proc/CtrlShiftClick(mob/user)
 	return
 
@@ -295,38 +301,48 @@
 	LE.xo = U.x - T.x
 	LE.fire()
 
-/mob/living/carbon/human/LaserEyes()
-	if(nutrition>0)
-		..()
-		nutrition = max(nutrition - rand(1,5),0)
-	else
-		src << "<span class='danger'>You're out of energy!  You need food!</span>"
-
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y ) return
+	if( buckled || stat != CONSCIOUS || !A || !x || !y || !A.x || !A.y )
+		return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) // Wall items are graphically shifted but on the floor
-		if(A.pixel_y > 16)		dir = NORTH
-		else if(A.pixel_y < -16)dir = SOUTH
-		else if(A.pixel_x > 16)	dir = EAST
-		else if(A.pixel_x < -16)dir = WEST
+		if(A.pixel_y > 16)
+			setDir(NORTH)
+		else if(A.pixel_y < -16)
+			setDir(SOUTH)
+		else if(A.pixel_x > 16)
+			setDir(EAST)
+		else if(A.pixel_x < -16)
+			setDir(WEST)
 		return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	dir = NORTH
-		else		dir = SOUTH
+		if(dy > 0)
+			setDir(NORTH)
+		else
+			setDir(SOUTH)
 	else
-		if(dx > 0)	dir = EAST
-		else		dir = WEST
+		if(dx > 0)
+			setDir(EAST)
+		else
+			setDir(WEST)
 
 /obj/screen/click_catcher
-	icon = 'icons/mob/screen_full.dmi'
-	icon_state = "passage0"
-	layer = 0
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "click_catcher"
+	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER-7,CENTER-7"
+
+/obj/screen/click_catcher/proc/MakeGreed()
+	. = list()
+	for(var/i = 0, i<15, i++)
+		for(var/j = 0, j<15, j++)
+			var/obj/screen/click_catcher/CC = new()
+			CC.screen_loc = "NORTH-[i],EAST-[j]"
+			. += CC
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
@@ -334,6 +350,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
-		T.Click(location, control, params)
-	return 1
+		var/turf/T = screen_loc2turf(screen_loc, get_turf(usr))
+		if(T)
+			T.Click(location, control, params)
+	. = 1

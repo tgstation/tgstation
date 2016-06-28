@@ -84,10 +84,10 @@
 
 		for(var/line in lines)
 			//world << line
-			for(var/beat in text2list(lowertext(line), ","))
+			for(var/beat in splittext(lowertext(line), ","))
 				//world << "beat: [beat]"
-				var/list/notes = text2list(beat, "/")
-				for(var/note in text2list(notes[1], "-"))
+				var/list/notes = splittext(beat, "/")
+				for(var/note in splittext(notes[1], "-"))
 					//world << "note: [note]"
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = 0
@@ -204,7 +204,7 @@
 
 		//split into lines
 		spawn()
-			lines = text2list(t, "\n")
+			lines = splittext(t, "\n")
 			if(copytext(lines[1],1,6) == "BPM: ")
 				tempo = sanitize_tempo(600 / text2num(copytext(lines[1],6)))
 				lines.Cut(1,2)
@@ -365,4 +365,4 @@
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 	else
-		..()
+		return ..()

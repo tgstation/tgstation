@@ -5,14 +5,25 @@
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
-	layer = 4
+	layer = ABOVE_MOB_LAYER
+
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
+	if(istype(caller, /mob/living))
+		if(istype(caller,/mob/living/simple_animal/bot))
+			return 1
+
+		var/mob/living/M = caller
+		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
+			return 0
+
+	return 1 //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && A.checkpass(PASSGLASS))
 		return prob(60)
 
 	var/obj/structure/bed/B = A
-	if (istype(A, /obj/structure/bed) && (B.buckled_mob || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
+	if (istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
 
 	if (istype(A, /obj/structure/closet/cardboard))
@@ -22,17 +33,13 @@
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(istype(A,/mob/living/simple_animal/bot/mulebot)) //mulebots can pass
+		if(istype(A,/mob/living/simple_animal/bot)) //Bots understand the secrets
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
 		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
-
-/obj/structure/plasticflaps/attackby(obj/item/weapon/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	..()
 
 /obj/structure/plasticflaps/ex_act(severity)
 	..()
@@ -59,6 +66,6 @@
 /obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
 	var/turf/T = get_turf(loc)
 	if(T)
-		if(istype(T, /turf/simulated/floor))
+		if(istype(T, /turf/open/floor))
 			T.blocks_air = 0
 	return ..()

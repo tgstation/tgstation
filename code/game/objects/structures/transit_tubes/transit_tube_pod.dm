@@ -11,8 +11,9 @@
 /obj/structure/transit_tube_pod/New(loc)
 	..(loc)
 
-	air_contents.oxygen = MOLES_O2STANDARD * 2
-	air_contents.nitrogen = MOLES_N2STANDARD
+	air_contents.assert_gases("o2", "n2")
+	air_contents.gases["o2"][MOLES] = MOLES_O2STANDARD * 2
+	air_contents.gases["n2"][MOLES] = MOLES_N2STANDARD
 	air_contents.temperature = T20C
 
 	// Give auto tubes time to align before trying to start moving
@@ -40,6 +41,8 @@
 				src.transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
+	else
+		return ..()
 
 /obj/structure/transit_tube_pod/container_resist()
 	var/mob/living/user = usr
@@ -61,73 +64,70 @@
 	else return ..()
 
 /obj/structure/transit_tube_pod/proc/follow_tube(reverse_launch)
+	set waitfor = 0
 	if(moving)
 		return
 
 	moving = 1
 
-	spawn()
-		var/obj/structure/transit_tube/current_tube = null
-		var/next_dir
-		var/next_loc
-		var/last_delay = 0
-		var/exit_delay
 
-		if(reverse_launch)
-			dir = turn(dir, 180) // Back it up
+	var/obj/structure/transit_tube/current_tube = null
+	var/next_dir
+	var/next_loc
+	var/last_delay = 0
+	var/exit_delay
 
-		for(var/obj/structure/transit_tube/tube in loc)
-			if(tube.has_exit(dir))
+	if(reverse_launch)
+		setDir(turn(dir, 180) )// Back it up
+
+	for(var/obj/structure/transit_tube/tube in loc)
+		if(tube.has_exit(dir))
+			current_tube = tube
+			break
+
+	while(current_tube)
+		next_dir = current_tube.get_exit(dir)
+
+		if(!next_dir)
+			break
+
+		exit_delay = current_tube.exit_delay(src, dir)
+		last_delay += exit_delay
+
+		sleep(exit_delay)
+
+		next_loc = get_step(loc, next_dir)
+
+		current_tube = null
+		for(var/obj/structure/transit_tube/tube in next_loc)
+			if(tube.has_entrance(next_dir))
 				current_tube = tube
 				break
 
-		while(current_tube)
-			next_dir = current_tube.get_exit(dir)
+		if(current_tube == null)
+			setDir(next_dir)
+			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
+			break
 
-			if(!next_dir)
-				break
+		last_delay = current_tube.enter_delay(src, next_dir)
+		sleep(last_delay)
+		setDir(next_dir)
+		loc = next_loc // When moving from one tube to another, skip collision and such.
+		density = current_tube.density
 
-			exit_delay = current_tube.exit_delay(src, dir)
-			last_delay += exit_delay
+		if(current_tube && current_tube.should_stop_pod(src, next_dir))
+			current_tube.pod_stopped(src, dir)
+			break
 
-			sleep(exit_delay)
-
-			next_loc = get_step(loc, next_dir)
-
-			current_tube = null
-			for(var/obj/structure/transit_tube/tube in next_loc)
-				if(tube.has_entrance(next_dir))
-					current_tube = tube
-					break
-
-			if(current_tube == null)
-				dir = next_dir
-				Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
-				break
-
-			last_delay = current_tube.enter_delay(src, next_dir)
-			sleep(last_delay)
-			dir = next_dir
-			loc = next_loc // When moving from one tube to another, skip collision and such.
-			density = current_tube.density
-
-			if(current_tube && current_tube.should_stop_pod(src, next_dir))
-				current_tube.pod_stopped(src, dir)
-				break
-
-		density = 1
-		moving = 0
+	density = 1
+	moving = 0
 
 
 // Should I return a copy here? If the caller edits or del()s the returned
 //  datum, there might be problems if I don't...
 /obj/structure/transit_tube_pod/return_air()
 	var/datum/gas_mixture/GM = new()
-	GM.oxygen			= air_contents.oxygen
-	GM.carbon_dioxide	= air_contents.carbon_dioxide
-	GM.nitrogen			= air_contents.nitrogen
-	GM.toxins			= air_contents.toxins
-	GM.temperature		= air_contents.temperature
+	GM.copy_from(air_contents)
 	return GM
 
 // For now, copying what I found in an unused FEA file (and almost identical in a
@@ -180,9 +180,9 @@
 		if(!(locate(/obj/structure/transit_tube) in loc))
 			mob.loc = loc
 			mob.client.Move(get_step(loc, direction), direction)
-			mob.reset_view(null)
+			mob.reset_perspective(null)
 
-			//if(moving && istype(loc, /turf/space))
+			//if(moving && istype(loc, /turf/open/space))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 
@@ -194,18 +194,18 @@
 							if(station.icon_state == "open")
 								mob.loc = loc
 								mob.client.Move(get_step(loc, direction), direction)
-								mob.reset_view(null)
+								mob.reset_perspective(null)
 
 							else
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							setDir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						setDir(direction)
 						return

@@ -8,10 +8,6 @@
 	item_color="yellow"
 	burn_state = FIRE_PROOF
 
-/obj/item/clothing/gloves/color/yellow/fake
-	desc = "These gloves will protect the wearer from electric shock. They don't feel like rubber..."
-	siemens_coefficient = 1
-
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."
 	name = "budget insulated gloves"
@@ -23,6 +19,7 @@
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/gloves/color/fyellow/New()
+	..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/black
@@ -36,6 +33,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	burn_state = FIRE_PROOF
+	var/can_be_cut = 1
 
 /obj/item/clothing/gloves/color/black/hos
 	item_color = "hosred"		//Exists for washing machines. Is not different from black gloves in any way.
@@ -45,7 +43,7 @@
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
-		if(icon_state == initial(icon_state)) //only if not dyed
+		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
 			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
@@ -176,3 +174,30 @@
 
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
+
+/obj/item/clothing/gloves/color/random
+	name = "random gloves"
+	desc = "These gloves are supposed to be a random color..."
+	icon_state = "white"
+	item_state = "wgloves"
+	item_color = "mime"
+
+/obj/item/clothing/gloves/color/random/New()
+	..()
+	var/list/gloves = list(
+		/obj/item/clothing/gloves/color/orange = 1,
+		/obj/item/clothing/gloves/color/red = 1,
+		/obj/item/clothing/gloves/color/blue = 1,
+		/obj/item/clothing/gloves/color/purple = 1,
+		/obj/item/clothing/gloves/color/green = 1,
+		/obj/item/clothing/gloves/color/grey = 1,
+		/obj/item/clothing/gloves/color/light_brown = 1,
+		/obj/item/clothing/gloves/color/brown = 1)
+
+	var/obj/item/clothing/gloves/color/selected = pick(gloves)
+
+	name = initial(selected.name)
+	desc = initial(selected.desc)
+	icon_state = initial(selected.icon_state)
+	item_state = initial(selected.item_state)
+	item_color = initial(selected.item_color)

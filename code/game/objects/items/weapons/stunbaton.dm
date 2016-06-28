@@ -23,15 +23,10 @@
 	update_icon()
 	return
 
-/obj/item/weapon/melee/baton/CheckParts()
-	bcell = locate(/obj/item/weapon/stock_parts/cell) in contents
-	update_icon()
-
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
 	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
@@ -84,9 +79,8 @@
 			user << "<span class='notice'>You remove the cell from [src].</span>"
 			status = 0
 			update_icon()
-			return
-		..()
-	return
+	else
+		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
@@ -165,9 +159,7 @@
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	if(deductcharge(1000 / severity))
-		if(bcell.reliability != 100 && prob(50/severity))
-			bcell.reliability -= 10 / severity
+	deductcharge(1000 / severity)
 	..()
 
 //Makeshift stun baton. Replacement for stun gloves.
@@ -181,3 +173,12 @@
 	stunforce = 5
 	hitcost = 2500
 	slot_flags = null
+	var/obj/item/device/assembly/igniter/sparkler = 0
+
+/obj/item/weapon/melee/baton/cattleprod/New()
+	..()
+	sparkler = new (src)
+
+/obj/item/weapon/melee/baton/cattleprod/baton_stun()
+	if(sparkler.activate())
+		..()

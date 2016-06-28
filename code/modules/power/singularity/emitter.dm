@@ -5,6 +5,7 @@
 	desc = "A heavy duty industrial laser.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
+	var/icon_state_on = "emitter_+a"
 	anchored = 0
 	density = 1
 	req_access = list(access_engine_equip)
@@ -29,11 +30,17 @@
 
 /obj/machinery/power/emitter/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
+	B.apply_default_parts(src)
 	RefreshParts()
+
+/obj/item/weapon/circuitboard/machine/emitter
+	name = "circuit board (Emitter)"
+	build_path = /obj/machinery/power/emitter
+	origin_tech = "programming=3;powerstorage=4;engineering=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -61,7 +68,7 @@
 	if (src.anchored)
 		usr << "<span class='warning'>It is fastened to the floor!</span>"
 		return 0
-	src.dir = turn(src.dir, 270)
+	src.setDir(turn(src.dir, 270))
 	return 1
 
 /obj/machinery/power/emitter/AltClick(mob/user)
@@ -88,9 +95,9 @@
 
 /obj/machinery/power/emitter/update_icon()
 	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+		icon_state = icon_state_on
 	else
-		icon_state = "emitter"
+		icon_state = initial(icon_state)
 
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
@@ -163,7 +170,7 @@
 
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
-		A.dir = src.dir
+		A.setDir(src.dir)
 		playsound(src.loc, projectile_sound, 25, 1)
 
 		if(prob(35))
@@ -246,16 +253,15 @@
 						disconnect_from_network()
 		return
 
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(W.GetID())
 		if(emagged)
 			user << "<span class='warning'>The lock seems to be broken!</span>"
 			return
-		if(src.allowed(user))
+		if(allowed(user))
 			if(active)
-				src.locked = !src.locked
+				locked = !locked
 				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 			else
-				src.locked = 0 //just in case it somehow gets locked
 				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
 		else
 			user << "<span class='danger'>Access denied.</span>"
@@ -270,10 +276,10 @@
 	if(default_pry_open(W))
 		return
 
-	default_deconstruction_crowbar(W)
+	if(default_deconstruction_crowbar(W))
+		return
 
-	..()
-	return
+	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
 	if(!emagged)

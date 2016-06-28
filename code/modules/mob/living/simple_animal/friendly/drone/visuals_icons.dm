@@ -9,7 +9,7 @@
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
 	var/image/I = drone_overlays[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
@@ -36,8 +36,8 @@
 
 		hands_overlays += r_hand_image
 
-		if(client && hud_used)
-			r_hand.layer = 20
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			r_hand.layer = ABOVE_HUD_LAYER
 			r_hand.screen_loc = ui_rhand
 			client.screen |= r_hand
 
@@ -53,8 +53,8 @@
 
 		hands_overlays += l_hand_image
 
-		if(client && hud_used)
-			l_hand.layer = 20
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			l_hand.layer = ABOVE_HUD_LAYER
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
 
@@ -65,7 +65,7 @@
 
 
 /mob/living/simple_animal/drone/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used)
+	if(internal_storage && client && hud_used && hud_used.hud_shown)
 		internal_storage.screen_loc = ui_drone_storage
 		client.screen += internal_storage
 
@@ -74,11 +74,13 @@
 	remove_overlay(DRONE_HEAD_LAYER)
 
 	if(head)
-		if(client && hud_used)
+		if(client && hud_used && hud_used.hud_shown)
 			head.screen_loc = ui_drone_head
 			client.screen += head
-
-		var/image/head_overlay = head.build_worn_icon(state = head.icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		var/used_head_icon = 'icons/mob/head.dmi'
+		if(istype(head, /obj/item/clothing/mask))
+			used_head_icon = 'icons/mob/mask.dmi'
+		var/image/head_overlay = head.build_worn_icon(state = head.icon_state, default_layer = DRONE_HEAD_LAYER, default_icon_file = used_head_icon)
 		head_overlay.pixel_y += -15
 
 		drone_overlays[DRONE_HEAD_LAYER]	= head_overlay
@@ -97,6 +99,13 @@
 
 /mob/living/simple_animal/drone/update_inv_wear_mask()
 	update_inv_head()
+
+/mob/living/simple_animal/drone/regenerate_icons()
+	// Drones only have 4 slots, which in this specific instance
+	// is a small blessing.
+	update_inv_hands()
+	update_inv_head()
+	update_inv_internal_storage()
 
 
 /mob/living/simple_animal/drone/proc/pickVisualAppearence()
@@ -133,9 +142,7 @@
 	switch(visualAppearence)
 		if(MAINTDRONE)
 			. = 0
-		if(REPAIRDRONE)
-			. = -6
-		if(SCOUTDRONE)
+		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

@@ -15,8 +15,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(restrained())
 		src << "You can't vent crawl while you're restrained!"
 		return
-	if(buckled_mob)
-		src << "You can't vent crawl with [buckled_mob] on you!"
+	if(has_buckled_mobs())
+		src << "You can't vent crawl with others creatures on you!"
 		return
 	if(buckled)
 		src << "You can't vent crawl while buckled!"
@@ -66,8 +66,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 						return
 
 			visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
-			loc = vent_found
-			add_ventcrawl(vent_found)
+			forceMove(vent_found)
 	else
 		src << "<span class='warning'>This ventilation duct is not connected to anything!</span>"
 
@@ -79,20 +78,21 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
-	if(!istype(starting_machine))
+	if(!istype(starting_machine) || !starting_machine.can_see_pipes())
 		return
 	var/list/totalMembers = list()
 
 	for(var/datum/pipeline/P in starting_machine.returnPipenets())
 		totalMembers += P.members
 		totalMembers += P.other_atmosmch
-	
+
 	if(!totalMembers.len)
 		return
 
-	for(var/obj/machinery/atmospherics/A in totalMembers)
+	for(var/X in totalMembers)
+		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_vision_img)
-			A.pipe_vision_img = image(A, A.loc, layer = 20, dir = A.dir)
+			A.pipe_vision_img = image(A, A.loc, layer = ABOVE_HUD_LAYER, dir = A.dir)
 			//20 for being above darkness
 		pipes_shown += A.pipe_vision_img
 		if(client)
@@ -103,7 +103,6 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/components/unary
 	if(client)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-		client.eye = src
 	pipes_shown.len = 0
 
 

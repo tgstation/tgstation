@@ -3,9 +3,6 @@
 /obj/machinery/abductor
 	var/team = 0
 
-/obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
-	return H.dna.species.id == "abductor"
-
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
 	if(H.dna.species.id == "abductor")
 		var/datum/species/abductor/S = H.dna.species
@@ -37,7 +34,7 @@
 /obj/machinery/abductor/console/attack_hand(mob/user)
 	if(..())
 		return
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -61,7 +58,6 @@
 		dat += "<span class='bad'>Emergency Teleporter System.</span>"
 		dat += "<span class='bad'>Consider using primary observation console first.</span>"
 		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
-		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
 		if(gizmo!=null && gizmo.marked!=null)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
@@ -94,9 +90,7 @@
 		return
 
 	usr.set_machine(src)
-	if(href_list["teleporter_set"])
-		TeleporterSet()
-	else if(href_list["teleporter_send"])
+	if(href_list["teleporter_send"])
 		TeleporterSend()
 	else if(href_list["teleporter_retrieve"])
 		TeleporterRetrieve()
@@ -116,12 +110,6 @@
 				Dispense(/obj/item/device/abductor/gizmo)
 	src.updateUsrDialog()
 
-/obj/machinery/abductor/console/proc/TeleporterSet()
-	var/A = null
-	A = input("Select area to teleport to", "Teleport", A) in teleportlocs
-	if(pad!=null && in_range(usr,src))
-		pad.teleport_target = teleportlocs[A]
-	return
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
 	if(gizmo!=null && pad!=null && gizmo.marked)
@@ -151,6 +139,16 @@
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
 	return
+
+/obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
+	if(!istype(location))
+		user << "<span class='warning'>That place is not safe for the specimen.</span>"
+		return
+
+	if(pad)
+		pad.teleport_target = location
+		user << "<span class='notice'>Location marked as test subject release point.</span>"
+
 
 /obj/machinery/abductor/console/proc/Initialize()
 
@@ -194,7 +192,7 @@
 		user << "<span class='notice'>You link the vest to the console.</span>"
 		vest = V
 	else
-		..()
+		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)

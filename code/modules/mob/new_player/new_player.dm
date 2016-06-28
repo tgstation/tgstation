@@ -6,10 +6,10 @@
 
 	flags = NONE
 
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 	density = 0
-	stat = 2
+	stat = DEAD
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
@@ -17,6 +17,11 @@
 /mob/new_player/New()
 	tag = "mob_[next_mob_id++]"
 	mob_list += src
+
+	if(length(newplayer_start))
+		loc = pick(newplayer_start)
+	else
+		loc = locate(1,1,1)
 
 /mob/new_player/proc/new_player_panel()
 
@@ -81,7 +86,8 @@
 	if(src != usr)
 		return 0
 
-	if(!client)	return 0
+	if(!client)
+		return 0
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
@@ -107,7 +113,8 @@
 	if(href_list["observe"])
 
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
-			if(!client)	return 1
+			if(!client)
+				return 1
 			var/mob/dead/observer/observer = new()
 
 			spawning = 1
@@ -120,13 +127,13 @@
 				observer.loc = O.loc
 			else
 				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
-			if(client.prefs.be_random_name)
-				client.prefs.real_name = random_unique_name(gender)
-			if(client.prefs.be_random_body)
-				client.prefs.random_character(gender)
-			observer.real_name = client.prefs.real_name
-			observer.name = observer.real_name
 			observer.key = key
+			observer.client = client
+			observer.set_ghost_appearance()
+			if(observer.client && observer.client.prefs)
+				observer.real_name = observer.client.prefs.real_name
+				observer.name = observer.real_name
+			observer.update_icon()
 			observer.stopLobbySound()
 			qdel(mind)
 
@@ -187,7 +194,7 @@
 		var/pollid = href_list["pollid"]
 		if(istext(pollid))
 			pollid = text2num(pollid)
-		if(isnum(pollid))
+		if(isnum(pollid) && IsInteger(pollid))
 			src.poll_player(pollid)
 		return
 
@@ -197,10 +204,16 @@
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
-				vote_on_poll(pollid, optionid)
+				if(vote_on_poll(pollid, optionid))
+					usr << "<span class='notice'>Vote successful.</span>"
+				else
+					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
-				log_text_poll_reply(pollid, replytext)
+				if(log_text_poll_reply(pollid, replytext))
+					usr << "<span class='notice'>Feedback logging successful.</span>"
+				else
+					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
@@ -216,10 +229,13 @@
 							rating = null
 						else
 							rating = text2num(href_list["o[optionid]"])
-							if(!isnum(rating))
+							if(!isnum(rating) || !IsInteger(rating))
 								return
 
-						vote_on_numval_poll(pollid, optionid, rating)
+						if(!vote_on_numval_poll(pollid, optionid, rating))
+							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							return
+				usr << "<span class='notice'>Vote successful.</span>"
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
@@ -230,7 +246,17 @@
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
 					if(!isnull(href_list["option_[optionid]"]))	//Test if this optionid was selected
-						vote_on_poll(pollid, optionid, 1)
+						var/i = vote_on_multi_poll(pollid, optionid)
+						switch(i)
+							if(0)
+								continue
+							if(1)
+								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								return
+							if(2)
+								usr << "<span class='danger'>Maximum replies reached.</span>"
+								break
+				usr << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
@@ -287,6 +313,7 @@
 		data_core.manifest_inject(character)
 		ticker.minds += character.mind//Cyborgs and AIs handle this in the transform proc.	//TODO!!!!! ~Carn
 		AnnounceArrival(character, rank)
+		AddEmploymentContract(character)
 	else
 		character.Robotize()
 
@@ -302,12 +329,29 @@
 	qdel(src)
 
 /mob/new_player/proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
-	if (ticker.current_state == GAME_STATE_PLAYING)
-		if(announcement_systems.len)
-			if(character.mind)
-				if((character.mind.assigned_role != "Cyborg") && (character.mind.assigned_role != character.mind.special_role))
-					var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
-					announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+	if(ticker.current_state != GAME_STATE_PLAYING)
+		return
+	var/area/A = get_area(character)
+	var/message = "<span class='game deadsay'><span class='name'>\
+		[character.real_name]</span> ([rank]) has arrived at the station at \
+		<span class='name'>[A.name]</span>.</span>"
+	deadchat_broadcast(message, follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if((!announcement_systems.len) || (!character.mind))
+		return
+	if((character.mind.assigned_role == "Cyborg") || (character.mind.assigned_role == character.mind.special_role))
+		return
+
+	var/obj/machinery/announcement_system/announcer = pick(announcement_systems)
+	announcer.announce("ARRIVAL", character.real_name, rank, list()) //make the list empty to make it announce it in common
+
+/mob/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
+	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
+	sleep(30)
+	for(var/C in employmentCabinets)
+		var/obj/structure/filingcabinet/employment/employmentCabinet = C
+		if(!employmentCabinet.virgin)
+			employmentCabinet.addFile(employee)
+
 
 /mob/new_player/proc/LateChoices()
 	var/mills = world.time // 1/10 of a second, not real milliseconds but whatever

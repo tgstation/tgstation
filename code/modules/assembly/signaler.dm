@@ -4,7 +4,7 @@
 	icon_state = "signaller"
 	item_state = "signaler"
 	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1"
+	origin_tech = "magnets=1;bluespace=1"
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 
@@ -17,7 +17,7 @@
 	..()
 	spawn(40)
 		set_frequency(frequency)
-	return
+
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(SSradio)
@@ -25,7 +25,8 @@
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)	return 0
+	if(cooldown > 0)
+		return 0
 	cooldown = 2
 	spawn(10)
 		process_cooldown()
@@ -118,17 +119,23 @@ Code:
 	return
 /*
 		for(var/obj/item/device/assembly/signaler/S in world)
-			if(!S)	continue
-			if(S == src)	continue
+			if(!S)
+				continue
+			if(S == src)
+				continue
 			if((S.frequency == src.frequency) && (S.code == src.code))
 				spawn(0)
-					if(S)	S.pulse(0)
+					if(S)
+						S.pulse(0)
 		return 0*/
 
 /obj/item/device/assembly/signaler/receive_signal(datum/signal/signal)
-	if(!signal)	return 0
-	if(signal.encryption != code)	return 0
-	if(!(src.wires & WIRE_RADIO_RECEIVE))	return 0
+	if(!signal)
+		return 0
+	if(signal.encryption != code)
+		return 0
+	if(!(src.wires & WIRE_RADIO_RECEIVE))
+		return 0
 	pulse(1)
 	audible_message("\icon[src] *beep* *beep*", null, 1)
 	return

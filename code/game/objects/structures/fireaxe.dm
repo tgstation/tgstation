@@ -8,7 +8,7 @@
 	density = 0
 	var/locked = 1
 	var/open = 0
-	var/glass_hp = 60
+	var/health = 60
 
 /obj/structure/fireaxecabinet/New()
 	..()
@@ -18,7 +18,7 @@
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
 		return
-	if(open || glass_hp <= 0)
+	if(open || health <= 0)
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
@@ -31,50 +31,64 @@
 			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
 			update_icon()
 			return
-		else if(glass_hp > 0)
+		else if(health > 0)
 			toggle_open()
+	else
+		return ..()
 
-	else if(istype(I, /obj/item/weapon))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weapon/W = I
-		user.do_attack_animation(src)
-		playsound(src, 'sound/effects/Glasshit.ogg', 100, 1)
-		if(W.force >= 10)
-			glass_hp -= W.force
-			if(glass_hp <= 0)
-				playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
-			update_icon()
+/obj/structure/fireaxecabinet/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
+
+/obj/structure/fireaxecabinet/proc/take_damage(damage, damage_type, sound_effect = 1)
+	if(open)
+		return
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(health <= 0)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 90, 1)
+				else
+					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 		else
-			user << "<span class='warning'>The [name]'s protective glass glances off the hit.</span>"
+			return
+	if(damage < 10)
+		return
+	if(health > 0)
+		health -= damage
+		update_icon()
+		if(health <= 0)
+			playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
+
 
 /obj/structure/fireaxecabinet/ex_act(severity, target)
 	switch(severity)
 		if(1)
 			qdel(src)
-			return
 		if(2)
 			if(prob(50) && fireaxe)
 				fireaxe.loc = src.loc
 				qdel(src)
-				return
+			else
+				take_damage(rand(30,70), BRUTE, 0)
 		if(3)
-			return
+			take_damage(rand(10,30), BRUTE, 0)
 
-/obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		if(Proj.damage)
-			glass_hp -= Proj.damage
-			if(glass_hp <= 0)
-				playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
-		update_icon()
+/obj/structure/fireaxecabinet/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/fireaxecabinet/blob_act()
+
+/obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
 	if(fireaxe)
 		fireaxe.loc = src.loc
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
-	if(open || glass_hp <= 0)
+	if(open || health <= 0)
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
@@ -90,37 +104,46 @@
 		update_icon()
 		return
 
-/obj/structure/fireaxecabinet/attack_paw(mob/user)
-	if(ismonkey(user)) //no fire-axe wielding aliens allowed
-		attack_hand(user)
-	return
+/obj/structure/fireaxecabinet/attack_paw(mob/living/user)
+	attack_hand(user)
+
+/obj/structure/fireaxecabinet/attack_alien(mob/living/user)
+	user.visible_message("<span class='warning'>[user] slashes [src].</span>")
+	take_damage(20)
+
+/obj/structure/fireaxecabinet/attack_animal(mob/living/simple_animal/M)
+	if(!M.melee_damage_upper)
+		return
+	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+					  "<span class='danger'>You smash against [src].</span>")
+	take_damage(M.melee_damage_upper, M.melee_damage_type)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
 	return
 
 /obj/structure/fireaxecabinet/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(fireaxe)
-		overlays += "axe"
+		add_overlay("axe")
 	if(!open)
-		switch(glass_hp)
+		switch(health)
 			if(-INFINITY to 0)
-				overlays += "glass4"
+				add_overlay("glass4")
 			if(1 to 20)
-				overlays += "glass3"
+				add_overlay("glass3")
 			if(21 to 40)
-				overlays += "glass2"
+				add_overlay("glass2")
 			if(41 to 59)
-				overlays += "glass1"
+				add_overlay("glass1")
 			if(60)
-				overlays += "glass"
+				add_overlay("glass")
 		if(locked)
-			overlays += "locked"
+			add_overlay("locked")
 		else
-			overlays += "unlocked"
+			add_overlay("unlocked")
 	else
-		overlays += "glass_raised"
+		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	user << "<span class = 'caution'> Resetting circuitry...</span>"

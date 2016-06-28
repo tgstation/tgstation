@@ -22,17 +22,10 @@
 
 /obj/structure/closet/gimmick/russian/New()
 	..()
-	new /obj/item/clothing/head/ushanka(src)
-	new /obj/item/clothing/head/ushanka(src)
-	new /obj/item/clothing/head/ushanka(src)
-	new /obj/item/clothing/head/ushanka(src)
-	new /obj/item/clothing/head/ushanka(src)
-	new /obj/item/clothing/under/soviet(src)
-	new /obj/item/clothing/under/soviet(src)
-	new /obj/item/clothing/under/soviet(src)
-	new /obj/item/clothing/under/soviet(src)
-	new /obj/item/clothing/under/soviet(src)
-
+	for(var/i in 1 to 5)
+		new /obj/item/clothing/head/ushanka(src)
+	for(var/i in 1 to 5)
+		new /obj/item/clothing/under/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
@@ -67,50 +60,38 @@
 
 /obj/structure/closet/thunderdome/tdred/New()
 	..()
-	new /obj/item/clothing/suit/armor/tdome/red(src)
-	new /obj/item/clothing/suit/armor/tdome/red(src)
-	new /obj/item/clothing/suit/armor/tdome/red(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/armor/tdome/red(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/melee/energy/sword/saber(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/melee/baton/loaded(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/storage/box/flashbangs(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/helmet/thunderdome(src)
+	
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
 	icon_door = "green"
 
 /obj/structure/closet/thunderdome/tdgreen/New()
 	..()
-	new /obj/item/clothing/suit/armor/tdome/green(src)
-	new /obj/item/clothing/suit/armor/tdome/green(src)
-	new /obj/item/clothing/suit/armor/tdome/green(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/melee/energy/sword/saber(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/gun/energy/laser(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/melee/baton/loaded(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-	new /obj/item/clothing/head/helmet/thunderdome(src)
-
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/suit/armor/tdome/green(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/melee/energy/sword/saber(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/melee/baton/loaded(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/storage/box/flashbangs(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/head/helmet/thunderdome(src)
+	
 /obj/structure/closet/malf/suits
 	desc = "It's a storage unit for operational gear."
 	icon_state = "syndicate"

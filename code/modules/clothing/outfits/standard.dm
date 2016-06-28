@@ -8,15 +8,7 @@
 	back = /obj/item/weapon/tank/jetpack/oxygen
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/space/post_equip(mob/living/carbon/human/H)
-	var/obj/item/weapon/tank/jetpack/J = H.back
-	J.toggle()
-	J.Topic(null, list("stat" = 1))
-
-
 /datum/outfit/tournament
-
-/datum/outfit/tournament/
 	name = "tournament standard red"
 
 	uniform = /obj/item/clothing/under/color/red
@@ -27,14 +19,14 @@
 	l_hand = /obj/item/weapon/kitchen/knife
 	r_pocket = /obj/item/weapon/grenade/smokebomb
 
-
-/datum/outfit/tournament/red
+/datum/outfit/tournament/green
 	name = "tournament standard green"
 
 	uniform = /obj/item/clothing/under/color/green
 
 /datum/outfit/tournament/gangster
 	name = "tournament gangster"
+
 	uniform = /obj/item/clothing/under/rank/det
 	suit = /obj/item/clothing/suit/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
@@ -143,7 +135,7 @@
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.contents)
 		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_blood(H)//Oh yes, there will be blood...
+			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -175,7 +167,7 @@
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/c4,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
 
 	var/obj/item/device/pda/heads/pda = H.belt
 	pda.owner = H.real_name
@@ -355,7 +347,7 @@
 		/obj/item/weapon/storage/firstaid/regular=1,\
 		/obj/item/weapon/storage/box/flashbangs=1,\
 		/obj/item/device/flashlight=1,\
-		/obj/item/weapon/c4=1)
+		/obj/item/weapon/grenade/plastic/x4=1)
 
 /datum/outfit/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -365,7 +357,7 @@
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

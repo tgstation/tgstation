@@ -1,6 +1,10 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
-datum/proc/on_varedit(modified_var) //called whenever a var is edited
+/datum
+	var/var_edited = 0 //Warrenty void if seal is broken
+
+/datum/proc/on_varedit(modified_var) //called whenever a var is edited
+	var_edited = 1
 	return
 
 /client/proc/debug_variables(datum/D in world)
@@ -17,7 +21,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var/title = ""
 	var/body = ""
 
-	if(!D)	return
+	if(!D)
+		return
 	if(istype(D, /atom))
 		var/atom/A = D
 		title = "[A.name] (\ref[A]) = [A.type]"
@@ -217,6 +222,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	if(src.holder && src.holder.marked_datum && src.holder.marked_datum == D)
 		body += "<br><font size='1' color='red'><b>Marked Object</b></font>"
 
+	if(D.var_edited)
+		body += "<br><font size='1' color='red'><b>Var Edited</b></font>"
 	body += "</div>"
 
 	body += "</div></td>"
@@ -269,6 +276,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 		if(ishuman(D))
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
+			body += "<option value='?_src_=vars;removebodypart=\ref[D]'>Remove Body Part</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
@@ -297,6 +305,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
@@ -348,7 +357,7 @@ body
 		html += "[name] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[value]\"</span>"
+		html += "[name] = <span class='value'>\"[html_encode(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -405,7 +414,7 @@ body
 				html += "</ul>"
 
 	else
-		html += "[name] = <span class='value'>[value]</span>"
+		html += "[name] = <span class='value'>[html_encode(value)]</span>"
 
 	html += "</li>"
 
@@ -425,7 +434,8 @@ body
 		src.debug_variables(DAT)
 
 	else if(href_list["mob_player_panel"])
-		if(!check_rights(0))	return
+		if(!check_rights(0))
+			return
 
 		var/mob/M = locate(href_list["mob_player_panel"])
 		if(!istype(M))
@@ -436,7 +446,8 @@ body
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["godmode"])
-		if(!check_rights(R_REJUVINATE))	return
+		if(!check_rights(R_REJUVINATE))
+			return
 
 		var/mob/M = locate(href_list["godmode"])
 		if(!istype(M))
@@ -447,7 +458,8 @@ body
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["mark_object"])
-		if(!check_rights(0))	return
+		if(!check_rights(0))
+			return
 
 		var/datum/D = locate(href_list["mark_object"])
 		if(!istype(D))
@@ -458,7 +470,8 @@ body
 		href_list["datumrefresh"] = href_list["mark_object"]
 
 	else if(href_list["proc_call"])
-		if(!check_rights(0))	return
+		if(!check_rights(0))
+			return
 
 		var/T = locate(href_list["proc_call"])
 
@@ -466,7 +479,8 @@ body
 			callproc_datum(T)
 
 	else if(href_list["regenerateicons"])
-		if(!check_rights(0))	return
+		if(!check_rights(0))
+			return
 
 		var/mob/M = locate(href_list["regenerateicons"])
 		if(!ismob(M))
@@ -482,7 +496,8 @@ body
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 
 		if(href_list["rename"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["rename"])
 			if(!istype(M))
@@ -490,14 +505,16 @@ body
 				return
 
 			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
-			if( !new_name || !M )	return
+			if( !new_name || !M )
+				return
 
 			message_admins("Admin [key_name_admin(usr)] renamed [key_name_admin(M)] to [new_name].")
 			M.fully_replace_character_name(M.real_name,new_name)
 			href_list["datumrefresh"] = href_list["rename"]
 
 		else if(href_list["varnameedit"] && href_list["datumedit"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/D = locate(href_list["datumedit"])
 			if(!istype(D,/datum) && !istype(D,/client))
@@ -507,7 +524,8 @@ body
 			modify_variables(D, href_list["varnameedit"], 1)
 
 		else if(href_list["varnamechange"] && href_list["datumchange"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/D = locate(href_list["datumchange"])
 			if(!istype(D,/datum) && !istype(D,/client))
@@ -517,7 +535,8 @@ body
 			modify_variables(D, href_list["varnamechange"], 0)
 
 		else if(href_list["varnamemass"] && href_list["datummass"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/atom/A = locate(href_list["datummass"])
 			if(!istype(A))
@@ -527,7 +546,8 @@ body
 			cmd_mass_modify_object_variables(A, href_list["varnamemass"])
 
 		else if(href_list["give_spell"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["give_spell"])
 			if(!istype(M))
@@ -538,7 +558,8 @@ body
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["give_disease"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["give_disease"])
 			if(!istype(M))
@@ -549,7 +570,8 @@ body
 			href_list["datumrefresh"] = href_list["give_spell"]
 
 		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))	return
+			if(!check_rights(R_FUN))
+				return
 
 			var/mob/M = locate(href_list["ninja"])
 			if(!istype(M))
@@ -560,7 +582,8 @@ body
 			href_list["datumrefresh"] = href_list["ninja"]
 
 		else if(href_list["gib"])
-			if(!check_rights(R_FUN))	return
+			if(!check_rights(R_FUN))
+				return
 
 			var/mob/M = locate(href_list["gib"])
 			if(!istype(M))
@@ -570,7 +593,8 @@ body
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(R_BUILDMODE))	return
+			if(!check_rights(R_BUILDMODE))
+				return
 
 			var/mob/M = locate(href_list["build_mode"])
 			if(!istype(M))
@@ -581,7 +605,8 @@ body
 			href_list["datumrefresh"] = href_list["build_mode"]
 
 		else if(href_list["drop_everything"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["drop_everything"])
 			if(!istype(M))
@@ -592,7 +617,8 @@ body
 				usr.client.cmd_admin_drop_everything(M)
 
 		else if(href_list["direct_control"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["direct_control"])
 			if(!istype(M))
@@ -603,30 +629,18 @@ body
 				usr.client.cmd_assume_direct_control(M)
 
 		else if(href_list["offer_control"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/M = locate(href_list["offer_control"])
 			if(!istype(M))
 				usr << "This can only be used on instances of type /mob"
 				return
-			M << "Control of your mob has been offered to dead players."
-			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-			message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [M.real_name]?", "pAI", null, FALSE, 100)
-			var/mob/dead/observer/theghost = null
-
-			if(candidates.len)
-				theghost = pick(candidates)
-				M << "Your mob has been taken over by a ghost!"
-				message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
-				M.ghostize(0)
-				M.key = theghost.key
-			else
-				M << "There were no ghosts willing to take control."
-				message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+			offer_control(M)
 
 		else if(href_list["delall"])
-			if(!check_rights(R_DEBUG|R_SERVER))	return
+			if(!check_rights(R_DEBUG|R_SERVER))
+				return
 
 			var/obj/O = locate(href_list["delall"])
 			if(!isobj(O))
@@ -651,6 +665,7 @@ body
 						if(Obj.type == O_type)
 							i++
 							qdel(Obj)
+						CHECK_TICK
 					if(!i)
 						usr << "No objects of this type exist"
 						return
@@ -662,6 +677,7 @@ body
 						if(istype(Obj,O_type))
 							i++
 							qdel(Obj)
+						CHECK_TICK
 					if(!i)
 						usr << "No objects of this type exist"
 						return
@@ -669,7 +685,8 @@ body
 					message_admins("<span class='notice'>[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) </span>")
 
 		else if(href_list["addreagent"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/atom/A = locate(href_list["addreagent"])
 
@@ -679,29 +696,20 @@ body
 					A.create_reagents(amount)
 
 			if(A.reagents)
-				var/list/reagent_options = list()
-				for(var/r_id in chemical_reagents_list)
-					var/datum/reagent/R = chemical_reagents_list[r_id]
-					reagent_options[R.name] = r_id
-
-				if(reagent_options.len)
-					sortList(reagent_options)
-					reagent_options.Insert(1, "CANCEL")
-
-					var/chosen = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options
-					var/chosen_id = reagent_options[chosen]
-
-					if(chosen_id)
-						var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
-						if(amount)
-							A.reagents.add_reagent(chosen_id, amount)
-							log_admin("[key_name(usr)] has added [amount] units of [chosen] to \the [A]")
-							message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen] to \the [A]</span>")
+				var/list/reagent_options = sortList(chemical_reagents_list)
+				var/chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options|null
+				if(chosen_id)
+					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
+					if(amount)
+						A.reagents.add_reagent(chosen_id, amount)
+						log_admin("[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]")
+						message_admins("<span class='notice'>[key_name(usr)] has added [amount] units of [chosen_id] to \the [A]</span>")
 
 			href_list["datumrefresh"] = href_list["addreagent"]
 
 		else if(href_list["explode"])
-			if(!check_rights(R_FUN))	return
+			if(!check_rights(R_FUN))
+				return
 
 			var/atom/A = locate(href_list["explode"])
 			if(!isobj(A) && !ismob(A) && !isturf(A))
@@ -712,7 +720,8 @@ body
 			href_list["datumrefresh"] = href_list["explode"]
 
 		else if(href_list["emp"])
-			if(!check_rights(R_FUN))	return
+			if(!check_rights(R_FUN))
+				return
 
 			var/atom/A = locate(href_list["emp"])
 			if(!isobj(A) && !ismob(A) && !isturf(A))
@@ -723,7 +732,8 @@ body
 			href_list["datumrefresh"] = href_list["emp"]
 
 		else if(href_list["rotatedatum"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/atom/A = locate(href_list["rotatedatum"])
 			if(!istype(A))
@@ -731,12 +741,15 @@ body
 				return
 
 			switch(href_list["rotatedir"])
-				if("right")	A.dir = turn(A.dir, -45)
-				if("left")	A.dir = turn(A.dir, 45)
+				if("right")
+					A.setDir(turn(A.dir, -45))
+				if("left")
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/living/carbon/C = locate(href_list["editorgans"])
 			if(!istype(C))
@@ -747,91 +760,104 @@ body
 			href_list["datumrefresh"] = href_list["editorgans"]
 
 		else if(href_list["makehuman"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"])
 			if(!istype(Mo))
 				usr << "This can only be done to instances of type /mob/living/carbon/monkey"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!Mo)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
 		else if(href_list["makemonkey"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makemonkey"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("monkeyone"=href_list["makemonkey"]))
 
 		else if(href_list["makerobot"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makerobot"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makerobot"=href_list["makerobot"]))
 
 		else if(href_list["makealien"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makealien"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makealien"=href_list["makealien"]))
 
 		else if(href_list["makeslime"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["makeslime"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeslime"=href_list["makeslime"]))
 
 		else if(href_list["makeai"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/H = locate(href_list["makeai"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon"
 				return
 
-			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
+				return
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 			holder.Topic(href, list("makeai"=href_list["makeai"]))
 
 		else if(href_list["setspecies"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["setspecies"])
 			if(!istype(H))
@@ -846,48 +872,63 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
+		else if(href_list["removebodypart"])
+			if(!check_rights(R_SPAWN))
+				return
+
+			var/mob/living/carbon/human/H = locate(href_list["removebodypart"])
+			if(!istype(H))
+				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+
+			var/result = input(usr, "Please choose which body part to remove","Remove Body Part") as null|anything in list("head", "l_arm", "r_arm", "l_leg", "r_leg")
+
+			if(!H)
+				usr << "Mob doesn't exist anymore"
+				return
+
+			if(result)
+				var/obj/item/bodypart/BP = H.get_bodypart(result)
+				if(BP)
+					BP.drop_limb()
 
 		else if(href_list["purrbation"])
-			if(!check_rights(R_SPAWN))	return
+			if(!check_rights(R_SPAWN))
+				return
 
 			var/mob/living/carbon/human/H = locate(href_list["purrbation"])
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
+				return
+			if(!ishumanbasic(H))
+				usr << "This can only be done to the basic human species \
+					at the moment."
 				return
 
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(H.dna.species.id == "human")
-				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
-					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
-					H.dna.features["tail_human"] = "Cat"
-					H.dna.features["ears"] = "Cat"
-				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
-					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
-					H.dna.features["tail_human"] = "None"
-					H.dna.features["ears"] = "None"
-				H.regenerate_icons()
-				return
+			var/success = purrbation_toggle(H)
+			if(success)
+				usr << "Put [H] on purrbation."
+				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 
-			usr << "You can only put humans on purrbation."
+			else
+				usr << "Removed [H] from purrbation."
+				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
-			if(!check_rights(0))	return
+			if(!check_rights(0))
+				return
 
 			var/mob/living/L = locate(href_list["mobToDamage"])
-			if(!istype(L)) return
+			if(!istype(L))
+				return
 
 			var/Text = href_list["adjustDamage"]
 
@@ -898,13 +939,20 @@ body
 				return
 
 			switch(Text)
-				if("brute")	L.adjustBruteLoss(amount)
-				if("fire")	L.adjustFireLoss(amount)
-				if("toxin")	L.adjustToxLoss(amount)
-				if("oxygen")L.adjustOxyLoss(amount)
-				if("brain")	L.adjustBrainLoss(amount)
-				if("clone")	L.adjustCloneLoss(amount)
-				if("stamina") L.adjustStaminaLoss(amount)
+				if("brute")
+					L.adjustBruteLoss(amount)
+				if("fire")
+					L.adjustFireLoss(amount)
+				if("toxin")
+					L.adjustToxLoss(amount)
+				if("oxygen")
+					L.adjustOxyLoss(amount)
+				if("brain")
+					L.adjustBrainLoss(amount)
+				if("clone")
+					L.adjustCloneLoss(amount)
+				if("stamina")
+					L.adjustStaminaLoss(amount)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return

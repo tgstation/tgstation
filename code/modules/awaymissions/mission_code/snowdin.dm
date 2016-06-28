@@ -1,37 +1,37 @@
 //Snow Valley Areas//--
 
 /area/awaymission/snowdin
-	name = "\improper Snowdin Tundra Plains"
+	name = "Snowdin Tundra Plains"
 	icon_state = "away"
 	requires_power = 0
 	luminosity = 1
 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowdin/post
-	name = "\improper Snowdin Outpost"
+	name = "Snowdin Outpost"
 	requires_power = 1
 
 /area/awaymission/snowdin/igloo
-	name = "\improper Snowdin Igloos"
+	name = "Snowdin Igloos"
 	icon_state = "away2"
 
 /area/awaymission/snowdin/cave
-	name = "\improper Snowdin Caves"
+	name = "Snowdin Caves"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/base
-	name = "\improper Snowdin Main Base"
+	name = "Snowdin Main Base"
 	icon_state = "away3"
 	requires_power = 1
 
 /area/awaymission/snowdin/dungeon1
-	name = "\improper Snowdin Depths"
+	name = "Snowdin Depths"
 	icon_state = "away2"
 	luminosity = 0
 
 /area/awaymission/snowdin/sekret
-	name = "\improper Snowdin Operations"
+	name = "Snowdin Operations"
 	icon_state = "away3"
 	requires_power = 1
 
@@ -124,10 +124,10 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 				/obj/item/weapon/storage/firstaid/brute = 27,
 				/obj/item/weapon/storage/firstaid/fire = 27,
 				/obj/item/weapon/storage/toolbox/syndicate = 12,
-				/obj/item/weapon/c4 = 7,
+				/obj/item/weapon/grenade/plastic/c4 = 7,
 				/obj/item/weapon/grenade/clusterbuster/smoke = 15,
 				/obj/item/clothing/under/chameleon = 13,
-				/obj/item/clothing/shoes/sneakers/syndigaloshes = 10,
+				/obj/item/clothing/shoes/chameleon = 10,
 				/obj/item/borg/upgrade/ddrill = 3,
 				/obj/item/borg/upgrade/soh = 3)
 
@@ -135,7 +135,6 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	name = "dungeon mid"
 	loot = list(/obj/item/weapon/defibrillator/compact = 6,
 				/obj/item/weapon/storage/firstaid/tactical = 35,
-				/obj/item/weapon/teleportation_scroll/apprentice = 4,
 				/obj/item/weapon/shield/energy = 6,
 				/obj/item/weapon/shield/riot/tele = 12,
 				/obj/item/weapon/dnainjector/lasereyesmut = 7,
@@ -164,15 +163,13 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	loot = list(/obj/item/weapon/twohanded/singularityhammer = 25,
 				/obj/item/weapon/twohanded/mjollnir = 10,
 				/obj/item/weapon/twohanded/fireaxe = 25,
-				/obj/item/organ/internal/brain/alien = 17,
+				/obj/item/organ/brain/alien = 17,
 				/obj/item/weapon/twohanded/dualsaber = 15,
-				/obj/item/organ/internal/heart/demon = 7,
+				/obj/item/organ/heart/demon = 7,
 				/obj/item/weapon/gun/projectile/automatic/c20r/unrestricted = 16,
-				/obj/item/weapon/teleportation_scroll = 5,
-				/obj/item/weapon/dice/d20/fate = 4,
 				/obj/item/weapon/gun/magic/wand/resurrection/inert = 15,
 				/obj/item/weapon/gun/magic/wand/resurrection = 10,
-				/obj/item/device/uplink/old = 2,
+				/obj/item/device/radio/uplink/old = 2,
 				/obj/item/weapon/spellbook/oneuse/charge = 12,
 				/obj/item/weapon/grenade/clusterbuster/spawner_manhacks = 15,
 				/obj/item/weapon/spellbook/oneuse/fireball = 10,
@@ -214,35 +211,38 @@ obj/item/weapon/paper/crumpled/snowdin/shovel
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-/obj/item/device/uplink/old //!!!
+/obj/item/device/radio/uplink/old
 	name = "dusty radio"
 	desc = "A dusty looking radio."
-	uses = 10
-	icon = 'icons/obj/radio.dmi'
-	icon_state = "walkietalkie"
 
-/obj/effect/landmark/corpse/syndicatesoldier/coldres
+/obj/item/device/radio/uplink/old/New()
+	..()
+	hidden_uplink.name = "dusty radio"
+	hidden_uplink.telecrystals = 10
+
+obj/effect/mob_spawn/human/syndicatesoldier/coldres
 	name = "Syndicate Snow Operative"
-	corpseuniform = /obj/item/clothing/under/syndicate/coldres
-	corpseshoes = /obj/item/clothing/shoes/combat/coldres
-	corpseradio = /obj/item/device/radio/headset/syndicate/alt
-	corpsepocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
-	corpsepocket2 = /obj/item/weapon/card/id/syndicate
-	corpseid = 0
+	uniform = /obj/item/clothing/under/syndicate/coldres
+	shoes = /obj/item/clothing/shoes/combat/coldres
+	radio = /obj/item/device/radio/headset/syndicate/alt
+	pocket1 = /obj/item/weapon/gun/projectile/automatic/pistol
+	pocket2 = /obj/item/weapon/card/id/syndicate
+	has_id = 0
 
-/obj/effect/landmark/corpse/syndicatesoldier/coldres/alive
+obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
 	name = "sleeper"
-	mobname = "Syndicate Snow Operative"
+	mob_name = "Syndicate Snow Operative"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
+	implants = list(/obj/item/weapon/implant/exile)
 	faction = "syndicate"
 	flavour_text = {"You are a syndicate operative recently awoken from cyrostatis in an underground outpost. Monitor Nanotrasen communications and record infomation. All intruders should be
 	disposed of swirfly to assure no gathered infomation is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."}
 
-/obj/effect/landmark/corpse/syndicatesoldier/coldres/alive/female
-	mobgender = FEMALE
+obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
+	mob_gender = FEMALE
 
 //mobs//--
 

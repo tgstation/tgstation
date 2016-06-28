@@ -33,7 +33,7 @@
 //Returns list element or null. Should prevent "index out of bounds" error.
 /proc/listgetindex(list/L, index)
 	if(istype(L))
-		if(isnum(index))
+		if(isnum(index) && IsInteger(index))
 			if(IsInRange(index,1,L.len))
 				return L[index]
 		else if(index in L)
@@ -53,10 +53,39 @@
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if(!L || !L.len || !A)
+		return 0
 	for(var/type in L)
 		if(istype(A, type))
 			return 1
 	return 0
+
+//Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
+/proc/is_type_in_typecache(atom/A, list/L)
+	if(!L || !L.len || !A)
+		return 0
+	return L[A.type]
+
+//Like typesof() or subtypesof(), but returns a typecache instead of a list
+/proc/typecacheof(path, ignore_root_path)
+	if(ispath(path))
+		var/list/types = ignore_root_path ? subtypesof(path) : typesof(path)
+		var/list/L = list()
+		for(var/T in types)
+			L[T] = TRUE
+		return L
+	else if(islist(path))
+		var/list/pathlist = path
+		var/list/L = list()
+		if(ignore_root_path)
+			for(var/P in pathlist)
+				for(var/T in subtypesof(P))
+					L[T] = TRUE
+		else
+			for(var/P in pathlist)
+				for(var/T in typesof(P))
+					L[T] = TRUE
+		return L
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -135,6 +164,11 @@
 	if(L.len)
 		. = L[L.len]
 		L.len--
+
+/proc/popleft(list/L)
+	if(L.len)
+		. = L[1]
+		L.Cut(1,2)
 
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
@@ -227,13 +261,7 @@
 	return r
 
 // Returns the key based on the index
-/proc/get_key_by_index(list/L, index)
-	var/i = 1
-	for(var/key in L)
-		if(index == i)
-			return key
-		i++
-	return null
+#define KEYBYINDEX(L, index) (((index <= L:len) && (index > 0)) ? L[index] : null)
 
 /proc/count_by_type(list/L, type)
 	var/i = 0
@@ -344,3 +372,16 @@
 	while(L.Remove(null))
 		continue
 	return L
+
+//Copies a list, and all lists inside it recusively
+//Does not copy any other reference type
+/proc/deepCopyList(list/l)
+	if(!islist(l))
+		return l
+	. = l.Copy()
+	for(var/i = 1 to l.len)
+		if(islist(.[i]))
+			.[i] = .(.[i])
+
+//Picks from the list, with some safeties, and returns the "default" arg if it fails
+#define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)

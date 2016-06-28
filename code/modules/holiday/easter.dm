@@ -29,7 +29,7 @@
 	for(var/obj/effect/landmark/R in landmarks_list)
 		if(R.name != "blobspawn")
 			if(prob(35))
-				if(istype(R.loc,/turf/space))
+				if(istype(R.loc,/turf/open/space))
 					new /mob/living/simple_animal/chicken/rabbit/space(R.loc)
 				else
 					new /mob/living/simple_animal/chicken/rabbit(R.loc)
@@ -38,9 +38,9 @@
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
 	icon = 'icons/mob/Easter.dmi'
-	icon_state = "rabbit"
-	icon_living = "rabbit"
-	icon_dead = "rabbit_dead"
+	icon_state = "rabbit_white"
+	icon_living = "rabbit_white"
+	icon_dead = "rabbit_white_dead"
 	speak = list("Hop into Easter!","Come get your eggs!","Prizes for everyone!")
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
@@ -56,13 +56,13 @@
 
 /mob/living/simple_animal/chicken/rabbit/space
 	icon_prefix = "s_rabbit"
-	icon_state = "s_rabbit"
-	icon_living = "s_rabbit"
-	icon_dead = "s_rabbit_dead"
+	icon_state = "s_rabbit_white"
+	icon_living = "s_rabbit_white"
+	icon_dead = "s_rabbit_white_dead"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	unsuitable_atmos_damage = 0	//This damage is taken when atmos doesn't fit all the requirements above
+	unsuitable_atmos_damage = 0
 
 //Easter Baskets
 /obj/item/weapon/storage/bag/easterbasket
@@ -72,16 +72,16 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/egg,/obj/item/weapon/reagent_containers/food/snacks/chocolateegg,/obj/item/weapon/reagent_containers/food/snacks/boiledegg)
 
 /obj/item/weapon/storage/bag/easterbasket/proc/countEggs()
-	overlays.Cut()
-	overlays += image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1)
-	overlays += image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1)
+	cut_overlays()
+	add_overlay(image("icon" = icon, "icon_state" = "basket-grass", "layer" = -1))
+	add_overlay(image("icon" = icon, "icon_state" = "basket-egg[contents.len <= 5 ? contents.len : 5]", "layer" = -1))
 
 /obj/item/weapon/storage/bag/easterbasket/remove_from_storage(obj/item/W as obj, atom/new_location)
 	..()
 	countEggs()
 
 /obj/item/weapon/storage/bag/easterbasket/handle_item_insertion(obj/item/I, prevent_warning = 0)
-	..()
+	. = ..()
 	countEggs()
 
 //Bunny Suit
@@ -91,8 +91,7 @@
 	item_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'"
 	slowdown = -1
-	flags = BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/suit/bunnysuit
 	name = "Easter Bunny Suit"
@@ -152,7 +151,7 @@
 	desc = "The Cross represents the Assistants that died for your sins."
 	icon_state = "hotcrossbun"
 
-/datum/table_recipe/hotcrossbun
+/datum/crafting_recipe/food/food/hotcrossbun
 	name = "Hot-Cross Bun"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
@@ -176,7 +175,7 @@
 	icon_state = "briochecake_slice"
 	filling_color = "#FFD700"
 
-/datum/table_recipe/briochecake
+/datum/crafting_recipe/food/food/briochecake
 	name = "Brioche cake"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1,
@@ -194,7 +193,7 @@
 	filling_color = "#FFFFF0"
 	list_reagents = list("nutriment" = 6)
 
-/datum/table_recipe/scotchegg
+/datum/crafting_recipe/food/scotchegg
 	name = "Scotch egg"
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 1,
@@ -206,14 +205,14 @@
 	category = CAT_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mammi
-	name = "Mämmi"
+	name = "Mammi"
 	desc = "A bowl of mushy bread and milk. It reminds you, not too fondly, of a bowel movement."
 	icon_state = "mammi"
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 1)
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 
-/datum/table_recipe/mammi
-	name = "Mämmi"
+/datum/crafting_recipe/food/mammi
+	name = "Mammi"
 	reqs = list(
 		/obj/item/weapon/reagent_containers/food/snacks/store/bread/plain = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 1,
@@ -230,7 +229,7 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 
-/datum/table_recipe/chocolatebunny
+/datum/crafting_recipe/food/chocolatebunny
 	name = "Chocolate bunny"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 2,

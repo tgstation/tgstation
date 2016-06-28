@@ -13,6 +13,7 @@
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
+	dog_fashion = /datum/dog_fashion/back
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = 1
@@ -34,8 +35,10 @@
 	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
+	dog_fashion = null
 
 /obj/item/weapon/extinguisher/New()
+	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
@@ -45,6 +48,15 @@
 	src.desc = "The safety is [safety ? "on" : "off"]."
 	user << "The safety is [safety ? "on" : "off"]."
 	return
+
+/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
+	if(user.a_intent == "help")
+		// If we're in help intent, don't bash anyone with the
+		// extinguisher
+		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
+		return 0
+	else
+		return ..()
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
@@ -77,8 +89,6 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
-	if(target.loc == user || !check_allowed_items(target)) //No more spraying yourself when putting your extinguisher away
-		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)
 		return
@@ -96,9 +106,9 @@
 
 		var/direction = get_dir(src,target)
 
-		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored)
+		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			spawn(0)
-				var/obj/B = usr.buckled
+				var/obj/B = user.buckled
 				var/movementdirection = turn(direction,180)
 				step(B, movementdirection)
 				sleep(1)
@@ -145,15 +155,9 @@
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W))
-					for(var/atom/atm in get_turf(W))
+					for(var/A in get_turf(W))
 						if(!W) return
-						W.reagents.reaction(atm)
-						if(isliving(atm)) //For extinguishing mobs on fire
-							var/mob/living/M = atm
-							M.ExtinguishMob()
-						if(istype(atm,/obj/item))
-							var/obj/item/Item = atm
-							Item.extinguish()
+						W.reagents.reaction(A)
 					if(W.loc == my_target) break
 					sleep(2)
 
@@ -166,5 +170,11 @@
 /obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
 	if(loc == user && reagents.total_volume)
 		reagents.clear_reagents()
+
+		var/turf/T = get_turf(loc)
+		if(istype(T, /turf/open))
+			var/turf/open/theturf = T
+			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
+
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
 	return

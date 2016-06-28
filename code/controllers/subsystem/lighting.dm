@@ -1,14 +1,15 @@
 var/datum/subsystem/lighting/SSlighting
 
-#define MC_AVERAGE(average, current) (0.8*(average) + 0.2*(current))
+#define SSLIGHTING_LIGHTS 1
+#define SSLIGHTING_TURFS 2
 
 /datum/subsystem/lighting
 	name = "Lighting"
-	priority = 1
-	wait = 5
-	dynamic_wait = 1
-	dwait_delta = 3
-	display = 5
+	init_order = 1
+	wait = 1
+	flags = SS_POST_FIRE_TIMING
+	priority = 40
+	display_order = 5
 
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
@@ -18,7 +19,6 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
-
 	return ..()
 
 
@@ -30,59 +30,54 @@ var/datum/subsystem/lighting/SSlighting
 //effects and then processes every turf in the queue, updating their lighting object's appearance
 //Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
-/datum/subsystem/lighting/fire()
-	changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
+/datum/subsystem/lighting/fire(resumed = 0)
+	var/ticklimit = CURRENT_TICKLIMIT
+	//split our tick allotment in half so we don't spend it all on lightshift checks
+	CURRENT_TICKLIMIT = world.tick_usage + ((ticklimit-world.tick_usage)/2)
 
-	for(var/thing in changed_lights)
-		var/datum/light_source/LS = thing
+	var/list/changed_lights = src.changed_lights
+	if (!resumed)
+		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
+	var/i = 1
+	while (i <= changed_lights.len)
+		var/datum/light_source/LS = changed_lights[i++]
 		LS.check()
-	changed_lights.Cut()
+		if (MC_TICK_CHECK)
+			break
+	if (i > 1)
+		changed_lights.Cut(1,i)
 
-	changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	for(var/thing in changed_turfs)
-		var/turf/T = thing
+	CURRENT_TICKLIMIT = ticklimit
+	var/list/changed_turfs = src.changed_turfs
+	if (!resumed)
+		changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
+	i = 1
+	while (i <= changed_turfs.len)
+		var/turf/T = changed_turfs[i++]
 		if(T.lighting_changed)
 			T.redraw_lighting()
-	changed_turfs.Cut()
+		if (MC_TICK_CHECK)
+			return
+	if (i > 1)
+		changed_turfs.Cut(1,i)
 
 //same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
-//Does not loop. Should be run prior to process() being called for the first time.
-//Note: if we get additional z-levels at runtime (e.g. if the gateway thin ever gets finished) we can initialize specific
-//z-levels with the z_level argument
-/datum/subsystem/lighting/Initialize(timeofday, z_level)
-	for(var/area/A in world)
-		if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
-			if (config.starlight)
-				A.SetDynamicLighting()
-
+/datum/subsystem/lighting/Initialize(timeofday)
+	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+	if (config.starlight)
+		for(var/area/A in world)
+			if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
+				A.luminosity = 0
 
 	for(var/thing in changed_lights)
 		var/datum/light_source/LS = thing
 		LS.check()
 	changed_lights.Cut()
-
-	var/z_start = 1
-	var/z_finish = world.maxz
-	if(z_level >= 1 && z_level <= world.maxz)
-		z_level = round(z_level)
-		z_start = z_level
-		z_finish = z_level
-
-	var/list/turfs_to_init = block(locate(1, 1, z_start), locate(world.maxx, world.maxy, z_finish))
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		T.init_lighting()
-
-	if(z_level)
-		//we need to loop through to clear only shifted turfs from the list. or we will cause errors
-		for(var/thing in changed_turfs)
-			var/turf/T = thing
-			if(T.z in z_start to z_finish)
-				continue
-			changed_turfs.Remove(thing)
-	else
-		changed_turfs.Cut()
+	changed_turfs.Cut()
 
 	..()
 
@@ -109,7 +104,8 @@ var/datum/subsystem/lighting/SSlighting
 	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
 	for(var/varname in SSlighting.vars)
 		switch(varname)
-			if("tag","bestF","type","parent_type","vars")	continue
+			if("tag","bestF","type","parent_type","vars")
+				continue
 			else
 				var/varval1 = SSlighting.vars[varname]
 				var/varval2 = vars[varname]

@@ -24,22 +24,22 @@
 	return
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(M.restrained() || M.stat || !Adjacent(M))
+	var/mob/living/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
 		return
 
 	if(over_object == M)
 		M.put_in_hands(src)
 
-	else if(istype(over_object, /obj/screen))
-		switch(over_object.name)
-			if("r_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(src)
+	else if(istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		if(!remove_item_from_storage(M))
+			if(!M.unEquip(src))
+				return
+		switch(H.slot_id)
+			if(slot_r_hand)
 				M.put_in_r_hand(src)
-			if("l_hand")
-				if(!remove_item_from_storage(M))
-					M.unEquip(src)
+			if(slot_l_hand)
 				M.put_in_l_hand(src)
 
 	add_fingerprint(M)
@@ -78,18 +78,18 @@
 	add_fingerprint(user)
 
 
-/obj/item/weapon/paper_bin/attackby(obj/item/weapon/paper/i, mob/user, params)
-	if(!istype(i))
+/obj/item/weapon/paper_bin/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/paper))
+		var/obj/item/weapon/paper/P = I
+		if(!user.unEquip(P))
+			return
+		P.loc = src
+		user << "<span class='notice'>You put [P] in [src].</span>"
+		papers.Add(P)
+		amount++
+		update_icon()
+	else
 		return ..()
-
-	if(!user.unEquip(i))
-		return
-	i.loc = src
-	user << "<span class='notice'>You put [i] in [src].</span>"
-	papers.Add(i)
-	amount++
-	update_icon()
-
 
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()

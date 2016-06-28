@@ -4,12 +4,14 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -89
 	pixel_y = -85
+	density = 0
 	current_size = 9 //It moves/eats like a max-size singulo, aside from range. --NEO
 	contained = 0 //Are we going to move around?
 	dissipate = 0 //Do we lose energy over time?
 	move_self = 1 //Do we move on our own?
 	grav_pull = 5 //How many tiles out do we pull?
 	consume_range = 6 //How many tiles out do we eat
+	var/clashing = FALSE //If Nar-Sie is fighting Ratvar
 
 /obj/singularity/narsie/large
 	name = "Nar-Sie"
@@ -18,7 +20,6 @@
 	pixel_x = -236
 	pixel_y = -256
 	current_size = 12
-	move_self = 1 //Do we move on our own?
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
@@ -29,8 +30,8 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		var/image/alert_overlay = image('icons/mob/mob.dmi', "harvester")
-		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, attack_not_jump = 1)
+		var/image/alert_overlay = image('icons/effects/effects.dmi', "ghostalertsie")
+		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 
 	narsie_spawn_animation()
 
@@ -44,35 +45,30 @@
 
 
 /obj/singularity/narsie/process()
+	if(clashing)
+		return
 	eat()
 	if(!target || prob(5))
 		pickcultist()
-	move()
+	if(istype(target, /obj/structure/clockwork/massive/ratvar))
+		move(get_dir(src, target)) //Oh, it's you again.
+	else
+		move()
 	if(prob(25))
 		mezzer()
 
 
-/obj/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
-	godsmack(A)
-	return
+/obj/singularity/narsie/Process_Spacemove()
+	return clashing
 
-/obj/singularity/narsie/Bumped(atom/A)
-	godsmack(A)
-	return
 
-/obj/singularity/narsie/proc/godsmack(atom/A)
-	if(isobj(A))
-		var/obj/O = A
-		O.ex_act(1)
-		if(O) qdel(O)
-
-	else if(isturf(A))
-		var/turf/T = A
-		T.ChangeTurf(/turf/simulated/floor/plasteel/cult)
+/obj/singularity/narsie/Bump(atom/A)
+	forceMove(get_turf(A))
+	A.narsie_act()
 
 
 /obj/singularity/narsie/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
+	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
@@ -83,13 +79,19 @@
 	A.narsie_act()
 
 
-/obj/singularity/narsie/ex_act() //No throwing bombs at it either. --NEO
+/obj/singularity/narsie/ex_act() //No throwing bombs at her either.
 	return
 
 
-/obj/singularity/narsie/proc/pickcultist() //Narsie rewards his cultists with being devoured first, then picks a ghost to follow. --NEO
+/obj/singularity/narsie/proc/pickcultist() //Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
 	var/list/cultists = list()
 	var/list/noncultists = list()
+	for(var/obj/structure/clockwork/massive/ratvar/enemy in poi_list) //Prioritize killing Ratvar
+		if(enemy.z != z)
+			continue
+		acquire(enemy)
+		return
+
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
 		if(pos.z != src.z)
@@ -121,7 +123,7 @@
 		return
 
 
-/obj/singularity/narsie/proc/acquire(mob/food)
+/obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
 	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
@@ -139,7 +141,7 @@
 	set background = BACKGROUND_ENABLED
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
-	for(var/atom/X in ultra_range(consume_range,src,1))
+	for(var/atom/X in urange(consume_range,src,1))
 		if(isturf(X) || istype(X, /atom/movable))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
@@ -149,7 +151,7 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
 	icon = 'icons/obj/narsie_spawn_anim.dmi'
-	dir = SOUTH
+	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
 	sleep(11)

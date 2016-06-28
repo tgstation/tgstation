@@ -28,7 +28,7 @@
 	var/turf/pickedstart
 	var/turf/pickedgoal
 	var/max_i = 10//number of tries to spawn meteor.
-	while (!istype(pickedstart, /turf/space))
+	while (!istype(pickedstart, /turf/open/space))
 		var/startSide = pick(cardinal)
 		pickedstart = spaceDebrisStartLoc(startSide, 1)
 		pickedgoal = spaceDebrisFinishLoc(startSide, 1)
@@ -100,7 +100,7 @@
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
 	var/z_original = 1
 
-	var/meteordrop = /obj/item/weapon/ore/iron
+	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
@@ -114,7 +114,7 @@
 		var/turf/T = get_turf(loc)
 		ram_turf(T)
 
-		if(prob(10) && !istype(T, /turf/space))//randomly takes a 'hit' from ramming
+		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
 			get_hit()
 
 	return .
@@ -137,6 +137,8 @@
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src)
+			if(istype(A, /mob/living))
+				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
 			A.ex_act(hitpwr)
 
 	//then, ram the turf if it still exists
@@ -159,13 +161,16 @@
 
 /obj/effect/meteor/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/pickaxe))
+		make_debris()
 		qdel(src)
 		return
-	..()
+	else
+		return ..()
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
-		new meteordrop(get_turf(src))
+		var/thing_to_spawn = pick(meteordrop)
+		new thing_to_spawn(get_turf(src))
 
 /obj/effect/meteor/proc/meteor_effect(sound=1)
 	if(sound)
@@ -188,8 +193,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
-	meteorsound = 'sound/weapons/throwtap.ogg'
-	meteordrop = /obj/item/weapon/ore/glass
+	meteorsound = 'sound/weapons/Gunshot_smg.ogg'
+	meteordrop = list(/obj/item/weapon/ore/glass)
 
 //Medium-sized
 /obj/effect/meteor/medium
@@ -219,7 +224,7 @@
 	hits = 5
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = /obj/item/weapon/ore/plasma
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..(heavy)
@@ -230,7 +235,7 @@
 	name = "glowing meteor"
 	icon_state = "glowing"
 	heavy = 1
-	meteordrop = /obj/item/weapon/ore/uranium
+	meteordrop = list(/obj/item/weapon/ore/uranium)
 
 
 /obj/effect/meteor/irradiated/meteor_effect()
@@ -247,8 +252,18 @@
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
+
+/obj/effect/meteor/meaty/New()
+	for(var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/M in meteordrop)
+		meteordrop -= M
+		meteordrop += pick(subtypesof(M))
+
+	for(var/obj/item/organ/tongue/T in meteordrop)
+		meteordrop -= T
+		meteordrop += pick(typesof(T))
+	..()
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
@@ -256,7 +271,7 @@
 
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		new /obj/effect/decal/cleanable/blood (T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
@@ -266,11 +281,15 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
+/obj/effect/meteor/meaty/xeno/New()
+	meteordrop += subtypesof(/obj/item/organ/alien)
+	..()
+
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
-	if(!istype(T, /turf/space))
+	if(!istype(T, /turf/open/space))
 		new /obj/effect/decal/cleanable/xenoblood (T)
 
 //Station buster Tunguska
@@ -282,7 +301,7 @@
 	hitpwr = 1
 	heavy = 1
 	meteorsound = 'sound/effects/bamf.ogg'
-	meteordrop = /obj/item/weapon/ore/plasma
+	meteordrop = list(/obj/item/weapon/ore/plasma)
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..(heavy)
@@ -307,9 +326,9 @@
 	hits = 10
 	heavy = 1
 	dropamt = 1
+	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 
 /obj/effect/meteor/pumpkin/New()
 	..()
-	meteordrop = pick(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin)
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////

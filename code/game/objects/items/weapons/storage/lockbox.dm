@@ -18,28 +18,28 @@
 
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user, params)
-	if (W.GetID())
-		if(src.broken)
+	if(W.GetID())
+		if(broken)
 			user << "<span class='danger'>It appears to be broken.</span>"
 			return
-		if(src.allowed(user))
-			src.locked = !( src.locked )
-			if(src.locked)
-				src.icon_state = src.icon_locked
+		if(allowed(user))
+			locked = !locked
+			if(locked)
+				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
+				close_all()
 				return
 			else
-				src.icon_state = src.icon_closed
+				icon_state = icon_closed
 				user << "<span class='danger'>You unlock the [src.name]!</span>"
 				return
 		else
 			user << "<span class='danger'>Access Denied.</span>"
 			return
 	if(!locked)
-		..()
+		return ..()
 	else
 		user << "<span class='danger'>It's locked!</span>"
-	return
 
 /obj/item/weapon/storage/lockbox/MouseDrop(over_object, src_location, over_location)
 	if (locked)
@@ -77,15 +77,14 @@
 	return ..()
 
 /obj/item/weapon/storage/lockbox/loyalty
-	name = "lockbox of loyalty implants"
+	name = "lockbox of mindshield implants"
 	req_access = list(access_security)
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implanter/loyalty(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/mindshield(src)
+	new /obj/item/weapon/implanter/mindshield(src)
 
 
 /obj/item/weapon/storage/lockbox/clusterbang
@@ -114,7 +113,6 @@
 	..()
 	new /obj/item/clothing/tie/medal/silver/valor(src)
 	new /obj/item/clothing/tie/medal/bronze_heart(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
-	new /obj/item/clothing/tie/medal/conduct(src)
+	for(var/i in 1 to 3)
+		new /obj/item/clothing/tie/medal/conduct(src)
 	new /obj/item/clothing/tie/medal/gold/captain(src)

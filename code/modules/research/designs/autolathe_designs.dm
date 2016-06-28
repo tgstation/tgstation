@@ -98,6 +98,23 @@
 	build_path = /obj/item/clothing/head/welding
 	category = list("initial","Tools")
 
+/datum/design/cable_coil
+	name = "Cable coil"
+	id = "cable_coil"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
+	build_path = /obj/item/stack/cable_coil/random
+	category = list("initial","Tools")
+	maxstack = 30
+
+/datum/design/toolbox
+	name = "Toolbox"
+	id = "tool_box"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500)
+	build_path = /obj/item/weapon/storage/toolbox
+	category = list("initial","Tools")
+
 /datum/design/console_screen
 	name = "Console screen"
 	id = "console_screen"
@@ -154,6 +171,14 @@
 	build_path = /obj/item/device/pipe_painter
 	category = list("initial", "Misc")
 
+/datum/design/airlock_painter
+	name = "Airlock painter"
+	id = "airlock_painter"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/weapon/airlock_painter
+	category = list("initial", "Misc")
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
@@ -161,6 +186,7 @@
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/metal
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/glass
 	name = "Glass"
@@ -169,6 +195,7 @@
 	materials = list(MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/glass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rglass
 	name = "Reinforced glass"
@@ -177,6 +204,7 @@
 	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rods
 	name = "Metal rod"
@@ -185,6 +213,7 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/stack/rods
 	category = list("initial","Construction")
+	maxstack = 50
 
 /datum/design/rcd_ammo
 	name = "Compressed matter cardridge"
@@ -200,6 +229,94 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/weapon/kitchen/knife
+	category = list("initial","Dinnerware")
+
+/datum/design/fork
+	name = "Fork"
+	id = "fork"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 80)
+	build_path = /obj/item/weapon/kitchen/fork
+	category = list("initial","Dinnerware")
+
+/datum/design/tray
+	name = "Tray"
+	id = "tray"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/bag/tray
+	category = list("initial","Dinnerware")
+
+/datum/design/bowl
+	name = "Bowl"
+	id = "bowl"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/glass/bowl
+	category = list("initial","Dinnerware")
+
+/datum/design/drinking_glass
+	name = "Drinking glass"
+	id = "drinking_glass"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 500)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass
+	category = list("initial","Dinnerware")
+
+/datum/design/shot_glass
+	name = "Shot glass"
+	id = "shot_glass"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 100)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass
+	category = list("initial","Dinnerware")
+
+/datum/design/shaker
+	name = "Shaker"
+	id = "shaker"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1500)
+	build_path = /obj/item/weapon/reagent_containers/food/drinks/shaker
+	category = list("initial","Dinnerware")
+
+/datum/design/cultivator
+	name = "Cultivator"
+	id = "cultivator"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL=50)
+	build_path = /obj/item/weapon/cultivator
+	category = list("initial","Misc")
+
+/datum/design/plant_analyzer
+	name = "Plant analyzer"
+	id = "plant_analyzer"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
+	build_path = /obj/item/device/plant_analyzer
+	category = list("initial","Misc")
+
+/datum/design/shovel
+	name = "Shovel"
+	id = "shovel"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel
+	category = list("initial","Misc")
+
+/datum/design/spade
+	name = "Spade"
+	id = "spade"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50)
+	build_path = /obj/item/weapon/shovel/spade
+	category = list("initial","Misc")
+
+/datum/design/hatchet
+	name = "Hatchet"
+	id = "hatchet"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000)
+	build_path = /obj/item/weapon/hatchet
 	category = list("initial","Misc")
 
 /datum/design/scalpel
@@ -546,6 +663,14 @@
 	materials = list(MAT_METAL = 30000)
 	build_path = /obj/item/ammo_box/c9mm
 	category = list("hacked", "Security")
+
+/datum/design/cleaver
+	name = "Butcher's cleaver"
+	id = "cleaver"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 18000)
+	build_path = /obj/item/weapon/kitchen/knife/butcher
+	category = list("hacked", "Dinnerware")
 
 /datum/design/spraycan
 	name = "Spraycan"

@@ -8,7 +8,7 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Toggle Mister"
+	actions_types = list(/datum/action/item_action/toggle_mister)
 
 	var/obj/item/weapon/noz
 	var/on = 0
@@ -22,10 +22,14 @@
 /obj/item/weapon/watertank/ui_action_click()
 	toggle_mister()
 
+/obj/item/weapon/watertank/item_action_slot_check(slot, mob/user)
+	if(slot == user.getBackSlot())
+		return 1
+
 /obj/item/weapon/watertank/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
-	if (usr.get_item_by_slot(usr.getWatertankSlot()) != src)
+	if (usr.get_item_by_slot(usr.getBackSlot()) != src)
 		usr << "<span class='warning'>The watertank must be worn properly to use!</span>"
 		return
 	if(usr.incapacitated())
@@ -52,7 +56,8 @@
 	return new /obj/item/weapon/reagent_containers/spray/mister(src)
 
 /obj/item/weapon/watertank/equipped(mob/user, slot)
-	if (slot != slot_back)
+	..()
+	if(slot != slot_back)
 		remove_noz()
 
 /obj/item/weapon/watertank/proc/remove_noz()
@@ -75,34 +80,29 @@
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/H = src.loc
-	if(istype(H))
-		switch(over_object.name)
-			if("r_hand")
-				if(H.r_hand)
+	var/mob/M = src.loc
+	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		switch(H.slot_id)
+			if(slot_r_hand)
+				if(M.r_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(H.l_hand)
+				M.put_in_r_hand(src)
+			if(slot_l_hand)
+				if(M.l_hand)
 					return
-				if(!H.unEquip(src))
+				if(!M.unEquip(src))
 					return
-				H.put_in_l_hand(src)
-	return
+				M.put_in_l_hand(src)
 
 /obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
-	..()
-
-/mob/proc/getWatertankSlot()
-	return slot_back
-
-/mob/living/simple_animal/drone/getWatertankSlot()
-	return slot_drone_storage
+		return 1
+	else
+		return ..()
 
 // This mister item is intended as an extension of the watertank and always attached to it.
 // Therefore, it's designed to be "locked" to the player's hands or extended back onto
@@ -119,6 +119,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	flags = NODROP | OPENCONTAINER | NOBLUDGEON
+	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
 
@@ -131,6 +132,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
+	..()
 	user << "<span class='notice'>The mister snaps back onto the watertank.</span>"
 	tank.on = 0
 	loc = tank
@@ -152,7 +154,7 @@
 		loc = tank.loc
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
 		return
 	..()
 
@@ -204,6 +206,7 @@
 	return new /obj/item/weapon/extinguisher/mini/nozzle(src)
 
 /obj/item/weapon/watertank/atmos/dropped(mob/user)
+	..()
 	icon_state = "waterbackpackatmos"
 	if(istype(noz, /obj/item/weapon/extinguisher/mini/nozzle))
 		var/obj/item/weapon/extinguisher/mini/nozzle/N = noz
@@ -261,6 +264,7 @@
 	return
 
 /obj/item/weapon/extinguisher/mini/nozzle/dropped(mob/user)
+	..()
 	user << "<span class='notice'>The nozzle snaps back onto the tank!</span>"
 	tank.on = 0
 	loc = tank
@@ -340,12 +344,12 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
-	action_button_name = "Activate Injector"
+	actions_types = list(/datum/action/item_action/activate_injector)
 
 	var/on = 0
 	volume = 300
 	var/usage_ratio = 5 //5 unit added per 1 removed
-	var/injection_amount = 1 
+	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
 	flags = OPENCONTAINER
 	spillable = 0
@@ -353,6 +357,10 @@
 
 /obj/item/weapon/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
+
+/obj/item/weapon/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
+	if(slot == slot_back)
+		return 1
 
 /obj/item/weapon/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr
@@ -368,19 +376,22 @@
 
 //Todo : cache these.
 /obj/item/weapon/reagent_containers/chemtank/proc/update_filling()
-	overlays.Cut()
+	cut_overlays()
 
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi',icon_state = "backpack-10")
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)		filling.icon_state = "backpack-10"
-			if(16 to 60) 	filling.icon_state = "backpack50"
-			if(61 to INFINITY)	filling.icon_state = "backpack100"
+			if(0 to 15)
+				filling.icon_state = "backpack-10"
+			if(16 to 60)
+				filling.icon_state = "backpack50"
+			if(61 to INFINITY)
+				filling.icon_state = "backpack100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)
 
 /obj/item/weapon/reagent_containers/chemtank/worn_overlays(var/isinhands = FALSE) //apply chemcolor and level
 	. = list()
@@ -390,22 +401,25 @@
 
 		var/percent = round((reagents.total_volume / volume) * 100)
 		switch(percent)
-			if(0 to 15)		filling.icon_state = "backpackmob-10"
-			if(16 to 60) 	filling.icon_state = "backpackmob50"
-			if(61 to INFINITY)	filling.icon_state = "backpackmob100"
+			if(0 to 15)
+				filling.icon_state = "backpackmob-10"
+			if(16 to 60)
+				filling.icon_state = "backpackmob50"
+			if(61 to INFINITY)
+				filling.icon_state = "backpackmob100"
 
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += filling
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_on()
 	on = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns on.</span>"
 
 /obj/item/weapon/reagent_containers/chemtank/proc/turn_off()
 	on = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	if(ismob(loc))
 		loc << "<span class='notice'>[src] turns off.</span>"
 
@@ -431,3 +445,36 @@
 	..()
 	reagents.add_reagent("stimulants_longterm", 300)
 	update_filling()
+
+//Operator backpack spray
+/obj/item/weapon/watertank/operator
+	name = "backpack water tank"
+	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
+	icon_state = "waterbackpackjani"
+	item_state = "waterbackpackjani"
+	w_class = 3
+	volume = 2000
+	slowdown = 0
+
+/obj/item/weapon/watertank/operator/New()
+	..()
+	reagents.add_reagent("mutagen",350)
+	reagents.add_reagent("napalm",125)
+	reagents.add_reagent("welding_fuel",125)
+	reagents.add_reagent("clf3",300)
+	reagents.add_reagent("cryptobiolin",350)
+	reagents.add_reagent("plasma",250)
+	reagents.add_reagent("condensedcapsaicin",500)
+
+/obj/item/weapon/reagent_containers/spray/mister/operator
+	name = "janitor spray nozzle"
+	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "misterjani"
+	item_state = "misterjani"
+	w_class = 4
+	amount_per_transfer_from_this = 100
+	possible_transfer_amounts = list(75,100,150)
+
+/obj/item/weapon/watertank/operator/make_noz()
+	return new /obj/item/weapon/reagent_containers/spray/mister/operator(src)

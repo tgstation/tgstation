@@ -1,6 +1,0 @@
-author: MrStonedOne
-delete-after: True
-changes: 
-  - bugfix: "screen shakes will no longer allow you to see through walls"
-  - tweak: "screen shakes will now move with you when moving rather than lag your client behind your mob"
-  - tweak: "screen shakes are now less laggy in higher tickrates"

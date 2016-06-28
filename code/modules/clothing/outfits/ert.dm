@@ -10,7 +10,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()
@@ -124,7 +124,8 @@
 		/obj/item/weapon/melee/baton/loaded=1,\
 		/obj/item/clothing/mask/gas/sechailer/swat=1,\
 		/obj/item/weapon/gun/energy/pulse/pistol/loyalpin=1,\
-		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1)
+		/obj/item/weapon/reagent_containers/hypospray/combat/nanites=1,\
+		/obj/item/weapon/gun/medbeam=1)
 
 /datum/outfit/ert/engineer
 	name = "ERT Engineer"

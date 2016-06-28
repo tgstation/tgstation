@@ -1,36 +1,36 @@
-/obj/item/organ/internal/alien
+/obj/item/organ/alien
 	origin_tech = "biotech=5"
 	icon_state = "xgibmid2"
 	var/list/alien_powers = list()
 
-/obj/item/organ/internal/alien/New()
+/obj/item/organ/alien/New()
 	for(var/A in alien_powers)
 		if(ispath(A))
 			alien_powers -= A
 			alien_powers += new A(src)
 	..()
 
-/obj/item/organ/internal/alien/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Insert(mob/living/carbon/M, special = 0)
 	..()
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.AddAbility(P)
 
 
-/obj/item/organ/internal/alien/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/Remove(mob/living/carbon/M, special = 0)
 	for(var/obj/effect/proc_holder/alien/P in alien_powers)
 		M.RemoveAbility(P)
 	..()
 
-/obj/item/organ/internal/alien/prepare_eat()
+/obj/item/organ/alien/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("sacid", 10)
 	return S
 
 
-/obj/item/organ/internal/alien/plasmavessel
+/obj/item/organ/alien/plasmavessel
 	name = "plasma vessel"
 	icon_state = "plasma"
-	origin_tech = "biotech=5;plasmatech=2"
+	origin_tech = "biotech=5;plasmatech=4"
 	w_class = 3
 	zone = "chest"
 	slot = "plasmavessel"
@@ -41,12 +41,12 @@
 	var/heal_rate = 5
 	var/plasma_rate = 10
 
-/obj/item/organ/internal/alien/plasmavessel/prepare_eat()
+/obj/item/organ/alien/plasmavessel/prepare_eat()
 	var/obj/S = ..()
 	S.reagents.add_reagent("plasma", storedPlasma/10)
 	return S
 
-/obj/item/organ/internal/alien/plasmavessel/large
+/obj/item/organ/alien/plasmavessel/large
 	name = "large plasma vessel"
 	icon_state = "plasma_large"
 	w_class = 4
@@ -54,11 +54,11 @@
 	max_plasma = 500
 	plasma_rate = 15
 
-/obj/item/organ/internal/alien/plasmavessel/large/queen
-	origin_tech = "biotech=6;plasmatech=3"
+/obj/item/organ/alien/plasmavessel/large/queen
+	origin_tech = "biotech=6;plasmatech=4"
 	plasma_rate = 20
 
-/obj/item/organ/internal/alien/plasmavessel/small
+/obj/item/organ/alien/plasmavessel/small
 	name = "small plasma vessel"
 	icon_state = "plasma_small"
 	w_class = 2
@@ -66,14 +66,14 @@
 	max_plasma = 150
 	plasma_rate = 5
 
-/obj/item/organ/internal/alien/plasmavessel/small/tiny
+/obj/item/organ/alien/plasmavessel/small/tiny
 	name = "tiny plasma vessel"
 	icon_state = "plasma_tiny"
 	w_class = 1
 	max_plasma = 100
 	alien_powers = list(/obj/effect/proc_holder/alien/transfer)
 
-/obj/item/organ/internal/alien/plasmavessel/on_life()
+/obj/item/organ/alien/plasmavessel/on_life()
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in owner.loc)
 		if(owner.health >= owner.maxHealth)
@@ -88,38 +88,69 @@
 			owner.adjustOxyLoss(-heal_amt)
 			owner.adjustCloneLoss(-heal_amt)
 
-/obj/item/organ/internal/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(isalien(M))
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
-/obj/item/organ/internal/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/plasmavessel/Remove(mob/living/carbon/M, special = 0)
 	..()
 	if(isalien(M))
 		var/mob/living/carbon/alien/A = M
 		A.updatePlasmaDisplay()
 
 
-/obj/item/organ/internal/alien/hivenode
+/obj/item/organ/alien/hivenode
 	name = "hive node"
 	icon_state = "hivenode"
 	zone = "head"
 	slot = "hivenode"
 	origin_tech = "biotech=5;magnets=4;bluespace=3"
 	w_class = 1
+	var/recent_queen_death = 0 //Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	alien_powers = list(/obj/effect/proc_holder/alien/whisper)
 
-/obj/item/organ/internal/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= "alien"
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= "alien"
 	..()
 
+//When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
+/obj/item/organ/alien/hivenode/proc/queen_death()
+	if(!owner|| owner.stat == DEAD)
+		return
+	if(isalien(owner)) //Different effects for aliens than humans
+		owner << "<span class='userdanger'>Your Queen has been struck down!</span>"
+		owner << "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."
+		owner.emote("roar")
+		owner.Stun(10) //Actually just slows them down a bit.
 
-/obj/item/organ/internal/alien/resinspinner
+	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
+		owner << "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"
+		owner.emote("scream")
+		owner.Weaken(5)
+
+	owner.jitteriness += 30
+	owner.confused += 30
+	owner.stuttering += 30
+
+	recent_queen_death = 1
+	owner.throw_alert("alien_noqueen", /obj/screen/alert/alien_vulnerable)
+	spawn(2400) //four minutes
+		if(qdeleted(src)) //In case the node is deleted
+			return
+		recent_queen_death = 0
+		if(!owner) //In case the xeno is butchered or subjected to surgery after death.
+			return
+		owner << "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>"
+		owner.clear_alert("alien_noqueen")
+
+
+/obj/item/organ/alien/resinspinner
 	name = "resin spinner"
 	icon_state = "stomach-x"
 	zone = "mouth"
@@ -128,7 +159,7 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/resin)
 
 
-/obj/item/organ/internal/alien/acid
+/obj/item/organ/alien/acid
 	name = "acid gland"
 	icon_state = "acid"
 	zone = "mouth"
@@ -137,7 +168,7 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/acid)
 
 
-/obj/item/organ/internal/alien/neurotoxin
+/obj/item/organ/alien/neurotoxin
 	name = "neurotoxin gland"
 	icon_state = "neurotox"
 	zone = "mouth"
@@ -146,11 +177,11 @@
 	alien_powers = list(/obj/effect/proc_holder/alien/neurotoxin)
 
 
-/obj/item/organ/internal/alien/eggsac
+/obj/item/organ/alien/eggsac
 	name = "egg sac"
 	icon_state = "eggsac"
 	zone = "groin"
 	slot = "eggsac"
 	w_class = 4
-	origin_tech = "biotech=8"
+	origin_tech = "biotech=6"
 	alien_powers = list(/obj/effect/proc_holder/alien/lay_egg)

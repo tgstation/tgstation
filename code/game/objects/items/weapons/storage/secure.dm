@@ -36,39 +36,40 @@
 		if (istype(W, /obj/item/weapon/screwdriver))
 			if (do_after(user, 20/W.toolspeed, target = src))
 				src.open =! src.open
-				user.show_message(text("<span class='notice'>You [] the service panel.</span>", (src.open ? "open" : "close")))
+				user.show_message("<span class='notice'>You [open ? "open" : "close"] the service panel.</span>", 1)
 			return
 		if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
-			user.show_message(text("<span class='danger'>Now attempting to reset internal memory, please hold.</span>"), 1)
+			user.show_message("<span class='danger'>Now attempting to reset internal memory, please hold.</span>", 1)
 			src.l_hacking = 1
 			if (do_after(usr, 100/W.toolspeed, target = src))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
-					user.show_message(text("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>"), 1)
+					user.show_message("<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
 					sleep(80)
 					src.l_setshort = 0
 					src.l_hacking = 0
 				else
-					user.show_message(text("<span class='danger'>Unable to reset internal memory.</span>"), 1)
+					user.show_message("<span class='danger'>Unable to reset internal memory.</span>", 1)
 					src.l_hacking = 0
-			else	src.l_hacking = 0
+			else
+				src.l_hacking = 0
 			return
 		//At this point you have exhausted all the special things to do when locked
 		// ... but it's still locked.
 		return
 
 	// -> storage/attackby() what with handle insertion, etc
-	..()
+	return ..()
 
 /obj/item/weapon/storage/secure/emag_act(mob/user)
 	if(locked)
 		if(!emagged)
 			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
 			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
+			add_overlay(image('icons/obj/storage.dmi', icon_locking))
 			locked = 0
 			user << "<span class='notice'>You short out the lock on [src].</span>"
 
@@ -107,7 +108,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_opened)
+				add_overlay(image('icons/obj/storage.dmi', icon_opened))
 				src.code = null
 			else
 				src.code = "ERROR"

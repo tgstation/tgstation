@@ -5,7 +5,7 @@
 	var/width = 0
 	var/height = 0
 	var/atom/ref = null
-	var/window_options = "focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
+	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;" // window option is set using window_id
 	var/stylesheets[0]
 	var/scripts[0]
 	var/title_image
@@ -100,10 +100,113 @@
 		window_size = "size=[width]x[height];"
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
-		onclose(user, window_id, ref)
+		spawn(0)
+			//winexists sleeps, so we don't need to.
+			for (var/i in 1 to 10)
+				if (user && winexists(user, window_id))
+					onclose(user, window_id, ref)
+					break
+
 
 /datum/browser/proc/close()
 	user << browse(null, "window=[window_id]")
+
+/datum/browser/alert
+	var/selectedbutton = 0
+	var/opentime = 0
+	var/timeout
+	var/stealfocus
+
+/datum/browser/alert/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1,Timeout=6000)
+	if (!User)
+		return
+
+	var/output =  {"<center><b>[Message]</b></center><br />
+		<div style="text-align:center">
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=\ref[src];button=1">[Button1]</a>"}
+
+	if (Button2)
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=\ref[src];button=2">[Button2]</a>"}
+
+	if (Button3)
+		output += {"<a style="font-size:large;float:right" href="?src=\ref[src];button=3">[Button3]</a>"}
+
+	output += {"</div>"}
+
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 150, src)
+	set_content(output)
+	stealfocus = StealFocus
+	if (!StealFocus)
+		window_options += "focus=false;"
+	timeout = Timeout
+
+/datum/browser/alert/open()
+	set waitfor = 0
+	opentime = world.time
+
+	if (stealfocus)
+		. = ..(use_onclose = 1)
+	else
+		var/focusedwindow = winget(user, null, "focus")
+		. = ..(use_onclose = 1)
+
+		//waits for the window to show up client side before attempting to un-focus it
+		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
+		for (var/i in 1 to 10)
+			if (user && winexists(user, window_id))
+				if (focusedwindow)
+					winset(user, focusedwindow, "focus=true")
+				else
+					winset(user, "mapwindow", "focus=true")
+				break
+	if (timeout)
+		spawn(timeout)
+			close()
+
+/datum/browser/alert/close()
+	.=..()
+	opentime = 0
+
+/datum/browser/alert/proc/wait()
+	while (opentime && selectedbutton <= 0 && (!timeout || opentime+timeout >= world.time))
+		stoplag()
+
+/datum/browser/alert/Topic(href,href_list)
+	if (href_list["close"] || !user || !user.client)
+		opentime = 0
+		return
+	if (href_list["button"])
+		var/button = text2num(href_list["button"])
+		if (button <= 3 && button >= 1)
+			selectedbutton = button
+	opentime = 0
+	close()
+
+//designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
+/proc/tgalert(var/mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+	if (!User)
+		User = usr
+	switch(askuser(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout))
+		if (1)
+			return Button1
+		if (2)
+			return Button2
+		if (3)
+			return Button3
+
+//Same shit, but it returns the button number, could at some point support unlimited button amounts.
+/proc/askuser(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
+	if (!istype(User))
+		if (istype(User, /client/))
+			var/client/C = User
+			User = C.mob
+		else
+			return
+	var/datum/browser/alert/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus, Timeout)
+	A.open()
+	A.wait()
+	if (A.selectedbutton)
+		return A.selectedbutton
 
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
@@ -115,7 +218,7 @@
 		I = new /icon(icon, icon_state, dir)
 	else
 		I = new /icon(icon, icon_state)
-		dir = "default"
+		setDir("default")
 
 	var/filename = "[ckey("[icon]_[icon_state]_[dir]")].png"
 	src << browse_rsc(I, filename)

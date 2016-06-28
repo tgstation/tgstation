@@ -7,18 +7,21 @@
 /obj/effect/holodeck_effect
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "x2"
-	invisibility = 101
-	proc/activate(var/obj/machinery/computer/holodeck/HC)
-		return
-	proc/deactivate(var/obj/machinery/computer/holodeck/HC)
-		qdel(src)
-		return
-	// Called by the holodeck computer as long as the program is running
-	proc/tick(var/obj/machinery/computer/holodeck/HC)
-		return
+	invisibility = INVISIBILITY_ABSTRACT
 
-	proc/safety(var/active)
-		return
+/obj/effect/holodeck_effect/proc/activate(var/obj/machinery/computer/holodeck/HC)
+	return
+
+/obj/effect/holodeck_effect/proc/deactivate(var/obj/machinery/computer/holodeck/HC)
+	qdel(src)
+	return
+
+// Called by the holodeck computer as long as the program is running
+/obj/effect/holodeck_effect/proc/tick(var/obj/machinery/computer/holodeck/HC)
+	return
+
+/obj/effect/holodeck_effect/proc/safety(var/active)
+	return
 
 
 // Generates a holodeck-tracked card deck
@@ -34,7 +37,8 @@
 	return D
 
 /obj/effect/holodeck_effect/cards/safety(active)
-	if(!D) return
+	if(!D)
+		return
 	if(active)
 		D.card_hitsound = null
 		D.card_force = 0
@@ -67,7 +71,8 @@
 	var/mob/mob = null
 
 /obj/effect/holodeck_effect/mobspawner/activate(var/obj/machinery/computer/holodeck/HC)
-	if(islist(mobtype)) mobtype = pick(mobtype)
+	if(islist(mobtype))
+		mobtype = pick(mobtype)
 	mob = new mobtype(loc)
 
 	// these vars are not really standardized but all would theoretically create stuff on death
@@ -76,7 +81,8 @@
 	return mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(var/obj/machinery/computer/holodeck/HC)
-	if(mob) HC.derez(mob)
+	if(mob)
+		HC.derez(mob)
 	qdel(src)
 
 /obj/effect/holodeck_effect/mobspawner/pet
@@ -85,3 +91,6 @@
 		/mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten,
 		/mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/pet/dog/corgi/puppy,
 		/mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/pet/fox)
+
+/obj/effect/holodeck_effect/mobspawner/bee
+	mobtype = /mob/living/simple_animal/hostile/poison/bees/toxin

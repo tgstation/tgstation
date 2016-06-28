@@ -22,9 +22,18 @@
 	base_state = "pflash"
 	density = 1
 
-/obj/machinery/flasher/New()
+/obj/machinery/flasher/New(loc, ndir = 0, built = 0)
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	bulb = new /obj/item/device/assembly/flash/handheld(src)
+	if(built)
+		setDir(ndir)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
+		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+	else
+		bulb = new /obj/item/device/assembly/flash/handheld(src)
+
+/obj/machinery/flasher/Move()
+	remove_from_proximity_list(src, range)
+	..()
 
 /obj/machinery/flasher/power_change()
 	if (powered() && anchored && bulb)
@@ -39,6 +48,7 @@
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user, params)
+	add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		if (bulb)
 			user.visible_message("[user] begins to disconnect [src]'s flashbulb.", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
@@ -59,7 +69,22 @@
 			power_change()
 		else
 			user << "<span class='warning'>A flashbulb is already installed in [src]!</span>"
-	add_fingerprint(user)
+
+	else if (istype(W, /obj/item/weapon/wrench))
+		if(!bulb)
+			user << "<span class='notice'>You start unsecuring the flasher frame...</span>"
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 40/W.toolspeed, target = src))
+				user << "<span class='notice'>You unsecure the flasher frame.</span>"
+				var/obj/item/wallframe/flasher/F = new(get_turf(src))
+				transfer_fingerprints_to(F)
+				F.id = id
+				playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				qdel(src)
+		else
+			user << "<span class='warning'>Remove a flashbulb from [src] first!</span>"
+	else
+		return ..()
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -69,7 +94,6 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-
 	if (!powered() || !bulb)
 		return
 
@@ -124,14 +148,34 @@
 
 		if (!anchored && !isinspace())
 			user << "<span class='notice'>[src] is now secured.</span>"
-			overlays += "[base_state]-s"
+			add_overlay("[base_state]-s")
 			anchored = 1
 			power_change()
+			add_to_proximity_list(src, range)
 		else
 			user << "<span class='notice'>[src] can now be moved.</span>"
-			overlays.Cut()
+			cut_overlays()
 			anchored = 0
 			power_change()
+			remove_from_proximity_list(src, range)
 
 	else
-		..()
+		return ..()
+
+
+/obj/item/wallframe/flasher
+	name = "mounted flash frame"
+	desc = "Used for building wall-mounted flashers."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "mflash_frame"
+	result_path = /obj/machinery/flasher
+	var/id = null
+
+/obj/item/wallframe/flasher/examine(mob/user)
+	..()
+	user << "<span class='notice'>Its channel ID is '[id]'.</span>"
+
+/obj/item/wallframe/flasher/after_attach(var/obj/O)
+	..()
+	var/obj/machinery/flasher/F = O
+	F.id = id

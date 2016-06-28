@@ -21,12 +21,11 @@
 /obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag, params)
 	if(flag)
 		return
-	else
-		if(works_from_distance)
-			if(istype(T))
-				if(T.component_parts)
-					T.exchange_parts(user, src)
-					user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+	else if(works_from_distance)
+		if(istype(T))
+			if(T.component_parts)
+				T.exchange_parts(user, src)
+				user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
@@ -72,6 +71,7 @@
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/New()
+	..()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
@@ -114,7 +114,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
 	materials = list(MAT_METAL=80)
@@ -155,7 +155,7 @@
 
 /obj/item/weapon/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "advanced_matter_bin"
 	origin_tech = "materials=3"
 	rating = 2
@@ -167,7 +167,7 @@
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "super_capacitor"
-	origin_tech = "powerstorage=5;materials=4"
+	origin_tech = "powerstorage=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
@@ -175,7 +175,7 @@
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
-	origin_tech = "magnets=5"
+	origin_tech = "magnets=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 
@@ -183,7 +183,7 @@
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
-	origin_tech = "materials=5;programming=2"
+	origin_tech = "materials=4;programming=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=30)
 
@@ -191,15 +191,15 @@
 	name = "ultra-high-power micro-laser"
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
-	origin_tech = "magnets=5"
+	origin_tech = "magnets=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/stock_parts/matter_bin/super
 	name = "super matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "super_matter_bin"
-	origin_tech = "materials=5"
+	origin_tech = "materials=4;engineering=4"
 	rating = 3
 	materials = list(MAT_METAL=80)
 
@@ -209,7 +209,7 @@
 	name = "quadratic capacitor"
 	desc = "An capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
-	origin_tech = "powerstorage=6;materials=5"
+	origin_tech = "powerstorage=5;materials=4;engineering=4"
 	rating = 4
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
 
@@ -217,7 +217,7 @@
 	name = "triphasic scanning module"
 	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
 	icon_state = "triphasic_scan_module"
-	origin_tech = "magnets=6"
+	origin_tech = "magnets=5;materials=4;engineering=4"
 	rating = 4
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
 
@@ -225,7 +225,7 @@
 	name = "femto-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
-	origin_tech = "materials=6;programming=3"
+	origin_tech = "materials=6;programming=4;engineering=4"
 	rating = 4
 	materials = list(MAT_METAL=30)
 
@@ -233,15 +233,15 @@
 	name = "quad-ultra micro-laser"
 	icon_state = "quadultra_micro_laser"
 	desc = "A tiny laser used in certain devices."
-	origin_tech = "magnets=6"
+	origin_tech = "magnets=5;materials=4;engineering=4"
 	rating = 4
 	materials = list(MAT_METAL=10, MAT_GLASS=20)
 
 /obj/item/weapon/stock_parts/matter_bin/bluespace
 	name = "bluespace matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "bluespace_matter_bin"
-	origin_tech = "materials=6"
+	origin_tech = "materials=6;programming=4;engineering=4"
 	rating = 4
 	materials = list(MAT_METAL=80)
 
@@ -251,49 +251,49 @@
 	name = "subspace ansible"
 	icon_state = "subspace_ansible"
 	desc = "A compact module capable of sensing extradimensional activity."
-	origin_tech = "programming=2;magnets=3;materials=2;bluespace=1"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=1"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/filter
 	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
 	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
-	origin_tech = "programming=2;magnets=1"
+	origin_tech = "programming=2;magnets=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/amplifier
 	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
 	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
-	origin_tech = "programming=2;magnets=2;materials=2;bluespace=1"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/treatment
 	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
 	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
-	origin_tech = "programming=2;magnets=1;materials=3;bluespace=1"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/analyzer
 	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
 	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
-	origin_tech = "programming=2;magnets=2;materials=2;bluespace=1"
+	origin_tech = "programming=2;magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=30, MAT_GLASS=10)
 
 /obj/item/weapon/stock_parts/subspace/crystal
 	name = "ansible crystal"
 	icon_state = "ansible_crystal"
 	desc = "A crystal made from pure glass used to transmit laser databursts to subspace."
-	origin_tech = "magnets=2;materials=2;bluespace=1"
+	origin_tech = "magnets=2;materials=2;bluespace=2;plasmatech=2"
 	materials = list(MAT_GLASS=50)
 
 /obj/item/weapon/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
-	origin_tech = "magnets=3;materials=3;bluespace=2"
+	origin_tech = "magnets=2;materials=2;bluespace=2"
 	materials = list(MAT_METAL=50)
 
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve

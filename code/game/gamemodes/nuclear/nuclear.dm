@@ -1,12 +1,12 @@
 /datum/game_mode
 	var/list/datum/mind/syndicates = list()
-
+	var/nukeops_lastname = ""
 
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 20 // 20 players - 5 players to be the nuke ops = 15 players remaining
-	required_enemies = 5
+	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_enemies = 2
 	recommended_enemies = 5
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
@@ -16,36 +16,29 @@
 	var/nuke_off_station = 0 //Used for tracking if the syndies actually haul the nuke to the station
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 
+
 /datum/game_mode/nuclear/announce()
 	world << "<B>The current game mode is - Nuclear Emergency!</B>"
 	world << "<B>A [syndicate_name()] Strike Force is approaching [station_name()]!</B>"
 	world << "A nuclear explosive was being transported by Nanotrasen to a military base. The transport ship mysteriously lost contact with Space Traffic Control (STC). About that time a strange disk was discovered around [station_name()]. It was identified by Nanotrasen as a nuclear auth. disk and now Syndicate Operatives have arrived to retake the disk and detonate SS13! Also, most likely Syndicate star ships are in the vicinity so take care not to lose the disk!\n<B>Syndicate</B>: Reclaim the disk and detonate the nuclear bomb anywhere on SS13.\n<B>Personnel</B>: Hold the disk and <B>escape with the disk</B> on the shuttle!"
 
 /datum/game_mode/nuclear/pre_setup()
-	var/agent_number = 0
-	if(antag_candidates.len > agents_possible)
-		agent_number = agents_possible
-	else
-		agent_number = antag_candidates.len
-
 	var/n_players = num_players()
-	if(agent_number > n_players)
-		agent_number = n_players/2
+	var/n_agents = min(round(n_players / 10, 1), agents_possible)
 
-	while(agent_number > 0)
+	if(antag_candidates.len < n_agents) //In the case of having less candidates than the selected number of agents
+		n_agents = antag_candidates.len
+
+	while(n_agents > 0)
 		var/datum/mind/new_syndicate = pick(antag_candidates)
 		syndicates += new_syndicate
 		antag_candidates -= new_syndicate //So it doesn't pick the same guy each time.
-		agent_number--
+		n_agents--
 
 	for(var/datum/mind/synd_mind in syndicates)
 		synd_mind.assigned_role = "Syndicate"
 		synd_mind.special_role = "Syndicate"//So they actually have a special role/N
 		log_game("[synd_mind.key] (ckey) has been selected as a nuclear operative")
-		if(ishuman(synd_mind.current))//don't want operatives burning to death instantly.
-			var/mob/living/carbon/human/human = synd_mind.current
-			if(human.dna && human.dna.species.dangerous_existence)
-				human.set_species(/datum/species/human)
 
 	return 1
 
@@ -88,7 +81,7 @@
 		greet_syndicate(synd_mind)
 		equip_syndicate(synd_mind.current)
 
-		if (nuke_code)
+		if(nuke_code)
 			synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
 			synd_mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
 
@@ -109,7 +102,8 @@
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
 	spawn(1)
-		NukeNameAssign(nukelastname(synd_mind.current),syndicates) //allows time for the rest of the syndies to be chosen
+		nukeops_lastname = nukelastname(synd_mind.current)
+		NukeNameAssign(nukeops_lastname,syndicates) //allows time for the rest of the syndies to be chosen
 	synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 	synd_mind.current << "<B>You are the Syndicate [leader_title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>"
 	synd_mind.current << "<B>If you feel you are not up to this task, give your ID to another operative.</B>"
@@ -130,7 +124,7 @@
 	if(A)
 		A.command = TRUE
 
-	if (nuke_code)
+	if(nuke_code)
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
 		P.name = "nuclear bomb code"
@@ -151,7 +145,7 @@
 
 
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
-	if (you_are)
+	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
 	var/obj_count = 1
 	for(var/datum/objective/objective in syndicate.objectives)
@@ -159,12 +153,9 @@
 		obj_count++
 	return
 
-
-/datum/game_mode/proc/random_radio_frequency()
-	return 1337 // WHY??? -- Doohl
-
-
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
+	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+
 	if(telecrystals)
 		synd_mob.equipOutfit(/datum/outfit/syndicate)
 	else
@@ -177,7 +168,6 @@
 		return 1
 	return ..()
 
-
 /datum/game_mode/proc/are_operatives_dead()
 	for(var/datum/mind/operative_mind in syndicates)
 		if (istype(operative_mind.current,/mob/living/carbon/human) && (operative_mind.current.stat!=2))
@@ -187,7 +177,7 @@
 /datum/game_mode/nuclear/check_finished() //to be called by ticker
 	if(replacementmode && round_converted == 2)
 		return replacementmode.check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 	if(are_operatives_dead())
 		if(bomb_set) //snaaaaaaaaaake! It's not over yet!
@@ -200,7 +190,7 @@
 		if(!D.onCentcom())
 			disk_rescued = 0
 			break
-	var/crew_evacuated = (SSshuttle.emergency.mode >= SHUTTLE_ENDGAME)
+	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
 	//var/operatives_are_dead = is_operatives_are_dead()
 
 
@@ -229,19 +219,19 @@
 		world << "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>"
 		world << "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't lose the disk!"
 
-	else if ((disk_rescued || SSshuttle.emergency.mode < SHUTTLE_ENDGAME) && are_operatives_dead())
+	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
 		feedback_set_details("round_end_result","loss - evacuation - disk secured - syndi team dead")
 		world << "<FONT size = 3><B>Crew Major Victory!</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and killed the [syndicate_name()] Operatives</B>"
 
-	else if ( disk_rescued )
+	else if (disk_rescued)
 		feedback_set_details("round_end_result","loss - evacuation - disk secured")
 		world << "<FONT size = 3><B>Crew Major Victory</B></FONT>"
 		world << "<B>The Research Staff has saved the disc and stopped the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued && are_operatives_dead())
-		feedback_set_details("round_end_result","loss - evacuation - disk not secured")
-		world << "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>"
+		feedback_set_details("round_end_result","halfwin - evacuation - disk not secured")
+		world << "<FONT size = 3><B>Neutral Victory!</B></FONT>"
 		world << "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>"
 
 	else if (!disk_rescued &&  crew_evacuated)
@@ -265,13 +255,13 @@
 		var/TC_uses = 0
 		for(var/datum/mind/syndicate in syndicates)
 			text += printplayer(syndicate)
-			for(var/obj/item/device/uplink/H in world_uplinks)
-				if(H && H.uplink_owner && H.uplink_owner==syndicate.key)
-					TC_uses += H.used_TC
+			for(var/obj/item/device/uplink/H in uplinks)
+				if(H && H.owner && H.owner == syndicate.key)
+					TC_uses += H.spent_telecrystals
 					purchases += H.purchase_log
 		text += "<br>"
 		text += "(Syndicates used [TC_uses] TC) [purchases]"
-		if(TC_uses==0 && station_was_nuked && !are_operatives_dead())
+		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
 			text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
 		world << text
 	return 1
@@ -306,11 +296,12 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/weapon/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
+	l_pocket = /obj/item/weapon/pinpointer/nukeop
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1)
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)
 
-	var/tc = 20
+	var/tc = 25
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0
@@ -322,10 +313,9 @@
 	R.freqlock = 1
 
 	if(tc)
-		var/obj/item/device/radio/uplink/U = new /obj/item/device/radio/uplink(H)
-		U.hidden_uplink.uplink_owner="[H.key]"
-		U.hidden_uplink.uses = tc
-		U.hidden_uplink.mode_override = /datum/game_mode/nuclear //Goodies
+		var/obj/item/device/radio/uplink/nuclear/U = new(H)
+		U.hidden_uplink.owner = "[H.key]"
+		U.hidden_uplink.telecrystals = tc
 		H.equip_to_slot_or_del(U, slot_in_backpack)
 
 	var/obj/item/weapon/implant/weapons_auth/W = new/obj/item/weapon/implant/weapons_auth(H)
@@ -341,15 +331,12 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
-	r_pocket = /obj/item/weapon/gun/projectile/automatic/pistol
+	r_pocket = /obj/item/weapon/tank/internals/emergency_oxygen/engi
 	belt = /obj/item/weapon/storage/belt/military
 	r_hand = /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog
-	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
+	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1,\
 		/obj/item/weapon/tank/jetpack/oxygen/harness=1,\
-		/obj/item/weapon/pinpointer/nukeop=1)
-
-	tc = 30
+		/obj/item/weapon/gun/projectile/automatic/pistol=1)
 
 /datum/outfit/syndicate/full/post_equip(mob/living/carbon/human/H)
 	..()
@@ -357,7 +344,5 @@
 
 	var/obj/item/clothing/suit/space/hardsuit/syndi/suit = H.wear_suit
 	suit.ToggleHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/syndi/helmet = H.head
-	helmet.attack_self(H)
 
-	H.internal = H.l_store
+	H.internal = H.r_store

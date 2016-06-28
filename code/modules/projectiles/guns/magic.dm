@@ -16,7 +16,7 @@
 	var/no_den_usage
 	origin_tech = null
 	clumsy_check = 0
-	trigger_guard = 0
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL // Has no trigger at all, uses magic instead
 	pin = /obj/item/device/firing_pin/magic
 
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
@@ -51,17 +51,19 @@
 	charges = max_charges
 	chambered = new ammo_type(src)
 	if(can_charge)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/magic/Destroy()
-	if(can_charge)	SSobj.processing.Remove(src)
+	if(can_charge)
+		STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
 /obj/item/weapon/gun/magic/process()
 	charge_tick++
-	if(charge_tick < recharge_rate || charges >= max_charges) return 0
+	if(charge_tick < recharge_rate || charges >= max_charges)
+		return 0
 	charge_tick = 0
 	charges++
 	return 1

@@ -7,17 +7,22 @@
 /obj/item/weapon/storage/pill_bottle/dice/New()
 	..()
 	var/special_die = pick("1","2","fudge","00","100")
-	if(special_die == "1")		new /obj/item/weapon/dice/d1(src)
-	if(special_die == "2")		new /obj/item/weapon/dice/d2(src)
+	if(special_die == "1")
+		new /obj/item/weapon/dice/d1(src)
+	if(special_die == "2")
+		new /obj/item/weapon/dice/d2(src)
 	new /obj/item/weapon/dice/d4(src)
 	new /obj/item/weapon/dice/d6(src)
-	if(special_die == "fudge")	new /obj/item/weapon/dice/fudge(src)
+	if(special_die == "fudge")
+		new /obj/item/weapon/dice/fudge(src)
 	new /obj/item/weapon/dice/d8(src)
 	new /obj/item/weapon/dice/d10(src)
-	if(special_die == "00")		new /obj/item/weapon/dice/d00(src)
+	if(special_die == "00")
+		new /obj/item/weapon/dice/d00(src)
 	new /obj/item/weapon/dice/d12(src)
 	new /obj/item/weapon/dice/d20(src)
-	if(special_die == "100")	new /obj/item/weapon/dice/d100(src)
+	if(special_die == "100")
+		new /obj/item/weapon/dice/d100(src)
 
 /obj/item/weapon/dice //depreciated d6, use /obj/item/weapon/dice/d6 if you actually want a d6
 	name = "die"
@@ -136,5 +141,5 @@
 		H.Weaken(3)
 
 /obj/item/weapon/dice/update_icon()
-	overlays.Cut()
-	overlays += "[src.icon_state][src.result]"
+	cut_overlays()
+	add_overlay("[src.icon_state][src.result]")

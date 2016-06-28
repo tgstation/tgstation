@@ -3,7 +3,8 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle
 	name = "Shuttles"
 	wait = 10
-	priority = 3
+	init_order = 3
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 
 	var/list/mobile = list()
 	var/list/stationary = list()
@@ -11,6 +12,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
+	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
 	var/emergencyCallTime = 6000	//time taken for emergency shuttle to reach the station when called (in deciseconds)
 	var/emergencyDockTime = 1800	//time taken for emergency shuttle to leave again once it has docked (in deciseconds)
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
@@ -20,48 +22,41 @@ var/datum/subsystem/shuttle/SSshuttle
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 50						//number of trade-points we have
-	var/points_per_decisecond = 0.005	//points gained every decisecond
-	var/points_per_slip = 2				//points gained per slip returned
-	var/points_per_crate = 5			//points gained per crate returned
-	var/points_per_intel = 250			//points gained per intel returned
-	var/points_per_plasma = 5			//points gained per plasma returned
-	var/points_per_design = 25			//points gained per max reliability research design returned (only for initilally unreliable designs)
+	var/points = 5000					//number of trade-points we have
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
-	var/list/techLevels = list()
-	var/list/researchDesigns = list()
+
+	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
-	var/list/supply_packs = list()
-	var/datum/round_event/shuttle_loan/shuttle_loan
-	var/sold_atoms = ""
+	var/list/orderhistory = list()
 
+	var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
-
-/datum/subsystem/shuttle/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+	if(!backup_shuttle)
+		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 
-	ordernum = rand(1,9000)
+	ordernum = rand(1, 9000)
 
-	for(var/typepath in subtypesof(/datum/supply_packs))
-		var/datum/supply_packs/P = new typepath()
-		if(P.name == "HEADER") continue		// To filter out group headers
-		supply_packs["[P.type]"] = P
+	for(var/pack in subtypesof(/datum/supply_pack))
+		var/datum/supply_pack/P = new pack()
+		if(!P.contains)
+			continue
+		supply_packs[P.type] = P
+
 	initial_move()
 	..()
 
 
 /datum/subsystem/shuttle/fire()
-	points += points_per_decisecond * wait
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing
@@ -83,8 +78,18 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if(!emergency)
-		throw EXCEPTION("requestEvac(): There is no emergency shuttle! The game will be unresolvable. This is likely due to a mapping error")
-		return
+		WARNING("requestEvac(): There is no emergency shuttle, but the \
+			shuttle was called. Using the backup shuttle instead.")
+		if(!backup_shuttle)
+			throw EXCEPTION("requestEvac(): There is no emergency shuttle, \
+			or backup shuttle! The game will be unresolvable. This is \
+			possibly a mapping error, more likely a bug with the shuttle \
+			manipulation system, or badminry. It is possible to manually \
+			resolve this problem by loading an emergency shuttle template \
+			manually, and then calling register() on the mobile docking port. \
+			Good luck.")
+			return
+		emergency = backup_shuttle
 
 	if(world.time - round_start_time < config.shuttle_refuel_delay)
 		user << "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again."
@@ -125,6 +130,13 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	return
 
+// Called when an emergency shuttle mobile docking port is
+// destroyed, which will only happen with admin intervention
+/datum/subsystem/shuttle/proc/emergencyDeregister()
+	// When a new emergency shuttle is created, it will override the
+	// backup shuttle.
+	src.emergency = src.backup_shuttle
+
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())
 		emergency.cancel(get_area(user))
@@ -164,7 +176,7 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if(callShuttle)
-		if(emergency.mode < SHUTTLE_CALL)
+		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
@@ -189,13 +201,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/moveShuttle(shuttleId, dockId, timed)
 	var/obj/docking_port/mobile/M = getShuttle(shuttleId)
+	var/obj/docking_port/stationary/D = getDock(dockId)
+
 	if(!M)
 		return 1
 	if(timed)
-		if(M.request(getDock(dockId)))
+		if(M.request(D))
 			return 2
 	else
-		if(M.dock(getDock(dockId)))
+		if(M.dock(D))
 			return 2
 	return 0	//dock successful
 
@@ -203,132 +217,30 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		for(var/obj/docking_port/stationary/S in stationary)
-			if(S.z != ZLEVEL_STATION && findtext(S.id, M.id))
-				S.width = M.width
-				S.height = M.height
-				S.dwidth = M.dwidth
-				S.dheight = M.dheight
 		moveShuttle(M.id, "[M.roundstart_move]", 0)
+		CHECK_TICK
 
-/datum/supply_order
-	var/ordernum
-	var/datum/supply_packs/object = null
-	var/orderedby = null
-	var/orderedbyRank
-	var/comment = null
+/datum/subsystem/shuttle/Recover()
+	if (istype(SSshuttle.mobile))
+		mobile = SSshuttle.mobile
+	if (istype(SSshuttle.stationary))
+		stationary = SSshuttle.stationary
+	if (istype(SSshuttle.transit))
+		transit = SSshuttle.transit
+	if (istype(SSshuttle.discoveredPlants))
+		discoveredPlants = SSshuttle.discoveredPlants
+	if (istype(SSshuttle.requestlist))
+		requestlist = SSshuttle.requestlist
+	if (istype(SSshuttle.orderhistory))
+		orderhistory = SSshuttle.orderhistory
+	if (istype(SSshuttle.emergency))
+		emergency = SSshuttle.emergency
+	if (istype(SSshuttle.backup_shuttle))
+		backup_shuttle = SSshuttle.backup_shuttle
+	if (istype(SSshuttle.supply))
+		supply = SSshuttle.supply
 
-/datum/supply_order/proc/generateRequisition(atom/_loc)
-	if(!object)
-		return
-
-	var/obj/item/weapon/paper/reqform = new /obj/item/weapon/paper(_loc)
-	reqform.name = "requisition form - [object.name]"
-	reqform.info += "<h3>[station_name] Supply Requisition Form</h3><hr>"
-	reqform.info += "INDEX: #[ordernum]<br>"
-	reqform.info += "REQUESTED BY: [orderedby]<br>"
-	reqform.info += "RANK: [orderedbyRank]<br>"
-	reqform.info += "REASON: [comment]<br>"
-	reqform.info += "SUPPLY CRATE TYPE: [object.name]<br>"
-	reqform.info += "ACCESS RESTRICTION: [get_access_desc(object.access)]<br>"
-	reqform.info += "CONTENTS:<br>"
-	reqform.info += object.manifest
-	reqform.info += "<hr>"
-	reqform.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
-
-	reqform.update_icon()	//Fix for appearing blank when printed.
-
-	return reqform
-
-/datum/supply_order/proc/createObject(atom/_loc, errors=0)
-	if(!object)
-		return
-
-		//create the crate
-	var/atom/Crate = new object.containertype(_loc)
-	Crate.name = "[object.containername] [comment ? "([comment])":"" ]"
-	if(object.access)
-		Crate:req_access = list(text2num(object.access))
-
-		//create the manifest slip
-	var/obj/item/weapon/paper/manifest/slip = new /obj/item/weapon/paper/manifest()
-	slip.erroneous = errors
-	slip.points = object.cost
-	slip.ordernumber = ordernum
-
-	var/stationName = (errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-	var/packagesAmt = SSshuttle.shoppinglist.len + ((errors & MANIFEST_ERROR_COUNT) ? rand(1,2) : 0)
-
-	slip.info = "<h3>[command_name()] Shipping Manifest</h3><hr><br>"
-	slip.info +="Order #[ordernum]<br>"
-	slip.info +="Destination: [stationName]<br>"
-	slip.info +="[packagesAmt] PACKAGES IN THIS SHIPMENT<br>"
-	slip.info +="CONTENTS:<br><ul>"
-
-		//we now create the actual contents
-	var/list/contains
-	if(istype(object, /datum/supply_packs/misc/randomised))
-		var/datum/supply_packs/misc/randomised/SO = object
-		contains = list()
-		if(object.contains.len)
-			for(var/j=1, j<=SO.num_contained, j++)
-				contains += pick(object.contains)
-	else
-		contains = object.contains
-
-	for(var/typepath in contains)
-		if(!typepath)	continue
-		var/atom/A = new typepath(Crate)
-		if(object.amount && A.vars.Find("amount") && A:amount)
-			A:amount = object.amount
-		slip.info += "<li>[A.name]</li>"	//add the item to the manifest (even if it was misplaced)
-
-	if(istype(Crate, /obj/structure/closet/critter)) // critter crates do not actually spawn mobs yet and have no contains var, but the manifest still needs to list them
-		var/obj/structure/closet/critter/CritCrate = Crate
-		if(CritCrate.content_mob)
-			var/mob/crittername = CritCrate.content_mob
-			slip.info += "<li>[initial(crittername.name)]</li>"
-
-	if((errors & MANIFEST_ERROR_ITEM))
-		//secure and large crates cannot lose items
-		if(findtext("[object.containertype]", "/secure/") || findtext("[object.containertype]","/largecrate/"))
-			errors &= ~MANIFEST_ERROR_ITEM
-		else
-			var/lostAmt = max(round(Crate.contents.len/10), 1)
-			//lose some of the items
-			while(--lostAmt >= 0)
-				qdel(pick(Crate.contents))
-
-	//manifest finalisation
-	slip.info += "</ul><br>"
-	slip.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
-	slip.loc = Crate
-	if(istype(Crate, /obj/structure/closet/crate))
-		var/obj/structure/closet/crate/CR = Crate
-		CR.manifest = slip
-		CR.update_icon()
-	if(istype(Crate, /obj/structure/largecrate))
-		var/obj/structure/largecrate/LC = Crate
-		LC.manifest = slip
-		LC.update_icon()
-
-	return Crate
-
-/datum/subsystem/shuttle/proc/generateSupplyOrder(packId, _orderedby, _orderedbyRank, _comment)
-	if(!packId)
-		return
-	var/datum/supply_packs/P = supply_packs["[packId]"]
-	if(!P)
-		return
-
-	var/datum/supply_order/O = new()
-	O.ordernum = ordernum++
-	O.object = P
-	O.orderedby = _orderedby
-	O.orderedbyRank = _orderedbyRank
-	O.comment = _comment
-
-	requestlist += O
-
-	return O
+	centcom_message = SSshuttle.centcom_message
+	ordernum = SSshuttle.ordernum
+	points = SSshuttle.points
 

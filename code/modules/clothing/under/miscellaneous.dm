@@ -244,6 +244,13 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
+/obj/item/clothing/under/burial
+	name = "burial garments"
+	desc = "Traditional burial garments from the early 22nd century."
+	icon_state = "burial"
+	item_state = "burial"
+	item_color = "burial"
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
@@ -490,6 +497,16 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
+/obj/item/clothing/under/plaid_skirt/green
+	name = "green plaid skirt"
+	desc = "A preppy green skirt with a white blouse."
+	icon_state = "plaid_green"
+	item_state = "plaid_green"
+	item_color = "plaid_green"
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = 1
+	alt_covers_chest = 1
+
 /obj/item/clothing/under/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
@@ -521,7 +538,7 @@
 	if(!istype(H))
 		return
 
-	if(H.fire_stacks)
+	if(H.on_fire)
 		if(extinguishes_left)
 			if(next_extinguish > world.time)
 				return
@@ -549,4 +566,11 @@
 	name = "Plasma-man jumpsuit refill pack"
 	desc = "A compressed water pack used to refill plasma-man jumpsuit auto-extinguishers."
 	icon_state = "plasmarefill"
+	origin_tech = "materials=2;plasmatech=3;biotech=1"
 
+/obj/item/clothing/under/rank/security/navyblue/russian
+	name = "russian officer's uniform"
+	desc = "The latest in fashionable russian outfits."
+	icon_state = "hostanclothes"
+	item_state = "hostanclothes"
+	item_color = "hostanclothes"

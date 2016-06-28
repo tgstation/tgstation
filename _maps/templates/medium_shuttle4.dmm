@@ -1,0 +1,480 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/area/ruin/powered)
+"c" = (
+/turf/closed/indestructible/oldshuttle,
+/area/ruin/powered)
+"d" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"e" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"f" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (NORTH)";
+	icon_state = "corner";
+	dir = 1
+	},
+/area/ruin/powered)
+"g" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"h" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (EAST)";
+	icon_state = "corner";
+	dir = 4
+	},
+/area/ruin/powered)
+"i" = (
+/obj/structure/closet{
+	icon_state = "oldcloset"
+	},
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"j" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	tag = "icon-propulsion (NORTH)";
+	icon_state = "propulsion";
+	dir = 1
+	},
+/turf/open/space,
+/area/ruin/powered)
+"k" = (
+/turf/closed/indestructible/oldshuttle{
+	tag = "icon-orange";
+	icon_state = "orange"
+	},
+/area/ruin/powered)
+"l" = (
+/obj/structure/chair/old{
+	tag = "icon-chairold (NORTH)";
+	icon_state = "chairold";
+	dir = 1
+	},
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"m" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (WEST)";
+	icon_state = "corner";
+	dir = 8
+	},
+/area/ruin/powered)
+"n" = (
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"o" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (NORTH)";
+	icon_state = "corner";
+	dir = 1
+	},
+/area/ruin/powered)
+"p" = (
+/turf/open/space,
+/turf/closed/indestructible/oldshuttle/corner{
+	tag = "icon-corner (EAST)";
+	icon_state = "corner";
+	dir = 4
+	},
+/area/ruin/powered)
+"q" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/closed/indestructible/oldshuttle/corner,
+/area/ruin/powered)
+"r" = (
+/obj/machinery/power/generator,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"s" = (
+/obj/machinery/power/smes,
+/turf/open/floor/oldshuttle{
+	baseturf = /turf/open/space;
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	},
+/area/ruin/powered)
+"t" = (
+/obj/structure/shuttle/engine/propulsion/burst/left,
+/turf/open/space,
+/area/ruin/powered)
+"u" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/turf/open/space,
+/area/ruin/powered)
+"v" = (
+/obj/structure/shuttle/engine/propulsion/burst/right,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/ruin/powered)
+"w" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/open/space,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+b
+c
+k
+t
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+b
+c
+c
+f
+g
+k
+k
+w
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+b
+d
+f
+g
+g
+g
+g
+k
+k
+w
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+j
+k
+g
+g
+g
+g
+m
+d
+k
+u
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+b
+c
+g
+g
+g
+m
+o
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+p
+a
+"}
+(7,1,1) = {"
+a
+b
+f
+i
+c
+i
+i
+i
+i
+i
+i
+c
+s
+c
+p
+"}
+(8,1,1) = {"
+b
+f
+i
+i
+c
+l
+l
+l
+l
+l
+l
+c
+g
+n
+c
+"}
+(9,1,1) = {"
+c
+g
+g
+g
+g
+l
+l
+l
+l
+l
+m
+c
+g
+g
+c
+"}
+(10,1,1) = {"
+d
+g
+g
+g
+g
+g
+g
+g
+g
+g
+c
+r
+g
+g
+d
+"}
+(11,1,1) = {"
+c
+g
+g
+g
+g
+l
+l
+l
+l
+l
+n
+c
+g
+g
+c
+"}
+(12,1,1) = {"
+e
+h
+i
+i
+c
+l
+l
+l
+l
+l
+l
+c
+g
+m
+c
+"}
+(13,1,1) = {"
+a
+e
+h
+i
+c
+i
+i
+i
+i
+i
+i
+c
+s
+c
+o
+"}
+(14,1,1) = {"
+a
+a
+e
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+o
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+e
+c
+g
+g
+g
+n
+p
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+j
+k
+g
+g
+g
+g
+n
+d
+k
+t
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+e
+d
+h
+g
+g
+g
+g
+k
+k
+w
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+e
+c
+c
+h
+g
+k
+k
+w
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+q
+c
+k
+v
+a
+"}

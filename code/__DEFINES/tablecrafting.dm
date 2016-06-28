@@ -5,3 +5,4 @@
 #define CAT_ROBOT	"Robots"
 #define CAT_FOOD	"Food"
 #define CAT_MISC	"Misc"
+#define CAT_PRIMAL  "Tribal"

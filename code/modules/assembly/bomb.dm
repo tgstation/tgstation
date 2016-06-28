@@ -10,6 +10,7 @@
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/onetankbomb/examine(mob/user)
 	..()
@@ -19,9 +20,9 @@
 	if(bombtank)
 		icon_state = bombtank.icon_state
 	if(bombassembly)
-		overlays += bombassembly.icon_state
-		overlays += bombassembly.overlays
-		overlays += "bomb_assembly"
+		add_overlay(bombassembly.icon_state)
+		add_overlay(bombassembly.overlays)
+		add_overlay("bomb_assembly")
 
 /obj/item/device/onetankbomb/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/analyzer))
@@ -69,10 +70,6 @@
 	else
 		bombtank.release()
 
-/obj/item/device/onetankbomb/HasProximity(atom/movable/AM as mob|obj)
-	if(bombassembly)
-		bombassembly.HasProximity(AM)
-
 /obj/item/device/onetankbomb/Crossed(atom/movable/AM as mob|obj) //for mousetraps
 	if(bombassembly)
 		bombassembly.Crossed(AM)
@@ -108,7 +105,10 @@
 	return
 
 /obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
-	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
+	air_contents.assert_gases("plasma", "o2")
+	var/fuel_moles = air_contents.gases["plasma"][MOLES] + air_contents.gases["o2"][MOLES]/6
+	air_contents.garbage_collect()
+
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)
@@ -158,7 +158,7 @@
 
 /obj/item/weapon/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
 	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
-	var/turf/simulated/T = get_turf(src)
+	var/turf/T = get_turf(src)
 	if(!T)
 		return
 	T.assume_air(removed)

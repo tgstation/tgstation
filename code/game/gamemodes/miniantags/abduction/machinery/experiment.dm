@@ -15,7 +15,7 @@
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
-	if(IsAbductor(target))
+	if(isabductor(target))
 		return
 	close_machine(target)
 
@@ -30,8 +30,8 @@
 		..()
 
 /obj/machinery/abductor/experiment/close_machine(mob/target)
-	for(var/mob/living/carbon/C in loc)
-		if(IsAbductor(C))
+	for(var/A in loc)
+		if(isabductor(A))
 			return
 	if(state_open && !panel_open)
 		..(target)
@@ -137,7 +137,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/organ/internal/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
@@ -164,8 +164,9 @@
 		for(var/datum/objective/objective in H.mind.objectives)
 			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
+		ticker.mode.update_abductor_icons_added(H.mind)
 
-		for(var/obj/item/organ/internal/gland/G in H.internal_organs)
+		for(var/obj/item/organ/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -187,13 +188,10 @@
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
-	var/area/A
 	if(console && console.pad && console.pad.teleport_target)
-		A = console.pad.teleport_target
-		if(A.safe) // right now crew areas are safe - being locked behind closed doors is not fun
-			TeleportToArea(H,A)
-			H.uncuff()
-			return
+		H.forceMove(console.pad.teleport_target)
+		H.uncuff()
+		return
 	//Area not chosen / It's not safe area - teleport to arrivals
 	H.forceMove(pick(latejoin))
 	H.uncuff()

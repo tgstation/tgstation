@@ -4,7 +4,7 @@
 	req_access = list(access_captain, access_robotics, access_heads)
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
-	circuit = /obj/item/weapon/circuitboard/aifixer
+	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
 
@@ -14,9 +14,8 @@
 			user << "<span class='warning'>The screws on [name]'s screen won't budge.</span>"
 		else
 			user << "<span class='warning'>The screws on [name]'s screen won't budge and it emits a warning beep.</span>"
-		return
 	else
-		..()
+		return ..()
 
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
@@ -82,27 +81,23 @@
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
 		return
-	if (href_list["fix"])
-		src.active = 1
-		while (src.occupier.health < 100)
-			src.occupier.adjustOxyLoss(-1)
-			src.occupier.adjustFireLoss(-1)
-			src.occupier.adjustToxLoss(-1)
-			src.occupier.adjustBruteLoss(-1)
-			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupier.stat == 2)
-				src.occupier.stat = 0
-				src.occupier.lying = 0
-				dead_mob_list -= src.occupier
-				living_mob_list += src.occupier
-			src.updateUsrDialog()
+	if(href_list["fix"])
+		active = 1
+		while (occupier.health < 100)
+			occupier.adjustOxyLoss(-1, 0)
+			occupier.adjustFireLoss(-1, 0)
+			occupier.adjustToxLoss(-1, 0)
+			occupier.adjustBruteLoss(-1, 0)
+			occupier.updatehealth()
+			if(occupier.health >= 0 && occupier.stat == DEAD)
+				occupier.revive()
+			updateUsrDialog()
 			update_icon()
 			sleep(10)
-		src.active = 0
-		src.add_fingerprint(usr)
-	src.updateUsrDialog()
+		active = 0
+		add_fingerprint(usr)
+	updateUsrDialog()
 	update_icon()
-	return
 
 
 /obj/machinery/computer/aifixer/update_icon()
@@ -111,15 +106,15 @@
 		return
 	else
 		if(active)
-			overlays += "ai-fixer-on"
+			add_overlay("ai-fixer-on")
 		if (occupier)
 			switch (occupier.stat)
 				if (0)
-					overlays += "ai-fixer-full"
+					add_overlay("ai-fixer-full")
 				if (2)
-					overlays += "ai-fixer-404"
+					add_overlay("ai-fixer-404")
 		else
-			overlays += "ai-fixer-empty"
+			add_overlay("ai-fixer-empty")
 
 /obj/machinery/computer/aifixer/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(!..())
@@ -129,12 +124,13 @@
 		if(stat & (NOPOWER|BROKEN))
 			user << "[src] is offline and cannot take an AI at this time!"
 			return
-		AI.loc = src
+		AI.forceMove(src)
 		occupier = AI
 		AI.control_disabled = 1
 		AI.radio_enabled = 0
 		AI << "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here."
 		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed."
+		card.AI = null
 		update_icon()
 
 	else //Uploading AI from terminal to card
@@ -142,6 +138,7 @@
 			occupier << "You have been downloaded to a mobile storage device. Still no remote access."
 			user << "<span class='boldnotice'>Transfer successful</span>: [occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 			occupier.loc = card
+			card.AI = occupier
 			occupier = null
 			update_icon()
 		else if (active)

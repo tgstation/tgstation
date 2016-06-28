@@ -4,6 +4,7 @@
 	weight = 7
 	max_occurrences = 1 //Only once okay fam
 	earliest_start = 18000 //30 minutes
+	min_players = 15
 
 
 /datum/round_event/spawn_swarmer
@@ -14,7 +15,7 @@
 		return 0
 	if(!the_gateway)
 		return 0
-	new /obj/item/unactivated_swarmer(get_turf(the_gateway))
+	new /obj/item/device/unactivated_swarmer(get_turf(the_gateway))
 	if(prob(25)) //25% chance to announce it to the crew
 		var/swarmer_report = "<font size=3><b>[command_name()] High-Priority Update</b></span>"
 		swarmer_report += "<br><br>Our long-range sensors have detected an odd signal emanating from your station's gateway. We recommend immediate investigation of your gateway, as something may have come \

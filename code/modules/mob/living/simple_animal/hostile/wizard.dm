@@ -25,6 +25,9 @@
 
 	retreat_distance = 3 //out of fireball range
 	minimum_distance = 3
+	del_on_death = 1
+	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
+				/obj/item/weapon/staff)
 
 	var/obj/effect/proc_holder/spell/dumbfire/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
@@ -54,18 +57,11 @@
 	blink.outer_tele_radius = 3
 	AddSpell(blink)
 
-/mob/living/simple_animal/hostile/wizard/death(gibbed)
-	..(gibbed)
-	new /obj/effect/landmark/mobcorpse/wizard(src.loc)
-	new /obj/item/weapon/staff(src.loc)
-	qdel(src)
-	return
-
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
 	if(target && next_cast < world.time)
 		if((get_dir(src,target) in list(SOUTH,EAST,WEST,NORTH)) && fireball.cast_check(0,src)) //Lined up for fireball
-			src.dir = get_dir(src,target)
+			src.setDir(get_dir(src,target))
 			fireball.choose_targets(src)
 			next_cast = world.time + 10 //One spell per second
 			return .

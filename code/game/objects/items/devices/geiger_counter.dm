@@ -18,10 +18,10 @@
 
 /obj/item/device/geiger_counter/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/geiger_counter/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/device/geiger_counter/process()
@@ -130,10 +130,12 @@
 		radiation_count = 0
 		update_icon()
 		return 1
-	..()
+	else
+		return ..()
 
-/obj/item/device/geiger_counter/AltClick()
-	..()
+/obj/item/device/geiger_counter/AltClick(mob/living/user)
+	if(!istype(user) || user.incapacitated())
+		return ..()
 	if(!scanning)
 		usr << "<span class='warning'>[src] must be on to reset its radiation level!</span>"
 		return 0

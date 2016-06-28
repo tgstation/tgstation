@@ -1,4 +1,4 @@
-/turf/simulated/wall/r_wall
+/turf/closed/wall/r_wall
 	name = "reinforced wall"
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
@@ -13,16 +13,17 @@
 	sheet_type = /obj/item/stack/sheet/plasteel
 	explosion_block = 2
 
-/turf/simulated/wall/r_wall/break_wall()
+/turf/closed/wall/r_wall/break_wall()
 	builtin_sheet.loc = src
 	return (new /obj/structure/girder/reinforced(src))
 
-/turf/simulated/wall/r_wall/devastate_wall()
+/turf/closed/wall/r_wall/devastate_wall()
 	builtin_sheet.loc = src
 	new /obj/item/stack/sheet/metal(src, 2)
 
-/turf/simulated/wall/r_wall/attack_animal(mob/living/simple_animal/M)
+/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
+	M.do_attack_animation(src)
 	if(M.environment_smash == 3)
 		dismantle_wall(1)
 		playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
@@ -30,12 +31,12 @@
 	else
 		M << "<span class='warning'>This wall is far too strong for you to destroy.</span>"
 
-/turf/simulated/wall/r_wall/try_destroy(obj/item/weapon/W, mob/user, turf/T)
+/turf/closed/wall/r_wall/try_destroy(obj/item/weapon/W, mob/user, turf/T)
 	if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
 		user << "<span class='notice'>You begin to smash though the [name]...</span>"
 		if(do_after(user, 50, target = src))
-			if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+			if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 				return 1
 			if( user.loc == T && user.get_active_hand() == W )
 				D.playDigSound()
@@ -54,12 +55,12 @@
 			MS.use(1)
 			src.d_state = 0
 			src.icon_state = "r_wall"
-			smooth_icon_neighbors(src)
+			queue_smooth_neighbors(src)
 			user << "<span class='notice'>You repair the last of the damage.</span>"
 			return 1
 	return 0
 
-/turf/simulated/wall/r_wall/try_decon(obj/item/weapon/W, mob/user, turf/T)
+/turf/closed/wall/r_wall/try_decon(obj/item/weapon/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(0)
@@ -76,7 +77,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 
 				if(do_after(user, 40, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
@@ -107,7 +108,7 @@
 					playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 					if(do_after(user, 60, target = src))
-						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
+						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 0
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
@@ -122,7 +123,7 @@
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 				if(do_after(user, 60, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
@@ -138,7 +139,7 @@
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 
 				if(do_after(user, 100, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
@@ -154,7 +155,7 @@
 				playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 
 				if(do_after(user, 40, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
@@ -172,7 +173,7 @@
 					playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 					if(do_after(user, 100, target = src))
-						if( !istype(src, /turf/simulated/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
+						if( !istype(src, /turf/closed/wall/r_wall) || !user || !WT || !WT.isOn() || !T )
 							return 1
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
@@ -187,7 +188,7 @@
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 
 				if(do_after(user, 70, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
@@ -203,7 +204,7 @@
 				playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 
 				if(do_after(user, 100, target = src))
-					if( !istype(src, /turf/simulated/wall/r_wall) || !user || !W || !T )
+					if( !istype(src, /turf/closed/wall/r_wall) || !user || !W || !T )
 						return 1
 
 					if( user.loc == T && user.get_active_hand() == W )
@@ -212,7 +213,7 @@
 				return 1
 	return 0
 
-/turf/simulated/wall/r_wall/proc/update_icon()
+/turf/closed/wall/r_wall/proc/update_icon()
 	if(d_state)
 		icon_state = "r_wall-[d_state]"
 		smooth = SMOOTH_FALSE
@@ -221,7 +222,7 @@
 		smooth = SMOOTH_TRUE
 		icon_state = ""
 
-/turf/simulated/wall/r_wall/singularity_pull(S, current_size)
+/turf/closed/wall/r_wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()

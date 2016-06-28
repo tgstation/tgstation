@@ -8,7 +8,32 @@
 	anchored = 1
 	density = 1
 	pixel_x = -16
-	layer = 9
+	layer = FLY_LAYER
+	var/cut = FALSE
+	var/log_amount = 10
+
+/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
+	if(!cut && log_amount && (!(NODECONSTRUCT in flags)))
+		if(W.sharpness && W.force > 0)
+			if(W.hitsound)
+				playsound(get_turf(src), W.hitsound, 100, 0, 0)
+			user.visible_message("<span class='notice'>[user] begins to cut down [src] with [W].</span>","<span class='notice'>You begin to cut down [src] with [W].</span>", "You hear the sound of cutting a tree.")
+			if(do_after(user, 1000/W.force, target = user)) //5 seconds with 20 force, 8 seconds with a hatchet, 20 seconds with a shard.
+				if(cut)
+					return
+				user.visible_message("<span class='notice'>[user] falls [src] with the [W].</span>","<span class='notice'>You fall [src] with the [W].</span>", "You hear the sound of a tree falling.")
+				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
+				icon_state = "tree_stump"
+				name = "stump"
+				cut = TRUE
+				for(var/i=1 to log_amount)
+					new /obj/item/weapon/grown/log/tree(get_turf(src))
+
+	else
+		return ..()
+
+
+
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -21,7 +46,6 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
-	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/New()
@@ -32,7 +56,7 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
 
-/obj/structure/flora/tree/festivus
+/obj/structure/festivus
 	name = "festivus pole"
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "festivus_pole"
@@ -202,12 +226,47 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	..()
 
-/obj/structure/flora/kirbyplants
+/obj/item/weapon/twohanded/required/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	w_class = 5
+	force = 10
+	throwforce = 13
+	throw_speed = 2
+	throw_range = 4
 
-/obj/structure/flora/kirbyplants/dead
+/obj/item/weapon/twohanded/flora/kirbyplants/equipped(mob/living/user)
+	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	I.override = 1
+	user.add_alt_appearance("sneaking_mission", I, player_list)
+
+/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+	..()
+	user.remove_alt_appearance("sneaking_mission")
+
+/obj/item/weapon/twohanded/required/kirbyplants/random
+	var/list/static/states
+
+/obj/item/weapon/twohanded/required/kirbyplants/random/New()
+	. = ..()
+	if(!states)
+		generate_states()
+	icon_state = pick(states)
+
+/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
+	states = list()
+	for(var/i in 1 to 25)
+		var/number
+		if(i < 10)
+			number = "0[i]"
+		else
+			number = "[i]"
+		states += "plant-[number]"
+	states += "applebush"
+
+
+/obj/item/weapon/twohanded/required/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
@@ -215,10 +274,10 @@
 
 //a rock is flora according to where the icon file is
 //and now these defines
+
 /obj/structure/flora/rock
-	name = "rock"
-	desc = "a rock"
-	icon_state = "rock"
+	icon_state = "basalt"
+	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	anchored = 1
 	burn_state = FIRE_PROOF
@@ -226,27 +285,12 @@
 
 /obj/structure/flora/rock/New()
 	..()
-	icon_state = "[icon_state][rand(1,5)]"
-
-/obj/structure/flora/rock/pile
-	name = "rocks"
-	desc = "some rocks"
-	icon_state = "rockpile"
-	density = 0
-
-
-/obj/structure/flora/rock/volcanic
-	icon_state = "basalt"
-	desc = "A volcanic rock"
-
-
-/obj/structure/flora/rock/volcanic/New()
-	..()
 	icon_state = "[icon_state][rand(1,3)]"
 
-/obj/structure/flora/rock/pile/volcanic
+/obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
+	desc = "A pile of rocks"
 
-/obj/structure/flora/rock/pile/volcanic/New()
+/obj/structure/flora/rock/pile/New()
 	..()
 	icon_state = "[icon_state][rand(1,3)]"

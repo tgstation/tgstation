@@ -2,7 +2,7 @@
 /datum/admins/proc/create_mob(mob/user)
 	if (!create_mob_html)
 		var/mobjs = null
-		mobjs = list2text(typesof(/mob), ";")
+		mobjs = jointext(typesof(/mob), ";")
 		create_mob_html = file2text('html/create_object.html')
 		create_mob_html = replacetext(create_mob_html, "null /* object types */", "\"[mobjs]\"")
 
@@ -22,3 +22,4 @@
 	H.dna.blood_type = random_blood_type()
 	H.update_body()
 	H.update_hair()
+	H.update_body_parts()

@@ -12,20 +12,24 @@
 	return file("[INVESTIGATE_DIR][subject].html")
 
 /proc/investigate_reset()
-	if(fdel(INVESTIGATE_DIR))	return 1
+	if(fdel(INVESTIGATE_DIR))
+		return 1
 	return 0
 
 /atom/proc/investigate_log(message, subject)
-	if(!message)	return
+	if(!message)
+		return
 	var/F = investigate_subject2file(subject)
-	if(!F)	return
+	if(!F)
+		return
 	F << "<small>[time_stamp()] \ref[src] ([x],[y],[z])</small> || [src] [message]<br>"
 
 //ADMINVERBS
 /client/proc/investigate_show( subject in list("hrefs","notes","watchlist","singulo","wires","telesci", "gravity", "records", "cargo", "supermatter", "atmos", "experimentor", "kudzu") )
 	set name = "Investigate"
 	set category = "Admin"
-	if(!holder)	return
+	if(!holder)
+		return
 	switch(subject)
 		if("singulo", "wires", "telesci", "gravity", "records", "cargo", "supermatter", "atmos", "kudzu")			//general one-round-only stuff
 			var/F = investigate_subject2file(subject)

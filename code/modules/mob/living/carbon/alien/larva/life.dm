@@ -10,39 +10,26 @@
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
-
-	//some kind of bug in canmove() isn't properly calling update_icons, so this is here as a placeholder
-	update_icons()
-
-/mob/living/carbon/alien/larva/handle_hud_icons_health()
-
-	if (healths)
-		if (stat != 2)
-			switch(health)
-				if(25 to INFINITY)
-					healths.icon_state = "health0"
-				if(20 to 25)
-					healths.icon_state = "health1"
-				if(15 to 20)
-					healths.icon_state = "health2"
-				if(10 to 15)
-					healths.icon_state = "health3"
-				if(5 to 10)
-					healths.icon_state = "health4"
-				if(0 to 5)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
+			update_icons()
 
 
-/mob/living/carbon/alien/larva/handle_regular_status_updates()
-
-	if(..()) //alive
-
-		if(health <= -maxHealth)
+/mob/living/carbon/alien/larva/update_stat()
+	if(status_flags & GODMODE)
+		return
+	if(stat != DEAD)
+		if(health<= -maxHealth || !getorgan(/obj/item/organ/brain))
 			death()
 			return
-
-		return 1
+		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= config.health_threshold_crit)
+			if(stat == CONSCIOUS)
+				stat = UNCONSCIOUS
+				blind_eyes(1)
+				update_canmove()
+		else
+			if(stat == UNCONSCIOUS)
+				stat = CONSCIOUS
+				resting = 0
+				adjust_blindness(-1)
+				update_canmove()
+	update_damage_hud()
+	update_health_hud()

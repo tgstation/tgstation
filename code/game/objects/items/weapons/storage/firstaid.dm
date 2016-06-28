@@ -42,9 +42,8 @@
 	..()
 	if(empty) return
 	icon_state = pick("ointment","firefirstaid")
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/weapon/reagent_containers/pill/oxandrolone(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
@@ -61,12 +60,10 @@
 	..()
 	if(empty) return
 	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2","antitoxfirstaid3")
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
 	new /obj/item/device/healthanalyzer(src)
 	return
 
@@ -79,10 +76,8 @@
 /obj/item/weapon/storage/firstaid/o2/New()
 	..()
 	if(empty) return
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
-	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -97,10 +92,8 @@
 /obj/item/weapon/storage/firstaid/brute/New()
 	..()
 	if(empty) return
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	for(var/i in 1 to 4)
+		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/stack/medical/gauze(src)
 	new /obj/item/device/healthanalyzer(src)
@@ -145,13 +138,14 @@
 		var/mob/M = usr
 		if(!istype(over_object, /obj/screen) || !Adjacent(M))
 			return ..()
-		if((!( M.restrained() ) && !( M.stat ) /*&& M.pocket == src*/))
-			switch(over_object.name)
-				if("r_hand")
-					M.unEquip(src)
+		if(!M.restrained() && !M.stat && istype(over_object, /obj/screen/inventory/hand))
+			var/obj/screen/inventory/hand/H = over_object
+			if(!M.unEquip(src))
+				return
+			switch(H.slot_id)
+				if(slot_r_hand)
 					M.put_in_r_hand(src)
-				if("l_hand")
-					M.unEquip(src)
+				if(slot_l_hand)
 					M.put_in_l_hand(src)
 			src.add_fingerprint(usr)
 			return
@@ -168,14 +162,8 @@
 
 /obj/item/weapon/storage/box/silver_sulf/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
-
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
 
 /obj/item/weapon/storage/pill_bottle/charcoal
 	name = "bottle of charcoal pills"
@@ -183,13 +171,8 @@
 
 /obj/item/weapon/storage/pill_bottle/charcoal/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
-	new /obj/item/weapon/reagent_containers/pill/charcoal(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/charcoal(src)
 
 /obj/item/weapon/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
@@ -197,13 +180,8 @@
 
 /obj/item/weapon/storage/pill_bottle/epinephrine/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
-	new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/epinephrine(src)
 
 /obj/item/weapon/storage/pill_bottle/mutadone
 	name = "bottle of mutadone pills"
@@ -211,13 +189,8 @@
 
 /obj/item/weapon/storage/pill_bottle/mutadone/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
-	new /obj/item/weapon/reagent_containers/pill/mutadone(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/mutadone(src)
 
 /obj/item/weapon/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
@@ -225,13 +198,8 @@
 
 /obj/item/weapon/storage/pill_bottle/mannitol/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
-	new /obj/item/weapon/reagent_containers/pill/mannitol(src)
+	for(var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/mannitol(src)
 
 /obj/item/weapon/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
@@ -239,8 +207,5 @@
 
 /obj/item/weapon/storage/pill_bottle/stimulant/New()
 	..()
-	new /obj/item/weapon/reagent_containers/pill/stimulant(src)
-	new /obj/item/weapon/reagent_containers/pill/stimulant(src)
-	new /obj/item/weapon/reagent_containers/pill/stimulant(src)
-	new /obj/item/weapon/reagent_containers/pill/stimulant(src)
-	new /obj/item/weapon/reagent_containers/pill/stimulant(src)
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/pill/stimulant(src)

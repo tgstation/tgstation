@@ -117,7 +117,8 @@
 	var/see_ghosts = 0 //for the spoop of it
 
 
-/obj/item/device/camera/CheckParts()
+/obj/item/device/camera/CheckParts(list/parts_list)
+	..()
 	var/obj/item/device/camera/C = locate(/obj/item/device/camera) in contents
 	if(C)
 		pictures_max = C.pictures_max
@@ -130,6 +131,12 @@
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
+
+/obj/item/device/camera/detective
+	name = "Detective's camera"
+	desc = "A polaroid camera with extra capacity for crime investigations."
+	pictures_max = 30
+	pictures_left = 30
 
 
 /obj/item/device/camera/siliconcam //camera AI can take pictures with
@@ -416,12 +423,8 @@
 		viewpichelper(Ainfo)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
-	if(!on || !pictures_left || ismob(target.loc) || !isturf(target.loc))
+	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	if(user.Adjacent(target))
-		var/list/bad_targets = list(/obj/structure, /obj/item/weapon/storage)
-		if(is_type_in_list(target, bad_targets))
-			return
 
 	captureimage(target, user, flag)
 

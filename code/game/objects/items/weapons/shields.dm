@@ -8,13 +8,13 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "riot"
 	slot_flags = SLOT_BACK
-	force = 8
+	force = 10
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
 	w_class = 4
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=2"
+	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
@@ -26,7 +26,7 @@
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
 	else
-		..()
+		return ..()
 
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -39,6 +39,16 @@
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
 
+/obj/item/weapon/shield/riot/buckler
+	name = "wooden buckler"
+	desc = "A medieval wooden buckler."
+	icon_state = "buckler"
+	item_state = "buckler"
+	materials = list()
+	origin_tech = "materials=1;combat=3;biotech=2"
+	burn_state = FLAMMABLE
+	block_chance = 30
+
 /obj/item/weapon/shield/energy
 	name = "energy combat shield"
 	desc = "A shield capable of stopping most melee attacks. Protects user from almost all energy projectiles. It can be retracted, expanded, and stored anywhere."
@@ -49,7 +59,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 1
-	origin_tech = "materials=4;magnets=3;syndicate=4"
+	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
 
@@ -87,6 +97,7 @@
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "teleriot0"
+	origin_tech = "materials=3;combat=4;engineering=4"
 	slot_flags = null
 	force = 3
 	throwforce = 3

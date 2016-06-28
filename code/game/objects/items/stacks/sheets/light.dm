@@ -13,7 +13,7 @@
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
-	..()
+
 	if(istype(O,/obj/item/weapon/wirecutters))
 		var/obj/item/stack/cable_coil/CC = new (user.loc)
 		CC.amount = 5
@@ -25,7 +25,7 @@
 			user.unEquip(src, 1)
 			qdel(src)
 
-	if(istype(O, /obj/item/stack/sheet/metal))
+	else if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		if (M.use(1))
 			use(1)
@@ -34,4 +34,5 @@
 			L.add_fingerprint(user)
 		else
 			user << "<span class='warning'>You need one metal sheet to finish the light tile!</span>"
-			return
+	else
+		return ..()

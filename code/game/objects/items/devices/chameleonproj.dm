@@ -1,7 +1,7 @@
 /obj/item/device/chameleon
 	name = "chameleon-projector"
 	icon_state = "shield0"
-	flags = CONDUCT
+	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	item_state = "electronic"
 	throwforce = 5
@@ -11,13 +11,15 @@
 	origin_tech = "syndicate=4;magnets=4"
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
-	var/saved_item = /obj/item/weapon/cigbutt
-	var/saved_icon = 'icons/obj/clothing/masks.dmi'
-	var/saved_icon_state = "cigbutt"
-	var/saved_overlays = null
-	var/saved_underlays = null
+	var/saved_appearance = null
+
+/obj/item/device/chameleon/New()
+	..()
+	var/obj/item/weapon/cigbutt/butt = /obj/item/weapon/cigbutt
+	saved_appearance = initial(butt.appearance)
 
 /obj/item/device/chameleon/dropped()
+	..()
 	disrupt()
 
 /obj/item/device/chameleon/equipped()
@@ -32,41 +34,31 @@
 		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 100, 1, -6)
 			user << "<span class='notice'>Scanned [target].</span>"
-			saved_item = target.type
-			saved_icon = target.icon
-			saved_icon_state = target.icon_state
-			saved_overlays = target.overlays
-			saved_underlays = target.underlays
+			var/obj/temp = new/obj()
+			temp.appearance = target.appearance
+			temp.layer = initial(target.layer) // scanning things in your inventory
+			saved_appearance = temp.appearance
 
 /obj/item/device/chameleon/proc/toggle()
-	if(!can_use || !saved_item) return
+	if(!can_use || !saved_appearance) return
 	if(active_dummy)
 		eject_all()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		qdel(active_dummy)
 		active_dummy = null
 		usr << "<span class='notice'>You deactivate \the [src].</span>"
-		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8)
-			qdel(T)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/O = new saved_item(src)
-		if(!O) return
 		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(O, usr, saved_icon, saved_icon_state, saved_overlays, saved_underlays, src)
-		qdel(O)
+		C.activate(usr, saved_appearance, src)
 		usr << "<span class='notice'>You activate \the [src].</span>"
-		var/obj/effect/overlay/T = new/obj/effect/overlay(get_turf(src))
-		T.icon = 'icons/effects/effects.dmi'
-		flick("emppulse",T)
-		spawn(8)
-			qdel(T)
+		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
 	if(active_dummy)
+		for(var/mob/M in active_dummy)
+			M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 		spark_system.set_up(5, 0, src)
 		spark_system.attach(src)
@@ -83,51 +75,46 @@
 		A.loc = active_dummy.loc
 		if(ismob(A))
 			var/mob/M = A
-			M.reset_view(null)
+			M.reset_perspective(null)
 
 /obj/effect/dummy/chameleon
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
-/obj/effect/dummy/chameleon/proc/activate(obj/O, mob/M, new_icon, new_iconstate, new_overlays, new_underlays, obj/item/device/chameleon/C)
-	name = O.name
-	desc = O.desc
-	icon = new_icon
-	icon_state = new_iconstate
-	overlays = new_overlays
-	underlays = new_underlays
-	dir = O.dir
+/obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
+	appearance = saved_appearance
 	M.loc = src
 	master = C
 	master.active_dummy = src
 
 /obj/effect/dummy/chameleon/attackby()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_hand()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/ex_act() //ok now THATS some serious protection against explosions right here
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
+/obj/effect/dummy/chameleon/attack_animal()
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/attack_slime()
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/attack_alien()
+	master.disrupt()
+
+/obj/effect/dummy/chameleon/ex_act(S, T)
+	contents_explosion(S, T)
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
-	for(var/mob/M in src)
-		M << "<span class='danger'>Your chameleon-projector deactivates.</span>"
 	..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
-	if(istype(loc, /turf/space) || !direction)
+	if(istype(loc, /turf/open/space) || !direction)
 		return //No magical space movement!
 
 	if(can_move)

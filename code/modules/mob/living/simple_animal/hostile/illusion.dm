@@ -16,6 +16,8 @@
 	var/life_span = INFINITY //how long until they despawn
 	var/mob/living/parent_mob
 	var/multiply_chance = 0 //if we multiply on hit
+	del_on_death = 1
+	deathmessage = "vanishes into thin air! It was a fake!"
 
 
 /mob/living/simple_animal/hostile/illusion/Life()
@@ -27,19 +29,15 @@
 /mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, health = 100, damage = 0, replicate = 0 )
 	appearance = original.appearance
 	parent_mob = original
-	dir = original.dir
+	setDir(original.dir)
 	life_span = world.time+life
 	melee_damage_lower = damage
 	melee_damage_upper = damage
 	multiply_chance = replicate
 	faction -= "neutral"
-
-
-/mob/living/simple_animal/hostile/illusion/death()
-	..()
-	visible_message("<span class='warning'>[src] vanishes in a puff of smoke! It was a fake!</span>")
-	qdel(src)
-
+	transform = initial(transform)
+	pixel_y = initial(pixel_y)
+	pixel_x = initial(pixel_x)
 
 /mob/living/simple_animal/hostile/illusion/examine(mob/user)
 	if(parent_mob)
@@ -56,7 +54,7 @@
 			return
 		var/mob/living/simple_animal/hostile/illusion/M = new(loc)
 		M.faction = faction.Copy()
-		M.Copy_Parent(parent_mob, life_span, health/2, melee_damage_upper, multiply_chance)
+		M.Copy_Parent(parent_mob, 80, health/2, melee_damage_upper, multiply_chance/2)
 		M.GiveTarget(L)
 
 ///////Actual Types/////////

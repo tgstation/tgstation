@@ -11,13 +11,14 @@
 	var/cooldown = 0
 
 /obj/item/nuke_core/New()
-	SSobj.processing += src
+	..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/nuke_core/attackby(obj/item/nuke_core_container/container, mob/user)
 	if(istype(container))
 		container.load(src, user)
 	else
-		..()
+		return ..()
 
 /obj/item/nuke_core/process()
 	if(cooldown < world.time - 60)
@@ -41,13 +42,16 @@
 	core = ncore
 	icon_state = "core_container_loaded"
 	user << "<span class='warning'>Container is sealing...</span>"
-	spawn(50)
-		SSobj.processing -= core
-		icon_state = "core_container_sealed"
-		playsound(loc, 'sound/items/Deconstruct.ogg', 100, 1)
-		if(loc == user)
-			user << "<span class='warning'>Container is sealed, the radiation is contained.</span>"
+	addtimer(src, "seal", 50)
 	return 1
+
+/obj/item/nuke_core_container/proc/seal()
+	if(istype(core))
+		STOP_PROCESSING(SSobj, core)
+		icon_state = "core_container_sealed"
+		playsound(loc, 'sound/items/Deconstruct.ogg', 60, 1)
+		if(ismob(loc))
+			loc << "<span class='warning'>[src] is permanently sealed, [core]'s radiation is contained.</span>"
 
 /obj/item/nuke_core_container/attackby(obj/item/nuke_core/core, mob/user)
 	if(istype(core))
@@ -57,7 +61,7 @@
 		else
 			load(core, user)
 	else
-		..()
+		return ..()
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
 /obj/item/weapon/screwdriver/nuke
@@ -65,11 +69,7 @@
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
-	item_state = "screwdriver_nuke"
 	toolspeed = 2
-
-/obj/item/weapon/screwdriver/nuke/New()
-//to skip screwdriver icon update
 
 /obj/item/weapon/paper/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\

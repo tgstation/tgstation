@@ -6,15 +6,16 @@
 		return
 
 	var/datum/gas_mixture/GM = target.return_air()
+	var/list/GM_gases
 	var/burning = 0
-	if(istype(target, /turf/simulated))
-		var/turf/simulated/T = target
+	if(istype(target, /turf/open))
+		var/turf/open/T = target
 		if(T.active_hotspot)
 			burning = 1
 
-	usr << "<span class='adminnotice'>@[target.x],[target.y]: O:[GM.oxygen] T:[GM.toxins] N:[GM.nitrogen] C:[GM.carbon_dioxide] w [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
-	for(var/datum/gas/trace_gas in GM.trace_gases)
-		usr << "[trace_gas.type]: [trace_gas.moles]"
+	usr << "<span class='adminnotice'>@[target.x],[target.y]: [GM.temperature] Kelvin, [GM.return_pressure()] kPa [(burning)?("\red BURNING"):(null)]</span>"
+	for(var/id in GM_gases)
+		usr << "[GM_gases[id][GAS_META][META_GAS_NAME]]: [GM_gases[id][MOLES]]"
 	feedback_add_details("admin_verb","DAST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/fix_next_move()
@@ -89,11 +90,13 @@
 	set name = "Reload Admins"
 	set category = "Admin"
 
-	if(!src.holder)	return
+	if(!src.holder)
+		return
 
 	var/confirm = alert(src, "Are you sure you want to reload all admins?", "Confirm", "Yes", "No")
-	if(confirm !="Yes") return
+	if(confirm !="Yes")
+		return
 
-	message_admins("[key_name_admin(usr)] manually reloaded admins")
 	load_admins()
 	feedback_add_details("admin_verb","RLDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	message_admins("[key_name_admin(usr)] manually reloaded admins")

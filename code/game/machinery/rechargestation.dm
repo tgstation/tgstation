@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 1000
-	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
@@ -15,14 +14,20 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
-	RefreshParts()
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
+	B.apply_default_parts(src)
 	update_icon()
+
+/obj/item/weapon/circuitboard/machine/cyborgrecharger
+	name = "circuit board (Cyborg Recharger)"
+	build_path = /obj/machinery/recharge_station
+	origin_tech = "powerstorage=3;engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 2,
+							/obj/item/weapon/stock_parts/cell = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)
+	def_components = list(
+		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -33,7 +38,6 @@
 		repairs += M.rating - 1
 	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
-
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())
@@ -79,7 +83,9 @@
 	if(default_pry_open(P))
 		return
 
-	default_deconstruction_crowbar(P)
+	if(default_deconstruction_crowbar(P))
+		return
+	return ..()
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
 	if(..(user,1,set_machine = 0))
@@ -101,11 +107,7 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
-			if(R.client)
-				R.client.eye = src
-				R.client.perspective = EYE_PERSPECTIVE
-			R.loc = src
+			R.forceMove(src)
 			occupant = R
 			use_power = 2
 			add_fingerprint(R)

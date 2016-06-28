@@ -7,7 +7,7 @@
 	icon_state = "singularity_s1"
 	anchored = 1
 	density = 1
-	layer = 6
+	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1
@@ -34,7 +34,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -43,7 +43,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -63,7 +63,7 @@
 /obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
 	return 0
 
-/obj/singularity/blob_act(severity)
+/obj/singularity/blob_act(obj/effect/blob/B)
 	return
 
 /obj/singularity/ex_act(severity, target)
@@ -115,8 +115,9 @@
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
-	var/count = locate(/obj/machinery/field/containment) in ultra_range(30, src, 1)
-	if(!count)	message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
+	var/count = locate(/obj/machinery/field/containment) in urange(30, src, 1)
+	if(!count)
+		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
 
 /obj/singularity/proc/dissipate()
@@ -147,17 +148,18 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
-			current_size = STAGE_TWO
-			icon = 'icons/effects/96x96.dmi'
-			icon_state = "singularity_s3"
-			pixel_x = -32
-			pixel_y = -32
-			grav_pull = 6
-			consume_range = 1
-			dissipate_delay = 5
-			dissipate_track = 0
-			dissipate_strength = 5
+		if(STAGE_TWO)
+			if((check_turfs_in(1,1))&&(check_turfs_in(2,1))&&(check_turfs_in(4,1))&&(check_turfs_in(8,1)))
+				current_size = STAGE_TWO
+				icon = 'icons/effects/96x96.dmi'
+				icon_state = "singularity_s3"
+				pixel_x = -32
+				pixel_y = -32
+				grav_pull = 6
+				consume_range = 1
+				dissipate_delay = 5
+				dissipate_track = 0
+				dissipate_strength = 5
 		if(STAGE_THREE)
 			if((check_turfs_in(1,2))&&(check_turfs_in(2,2))&&(check_turfs_in(4,2))&&(check_turfs_in(8,2)))
 				current_size = STAGE_THREE
@@ -235,14 +237,22 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	var/list/L = grav_pull > 8 ? ultra_range(grav_pull, src, 1) : orange(grav_pull, src)
-	for(var/atom/X in L)
-		var/dist = get_dist(X, src)
-		var/obj/singularity/S = src
-		if(dist > consume_range)
-			X.singularity_pull(S, current_size)
-		else if(dist <= consume_range)
-			consume(X)
+	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+		var/turf/T = tile
+		if(!T || !isturf(loc))
+			continue
+		if(get_dist(T, src) > consume_range)
+			T.singularity_pull(src, current_size)
+		else
+			consume(T)
+		for(var/thing in T)
+			if(isturf(loc))
+				var/atom/movable/X = thing
+				if(get_dist(X, src) > consume_range)
+					X.singularity_pull(src, current_size)
+				else
+					consume(X)
+			CHECK_TICK
 	return
 
 
@@ -371,7 +381,7 @@
 
 
 /obj/singularity/proc/combust_mobs()
-	for(var/mob/living/carbon/C in ultra_range(20, src, 1))
+	for(var/mob/living/carbon/C in urange(20, src, 1))
 		C.visible_message("<span class='warning'>[C]'s skin bursts into flame!</span>", \
 						  "<span class='userdanger'>You feel an inner fire as your skin bursts into flames!</span>")
 		C.adjust_fire_stacks(5)

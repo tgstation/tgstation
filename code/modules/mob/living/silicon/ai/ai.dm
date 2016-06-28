@@ -18,10 +18,13 @@ var/list/ai_list = list()
 	icon_state = "ai"
 	anchored = 1
 	density = 1
-	status_flags = CANSTUN|CANPARALYSE|CANPUSH
+	status_flags = CANSTUN|CANPUSH
 	force_compose = 1 //This ensures that the AI always composes it's own hear message. Needed for hrefs and job display.
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	see_in_dark = 8
 	med_hud = DATA_HUD_MEDICAL_BASIC
 	sec_hud = DATA_HUD_SECURITY_BASIC
+	mob_size = MOB_SIZE_LARGE
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/list/connected_robots = list()
@@ -77,7 +80,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	..()
-	rename_self("ai", 1)
+	rename_self("ai")
 	name = real_name
 	anchored = 1
 	canmove = 0
@@ -121,6 +124,7 @@ var/list/ai_list = list()
 		else
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
+				rename_self("ai")
 				if(mind.special_role)
 					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
 					src << "<span class='userdanger'>You have been installed as an AI! </span>"
@@ -163,7 +167,7 @@ var/list/ai_list = list()
 		return
 
 		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo")
+	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
 	if(icontype == "Clown")
 		icon_state = "ai-clown2"
 	else if(icontype == "Monochrome")
@@ -226,6 +230,8 @@ var/list/ai_list = list()
 		icon_state = "ai-nanotrasen"
 	else if(icontype == "Gentoo")
 		icon_state = "ai-gentoo"
+	else if(icontype == "Angel")
+		icon_state = "ai-angel"
 	//else
 			//usr <<"You can only change your display once!"
 			//return
@@ -295,7 +301,7 @@ var/list/ai_list = list()
 	onclose(src, "airoster")
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
@@ -309,7 +315,7 @@ var/list/ai_list = list()
 		SSshuttle.requestEvac(src, reason)
 
 	// hack to display shuttle timer
-	if(SSshuttle.emergency.mode >= SHUTTLE_CALL)
+	if(!EMERGENCY_IDLE_OR_RECALLED)
 		var/obj/machinery/computer/communications/C = locate() in machines
 		if(C)
 			C.post_status("shuttle")
@@ -324,7 +330,7 @@ var/list/ai_list = list()
 	set name = "Toggle Floor Bolts"
 	if(!isturf(loc)) // if their location isn't a turf
 		return // stop
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
 
@@ -336,7 +342,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/ai_cancel_call()
 	set category = "Malfunction"
-	if(stat == 2)
+	if(stat == DEAD)
 		return //won't work if dead
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
@@ -346,21 +352,15 @@ var/list/ai_list = list()
 	SSshuttle.cancelEvac(src)
 	return
 
-/mob/living/silicon/ai/check_eye(mob/user)
-	if (!current)
-		return null
-	user.reset_view(current)
-	return 1
-
-/mob/living/silicon/ai/blob_act()
-	if (stat != 2)
+/mob/living/silicon/ai/blob_act(obj/effect/blob/B)
+	if (stat != DEAD)
 		adjustBruteLoss(60)
 		updatehealth()
 		return 1
 	return 0
 
-/mob/living/silicon/ai/restrained()
-	return 0
+/mob/living/silicon/ai/restrained(ignore_grab)
+	. = 0
 
 /mob/living/silicon/ai/emp_act(severity)
 	if (prob(30))
@@ -378,11 +378,11 @@ var/list/ai_list = list()
 		if(1)
 			gib()
 		if(2)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(60)
 				adjustFireLoss(60)
 		if(3)
-			if (stat != 2)
+			if (stat != DEAD)
 				adjustBruteLoss(30)
 
 	return
@@ -472,20 +472,12 @@ var/list/ai_list = list()
 	..()
 	return
 
-/mob/living/silicon/ai/reset_view(atom/A)
-	if (camera_light_on)
-		light_cameras()
-	if(istype(A,/obj/machinery/camera))
-		current = A
-	..()
-
-
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C || stat == 2) //C.can_use())
+	if (!C || stat == DEAD) //C.can_use())
 		return 0
 
 	if(!src.eyeobj)
@@ -764,7 +756,7 @@ var/list/ai_list = list()
 	var/list/obj/machinery/camera/visible = list()
 	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
 		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || C.light_disabled || get_dist(C, eyeobj) > 7)
+			if (!C.can_use() || get_dist(C, eyeobj) > 7)
 				continue
 			visible |= C
 
@@ -772,10 +764,10 @@ var/list/ai_list = list()
 	remove = lit_cameras - visible
 
 	for (var/obj/machinery/camera/C in remove)
-		C.SetLuminosity(0)
-		lit_cameras -= C
+		lit_cameras -= C //Removed from list before turning off the light so that it doesn't check the AI looking away.
+		C.Togglelight(0)
 	for (var/obj/machinery/camera/C in add)
-		C.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		C.Togglelight(1)
 		lit_cameras |= C
 
 /mob/living/silicon/ai/proc/control_integrated_radio()
@@ -814,10 +806,11 @@ var/list/ai_list = list()
 			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
-		aiRestorePowerRoutine = 0//So the AI initially has power.
+		ai_restore_power()//So the AI initially has power.
 		control_disabled = 1//Can't control things remotely if you're stuck in a card!
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
+		card.AI = src
 		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
 		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
 
@@ -843,3 +836,65 @@ var/list/ai_list = list()
 	if(M && cameranet && !cameranet.checkTurfVis(get_turf_pixel(M)) && !apc_override)
 		return
 	return 1
+
+/mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
+	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
+	var/name_used = speaker.GetVoice()
+	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	show_message(rendered, 2)
+
+/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
+	..()
+	if(oldname != real_name)
+		if(eyeobj)
+			eyeobj.name = "[newname] (AI Eye)"
+
+		// Notify Cyborgs
+		for(var/mob/living/silicon/robot/Slave in connected_robots)
+			Slave.show_laws()
+
+/mob/living/silicon/ai/replace_identification_name(oldname,newname)
+	if(aiPDA)
+		aiPDA.owner = newname
+		aiPDA.name = newname + " (" + aiPDA.ownjob + ")"
+
+
+/mob/living/silicon/ai/proc/add_malf_picker()
+	src << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
+	src << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
+	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
+	verbs += /mob/living/silicon/ai/proc/choose_modules
+	malf_picker = new /datum/module_picker
+
+
+/mob/living/silicon/ai/reset_perspective(atom/A)
+	if(camera_light_on)
+		light_cameras()
+	if(istype(A,/obj/machinery/camera))
+		current = A
+	if(client)
+		if(istype(A, /atom/movable))
+			client.perspective = EYE_PERSPECTIVE
+			client.eye = A
+		else
+			if(isturf(loc))
+				if(eyeobj)
+					client.eye = eyeobj
+					client.perspective = MOB_PERSPECTIVE
+				else
+					client.eye = client.mob
+					client.perspective = MOB_PERSPECTIVE
+			else
+				client.perspective = EYE_PERSPECTIVE
+				client.eye = loc
+		update_sight()
+		if(client.eye != src)
+			var/atom/AT = client.eye
+			AT.get_remote_view_fullscreens(src)
+		else
+			clear_fullscreen("remote_view", 0)
+
+/mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
+	if(..()) //successfully ressuscitated from death
+		icon_state = "ai"
+		. = 1

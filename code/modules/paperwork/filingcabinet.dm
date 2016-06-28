@@ -3,6 +3,7 @@
  *		Filing Cabinets
  *		Security Record Cabinets
  *		Medical Record Cabinets
+ *		Employment Contract Cabinets
  */
 
 
@@ -55,8 +56,10 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
-	else
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't put [P] in [src]!</span>"
+	else
+		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
@@ -114,7 +117,8 @@
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/S = find_record("name", G.fields["name"], data_core.security)
-			if(!S)	continue
+			if(!S)
+				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
@@ -144,7 +148,8 @@
 	if(virgin)
 		for(var/datum/data/record/G in data_core.general)
 			var/datum/data/record/M = find_record("name", G.fields["name"], data_core.medical)
-			if(!M)	continue
+			if(!M)
+				continue
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(src)
 			P.info = "<CENTER><B>Medical Record</B></CENTER><BR>"
 			P.info += "Name: [G.fields["name"]] ID: [G.fields["id"]]<BR>\nSex: [G.fields["sex"]]<BR>\nAge: [G.fields["age"]]<BR>\nFingerprint: [G.fields["fingerprint"]]<BR>\nPhysical Status: [G.fields["p_stat"]]<BR>\nMental Status: [G.fields["m_stat"]]<BR>"
@@ -163,3 +168,60 @@
 /obj/structure/filingcabinet/medical/attack_tk()
 	populate()
 	..()
+
+/*
+ * Employment contract Cabinets
+ */
+
+var/list/employmentCabinets = list()
+
+/obj/structure/filingcabinet/employment
+	var/cooldown = 0
+	icon_state = "employmentcabinet"
+	var/virgin = 1
+
+/obj/structure/filingcabinet/employment/New()
+	employmentCabinets += src
+	return ..()
+
+/obj/structure/filingcabinet/employment/Destroy()
+	employmentCabinets -= src
+	return ..()
+
+/obj/structure/filingcabinet/employment/proc/fillCurrent()
+	//This proc fills the cabinet with the current crew.
+	for(var/record in data_core.locked)
+		var/datum/data/record/G = record
+		if(!G)
+			continue
+		if(G.fields["reference"])
+			addFile(G.fields["reference"])
+
+
+/obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
+	new /obj/item/weapon/paper/contract/employment(src, employee)
+
+/obj/structure/filingcabinet/employment/attack_hand(mob/user)
+	if(!cooldown)
+		if(virgin)
+			fillCurrent()
+			virgin = 0
+		cooldown = 1
+		..()
+		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
+		cooldown = 0
+	else
+		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
+
+
+
+
+/obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
+	if(istype(P, /obj/item/weapon/wrench))
+		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		if (do_after(user,300,user))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			anchored = !anchored
+			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+	else
+		return ..()
