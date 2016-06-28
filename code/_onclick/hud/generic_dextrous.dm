@@ -45,7 +45,7 @@
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/destrous/persistant_inventory_update()
+/datum/hud/dextrous/persistant_inventory_update()
 	if(!mymob)
 		return
 	var/mob/living/D = mymob
