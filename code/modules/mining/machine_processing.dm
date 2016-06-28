@@ -218,8 +218,7 @@
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/process()
-	var/i
-	for (i = 0; i < 10; i++)
+	for(var/i in 1 to 10)
 		if (on)
 			if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0 && selected_titanium == 0)
 				if (ore_glass > 0)
