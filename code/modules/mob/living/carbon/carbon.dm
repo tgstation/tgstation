@@ -121,7 +121,7 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
-	if(health >= 0)
+	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
