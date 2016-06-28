@@ -530,7 +530,6 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	..()
 	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/weapon/paper/guardian(src)
-	return
 
 /obj/item/weapon/guardiancreator/carp
 	name = "holocarp fishsticks"
@@ -549,3 +548,11 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /obj/item/weapon/guardiancreator/carp/choose
 	random = FALSE
+
+/obj/item/weapon/storage/box/syndie_kit/holofish
+	name = "holocarp fishfinger carton"
+
+/obj/item/weapon/storage/box/syndie_kit/holofish/New()
+	..()
+	new /obj/item/weapon/guardiancreator/carp(src)
+	new /obj/item/weapon/guardiancreator/carp(src)
