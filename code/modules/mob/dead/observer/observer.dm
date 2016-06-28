@@ -564,7 +564,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
 	if (client && global.cross_allowed) 
-		src << "<span class='notice'>Sending you to [global.cross_address]</span>"
+		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+		winset(usr, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(global.cross_address)
 	else
 		src << "<span class='error'>There is no other server configured!</span>"
