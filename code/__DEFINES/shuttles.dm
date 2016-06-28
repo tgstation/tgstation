@@ -1,11 +1,12 @@
 //shuttle mode defines
-#define SHUTTLE_IDLE		0
-#define SHUTTLE_RECALL		1
-#define SHUTTLE_CALL		2
-#define SHUTTLE_DOCKED		3
-#define SHUTTLE_STRANDED	4
-#define SHUTTLE_ESCAPE		5
-#define SHUTTLE_ENDGAME		6
+#define SHUTTLE_IDLE		"idle"
+#define SHUTTLE_IGNITING	"igniting"
+#define SHUTTLE_RECALL		"recall"
+#define SHUTTLE_CALL		"call"
+#define SHUTTLE_DOCKED		"docked"
+#define SHUTTLE_STRANDED	"stranded"
+#define SHUTTLE_ESCAPE		"escape"
+#define SHUTTLE_ENDGAME		"endgame: game over"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))

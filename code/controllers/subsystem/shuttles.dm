@@ -10,6 +10,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/stationary = list()
 	var/list/transit = list()
 
+	var/list/turf/transit_turfs = list()
+
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
@@ -53,16 +55,35 @@ var/datum/subsystem/shuttle/SSshuttle
 		supply_packs[P.type] = P
 
 	initial_move()
+	setup_transit_zone()
+
+/datum/subsystem/shuttle/proc/setup_transit_zone()
+	// transit zone
+	var/obj/A = transit_markers[1]
+	var/obj/B = transit_markers[2]
+
+	var/x1 = min(A.x, B.x)
+	var/x2 = max(A.x, B.x)
+	var/y1 = min(A.y, B.y)
+	var/y2 = max(A.y, B.y)
+	var/_z = A.z
+
+	for(var/xi in x1 to x2)
+		for(var/yi in y1 to y2)
+			var/turf/T = locate(xi, yi, _z)
+			transit_turfs += T
 	..()
 
 
 /datum/subsystem/shuttle/fire()
 	for(var/thing in mobile)
-		if(thing)
-			var/obj/docking_port/mobile/P = thing
-			P.check()
+		if(!thing)
+			mobile.Remove(thing)
 			continue
-		mobile.Remove(thing)
+		var/obj/docking_port/mobile/P = thing
+		P.check()
+		if(istype(P.assigned_transit) && P.mode == SHUTTLE_IDLE)
+			qdel(P.assigned_transit, force=TRUE)
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -105,6 +126,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(SHUTTLE_DOCKED)
 			user << "The emergency shuttle is already here."
 			return
+		if(SHUTTLE_IGNITING)
+			user << "The emergency shuttle is firing its engines to leave."
+			return
 		if(SHUTTLE_ESCAPE)
 			user << "The emergency shuttle is moving away to a safe distance."
 			return
@@ -127,8 +151,6 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
-
-	return
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -213,6 +235,51 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
+/datum/subsystem/shuttle/proc/requestTransitZone(obj/docking_port/mobile/M)
+	// First, determine the size of the needed zone
+	var/transit_width = M.width + 14 // view range is 7, both ways is 14
+	var/transit_height = M.height + 14
+	// Then find a place to put the zone
+
+	var/list/proposed_zone = list()
+	base:
+		for(var/i in transit_turfs)
+			proposed_zone.Cut()
+			var/turf/T = i
+			for(var/dx in 0 to transit_width - 1)
+				for(var/dy in 0 to transit_height - 1)
+					var/turf/dt = locate(T.x + dx, T.y + dy, T.z)
+					if(!(dt in transit_turfs))
+						continue base
+					for(var/j in transit)
+						var/obj/docking_port/stationary/transit/TDP = j
+						if(dt in TDP.assigned_turfs)
+							continue base
+					proposed_zone += dt
+			break
+
+	if(!proposed_zone.len)
+		return
+
+	var/turf/topleft = proposed_zone[1]
+	// Then create a transit docking port in the middle
+	var/mid_x = round(transit_width / 2) + topleft.x
+	var/mid_y = round(transit_height / 2) + topleft.y
+
+	var/turf/midpoint = locate(mid_x, mid_y, topleft.z)
+	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
+	new_transit_dock.assigned_turfs = proposed_zone
+	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.setDir(M.travelDir)
+	for(var/i in new_transit_dock.assigned_turfs)
+		var/turf/open/space/transit/T = i
+		T.ChangeTurf(/turf/open/space/transit)
+		T.setDir(M.travelDir)
+		T.update_icon()
+
+	return new_transit_dock
+	// Then return it
+
 /datum/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
@@ -239,6 +306,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		backup_shuttle = SSshuttle.backup_shuttle
 	if (istype(SSshuttle.supply))
 		supply = SSshuttle.supply
+	if (istype(SSshuttle.transit_turfs))
+		transit_turfs = SSshuttle.transit_turfs
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum

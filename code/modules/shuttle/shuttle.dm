@@ -151,20 +151,23 @@
 //returns first-found touching shuttleport
 /obj/docking_port/stationary/get_docked()
 	. = locate(/obj/docking_port/mobile) in loc
-	/*
-	for(var/turf/T in return_ordered_turfs())
-		. = locate(/obj/docking_port/mobile) in loc
-		if(.)
-			return .
-	*/
 
 /obj/docking_port/stationary/transit
 	name = "In Transit"
 	turf_type = /turf/open/space/transit
+	var/list/turf/assigned_turfs = list()
 
 /obj/docking_port/stationary/transit/New()
 	..()
 	SSshuttle.transit += src
+
+/obj/docking_port/stationary/transit/Destroy(force=FALSE)
+	if(force)
+		SSshuttle.transit -= src
+		if(assigned_turfs)
+			assigned_turfs.Cut()
+		assigned_turfs = null
+	. = ..()
 
 
 /obj/docking_port/mobile
@@ -176,12 +179,15 @@
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
-	var/callTime = 150				//time spent in transit (deciseconds)
+	var/callTime = 150				//time spent in transit (deciseconds)7
+	var/ignitionTime = 100			// time spent "starting the engines"
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0				//direction the shuttle would travel in
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
+
+	var/obj/docking_port/stationary/transit/assigned_transit
 
 	var/launch_status = NOLAUNCH
 
@@ -288,11 +294,10 @@
 				destination = S
 				timer = world.time
 			mode = SHUTTLE_CALL
-		else
+		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
 			destination = S
-			mode = SHUTTLE_CALL
+			mode = SHUTTLE_IGNITING
 			timer = world.time
-			enterTransit()		//hyperspace
 
 //recall the shuttle to where it was previously
 /obj/docking_port/mobile/proc/cancel()
@@ -306,12 +311,16 @@
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
 
+/obj/docking_port/mobile/proc/requestTransitZone()
+	assigned_transit = SSshuttle.requestTransitZone(src)
+	. = istype(assigned_transit)
+
 /obj/docking_port/mobile/proc/enterTransit()
 	previous = null
 //		if(!destination)
 //			return
 	var/obj/docking_port/stationary/S0 = get_docked()
-	var/obj/docking_port/stationary/S1 = findTransitDock()
+	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
 		if(dock(S1))
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
@@ -411,10 +420,6 @@
 			return -1
 
 	closePortDoors()
-
-//		//rotate transit docking ports, so we don't need zillions of variants
-//		if(istype(S1, /obj/docking_port/stationary/transit))
-//			S1.setDir(turn(NORTH, -travelDir))
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
@@ -527,21 +532,6 @@
 	if(!buckled)
 		Weaken(3)
 
-/*
-	if(istype(S1, /obj/docking_port/stationary/transit))
-		var/d = turn(dir, 180 + travelDir)
-		for(var/turf/open/space/transit/T in S1.return_ordered_turfs())
-			T.pushdirection = d
-			T.update_icon()
-*/
-
-
-
-/obj/docking_port/mobile/proc/findTransitDock()
-	var/obj/docking_port/stationary/transit/T = SSshuttle.getDock("[id]_transit")
-	if(T && !canDock(T))
-		return T
-
 /obj/docking_port/mobile/proc/findRoundstartDock()
 	var/obj/docking_port/stationary/D
 	D = SSshuttle.getDock(roundstart_move)
@@ -558,15 +548,6 @@
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
-
-/*	commented out due to issues with rotation
-	for(var/obj/docking_port/stationary/transit/S in SSshuttle.transit)
-		if(S.id)
-			continue
-		if(!canDock(S))
-			return S
-*/
-
 
 //shuttle-door closing is handled in the dock() proc whilst looping through turfs
 //this one closes the door where we are docked at, if there is one there.
@@ -613,29 +594,18 @@
 				step(AM, dir)
 			else
 				qdel(AM)
-/*
-//used to check if atom/A is within the shuttle's bounding box
-/obj/docking_port/mobile/proc/onShuttleCheck(atom/A)
-	var/turf/T = get_turf(A)
-	if(!T)
-		return 0
 
-	var/list/L = return_coords()
-	if(L[1] > L[3])
-		L.Swap(1,3)
-	if(L[2] > L[4])
-		L.Swap(2,4)
-
-	if(L[1] <= T.x && T.x <= L[3])
-		if(L[2] <= T.y && T.y <= L[4])
-			return 1
-	return 0
-*/
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
 	var/timeLeft = timeLeft(1)
 	if(!ripples.len && (timeLeft <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL)))
 		create_ripples(destination)
+
+	// Stall until we get a transit slot
+	if(mode == SHUTTLE_IGNITING)
+		var/success = requestTransitZone()
+		if(!success)
+			timer = world.time
 
 	if(timeLeft <= 0)
 		switch(mode)
@@ -647,6 +617,11 @@
 				if(dock(previous))
 					setTimer(20)	//can't dock for some reason, try again in 2 seconds
 					return
+			if(SHUTTLE_IGNITING)
+				mode = SHUTTLE_CALL
+				timer = world.time
+				enterTransit()
+				return
 		mode = SHUTTLE_IDLE
 		timer = 0
 		destination = null
@@ -668,6 +643,8 @@
 // returns 3-letter mode string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getModeStr()
 	switch(mode)
+		if(SHUTTLE_IGNITING)
+			return "IGN"
 		if(SHUTTLE_RECALL)
 			return "RCL"
 		if(SHUTTLE_CALL)

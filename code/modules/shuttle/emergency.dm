@@ -247,15 +247,6 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 
-/*
-/obj/docking_port/mobile/emergency/findTransitDock()
-	. = SSshuttle.getDock("emergency_transit")
-	if(.)
-		return .
-	return ..()
-*/
-
-
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
 		return
