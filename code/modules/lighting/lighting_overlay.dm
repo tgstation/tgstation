@@ -4,6 +4,7 @@
 	name             = ""
 
 	anchored         = TRUE
+	ignoreinvert     = TRUE
 
 	icon             = LIGHTING_ICON
 	color            = LIGHTING_BASE_MATRIX
@@ -15,7 +16,6 @@
 	blend_mode       = BLEND_MULTIPLY
 
 	var/needs_update = FALSE
-	var/wa = FALSE
 
 /atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
 	. = ..()
@@ -81,9 +81,6 @@
 
 		else if (mx < LIGHTING_SOFT_THRESHOLD)
 			. = 0 // 0 means soft lighting.
-
-		if (wa)
-			to_chat(world, "[.] [mx] [max] ")
 
 		max = max(max, mx)
 

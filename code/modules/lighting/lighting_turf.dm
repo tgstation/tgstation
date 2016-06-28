@@ -89,7 +89,7 @@
 		else
 			lighting_clear_overlay()
 
-/turf/proc/get_corners(var/dir)
+/turf/proc/get_corners()
 	if (has_opaque_atom)
 		return null // Since this proc gets used in a for loop, null won't be looped though.
 
