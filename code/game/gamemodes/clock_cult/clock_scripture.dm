@@ -860,8 +860,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		return 0
 	invoker.notransform = FALSE
 	slab.busy = null
+	if(!check_special_requirements())
+		return 0
 	invoker << "<span class='warning'>The tendril shivers slightly as it selects a marauder...</span>"
 	var/list/marauder_candidates = pollCandidates("Do you want to play as the clockwork marauder of [invoker.real_name]?", ROLE_SERVANT_OF_RATVAR, null, FALSE, 100)
+	if(!check_special_requirements())
+		return 0
 	if(!marauder_candidates.len)
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
