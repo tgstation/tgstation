@@ -25,6 +25,7 @@
 	desc = "A strange metal tablet. A clock in the center turns around and around."
 	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect."
 	icon_state = "dread_ipad"
+	slot_flags = SLOT_BELT
 	w_class = 2
 	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 	var/busy //If the slab is currently being used by something
