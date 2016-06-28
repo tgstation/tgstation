@@ -84,7 +84,7 @@
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
-	desc = "A red banner, used to play capture the flag."
+	desc = "A red banner used to play capture the flag."
 	team = RED_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/red
 
@@ -93,7 +93,7 @@
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
-	desc = "A blue banner, used to play capture the flag."
+	desc = "A blue banner used to play capture the flag."
 	team = BLUE_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/blue
 
@@ -107,13 +107,13 @@
 /obj/effect/ctf/flag_reset/red
 	name = "red flag landmark"
 	icon_state = "banner-red"
-	desc = "This is where a red banner, used to play capture the flag \
+	desc = "This is where a red banner used to play capture the flag \
 		would go."
 
 /obj/effect/ctf/flag_reset/blue
 	name = "blue flag landmark"
 	icon_state = "banner-blue"
-	desc = "This is where a blue banner, used to play capture the flag \
+	desc = "This is where a blue banner used to play capture the flag \
 		would go."
 
 /obj/machinery/capture_the_flag
@@ -282,8 +282,9 @@
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
 	var/area/A = get_area(src)
-	for(var/mob/M in mob_list)
-		if((get_area(A) == A) && M.ckey in team_members)
+	for(var/i in mob_list)
+		var/mob/M = i
+		if((get_area(A) == A) && (M.ckey in team_members))
 			M.dust()
 	team_members.Cut()
 
