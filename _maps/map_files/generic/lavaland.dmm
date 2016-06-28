@@ -45,7 +45,9 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 "aj" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -54,7 +56,9 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 "ak" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2080,16 +2084,10 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/living_quarters)
+/turf/closed/indestructible/riveted,
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 "eo" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -2706,7 +2704,9 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/lavaland/surface/outdoors)
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 "fy" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/mineral/random/volcanic,
@@ -34666,8 +34666,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+en
+en
 ah
 ah
 ah
@@ -34679,8 +34679,8 @@ ah
 ah
 ah
 ah
-aa
-aa
+en
+en
 ab
 ab
 ab
@@ -34923,7 +34923,7 @@ ab
 ab
 ab
 ab
-aa
+en
 ai
 ai
 ai
@@ -34937,7 +34937,7 @@ ai
 ai
 ai
 ai
-aa
+en
 ab
 ab
 ab
@@ -35437,7 +35437,7 @@ ab
 ab
 ab
 ab
-aa
+en
 aj
 aj
 aj
@@ -35451,7 +35451,7 @@ aj
 aj
 aj
 aj
-aa
+en
 ab
 ab
 ab
@@ -35694,8 +35694,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+en
+en
 ak
 ak
 ak
@@ -35707,8 +35707,8 @@ ak
 ak
 ak
 ak
-aa
-aa
+en
+en
 ab
 ab
 ab
