@@ -140,15 +140,16 @@ var/last_irc_status = 0
 
 		return list2params(s)
 
-	else if("announce" in input)
-		if(!key_valid)
-			return "Bad Key"
-		else
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					C << "<span class='announce'>PR: [input["announce"]]</span>"
-#undef CHAT_PULLR
+	else if(copytext(T,1,9)=="announce")
+		var/i[]=params2list(T)
+		if(i["key"] != global.comms_key)
+			spawn(50)
+				return "Bad Key (Throttled)"
+
+		i["announce"] = sanitize_russian(i["announce"])
+		i["g"] = sanitize_russian(i["g"])
+		for(var/client/C in clients)
+			C<<"<font color=#[i["i"]]><b><span class='prefix'>OOC:</span> <EM>[i["g"]]:</EM> <span class='message'>[i["announce"]]</span></b></font>"
 
 	else if("crossmessage" in input)
 		if(!key_valid)
