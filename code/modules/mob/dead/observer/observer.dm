@@ -557,7 +557,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	return 1
 
-/mob/dead/observer/proc/ServerHop()
+/mob/dead/observer/proc/server_hop()
 	set category = "Ghost"
 	set name = "Server Hop!"
 	set desc= "Jump to the other server"
