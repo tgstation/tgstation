@@ -2080,16 +2080,12 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
+/obj/structure/lavaland_door{
+	bound_x = -32;
+	pixel_x = -32
 	},
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/mine/living_quarters)
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "eo" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -34915,7 +34911,7 @@ aa
 aa
 aa
 aa
-ad
+aa
 ab
 ab
 ab
@@ -35169,10 +35165,10 @@ ab
 ab
 ab
 ab
-ac
 ab
 ab
 ab
+en
 ae
 ab
 ab
