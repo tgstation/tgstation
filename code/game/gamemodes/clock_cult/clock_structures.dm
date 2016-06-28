@@ -505,7 +505,7 @@
 			L.IgniteMob()
 		targetsjudged++
 		L.adjustBruteLoss(10)
-	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[targetsjudged > 1 ? "s":""].</b></span>"
+	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
 	QDEL_IN(src, 3) //so the animation completes properly
 
 /obj/effect/clockwork/judicial_marker/ex_act(severity)
