@@ -14,6 +14,8 @@
 	if(..())
 		. = 1
 
+		handle_blood()
+
 		for(var/obj/item/organ/O in internal_organs)
 			O.on_life()
 
@@ -212,6 +214,9 @@
 			update_internals_hud_icon(1)
 			return internal.remove_air_volume(volume_needed)
 
+/mob/living/carbon/proc/handle_blood()
+	return
+
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)
@@ -351,9 +356,6 @@
 		if(prob(5))
 			AdjustSleeping(1)
 			Paralyse(5)
-
-	if(confused)
-		confused = max(0, confused - 1)
 
 	//Jitteryness
 	if(jitteriness)

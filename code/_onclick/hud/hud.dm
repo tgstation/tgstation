@@ -20,6 +20,8 @@
 
 	var/obj/screen/alien_plasma_display
 
+	var/obj/screen/devil/soul_counter/devilsouldisplay
+
 	var/obj/screen/deity_power_display
 	var/obj/screen/deity_follower_display
 
@@ -90,6 +92,7 @@
 	healthdoll = null
 	internals = null
 	lingchemdisplay = null
+	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null

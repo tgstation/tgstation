@@ -34,7 +34,7 @@
 
 	src.energy = starting_energy
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
@@ -43,7 +43,7 @@
 	return
 
 /obj/singularity/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	return ..()
 
@@ -239,18 +239,19 @@
 	set background = BACKGROUND_ENABLED
 	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
 		var/turf/T = tile
-		if(!T)
+		if(!T || !isturf(loc))
 			continue
 		if(get_dist(T, src) > consume_range)
 			T.singularity_pull(src, current_size)
 		else
 			consume(T)
 		for(var/thing in T)
-			var/atom/movable/X = thing
-			if(get_dist(X, src) > consume_range)
-				X.singularity_pull(src, current_size)
-			else
-				consume(X)
+			if(isturf(loc))
+				var/atom/movable/X = thing
+				if(get_dist(X, src) > consume_range)
+					X.singularity_pull(src, current_size)
+				else
+					consume(X)
 			CHECK_TICK
 	return
 

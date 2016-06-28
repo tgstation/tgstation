@@ -77,6 +77,7 @@ obj/item/weapon/mop/proc/clean(turf/A)
 	mopcap = 10
 	icon_state = "advmop"
 	item_state = "mop"
+	origin_tech = "materials=3;engineering=3"
 	force = 6
 	throwforce = 8
 	throw_range = 4

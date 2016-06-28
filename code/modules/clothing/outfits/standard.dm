@@ -135,7 +135,7 @@
 /datum/outfit/psycho/post_equip(mob/living/carbon/human/H)
 	for(var/obj/item/carried_item in H.contents)
 		if(!istype(carried_item, /obj/item/weapon/implant))//If it's not an implant.
-			carried_item.add_blood(H)//Oh yes, there will be blood...
+			carried_item.add_mob_blood(H)//Oh yes, there will be blood...
 	H.regenerate_icons()
 
 /datum/outfit/assassin
@@ -357,7 +357,7 @@
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)//Here you go Deuryn
+	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)//Here you go Deuryn
 	L.imp_in = H
 	L.implanted = 1
 	H.sec_hud_set_implants()

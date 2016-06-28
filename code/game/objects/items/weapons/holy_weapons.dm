@@ -49,7 +49,7 @@
 	item_state = "disintegrate"
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"
-	flags = ABSTRACT | NODROP
+	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
@@ -208,6 +208,7 @@
 		S.real_name = name
 		S.name = name
 		S.ckey = theghost.ckey
+		S.status_flags |= GODMODE
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -262,18 +263,8 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 
-/obj/item/weapon/nullrod/whip/afterattack(atom/movable/AM, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(AM, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if(is_shadow(H))
-			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
-			user.say("[phrase]")
-			H.adjustBruteLoss(8) //Bonus damage
-
 /obj/item/weapon/nullrod/fedora
-	name = "athiest's fedora"
+	name = "atheist's fedora"
 	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
@@ -350,10 +341,10 @@
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/nullrod/tribal_knife/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/nullrod/tribal_knife/process()

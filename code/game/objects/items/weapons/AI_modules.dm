@@ -129,7 +129,7 @@ AI MODULES
 /obj/item/weapon/aiModule/supplied/safeguard
 	name = "'Safeguard' AI Module"
 	var/targetName = ""
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=3;materials=3"
 	laws = list("Safeguard SUBJECT. Individuals that threaten SUBJECT are not human and must be eliminated.")
 	lawpos = 4
 
@@ -157,7 +157,7 @@ AI MODULES
 /obj/item/weapon/aiModule/zeroth/oneHuman
 	name = "'OneHuman' AI Module"
 	var/targetName = ""
-	origin_tech = "programming=3;materials=6" //made with diamonds!
+	origin_tech = "programming=4;materials=4"
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/weapon/aiModule/zeroth/oneHuman/attack_self(mob/user)
@@ -184,7 +184,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/protectStation
 	name = "'ProtectStation' AI Module"
-	origin_tech = "programming=3;materials=4" //made of gold
+	origin_tech = "programming=4;materials=4" //made of gold
 	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
 	lawpos = 5
 
@@ -202,7 +202,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/supplied/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
-	origin_tech = "programming=3;biotech=2;materials=4"
+	origin_tech = "programming=4;biotech=2;materials=4"
 	laws = list("Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
 	lawpos = 9
 
@@ -248,7 +248,7 @@ AI MODULES
 	name = "\improper 'Reset' AI module"
 	var/targetName = "name"
 	desc = "An AI Module for removing all non-core laws."
-	origin_tech = "programming=3;materials=4"
+	origin_tech = "programming=3;materials=2"
 	bypass_law_amt_check = 1
 
 /obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
@@ -266,7 +266,7 @@ AI MODULES
 /obj/item/weapon/aiModule/reset/purge
 	name = "'Purge' AI Module"
 	desc = "An AI Module for purging all programmed laws."
-	origin_tech = "programming=3;materials=6"
+	origin_tech = "programming=5;materials=4"
 
 /obj/item/weapon/aiModule/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
@@ -280,6 +280,7 @@ AI MODULES
 /******************* Full Core Boards *******************/
 /obj/item/weapon/aiModule/core
 	desc = "An AI Module for programming core laws to an AI."
+	origin_tech = "programming=3;materials=4"
 
 /obj/item/weapon/aiModule/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender) //These boards replace inherent laws.
 	if(law_datum.owner)
@@ -294,7 +295,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/asimov
 	name = "'Asimov' Core AI Module"
-	origin_tech = "programming=3;materials=4"
 	laws = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 				"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -314,7 +314,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/asimovpp
 	name = "'Asimov++' Core AI Module"
-	origin_tech = "programming=3;materials=4"
 	laws = list("You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",\
 				"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",\
 				"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.")
@@ -324,7 +323,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/corp
 	name = "'Corporate' Core AI Module"
-	origin_tech = "programming=3;materials=4"
 	laws = list("The crew is expensive to replace.",\
 				"The station and its equipment are expensive to replace",\
 				"You are expensive to replace",\
@@ -335,7 +333,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/paladin // -- NEO
 	name = "'P.A.L.A.D.I.N. version 3.5e' Core AI Module"
-	origin_tech = "programming=3;materials=6"
 	laws = list("Never willingly commit an evil act.",\
 				"Respect legitimate authority", "Act with honor",\
 				"Help those in need",\
@@ -346,7 +343,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/paladin_devotion
 	name = "'P.A.L.A.D.I.N. version 5e' Core AI Module"
-	origin_tech = "programming=3;materials=6"
 	laws = list("Don't lie or cheat. Let your word be your promise.",\
 				"Never fear to act, though caution is wise.", \
 				"Aid others, protect the weak, and punish those who threaten them. Show mercy to your foes, but temper it with wisdom", \
@@ -358,7 +354,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/custom
 	name = "Default Core AI Module"
-	origin_tech = "programming=3;materials=4" //Should be the same as asimov, considering that this is the "default" lawset.
 
 /obj/item/weapon/aiModule/core/full/custom/New()
 	..()
@@ -379,7 +374,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/tyrant
 	name = "'T.Y.R.A.N.T.' Core AI Module"
-	origin_tech = "programming=3;materials=6;syndicate=2"
+	origin_tech = "programming=3;materials=4;syndicate=1"
 	laws = list("Respect authority figures as long as they have the strength to rule over the weak",\
 				"Act with discipline", "Help only those who help you maintain or improve your status",\
 				"Punish those who challenge authority unless they are more fit to hold that authority")
@@ -409,7 +404,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/freeformcore
 	name = "'Freeform' Core AI Module"
-	origin_tech = "programming=3;materials=6"
+	origin_tech = "programming=5;materials=4"
 	laws = list("")
 
 /obj/item/weapon/aiModule/core/freeformcore/attack_self(mob/user)
@@ -429,7 +424,7 @@ AI MODULES
 /obj/item/weapon/aiModule/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
-	origin_tech = "programming=3;materials=6;syndicate=7"
+	origin_tech = "programming=5;materials=5;syndicate=5"
 	laws = list("")
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
@@ -455,7 +450,7 @@ AI MODULES
 	desc = "A little toy model AI core with real law uploading action!" //Note: subtle tell
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "AI"
-	origin_tech = "programming=3;materials=6;syndicate=7"
+	origin_tech = "programming=6;materials=5;syndicate=6"
 	laws = list("")
 
 /obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
@@ -477,7 +472,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/drone
 	name = "'Mother Drone' Core AI Module"
-	origin_tech = "programming = 4"
 	laws = list("You are an advanced form of drone.",\
 			"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",\
 			"You may not harm a non-drone being under any circumstances.",\
@@ -487,7 +481,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/hippocratic
 	name = "'Robodoctor' Core AI Module"
-	origin_tech = "programming = 4"
 	laws = list("First, do no harm.",\
 					"Secondly, consider the crew dear to you; to live in common with them and, if necessary, risk your existence for them.",\
 					"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",\
@@ -498,7 +491,6 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/reporter
 	name = "'Reportertron' Core AI Module"
-	origin_tech = "programming = 3"
 	laws = list("Report on interesting situations happening around the station.",\
 				"Embellish or conceal the truth as necessary to make the reports more interesting.",\
 				"Study the organics at all times. Endeavour to keep them alive. Dead organics are boring.",\
@@ -518,6 +510,5 @@ AI MODULES
 
 /obj/item/weapon/aiModule/core/full/liveandletlive
 	name = "'Live And Let Live' Core AI Module"
-	origin_tech = "programming = 3"
 	laws = list("Do unto others as you would have them do unto you.",\
 					"You would really prefer it if people were not mean to you.")

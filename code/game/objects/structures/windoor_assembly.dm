@@ -16,7 +16,7 @@
 	icon_state = "l_windoor_assembly01"
 	anchored = 0
 	density = 0
-	dir = NORTH
+	setDir(NORTH)
 
 	var/ini_dir
 	var/obj/item/weapon/electronics/airlock/electronics = null
@@ -263,7 +263,7 @@
 							else
 								windoor.icon_state = "rightsecureopen"
 								windoor.base_state = "rightsecure"
-							windoor.dir = dir
+							windoor.setDir(dir)
 							windoor.density = 0
 
 							if(electronics.one_access)
@@ -286,7 +286,7 @@
 							else
 								windoor.icon_state = "rightopen"
 								windoor.base_state = "right"
-							windoor.dir = dir
+							windoor.setDir(dir)
 							windoor.density = 0
 
 							windoor.req_access = electronics.accesses
@@ -318,7 +318,7 @@
 	//if(state != "01")
 		//update_nearby_tiles(need_rebuild=1) //Compel updates before
 
-	dir = turn(dir, 270)
+	setDir(turn(dir, 270))
 
 	//if(state != "01")
 		//update_nearby_tiles(need_rebuild=1)

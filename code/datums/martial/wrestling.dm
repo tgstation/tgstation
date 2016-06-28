@@ -121,7 +121,7 @@
 		A << "You need to have [D] in a cinch!"
 		return
 	D.forceMove(A.loc)
-	D.dir = get_dir(D, A)
+	D.setDir(get_dir(D, A))
 
 	D.Stun(4)
 	A.visible_message("<span class = 'danger'><B>[A] starts spinning around with [D]!</B></span>")
@@ -151,12 +151,12 @@
 				A << "You can't throw [D] from here!"
 				return 0
 
-			A.dir = turn(A.dir, 90)
+			A.setDir(turn(A.dir, 90))
 			var/turf/T = get_step(A, A.dir)
 			var/turf/S = D.loc
 			if ((S && isturf(S) && S.Exit(D)) && (T && isturf(T) && T.Enter(A)))
 				D.forceMove(T)
-				D.dir = get_dir(D, A)
+				D.setDir(get_dir(D, A))
 		else
 			return 0
 
@@ -193,8 +193,8 @@
 		A << "You need to have [D] in a cinch!"
 		return
 	D.forceMove(A.loc)
-	A.dir = get_dir(A, D)
-	D.dir = get_dir(D, A)
+	A.setDir(get_dir(A, D))
+	D.setDir(get_dir(D, A))
 
 	A.visible_message("<span class = 'danger'><B>[A] lifts [D] up!</B></span>")
 
@@ -209,8 +209,8 @@
 		if (A && D)
 			A.pixel_y += 3
 			D.pixel_y += 3
-			A.dir = turn(A.dir, 90)
-			D.dir = turn(D.dir, 90)
+			A.setDir(turn(A.dir, 90))
+			D.setDir(turn(D.dir, 90))
 
 			switch (A.dir)
 				if (NORTH)
@@ -305,7 +305,7 @@
 	var/turf/T = get_turf(A)
 	if (T && isturf(T) && D && isturf(D.loc))
 		for (var/i = 0, i < 4, i++)
-			A.dir = turn(A.dir, 90)
+			A.setDir(turn(A.dir, 90))
 
 		A.forceMove(D.loc)
 		spawn (4)
@@ -322,7 +322,7 @@
 		return
 	A.emote("scream")
 	A.emote("flip")
-	A.dir = turn(A.dir, 90)
+	A.setDir(turn(A.dir, 90))
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
 	playsound(A.loc, "swing_hit", 50, 1)

@@ -1,4 +1,4 @@
-//This is realisation of the working torus-looping randomized-per-round space map, this kills the cube
+//This is a simple 3 by 3 grid working off the corpse of the space torus. The donut is dead, cube has been avenged!
 
 #define Z_LEVEL_NORTH 		"1"
 #define Z_LEVEL_SOUTH 		"2"
@@ -12,13 +12,13 @@ var/list/z_levels_list = list()
 	var/name = "Your config settings failed, you need to fix this for the datum space levels to work"
 	var/list/neigbours = list()
 	var/z_value = 1 //actual z placement
-	var/linked = 1
+	var/linked = SELFLOOPING
 	var/xi
 	var/yi   //imaginary placements on the grid
 
 /datum/space_level/New(transition_type)
 	linked = transition_type
-	if(linked == 1)
+	if(linked == SELFLOOPING)
 		neigbours = list()
 		var/list/L = list(Z_LEVEL_NORTH,Z_LEVEL_SOUTH,Z_LEVEL_EAST,Z_LEVEL_WEST)
 		for(var/A in L)
@@ -84,7 +84,7 @@ var/list/z_levels_list = list()
 		D = new(map_transition_config[A])
 		D.name = A
 		D.z_value = k
-		if(D.linked < 2)
+		if(D.linked != CROSSLINKED)
 			z_levels_list["[D.z_value]"] = D
 		else
 			SLS.Add(D)
@@ -104,8 +104,7 @@ var/list/z_levels_list = list()
 	var/list/used_points = list()
 	grid.Cut()
 	while(SLS.len)
-		D = pick(SLS)
-		SLS.Remove(D)
+		D = pick_n_take(SLS)
 		D.xi = P.x
 		D.yi = P.y
 		P.spl = D
@@ -154,6 +153,7 @@ var/list/z_levels_list = list()
 				S.destination_x = x_pos_transition[side] == 1 ? S.x : x_pos_transition[side]
 				S.destination_y = y_pos_transition[side] == 1 ? S.y : y_pos_transition[side]
 				S.destination_z = zdestination
+				//S.maptext = "[zdestination]" // for debugging
 
 	for(var/A in grid)
 		z_levels_list[A] = grid[A]

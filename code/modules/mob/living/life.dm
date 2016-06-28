@@ -22,9 +22,6 @@
 		//Chemicals in the body
 		handle_chemicals_in_body()
 
-		//Blud
-		handle_blood()
-
 		//Random events (vomiting etc)
 		handle_random_events()
 
@@ -69,9 +66,6 @@
 		AI.client.images |= src.digitaldisguise
 
 
-/mob/living/proc/handle_blood()
-	return
-
 /mob/living/proc/handle_random_events()
 	return
 
@@ -89,6 +83,8 @@
 		AdjustStunned(-1, 1, 1)
 	if(weakened)
 		AdjustWeakened(-1, 1, 1)
+	if(confused)
+		confused = max(0, confused - 1)
 
 /mob/living/proc/handle_disabilities()
 	//Eyes

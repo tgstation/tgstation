@@ -8,6 +8,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
@@ -100,13 +101,13 @@
 	icon_state = "banana_blue"
 	trash = /obj/item/weapon/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
+	origin_tech = "biotech=3;bluespace=5"
 
 /obj/item/weapon/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "banana_peel_blue"
-
 
 // Other
 /obj/item/weapon/grown/bananapeel/specialpeel     //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

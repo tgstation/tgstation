@@ -40,11 +40,7 @@
 					summoned_object.vars[varName] = newVars[varName]
 
 			if(summon_lifespan)
-				spawn(summon_lifespan)
-					if(summoned_object)
-						qdel(summoned_object)
-
-	return
+				QDEL_IN(summoned_object, summon_lifespan)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/summonEdSwarm //test purposes - Also a lot of fun
 	name = "Dispense Wizard Justice"

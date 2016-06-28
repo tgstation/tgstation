@@ -61,6 +61,10 @@
 	if(prob(20))
 		new /obj/structure/table/wood(src.loc)
 
+/obj/structure/table/ratvar_act()
+	if(prob(20))
+		new /obj/structure/table/reinforced/brass(src.loc)
+
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
 	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
 	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
@@ -233,12 +237,8 @@
 		user << "<span class='notice'>You start deconstructing [src]...</span>"
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
-			for(var/i = 1, i <= framestackamount, i++)
-				new framestack(get_turf(src))
-			for(var/i = 1, i <= buildstackamount, i++)
-				new buildstack(get_turf(src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			qdel(src)
+			table_destroy()
 
 
 /*
@@ -352,20 +352,43 @@
 		if(WT.remove_fuel(0, user))
 			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 			if(deconstruction_ready)
-				user << "<span class='notice'>You start weakening the reinforced table...</span>"
-				if (do_after(user, 50/W.toolspeed, target = src))
-					if(!src || !WT.isOn()) return
-					user << "<span class='notice'>You weaken the table.</span>"
-					deconstruction_ready = 0
-			else
 				user << "<span class='notice'>You start strengthening the reinforced table...</span>"
 				if (do_after(user, 50/W.toolspeed, target = src))
 					if(!src || !WT.isOn()) return
 					user << "<span class='notice'>You strengthen the table.</span>"
+					deconstruction_ready = 0
+			else
+				user << "<span class='notice'>You start weakening the reinforced table...</span>"
+				if (do_after(user, 50/W.toolspeed, target = src))
+					if(!src || !WT.isOn()) return
+					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1
 	else
 		return ..()
 
+/obj/structure/table/reinforced/brass
+	name = "brass table"
+	desc = "A solid, slightly beveled brass table."
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
+	icon_state = "brass_table"
+	frame = /obj/structure/table_frame/brass
+	framestackamount = 0
+	buildstackamount = 0
+	canSmoothWith = list(/obj/structure/table/reinforced/brass)
+
+/obj/structure/table/reinforced/brass/table_destroy()
+	new frame(src.loc)
+	qdel(src)
+
+/obj/structure/table/reinforced/brass/narsie_act()
+	take_damage(rand(15, 45), BRUTE)
+	if(src) //do we still exist?
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/structure/table/reinforced/brass/ratvar_act()
+	health = initial(health)
 
 /*
  * Surgery Tables

@@ -8,9 +8,9 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 
 /obj/item/weapon/storage/belt/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += "[I.name]"
+		add_overlay("[I.name]")
 	..()
 
 /obj/item/weapon/storage/belt/utility
@@ -78,7 +78,6 @@
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/device/rad_laser,
 		/obj/item/device/sensor_device,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/,
@@ -147,7 +146,7 @@
 	desc = "A versatile chest rig, cherished by miners and hunters alike."
 	icon_state = "explorer1"
 	item_state = "explorer1"
-	storage_slots = 5
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
 	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
@@ -174,17 +173,20 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle,
 		/obj/item/stack/medical,
 		/obj/item/weapon/kitchen/knife,
-		/obj/item/weapon/reagent_containers/hypospray/medipen,
+		/obj/item/weapon/reagent_containers/hypospray,
 		/obj/item/device/gps,
 		/obj/item/weapon/storage/bag/ore,
 		/obj/item/weapon/survivalcapsule,
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/ore/bluespace_crystal,
-		/obj/item/weapon/reagent_containers/food/drinks,
-
-
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/weapon/ore,
+		/obj/item/weapon/reagent_containers/food/drinks
 		)
+
+
+/obj/item/weapon/storage/belt/mining/vendor
+	contents = newlist(/obj/item/weapon/survivalcapsule)
 
 /obj/item/weapon/storage/belt/mining/alt
 	icon_state = "explorer2"
@@ -193,6 +195,7 @@
 /obj/item/weapon/storage/belt/mining/primitive
 	name = "hunter's belt"
 	desc = "A versatile belt, woven from sinew."
+	storage_slots = 5
 	icon_state = "ebelt"
 	item_state = "ebelt"
 

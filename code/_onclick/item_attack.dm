@@ -64,9 +64,12 @@
 		if(apply_damage(I.force, I.damtype))
 			if(I.damtype == BRUTE)
 				if(prob(33))
+					I.add_mob_blood(src)
 					var/turf/location = get_turf(src)
-					location.add_blood_floor(src)
-
+					add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+						user.add_mob_blood(src)
+	return TRUE
 
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.

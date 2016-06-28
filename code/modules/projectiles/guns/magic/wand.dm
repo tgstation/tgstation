@@ -125,11 +125,11 @@
 	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/teleport/zap_self(mob/living/user)
-	do_teleport(user, user, 10)
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(3, user.loc)
-	smoke.start()
-	charges--
+	if(do_teleport(user, user, 10))
+		var/datum/effect_system/smoke_spread/smoke = new
+		smoke.set_up(3, user.loc)
+		smoke.start()
+		charges--
 	..()
 
 /////////////////////////////////////

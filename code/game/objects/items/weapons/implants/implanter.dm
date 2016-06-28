@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = 2
-	origin_tech = "materials=1;biotech=3;programming=2"
+	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
 

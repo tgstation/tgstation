@@ -37,7 +37,8 @@
 		if(iscultist(M))
 			M << my_message
 		else if(M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [my_message]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [my_message]"
 
 	log_say("[user.real_name]/[user.key] : [message]")
 

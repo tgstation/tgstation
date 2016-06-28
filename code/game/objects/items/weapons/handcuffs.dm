@@ -16,7 +16,7 @@
 	throw_speed = 3
 	throw_range = 5
 	materials = list(MAT_METAL=500)
-	origin_tech = "materials=1"
+	origin_tech = "engineering=3;combat=3"
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
 	var/trashtype = null //for disposable cuffs
@@ -85,6 +85,7 @@
 	icon_state = "cuff_red"
 	item_state = "coil_red"
 	materials = list(MAT_METAL=150, MAT_GLASS=75)
+	origin_tech = "engineering=2"
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 	var/datum/robot_energy_storage/wirestorage = null
@@ -225,7 +226,7 @@
 	flags = CONDUCT
 	throwforce = 0
 	w_class = 3
-	origin_tech = "materials=1"
+	origin_tech = "engineering=3;combat=3"
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -235,6 +236,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
+	origin_tech = "engineering=4"
 	var/armed = 0
 	var/trap_damage = 20
 
@@ -288,19 +290,18 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
 	..()
-	spawn(100)
-		if(!istype(loc, /mob))
-			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-			sparks.set_up(1, 1, src)
-			sparks.start()
-			qdel(src)
+	addtimer(src, "dissipate", 100)
 
-/obj/item/weapon/restraints/legcuffs/beartrap/energy/dropped()
-	..()
-	qdel(src)
+/obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
+	if(!istype(loc, /mob))
+		var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+		sparks.set_up(1, 1, src)
+		sparks.start()
+		qdel(src)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
@@ -314,6 +315,7 @@
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
 	gender = NEUTER
+	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
@@ -334,4 +336,5 @@
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
 	breakouttime = 70
+	origin_tech = "engineering=4;combat=3"
 	weaken = 1

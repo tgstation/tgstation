@@ -4,7 +4,7 @@
 		unconcious or dead humans, butchering all other living things to \
 		sustain the zombie, forcing open airlock doors and opening \
 		child-safe caps on bottles."
-	flags = NODROP|ABSTRACT
+	flags = NODROP|ABSTRACT|DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	var/icon_left = "bloodhand_left"
@@ -23,11 +23,6 @@
 			icon_state = icon_right
 		if(slot_r_hand)
 			icon_state = icon_left
-
-/obj/item/zombie_hand/dropped(mob/user)
-	. = ..()
-	// Zombie hands are force dropped upon species loss
-	qdel(src)
 
 /obj/item/zombie_hand/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
@@ -74,17 +69,13 @@
 	A.audible_message("<span class='italics'>You hear a loud metallic \
 		grinding sound.</span>")
 
-	spawn(20)
-		if(removing_airlock)
-			playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
-			user.audible_message("<span class='warning'>[user] growls as \
-				their claws dig into the metal frame...</span>")
+	addtimer(src, "growl", 20, unique=FALSE, user)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
 		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		A.audible_message("<span class='danger'>With a screech, [A] is torn \
 			apart!</span>")
-		var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
+		var/obj/structure/door_assembly/door = new A.assemblytype(get_turf(A))
 		door.density = 0
 		door.anchored = 1
 		door.name = "ravaged [door]"
@@ -92,6 +83,12 @@
 			won't be keeping much out now."
 		qdel(A)
 	removing_airlock = FALSE
+
+/obj/item/zombie_hand/proc/growl(mob/user)
+	if(removing_airlock)
+		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+		user.audible_message("<span class='warning'>[user] growls as \
+			their claws dig into the metal frame...</span>")
 
 /obj/item/zombie_hand/suicide_act(mob/living/carbon/user)
 	// Suiciding as a zombie brings someone else in to play it

@@ -1,10 +1,9 @@
-
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/surgery.dmi'
 	var/mob/living/carbon/owner = null
 	var/status = ORGAN_ORGANIC
-	origin_tech = "biotech=2"
+	origin_tech = "biotech=3"
 	force = 1
 	w_class = 2
 	throwforce = 0
@@ -105,7 +104,7 @@
 	icon_state = "heart-on"
 	zone = "chest"
 	slot = "heart"
-	origin_tech = "biotech=3"
+	origin_tech = "biotech=5"
 	var/beating = 1
 	var/icon_base = "heart"
 	attack_verb = list("beat", "thumped")
@@ -126,18 +125,19 @@
 		if(!special)
 			H.heart_attack = 1
 
-	spawn(120)
-		if(!owner)
-			Stop()
+	addtimer(src, "stop_if_unowned", 120)
+
+/obj/item/organ/heart/proc/stop_if_unowned()
+	if(!owner)
+		Stop()
 
 /obj/item/organ/heart/attack_self(mob/user)
 	..()
 	if(!beating)
+		visible_message("<span class='notice'>[user] squeezes [src] to \
+			make it beat again!</span>")
 		Restart()
-		spawn(80)
-			if(!owner)
-				Stop()
-
+		addtimer(src, "stop_if_unowned", 80)
 
 /obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -168,7 +168,7 @@
 	desc = "it needs to be pumped..."
 	icon_state = "cursedheart-off"
 	icon_base = "cursedheart"
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=6"
 	actions_types = list(/datum/action/item_action/organ_action/cursed_heart)
 	var/last_pump = 0
 	var/add_colour = TRUE //So we're not constantly recreating colour datums
@@ -193,11 +193,12 @@
 	if(world.time > (last_pump + pump_delay))
 		if(ishuman(owner) && owner.client) //While this entire item exists to make people suffer, they can't control disconnects.
 			var/mob/living/carbon/human/H = owner
-			H.vessel.remove_reagent("blood",blood_loss)
-			H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
-			if(add_colour)
-				H.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
-				add_colour = FALSE
+			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+				H.blood_volume = max(H.blood_volume - blood_loss, 0)
+				H << "<span class = 'userdanger'>You have to keep pumping your blood!</span>"
+				if(add_colour)
+					H.add_client_colour(/datum/client_colour/cursed_heart_blood) //bloody screen so real
+					add_colour = FALSE
 		else
 			last_pump = world.time //lets be extra fair *sigh*
 
@@ -225,12 +226,13 @@
 
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
-			H.vessel.add_reagent("blood",(cursed_heart.blood_loss*0.5))//gain half the blood back from a failure
-			H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
-			cursed_heart.add_colour = TRUE
-			H.adjustBruteLoss(-cursed_heart.heal_brute)
-			H.adjustFireLoss(-cursed_heart.heal_burn)
-			H.adjustOxyLoss(-cursed_heart.heal_oxy)
+			if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+				H.blood_volume = min(H.blood_volume + cursed_heart.blood_loss*0.5, BLOOD_VOLUME_MAXIMUM)
+				H.remove_client_colour(/datum/client_colour/cursed_heart_blood)
+				cursed_heart.add_colour = TRUE
+				H.adjustBruteLoss(-cursed_heart.heal_brute)
+				H.adjustFireLoss(-cursed_heart.heal_burn)
+				H.adjustOxyLoss(-cursed_heart.heal_oxy)
 
 
 /datum/client_colour/cursed_heart_blood
@@ -326,7 +328,8 @@
 				continue
 		H << rendered
 	for(var/mob/M in dead_mob_list)
-		M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [rendered]"
+		var/link = FOLLOW_LINK(M, user)
+		M << "[link] [rendered]"
 	return ""
 
 /obj/item/organ/tongue/zombie
@@ -430,33 +433,3 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
-
-/obj/item/organ/shadowtumor
-	name = "black tumor"
-	desc = "A tiny black mass with red tendrils trailing from it. It seems to shrivel in the light."
-	icon_state = "blacktumor"
-	origin_tech = "biotech=4"
-	w_class = 1
-	zone = "head"
-	slot = "brain_tumor"
-	var/health = 3
-
-/obj/item/organ/shadowtumor/New()
-	..()
-	SSobj.processing |= src
-
-/obj/item/organ/shadowtumor/Destroy()
-	SSobj.processing.Remove(src)
-	..()
-
-/obj/item/organ/shadowtumor/process()
-	if(isturf(loc))
-		var/turf/T = loc
-		var/light_count = T.get_lumcount()
-		if(light_count > LIGHT_DAM_THRESHOLD && health > 0) //Die in the light
-			health--
-		else if(light_count < LIGHT_HEAL_THRESHOLD && health < 3) //Heal in the dark
-			health++
-		if(health <= 0)
-			visible_message("<span class='warning'>[src] collapses in on itself!</span>")
-			qdel(src)

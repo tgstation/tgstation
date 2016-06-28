@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Ghosts spawning via Ratvar can now choose to spawn as a Cogscarab with a usable slab instead of as a Reclaimer."

@@ -10,17 +10,29 @@
 	opacity = 0
 	var/obj/item/weapon/electronics/airlock/electronics = null
 	var/reinf = 0
+	var/shards = 2
+	var/rods = 2
+	var/cable = 2
+	var/list/debris = list()
 
-/obj/machinery/door/window/New()
+/obj/machinery/door/window/New(loc, set_dir)
 	..()
-
-	if (src.req_access && src.req_access.len)
+	if(set_dir)
+		setDir(set_dir)
+	if(src.req_access && src.req_access.len)
 		src.icon_state = "[src.icon_state]"
 		src.base_state = src.icon_state
-	return
+	for(var/i in 1 to shards)
+		debris += new /obj/item/weapon/shard(src)
+	if(rods)
+		debris += new /obj/item/stack/rods(src, rods)
+	if(cable)
+		debris += new /obj/item/stack/cable_coil(src, cable)
 
 /obj/machinery/door/window/Destroy()
 	density = 0
+	for(var/I in debris)
+		qdel(I)
 	if(health == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
@@ -158,18 +170,15 @@
 			return
 	health = max(0, src.health - damage)
 	if(health <= 0)
-		if(!(flags & NODECONSTRUCT))
-			var/debris = list(
-				new /obj/item/weapon/shard(src.loc),
-				new /obj/item/weapon/shard(src.loc),
-				new /obj/item/stack/rods(src.loc, 2),
-				new /obj/item/stack/cable_coil(src.loc, 2)
-				)
-			for(var/obj/fragment in debris)
-				transfer_fingerprints_to(fragment)
-		density = 0
-		qdel(src)
-		return
+		shatter()
+
+/obj/machinery/door/window/proc/shatter()
+	if(!(flags & NODECONSTRUCT))
+		for(var/obj/fragment in debris)
+			fragment.forceMove(get_turf(src))
+			transfer_fingerprints_to(fragment)
+			debris -= fragment
+	qdel(src)
 
 /obj/machinery/door/window/ex_act(severity, target)
 	switch(severity)
@@ -177,7 +186,7 @@
 			qdel(src)
 		if(2)
 			if(prob(25))
-				qdel(src)
+				shatter()
 			else
 				take_damage(120, BRUTE, 0)
 		if(3)
@@ -185,6 +194,11 @@
 
 /obj/machinery/door/window/narsie_act()
 	color = "#7D1919"
+
+/obj/machinery/door/window/ratvar_act()
+	if(prob(20))
+		new/obj/machinery/door/window/clockwork(src.loc, dir)
+		qdel(src)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -258,7 +272,7 @@
 								WA.secure = 1
 						WA.anchored = 1
 						WA.state= "02"
-						WA.dir = src.dir
+						WA.setDir(src.dir)
 						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name
@@ -315,7 +329,6 @@
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"
-	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	var/id = null
@@ -323,6 +336,38 @@
 	reinf = 1
 	explosion_block = 1
 
+/obj/machinery/door/window/clockwork
+	name = "clockwork door"
+	desc = "A thin door with translucent brass paneling."
+	icon_state = "clockwork"
+	base_state = "clockwork"
+	shards = 0
+	rods = 0
+
+/obj/machinery/door/window/clockwork/New(loc, set_dir)
+	..()
+	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
+	if(set_dir)
+		E.setDir(set_dir)
+	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+
+/obj/machinery/door/window/clockwork/ratvar_act()
+	health = initial(health)
+
+/obj/machinery/door/window/clockwork/hasPower()
+	return TRUE //yup that's power all right
+
+/obj/machinery/door/window/clockwork/narsie_act()
+	take_damage(rand(30, 60), BRUTE)
+	if(src)
+		var/previouscolor = color
+		color = "#960000"
+		animate(src, color = previouscolor, time = 8)
+
+/obj/machinery/door/window/clockwork/allowed(mob/M)
+	if(is_servant_of_ratvar(M))
+		return 1
+	return 0
 
 /obj/machinery/door/window/northleft
 	dir = NORTH

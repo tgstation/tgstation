@@ -29,7 +29,7 @@
 /mob/living/simple_animal/hostile/illusion/proc/Copy_Parent(mob/living/original, life = 50, health = 100, damage = 0, replicate = 0 )
 	appearance = original.appearance
 	parent_mob = original
-	dir = original.dir
+	setDir(original.dir)
 	life_span = world.time+life
 	melee_damage_lower = damage
 	melee_damage_upper = damage

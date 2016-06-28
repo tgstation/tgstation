@@ -1,6 +1,6 @@
 /obj/item/latexballon
 	name = "latex glove"
-	desc = "" //todo
+	desc = "Sterile and airtight."
 	icon_state = "latexballon"
 	item_state = "lgloves"
 	force = 0
@@ -48,7 +48,6 @@
 /obj/item/latexballon/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+100)
 		burst()
-	return
 
 /obj/item/latexballon/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/tank))

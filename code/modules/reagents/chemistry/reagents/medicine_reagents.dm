@@ -272,13 +272,13 @@
 	..()
 
 /datum/reagent/medicine/salglu_solution/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
-	if(iscarbon(M) && method == INJECT)
+	if(ishuman(M) && method == INJECT)
 		var/mob/living/carbon/human/H = M
-		//The lower the blood of the patient, the better it is as a blood substitute.
-		var/efficiency = (560-H.vessel.get_reagent_amount("blood"))/700 + 0.2
-		efficiency = min(0.75,efficiency)
-		//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
-		H.vessel.add_reagent("blood", efficiency * min(5,reac_volume))
+		if(H.dna && !(NOBLOOD in H.dna.species.specflags))
+			var/efficiency = (BLOOD_VOLUME_NORMAL-H.blood_volume)/700 + 0.2//The lower the blood of the patient, the better it is as a blood substitute.
+			efficiency = min(0.75,efficiency)
+			//As it's designed for an IV drip, make large injections not as effective as repeated small injections.
+			H.blood_volume += round(efficiency * min(5,reac_volume), 0.1)
 	..()
 
 /datum/reagent/medicine/mine_salve
@@ -1000,6 +1000,32 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustToxLoss(-5*REM, 0)
 	M.adjustBrainLoss(-15*REM)
 	M.adjustCloneLoss(-3*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
+	name = "Earthsblood"
+	id = "earthsblood"
+	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
+	color = rgb(255, 175, 0)
+	overdose_threshold = 25
+
+/datum/reagent/medicine/earthsblood/on_mob_life(mob/living/M)
+	M.adjustBruteLoss(-3 * REM, 0)
+	M.adjustFireLoss(-3 * REM, 0)
+	M.adjustOxyLoss(-15 * REM, 0)
+	M.adjustToxLoss(-3 * REM, 0)
+	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
+	M.adjustCloneLoss(-1 * REM, 0)
+	M.adjustStaminaLoss(-30 * REM, 0)
+	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above
+	..()
+	. = 1
+
+/datum/reagent/medicine/earthsblood/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 10), 50)
+	M.adjustToxLoss(5 * REM, 0)
 	..()
 	. = 1
 

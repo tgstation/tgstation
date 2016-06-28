@@ -164,7 +164,9 @@
 		else
 			back = backpack //Department backpack
 
-	backpack_contents[box] = 1
+	if(box)
+		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
+		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

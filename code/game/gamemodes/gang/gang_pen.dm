@@ -2,7 +2,7 @@
  * Gang Boss Pens
  */
 /obj/item/weapon/pen/gang
-	origin_tech = "materials=2;syndicate=5"
+	origin_tech = "materials=2;syndicate=3"
 	var/cooldown
 	var/last_used = 0
 	var/charges = 1
@@ -67,7 +67,7 @@
 	name = "gang implant"
 	desc = "Makes you a gangster or such."
 	activated = 0
-	origin_tech = "materials=2;biotech=4;programming=4;syndicate=4"
+	origin_tech = "materials=2;biotech=4;programming=4;syndicate=3"
 	var/datum/gang/gang
 
 /obj/item/weapon/implant/gang/New(loc,var/setgang)
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/implant/gang/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Criminal Loyalty Implant<BR>
+				<b>Name:</b> Criminal brainwash implant<BR>
 				<b>Life:</b> A few seconds after injection.<BR>
 				<b>Important Notes:</b> Illegal<BR>
 				<HR>

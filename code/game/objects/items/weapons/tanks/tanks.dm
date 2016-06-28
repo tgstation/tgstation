@@ -53,13 +53,13 @@
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
@@ -113,7 +113,7 @@
 				step(W, pick(alldirs))
 		H.hair_style = "Bald"
 		H.update_hair()
-		H.blood_max = 5
+		H.bleed_rate = 5
 		gibs(H.loc, H.viruses, H.dna)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 

@@ -40,13 +40,19 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	toolspeed = 2
 
+/obj/item/weapon/wrench/brass
+	name = "brass wrench"
+	desc = "A brass wrench. It's faintly warm to the touch."
+	icon_state = "wrench_brass"
+	toolspeed = 2
+
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
-	origin_tech = "materials=1;engineering=1;biotech=1"
+	origin_tech = "materials=1;engineering=1;biotech=3"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
@@ -104,6 +110,7 @@
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
+	..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red","blue","pink","brown","green","cyan","yellow")
@@ -121,6 +128,12 @@
 	if(user.disabilities & CLUMSY && prob(50))
 		M = user
 	return eyestab(M,user)
+
+/obj/item/weapon/screwdriver/brass
+	name = "brass screwdriver"
+	desc = "A screwdriver made of brass. The handle feels freezing cold."
+	icon_state = "screwdriver_brass"
+	toolspeed = 2
 
 /obj/item/weapon/screwdriver/cyborg
 	name = "powered screwdriver"
@@ -173,6 +186,11 @@
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
+/obj/item/weapon/wirecutters/brass
+	name = "brass wirecutters"
+	desc = "A pair of wirecutters made of brass. The handle feels freezing cold to the touch."
+	icon_state = "cutters_brass"
+	toolspeed = 2
 
 /obj/item/weapon/wirecutters/cyborg
 	name = "wirecutters"
@@ -200,7 +218,7 @@
 	w_class = 2
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1"
+	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -218,9 +236,9 @@
 	return
 
 /obj/item/weapon/weldingtool/proc/update_torch()
-	overlays.Cut()
+	cut_overlays()
 	if(welding)
-		overlays += "[initial(icon_state)]-on"
+		add_overlay("[initial(icon_state)]-on")
 		item_state = "[initial(item_state)]1"
 	else
 		item_state = "[initial(item_state)]"
@@ -267,9 +285,6 @@
 			if(!do_mob(user, H, 50))
 				return
 			item_heal_robotic(H, user, 5, 0)
-			return
-		else
-			return
 	else
 		return ..()
 
@@ -280,7 +295,7 @@
 			damtype = "brute"
 			update_icon()
 			if(!can_off_process)
-				SSobj.processing.Remove(src)
+				STOP_PROCESSING(SSobj, src)
 			return
 	//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -297,19 +312,6 @@
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity) return
-	if(istype(O, /obj/structure/reagent_dispensers/fueltank) && in_range(src, O))
-		if(!welding)
-			O.reagents.trans_to(src, max_fuel)
-			user << "<span class='notice'>[src] refueled.</span>"
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
-			update_icon()
-			return
-		else
-			message_admins("[key_name_admin(user)] triggered a fueltank explosion.")
-			log_game("[key_name(user)] triggered a fueltank explosion.")
-			user << "<span class='warning'>That was stupid of you.</span>"
-			O.ex_act()
-			return
 
 	if(welding)
 		remove_fuel(1)
@@ -318,7 +320,9 @@
 
 		if(isliving(O))
 			var/mob/living/L = O
-			L.IgniteMob()
+			if(L.IgniteMob())
+				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
+				log_game("[key_name(user)] set [key_name(L)] on fire")
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)
@@ -378,7 +382,7 @@
 			damtype = "fire"
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0
@@ -428,7 +432,7 @@
 	icon_state = "indwelder"
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2"
+	origin_tech = "engineering=2;plasmatech=2"
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -461,7 +465,7 @@
 	item_state = "upindwelder"
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3"
+	origin_tech = "engineering=3;plasmatech=2"
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
@@ -470,12 +474,18 @@
 	item_state = "exwelder"
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=3"
+	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
 	light_intensity = 1
 	toolspeed = 2
+
+/obj/item/weapon/weldingtool/experimental/brass
+	name = "brass welding tool"
+	desc = "A brass welder that seems to constantly refuel itself. It is faintly warm to the touch."
+	icon_state = "brasswelder"
+	item_state = "brasswelder"
 
 
 //Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
@@ -509,7 +519,7 @@
 	throwforce = 7
 	w_class = 2
 	materials = list(MAT_METAL=50)
-	origin_tech = "engineering=1"
+	origin_tech = "engineering=1;combat=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
 
@@ -521,6 +531,12 @@
 /obj/item/weapon/crowbar/red
 	icon_state = "crowbar_red"
 	force = 8
+
+/obj/item/weapon/crowbar/brass
+	name = "brass crowbar"
+	desc = "A brass crowbar. It feels faintly warm to the touch."
+	icon_state = "crowbar_brass"
+	toolspeed = 2
 
 /obj/item/weapon/crowbar/large
 	name = "crowbar"

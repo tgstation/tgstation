@@ -160,7 +160,7 @@
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	origin_tech = "biotech=5"
+	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -189,7 +189,8 @@
 	if(candidates.len)
 		theghost = pick(candidates)
 		SM.key = theghost.key
-		SM.languages |= HUMAN
+		SM.languages_spoken |= HUMAN
+		SM.languages_understood |= HUMAN
 		SM.faction = user.faction
 		SM.sentience_act()
 		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
@@ -236,7 +237,8 @@
 
 
 	user.mind.transfer_to(SM)
-	SM.languages = user.languages
+	SM.languages_spoken = user.languages_spoken
+	SM.languages_understood = user.languages_understood
 	SM.faction = user.faction
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
@@ -326,6 +328,7 @@
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
+	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
@@ -356,6 +359,7 @@
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
+	origin_tech = "biotech=5"
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)
@@ -451,7 +455,7 @@
 
 /obj/effect/golemrune/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
@@ -510,9 +514,6 @@
 		golem_becomes_antag = TRUE
 	else if(is_revolutionary_in_general(user))
 		ticker.mode.add_revolutionary(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_shadow_or_thrall(user))
-		ticker.mode.add_thrall(G.mind)
 		golem_becomes_antag = TRUE
 	else if(is_servant_of_ratvar(user))
 		add_servant_of_ratvar(G)
@@ -662,4 +663,3 @@
 		for(var/turf/T in A)
 			T.color = "#2956B2"
 		qdel(src)
-

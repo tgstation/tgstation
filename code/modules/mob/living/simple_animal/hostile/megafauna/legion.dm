@@ -42,7 +42,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0
@@ -81,7 +81,7 @@
 
 		L.target = target
 
-		visible_message("<span class='danger'>[src] splits!</span>")
+		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
@@ -123,7 +123,7 @@
 
 /obj/item/weapon/staff_of_storms/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "The staff is still recharging."
+		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
 
 	if(!linked_machine || linked_machine.z != user.z)
@@ -134,18 +134,21 @@
 
 	if(linked_machine && linked_machine.ongoing_weather)
 		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "The storm is already ending. It would be a waste to use the staff now."
+			user << "<span class='warning'>The storm is already ending. It would be a waste to use the staff now.</span>"
 			return
-		linked_machine.ongoing_weather.duration = 0
-		user << "<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>"
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
+		user.visible_message("<span class='warning'>[user] holds [src] skywards, causing its orb to flare!</span>", \
+		"<span class='notice'>With an appropriately dramatic flourish, you dispel the storm!</span>")
+		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 0)
 		storm_cooldown = world.time + 600
+		linked_machine.ongoing_weather.stage = WIND_DOWN_STAGE
+		linked_machine.ongoing_weather.weather_wind_down()
 
 	else if (linked_machine && !linked_machine.ongoing_weather)
-		user << "<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>"
-		linked_machine.weather_cooldown = 0
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
+		user.visible_message("<span class='warning'>[user] holds [src] skywards, causing its orb to flare!</span>", \
+		"<span class='danger'>You lift your staff skywards, calling down a terrible storm!</span>")
+		playsound(get_turf(src),'sound/magic/Staff_Chaos.ogg', 200, 0)
 		storm_cooldown = world.time + 600
+		linked_machine.weather_cooldown = 0
 
 	else
 		user << "You can't seem to control the weather here."

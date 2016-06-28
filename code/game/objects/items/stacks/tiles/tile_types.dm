@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
+	origin_tech = "materials=1"
 	var/turf_type = null
 	var/mineralType = null
 
@@ -41,8 +42,8 @@
 
 			if (mineralType == "metal")
 				var/obj/item/stack/sheet/metal/new_item = new(user.loc)
-				user.visible_message("[user.name] shaped [src] into metal with the weldingtool.", \
-							 "<span class='notice'>You shaped [src] into metal with the weldingtool.</span>", \
+				user.visible_message("[user.name] shaped [src] into metal with the welding tool.", \
+							 "<span class='notice'>You shaped [src] into metal with the welding tool.</span>", \
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
@@ -54,8 +55,8 @@
 			else
 				var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
 				var/obj/item/stack/sheet/mineral/new_item = new sheet_type(user.loc)
-				user.visible_message("[user.name] shaped [src] into a sheet with the weldingtool.", \
-							 "<span class='notice'>You shaped [src] into a sheet with the weldingtool.</span>", \
+				user.visible_message("[user.name] shaped [src] into a sheet with the welding tool.", \
+							 "<span class='notice'>You shaped [src] into a sheet with the welding tool.</span>", \
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
@@ -70,7 +71,7 @@
 /obj/item/stack/tile/grass
 	name = "grass tile"
 	singular_name = "grass floor tile"
-	desc = "A patch of grass like they often use on golf courses."
+	desc = "A patch of grass like they use on space golf courses."
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
@@ -81,7 +82,7 @@
 /obj/item/stack/tile/wood
 	name = "wood floor tile"
 	singular_name = "wood floor tile"
-	desc = "an easy to fit wood floor tile."
+	desc = "An easy to fit wood floor tile."
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
@@ -153,7 +154,6 @@
 	materials = list(MAT_METAL=500)
 	throwforce = 10
 	flags = CONDUCT
-	max_amount = 60
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
 

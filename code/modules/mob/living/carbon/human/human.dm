@@ -49,8 +49,6 @@
 	for(var/obj/item/organ/I in internal_organs)
 		I.Insert(src)
 
-	make_blood()
-
 	martial_art = default_martial_art
 
 	handcrafting = new()
@@ -166,6 +164,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && !prob(getarmor(BP, "bomb")) && BP.body_zone != "head" && BP.body_zone != "chest")
+				BP.brute_dam = BP.max_damage
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)
@@ -703,7 +702,7 @@
 	if(dna && dna.species.id && dna.species.id != "human")
 		threatcount += 1
 
-	//Loyalty implants imply trustworthyness
+	//mindshield implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
@@ -797,7 +796,7 @@
 			for(var/t in missing)
 				src << "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>"
 
-			if(blood_max)
+			if(bleed_rate)
 				src << "<span class='danger'>You are bleeding!</span>"
 			if(staminaloss)
 				if(staminaloss > 30)
@@ -816,7 +815,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
@@ -890,7 +889,6 @@
 		..() // Clear the Blood_DNA list
 		if(H.bloody_hands)
 			H.bloody_hands = 0
-			H.bloody_hands_mob = null
 			H.update_inv_gloves()
 	update_icons()	//apply the now updated overlays to the mob
 
@@ -906,7 +904,7 @@
 /mob/living/carbon/human/proc/electrocution_animation(anim_duration)
 	//Handle mutant parts if possible
 	if(dna && dna.species)
-		overlays += "electrocuted_base"
+		add_overlay("electrocuted_base")
 		spawn(anim_duration)
 			if(src)
 				overlays -= "electrocuted_base"
@@ -975,7 +973,7 @@
 					if(5)
 						hud_used.healths.icon_state = "health0"
 		if(hud_used.healthdoll)
-			hud_used.healthdoll.overlays.Cut()
+			hud_used.healthdoll.cut_overlays()
 			if(stat != DEAD)
 				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
 				for(var/X in bodyparts)
@@ -996,9 +994,9 @@
 					if(hal_screwyhud == 5)
 						icon_num = 0
 					if(icon_num)
-						hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
+						hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[t]6")
+					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
@@ -1029,7 +1027,6 @@
 				T = new()
 				T.Insert(src)
 
-	restore_blood()
 	remove_all_embedded_objects()
 	drunkenness = 0
 	for(var/datum/mutation/human/HM in dna.mutations)

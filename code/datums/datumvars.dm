@@ -305,6 +305,7 @@
 	var/list/names = list()
 	for (var/V in D.vars)
 		names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
 
 	names = sortList(names)
 
@@ -741,9 +742,9 @@ body
 
 			switch(href_list["rotatedir"])
 				if("right")
-					A.dir = turn(A.dir, -45)
+					A.setDir(turn(A.dir, -45))
 				if("left")
-					A.dir = turn(A.dir, 45)
+					A.setDir(turn(A.dir, 45))
 			href_list["datumrefresh"] = href_list["rotatedatum"]
 
 		else if(href_list["editorgans"])
@@ -871,9 +872,7 @@ body
 
 			if(result)
 				var/newtype = species_list[result]
-				var/datum/species/old_species = H.dna.species
 				H.set_species(newtype)
-				H.dna.species.admin_set_species(H,old_species)
 
 		else if(href_list["removebodypart"])
 			if(!check_rights(R_SPAWN))
@@ -903,30 +902,25 @@ body
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
+			if(!ishumanbasic(H))
+				usr << "This can only be done to the basic human species \
+					at the moment."
+				return
 
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
-				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
-					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
-					H.dna.features["tail_human"] = "Cat"
-					H.dna.features["ears"] = "Cat"
-				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
-					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
-					H.dna.features["tail_human"] = "None"
-					H.dna.features["ears"] = "None"
-				H.regenerate_icons()
-				return
+			var/success = purrbation_toggle(H)
+			if(success)
+				usr << "Put [H] on purrbation."
+				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 
-			usr << "You can only put humans on purrbation."
+			else
+				usr << "Removed [H] from purrbation."
+				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))

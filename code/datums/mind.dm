@@ -469,25 +469,6 @@
 
 	sections["traitor"] = text
 
-	/** SHADOWLING **/
-	text = "shadowling"
-	if(ticker.mode.config_tag == "shadowling")
-		text = uppertext(text)
-	text = "<i><b>[text]</b></i>: "
-	if(src in ticker.mode.shadows)
-		text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
-	else if(src in ticker.mode.thralls)
-		text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
-	else
-		text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
-
-	if(current && current.client && (ROLE_SHADOWLING in current.client.prefs.be_special))
-		text += "|Enabled in Prefs"
-	else
-		text += "|Disabled in Prefs"
-
-	sections["shadowling"] = text
-
 	/** Abductors **/
 
 	text = "Abductor"
@@ -1043,12 +1024,12 @@
 	else if(href_list["clockcult"])
 		switch(href_list["clockcult"])
 			if("clear")
-				remove_servant_of_ratvar(current)
+				remove_servant_of_ratvar(current, TRUE)
 				message_admins("[key_name_admin(usr)] has removed clockwork servant status from [current].")
 				log_admin("[key_name(usr)] has removed clockwork servant status from [current].")
 			if("servant")
-				if(!(src in ticker.mode.servants_of_ratvar))
-					add_servant_of_ratvar(current)
+				if(!is_servant_of_ratvar(current))
+					add_servant_of_ratvar(current, TRUE)
 					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
 					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
 			if("slab")
@@ -1187,43 +1168,6 @@
 			if("autoobjectives")
 				ticker.mode.forge_traitor_objectives(src)
 				usr << "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>"
-
-	else if(href_list["shadowling"])
-		switch(href_list["shadowling"])
-			if("clear")
-				ticker.mode.update_shadow_icons_removed(src)
-				if(src in ticker.mode.shadows)
-					ticker.mode.shadows -= src
-					special_role = null
-					current << "<span class='userdanger'>Your powers have been quenched! You are no longer a shadowling!</span>"
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hatch)
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_ascend)
-					RemoveSpell(/obj/effect/proc_holder/spell/targeted/enthrall)
-					RemoveSpell(/obj/effect/proc_holder/spell/self/shadowling_hivemind)
-					message_admins("[key_name_admin(usr)] has de-shadowling'ed [current].")
-					log_admin("[key_name(usr)] has de-shadowling'ed [current].")
-				else if(src in ticker.mode.thralls)
-					ticker.mode.remove_thrall(src,0)
-					message_admins("[key_name_admin(usr)] has de-thrall'ed [current].")
-					log_admin("[key_name(usr)] has de-thrall'ed [current].")
-			if("shadowling")
-				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
-					return
-				ticker.mode.shadows += src
-				special_role = "shadowling"
-				current << "<span class='shadowling'><b>Something stirs deep in your mind. A red light floods your vision, and slowly you remember. Though your human disguise has served you well, the \
-				time is nigh to cast it off and enter your true form. You have disguised yourself amongst the humans, but you are not one of them. You are a shadowling, and you are to ascend at all costs.\
-				</b></span>"
-				ticker.mode.finalize_shadowling(src)
-				ticker.mode.update_shadow_icons_added(src)
-			if("thrall")
-				if(!ishuman(current))
-					usr << "<span class='warning'>This only works on humans!</span>"
-					return
-				ticker.mode.add_thrall(src)
-				message_admins("[key_name_admin(usr)] has thrall'ed [current].")
-				log_admin("[key_name(usr)] has thrall'ed [current].")
 
 	else if(href_list["devil"])
 		switch(href_list["devil"])
@@ -1466,8 +1410,7 @@
 
 /datum/mind/proc/make_Cultist()
 	if(!(src in ticker.mode.cult))
-		ticker.mode.cult += src
-		ticker.mode.update_cult_icons_added(src)
+		ticker.mode.add_cultist(src,FALSE)
 		special_role = "Cultist"
 		current << "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>"
 		current << "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>"
@@ -1718,8 +1661,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
-		spawn(0)
-			S.start_recharge()
+		addtimer(S, "start_recharge", 0)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
 	for(var/mob/dead/observer/G in dead_mob_list)

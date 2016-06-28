@@ -1,4 +1,6 @@
 /mob/living/carbon/monkey/emote(act,m_type=1,message = null)
+	if(stat == DEAD && (act != "deathgasp") || (status_flags & FAKEDEATH)) //if we're faking, don't emote at all
+		return
 
 	var/param = null
 	if (findtext(act, "-", 1, null))

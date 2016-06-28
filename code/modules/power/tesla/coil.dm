@@ -16,7 +16,7 @@
 /obj/item/weapon/circuitboard/machine/tesla_coil
 	name = "circuit board (Tesla Coil)"
 	build_path = /obj/machinery/power/tesla_coil
-	origin_tech = "programming=1;engineering=2;powerstorage=3"
+	origin_tech = "programming=3;magnets=3;powerstorage=3"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/power/tesla_coil/RefreshParts()
@@ -72,7 +72,7 @@
 /obj/item/weapon/circuitboard/machine/grounding_rod
 	name = "circuit board (Grounding Rod)"
 	build_path = /obj/machinery/power/grounding_rod
-	origin_tech = "programming=1;engineering=1;powerstorage=1"
+	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
 
 /obj/machinery/power/grounding_rod/attackby(obj/item/W, mob/user, params)

@@ -346,7 +346,9 @@
 	if(istype(AM, /obj/item))
 		I = AM
 		throwpower = I.throwforce
-	if(I.thrownby != src && check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
+		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
+			return ..()
+	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))
 		hitpush = 0
 		skipcatch = 1
 		blocked = 1
@@ -357,7 +359,7 @@
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
-					I.add_blood(src)//it embedded itself in you, of course it's bloody!
+					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
 					I.loc = src
 					L.take_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>\the [I.name] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>\the [I.name] embeds itself in your [L.name]!</span>")

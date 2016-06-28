@@ -1,9 +1,0 @@
-author: coiax
-delete-after: True
-changes: 
-  - rscadd: "Clone pods now notify the medical channel on a successful clone.
-They also notify the medical channel if the clone dies or is horribly
-mutilated; but not if it is ejected early by authorised medical
-personnel."
-  - rscadd: "Cloning pods now are more capable of cloning humanoid species
-that do not breathe."

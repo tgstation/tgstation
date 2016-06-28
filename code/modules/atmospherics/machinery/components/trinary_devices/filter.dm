@@ -25,14 +25,14 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/direction in cardinal)
 		if(direction & initialize_directions)
 			var/obj/machinery/atmospherics/node = findConnecting(direction)
 			if(node)
-				overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color)
+				add_overlay(getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction, node.pipe_color))
 				continue
-			overlays += getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction)
+			add_overlay(getpipeimage('icons/obj/atmospherics/components/trinary_devices.dmi', "cap", direction))
 	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon_nopipes()
@@ -109,7 +109,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_filter", name, 470, 140, master_ui, state)
+		ui = new(user, src, ui_key, "atmos_filter", name, 475, 140, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_data()

@@ -23,7 +23,7 @@
 	var/autoclose = 0 //does it automatically close after some time
 	var/safe = 1 //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = 0 //whether the door is bolted or not.
-
+	var/assemblytype //the type of door frame to drop during deconstruction
 	var/auto_close //TO BE REMOVED, no longer used, it's just preventing a runtime with a map var edit.
 
 /obj/machinery/door/New()
@@ -175,16 +175,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		if(BURN)
 			if(sound_effect)
 				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
-		else
-			return
-
 
 
 /obj/machinery/door/blob_act(obj/effect/blob/B)
 	if(prob(40))
 		qdel(src)
-	return
-
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
@@ -193,10 +188,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			spawn(300)
-				secondsElectrified = 0
+			addtimer(src, "unelectrify", 300)
 	..()
 
+/obj/machinery/door/proc/unelectrify()
+	secondsElectrified = 0
 
 /obj/machinery/door/ex_act(severity, target)
 	if(severity == 3)
@@ -212,8 +208,6 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		icon_state = "door1"
 	else
 		icon_state = "door0"
-	return
-
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
@@ -307,7 +301,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
-		location.add_blood_floor(L)
+		L.add_splatter_floor(location)
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 

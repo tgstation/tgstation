@@ -29,24 +29,22 @@
 /obj/effect/particle_effect/foam/New(loc)
 	..(loc)
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
-	SSfastprocess.processing |= src
+	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 /obj/effect/particle_effect/foam/Destroy()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
-	SSfastprocess.processing.Remove(src)
+	STOP_PROCESSING(SSfastprocess, src)
 	if(metal)
 		var/obj/structure/foamedmetal/M = new(src.loc)
 		M.metal = metal
 		M.updateicon()
 	flick("[icon_state]-disolve", src)
-	spawn(5)
-		qdel(src)
-
+	QDEL_IN(src, 5)
 
 /obj/effect/particle_effect/foam/process()
 	lifetime--
@@ -220,7 +218,6 @@
 
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
-	return
 
 
 /obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)

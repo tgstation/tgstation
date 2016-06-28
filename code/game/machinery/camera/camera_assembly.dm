@@ -27,7 +27,7 @@
 /obj/machinery/camera_assembly/New(loc, ndir, building)
 	..()
 	if(building)
-		dir = ndir
+		setDir(ndir)
 
 /obj/machinery/camera_assembly/attackby(obj/item/W, mob/living/user, params)
 	switch(state)
@@ -87,7 +87,7 @@
 				var/obj/machinery/camera/C = new(src.loc)
 				src.loc = C
 				C.assembly = src
-				C.dir = src.dir
+				C.setDir(src.dir)
 
 				C.network = tempnetwork
 				var/area/A = get_area_master(src)

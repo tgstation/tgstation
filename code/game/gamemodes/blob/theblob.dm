@@ -24,7 +24,7 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
-	src.dir = pick(1, 2, 4, 8)
+	src.setDir(pick(1, 2, 4, 8))
 	src.update_icon()
 	..(loc)
 	ConsumeTile()

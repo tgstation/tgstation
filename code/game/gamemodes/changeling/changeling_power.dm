@@ -15,6 +15,7 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
+	var/always_keep = 0 // important for abilities like regenerate that screw you if you lose them.
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)

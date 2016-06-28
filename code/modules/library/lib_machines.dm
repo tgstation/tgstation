@@ -25,6 +25,7 @@
 	var/category = "Any"
 	var/author
 	var/SQLquery
+	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/libraryconsole/attack_hand(mob/user)
 	if(..())

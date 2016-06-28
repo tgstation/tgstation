@@ -40,7 +40,7 @@
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>"
+		M << "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>"
 		M.return_soul()
 	else
 		if(ishuman(M))
@@ -145,9 +145,7 @@
 	add_fingerprint(user)
 	if(M == user && target == M.mind && M.mind.soulOwner == M.mind && attempt_signature(user))
 		user.visible_message("<span class='danger'>[user] slices their wrist with [src], and scrawls their name in blood.</span>", "<span class='danger'>You slice your wrist open and scrawl your name in blood.</span>")
-		if(istype(user, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = user
-			H.vessel.remove_reagent("blood",10)
+		user.blood_volume = max(user.blood_volume - 10, 0)
 	else
 		return ..()
 
@@ -165,7 +163,7 @@
 			else
 				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
 		else
-			user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
+			user << "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>"
 	else
 		user << "<span class='notice'>You don't know how to read or write.</span>"
 	return 0

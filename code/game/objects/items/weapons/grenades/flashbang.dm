@@ -2,7 +2,7 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	origin_tech = "materials=2;combat=1"
+	origin_tech = "materials=2;combat=3"
 
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
@@ -36,7 +36,6 @@
 	if(M.flash_eyes(affect_silicon = 1))
 		M.Stun(max(10/distance, 3))
 		M.Weaken(max(10/distance, 3))
-
 
 //Bang
 	if((loc == M) || loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection

@@ -29,3 +29,6 @@
 #define ITALICS 1
 #define REDUCE_RANGE 2
 #define NOPASS 4
+
+// A link given to ghost alice to follow bob
+#define FOLLOW_LINK(alice, bob) "<a href=?src=\ref[alice];follow=\ref[bob]>(F)</a>"
