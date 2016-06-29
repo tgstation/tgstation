@@ -240,12 +240,14 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	world << "Transit requested for [M]"
 
+	CHECK_TICK
 	var/list/availible = transit_turfs - transit_turfs_in_use
+	CHECK_TICK
 
 	world << "There are [availible.len] turfs that are free"
 
 	var/list/proposed_zone
-	for(var/i in availible)
+	for(var/i in shuffle(availible))
 		var/turf/topleft = i
 		world << "Trying [COORD(topleft)]"
 		CHECK_TICK
@@ -253,27 +255,38 @@ var/datum/subsystem/shuttle/SSshuttle
 			topleft.y + transit_height, topleft.z)
 		if(!bottomright)
 			continue
+		CHECK_TICK
 		if(!(bottomright in transit_turfs))
 			world << "Bottomright [COORD(bottomright)] not in \
 				transit_turfs, trying another topleft"
 			continue
+		CHECK_TICK
 		if(bottomright in transit_turfs_in_use)
 			world << "Bottomright [COORD(bottomright)] in use..."
 			continue
+		CHECK_TICK
 
 		proposed_zone = block(topleft, bottomright)
+		CHECK_TICK
 		world << "Proposed zone of [proposed_zone.len] turfs made"
+		CHECK_TICK
+		if(!proposed_zone)
+			world << "Proposed zone was null."
+			continue
 		var/list/L
+		CHECK_TICK
 		L = proposed_zone | transit_turfs_in_use
 		if(L.len)
 			world << "Proposed zone contains in use turfs, continuing"
 			continue
+		CHECK_TICK
 		break
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		world << "We couldn't find a suitable transit zone"
 		return
 
+	CHECK_TICK
 	transit_turfs_in_use |= proposed_zone
 	world << "Now creating transit port"
 	var/turf/topleft = proposed_zone[1]
@@ -286,6 +299,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
 	new_transit_dock.setDir(M.travelDir)
+	CHECK_TICK
 
 	world << "Now setting turf type"
 	for(var/i in new_transit_dock.assigned_turfs)
