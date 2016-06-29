@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Adds a new UI to slimepeople, allowing them to select more easily which body to swap to"
-  - rscadd: "Slimepeople swapping consciousness between bodies is now visible to onlookers"

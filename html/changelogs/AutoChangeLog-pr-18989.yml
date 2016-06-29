@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "The AI malfunction \"Hostile Lockdown\" power now restores the station doors to normal after 90 seconds, rather than keeping everything shut forever."
