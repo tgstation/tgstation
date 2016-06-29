@@ -8526,7 +8526,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/security/vacantoffice2)
 "aso" = (
 /obj/machinery/door/airlock/maintenance{
