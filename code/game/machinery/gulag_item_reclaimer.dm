@@ -15,13 +15,17 @@
 
 /obj/machinery/gulag_item_reclaimer/New()
 	..()
-	addtimer(src, "locate_teleporter", 5)
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
 		var/obj/item/I = i
 		I.forceMove(get_turf(src))
-	..()
+	if(linked_teleporter)
+		linked_teleporter.linked_reclaimer = null
+	if(inserted_id)
+		inserted_id.loc = get_turf(src)
+		inserted_id = null
+	return ..()
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
@@ -89,11 +93,6 @@
 			var/mob/M = locate(params["mobref"])
 			if(M == usr || allowed(usr))
 				drop_items(M)
-
-/obj/machinery/gulag_item_reclaimer/proc/locate_teleporter()
-	linked_teleporter = locate(/obj/machinery/gulag_teleporter)
-	if(linked_teleporter)
-		linked_teleporter.linked_reclaimer = src
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])

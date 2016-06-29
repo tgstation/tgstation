@@ -2784,7 +2784,7 @@
 /turf/closed/mineral/random/volcanic,
 /area/lavaland/surface/outdoors/explored)
 "fK" = (
-/turf/closed/mineral/random/labormineral,
+/turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
 "fL" = (
 /obj/structure/ore_box,

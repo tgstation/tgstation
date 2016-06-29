@@ -17,6 +17,11 @@
 	..()
 	addtimer(src, "scan_machinery", 5)
 
+/obj/machinery/computer/gulag_teleporter_computer/Destroy()
+	if(id)
+		id.loc = get_turf(src)
+	return ..()
+
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/id/prisoner))
 		if(!id)

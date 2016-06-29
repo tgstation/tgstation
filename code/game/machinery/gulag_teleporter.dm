@@ -26,6 +26,12 @@ The console is located at computer/gulag_teleporter.dm
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
 	B.apply_default_parts(src)
+	addtimer(src, "locate_reclaimer", 5)
+
+/obj/machinery/gulag_teleporter/Destroy()
+	if(linked_reclaimer)
+		linked_reclaimer.linked_teleporter = null
+	return ..()
 
 /obj/machinery/gulag_teleporter/power_change()
 	..()
@@ -101,6 +107,11 @@ The console is located at computer/gulag_teleporter.dm
 
 		open_machine()
 
+/obj/machinery/gulag_teleporter/proc/locate_reclaimer()
+	linked_reclaimer = locate(/obj/machinery/gulag_item_reclaimer)
+	if(linked_reclaimer)
+		linked_reclaimer.linked_teleporter = src
+
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)
 		usr << "<span class='notice'>Close the maintenance panel first.</span>"
@@ -114,7 +125,8 @@ The console is located at computer/gulag_teleporter.dm
 
 // strips and stores all occupant's items
 /obj/machinery/gulag_teleporter/proc/strip_occupant()
-	linked_reclaimer.stored_items[occupant] = list()
+	if(linked_reclaimer)
+		linked_reclaimer.stored_items[occupant] = list()
 	for(var/obj/item/W in occupant)
 		if(occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
@@ -126,6 +138,8 @@ The console is located at computer/gulag_teleporter.dm
 				linked_reclaimer.stored_items[occupant] += W
 				linked_reclaimer.contents += W
 				W.loc = linked_reclaimer
+			else
+				W.loc = get_turf(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))
