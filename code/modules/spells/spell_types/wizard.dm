@@ -250,7 +250,7 @@
 	duration = 300
 	sound="sound/magic/Blind.ogg"
 
-/obj/effect/proc_holder/spell/dumbfire/fireball
+/obj/effect/proc_holder/spell/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
@@ -261,16 +261,64 @@
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-
+	var/fireball_type = /obj/item/projectile/magic/fireball
+/*
 	proj_icon_state = "fireball"
 	proj_name = "a fireball"
 	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
 
 	proj_lifespan = 200
 	proj_step_delay = 1
-
-	action_icon_state = "fireball"
+*/
+	action_icon_state = "fireball0"
 	sound = "sound/magic/Fireball.ogg"
+
+	active = 0
+
+
+/obj/effect/proc_holder/spell/fireball/Click()
+	var/mob/living/user = usr
+	if(!istype(user) || !can_cast(user))
+		return
+
+	var/msg
+	if(active)
+		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
+		remove_ranged_ability(user, msg)
+	else
+		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
+		add_ranged_ability(user, msg)
+
+	action.button_icon_state = "fireball[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
+	if(..() || !cast_check(0, user))
+		return
+
+	var/list/targets = list(target)
+	perform(targets, user)
+
+/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
+	var/target = targets[1] //There is only ever one target for fireball
+	var/turf/T = user.loc
+	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return 0
+
+	var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(user.loc)
+	FB.current = get_turf(user)
+	FB.preparePixelProjectile(target, get_turf(target), user)
+	FB.fire()
+	user.newtonian_move(get_dir(U, T))
+
+	return 1
+
+/*
+/obj/effect/proc_holder/spell/fireball/on_lose(mob/living/carbon/user)
+	if(user.ranged_ability == src)
+		user.ranged_ability = null
+*/
 
 /obj/effect/proc_holder/spell/turf/fireball/cast(turf/T,mob/user = usr)
 	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)

@@ -1,14 +1,41 @@
 #define TARGET_CLOSEST 1
 #define TARGET_RANDOM 2
 
+
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
+	var/active = 0 //Used by toggle based abilities.
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/user, params, atom/A)
-	return
+/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
+	if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'>You already have <b>[user.ranged_ability.name]<\b> readied! Cancel it first."
+		return 1 //1 for failed, 0 for passed.
+	user.next_click = world.time + 6
+	user.face_atom(A)
+	return 0
 
+/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, var/msg)
+	if(!user || !user.client)
+		return
+	if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'>You must cancel <b>[user.ranged_ability.name]<\b> before using [name]!"
+		return
+	user.ranged_ability = src
+	user.client.click_intercept = user.ranged_ability
+	active = 1
+	if(msg)
+		user << msg
+
+/obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
+	if(!user || !user.client ||user.ranged_ability != src) //To avoid removing the wrong ability
+		return
+	user.ranged_ability = null
+	user.client.click_intercept = null
+	active = 0
+	if(msg)
+		user << msg
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -61,10 +88,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
 
-	var/datum/action/spell_action/action = null
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
+	var/datum/action/spell_action/action
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
