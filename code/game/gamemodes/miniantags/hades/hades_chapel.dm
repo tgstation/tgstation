@@ -37,15 +37,18 @@
 		var/mob/living/M = locate(/mob/living) in get_turf(KS)
 		M.gib()
 	playsound(get_turf(src), 'sound/effects/pope_entry.ogg', 100, 1)
-	spawn(100)
-		playsound(get_turf(src), 'sound/effects/hyperspace_end.ogg', 100, 1)
-		new/obj/item/weapon/hades_staff/imbued(get_turf(src))
-		src.visible_message("<span class='warning'>[src] shatters into a thousand shards, a staff falling from it.</span>")
-		qdel(src)
+	sleep(100)
+	playsound(get_turf(src), 'sound/effects/hyperspace_end.ogg', 100, 1)
+	new/obj/item/weapon/hades_staff/imbued(get_turf(src))
+	src.visible_message("<span class='warning'>[src] shatters into a thousand shards, a staff falling from it.</span>")
+	qdel(src)
 
 /obj/structure/chair/hades/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/hades_staff))
+		var/obj/item/weapon/hades_staff/HS = W
+		if(!HS.isKey)
+			return
 		src.visible_message("<span class='warning'>[user] inserts the [W] into the [src], giving it a quick turn.</span>")
 		if(considerReady())
 			qdel(W)
@@ -53,8 +56,7 @@
 			for(var/mob/living/M in buckled_mobs)
 				M.gib()
 			for(var/i in 1 to 4)
-				spawn(i*10)
-					playsound(get_turf(src), 'sound/effects/clang.ogg', 100, 1)
+				addtimer(GLOBAL_PROC, "playsound", i*10, FALSE, get_turf(src), 'sound/effects/clang.ogg', 100, 1)
 			spawn(50)
 				src.visible_message("<span class='warning'>[src] begins to lower into the ground...</span>")
 				icon_state = "chair_hades_slide"
@@ -83,16 +85,25 @@
 	icon = 'icons/obj/guns/magic.dmi'
 	item_state = "staffofchange"
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 40
-	throwforce = 10
+	force = 25
+	throwforce = 5
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("slapped", "shattered", "blasphemed", "smashed", "whacked", "crushed", "hammered")
-	block_chance = 50
+	block_chance = 25
+	var/isKey = 1
+
+/obj/item/weapon/hades_staff/fake
+	name = "Inert Staff of Hades"
+	desc = "A large, dark staff."
+	isKey = 0
 
 /obj/item/weapon/hades_staff/imbued
 	name = "Imbued Staff of Hades"
 	desc = " Bestowed with the power of wayward souls, this Staff allows the wielder to judge a target."
+	force = 75
+	throwforce = 35
+	block_chance = 75
 	var/lastJudge = 0
 	var/judgeCooldown = 150
 

@@ -179,21 +179,18 @@
 		toggle()
 		return
 	for(var/atom/movable/M in range(5, src))
-		if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
-			var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
-			if((E.health == E.maxHealth && !E.fatigue) || E.stat)
-				continue
-			if(!try_use_power(mob_cost))
-				break
-			E.adjustBruteLoss(-E.maxHealth) //Instant because marauders don't usually take health damage
-			E.fatigue = max(0, E.fatigue - 15)
-		else if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
+		if(isclockmob(M) || istype(M, /mob/living/simple_animal/drone/cogscarab))
 			var/mob/living/simple_animal/hostile/clockwork/W = M
-			if(W.health == W.maxHealth || W.stat)
+			var/fatigued = FALSE
+			if(istype(M, /mob/living/simple_animal/hostile/clockwork/marauder))
+				var/mob/living/simple_animal/hostile/clockwork/marauder/E = M
+				if(E.fatigue)
+					fatigued = TRUE
+			if((!fatigued && W.health == W.maxHealth) || W.stat)
 				continue
 			if(!try_use_power(mob_cost))
 				break
-			W.adjustBruteLoss(-15)
+			W.adjustHealth(-15)
 		else if(istype(M, /obj/structure/clockwork))
 			var/obj/structure/clockwork/C = M
 			if(C.health == C.max_health)
@@ -404,15 +401,20 @@
 		return
 	if(disabled)
 		visible_message("<span class='warning'>The writhing tendrils return to the gemstone, which begins to glow with power!</span>")
-		flick("[initial(icon_state)]_recharged", src)
+		flick("interdiction_lens_recharged", src)
 		disabled = FALSE
 		toggle(0)
 	else
 		var/successfulprocess = FALSE
 		var/power_drained = 0
 		var/list/atoms_to_test = list()
-		for(var/atom/movable/M in urange(interdiction_range, src))
-			atoms_to_test |= M
+		for(var/A in spiral_range_turfs(interdiction_range, src))
+			var/turf/T = A
+			for(var/M in T)
+				atoms_to_test |= M
+
+			CHECK_TICK
+
 		for(var/M in atoms_to_test)
 			if(istype(M, /obj/machinery/power/apc))
 				var/obj/machinery/power/apc/A = M
@@ -451,19 +453,20 @@
 					var/datum/effect_system/spark_spread/spks = new(get_turf(R))
 					spks.set_up(3, 0, get_turf(R))
 					spks.start()
+
+			CHECK_TICK
+
 		if(!return_power(power_drained) || power_drained < 50) //failed to return power drained or too little power to return
 			successfulprocess = FALSE
 		if(try_use_power(disrupt_cost) && total_accessable_power() >= disrupt_cost) //if we can disable at least one object
 			playsound(src, 'sound/items/PSHOOM.ogg', 50, 1, interdiction_range-7, 1)
 			for(var/M in atoms_to_test)
-				if(ismob(M))
-					flash_color(M, flash_color="#EE54DE", flash_time=5)
-				else if(istype(M, /obj/machinery/light)) //cosmetic light flickering
+				if(istype(M, /obj/machinery/light)) //cosmetic light flickering
 					var/obj/machinery/light/L = M
 					if(L.on)
 						playsound(L, 'sound/effects/light_flicker.ogg', 50, 1)
 						L.flicker(3)
-				if(istype(M, /obj/machinery/camera))
+				else if(istype(M, /obj/machinery/camera))
 					var/obj/machinery/camera/C = M
 					if(C.isEmpProof() || !C.status)
 						continue
@@ -481,7 +484,7 @@
 					if(!try_use_power(disrupt_cost))
 						break
 					O.emp_act(1)
-				else //there's probably not another radio in that radio, right?
+				else if(isliving(M) || istype(M, /obj/structure/closet) || istype(M, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
 					var/atom/movable/A = M
 					for(var/obj/item/device/radio/O in A.GetAllContents())
 						successfulprocess = TRUE
@@ -490,10 +493,13 @@
 						if(!try_use_power(disrupt_cost))
 							break
 						O.emp_act(1)
+
+				CHECK_TICK
+
 		if(!successfulprocess)
 			visible_message("<span class='warning'>The gemstone suddenly turns horribly dark, writhing tendrils covering it!</span>")
 			recharging = world.time + recharge_time
-			flick("[initial(icon_state)]_discharged", src)
+			flick("interdiction_lens_discharged", src)
 			icon_state = "interdiction_lens_inactive"
 			SetLuminosity(2,1)
 			disabled = TRUE
@@ -554,7 +560,7 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			user.say("Uvrebcunag Oebnqpnfg, npgvingr!")
+			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
 			send_hierophant_message(user, input, 1)
 		if("Spatial Gateway")
 			if(gateway_active)
@@ -564,7 +570,7 @@
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1))
-				user.say("Fcnpvny Tngrjnl, npgvingr!")
+				clockwork_say(user, "Fcnpvny Tngrjnl, npgvingr!")
 			else
 				return_power(gateway_cost)
 		if("Cancel")

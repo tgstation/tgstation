@@ -246,17 +246,30 @@
 
 /obj/item/organ/hivelord_core/New()
 	..()
-	spawn(2400)
-		if(!owner && !preserved)
-			go_inert()
-		else
-			preserved = TRUE
-			feedback_add_details("hivelord_core", "[src.type]|implanted")
+	addtimer(src, "inert_check", 2400)
 
+/obj/item/organ/hivelord_core/proc/inert_check()
+	if(!owner && !preserved)
+		go_inert()
+	else
+		preserved(implanted = 1)
+
+/obj/item/organ/hivelord_core/proc/preserved(implanted = 0)
+	inert = FALSE
+	preserved = TRUE
+	update_icon()
+
+	if(implanted)
+		feedback_add_details("hivelord_core", "[type]|implanted")
+	else
+		feedback_add_details("hivelord_core", "[type]|stabilizer")
+
+		
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 	feedback_add_details("hivelord_core", "[src.type]|inert")
+	update_icon()
 
 /obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
@@ -525,8 +538,7 @@
 	if(!latched)
 		qdel(src)
 	else
-		spawn(50)
-			qdel(src)
+		QDEL_IN(src, 50)
 
 /obj/item/stack/sheet/animalhide/goliath_hide
 	name = "goliath hide plates"
@@ -771,11 +783,13 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
 	visible_message("<span class='warning'>The skulls on [src] wail in anger as they flee from their dying host!</span>")
-	if(stored_mob)
-		stored_mob.loc = get_turf(src)
-		stored_mob.adjustBruteLoss(1000)
-	else
-		new /obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+	var/turf/T = get_turf(src)
+	if(T)
+		if(stored_mob)
+			stored_mob.forceMove(get_turf(src))
+			stored_mob = null
+		else
+			new /obj/effect/mob_spawn/human/corpse/damaged(T)
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
@@ -811,8 +825,9 @@
 				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()
+				H.adjustBruteLoss(1000)
 				L.stored_mob = H
-				H.loc = L
+				H.forceMove(L)
 				qdel(src)
 	..()
 
@@ -820,7 +835,6 @@
 	name = "legion's soul"
 	desc = "A strange rock that still crackles with power... its \
 		healing properties will soon become inert if not used quickly."
-	icon = 'icons/obj/surgery.dmi'
 	icon_state = "legion_soul"
 
 /obj/item/organ/hivelord_core/legion/New()
@@ -830,14 +844,20 @@
 /obj/item/organ/hivelord_core/update_icon()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
 	cut_overlays()
-	if(!inert)
-		add_overlay(image(icon, "legion_soul_crackle"))
+	if(!inert && !preserved)
+		add_overlay("legion_soul_crackle")
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
 /obj/item/organ/hivelord_core/legion/go_inert()
 	. = ..()
 	desc = "[src] has become inert, it crackles no more and is useless for \
 		healing injuries."
-	update_icon()
+
+/obj/item/organ/hivelord_core/legion/preserved()
+	..()
+	desc = "[src] has been stabilized. It no longer crackles with power, but it's healing properties are preserved indefinitely."
 
 /obj/item/weapon/legion_skull
 	name = "legion's head"

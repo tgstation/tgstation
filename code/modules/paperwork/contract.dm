@@ -40,7 +40,7 @@
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>"
+		M << "<span class='boldnotice'>You feel that your soul has returned to its rightful owner, Nanotrasen.</span>"
 		M.return_soul()
 	else
 		if(ishuman(M))
@@ -163,7 +163,7 @@
 			else
 				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
 		else
-			user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
+			user << "<span class='notice'>Your signature simply slides off the sheet, it seems this contract is not meant for you to sign.</span>"
 	else
 		user << "<span class='notice'>You don't know how to read or write.</span>"
 	return 0

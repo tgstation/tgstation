@@ -77,8 +77,7 @@
 							trail.icon = proj_trail_icon
 							trail.icon_state = proj_trail_icon_state
 							trail.density = 0
-							spawn(proj_trail_lifespan)
-								qdel(trail)
+							QDEL_IN(trail, proj_trail_lifespan)
 
 				current_loc = projectile.loc
 				var/matrix/M = new

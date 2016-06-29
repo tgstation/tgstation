@@ -330,6 +330,8 @@
 		if("Clown")
 			favoured_types = list(/obj/item/weapon/soap, /obj/item/weapon/reagent_containers/food/snacks/grown/banana,/obj/item/weapon/grown/bananapeel)
 			functions += "clowning"
+		if("Mime")
+			functions -= "chatter"
 		if("Botanist")
 			favoured_types = list(/obj/machinery/hydroponics,  /obj/item/weapon/reagent_containers, /obj/item/weapon)
 			functions += "botany"
@@ -879,7 +881,7 @@
 		else if(doing & FIGHTING)
 			if(prob(chattyness))
 				chatmsg += pick("I'm going to [verbs_use] you, you [adjective_insult] [nouns_insult]!",
-				"Rend and [verbs_touch], Rend and [verbs_use]!",
+				"Rend and [verbs_touch], rend and [verbs_use]!",
 				"You [nouns_insult], I'm going to [verbs_use] you right in the [nouns_body]. JUST YOU WAIT!")
 		if(prob(chattyness/2))
 			chatmsg = ";"

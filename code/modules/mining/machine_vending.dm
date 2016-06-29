@@ -18,7 +18,7 @@
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
-		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
+		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
 		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core			 ,                     					400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
@@ -158,16 +158,18 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit")
+
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/weapon/storage/belt/mining(src.loc)
-			new /obj/item/weapon/survivalcapsule(src.loc)
+			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
 		if("Resonator and Advanced Scanner")
 			new /obj/item/weapon/resonator(src.loc)
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+			new /obj/item/weapon/storage/pill_bottle/mining(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)

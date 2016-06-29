@@ -33,7 +33,7 @@
 	if(used)
 		user << "This charter has already been used to name the station."
 		return
-	if(!ignores_timeout && (world.time > CHALLENGE_TIME_LIMIT)) //5 minutes
+	if(!ignores_timeout && (world.time-round_start_time > CHALLENGE_TIME_LIMIT)) //5 minutes
 		user << "The crew has already settled into the shift. \
 			It probably wouldn't be good to rename the station right now."
 		return
@@ -68,7 +68,7 @@
 		return
 	if(!response_timer_id)
 		return
-	var/turf/T = get_turf(user)
+	var/turf/T = get_turf(src)
 	T.visible_message("<span class='warning'>The proposed changes disappear \
 		from [src]; it looks like they've been rejected.</span>")
 	var/m = "[key_name(user)] has rejected the proposed station name."

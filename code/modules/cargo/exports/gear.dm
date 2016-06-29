@@ -107,23 +107,23 @@
 	export_types = list(/obj/item/clothing/suit/radiation)
 
 // Biosuits
-/datum/export/gear/radhelmet
+/datum/export/gear/biohood
 	cost = 50
 	unit_name = "biosuit hood"
-	export_types = list(/obj/item/clothing/head/radiation)
+	export_types = list(/obj/item/clothing/head/bio_hood)
 
-/datum/export/gear/radsuit
+/datum/export/gear/biosuit
 	cost = 100
 	unit_name = "biosuit"
-	export_types = list(/obj/item/clothing/suit/radiation)
+	export_types = list(/obj/item/clothing/suit/bio_suit)
 
 // Bombsuits
-/datum/export/gear/radhelmet
+/datum/export/gear/bombhelmet
 	cost = 100
 	unit_name = "bomb suit hood"
 	export_types = list(/obj/item/clothing/head/bomb_hood)
 
-/datum/export/gear/radsuit
+/datum/export/gear/bombsuit
 	cost = 300
 	unit_name = "bomb suit"
 	export_types = list(/obj/item/clothing/suit/bomb_suit)

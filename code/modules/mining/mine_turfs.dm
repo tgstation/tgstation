@@ -625,6 +625,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
+/turf/open/chasm/straight_down/lava_land_surface/normal_air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	if(!AM.invisibility)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \

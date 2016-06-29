@@ -17,7 +17,7 @@
 
 /obj/effect/overlay/beam/New()
 	..()
-	spawn(10) qdel(src)
+	QDEL_IN(src, 10)
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"
@@ -35,8 +35,15 @@
 	if(randomdir)
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
-	spawn(duration)
-		qdel(src)
+
+	// Because some people are sticklers for animation accuracy, we use
+	// spawn() if it's not a multiple of 2 deciseconds, which is the timer
+	// ss accuracy
+	if(duration % 2) //ODD
+		spawn(duration)
+			qdel(src)
+	else //EVEN
+		QDEL_IN(src, duration)
 
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
@@ -273,7 +280,7 @@
 	duration = 15
 
 /obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
-	icon_state = gib_icon
+	icon_state = gib_icon // Needs to be before ..() so icon is correct
 	..()
 
 /obj/effect/overlay/temp/gib_animation/ex_act(severity)
@@ -287,8 +294,31 @@
 	duration = 15
 
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
-	icon_state = dust_icon
+	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
+
+/obj/effect/overlay/temp/sparkle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
+	mouse_opacity = 0
+	density = 0
+	duration = 10
+	var/atom/movable/attached_to
+
+/obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
+	..()
+	if(istype(AM))
+		attached_to = AM
+		attached_to.overlays += src
+
+/obj/effect/overlay/temp/sparkle/Destroy()
+	if(attached_to)
+		attached_to.overlays -= src
+	attached_to = null
+	. = ..()
+
+/obj/effect/overlay/temp/sparkle/tailsweep
+	icon_state = "tailsweep"
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

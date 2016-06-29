@@ -2,7 +2,7 @@
 
 /obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
-	desc = "a large pulsating plant..."
+	desc = "A large pulsating plant..."
 	icon = 'icons/effects/spacevines.dmi'
 	icon_state = "flower_bud"
 	layer = SPACEVINE_MOB_LAYER
@@ -23,17 +23,18 @@
 	for(var/turf/T in anchors)
 		var/datum/beam/B = Beam(T,"vine",'icons/effects/spacevines.dmi',INFINITY, 5,/obj/effect/ebeam/vine)
 		B.sleep_time = 10 //these shouldn't move, so let's slow down updates to 1 second (any slower and the deletion of the vines would be too slow)
+	addtimer(src, "bear_fruit", growth_time)
 
-	spawn(growth_time)
-		visible_message("<span class='danger'>the plant has borne fruit!</span>")
-		new /mob/living/simple_animal/hostile/venus_human_trap (get_turf(src))
-		qdel(src)
+/obj/structure/alien/resin/flower_bud_enemy/proc/bear_fruit()
+	visible_message("<span class='danger'>the plant has borne fruit!</span>")
+	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
+	qdel(src)
 
 
 /obj/effect/ebeam/vine
 	name = "thick vine"
 	mouse_opacity = 1
-	desc = "a thick vine, painful to the touch"
+	desc = "A thick vine, painful to the touch."
 
 
 /obj/effect/ebeam/vine/Crossed(atom/movable/AM)
@@ -47,7 +48,7 @@
 
 /mob/living/simple_animal/hostile/venus_human_trap
 	name = "venus human trap"
-	desc = "now you know how the fly feels"
+	desc = "Now you know how the fly feels."
 	icon_state = "venus_human_trap"
 	layer = SPACEVINE_MOB_LAYER
 	health = 50
