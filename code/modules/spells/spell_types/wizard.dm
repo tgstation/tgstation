@@ -262,14 +262,6 @@
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
 	var/fireball_type = /obj/item/projectile/magic/fireball
-/*
-	proj_icon_state = "fireball"
-	proj_name = "a fireball"
-	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
-
-	proj_lifespan = 200
-	proj_step_delay = 1
-*/
 	action_icon_state = "fireball0"
 	sound = "sound/magic/Fireball.ogg"
 
@@ -306,33 +298,13 @@
 	if(!isturf(U) || !isturf(T))
 		return 0
 
-	var/obj/item/projectile/magic/fireball/FB = new /obj/item/projectile/magic/fireball(user.loc)
+	var/obj/item/projectile/magic/fireball/FB = new fireball_type(user.loc)
 	FB.current = get_turf(user)
 	FB.preparePixelProjectile(target, get_turf(target), user)
 	FB.fire()
 	user.newtonian_move(get_dir(U, T))
 
 	return 1
-
-/*
-/obj/effect/proc_holder/spell/fireball/on_lose(mob/living/carbon/user)
-	if(user.ranged_ability == src)
-		user.ranged_ability = null
-*/
-
-/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T,mob/user = usr)
-	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
-
-
-/obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
-	amt_dam_brute = 20
-	amt_dam_fire = 25
-
-/obj/effect/proc_holder/spell/targeted/explosion/fireball
-	ex_severe = -1
-	ex_heavy = -1
-	ex_light = 2
-	ex_flash = 5
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"

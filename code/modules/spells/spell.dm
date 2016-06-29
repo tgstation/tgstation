@@ -10,7 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'>You already have <b>[user.ranged_ability.name]<\b> readied! Cancel it first."
+		user << "<span class='warning'>You already have <b>[user.ranged_ability.name]</b> readied! Cancel it first."
 		return 1 //1 for failed, 0 for passed.
 	user.next_click = world.time + 6
 	user.face_atom(A)
@@ -20,7 +20,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!user || !user.client)
 		return
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'>You must cancel <b>[user.ranged_ability.name]<\b> before using [name]!"
+		user << "<span class='warning'>You must cancel <b>[user.ranged_ability.name]</b> before using [name]!"
 		return
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability

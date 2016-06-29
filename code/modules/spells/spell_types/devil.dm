@@ -86,12 +86,9 @@
 	invocation_type = "shout"
 	range = 2
 
-	fireball_type = /obj/effect/proc_holder/spell/turf/fireball/infernal
+	fireball_type = /obj/item/projectile/magic/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
-
-/obj/effect/proc_holder/spell/turf/fireball/infernal/cast(turf/T,mob/user = usr)
-	explosion(T, -1, -1, 1, 4, 0, flame_range = 5)
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
