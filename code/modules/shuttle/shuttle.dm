@@ -187,6 +187,7 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 
+	var/requesting_transit = FALSE
 	var/obj/docking_port/stationary/transit/assigned_transit
 
 	var/launch_status = NOLAUNCH
@@ -312,8 +313,12 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/requestTransitZone()
+	if(requesting_transit)
+		return FALSE
+	requesting_transit = TRUE
 	assigned_transit = SSshuttle.requestTransitZone(src)
 	. = istype(assigned_transit)
+	requesting_transit = FALSE
 
 /obj/docking_port/mobile/proc/enterTransit()
 	previous = null
