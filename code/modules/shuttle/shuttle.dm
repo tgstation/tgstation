@@ -188,7 +188,6 @@
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
 
-	var/requesting_transit = FALSE
 	var/obj/docking_port/stationary/transit/assigned_transit
 
 	var/launch_status = NOLAUNCH
@@ -210,6 +209,9 @@
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
 		SSshuttle.mobile -= src
+		destination = null
+		previous = null
+		assigned_transit = null
 	. = ..()
 
 /obj/docking_port/mobile/initialize()
@@ -268,38 +270,43 @@
 
 	return SHUTTLE_CAN_DOCK
 
-//call the shuttle to destination S
-/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
+/obj/docking_port/mobile/proc/check_dock(obj/docking_port/stationary/S)
 	var/status = canDock(S)
-	if(status == SHUTTLE_ALREADY_DOCKED)
+	if(status == SHUTTLE_CAN_DOCK)
+		return TRUE
+	else if(status == SHUTTLE_ALREADY_DOCKED)
 		// We're already docked there, don't need to do anything.
 		// Triggering shuttle movement code in place is weird
-		return
-	else if(status != SHUTTLE_CAN_DOCK)
-		var/msg = "request(): shuttle [src] cannot dock at [S], \
-			error: [status]"
+		return FALSE
+	else
+		var/msg = "Shuttle [src] cannot dock at [S], error: [status]"
 		message_admins(msg)
-		throw EXCEPTION(msg)
+		return FALSE
+
+//call the shuttle to destination S
+/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
+	if(!check_dock(S))
+		return
 
 	switch(mode)
 		if(SHUTTLE_CALL)
 			if(S == destination)
-				if(world.time <= timer)
-					timer = world.time
+				if(timeLeft(1) < callTime)
+					setTimer(callTime)
 			else
 				destination = S
-				timer = world.time
+				setTimer(callTime)
 		if(SHUTTLE_RECALL)
 			if(S == destination)
-				timer = world.time + timeLeft(1)
+				setTimer(callTime - timeLeft(1))
 			else
 				destination = S
-				timer = world.time
+				setTimer(callTime)
 			mode = SHUTTLE_CALL
 		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
 			destination = S
 			mode = SHUTTLE_IGNITING
-			timer = world.time + ignitionTime
+			setTimer(ignitionTime)
 
 //recall the shuttle to where it was previously
 /obj/docking_port/mobile/proc/cancel()
@@ -310,22 +317,8 @@
 			qdel(i)
 		ripples.Cut()
 
-	timer = world.time - timeLeft(1)
+	setTimer(callTime - timeLeft(1))
 	mode = SHUTTLE_RECALL
-
-/obj/docking_port/mobile/proc/requestTransitZone()
-	if(requesting_transit)
-		return TRANSIT_REQUEST
-	if(assigned_transit)
-		return TRANSIT_READY
-
-	requesting_transit = TRUE
-	assigned_transit = SSshuttle.requestTransitZone(src)
-	requesting_transit = FALSE
-	if(istype(assigned_transit))
-		return TRANSIT_READY
-	else
-		return TRANSIT_FULL
 
 /obj/docking_port/mobile/proc/enterTransit()
 	previous = null
@@ -487,20 +480,11 @@
 	loc = S1.loc
 	setDir(S1.dir)
 
-
 /obj/docking_port/mobile/proc/findRoundstartDock()
-	var/obj/docking_port/stationary/D
-	D = SSshuttle.getDock(roundstart_move)
-
-	if(D)
-		return D
+	return SSshuttle.getDock(roundstart_move)
 
 /obj/docking_port/mobile/proc/dockRoundstart()
-	// Instead of spending a lot of time trying to work out where to place
-	// our shuttle, just create it somewhere empty and send it to where
-	// it should go
-	var/obj/docking_port/stationary/D = findRoundstartDock()
-	return dock(D)
+	return dock(findRoundstartDock())
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
@@ -553,54 +537,58 @@
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()
-	var/timeLeft = timeLeft(1)
-	if(!ripples.len && (timeLeft <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL)))
-		create_ripples(destination)
+	check_ripples()
 
 	if(mode == SHUTTLE_IGNITING)
-		requestTransitZone()
+		check_transit_zone()
 
-	if(timeLeft <= 0)
-		switch(mode)
-			if(SHUTTLE_CALL)
-				if(dock(destination))
-					setTimer(20)	//can't dock for some reason, try again in 2 seconds
-					return
-			if(SHUTTLE_RECALL)
-				if(dock(previous))
-					setTimer(20)	//can't dock for some reason, try again in 2 seconds
-					return
-			if(SHUTTLE_IGNITING)
-				if(requestTransitZone() != TRANSIT_READY)
-					setTimer(20)
-					return
+	if(timeLeft(1) > 0)
+		return
+	// If we can't dock or we don't have a transit slot, wait for 20 ds,
+	// then try again
+	switch(mode)
+		if(SHUTTLE_CALL)
+			if(dock(destination))
+				setTimer(20)
+		if(SHUTTLE_RECALL)
+			if(dock(previous))
+				setTimer(20)
+		if(SHUTTLE_IGNITING)
+			if(check_transit_zone() != TRANSIT_READY)
+				setTimer(20)
+			else
 				mode = SHUTTLE_CALL
-				timer = world.time
+				setTimer(callTime)
 				enterTransit()
-				return
-		mode = SHUTTLE_IDLE
-		timer = 0
-		destination = null
+		else
+			mode = SHUTTLE_IDLE
+			timer = 0
+			destination = null
 
+/obj/docking_port/mobile/proc/check_ripples()
+	if(!ripples.len)
+		if((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL))
+			if(timeLeft(1) <= SHUTTLE_RIPPLE_TIME)
+				create_ripples(destination)
+
+/obj/docking_port/mobile/proc/check_transit_zone()
+	if(assigned_transit)
+		return TRANSIT_READY
+	else
+		SSshuttle.request_transit_dock()
 
 /obj/docking_port/mobile/proc/setTimer(wait)
-	if(timer <= 0)
-		timer = world.time
-	timer += wait - timeLeft(1)
+	timer = world.time + wait
 
 //returns timeLeft
 /obj/docking_port/mobile/proc/timeLeft(divisor)
 	if(divisor <= 0)
 		divisor = 10
 
-	var/xTime
-	if(mode != SHUTTLE_IGNITING)
-		xTime = callTime
-	else
-		xTime = ignitionTime
 	if(!timer)
-		return round(xTime/divisor, 1)
-	return max( round((timer+xTime-world.time)/divisor,1), 0 )
+		return round(callTime / divisor, 1)
+	else
+		return max(0, round((timer - world.time) / divisor, 1))
 
 // returns 3-letter mode string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getModeStr()

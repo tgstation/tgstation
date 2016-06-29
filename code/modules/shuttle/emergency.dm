@@ -202,7 +202,7 @@
 	if(!timer)
 		return round(SSshuttle.emergencyCallTime/divisor, 1)
 
-	var/dtime = world.time - timer
+	var/dtime = timer - world.time
 	switch(mode)
 		if(SHUTTLE_ESCAPE)
 			dtime = max(SSshuttle.emergencyEscapeTime - dtime, 0)
@@ -217,10 +217,10 @@
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			mode = SHUTTLE_CALL
-			timer = world.time - timeLeft(1)
+			setTimer(callTime - timeLeft(1))
 		if(SHUTTLE_IDLE)
 			mode = SHUTTLE_CALL
-			timer = world.time
+			setTimer(callTime)
 		if(SHUTTLE_CALL)
 			if(world.time < timer)	//this is just failsafe
 				timer = world.time
