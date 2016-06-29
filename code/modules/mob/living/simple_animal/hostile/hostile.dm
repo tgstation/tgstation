@@ -13,6 +13,16 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
+//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
+	var/list/environment_target_typecache = list(
+	/obj/machinery/door/window,
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/rack,
+	/obj/structure/barricade) //turned into a typecache in New()
+
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
@@ -40,6 +50,7 @@
 	..()
 	if(!targets_from)
 		targets_from = src
+	environment_target_typecache = typecacheof(environment_target_typecache)
 
 
 /mob/living/simple_animal/hostile/Life()
@@ -316,7 +327,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
+				if(is_type_in_typecache(A, environment_target_typecache))
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()

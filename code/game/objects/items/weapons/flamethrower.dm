@@ -106,7 +106,7 @@
 
 	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
 		if(ptank)
-			user << "<span class='notice'>There appears to already be a plasma tank loaded in [src]!</span>"
+			user << "<span class='notice'>There is already a plasma tank loaded in [src]!</span>"
 			return
 		if(!user.unEquip(W))
 			return
