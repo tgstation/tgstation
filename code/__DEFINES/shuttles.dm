@@ -13,6 +13,7 @@
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
 
 // Shuttle return values
+#define SHUTTLE_CAN_DOCK "can_dock"
 #define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
 #define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"
 #define SHUTTLE_WIDTH_TOO_LARGE "width_too_large"
@@ -30,3 +31,7 @@
 // Ripples, effects that signal a shuttle's arrival
 #define SHUTTLE_RIPPLE_TIME 100
 #define SHUTTLE_RIPPLE_FADEIN 50
+
+#define TRANSIT_REQUEST 1
+#define TRANSIT_READY 2
+#define TRANSIT_FULL 3

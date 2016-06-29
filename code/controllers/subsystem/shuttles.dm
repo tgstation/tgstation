@@ -13,7 +13,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/transit = list()
 
 	var/list/turf/transit_turfs = list()
-	var/list/turf/transit_turfs_in_use = list()
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
@@ -67,9 +66,12 @@ var/datum/subsystem/shuttle/SSshuttle
 	for(var/i in block(A, B))
 		var/turf/T = i
 		transit_turfs += T
+		T.flags |= UNUSED_TRANSIT_TURF
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
+		else
+			T.color = "#00ffff"
 #endif
 
 	world.log << "[transit_turfs.len] transit turfs registered"
@@ -234,60 +236,43 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/requestTransitZone(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
-	var/transit_width = M.width + 14 // view range is 7, both ways is 14
-	var/transit_height = M.height + 14
+	var/transit_width = M.width + M.dwidth + 14
+	var/transit_height = M.height + M.dheight + 14
 	// Then find a place to put the zone
 
 	world << "Transit requested for [M]"
 
-	CHECK_TICK
-	var/list/availible = transit_turfs - transit_turfs_in_use
-	CHECK_TICK
-
-	world << "There are [availible.len] turfs that are free"
-
 	var/list/proposed_zone
-	for(var/i in shuffle(availible))
-		var/turf/topleft = i
-		world << "Trying [COORD(topleft)]"
-		CHECK_TICK
-		var/turf/bottomright = locate(topleft.x + transit_width,
-			topleft.y + transit_height, topleft.z)
-		if(!bottomright)
-			continue
-		CHECK_TICK
-		if(!(bottomright in transit_turfs))
-			world << "Bottomright [COORD(bottomright)] not in \
-				transit_turfs, trying another topleft"
-			continue
-		CHECK_TICK
-		if(bottomright in transit_turfs_in_use)
-			world << "Bottomright [COORD(bottomright)] in use..."
-			continue
-		CHECK_TICK
 
-		proposed_zone = block(topleft, bottomright)
-		CHECK_TICK
-		world << "Proposed zone of [proposed_zone.len] turfs made"
-		CHECK_TICK
-		if(!proposed_zone)
-			world << "Proposed zone was null."
-			continue
-		var/list/L
-		CHECK_TICK
-		L = proposed_zone | transit_turfs_in_use
-		if(L.len)
-			world << "Proposed zone contains in use turfs, continuing"
-			continue
-		CHECK_TICK
-		break
+	base:
+		for(var/i in transit_turfs)
+			CHECK_TICK
+			var/turf/topleft = i
+			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
+				world << "Topleft [COORD(topleft)] is used"
+			var/turf/bottomright = locate(topleft.x + transit_width,
+				topleft.y + transit_height, topleft.z)
+			if(!bottomright)
+				continue
+			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
+				world << "Bottomright [COORD(bottomright)] is used."
+				continue
+
+			proposed_zone = block(topleft, bottomright)
+			world << "Proposed zone of [proposed_zone.len] turfs made"
+			if(!proposed_zone)
+				world << "Proposed zone was null."
+				continue
+			for(var/j in proposed_zone)
+				var/turf/T = j
+				if(!(T.flags & UNUSED_TRANSIT_TURF))
+					continue base
+			break
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		world << "We couldn't find a suitable transit zone"
 		return
 
-	CHECK_TICK
-	transit_turfs_in_use |= proposed_zone
 	world << "Now creating transit port"
 	var/turf/topleft = proposed_zone[1]
 	// Then create a transit docking port in the middle
@@ -298,16 +283,17 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
-	new_transit_dock.setDir(M.travelDir)
-	CHECK_TICK
+	new_transit_dock.setDir(M.dir)
 
 	world << "Now setting turf type"
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/open/space/transit/T = i
+		T.flags |= UNUSED_TRANSIT_TURF
 		T.ChangeTurf(/turf/open/space/transit)
 		T.setDir(M.travelDir)
 		T.update_icon()
 
+	world << "Done!"
 	return new_transit_dock
 	// Then return it
 

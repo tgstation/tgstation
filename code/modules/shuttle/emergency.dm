@@ -288,7 +288,25 @@
 					else
 						G.dom_attempts = min(1,G.dom_attempts)
 
+
 		if(SHUTTLE_DOCKED)
+			if(time_left <= ENGINES_START_TIME)
+				mode = SHUTTLE_IGNITING
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
+					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+						M.mode = SHUTTLE_IGNITING
+
+		if(SHUTTLE_IGNITING)
+			var/success = TRUE
+			
+			success &= (requestTransitZone() == TRANSIT_READY)
+			for(var/A in SSshuttle.mobile)
+				var/obj/docking_port/mobile/M = A
+				if(M.launch_status == UNLAUNCHED)
+					success &= (M.requestTransitZone() == TRANSIT_READY)
+			if(!success)
+				setTimer(ENGINES_START_TIME * 10)
 
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.

@@ -12,9 +12,10 @@
 	anchored = 1
 
 	var/id
-	dir = NORTH//this should point -away- from the dockingport door, ie towards the ship
+	// this should point -away- from the dockingport door, ie towards the ship
+	dir = NORTH
 	var/width = 0	//size of covered area, perpendicular to dir
-	var/height = 0	//size of covered area, paralell to dir
+	var/height = 0	//size of covered area, parallel to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
@@ -178,8 +179,8 @@
 	var/area/shuttle/areaInstance
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
-	var/mode = SHUTTLE_IDLE			//current shuttle mode (see /__DEFINES/stat.dm)
-	var/callTime = 150				//time spent in transit (deciseconds)7
+	var/mode = SHUTTLE_IDLE			//current shuttle mode
+	var/callTime = 150				//time spent in transit (deciseconds)
 	var/ignitionTime = 100			// time spent "starting the engines"
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 	var/travelDir = 0				//direction the shuttle would travel in
@@ -232,7 +233,7 @@
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
-	return 0	//0 means we can move
+	return TRUE
 
 //this is to check if this shuttle can physically dock at dock S
 /obj/docking_port/mobile/proc/canDock(obj/docking_port/stationary/S)
@@ -240,7 +241,7 @@
 		return SHUTTLE_NOT_A_DOCKING_PORT
 
 	if(istype(S, /obj/docking_port/stationary/transit))
-		return FALSE
+		return SHUTTLE_CAN_DOCK
 
 	if(dwidth > S.dwidth)
 		return SHUTTLE_DWIDTH_TOO_LARGE
@@ -265,7 +266,7 @@
 		// attempt to move us where we currently are, it will get weird.
 			return SHUTTLE_ALREADY_DOCKED
 
-	return FALSE
+	return SHUTTLE_CAN_DOCK
 
 //call the shuttle to destination S
 /obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
@@ -274,7 +275,7 @@
 		// We're already docked there, don't need to do anything.
 		// Triggering shuttle movement code in place is weird
 		return
-	else if(status)
+	else if(status != SHUTTLE_CAN_DOCK)
 		var/msg = "request(): shuttle [src] cannot dock at [S], \
 			error: [status]"
 		message_admins(msg)
@@ -290,7 +291,7 @@
 				timer = world.time
 		if(SHUTTLE_RECALL)
 			if(S == destination)
-				timer = world.time - timeLeft(1)
+				timer = world.time + timeLeft(1)
 			else
 				destination = S
 				timer = world.time
@@ -298,7 +299,7 @@
 		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
 			destination = S
 			mode = SHUTTLE_IGNITING
-			timer = world.time
+			timer = world.time + ignitionTime
 
 //recall the shuttle to where it was previously
 /obj/docking_port/mobile/proc/cancel()
@@ -314,11 +315,17 @@
 
 /obj/docking_port/mobile/proc/requestTransitZone()
 	if(requesting_transit)
-		return FALSE
+		return TRANSIT_REQUEST
+	if(assigned_transit)
+		return TRANSIT_READY
+
 	requesting_transit = TRUE
 	assigned_transit = SSshuttle.requestTransitZone(src)
-	. = istype(assigned_transit)
 	requesting_transit = FALSE
+	if(istype(assigned_transit))
+		return TRANSIT_READY
+	else
+		return TRANSIT_FULL
 
 /obj/docking_port/mobile/proc/enterTransit()
 	previous = null
@@ -334,24 +341,6 @@
 	else
 		WARNING("shuttle \"[id]\" could not enter transit space. S0=[S0 ? S0.id : "null"] S1=[S1 ? S1.id : "null"]")
 
-//default shuttleRotate
-/atom/proc/shuttleRotate(rotation)
-	//rotate our direction
-	setDir(angle2dir(rotation+dir2angle(dir)))
-
-	//resmooth if need be.
-	if(smooth)
-		queue_smooth(src)
-
-	//rotate the pixel offsets too.
-	if (pixel_x || pixel_y)
-		if (rotation < 0)
-			rotation += 360
-		for (var/turntimes=rotation/90;turntimes>0;turntimes--)
-			var/oldPX = pixel_x
-			var/oldPY = pixel_y
-			pixel_x = oldPY
-			pixel_y = (oldPX*(-1))
 
 /obj/docking_port/mobile/proc/jumpToNullSpace()
 	// Destroys the docking port and the shuttle contents.
@@ -415,13 +404,13 @@
 		var/status = canDock(S1)
 		if(status == SHUTTLE_ALREADY_DOCKED)
 			return status
-		else if(status)
+		else if(status != SHUTTLE_CAN_DOCK)
 			var/msg = "dock(): shuttle [src] cannot dock at [S1], \
 				error: [status]"
 			message_admins(msg)
 			return status
 
-		if(canMove())
+		if(!canMove())
 			return -1
 
 	closePortDoors()
@@ -498,44 +487,6 @@
 	loc = S1.loc
 	setDir(S1.dir)
 
-/atom/movable/proc/onShuttleMove(turf/T1, rotation)
-	if(rotation)
-		shuttleRotate(rotation)
-	loc = T1
-	return 1
-
-/obj/onShuttleMove()
-	if(invisibility >= INVISIBILITY_ABSTRACT)
-		return 0
-	. = ..()
-
-/atom/movable/light/onShuttleMove()
-	return 0
-
-/obj/machinery/door/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-	addtimer(src, "close", 0)
-
-/mob/onShuttleMove()
-	if(!move_on_shuttle)
-		return 0
-	. = ..()
-	if(!.)
-		return
-	if(client)
-		if(buckled)
-			shake_camera(src, 2, 1) // turn it down a bit come on
-		else
-			shake_camera(src, 7, 1)
-
-/mob/living/carbon/onShuttleMove()
-	. = ..()
-	if(!.)
-		return
-	if(!buckled)
-		Weaken(3)
 
 /obj/docking_port/mobile/proc/findRoundstartDock()
 	var/obj/docking_port/stationary/D
@@ -606,11 +557,8 @@
 	if(!ripples.len && (timeLeft <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_RECALL)))
 		create_ripples(destination)
 
-	// Stall until we get a transit slot
 	if(mode == SHUTTLE_IGNITING)
-		var/success = requestTransitZone()
-		if(!success)
-			timer = world.time
+		requestTransitZone()
 
 	if(timeLeft <= 0)
 		switch(mode)
@@ -623,6 +571,9 @@
 					setTimer(20)	//can't dock for some reason, try again in 2 seconds
 					return
 			if(SHUTTLE_IGNITING)
+				if(requestTransitZone() != TRANSIT_READY)
+					setTimer(20)
+					return
 				mode = SHUTTLE_CALL
 				timer = world.time
 				enterTransit()
@@ -641,9 +592,15 @@
 /obj/docking_port/mobile/proc/timeLeft(divisor)
 	if(divisor <= 0)
 		divisor = 10
+
+	var/xTime
+	if(mode != SHUTTLE_IGNITING)
+		xTime = callTime
+	else
+		xTime = ignitionTime
 	if(!timer)
-		return round(callTime/divisor, 1)
-	return max( round((timer+callTime-world.time)/divisor,1), 0 )
+		return round(xTime/divisor, 1)
+	return max( round((timer+xTime-world.time)/divisor,1), 0 )
 
 // returns 3-letter mode string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getModeStr()
