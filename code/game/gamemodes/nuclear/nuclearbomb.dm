@@ -463,10 +463,11 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/weapon/disk/nuclear/proc/relocate()
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
-	if(!targetturf && (blobstart.len > 0))
-		targetturf = get_turf(pick(blobstart))
-	else
-		throw EXCEPTION("Unable to find a blobstart landmark")
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
 
 	if(ismob(loc))
 		var/mob/M = loc
