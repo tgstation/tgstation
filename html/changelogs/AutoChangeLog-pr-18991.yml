@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Judicial Visors now tell the user how many targets the Judicial Blast struck."
+  - soundadd: "Judicial Markers now have sounds when appearing and exploding."

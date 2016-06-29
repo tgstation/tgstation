@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts may now jump between the two linked servers using the new Server Hop verb. Rather than whine in deadchat about dieing, you can just go play a new round on the other server."
