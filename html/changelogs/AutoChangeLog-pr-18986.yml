@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Slabs now use an action button to communicate instead of the \"Report\" option in the menu after using a slab."
+  - tweak: "Clockwork Slabs now fit in pockets, the belt slot, or in the suit storage slot(if wearing clockwork armor), where they can be used as hands-free communication."
+  - imageadd: "Clockwork items with action buttons have a new, clockwork-y background."
