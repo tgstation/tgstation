@@ -251,7 +251,7 @@
 	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"Trg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
 	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragvn.\"", "\"Fgevir gb trg n fperj ybbfr.\"")
 	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
-	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gung'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
+	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
 	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gur'fr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg bs pbairefvba.\"", \
 	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
 	"\"Ubj qb gur'l snvy gb hfr n Fvtvy-bs Npprffvba, naljnl?\"", "\"Jul vf vg gun'g nyy freinagf ner guv'f varcg?\"", "\"Vg'f dhvgr yvxryl lbh'yy or fghpx urer sbe n juvyr.\"")
