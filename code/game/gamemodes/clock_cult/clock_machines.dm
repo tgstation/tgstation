@@ -255,6 +255,9 @@
 	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gurfr vqvbgf va gur neg bs pbairefvba.\"", \
 	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
 	"\"Ubj qb gurl snvy gb hfr n Fvtvy bs Npprffvba, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
+	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagrerfgvat ybpngvba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGRAANR!\"", \
+	"\"Nznmvat. Lbh fbzrubj znantrq gb jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
+	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgvyy qb fbzrguv'at NF FGHCVQ NF GUV'F!\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
@@ -271,11 +274,27 @@
 		return
 	if(try_use_power(mania_cost))
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
+		for(var/mob/living/carbon/human/H in view(1, src))
+			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
+				if(is_eligible_servant(H) && try_use_power(convert_cost))
+					H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
+					H.playsound_local(T, hum, 80, 1)
+					add_servant_of_ratvar(H)
+				else if(!H.stat)
+					if(H.getBrainLoss() >= H.maxHealth)
+						H.Paralyse(5)
+						H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+					else
+						H.adjustBrainLoss(100)
+						H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
+			else
+				visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
+				playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 		for(var/mob/living/carbon/human/H in range(10, src))
-			if(!is_servant_of_ratvar(H) && !H.null_rod_check())
+			if(!is_servant_of_ratvar(H) && !H.null_rod_check() && H.stat == CONSCIOUS)
 				var/distance = get_dist(T, get_turf(H))
-				var/falloff_distance = (110) - distance * 10
-				var/sound_distance = falloff_distance * 0.4
+				var/falloff_distance = min((110) - distance * 10, 80)
+				var/sound_distance = falloff_distance * 0.5
 				var/targetbrainloss = H.getBrainLoss()
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
@@ -289,26 +308,26 @@
 								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
 							else
 								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
-						if(targetbrainloss <= 70)
-							H.adjustBrainLoss(70 - targetbrainloss) //got too close had brain eaten
+						if(targetbrainloss <= 50)
+							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
 						if(targetdruggy <= 150)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(11)
 						if(targethallu <= 150)
-							H.hallucination += 10
+							H.hallucination += 11
 					if(4 to 5)
 						if(targetbrainloss <= 50)
-							H.adjustBrainLoss(5)
+							H.adjustBrainLoss(3)
 						if(targetdruggy <= 120)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(9)
 						if(targethallu <= 120)
-							H.hallucination += 10
+							H.hallucination += 9
 					if(6 to 7)
 						if(targetbrainloss <= 30)
 							H.adjustBrainLoss(2)
 						if(prob(falloff_distance) && targetdruggy <= 90)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(7)
 						else if(targethallu <= 90)
-							H.hallucination += 10
+							H.hallucination += 7
 					if(8 to 9)
 						if(H.getBrainLoss() <= 10)
 							H.adjustBrainLoss(1)
@@ -318,24 +337,23 @@
 							H.hallucination += 5
 					if(10 to INFINITY)
 						if(prob(falloff_distance) && targetdruggy <= 30)
-							H.adjust_drugginess(5)
+							H.adjust_drugginess(3)
 						else if(targethallu <= 30)
-							H.hallucination += 5
-					else //if it's a distance of 1 or they're on top of it(how'd they get on top of it???)
-						if(try_use_power(convert_attempt_cost))
-							if(is_eligible_servant(H) && try_use_power(convert_cost))
-								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
-								add_servant_of_ratvar(H)
-							else if(!H.stat)
-								if(targetbrainloss >= H.maxHealth)
-									H.Paralyse(5)
-									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
-								else
-									H.adjustBrainLoss(100)
-									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
-						else
-							visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
-							playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
+							H.hallucination += 3
+					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
+						if(prob(falloff_distance))
+							if(prob(falloff_distance))
+								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+							else if(prob(falloff_distance))
+								H << "<span class='sevtug'>[pick(close_messages)]</span>"
+							else
+								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+						if(targetbrainloss <= 100)
+							H.adjustBrainLoss(100 - targetbrainloss)
+						if(targetdruggy <= 200)
+							H.adjust_drugginess(15)
+						if(targethallu <= 200)
+							H.hallucination += 15
 
 			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
 				H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, and druggy
