@@ -72,10 +72,12 @@
 		return
 	if(tank && !tank.air_contents.remove(gasperfist * fisto_setting))
 		user << "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>"
+		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
 	target.apply_damage(force * fisto_setting, BRUTE)
-	target.visible_message("<span class='danger'>[user]'s [src] lets out a loud hiss as they punch [target.name]!</span>", \
-		"<span class='userdanger'>You cry out in pain as the [src] flings you backwards!</span>")
+	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
+		"<span class='userdanger'>You cry out in pain as [src] flings you backwards!</span>")
+	PoolOrNew(/obj/effect/kinetic_blast, target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 
