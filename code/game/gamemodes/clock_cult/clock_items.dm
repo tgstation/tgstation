@@ -566,7 +566,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -576,7 +575,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
@@ -594,7 +593,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -605,7 +603,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -628,7 +626,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
@@ -638,7 +635,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -656,7 +653,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
@@ -666,7 +662,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
