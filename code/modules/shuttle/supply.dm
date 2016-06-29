@@ -1,16 +1,4 @@
-/obj/docking_port/mobile/supply
-	name = "supply shuttle"
-	id = "supply"
-	callTime = 600
-
-	dir = WEST
-	travelDir = 90
-	width = 12
-	dwidth = 5
-	height = 7
-	roundstart_move = "supply_away"
-
-	var/list/blacklist = list(
+var/list/blacklisted_cargo_types = typecacheof(list(
 		/mob/living,
 		/obj/effect/blob,
 		/obj/effect/rune,
@@ -22,18 +10,21 @@
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/telepad,
-		/obj/machinery/clonepod
-	)
-	var/list/storage_objects = list(
-		/obj/structure/closet,
-		/obj/item/weapon/storage,
-		/obj/item/weapon/storage/bag/money,
-		/obj/item/weapon/folder, // Selling a folder of stamped manifests? Sure, why not!
-		/obj/structure/filingcabinet,
-		/obj/structure/ore_box,
-	)
-	var/list/exports = list()
-	var/list/exports_floor = list()
+		/obj/machinery/clonepod,
+		/obj/effect/mob_spawn
+	))
+
+/obj/docking_port/mobile/supply
+	name = "supply shuttle"
+	id = "supply"
+	callTime = 600
+
+	dir = WEST
+	travelDir = 90
+	width = 12
+	dwidth = 5
+	height = 7
+	roundstart_move = "supply_away"
 
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
@@ -48,12 +39,13 @@
 		return check_blacklist(areaInstance)
 	return ..()
 
-/obj/docking_port/mobile/supply/proc/check_blacklist(atom/A)
-	if(is_type_in_list(A, blacklist))
-		return 1
-	for(var/thing in A)
-		if(.(thing))
-			return 1
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
+	for(var/trf in areaInstance)
+		var/turf/T = trf
+		for(var/a in T.GetAllContents())
+			if(is_type_in_typecache(a, blacklisted_cargo_types))
+				return TRUE
+	return FALSE
 
 /obj/docking_port/mobile/supply/request()
 	if(mode != SHUTTLE_IDLE)
@@ -104,15 +96,8 @@
 /obj/docking_port/mobile/supply/proc/sell()
 	var/presale_points = SSshuttle.points
 
-	if(!exports.len) // No exports list? Generate it!
-		exports_floor.Cut()
-		var/datum/export/E
-		for(var/subtype in subtypesof(/datum/export))
-			E = new subtype
-			if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-				exports += E
-				if(E.shuttle_floor)
-					exports_floor += E
+	if(!exports_list.len) // No exports list? Generate it!
+		setupExports()
 
 	var/msg = ""
 	var/sold_atoms = ""
@@ -120,12 +105,12 @@
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored)
 			continue
-		sold_atoms += recursive_sell(AM)
+		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
 
-	for(var/a in exports)
+	for(var/a in exports_list)
 		var/datum/export/E = a
 		var/export_text = E.total_printout()
 		if(!export_text)
@@ -137,22 +122,3 @@
 
 	SSshuttle.centcom_message = msg
 	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", "cargo")
-
-/obj/docking_port/mobile/supply/proc/recursive_sell(var/obj/O, var/level=0)
-	var/sold_atoms = " [O.name]"
-	var/list/xports = exports
-	if(level == 0)
-		xports = exports_floor // If on the floor level, sell floor exports only
-	level++
-
-	for(var/a in xports)
-		var/datum/export/E = a
-		if(E.applies_to(O, contraband, emagged))
-			E.sell_object(O, contraband, emagged)
-			break
-
-	if(level < 10 && is_type_in_list(O, storage_objects))
-		for(var/obj/thing in O)
-			sold_atoms += recursive_sell(thing, level)
-	qdel(O)
-	return sold_atoms

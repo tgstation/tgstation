@@ -68,6 +68,14 @@
 	..()
 	new /obj/item/device/radio/off(src)
 
+/obj/item/weapon/storage/box/survival_mining/New()
+	..()
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+
+
 // Engineer survival box
 /obj/item/weapon/storage/box/engineer/New()
 	..()

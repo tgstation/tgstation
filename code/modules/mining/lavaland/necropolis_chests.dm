@@ -430,7 +430,7 @@
 			if(C.wear_mask)
 				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
 			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
+				if(!ishumanbasic(C)) //implying xenoshumans are holy
 					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
 				else
 					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"

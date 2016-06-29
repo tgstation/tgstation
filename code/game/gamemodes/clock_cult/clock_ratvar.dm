@@ -210,10 +210,16 @@
 
 
 /obj/structure/clockwork/massive/ratvar/attack_ghost(mob/dead/observer/O)
-	if(alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Yes", "No") == "No" || !O)
+	var/alertresult = alert(O, "Embrace the Justiciar's light? You can no longer be cloned!",,"Cogscarab", "Reclaimer", "No")
+	if(alertresult == "No" || !O)
 		return 0
-	var/mob/living/simple_animal/hostile/clockwork/reclaimer/R = new(get_turf(src))
-	R.visible_message("<span class='warning'>[R] forms and hums to life!</span>")
+	var/mob/living/simple_animal/R
+	if(alertresult == "Cogscarab")
+		R = new/mob/living/simple_animal/drone/cogscarab/ratvar(get_turf(src))
+		R.visible_message("<span class='heavy_brass'>[R] forms, and its eyes blink open, glowing bright red!</span>")
+	else
+		R = new/mob/living/simple_animal/hostile/clockwork/reclaimer(get_turf(src))
+		R.visible_message("<span class='heavy_brass'>[R] forms, and it emits a faint hum!</span>")
 	R.key = O.key
 
 

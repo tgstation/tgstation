@@ -1,4 +1,0 @@
-author: "SnipeDragon"
-delete-after: True
-changes: 
-  - bugfix: "Cardboard Cutouts now become opaque when their appearance is changed."
