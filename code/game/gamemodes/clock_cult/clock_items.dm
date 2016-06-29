@@ -480,12 +480,10 @@
 		user.update_action_buttons_icon()
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
-	if(recharging)
+	if(recharging || !isliving(loc))
 		icon_state = "judicial_visor_0"
 		return 0
 	if(active == change_to)
-		return 0
-	if(!isliving(loc))
 		return 0
 	var/mob/living/L = loc
 	if(!is_servant_of_ratvar(L) || L.stat)
@@ -493,6 +491,7 @@
 	active = change_to
 	icon_state = "judicial_visor_[active]"
 	L.update_action_buttons_icon()
+	L.update_inv_glasses()
 	switch(active)
 		if(TRUE)
 			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
@@ -505,10 +504,13 @@
 	if(!src || !user)
 		return 0
 	recharging = FALSE
+	if(src == user.get_item_by_slot(slot_glasses))
+		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+	else
+		active = FALSE
 	icon_state = "judicial_visor_[active]"
 	user.update_action_buttons_icon()
-	if(loc == user)
-		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+	user.update_inv_glasses()
 
 /obj/item/weapon/ratvars_flame //Used by the judicial visor
 	name = "Ratvar's flame"
@@ -547,8 +549,9 @@
 		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
 	clockwork_say(user, "Xarry, urn'guraf!")
 	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
-	new/obj/effect/clockwork/judicial_marker(get_turf(target))
+	new/obj/effect/clockwork/judicial_marker(get_turf(target), user)
 	user.update_action_buttons_icon()
+	user.update_inv_glasses()
 	addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
 	qdel(src)
 	return 1
