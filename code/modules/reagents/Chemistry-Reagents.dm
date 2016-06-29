@@ -1438,6 +1438,13 @@
 	reagent_state = LIQUID
 	color = "#C8A5DC" //rgb: 200, 165, 220
 
+/datum/reagent/vaporsalt
+	name = "Vapor Salts"
+	id = VAPORSALT
+	description = "A strange mineral found in alien plantlife that behaves strangely in the presence of certain gasses in liquid form."
+	reagent_state = LIQUID
+	color = "#BDE5F2"
+
 /datum/reagent/iron
 	name = "Iron"
 	id = IRON

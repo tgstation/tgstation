@@ -1747,30 +1747,82 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/flammkuchen
 
-// Currently Disabled //////////////////////////////////////////
-
-/*
-
-/datum/recipe/bananaphone
-	reagents = list(PSILOCYBIN = 5) //Trippin' balls, man.
+/datum/recipe/welcomepie
+	reagents = list(FLOUR = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-		/obj/item/device/radio
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher
 		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/bananaphone
+	result = /obj/item/weapon/reagent_containers/food/snacks/pie/welcomepie
 
-/datum/recipe/telebacon
+/datum/recipe/zhulongcaofan
+	reagents = list(RICE = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/device/assembly/signaler
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher
 		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
+	result = /obj/item/weapon/reagent_containers/food/snacks/zhulongcaofan
 
-/datum/recipe/syntitelebacon
+/datum/recipe/zhulongcaofan/make_food(var/obj/container as obj)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher/P in container)
+		P.reagents.del_reagent(SACID) //This cleanses the plant.
+	return ..()
+
+/datum/recipe/bacon
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/meat/box)
+	result = /obj/item/weapon/reagent_containers/food/snacks/bacon
+
+/datum/recipe/porktenderloin
+	reagents = list(GRAVY = 10)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meat/syntiflesh,
-		/obj/item/device/assembly/signaler
+		/obj/item/weapon/reagent_containers/food/snacks/meat/box
 		)
-	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
+	result = /obj/item/weapon/reagent_containers/food/snacks/porktenderloin
 
-*/
+/datum/recipe/sweetandsourpork
+	reagents = list(SOYSAUCE = 10, SUGAR = 10) //Will require trading with humans to get soy, but they can make their own acid.
+	items = (
+		/obj/item/weapon/reagent_containers/food/snacks/meat/box
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sweetandsourpork
+
+/datum/recipe/hoboburger
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/box,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/hoboburger
+
+/datum/recipe/hoboburger/make_food(var/obj/container as obj)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher/P in container)
+		P.reagents.del_reagent(SACID) //This cleanses the plant.
+	return ..()
+
+/datum/recipe/reclaimed
+	reagents = list(VOMIT = 5, ANTI_TOXIN = 1)
+	result = /obj/item/weapon/reagent_containers/food/snacks/reclaimed
+
+/datum/recipe/bruisepack
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/aloe)
+	result = /obj/item/stack/medical/bruise_pack
+
+/datum/recipe/ointment
+	reagents = list(DERMALINE = 5)
+	result = /obj/item/stack/medical/ointment
+
+/datum/recipe/poachedaloe
+	reagents = list(WATER = 5)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/aloe)
+	result = /obj/item/weapon/reagent_containers/food/snacks/poachedaloe
+
+/datum/recipe/toxicmint
+	reagents = list(SUGAR = 1)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/grown/aloe)
+	result = /obj/item/weapon/reagent_containers/food/snacks/mint
+
+/datum/recipe/vanishingstew
+	reagents = list(VAPORSALT = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chickenshroom
+		)
+	result = /obj/item/weapon/reagent_containers/food/snacks/vanishingstew

@@ -398,6 +398,21 @@
 	seed_type = "garlic"
 	vending_cat = "Vox hydroponics"
 
+/obj/item/seeds/pitcher
+	name = "tissue culture of slipping pitchers"
+	seed_type = "pitcher"
+	vending_cat = "Vox hydroponics"
+
+/obj/item/seeds/aloe
+	name = "packet of aloe vera seeds"
+	seed_type = "aloe"
+	vending_cat = "Vox hydroponics"
+
+/obj/item/seeds/vaporsac
+	name = "packet of vapor sac spores"
+	seed_type = "vaporsac"
+	vending_cat = "Vox hydroponics"
+
 // Chili plants/variants.
 /datum/seed/chili
 
@@ -1555,7 +1570,7 @@
 	yield = 3
 	potency = 0
 
-/datum/seed/apple/wood
+/datum/seed/woodapple
 	name = "woodapple"
 	seed_name = "woodapple"
 	display_name = "woodapple tree"
@@ -1610,3 +1625,62 @@
 	yield = 4
 	water_consumption = 2
 	ideal_heat = 298
+
+/datum/seed/pitcher
+	name = "pitcher" //based on the slippery Nepenthes genus of pitcher plants
+	seed_name = "pitcher"
+	display_name = "pitcher plant" //because these are juicy 2, they automatically get renamed "slippery pitcher"
+	packet_icon = "seed-pitcher"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "pitcher"
+	chems = list(SACID = list(1,25))
+
+	potency = 10
+	lifespan = 50
+	yield = 3
+	growth_stages = 3
+	maturation = 12
+	production = 1
+	water_consumption = 6
+	ideal_heat = 310
+	pest_tolerance = 10
+	endurance = 25 //Fragile...
+	carnivorous = 1 //Eats pests!
+	juicy = 2 //And here's where the slipperiness comes in
+
+/datum/seed/aloe
+	name = "aloe"
+	seed_name = "aloe"
+	display_name = "aloe vera"
+	packet_icon = "seed-aloe"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/aloe)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "aloe"
+	chems = list(DERMALINE = list(1,10)) //Not as good as poppy's bicaridine for speedy heals, but general purpose.
+
+	lifespan = 30
+	maturation = 6
+	production = 6
+	yield = 4
+	potency = 20
+	growth_stages = 3
+	ideal_heat = 310
+	thorny = 1
+
+/datum/seed/vaporsac
+	name = "vaporsac"
+	seed_name = "vaporsac"
+	display_name = "vapor sac"
+	packet_icon = "seed-vaporsac"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac)
+	plant_dmi = 'icons/obj/hydroponics2.dmi'
+	plant_icon = "vaporsac"
+	chems = list(VAPORSALT = list(1,1))
+
+	lifespan = 50
+	maturation = 6
+	production = 1
+	yield = 1
+	potency = 30
+	growth_stages = 3

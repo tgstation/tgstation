@@ -754,6 +754,15 @@ obj/item/weapon/circuitboard/rdserver
 							"/obj/item/weapon/stock_parts/matter_bin" = 1,
 							"/obj/item/weapon/stock_parts/capacitor" = 2)
 
+/obj/item/weapon/circuitboard/box_cloner
+	name = "Circuit Board (Box Cloner)"
+	build_path = "/obj/machinery/egg_incubator/box_cloner"
+	origin_tech = "syndicate=3"
+	frame_desc = "Requires 1 Matter Bin and 2 Capacitors   "
+	req_components = list(
+							"/obj/item/weapon/stock_parts/matter_bin" = 1,
+							"/obj/item/weapon/stock_parts/capacitor" = 2)
+
 /obj/item/weapon/circuitboard/monkey_recycler
 	name = "Circuit Board (Monkey Recycler)"
 	build_path = "/obj/machinery/monkey_recycler"

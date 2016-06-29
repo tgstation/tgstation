@@ -431,6 +431,13 @@
 	filling_color = "#125709"
 	plantname = "ambrosia"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
+	plantname = "ambrosiacruciatus"
+	name = "ambrosia vulgaris branch"
+	desc = "This is a plant containing various healing chemicals."
+	icon_state = "ambrosiavulgaris"
+	potency = 10
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(var/obj/item/weapon/O as obj, var/mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper))
 		qdel(O)
@@ -591,6 +598,15 @@
 	filling_color = "#FF0000"
 	potency = 10
 	plantname = "tomato"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
+	name = "tomato" //"blue-space" is applied on new(), provided it's teleporting trait hasn't been removed
+	desc = "Its juices lubricate so well, you might slip through space-time."
+	icon_state = "bluespacetomato"
+	potency = 20
+	origin_tech = "bluespace = 3"
+	filling_color = "#91F8FF"
+	plantname = "bluespacetomato"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/killertomato
 	name = "killer-tomato"
@@ -775,26 +791,50 @@
 	filling_color = "857663"
 	plantname = "woodapple"
 
+/obj/item/weapon/reagent_containers/food/snacks/grown/pitcher
+	name = "slipping pitcher"
+	desc = "A fragile, but slippery exotic plant from tropical climates. Powerful digestive acid contained within dissolves prey."
+	icon_state = "pitcher"
+	filling_color = "7E8507"
+	plantname = "pitcher"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/aloe
+	name = "aloe vera"
+	desc = "A thorny, broad-leaf plant believed to be useful for first aid."
+	icon_state = "aloe"
+	filling_color = "77BA9F"
+	plantname = "aloe"
+
 // *************************************
 // Complex Grown Object Defines -
 // Putting these at the bottom so they don't clutter the list up. -Cheridan
 // *************************************
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato
-	name = "tomato" //"blue-space" is applied on new(), provided it's teleporting trait hasn't been removed
-	desc = "Its juices lubricate so well, you might slip through space-time."
-	icon_state = "bluespacetomato"
-	potency = 20
-	origin_tech = "bluespace = 3"
-	filling_color = "#91F8FF"
-	plantname = "bluespacetomato"
+/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac
+	plantname = "vaporsac"
+	name = "vapor sac fruit"
+	desc = "A thin organic film bearing seeds, held slightly aloft by internal gasses and a reservoir of chemicals."
+	icon_state = "vaporsac"
+	filling_color = "#FFFFFF"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/cruciatus
-	plantname = "ambrosiacruciatus"
-	name = "ambrosia vulgaris branch"
-	desc = "This is a plant containing various healing chemicals."
-	icon_state = "ambrosiavulgaris"
-	potency = 10
+/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/attack(mob/living/M, mob/user, def_zone, eat_override = 0)
+	pop(user)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/attack_animal(mob/M)
+	pop(M)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/attackby(obj/item/weapon/W, mob/user)
+	pop(user)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/proc/pop(mob/popper)
+	if(popper)
+		popper.visible_message("<span class='warning'>[popper] pops the \the [src]!</span>","<span class='warning'>You pop \the [src]!</span>")
+	for(var/mob/living/carbon/C in view(1))
+		if(C.CheckSlip() < 1)
+			continue
+		C.Weaken(5)
+	playsound(get_turf(src), 'sound/effects/bang.ogg', 10, 1)
+	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/nofruit
 	name = "no-fruit"

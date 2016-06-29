@@ -131,6 +131,7 @@ var/global/disable_vents     = 0
 
 //Reagents
 
+#define VAPORSALT			"vaporsalt"
 #define BUSTANUT 			"bustanut"
 #define ROGAN 			"rogan"
 #define SLIMEJELLY 			"slimejelly"
