@@ -276,6 +276,12 @@
 /obj/machinery/droneDispenser/swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 
+/obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	if(S.resources + 50 > 100)
+		S << "<span class='warning'>We have too many resources to reconsume this shell. Aborting.</span>"
+	else
+		..()
+		S.resources += 49 //refund the whole thing
 
 ////END CTRL CLICK FOR SWARMERS////
 
