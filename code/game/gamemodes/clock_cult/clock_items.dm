@@ -784,8 +784,8 @@
 		return
 	var/mob/living/L = target
 	if(issilicon(L) || iscultist(L))
-		L.Stun(3)
-		L.Weaken(3)
+		L.Stun(6)
+		L.Weaken(6)
 	break_spear(T)
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)
