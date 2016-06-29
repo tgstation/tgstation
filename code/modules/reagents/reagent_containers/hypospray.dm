@@ -132,7 +132,7 @@
 	icon_state = "stimpen"
 	volume = 80
 	amount_per_transfer_from_this = 83
-	list_reagents = list("adminordrazine" = 3, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5, "stimulants" = 10)
+	list_reagents = list("nanites" = 3, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5, "stimulants" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"
