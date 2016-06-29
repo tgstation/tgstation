@@ -19,7 +19,7 @@
 
 /obj/item/weapon/implant/mindshield/implant(mob/target)
 	if(..())
-		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())) || is_shadow_or_thrall(target))
+		if((target.mind in (ticker.mode.head_revolutionaries | ticker.mode.get_gang_bosses())))
 			target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 			removed(target, 1)
 			qdel(src)

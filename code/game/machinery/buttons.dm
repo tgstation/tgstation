@@ -41,13 +41,13 @@
 
 
 /obj/machinery/button/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(panel_open)
 		icon_state = "button-open"
 		if(device)
-			overlays += "button-device"
+			add_overlay("button-device")
 		if(board)
-			overlays += "button-board"
+			add_overlay("button-board")
 
 	else
 		if(stat & (NOPOWER|BROKEN))
@@ -160,8 +160,7 @@
 	if(device)
 		device.pulsed()
 
-	spawn(15)
-		update_icon()
+	addtimer(src, "update_icon", 15)
 
 /obj/machinery/button/power_change()
 	..()

@@ -430,7 +430,7 @@
 			if(C.wear_mask)
 				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
 			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
+				if(!ishumanbasic(C)) //implying xenoshumans are holy
 					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
 				else
 					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
@@ -488,14 +488,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -692,6 +692,7 @@
 	if(!(isliving(choice)))
 		user << "[choice] is already dead!"
 		used = FALSE
+		return
 	else
 
 		var/mob/living/L = choice

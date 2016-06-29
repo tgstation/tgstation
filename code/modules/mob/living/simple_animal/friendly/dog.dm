@@ -395,7 +395,7 @@
 
 
 /mob/living/simple_animal/pet/dog/corgi/regenerate_icons()
-	overlays.Cut()
+	cut_overlays()
 	if(inventory_head)
 		var/image/head_icon
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
@@ -410,7 +410,7 @@
 		else
 			head_icon = DF.get_image()
 
-		overlays += head_icon
+		add_overlay(head_icon)
 
 	if(inventory_back)
 		var/image/back_icon
@@ -425,16 +425,16 @@
 			back_icon.transform = turn(back_icon.transform, 180)
 		else
 			back_icon = DF.get_image()
-		overlays += back_icon
+		add_overlay(back_icon)
 
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/pet/dog/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgipuppy"))
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			add_overlay(image('icons/mob/mask.dmi',"facehugger_corgi"))
 	if(pcollar)
-		overlays += collar
-		overlays += pettag
+		add_overlay(collar)
+		add_overlay(pettag)
 
 	return
 

@@ -229,22 +229,22 @@
 	if(A.top_left_corner != nw)
 		A.overlays -= A.top_left_corner
 		A.top_left_corner = nw
-		A.overlays += nw
+		A.add_overlay(nw)
 
 	if(A.top_right_corner != ne)
 		A.overlays -= A.top_right_corner
 		A.top_right_corner = ne
-		A.overlays += ne
+		A.add_overlay(ne)
 
 	if(A.bottom_right_corner != sw)
 		A.overlays -= A.bottom_right_corner
 		A.bottom_right_corner = sw
-		A.overlays += sw
+		A.add_overlay(sw)
 
 	if(A.bottom_left_corner != se)
 		A.overlays -= A.bottom_left_corner
 		A.bottom_left_corner = se
-		A.overlays += se
+		A.add_overlay(se)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -306,13 +306,13 @@
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
 	top_left_corner = nw
-	overlays += nw
+	add_overlay(nw)
 	top_right_corner = ne
-	overlays += ne
+	add_overlay(ne)
 	bottom_left_corner = sw
-	overlays += sw
+	add_overlay(sw)
 	bottom_right_corner = se
-	overlays += se
+	add_overlay(se)
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)

@@ -35,7 +35,7 @@
 
 /obj/item/weapon/circuitboard/computer/camera_bug/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/circuitboard/computer/camera_bug/Destroy()
 	get_cameras()

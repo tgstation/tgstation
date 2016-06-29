@@ -209,3 +209,13 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/pill/stimulant(src)
+
+/obj/item/weapon/storage/pill_bottle/mining
+	name = "box of patches"
+	desc = "Contains patches used to treat brute and burn damage."
+
+/obj/item/weapon/storage/pill_bottle/mining/New()
+	..()
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)

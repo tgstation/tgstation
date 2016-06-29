@@ -231,9 +231,22 @@ var/next_mob_id = 0
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
 	if(!istype(W)) return 0
+	var/slot_priority = W.slot_equipment_priority
 
-	for(var/slot in W.slot_equipment_priority)
-		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 0; redraw_mob = 1
+	if(!slot_priority)
+		slot_priority = list( \
+			slot_back, slot_wear_id,\
+			slot_w_uniform, slot_wear_suit,\
+			slot_wear_mask, slot_head,\
+			slot_shoes, slot_gloves,\
+			slot_ears, slot_glasses,\
+			slot_belt, slot_s_store,\
+			slot_l_store, slot_r_store,\
+			slot_drone_storage\
+		)
+
+	for(var/slot in slot_priority)
+		if(equip_to_slot_if_possible(W, slot, 0, 1, 1)) //qdel_on_fail = 0; disable_warning = 1; redraw_mob = 1
 			return 1
 
 	return 0

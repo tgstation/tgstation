@@ -48,7 +48,7 @@
 				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
 			user << "<span class='danger'>You broke the restrictor!</span>"

@@ -37,6 +37,9 @@
 	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
 	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
 
+	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
+	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
+
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
 	pixel_x = rand(-8, 8)

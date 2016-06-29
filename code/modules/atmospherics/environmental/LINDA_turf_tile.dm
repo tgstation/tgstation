@@ -101,7 +101,7 @@
 		atmos_overlay_types -= overlay
 
 	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
-		overlays += overlay
+		add_overlay(overlay)
 
 	atmos_overlay_types = new_overlay_types
 

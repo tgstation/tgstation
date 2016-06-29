@@ -41,7 +41,7 @@
 	duration_upper = 60 //1 minute
 	duration_message = "This isn't average everyday darkness... this is advanced darkness!"
 	wind_down = 100 // 10 seconds
-	wind_down_message = "The darkness is receding. Thank god."
+	wind_down_message = "The darkness recedes."
 	purely_aesthetic = TRUE
 
 	target_z = 1
@@ -68,12 +68,15 @@
 /datum/weather/ash_storm
 	name = "ash storm"
 	start_up_time = 300 //30 seconds
-	start_up_message = "The wind begins to pick up. Seek shelter."
+	start_up_message = "An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter."
+	start_up_sound = 'sound/lavaland/ash_storm_windup.ogg'
 	duration_lower = 60 //1 minute
 	duration_upper = 150 //2.5 minutes
-	duration_message = "An ash storm has started! Get inside!"
+	duration_message = "Smoldering clouds of scorching ash billow down around you! Get inside!"
+	duration_sound = 'sound/lavaland/ash_storm_start.ogg'
 	wind_down = 300 // 30 seconds
-	wind_down_message = "The storm begins to fade. Should be safe to go outside again."
+	wind_down_message = "The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now."
+	wind_down_sound = 'sound/lavaland/ash_storm_end.ogg'
 
 	target_z = ZLEVEL_LAVALAND
 	area_type = /area/lavaland/surface/outdoors
@@ -88,8 +91,8 @@
 /datum/weather/ash_storm/false_alarm //No storm, just light ember fall
 	purely_aesthetic = TRUE
 	duration_overlay = "light_ash"
-	duration_message = "Looks like the storm just missed the mining area. False alarm."
-	wind_down_message = "The ash fall starts to trail off."
+	duration_message = "<span class='notice'>Gentle ashfall surrounds you like grotesque snow. The storm seems to have passed you by.</span>"
+	wind_down_message = "The ashfall quietly slows, then stops. Another layer of hardened soot to the volcanic rock beneath you."
 
 /datum/weather/ash_storm/storm_act(mob/living/L)
 	if(immunity_type in L.weather_immunities)

@@ -121,7 +121,7 @@
 		M << "<span class='warning'>You can't put them out with just your bare hands!"
 		return
 
-	if(health >= 0)
+	if(health >= 0 && !(status_flags & FAKEDEATH))
 
 		if(lying)
 			M.visible_message("<span class='notice'>[M] shakes [src] trying to get them up!</span>", \
@@ -781,5 +781,12 @@
 
 	..()
 
-
+/mob/living/carbon/adjustToxLoss(amount, updating_health=1)
+	if(has_dna() && TOXINLOVER in dna.species.specflags) //damage becomes healing and healing becomes damage
+		amount = -amount
+		if(amount > 0)
+			blood_volume -= 5*amount
+		else
+			blood_volume -= amount
+	return ..()
 

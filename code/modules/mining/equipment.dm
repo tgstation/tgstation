@@ -154,9 +154,7 @@
 				L.Weaken(3)
 				if(ishuman(L))
 					shake_camera(L, 20, 1)
-					spawn(20)
-						if(L)
-							L.vomit(20)
+					addtimer(L, "vomit", 20)
 
 /**********************Resonator**********************/
 
@@ -480,7 +478,7 @@
 	if(!istype(C, /obj/item/organ/hivelord_core))
 		user << "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>"
 		return ..()
-	C.preserved = 1
-	feedback_add_details("hivelord_core", "[C.type]|stabilizer") // preserved
+
+	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)

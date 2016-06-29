@@ -1620,7 +1620,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
 "adl" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-07";
 	name = "Photosynthetic Potted plant";
 	pixel_y = 10
@@ -1651,7 +1651,7 @@
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
 "ado" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-09";
 	name = "Photosynthetic Potted plant";
 	pixel_y = 10
@@ -12610,7 +12610,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -13584,7 +13584,7 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -25613,7 +25613,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/plasteel/white,
@@ -28708,7 +28708,7 @@
 	},
 /area/hallway/primary/central)
 "ben" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-04"
 	},
 /turf/open/floor/plasteel,
@@ -42034,7 +42034,7 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bFN" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-12"
 	},
 /turf/open/floor/plasteel/darkblue/corner,
@@ -44831,7 +44831,7 @@
 	layer = 4;
 	pixel_x = -32
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/plasteel/black,
@@ -47187,7 +47187,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/hos)
 "bPy" = (
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/black,
@@ -47312,7 +47312,7 @@
 	name = "HIGH VOLTAGE";
 	pixel_y = -32
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/black,
@@ -52334,7 +52334,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/flora/kirbyplants{
+/obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-02"
 	},
 /turf/open/floor/plasteel/escape{
@@ -57079,7 +57079,7 @@
 	name = "Medical Maintenance"
 	})
 "cku" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "ckv" = (

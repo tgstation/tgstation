@@ -1,6 +1,6 @@
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = 1
@@ -157,7 +157,7 @@
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
-		overlays += armrest
+		add_overlay(armrest)
 	else
 		overlays -= armrest
 

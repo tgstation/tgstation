@@ -66,10 +66,10 @@
 	if(locked)
 		if(!emagged)
 			emagged = 1
-			src.overlays += image('icons/obj/storage.dmi', icon_sparking)
+			src.add_overlay(image('icons/obj/storage.dmi', icon_sparking))
 			sleep(6)
 			src.overlays = null
-			overlays += image('icons/obj/storage.dmi', icon_locking)
+			add_overlay(image('icons/obj/storage.dmi', icon_locking))
 			locked = 0
 			user << "<span class='notice'>You short out the lock on [src].</span>"
 
@@ -108,7 +108,7 @@
 			else if ((src.code == src.l_code) && (src.emagged == 0) && (src.l_set == 1))
 				src.locked = 0
 				src.overlays = null
-				overlays += image('icons/obj/storage.dmi', icon_opened)
+				add_overlay(image('icons/obj/storage.dmi', icon_opened))
 				src.code = null
 			else
 				src.code = "ERROR"

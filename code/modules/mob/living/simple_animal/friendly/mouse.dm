@@ -44,6 +44,7 @@
 		..(1)
 		var/obj/item/trash/deadmouse/M = new(src.loc)
 		M.icon_state = icon_dead
+		M.name = name
 		if(toast)
 			M.color = "#3A3A3A"
 			M.desc = "It's toast."

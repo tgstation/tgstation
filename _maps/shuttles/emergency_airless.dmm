@@ -110,6 +110,10 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"s" = (
+/obj/machinery/status_display,
+/turf/closed/wall,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 a
@@ -139,7 +143,7 @@ a
 a
 b
 c
-c
+s
 c
 b
 b
@@ -344,7 +348,7 @@ b
 b
 b
 c
-c
+s
 c
 b
 c

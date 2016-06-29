@@ -17,11 +17,11 @@
 
 /obj/item/weapon/minigunpack/New()
 	gun = new(src)
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/minigunpack/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/minigunpack/process()
@@ -147,7 +147,6 @@
 
 /obj/item/weapon/gun/projectile/minigun/dropped(mob/living/user)
 	ammo_pack.attach_gun(user)
-	return
 
 /obj/item/weapon/gun/projectile/minigun/process_chamber(eject_casing = 0, empty_chamber = 1)
 	..()

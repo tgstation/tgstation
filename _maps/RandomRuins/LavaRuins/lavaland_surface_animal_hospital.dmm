@@ -220,8 +220,10 @@
 	},
 /area/ruin/powered)
 "aF" = (
-/obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plating{
+/obj/machinery/door/unpowered/shuttle{
+	name = "Restroom"
+	},
+/turf/open/floor/plasteel/bar{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -257,10 +259,7 @@
 	},
 /area/ruin/powered)
 "aM" = (
-/obj/effect/mob_spawn/human/doctor/alive{
-	flavour_text = "You were putting in your hours as a vet in the local animal hospital when a massive bluespace translocation shunted you across the galaxy. Can you survive on this desolate wasteland..?";
-	id_job = "Veterinarian"
-	},
+/obj/effect/mob_spawn/human/doctor/alive/lavaland,
 /turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1
@@ -384,6 +383,10 @@
 "bd" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/gloves,
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -513,7 +516,7 @@
 	},
 /area/ruin/powered)
 "bt" = (
-/obj/structure/flora/kirbyplants,
+/obj/item/weapon/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -530,7 +533,7 @@
 "bv" = (
 /obj/effect/mob_spawn/mouse{
 	dir = 4;
-	flavour_text = "You're a mousey! You're getting pretty old as mice go, and you haven't been feeling well as of late. Your master loves you a lot so he took you to this place so you can get better! You can't wait to see him again!";
+	flavour_text = "<font size=3><b>Y</b></font><b>ou're a mousey! You're getting pretty old as mice go, and you haven't been feeling well as of late. Your master loves you a lot so he took you to this place so you can get better! You can't wait to see him again!<b>";
 	mob_name = "Stallman Jr."
 	},
 /turf/open/floor/plasteel/white{
@@ -546,9 +549,9 @@
 "bx" = (
 /obj/machinery/door/airlock/medical{
 	name = "Patient Room";
-	req_access_txt = "5"
+	req_access_txt = "0"
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -641,8 +644,10 @@
 	},
 /area/ruin/powered)
 "bJ" = (
-/obj/machinery/door/airlock/glass_large,
-/turf/open/floor/plating{
+/obj/machinery/door/airlock/glass_large{
+	name = "Ian's Pet Care"
+	},
+/turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -673,7 +678,7 @@
 "bN" = (
 /obj/effect/mob_spawn/cow{
 	dir = 4;
-	flavour_text = "You're a cow. You've lived a pampered life as a prized show heifer, a real blue-ribbon winner. After showing signs of a minor respiratory infection, your master took you to the hospital right away. He'd better come back soon, you're getting quite impatient.";
+	flavour_text = "<font size=3><b>Y</b></font><b>ou're a cow. You've lived a pampered life as a prized show heifer, a real blue-ribbon winner. After showing signs of a minor respiratory infection, your master took you to the hospital right away. He'd better come back soon. You're getting quite impatient.</b>";
 	mob_name = "Flossie"
 	},
 /turf/open/floor/plasteel/white{
@@ -706,7 +711,10 @@
 "bR" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/melee/baton/cattleprod,
+/obj/item/weapon/melee/baton/cattleprod{
+	desc = "On-the-fly rabies treatment.";
+	name = "cattle prod"
+	},
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/plasteel/blue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -802,13 +810,66 @@
 	},
 /area/ruin/powered)
 "cf" = (
-/obj/machinery/sleeper{
-	icon_state = "sleeper-open";
-	dir = 4
+/obj/structure/closet/l3closet,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/turf/open/floor/plasteel/blue/side{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 1
+/area/ruin/powered)
+"cm" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Tool Storage"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"cl" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Safety Supplies"
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ck" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Medical Supplies"
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"cj" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Morgue"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ci" = (
+/obj/machinery/door/unpowered/shuttle{
+	desc = "There's a note wedged in the seam saying something about directing pizza here.";
+	name = "Staff Entrance"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ch" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Emergency Care"
+	},
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"cg" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Break Room"
+	},
+/turf/open/floor/plasteel/cmo{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 
@@ -942,7 +1003,7 @@ ae
 ae
 ae
 aE
-aF
+ci
 ae
 aE
 aT
@@ -974,11 +1035,11 @@ ay
 ae
 aK
 aK
-aF
+cj
 aU
 aZ
 bg
-aF
+cj
 aK
 bp
 by
@@ -1061,7 +1122,7 @@ ae
 ai
 as
 as
-aF
+cg
 aK
 aP
 ae
@@ -1094,11 +1155,11 @@ as
 ae
 aM
 aK
-aF
+ck
 ao
 bb
 ao
-aF
+ck
 aK
 aK
 aK
@@ -1133,7 +1194,7 @@ bl
 bt
 aK
 aK
-aU
+aK
 aJ
 aJ
 ab
@@ -1154,11 +1215,11 @@ as
 ae
 aM
 aK
-aF
+cl
 ao
 bc
 ao
-aF
+cl
 aK
 aK
 aK
@@ -1181,7 +1242,7 @@ ae
 am
 as
 as
-aF
+cg
 aK
 aP
 ae
@@ -1215,7 +1276,7 @@ aH
 aL
 aP
 ae
-aV
+cf
 bd
 bj
 ae
@@ -1271,10 +1332,10 @@ cc
 ce
 ao
 ao
-aF
+ch
 aK
 aK
-aF
+cm
 aX
 be
 bk

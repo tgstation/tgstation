@@ -480,5 +480,5 @@
 	p.pixel_x = rand(-10, 10)
 	p.pixel_y = rand(-10, 10)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
-	visible_message("[C.name] spits out a photograph from a narrow slot on it's chassis.")
+	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	usr << "<span class='notice'>You print a photograph.</span>"

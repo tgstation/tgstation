@@ -277,9 +277,9 @@
 	..()
 	overlays = 0
 	if(drying)
-		overlays += "drying_rack_drying"
+		add_overlay("drying_rack_drying")
 	if(contents.len)
-		overlays += "drying_rack_filled"
+		add_overlay("drying_rack_filled")
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()

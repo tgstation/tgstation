@@ -24,13 +24,13 @@
 
 /obj/effect/countdown/proc/start()
 	if(!started)
-		SSfastprocess.processing |= src
+		START_PROCESSING(SSfastprocess, src)
 		started = TRUE
 
 /obj/effect/countdown/proc/stop()
 	if(started)
 		overlays.Cut()
-		SSfastprocess.processing -= src
+		STOP_PROCESSING(SSfastprocess, src)
 		started = FALSE
 
 /obj/effect/countdown/proc/get_value()
@@ -59,7 +59,7 @@
 
 /obj/effect/countdown/Destroy()
 	attached_to = null
-	SSfastprocess.processing -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	. = ..()
 
 /obj/effect/countdown/syndicatebomb
@@ -105,6 +105,33 @@
 	var/obj/machinery/dominator/D = attached_to
 	if(!istype(D))
 		return
-	else if(D.gang && D.gang.dom_timer)
-		var/timer = D.gang.dom_timer
+	else if(D.gang && D.gang.is_dominating)
+		var/timer = D.gang.domination_time_remaining()
 		return timer
+	else
+		return "OFFLINE"
+
+/obj/effect/countdown/clockworkgate
+	name = "gateway countdown"
+	text_size = 1
+	text_color = "#BE8700"
+	layer = POINT_LAYER
+
+/obj/effect/countdown/clockworkgate/get_value()
+	var/obj/structure/clockwork/massive/celestial_gateway/G = attached_to
+	if(!istype(G))
+		return
+	else if(G.health && !G.purpose_fulfilled)
+		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds]</div>"
+
+/obj/effect/countdown/transformer
+	name = "transformer countdown"
+	text_color = "#4C5866"
+
+/obj/effect/countdown/transformer/get_value()
+	var/obj/machinery/transformer/T = attached_to
+	if(!istype(T))
+		return
+	else if(T.cooldown)
+		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
+		return "[round(seconds_left)]"

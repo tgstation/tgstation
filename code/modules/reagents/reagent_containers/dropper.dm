@@ -88,8 +88,8 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/dropper/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(reagents.total_volume)
 		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "dropper")
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
-		overlays += filling
+		add_overlay(filling)

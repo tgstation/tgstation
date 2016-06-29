@@ -58,4 +58,4 @@
 /mob/living/carbon/true_devil/apply_overlay(cache_index)
 	var/image/I = devil_overlays[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)

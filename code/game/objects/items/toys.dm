@@ -330,38 +330,48 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = 1
+	var/ash_type = /obj/effect/decal/cleanable/ash
 
-/obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
+/obj/item/toy/snappop/proc/pop_burst(var/n=3, var/c=1)
+	var/datum/effect_system/spark_spread/s = new()
+	s.set_up(n, c, src)
 	s.start()
-	new /obj/effect/decal/cleanable/ash(loc)
-	visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
+	new ash_type(loc)
+	visible_message("<span class='warning'>[src] explodes!</span>",
+		"<span class='italics'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 
 /obj/item/toy/snappop/fire_act()
 	pop_burst()
-	return
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	if(!..())
 		pop_burst()
 
-
 /obj/item/toy/snappop/Crossed(H as mob|obj)
-	if((ishuman(H))) //i guess carp and shit shouldn't set them off
+	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(M.m_intent == "run")
+		if(issilicon(H) || M.m_intent == "run")
 			M << "<span class='danger'>You step on the snap pop!</span>"
+			pop_burst(2, 0)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(2, 0, src)
-			s.start()
-			new /obj/effect/decal/cleanable/ash(src.loc)
-			src.visible_message("<span class='danger'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
-			playsound(src, 'sound/effects/snap.ogg', 50, 1)
-			qdel(src)
+/obj/item/toy/snappop/phoenix
+	name = "phoenix snap pop"
+	desc = "Wow! And wow! And wow!"
+	ash_type = /obj/effect/decal/cleanable/ash/snappop_phoenix
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix
+	var/respawn_time = 300
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix/New()
+	. = ..()
+	addtimer(src, "respawn", respawn_time)
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
+	new /obj/item/toy/snappop/phoenix(get_turf(src))
+	qdel(src)
+
 
 /*
  * Mech prizes
@@ -369,30 +379,25 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	var/cooldown = 0
+	var/timer = 0
+	var/cooldown = 30
 	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
-	if(!cooldown)
+	if(timer < world.time)
 		user << "<span class='notice'>You play with [src].</span>"
-		cooldown = 1
-		spawn(30) cooldown = 0
-		if (!quiet)
+		timer = world.time + cooldown
+		if(!quiet)
 			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		return
-	..()
+	else
+		. = ..()
 
 /obj/item/toy/prize/attack_hand(mob/user)
 	if(loc == user)
-		if(!cooldown)
-			user << "<span class='notice'>You play with [src].</span>"
-			cooldown = 1
-			spawn(30) cooldown = 0
-			if (!quiet)
-				playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			return
-	..()
+		attack_self(user)
+	else
+		. = ..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
@@ -760,8 +765,8 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
+	var/mob/living/M = usr
+	if(!istype(M) || usr.incapacitated() || usr.lying)
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)

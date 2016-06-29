@@ -128,12 +128,12 @@ var/global/mulebot_count = 0
 		icon_state="mulebot-hatch"
 	else
 		icon_state = "mulebot[wires.is_cut(WIRE_AVOIDANCE)]"
-	overlays.Cut()
+	cut_overlays()
 	if(load && !ismob(load))//buckling handles the mob offsets
 		load.pixel_y = initial(load.pixel_y) + 9
 		if(load.layer < layer)
 			load.layer = layer + 0.01
-		overlays += load
+		add_overlay(load)
 	return
 
 /mob/living/simple_animal/bot/mulebot/ex_act(severity)
@@ -400,7 +400,7 @@ var/global/mulebot_count = 0
 
 	mode = BOT_IDLE
 
-	overlays.Cut()
+	cut_overlays()
 
 	unbuckle_all_mobs()
 
