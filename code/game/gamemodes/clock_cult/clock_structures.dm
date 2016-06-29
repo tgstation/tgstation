@@ -113,7 +113,7 @@
 	take_damage(damage, damage_type)
 
 /obj/structure/clockwork/attack_alien(mob/living/user)
-	playsound(src 'sound/weapons/bladeslice.ogg', 50, 1)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	attack_generic(user, 15)
 
 /obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
