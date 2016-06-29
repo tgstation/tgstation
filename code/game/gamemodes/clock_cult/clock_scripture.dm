@@ -82,7 +82,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
-			if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 				nearby_servants++
 		if(nearby_servants < invokers_required)
 			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
