@@ -103,6 +103,7 @@
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
+	playsound(src, P.hitsound, 50, 1)
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
@@ -112,26 +113,30 @@
 	take_damage(damage, damage_type)
 
 /obj/structure/clockwork/attack_alien(mob/living/user)
+	playsound(src 'sound/weapons/bladeslice.ogg', 50, 1)
 	attack_generic(user, 15)
 
 /obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
 /obj/structure/clockwork/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(user, rand(10, 15))
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(I.force && takes_damage)
-		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
+		take_damage(I.force, I.damtype)
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		take_damage(M.force, M.damtype)
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
