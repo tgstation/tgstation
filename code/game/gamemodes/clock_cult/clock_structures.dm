@@ -846,8 +846,9 @@
 	affects_servants = TRUE
 	stat_affected = DEAD
 	var/vitality = 0
-	var/base_revive_cost = 25
+	var/base_revive_cost = 20
 	var/sigil_active = FALSE
+	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
@@ -864,9 +865,12 @@
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+		if(animation_number >= 4)
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+			animation_number = 0
+		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(4)
+			var/vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
@@ -880,14 +884,19 @@
 			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
-				if(vitality >= revival_cost)
-					L.revive(1, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
-					vitality -= revival_cost
+				var/mob/dead/observer/ghost = L.grab_ghost(TRUE)
+				if(ghost)
+					if(vitality >= revival_cost)
+						L.revive(1, 1)
+						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
+						vitality -= revival_cost
+						break
+				else
 					break
 			if(!total_damage)
 				break
-			var/vitality_for_cycle = min(vitality, 8)
+			var/vitality_for_cycle = min(vitality, 3)
 
 			if(clone_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, clone_to_heal)
@@ -918,8 +927,9 @@
 				vitality_for_cycle -= healing
 				L.adjustOxyLoss(-healing)
 				vitality -= healing
-		sleep(8)
+		sleep(2)
 
+	animation_number = initial(animation_number)
 	sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
