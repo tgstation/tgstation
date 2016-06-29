@@ -54,6 +54,8 @@
 
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
+	if(isobserver(usr))
+		return
 	M.OpenCraftingMenu()
 
 /obj/screen/inventory

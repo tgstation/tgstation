@@ -276,6 +276,13 @@ var/next_mob_id = 0
 		update_pipe_vision()
 
 /mob/dead/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			target.observers -= src
+			var/list/L = target.observers
+			if(!L.len)
+				target.observers = null
 	if(..())
 		if(hud_used)
 			client.screen = list()
@@ -508,6 +515,9 @@ var/next_mob_id = 0
 		if(isobserver(src))
 			src.client.screen = list()
 			if(mob_eye.hud_used)
+				if(!mob_eye.observers)
+					mob_eye.observers = list()
+				mob_eye.observers |= src
 				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()

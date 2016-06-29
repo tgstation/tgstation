@@ -197,7 +197,7 @@
 /datum/hud/proc/hidden_inventory_update()
 	return
 
-/datum/hud/proc/persistant_inventory_update()
+/datum/hud/proc/persistant_inventory_update(mob/viewer)
 	return
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
