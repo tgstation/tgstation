@@ -90,7 +90,7 @@
 		if("claim_points")
 			inserted_id.points += stacking_machine.points
 			stacking_machine.points = 0
-			src << "Points transferred."
+			usr << "Points transferred."
 		if("move_shuttle")
 			if(!alone_in_area(get_area(src), usr))
 				usr << "<span class='warning'>Prisoners are only allowed to be released while alone.</span>"

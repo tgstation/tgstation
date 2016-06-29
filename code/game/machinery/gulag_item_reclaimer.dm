@@ -54,7 +54,7 @@
 	if(inserted_id)
 		data["id"] = inserted_id
 		data["id"]["name"] = inserted_id.registered_name
-		if(inserted_id.points >= inserted_id.goal)
+		if(inserted_id.points >= inserted_id.goal || allowed(user))
 			can_reclaim = TRUE
 
 	var/list/mobs = list()
@@ -93,6 +93,8 @@
 			var/mob/M = locate(params["mobref"])
 			if(M == usr || allowed(usr))
 				drop_items(M)
+			else
+				usr << "Access denied."
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])

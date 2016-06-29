@@ -18,6 +18,7 @@
 		</ui-section>
 		<ui-section label='Unclaimed points'>
 			<span>{{data.unclaimed_points}}</span>
+			<ui-button action="claim_points" state={{data.unclaimed_points ? null : 'disabled'}}>Claim points</ui-button>
 		</ui-section>
 	{{/if}}
 </ui-display>
