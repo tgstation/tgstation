@@ -1,5 +1,8 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
+/obj/structure/fans/tiny/invisible //For blocking air in ruin entrances
+	invisibility = INVISIBILITY_ABSTRACT
+
 //lavaland_surface_seed_vault.dmm
 //Seed Vault
 
