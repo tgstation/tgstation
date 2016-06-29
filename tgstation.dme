@@ -113,6 +113,7 @@
 #include "code\_onclick\hud\devil.dm"
 #include "code\_onclick\hud\drones.dm"
 #include "code\_onclick\hud\fullscreen.dm"
+#include "code\_onclick\hud\generic_dextrous.dm"
 #include "code\_onclick\hud\ghost.dm"
 #include "code\_onclick\hud\guardian.dm"
 #include "code\_onclick\hud\hud.dm"
