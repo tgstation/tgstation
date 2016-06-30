@@ -86,6 +86,13 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.06.30</h2>
+			<h3 class="author">Kurfurst updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a bug with inheritance that caused woodapples to be reharvestable infinitely</li>
+				<li class="tweak">Based on feedback, reduced vapor salt production significantly.</li>
+			</ul>
+
 			<h2 class="date">2016.06.29</h2>
 			<h3 class="author">Kurfurst updated:</h3>
 			<ul class="changes bgimages16">
@@ -1627,20 +1634,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 			<ul class="changes bgimages16">
 				<li class="tweak">When making bottles at a Chemmaster, you will now be prompted to input how many bottles you want to make before being prompted to name the bottles. This is to keep consistency with making pills (prevent bottles named '3'), and also allows the bottles to be automatically named after many units of chemicals they contain.</li>
 				<li class="rscadd">You can now alt-click Chemmasters and All-in-One Grinders to eject their beaker, if they have one loaded.</li>
-			</ul>
-
-			<h2 class="date">2016.02.04</h2>
-			<h3 class="author">DrCelt updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Merged flags_inv and body_parts_covered</li>
-				<li class="bugfix">Fixed clothing being contaminated undesirably</li>
-				<li class="bugfix">Fixes a bunch of unreported bugs due to the nature of the PR varying from the HoP jacket the riot suit and the stallhelm. If there is a bug where a sprite was overriding where it should not have this SHOULD fix that</li>
-				<li class="experimental">This SHOULD also prevent that type of bug ever happening again. Please bugreport if you notice any sprite errors</li>
-				<li class="rscadd">Adds is_slot_hidden proc</li>
-				<li class="tweak">Splits head thermal conductivity into three parts</li>
-				<li class="bugfix">Fixed a bug where agent gas masks would conceal identities when their mask should not have.</li>
-				<li class="bugfix">Fixed a bug where bloody hands were always visible on examine</li>
-				<li class="tweak">You now lose heat to an environment if you have an exposed limb, no matter how wrapped up the other limbs are.</li>
 			</ul>
 		</div>
 		<!--
