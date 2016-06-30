@@ -150,22 +150,11 @@
 	if(!canUseTopic())
 		return
 
-	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.locked = 0 //For airlocks that were bolted open.
-					AL.safe = 0 //DOOR CRUSH
-					AL.close()
-					AL.bolt() //Bolt it!
-					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
-			else if(!D.stat) //So that only powered doors are closed.
-				D.close() //Close ALL the doors!
+		addtimer(D, "hostile_lockdown", 0, FALSE, src)
+		addtimer(D, "disable_lockdown", 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -174,28 +163,9 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	addtimer(src, "disablelockdown", 900)
-
-/mob/living/silicon/ai/proc/disablelockdown()
-	set category = "Malfunction"
-	set name = "Disable Lockdown"
-
-	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION)
-			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.unbolt()
-					AL.secondsElectrified = 0
-					AL.open()
-					AL.safe = 1
-			else if(!D.stat) //Opens only powered doors.
-				D.open() //Open everything!
-
-	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
+	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+		"Automatic system reboot complete. Have a secure day.",
+		"Network reset:")
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"

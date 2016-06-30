@@ -60,3 +60,9 @@
 /obj/item/weapon/implantcase/chem/New()
 	imp = new /obj/item/weapon/implant/chem(src)
 	..()
+	
+/obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
+	if(imp)
+		imp.attackby(W, user, params)
+	else 
+		return ..()

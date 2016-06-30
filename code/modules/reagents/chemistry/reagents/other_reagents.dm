@@ -113,7 +113,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
+		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*1.5)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -266,7 +266,7 @@
 /datum/reagent/lube/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
 	if(reac_volume >= 1)
-		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=5, wet_time_to_add=reac_volume)
+		T.MakeSlippery(wet_setting=TURF_WET_LUBE, min_wet_time=15, wet_time_to_add=reac_volume*2)
 
 /datum/reagent/spraytan
 	name = "Spray Tan"
