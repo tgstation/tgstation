@@ -538,23 +538,24 @@
 /obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
 	if(!visor || (visor && visor.cooldown))
 		qdel(src)
-	visor.recharging = TRUE
-	visor.flame = null
-	visor.update_status()
-	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
-		if(V == visor)
-			continue
-		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
-		V.update_status()
-		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
-	clockwork_say(user, "Xarry, urn'guraf!")
-	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
-	new/obj/effect/clockwork/judicial_marker(get_turf(target), user)
-	user.update_action_buttons_icon()
-	user.update_inv_glasses()
-	addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
-	qdel(src)
-	return 1
+	if(target in view(7, get_turf(user)))
+		visor.recharging = TRUE
+		visor.flame = null
+		visor.update_status()
+		for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+			if(V == visor)
+				continue
+			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
+			V.update_status()
+			addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
+		clockwork_say(user, "Xarry, urn'guraf!")
+		user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
+		new/obj/effect/clockwork/judicial_marker(get_turf(target), user)
+		user.update_action_buttons_icon()
+		user.update_inv_glasses()
+		addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
+		qdel(src)
+		return 1
 
 
 /obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
