@@ -40,12 +40,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		slab.busy = "Invocation ([name]) in progress"
 		if(!ratvar_awakens && !slab.no_cost)
 			for(var/i in consumed_components)
-				if(slab.stored_components[i] >= consumed_components[i]) //Draw components from the slab first
-					slab.stored_components[i] -= consumed_components[i]
-					used_slab_components[i]++
-				else
-					clockwork_component_cache[i] -= consumed_components[i]
-					used_cache_components[i]++
+				if(consumed_components[i])
+					for(var/j in 1 to consumed_components[i])
+						if(slab.stored_components[i])
+							slab.stored_components[i]--
+							used_slab_components[i]++
+						else
+							clockwork_component_cache[i]--
+							used_cache_components[i]++
 		else
 			channel_time *= 0.5 //if ratvar has awoken or the slab has no cost, half channel time
 		if(!check_special_requirements() || !recital() || !check_special_requirements() || !scripture_effects()) //if we fail any of these, refund components used
@@ -80,7 +82,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
-			if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+			if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 				nearby_servants++
 		if(nearby_servants < invokers_required)
 			invoker << "<span class='warning'>There aren't enough non-mute servants nearby ([nearby_servants]/[invokers_required])!</span>"
@@ -94,7 +96,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(!channel_time && invocations.len)
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 					for(var/invocation in invocations)
 						clockwork_say(L, invocation, whispered)
 		else
@@ -109,7 +111,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			return 0
 		if(multiple_invokers_used)
 			for(var/mob/living/L in range(1, invoker))
-				if(is_servant_of_ratvar(L) && L.can_speak_vocal())
+				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 					clockwork_say(L, invocation, whispered)
 		else
 			clockwork_say(invoker, invocation, whispered)
@@ -1186,7 +1188,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			else
 				L.adjustFireLoss(randdamage)
 				L.visible_message(
-				"<span class='danger'>[src] was shocked by Nzcrentr's power!</span>", \
+				"<span class='danger'>[L] was shocked by Nzcrentr's power!</span>", \
 				"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 				"<span class='italics'>You hear a heavy electrical crack.</span>" \
 				)

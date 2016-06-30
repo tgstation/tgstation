@@ -163,7 +163,7 @@
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(istype(T, /turf/open))
 			var/turf/open/OT = T
-			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=5, wet_time_to_add=reac_volume*0.5) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -339,7 +339,7 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*2)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air( T:air:total_moles() )

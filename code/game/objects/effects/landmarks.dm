@@ -77,7 +77,6 @@
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"
-	invisibility = INVISIBILITY_ABSTRACT
 	start_landmarks_list += src
 	return 1
 

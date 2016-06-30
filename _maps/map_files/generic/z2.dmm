@@ -4258,7 +4258,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "nd" = (
-/obj/structure/barricade/security,
+/obj/structure/barricade/security/ctf,
 /turf/open/floor/plasteel/circuit,
 /area/ctf)
 "ne" = (
@@ -4739,7 +4739,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "oE" = (
-/obj/structure/barricade/security,
+/obj/structure/barricade/security/ctf,
 /turf/open/floor/plasteel/bluespace,
 /area/ctf)
 "oF" = (
@@ -5108,7 +5108,7 @@
 	},
 /area/ctf)
 "pT" = (
-/obj/structure/barricade/security,
+/obj/structure/barricade/security/ctf,
 /turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "pU" = (
@@ -5400,7 +5400,7 @@
 	},
 /area/ctf)
 "qP" = (
-/obj/structure/barricade/security,
+/obj/structure/barricade/security/ctf,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/ctf)
 "qQ" = (
@@ -5408,8 +5408,7 @@
 /turf/open/floor/plasteel/red,
 /area/ctf)
 "qR" = (
-/obj/structure/barricade/security,
-/obj/structure/barricade/security,
+/obj/structure/barricade/security/ctf,
 /turf/open/floor/plasteel/circuit/rcircuit,
 /area/ctf)
 "qS" = (

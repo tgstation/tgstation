@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The CTF arena regenerates every round, and the blue team now shoot blue lasers."
