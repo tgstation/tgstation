@@ -95,7 +95,7 @@
 					usr.put_in_hands(id)
 					id = null
 				else
-					id.loc = get_turf(src)
+					id.forceMove(src)
 					id = null
 			else
 				var/obj/item/I = usr.get_active_hand()
@@ -145,7 +145,7 @@
 	log_game("[user]([user.ckey] teleported [prisoner]([prisoner.ckey]) to the Labor Camp ([beacon.x], [beacon.y], [beacon.z]) for [id.goal] points.")
 	teleporter.handle_prisoner(id, temporary_record)
 	playsound(loc, "sound/weapons/emitter.ogg", 50, 1)
-	prisoner.loc = get_turf(beacon)
+	prisoner.forceMove(beacon)
 	prisoner.Weaken(2) // small travel dizziness
 	prisoner << "<span class='warning'>The teleportation makes you a little dizzy.</span>"
 	PoolOrNew(/obj/effect/particle_effect/sparks, prisoner.loc)

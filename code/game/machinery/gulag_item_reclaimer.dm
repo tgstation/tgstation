@@ -80,7 +80,7 @@
 					usr.put_in_hands(inserted_id)
 					inserted_id = null
 				else
-					inserted_id.loc = get_turf(src)
+					inserted_id.forceMove(src)
 					inserted_id = null
 			else
 				var/obj/item/I = usr.get_active_hand()
