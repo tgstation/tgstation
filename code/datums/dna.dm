@@ -22,9 +22,9 @@
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
 	destination.set_species(species.type, icon_update=0)
-	destination.dna.features = features
+	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
-	destination.dna.temporary_mutations = temporary_mutations
+	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
 
@@ -33,10 +33,10 @@
 	new_dna.struc_enzymes = struc_enzymes
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
-	new_dna.features = features
+	new_dna.features = features.Copy()
 	new_dna.species = new species.type
 	new_dna.real_name = real_name
-	new_dna.mutations = mutations
+	new_dna.mutations = mutations.Copy()
 
 /datum/dna/proc/add_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
@@ -176,7 +176,10 @@
 	if(mrace && has_dna())
 		dna.species.on_species_loss(src)
 		var/old_species = dna.species
-		dna.species = new mrace()
+		if(ispath(mrace))
+			dna.species = new mrace()
+		else
+			dna.species = mrace
 		dna.species.on_species_gain(src, old_species)
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = 1)
