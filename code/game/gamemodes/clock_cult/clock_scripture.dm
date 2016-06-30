@@ -170,49 +170,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	new object_path (get_turf(invoker))
 	return 1
 
-
-
-/datum/clockwork_scripture/targeted //Accepts a name and affects that target
-	var/target_name //The inputted name, used to find targets
-	var/mob/living/target //The target mob
-	var/affects_servants = FALSE //If servants are valid targets
-
-/datum/clockwork_scripture/targeted/check_special_requirements()
-	while(!target)
-		target_name = reject_bad_name(input(invoker, "Enter the actual name of a target (case-sensitive).", name), 1)
-		if(!target_name)
-			return 0
-		var/list/targets = find_targets()
-		if(targets.len)
-			if(targets.len == 1)
-				target = targets[1]
-			else
-				target = input(invoker, "Choose a target to affect.", "Target Selection") as null|anything in targets
-			if(!target)
-				return 0
-			if(!target.mind)
-				invoker << "<span class='warning'>[target] has no mind!</span>"
-				target = null
-			if(target.stat)
-				invoker << "<span class='warning'>[target] is dead or unconscious!</span>"
-				target = null
-			if(is_servant_of_ratvar(target) && !affects_servants)
-				invoker << "<span class='warning'>[target] is a servant, and [name] cannot target servants!</span>"
-				target = null
-		else
-			invoker << "<span class='warning'>There are no targets with that name!</span>"
-			return 0
-	return 1
-
-/datum/clockwork_scripture/targeted/proc/find_targets()
-	var/list/validtargets = list()
-	for(var/mob/living/L in living_mob_list)
-		if(L.real_name == target_name)
-			if(is_servant_of_ratvar(L) && !affects_servants)
-				continue
-			validtargets |= L
-	. = validtargets
-
 /////////////
 // DRIVERS //
 /////////////
@@ -883,52 +840,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	"<span class='heavy_brass'>The procedure was successful! [M.true_name], a clockwork marauder, has taken up residence in your mind. Communicate with it via the \"Linked Minds\" ability in the \
 	Clockwork tab.</span>")
 	invoker.verbs += /mob/living/proc/talk_with_marauder
-	return 1
-
-
-
-/datum/clockwork_scripture/targeted/justiciars_gavel //Justiciar's Gavel: Deals extreme but temporary brain damage to a target with the inputted name and knocks them out for a brief time.
-	descname = "Stun Designated Target"
-	name = "Justiciar's Gavel"
-	desc = "Deals massive brain damage to and knocks out a target with the inputted name. This brain damage will slowly recover itself."
-	invocations = list("Guvf urngura...", "...unf jebatrq lbh!")
-	channel_time = 40
-	required_components = list("belligerent_eye" = 2, "guvax_capacitor" = 2, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 2, "guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	invokers_required = 3
-	multiple_invokers_used = TRUE
-	usage_tip = "Also functions on silicon-based lifeforms, although it will not apply brain damage."
-	tier = SCRIPTURE_APPLICATION
-
-/datum/clockwork_scripture/targeted/justiciars_gavel/scripture_effects()
-	if(!target)
-		return 0 //wait where'd they go
-	if(iscarbon(target))
-		if(target.null_rod_check())
-			var/obj/item/I = target.null_rod_check()
-			target.visible_message("<span class='warning'>[target]'s [I.name] glows a blazing white!</span>", "<span class='userdanger'>Your [I.name] suddenly glows with intense heat!</span>")
-			invoker << "<span class='userdanger'>[target] had a holy artifact and was unaffected!</span>"
-			playsound(target, 'sound/weapons/sear.ogg', 50, 1)
-			target.adjustFireLoss(10) //Still has *some* effect
-			return
-		if(iscultist(target))
-			target.visible_message("<span class='warning'>Blood sprays from a sudden wound on [target]'s head!</span>", \
-			"<span class='heavy_brass'>\"If you like wasting your own blood so much, pig, why don't you bathe in it?\"</span>\n\
-			<span class='userdanger'>An unbearable pain invades your mind, rupturing your head and wiping all thought.</span>")
-			target.apply_damage(rand(20, 30), BRUTE, "head")
-		else
-			target.visible_message("<span class='warning'>[target]'s face falls lax, their eyes dimming.</span>", \
-			"<span class='heavy_brass'>\"I don't think you need that brain. Not like you use it anyway.\"</span>\n\
-			<span class='userdanger'>A savage pain invades your mind, driving out all conscious thought.</span>")
-		target.adjustBrainLoss(200)
-		if(target.reagents)
-			target.reagents.add_reagent("mannitol", 25) //Enough to cure most of it but not all of it
-		target.Paralyse(10)
-	else if(issilicon(target))
-		target.visible_message("<span class='warning'>[target] suddenly shuts down!</span>", \
-		"<span class='heavy_brass'>\"NOB ZVANG-VBA! You disgust me, abomination of circuits and wires.\"</span>\n\
-		<span class='userdanger'>Factory reset sequence initiated by foreign signal. Entering standby mode and halting sequence.</span>")
-		target.Weaken(10)
 	return 1
 
 
