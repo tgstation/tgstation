@@ -884,9 +884,10 @@
 			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
-				var/mob/dead/observer/ghost = L.grab_ghost(TRUE)
+				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(ghost)
 					if(vitality >= revival_cost)
+						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
 						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
