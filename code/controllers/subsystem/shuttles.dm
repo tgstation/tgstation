@@ -253,12 +253,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
-	var/travel_dir = angle2dir(M.travelDir)
-	var/coords = M.return_coords(0, 0, travel_dir)
-	var/x0 = coords[1]
-	var/y0 = coords[2]
-	var/x1 = coords[3]
-	var/y1 = coords[4]
+	//var/travel_dir = angle2dir(M.travelDir)
+	//var/coords = M.return_coords(0, 0, travel_dir)
 
 	// And then... stuff?
 
