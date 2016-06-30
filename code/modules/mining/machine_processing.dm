@@ -309,6 +309,7 @@
 				continue
 			//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
 			//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
+			//Even in the dark year of 2016, where /tg/ is dead, Urist still hasn't finished this -Bawhoppennn
 			/*if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 				if (ore_uranium >= 2 && ore_diamond >= 1)
 					ore_uranium -= 2
