@@ -1570,7 +1570,7 @@
 	yield = 3
 	potency = 0
 
-/datum/seed/woodapple
+/datum/seed/apple/wood
 	name = "woodapple"
 	seed_name = "woodapple"
 	display_name = "woodapple tree"
@@ -1676,7 +1676,7 @@
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac)
 	plant_dmi = 'icons/obj/hydroponics2.dmi'
 	plant_icon = "vaporsac"
-	chems = list(VAPORSALT = list(1,1))
+	chems = list(VAPORSALT = list(1,2))
 
 	lifespan = 50
 	maturation = 6

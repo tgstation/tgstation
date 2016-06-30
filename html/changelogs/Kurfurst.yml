@@ -1,0 +1,6 @@
+author: Kurfurst
+delete-after: True
+
+changes: 
+- bugfix: Fixed a bug with inheritance that caused woodapples to be reharvestable infinitely
+- tweak: Based on feedback, reduced vapor salt production significantly.
