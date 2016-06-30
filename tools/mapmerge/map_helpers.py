@@ -60,7 +60,7 @@ def merge_map(newfile, backupfile, tgm):
                     try:
                         unused_keys.remove(newKey)
                     except ValueError: #caused by a duplicate entry
-                        print("WARNING: Correcting duplicate dictionary entry. ({})".format(shitKey))
+                        print(("WARNING: Correcting duplicate dictionary entry. ({})".format(shitKey)))
                     mergeGrid[x,y] = newKey
                     known_keys[shitKey] = newKey    
                 #if data at original x,y no longer exists we reuse the key immediately
@@ -104,12 +104,12 @@ def merge_map(newfile, backupfile, tgm):
 
     #Recycle outdated keys with any new tile data, starting from the bottom of the dictionary
     i = 0
-    for key, value in reversed(tempDict.items()):
+    for key, value in reversed(list(tempDict.items())):
         recycled_key = key
         if len(unused_keys) > 0:
             recycled_key = unused_keys.pop()
 
-        for coord, gridkey in tempGrid.items():
+        for coord, gridkey in list(tempGrid.items()):
             if gridkey == None:
                 continue
             if gridkey == key:
@@ -142,7 +142,7 @@ def merge_map(newfile, backupfile, tgm):
 def write_dictionary_tgm(filename, dictionary): 
     with open(filename, "w") as output:
         output.write("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE \n")
-        for key, list_ in dictionary.items():
+        for key, list_ in list(dictionary.items()):
             output.write("\"{}\" = (\n".format(key))
 
             for thing in list_:
@@ -195,7 +195,7 @@ def write_grid_coord_small(filename, grid):
             output.write("{}\n\"}}\n".format(grid[x,maxy]))
 
 def search_key(dictionary, data):
-    for key, value in dictionary.items():
+    for key, value in list(dictionary.items()):
         if value == data:
             return key
     return None
@@ -471,7 +471,7 @@ def string_to_num(s):
 #writes a tile data dictionary the same way Dreammaker does
 def write_dictionary(filename, dictionary):
     with open(filename, "w") as output:
-        for key, value in dictionary.items():
+        for key, value in list(dictionary.items()):
             output.write("\"{}\" = ({})\n".format(key, ",".join(value)))
 
 #writes a map grid the same way Dreammaker does
@@ -485,7 +485,7 @@ def write_grid(filename, grid):
                 try:
                     output.write(grid[x,y])
                 except KeyError:
-                    print("Key error: ({},{})".format(x,y))
+                    print(("Key error: ({},{})".format(x,y)))
             output.write("\n")
         output.write("\"}")
         output.write("\n")
