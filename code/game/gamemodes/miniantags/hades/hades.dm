@@ -746,7 +746,7 @@
 				user << "<span class='warning'><font size=3>Such power.. Slay this [M] so that I may partake of its being.</font></span>"
 				return
 			if(!M.stat)
-				user << "<span class='warning'><font size=3>[M] is still too tightly bound to the mortal world! You must either kill or knock them unconscious to sacrafice them.</font></span>"
+				user << "<span class='warning'><font size=3>[M] is still too tightly bound to the mortal world! You must either kill or knock them unconscious to sacrifice them.</font></span>"
 				return
 			user << "<span class='warning'><font size=3>I accept your offering.</font></span>"
 			absorbedHP += M.maxHealth
