@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Swarmers consuming swarmer shells now refunds the swarmer the entire cost of the shell instead of 2% of the shell's cost."

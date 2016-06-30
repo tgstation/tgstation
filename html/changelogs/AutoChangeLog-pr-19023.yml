@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Vitality Matrices will drain and heal 50% faster, and the base cost to revive is 20% lower; 20, from 25."
+  - rscadd: "Vitality Matrices will not revive or heal corpses unless they can grab the ghost of the corpse, and will immediately grab the ghost when reviving."

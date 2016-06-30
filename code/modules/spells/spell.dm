@@ -10,7 +10,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'>You already have <b>[user.ranged_ability.name]</b> readied! Cancel it first."
+		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
+		user.ranged_ability.remove_ranged_ability(user)
 		return 1 //1 for failed, 0 for passed.
 	user.next_click = world.time + 6
 	user.face_atom(A)
@@ -20,13 +21,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!user || !user.client)
 		return
 	if(user.ranged_ability && user.ranged_ability != src)
-		user << "<span class='warning'>You must cancel <b>[user.ranged_ability.name]</b> before using [name]!"
-		return
+		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
+		user.ranged_ability.remove_ranged_ability(user)
 	user.ranged_ability = src
 	user.client.click_intercept = user.ranged_ability
 	active = 1
 	if(msg)
 		user << msg
+	update_icon()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
 	if(!user || !user.client ||user.ranged_ability != src) //To avoid removing the wrong ability
@@ -36,6 +38,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	active = 0
 	if(msg)
 		user << msg
+	update_icon()
 
 /obj/effect/proc_holder/spell
 	name = "Spell"

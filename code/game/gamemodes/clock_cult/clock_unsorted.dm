@@ -2,6 +2,7 @@
 /datum/action/innate/function_call
 	name = "Function Call"
 	button_icon_state = "ratvarian_spear"
+	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/function_call/IsAvailable()

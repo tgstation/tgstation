@@ -281,6 +281,7 @@
 		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
 		add_ranged_ability(user, msg)
 
+/obj/effect/proc_holder/spell/fireball/update_icon()
 	action.button_icon_state = "fireball[active]"
 	action.UpdateButtonIcon()
 
@@ -289,7 +290,7 @@
 		return
 
 	var/list/targets = list(target)
-	perform(targets, user)
+	perform(targets,user = user)
 
 /obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
 	var/target = targets[1] //There is only ever one target for fireball
