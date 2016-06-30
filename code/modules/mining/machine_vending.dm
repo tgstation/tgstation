@@ -169,7 +169,6 @@
 		if("Resonator and Advanced Scanner")
 			new /obj/item/weapon/resonator(src.loc)
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
-			new /obj/item/weapon/storage/pill_bottle/mining(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
