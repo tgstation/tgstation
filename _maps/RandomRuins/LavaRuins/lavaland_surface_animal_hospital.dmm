@@ -815,35 +815,19 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cm" = (
+"cg" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Tool Storage"
+	name = "Break Room"
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cl" = (
+"ch" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Safety Supplies"
+	name = "Emergency Care"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"ck" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Medical Supplies"
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"cj" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Morgue"
-	},
-/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -856,19 +840,35 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"ch" = (
+"cj" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Emergency Care"
+	name = "Morgue"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ck" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Medical Supplies"
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cg" = (
+"cl" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Break Room"
+	name = "Safety Supplies"
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"cm" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Tool Storage"
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
