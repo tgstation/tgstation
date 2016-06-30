@@ -132,6 +132,9 @@
 	if(statpanel("Status"))
 		stat("Resources:",resources)
 
+/mob/living/simple_animal/hostile/swarmer/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/simple_animal/hostile/swarmer/emp_act()
 	if(health > 1)
 		adjustHealth(health-1)
@@ -546,7 +549,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
-	var/rendered = "<B>Swarm communication - </b> [src] states: [message]"
+	var/rendered = "<B>Swarm communication - [src]</b> states: [say_quote(message, get_spans())]"
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))
