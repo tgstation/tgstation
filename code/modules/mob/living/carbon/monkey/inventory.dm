@@ -99,4 +99,8 @@
 			if(W)
 				W.layer = initial(W.layer)
 
-	return
+/mob/living/carbon/monkey/strip_time()
+	return MONKEY_STRIP_DELAY
+
+/mob/living/carbon/monkey/reversestrip_time()
+	return MONKEY_REVERSESTRIP_DELAY

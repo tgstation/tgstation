@@ -4,13 +4,19 @@
 	else
 		return I
 
+/mob/living/carbon/proc/strip_time()
+	return HUMAN_STRIP_DELAY
+
+/mob/living/carbon/proc/reversestrip_time()
+	return HUMAN_REVERSESTRIP_DELAY
+
 //This proc is unsafe, it assumes that the mob is holding the item, that the item can be removed, etc.
 /mob/living/carbon/proc/strip_item_from(var/mob/living/user, var/obj/item/target_item, var/slot = null, var/pickpocket = FALSE)
 	var/temp_loc = target_item.loc //do_mob will make sure nobody goes anywhere, including the item to be placed, but sadly it doesn't keep track of the item to be stripped
 
 	target_item.add_fingerprint(user) //We don't need to be successful in order to get our prints on the thing
 
-	if(do_mob(user, src, HUMAN_STRIP_DELAY)) //Fails if the user moves, changes held item, is incapacitated, etc.
+	if(do_mob(user, src, strip_time())) //Fails if the user moves, changes held item, is incapacitated, etc.
 		if(temp_loc != target_item.loc) //This will also fail if the item to strip went anywhere, necessary because do_mob() doesn't keep track of it.
 			return
 
@@ -26,9 +32,13 @@
 
 //This proc is unsafe, it assumes that the mob has the given slot free, that the item can be put there etc.
 /mob/living/carbon/proc/reversestrip_into_slot(var/mob/living/user, var/slot, var/pickpocket = FALSE)
+	if(slot in list(slot_handcuffed, slot_legcuffed))
+		to_chat(user, "<span class='warning'>You feel stupider, suddenly.</span>")
+		return
+
 	var/obj/item/held = user.get_active_hand()
 
-	if(do_mob(user, src, HUMAN_STRIP_DELAY)) //Fails if the user moves, changes held item, is incapacitated, etc.
+	if(do_mob(user, src, reversestrip_time())) //Fails if the user moves, changes held item, is incapacitated, etc.
 		if(held.mob_can_equip(src, slot, disable_warning = 1) == CAN_EQUIP) //Do not accept CAN_EQUIP_BUT_SLOT_TAKEN as valid!
 			user.drop_from_inventory(held)
 			src.equip_to_slot(held, slot) //Not using equip_to_slot_if_possible() because we want to check that the guy can wear this before dropping it
@@ -39,7 +49,7 @@
 /mob/living/carbon/proc/reversestrip_into_hand(var/mob/living/user, var/index, var/pickpocket = FALSE)
 	var/obj/item/held = user.get_active_hand()
 
-	if(do_mob(user, src, HUMAN_STRIP_DELAY)) //Fails if the user moves, changes held item, is incapacitated, etc.
+	if(do_mob(user, src, reversestrip_time())) //Fails if the user moves, changes held item, is incapacitated, etc.
 		if(src.put_in_hand_check(held, index))
 			user.drop_from_inventory(held)
 			src.put_in_hand(index, held)
