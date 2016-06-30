@@ -251,6 +251,17 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
+	// Because of shuttle rotation, the "width" of the shuttle is not
+	// always x.
+	var/travel_dir = angle2dir(M.travelDir)
+	var/coords = M.return_coords(0, 0, travel_dir)
+	var/x0 = coords[1]
+	var/y0 = coords[2]
+	var/x1 = coords[3]
+	var/y1 = coords[4]
+
+	// And then... stuff?
+
 	var/transit_width = M.width + 14
 	var/transit_height = M.height + 14
 	// Then find a place to put the zone

@@ -1,3 +1,10 @@
+// Byond direction defines, because I want to put them somewhere.
+// #define NORTH 1
+// #define SOUTH 2
+// #define EAST 4
+// #define WEST 8
+
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
