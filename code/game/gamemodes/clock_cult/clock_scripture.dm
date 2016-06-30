@@ -815,7 +815,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	whispered = TRUE
 	object_path = /obj/effect/clockwork/sigil/vitality
 	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-servants and heal servants that cross it.</span>"
-	usage_tip = "To revive a servant, the sigil must have 25 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
+	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 
