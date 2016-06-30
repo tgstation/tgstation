@@ -1,0 +1,7 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Adds some descriptions to alien surgery tools"
+  - rscadd: "The agent vest can be locked and unlocked (toggling the NODROP flag)"
+  - rscadd: "An abductor team can spend data points to purchase an agent vest (note
+that only abductor agents are trained in their use)"
