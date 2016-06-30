@@ -661,7 +661,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Clockwork Posibrain"
 	name = "Soul Vessel"
 	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
-	invocations = list("Ureq'gur fbhyf-bs gur...", "...oynf curz-bhf qnzarq!")
+	invocations = list("Ureq'gur fbhyf-bs...", "...gur oynf curz-bhf qnzarq!")
 	channel_time = 20
 	required_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
 	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
