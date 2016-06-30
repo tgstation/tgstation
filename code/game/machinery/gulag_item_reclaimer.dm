@@ -13,9 +13,6 @@
 	var/obj/item/weapon/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
-/obj/machinery/gulag_item_reclaimer/New()
-	..()
-
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)
 		var/obj/item/I = i
@@ -26,6 +23,11 @@
 		inserted_id.forceMove(get_turf(src))
 		inserted_id = null
 	return ..()
+
+/obj/machinery/gulag_item_reclaimer/emag_act(mob/user)
+	if(!emagged) // emagging lets anyone reclaim all the items
+		req_access = list()
+		emagged = 1
 
 /obj/machinery/gulag_item_reclaimer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id/prisoner))
