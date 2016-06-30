@@ -179,6 +179,8 @@
 	var/area/shuttle/areaInstance
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
+	var/last_timer_length
+
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
 	var/callTime = 150				//time spent in transit (deciseconds)
 	var/ignitionTime = 100			// time spent "starting the engines"
@@ -318,7 +320,7 @@
 			qdel(i)
 		ripples.Cut()
 
-	setTimer(callTime - timeLeft(1))
+	invertTimer()
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
@@ -390,6 +392,11 @@
 			ripple_turfs += T1
 
 	return ripple_turfs
+
+/obj/docking_port/mobile/proc/check_poddoors()
+	for(var/obj/machinery/door/poddoor/shuttledock/pod in airlocks)
+		pod.check()
+
 //this is the main proc. It instantly moves our mobile port to stationary port S1
 //it handles all the generic behaviour, such as sanity checks, closing doors on the shuttle, stunning mobs, etc
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
@@ -399,8 +406,6 @@
 			return -1
 		if(!canMove())
 			return -1
-
-	closePortDoors()
 
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/turf_type = /turf/open/space
@@ -471,6 +476,8 @@
 		T0.CalculateAdjacentTurfs()
 		SSair.add_to_active(T0,1)
 
+	check_poddoors()
+
 	loc = S1.loc
 	setDir(S1.dir)
 
@@ -484,15 +491,6 @@
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
-
-//shuttle-door closing is handled in the dock() proc whilst looping through turfs
-//this one closes the door where we are docked at, if there is one there.
-/obj/docking_port/mobile/proc/closePortDoors()
-	var/turf/T = get_step(loc, turn(dir,180))
-	if(T)
-		var/obj/machinery/door/Door = locate() in T
-		if(Door)
-			addtimer(Door, "close", 0)
 
 /obj/docking_port/mobile/proc/roadkill(list/L0, list/L1, dir)
 	var/list/hurt_mobs = list()
@@ -579,16 +577,28 @@
 
 /obj/docking_port/mobile/proc/setTimer(wait)
 	timer = world.time + wait
+	last_timer_length = wait
+
+/obj/docking_port/mobile/proc/invertTimer()
+	if(!last_timer_length)
+		return
+	var/time_remaining = timer - world.time
+	if(time_remaining > 0)
+		var/time_passed = last_timer_length - time_remaining
+		setTimer(time_passed)
 
 //returns timeLeft
 /obj/docking_port/mobile/proc/timeLeft(divisor)
 	if(divisor <= 0)
 		divisor = 10
 
+	var/ds_remaining
 	if(!timer)
-		return round(callTime / divisor, 1)
+		ds_remaining = callTime
 	else
-		return max(0, round((timer - world.time) / divisor, 1))
+		ds_remaining = max(0, timer - world.time)
+
+	. = round(ds_remaining / divisor, 1)
 
 // returns 3-letter mode string, used by status screens and mob status panel
 /obj/docking_port/mobile/proc/getModeStr()
