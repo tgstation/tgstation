@@ -1,3 +1,20 @@
+//sends messages via hierophant
+/proc/send_hierophant_message(mob/user, message, name_span, message_span, user_title = "Servant")
+	if(!user || !message || !ticker || !ticker.mode)
+		return 0
+	if(!name_span)
+		name_span = "heavy_brass"
+	if(!message_span)
+		message_span = "brass"
+	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[message_span]'>\"[message]\"</span>"
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [parsed_message]"
+		else if(is_servant_of_ratvar(M))
+			M << parsed_message
+	return 1
+
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
 	name = "Function Call"
