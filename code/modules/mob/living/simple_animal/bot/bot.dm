@@ -847,26 +847,25 @@ Pass a positive integer as an argument to override a bot's default speed.
 		user << "<span class='warning'>A [paicard] is already inserted!</span>"
 	else if(allow_pai && !key)
 		if(!locked && !open)
-			var/obj/item/device/paicard/card = W
 			if(card.pai && card.pai.mind)
 				if(!user.drop_item())
 					return
-				W.forceMove(src)
+				card.forceMove(src)
 				paicard = card
-				user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
+				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
 				paicard.pai.mind.transfer_to(src)
 				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 				bot_name = name
 				name = paicard.pai.name
 				faction = user.faction
-				add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
+				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else
-				user << "<span class='warning'>[W] is inactive.</span>"
+				user << "<span class='warning'>[card] is inactive.</span>"
 		else
 			user << "<span class='warning'>The personality slot is locked.</span>"	
 	else
-		user << "<span class='warning'>[src] is not compatible with [W]</span>"
+		user << "<span class='warning'>[src] is not compatible with [card]</span>"
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)
