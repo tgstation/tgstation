@@ -1188,7 +1188,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			else
 				L.adjustFireLoss(randdamage)
 				L.visible_message(
-				"<span class='danger'>[src] was shocked by Nzcrentr's power!</span>", \
+				"<span class='danger'>[L] was shocked by Nzcrentr's power!</span>", \
 				"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
 				"<span class='italics'>You hear a heavy electrical crack.</span>" \
 				)
