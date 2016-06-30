@@ -130,16 +130,16 @@ The console is located at computer/gulag_teleporter.dm
 	for(var/obj/item/W in occupant)
 		if(occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
-				W.loc = get_turf(src)
+				W.forceMove(src)
 				continue
 			if(istype(W, /obj/item/weapon/implant/storage))
 				continue
 			if(linked_reclaimer)
 				linked_reclaimer.stored_items[occupant] += W
 				linked_reclaimer.contents += W
-				W.loc = linked_reclaimer
+				W.forceMove(linked_reclaimer)
 			else
-				W.loc = get_turf(src)
+				W.forceMove(src)
 
 /obj/machinery/gulag_teleporter/proc/handle_prisoner(obj/item/id, datum/data/record/R)
 	if(!ishuman(occupant))

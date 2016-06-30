@@ -19,7 +19,7 @@
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
-		id.loc = get_turf(src)
+		id.forceMove(src)
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
@@ -27,7 +27,7 @@
 		if(!id)
 			if(!user.drop_item())
 				return
-			W.loc = src
+			W.forceMove(src)
 			id = W
 			user << "<span class='notice'>You insert [W].</span>"
 			return
@@ -102,7 +102,7 @@
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return
-					I.loc = src
+					I.forceMove(src)
 					id = I
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null

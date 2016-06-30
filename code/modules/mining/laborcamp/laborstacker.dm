@@ -26,7 +26,7 @@
 		if(!inserted_id)
 			if(!user.drop_item())
 				return
-			I.loc = src
+			I.forceMove(src)
 			inserted_id = I
 			user << "<span class='notice'>You insert [I].</span>"
 			return
@@ -78,14 +78,14 @@
 					usr.put_in_hands(inserted_id)
 					inserted_id = null
 				else
-					inserted_id.loc = get_turf(src)
+					inserted_id.forceMove(src)
 					inserted_id = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return
-					I.loc = src
+					I.forceMove(src)
 					inserted_id = I
 		if("claim_points")
 			inserted_id.points += stacking_machine.points

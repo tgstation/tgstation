@@ -2087,7 +2087,6 @@
 "en" = (
 /obj/item/weapon/pickaxe,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors/explored,
 /turf/closed/indestructible/riveted,
 /area/ruin/unpowered{
 	name = "Necropolis Bridge"

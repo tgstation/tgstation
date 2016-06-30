@@ -23,7 +23,7 @@
 	if(linked_teleporter)
 		linked_teleporter.linked_reclaimer = null
 	if(inserted_id)
-		inserted_id.loc = get_turf(src)
+		inserted_id.forceMove(src)
 		inserted_id = null
 	return ..()
 
@@ -32,7 +32,7 @@
 		if(!inserted_id)
 			if(!user.drop_item())
 				return
-			I.loc = src
+			I.forceMove(src)
 			inserted_id = I
 			user << "<span class='notice'>You insert [I].</span>"
 			return
@@ -87,7 +87,7 @@
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return
-					I.loc = src
+					I.forceMove(src)
 					inserted_id = I
 		if("release_items")
 			var/mob/M = locate(params["mobref"])
