@@ -9,6 +9,7 @@
 var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
+	check_for_cleanbot_bug()
 	map_ready = 1
 
 #if (PRELOAD_RSC == 0)

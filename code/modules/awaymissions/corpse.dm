@@ -54,7 +54,7 @@
 
 /obj/effect/mob_spawn/Destroy()
 	poi_list.Remove(src)
-	..()
+	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
 	return

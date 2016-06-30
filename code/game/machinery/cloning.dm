@@ -159,8 +159,7 @@
 	countdown.start()
 
 	eject_wait = TRUE
-	spawn(30)
-		eject_wait = FALSE
+	addtimer(src, "wait_complete", 30)
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
@@ -207,6 +206,9 @@
 		H.suiciding = FALSE
 	attempting = FALSE
 	return TRUE
+
+/obj/machinery/clonepod/proc/wait_complete()
+	eject_wait = FALSE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -362,9 +364,7 @@
 			<i>Is this what dying is like? Yes it is.</i></span>"
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		spawn(40)
-			occupant.ghostize()
-			qdel(occupant)
+		QDEL_IN(occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
