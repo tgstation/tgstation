@@ -185,8 +185,18 @@
 				m_type = VISIBLE
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> coughs!"
-					m_type = HEARABLE
+					if (auto == 1)
+						if(world.time-last_emote_sound >= 30)//prevent cough spam
+							//Cough sounds from freesound.org and an anon in ss13g
+							var/coughSound = "malecough"
+							if (src.gender == FEMALE) //Females have their own coughes
+								coughSound = "femalecough"
+
+							playsound(get_turf(src), coughSound, 20, 0)
+							last_emote_sound = world.time
+
+						message = "<B>[src]</B> coughs!"
+						m_type = HEARABLE
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = HEARABLE
@@ -567,7 +577,7 @@
 				if(!stat)
 					if (!muzzled)
 						if (auto == 1)
-							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+							if(world.time-last_emote_sound >= 30)//prevent scream spam with things like poly spray
 								message = "<B>[src]</B> screams in agony!"
 								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
 								if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
@@ -575,7 +585,7 @@
 								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
 								playsound(get_turf(src), scream, 50, 0)
 								m_type = HEARABLE
-								lastScream = world.time
+								last_emote_sound = world.time
 						else
 							message = "<B>[src]</B> screams!"
 							m_type = HEARABLE

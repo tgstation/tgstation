@@ -374,7 +374,7 @@
 	//Cancer has a single universal sign. Coughing. Has a chance to happen every tick
 	//Most likely not medically accurate, but whocares.ru
 	if(prob(1))
-		owner.emote("cough")
+		owner.audible_cough()
 
 //Updating germ levels. Handles organ germ levels and necrosis.
 /*

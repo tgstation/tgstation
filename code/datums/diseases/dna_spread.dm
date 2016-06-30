@@ -21,7 +21,7 @@
 			if(prob(8))
 				affected_mob.emote("sneeze")
 			if(prob(8))
-				affected_mob.emote("cough")
+				affected_mob.audible_cough()
 			if(prob(1))
 				to_chat(affected_mob, "<span class='warning'>Your muscles ache.</span>")
 				if(prob(20))

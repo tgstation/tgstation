@@ -187,7 +187,7 @@
 			rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <a href='byond://?src=\ref[M];follow2=\ref[M];follow=\ref[src]'>(Follow)</a> <span class='message'>[message_a]</span></span></i></font>"
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(var/act,var/m_type=1,var/message = null)
+/mob/camera/blob/emote(var/act,var/m_type=1,var/message = null,var/auto)
 	return
 
 /mob/camera/blob/ex_act()

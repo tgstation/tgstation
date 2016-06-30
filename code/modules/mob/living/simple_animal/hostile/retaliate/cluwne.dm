@@ -293,11 +293,12 @@
 		to_chat(src, "<span class='warning'>You have a seizure!</span>")
 		Paralyse(10)
 
-/mob/living/simple_animal/hostile/retaliate/cluwne/emote(var/act)
+/mob/living/simple_animal/hostile/retaliate/cluwne/emote(var/act, var/type, var/message, var/auto)
 	if(timestopped) return //under effects of time magick
-	var/message=pick("quietly sobs into a dirty handkerchief","cries into [gender==MALE?"his":"her"] hands","bawls like a cow")
-	message = "<B>[src]</B> [message]"
-	return ..(message)
+
+	var/msg = pick("quietly sobs into a dirty handkerchief","cries into [gender==MALE?"his":"her"] hands","bawls like a cow")
+	msg = "<B>[src]</B> [msg]"
+	return ..(msg)
 
 /mob/living/simple_animal/hostile/retaliate/cluwne/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..(NewLoc, Dir, step_x, step_y)

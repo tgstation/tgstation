@@ -32,7 +32,7 @@ BONUS
 			if(1, 2, 3)
 				to_chat(M, "<span notice='notice'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>")
 			else
-				M.emote("cough")
+				M.audible_cough()
 				var/obj/item/I = M.get_active_hand()
 				if(I && I.w_class < W_CLASS_MEDIUM)
 					M.drop_item(I)

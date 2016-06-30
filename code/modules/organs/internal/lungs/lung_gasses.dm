@@ -133,7 +133,7 @@
 			if(world.time - H.co2overloadtime > 600) // They've been in here 60s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(3)
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			H.emote("cough")
+			H.audible_cough()
 	else
 		H.co2overloadtime = 0
 

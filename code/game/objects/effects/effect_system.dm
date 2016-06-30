@@ -274,7 +274,7 @@ steam.start() -- spawns the effect
 	M.adjustOxyLoss(1)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
-		M.emote("cough")
+		M.audible_cough()
 		spawn ( 20 )
 			M.coughedtime = 0
 
@@ -303,7 +303,7 @@ steam.start() -- spawns the effect
 	M:sleeping += 1
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
-		M.emote("cough")
+		M.audible_cough()
 		spawn ( 20 )
 			M.coughedtime = 0
 /////////////////////////////////////////////

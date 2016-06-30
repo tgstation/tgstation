@@ -29,5 +29,5 @@
 				var/rendered="<span class='thoughtspeech'>Thought-speech, <b>[src.name]</b> ([controls]) -> <b>[B.truename]:</b> [message]</span>"
 				M.show_message(rendered, 2) //Takes into account blindness and such.
 
-/mob/living/captive_brain/emote(var/message)
+/mob/living/captive_brain/emote(var/act, var/type, var/message, var/auto)
 	return

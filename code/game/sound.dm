@@ -14,6 +14,8 @@ var/list/mommicomment_sound = list('sound/voice/mommi_comment1.ogg', 'sound/voic
 var/list/polaroid_sound = list('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg')
 var/list/male_scream_sound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg')
 var/list/female_scream_sound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+var/list/male_cough_sound = list('sound/misc/cough/cough_m1.ogg', 'sound/misc/cough/cough_m2.ogg', 'sound/misc/cough/cough_m3.ogg', 'sound/misc/cough/cough_m4.ogg')
+var/list/female_cough_sound = list('sound/misc/cough/cough_f1.ogg', 'sound/misc/cough/cough_f2.ogg', 'sound/misc/cough/cough_f3.ogg', 'sound/misc/cough/cough_f4.ogg')
 var/list/lightning_sound = list('sound/effects/lightning/chainlightning1.ogg', 'sound/effects/lightning/chainlightning2.ogg', 'sound/effects/lightning/chainlightning3.ogg', 'sound/effects/lightning/chainlightning4.ogg', 'sound/effects/lightning/chainlightning5.ogg', 'sound/effects/lightning/chainlightning6.ogg', 'sound/effects/lightning/chainlightning7.ogg')
 var/list/soulstone_sound = list('sound/hallucinations/far_noise.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 
@@ -154,6 +156,8 @@ var/const/SURROUND_CAP = 7
 			if ("polaroid") soundin = pick(polaroid_sound)
 			if ("malescream") soundin = pick(male_scream_sound)
 			if ("femalescream") soundin = pick(female_scream_sound)
+			if ("malecough") soundin = pick(male_cough_sound)
+			if ("femalecough") soundin = pick(female_cough_sound)
 			if ("soulstone") soundin = pick(soulstone_sound)
 			//if ("gunshot") soundin = pick(gun_sound)
 	return soundin

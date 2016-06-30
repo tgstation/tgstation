@@ -168,6 +168,8 @@
 		"Taser" = 'sound/weapons/Taser.ogg',
 		"Male scream" = "malescream",
 		"Female scream" = "femalescream",
+		"Male cough" = "malecough",
+		"Female cough" = "femalecough",
 		"Sad trombone" = 'sound/misc/sadtrombone.ogg',
 		"Awooga" = 'sound/effects/awooga.ogg',
 		"Bubbles" = 'sound/effects/bubbles.ogg',

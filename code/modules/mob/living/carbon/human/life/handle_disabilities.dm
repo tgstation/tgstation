@@ -16,7 +16,7 @@
 	if(disabilities & COUGHING)
 		if((prob(5) && paralysis <= 1))
 			drop_item()
-			emote("cough")
+			audible_cough(src)
 	if(disabilities & TOURETTES)
 		if((prob(10) && paralysis <= 1))
 			//Stun(10)

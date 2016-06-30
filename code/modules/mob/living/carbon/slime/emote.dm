@@ -1,4 +1,4 @@
-/mob/living/carbon/slime/emote(var/act,var/m_type=1,var/message = null)
+/mob/living/carbon/slime/emote(var/act,var/m_type=1,var/message = null, var/auto)
 
 	if(timestopped) return //under effects of time magick
 	if (findtext(act, "-", 1, null))
