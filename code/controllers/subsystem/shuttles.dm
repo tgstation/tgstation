@@ -13,6 +13,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/transit = list()
 
 	var/list/turf/transit_turfs = list()
+	var/list/transit_requesters = list()
 
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
@@ -77,6 +78,11 @@ var/datum/subsystem/shuttle/SSshuttle
 	world.log << "[transit_turfs.len] transit turfs registered"
 
 /datum/subsystem/shuttle/fire()
+	if(transit_requesters.len)
+		var/requester = popleft(transit_requesters)
+		var/success = generate_transit_dock(requester)
+		if(!success) // BACK OF THE QUEUE
+			transit_requesters += requester
 	for(var/thing in mobile)
 		if(!thing)
 			mobile.Remove(thing)
@@ -234,13 +240,20 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
-/datum/subsystem/shuttle/proc/requestTransitZone(obj/docking_port/mobile/M)
-	// First, determine the size of the needed zone
-	var/transit_width = M.width + M.dwidth + 14
-	var/transit_height = M.height + M.dheight + 14
-	// Then find a place to put the zone
+/datum/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
+	if(!istype(M))
+		throw EXCEPTION("[M] is not a mobile docking port")
 
-	world << "Transit requested for [M]"
+	if(M.assigned_transit)
+		return
+	else
+		transit_requesters += M
+
+/datum/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
+	// First, determine the size of the needed zone
+	var/transit_width = M.width + 14
+	var/transit_height = M.height + 14
+	// Then find a place to put the zone
 
 	var/list/proposed_zone
 
@@ -249,19 +262,16 @@ var/datum/subsystem/shuttle/SSshuttle
 			CHECK_TICK
 			var/turf/topleft = i
 			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
-				world << "Topleft [COORD(topleft)] is used"
+				continue
 			var/turf/bottomright = locate(topleft.x + transit_width,
 				topleft.y + transit_height, topleft.z)
 			if(!bottomright)
 				continue
 			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
-				world << "Bottomright [COORD(bottomright)] is used."
 				continue
 
 			proposed_zone = block(topleft, bottomright)
-			world << "Proposed zone of [proposed_zone.len] turfs made"
 			if(!proposed_zone)
-				world << "Proposed zone was null."
 				continue
 			for(var/j in proposed_zone)
 				var/turf/T = j
@@ -270,38 +280,37 @@ var/datum/subsystem/shuttle/SSshuttle
 			break
 
 	if((!proposed_zone) || (!proposed_zone.len))
-		world << "We couldn't find a suitable transit zone"
-		return
+		return FALSE
 
-	world << "Now creating transit port"
 	var/turf/topleft = proposed_zone[1]
 	// Then create a transit docking port in the middle
-	var/mid_x = round(transit_width / 2) + topleft.x
-	var/mid_y = round(transit_height / 2) + topleft.y
+	var/mid_x = 7 + M.dwidth + topleft.x
+	var/mid_y = 7 + M.dheight + topleft.y
 
 	var/turf/midpoint = locate(mid_x, mid_y, topleft.z)
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
-	new_transit_dock.setDir(M.dir)
 
-	world << "Now setting turf type"
+	var/dockdir = 270 + M.travelDir
+	new_transit_dock.setDir(angle2dir(dockdir))
+
+	var/spacedir = angle2dir(M.travelDir)
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/open/space/transit/T = i
-		T.flags |= UNUSED_TRANSIT_TURF
+		T.flags &= ~(UNUSED_TRANSIT_TURF)
 		T.ChangeTurf(/turf/open/space/transit)
-		T.setDir(M.travelDir)
+		T.setDir(spacedir)
 		T.update_icon()
 
-	world << "Done!"
-	return new_transit_dock
-	// Then return it
+	M.assigned_transit = new_transit_dock
+	return TRUE
 
 /datum/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		moveShuttle(M.id, "[M.roundstart_move]", 0)
+		M.dockRoundstart()
 		CHECK_TICK
 
 /datum/subsystem/shuttle/Recover()

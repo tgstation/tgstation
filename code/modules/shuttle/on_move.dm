@@ -16,7 +16,10 @@
 	. = ..()
 	if(!.)
 		return
-	addtimer(src, "close", 0)
+	addtimer(src, "close", 0, TRUE)
+	// Close any attached airlocks as well
+	for(var/obj/machinery/door/D in orange(1, src))
+		addtimer(src, "close", 0, TRUE)
 
 /mob/onShuttleMove()
 	if(!move_on_shuttle)

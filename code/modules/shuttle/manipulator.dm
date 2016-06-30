@@ -219,7 +219,7 @@
 	// truthy value means that it cannot dock for some reason
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
-	if(result && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
+	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
 		var/m = "Unsuccessful dock of [preview_shuttle] ([result])."
 		WARNING(m)
 		return

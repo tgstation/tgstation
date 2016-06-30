@@ -19,7 +19,7 @@
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
 
-	//these objects are indestructable
+	//these objects are indestructible
 /obj/docking_port/Destroy(force)
 	// unless you assert that you know what you're doing. Horrible things
 	// may result.
@@ -212,6 +212,7 @@
 		destination = null
 		previous = null
 		assigned_transit = null
+		areaInstance = null
 	. = ..()
 
 /obj/docking_port/mobile/initialize()
@@ -394,15 +395,8 @@
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/S1, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
 	if(!force)
-		var/status = canDock(S1)
-		if(status == SHUTTLE_ALREADY_DOCKED)
-			return status
-		else if(status != SHUTTLE_CAN_DOCK)
-			var/msg = "dock(): shuttle [src] cannot dock at [S1], \
-				error: [status]"
-			message_admins(msg)
-			return status
-
+		if(!check_dock(S1))
+			return -1
 		if(!canMove())
 			return -1
 
@@ -484,7 +478,9 @@
 	return SSshuttle.getDock(roundstart_move)
 
 /obj/docking_port/mobile/proc/dockRoundstart()
-	return dock(findRoundstartDock())
+	var/port = findRoundstartDock()
+	if(port)
+		return dock(port)
 
 /obj/effect/landmark/shuttle_import
 	name = "Shuttle Import"
@@ -550,20 +546,24 @@
 		if(SHUTTLE_CALL)
 			if(dock(destination))
 				setTimer(20)
+				return
 		if(SHUTTLE_RECALL)
 			if(dock(previous))
 				setTimer(20)
+				return
 		if(SHUTTLE_IGNITING)
 			if(check_transit_zone() != TRANSIT_READY)
 				setTimer(20)
+				return
 			else
 				mode = SHUTTLE_CALL
 				setTimer(callTime)
 				enterTransit()
-		else
-			mode = SHUTTLE_IDLE
-			timer = 0
-			destination = null
+				return
+
+	mode = SHUTTLE_IDLE
+	timer = 0
+	destination = null
 
 /obj/docking_port/mobile/proc/check_ripples()
 	if(!ripples.len)
@@ -575,7 +575,7 @@
 	if(assigned_transit)
 		return TRANSIT_READY
 	else
-		SSshuttle.request_transit_dock()
+		SSshuttle.request_transit_dock(src)
 
 /obj/docking_port/mobile/proc/setTimer(wait)
 	timer = world.time + wait

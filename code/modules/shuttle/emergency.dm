@@ -168,6 +168,9 @@
 
 	for(var/obj/item/weapon/card/id/ID in src)
 		qdel(ID)
+	if(authorized && authorized.len)
+		authorized.Cut()
+	authorized = null
 
 	. = ..()
 
@@ -290,21 +293,26 @@
 
 
 		if(SHUTTLE_DOCKED)
-			if(time_left <= ENGINES_START_TIME)
-				mode = SHUTTLE_IGNITING
-				for(var/A in SSshuttle.mobile)
-					var/obj/docking_port/mobile/M = A
-					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
-						M.mode = SHUTTLE_IGNITING
+			if(time_left <= ENGINES_START_TIME * 10)
+				if(SSshuttle.emergencyNoEscape)
+					priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+					sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
+					mode = SHUTTLE_STRANDED
+				else
+					mode = SHUTTLE_IGNITING
+					for(var/A in SSshuttle.mobile)
+						var/obj/docking_port/mobile/M = A
+						if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+							M.check_transit_zone()
 
 		if(SHUTTLE_IGNITING)
 			var/success = TRUE
 			
-			success &= (requestTransitZone() == TRANSIT_READY)
+			success &= (check_transit_zone() == TRANSIT_READY)
 			for(var/A in SSshuttle.mobile)
 				var/obj/docking_port/mobile/M = A
 				if(M.launch_status == UNLAUNCHED)
-					success &= (M.requestTransitZone() == TRANSIT_READY)
+					success &= (M.check_transit_zone() == TRANSIT_READY)
 			if(!success)
 				setTimer(ENGINES_START_TIME * 10)
 
@@ -312,11 +320,6 @@
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
-
-			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
-				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
-				sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
-				mode = SHUTTLE_STRANDED
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
