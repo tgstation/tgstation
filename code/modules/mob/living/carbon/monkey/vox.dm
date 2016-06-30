@@ -10,6 +10,7 @@
 	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/rawchicken
 	canWearClothes = 0
 	canWearGlasses = 0
+	safe_oxygen_min = 0
 	var/eggsleft
 	var/eggcost = 250
 	languagetoadd = "Vox-pidgin"

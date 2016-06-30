@@ -7,6 +7,7 @@
 	var/pressure_alert = 0
 	base_insulation = 0.5
 	var/temperature_alert = 0
+	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 
 
 /mob/living/carbon/monkey/Life()
@@ -311,7 +312,7 @@
 
 		return 0
 
-	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
+
 	//var/safe_oxygen_max = 140 // Maximum safe partial pressure of O2, in kPa (Not used for now)
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.5
