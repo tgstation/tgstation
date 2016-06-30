@@ -832,7 +832,7 @@
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
-	var/power_charge = 4000 //starts with 4000W by default
+	var/power_charge = 2500 //starts with 2500W by default
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()

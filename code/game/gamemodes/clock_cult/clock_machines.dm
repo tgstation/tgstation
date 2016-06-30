@@ -142,14 +142,14 @@
 	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
 	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
-	var/stored_alloy = 0 //250W = 1 alloy
-	var/max_alloy = 50000
+	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
+	var/max_alloy = 25000
 	var/mob_cost = 200
 	var/structure_cost = 250
 	var/cyborg_cost = 300
 
 /obj/structure/clockwork/powered/mending_motor/prefilled
-	stored_alloy = 5000 //starts with 20 alloy
+	stored_alloy = 2500 //starts with 1 replicant alloy/100 liquified alloy
 
 /obj/structure/clockwork/powered/mending_motor/total_accessable_power()
 	. = ..()
@@ -170,11 +170,11 @@
 /obj/structure/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It has [stored_alloy*0.004]/[max_alloy*0.004] units of replicant alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
+		user << "<span class='alloy'>It contains [stored_alloy*0.04]/[max_alloy*0.04] units of liquified alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
 		user << "<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>"
 
 /obj/structure/clockwork/powered/mending_motor/process()
-	if(!..())
+	if(..() < mob_cost)
 		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
 		toggle()
 		return
@@ -210,7 +210,7 @@
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
-		if(!total_accessable_power() >= 300)
+		if(total_accessable_power() < mob_cost)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
 		toggle(0, user)

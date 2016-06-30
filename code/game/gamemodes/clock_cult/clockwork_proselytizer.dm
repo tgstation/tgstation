@@ -14,7 +14,7 @@
 	var/repairing = null //what we're currently repairing, if anything
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = REPLICANT_ALLOY_UNIT
+	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
