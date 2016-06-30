@@ -341,15 +341,15 @@
 						else if(targethallu <= 30)
 							H.hallucination += 3
 					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
-						if(prob(falloff_distance))
+						if(targetbrainloss <= 99)
 							if(prob(falloff_distance))
-								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
-							else if(prob(falloff_distance))
-								H << "<span class='sevtug'>[pick(close_messages)]</span>"
-							else
-								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
-						if(targetbrainloss <= 100)
-							H.adjustBrainLoss(100 - targetbrainloss)
+								if(prob(falloff_distance))
+									H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+								else if(prob(falloff_distance))
+									H << "<span class='sevtug'>[pick(close_messages)]</span>"
+								else
+									H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+							H.adjustBrainLoss(99 - targetbrainloss)
 						if(targetdruggy <= 200)
 							H.adjust_drugginess(15)
 						if(targethallu <= 200)
