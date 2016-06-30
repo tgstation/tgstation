@@ -41,6 +41,7 @@
 				fisto_setting = 3
 			if(3)
 				fisto_setting = 1
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>"
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(tank)
@@ -49,26 +50,27 @@
 
 /obj/item/weapon/melee/powerfist/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
-		if(!src.tank)
+		if(!tank)
+			user << "<span class='notice'>\The [src] currently has no tank attached to it.</span>"
 			return
 		user << "<span class='notice'>You detach \the [thetank] from \the [src].</span>"
-		src.tank.loc = get_turf(user)
+		tank.forceMove(get_turf(user))
 		user.put_in_hands(tank)
-		src.tank = null
+		tank = null
 	if(!removing)
-		if(src.tank)
+		if(tank)
 			user << "<span class='warning'>\The [src] already has a tank.</span>"
 			return
 		if(!user.unEquip(thetank))
 			return
 		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
-		src.tank = thetank
-		thetank.loc = src
+		tank = thetank
+		thetank.forceMove(src)
 
 
 /obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)
 	if(!tank)
-		user << "<span class='warning'>\The [src] can't operate without a source of gas.</span>"
+		user << "<span class='warning'>\The [src] can't operate without a source of gas!</span>"
 		return
 	if(tank && !tank.air_contents.remove(gasperfist * fisto_setting))
 		user << "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>"
@@ -76,7 +78,7 @@
 		return
 	target.apply_damage(force * fisto_setting, BRUTE)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
-		"<span class='userdanger'>You cry out in pain as [src] flings you backwards!</span>")
+		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	PoolOrNew(/obj/effect/kinetic_blast, target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
