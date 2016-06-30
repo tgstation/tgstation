@@ -8,7 +8,7 @@ var/global/posibrain_notif_cooldown = 0
 	w_class = 3
 	origin_tech = "biotech=3;programming=3;plasmatech=2"
 	var/notified = 0
-	var/askDelay = 10 * 60 * 1
+	var/askDelay = 600 //one minute
 	var/used = 0 //Prevents split personality virus. May be reset if personality deletion code is added.
 	brainmob = null
 	req_access = list(access_robotics)
@@ -38,7 +38,7 @@ var/global/posibrain_notif_cooldown = 0
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 		if(!newlymade)
 			posibrain_notif_cooldown = 1
-			addtimer(src, "reset_posibrain_cooldown", 600, FALSE)
+			addtimer(src, "reset_posibrain_cooldown", askDelay, FALSE)
 
 /obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
 	posibrain_notif_cooldown = 0
