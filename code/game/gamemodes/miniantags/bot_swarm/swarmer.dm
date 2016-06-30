@@ -278,7 +278,7 @@
 	S << "<span class='warning'>This object is receiving unactivated swarmer shells to help us. Aborting.</span>"
 
 /obj/item/device/unactivated_swarmer/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	if(S.resources + 50 > max_resources)
+	if(S.resources + 50 > S.max_resources)
 		S << "<span class='warning'>We have too many resources to reconsume this shell. Aborting.</span>"
 	else
 		..()
