@@ -25,34 +25,37 @@ def get_filenames():
             filenames.append(os.path.join(path, file))
     return filenames
 
+def try_filename(filename1):
+    filename2 = filename1 + ".backup"
+    tgm = is_tgm(filename1)
+
+    with open(filename1) as f:
+        original_contents = f.read()
+
+    shutil.copyfile(filename1, filename2)
+    try:
+        did_merge = map_helpers.merge_map(filename1, filename2, tgm) != -1
+    except KeyError:
+        return "Key Error"
+
+    if not did_merge:
+        return "Merge Error"
+    else:
+        with open(filename1) as f2:
+            new_contents = f2.read()
+        if original_contents == new_contents:
+            return "Good"
+        else:
+            return "Difference"
+
 def doublecheck(verbose=False):
     success = True
     for filename1 in get_filenames():
-        filename2 = filename1 + ".backup"
-        tgm = is_tgm(filename1)
-
-        with open(filename1) as f:
-            original_contents = f.read()
-
-        shutil.copyfile(filename1, filename2)
-        try:
-            did_merge = map_helpers.merge_map(filename1, filename2, tgm) != -1
-        except KeyError:
-            status = "Key Error"
+        status = try_filename(filename1)
+        if status != "Good":
             success = False
 
-        if not did_merge:
-            status = "Merge Error"
-            success = False
-        else:
-            with open(filename1) as f2:
-                new_contents = f2.read()
-            if original_contents == new_contents:
-                status = "Good"
-            else:
-                status = "Difference"
-                success = False
-        if status != "Good" or verbose:
+        if (status != "Good") or verbose:
             print("{}: {}".format(filename1, status))
 
     return success
@@ -65,4 +68,5 @@ if __name__=='__main__':
     if not success:
         sys.exit(1)
     else:
+        print "Doublecheck finished with no problems."
         sys.exit(0)
