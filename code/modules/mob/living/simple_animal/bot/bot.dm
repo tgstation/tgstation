@@ -257,7 +257,7 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 	else if(istype(W, /obj/item/device/paicard))
-		insertpai(user, card)
+		insertpai(user, W)
 	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
 		if(open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
