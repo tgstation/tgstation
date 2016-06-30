@@ -694,6 +694,7 @@ var/global/list/gene_tag_masks = list()   // Gene obfuscation for delicious tria
 	new_seed.biolum =               biolum
 	new_seed.biolum_colour =        biolum_colour
 	new_seed.alter_temp = 			alter_temp
+	new_seed.plant_dmi =			plant_dmi
 
 	ASSERT(istype(new_seed)) //something happened... oh no...
 	return new_seed

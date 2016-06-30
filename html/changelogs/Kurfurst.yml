@@ -1,0 +1,5 @@
+author: Kurfurst
+delete-after: True
+
+changes: 
+- bugfix: Fixed a bug where any plant with images in hydroponics2.dmi would disappear when modified. These included diona nodes, Vox plants, cinnamonum.
