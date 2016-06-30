@@ -371,14 +371,16 @@
 
 	else if (emagged && active_record)
 		if(href_list["change_name"])
-			var/name_of_victim = input(usr, "/^!@#! ERROR: NAME PROTOCOLS OVERRIDDEN. MANUALLY INSERT NAME.", "Change Record Name") as text|null
-			active_record.dna.real_name = name_of_victim
+			var/name_of_victim = copytext(sanitize(input(usr, "/^!@#! ERROR: NAME PROTOCOLS OVERRIDDEN. MANUALLY INSERT NAME.", "Change Record Name") as text|null),1,MAX_NAME_LEN)
+			if(name_of_victim)
+				active_record.dna.real_name = name_of_victim
 		if(href_list["change_species"])
 			var/species_of_victim = input(usr, "/^!@#! ERROR: SPECIES PROTOCOLS OVERRIDDEN. MANUALLY INSERT SPECIES.","Change Record Species") as null|anything in list("random")+available_species
-			if(species_of_victim == "random")
-				active_record.dna.species = pick(available_species)
-			else
-				active_record.dna.species = species_of_victim
+			if(species_of_victim)
+				if(species_of_victim == "random")
+					active_record.dna.species = pick(available_species)
+				else
+					active_record.dna.species = species_of_victim
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return

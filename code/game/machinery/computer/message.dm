@@ -399,6 +399,7 @@
 					//Select Your Name
 					if("Sender")
 						customsender 	= input(usr, "Please enter the sender's name.") as text|null
+						customsender	= copytext(sanitize(customsender), 1, MAX_NAME_LEN)
 
 					//Select Receiver
 					if("Recepient")
@@ -415,6 +416,7 @@
 					//Enter custom job
 					if("RecJob")
 						customjob	 	= input(usr, "Please enter the sender's job.") as text|null
+						customjob	= copytext(sanitize(customjob), 1, MAX_NAME_LEN)
 
 					//Enter message
 					if("Message")
