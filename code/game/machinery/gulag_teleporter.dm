@@ -130,7 +130,7 @@ The console is located at computer/gulag_teleporter.dm
 	for(var/obj/item/W in occupant)
 		if(occupant.unEquip(W))
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
-				W.forceMove(src)
+				W.forceMove(get_turf(src))
 				continue
 			if(istype(W, /obj/item/weapon/implant/storage))
 				continue

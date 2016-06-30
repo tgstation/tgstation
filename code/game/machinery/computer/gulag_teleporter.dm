@@ -19,7 +19,7 @@
 
 /obj/machinery/computer/gulag_teleporter_computer/Destroy()
 	if(id)
-		id.forceMove(src)
+		id.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/computer/gulag_teleporter_computer/attackby(obj/item/W, mob/user)
@@ -95,7 +95,7 @@
 					usr.put_in_hands(id)
 					id = null
 				else
-					id.forceMove(src)
+					id.forceMove(get_turf(src))
 					id = null
 			else
 				var/obj/item/I = usr.get_active_hand()
