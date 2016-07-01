@@ -244,7 +244,7 @@
 /obj/item/weapon/book/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(carved)
 		if(!store)
-			if(W.w_class > W_CLASS_MEDIUM)
+			if(W.w_class < W_CLASS_MEDIUM)
 				if(user.drop_item(W, src))
 					store = W
 					to_chat(user, "<span class='notice'>You put [W] in [title].</span>")
