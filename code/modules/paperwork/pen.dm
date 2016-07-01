@@ -7,6 +7,7 @@
 
 #define ACT_BBCODE_IMG /datum/speech_filter_action/bbcode/img
 #define ACT_BBCODE_VIDEO /datum/speech_filter_action/bbcode/video
+#define ACT_BBCODE_YOUTUBE /datum/speech_filter_action/bbcode/youtube
 #define CHECK_NANO /obj/item/weapon/pen
 // MACROS
 #define REG_NOTBB "\[^\\\[\]+"    // [^\]]+
@@ -36,6 +37,18 @@
 	while(expr.Find(text, expr.index))
 		message_admins("[key_name_admin(user)] added a video ([html_encode(expr.group[1])]) to [P] at [formatJumpTo(get_turf(P))]")
 		var/rtxt   = "<embed src=\"[html_encode(expr.group[1])]\" width=\"420\" height=\"344\" type=\"x-ms-wmv\" volume=\"85\" autoStart=\"0\" autoplay=\"true\" />"
+		text       = copytext(text, 1, expr.index) + rtxt + copytext(text, expr.index + length(expr.match))
+		expr.index = expr.index + length(rtxt)
+	return text
+
+/datum/speech_filter_action/bbcode/youtube/Run(var/text, var/mob/user, var/atom/movable/P)
+	expr.index = 1
+	while(expr.Find(text,expr.index))
+		var/regex/youtubeid = regex("(youtu\\.be\\/|youtube\\.com\\/(watch\\?(.*&)?v=|(embed|v)\\/))(\[\\w\]+)", "gi")
+		youtubeid.Find(expr.group[1])
+		var/link = "http://www.youtube.com/embed/[youtubeid.group[5]]?autoplay=1&loop=1&controls=0&showinfo=0&rel=0"
+		message_admins("[key_name_admin(user)] added a youtube video ([html_encode(expr.group[1])]) to [P] at [formatJumpTo(get_turf(P))]")
+		var/rtxt   = "<iframe width=\"420\" height=\"345\" src=\"[link]\" frameborder=\"0\">"
 		text       = copytext(text, 1, expr.index) + rtxt + copytext(text, expr.index + length(expr.match))
 		expr.index = expr.index + length(rtxt)
 	return text
@@ -172,6 +185,7 @@ var/paperwork_library
 
 /datum/writing_style/pen/nano_paper/New()
 	addExpression(REG_BBTAG("video")+"("+REG_NOTBB+")"+REG_BBTAG("/video"), ACT_BBCODE_VIDEO,list(),flags = "gi")
+	addExpression(REG_BBTAG("youtube")+"("+REG_NOTBB+")"+REG_BBTAG("/youtube"), ACT_BBCODE_YOUTUBE,list(),flags = "gi")
 
 	..()
 
