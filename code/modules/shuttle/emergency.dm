@@ -182,7 +182,7 @@
 	width = 22
 	height = 11
 	dir = EAST
-	travelDir = -90
+	port_angle = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 

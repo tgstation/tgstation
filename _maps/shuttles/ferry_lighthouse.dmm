@@ -198,7 +198,7 @@
 	name = "The Lighthouse";
 	roundstart_move = "ferry_away";
 	timid = 1;
-	travelDir = 180;
+	port_angle = 180;
 	width = 16
 	},
 /turf/open/floor/plasteel/shuttle,

@@ -253,13 +253,22 @@ var/datum/subsystem/shuttle/SSshuttle
 	// First, determine the size of the needed zone
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
-	//var/travel_dir = angle2dir(M.travelDir)
+	var/travel_dir = M.preferred_direction
 	//var/coords = M.return_coords(0, 0, travel_dir)
 
-	// And then... stuff?
+	var/transit_width = 14
+	var/transit_height = 14
 
-	var/transit_width = M.width + 14
-	var/transit_height = M.height + 14
+	// Shuttles travelling on their side have their dimensions swapped
+	// from our perspective
+	switch(travel_dir)
+		if(NORTH, SOUTH)
+			transit_width += M.width
+			transit_height += M.height
+		if(EAST, WEST)
+			transit_width += M.height
+			transit_height += M.width
+
 	// Then find a place to put the zone
 
 	var/list/proposed_zone
@@ -299,15 +308,15 @@ var/datum/subsystem/shuttle/SSshuttle
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
 
-	var/dockdir = 270 + M.travelDir
-	new_transit_dock.setDir(angle2dir(dockdir))
+	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	// Add 180, because ports point inwards, rather than outwards
+	new_transit_dock.setDir(angle2dir(dock_angle))
 
-	var/spacedir = angle2dir(M.travelDir)
 	for(var/i in new_transit_dock.assigned_turfs)
 		var/turf/open/space/transit/T = i
 		T.flags &= ~(UNUSED_TRANSIT_TURF)
 		T.ChangeTurf(/turf/open/space/transit)
-		T.setDir(spacedir)
+		T.setDir(travel_dir)
 		T.update_icon()
 
 	M.assigned_transit = new_transit_dock

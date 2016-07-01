@@ -185,7 +185,11 @@
 	var/callTime = 150				//time spent in transit (deciseconds)
 	var/ignitionTime = 100			// time spent "starting the engines"
 	var/roundstart_move				//id of port to send shuttle to at roundstart
-	var/travelDir = 0				//direction the shuttle would travel in
+
+	// The direction the shuttle prefers to travel in
+	var/preferred_direction = NORTH
+	// And the angle from the front of the shuttle to the port
+	var/port_angle = 0 // used to be travelDir
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
