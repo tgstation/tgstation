@@ -1,0 +1,4 @@
+author: "NikNak"
+delete-after: True
+changes: 
+  - tweak: "Showcases are now movable and deconstructable.  Wrench them to unanchor and then screwdriver and crowbar to deconstruct."
