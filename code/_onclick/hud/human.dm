@@ -312,8 +312,6 @@
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
 
-	inventory_shown = 0
-
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src

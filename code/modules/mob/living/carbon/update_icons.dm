@@ -54,6 +54,12 @@
 					var/mob/dead/observe = M
 					if(observe.client)
 						observe.client.screen += r_hand
+					else
+						observers -= observe
+						if(!observers.len)
+							observers = null
+							break
+
 
 		var/t_state = r_hand.item_state
 		if(!t_state)
@@ -78,6 +84,11 @@
 					var/mob/dead/observe = M
 					if(observe.client)
 						observe.client.screen += l_hand
+					else
+						observers -= observe
+						if(!observers.len)
+							observers = null
+							break
 
 		var/t_state = l_hand.item_state
 		if(!t_state)

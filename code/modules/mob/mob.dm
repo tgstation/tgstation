@@ -485,16 +485,10 @@ var/next_mob_id = 0
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
-	var/is_admin = 0
 
-	if(check_rights_for(client,R_ADMIN))
-		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
-
-	if(is_admin && stat == DEAD)
-		is_admin = 0
 
 	var/list/creatures = getpois()
 
@@ -502,8 +496,7 @@ var/next_mob_id = 0
 
 	var/eye_name = null
 
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
 
 	if (!eye_name)
 		return

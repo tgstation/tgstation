@@ -9,7 +9,7 @@
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
 	var/hud_version = 1			//Current displayed version of the HUD
-	var/inventory_shown = 1		//the inventory
+	var/inventory_shown = 0		//Equipped item inventory
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
@@ -143,7 +143,7 @@
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-			screenmob.client.screen += hide_actions_toggle
+			mymob.client.screen += hide_actions_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position
