@@ -123,12 +123,7 @@
 					continue
 				var/follow_rev = FOLLOW_LINK(ded, user)
 				var/follow_whispee = FOLLOW_LINK(ded, M)
-				ded << "[follow_rev] \
-					<span class='name'>[user]</span> \
-					<span class='revenboldnotice'>Revenant Transmit --></span> \
-					[follow_whispee] \
-					<span class='name'>[M]</span> \
-					<span class='revennotice'>[msg]</span>"
+				ded << "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>"
 
 
 
@@ -202,7 +197,7 @@
 	stun = 30
 	cast_amount = 40
 	var/shock_range = 2
-	var/shock_damage = 20
+	var/shock_damage = 15
 	action_icon_state = "overload_lights"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -238,7 +233,7 @@
 	desc = "Twists and corrupts the nearby area as well as dispelling holy auras on floors."
 	charge_max = 150
 	range = 4
-	stun = 10
+	stun = 20
 	reveal = 40
 	unlock_amount = 75
 	cast_amount = 30
@@ -284,8 +279,8 @@
 	desc = "Corrupts and damages nearby machines and mechanical objects."
 	charge_max = 200
 	range = 4
-	cast_amount = 45
-	unlock_amount = 150
+	cast_amount = 60
+	unlock_amount = 200
 	action_icon_state = "malfunction"
 
 //A note to future coders: do not replace this with an EMP because it will wreck malf AIs and gang dominators and everyone will hate you.
