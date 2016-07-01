@@ -25,8 +25,8 @@
 
 
 /client/Southwest()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
+	if(usr.can_throw())
+		var/mob/living/C = usr
 		C.toggle_throw_mode()
 	else
 		usr << "<span class='danger'>This mob type cannot throw items.</span>"

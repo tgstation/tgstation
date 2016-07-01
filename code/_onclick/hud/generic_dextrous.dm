@@ -9,6 +9,11 @@
 	using.screen_loc = ui_drone_drop
 	static_inventory += using
 
+	throw_icon = new /obj/screen/throw_catch()
+	throw_icon.icon = ui_style
+	throw_icon.screen_loc = ui_storage1
+	hotkeybuttons += throw_icon
+
 	inv_box = new /obj/screen/inventory/hand()
 	inv_box.name = "right hand"
 	inv_box.icon = ui_style

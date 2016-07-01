@@ -186,7 +186,13 @@
 
 
 //Throwing stuff
-/mob/living/carbon/proc/toggle_throw_mode()
+/mob/proc/can_throw()
+	return
+
+/mob/living/carbon/can_throw()
+	return 1
+
+/mob/living/proc/toggle_throw_mode()
 	if(stat)
 		return
 	if(in_throw_mode)
@@ -195,13 +201,13 @@
 		throw_mode_on()
 
 
-/mob/living/carbon/proc/throw_mode_off()
+/mob/living/proc/throw_mode_off()
 	in_throw_mode = 0
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_off"
 
 
-/mob/living/carbon/proc/throw_mode_on()
+/mob/living/proc/throw_mode_on()
 	in_throw_mode = 1
 	if(client && hud_used)
 		hud_used.throw_icon.icon_state = "act_throw_on"
@@ -209,7 +215,7 @@
 /mob/proc/throw_item(atom/target)
 	return
 
-/mob/living/carbon/throw_item(atom/target)
+/mob/living/throw_item(atom/target)
 	throw_mode_off()
 	if(!target || !isturf(loc))
 		return
