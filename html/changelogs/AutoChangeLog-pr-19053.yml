@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Script and Application scripture have had their component costs and requirements tweaked to reduce overuse of certain components."
+  - wip: "Invoke times for a few scriptures that were instant are now very short instead."
