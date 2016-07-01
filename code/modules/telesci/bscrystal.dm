@@ -72,3 +72,6 @@
 			qdel(src)
 			user << "<span class='notice'>You break the final crystal off.</span>"
 		else user << "<span class='notice'>You break off a crystal.</span>"
+	else
+		..()
+	return

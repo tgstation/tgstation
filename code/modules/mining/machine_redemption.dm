@@ -90,7 +90,7 @@
 						i++
 		var/msg = "Now available in the Cargo Bay: \n"
 		for(var/s in stack_list) // Making an announcement for cargo
-			var/obj/item/stack/sheet/mats = s
+			var/obj/item/stack/sheet/mats = stack_list[s]
 			msg += "[capitalize(mats.name)]: [mats.amount] sheets \n"
 		for(var/obj/machinery/requests_console/D in allConsoles)
 			if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar" )
