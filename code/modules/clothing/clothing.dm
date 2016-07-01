@@ -10,6 +10,114 @@
 
 	var/cold_speed_protection = 300 //that cloth allows its wearer to keep walking at normal speed at lower temperatures
 
+	var/list/obj/item/clothing/accessory/accessories = list()
+
+/obj/item/clothing/examine(mob/user)
+	..()
+	for(var/obj/item/clothing/accessory/A in accessories)
+		to_chat(user, "<span class='info'>\A [A] is clipped to it.</span>")
+
+/obj/item/clothing/emp_act(severity)
+	for(var/obj/item/clothing/accessory/accessory in accessories)
+		accessory.emp_act(severity)
+	..()
+
+/obj/item/clothing/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(check_accessory_overlap(A))
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
+			return
+		if(!A.can_attach_to(src))
+			to_chat(user, "<span class='notice'>\The [A] cannot be attached to [src].</span>")
+			return
+		if(user.drop_item(I, src))
+			accessories.Add(A)
+			A.on_attached(src, user)
+			update_verbs()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			H.update_inv_by_slot(slot_flags)
+		return 1
+	for(var/obj/item/clothing/accessory/accessory in priority_accessories())
+		if(accessory.attackby(I, user))
+			return 1
+
+	..()
+
+/obj/item/clothing/attack_hand(mob/user)
+	if(accessories.len && src.loc == user)
+		var/list/delayed = list()
+		for(var/obj/item/clothing/accessory/A in priority_accessories())
+			switch(A.on_accessory_interact(user, 0))
+				if(1)
+					return 1
+				if(-1)
+					delayed.Add(A)
+				else
+					continue
+		for(var/obj/item/clothing/accessory/A in delayed)
+			if(A.on_accessory_interact(user, 1))
+				return 1
+		return
+	return ..()
+
+/obj/item/clothing/proc/priority_accessories()
+	if(!accessories.len)
+		return list()
+	var/list/unorg = accessories
+	var/list/prioritized = list()
+	for(var/obj/item/clothing/accessory/holster/H in accessories)
+		prioritized.Add(H)
+	for(var/obj/item/clothing/accessory/storage/S in accessories)
+		prioritized.Add(S)
+	for(var/obj/item/clothing/accessory/armband/A in accessories)
+		prioritized.Add(A)
+	prioritized |= unorg
+	return prioritized
+
+/obj/item/clothing/proc/check_accessory_overlap(var/obj/item/clothing/accessory/accessory)
+	if(!accessory)
+		return
+
+	for(var/obj/item/clothing/accessory/A in accessories)
+		if(A.accessory_exclusion & accessory.accessory_exclusion)
+			return 1
+
+/obj/item/clothing/proc/remove_accessory(mob/user, var/obj/item/clothing/accessory/accessory)
+	if(!accessory || !(accessory in accessories)) return
+
+	accessory.on_removed(user)
+	accessories.Remove(accessory)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_by_slot(slot_flags)
+	update_verbs()
+
+/obj/item/clothing/verb/removeaccessory()
+	set name = "Remove Accessory"
+	set category = "Object"
+	set src in usr
+	if(usr.incapacitated()) return
+
+	if(!accessories.len) return
+	var/obj/item/clothing/accessory/A
+	if(accessories.len > 1)
+		A = input("Select an accessory to remove from [src]") as anything in accessories
+	else
+		A = accessories[1]
+	src.remove_accessory(usr,A)
+
+/obj/item/clothing/proc/update_verbs()
+	if(accessories.len)
+		verbs |= /obj/item/clothing/verb/removeaccessory
+	else
+		verbs -= /obj/item/clothing/verb/removeaccessory
+
+/obj/item/clothing/New() //so sorry
+	..()
+	update_verbs()
+
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(mob/M, slot, disable_warning = 0, automatic = 0)
 
@@ -344,7 +452,6 @@ BLIND     // can't see anything
 	heat_conductivity = JUMPSUIT_HEAT_CONDUCTIVITY
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	species_restricted = list("exclude","Muton")
-	var/list/obj/item/clothing/accessory/accessories = list()
 	var/has_sensor = 1 //For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
@@ -354,87 +461,11 @@ BLIND     // can't see anything
 		*/
 	var/displays_id = 1
 
-/obj/item/clothing/under/emp_act(severity)
-	for(var/obj/item/clothing/accessory/accessory in accessories)
-		accessory.emp_act(severity)
-	..()
-
 /obj/item/clothing/under/Destroy()
 	for(var/obj/machinery/computer/crew/C in machines)
 		if(C && src in C.tracked)
 			C.tracked -= src
 	..()
-
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/clothing/accessory))
-		var/obj/item/clothing/accessory/A = I
-		if(can_attach_accessory(A))
-			if(user.drop_item(I, src))
-				accessories.Add(A)
-				A.on_attached(src, user)
-				if(istype(loc, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = loc
-					H.update_inv_w_uniform()
-				return
-		else
-			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src]</span>")
-			return
-
-	for(var/obj/item/clothing/accessory/accessory in priority_accessories())
-		if(accessory.attackby(I, user))
-			return
-
-	..()
-
-/obj/item/clothing/under/attack_hand(mob/user)
-	if(accessories.len && src.loc == user)
-		var/list/delayed = list()
-		for(var/obj/item/clothing/accessory/A in priority_accessories())
-			switch(A.on_accessory_interact(user, 0))
-				if(1)
-					return 1
-				if(-1)
-					delayed.Add(A)
-				else
-					continue
-		for(var/obj/item/clothing/accessory/A in delayed)
-			if(A.on_accessory_interact(user, 1))
-				return 1
-		return
-	return ..()
-
-/obj/item/clothing/under/proc/priority_accessories()
-	if(!accessories.len)
-		return list()
-	var/list/unorg = accessories
-	var/list/prioritized = list()
-	for(var/obj/item/clothing/accessory/holster/H in accessories)
-		prioritized.Add(H)
-	for(var/obj/item/clothing/accessory/storage/S in accessories)
-		prioritized.Add(S)
-	for(var/obj/item/clothing/accessory/armband/A in accessories)
-		prioritized.Add(A)
-	prioritized |= unorg
-	return prioritized
-
-/obj/item/clothing/under/proc/can_attach_accessory(var/obj/item/clothing/accessory/accessory)
-	if(!accessory) return
-
-	if(!accessories.len) return 1 //nothing can stop us!
-
-	for(var/obj/item/clothing/accessory/A in accessories)
-		if(A.accessory_exclusion & accessory.accessory_exclusion)
-			return
-	return 1
-
-/obj/item/clothing/under/proc/remove_accessory(mob/user, var/obj/item/clothing/accessory/accessory)
-	if(!accessory || !(accessory in accessories)) return
-
-	accessory.on_removed(user)
-	accessories.Remove(accessory)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_w_uniform()
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
@@ -449,8 +480,6 @@ BLIND     // can't see anything
 		if(3)
 			mode = "Its vital tracker and tracking beacon appear to be enabled."
 	to_chat(user, "<span class='info'>" + mode + "</span>")
-	for(var/obj/item/clothing/accessory/A in accessories)
-		to_chat(user, "<span class='info'>\A [A] is clipped to it.</span>")
 
 /obj/item/clothing/under/proc/set_sensors(mob/user as mob)
 	if(user.incapacitated()) return
@@ -500,21 +529,6 @@ BLIND     // can't see anything
 /obj/item/clothing/under/AltClick()
 	if(is_holder_of(usr, src))
 		set_sensors(usr)
-
-/obj/item/clothing/under/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.isUnconscious()) return
-
-	if(!accessories.len) return
-	var/obj/item/clothing/accessory/A
-	if(accessories.len > 1)
-		A = input("Select an accessory to remove from [src]") as anything in accessories
-	else
-		A = accessories[1]
-	src.remove_accessory(usr,A)
 
 /obj/item/clothing/under/rank/New()
 	. = ..()

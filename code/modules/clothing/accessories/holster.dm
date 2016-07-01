@@ -66,14 +66,15 @@
 	set name = "Holster"
 	set category = "Object"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.isUnconscious()) return
+
+	if(usr.incapacitated())
+		return
 
 	var/obj/item/clothing/accessory/holster/H = null
 	if (istype(src, /obj/item/clothing/accessory/holster))
 		H = src
-	else if (istype(src, /obj/item/clothing/under))
-		var/obj/item/clothing/under/S = src
+	else if (istype(src, /obj/item/clothing/))
+		var/obj/item/clothing/S = src
 		if (S.accessories.len)
 			H = locate() in S.accessories
 
@@ -117,8 +118,8 @@
 
 /obj/item/clothing/accessory/holster/on_attached(obj/item/clothing/under/S, mob/user as mob)
 	..()
-	has_suit.verbs += /obj/item/clothing/accessory/holster/verb/holster_verb
+	attached_to.verbs += /obj/item/clothing/accessory/holster/verb/holster_verb
 
 /obj/item/clothing/accessory/holster/on_removed(mob/user as mob)
-	has_suit.verbs -= /obj/item/clothing/accessory/holster/verb/holster_verb
+	attached_to.verbs -= /obj/item/clothing/accessory/holster/verb/holster_verb
 	..()

@@ -7,7 +7,7 @@
 	var/list/can_only_hold = list() //I would add the other storage item variables, but nothing would use them yet, so there's no point.
 	var/list/cant_hold = list("/obj/item/clothing/accessory/storage", "/obj/item/clothing/under") //NO RECURSION
 	var/obj/item/weapon/storage/internal/hold
-	accessory_exclusion = STORAGE
+	accessory_exclusion = STORAGE | HOLSTER
 
 /obj/item/clothing/accessory/storage/New()
 	..()

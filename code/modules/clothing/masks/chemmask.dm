@@ -73,7 +73,8 @@
 	if(H.wear_mask == src)
 		update_verbs()
 
-/obj/item/clothing/mask/chemmask/proc/update_verbs()
+/obj/item/clothing/mask/chemmask/update_verbs()
+	..()
 	var/mob/living/carbon/human/H
 	if (power)
 		verbs += /obj/item/clothing/mask/chemmask/verb/set_pack_injection

@@ -7,7 +7,7 @@
 /obj/item/clothing/accessory
 	name = "tie"
 	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
+	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "bluetie"
 	item_state = ""	//no inhands
 	_color = "bluetie"
@@ -15,41 +15,43 @@
 	slot_flags = 0
 	w_class = W_CLASS_SMALL
 	var/accessory_exclusion = DECORATION
-	var/obj/item/clothing/under/has_suit = null
+	var/obj/item/clothing/attached_to = null
 	var/image/inv_overlay
-
 
 /obj/item/clothing/accessory/New()
 	..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[_color || icon_state]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlays.dmi', "icon_state" = "[_color || icon_state]")
 
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user as mob)
-	if(!istype(S))
+/obj/item/clothing/accessory/proc/can_attach_to(obj/item/clothing/C)
+	return istype(C, /obj/item/clothing/under) //By default, accessories can only be attached to jumpsuits
+
+/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/C, mob/user as mob)
+	if(!istype(C))
 		return
-	has_suit = S
+	attached_to = C
 	if(user)
-		if(user.drop_item(src, has_suit))
-			to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
+		if(user.drop_item(src, attached_to))
+			to_chat(user, "<span class='notice'>You attach [src] to [attached_to].</span>")
 			add_fingerprint(user)
 	else
-		loc = has_suit
-	has_suit.overlays += inv_overlay
+		forceMove(attached_to)
+	attached_to.overlays += inv_overlay
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user as mob)
-	if(!has_suit)
+	if(!attached_to)
 		return
-	has_suit.overlays -= inv_overlay
-	has_suit = null
+	attached_to.overlays -= inv_overlay
+	attached_to = null
 	forceMove(get_turf(user || src))
 	if(user)
 		user.put_in_hands(src)
 		add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_accessory_interact(mob/user, delayed = 0)
-	if(!has_suit)
+	if(!attached_to)
 		return
 	if(delayed)
-		has_suit.remove_accessory(user, src)
+		attached_to.remove_accessory(user, src)
 		attack_hand(user)
 		return 1
 	return -1
@@ -58,6 +60,38 @@
 	on_removed(null)
 	inv_overlay = null
 	return ..()
+
+//Defining this at item level to prevent CASTING HELL
+/obj/item/proc/generate_accessory_overlays()
+	return
+
+/obj/item/clothing/generate_accessory_overlays(var/obj/Overlays/O)
+	if(accessories.len)
+		for(var/obj/item/clothing/accessory/accessory in accessories)
+			O.overlays += image("icon" = 'icons/mob/clothing_accessories.dmi', "icon_state" = "[accessory._color || accessory.icon_state]")
+
+//Defining this at item level to prevent CASTING HELL
+/obj/item/proc/description_accessories()
+	return
+
+/obj/item/clothing/description_accessories()
+	if(accessories.len)
+		. = list()
+		for(var/obj/item/clothing/accessory/accessory in accessories)
+			. += "[bicon(accessory)] \a [accessory]"
+		return " It has [english_list(.)]."
+
+/obj/item/clothing/accessory/pinksquare
+	name = "pink square"
+	desc = "It's a pink square."
+	icon_state = "pinksquare"
+	_color = "pinksquare"
+/obj/item/clothing/accessory/pinksquare/can_attach_to(obj/item/clothing/C)
+	return 1
+
+/obj/item/clothing/accessory/tie/can_attach_to(obj/item/clothing/C)
+	if(istype(C))
+		return (C.body_parts_covered & UPPER_TORSO) //Sure why not
 
 /obj/item/clothing/accessory/tie/blue
 	name = "blue tie"
@@ -125,6 +159,10 @@
 	desc = "A bronze medal."
 	icon_state = "bronze"
 	_color = "bronze"
+
+/obj/item/clothing/accessory/medal/can_attach_to(obj/item/clothing/C)
+	if(istype(C))
+		return (C.body_parts_covered & UPPER_TORSO) //Sure why not
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
