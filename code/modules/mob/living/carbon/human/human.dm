@@ -767,9 +767,9 @@
 	else if (href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
 		usr.examination(I)
-	else if (href_list["lookmob"])
+	/*else if (href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
-		usr.examination(M)
+		usr.examination(M)*/
 
 /**
  * Returns a number between -1 to 2.
