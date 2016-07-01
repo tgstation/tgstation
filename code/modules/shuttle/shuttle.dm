@@ -37,11 +37,11 @@
 	return //we don't rotate with shuttles via this code.
 //returns a list(x0,y0, x1,y1) where points 0 and 1 are bounding corners of the projected rectangle
 /obj/docking_port/proc/return_coords(_x, _y, _dir)
-	if(!_dir)
+	if(_dir == null)
 		_dir = dir
-	if(!_x)
+	if(_x == null)
 		_x = x
-	if(!_y)
+	if(_y == null)
 		_y = y
 
 	//byond's sin and cos functions are inaccurate. This is faster and perfectly accurate
@@ -136,6 +136,7 @@
 
 	var/turf_type = /turf/open/space
 	var/area_type = /area/space
+	var/last_dock_time
 
 /obj/docking_port/stationary/New()
 	..()
@@ -481,6 +482,7 @@
 		SSair.add_to_active(T0,1)
 
 	check_poddoors()
+	S1.last_dock_time = world.time
 
 	loc = S1.loc
 	setDir(S1.dir)
