@@ -1,0 +1,4 @@
+author: "name: Lzimann"
+delete-after: True
+changes: 
+  - tweak: "Mulebots with pAI cards no longer stun people"
