@@ -88,14 +88,14 @@
 			if(servants >= 5 && clockwork_caches)
 				return 1 //5 or more non-brain servants and any number of clockwork caches
 		if(SCRIPTURE_APPLICATION)
-			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50)
-				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 50 CV
+			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 75)
+				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 75 CV
 		if(SCRIPTURE_REVENANT)
-			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
-				return 1 //10 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
+			if(servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 150)
+				return 1 //10 or more non-brain servants, 4+ clockwork caches, and at least 150 CV
 		if(SCRIPTURE_JUDGEMENT)
-			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100 && !unconverted_ai_exists)
-				return 1 //10 or more non-brain servants, 3+ clockwork caches, at least 100 CV, and there are no living, non-servant ais
+			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 250 && !unconverted_ai_exists)
+				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 250 CV, and there are no living, non-servant ais
 	return 0
 
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component

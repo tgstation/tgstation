@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Ratvarian Spears will stun cyborgs and cultists for twice as long when thrown; on cyborgs, this should be long enough to use Guvax on them."

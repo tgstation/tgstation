@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The nuke disk reappears on the station in far more random locations, but tends to re-materialise in safe pressurised areas that aren't on fire."

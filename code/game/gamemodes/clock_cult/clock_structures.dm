@@ -103,6 +103,7 @@
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
+	playsound(src, P.hitsound, 50, 1)
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
@@ -112,26 +113,30 @@
 	take_damage(damage, damage_type)
 
 /obj/structure/clockwork/attack_alien(mob/living/user)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	attack_generic(user, 15)
 
 /obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
 /obj/structure/clockwork/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(user, rand(10, 15))
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(I.force && takes_damage)
-		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
+		take_damage(I.force, I.damtype)
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		take_damage(M.force, M.damtype)
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
@@ -860,8 +865,9 @@
 	affects_servants = TRUE
 	stat_affected = DEAD
 	var/vitality = 0
-	var/base_revive_cost = 25
+	var/base_revive_cost = 20
 	var/sigil_active = FALSE
+	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
@@ -878,9 +884,12 @@
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+		if(animation_number >= 4)
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+			animation_number = 0
+		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(4)
+			var/vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
@@ -894,14 +903,20 @@
 			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
-				if(vitality >= revival_cost)
-					L.revive(1, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
-					vitality -= revival_cost
+				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
+				if(ghost)
+					if(vitality >= revival_cost)
+						ghost.reenter_corpse()
+						L.revive(1, 1)
+						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
+						vitality -= revival_cost
+						break
+				else
 					break
 			if(!total_damage)
 				break
-			var/vitality_for_cycle = min(vitality, 8)
+			var/vitality_for_cycle = min(vitality, 3)
 
 			if(clone_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, clone_to_heal)
@@ -932,8 +947,9 @@
 				vitality_for_cycle -= healing
 				L.adjustOxyLoss(-healing)
 				vitality -= healing
-		sleep(8)
+		sleep(2)
 
+	animation_number = initial(animation_number)
 	sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")

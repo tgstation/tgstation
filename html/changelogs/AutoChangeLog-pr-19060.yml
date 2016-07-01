@@ -1,0 +1,4 @@
+author: "Flavo"
+delete-after: True
+changes: 
+  - bugfix: "fixed a bug where lights would not update."

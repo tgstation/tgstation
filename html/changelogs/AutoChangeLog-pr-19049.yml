@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "Application scriptures require at least 75 CV, from 50."
+  - experiment: "Revenant scriptures require at least 4 Caches, from 3, and at least 150 CV, from 100."
+  - experiment: "Judgement scripture requires at least 12 servants, from 10, 5 Caches, from 3, and at least 250 CV, from 100."
