@@ -352,5 +352,4 @@
 		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.Crossed(hit_atom)
 		qdel(src)
-	spawn(10)
 	..()
