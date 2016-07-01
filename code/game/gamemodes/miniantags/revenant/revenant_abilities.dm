@@ -202,9 +202,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "overload", 0, FALSE, T)
+			addtimer(src, "overload", 0, FALSE, T, user)
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
 	for(var/obj/machinery/light/L in T.contents)
 		if(!L.on)
 			return
@@ -289,9 +289,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "malfunction", 0, FALSE, T)
+			addtimer(src, "malfunction", 0, FALSE, T, user)
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T.contents)
 		if(!bot.emagged)
 			PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
@@ -334,9 +334,9 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
-			addtimer(src, "blight", 0, FALSE, T)
+			addtimer(src, "blight", 0, FALSE, T, user)
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T)
+/obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
 	for(var/mob/living/mob in T.contents)
 		if(mob == user)
 			continue
