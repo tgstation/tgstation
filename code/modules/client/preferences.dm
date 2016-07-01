@@ -589,6 +589,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_FAT,        "Obese")
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_EPILEPTIC,  "Seizures")
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_DEAF,       "Deaf")
+	HTML += ShowDisabilityState(user,DISABILITY_FLAG_BLIND,      "Blind")
 	/*HTML += ShowDisabilityState(user,DISABILITY_FLAG_COUGHING,   "Coughing")
 	HTML += ShowDisabilityState(user,DISABILITY_FLAG_TOURETTES,   "Tourettes") Still working on it! -Angelite*/
 
@@ -1299,41 +1300,52 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						flavor_text = msg
 
 				if("limbs")
-					var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+					var/list/limb_input = list(
+						"Left Leg [organ_data["l_leg"]]" = "l_leg",
+						"Right Leg [organ_data["r_leg"]]" = "r_leg",
+						"Left Arm [organ_data["l_arm"]]" = "l_arm",
+						"Right Arm [organ_data["r_arm"]]" = "r_arm",
+						"Left Foot [organ_data["l_foot"]]" = "l_foot",
+						"Right Foot [organ_data["r_foot"]]" = "r_foot",
+						"Left Hand [organ_data["l_hand"]]" = "l_hand",
+						"Right Hand [organ_data["r_hand"]]" = "r_hand"
+						)
+
+					var/limb_name = input(user, "Which limb do you want to change?") as null|anything in limb_input
 					if(!limb_name) return
 
 					var/limb = null
 					var/second_limb = null // if you try to change the arm, the hand should also change
 					var/third_limb = null  // if you try to unchange the hand, the arm should also change
 					var/valid_limb_states=list("Normal","Amputated","Prothesis")
-					switch(limb_name)
-						if("Left Leg")
+					switch(limb_input[limb_name])
+						if("l_leg")
 							limb = "l_leg"
 							second_limb = "l_foot"
 							valid_limb_states += "Peg Leg"
-						if("Right Leg")
+						if("r_leg")
 							limb = "r_leg"
 							second_limb = "r_foot"
 							valid_limb_states += "Peg Leg"
-						if("Left Arm")
+						if("l_arm")
 							limb = "l_arm"
 							second_limb = "l_hand"
 							valid_limb_states += "Wooden Prosthesis"
-						if("Right Arm")
+						if("r_arm")
 							limb = "r_arm"
 							second_limb = "r_hand"
 							valid_limb_states += "Wooden Prosthesis"
-						if("Left Foot")
+						if("l_foot")
 							limb = "l_foot"
 							third_limb = "l_leg"
-						if("Right Foot")
+						if("r_foot")
 							limb = "r_foot"
 							third_limb = "r_leg"
-						if("Left Hand")
+						if("l_hand")
 							limb = "l_hand"
 							third_limb = "l_arm"
 							valid_limb_states += "Hook Prosthesis"
-						if("Right Hand")
+						if("r_hand")
 							limb = "r_hand"
 							third_limb = "r_arm"
 							valid_limb_states += "Hook Prosthesis"
@@ -1590,6 +1602,8 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 		character.disabilities|=EPILEPSY
 	if(disabilities & DISABILITY_FLAG_DEAF)
 		character.sdisabilities|=DEAF
+	if(disabilities & DISABILITY_FLAG_BLIND)
+		character.sdisabilities|=BLIND
 	/*if(disabilities & DISABILITY_FLAG_COUGHING)
 		character.sdisabilities|=COUGHING
 	if(disabilities & DISABILITY_FLAG_TOURETTES)

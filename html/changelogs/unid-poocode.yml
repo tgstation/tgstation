@@ -1,0 +1,7 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- rscadd: Added blindness to the list of disabilities that you can give to your character in character creation.
+- tweak: "Slightly improved character limb customization menu - you can now see which limbs are wooden, amputated or prosthetic."
