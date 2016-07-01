@@ -1032,6 +1032,8 @@ var/list/slot_equipment_priority = list( \
 
 	if(usr != src)
 		to_chat(usr, "No.")
+		return
+
 	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
 	if(msg != null)
