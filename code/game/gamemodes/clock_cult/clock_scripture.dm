@@ -934,17 +934,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_APPLICATION
 	var/confirmed_waste = FALSE
 
-/datum/clockwork_scripture/create_object/tinkerers_daemon/run_scripture()
-	if(!check_waste())
-		return 0
-	return ..()
-
-/datum/clockwork_scripture/create_object/tinkerers_daemon/scripture_effects()
-	if(!check_waste())
-		return 0
-	return ..()
-
-/datum/clockwork_scripture/create_object/tinkerers_daemon/proc/check_waste()
+/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
@@ -957,7 +947,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!invoker || !slab || confirm_wasteful == "No")
 			return 0
 		confirmed_waste = TRUE
-	return 1
+	return ..()
 
 //////////////
 // REVENANT //
