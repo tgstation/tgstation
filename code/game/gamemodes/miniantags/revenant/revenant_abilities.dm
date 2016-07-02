@@ -326,7 +326,6 @@
 	desc = "Causes nearby living things to waste away."
 	charge_max = 200
 	range = 3
-	reveal = 50
 	cast_amount = 50
 	unlock_amount = 200
 	action_icon_state = "blight"
@@ -361,7 +360,7 @@
 						blight.stage++
 				if(!blightfound)
 					H.AddDisease(new /datum/disease/revblight)
-					H << "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <span class='italics'>wrong</span>")].</span>"
+					H << "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>"
 			else
 				if(mob.reagents)
 					mob.reagents.add_reagent("plasma", 5)

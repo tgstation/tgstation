@@ -23,20 +23,20 @@
 	..()
 
 /datum/disease/revblight/stage_act()
-	if(!finalstage && affected_mob.lying && prob(stage*5))
+	if(!finalstage && affected_mob.lying && prob(stage*6))
 		cure()
 		return
 	if(!finalstage && prob(stage*3))
 		affected_mob << "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>"
-		affected_mob.confused += 10
-		affected_mob.adjustStaminaLoss(10)
+		affected_mob.confused += 8
+		affected_mob.adjustStaminaLoss(8)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 	if(!finalstage && stagedamage < stage)
 		stagedamage++
-		affected_mob.adjustToxLoss(stage*3) //should, normally, do about 45 toxin damage.
+		affected_mob.adjustToxLoss(stage*2) //should, normally, do about 30 toxin damage.
 		PoolOrNew(/obj/effect/overlay/temp/revenant, affected_mob.loc)
 	if(!finalstage && prob(45))
-		affected_mob.adjustStaminaLoss(stage*2)
+		affected_mob.adjustStaminaLoss(stage)
 	..() //So we don't increase a stage before applying the stage damage.
 	switch(stage)
 		if(2)
@@ -57,7 +57,7 @@
 				if(affected_mob.dna && affected_mob.dna.species)
 					affected_mob.dna.species.handle_mutant_bodyparts(affected_mob,"#1d2953")
 					affected_mob.dna.species.handle_hair(affected_mob,"#1d2953")
-					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <span class='italics'>wrong</span>...</span>")
+					affected_mob.visible_message("<span class='warning'>[affected_mob] looks terrifyingly gaunt...</span>", "<span class='revennotice'>You suddenly feel like your skin is <i>wrong</i>...</span>")
 					var/old_color = affected_mob.color
 					affected_mob.color = "#1d2953"
 					spawn(100)
