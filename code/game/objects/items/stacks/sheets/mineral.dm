@@ -298,21 +298,6 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	..()
 
 /****************************** Others ****************************/
-
-/*
- * Enriched Uranium
- */
-/obj/item/stack/sheet/mineral/enruranium
-	name = "enriched uranium"
-	icon_state = "sheet-enruranium"
-	force = 5.0
-	throwforce = 5
-	w_class = W_CLASS_MEDIUM
-	throw_speed = 3
-	throw_range = 3
-	origin_tech = "materials=5"
-	perunit = 1000
-
 /*
  * Adamantine
  */
