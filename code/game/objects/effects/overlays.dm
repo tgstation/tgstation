@@ -26,9 +26,11 @@
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
+	var/timerid
 
 /obj/effect/overlay/temp/Destroy()
 	..()
+	deltimer(timerid)
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/overlay/temp/New()
@@ -37,7 +39,7 @@
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
 
-	QDEL_IN(src, duration)
+	timerid = QDEL_IN(src, duration)
 
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
@@ -255,9 +257,16 @@
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
 
-/obj/effect/overlay/temp/purple_sparkles
+
+/obj/effect/overlay/temp/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "glowing cracks"
+	icon_state = "purplecrack"
+	duration = 6
+
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"

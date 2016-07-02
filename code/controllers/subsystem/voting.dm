@@ -192,6 +192,8 @@ var/datum/subsystem/vote/SSvote
 		for(var/c in clients)
 			var/client/C = c
 			var/datum/action/vote/V = new
+			if(question)
+				V.name = "Vote: [question]"
 			V.Grant(C.mob)
 			generated_actions += V
 		return 1

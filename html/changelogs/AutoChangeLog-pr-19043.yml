@@ -1,0 +1,5 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - rscadd: "Some new emojis have been added to OOC for your enjoyment. Try them out."
+  - rscadd: "New emojis are : coffee, trophy, tea, gear, supermatter, forceweapon, gift, kudzu, dosh, chrono, nya, and tophat. Type :nameofemoji: in OOC to use."

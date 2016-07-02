@@ -338,3 +338,18 @@
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
 	weaken = 1
+
+/obj/item/weapon/restraints/legcuffs/bola/energy //For Security
+	name = "energy bola"
+	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
+	icon_state = "ebola"
+	hitsound = 'sound/weapons/taserhit.ogg'
+	w_class = 2
+	breakouttime = 60
+
+/obj/item/weapon/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+	if(iscarbon(hit_atom))
+		var/obj/item/weapon/restraints/legcuffs/beartrap/B = new /obj/item/weapon/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
+		B.Crossed(hit_atom)
+		qdel(src)
+	..()
