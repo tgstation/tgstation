@@ -4501,14 +4501,11 @@
 /turf/open/space,
 /area/solar/auxport)
 "ajr" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("Labor")
-	},
+/obj/machinery/computer/gulag_teleporter_computer,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "ajs" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
 /area/security/processing)
 "ajt" = (
@@ -4516,20 +4513,23 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/storage/box/prisoner,
+/obj/machinery/camera{
+	c_tag = "Labor Shuttle Dock North"
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
 "aju" = (
-/obj/machinery/camera{
-	c_tag = "Labor Shuttle Dock North"
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
+	},
+/obj/machinery/computer/security{
+	name = "Labor Camp Monitoring";
+	network = list("Labor")
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
@@ -6434,7 +6434,9 @@
 	},
 /area/security/processing)
 "ant" = (
-/obj/structure/closet/emcloset,
+/obj/machinery/gulag_item_reclaimer{
+	pixel_y = 24
+	},
 /turf/open/floor/plasteel/warning{
 	dir = 9
 	},
@@ -6869,6 +6871,7 @@
 	},
 /area/security/processing)
 "aos" = (
+/obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/warning{
 	dir = 10
 	},
@@ -8526,7 +8529,7 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plating,
 /area/security/vacantoffice2)
 "aso" = (
 /obj/machinery/door/airlock/maintenance{

@@ -25,13 +25,15 @@
 	desc = "A strange metal tablet. A clock in the center turns around and around."
 	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect."
 	icon_state = "dread_ipad"
-	w_class = 3
+	slot_flags = SLOT_BELT
+	w_class = 2
 	var/list/stored_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 0, "hierophant_ansible" = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
+	actions_types = list(/datum/action/item_action/hierophant)
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -85,6 +87,9 @@
 			S.production_time = world.time + SLAB_PRODUCTION_TIME
 		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
+/obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
+	show_hierophant(user)
+
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
 		var/obj/item/clockwork/component/C = I
@@ -124,19 +129,19 @@
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection", "Report")
+	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
 		if("Recital")
+			if(user.get_active_hand() != src)
+				user << "<span class='warning'>You need to hold the slab to recite scripture!</span>"
+				return
 			recite_scripture(user)
 		if("Records")
 			show_stats(user)
 		if("Recollection")
 			show_guide(user)
-		if("Report")
-			show_hierophant(user)
-			access_display(user)
 	return 1
 
 /obj/item/clockwork/slab/proc/recite_scripture(mob/living/user)
@@ -178,7 +183,7 @@
 		var/datum/clockwork_scripture/C = S
 		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
-	if(!scripture_to_recite)
+	if(!scripture_to_recite || user.get_active_hand() != src)
 		return 0
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
@@ -223,15 +228,15 @@
 	In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
 	\
 	The first functionality of the slab is Recital. This allows you to consume components either from your slab or from the global cache (more on that in the scripture list) to perform \
-	effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs or break the will of those implanted by Nanotrasen. Nevertheless, scripture \
+	effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs, cause mass confusion, or force people to walk. Nevertheless, scripture \
 	is extremely important to a successful takeover.<br><br>\
 	\
 	The second functionality of the clockwork slab is Records. The slab is not a one-way link and can also feed information into the stream that it draws from. Records will allow many \
 	important statistics to be displayed, such as the amount of people converted and total construction value. You should check it often.<br><br>\
 	\
-	The third functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
+	The third and final functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
 	\
-	The fourth and final functionality is Report, which allows you to discreetly communicate with all other servants.<br><br>\
+	Examine the slab for component amount information.<br><br>\
 	\
 	A complete list of scripture, its effects, and its requirements can be found below. <i>Note that anything above a driver always consumes the components listed unless otherwise \
 	specified.</i><br><br>"
@@ -344,6 +349,7 @@
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
+		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
 		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
 		user << "<b>Stored components (with global cache):</b>"
 		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
@@ -430,6 +436,11 @@
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
 	actions_types = list(/datum/action/item_action/toggle_flame)
 
+/obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
+	if(slot != slot_glasses)
+		return 0
+	return ..()
+
 /obj/item/clothing/glasses/judicial_visor/equipped(mob/living/user, slot)
 	..()
 	if(slot != slot_glasses)
@@ -461,7 +472,7 @@
 			if(C.l_hand && C.r_hand)
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
-			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile</b> to unleash it, or use the action button again to dispel it.</i></span>")
+			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile at any range</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
 			flame = R
 			C.put_in_hands(R)
@@ -469,12 +480,10 @@
 		user.update_action_buttons_icon()
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
-	if(recharging)
+	if(recharging || !isliving(loc))
 		icon_state = "judicial_visor_0"
 		return 0
 	if(active == change_to)
-		return 0
-	if(!isliving(loc))
 		return 0
 	var/mob/living/L = loc
 	if(!is_servant_of_ratvar(L) || L.stat)
@@ -482,6 +491,7 @@
 	active = change_to
 	icon_state = "judicial_visor_[active]"
 	L.update_action_buttons_icon()
+	L.update_inv_glasses()
 	switch(active)
 		if(TRUE)
 			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
@@ -494,10 +504,13 @@
 	if(!src || !user)
 		return 0
 	recharging = FALSE
+	if(src == user.get_item_by_slot(slot_glasses))
+		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+	else
+		active = FALSE
 	icon_state = "judicial_visor_[active]"
 	user.update_action_buttons_icon()
-	if(loc == user)
-		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+	user.update_inv_glasses()
 
 /obj/item/weapon/ratvars_flame //Used by the judicial visor
 	name = "Ratvar's flame"
@@ -525,22 +538,24 @@
 /obj/item/weapon/ratvars_flame/afterattack(atom/target, mob/living/user, flag, params)
 	if(!visor || (visor && visor.cooldown))
 		qdel(src)
-	visor.recharging = TRUE
-	visor.flame = null
-	visor.update_status()
-	for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
-		if(V == visor)
-			continue
-		V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
-		V.update_status()
-		addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
-	clockwork_say(user, "Xarry, urn'guraf!")
-	user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
-	new/obj/effect/clockwork/judicial_marker(get_turf(target))
-	user.update_action_buttons_icon()
-	addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
-	qdel(src)
-	return 1
+	if(target in view(7, get_turf(user)))
+		visor.recharging = TRUE
+		visor.flame = null
+		visor.update_status()
+		for(var/obj/item/clothing/glasses/judicial_visor/V in user.GetAllContents())
+			if(V == visor)
+				continue
+			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
+			V.update_status()
+			addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
+		clockwork_say(user, "Xarry, urn'guraf!")
+		user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
+		new/obj/effect/clockwork/judicial_marker(get_turf(target), user)
+		user.update_action_buttons_icon()
+		user.update_inv_glasses()
+		addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
+		qdel(src)
+		return 1
 
 
 /obj/item/clothing/head/helmet/clockwork //Clockwork armor: High melee protection but weak to lasers
@@ -566,7 +581,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -576,7 +590,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1) //equipped happens before putting stuff on(but not before picking items up). thus, we need to wait for it to be on before forcing it off.
 
 /obj/item/clothing/suit/armor/clockwork
 	name = "clockwork cuirass"
@@ -594,7 +608,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
@@ -605,7 +618,7 @@
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
 			user.IgniteMob()
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 /obj/item/clothing/gloves/clockwork
 	name = "clockwork gauntlets"
@@ -628,7 +641,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
@@ -638,7 +650,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 /obj/item/clothing/shoes/clockwork
 	name = "clockwork treads"
@@ -656,7 +668,6 @@
 		if(!iscultist(user))
 			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
-			user.unEquip(src, 1)
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
@@ -666,7 +677,7 @@
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
-			user.unEquip(src, 1)
+		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 
 /obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
@@ -784,8 +795,8 @@
 		return
 	var/mob/living/L = target
 	if(issilicon(L) || iscultist(L))
-		L.Stun(3)
-		L.Weaken(3)
+		L.Stun(6)
+		L.Weaken(6)
 	break_spear(T)
 
 /obj/item/clockwork/ratvarian_spear/proc/break_spear(turf/T)

@@ -335,3 +335,11 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 
 /obj/machinery/door/proc/unlock()
 	return
+
+/obj/machinery/door/proc/hostile_lockdown(mob/origin)
+	if(!stat) //So that only powered doors are closed.
+		close() //Close ALL the doors!
+
+/obj/machinery/door/proc/disable_lockdown()
+	if(!stat) //Opens only powered doors.
+		open() //Open everything!

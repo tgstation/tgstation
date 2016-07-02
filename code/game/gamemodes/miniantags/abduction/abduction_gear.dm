@@ -52,8 +52,8 @@
 	stealth_active = 1
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
+		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
+			null, "cloak", null, M.dir)
 
 		M.name_override = disguise.name
 		M.icon = disguise.icon
@@ -61,7 +61,6 @@
 		M.overlays = disguise.overlays
 		M.update_inv_r_hand()
 		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -69,12 +68,11 @@
 	stealth_active = 0
 	if(istype(src.loc, /mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src.loc
-		spawn(0)
-			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
+		addtimer(GLOBAL_PROC, "anim", 0, FALSE, M.loc, M, 'icons/mob/mob.dmi',
+			null, "uncloak", null, M.dir)
 		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
 	DeactivateStealth()
@@ -265,7 +263,6 @@
 		START_PROCESSING(SSobj, src)
 	else
 		imp_in << "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>"
-	return
 
 /obj/item/weapon/implant/abductor/process()
 	if(cooldown < initial(cooldown))
@@ -444,10 +441,9 @@ Congratulations! You are now trained for xenobiology research!"}
 		H.forcesay(hit_appends)
 
 	add_logs(user, L, "stunned")
-	return
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.stunned)
+	if(L.stunned || L.sleeping)
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
@@ -458,7 +454,6 @@ Congratulations! You are now trained for xenobiology research!"}
 		user << "<span class='warning'>Sleep inducement works fully only on stunned specimens! </span>"
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
-	return
 
 /obj/item/weapon/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
@@ -536,31 +531,38 @@ Congratulations! You are now trained for xenobiology research!"}
 
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
+	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
+	desc = "You've never seen this before."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
+	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
+	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
+	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
+	desc = "Why would bloodless aliens have a tool to stop bleeding? \
+		Unless..."
 	icon = 'icons/obj/abductor.dmi'
 	origin_tech = "materials=2;biotech=2;abductor=2"
 

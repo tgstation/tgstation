@@ -7,14 +7,14 @@
 	w_class = 3
 	force = 5
 	flags = NOBLUDGEON
-	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides 10 charge
+	var/stored_alloy = 0 //Requires this to function; each chunk of replicant alloy provides REPLICANT_ALLOY_UNIT
 	var/max_alloy = REPLICANT_ALLOY_UNIT * 10
 	var/uses_alloy = TRUE
 	var/metal_to_alloy = FALSE
 	var/repairing = null //what we're currently repairing, if anything
 
 /obj/item/clockwork/clockwork_proselytizer/preloaded
-	stored_alloy = REPLICANT_ALLOY_UNIT
+	stored_alloy = REPLICANT_WALL_MINUS_FLOOR+REPLICANT_WALL_TOTAL
 
 /obj/item/clockwork/clockwork_proselytizer/scarab
 	name = "scarab proselytizer"
@@ -44,13 +44,26 @@
 		if(uses_alloy)
 			user << "<span class='alloy'>It has [stored_alloy]/[max_alloy] units of liquified alloy stored.</span>"
 			user << "<span class='alloy'>Use it on a Tinkerer's Cache, strike it with Replicant Alloy, or attack Replicant Alloy with it to add additional liquified alloy.</span>"
+			user << "<span class='alloy'>Use it in-hand to remove stored liquified alloy.</span>"
+
+/obj/item/clockwork/clockwork_proselytizer/attack_self(mob/living/user)
+	if(is_servant_of_ratvar(user) && uses_alloy)
+		if(!can_use_alloy(REPLICANT_ALLOY_UNIT))
+			user << "<span class='warning'>[src] [stored_alloy ? "Lacks enough":"Contains no"] alloy to reform[stored_alloy ? "":" any"] into solidified alloy!</span>"
+			return
+		modify_stored_alloy(-REPLICANT_ALLOY_UNIT)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		new/obj/item/clockwork/component/replicant_alloy(user.loc)
+		user << "<span class='brass'>You force [stored_alloy ? "some":"all"] of the alloy in [src]'s compartments to reform and solidify. \
+		It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
 
 /obj/item/clockwork/clockwork_proselytizer/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/clockwork/component/replicant_alloy) && is_servant_of_ratvar(user) && uses_alloy)
-		if(stored_alloy + REPLICANT_ALLOY_UNIT >= max_alloy)
+		if(!can_use_alloy(-REPLICANT_ALLOY_UNIT))
 			user << "<span class='warning'>[src]'s replicant alloy compartments are full!</span>"
 			return 0
 		modify_stored_alloy(REPLICANT_ALLOY_UNIT)
+		playsound(user, 'sound/machines/click.ogg', 50, 1)
 		user << "<span class='brass'>You force [I] to liquify and pour it into [src]'s compartments. It now contains [stored_alloy]/[max_alloy] units of liquified alloy.</span>"
 		user.drop_item()
 		qdel(I)
@@ -297,10 +310,10 @@
 	return
 
 /obj/structure/clockwork/wall_gear/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 10, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
+	return list("operation_time" = 10, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 5, "new_obj_type" = /obj/item/clockwork/component/replicant_alloy, "alloy_cost" = REPLICANT_ALLOY_UNIT-REPLICANT_STANDARD, "spawn_dir" = SOUTH)
+	return list("operation_time" = 5, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_STANDARD, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/component/replicant_alloy/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "alloy_cost" = -REPLICANT_ALLOY_UNIT, "spawn_dir" = SOUTH)

@@ -62,6 +62,8 @@ var/global/list/GlobalPool = list()
 
 	var/datum/pooled = pop(GlobalPool[get_type])
 	if(pooled)
+		pooled.gc_destroyed = null
+
 		var/atom/movable/AM
 		if(istype(pooled, /atom/movable))
 			AM = pooled
@@ -91,12 +93,14 @@ var/global/list/GlobalPool = list()
 
 	GlobalPool[diver.type] |= diver
 
-	if (destroy)
+	if(destroy)
 		diver.Destroy()
+
+	diver.gc_destroyed = 1
 
 	diver.ResetVars()
 
-var/list/exclude = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type")
+var/list/exclude = list("animate_movement", "contents", "loc", "locs", "parent_type", "vars", "verbs", "type", "gc_destroyed")
 var/list/pooledvariables = list()
 //thanks to clusterfack @ /vg/station for these two procs
 /datum/proc/createVariables()

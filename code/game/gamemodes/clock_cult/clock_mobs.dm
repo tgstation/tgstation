@@ -24,6 +24,9 @@
 	internalslab = null
 	return ..()
 
+/mob/living/simple_animal/hostile/clockwork/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/simple_animal/hostile/clockwork/Login()
 	..()
 	src << playstyle_string

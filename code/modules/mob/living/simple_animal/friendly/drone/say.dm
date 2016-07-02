@@ -11,6 +11,9 @@
 		..()
 
 
+/mob/living/simple_animal/drone/get_spans()
+	return ..() | SPAN_ROBOT
+
 /mob/living/simple_animal/drone/proc/alert_drones(msg, dead_can_hear = 0)
 	for(var/W in mob_list)
 		var/mob/living/simple_animal/drone/M = W
@@ -22,9 +25,9 @@
 
 
 /mob/living/simple_animal/drone/proc/drone_chat(msg)
-	var/rendered = "<i><span class='game say'>Drone Chat: \
+	var/rendered = "<i>Drone Chat: \
 		<span class='name'>[name]</span>: \
-		<span class='message'>[msg]</span></span></i>"
+		<span class='message'>[say_quote(msg, get_spans())]</span></i>"
 	alert_drones(rendered, 1)
 
 /mob/living/simple_animal/drone/binarycheck()

@@ -97,6 +97,7 @@ This file's folder contains:
 	M.languages_spoken |= RATVAR
 	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
@@ -126,6 +127,7 @@ This file's folder contains:
 	M.mind.special_role = null
 	M.languages_spoken &= ~RATVAR
 	M.languages_understood &= ~RATVAR
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -137,18 +139,6 @@ This file's folder contains:
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
-	return 1
-
-/proc/send_hierophant_message(mob/user, message, large)
-	if(!user || !message || !ticker || !ticker.mode)
-		return 0
-	var/parsed_message = "<span class='[large ? "big_brass":"heavy_brass"]'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[large ? "large_brass":"brass"]'>\"[message]\"</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
 	return 1
 
 ///////////////
@@ -249,8 +239,8 @@ This file's folder contains:
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using Report in your slab's interface, and you can find a \
-	concise tutorial in Recollection.</b>"
+	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
 	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
 	return 1
 

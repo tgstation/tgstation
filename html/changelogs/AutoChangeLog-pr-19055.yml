@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Proselytizers can now reform stored alloy into usable component alloy when used in-hand."
