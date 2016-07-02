@@ -96,7 +96,7 @@
 		return
 	switch(action)
 		if("send")
-			if(SSshuttle.supply.canMove())
+			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
@@ -113,7 +113,7 @@
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
 				return
-			if(SSshuttle.supply.canMove())
+			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
 			else if(SSshuttle.supply.mode == SHUTTLE_IDLE)

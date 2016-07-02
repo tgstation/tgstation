@@ -44,8 +44,8 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		var/turf/T = trf
 		for(var/a in T.GetAllContents())
 			if(is_type_in_typecache(a, blacklisted_cargo_types))
-				return TRUE
-	return FALSE
+				return FALSE
+	return TRUE
 
 /obj/docking_port/mobile/supply/request()
 	if(mode != SHUTTLE_IDLE)
