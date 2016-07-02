@@ -950,7 +950,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(is_servant_of_ratvar(L))
 			servants++
 	if(!confirmed_waste && servants * 0.2 < clockwork_daemons+1)
-		var/confirm_wasteful = alert(user, "This daemon will prevent other daemons from working", "Do you want to waste components?", "Yes", "No")
+		var/confirm_wasteful = alert(user, "This daemon will prevent other daemons from working", "Do you want to waste components?", "No", "Yes")
 		if(!invoker || !slab || confirm_wasteful == "No")
 			return 0
 		confirmed_waste = TRUE
