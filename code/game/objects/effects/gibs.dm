@@ -1,8 +1,8 @@
 /proc/gibs(atom/location, var/list/viruses, var/datum/dna/MobDNA)		//CARN MARKER
 	new /obj/effect/gibspawner/generic(get_turf(location),viruses,MobDNA)
 
-/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
-	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor)
+/proc/hgibs(atom/location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor, spread_radius)
+	new /obj/effect/gibspawner/human(get_turf(location),viruses,MobDNA,fleshcolor,bloodcolor, spread_radius)
 
 /proc/xgibs(atom/location, var/list/viruses)
 	new /obj/effect/gibspawner/xeno(get_turf(location),viruses)
@@ -19,16 +19,16 @@
 	var/fleshcolor //Used for gibbed humans.
 	var/bloodcolor //Used for gibbed humans.
 
-/obj/effect/gibspawner/New(location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor)
+/obj/effect/gibspawner/New(location, var/list/viruses, var/datum/dna/MobDNA, var/fleshcolor, var/bloodcolor, spread_radius)
 	..()
 
 	if(fleshcolor) src.fleshcolor = fleshcolor
 	if(bloodcolor) src.bloodcolor = bloodcolor
 
 	if(istype(loc,/turf)) //basically if a badmin spawns it
-		Gib(loc,viruses,MobDNA)
+		Gib(loc,viruses,MobDNA,spread_radius)
 
-/obj/effect/gibspawner/proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null)
+/obj/effect/gibspawner/proc/Gib(atom/location, var/list/viruses = list(), var/datum/dna/MobDNA = null, spread_radius)
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		to_chat(world, "<span class='warning'>Gib list length mismatch!</span>")
 		return
@@ -76,6 +76,6 @@
 					gib.blood_DNA["Non-human DNA"] = "A+"
 				var/list/directions = gibdirections[i]
 				if(directions.len)
-					gib.streak(directions)
+					gib.streak(directions, spread_radius)
 
 	qdel(src)
