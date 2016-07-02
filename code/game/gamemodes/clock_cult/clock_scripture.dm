@@ -932,7 +932,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
-	var/confirmed_waste = FALSE
 
 /datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
 	var/servants = 0
@@ -940,13 +939,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(is_servant_of_ratvar(L))
 			servants++
 	if(servants * 0.2 < clockwork_daemons)
-		invoker << "<span class='nezbere'>\"Daemons are already disabled, making [clockwork_daemons ? "more of them":"one"] would be a waste.\</span>"
+		invoker << "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>"
 		return 0
-	if(!confirmed_waste && servants * 0.2 < clockwork_daemons+1)
-		var/confirm_wasteful = alert(invoker, "This daemon will prevent other daemons from working", "Do you want to waste components?", "No", "Yes")
-		if(!invoker || !slab || confirm_wasteful == "No")
-			return 0
-		confirmed_waste = TRUE
+	if(servants * 0.2 < clockwork_daemons+1)
+		invoker << "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>"
+		return 0
 	return ..()
 
 //////////////
