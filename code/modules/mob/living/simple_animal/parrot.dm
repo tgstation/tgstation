@@ -618,7 +618,7 @@
 /mob/living/simple_animal/parrot/movement_delay()
 	if(client && stat == CONSCIOUS && parrot_state != "parrot_fly")
 		icon_state = "parrot_fly"
-	..()
+	return ..()
 
 /mob/living/simple_animal/parrot/proc/isStuck()
 	//Check to see if the parrot is stuck due to things like windows or doors or windowdoors

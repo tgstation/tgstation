@@ -697,3 +697,8 @@
 /turf/proc/soft_add_holomap(var/atom/movable/AM)
 	if (!ticker || ticker.current_state != GAME_STATE_PLAYING)
 		add_holomap(AM)
+
+// Return -1 to make movement instant for the mob
+// Return high values to make movement slower
+/turf/proc/adjust_slowdown(mob/living/L, base_slowdown)
+	return base_slowdown

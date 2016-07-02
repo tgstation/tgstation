@@ -9,12 +9,16 @@
 	plasma_rate = 20
 
 /mob/living/carbon/alien/humanoid/queen/movement_delay()
-	return (5 + move_delay_add + config.alien_delay) //Queens are slow as fuck
+	var/tally = 5 + move_delay_add + config.alien_delay //Queens are slow as fuck
+
+	var/turf/T = loc
+	if(istype(T))
+		tally = T.adjust_slowdown(src, tally)
+
+	return tally
 
 /mob/living/carbon/alien/humanoid/queen/New()
-	var/datum/reagents/R = new/datum/reagents(100)
-	reagents = R
-	R.my_atom = src
+	create_reagents(100)
 
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)

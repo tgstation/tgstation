@@ -3,12 +3,15 @@
 
 	if(flying) return -1
 
-	if(istype(loc,/turf/simulated/floor))
-		var/turf/simulated/floor/T = loc
-		if(T.material=="phazon")
-			return -1 // Phazon floors make us go fast
-
 	var/tally = 0
+
+	var/turf/T = loc
+	if(istype(T))
+		tally = T.adjust_slowdown(src, tally)
+
+		if(tally == -1)
+			return tally
+
 	if(species && species.move_speed_mod)
 		tally += species.move_speed_mod
 

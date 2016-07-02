@@ -104,6 +104,13 @@
 /mob/living/carbon/slime/movement_delay()
 	var/tally = 0
 
+	var/turf/T = loc
+	if(istype(T))
+		tally = T.adjust_slowdown(src, tally)
+
+		if(tally == -1)
+			return tally
+
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 

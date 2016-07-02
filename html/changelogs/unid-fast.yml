@@ -1,0 +1,6 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- bugfix: Phazon floors now affect all types of mobs, not only a few of them

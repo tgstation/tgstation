@@ -8,6 +8,9 @@
 /obj/item/stack/tile
 	var/material
 
+/obj/item/stack/tile/proc/adjust_slowdown(mob/living/L, current_slowdown)
+	return current_slowdown
+
 /obj/item/stack/tile/ex_act(severity)
 	switch(severity)
 		if(1.0)

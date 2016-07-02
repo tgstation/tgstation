@@ -648,3 +648,10 @@ turf/simulated/floor/update_icon()
 		icon_state = "cult"
 		turf_animation('icons/effects/effects.dmi',"cultfloor",0,0,MOB_LAYER-1,anim_plane = PLANE_OBJ)
 	return
+
+/turf/simulated/floor/adjust_slowdown(mob/living/L, current_slowdown)
+	//Phazon floors make movement instant
+	if(floor_tile)
+		return floor_tile.adjust_slowdown(L, current_slowdown)
+
+	return ..()
