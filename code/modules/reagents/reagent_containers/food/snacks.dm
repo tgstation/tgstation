@@ -273,7 +273,7 @@
 			M.delayNextAttack(10)
 			var/mob/living/simple_animal/mouse/N = M
 			if(prob(25)) //We are noticed
-				N.visible_message("[N] nibbles away at \the [src].", "You nibble away at \the [src]")
+				N.visible_message("[N] nibbles away at \the [src].", "<span class='notice'>You nibble away at \the [src].</span>")
 			else
 				to_chat(N, ("<span class='notice'>You nibble away at \the [src].</span>"))
 			N.health = min(N.health + 1, N.maxHealth)
