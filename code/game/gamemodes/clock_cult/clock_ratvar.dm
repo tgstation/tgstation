@@ -67,7 +67,7 @@
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
 	countdown.stop()
 	visible_message("<span class='userdanger'>The [src] begins to pulse uncontrollably... you might want to run!</span>")
-	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 40)
+	world << sound('sound/effects/clockcult_gateway_disrupted.ogg', 0, channel = 8, volume = 50)
 	make_glow()
 	glow.icon_state = "clockwork_gateway_disrupted"
 	takes_damage = FALSE
@@ -94,19 +94,19 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!first_sound_played)
-				world << sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 25)
+				world << sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30)
 				first_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!second_sound_played)
-				world << sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 30)
+				world << sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35)
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!third_sound_played)
-				world << sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 35)
+				world << sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40)
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
