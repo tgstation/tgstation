@@ -663,6 +663,7 @@
 #include "code\game\objects\items\weapons\paint.dm"
 #include "code\game\objects\items\weapons\paiwire.dm"
 #include "code\game\objects\items\weapons\pneumaticCannon.dm"
+#include "code\game\objects\items\weapons\powerfist.dm"
 #include "code\game\objects\items\weapons\RCD.dm"
 #include "code\game\objects\items\weapons\RPD.dm"
 #include "code\game\objects\items\weapons\RSF.dm"
