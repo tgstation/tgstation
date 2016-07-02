@@ -178,7 +178,7 @@ This file's folder contains:
 	var/starter_servants = 3 //Guaranteed three servants
 	var/number_players = num_players()
 	if(number_players > 30) //plus one servant for every additional 15 players
-		number_players - 30
+		number_players -= 30
 		starter_servants += round(number_players/15)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
