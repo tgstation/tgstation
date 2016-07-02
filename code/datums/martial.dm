@@ -120,7 +120,7 @@
 			D.apply_effect(10,WEAKEN,armor_block)
 			D.SetSleeping(5)
 			D.forcesay(hit_appends)
-		add_logs(A, D, "knocked out (boxing) ")
+			add_logs(A, D, "knocked out (boxing) ")
 		else if(D.lying)
 			D.forcesay(hit_appends)
 	return 1
