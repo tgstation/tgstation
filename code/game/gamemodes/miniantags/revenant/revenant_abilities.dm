@@ -205,7 +205,7 @@
 			addtimer(src, "overload", 0, FALSE, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/proc/overload(turf/T, mob/user)
-	for(var/obj/machinery/light/L in T.contents)
+	for(var/obj/machinery/light/L in T)
 		if(!L.on)
 			return
 		L.visible_message("<span class='warning'><b>\The [L] suddenly flares brightly and begins to spark!</span>")
@@ -263,16 +263,16 @@
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
 	for(var/obj/structure/closet/closet in T.contents)
 		closet.open()
-	for(var/obj/structure/bodycontainer/corpseholder in T.contents)
+	for(var/obj/structure/bodycontainer/corpseholder in T)
 		if(corpseholder.connected.loc == corpseholder)
 			corpseholder.open()
-	for(var/obj/machinery/dna_scannernew/dna in T.contents)
+	for(var/obj/machinery/dna_scannernew/dna in T)
 		dna.open_machine()
-	for(var/obj/structure/window/window in T.contents)
+	for(var/obj/structure/window/window in T)
 		window.take_damage(rand(30,80))
 		if(window && window.fulltile)
 			PoolOrNew(/obj/effect/overlay/temp/revenant/cracks, window.loc)
-	for(var/obj/machinery/light/light in T.contents)
+	for(var/obj/machinery/light/light in T)
 		light.flicker(20) //spooky
 
 //Malfunction: Makes bad stuff happen to robots and machines.
@@ -292,19 +292,19 @@
 			addtimer(src, "malfunction", 0, FALSE, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
-	for(var/mob/living/simple_animal/bot/bot in T.contents)
+	for(var/mob/living/simple_animal/bot/bot in T)
 		if(!bot.emagged)
 			PoolOrNew(/obj/effect/overlay/temp/revenant, bot.loc)
 			bot.locked = 0
 			bot.open = 1
 			bot.emag_act()
-	for(var/mob/living/carbon/human/human in T.contents)
+	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
 		human << "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>"
 		PoolOrNew(/obj/effect/overlay/temp/revenant, human.loc)
 		human.emp_act(1)
-	for(var/obj/thing in T.contents)
+	for(var/obj/thing in T)
 		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
 			continue
 		if(prob(20))
@@ -314,7 +314,7 @@
 		else
 			if(!istype(thing, /obj/machinery/clonepod)) //I hate everything but mostly the fact there's no better way to do this without just not affecting it at all
 				thing.emp_act(1)
-	for(var/mob/living/silicon/robot/S in T.contents) //Only works on cyborgs, not AI
+	for(var/mob/living/silicon/robot/S in T) //Only works on cyborgs, not AI
 		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, 1)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, S.loc)
 		S.spark_system.start()
@@ -337,7 +337,7 @@
 			addtimer(src, "blight", 0, FALSE, T, user)
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/proc/blight(turf/T, mob/user)
-	for(var/mob/living/mob in T.contents)
+	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
 		PoolOrNew(/obj/effect/overlay/temp/revenant, mob.loc)
@@ -367,19 +367,15 @@
 					mob.reagents.add_reagent("plasma", 5)
 		else
 			mob.adjustToxLoss(5)
-	for(var/obj/effect/spacevine/vine in T.contents) //Fucking with botanists, the ability.
+	for(var/obj/effect/spacevine/vine in T) //Fucking with botanists, the ability.
 		vine.color = "#823abb"
 		PoolOrNew(/obj/effect/overlay/temp/revenant, vine.loc)
-		spawn(10)
-			if(vine)
-				qdel(vine)
-	for(var/obj/effect/glowshroom/shroom in T.contents)
+		QDEL_IN(vine, 10)
+	for(var/obj/effect/glowshroom/shroom in T)
 		shroom.color = "#823abb"
 		PoolOrNew(/obj/effect/overlay/temp/revenant, shroom.loc)
-		spawn(10)
-			if(shroom)
-				qdel(shroom)
-	for(var/obj/machinery/hydroponics/tray in T.contents)
+		QDEL_IN(shroom, 10)
+	for(var/obj/machinery/hydroponics/tray in T)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, tray.loc)
 		tray.pestlevel = rand(8, 10)
 		tray.weedlevel = rand(8, 10)

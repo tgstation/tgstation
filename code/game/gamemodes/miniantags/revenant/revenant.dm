@@ -171,6 +171,8 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
+/mob/living/simple_animal/revenant/ratvar_act()
+	return //clocks get out reee
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
@@ -181,9 +183,12 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		spawn(30)
-			inhibited = 0
-			update_action_buttons_icon()
+		addtimer(src, "reset_inhibit", 30, FALSE)
+
+/mob/living/simple_animal/revenant/proc/reset_inhibit()
+	if(src)
+		inhibited = 0
+		update_action_buttons_icon()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
@@ -192,7 +197,7 @@
 	essence = max(0, essence-amount)
 	update_health_hud()
 	if(essence == 0)
-		src << "<span class='revendanger'>You feel your essence fraying!</span>"
+		death()
 
 /mob/living/simple_animal/revenant/dust()
 	death()
