@@ -277,7 +277,7 @@ var/next_mob_id = 0
 
 /mob/dead/reset_perspective(atom/A)
 	if(client)
-		if(ismob(client.eye) && (client.eye != src))
+		if(ismob(client.eye) && (client.eye != src) && client.eye.observers)
 			var/mob/target = client.eye
 			target.observers -= src
 			var/list/L = target.observers

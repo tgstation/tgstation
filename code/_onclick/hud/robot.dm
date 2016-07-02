@@ -5,7 +5,14 @@
 	name = "cyborg module"
 	icon_state = "nomod"
 
+/obj/screen/robot/Click()
+	if(isobserver(usr))
+		return
+
+
 /obj/screen/robot/module/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	if(R.module)
 		R.hud_used.toggle_show_robot_modules()
@@ -17,6 +24,8 @@
 	icon_state = "inv1"
 
 /obj/screen/robot/module1/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(1)
 
@@ -25,6 +34,8 @@
 	icon_state = "inv2"
 
 /obj/screen/robot/module2/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(2)
 
@@ -33,6 +44,8 @@
 	icon_state = "inv3"
 
 /obj/screen/robot/module3/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_module(3)
 
@@ -41,6 +54,8 @@
 	icon_state = "radio"
 
 /obj/screen/robot/radio/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.radio.interact(R)
 
@@ -49,6 +64,8 @@
 	icon_state = "store"
 
 /obj/screen/robot/store/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.uneq_active()
 
@@ -57,6 +74,8 @@
 	icon_state = "lamp0"
 
 /obj/screen/robot/lamp/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.control_headlamp()
 
@@ -65,6 +84,8 @@
 	icon_state = "ionpulse0"
 
 /obj/screen/robot/thrusters/Click()
+	if(!..())
+		return
 	var/mob/living/silicon/robot/R = usr
 	R.toggle_ionpulse()
 
