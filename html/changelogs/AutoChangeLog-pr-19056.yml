@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscdel: "Mending motors start with 2500W of power in alloy, from 5000. Sigils of Transmission start with 2500W of power, from 4000. Clockwork Proselytizers start with 90 alloy, from 100."
