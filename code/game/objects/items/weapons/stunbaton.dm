@@ -23,6 +23,11 @@
 	update_icon()
 	return
 
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	..()
+	if(status && prob(35))
+		baton_stun(hit_atom, usr)
+
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
