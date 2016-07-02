@@ -338,11 +338,9 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bh" = (
+"bf" = (
 /obj/structure/grille,
-/turf/open/floor/plating/warnplate{
-	dir = 4
-	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/grille,
@@ -350,9 +348,11 @@
 	dir = 8
 	},
 /area/shuttle/escape)
-"bf" = (
+"bh" = (
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/warnplate{
+	dir = 4
+	},
 /area/shuttle/escape)
 
 (1,1,1) = {"

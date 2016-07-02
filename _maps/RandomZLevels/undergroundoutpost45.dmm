@@ -1156,6 +1156,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 351.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -1172,6 +1173,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 351.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2783,6 +2785,7 @@
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2968,6 +2971,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -3387,6 +3391,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3704,6 +3709,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3968,6 +3974,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -4207,6 +4214,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4551,6 +4559,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -4565,6 +4574,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4610,6 +4620,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6330,6 +6341,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6379,6 +6391,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -8643,6 +8656,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -10844,6 +10858,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10863,6 +10878,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10883,6 +10899,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11286,6 +11303,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11643,6 +11661,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11662,6 +11681,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11681,6 +11701,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -14512,6 +14533,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -15359,6 +15381,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -15674,6 +15697,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -16056,6 +16080,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17484,6 +17509,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17496,6 +17522,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17513,6 +17540,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17534,6 +17562,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17554,6 +17583,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17575,6 +17605,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17595,6 +17626,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17614,6 +17646,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17632,6 +17665,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17652,6 +17686,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17669,6 +17704,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17686,6 +17722,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17704,6 +17741,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17724,6 +17762,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17742,6 +17781,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17760,6 +17800,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17778,6 +17819,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17797,6 +17839,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17814,6 +17857,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17831,6 +17875,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17849,6 +17894,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17866,6 +17912,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17884,6 +17931,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17905,6 +17953,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17925,6 +17974,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17945,6 +17995,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17964,6 +18015,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17985,6 +18037,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18003,6 +18056,7 @@
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
 	temperature = 363.9;
+	
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
