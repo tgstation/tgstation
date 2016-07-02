@@ -19,6 +19,13 @@ var/bomb_set
 	icon_state = "nuclearbomb_base"
 	density = 1
 
+	var/timer_set = 60
+	var/default_timer_set = 60
+	var/minimum_timer_set = 60
+	var/maximum_timer_set = 3600
+	var/ui_style = "nanotrasen"
+
+	var/numeric_input = ""
 	var/timeleft = 60
 	var/timing = 0
 	var/r_code = "ADMIN"
@@ -58,9 +65,9 @@ var/bomb_set
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
 	icon_state = "nuclearbomb_base"
 	anchored = 1 //stops it being moved
-	layer = MOB_LAYER
 
 /obj/machinery/nuclearbomb/syndicate
+	ui_style = "syndicate"
 
 /obj/machinery/nuclearbomb/syndicate/New()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
@@ -227,84 +234,102 @@ var/bomb_set
 /obj/machinery/nuclearbomb/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/nuclearbomb/attack_ai(mob/user)
-	return
+/obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "nuclear_bomb", name, 500, 600, master_ui, state)
+		ui.set_style(ui_style)
+		ui.open()
 
-/obj/machinery/nuclearbomb/attack_hand(mob/user)
-	user.set_machine(src)
-	var/dat = text("<TT>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (auth ? "++++++++++" : "----------"))
-	if (auth)
-		if (yes_code)
-			dat += text("\n<B>Status</B>: []-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] <A href='?src=\ref[];timer=1'>Toggle</A><BR>\nTime: <A href='?src=\ref[];time=-10'>-</A> <A href='?src=\ref[];time=-1'>-</A> [] <A href='?src=\ref[];time=1'>+</A> <A href='?src=\ref[];time=10'>+</A><BR>\n<BR>\nSafety: [] <A href='?src=\ref[];safety=1'>Toggle</A><BR>\nAnchor: [] <A href='?src=\ref[];anchor=1'>Toggle</A><BR>\n", (timing ? "Func/Set" : "Functional"), (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), src, src, src, timeleft, src, src, (safety ? "On" : "Off"), src, (anchored ? "Engaged" : "Off"), src)
+/obj/machinery/nuclearbomb/ui_data(mob/user)
+	var/list/data = list()
+	data["disk_present"] = auth
+	data["code_approved"] = yes_code
+	var/first_status
+	if(auth)
+		if(yes_code)
+			first_status = timing ? "Func/Set" : "Functional"
 		else
-			dat += text("\n<B>Status</B>: Auth. S2-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\n[] Safety: Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
+			first_status = "Auth S2."
 	else
-		if (timing)
-			dat += text("\n<B>Status</B>: Set-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
+		if(timing)
+			first_status = "Set"
 		else
-			dat += text("\n<B>Status</B>: Auth. S1-[]<BR>\n<B>Timer</B>: []<BR>\n<BR>\nTimer: [] Toggle<BR>\nTime: - - [] + +<BR>\n<BR>\nSafety: [] Toggle<BR>\nAnchor: [] Toggle<BR>\n", (safety ? "Safe" : "Engaged"), timeleft, (timing ? "On" : "Off"), timeleft, (safety ? "On" : "Off"), (anchored ? "Engaged" : "Off"))
-	var/message = "AUTH"
-	if (auth)
-		message = text("[]", code)
-		if (yes_code)
-			message = "*****"
-	dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A><A href='?src=\ref[];type=2'>2</A><A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A><A href='?src=\ref[];type=5'>5</A><A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A><A href='?src=\ref[];type=8'>8</A><A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A><A href='?src=\ref[];type=0'>0</A><A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-	var/datum/browser/popup = new(user, "nuclearbomb", name, 300, 400)
-	popup.set_content(dat)
-	popup.open()
+			first_status = "Auth S1."
+	var/second_status = safety ? "Safe" : "Engaged"
+	data["status1"] = first_status
+	data["status2"] = second_status
+	data["anchored"] = anchored
+	data["safety"] = safety
 
-/obj/machinery/nuclearbomb/Topic(href, href_list)
-	if(..())
+	data["timer_set"] = timer_set
+	data["timer_is_not_default"] = timer_set != default_timer_set
+	data["timer_is_not_min"] = timer_set != minimum_timer_set
+	data["timer_is_not_max"] = timer_set != maximum_timer_set
+
+	var/message = "AUTH"
+	if(auth)
+		message = "[numeric_input]"
+		if(yes_code)
+			message = "*****"
+	data["message"] = message
+
+	return data
+
+/obj/machinery/nuclearbomb/ui_act(action, params)
+	if(!..())
 		return
-	usr.set_machine(src)
-	if (href_list["auth"])
-		if (auth)
-			auth.loc = loc
-			yes_code = 0
-			auth = null
-		else
-			var/obj/item/I = usr.get_active_hand()
-			if (istype(I, /obj/item/weapon/disk/nuclear))
-				usr.drop_item()
-				I.loc = src
-				auth = I
-	if (auth)
-		if (href_list["type"])
-			if (href_list["type"] == "E")
-				if (code == r_code)
-					yes_code = 1
-					code = null
-				else
-					code = "ERROR"
-			else
-				if (href_list["type"] == "R")
-					yes_code = 0
-					code = null
-				else
-					lastentered = text("[]", href_list["type"])
-					if (text2num(lastentered) == null)
-						var/turf/LOC = get_turf(usr)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) tried to exploit a nuclear bomb by entering non-numerical codes: <a href='?_src_=vars;Vars=\ref[src]'>[lastentered]</a> ! ([LOC ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[LOC.x];Y=[LOC.y];Z=[LOC.z]'>JMP</a>" : "null"])", 0)
-						log_admin("EXPLOIT : [key_name(usr)] tried to exploit a nuclear bomb by entering non-numerical codes: [lastentered] !")
-					else
-						code += lastentered
-						if (length(code) > 5)
-							code = "ERROR"
-		if (yes_code)
-			if (href_list["time"])
-				var/time = text2num(href_list["time"])
-				timeleft += time
-				timeleft = min(max(round(timeleft), 60), 600)
-			if (href_list["timer"])
-				set_active()
-			if (href_list["safety"])
-				set_safety()
-			if (href_list["anchor"])
-				set_anchor()
-	add_fingerprint(usr)
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			attack_hand(M)
+	switch(action)
+		if("eject_disk")
+			if(auth && auth.loc == src)
+				auth.forceMove(get_turf(src))
+				auth = null
+				. = TRUE
+		if("insert_disk")
+			if(!auth)
+				var/obj/item/I = usr.get_active_hand()
+				if(istype(I, /obj/item/weapon/disk/nuclear))
+					usr.drop_item()
+					I.forceMove(src)
+					auth = I
+					. = TRUE
+		if("keypad")
+			if(auth)
+				var/digit = params["digit"]
+				switch(digit)
+					if("R")
+						numeric_input = ""
+						yes_code = FALSE
+						. = TRUE
+					if("E")
+						if(numeric_input == code)
+							numeric_input = ""
+							yes_code = TRUE
+							. = TRUE
+						else
+							numeric_input = "ERROR"
+					if("0","1","2","3","4","5","6","7","8","9")
+						numeric_input += digit
+						. = TRUE
+		if("timer")
+			if(auth && yes_code)
+				var/change = params["change"]
+				if(change == "reset")
+					timer_set = default_timer_set
+				else if(change == "decrease")
+					timer_set = max(minimum_timer_set, timer_set - 10)
+				else if(change == "increase")
+					timer_set = min(maximum_timer_set, timer_set + 10)
+				else if(change == "input")
+					var/user_input = input(usr, "Set time to detonation.", name) as null|num
+					if(!user_input)
+						return
+					var/N = text2num(user_input)
+					if(!N)
+						return
+					timer_set = Clamp(N,minimum_timer_set,maximum_timer_set)
+				. = TRUE
+
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
 	if(!isinspace())
