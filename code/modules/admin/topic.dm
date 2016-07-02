@@ -126,6 +126,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a clockwork cult.")
+			if("16")
+				if(src.makeRevenant())
+					message_admins("[key_name(usr)] created a revenant.")
+					log_admin("[key_name(usr)] created a revenant.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a revenant.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
