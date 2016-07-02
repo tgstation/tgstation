@@ -120,3 +120,8 @@
 /atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
 	if(harderforce)
 		. = ..()
+
+/atom/movable/lighting_overlay/resetVariables(...)
+	color = LIGHTING_BASE_MATRIX
+
+	return ..("color")
