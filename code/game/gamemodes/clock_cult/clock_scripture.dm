@@ -308,7 +308,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
 	if(servants > 5)
-		channel_time = min(servants*10, 150) //if above 5 servants, is slower
+		servants -= 5
+		channel_time = min(channel_time + servants*7.5, 150) //if above 5 servants, is slower
 	return ..()
 
 /datum/clockwork_scripture/guvax/scripture_effects()
