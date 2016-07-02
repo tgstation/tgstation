@@ -59,6 +59,26 @@
 	if(A)
 		notify_ghosts("An ash walker egg is ready to hatch in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
+//Kobold eggs: Spawns in drake nests in lavaland. Ghosts become draconic minions of the drake and are advised to bring it food.
+/obj/effect/mob_spawn/kobold
+	name = "kobold egg"
+	desc = "A small red egg, slightly warm to the touch. A short humanoid silhouette lurks within."
+	mob_name = "a kobold"
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "kobold_egg"
+	mob_type = /mob/living/simple_animal/hostile/kobold
+	roundstart = FALSE
+	death = FALSE
+	anchored = 0
+	density = 0
+	flavour_text = "<font size=3><b>Y</b></font><b>ou are a kobold - a draconic servant of Mother Drake. Though physically frail, Mother Drake has gifted you with intellect and cunning, allowing \
+	you and your kind to create tools to capture the beasts of this land to feed her. By feeding her, you - her brood - may grow and thrive.</b>"
+
+/obj/effect/mob_spawn/kobold/special(mob/living/new_spawn)
+	new_spawn.real_name = random_unique_lizard_name(pick(MALE, FEMALE))
+	new_spawn.visible_message("<span class='warning'>A kobold emerges from [src]!</span>", "<b>Use the traps in your den to slay the creatures of this land. Bring their corpses back to Mother \
+	Drake so that she may feast and lay new eggs for your kind. Above all, protect her from harm, for her fall will ensure your doom.</b>")
+
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile
 	name = "timeless prison"

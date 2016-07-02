@@ -12,7 +12,7 @@
 	status_flags = 0
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
-	var/icon_aggro = null // for swapping to when we get aggressive
+	var/icon_aggro = null // for swapping to when we get aggressived
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
 
@@ -264,7 +264,7 @@
 	else
 		feedback_add_details("hivelord_core", "[type]|stabilizer")
 
-		
+
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
@@ -482,7 +482,7 @@
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
 		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
-		new /obj/effect/goliath_tentacle/original(tturf)
+		new/obj/effect/goliath_tentacle/original(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
 		pre_attack = 0
@@ -501,13 +501,18 @@
 	return
 
 /obj/effect/goliath_tentacle/
-	name = "Goliath tentacle"
+	name = "goliath tentacle"
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	icon_state = "Goliath_tentacle"
 	var/latched = 0
 	anchored = 1
+	var/mob/living/simple_animal/hostile/asteroid/goliath/owner
 
-/obj/effect/goliath_tentacle/New()
+/obj/effect/goliath_tentacle/New(turf/T, mob/living/O)
+	..()
+	if(!O)
+		qdel(src)
+	owner = O
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/closed/mineral))
 		var/turf/closed/mineral/M = turftype
@@ -526,11 +531,17 @@
 		var/spawndir = pick(directions)
 		directions -= spawndir
 		var/turf/T = get_step(src,spawndir)
-		new /obj/effect/goliath_tentacle(T)
+		new /obj/effect/goliath_tentacle(T, owner)
 	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
+	for(var/obj/item/device/kobold_device/goliath_snare/G in get_turf(src))
+		G.contract(src)
+		latched = TRUE
+		QDEL_IN(src, 50)
+		return
 	for(var/mob/living/M in src.loc)
+		icon_state = "Goliath_tentacle_grab"
 		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
 		M.adjustBruteLoss(rand(10,15))

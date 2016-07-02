@@ -236,3 +236,66 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold //Prideful ash drakes serve as the kobolds' nest.
+	name = "prideful ash drake"
+	desc = "A small but haughty ash drake. This one seems much less aggressive than others."
+	gender = FEMALE
+	faction = list("mining", "kobold")
+	loot = list(/obj/item/device/assembly/signaler/anomaly)
+	deathmessage = "stares in disbelief before collapsing into bones and a strange stone!"
+	idle_vision_range = 1
+	aggro_vision_range = 1
+	var/consumed_creatures = 0
+	var/eating = FALSE
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold/Life()
+	..()
+	if(stat)
+		return
+	for(var/mob/living/L in range(1, src))
+		if(L.stat && !eating)
+			eat(L)
+	if(consumed_creatures >= 2)
+		visible_message("<span class='notice'>[src] lays an egg!</span>")
+		new/obj/effect/mob_spawn/kobold(get_turf(src))
+		consumed_creatures -= 2
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold/death(gibbed)
+	..(gibbed)
+	for(var/mob/living/simple_animal/hostile/kobold/K in mob_list) //Kobolds lose their intelligence and become mere beasts
+		K << "<span class='userdanger'>You hear a horrible cry on the wind and you know that Mother Drake has fallen. You feel your intelligence receding. Your hands are once more claws, ready to \
+		rend and kill. Your tools are now dangers, to be avoided. You are a kobold, and you know nothing more than this: kill, eat, survive.</span>"
+		K.unEquip(l_hand)
+		K.unEquip(r_hand)
+		K.dextrous = FALSE
+		K.real_name = "kobold"
+		K.languages_spoken = null
+		K.languages_understood = null
+		qdel(K.hud_used)
+		K.create_mob_hud()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold/devour(mob/living/lunch)
+	if(!eating)
+		eat(lunch)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold/proc/eat(mob/living/lunch)
+	if(!lunch) //What about dinner?
+		return
+	lunch.visible_message("<span class='warning'>[src] picks up [lunch] and begins devouring \him!</span>", "<span class='userdanger'>[src] grabs you with its jaws and starts eating you!</span>")
+	lunch.Weaken(10)
+	lunch.loc = get_turf(src)
+	playsound(src, 'sound/magic/demon_attack1.ogg', 50, 1)
+	eating = TRUE
+	for(var/i in 1 to 3)
+		if(!lunch || lunch.loc != get_turf(src))
+			eating = FALSE
+			return
+		lunch.adjustBruteLoss(25)
+		playsound(src, 'sound/magic/Demon_consume.ogg', 50, 1)
+		adjustBruteLoss(-25)
+		sleep(10)
+	lunch.visible_message("<span class='warning'>[src] messily devours [lunch]!</span>", "<span class='userdanger'>You feel teeth sinking into your body, and--</span>")
+	playsound(src, 'sound/effects/splat.ogg', 50, 1)
+	lunch.gib()
+	consumed_creatures++
+	eating = FALSE

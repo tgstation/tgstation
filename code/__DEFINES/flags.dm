@@ -78,6 +78,7 @@
 	These defines are used specifically with the atom/movable/languages bitmask.
 	They are used in atom/movable/Hear() and atom/movable/say() to determine whether hearers can understand a message.
 */
+
 #define HUMAN 1
 #define MONKEY 2
 #define ALIEN 4
@@ -86,6 +87,7 @@
 #define DRONE 32
 #define SWARMER 64
 #define RATVAR 128
+#define ASHEN 256 //Spoken by creatures in lavaland. Sounds like hissing and whistling to anyone who can't understand it.
 
 // Flags for reagents
 #define REAGENT_NOREACT 1
