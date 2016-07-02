@@ -60,6 +60,9 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	initial_move()
 	setup_transit_zone()
+#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+	color_space()
+#endif
 
 /datum/subsystem/shuttle/proc/setup_transit_zone()
 	// transit zone
@@ -70,7 +73,16 @@ var/datum/subsystem/shuttle/SSshuttle
 		T.ChangeTurf(/turf/open/space)
 		transit_turfs += T
 		T.flags |= UNUSED_TRANSIT_TURF
+
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+/datum/subsystem/shuttle/proc/color_space()
+	var/turf/A = get_turf(transit_markers[1])
+	var/turf/B = get_turf(transit_markers[2])
+	for(var/i in block(A, B))
+		var/turf/T = i
+		// Only dying the "pure" space, not the transit tiles
+		if(!(T.type == /turf/open/space))
+			continue
 		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
 			T.color = "#ffff00"
 		else
@@ -86,12 +98,29 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		var/obj/docking_port/mobile/P = thing
 		P.check()
+	var/changed_transit = FALSE
+	for(var/thing in transit)
+		var/obj/docking_port/stationary/transit/T = thing
+		if(!T.owner)
+			qdel(T, force=TRUE)
+			changed_transit = TRUE
+		// This next one removes transit docks/zones that aren't
+		// immediately being used. This will mean that the zone creation
+		// code will be running a lot.
+		if(T.owner && (T.owner.mode == SHUTTLE_IDLE) && (!T.get_docked()))
+			qdel(T, force=TRUE)
+			changed_transit = TRUE
 	if(clear_transit)
 		transit_requesters.Cut()
 		for(var/i in transit)
 			qdel(i, force=TRUE)
 		setup_transit_zone()
 		clear_transit = FALSE
+		changed_transit = TRUE
+#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+	if(changed_transit)
+		color_space()
+#endif
 
 	while(transit_requesters.len)
 		var/requester = popleft(transit_requesters)
@@ -371,6 +400,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
 	new_transit_dock.turf_type = transit_path
+	new_transit_dock.owner = M
 
 	// Add 180, because ports point inwards, rather than outwards
 	new_transit_dock.setDir(angle2dir(dock_angle))
