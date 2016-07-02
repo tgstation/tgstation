@@ -949,7 +949,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in living_mob_list)
 		if(is_servant_of_ratvar(L))
 			servants++
-	if(servants < 5 || servants * 0.2 < clockwork_daemons)
+	if(servants * 0.2 < clockwork_daemons)
 		invoker << "<span class='nezbere'>\"Daemons are already disabled, making [clockwork_daemons ? "more of them":"one"] would be a waste.\</span>"
 		return 0
 	if(!confirmed_waste && servants * 0.2 < clockwork_daemons+1)
