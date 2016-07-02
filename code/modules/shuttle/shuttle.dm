@@ -320,10 +320,8 @@
 /obj/docking_port/mobile/proc/cancel()
 	if(mode != SHUTTLE_CALL)
 		return
-	if(ripples.len)
-		for(var/i in ripples)
-			qdel(i)
-		ripples.Cut()
+
+	remove_ripples()
 
 	invertTimer()
 	mode = SHUTTLE_RECALL
@@ -379,6 +377,11 @@
 	var/list/turfs = ripple_area(S1)
 	for(var/t in turfs)
 		ripples += PoolOrNew(/obj/effect/overlay/temp/ripple, t)
+
+/obj/docking_port/mobile/proc/remove_ripples()
+	for(var/R in ripples)
+		qdel(R)
+	ripples.Cut()
 
 /obj/docking_port/mobile/proc/ripple_area(obj/docking_port/stationary/S1)
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
@@ -437,13 +440,11 @@
 		for(var/turf/T0 in L0)
 			A0.contents += T0
 
+
+	remove_ripples()
+
 	//move or squish anything in the way ship at destination
 	roadkill(L0, L1, S1.dir)
-
-	// Removes ripples
-	for(var/i in ripples)
-		qdel(i)
-	ripples.Cut()
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
