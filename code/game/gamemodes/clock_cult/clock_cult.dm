@@ -156,9 +156,9 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 30
-	required_enemies = 2
-	recommended_enemies = 4
+	required_players = 24
+	required_enemies = 3
+	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
@@ -175,7 +175,11 @@ This file's folder contains:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
+	var/starter_servants = 3 //Guaranteed three servants
+	var/number_players = num_players()
+	if(number_players > 30) //plus one servant for every additional 15 players
+		number_players - 30
+		starter_servants += round(number_players/15)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
