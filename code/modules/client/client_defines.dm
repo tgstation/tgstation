@@ -52,3 +52,4 @@
 
 	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
 	var/var_edited = 0
+	var/hotkeys = FALSE

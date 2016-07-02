@@ -199,7 +199,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
-	S["hotkeys"]			>> hotkeys
+	S["hotkeys"]			>> hotkey_preference
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
 
@@ -227,18 +227,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_antagchoices(needs_update)
 
 	//Sanitize
-	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
-	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative"), initial(UI_style))
-	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
-	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
-	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
-	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
-	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
-	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
-	ghost_others	= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	ooccolor			= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
+	lastchangelog		= sanitize_text(lastchangelog, initial(lastchangelog))
+	UI_style			= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative"), initial(UI_style))
+	hotkey_preference	= sanitize_integer(hotkey_preference, 0, 1, initial(hotkey_preference))
+	tgui_fancy			= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
+	tgui_lock			= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	default_slot		= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
+	toggles				= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	ghost_form			= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
+	ghost_orbit 		= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
+	ghost_accs			= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
+	ghost_others		= sanitize_inlist(ghost_others, ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 
 	return 1
 
@@ -256,7 +256,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
-	S["hotkeys"]			<< hotkeys
+	S["hotkeys"]			<< hotkey_preference
 	S["tgui_fancy"]			<< tgui_fancy
 	S["tgui_lock"]			<< tgui_lock
 	S["be_special"]			<< be_special
