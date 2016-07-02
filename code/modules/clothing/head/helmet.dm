@@ -35,6 +35,10 @@
 	can_flashlight = 1
 	dog_fashion = null
 
+/obj/item/clothing/head/helmet/blueshirt
+	icon_state = "blueshift"
+	item_state = "blueshift"
+
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."

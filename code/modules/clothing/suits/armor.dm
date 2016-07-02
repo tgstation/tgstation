@@ -23,6 +23,10 @@
 	icon_state = "armor"
 	item_state = "armor"
 
+/obj/item/clothing/suit/armor/vest/blueshirt
+	icon_state = "blueshift"
+	item_state = "blueshift"
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enchanced with a special alloy for some protection and style for those with a commanding presence."

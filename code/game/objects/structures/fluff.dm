@@ -8,7 +8,7 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
-	deconstructible = 1
+	var/deconstructible = 1
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
