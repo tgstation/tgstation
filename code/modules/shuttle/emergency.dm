@@ -257,7 +257,7 @@
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
-				timer = setTimer(SSshuttle.emergencyDockTime)
+				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				feedback_add_details("emergency_shuttle", src.name)

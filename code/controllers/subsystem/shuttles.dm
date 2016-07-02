@@ -80,23 +80,26 @@ var/datum/subsystem/shuttle/SSshuttle
 	//world.log << "[transit_turfs.len] transit turfs registered"
 
 /datum/subsystem/shuttle/fire()
-	if(clear_transit)
-		transit_requesters.Cut()
-		for(var/i in transit)
-			qdel(i, force=TRUE)
-		setup_transit_zone()
-		clear_transit = FALSE
-	else if(transit_requesters.len)
-		var/requester = popleft(transit_requesters)
-		var/success = generate_transit_dock(requester)
-		if(!success) // BACK OF THE QUEUE
-			transit_requesters += requester
 	for(var/thing in mobile)
 		if(!thing)
 			mobile.Remove(thing)
 			continue
 		var/obj/docking_port/mobile/P = thing
 		P.check()
+	if(clear_transit)
+		transit_requesters.Cut()
+		for(var/i in transit)
+			qdel(i, force=TRUE)
+		setup_transit_zone()
+		clear_transit = FALSE
+
+	while(transit_requesters.len)
+		var/requester = popleft(transit_requesters)
+		var/success = generate_transit_dock(requester)
+		if(!success) // BACK OF THE QUEUE
+			transit_requesters += requester
+		if(MC_TICK_CHECK)
+			return
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -255,7 +258,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(M.assigned_transit)
 		return
 	else
-		transit_requesters += M
+		if(!(M in transit_requesters))
+			transit_requesters += M
 
 /datum/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
