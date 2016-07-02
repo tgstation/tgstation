@@ -262,6 +262,8 @@ var/datum/subsystem/shuttle/SSshuttle
 	// Because of shuttle rotation, the "width" of the shuttle is not
 	// always x.
 	var/travel_dir = M.preferred_direction
+	// Remember, the direction is the direction we appear to be
+	// coming from
 	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
 	var/dock_dir = angle2dir(dock_angle)
 
@@ -308,17 +310,17 @@ var/datum/subsystem/shuttle/SSshuttle
 					continue base
 				if(!(T.flags & UNUSED_TRANSIT_TURF))
 					continue base
-			world << "[COORD(topleft)] and [COORD(bottomright)]"
+			//world << "[COORD(topleft)] and [COORD(bottomright)]"
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	world << "[COORD(topleft)] is TOPLEFT"
+	//world << "[COORD(topleft)] is TOPLEFT"
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	world << json_encode(coords)
+	//world << json_encode(coords)
 	/*  0------2
         |      |
         |      |
