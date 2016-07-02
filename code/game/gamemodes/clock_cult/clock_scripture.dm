@@ -932,6 +932,29 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
+	var/confirmed_waste = FALSE
+
+/datum/clockwork_scripture/create_object/tinkerers_daemon/run_scripture()
+	if(!check_waste())
+		return 0
+	return ..()
+
+/datum/clockwork_scripture/create_object/tinkerers_daemon/scripture_effects()
+	if(!check_waste())
+		return 0
+	return ..()
+
+/datum/clockwork_scripture/create_object/tinkerers_daemon/proc/check_waste()
+	var/servants = 0
+	for(var/mob/living/L in living_mob_list)
+		if(is_servant_of_ratvar(L))
+			servants++
+	if(!confirmed_waste && servants * 0.2 < clockwork_daemons+1)
+		var/confirm_wasteful = alert(user, "This daemon will prevent other daemons from working", "Do you want to waste components?", "Yes", "No")
+		if(!invoker || !slab || confirm_wasteful == "No")
+			return 0
+		confirmed_waste = TRUE
+	return 1
 
 //////////////
 // REVENANT //
