@@ -350,9 +350,9 @@ proc/AirflowSpace(zone/A)
 			if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
 				airflow_dest = locate(Clamp(x + xo, 1, world.maxx), Clamp(y + yo, 1, world.maxy), z)
 			if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-				return
+				break
 			if (!isturf(loc))
-				return
+				break
 			step_towards(src, src.airflow_dest)
 			if(ismob(src) && src:client)
 				var/mob/M = src
