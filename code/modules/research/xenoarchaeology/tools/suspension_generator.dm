@@ -340,6 +340,7 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = 1
 	density = 1
+	mouse_opacity = 0
 	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Destroy()
