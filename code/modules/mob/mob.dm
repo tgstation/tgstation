@@ -347,7 +347,7 @@ var/global/obj/screen/fuckstat/FUCK = new
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 /atom/proc/visible_message(var/message, var/blind_message, var/drugged_message, var/blind_drugged_message)
 	if(world.time>resethearers) sethearing()
-	for(var/mob/virtualhearer/hearer in viewers(src))
+	for(var/mob/virtualhearer/hearer in viewers(get_turf(src)))
 		if(istype(hearer.attached, /mob))
 			var/mob/M = hearer.attached
 			if(M.see_invisible < invisibility || M == src)
