@@ -257,9 +257,16 @@
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
 
-/obj/effect/overlay/temp/purple_sparkles
+
+/obj/effect/overlay/temp/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "glowing cracks"
+	icon_state = "purplecrack"
+	duration = 6
+
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"

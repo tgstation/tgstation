@@ -2766,7 +2766,9 @@
 	},
 /obj/docking_port/mobile/assault_pod{
 	dwidth = 3;
-	name = "steel rain"
+	name = "steel rain";
+	port_angle = 90;
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/assault_pod)
@@ -6134,17 +6136,13 @@
 /turf/open/floor/carpet,
 /area/hades)
 "tq" = (
-/obj/structure/table/wood,
-/obj/item/weapon/kitchen/fork,
-/turf/open/floor/carpet,
-/area/hades)
+/obj/structure/closet/cardboard,
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership)
 "tr" = (
-/obj/structure/chair/wood/normal{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/hades)
+/obj/structure/closet/cardboard/metal,
+/turf/open/floor/plating/airless,
+/area/syndicate_mothership)
 "ts" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/drinkingglasses,
@@ -27137,13 +27135,13 @@ ab
 ab
 hi
 iR
-iR
+tq
 jF
 kn
 kI
 kn
 jF
-iR
+tr
 iR
 hi
 ab
