@@ -77,7 +77,7 @@
 			servants++
 	if(servants > 5)
 		servants -= 5
-		production_slowdown = SLAB_SERVANT_SLOWDOWN * servants //15 seconds for each servant above 5
+		production_slowdown = SLAB_SERVANT_SLOWDOWN * servants //SLAB_SERVANT_SLOWDOWN additional seconds for each servant above 5
 	production_time = world.time + SLAB_PRODUCTION_TIME + production_slowdown
 	var/mob/living/L
 	if(isliving(loc))
