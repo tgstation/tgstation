@@ -253,7 +253,7 @@
 	death = FALSE
 	roundstart = FALSE
 	random = TRUE
-	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font><b> leave the hotel, lest the manager fire you for\
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
 		dereliction of duty!"
 
 /obj/effect/mob_spawn/human/hotel_staff/security
@@ -266,7 +266,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	belt = /obj/item/weapon/storage/belt/security/full
 	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
-		guests and the staff.Do <font size=6><b>NOT</b></font><b> leave the hotel, as that is grounds for contract termination."
+		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
 /obj/effect/mob_spawn/human/hotel_staff/Destroy()
