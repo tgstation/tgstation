@@ -343,9 +343,10 @@
 			else if(istype(target,/obj/mecha))
 				if(mech_damage_cycle)
 					var/obj/mecha/M = target
-					M.take_directional_damage(damage_per_tick, "laser", get_dir(src, M), 0)
+					M.take_directional_damage(damage_per_tick*1.5, "laser", get_dir(src, M), 0) //does about 75% of standard damage to mechs * whatever their fire armor is
 					mech_damage_cycle--
-				mech_damage_cycle++
+				else
+					mech_damage_cycle++
 			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
@@ -372,12 +373,13 @@
 			. += L
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
-		if(get_dist(M, src) <= sight_range && can_see(src, M, sight_range) && M.occupant && !is_servant_of_ratvar(M.occupant))
+		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src))))
 			. += M
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
 		return 0
+	mech_damage_cycle = 0
 	target = null
 	visible_message("<span class='warning'>[src] settles and seems almost disappointed.</span>")
 	return 1
