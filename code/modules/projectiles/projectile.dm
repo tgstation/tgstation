@@ -143,6 +143,7 @@
 		var/next_run = world.time
 		while(loc)
 			if(paused)
+				next_run = world.time
 				sleep(1)
 				continue
 			
