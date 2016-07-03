@@ -663,12 +663,13 @@
 	id = "borg_upgrade_hover"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/hover
-	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
-	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000, MAT_GOLD = 15000)
-	construction_time = 120
+	req_tech = list("magnets" = 5, "plasmatech" = 4, "materials" = 7, "engineering" = 5)
+	//A ton of gold is required because the hull plating part is made mostly of it!
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 4000, MAT_PLASMA = 10000, MAT_GOLD = 15000, MAT_DIAMOND = 3000)
+	construction_time = 160
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/nvgmesons
+/datum/design/borg_nvgmesons
 	name = "Cyborg Upgrade (Night Vision Optical Meson Scanner)"
 	id = "borg_nvmesons"
 	req_tech = list("magnets" = 5, "plasmatech" = 5, "engineering" = 6)

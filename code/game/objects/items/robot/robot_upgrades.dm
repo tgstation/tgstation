@@ -36,6 +36,7 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
+	R.cust_panel = null
 	qdel(R.module)
 	R.module = null
 
@@ -259,7 +260,7 @@
 	icon_state = "hover_upgrade"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=6;materials=7;plasmatech=4;magnets=5"
+	origin_tech = "engineering=4;materials=6;plasmatech=4;magnets=5"
 
 /obj/item/borg/upgrade/hover/action(mob/living/silicon/robot/R)
 	if(..())
@@ -268,6 +269,7 @@
 	R.pass_flags |= PASSTABLE //This should be changed later to support chasms
 	R.magpulse = 1
 	R.icon_state = "lavaborg"
+	R.cust_panel = "lava-"
 	return 1
 
 /obj/item/borg/upgrade/syndicate

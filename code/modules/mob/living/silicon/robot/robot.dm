@@ -3,6 +3,7 @@
 	real_name = "Cyborg"
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "robot"
+	var/cust_panel //For borgs with their own cover overlays
 	maxHealth = 100
 	health = 100
 	macro_default = "robot-default"
@@ -214,7 +215,8 @@
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
 			icon_state = "minerborg"
-			animation_length = 30
+			cust_panel = "miner-"
+			animation_length = 0 //NEW BORG ANIMATION WANTED!!!!!!!!
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
 
@@ -809,7 +811,6 @@
 
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
-	var/cust //For borgs with their own cover overlays
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
 
@@ -830,10 +831,8 @@
 				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("minerborg")
 				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-				cust = "miner-"
 			if("lavaborg")
 				add_overlay("eyes-lavaborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-				cust = "lava-"
 			if("peaceborg")
 				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
@@ -846,11 +845,11 @@
 
 	if(opened)
 		if(wiresexposed)
-			add_overlay("[cust]ov-opencover +w")
+			add_overlay("[cust_panel]ov-opencover +w")
 		else if(cell)
-			add_overlay("[cust]ov-opencover +c")
+			add_overlay("[cust_panel]ov-opencover +c")
 		else
-			add_overlay("[cust]ov-opencover -c")
+			add_overlay("[cust_panel]ov-opencover -c")
 
 	update_fire()
 
