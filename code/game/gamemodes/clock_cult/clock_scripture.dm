@@ -943,6 +943,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
 
+/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
+	var/servants = 0
+	for(var/mob/living/L in living_mob_list)
+		if(is_servant_of_ratvar(L))
+			servants++
+	if(servants * 0.2 < clockwork_daemons)
+		invoker << "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>"
+		return 0
+	if(servants * 0.2 < clockwork_daemons+1)
+		invoker << "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>"
+		return 0
+	return ..()
+
 //////////////
 // REVENANT //
 //////////////
