@@ -81,12 +81,20 @@
 			adminonly = 0
 		else
 			return
+	var/dontshow
+	switch(alert("Hide poll results from tracking until completed?",,"Yes","No","Cancel"))
+		if("Yes")
+			dontshow = 1
+		if("No")
+			dontshow = 0
+		else
+			return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/question = input("Write your question","Question") as message|null
 	if(!question)
 		return
 	question = sanitizeSQL(question)
-	var/DBQuery/query_polladd_question = dbcon.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', '[address]')")
+	var/DBQuery/query_polladd_question = dbcon.NewQuery("INSERT INTO [format_table_name("poll_question")] (polltype, starttime, endtime, question, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow) VALUES ('[polltype]', '[starttime]', '[endtime]', '[question]', '[adminonly]', '[choice_amount]', '[sql_ckey]', '[address]', '[dontshow]')")
 	if(!query_polladd_question.Execute())
 		var/err = query_polladd_question.ErrorMsg()
 		log_game("SQL ERROR adding new poll question to table. Error : \[[err]\]\n")
