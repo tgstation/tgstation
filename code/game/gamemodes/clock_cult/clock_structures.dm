@@ -308,8 +308,9 @@
 	burn_state = LAVA_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
-	var/mob/living/target
+	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
+	var/mech_damage_cycle = 0 //only hits every few cycles so mechs have a chance against it
 
 /obj/structure/clockwork/ocular_warden/New()
 	..()
@@ -332,19 +333,32 @@
 		if(!(target in validtargets))
 			lose_target()
 		else
-			if(!target.null_rod_check())
-				target.adjustFireLoss(!iscultist(target) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
-				if(ratvar_awakens && target)
-					target.adjust_fire_stacks(damage_per_tick)
-					target.IgniteMob()
-				setDir(get_dir(get_turf(src), get_turf(target)))
+			if(isliving(target))
+				var/mob/living/L = target
+				if(!L.null_rod_check())
+					L.adjustFireLoss(!iscultist(L) ? damage_per_tick : damage_per_tick * 2) //Nar-Sian cultists take additional damage
+					if(ratvar_awakens && L)
+						L.adjust_fire_stacks(damage_per_tick)
+						L.IgniteMob()
+			else if(istype(target,/obj/mecha))
+				if(mech_damage_cycle)
+					var/obj/mecha/M = target
+					M.take_directional_damage(damage_per_tick, "laser", get_dir(src, M), 0)
+					mech_damage_cycle--
+				mech_damage_cycle++
+			setDir(get_dir(get_turf(src), get_turf(target)))
 	if(!target)
 		if(validtargets.len)
 			target = pick(validtargets)
 			visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-			target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
-			if(target.null_rod_check() && !ratvar_awakens)
-				target << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
+			if(isliving(target))
+				var/mob/living/L = target
+				L << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+				if(L.null_rod_check() && !ratvar_awakens)
+					L << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
+			else if(istype(target,/obj/mecha))
+				var/obj/mecha/M = target
+				M.occupant << "<span class='heavy_brass'>\"I SEE YOU!\"</span>" //heeeellooooooo, person in mech.
 		else if(prob(0.5)) //Extremely low chance because of how fast the subsystem it uses processes
 			if(prob(50))
 				visible_message("<span class='notice'>[src][pick(idle_messages)]</span>")
@@ -356,6 +370,10 @@
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
 		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check())
 			. += L
+	for(var/N in mechas_list)
+		var/obj/mecha/M = N
+		if(get_dist(M, src) <= sight_range && can_see(src, M, sight_range) && M.occupant && !is_servant_of_ratvar(M.occupant))
+			. += M
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
 	if(!target)
