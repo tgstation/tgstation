@@ -13,6 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/throw_hit_chance = 75
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -25,7 +26,7 @@
 
 /obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
 	..()
-	if(status && prob(35))
+	if(status && prob(throw_hit_chance))
 		baton_stun(hit_atom)
 
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
@@ -178,6 +179,7 @@
 	throwforce = 5
 	stunforce = 5
 	hitcost = 2500
+	throw_hit_chance = 10
 	slot_flags = null
 	var/obj/item/device/assembly/igniter/sparkler = 0
 
