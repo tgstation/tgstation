@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The zone of hyperspace that a shuttle travels in is dynamically determined when a shuttle begins charging its engines. This is signified by the shuttle mode IGN. All shuttles must now charge engines before launching. This time is already included in the emergency shuttle timer."
+  - rscdel: "The cargo shuttle can only be loaned to Centcom while at Centcom."
