@@ -724,10 +724,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Gets the turf this atom inhabits
 
 /proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
+	return get_step(O, 0)
 
 
 /*
