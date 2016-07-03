@@ -58,4 +58,6 @@ component.exports = {
   <warnings/>
   <interface/>
 </main>
-<resize/>
+{{#if config.titlebar}}
+  <resize/>
+{{/if}}
