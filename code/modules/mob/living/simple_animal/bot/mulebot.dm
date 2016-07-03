@@ -639,11 +639,12 @@ var/global/mulebot_count = 0
 			if(istype(M,/mob/living/silicon/robot))
 				visible_message("<span class='danger'>[src] bumps into [M]!</span>")
 			else
-				add_logs(src, M, "knocked down")
-				visible_message("<span class='danger'>[src] knocks over [M]!</span>")
-				M.stop_pulling()
-				M.Stun(8)
-				M.Weaken(5)
+				if(!paicard)
+					add_logs(src, M, "knocked down")
+					visible_message("<span class='danger'>[src] knocks over [M]!</span>")
+					M.stop_pulling()
+					M.Stun(8)
+					M.Weaken(5)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
@@ -737,6 +738,10 @@ var/global/mulebot_count = 0
 		unload(get_dir(loc, A))
 	else
 		..()
+		
+/mob/living/simple_animal/bot/mulebot/insertpai(mob/user, obj/item/device/paicard/card)
+	if(..())
+		visible_message("[src] safeties are locked on.")
 
 #undef SIGH
 #undef ANNOYED

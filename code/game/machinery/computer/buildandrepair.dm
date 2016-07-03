@@ -270,7 +270,9 @@
 /obj/item/weapon/circuitboard/computer/prisoner
 	name = "circuit board (Prisoner Management Console)"
 	build_path = /obj/machinery/computer/prisoner
-
+/obj/item/weapon/circuitboard/computer/gulag_teleporter_console
+	name = "circuit board (Labor Camp teleporter console)"
+	build_path = /obj/machinery/computer/gulag_teleporter_computer
 
 /obj/item/weapon/circuitboard/computer/rdconsole
 	name = "circuit board (RD Console)"

@@ -20,6 +20,7 @@
 #define ROLE_MONKEY				"monkey"
 #define ROLE_GANG				"gangster"
 #define ROLE_ABDUCTOR			"abductor"
+#define ROLE_REVENANT			"revenant"
 #define ROLE_HOG_GOD			"hand of god: god"
 #define ROLE_HOG_CULTIST		"hand of god: cultist"
 #define ROLE_DEVIL				"devil"
@@ -42,6 +43,7 @@ var/global/list/special_roles = list(
 	ROLE_NINJA,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_GANG = /datum/game_mode/gang,
+	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_HOG_GOD = /datum/game_mode/hand_of_god,
 	ROLE_HOG_CULTIST = /datum/game_mode/hand_of_god,
