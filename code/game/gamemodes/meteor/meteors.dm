@@ -256,13 +256,15 @@
 	var/meteorgibs = /obj/effect/gibspawner/generic
 
 /obj/effect/meteor/meaty/New()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/M in meteordrop)
-		meteordrop -= M
-		meteordrop += pick(subtypesof(M))
+	for(var/path in meteordrop)
+		if(path == /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant)
+			meteordrop -= path
+			meteordrop += pick(subtypesof(path))
 
-	for(var/obj/item/organ/tongue/T in meteordrop)
-		meteordrop -= T
-		meteordrop += pick(typesof(T))
+	for(var/path in meteordrop)
+		if(path == /obj/item/organ/tongue)
+			meteordrop -= path
+			meteordrop += pick(typesof(path))
 	..()
 
 /obj/effect/meteor/meaty/make_debris()
