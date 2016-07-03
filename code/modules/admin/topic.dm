@@ -2912,7 +2912,7 @@
 			if("onlyone")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","OO")
-				usr.client.only_one()
+				usr.client.only_one(usr)
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
 			if("togglenarsie")
 				feedback_inc("admin_secrets_fun_used",1)
