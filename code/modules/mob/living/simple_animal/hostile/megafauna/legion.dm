@@ -149,7 +149,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
 		"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-		playsound(user, 'sound/magic/WandODeath.ogg', 200, 0)
+		playsound(user, 'sound/magic/Staff_Chaos.ogg', 200, 0)
 		A.telegraph()
 
 	storm_cooldown = world.time + 600
