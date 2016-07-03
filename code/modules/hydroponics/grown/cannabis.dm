@@ -2,6 +2,7 @@
 /obj/item/seeds/cannabis
 	name = "pack of cannabis seeds"
 	desc = "Taxable."
+	icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_state = "seed-cannabis"
 	species = "cannabis"
 	plantname = "Cannabis Plant"
@@ -84,6 +85,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis
 	seed = /obj/item/seeds/cannabis
+	icon = 'goon/icons/obj/hydroponics.dmi'
 	name = "cannabis leaf"
 	desc = "Recently legalized in most galaxies."
 	icon_state = "cannabis"
