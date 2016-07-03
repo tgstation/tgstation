@@ -50,12 +50,14 @@
 	if(stage == STARTUP_STAGE)
 		return
 	stage = STARTUP_STAGE
-	for(var/area/A in get_areas(area_type))
+	for(var/V in get_areas(area_type))
+		var/area/A = V
 		if(A.z == target_z)
 			impacted_areas |= A
 	weather_duration = rand(weather_duration_lower, weather_duration_upper)
 	update_areas()
-	for(var/mob/M in player_list)
+	for(var/V in player_list)
+		var/mob/M = V
 		if(M.z == target_z)
 			if(telegraph_message)
 				M << telegraph_message
@@ -68,7 +70,8 @@
 		return
 	stage = MAIN_STAGE
 	update_areas()
-	for(var/mob/M in player_list)
+	for(var/V in player_list)
+		var/mob/M = V
 		if(M.z == target_z)
 			if(weather_message)
 				M << weather_message
@@ -82,14 +85,15 @@
 		return
 	stage = WIND_DOWN_STAGE
 	update_areas()
-	for(var/mob/M in player_list)
+	for(var/V in player_list)
+		var/mob/M = V
 		if(M.z == target_z)
 			if(end_message)
 				M << end_message
 			if(end_sound)
 				M << sound(end_sound)
 	SSweather.processing -= src
-	addtimer(src, "end", weather_duration)
+	addtimer(src, "end", end_duration)
 
 /datum/weather/proc/end()
 	if(stage == END_STAGE)
@@ -101,7 +105,8 @@
 	return
 
 /datum/weather/proc/update_areas()
-	for(var/area/N in impacted_areas)
+	for(var/V in impacted_areas)
+		var/area/N = V
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.invisibility = 0

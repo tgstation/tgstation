@@ -11,12 +11,10 @@ var/datum/subsystem/weather/SSweather
 
 /datum/subsystem/weather/New()
 	NEW_SS_GLOBAL(SSweather)
-	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
-		existing_weather += new W
 
 /datum/subsystem/weather/fire()
-	for(var/datum/weather/W in processing)
+	for(var/V in processing)
+		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
 		for(var/mob/living/L in mob_list)
@@ -25,7 +23,8 @@ var/datum/subsystem/weather/SSweather
 				W.impact(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
-		for(var/datum/weather/WE in existing_weather)
+		for(var/V in existing_weather)
+			var/datum/weather/WE = V
 			if(WE.target_z == Z && WE.probability) //Another check so that it doesn't run extra weather
 				possible_weather_for_this_z[WE] = WE.probability
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
@@ -33,10 +32,17 @@ var/datum/subsystem/weather/SSweather
 		eligible_zlevels -= Z
 		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, Z) //Around 5-10 minutes between weathers
 
+/datum/subsystem/weather/Initialize(start_timeofday)
+	..()
+	for(var/V in subtypesof(/datum/weather))
+		var/datum/weather/W = V
+		existing_weather |= new W
+
 /datum/subsystem/weather/proc/run_weather(weather_name)
 	if(!weather_name)
 		return
-	for(var/datum/weather/W in existing_weather)
+	for(var/V in existing_weather)
+		var/datum/weather/W = V
 		if(W.name == weather_name)
 			W.telegraph()
 

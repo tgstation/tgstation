@@ -50,7 +50,8 @@
 	target_z = ZLEVEL_STATION
 
 /datum/weather/advanced_darkness/update_areas()
-	for(var/area/A in impacted_areas)
+	for(var/V in impacted_areas)
+		var/area/A = V
 		if(stage == MAIN_STAGE)
 			A.invisibility = 0
 			A.opacity = 1
