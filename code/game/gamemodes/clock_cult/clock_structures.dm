@@ -371,7 +371,7 @@
 			. += L
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
-		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src))))
+		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
 			. += M
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
