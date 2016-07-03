@@ -390,8 +390,8 @@
 		force = force * 4
 		for(var/obj/effect/spacevine/B in orange(1,src))
 			B.health = health - force
-			if(health < 1)
-				qdel(src)
+			if(B.health < 1)
+				qdel(B)
 
 		health = health - force
 
