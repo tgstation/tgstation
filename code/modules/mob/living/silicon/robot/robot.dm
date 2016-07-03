@@ -213,7 +213,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "ashborg"
+			icon_state = "minerborg"
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
@@ -809,8 +809,10 @@
 
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
+	var/cust //For borgs with their own cover overlays
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		var/state_name = icon_state //For easy conversion and/or different names
+
 		switch(icon_state)
 			if("robot")
 				add_overlay("eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]") //Cyborgs converted by Ratvar have yellow eyes rather than blue
@@ -826,9 +828,12 @@
 				add_overlay("eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("janiborg")
 				add_overlay("eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-			if("minerborg","ashborg")
+			if("minerborg")
 				add_overlay("eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]")
-				state_name = "minerborg"
+				cust = "miner-"
+			if("lavaborg")
+				add_overlay("eyes-lavaborg[is_servant_of_ratvar(src) ? "_r" : ""]")
+				cust = "lava-"
 			if("peaceborg")
 				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
@@ -841,11 +846,11 @@
 
 	if(opened)
 		if(wiresexposed)
-			add_overlay("ov-opencover +w")
+			add_overlay("[cust]ov-opencover +w")
 		else if(cell)
-			add_overlay("ov-opencover +c")
+			add_overlay("[cust]ov-opencover +c")
 		else
-			add_overlay("ov-opencover -c")
+			add_overlay("[cust]ov-opencover -c")
 
 	update_fire()
 
@@ -1258,6 +1263,10 @@
 	if(sight_mode & BORGTHERM)
 		sight |= SEE_MOBS
 		see_invisible = min(see_invisible, SEE_INVISIBLE_LIVING)
+		see_in_dark = 8
+
+	if(sight_mode & BORGNV)
+		see_invisible = min(see_invisible, SEE_INVISIBLE_MINIMUM)
 		see_in_dark = 8
 
 	if(see_override)

@@ -25,3 +25,4 @@
 #define BORGTHERM 2
 #define BORGXRAY  4
 #define BORGMATERIAL 8
+#define BORGNV    16
