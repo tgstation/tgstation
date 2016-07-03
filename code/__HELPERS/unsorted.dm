@@ -724,7 +724,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //Gets the turf this atom inhabits
 
 /proc/get_turf(atom/A)
-	return get_step(O, 0)
+	return get_step(A, 0)
 
 
 /*
