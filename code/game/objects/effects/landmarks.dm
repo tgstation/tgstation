@@ -286,26 +286,3 @@
 	ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
-
-/obj/effect/landmark/stationary
-	name = "stationary landmark"
-	desc = "This doesn't seem to move."
-	invisibility = 0
-	layer = GHOST_LAYER
-	var/trueLoc
-
-/obj/effect/landmark/stationary/New(loc)
-	. = ..()
-	trueLoc = loc
-	START_PROCESSING(SSfastprocess, src)
-
-/obj/effect/landmark/stationary/Destroy()
-	trueLoc = null
-	STOP_PROCESSING(SSfastprocess, src)
-
-/obj/effect/landmark/stationary/process()
-	if(loc != trueLoc)
-		forceMove(trueLoc)
-
-/obj/effect/landmark/stationary/onShuttleMove()
-	return FALSE
