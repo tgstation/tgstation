@@ -437,6 +437,10 @@
 	})
 "bc" = (
 /obj/machinery/power/smes,
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
 	name = "Derelict Power Storage"
@@ -444,6 +448,16 @@
 "bd" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell/hyper,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
 	name = "Derelict Power Storage"
@@ -616,42 +630,30 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/item/weapon/pen,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
 	name = "Derelict Power Storage"
 	})
 "bs" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/effect/decal/cleanable/blood/old{
+	tag = "icon-trails_1 (WEST)";
+	name = "dried blood trail";
+	icon_state = "trails_1";
+	dir = 8
 	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
-	name = "Derelict Power Storage"
+	name = "Derelict Cargo Storage"
 	})
 "bt" = (
-/obj/machinery/power/terminal{
-	icon_state = "term";
-	dir = 1
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
-	name = "Derelict Power Storage"
+	name = "Derelict Cargo Storage"
 	})
 "bu" = (
 /obj/machinery/door/airlock/shuttle,
@@ -1359,6 +1361,7 @@
 	pixel_x = 0;
 	tag = ""
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
 	name = "Derelict Outpost"
@@ -1716,6 +1719,7 @@
 	name = "gelatinous floor"
 	},
 /obj/effect/glowshroom/single,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered{
 	name = "Derelict Cargo Bay"
@@ -2805,6 +2809,46 @@
 /area/ruin/unpowered{
 	name = "Derelict Cargo Bay"
 	})
+"eN" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered{
+	name = "Derelict Cargo Storage"
+	})
+"eM" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/ruin/unpowered{
+	name = "Derelict Cargo Bay"
+	})
+"eL" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered{
+	name = "Derelict Outpost"
+	})
+"eK" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered{
+	name = "Derelict Cargo Bay"
+	})
+"eJ" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/unpowered{
+	name = "Derelict Power Storage"
+	})
 
 (1,1,1) = {"
 aa
@@ -2988,7 +3032,7 @@ aD
 aD
 aB
 bd
-bs
+bK
 bK
 cb
 cu
@@ -3029,8 +3073,8 @@ ad
 aD
 aD
 aB
-bc
-bt
+eJ
+br
 bL
 cc
 cv
@@ -3077,16 +3121,16 @@ aT
 aT
 cw
 aT
-ak
+eM
 dc
 ab
 ab
 ab
 dN
 dN
-dY
-dY
-ev
+eN
+eN
+bs
 dN
 dN
 aS
@@ -3118,7 +3162,7 @@ aA
 bM
 cd
 cx
-ak
+eK
 ak
 dd
 ab
@@ -3297,7 +3341,7 @@ dZ
 dY
 dY
 ev
-dY
+bt
 dN
 aS
 ba
@@ -3874,7 +3918,7 @@ bC
 bV
 bD
 cE
-bj
+eL
 aL
 cU
 cU

@@ -38,9 +38,11 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "aj" = (
-/mob/living/simple_animal/hostile/pirate/ranged,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/unpowered)
 "ak" = (
 /obj/structure/closet{
 	name = "pirate outfits"
@@ -61,7 +63,11 @@
 /area/ruin/powered)
 "am" = (
 /obj/structure/table,
-/mob/living/simple_animal/parrot,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/mythril,
+/obj/item/weapon/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "an" = (
@@ -87,13 +93,16 @@
 /area/ruin/powered)
 "aq" = (
 /obj/structure/bed,
+/obj/item/weapon/bedsheet/brown,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "ar" = (
-/obj/structure/bed,
-/mob/living/simple_animal/hostile/pirate,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
+/turf/open/floor/plasteel/airless/shuttle,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f6";
+	icon_state = "swall_f6"
+	},
+/area/ruin/unpowered)
 "as" = (
 /obj/structure/chair{
 	dir = 1
@@ -102,6 +111,7 @@
 /area/ruin/powered)
 "at" = (
 /obj/structure/rack,
+/obj/item/weapon/storage/bag/money/vault,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "au" = (
@@ -179,10 +189,12 @@
 /turf/closed/wall/mineral/iron,
 /area/space)
 "aG" = (
-/obj/structure/chair,
-/mob/living/simple_animal/hostile/pirate/ranged,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f9";
+	icon_state = "swall_f9"
+	},
+/area/ruin/unpowered)
 "aH" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
@@ -273,10 +285,12 @@
 /turf/open/floor/plasteel/airless/shuttle/red,
 /area/space)
 "aW" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
+/obj/structure/door_assembly/door_assembly_shuttle{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plasteel/shuttle/yellow,
+/area/ruin/unpowered)
 "aX" = (
 /obj/item/stack/sheet/metal,
 /turf/open/floor/plating/asteroid/airless,
@@ -294,13 +308,18 @@
 	},
 /area/space)
 "ba" = (
-/mob/living/simple_animal/hostile/pirate/space,
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
 /turf/open/floor/wood{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/space)
 "bb" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall8";
+	icon_state = "swall8"
+	},
 /area/ruin/unpowered)
 "bc" = (
 /obj/structure/girder,
@@ -310,10 +329,9 @@
 	},
 /area/ruin/unpowered)
 "bd" = (
-/turf/closed/wall/shuttle/smooth,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
+/turf/closed/wall/shuttle{
+	tag = "icon-swall12";
+	icon_state = "swall12"
 	},
 /area/ruin/unpowered)
 "be" = (
@@ -328,11 +346,9 @@
 	},
 /area/ruin/unpowered)
 "bf" = (
-/turf/open/floor/plating,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
-	},
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/turf/open/floor/plasteel/shuttle,
 /area/ruin/unpowered)
 "bg" = (
 /obj/machinery/door/airlock/shuttle,
@@ -440,16 +456,15 @@
 	icon_state = "plating";
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/space,
 /area/space)
 "bx" = (
-/mob/living/simple_animal/hostile/pirate/space,
+/obj/machinery/door/airlock/shuttle,
 /turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "by" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "bz" = (
 /turf/open/space,
@@ -481,6 +496,7 @@
 /turf/open/space,
 /area/space)
 "bC" = (
+/obj/structure/girder,
 /turf/open/floor/plating/airless{
 	icon_plating = "platingdmg2";
 	icon_state = "platingdmg2"
@@ -796,7 +812,8 @@
 /turf/open/floor/plasteel/shuttle/yellow,
 /area/ruin/unpowered)
 "cv" = (
-/mob/living/simple_animal/hostile/pirate/space,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/clipboard,
 /turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "cw" = (
@@ -815,7 +832,7 @@
 /area/ruin/unpowered)
 "cy" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "cz" = (
 /obj/item/chair,
@@ -1082,8 +1099,11 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/ruin/powered)
 "di" = (
-/turf/closed/wall/shuttle/smooth,
-/area/space)
+/obj/machinery/button/door{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/unpowered)
 "dj" = (
 /turf/open/space,
 /turf/closed/wall{
@@ -1108,6 +1128,220 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
+"dS" = (
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dR" = (
+/mob/living/simple_animal/hostile/pirate/space/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"dP" = (
+/obj/structure/door_assembly/door_assembly_shuttle{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/area/ruin/unpowered)
+"dO" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/area/ruin/unpowered)
+"dN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dM" = (
+/turf/closed/wall/shuttle,
+/area/ruin/unpowered)
+"dL" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dK" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dJ" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dI" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall1";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dH" = (
+/turf/open/floor/plasteel/airless/shuttle,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f5";
+	icon_state = "swall_f5"
+	},
+/area/ruin/unpowered)
+"dG" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dF" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dE" = (
+/obj/machinery/button/door{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dD" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"dC" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f10";
+	icon_state = "swall_f10"
+	},
+/area/ruin/unpowered)
+"dB" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall4";
+	icon_state = "swall4"
+	},
+/area/ruin/unpowered)
+"dA" = (
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/obj/structure/door_assembly/door_assembly_shuttle{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"dz" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall2";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dy" = (
+/obj/structure/girder,
+/turf/open/space,
+/area/space)
+"dx" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube,
+/turf/open/floor/wood{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/space)
+"dw" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dv" = (
+/turf/open/space,
+/turf/open/floor/plating/airless{
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_plating = "lattice";
+	icon_state = "lattice";
+	name = "anchor chain"
+	},
+/area/space)
+"du" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dt" = (
+/obj/item/weapon/coin/mythril,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ds" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/pirate,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dr" = (
+/obj/structure/table,
+/obj/item/weapon/storage/bag/money/vault,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dq" = (
+/obj/structure/table,
+/mob/living/simple_animal/parrot{
+	faction = list("pirate");
+	name = "Pegwing"
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dp" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/gold,
+/obj/item/weapon/coin/mythril,
+/obj/item/weapon/coin/plasma,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"do" = (
+/obj/structure/table,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
+	},
+/obj/item/weapon/coin/plasma,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dn" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dm" = (
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
 
 (1,1,1) = {"
 aa
@@ -1980,15 +2214,15 @@ aa
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
@@ -2025,19 +2259,19 @@ aa
 aa
 aa
 aa
-bb
-bb
-bb
+aa
+aa
+bd
 bK
 bU
 cm
-bb
+bd
 bK
 bU
 cm
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 aa
@@ -2072,9 +2306,9 @@ aa
 aa
 aa
 aa
-bb
+aa
+aa
 bd
-bb
 bL
 bL
 bL
@@ -2082,9 +2316,9 @@ bb
 bL
 bL
 bL
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 aa
@@ -2121,7 +2355,7 @@ aa
 aa
 aa
 aa
-bb
+bd
 bO
 cc
 cc
@@ -2129,8 +2363,8 @@ cc
 cc
 cc
 cc
-bb
-bb
+bd
+aa
 aa
 aa
 aa
@@ -2176,8 +2410,8 @@ cE
 cE
 cc
 cc
-bb
-bb
+bd
+aa
 aa
 aa
 aa
@@ -2222,9 +2456,9 @@ cs
 cE
 cS
 cE
-cc
+ch
 bb
-bb
+aa
 aa
 aa
 aa
@@ -2315,7 +2549,7 @@ ce
 bR
 cs
 cE
-cE
+cu
 cc
 be
 aa
@@ -2408,9 +2642,9 @@ aR
 bR
 ct
 cE
-cE
+cG
 da
-cc
+di
 be
 aa
 aa
@@ -2452,13 +2686,13 @@ aa
 aa
 aa
 bQ
-cg
+dQ
 cs
-cG
-cE
-cE
-cc
-bb
+dM
+aW
+dz
+dF
+dI
 aa
 aa
 aa
@@ -2500,7 +2734,7 @@ bh
 aa
 bo
 bk
-cu
+cE
 cE
 cU
 db
@@ -2552,7 +2786,7 @@ cH
 cc
 cc
 cc
-bb
+dB
 aa
 aa
 aa
@@ -2592,14 +2826,14 @@ aa
 aa
 aa
 bc
-bb
+dH
 ch
-ch
+aj
 cI
 ch
-ch
-bb
-bb
+bf
+ar
+aG
 aa
 aa
 aa
@@ -2639,13 +2873,13 @@ aa
 aa
 aa
 aa
-bb
+dC
 bv
 bv
 bv
 bv
 bv
-bb
+aG
 aa
 aa
 aa
@@ -2906,7 +3140,7 @@ aa
 aA
 aa
 aa
-aR
+dv
 az
 aa
 aN
@@ -2953,7 +3187,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3000,7 +3234,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3047,7 +3281,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3094,8 +3328,8 @@ aa
 aa
 aa
 aa
-aR
-aR
+dv
+dv
 aa
 aa
 aa
@@ -3142,7 +3376,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3189,7 +3423,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3236,7 +3470,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3249,11 +3483,11 @@ aa
 aN
 aa
 aa
-bb
+dB
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
@@ -3283,14 +3517,14 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
 aa
 aa
 aa
-bb
+aa
 aa
 aN
 bi
@@ -3300,9 +3534,9 @@ bC
 bS
 bU
 cm
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 aa
@@ -3330,16 +3564,16 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
 aa
 aa
 aa
-bb
-bc
 aa
+aa
+dy
 aa
 aA
 aa
@@ -3347,9 +3581,9 @@ bb
 bL
 bL
 bL
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 aa
@@ -3377,7 +3611,7 @@ aa
 aa
 aa
 aa
-aR
+dv
 aa
 aa
 aa
@@ -3385,7 +3619,7 @@ aa
 aa
 aa
 aa
-bb
+aa
 bd
 aR
 az
@@ -3394,8 +3628,8 @@ bD
 bR
 bm
 bm
-bb
-bb
+bd
+aa
 aa
 aa
 ay
@@ -3424,7 +3658,7 @@ aa
 aa
 aa
 ab
-aR
+dv
 aa
 aa
 aa
@@ -3432,17 +3666,17 @@ aa
 aa
 aa
 aa
-bb
-bb
+aa
+bd
 bj
 bo
 bo
 bE
 br
 bm
-cv
-bb
-bb
+dJ
+bd
+aa
 aa
 aa
 ay
@@ -3471,7 +3705,8 @@ ao
 ao
 ao
 ad
-aR
+dv
+aa
 aa
 aa
 aa
@@ -3480,16 +3715,15 @@ aa
 aa
 aa
 bb
-bb
-bk
+dD
 bp
 bp
 bF
 bt
 ci
-bm
+bu
 bb
-bb
+aa
 aa
 ay
 ay
@@ -3532,7 +3766,7 @@ bl
 bq
 br
 bt
-bt
+cl
 cj
 bm
 be
@@ -3603,30 +3837,30 @@ aa
 (54,1,1) = {"
 aa
 ab
-ae
-af
+dm
+dm
 ab
-aj
-aq
 ae
+aq
 aB
+dt
 aq
 ae
 ab
-af
-ae
+dm
+dm
 ad
 aa
 aa
 aa
 aa
 aa
-bf
+bY
 bm
 bs
 bt
 bG
-bt
+dO
 bt
 bm
 be
@@ -3653,11 +3887,11 @@ ac
 ae
 ae
 ah
+dn
 ae
 ae
 ae
-ae
-ae
+dn
 ae
 ah
 ae
@@ -3666,16 +3900,16 @@ ac
 aY
 aY
 aY
+dx
 aY
-aY
-bf
-bm
+bY
+dE
 bt
 bt
 bH
 bt
 ck
-bm
+dE
 be
 aa
 aa
@@ -3715,15 +3949,15 @@ aZ
 ba
 aY
 aY
-bb
-bm
-bt
+dz
+dF
+dI
 bx
-bt
-bt
-cl
-bm
-bb
+dM
+dP
+dz
+dF
+dI
 aa
 aa
 ay
@@ -3744,30 +3978,30 @@ aa
 (57,1,1) = {"
 aa
 ad
-ae
-ae
+dm
+dm
 ad
-ae
+af
 aq
 ae
 ae
 aq
-ae
+af
 ab
-ae
-aW
+dm
+dm
 ad
 aa
 aa
 aa
 aa
 aa
-bg
+dA
 bm
 bm
 by
-bt
-bs
+bm
+bm
 bm
 bm
 bg
@@ -3790,34 +4024,34 @@ aa
 "}
 (58,1,1) = {"
 aa
-ab
+bA
 ab
 ab
 ad
 ak
 ae
 ae
-aj
+ae
 ae
 ak
 ad
 ab
 ab
-ad
+dj
 aa
 aa
 aa
 aa
 aa
-bb
-bm
-bm
+dB
+dG
+dJ
 bm
 bI
 bm
+dR
 bm
-bm
-bb
+dB
 aa
 aa
 ay
@@ -3841,12 +4075,12 @@ aa
 aa
 ag
 ad
-al
-ar
+do
+aq
 ae
 ae
 aq
-an
+dr
 ad
 ag
 aa
@@ -3856,15 +4090,15 @@ aa
 aa
 aa
 aa
-bb
-bb
-bu
-bu
+dC
+dH
+dK
+dL
 bJ
 bT
-bu
-bb
-bb
+dS
+ar
+aG
 aa
 aa
 aa
@@ -3888,12 +4122,12 @@ aa
 aa
 ad
 ab
-al
+dp
 aq
 ae
 ae
 aq
-an
+dw
 ab
 ad
 aa
@@ -3904,13 +4138,13 @@ aa
 aa
 aa
 aa
-bb
+dC
 bv
 bv
 bv
 bv
 bv
-bb
+aG
 aa
 aa
 aa
@@ -3937,9 +4171,9 @@ ag
 ab
 am
 ae
+dn
 ae
-ae
-ae
+aB
 al
 ab
 ag
@@ -3982,12 +4216,12 @@ aa
 aa
 ad
 ab
-an
+dq
 as
 ae
 ae
 aO
-an
+dr
 ab
 ad
 aa
@@ -4027,16 +4261,16 @@ aa
 aa
 aa
 aa
-aa
+bA
 ab
 ab
 ab
-aB
+ae
 ae
 ab
 ab
 ab
-aa
+dj
 aa
 aa
 aa
@@ -4075,14 +4309,14 @@ aa
 aa
 aa
 aa
-aa
+bA
 ad
 at
 ae
 ae
-at
+du
 ad
-aa
+dj
 aa
 aa
 aa
@@ -4219,8 +4453,8 @@ aa
 aa
 ab
 av
-as
-aG
+ds
+aO
 av
 ab
 aa
@@ -4265,7 +4499,7 @@ aa
 aa
 aa
 ab
-an
+dr
 ae
 ae
 an
@@ -4358,12 +4592,12 @@ aa
 aa
 aa
 aa
-ad
+bA
 ax
 ax
 ax
 ax
-ad
+dj
 aa
 aa
 aa
@@ -4376,15 +4610,15 @@ aa
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
-bb
+dB
 aa
 aa
 aa
@@ -4421,19 +4655,19 @@ aa
 aa
 aa
 aa
-bb
-bb
-bb
+aa
+aa
+bd
 bK
 bU
 cm
-bb
+bd
 bK
 bU
 cm
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 ab
@@ -4468,9 +4702,9 @@ aa
 aa
 aa
 aa
-bb
-bb
-bb
+aa
+aa
+bd
 bL
 bL
 bL
@@ -4478,9 +4712,9 @@ bb
 bL
 bL
 bL
-bb
-bb
-bb
+bd
+aa
+aa
 aa
 aa
 bA
@@ -4516,8 +4750,8 @@ aa
 aa
 aa
 aa
-bb
-bb
+aa
+bd
 bm
 bm
 bm
@@ -4525,8 +4759,8 @@ bm
 bm
 bm
 bm
-bb
-di
+bd
+aa
 aa
 aa
 aa
@@ -4563,8 +4797,8 @@ aa
 aa
 aa
 aa
-bb
-bb
+aa
+bd
 bm
 bm
 bt
@@ -4572,8 +4806,8 @@ bt
 cJ
 bm
 bm
-bb
-di
+bd
+aa
 aa
 aa
 aa
@@ -4610,17 +4844,17 @@ aa
 aa
 aa
 aa
+aa
 bb
-bb
-bm
+bu
 bt
 bt
 cw
 bt
 bt
-bm
+bu
 bb
-di
+aa
 aa
 aa
 aa
@@ -4754,10 +4988,10 @@ aa
 aa
 be
 bm
+bV
 bt
-bt
-bt
-bt
+cn
+cx
 bt
 bm
 be
@@ -4800,13 +5034,13 @@ aa
 aa
 aa
 be
-bm
+dE
 bt
 bt
 bt
 cL
 bt
-bm
+dE
 be
 aa
 aa
@@ -4846,15 +5080,15 @@ aa
 aa
 aa
 aa
-bb
-bm
-bV
-bt
-cx
-bt
-bt
-bm
-bb
+dz
+dF
+dI
+dP
+dM
+dP
+dz
+dF
+dI
 aa
 aa
 aa
@@ -4896,11 +5130,11 @@ aa
 bg
 bm
 bm
-cn
+bm
 cy
 by
 bm
-bl
+cv
 bg
 aa
 aa
@@ -4940,15 +5174,15 @@ aa
 aa
 aa
 aa
-bb
-bl
+dB
+dN
 bW
 bl
 cz
 cM
 bl
 bm
-bb
+dB
 aa
 aa
 aa
@@ -4987,15 +5221,15 @@ aa
 aa
 aa
 aa
-bb
-bb
+dC
+dH
 bX
 co
 cA
 cN
 cV
-bb
-bb
+ar
+aG
 aa
 aa
 aa
@@ -5035,13 +5269,13 @@ aa
 aa
 aa
 aa
-bb
+dC
 bY
 cp
 cB
 aR
 bY
-bb
+aG
 aa
 aa
 aa
@@ -5086,9 +5320,9 @@ aa
 aa
 aa
 aa
-cO
 aa
-cD
+aa
+aa
 aa
 aa
 aa
@@ -5128,15 +5362,15 @@ aa
 aa
 aa
 aa
-bz
-ab
-ab
-ab
-cC
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+cO
+aa
+cD
+aa
 aa
 aa
 aa
@@ -5175,15 +5409,15 @@ aa
 aa
 aa
 aa
-ax
-bM
-bZ
-bZ
-bZ
-cP
-cP
-dc
-df
+bz
+ab
+ab
+ab
+cC
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -5199,6 +5433,53 @@ aa
 aa
 "}
 (88,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aC
+aC
+aC
+ay
+ay
+ay
+ay
+ay
+ay
+ay
+aa
+aa
+aa
+aa
+aa
+ax
+bM
+bZ
+bZ
+bZ
+cP
+cP
+dc
+df
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(89,1,1) = {"
 aa
 aa
 aa
@@ -5245,53 +5526,6 @@ aa
 aa
 aa
 "}
-(89,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aC
-aC
-aC
-ay
-ay
-ay
-ay
-ay
-ay
-ay
-aa
-aa
-aa
-aa
-aa
-ax
-bM
-cb
-bZ
-bZ
-cR
-cR
-dc
-df
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
 (90,1,1) = {"
 aa
 aa
@@ -5316,15 +5550,15 @@ aa
 aa
 aa
 aa
-bA
-ab
-ab
-ab
-cC
-ab
-ab
-ab
-ab
+ax
+bM
+cb
+bZ
+bZ
+cR
+cR
+dc
+df
 aa
 aa
 aa
@@ -5363,15 +5597,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-cD
-aa
+bA
+ab
+ab
+ab
+cC
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -5417,7 +5651,7 @@ aa
 aa
 aa
 aa
-aa
+cD
 aa
 aa
 aa
