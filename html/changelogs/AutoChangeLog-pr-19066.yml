@@ -1,0 +1,7 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "Hand labelers can now label storage containers."
+  - bugfix: "You can now properly resist out of wrapped lockers."
+  - bugfix: "You can now resist out of morgues if you are in a bodybag."
+  - bugfix: "Mechs can no longer spam doors they do not have access to."
