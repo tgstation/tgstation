@@ -388,10 +388,16 @@
 
 	if(istype(W, /obj/item/weapon/scythe))
 		force = force * 4
-		for(var/obj/effect/spacevine/B in range(1,get_turf(src)))
+		for(var/obj/effect/spacevine/B in orange(1,src))
 			B.health = health - force
 			if(health < 1)
 				qdel(src)
+
+		health = health - force
+
+		if(health < 1)
+			qdel(src)
+
 		return
 
 	if(W.is_sharp())
