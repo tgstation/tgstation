@@ -388,7 +388,7 @@
 
 	if(istype(W, /obj/item/weapon/scythe))
 		force = force * 4
-		for(var/obj/effect/spacevine/B in range(1,src))
+		for(var/obj/effect/spacevine/B in range(1,get_turf(src)))
 			B.health = health - force
 			if(health < 1)
 				qdel(src)
