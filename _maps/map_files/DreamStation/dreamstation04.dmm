@@ -2263,7 +2263,7 @@
 	id = "syndicate";
 	name = "syndicate infiltrator";
 	roundstart_move = "syndicate_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 18
 	},
 /obj/docking_port/stationary{
@@ -3495,7 +3495,7 @@
 	launch_status = 0;
 	name = "NT Medical Ship";
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 35
 	},
 /obj/docking_port/stationary{
@@ -3735,7 +3735,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	travelDir = -90;
+	port_angle = -90;
 	width = 15
 	},
 /turf/open/floor/plating,
@@ -4547,7 +4547,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 5
 	},
 /obj/docking_port/stationary{
@@ -63462,7 +63462,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 7
 	},
 /obj/docking_port/stationary{

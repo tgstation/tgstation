@@ -1,3 +1,10 @@
+// Byond direction defines, because I want to put them somewhere.
+// #define NORTH 1
+// #define SOUTH 2
+// #define EAST 4
+// #define WEST 8
+
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -458,3 +465,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+#define COORD(A) "([A.x],[A.y],[A.z])"

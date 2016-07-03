@@ -660,7 +660,8 @@
 	},
 /obj/docking_port/mobile/pod{
 	id = "pod2";
-	name = "escape pod 2"
+	name = "escape pod 2";
+	port_angle = 180
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_2)
@@ -1945,7 +1946,9 @@
 /obj/docking_port/mobile/pod{
 	dir = 4;
 	id = "pod3";
-	name = "escape pod 3"
+	name = "escape pod 3";
+	port_angle = 180;
+	preferred_direction = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
@@ -15535,7 +15538,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -15787,7 +15790,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -25712,7 +25715,8 @@
 	},
 /obj/docking_port/mobile/pod{
 	id = "pod1";
-	name = "escape pod 1"
+	name = "escape pod 1";
+	port_angle = 180
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_1)
@@ -35747,7 +35751,9 @@
 /obj/docking_port/mobile/pod{
 	dir = 4;
 	id = "pod4";
-	name = "escape pod 4"
+	name = "escape pod 4";
+	port_angle = 180;
+	preferred_direction = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_4)
@@ -39195,7 +39201,8 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	travelDir = -90;
+	port_angle = -90;
+	preferred_direction = 8;
 	width = 15
 	},
 /obj/docking_port/stationary{
@@ -62397,8 +62404,9 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
+	port_angle = -90;
+	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
 	width = 27
 	},
 /obj/machinery/door/airlock/shuttle{
@@ -89560,8 +89568,8 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
+	port_angle = 0;
 	roundstart_move = "syndicate_away";
-	travelDir = 180;
 	width = 18
 	},
 /obj/docking_port/stationary{
@@ -90660,8 +90668,9 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
+	port_angle = 0;
+	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	travelDir = 180;
 	width = 5
 	},
 /obj/docking_port/stationary{
@@ -92397,10 +92406,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
 "dcC" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "dcD" = (
 /obj/machinery/door/airlock/shuttle{
@@ -92622,10 +92628,7 @@
 /area/shuttle/escape)
 "dcU" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "dcV" = (
 /obj/machinery/vending/wallmed{
@@ -92635,10 +92638,7 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "dcW" = (
 /obj/structure/cable/yellow{
@@ -92697,10 +92697,7 @@
 	},
 /area/chapel/main)
 "ddb" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/overspace,
 /area/shuttle/escape)
 "ddc" = (
 /turf/closed/wall/shuttle{
@@ -92709,10 +92706,7 @@
 /area/shuttle/escape)
 "ddd" = (
 /obj/structure/sign/nosmoking_2,
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "dde" = (
 /turf/closed/wall/shuttle{
@@ -92759,10 +92753,7 @@
 /area/shuttle/escape)
 "ddk" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "ddl" = (
 /obj/structure/chair{
@@ -92786,10 +92777,7 @@
 /area/shuttle/escape)
 "ddo" = (
 /obj/structure/sign/bluecross_2,
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "ddp" = (
 /obj/structure/table,
@@ -93049,10 +93037,7 @@
 /area/shuttle/escape)
 "ddY" = (
 /obj/structure/reagent_dispensers/peppertank,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "ddZ" = (
 /obj/structure/rack,
@@ -116420,7 +116405,7 @@ cTH
 cRh
 cOU
 aaa
-cTE
+deu
 ddi
 ddi
 ddi
@@ -116431,7 +116416,7 @@ deu
 ddi
 ddi
 ddi
-dem
+deu
 aaa
 aaa
 aaa
@@ -116677,19 +116662,19 @@ cSB
 cTI
 cOU
 ddb
-dcF
-dcF
-dcF
-dcF
-dcF
-dcF
-dcF
-dcy
-dcF
-dcF
-dcF
-dcF
-dev
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+dcC
+ddb
 aaa
 aaa
 aaa
@@ -117198,7 +117183,7 @@ ddW
 ddj
 dcI
 ddv
-dcA
+dcC
 dcP
 dcP
 dcP
@@ -117455,9 +117440,9 @@ dcI
 dcI
 ded
 ddx
-dcE
+dcC
 deb
-dcJ
+dcC
 dcP
 dcP
 deb
@@ -117714,7 +117699,7 @@ dcI
 dcI
 ddS
 ddD
-dcA
+dcC
 dea
 dea
 dcz
@@ -117962,19 +117947,19 @@ cTp
 cTJ
 cUh
 dcC
-dcF
+dcC
 ddk
-ddc
+dcC
 ddN
-dfK
+dcC
 ddk
-dcF
-ddO
-dcF
-ddn
+dcC
+dcC
+dcC
+dcC
 ddk
-dcF
-deq
+dcC
+dcC
 aaa
 aaa
 aaa
@@ -118218,7 +118203,7 @@ cTa
 cTr
 cTL
 cOU
-dcA
+dcC
 ddH
 dcI
 dcI
@@ -118226,12 +118211,12 @@ dcI
 dcI
 dcI
 ddH
-dcE
+dcC
 ddA
 ddA
 ddA
 den
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -118732,7 +118717,7 @@ cOU
 cOU
 cOU
 cOU
-dcA
+dcC
 ddf
 dcI
 ddl
@@ -118997,12 +118982,12 @@ dcV
 ddf
 dcI
 ddl
-dcA
+dcC
 ddC
 ddV
 ddV
 ddB
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -119255,11 +119240,11 @@ ddf
 dcI
 ddh
 dcC
-dcF
+dcC
 ddY
 ddk
-dcF
-deq
+dcC
+dcC
 aaa
 aaa
 aaa
@@ -119511,12 +119496,12 @@ dcU
 ddf
 dcI
 ddl
-dcA
+dcC
 ddu
 ddt
 ddw
 dep
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -120287,7 +120272,7 @@ ddK
 ddK
 dcI
 ddp
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -120540,11 +120525,11 @@ ddf
 dcI
 ddl
 ddo
-dcF
+dcC
 dcz
 ddm
 dcK
-deq
+dcC
 aaa
 aaa
 aaa
@@ -120788,7 +120773,7 @@ cTd
 cRK
 cRK
 cRK
-dcA
+dcC
 dcM
 dcI
 ddl
@@ -120796,12 +120781,12 @@ dcz
 ddf
 dcI
 ddl
-dcA
+dcC
 ddL
 ddZ
 dee
 des
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -121058,7 +121043,7 @@ ddM
 dcT
 dcP
 ddy
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -121816,7 +121801,7 @@ cRq
 cRK
 cRK
 cRK
-dcA
+dcC
 dcI
 dcI
 dcI
@@ -121829,7 +121814,7 @@ ddT
 dcP
 dcP
 det
-dcA
+dcC
 aaa
 aaa
 aaa
@@ -122073,7 +122058,7 @@ aaf
 aaa
 aaa
 aaf
-dcA
+dcC
 dcH
 dcG
 dcH
@@ -122086,7 +122071,7 @@ ddU
 ddT
 ddT
 dcO
-dcA
+dcC
 aaf
 aaf
 aaf
@@ -122330,20 +122315,20 @@ aaf
 aaf
 aaf
 aaf
-dde
-dcF
+ddb
+dcC
+dcz
+dcC
 dcz
 dcF
 dcz
-dcF
-dcz
-dcF
-ddn
-dcF
+dcC
+dcC
+dcC
 dcz
 dcz
-dcF
-dew
+dcC
+ddb
 aaa
 aaa
 aaf

@@ -45,13 +45,8 @@
 	SSshuttle.points += bonus_points
 	endWhen = activeFor + 1
 
-	SSshuttle.supply.sell()
-	SSshuttle.supply.enterTransit()
-	if(SSshuttle.supply.z != ZLEVEL_STATION)
-		SSshuttle.supply.mode = SHUTTLE_CALL
-		SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
-	else
-		SSshuttle.supply.mode = SHUTTLE_RECALL
+	SSshuttle.supply.mode = SHUTTLE_CALL
+	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -121,23 +116,15 @@
 				if(prob(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
 
-				var/turf/T = pick(empty_shuttle_turfs)
-				empty_shuttle_turfs.Remove(T)
+				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
 				new /obj/effect/decal/remains/human(T)
 				new /obj/item/clothing/shoes/space_ninja(T)
 				new /obj/item/clothing/mask/balaclava(T)
 
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
-				T = pick(empty_shuttle_turfs)
-				new /obj/effect/spider/stickyweb(T)
+				for(var/i in 1 to 5)
+					T = pick_n_take(empty_shuttle_turfs)
+					new /obj/effect/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
 				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)

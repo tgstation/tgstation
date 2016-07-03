@@ -25,7 +25,9 @@
   {{#if data.loan && !data.requestonly}}
     <ui-section label='Loan'>
       {{#if !data.loan_dispatched}}
-        <ui-button action='loan'>Loan Shuttle</ui-button>
+        <ui-button
+         state='{{data.away && data.docked ? null : "disabled"}}'
+         action='loan'>Loan Shuttle</ui-button>
       {{else}}
         <span class='bad'>Loaned to Centcom</span>
       {{/if}}

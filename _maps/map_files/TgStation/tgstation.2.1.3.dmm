@@ -2510,7 +2510,9 @@
 /obj/docking_port/mobile/pod{
 	dir = 4;
 	id = "pod3";
-	name = "escape pod 3"
+	name = "escape pod 3";
+	port_angle = 180;
+	preferred_direction = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_3)
@@ -6618,7 +6620,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -8676,7 +8678,8 @@
 	},
 /obj/docking_port/mobile/pod{
 	id = "pod1";
-	name = "escape pod 1"
+	name = "escape pod 1";
+	port_angle = 180
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_1)
@@ -8702,7 +8705,8 @@
 	},
 /obj/docking_port/mobile/pod{
 	id = "pod2";
-	name = "escape pod 2"
+	name = "escape pod 2";
+	port_angle = 180
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_2)
@@ -17137,7 +17141,8 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	travelDir = -90;
+	port_angle = -90;
+	preferred_direction = 8;
 	width = 15
 	},
 /obj/docking_port/stationary{
@@ -33979,8 +33984,8 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
+	port_angle = 0;
 	roundstart_move = "syndicate_away";
-	travelDir = 180;
 	width = 18
 	},
 /obj/docking_port/stationary{
@@ -39699,7 +39704,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -54932,7 +54937,9 @@
 /obj/docking_port/mobile/pod{
 	dir = 4;
 	id = "pod4";
-	name = "escape pod 4"
+	name = "escape pod 4";
+	port_angle = 180;
+	preferred_direction = 4
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/pod_4)
@@ -58719,8 +58726,9 @@
 	height = 12;
 	id = "ferry";
 	name = "ferry shuttle";
+	port_angle = 0;
+	preferred_direction = 4;
 	roundstart_move = "ferry_away";
-	travelDir = 180;
 	width = 5
 	},
 /obj/docking_port/stationary{
@@ -58894,8 +58902,9 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
+	port_angle = -90;
+	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
 	width = 35
 	},
 /obj/docking_port/stationary{
