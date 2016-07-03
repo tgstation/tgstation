@@ -343,7 +343,7 @@
 			else if(istype(target,/obj/mecha))
 				if(mech_damage_cycle)
 					var/obj/mecha/M = target
-					M.take_directional_damage(damage_per_tick*1.5, "laser", get_dir(src, M), 0) //does about 75% of standard damage to mechs * whatever their fire armor is
+					M.take_directional_damage(damage_per_tick, "fire", get_dir(src, M), 0) //does about half of standard damage to mechs * whatever their fire armor is
 					mech_damage_cycle--
 				else
 					mech_damage_cycle++
@@ -355,8 +355,6 @@
 			if(isliving(target))
 				var/mob/living/L = target
 				L << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
-				if(L.null_rod_check() && !ratvar_awakens)
-					L << "<span class='warning'>Your artifact glows hotly against you, protecting you from the warden's gaze!</span>"
 			else if(istype(target,/obj/mecha))
 				var/obj/mecha/M = target
 				M.occupant << "<span class='heavy_brass'>\"I SEE YOU!\"</span>" //heeeellooooooo, person in mech.
