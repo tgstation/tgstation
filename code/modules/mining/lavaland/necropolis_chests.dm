@@ -442,8 +442,15 @@
 				src.used = TRUE
 
 
+/obj/structure/closet/crate/necropolis/trapped //Used in kobold dens. Sneaky kobolds.
 
-
+/obj/structure/closet/crate/necropolis/trapped/attack_hand(mob/living/user)
+	..()
+	if(ishuman(user))
+		user.visible_message("<span class='warning'>Teeth on [src]'s lid dig into [user]'s hand!</span>", "<span class='userdanger'>Metal teeth on [src]'s lid sink into your hands!</span>")
+		user.emote("scream")
+		user.apply_damage(7.5, BRUTE, "l_arm")
+		user.apply_damage(7.5, BRUTE, "r_arm")
 
 
 ///Bosses

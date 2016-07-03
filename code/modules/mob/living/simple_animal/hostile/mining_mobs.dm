@@ -12,9 +12,10 @@
 	status_flags = 0
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
-	var/icon_aggro = null // for swapping to when we get aggressived
+	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	var/defiance_string = "roars" //Used when breaking free of a net
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -46,6 +47,34 @@
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
 	feedback_add_details("mobs_killed_mining","[src.type]")
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/AttackingTarget()
+	if(notransform)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/asteroid/proc/entrap(obj/item/device/kobold_device/sinew_net/N)
+	if(!N)
+		return
+	visible_message("<span class='warning'>[src] [defiance_string] in defiance and struggles to break free as [N] immobilizes it!</span>", "<span class='userdanger'>A [N.name] entangles you! You \
+	struggle to break free...</span>", "<span class='boldwarning'>You hear something big struggling!</span>")
+	notransform = TRUE
+	N.loc = src
+	addtimer(src, "break_free", 75, N)
+
+/mob/living/simple_animal/hostile/asteroid/proc/break_free(obj/item/device/kobold_device/sinew_net/N)
+	if(!N)
+		notransform = FALSE
+		return
+	if(health < maxHealth)
+		visible_message("<span class='warning'>[src] breaks free of [N]!</span>", "<span class='userdanger'>You struggle out of [N]'s grasp!</span>")
+		playsound(src, 'sound/weapons/punchmiss.ogg', 50, 1)
+		N.loc = get_turf(src)
+	else
+		visible_message("<span class='warning'>[src] snaps through [N]!</span>", "<span class='userdanger'>You break apart [N]!</span>", "<span class='warning'>You hear snapping sounds.</span>")
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
+		qdel(N)
+	notransform = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
@@ -79,6 +108,7 @@
 	turns_per_move = 5
 	loot = list(/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER},
 				/obj/item/weapon/ore/diamond{layer = ABOVE_MOB_LAYER})
+	defiance_string = "hisses"
 
 /obj/item/projectile/temp/basilisk
 	name = "freezing blast"
@@ -132,6 +162,7 @@
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/uranium)
+	defiance_string = "frantically wiggles"
 
 	var/chase_time = 100
 	var/will_burrow = TRUE
@@ -214,6 +245,7 @@
 	minimum_distance = 3
 	pass_flags = PASSTABLE
 	loot = list(/obj/item/organ/hivelord_core)
+	defiance_string = "flails"
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
@@ -358,6 +390,9 @@
 	..()
 	addtimer(src, "death", 100)
 
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/entrap()
+	return
+
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/blood
 	name = "blood brood"
 	desc = "A living string of blood and alien materials."
@@ -452,6 +487,7 @@
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
 	mob_size = MOB_SIZE_LARGE
+	defiance_string = "bellows"
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide{layer = ABOVE_MOB_LAYER})
@@ -627,6 +663,7 @@
 	idle_vision_range = 5
 	mob_size = MOB_SIZE_SMALL
 	environment_smash = 0
+	defiance_string = "struggles"
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
@@ -790,6 +827,7 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	defiance_string = "wails"
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
@@ -913,6 +951,7 @@
 	del_on_death = TRUE
 	loot = list(/obj/effect/decal/cleanable/blood/gibs)
 	deathmessage = "is pulped into bugmash."
+	defiance_string = "wiggles"
 
 	animal_species = /mob/living/simple_animal/hostile/asteroid/gutlunch
 	childtype = list(/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck = 45, /mob/living/simple_animal/hostile/asteroid/gutlunch/guthen = 55)

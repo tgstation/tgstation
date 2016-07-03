@@ -283,11 +283,13 @@
 		return
 	lunch.visible_message("<span class='warning'>[src] picks up [lunch] and begins devouring \him!</span>", "<span class='userdanger'>[src] grabs you with its jaws and starts eating you!</span>")
 	lunch.Weaken(10)
-	lunch.loc = get_turf(src)
+	lunch.forceMove(get_turf(src))
 	playsound(src, 'sound/magic/demon_attack1.ogg', 50, 1)
 	eating = TRUE
+	wander = FALSE
 	for(var/i in 1 to 3)
 		if(!lunch || lunch.loc != get_turf(src))
+			wander = TRUE
 			eating = FALSE
 			return
 		lunch.adjustBruteLoss(25)
@@ -299,3 +301,4 @@
 	lunch.gib()
 	consumed_creatures++
 	eating = FALSE
+	wander = TRUE

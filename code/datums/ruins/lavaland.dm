@@ -69,6 +69,16 @@
 	cost = 20
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/kobold_den
+	name = "Kobold Den"
+	id = "kobold-den"
+	description = "A juvenile ash drake lives here with her brood, who seem \
+	cunning and have proven themselves as capable trappers. Oh, and they can't \
+	speak English and are more than willing to kill humans on sight."
+	suffix = "lavaland_surface_kobold_den.dmm"
+	cost = 15
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
 	id = "golem-ship"

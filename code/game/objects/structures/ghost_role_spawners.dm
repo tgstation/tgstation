@@ -76,8 +76,10 @@
 
 /obj/effect/mob_spawn/kobold/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(pick(MALE, FEMALE))
+	new_spawn.name = new_spawn.real_name
 	new_spawn.visible_message("<span class='warning'>A kobold emerges from [src]!</span>", "<b>Use the traps in your den to slay the creatures of this land. Bring their corpses back to Mother \
-	Drake so that she may feast and lay new eggs for your kind. Above all, protect her from harm, for her fall will ensure your doom.</b>")
+	Drake so that she may feast and lay new eggs for your kind. Above all, protect her from harm, for her fall will ensure your doom. And know this: you are of Mother Drake's physiology. You are \
+	immune to the ash storms that plague this land, although not to lava.</b>")
 
 //Timeless prisons: Spawns in Wish Granter prisons in lavaland. Ghosts become age-old users of the Wish Granter and are advised to seek repentance for their past.
 /obj/effect/mob_spawn/human/exile

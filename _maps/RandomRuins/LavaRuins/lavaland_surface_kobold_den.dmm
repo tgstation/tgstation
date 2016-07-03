@@ -1,0 +1,30 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/volcanic,/area/lavaland/surface/outdoors)
+"c" = (/turf/open/floor/plating/lava/smooth/lava_land_surface,/area/ruin/unpowered)
+"d" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"e" = (/obj/effect/mob_spawn/kobold,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"f" = (/mob/living/simple_animal/hostile/megafauna/dragon/lesser/kobold,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"g" = (/obj/structure/mineral_door/iron{color = "#4B4B4B"; desc = "Two heavy slabs of basalt set into the rock."; layer = 4.4; name = "basalt door"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/unpowered)
+"h" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+aaaaaabbbbbbbbaaaaa
+aaabbbbbcccbbbbbaaa
+aabbbbbccccccccbbaa
+abbbbbbcdddeddcbbba
+abbbbbbddddddddbbba
+bbbbbddddddddddbbba
+bbbbddddddddddddbbb
+bbccddddddddddddbbb
+bcceddddddddddddbbb
+bbcddddddfddddddbbb
+bbbbddddddddddddccb
+bbbbdddddddddddeccb
+bbbccddddddddddccbb
+abbccccdddddddcccba
+abbccccbdddddbccbba
+abbbccbbddddbbbbbba
+abbbbbbbbgbbbbbbbba
+abbbbbbaahaabbbbbba
+aabbbbaaaaaaabbbbaa
+"}

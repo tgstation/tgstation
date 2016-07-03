@@ -16,13 +16,32 @@
 	..()
 	desc = initial(desc)
 
+
+/obj/item/weapon/storage/bag/trapper //Trapper's bags hold traps and the materials to craft them
+	name = "trapper's bag"
+	desc = "A large goliath-hide bag fitted for storing traps."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "giftbag2"
+	storage_slots = 15
+	max_w_class = 3
+	max_combined_w_class = 30 //Ten traps
+	can_hold = list(/obj/item/device/kobold_device)
+
+/obj/item/weapon/storage/bag/trapper/full/New()
+	..()
+	for(var/i in 1 to 3)
+		new/obj/item/device/kobold_device/goliath_snare(src)
+	for(var/i in 1 to 2)
+		new/obj/item/device/kobold_device/sinew_net(src)
+
+
 /obj/item/device/kobold_device/goliath_snare //Goliath snares are tooth-lined rings of metal that rapidly contract when something enters it. This stuns and damages most land-bound creatures.
 	name = "goliath snare"
 	desc = "A metal ring lined with spikes."
-	kobold_desc = "A tooth-lined ring that quickly shrinks inward when something enters it."
-	icon_state = "goliath_snare"
+	kobold_desc = "A tooth-lined proximity trap, designed to heavily wound goliath tentacles."
+	icon_state = "goliath_snare_contracted"
 	breakouttime = 600 //For carbon mobs that step on the snare. Takes a long time to break free because it's meant for goliaths and you just stepped on it, you dumb human you.
-	var/contracted = FALSE //If the snare has already been used
+	var/contracted = TRUE //If the snare has already been used
 
 /obj/item/device/kobold_device/goliath_snare/attack_self(mob/living/user)
 	if(!iskobold(user))
@@ -49,12 +68,21 @@
 /obj/item/device/kobold_device/goliath_snare/Crossed(atom/movable/AM)
 	contract(AM)
 
+/obj/item/device/kobold_device/goliath_snare/dropped(mob/living/user)
+	..()
+	alpha = 100 //Harder to see when placed
+
+/obj/item/device/kobold_device/goliath_snare/pickup(mob/living/user)
+	..()
+	alpha = initial(alpha)
+
 /obj/item/device/kobold_device/goliath_snare/proc/contract(atom/movable/AM)
-	if(contracted)
+	if(contracted || AM.type == type)
 		return
 	contracted = TRUE
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	icon_state = "[icon_state]_contracted"
+	alpha = initial(alpha)
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		C.visible_message("<span class='warning'>[src] quickly contracts around [AM]'s foot!</span>", "<span class='userdanger'>You trigger a [name]!</span>")
@@ -77,7 +105,22 @@
 	else if(istype(AM, /obj/effect/goliath_tentacle))
 		var/obj/effect/goliath_tentacle/G = AM
 		G.visible_message("<span class='warning'>[src] contracts around [G], holding it in place!</span>")
-		G.owner.visible_message("<span class='warning'>[G] bellows in pain!</span>", "<span class='userdanger'>A [name] heavily wounds you!</span>")
+		G.owner.visible_message("<span class='warning'>[G.owner] bellows in pain!</span>", "<span class='userdanger'>A [name] heavily wounds you!</span>")
 		G.owner.adjustBruteLoss(100) //1/3 of max health by default
-		G.owner.ranged_cooldown = 150 //A bit more than default to recuperate from the snare
 		icon_state = "goliath_snare_contracted_bloody"
+
+
+/obj/item/device/kobold_device/sinew_net //Sinew nets are made of watcher sinew and effectively stun anything trapped in them. Non-injured creatures can break free easily.
+	name = "sinew net"
+	desc = "A fibrous mesh made of sinewy material."
+	kobold_desc = "A strong net made of watcher sinew. Throwing it at large creatures will snare them and make them vulnerable to attack."
+	icon_state = "sinew_net"
+	force = 0
+	throw_range = 7
+
+/obj/item/device/kobold_device/sinew_net/throw_impact(atom/movable/AM)
+	if(istype(AM, /mob/living/simple_animal/hostile/asteroid))
+		var/mob/living/simple_animal/hostile/asteroid/A = AM
+		A.entrap(src)
+	else
+		..()
