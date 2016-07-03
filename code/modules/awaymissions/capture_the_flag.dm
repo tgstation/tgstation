@@ -22,27 +22,35 @@
 	flags = HANDSLOW
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
-	var/obj/effect/landmark/reset
+	var/obj/effect/ctf/flag_reset/reset
+	var/reset_path = /obj/effect/ctf/flag_reset
 
 /obj/item/weapon/twohanded/required/ctf/New()
 	if(!reset)
-		reset = new /obj/effect/landmark(get_turf(src))
+		reset = new reset_path(get_turf(src))
+
+/obj/item/weapon/twohanded/required/ctf/Destroy()
+	if(reset)
+		qdel(reset)
+		reset = null
+	. = ..()
 
 /obj/item/weapon/twohanded/required/ctf/initialize()
 	if(!reset)
-		reset = new /obj/effect/landmark(get_turf(src))
+		reset = new reset_path(get_turf(src))
 
 /obj/item/weapon/twohanded/required/ctf/process()
 	if(world.time > reset_cooldown)
-		src.loc = get_turf(src.reset)
+		forceMove(get_turf(src.reset))
 		for(var/mob/M in player_list)
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
-				M << "<span class='userdanger'>\The [src] has been returned to base!</span>"
+				M << "<span class='userdanger'>\The [src] has been returned \
+					to base!</span>"
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/required/ctf/attack_hand(mob/living/user)
-	if (!user)
+	if(!user)
 		return
 	if(team in user.faction)
 		user << "You can't move your own flag!"
@@ -76,18 +84,37 @@
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
-	desc = "A red banner, used to play capture the flag."
+	desc = "A red banner used to play capture the flag."
 	team = RED_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/red
 
 
 /obj/item/weapon/twohanded/required/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
-	desc = "A blue banner, used to play capture the flag."
+	desc = "A blue banner used to play capture the flag."
 	team = BLUE_TEAM
+	reset_path = /obj/effect/ctf/flag_reset/blue
 
+/obj/effect/ctf/flag_reset
+	name = "banner landmark"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banner"
+	desc = "This is where a banner with Nanotrasen's logo on it would go."
+	layer = LOW_ITEM_LAYER
 
+/obj/effect/ctf/flag_reset/red
+	name = "red flag landmark"
+	icon_state = "banner-red"
+	desc = "This is where a red banner used to play capture the flag \
+		would go."
+
+/obj/effect/ctf/flag_reset/blue
+	name = "blue flag landmark"
+	icon_state = "banner-blue"
+	desc = "This is where a blue banner used to play capture the flag \
+		would go."
 
 /obj/machinery/capture_the_flag
 	name = "CTF Controller"
@@ -107,9 +134,23 @@
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 	var/instagib_gear = /datum/outfit/ctf/instagib
+	var/list/dead_barricades = list()
+
+	var/static/ctf_object_typecache
+	var/static/arena_cleared = FALSE
 
 /obj/machinery/capture_the_flag/New()
 	..()
+	if(!ctf_object_typecache)
+		ctf_object_typecache = typecacheof(list(
+			/turf,
+			/mob,
+			/area,
+			/obj/machinery,
+			/obj/structure,
+			/obj/effect/ctf,
+			/obj/item/weapon/twohanded/required/ctf
+		))
 	poi_list |= src
 
 /obj/machinery/capture_the_flag/Destroy()
@@ -172,10 +213,6 @@
 	M.faction += team
 	M.equipOutfit(ctf_gear)
 
-/obj/machinery/capture_the_flag/proc/TellGhost()
-	if(ctf_enabled)
-		notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
-
 /obj/machinery/capture_the_flag/Topic(href, href_list)
 	if(href_list["join"])
 		var/mob/dead/observer/ghost = usr
@@ -214,9 +251,42 @@
 			CTF.control_points = 0
 			CTF.ctf_enabled = FALSE
 			CTF.team_members = list()
-			spawn(300)
-				CTF.ctf_enabled = TRUE
+			CTF.arena_cleared = FALSE
+			addtimer(CTF, "start_ctf", 300)
 
+/obj/machinery/capture_the_flag/proc/toggle_ctf()
+	if(!ctf_enabled)
+		start_ctf()
+		. = TRUE
+	else
+		stop_ctf()
+		. = FALSE
+
+/obj/machinery/capture_the_flag/proc/start_ctf()
+	ctf_enabled = TRUE
+	for(var/obj/effect/ctf/dead_barricade/ded in dead_barricades)
+		ded.respawn()
+	dead_barricades.Cut()
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=\ref[src];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+
+	if(!arena_cleared)
+		clear_the_arena()
+		arena_cleared = TRUE
+
+/obj/machinery/capture_the_flag/proc/clear_the_arena()
+	var/area/A = get_area(src)
+	for(var/atm in A)
+		if(!is_type_in_typecache(atm, ctf_object_typecache))
+			qdel(atm)
+
+/obj/machinery/capture_the_flag/proc/stop_ctf()
+	ctf_enabled = FALSE
+	var/area/A = get_area(src)
+	for(var/i in mob_list)
+		var/mob/M = i
+		if((get_area(A) == A) && (M.ckey in team_members))
+			M.dust()
+	team_members.Cut()
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
@@ -243,10 +313,34 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
 /obj/item/ammo_casing/caseless/laser/ctf
- 	projectile_type = /obj/item/projectile/beam/ctf
+	projectile_type = /obj/item/projectile/beam/ctf
 
 /obj/item/projectile/beam/ctf
 	damage = 150
+
+/obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
+
+/obj/item/ammo_box/magazine/recharge/ctf/red
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
+
+/obj/item/ammo_casing/caseless/laser/ctf/red
+	projectile_type = /obj/item/projectile/beam/ctf/red
+
+/obj/item/projectile/beam/ctf/red
+	icon_state = "laser"
+
+/obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
+
+/obj/item/ammo_box/magazine/recharge/ctf/blue
+	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
+
+/obj/item/ammo_casing/caseless/laser/ctf/blue
+	projectile_type = /obj/item/projectile/beam/ctf/blue
+
+/obj/item/projectile/beam/ctf/blue
+	icon_state = "bluelaser"
 
 /datum/outfit/ctf
 	name = "CTF"
@@ -268,6 +362,7 @@
 /datum/outfit/ctf/red
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
+	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill/red
@@ -276,6 +371,7 @@
 /datum/outfit/ctf/blue
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
+	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
@@ -321,8 +417,31 @@
 	team = BLUE_TEAM
 	icon_state = "trap-frost"
 
-/obj/structure/barricade/security/CTF
-	health = INFINITY
+/obj/structure/barricade/security/ctf
+	name = "barrier"
+	desc = "A barrier. Provides cover in fire fights."
+
+/obj/structure/barricade/security/ctf/make_debris()
+	new /obj/effect/ctf/dead_barricade(get_turf(src))
+
+/obj/effect/ctf
+	density = FALSE
+	anchored = TRUE
+	invisibility = INVISIBILITY_OBSERVER
+	alpha = 100
+
+/obj/effect/ctf/dead_barricade
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barrier0"
+
+/obj/effect/ctf/dead_barricade/New()
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		CTF.dead_barricades += src
+
+/obj/effect/ctf/dead_barricade/proc/respawn()
+	if(!qdeleted(src))
+		new /obj/structure/barricade/security/ctf(get_turf(src))
+		qdel(src)
 
 //Areas
 

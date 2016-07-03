@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Clock Cult can now happen at 24 players, same as cult."
+  - tweak: "Clock Cult player scaling is lower; 3 people, plus one for every 15 players above 30, from 1 for every 10 players with a player minimum of 30."

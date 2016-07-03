@@ -103,6 +103,7 @@
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>")
+	playsound(src, P.hitsound, 50, 1)
 	take_damage(P.damage, P.damage_type)
 
 /obj/structure/clockwork/proc/attack_generic(mob/user, damage = 0, damage_type = BRUTE) //used by attack_alien, attack_animal, and attack_slime
@@ -112,26 +113,30 @@
 	take_damage(damage, damage_type)
 
 /obj/structure/clockwork/attack_alien(mob/living/user)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 	attack_generic(user, 15)
 
 /obj/structure/clockwork/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(M, M.melee_damage_upper, M.melee_damage_type)
 
 /obj/structure/clockwork/attack_slime(mob/living/simple_animal/slime/user)
 	if(!user.is_adult)
 		return
+	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	attack_generic(user, rand(10, 15))
 
 /obj/structure/clockwork/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
 	if(I.force && takes_damage)
-		take_damage(I.force, I.damtype)
 		playsound(src, I.hitsound, 50, 1)
+		take_damage(I.force, I.damtype)
 
 /obj/structure/clockwork/mech_melee_attack(obj/mecha/M)
 	if(..())
+		playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
 		take_damage(M.force, M.damtype)
 
 /obj/structure/clockwork/cache //Tinkerer's cache: Stores components for later use.
@@ -460,7 +465,7 @@
 	..()
 	desc = initial(desc)
 
-/obj/effect/clockwork/judicial_marker //Judicial marker: Created by the judicial visor. After four seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
+/obj/effect/clockwork/judicial_marker //Judicial marker: Created by the judicial visor. After three seconds, stuns any non-servants nearby and damages Nar-Sian cultists.
 	name = "judicial marker"
 	desc = "You get the feeling that you shouldn't be standing here."
 	clockwork_desc = "A sigil that will soon erupt and smite any unenlightened nearby."
@@ -468,34 +473,48 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = BELOW_MOB_LAYER
+	var/mob/user
 
-/obj/effect/clockwork/judicial_marker/New()
+/obj/effect/clockwork/judicial_marker/New(loc, caster)
 	..()
+	user = caster
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', 50, 1, 1, 1)
 	flick("judicial_marker", src)
-	spawn(16) //Utilizes spawns due to how it works with Ratvar's flame
-		layer = ABOVE_ALL_MOB_LAYER
-		flick("judicial_explosion", src)
-		spawn(14)
-			for(var/mob/living/L in range(1, src))
-				if(is_servant_of_ratvar(L))
-					continue
-				if(L.null_rod_check())
-					var/obj/item/I = L.null_rod_check()
-					L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
-					"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
-				else if(!iscultist(L))
-					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-					"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
-					L.Weaken(8)
-				else
-					L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
-					"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
-					L.Weaken(4) //half the stun, but sets cultists on fire
-					L.adjust_fire_stacks(2)
-					L.IgniteMob()
-				L.adjustBruteLoss(10)
-			qdel(src)
-			return 1
+	addtimer(src, "burstanim", 16, FALSE)
+
+/obj/effect/clockwork/judicial_marker/proc/burstanim()
+	layer = ABOVE_ALL_MOB_LAYER
+	flick("judicial_explosion", src)
+	addtimer(src, "judicialblast", 13, FALSE)
+
+/obj/effect/clockwork/judicial_marker/proc/judicialblast()
+	var/targetsjudged = 0
+	playsound(src, 'sound/effects/explosionfar.ogg', 100, 1, 1, 1)
+	for(var/mob/living/L in range(1, src))
+		if(is_servant_of_ratvar(L))
+			continue
+		if(L.null_rod_check())
+			var/obj/item/I = L.null_rod_check()
+			L.visible_message("<span class='warning'>Strange energy flows into [L]'s [I.name]!</span>", \
+			"<span class='userdanger'>Your [I.name] shields you from [src]!</span>")
+			continue
+		if(!iscultist(L))
+			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+			"<span class='userdanger'>[!issilicon(L) ? "An unseen force slams you into the ground!" : "ERROR: Motor servos disabled by external source!"]</span>")
+			L.Weaken(8)
+		else
+			L.visible_message("<span class='warning'>[L] is struck by a judicial explosion!</span>", \
+			"<span class='heavy_brass'>\"Keep an eye out, filth.\"</span>\n<span class='userdanger'>A burst of heat crushes you against the ground!</span>")
+			L.Weaken(4) //half the stun, but sets cultists on fire
+			L.adjust_fire_stacks(2)
+			L.IgniteMob()
+		targetsjudged++
+		L.adjustBruteLoss(10)
+	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
+	QDEL_IN(src, 3) //so the animation completes properly
+
+/obj/effect/clockwork/judicial_marker/ex_act(severity)
+	return
 
 /obj/effect/clockwork/spatial_gateway //Spatial gateway: A usually one-way rift to another location.
 	name = "spatial gateway"
@@ -813,7 +832,7 @@
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
-	var/power_charge = 4000 //starts with 4000W by default
+	var/power_charge = 2500 //starts with 2500W by default
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
@@ -846,8 +865,9 @@
 	affects_servants = TRUE
 	stat_affected = DEAD
 	var/vitality = 0
-	var/base_revive_cost = 25
+	var/base_revive_cost = 20
 	var/sigil_active = FALSE
+	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
@@ -864,9 +884,12 @@
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
-		PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+		if(animation_number >= 4)
+			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+			animation_number = 0
+		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(4)
+			var/vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
@@ -880,14 +903,20 @@
 			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
-				if(vitality >= revival_cost)
-					L.revive(1, 1)
-					L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
-					vitality -= revival_cost
+				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
+				if(ghost)
+					if(vitality >= revival_cost)
+						ghost.reenter_corpse()
+						L.revive(1, 1)
+						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
+						vitality -= revival_cost
+						break
+				else
 					break
 			if(!total_damage)
 				break
-			var/vitality_for_cycle = min(vitality, 8)
+			var/vitality_for_cycle = min(vitality, 3)
 
 			if(clone_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, clone_to_heal)
@@ -918,8 +947,9 @@
 				vitality_for_cycle -= healing
 				L.adjustOxyLoss(-healing)
 				vitality -= healing
-		sleep(8)
+		sleep(2)
 
+	animation_number = initial(animation_number)
 	sigil_active = FALSE
 	animate(src, alpha = initial(alpha), time = 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")

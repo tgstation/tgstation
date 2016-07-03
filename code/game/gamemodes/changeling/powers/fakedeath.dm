@@ -11,12 +11,12 @@
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
 	user << "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>"
-	user.status_flags |= FAKEDEATH		//play dead
-	user.update_stat()
-	user.update_canmove()
 	if(user.stat != DEAD)
 		user.emote("deathgasp")
 		user.tod = worldtime2text()
+	user.status_flags |= FAKEDEATH //play dead
+	user.update_stat()
+	user.update_canmove()
 
 	addtimer(src, "ready_to_regenerate", LING_FAKEDEATH_TIME, FALSE, user)
 

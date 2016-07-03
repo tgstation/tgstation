@@ -47,9 +47,9 @@
 	name = "The Emergency Escape Bar"
 	description = "Features include sentient bar staff (a Bardrone and a \
 		Barmaid), bathroom, a quality lounge for the heads, and a \
-		small gambling table."
+		large gathering table."
 	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically \
-		sentienced by the fun balloon at 60 seconds before arrival. No \
+		sentienced by the fun balloon at 60 seconds before arrival. Has \
 		medical facilities."
 
 /datum/map_template/shuttle/emergency/birdboat

@@ -152,9 +152,6 @@ var/list/airlock_overlays = list()
 			return
 	..()
 
-/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
-	..()
-
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != 0)
 		return 1
@@ -1159,3 +1156,23 @@ var/list/airlock_overlays = list()
 	if(do_after(user, time_to_open, target = src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			user << "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>"
+
+/obj/machinery/door/airlock/hostile_lockdown(mob/origin)
+	// Must be powered and have working AI wire.
+	if(canAIControl(src) && !stat)
+		locked = FALSE //For airlocks that were bolted open.
+		safe = FALSE //DOOR CRUSH
+		close()
+		bolt() //Bolt it!
+		secondsElectrified = -1  //Shock it!
+		if(origin)
+			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
+
+
+/obj/machinery/door/airlock/disable_lockdown()
+	// Must be powered and have working AI wire.
+	if(canAIControl(src) && !stat)
+		unbolt()
+		secondsElectrified = 0
+		open()
+		safe = TRUE

@@ -9681,19 +9681,7 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "arh" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
-/obj/item/weapon/razor{
-	pixel_x = -6
-	},
-/obj/item/weapon/paper{
-	desc = "";
-	info = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace his equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner his ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of his crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place him in the secure northern half of the labor shuttle, and send him to the station.  Once he meets his quota by feeding sheets to the stacker, he will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveilance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine.";
-	name = "Labor Camp Operating Guide"
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/machinery/computer/shuttle/labor,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "ari" = (
@@ -10505,22 +10493,25 @@
 	c_tag = "Labor Shuttle Control Desk";
 	dir = 4
 	},
-/obj/machinery/computer/shuttle/labor,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/weapon/storage/box/prisoner,
+/obj/item/weapon/razor{
+	pixel_x = -6
+	},
+/obj/item/weapon/paper{
+	desc = "";
+	info = "<b>Labor Camp Facility Operation Guide</b><br><br>Hello there, proud operator of an NT-Sec Prisoner Rehabilitation Center.  A solution to rising crime rates and falling productivity, these facilities are specifically designed for the safe, productive imprisonment of your most dangerous criminals.  <br><br>To press a long-term prisoner into the service of the station, replace his equipment with prisoners' garb at one of the prison lockers, as per normal operating procedure.  Before assigning a prisoner his ID, insert the ID into a prisoner management console and assign the prisoner a quota, based on the severity of his crime.  <br>A single sheet of most materials produces five points for the prisoner, and points can be expected to be produced at a rate of about 100 per minute, though punishments as severe as forced labor should be reserved for serious crimes of sentences not less than five minutes long.<br>Once you have prepared the prisoner, place him in the secure northern half of the labor shuttle, and send him to the station.  Once he meets his quota by feeding sheets to the stacker, he will be allowed to return to the station, and will be able to open the secure door to the prisoner release area.<br><br>In the case of dangerous prisoners, surveilance may be needed. To that end, there is a prisoner monitoring room on the mining station, equipped with a remote flasher and a lockdown button.  The mine itself is patrolled by a securibot, so the nearby security records console can also be used to secure hostile prisoners on the mine.";
+	name = "Labor Camp Operating Guide"
+	},
+/obj/item/weapon/pen,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "asy" = (
 /obj/structure/chair/office/dark{
 	dir = 8
-	},
-/obj/machinery/door/window/westleft{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Labor Camp Desk";
-	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/black,
 /area/security/brig)
@@ -11484,19 +11475,11 @@
 	},
 /area/shuttle/labor)
 "atW" = (
-/obj/machinery/computer/prisoner,
+/obj/machinery/computer/gulag_teleporter_computer,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "atX" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "atY" = (
@@ -15840,6 +15823,9 @@
 	id = "PRelease";
 	pixel_x = 24;
 	pixel_y = 20
+	},
+/obj/machinery/gulag_item_reclaimer{
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/black,
 /area/hallway/primary/fore)
@@ -27054,10 +27040,6 @@
 	charge = 5e+006
 	},
 /obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
 	},
@@ -27878,17 +27860,6 @@
 	pixel_x = 0;
 	pixel_y = 20
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai)
 "aWI" = (
@@ -27930,11 +27901,6 @@
 	d2 = 2;
 	icon_state = "1-2";
 	pixel_y = 0
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
@@ -28762,20 +28728,10 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "aYi" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "aYj" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "aYk" = (
@@ -30766,12 +30722,6 @@
 /obj/machinery/ai_slipper{
 	icon_state = "motion0";
 	uses = 10
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/bluegrid,
@@ -33569,11 +33519,6 @@
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bgb" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -33597,11 +33542,6 @@
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
-	},
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -34619,22 +34559,11 @@
 	icon_state = "motion0";
 	uses = 10
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
 "bhV" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai)
@@ -36819,14 +36748,6 @@
 /obj/machinery/power/terminal{
 	icon_state = "term";
 	dir = 1
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /obj/machinery/flasher{
 	id = "AI";
@@ -118198,7 +118119,7 @@ aju
 avw
 aju
 aaa
-azT
+aDN
 aBo
 aCA
 aDO
@@ -148285,11 +148206,11 @@ aSH
 aVk
 aWG
 aYi
-aZW
+aYi
 bbr
-aZW
-aZW
-bga
+aYi
+aYi
+aYi
 bhS
 bjZ
 blF
@@ -148539,7 +148460,7 @@ aPX
 aaa
 aSH
 aSH
-aVl
+aVk
 aWH
 aYj
 aVk
@@ -148547,7 +148468,7 @@ bsk
 aVk
 aVk
 bgb
-bhT
+aYj
 bka
 blF
 bnv

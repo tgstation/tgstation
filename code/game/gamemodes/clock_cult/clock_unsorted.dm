@@ -1,7 +1,21 @@
+//sends messages via hierophant
+/proc/send_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
+	if(!user || !message || !ticker || !ticker.mode)
+		return 0
+	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[message_span]'>\"[message]\"</span>"
+	for(var/M in mob_list)
+		if(isobserver(M))
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [parsed_message]"
+		else if(is_servant_of_ratvar(M))
+			M << parsed_message
+	return 1
+
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
 	name = "Function Call"
 	button_icon_state = "ratvarian_spear"
+	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/function_call/IsAvailable()
@@ -87,14 +101,14 @@
 			if(servants >= 5 && clockwork_caches)
 				return 1 //5 or more non-brain servants and any number of clockwork caches
 		if(SCRIPTURE_APPLICATION)
-			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 50)
-				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 50 CV
+			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 75)
+				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 75 CV
 		if(SCRIPTURE_REVENANT)
-			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
-				return 1 //10 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
+			if(servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 150)
+				return 1 //10 or more non-brain servants, 4+ clockwork caches, and at least 150 CV
 		if(SCRIPTURE_JUDGEMENT)
-			if(servants >= 10 && clockwork_caches >= 3 && clockwork_construction_value >= 100 && !unconverted_ai_exists)
-				return 1 //10 or more non-brain servants, 3+ clockwork caches, at least 100 CV, and there are no living, non-servant ais
+			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 250 && !unconverted_ai_exists)
+				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 250 CV, and there are no living, non-servant ais
 	return 0
 
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component

@@ -97,6 +97,13 @@
 		treasure in this disused warehouse, launch it into space, and then \
 		ignore it. Forever."
 
+/datum/map_template/ruin/space/derelict6
+	id = "derelict6"
+	suffix = "derelict6.dmm"
+	name = "Derelict 6"
+	description = "The hush-hush of Nanotrasen when it comes to stations seemingly vanishing off the radar is an interesting topic, \
+		theories of nuclear destruction float about while Nanotrasen flat-out denies said stations ever existing."
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
@@ -232,3 +239,10 @@
 		teleporter suggests that it was once part of a larger structure, \
 		but what remains of said structure, if anything, can \
 		only be guessed at."
+
+/datum/map_template/ruin/space/puzzle1
+	id = "puzzle1"
+	suffix = "puzzle1.dmm"
+	name = "Strange Structure"
+	description = "A strange, free-floating structure that has been aimlessly drifting through the void \
+		of space for who knows how long. Seems like whatever built it was really bored."
