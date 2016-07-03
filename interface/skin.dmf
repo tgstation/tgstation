@@ -1,7 +1,7 @@
 macro "default"
 	elem
 		name = "TAB"
-		command = "Toggle-Hotkey-Mode"
+		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
@@ -132,7 +132,7 @@ macro "default"
 macro "hotkeys"
 	elem
 		name = "TAB"
-		command = "Toggle-Hotkey-Mode"
+		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
@@ -324,7 +324,7 @@ macro "hotkeys"
 macro "robot-default"
 	elem
 		name = "TAB"
-		command = "Toggle-Hotkey-Mode"
+		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
@@ -446,7 +446,7 @@ macro "robot-default"
 macro "robot-hotkeys"
 	elem
 		name = "TAB"
-		command = "Toggle-Hotkey-Mode"
+		command = ".winset \"mainwindow.macro=robot-default input.focus=true input.background-color=#d3b5b5\""
 	elem
 		name = "CENTER+REP"
 		command = ".center"
