@@ -278,7 +278,7 @@
 
 /datum/reagent/spraytan/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(istype(M, /mob/living/carbon/human))
-		if(method == PATCH || method == VAPOR)
+		if(method == PATCH || method == TOUCH || method == VAPOR)
 			var/mob/living/carbon/human/N = M
 			if(N.dna.species.id == "human")
 				switch(N.skin_tone)
