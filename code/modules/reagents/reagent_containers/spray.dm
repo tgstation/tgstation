@@ -88,17 +88,17 @@
 					if(ismob(T))
 						var/mob/M = T
 						if(!M.lying || !range_left)
-							D.reagents.reaction(M, VAPOR)
+							D.reagents.reaction(M, TOUCH)
 							puff_reagent_left -= 1
 					else if(!range_left)
-						D.reagents.reaction(T, VAPOR)
+						D.reagents.reaction(T, TOUCH)
 				else
-					D.reagents.reaction(T, VAPOR)
+					D.reagents.reaction(T, TOUCH)
 					if(ismob(T))
 						puff_reagent_left -= 1
 
 			if(puff_reagent_left > 0 && (!stream_mode || !range_left))
-				D.reagents.reaction(get_turf(D), VAPOR)
+				D.reagents.reaction(get_turf(D), TOUCH)
 				puff_reagent_left -= 1
 
 			if(puff_reagent_left <= 0) // we used all the puff so we delete it.
