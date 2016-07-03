@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Guvax now invokes 1 second faster(5 seconds), but is 0.75 seconds slower for each scripture-valid servant above 5, up to a maximum of 15 seconds."

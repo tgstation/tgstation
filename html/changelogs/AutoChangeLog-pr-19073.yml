@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Clockwork Slabs generate components 20 seconds slower for each scripture-valid servant above 5, up to a maximum of 1 component every 5 minutes."
