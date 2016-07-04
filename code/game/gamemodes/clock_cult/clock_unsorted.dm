@@ -11,6 +11,19 @@
 			M << parsed_message
 	return 1
 
+/proc/generic_hierophant_message(message, servantsonly, atom/target) //sends a generic message to all servants and optionally observers
+	if(!message || !ticker || !ticker.mode)
+		return 0
+	for(var/M in mob_list)
+		if(!servantsonly && isobserver(M))
+			if(target)
+				var/link = FOLLOW_LINK(M, target)
+				M << "[link] [message]"
+			else
+				M << message
+		if(is_servant_of_ratvar(M))
+			M << message
+
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
 	name = "Function Call"
@@ -110,6 +123,18 @@
 			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 250 && !unconverted_ai_exists)
 				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 250 CV, and there are no living, non-servant ais
 	return 0
+
+/proc/scripture_unlock_alert(list/previous_states) //reports to servants when scripture is locked or unlocked
+	var/list/states = get_scripture_states()
+	for(var/i in states)
+		if(states[i] != previous_states[i])
+			generic_hierophant_message("<span class='big_brass'>[i] Scripture has been [states[i] ? "un":""]locked.</span>")
+
+/proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
+	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
+	"Application" = scripture_unlock_check(SCRIPTURE_APPLICATION), \
+	"Revenant" = scripture_unlock_check(SCRIPTURE_REVENANT), \
+	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
 
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
 	if(specific_component_id)
