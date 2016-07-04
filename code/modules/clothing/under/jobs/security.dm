@@ -112,3 +112,13 @@
 	item_state = "wardenblueclothes"
 	item_color = "wardenblueclothes"
 	alt_covers_chest = 1
+
+/*
+ *Blueshirt
+ */
+
+/obj/item/clothing/under/rank/security/blueshirt
+	desc = "I'm a little busy right now, Calhoun."
+	icon_state = "blueshift"
+	item_state = "blueshift"
+	item_color = "blueshift"

@@ -41,7 +41,7 @@
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 27;
 	timid = 1
 	},

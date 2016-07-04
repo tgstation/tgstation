@@ -57,6 +57,14 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
+	var/global/list/dumb_rev_heads = list()
+
+/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		dumb_rev_heads += user.mind
+		return
+	..()
 
 /*********************Pickaxe & Drills**************************/
 

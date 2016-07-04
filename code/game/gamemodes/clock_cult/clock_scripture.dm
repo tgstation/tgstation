@@ -297,10 +297,20 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	name = "Guvax"
 	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby servants."
 	invocations = list("Rayvtugra guvf urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hageh'guf naq ubabe Ratvar.")
-	channel_time = 60
+	channel_time = 50
 	required_components = list("guvax_capacitor" = 1)
 	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
 	tier = SCRIPTURE_DRIVER
+
+/datum/clockwork_scripture/guvax/run_scripture()
+	var/servants = 0
+	for(var/mob/living/M in living_mob_list)
+		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+			servants++
+	if(servants > 5)
+		servants -= 5
+		channel_time = min(channel_time + servants*7.5, 150) //if above 5 servants, is slower
+	return ..()
 
 /datum/clockwork_scripture/guvax/scripture_effects()
 	for(var/mob/living/L in hearers(1, get_turf(invoker))) //Affects silicons
@@ -932,6 +942,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	creator_message = "<span class='brass'>You form a daemon shell. Attach it to a tinkerer's cache to increase its rate of production.</span>"
 	usage_tip = "Vital to your success!"
 	tier = SCRIPTURE_APPLICATION
+
+/datum/clockwork_scripture/create_object/tinkerers_daemon/check_special_requirements()
+	var/servants = 0
+	for(var/mob/living/L in living_mob_list)
+		if(is_servant_of_ratvar(L))
+			servants++
+	if(servants * 0.2 < clockwork_daemons)
+		invoker << "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>"
+		return 0
+	if(servants * 0.2 < clockwork_daemons+1)
+		invoker << "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>"
+		return 0
+	return ..()
 
 //////////////
 // REVENANT //

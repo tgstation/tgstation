@@ -57,6 +57,14 @@
 		evidence of construction, hook it covertly into the \
 		telecommunications network and hope for the best."
 
+/datum/map_template/ruin/space/bigderelict1
+	id = "bigderelict1"
+	suffix = "bigderelict1.dmm"
+	name = "Derelict Tradepost"
+	description = "A once-bustling tradestation that handled imports and exports from \
+		nearby stations now lays eerily dormant. The last received message was a distress call from one of the \
+		on-board officers, but we had no success in making contact again."
+
 /datum/map_template/ruin/space/derelict1
 	id = "derelict1"
 	suffix = "derelict1.dmm"
@@ -126,6 +134,14 @@
 	description = "Just somewhere quiet, where I can focus on my work with \
 		no interruptions."
 
+/datum/map_template/ruin/space/caravanambush
+	id = "space/caravanambush"
+	suffix = "caravanambush.dmm"
+	name = "Syndicate Ambush"
+	description = "A caravan route used by passing cargo freights has been ambushed by a salvage \
+		team manned by the syndicate. The caravan managed to send off a distress message before being surrounded, their video feed \
+		cutting off as the sound of gunfire and a parrot was heard."
+
 /datum/map_template/ruin/space/mech_transport
 	id = "mech-transport"
 	suffix = "mechtransport.dmm"
@@ -151,12 +167,26 @@
 		No tabs. No violence in the inside areas. That's it. Welcome to the \
 		Rampant Golem and Yellow Hound. Can I take your order?"
 
+/datum/map_template/ruin/space/spacehotel
+	id = "spacehotel"
+	suffix = "spacehotel.dmm"
+	name = "The Twin-Nexus Hotel"
+	description = "A interstellar hotel, where the weary spaceman can rest their head \
+		 and relax, assured that the residental staff will not murder them in their sleep. Probably."
+
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
 	suffix = "turretedoutpost.dmm"
 	name = "Unnamed Turreted Outpost"
 	description = "We'd ask them to stop blaring that ruskiepop music, but \
 		none of us are brave enough to go near those death turrets they have."
+
+/datum/map_template/ruin/space/oldshuttle
+	id = "spaceman-origins"
+	suffix = "shuttlerelic.dmm"
+	name = "Strange Ship"
+	description = "A ship seemingly lost, drifting along the stars. This thing looks \
+		like it belongs in ancient times."
 
 /datum/map_template/ruin/space/way_home
 	id = "way-home"
@@ -239,10 +269,3 @@
 		teleporter suggests that it was once part of a larger structure, \
 		but what remains of said structure, if anything, can \
 		only be guessed at."
-
-/datum/map_template/ruin/space/puzzle1
-	id = "puzzle1"
-	suffix = "puzzle1.dmm"
-	name = "Strange Structure"
-	description = "A strange, free-floating structure that has been aimlessly drifting through the void \
-		of space for who knows how long. Seems like whatever built it was really bored."
