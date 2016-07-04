@@ -1,8 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Immovable rods now notify ghosts when created, allowing them to
-orbit it and follow their path of destruction through the station."
-  - bugfix: "Fixed bugs where no meteors would come or go from the south.
-Seriously, that was a real bug. Meteor showers are now about 33%
-stronger as a result."

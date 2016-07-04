@@ -1,4 +1,0 @@
-author: "X-TheDark"
-delete-after: True
-changes: 
-  - rscadd: "Switching mobs/ghosting/etc related actions during the round will now no longer reset your hotkey settings."

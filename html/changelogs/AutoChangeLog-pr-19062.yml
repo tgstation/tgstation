@@ -1,5 +1,0 @@
-author: "bgobandit"
-delete-after: True
-changes: 
-  - rscadd: "Bluespace polycrystals, basically stacks of bluespace crystals, have been added. The ore redemptor accepts them now."
-  - tweak: "The ore redemptor machine should be less spammy now."
