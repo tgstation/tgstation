@@ -557,7 +557,7 @@
 	turf_type = /turf/open/floor/plating/lava/smooth;
 	width = 9
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bm" = (
 /obj/machinery/door/airlock/glass_security{
@@ -719,10 +719,7 @@
 	},
 /area/mine/eva)
 "bA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
+/turf/open/floor/plating/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bB" = (
 /obj/structure/table,
@@ -909,10 +906,15 @@
 	},
 /area/mine/production)
 "bT" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 30;
+	pixel_y = 0
 	},
-/area/lavaland/surface/outdoors/explored)
+/turf/open/floor/plasteel/brown{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 4
+	},
+/area/mine/production)
 "bU" = (
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -1232,11 +1234,14 @@
 	},
 /area/mine/production)
 "cx" = (
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
 	},
-/area/lavaland/surface/outdoors/explored)
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/living_quarters)
 "cy" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Station Storage";
@@ -1790,6 +1795,10 @@
 	},
 /area/mine/eva)
 "dG" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -2085,8 +2094,6 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/obj/item/weapon/pickaxe,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /turf/closed/indestructible/riveted,
 /area/ruin/unpowered{
 	name = "Necropolis Bridge"
@@ -2816,6 +2823,12 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/laborcamp/security)
+"fP" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/closed/indestructible/riveted,
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 
 (1,1,1) = {"
 aa
@@ -3546,7 +3559,7 @@ af
 af
 af
 af
-af
+ab
 af
 af
 af
@@ -3802,13 +3815,13 @@ af
 af
 af
 af
+ab
+al
+al
 af
 af
 af
-af
-af
-af
-af
+ab
 af
 af
 af
@@ -4058,10 +4071,10 @@ af
 af
 af
 af
-af
-af
-af
-af
+ab
+al
+al
+al
 af
 af
 af
@@ -4306,6 +4319,8 @@ af
 af
 af
 af
+ab
+ab
 af
 af
 af
@@ -4314,20 +4329,18 @@ af
 af
 af
 af
-af
-af
-af
-af
+ab
+al
 dq
+ab
 af
 af
 af
 af
 af
-af
-af
-af
-af
+ab
+ab
+ab
 af
 af
 af
@@ -4567,13 +4580,14 @@ af
 af
 af
 af
+ab
 af
 af
-af
+bA
+bA
+ab
 dq
-dq
-af
-dq
+ab
 af
 af
 af
@@ -4581,9 +4595,8 @@ af
 af
 af
 af
-af
-af
-af
+ab
+ab
 af
 af
 af
@@ -4818,6 +4831,16 @@ af
 af
 af
 af
+ab
+af
+af
+af
+ab
+af
+af
+af
+bA
+bA
 af
 af
 af
@@ -4826,20 +4849,10 @@ af
 af
 af
 af
-dq
-dq
 af
 af
 af
-af
-af
-af
-af
-af
-af
-af
-af
-af
+ab
 af
 af
 af
@@ -5074,32 +5087,32 @@ af
 af
 af
 af
+ab
+ab
+af
+ab
+ab
+af
+af
+af
+af
+bA
+bA
+af
+af
+bA
+bA
+af
+af
+bA
+af
+ab
 af
 af
 af
 af
 af
-af
-af
-af
-af
-dq
-dq
-af
-af
-dq
-dq
-af
-af
-dq
-af
-af
-af
-af
-af
-af
-af
-af
+ab
 af
 af
 af
@@ -5334,29 +5347,29 @@ af
 af
 af
 af
+ab
+ab
+af
+af
+af
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 af
 af
 af
 af
-af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-af
-af
-af
-af
-af
+ab
 af
 af
 af
@@ -5594,23 +5607,23 @@ af
 af
 af
 af
+bA
+bA
 dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-af
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+ab
 af
 af
 af
@@ -5852,24 +5865,24 @@ af
 af
 af
 af
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
+bA
+bA
+bA
+bA
+bA
+bA
 af
-dq
+bA
 af
 af
 af
@@ -6101,28 +6114,28 @@ af
 af
 af
 af
+ab
 af
 af
 af
 af
 af
 af
+ab
 af
-af
-af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 af
 af
 af
@@ -6357,6 +6370,8 @@ af
 af
 af
 af
+ab
+ab
 af
 af
 af
@@ -6364,24 +6379,22 @@ af
 af
 af
 af
-af
-af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-af
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+ab
 af
 af
 af
@@ -6618,27 +6631,27 @@ af
 af
 af
 af
+ab
 af
 af
 af
 af
-af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 af
 af
 af
@@ -6881,19 +6894,19 @@ af
 af
 af
 af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 af
 af
 af
@@ -7138,19 +7151,19 @@ af
 af
 af
 af
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
-dq
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
+bA
 bl
-dq
-dq
-dq
+bA
+bA
+bA
 af
 af
 af
@@ -7385,7 +7398,7 @@ af
 af
 af
 af
-af
+ab
 af
 af
 af
@@ -7406,8 +7419,8 @@ fI
 an
 bm
 an
-dq
-dq
+bA
+bA
 af
 af
 af
@@ -12283,7 +12296,7 @@ fK
 fK
 fK
 dq
-en
+fP
 fL
 fK
 dq
@@ -13068,7 +13081,7 @@ ej
 bX
 bY
 ee
-fj
+cx
 bg
 fj
 ee
@@ -18460,7 +18473,7 @@ dK
 bI
 bS
 dZ
-bS
+bT
 bI
 dI
 dI
@@ -34714,8 +34727,8 @@ ah
 ah
 ah
 ah
-en
-en
+fP
+fP
 ab
 ab
 ab
@@ -34958,7 +34971,7 @@ ab
 ab
 ab
 ab
-en
+fP
 ai
 ai
 ai
@@ -34972,7 +34985,7 @@ ai
 ai
 ai
 ai
-en
+fP
 ab
 ab
 ab
@@ -35472,7 +35485,7 @@ ab
 ab
 ab
 ab
-en
+fP
 aj
 aj
 aj
@@ -35486,7 +35499,7 @@ aj
 aj
 aj
 aj
-en
+fP
 ab
 ab
 ab
@@ -35729,8 +35742,8 @@ ab
 ab
 ab
 ab
-en
-en
+fP
+fP
 ak
 ak
 ak
@@ -35742,8 +35755,8 @@ ak
 ak
 ak
 ak
-en
-en
+fP
+fP
 ab
 ab
 ab
