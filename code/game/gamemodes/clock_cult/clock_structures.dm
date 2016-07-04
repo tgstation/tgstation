@@ -24,15 +24,11 @@
 
 /obj/structure/clockwork/New()
 	..()
-	var/list/scripture_states = get_scripture_states()
-	clockwork_construction_value += construction_value
-	scripture_unlock_alert(scripture_states)
+	change_construction_value(construction_value)
 	all_clockwork_objects += src
 
 /obj/structure/clockwork/Destroy()
-	var/list/scripture_states = get_scripture_states()
-	clockwork_construction_value -= construction_value
-	scripture_unlock_alert(scripture_states)
+	change_construction_value(-construction_value)
 	all_clockwork_objects -= src
 	return ..()
 

@@ -136,6 +136,11 @@
 	"Revenant" = scripture_unlock_check(SCRIPTURE_REVENANT), \
 	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
 
+/proc/change_construction_value(amount)
+	var/list/scripture_states = get_scripture_states()
+	clockwork_construction_value += amount
+	scripture_unlock_alert(scripture_states)
+
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
 	if(specific_component_id)
 		clockwork_component_cache[specific_component_id]++

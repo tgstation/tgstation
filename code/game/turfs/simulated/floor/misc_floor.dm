@@ -123,15 +123,11 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	var/list/scripture_states = get_scripture_states()
-	clockwork_construction_value++
-	scripture_unlock_alert(scripture_states)
+	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	var/list/scripture_states = get_scripture_states()
-	clockwork_construction_value--
-	scripture_unlock_alert(scripture_states)
+	change_construction_value(-1)
 	return ..()
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
