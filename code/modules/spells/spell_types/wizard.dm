@@ -265,7 +265,7 @@
 	action_icon_state = "fireball0"
 	sound = "sound/magic/Fireball.ogg"
 
-	active = 0
+	active = FALSE
 
 
 /obj/effect/proc_holder/spell/fireball/Click()
@@ -286,7 +286,11 @@
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
-	if(..() || !cast_check(0, user))
+	if(..())
+		return
+
+	if(!cast_check(0, user))
+		remove_ranged_ability(user)
 		return
 
 	var/list/targets = list(target)

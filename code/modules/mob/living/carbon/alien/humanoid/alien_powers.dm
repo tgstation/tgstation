@@ -190,7 +190,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
 	action_icon_state = "alien_neurotoxin_0"
-	active = 0
+	active = FALSE
 
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
 	var/message
@@ -206,8 +206,11 @@ Doesn't work on other aliens/AI.*/
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/alien/neurotoxin/InterceptClickOn(mob/living/carbon/user, params, atom/target)
+	if(..())
+		return
 	var/p_cost = 50
 	if(!iscarbon(user) || user.lying || user.stat)
+		remove_ranged_ability(user)
 		return
 
 	if(user.getPlasma() < p_cost)
@@ -217,7 +220,7 @@ Doesn't work on other aliens/AI.*/
 	var/turf/T = user.loc
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T))
-		return 0
+		return FALSE
 
 	user.visible_message("<span class='danger'>[user] spits neurotoxin!", "<span class='alertalien'>You spit neurotoxin.</span>")
 	var/obj/item/projectile/bullet/neurotoxin/A = new /obj/item/projectile/bullet/neurotoxin(user.loc)
@@ -227,7 +230,7 @@ Doesn't work on other aliens/AI.*/
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
 
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	if(user.ranged_ability == src)
