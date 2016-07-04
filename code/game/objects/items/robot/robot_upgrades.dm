@@ -36,6 +36,7 @@
 	R.uneq_all()
 	R.hands.icon_state = "nomod"
 	R.icon_state = "robot"
+	R.cust_panel = null
 	qdel(R.module)
 	R.module = null
 
@@ -50,6 +51,7 @@
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
 	R.weather_immunities = initial(R.weather_immunities)
+	R.pass_flags &= PASSTABLE
 
 	R.status_flags |= CANPUSH
 
@@ -197,7 +199,7 @@
 
 /obj/item/borg/upgrade/hyperka
 	name = "mining cyborg hyper-kinetic accelerator"
-	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
+	desc = "Contains a rapid recharge emitter and conic dispersal array to greatly enhance the effectiveness of a cyborg's proto-kinetic accelerator."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
@@ -213,6 +215,61 @@
 	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
 	R.module.rebuild()
 
+	return 1
+
+/obj/item/borg/upgrade/nvmeson
+	name = "mining cyborg night vision optical meson scanner"
+	desc = "An upgrade module which adds a light amplifier module to a mining cyborg's meson sensor."
+	icon_state = "cyborg_upgrade2"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "magnets=4;engineering=5;plasmatech=4"
+
+/obj/item/borg/upgrade/nvmeson/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	for(var/obj/item/borg/sight/meson/M in R.module.modules)
+		qdel(M)
+
+	R.module.modules += new /obj/item/borg/sight/nvmeson(R.module)
+	R.module.rebuild()
+
+	return 1
+
+/obj/item/borg/upgrade/thermal
+	name = "mining cyborg lifeform analyzer"
+	desc = "A self-contained thermal-electromagnetic sensor package, designed to locate living organisms in harsh environments."
+	icon_state = "cyborg_upgrade1"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "magnets=4;engineering=5;plasmatech=4"
+
+/obj/item/borg/upgrade/thermal/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	R.module.modules += new /obj/item/borg/sight/thermal(R.module)
+	R.module.rebuild()
+
+	return 1
+
+/obj/item/borg/upgrade/hover
+	name = "mining cyborg graviton thrusters"
+	desc = "A complete hull conversion kit for a mining cyborg, complete with gyroscopic stabilizers and efficient airborne-suspension-only thrusters."
+	icon_state = "hover_upgrade"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+	origin_tech = "engineering=4;materials=6;plasmatech=4;magnets=5"
+
+/obj/item/borg/upgrade/hover/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+	R.weather_immunities += "lava" //Floats above everything
+	R.pass_flags |= PASSTABLE //This should be changed later to support chasms
+	R.magpulse = 1
+	R.icon_state = "lavaborg"
+	R.cust_panel = "lava-"
 	return 1
 
 /obj/item/borg/upgrade/syndicate
@@ -231,20 +288,6 @@
 
 	R.SetEmagged(1)
 
-	return 1
-
-/obj/item/borg/upgrade/lavaproof
-	name = "mining cyborg lavaproof tracks"
-	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
-	icon_state = "ash_plating"
-	require_module = 1
-	module_type = /obj/item/weapon/robot_module/miner
-	origin_tech = "engineering=4;materials=4;plasmatech=4"
-
-/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-	R.weather_immunities += "lava"
 	return 1
 
 /obj/item/borg/upgrade/selfrepair

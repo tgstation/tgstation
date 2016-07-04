@@ -658,14 +658,35 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_lavaproof
-	name = "Cyborg Upgrade (Lavaproof Tracks)"
-	id = "borg_upgrade_lavaproof"
+/datum/design/borg_upgrade_hover
+	name = "Cyborg Upgrade (Graviton Thrusters)"
+	id = "borg_upgrade_hover"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/lavaproof
-	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
-	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
-	construction_time = 120
+	build_path = /obj/item/borg/upgrade/hover
+	req_tech = list("magnets" = 5, "plasmatech" = 4, "materials" = 7, "engineering" = 5)
+	//A ton of gold is required because the hull plating part is made mostly of it!
+	materials = list(MAT_METAL = 8000, MAT_GLASS = 4000, MAT_PLASMA = 10000, MAT_GOLD = 15000, MAT_DIAMOND = 3000)
+	construction_time = 160
+	category = list("Cyborg Upgrade Modules")
+
+/datum/design/borg_nvgmesons
+	name = "Cyborg Upgrade (Night Vision Optical Meson Scanner)"
+	id = "borg_nvmesons"
+	req_tech = list("magnets" = 5, "plasmatech" = 5, "engineering" = 6)
+	build_type = MECHFAB
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_PLASMA = 350, MAT_URANIUM = 1000)
+	build_path = /obj/item/borg/upgrade/nvmeson
+	category = list("Cyborg Upgrade Modules")
+
+
+/datum/design/borg_thermal
+	name = "Cyborg Upgrade (Lifeform Analyzer)"
+	id = "borg_thermal"
+	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "magnets" = 5,"plasmatech" = 4)
+	build_type = MECHFAB //Same req as thermals implant for humans
+	construction_time = 60
+	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_SILVER = 600, MAT_GOLD = 600, MAT_PLASMA = 1000, MAT_DIAMOND = 2000)
+	build_path = /obj/item/borg/upgrade/thermal
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module

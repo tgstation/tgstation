@@ -348,7 +348,7 @@
 
 
 /obj/item/borg/sight/thermal
-	name = "\proper thermal vision"
+	name = "\proper lifeform analyzer"
 	sight_mode = BORGTHERM
 	icon_state = "thermal"
 
@@ -357,6 +357,11 @@
 	name = "\proper meson vision"
 	sight_mode = BORGMESON
 	icon_state = "meson"
+
+/obj/item/borg/sight/nvmeson
+	name = "\proper night meson vision"
+	sight_mode = BORGMESON|BORGNV
+	icon_state = "nvmeson"
 
 /obj/item/borg/sight/material
 	name = "\proper material vision"
