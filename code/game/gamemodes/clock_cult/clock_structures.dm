@@ -510,6 +510,7 @@
 			L.IgniteMob()
 		targetsjudged++
 		L.adjustBruteLoss(10)
+		add_logs(user, L, "struck with a judicial blast")
 	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
 	QDEL_IN(src, 3) //so the animation completes properly
 
