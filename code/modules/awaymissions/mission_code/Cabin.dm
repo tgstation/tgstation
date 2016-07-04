@@ -39,7 +39,7 @@
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
-		var/msg = ignite_with_item_message(W, user)
+		var/msg = W.ignition_effect(src, user)
 		if(msg)
 			active = TRUE
 			visible_message(msg)

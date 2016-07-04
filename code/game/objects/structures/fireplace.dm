@@ -31,7 +31,7 @@
 	if(!fuel_added)
 		user << "<span class='warning'>[src] needs some fuel to burn!</span>"
 		return FALSE
-	var/msg = ignite_with_item_message(O, user)
+	var/msg = O.ignition_effect(src, user)
 	if(msg)
 		visible_message(msg)
 		ignite()

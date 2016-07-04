@@ -219,27 +219,3 @@
 
 /obj/proc/CanAStarPass()
 	. = !density
-
-/obj/proc/ignite_with_item_message(obj/item/O, mob/user)
-	var/lighting_text = null
-	if(istype(O, /obj/item/weapon/weldingtool))
-		lighting_text = "<span class='notice'>[user] casually lights [src] with [O], what a badass.</span>"
-	else if(istype(O, /obj/item/weapon/lighter/greyscale)) // we have to check for this first -- zippo lighters are default
-		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light [src] with [O].</span>"
-	else if(istype(O, /obj/item/weapon/lighter))
-		lighting_text = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [src] with [O]. Damn they're cool.</span>"
-	else if(istype(O, /obj/item/weapon/melee/energy))
-		var/in_mouth = ""
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			if(C.wear_mask == src)
-				in_mouth = ", barely missing their nose"
-		lighting_text = "<span class='warning'>[user] swings their \
-			[O][in_mouth]. They light [src] in the process.</span>"
-	else if(istype(O, /obj/item/device/assembly/igniter))
-		lighting_text = "<span class='notice'>[user] fiddles with [O], and manages to light [src].</span>"
-	else if(istype(O, /obj/item/device/flashlight/flare))
-		lighting_text = "<span class='notice'>[user] lights [src] with [O] like a real badass.</span>"
-	else if(O.is_hot())
-		lighting_text = "<span class='notice'>[user] lights their [name] with [O].</span>"
-	return lighting_text

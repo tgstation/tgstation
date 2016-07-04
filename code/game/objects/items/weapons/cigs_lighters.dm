@@ -27,14 +27,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1000
 
 /obj/item/weapon/match/process()
-	var/turf/location = get_turf(src)
 	smoketime--
 	if(smoketime < 1)
 		matchburnout()
-		return
-	if(location)
-		location.hotspot_expose(700, 5)
-		return
+	else
+		open_flame(heat)
 
 /obj/item/weapon/match/fire_act()
 	matchignite()
@@ -134,8 +131,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/weapon/W, mob/user, params)
-	if(!lit && smoketime > 0 && W.is_hot())
-		var/lighting_text = ignite_with_item_message(W,user)
+	if(!lit && smoketime > 0)
+		var/lighting_text = W.ignition_effect(src, user)
 		if(lighting_text)
 			light(lighting_text)
 	else
@@ -384,7 +381,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	open_flame()
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		handle_reagents()
-	return
 
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/O, mob/user, params)
@@ -404,7 +400,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			user << "<span class='warning'>It is already packed!</span>"
 	else
-		var/lighting_text = ignite_with_item_message(O,user)
+		var/lighting_text = O.ignition_effect(src,user)
 		if(lighting_text)
 			if(smoketime > 0)
 				light(lighting_text)
@@ -466,6 +462,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	I.color = color2hex(randomColor(1))
 	add_overlay(I)
 
+/obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
+	. = "<span class='notice'>After some fiddling, [user] manages to \
+		light [A] with [src].</span>"
+
+/obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
+	. = "<span class='rose'>With a single flick of their wrist, [user] \
+		smoothly lights [A] with [src]. Damn they're cool.</span>"
+
 /obj/item/weapon/lighter/update_icon()
 	icon_state = lit ? "[icon_state]_on" : "[initial(icon_state)]"
 
@@ -525,18 +529,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 
 /obj/item/weapon/lighter/process()
-	var/turf/location = get_turf(src)
-	if(location)
-		location.hotspot_expose(700, 5)
-	return
+	open_flame()
 
 /obj/item/weapon/lighter/pickup(mob/user)
 	..()
 	if(lit)
 		SetLuminosity(0)
 		user.AddLuminosity(1)
-	return
-
 
 /obj/item/weapon/lighter/dropped(mob/user)
 	..()
@@ -544,7 +543,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(user)
 			user.AddLuminosity(-1)
 		SetLuminosity(1)
-	return
 
 /obj/item/weapon/lighter/is_hot()
 	return lit * heat

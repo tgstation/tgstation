@@ -31,7 +31,7 @@
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	var/msg = ignite_with_item_message(W, user)
+	var/msg = W.ignition_effect(src, user)
 	if(msg)
 		light(msg)
 
