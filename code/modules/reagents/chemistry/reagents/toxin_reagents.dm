@@ -592,7 +592,7 @@
 	var/toxdamage = current_cycle*3*REM
 	M.adjustToxLoss(toxdamage)
 	if(M)
-		add_logs(M, null, "has taken [toxdamage] toxin damage from amanitin toxin")
+		add_logs(M, get_turf(M), "has taken [toxdamage] toxin damage from amanitin toxin")
 	..()
 
 /datum/reagent/toxin/lipolicide
