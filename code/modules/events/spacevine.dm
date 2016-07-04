@@ -44,7 +44,7 @@
 	return
 
 /datum/spacevine_mutation/proc/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
-	. = expected_damage
+	return expected_damage
 
 /datum/spacevine_mutation/proc/on_cross(obj/effect/spacevine/holder, mob/crosser)
 	return
@@ -189,7 +189,8 @@
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
 	if(I && I.damtype == "fire")
-		. = 0
+		return 0
+	return expected_damage
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
@@ -313,7 +314,8 @@
 
 /datum/spacevine_mutation/woodening/on_hit(obj/effect/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(I.is_sharp())
-		. = expected_damage * 0.5
+		return expected_damage * 0.5
+	return expected_damage
 
 /datum/spacevine_mutation/flowering
 	name = "flowering"
