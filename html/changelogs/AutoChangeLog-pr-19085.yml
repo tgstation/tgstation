@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Adds space ruins. Balance not included."
+  - tweak: "Simple mob ghosts actually work now."
+  - rscdel: "Puzzle1 ruin removed due to issues with projectiles."
