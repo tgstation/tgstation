@@ -265,16 +265,13 @@
 
 /obj/item/weapon/nullrod/fedora
 	name = "atheist's fedora"
-	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
+	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
 	slot_flags = SLOT_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
-	force = 0
 	sharpness = IS_SHARP
-	throw_speed = 4
-	throw_range = 7
-	throwforce = 20
+	attack_verb = list("enlightened", "redpilled")
 
 /obj/item/weapon/nullrod/armblade
 	name = "dark blessing"
