@@ -271,6 +271,7 @@
 	slot_flags = SLOT_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
 	force = 0
+	sharpness = 1
 	throw_speed = 4
 	throw_range = 7
 	throwforce = 20
