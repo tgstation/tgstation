@@ -573,7 +573,6 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
 
 
 	var/list/outfits = list("Naked","Custom","As Job...")
