@@ -1,0 +1,5 @@
+author: "Gun Hog"
+delete-after: True
+changes: 
+  - rscadd: "The Space Wizard Federation has finally begun teaching its pupils how to properly aim the Fireball spell!"
+  - tweak: "Fireball spells, including the Devil version, are now aimed via mouse click. It is recommended to avoid firing at anything too close, as the user can still blow himself up!"
