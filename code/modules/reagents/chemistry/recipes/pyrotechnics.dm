@@ -414,7 +414,7 @@
 	name = "hugexplosion"
 	id = "hugexplosion"
 	result = "null"
-	required_reagents = list(barocardone = 1, endorphins = 1)
+	required_reagents = list("barocardone" = 1, "endorphins" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/hugplosion/on_reaction(datum/reagents/holder, created_volume)
