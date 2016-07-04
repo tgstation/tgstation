@@ -59,11 +59,6 @@
 			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
-			if(s.name != "glass" && s.name != "metal") // no need to announce metal/glass
-				var/msg = "[capitalize(s.name)] sheets now available at Cargo Bay."
-				for(var/obj/machinery/requests_console/D in allConsoles)
-					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar" )
-						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += sheet_per_ore //Stack the sheets
 		O.loc = null //Let the old sheet...
@@ -93,6 +88,14 @@
 					else
 						process_sheet(O)
 						i++
+		if(i > 0)
+			var/msg = "Now available in the cargo Bay: \n"
+			for(var/s in stack_list) // Making an announcement for cargo
+				var/obj/item/stack/sheet/mats = stack_list[s]
+				msg += "[capitalize(mats.name)]: [mats.amount] sheets \n"
+			for(var/obj/machinery/requests_console/D in allConsoles)
+				if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar")
+					D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
 	if(exchange_parts(user, W))
