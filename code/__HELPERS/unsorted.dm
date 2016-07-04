@@ -720,13 +720,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		return zone
 
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	return get_step(A, 0)
-
-
 /*
 
  Gets the turf this atom's *ICON* appears to inhabit
