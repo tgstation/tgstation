@@ -409,3 +409,13 @@
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, created_volume)
 	holder.chem_temp = 20 // also cools the fuck down
 	return
+
+/datum/chemical_reaction/hugplosion
+	name = "hugexplosion"
+	id = "hugexplosion"
+	result = "null"
+	required_reagents = list(barocardone = 1, endorphins = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hugplosion/on_reaction(datum/reagents/holder, created_volume)
+	explosion(get_turf(holder.my_atom), 0, 1, 4, 8) //Don't hug me!
