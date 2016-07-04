@@ -589,7 +589,10 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	M.adjustToxLoss(current_cycle*3*REM)
+	var/toxdamage = current_cycle*3*REM
+	M.adjustToxLoss(toxdamage)
+	if(M)
+		add_logs(M, null, "has taken [toxdamage] toxin damage from amanitin toxin")
 	..()
 
 /datum/reagent/toxin/lipolicide
