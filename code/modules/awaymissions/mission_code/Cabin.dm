@@ -17,107 +17,6 @@
 	name = "Lumbermill"
 	icon_state = "away3"
 
-
-
-#define SECONDS_PER_LOG 150 //How many seconds a log will burn for
-
-//Fireplaces//
-
-/obj/structure/fireplace
-	name = "fireplace"
-	desc = "A large stone fireplace, warm and cozy"
-	icon = 'icons/obj/fireplace.dmi'
-	icon_state = "fireplace"
-	density = 0
-	anchored = 1
-	pixel_x = -16
-	var/wood = 0
-	var/lit = 0
-
-
-/obj/structure/fireplace/proc/try_light(obj/item/O, mob/user)
-	if (!wood)
-		user << "<span class='warning'>[src] needs some wood to burn!</span>"
-		return FALSE
-	if (lit == 1)
-		user << "<span class='warning'>It's already lit!</span>"
-		return FALSE
-
-	var/lighting_text = "<span class='notice'>[user] lights the [src] with the [O].</span>"
-	if(istype(O, /obj/item/weapon/weldingtool))
-		lighting_text = "<span class='notice'>[user] lights the [src] with the [O]. What a badass. </span>"
-	else if(istype(O, /obj/item/weapon/lighter/greyscale))
-		lighting_text = "<span class='notice'>After some fiddling, [user] manages to light the [src] with [O].</span>"
-	else if(istype(O, /obj/item/weapon/lighter))
-		lighting_text =  "<span class='rose'>With a single flick of their wrist, [user] smoothly lights the [src] with [O]. Classy.</span>"
-	else if(istype(O, /obj/item/weapon/melee/energy))
-		lighting_text = "<span class='warning'>[user] swings their [O], lighting the [src] in the proccess.</span>"
-	if(O.is_hot())
-		visible_message(lighting_text)
-		lit = 1
-		//IT'S LIT FAM
-		START_PROCESSING(SSobj, src)
-		return TRUE
-
-/obj/structure/fireplace/attackby(obj/item/T, mob/user)
-	if(istype(T,/obj/item/stack/sheet/mineral/wood))
-		if(wood > 4)
-			user << "<span class = 'warning'>There's already enough logs in the [src].</span>"
-			return
-		var/woodnumber = input(user, "Fireplace Fuel: Max 4 logs.", "How much wood do you want to add?", 0) as num //Something is causing this to break
-		woodnumber = Clamp(woodnumber,0,4)
-		var/obj/item/stack/sheet/mineral/wood/woody = T
-		if(!user.incapacitated() && in_range(src, user) && woody.use(woodnumber))
-			wood += woodnumber * SECONDS_PER_LOG
-			user.visible_message("<span class='notice'>[user] tosses some wood into [name].</span>", "<span class='notice'>You add some fuel to [src].</span>")
-			return
-
-	else if(try_light(T,user))
-		return
-
-/obj/structure/fireplace/update_icon()
-	cut_overlays()
-	luminosity = 0
-	switch(wood)
-		if(0 to 100)
-			add_overlay("fireplace_fire0")
-			SetLuminosity(1)
-		if(100 to 200)
-			add_overlay("fireplace_fire1")
-			SetLuminosity(2)
-		if(200 to 300)
-			add_overlay("fireplace_fire2")
-			SetLuminosity(3)
-		if(300 to 400)
-			add_overlay("fireplace_fire3")
-			SetLuminosity(4)
-		if(400 to 600)
-			add_overlay("fireplace_fire4")
-			SetLuminosity(6)
-
-	if (wood != 0)
-		add_overlay("fireplace_glow")
-
-
-/obj/structure/fireplace/process()
-	wood --
-	update_icon()
-	if(wood > 1)
-		playsound(src, 'sound/effects/comfyfire.ogg',50,0, 0, 1)
-	else if(!wood)
-		lit = 0
-		update_icon()
-		STOP_PROCESSING(SSobj, src)
-
-/obj/structure/fireplace/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	.=..()
-
-
-
-
-
-//Firepits are dumb, they can do whatever they want
 /obj/structure/firepit
 	name = "firepit"
 	desc = "warm and toasty"
@@ -140,8 +39,10 @@
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
-		if(W.is_hot())
-			active = 1
+		var/msg = ignite_with_item_message(W, user)
+		if(msg)
+			active = TRUE
+			visible_message(msg)
 			toggleFirepit()
 		else
 			return ..()
@@ -158,12 +59,12 @@
 
 /obj/structure/firepit/extinguish()
 	if(active)
-		active = 0
+		active = FALSE
 		toggleFirepit()
 
 /obj/structure/firepit/fire_act()
 	if(!active)
-		active = 1
+		active = TRUE
 		toggleFirepit()
 
 
