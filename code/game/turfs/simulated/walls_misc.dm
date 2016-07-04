@@ -53,11 +53,15 @@
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	var/list/scripture_states = get_scripture_states()
 	clockwork_construction_value += 5
+	scripture_unlock_alert(scripture_states)
 
 /turf/closed/wall/clockwork/Destroy()
+	var/list/scripture_states = get_scripture_states()
 	clockwork_construction_value -= 5
-	..()
+	scripture_unlock_alert(scripture_states)
+	return ..()
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
