@@ -29,6 +29,11 @@
 	variance = 25
 	select_name = "scatter"
 
+/obj/item/ammo_casing/energy/laser/scatter/disabler
+	projectile_type = /obj/item/projectile/beam/disabler
+	pellets = 3
+	variance = 15
+
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/laser/heavylaser
 	select_name = "anti-vehicle"

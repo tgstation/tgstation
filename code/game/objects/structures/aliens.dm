@@ -45,6 +45,20 @@
 	take_damage(P.damage, P.damage_type)
 
 /*
+ * Generic alien stuff, not related to the purple lizards but still alien-like
+ */
+
+/obj/structure/alien/gelpod
+	name = "gelatinous mound"
+	desc = "A mound of jelly-like substance incasing something inside."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "gelmound"
+
+/obj/structure/alien/gelpod/Break()
+	new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+	qdel(src)
+
+/*
  * Resin
  */
 /obj/structure/alien/resin
