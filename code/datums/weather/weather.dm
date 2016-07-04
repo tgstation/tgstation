@@ -77,7 +77,7 @@
 				M << weather_message
 			if(weather_sound)
 				M << sound(weather_sound)
-	SSweather.processing |= src
+	START_PROCESSING(SSweather, src)
 	addtimer(src, "wind_down", weather_duration)
 
 /datum/weather/proc/wind_down()
@@ -92,7 +92,7 @@
 				M << end_message
 			if(end_sound)
 				M << sound(end_sound)
-	SSweather.processing -= src
+	STOP_PROCESSING(SSweather, src)
 	addtimer(src, "end", end_duration)
 
 /datum/weather/proc/end()
