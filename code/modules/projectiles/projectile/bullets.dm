@@ -101,7 +101,7 @@
 	damage = 20
 
 /obj/item/projectile/bullet/incendiary/shell/Move()
-	..()
+	. = ..()
 	var/turf/location = get_turf(src)
 	if(location)
 		PoolOrNew(/obj/effect/hotspot, location)
@@ -308,7 +308,7 @@
 	armour_penetration = 0
 
 obj/item/projectile/bullet/saw/incen/Move()
-	..()
+	. = ..()
 	var/turf/location = get_turf(src)
 	if(location)
 		PoolOrNew(/obj/effect/hotspot, location)

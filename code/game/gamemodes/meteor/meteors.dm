@@ -106,7 +106,7 @@
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
 		qdel(src)
-		return
+		return 0
 
 	. = ..() //process movement...
 
@@ -116,8 +116,6 @@
 
 		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
 			get_hit()
-
-	return .
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc

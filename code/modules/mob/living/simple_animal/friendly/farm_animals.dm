@@ -65,7 +65,7 @@
 	src.visible_message("<span class='danger'>[src] gets an evil-looking gleam in \his eye.</span>")
 
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
-	..()
+	. = ..()
 	if(!stat)
 		if(locate(/obj/effect/spacevine) in loc)
 			var/obj/effect/spacevine/SV = locate(/obj/effect/spacevine) in loc

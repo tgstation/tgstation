@@ -215,7 +215,7 @@
 
 /mob/camera/god/Move(NewLoc, Dir = 0)
 	loc = NewLoc
-
+	return 1
 
 
 /mob/camera/god/Topic(href, href_list)

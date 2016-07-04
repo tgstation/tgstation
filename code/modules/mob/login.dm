@@ -61,9 +61,9 @@
 	sync_mind()
 
 	if(client.prefs.hotkeys)
-		winset(src, null, "mainwindow.macro=[macro_hotkeys] mapwindow.map.focus=true input.background-color=#e0e0e0")
+		winset(src, null, "mapwindow.map.focus=true input.background-color=#e0e0e0")
 	else
-		winset(src, null, "mainwindow.macro=[macro_default] input.focus=true input.background-color=#d3b5b5")
+		winset(src, null, "input.focus=true input.background-color=#d3b5b5")
 
 	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
 		for(var/aakey in viewing_alternate_appearances)

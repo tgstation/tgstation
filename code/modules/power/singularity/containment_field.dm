@@ -58,6 +58,7 @@
 
 /obj/machinery/field/containment/Move()
 	qdel(src)
+	return 0
 
 // Abstract Field Class
 // Used for overriding certain procs

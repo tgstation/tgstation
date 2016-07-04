@@ -49,7 +49,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 // You aren't allowed to move.
 /obj/machinery/gravity_generator/Move()
-	..()
+	. = ..()
 	qdel(src)
 
 /obj/machinery/gravity_generator/proc/set_broken()

@@ -247,7 +247,7 @@
 	return GM
 
 /obj/effect/chrono_field/Move()
-	return
+	return 0
 
 /obj/effect/chrono_field/singularity_act()
 	return

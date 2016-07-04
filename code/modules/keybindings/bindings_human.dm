@@ -1,0 +1,5 @@
+/mob/living/carbon/human/keyDown(key, client/user)
+	switch(key)
+		if("e")
+			quick_equip()
+	..()

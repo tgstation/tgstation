@@ -1,620 +1,547 @@
 macro "default"
 	elem
 		name = "TAB"
-		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
+		command = ".winset \"input.focus=true?map.focus=true input.background-color=#F0F0F0:input.focus=true input.background-color=#D3B5B5\""
 	elem
-		name = "CENTER+REP"
-		command = ".center"
+		name = "center"
+		command = "keyDown center"
 	elem
-		name = "NORTHEAST"
-		command = ".northeast"
+		name = "center+UP"
+		command = "keyUp center"
 	elem
-		name = "SOUTHEAST"
-		command = ".southeast"
+		name = "numpad0"
+		command = "keyDown numpad0"
 	elem
-		name = "SOUTHWEST"
-		command = ".southwest"
+		name = "numpad0+UP"
+		command = "keyUp numpad0"
 	elem
-		name = "NORTHWEST"
-		command = ".northwest"
+		name = "numpad1"
+		command = "keyDown numpad1"
 	elem
-		name = "CTRL+WEST"
-		command = "westface"
+		name = "numpad1+UP"
+		command = "keyUp numpad1"
 	elem
-		name = "WEST+REP"
-		command = ".west"
+		name = "numpad2"
+		command = "keyDown numpad2"
 	elem
-		name = "CTRL+NORTH"
-		command = "northface"
+		name = "numpad2+UP"
+		command = "keyUp numpad2"
 	elem
-		name = "NORTH+REP"
-		command = ".north"
+		name = "numpad3"
+		command = "keyDown numpad3"
 	elem
-		name = "CTRL+EAST"
-		command = "eastface"
+		name = "numpad3+UP"
+		command = "keyUp numpad3"
 	elem
-		name = "EAST+REP"
-		command = ".east"
+		name = "numpad4"
+		command = "keyDown numpad4"
 	elem
-		name = "CTRL+SOUTH"
-		command = "southface"
+		name = "numpad4+UP"
+		command = "keyUp numpad4"
 	elem
-		name = "SOUTH+REP"
-		command = ".south"
+		name = "numpad5"
+		command = "keyDown numpad5"
 	elem
-		name = "INSERT"
-		command = "a-intent right"
+		name = "numpad5+UP"
+		command = "keyUp numpad5"
 	elem
-		name = "DELETE"
-		command = "delete-key-pressed"
+		name = "numpad6"
+		command = "keyDown numpad6"
 	elem
-		name = "CTRL+1"
-		command = "a-intent help"
+		name = "numpad6+UP"
+		command = "keyUp numpad6"
 	elem
-		name = "CTRL+2"
-		command = "a-intent disarm"
+		name = "numpad7"
+		command = "keyDown numpad7"
 	elem
-		name = "CTRL+3"
-		command = "a-intent grab"
+		name = "numpad7+UP"
+		command = "keyUp numpad7"
 	elem
-		name = "CTRL+4"
-		command = "a-intent harm"
+		name = "numpad8"
+		command = "keyDown numpad8"
 	elem
-		name = "CTRL+A+REP"
-		command = ".west"
+		name = "numpad8+UP"
+		command = "keyUp numpad8"
 	elem
-		name = "CTRL+B"
-		command = "resist"
+		name = "numpad9"
+		command = "keyDown numpad9"
 	elem
-		name = "CTRL+D+REP"
-		command = ".east"
+		name = "numpad9+UP"
+		command = "keyUp numpad9"
 	elem
-		name = "CTRL+E"
-		command = "quick-equip"
+		name = "divide"
+		command = "keyDown divide"
 	elem
-		name = "CTRL+F"
-		command = "a-intent left"
+		name = "divide+UP"
+		command = "keyUp divide"
 	elem
-		name = "CTRL+G"
-		command = "a-intent right"
+		name = "multiply"
+		command = "keyDown multiply"
 	elem
-		name = "CTRL+Q"
-		command = ".northwest"
+		name = "multiply+UP"
+		command = "keyUp multiply"
 	elem
-		name = "CTRL+R"
-		command = ".southwest"
+		name = "subtract"
+		command = "keyDown subtract"
 	elem
-		name = "CTRL+S+REP"
-		command = ".south"
+		name = "subtract+UP"
+		command = "keyUp subtract"
 	elem
-		name = "CTRL+W+REP"
-		command = ".north"
+		name = "add"
+		command = "keyDown add"
 	elem
-		name = "CTRL+X"
-		command = ".northeast"
+		name = "add+UP"
+		command = "keyUp add"
 	elem
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		name = "decimal"
+		command = "keyDown decimal"
 	elem
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		name = "decimal+UP"
+		command = "keyUp decimal"
+	elem
+		name = "west"
+		command = "keyDown west"
+	elem
+		name = "west+UP"
+		command = "keyUp west"
+	elem
+		name = "east"
+		command = "keyDown east"
+	elem
+		name = "east+UP"
+		command = "keyUp east"
+	elem
+		name = "north"
+		command = "keyDown north"
+	elem
+		name = "north+UP"
+		command = "keyUp north"
+	elem
+		name = "south"
+		command = "keyDown south"
+	elem
+		name = "south+UP"
+		command = "keyUp south"
+	elem
+		name = "northeast"
+		command = "keyDown northeast"
+	elem
+		name = "northeast+UP"
+		command = "keyUp northeast"
+	elem
+		name = "southeast"
+		command = "keyDown southeast"
+	elem
+		name = "southeast+UP"
+		command = "keyUp southeast"
+	elem
+		name = "northwest"
+		command = "keyDown northwest"
+	elem
+		name = "northwest+UP"
+		command = "keyUp northwest"
+	elem
+		name = "southwest"
+		command = "keyDown southwest"
+	elem
+		name = "southwest+UP"
+		command = "keyUp southwest"
+	elem
+		name = "space"
+		command = "keyDown space"
+	elem
+		name = "space+UP"
+		command = "keyUp space"
+	elem
+		name = "shift"
+		command = "keyDown shift"
+	elem
+		name = "shift+UP"
+		command = "keyUp shift"
+	elem
+		name = "ctrl"
+		command = "keyDown ctrl"
+	elem
+		name = "ctrl+UP"
+		command = "keyUp ctrl"
+	elem
+		name = "alt"
+		command = "keyDown alt"
+	elem
+		name = "alt+UP"
+		command = "keyUp alt"
+	elem
+		name = "escape"
+		command = "keyDown escape"
+	elem
+		name = "escape+UP"
+		command = "keyUp escape"
+	elem
+		name = "return"
+		command = "keyDown return"
+	elem
+		name = "return+UP"
+		command = "keyUp return"
+	elem
+		name = "delete"
+		command = "keyDown delete"
+	elem
+		name = "delete+UP"
+		command = "keyUp delete"
+	elem
+		name = "insert"
+		command = "keyDown insert"
+	elem
+		name = "insert+UP"
+		command = "keyUp insert"
 	elem
 		name = "F1"
-		command = "adminhelp"
+		command = "keyDown F1"
 	elem
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
+		name = "F1+UP"
+		command = "keyUp F1"
 	elem
-		name = "F2+REP"
-		command = ".screenshot auto"
+		name = "F2"
+		command = "keyDown F2"
 	elem
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
+		name = "F2+UP"
+		command = "keyUp F2"
+	elem
+		name = "F3"
+		command = "keyDown F3"
+	elem
+		name = "F3+UP"
+		command = "keyUp F3"
+	elem
+		name = "F4"
+		command = "keyDown F4"
+	elem
+		name = "F4+UP"
+		command = "keyUp F4"
 	elem
 		name = "F5"
-		command = "Aghost"
+		command = "keyDown F5"
 	elem
-		name = "CTRL+O"
-		command = "ooc"
+		name = "F5+UP"
+		command = "keyUp F5"
 	elem
 		name = "F6"
-		command = "Player-Panel"
+		command = "keyDown F6"
+	elem
+		name = "F6+UP"
+		command = "keyUp F6"
 	elem
 		name = "F7"
-		command = "Admin-PM"
+		command = "keyDown F7"
+	elem
+		name = "F7+UP"
+		command = "keyUp F7"
 	elem
 		name = "F8"
-		command = "Invisimin"
+		command = "keyDown F8"
+	elem
+		name = "F8+UP"
+		command = "keyUp F8"
+	elem
+		name = "F9"
+		command = "keyDown F9"
+	elem
+		name = "F9+UP"
+		command = "keyUp F9"
+	elem
+		name = "F10"
+		command = "keyDown F10"
+	elem
+		name = "F10+UP"
+		command = "keyUp F10"
+	elem
+		name = "F11"
+		command = "keyDown F11"
+	elem
+		name = "F11+UP"
+		command = "keyUp F11"
 	elem
 		name = "F12"
-		command = "F12"
-
-macro "hotkeys"
+		command = "keyDown F12"
 	elem
-		name = "TAB"
-		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
+		name = "F12+UP"
+		command = "keyUp F12"
 	elem
-		name = "CENTER+REP"
-		command = ".center"
+		name = "a"
+		command = "keyDown a"
 	elem
-		name = "NORTHEAST"
-		command = ".northeast"
+		name = "a+UP"
+		command = "keyUp a"
 	elem
-		name = "SOUTHEAST"
-		command = ".southeast"
+		name = "b"
+		command = "keyDown b"
 	elem
-		name = "SOUTHWEST"
-		command = ".southwest"
+		name = "b+UP"
+		command = "keyUp b"
 	elem
-		name = "NORTHWEST"
-		command = ".northwest"
+		name = "d"
+		command = "keyDown d"
 	elem
-		name = "CTRL+WEST"
-		command = "westface"
+		name = "d+UP"
+		command = "keyUp d"
 	elem
-		name = "WEST+REP"
-		command = ".west"
+		name = "e"
+		command = "keyDown e"
 	elem
-		name = "CTRL+NORTH"
-		command = "northface"
+		name = "e+UP"
+		command = "keyUp e"
 	elem
-		name = "NORTH+REP"
-		command = ".north"
+		name = "f"
+		command = "keyDown f"
 	elem
-		name = "CTRL+EAST"
-		command = "eastface"
+		name = "f+UP"
+		command = "keyUp f"
 	elem
-		name = "EAST+REP"
-		command = ".east"
+		name = "g"
+		command = "keyDown g"
 	elem
-		name = "CTRL+SOUTH"
-		command = "southface"
+		name = "g+UP"
+		command = "keyUp g"
 	elem
-		name = "SOUTH+REP"
-		command = ".south"
+		name = "h"
+		command = "keyDown h"
 	elem
-		name = "INSERT"
-		command = "a-intent right"
+		name = "h+UP"
+		command = "keyUp h"
 	elem
-		name = "DELETE"
-		command = "delete-key-pressed"
+		name = "i"
+		command = "keyDown i"
+	elem
+		name = "i+UP"
+		command = "keyUp i"
+	elem
+		name = "j"
+		command = "keyDown j"
+	elem
+		name = "j+UP"
+		command = "keyUp j"
+	elem
+		name = "k"
+		command = "keyDown k"
+	elem
+		name = "k+UP"
+		command = "keyUp k"
+	elem
+		name = "l"
+		command = "keyDown l"
+	elem
+		name = "l+UP"
+		command = "keyUp l"
+	elem
+		name = "m"
+		command = "keyDown m"
+	elem
+		name = "m+UP"
+		command = "keyUp m"
+	elem
+		name = "n"
+		command = "keyDown n"
+	elem
+		name = "n+UP"
+		command = "keyUp n"
+	elem
+		name = "o"
+		command = "keyDown o"
+	elem
+		name = "o+UP"
+		command = "keyUp o"
+	elem
+		name = "p"
+		command = "keyDown p"
+	elem
+		name = "p+UP"
+		command = "keyUp p"
+	elem
+		name = "q"
+		command = "keyDown q"
+	elem
+		name = "q+UP"
+		command = "keyUp q"
+	elem
+		name = "r"
+		command = "keyDown r"
+	elem
+		name = "r+UP"
+		command = "keyUp r"
+	elem
+		name = "s"
+		command = "keyDown s"
+	elem
+		name = "s+UP"
+		command = "keyUp s"
+	elem
+		name = "t"
+		command = "keyDown t"
+	elem
+		name = "t+UP"
+		command = "keyUp t"
+	elem
+		name = "u"
+		command = "keyDown u"
+	elem
+		name = "u+UP"
+		command = "keyUp u"
+	elem
+		name = "v"
+		command = "keyDown v"
+	elem
+		name = "v+UP"
+		command = "keyUp v"
+	elem
+		name = "w"
+		command = "keyDown w"
+	elem
+		name = "w+UP"
+		command = "keyUp w"
+	elem
+		name = "x"
+		command = "keyDown x"
+	elem
+		name = "x+UP"
+		command = "keyUp x"
+	elem
+		name = "y"
+		command = "keyDown y"
+	elem
+		name = "y+UP"
+		command = "keyUp y"
+	elem
+		name = "z"
+		command = "keyDown z"
+	elem
+		name = "z+UP"
+		command = "keyUp z"
+	elem
+		name = "0"
+		command = "keyDown 0"
+	elem
+		name = "0+UP"
+		command = "keyUp 0"
 	elem
 		name = "1"
-		command = "a-intent help"
+		command = "keyDown 1"
 	elem
-		name = "CTRL+1"
-		command = "a-intent help"
+		name = "1+UP"
+		command = "keyUp 1"
 	elem
 		name = "2"
-		command = "a-intent disarm"
+		command = "keyDown 2"
 	elem
-		name = "CTRL+2"
-		command = "a-intent disarm"
+		name = "2+UP"
+		command = "keyUp 2"
 	elem
 		name = "3"
-		command = "a-intent grab"
+		command = "keyDown 3"
 	elem
-		name = "CTRL+3"
-		command = "a-intent grab"
+		name = "3+UP"
+		command = "keyUp 3"
 	elem
 		name = "4"
-		command = "a-intent harm"
+		command = "keyDown 4"
 	elem
-		name = "CTRL+4"
-		command = "a-intent harm"
+		name = "4+UP"
+		command = "keyUp 4"
 	elem
-		name = "A+REP"
-		command = ".west"
+		name = "5"
+		command = "keyDown 5"
 	elem
-		name = "CTRL+A+REP"
-		command = ".west"
+		name = "5+UP"
+		command = "keyUp 5"
 	elem
-		name = "B"
-		command = "resist"
+		name = "6"
+		command = "keyDown 6"
 	elem
-		name = "CTRL+B"
-		command = "resist"
+		name = "6+UP"
+		command = "keyUp 6"
 	elem
-		name = "D+REP"
-		command = ".east"
+		name = "7"
+		command = "keyDown 7"
 	elem
-		name = "CTRL+D+REP"
-		command = ".east"
+		name = "7+UP"
+		command = "keyUp 7"
 	elem
-		name = "E"
-		command = "quick-equip"
+		name = "8"
+		command = "keyDown 8"
 	elem
-		name = "CTRL+E"
-		command = "quick-equip"
+		name = "8+UP"
+		command = "keyUp 8"
 	elem
-		name = "F"
-		command = "a-intent left"
+		name = "9"
+		command = "keyDown 9"
 	elem
-		name = "CTRL+F"
-		command = "a-intent left"
+		name = "9+UP"
+		command = "keyUp 9"
 	elem
-		name = "G"
-		command = "a-intent right"
+		name = "`"
+		command = "keyDown `"
 	elem
-		name = "CTRL+G"
-		command = "a-intent right"
+		name = "`+UP"
+		command = "keyUp `"
 	elem
-		name = "M"
-		command = "me"
+		name = "-"
+		command = "keyDown -"
 	elem
-		name = "O"
-		command = "ooc"
+		name = "-+UP"
+		command = "keyUp -"
 	elem
-		name = "CTRL+O"
-		command = "ooc"
+		name = "="
+		command = "keyDown ="
 	elem
-		name = "Q"
-		command = ".northwest"
+		name = "=+UP"
+		command = "keyUp ="
 	elem
-		name = "CTRL+Q"
-		command = ".northwest"
+		name = "["
+		command = "keyDown ["
 	elem
-		name = "R"
-		command = ".southwest"
+		name = "[+UP"
+		command = "keyUp ["
 	elem
-		name = "CTRL+R"
-		command = ".southwest"
-	elem "s_key"
-		name = "S+REP"
-		command = ".south"
+		name = "]"
+		command = "keyDown ]"
 	elem
-		name = "CTRL+S+REP"
-		command = ".south"
+		name = "]+UP"
+		command = "keyUp ]"
 	elem
-		name = "T"
-		command = "say"
-	elem "w_key"
-		name = "W+REP"
-		command = ".north"
+		name = ";"
+		command = "keyDown ;"
 	elem
-		name = "CTRL+W+REP"
-		command = ".north"
+		name = ";+UP"
+		command = "keyUp ;"
 	elem
-		name = "X"
-		command = ".northeast"
+		name = "'"
+		command = "keyDown '"
 	elem
-		name = "CTRL+X"
-		command = ".northeast"
+		name = "'+UP"
+		command = "keyUp '"
 	elem
-		name = "Y"
-		command = "Activate-Held-Object"
+		name = ","
+		command = "keyDown ,"
 	elem
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
+		name = ",+UP"
+		command = "keyUp ,"
 	elem
-		name = "Z"
-		command = "Activate-Held-Object"
+		name = "."
+		command = "keyDown ."
 	elem
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
+		name = ".+UP"
+		command = "keyUp ."
 	elem
-		name = "F1"
-		command = "adminhelp"
+		name = "/"
+		command = "keyDown /"
 	elem
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
+		name = "/+UP"
+		command = "keyUp /"
 	elem
-		name = "F2+REP"
-		command = ".screenshot auto"
+		name = "\\"
+		command = "keyDown \\"
 	elem
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem
-		name = "F5"
-		command = "Aghost"
-	elem
-		name = "F6"
-		command = "Player-Panel"
-	elem
-		name = "F7"
-		command = "Admin-PM"
-	elem
-		name = "F8"
-		command = "Invisimin"
-	elem
-		name = "F12"
-		command = "F12"
-
-
-macro "robot-default"
-	elem
-		name = "TAB"
-		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
-	elem
-		name = "CENTER+REP"
-		command = ".center"
-	elem
-		name = "NORTHEAST"
-		command = ".northeast"
-	elem
-		name = "SOUTHEAST"
-		command = ".southeast"
-	elem
-		name = "NORTHWEST"
-		command = "unequip-module"
-	elem
-		name = "CTRL+WEST"
-		command = "westface"
-	elem
-		name = "WEST+REP"
-		command = ".west"
-	elem
-		name = "CTRL+NORTH"
-		command = "northface"
-	elem
-		name = "NORTH+REP"
-		command = ".north"
-	elem
-		name = "CTRL+EAST"
-		command = "eastface"
-	elem
-		name = "EAST+REP"
-		command = ".east"
-	elem
-		name = "CTRL+SOUTH"
-		command = "southface"
-	elem
-		name = "SOUTH+REP"
-		command = ".south"
-	elem
-		name = "INSERT"
-		command = "a-intent right"
-	elem
-		name = "DELETE"
-		command = "delete-key-pressed"
-	elem
-		name = "CTRL+1"
-		command = "toggle-module 1"
-	elem
-		name = "CTRL+2"
-		command = "toggle-module 2"
-	elem
-		name = "CTRL+3"
-		command = "toggle-module 3"
-	elem
-		name = "CTRL+4"
-		command = "a-intent left"
-	elem
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem
-		name = "CTRL+B"
-		command = "resist"
-	elem
-		name = "CTRL+O"
-		command = "ooc"
-	elem
-		name = "CTRL+D+REP"
-		command = ".east"
-	elem
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem
-		name = "CTRL+Q"
-		command = "unequip-module"
-	elem
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem
-		name = "CTRL+X"
-		command = ".northeast"
-	elem
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-	elem
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-	elem
-		name = "F1"
-		command = "adminhelp"
-	elem
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem
-		name = "F5"
-		command = "Aghost"
-	elem
-		name = "F6"
-		command = "Player-Panel"
-	elem
-		name = "F7"
-		command = "Admin-PM"
-	elem
-		name = "F8"
-		command = "Invisimin"
-	elem
-		name = "F12"
-		command = "F12"
-
-macro "robot-hotkeys"
-	elem
-		name = "TAB"
-		command = ".winset \"mainwindow.macro=robot-default input.focus=true input.background-color=#d3b5b5\""
-	elem
-		name = "CENTER+REP"
-		command = ".center"
-	elem
-		name = "NORTHEAST"
-		command = ".northeast"
-	elem
-		name = "SOUTHEAST"
-		command = ".southeast"
-	elem
-		name = "NORTHWEST"
-		command = "unequip-module"
-	elem
-		name = "CTRL+WEST"
-		command = "westface"
-	elem
-		name = "WEST+REP"
-		command = ".west"
-	elem
-		name = "CTRL+NORTH"
-		command = "northface"
-	elem
-		name = "NORTH+REP"
-		command = ".north"
-	elem
-		name = "CTRL+EAST"
-		command = "eastface"
-	elem
-		name = "EAST+REP"
-		command = ".east"
-	elem
-		name = "CTRL+SOUTH"
-		command = "southface"
-	elem
-		name = "SOUTH+REP"
-		command = ".south"
-	elem
-		name = "INSERT"
-		command = "a-intent right"
-	elem
-		name = "DELETE"
-		command = "delete-key-pressed"
-	elem
-		name = "1"
-		command = "toggle-module 1"
-	elem
-		name = "CTRL+1"
-		command = "toggle-module 1"
-	elem
-		name = "2"
-		command = "toggle-module 2"
-	elem
-		name = "CTRL+2"
-		command = "toggle-module 2"
-	elem
-		name = "3"
-		command = "toggle-module 3"
-	elem
-		name = "CTRL+3"
-		command = "toggle-module 3"
-	elem
-		name = "4"
-		command = "a-intent left"
-	elem
-		name = "CTRL+4"
-		command = "a-intent left"
-	elem
-		name = "A+REP"
-		command = ".west"
-	elem
-		name = "CTRL+A+REP"
-		command = ".west"
-	elem
-		name = "B"
-		command = "resist"
-	elem
-		name = "CTRL+B"
-		command = "resist"
-	elem
-		name = "O"
-		command = "ooc"
-	elem
-		name = "CTRL+O"
-		command = "ooc"
-	elem
-		name = "D+REP"
-		command = ".east"
-	elem
-		name = "CTRL+D+REP"
-		command = ".east"
-	elem
-		name = "F"
-		command = "a-intent left"
-	elem
-		name = "CTRL+F"
-		command = "a-intent left"
-	elem
-		name = "G"
-		command = "a-intent right"
-	elem
-		name = "CTRL+G"
-		command = "a-intent right"
-	elem
-		name = "Q"
-		command = "unequip-module"
-	elem
-		name = "CTRL+Q"
-		command = "unequip-module"
-	elem "s_key"
-		name = "S+REP"
-		command = ".south"
-	elem
-		name = "CTRL+S+REP"
-		command = ".south"
-	elem
-		name = "T"
-		command = "say"
-	elem "w_key"
-		name = "W+REP"
-		command = ".north"
-	elem
-		name = "CTRL+W+REP"
-		command = ".north"
-	elem
-		name = "X"
-		command = ".northeast"
-	elem
-		name = "CTRL+X"
-		command = ".northeast"
-	elem
-		name = "Y"
-		command = "Activate-Held-Object"
-	elem
-		name = "CTRL+Y"
-		command = "Activate-Held-Object"
-	elem
-		name = "Z"
-		command = "Activate-Held-Object"
-	elem
-		name = "CTRL+Z"
-		command = "Activate-Held-Object"
-	elem
-		name = "F1"
-		command = "adminhelp"
-	elem
-		name = "CTRL+SHIFT+F1+REP"
-		command = ".options"
-	elem
-		name = "F2+REP"
-		command = ".screenshot auto"
-	elem
-		name = "SHIFT+F2+REP"
-		command = ".screenshot"
-	elem
-		name = "F5"
-		command = "Aghost"
-	elem
-		name = "F6"
-		command = "Player-Panel"
-	elem
-		name = "F7"
-		command = "Admin-PM"
-	elem
-		name = "F8"
-		command = "Invisimin"
-	elem
-		name = "F12"
-		command = "F12"
+		name = "\\+UP"
+		command = "keyUp \\"
 
 
 menu "menu"
@@ -700,7 +627,7 @@ window "mainwindow"
 		is-default = true
 		icon = 'icons\\ss13_64.png'
 		menu = "menu"
-		macro = "macro"
+		macro = "default"
 		saved-params = "pos;size;is-minimized;is-maximized"
 	elem "split"
 		type = CHILD
