@@ -1,11 +1,5 @@
 //If you're looking for spawners like ash walker eggs, check ghost_role_spawners.dm
 
-/obj/machinery/lavaland_controller
-	name = "weather machine"
-	desc = "Controls the weather... when it's on, at any rate. A sticky note on the side proclaims \"DISABLED IN FAVOR OF AN ACTUAL ATMOSPHERE\"."
-	icon = 'icons/obj/machines/telecomms.dmi'
-	icon_state = "processor_off"
-
 /obj/structure/fans/tiny/invisible //For blocking air in ruin doorways
 	invisibility = INVISIBILITY_ABSTRACT
 

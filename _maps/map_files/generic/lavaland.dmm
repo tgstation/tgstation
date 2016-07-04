@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "ab" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -15,7 +15,7 @@
 /area/lavaland/surface/outdoors)
 "ae" = (
 /obj/effect/light_emitter,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "af" = (
 /turf/open/floor/plating/lava/smooth/lava_land_surface,
@@ -49,21 +49,11 @@
 	name = "Necropolis Bridge"
 	})
 "aj" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
-/area/ruin/unpowered{
-	name = "Necropolis Bridge"
-	})
+/obj/structure/necropolis_gate,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "ak" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "al" = (
 /turf/closed/mineral/random/volcanic,
@@ -719,11 +709,9 @@
 	},
 /area/mine/eva)
 "bA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors/explored)
+/obj/structure/fluff/drake_statue,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
 "bB" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -909,10 +897,9 @@
 	},
 /area/mine/production)
 "bT" = (
-/turf/open/floor/plasteel{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors/explored)
+/obj/structure/fluff/drake_statue/falling,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
 "bU" = (
 /turf/open/floor/plasteel/purple/corner{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
@@ -1232,11 +1219,10 @@
 	},
 /area/mine/production)
 "cx" = (
-/turf/open/floor/plasteel/purple/corner{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 4
-	},
-/area/lavaland/surface/outdoors/explored)
+/turf/open/indestructible/necropolis,
+/area/ruin/unpowered{
+	name = "Necropolis Bridge"
+	})
 "cy" = (
 /obj/machinery/door/airlock/mining{
 	name = "Mining Station Storage";
@@ -2085,9 +2071,7 @@
 	},
 /area/mine/living_quarters)
 "en" = (
-/obj/item/weapon/pickaxe,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/turf/closed/indestructible/riveted,
+/turf/closed/indestructible/necropolis,
 /area/ruin/unpowered{
 	name = "Necropolis Bridge"
 	})
@@ -2703,10 +2687,9 @@
 	},
 /area/mine/living_quarters)
 "fx" = (
-/turf/open/floor/plasteel/neutral{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
-	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/obj/item/weapon/pickaxe,
+/turf/closed/indestructible/necropolis,
 /area/ruin/unpowered{
 	name = "Necropolis Bridge"
 	})
@@ -12283,7 +12266,7 @@ fK
 fK
 fK
 dq
-en
+fx
 fL
 fK
 dq
@@ -16963,10 +16946,10 @@ aa
 aa
 ab
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 af
 af
@@ -17220,10 +17203,10 @@ aa
 aa
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 af
 af
@@ -17477,10 +17460,10 @@ aa
 aa
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 af
 af
@@ -23131,9 +23114,9 @@ aa
 aa
 ab
 ed
-aa
-aa
-aa
+al
+al
+al
 ab
 ab
 af
@@ -23388,9 +23371,9 @@ aa
 aa
 ab
 ed
-aa
-aa
-aa
+al
+al
+al
 ed
 ab
 af
@@ -23645,9 +23628,9 @@ aa
 aa
 ab
 ab
-aa
-aa
-aa
+al
+al
+al
 ed
 ab
 af
@@ -27759,8 +27742,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+al
+al
 ab
 ab
 ab
@@ -28016,8 +27999,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+al
+al
 ed
 ab
 ab
@@ -28273,8 +28256,8 @@ ab
 ab
 ab
 ed
-aa
-aa
+al
+al
 ed
 ab
 ab
@@ -32387,8 +32370,8 @@ ab
 ab
 ab
 ed
-aa
-aa
+al
+al
 ab
 af
 af
@@ -32644,8 +32627,8 @@ ab
 ab
 ed
 ed
-aa
-aa
+al
+al
 ed
 af
 af
@@ -32901,8 +32884,8 @@ ab
 ab
 ab
 ed
-aa
-aa
+al
+al
 ed
 af
 af
@@ -33158,8 +33141,8 @@ ed
 ab
 ab
 ed
-aa
-aa
+al
+al
 ab
 af
 af
@@ -33666,8 +33649,8 @@ aa
 aa
 aa
 aa
-ed
-ab
+ak
+ak
 ab
 ab
 ab
@@ -33923,9 +33906,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+ak
+bA
+ak
 ab
 ab
 ab
@@ -34180,10 +34163,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ak
+ak
+ak
+ak
 ab
 ab
 ab
@@ -34437,10 +34420,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ak
+ak
+ak
+ak
 ab
 ab
 ab
@@ -34694,26 +34677,26 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
+ak
+ak
+ak
+ak
+ak
 ab
 ab
 en
 en
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
 en
 en
 ab
@@ -34950,28 +34933,28 @@ aa
 aa
 aa
 aa
-ad
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-en
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
-ai
+aa
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
 en
 ab
 ab
@@ -35204,32 +35187,32 @@ ab
 ab
 ab
 ab
-ac
 ab
 ab
 ab
+aj
 ae
-ab
-ab
-ab
-ab
-ab
-ab
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
-fx
+ak
+ak
+ak
+ak
+ak
+ak
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
 ab
 ab
 ab
@@ -35465,27 +35448,27 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-en
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
-aj
+ak
+ak
+ak
+ak
+ak
+ak
+ak
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
+cx
 en
 ab
 ab
@@ -35722,26 +35705,26 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
+ak
+ak
+ak
+ak
+ak
 ab
 ab
 en
 en
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
+af
 en
 en
 ab
@@ -35979,10 +35962,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ak
+ak
+ak
+ak
 ab
 ab
 ab
@@ -36236,10 +36219,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ak
+bT
+ak
+ak
 ab
 ab
 ab
@@ -36493,9 +36476,9 @@ aa
 aa
 aa
 aa
-ed
-ab
-ab
+ak
+ak
+ak
 ab
 ab
 ab
@@ -36750,9 +36733,9 @@ aa
 aa
 aa
 aa
-ed
-ed
-ed
+ak
+ak
+ab
 ab
 ab
 ab
@@ -45493,10 +45476,10 @@ ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 af
 af
@@ -45750,10 +45733,10 @@ ab
 ab
 ab
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 af
 af
@@ -46007,10 +45990,10 @@ ab
 ab
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab
@@ -46264,10 +46247,10 @@ ab
 ab
 ed
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -46521,10 +46504,10 @@ ab
 ab
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ed
 ab
@@ -46778,10 +46761,10 @@ ab
 ab
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ed
 ab
@@ -47035,10 +47018,10 @@ ab
 ab
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -47292,10 +47275,10 @@ ab
 ab
 ab
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -47549,10 +47532,10 @@ ed
 ab
 ab
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab
@@ -47806,10 +47789,10 @@ aa
 aa
 ab
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab
@@ -49859,7 +49842,7 @@ aa
 aa
 ab
 ed
-aa
+al
 ab
 ab
 ab
@@ -50116,7 +50099,7 @@ aa
 aa
 ed
 ed
-aa
+al
 ab
 ab
 ab
@@ -50373,7 +50356,7 @@ aa
 aa
 ed
 ed
-aa
+al
 ed
 ab
 ab
@@ -50630,7 +50613,7 @@ aa
 aa
 ed
 ed
-aa
+al
 ed
 ab
 ab
@@ -50887,7 +50870,7 @@ aa
 aa
 ed
 ed
-aa
+al
 ab
 ab
 ab
@@ -55519,8 +55502,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+al
+al
 ab
 ab
 ab
@@ -55776,8 +55759,8 @@ ab
 ab
 ab
 ed
-aa
-aa
+al
+al
 ab
 ab
 ab
@@ -56033,8 +56016,8 @@ ab
 ab
 ab
 ab
-aa
-aa
+al
+al
 ed
 ab
 af
@@ -59110,10 +59093,10 @@ aa
 aa
 aa
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab
@@ -59367,10 +59350,10 @@ aa
 aa
 aa
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -59624,10 +59607,10 @@ aa
 aa
 aa
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -59881,10 +59864,10 @@ aa
 aa
 aa
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -60138,10 +60121,10 @@ aa
 aa
 aa
 ed
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -60395,10 +60378,10 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ed
 ab
 ab
@@ -60652,10 +60635,10 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab
@@ -60909,10 +60892,10 @@ aa
 aa
 aa
 ab
-aa
-aa
-aa
-aa
+al
+al
+al
+al
 ab
 ab
 ab

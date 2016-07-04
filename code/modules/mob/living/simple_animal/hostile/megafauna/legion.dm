@@ -1,7 +1,25 @@
+/*
+
+LEGION
+
+Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
+
+It has two attack modes that it constantly rotates between.
+
+In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
+In charge mode, it will spin and rush its target, attacking with melee whenever possible.
+
+When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-	health = 800
-	maxHealth = 800
+	health = 1250
+	maxHealth = 1250
 	icon_state = "legion"
 	icon_living = "legion"
 	desc = "One of many."
@@ -11,8 +29,8 @@
 	faction = list("mining")
 	speak_emote = list("echoes")
 	armour_penetration = 50
-	melee_damage_lower = 25
-	melee_damage_upper = 25
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	speed = 2
 	ranged = 1
 	flying = 1
@@ -20,14 +38,14 @@
 	retreat_distance = 5
 	minimum_distance = 5
 	ranged_cooldown_time = 20
-	var/size = 10
 	var/charging = 0
 	pixel_y = -90
 	pixel_x = -75
-	loot = list(/obj/item/stack/sheet/bone = 3)
-	vision_range = 13
+	loot = list(/obj/item/weapon/staff_of_storms = 1)
+	vision_range = 7
 	aggro_vision_range = 18
-	idle_vision_range = 13
+	idle_vision_range = 7
+	var/dying = FALSE //Are we going through the death animation?
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
@@ -42,8 +60,8 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='warning'><b>[src] charges!</b></span>")
-			SpinAnimation(speed = 20, loops = 5)
+			visible_message("<span class='boldwarning'>[src] charges!</span>")
+			SpinAnimation(speed = 10, loops = 5)
 			ranged = 0
 			retreat_distance = 0
 			minimum_distance = 0
@@ -56,43 +74,35 @@
 				speed = 2
 				charging = 0
 
-/mob/living/simple_animal/hostile/megafauna/legion/death()
-	if(health > 0)
+/mob/living/simple_animal/hostile/megafauna/legion/death(force)
+	if(health > 0 && !force)
 		return
-	if(size > 2)
-		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
+	if(dying)
+		return
+	dying = TRUE
+	notransform = TRUE
+	faction |= "neutral"
+	visible_message("<span class='userdanger'>Cracks split down [src] as a horrible scream fills the air!</span>")
+	for(var/mob/M in range(7, src))
+		M << 'sound/creatures/legion_death.ogg'
+	flick("legion_death", src)
+	icon_state = null
+	sleep(27) //To delay the actual death
+	flashy_death()
+	..()
 
-		L.maxHealth = maxHealth * 0.6
-		maxHealth = L.maxHealth
-
-		L.health = L.maxHealth
-		health = L.health
-
-		L.size = size - 2
-		size = L.size
-
-		var/size_multiplier = L.size * 0.08
-		L.resize = size_multiplier
-		resize = L.resize
-
-		L.update_transform()
-		update_transform()
-
-		L.target = target
-
-		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
-	else
-		var/last_legion = TRUE
-		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
-			if(other != src)
-				last_legion = FALSE
-				break
-		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
-		else if(prob(5))
-			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
-		..()
+/mob/living/simple_animal/hostile/megafauna/legion/proc/flashy_death()
+	visible_message("<span class='userdanger'>[src] vanishes in a flash of crimson light!</span>")
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
+	var/list/nearby_mobs = list()
+	for(var/mob/living/M in range(7, src))
+		M.overlay_fullscreen("flash", /obj/screen/fullscreen/flash) //Get it? Flashy death? GET IT?!!
+		addtimer(M, "clear_fullscreen", 25, FALSE, "flash", 25)
+		nearby_mobs |= M
+	for(var/mob/M in player_list - nearby_mobs)
+		if(M.z == z)
+			M << "<span class='boldnotice'>The furious death throes of something awful fill your mind. You feel an unexpected peace.</span>"
+			M << 'sound/creatures/legion_death_far.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)
 	return 1
