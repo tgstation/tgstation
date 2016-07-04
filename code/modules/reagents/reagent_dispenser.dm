@@ -160,10 +160,6 @@
 	tank_volume = 500
 	var/paper_cups = 25 //Paper cups left from the cooler
 
-/obj/structure/reagent_dispensers/water_cooler/New()
-	..()
-	name = "[reagent_id] cooler"
-
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	..()
 	user << "There are [paper_cups ? paper_cups : "no"] paper cups left."
@@ -176,14 +172,6 @@
 	var/obj/item/weapon/reagent_containers/food/drinks/sillycup/S = new(get_turf(src))
 	user.put_in_hands(S)
 	paper_cups--
-
-/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/sillycup))
-		user << "<span class='notice'>You put [I] into [src]'s stack.</span>"
-		user.drop_item()
-		qdel(I)
-		return
-	return ..()
 
 
 /obj/structure/reagent_dispensers/beerkeg

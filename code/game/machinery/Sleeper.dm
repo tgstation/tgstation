@@ -7,6 +7,7 @@
 
 /obj/machinery/sleeper
 	name = "sleeper"
+	desc = "An enclosed machine used to stabilize and heal patients."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "sleeper"
 	density = FALSE

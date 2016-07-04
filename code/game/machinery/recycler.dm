@@ -2,7 +2,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler
 	name = "recycler"
-	desc = "A large crushing machine which is used to recycle small items ineffeciently; there are lights on the side of it."
+	desc = "A large crushing machine used to recycle small items inefficiently. There are lights on the side."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "grinder-o0"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead

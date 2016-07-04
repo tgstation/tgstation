@@ -237,3 +237,39 @@
 /obj/effect/mob_spawn/human/prisoner_transport/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
 	..()
+
+//Space Hotel Staff
+/obj/effect/mob_spawn/human/hotel_staff //not free antag u little shits
+	name = "staff sleeper"
+	desc = "A sleeper designed for long-term statis between guest vists."
+	mob_name = "hotel staff member"
+	icon = 'icons/obj/Cryogenic2.dmi'
+	icon_state = "sleeper_s"
+	uniform = /obj/item/clothing/under/assistantformal
+	shoes = /obj/item/clothing/shoes/laceup
+	pocket1 = /obj/item/device/radio/off
+	back = /obj/item/weapon/storage/backpack
+	objectives = "Cater to visting guests with your fellow staff. Do not leave your assigned hotel and always remember: The customer is always right!"
+	death = FALSE
+	roundstart = FALSE
+	random = TRUE
+	flavour_text = "You are a staff member of a top-of-the-line space hotel! Cater to guests and <font size=6><b>DON'T</b></font> leave the hotel, lest the manager fire you for\
+		dereliction of duty!"
+
+/obj/effect/mob_spawn/human/hotel_staff/security
+	name = "hotel security sleeper"
+	mob_name = "hotel security memeber"
+	uniform = /obj/item/clothing/under/rank/security/blueshirt
+	shoes = /obj/item/clothing/shoes/jackboots
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	helmet = /obj/item/clothing/head/helmet/blueshirt
+	back = /obj/item/weapon/storage/backpack/security
+	belt = /obj/item/weapon/storage/belt/security/full
+	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
+		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
+	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
+
+/obj/effect/mob_spawn/human/hotel_staff/Destroy()
+	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
+	..()
+

@@ -72,8 +72,6 @@
 		if (!isnull(podf) && podf.is_operational())
 			return podf
 
-	return null
-
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
@@ -83,7 +81,6 @@
 			src.diskette = W
 			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
-			return
 	else
 		return ..()
 
@@ -218,7 +215,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/cloning/Topic(href, href_list)
 	if(..())
@@ -372,7 +368,10 @@
 
 	var/datum/data/record/R = new()
 	if(subject.dna.species)
-		R.fields["mrace"] = subject.dna.species.type
+		// We store the instance rather than the path, because some
+		// species (abductors, slimepeople) store state in their
+		// species datums
+		R.fields["mrace"] = subject.dna.species
 	else
 		var/datum/species/rando_race = pick(config.roundstart_races)
 		R.fields["mrace"] = rando_race.type

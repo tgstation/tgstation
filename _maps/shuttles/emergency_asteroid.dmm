@@ -37,7 +37,7 @@
 "ah" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "ai" = (
 /obj/machinery/door/airlock/shuttle{
@@ -679,7 +679,7 @@ aB
 aJ
 at
 aZ
-bh
+ah
 aK
 at
 aL
@@ -694,7 +694,7 @@ at
 at
 at
 aZ
-bh
+ah
 aK
 at
 aS
@@ -709,7 +709,7 @@ aC
 aK
 at
 aZ
-bh
+ah
 aK
 at
 bw
@@ -720,22 +720,22 @@ aa
 (14,1,1) = {"
 ag
 ag
-aD
+ad
 aK
 at
 aZ
-bh
+ah
 aK
 at
 aZ
-aD
+ad
 aa
 aa
 "}
 (15,1,1) = {"
 ag
 ag
-aD
+ad
 aK
 at
 at
@@ -743,22 +743,22 @@ at
 at
 at
 aZ
-aD
+ad
 aa
 aa
 "}
 (16,1,1) = {"
 ag
 ag
-aD
+ad
 aK
 at
 aZ
-bh
+ah
 aK
 at
 aZ
-aD
+ad
 aa
 aa
 "}
@@ -769,7 +769,7 @@ aB
 aK
 at
 aZ
-bh
+ah
 aK
 at
 bx
@@ -784,7 +784,7 @@ at
 at
 at
 aZ
-bh
+ah
 aK
 at
 aS
@@ -799,7 +799,7 @@ aC
 aL
 at
 aZ
-bh
+ah
 aK
 at
 by
@@ -906,7 +906,7 @@ ad
 aP
 ak
 bq
-aD
+ad
 as
 as
 au

@@ -462,18 +462,22 @@ This is here to make the tiles around the station mininuke change when it's arme
 		log_game("[src] has been moved out of bounds in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 
 /obj/item/weapon/disk/nuclear/proc/relocate()
-	if(blobstart.len > 0)
-		var/turf/targetturf = get_turf(pick(blobstart))
-		if(ismob(loc))
-			var/mob/M = loc
-			M.remove_from_mob(src)
-		if(istype(loc, /obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = loc
-			S.remove_from_storage(src, targetturf)
-		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
-		return targetturf
-	else
-		throw EXCEPTION("Unable to find a blobstart landmark")
+	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	if(!targetturf)
+		if(blobstart.len > 0)
+			targetturf = get_turf(pick(blobstart))
+		else
+			throw EXCEPTION("Unable to find a blobstart landmark")
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.remove_from_mob(src)
+	if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, targetturf)
+	// move the disc, so ghosts remain orbiting it even if it's "destroyed"
+	forceMove(targetturf)
+	return targetturf
 
 /obj/item/weapon/disk/nuclear/Destroy(force)
 	var/turf/diskturf = get_turf(src)

@@ -8,9 +8,12 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
+	var/deconstructible = 1
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
+		if(!deconstructible)
+			return
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
@@ -49,3 +52,9 @@
 	desc = "Although comfortable, this sleeper won't function as anything but a bed ever again."
 	icon = 'icons/obj/lavaland/spawners.dmi'
 	icon_state = "cryostasis_sleeper_open"
+
+/obj/structure/fluff/broken_flooring
+	name = "broken tiling"
+	desc = "A segment of broken flooring"
+	icon = 'icons/obj/brokentiling.dmi'
+	icon_state = "corner"

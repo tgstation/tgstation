@@ -1209,7 +1209,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "cW" = (
@@ -1472,19 +1472,8 @@
 	},
 /area/hallway/primary/central)
 "dv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/power/apc{
-	auto_name = 1;
-	dir = 2;
-	name = "_South APC";
-	pixel_y = -24
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/warnplate{
-	dir = 2
-	},
+/obj/machinery/photocopier,
+/turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "dw" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1497,9 +1486,6 @@
 /turf/closed/wall,
 /area/hallway/primary/central)
 "dy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/status_display{
 	density = 0;
 	pixel_y = 2;
@@ -2571,11 +2557,12 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "fN" = (
-/obj/machinery/photocopier,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 2;
 	on = 1
 	},
+/obj/structure/table,
+/obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel/caution/corner{
 	dir = 4
 	},
@@ -4175,7 +4162,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	travelDir = -90;
+	port_angle = -90;
 	width = 15
 	},
 /obj/docking_port/stationary{
@@ -13208,7 +13195,7 @@
 	id = "syndicate";
 	name = "syndicate infiltrator";
 	roundstart_move = "syndicate_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 18
 	},
 /obj/docking_port/stationary{
@@ -14984,7 +14971,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 5
 	},
 /obj/docking_port/stationary{
@@ -15055,6 +15042,83 @@
 /obj/item/clothing/under/burial,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
+"IR" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	color = "#0000ff";
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"IQ" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"IP" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"IO" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"IN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/turf/open/floor/plating,
+/area/hallway/primary/central)
+"IM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/power/apc{
+	auto_name = 1;
+	dir = 2;
+	name = "_South APC";
+	pixel_y = -24
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating/warnplate{
+	dir = 2
+	},
+/area/quartermaster/storage)
 
 (1,1,1) = {"
 aa
@@ -44729,8 +44793,8 @@ bv
 bq
 ce
 bq
-bq
 ds
+bq
 bq
 bJ
 bq
@@ -44984,12 +45048,12 @@ aa
 aa
 aa
 aa
-am
 bx
-bN
+cx
 bN
 bq
 eD
+cS
 ff
 fD
 fa
@@ -45241,12 +45305,12 @@ aa
 aa
 aa
 bL
-am
 bx
 bN
 dt
 bq
 eE
+cS
 cS
 fA
 cS
@@ -45499,11 +45563,11 @@ aa
 bx
 bM
 bx
-bx
 bN
 iE
 dR
 eF
+fb
 fb
 fE
 cS
@@ -45756,11 +45820,11 @@ am
 by
 bN
 bx
-cx
-cT
-dv
+bN
+IM
 bq
 eG
+dv
 fg
 fF
 fN
@@ -46014,8 +46078,8 @@ bx
 bM
 bx
 bN
-cU
-dw
+IN
+bq
 bq
 bQ
 bQ
@@ -46272,7 +46336,7 @@ bO
 bO
 bO
 cV
-dx
+bx
 eI
 eI
 eI
@@ -46528,7 +46592,7 @@ bA
 bN
 cf
 bN
-cU
+IO
 dy
 dV
 el
@@ -46785,8 +46849,8 @@ bB
 ah
 ah
 bx
-cW
-dw
+IP
+bx
 dW
 eK
 eK
@@ -47042,8 +47106,8 @@ bD
 bR
 bo
 cy
-cX
-dz
+IQ
+IR
 eL
 eL
 eL

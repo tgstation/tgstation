@@ -70,7 +70,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 5;
 	timid = 1
 	},

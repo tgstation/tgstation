@@ -250,7 +250,7 @@
 	duration = 300
 	sound="sound/magic/Blind.ogg"
 
-/obj/effect/proc_holder/spell/dumbfire/fireball
+/obj/effect/proc_holder/spell/fireball
 	name = "Fireball"
 	desc = "This spell fires a fireball at a target and does not require wizard garb."
 
@@ -261,30 +261,55 @@
 	invocation_type = "shout"
 	range = 20
 	cooldown_min = 20 //10 deciseconds reduction per rank
-
-	proj_icon_state = "fireball"
-	proj_name = "a fireball"
-	proj_type = "/obj/effect/proc_holder/spell/turf/fireball"
-
-	proj_lifespan = 200
-	proj_step_delay = 1
-
-	action_icon_state = "fireball"
+	var/fireball_type = /obj/item/projectile/magic/fireball
+	action_icon_state = "fireball0"
 	sound = "sound/magic/Fireball.ogg"
 
-/obj/effect/proc_holder/spell/turf/fireball/cast(turf/T,mob/user = usr)
-	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
+	active = FALSE
 
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/fireball
-	amt_dam_brute = 20
-	amt_dam_fire = 25
+/obj/effect/proc_holder/spell/fireball/Click()
+	var/mob/living/user = usr
+	if(!istype(user) || !can_cast(user))
+		return
 
-/obj/effect/proc_holder/spell/targeted/explosion/fireball
-	ex_severe = -1
-	ex_heavy = -1
-	ex_light = 2
-	ex_flash = 5
+	var/msg
+	if(active)
+		msg = "<span class='notice'>You extinguish your fireball...for now.</span>"
+		remove_ranged_ability(user, msg)
+	else
+		msg = "<span class='notice'>Your prepare to cast your fireball spell! <B>Left-click to cast at a target!</B></span>"
+		add_ranged_ability(user, msg)
+
+/obj/effect/proc_holder/spell/fireball/update_icon()
+	action.button_icon_state = "fireball[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/spell/fireball/InterceptClickOn(mob/living/user, params, atom/target)
+	if(..())
+		return
+
+	if(!cast_check(0, user))
+		remove_ranged_ability(user)
+		return
+
+	var/list/targets = list(target)
+	perform(targets,user = user)
+
+/obj/effect/proc_holder/spell/fireball/cast(list/targets, mob/living/user)
+	var/target = targets[1] //There is only ever one target for fireball
+	var/turf/T = user.loc
+	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
+	if(!isturf(U) || !isturf(T))
+		return 0
+
+	var/obj/item/projectile/magic/fireball/FB = new fireball_type(user.loc)
+	FB.current = get_turf(user)
+	FB.preparePixelProjectile(target, get_turf(target), user)
+	FB.fire()
+	user.newtonian_move(get_dir(U, T))
+
+	return 1
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse
 	name = "Repulse"

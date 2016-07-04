@@ -93,16 +93,21 @@ h1.alert, h2.alert		{color: #000000;}
 .alloy					{color: #42474D;}
 .heavy_alloy			{color: #42474D; font-weight: bold; font-style: italic;}
 .large_alloy			{color: #42474D; font-size: 3;}
+.nezbere_large			{color: #42474D; font-size: 3; font-weight: bold; font-style: italic;}
 .nezbere				{color: #42474D; font-weight: bold; font-style: italic;}
 .nezbere_small			{color: #42474D;}
+.sevtug_large			{color: #AF0AAF; font-size: 3; font-weight: bold; font-style: italic;}
 .sevtug					{color: #AF0AAF; font-weight: bold; font-style: italic;}
 .sevtug_small			{color: #AF0AAF;}
+.inathneq_large			{color: #1E8CE1; font-size: 3; font-weight: bold; font-style: italic;}
 .inathneq				{color: #1E8CE1; font-weight: bold; font-style: italic;}
 .inathneq_small			{color: #1E8CE1;}
-.nzcrentr				{color: #BE8700; font-weight: bold; font-style: italic;}
-.nzcrentr_small			{color: #BE8700;}
-.neovgre				{color: #13143F; font-weight: bold; font-style: italic;}
-.neovgre_small			{color: #13143F;}
+.nzcrentr_large			{color: #DAAA18; font-size: 3; font-weight: bold; font-style: italic;}
+.nzcrentr				{color: #DAAA18; font-weight: bold; font-style: italic;}
+.nzcrentr_small			{color: #DAAA18;}
+.neovgre_large			{color: #6E001A; font-size: 3; font-weight: bold; font-style: italic;}
+.neovgre				{color: #6E001A; font-weight: bold; font-style: italic;}
+.neovgre_small			{color: #6E001A;}
 
 .newscaster				{color: #800000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
