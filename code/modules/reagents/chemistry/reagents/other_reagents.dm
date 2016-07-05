@@ -1220,3 +1220,15 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
+
+/datum/reagent/barocardone
+	name = "barocardone"
+	id = "barocardone"
+	description = "A potent explosive chemical that is activated in presence of high levels of endorphins. You know, like when you get hugged."
+	metabolization_rate = 0.05
+
+/datum/reagent/endorphins
+	name = "endorphins"
+	id = "endorphins"
+	description = "A natural chemical that is released when you experience social interactions or excitement and happiness. Your body's natural painkillers"
+	metabolization_rate = 5

@@ -336,3 +336,9 @@
 	desc = "A small bottle containing Bio Virus Antidote Kit."
 	icon_state = "bottle5"
 	list_reagents = list("atropine" = 5, "epinephrine" = 5, "salbutamol" = 10, "spaceacillin" = 10)
+
+/obj/item/weapon/reagent_containers/glass/bottle/antisocial
+	name = "barocardone bottle"
+	desc = "A fun chemical for explosive antisocialness"
+	volume = 50
+	list_reagents = list("barocardone" = 30)
