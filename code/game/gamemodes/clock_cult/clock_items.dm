@@ -442,6 +442,7 @@
 	var/active = FALSE //If the visor is online
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
+	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
 	actions_types = list(/datum/action/item_action/toggle_flame)
 
 /obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
@@ -459,7 +460,9 @@
 		return 0
 	if(is_servant_of_ratvar(user))
 		update_status(TRUE)
-	else if(iscultist(user)) //Cultists spontaneously combust
+	else
+		update_status(FALSE)
+	if(iscultist(user)) //Cultists spontaneously combust
 		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
 		user << "<span class='userdanger'>You suddenly catch fire!</span>"
 		user.adjust_fire_stacks(5)
@@ -481,10 +484,12 @@
 				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
 				return 0
 			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile at any range</b> to unleash it, or use the action button again to dispel it.</i></span>")
-			var/obj/item/weapon/ratvars_flame/R = new(get_turf(C))
+			var/turf/T = get_turf(C)
+			var/obj/item/weapon/ratvars_flame/R = new(T)
 			flame = R
 			C.put_in_hands(R)
 			R.visor = src
+			add_logs(C, T, "prepared ratvar's flame", src)
 		user.update_action_buttons_icon()
 
 /obj/item/clothing/glasses/judicial_visor/proc/update_status(change_to)
@@ -555,13 +560,15 @@
 				continue
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
-			addtimer(V, "recharge_visor", ratvar_awakens ? 60 : 600, FALSE, user)
+			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, user)
 		clockwork_say(user, "Xarry, urn'guraf!")
 		user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
-		new/obj/effect/clockwork/judicial_marker(get_turf(target), user)
+		var/turf/T = get_turf(target)
+		new/obj/effect/clockwork/judicial_marker(T, user)
+		add_logs(user, T, "used ratvar's flame to create a judicial marker")
 		user.update_action_buttons_icon()
 		user.update_inv_glasses()
-		addtimer(visor, "recharge_visor", ratvar_awakens ? 30 : 300, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
+		addtimer(visor, "recharge_visor", ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown, FALSE, user)//Cooldown is reduced by 10x if Ratvar is up
 		qdel(src)
 		return 1
 
