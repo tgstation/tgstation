@@ -962,7 +962,7 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggre guna oebxra obqvrf.\"", "\"Vg pbhyq fgvyy or hfrq, vs gurer jnf n qbbe gb cynpr vg ba.\"")
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggr-e guna oebxra obqvrf.\"", "\"Vg pbhyq fgvyy or hfrq, vs gurer jnf n qbbe gb-cynpr vg ba.\"")
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -980,7 +980,7 @@
 	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
-	servant_of_ratvar_messages = list("\"Jub oebxr guvf.\"", "\"Qvq lbh oernx gurfr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guvf gb fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguvat - hayvxr lbh.\"")
+	servant_of_ratvar_messages = list("\"Jub oebxr guv'f.\"", "\"Qvq lbh oernx gur'fr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guv'f gb fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguv'at - hayvxr lbh.\"")
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -1022,8 +1022,8 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"", \
-	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guvax gur obff jbhyq abgvpr?\"")
+	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n ober. Gur'er'f abguvat V pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V jnag gb-tb xvyy fbzrguv'at.\"", "\"HEHEHEHEHEHEH!\"", \
+	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgvpr?\"")
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk

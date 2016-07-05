@@ -296,7 +296,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Melee Area Convert"
 	name = "Guvax"
 	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby servants."
-	invocations = list("Rayvtugr-a guv'f urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hagehguf naq ubabe Ratvar.")
+	invocations = list("Rayvtugr-a guv'f urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hagehguf-naq-ubabe Ratvar.")
 	channel_time = 50
 	required_components = list("guvax_capacitor" = 1)
 	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
@@ -332,7 +332,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Channeled, Mobile Area Confusion"
 	name = "Taunting Tirade"
 	desc = "Confuses and dizzies all nearby non-servants with a short invocation, then allows movement for three seconds. Chanted every second for up to thirty-five seconds."
-	chant_invocations = list("Ubfgv'yrf ba zl onpx!", "Rarzvrf ba-zl genvy!", "Tbaan gel naq funxr-zl gnvy.", "Obtrlf ba-zl fvk!")
+	chant_invocations = list("Ubfgv'yrf ba-zl onpx!", "Rarzvrf ba-zl genvy!", "Tbaan gel-naq-funxr zl-gnvy.", "Obtrlf ba-zl fvk!")
 	chant_amount = 10
 	chant_interval = 5
 	required_components = list("guvax_capacitor" = 2)
@@ -408,7 +408,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Xray Vision Glasses"
 	name = "Wraith Spectacles"
 	desc = "Fabricates a pair of glasses that provides true sight but quickly damage vision, eventually causing blindness if worn for too long."
-	invocations = list("Fubj gur gehgu-bs guv'f jbeyq gb zr!.")
+	invocations = list("Fubj gur gehgu-bs guv'f jbeyq gb-zr!.")
 	channel_time = 10
 	required_components = list("hierophant_ansible" = 1)
 	whispered = TRUE
@@ -464,7 +464,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Channeled, Area Power Drain"
 	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
 	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
-	chant_invocations = list("Qenj punetr gb guv’f furyy!")
+	chant_invocations = list("Qenj punetr gb-guv'f furyy!")
 	chant_amount = 30
 	chant_interval = 10
 	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
@@ -796,7 +796,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br> \
 	Unlike holoparasites, however, it does not transfer the damage it takes to you, instead simply gaining Fatigue as it is attacked. Marauders cannot move too far from their hosts, \
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
-	invocations = list("Pnyy sbegu...", "Sevtug'f jvyy, gur zvaq znqr fjbeq-naq-fuvryq.")
+	invocations = list("Sevtug'f jvyy...", "...Pnyy sbegu...")
 	channel_time = 100
 	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
@@ -827,6 +827,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return 0
+	clockwork_say(invoker, "...Gur zvaq znqr...")
 	invoker.notransform = FALSE
 	slab.busy = null
 	if(!check_special_requirements())
@@ -839,6 +840,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return 0
+	clockwork_say(invoker, "...Fjbeq-naq-fuvryq!")
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
@@ -877,7 +879,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Structure, Repairs Other Structures"
 	name = "Mending Motor"
 	desc = "Creates a mechanized prism that will rapidly repair damage to clockwork creatures, converted cyborgs, and clockwork structures. Requires replicant alloy or power to function."
-	invocations = list("Znl guv'f cevfz...", "...zraq bhe qragf naq fpengpurf!")
+	invocations = list("Znl guv'f cevfz...", "...zraq bhe qragf-naq-fpengpurf!")
 	channel_time = 80
 	required_components = list("vanguard_cogwheel" = 4, "guvax_capacitor" = 1, "replicant_alloy" = 1)
 	consumed_components = list("vanguard_cogwheel" = 3, "guvax_capacitor" = 1, "replicant_alloy" = 1)
@@ -896,7 +898,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Structure, Teleportation Hub"
 	name = "Clockwork Obelisk"
 	desc = "Creates a clockwork obelisk that can broadcast messages over the Hierophant Network or open a Spatial Gateway to any living servant or clockwork obelisk."
-	invocations = list("Znl guv'f boryvfx...", "...gnxr-hf gb nyy cynprf!")
+	invocations = list("Znl guv'f boryvfx...", "...gnxr-hf gb-nyy cynprf!")
 	channel_time = 80
 	required_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 4)
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
@@ -980,7 +982,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='nezbere'>\"Bhe znfgr-e vf urer nyernql. Lbh qb abg erdhver-zl uryc, sevraq.\"</span>\n\
+		invoker << "<span class='nezbere'>\"Bhe znfgr-e vf urer nyernql. Lbh qb abg erdhver zl-uryc, sevraq.\"</span>\n\
 		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return 1
@@ -1023,17 +1025,17 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
-	var/list/mindbreaksayings = list("\"Bu, terng. V trg gb funggr-e fbzr zvaqf.\"", "\"Zber zvaqf gb pehfu.\"", \
-	"\"Ernyyl, guv'f vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguvat vagrerfgvat va gur'z.\"", "\"Znlor V pna vafgvyy n yvggyr ovg bs gr-eebe va guv'f bar.\"", \
-	"\"Jung n jnfgr-bs zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
+	var/list/mindbreaksayings = list("\"Bu, terng. V trg gb funggr-e fbzr zvaqf.\"", "\"Zber zvaqf gb-pehfu.\"", \
+	"\"Ernyyl, guv'f vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguvat vagrerfgvat va gur'z.\"", "\"Znlor V pna vafgvyy n yvggyr ovg-bs gr-eebe va guv'f bar.\"", \
+	"\"Jung n jnfgr-bs-zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb tenfc gur pbaprcg-bs jnvgvat?\"</span>\n\
+		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcyrgba yvxr lbh - gb-tenfc gur pbaprcg-bs jnvgvat?\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guv'ax nalguv'at V pna qb evtug abj jvyy pbzcner gb Ratvar's cbjre?.\"</span>\n\
+		invoker << "<span class='sevtug'>\"Qb lbh ernyyl guv'ax nalguv'at V pna qb evtug abj jvyy pbzcner gb-Ratvar's cbjre?.\"</span>\n\
 		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return ..()
@@ -1092,7 +1094,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		invoker << "<span class='nzcrentr'>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs V xvyyrq lbh? ...Ur jbhyq? Bx.\"</span>\n\
+		invoker << "<span class='nzcrentr'>\"Gur obff fnlf lbh unir gb-jnvg. Url, qb lbh guvax ur jbhyq zvaq vs V xvyyrq lbh? ...Ur jbhyq? Bx.\"</span>\n\
 		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
 		return 0
 	return 1
@@ -1101,14 +1103,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
-	"<span class='nzcrentr'>\"Gur obff fnlf vg'f bxnl gb qb guv'f. Qba'g oynzr zr vs lbh qvr sebz vg.\"</span>\n \
+	"<span class='nzcrentr'>\"Gur obff fnlf vg'f bxnl gb-qb guv'f. Qba'g oynzr zr vs lbh qvr sebz vg.\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
 	playsound(invoker, 'sound/magic/lightning_chargeup.ogg', 100, 0)
 	animate(invoker, color = list(rgb(255, 255, 255), rgb(255, 255, 255), rgb(255, 255, 255), rgb(0,0,0)), time = 88) //Gradual advancement to extreme brightness
 	sleep(88)
 	if(invoker)
 		invoker.visible_message("<span class='warning'>Massive bolts of energy emerge from across [invoker]'s body!</span>", \
-		"<span class='nzcrentr'>\"V gbyq lbh lbh jbhyqa'g or noyr gb unaqyr vg.\"</span>\n \
+		"<span class='nzcrentr'>\"V gbyq lbh lbh jbhyqa'g or noyr gb-unaqyr vg.\"</span>\n \
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		animate(invoker, color = initial(invoker.color), time = 10)
@@ -1138,7 +1140,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Area Invuln"
 	name = "Invoke Inath-Neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
-	invocations = list("V pnyy hcba lbh, Inath-Neq!!", "Y-rg gur Erfbanag Pbtf ghea bapr zber!!", "Tenag zr naq zl nyyvrf gur fgeratgu gb inadhvfu bhe sbrf!!")
+	invocations = list("V pnyy hcba lbh, Inath-Neq!!", "Y-rg gur Erfbanag Pbtf ghea bapr zber!!", "Tenag zr-naq-zl-nyyvrf gur fgeratgu gb-inadhvfu bhe sbrf!!")
 	channel_time = 150
 	required_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	consumed_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
@@ -1161,7 +1163,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
 			continue
-		L << "<span class='inathneq'>\"V yraq lbh zl nvq, punzcvba! Y-rg tybel thvqr lbhe oybjf!\"</span>\n\
+		L << "<span class='inathneq'>\"V yraq lbh zl-nvq, punzcvba! Y-rg tybel thvqr lbhe oybjf!\"</span>\n\
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
 		L.color = "#1E8CE1"
 		L.fully_heal()
@@ -1184,7 +1186,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Pulls from the power of all of Ratvar's servants and generals to construct a massive machine used to tear apart a rift in spacetime to the Celestial Derelict. This gateway will \
 	call forth Ratvar from his exile after some time."
 	invocations = list("NEZBERE! SEVTUG! NZCRENTR! INATH-NEQ! V PNYY HCBA LBH!!", \
-	"GUR GV'ZR UNF PBZR SBE BHE ZNFGR-E GB OERNX GUR PUNVAF-BS RKVYR!!", \
+	"GUR GV'ZR UNF PBZR SBE BHE ZNFGR-E GB-OERNX GUR PUNVAF-BS RKVYR!!", \
 	"YRAQ HF LBHE NVQ! RATVAR PBZRF!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 10, "vanguard_cogwheel" = 10, "guvax_capacitor" = 10, "replicant_alloy" = 10, "hierophant_ansible" = 10)
@@ -1215,11 +1217,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/scripture_effects()
 	var/turf/T = get_turf(invoker)
 	new/obj/effect/clockwork/general_marker/nezbere(T)
-	T.visible_message("<span class='nezbere'>\"Ratvar, pbzr sbegu naq fuvar lbhe yvtug npebff guv'f ernyz!\"</span>")
+	T.visible_message("<span class='nezbere'>\"Ratvar, pbzr sbegu-naq-fuvar lbhe yvtug npebff guv'f ernyz!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 20, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
-	T.visible_message("<span class='sevtug'>\"Ratvar, pbzr sbegu naq fubj guv'f fgngvba lbhe qrpbengvat fxvyyf!\"</span>")
+	T.visible_message("<span class='sevtug'>\"Ratvar, pbzr sbegu-naq-fubj guv'f fgngvba lbhe qrpbengvat fxvyyf!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nzcrentr(T)
@@ -1227,7 +1229,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 40, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/inathneq(T)
-	T.visible_message("<span class='inathneq'>\"Ratvar, pbzr sbegu naq fubj lbhe freinagf lbhe zrepl!\"</span>")
+	T.visible_message("<span class='inathneq'>\"Ratvar, pbzr sbegu-naq-fubj lbhe freinagf lbhe zrepl!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	sleep(10)
 	new/obj/structure/clockwork/massive/celestial_gateway(T)
