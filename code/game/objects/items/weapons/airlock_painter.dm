@@ -34,7 +34,7 @@
 //because you're expecting user input.
 /obj/item/weapon/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		user << "<span class='notice'>There is no toner cartridge installed installed in \the [name]!</span>"
+		user << "<span class='notice'>There is no toner cartridge installed in \the [name]!</span>"
 		return 0
 	else if(ink.charges < 1)
 		user << "<span class='notice'>\The [name] is out of ink!</span>"
@@ -92,7 +92,7 @@
 /obj/item/weapon/airlock_painter/examine(mob/user)
 	..()
 	if(!ink)
-		user << "<span class='notice'>It doesn't have a toner cardridge installed.</span>"
+		user << "<span class='notice'>It doesn't have a toner cartridge installed.</span>"
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)

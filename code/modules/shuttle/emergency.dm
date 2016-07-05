@@ -1,7 +1,7 @@
 #define TIME_LEFT (SSshuttle.emergency.timeLeft())
-#define ENGINES_START_TIME 10
-#define ENGINES_STARTED (TIME_LEFT <= ENGINES_START_TIME)
-#define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED)
+#define ENGINES_START_TIME 100
+#define ENGINES_STARTED (SSshuttle.emergency.mode == SHUTTLE_IGNITING)
+#define IS_DOCKED (SSshuttle.emergency.mode == SHUTTLE_DOCKED || (ENGINES_STARTED))
 
 /obj/machinery/computer/emergency_shuttle
 	name = "emergency shuttle console"
@@ -125,10 +125,10 @@
 	// Check to see if we've reached criteria for early launch
 	if((authorized.len >= auth_need) || emagged)
 		// shuttle timers use 1/10th seconds internally
-		SSshuttle.emergency.setTimer(ENGINES_START_TIME * 10)
+		SSshuttle.emergency.setTimer(ENGINES_START_TIME)
 		var/system_error = emagged ? "SYSTEM ERROR:" : null
 		minor_announce("The emergency shuttle will launch in \
-			[ENGINES_START_TIME] seconds", system_error, alert=TRUE)
+			[TIME_LEFT] seconds", system_error, alert=TRUE)
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/emag_act(mob/user)
@@ -142,7 +142,7 @@
 	(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
 	has emagged the emergency shuttle [time] seconds before launch.", 0, 1)
 	log_game("[key_name(user)] has emagged the emergency shuttle in \
-		([x],[y],[z]) [time] seconds before launch.")
+		[COORD(src)] [time] seconds before launch.")
 	emagged = TRUE
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
@@ -168,6 +168,9 @@
 
 	for(var/obj/item/weapon/card/id/ID in src)
 		qdel(ID)
+	if(authorized && authorized.len)
+		authorized.Cut()
+	authorized = null
 
 	. = ..()
 
@@ -179,7 +182,7 @@
 	width = 22
 	height = 11
 	dir = EAST
-	travelDir = -90
+	port_angle = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
 
@@ -196,34 +199,14 @@
 
 	. = ..()
 
-/obj/docking_port/mobile/emergency/timeLeft(divisor)
-	if(divisor <= 0)
-		divisor = 10
-	if(!timer)
-		return round(SSshuttle.emergencyCallTime/divisor, 1)
-
-	var/dtime = world.time - timer
-	switch(mode)
-		if(SHUTTLE_ESCAPE)
-			dtime = max(SSshuttle.emergencyEscapeTime - dtime, 0)
-		if(SHUTTLE_DOCKED)
-			dtime = max(SSshuttle.emergencyDockTime - dtime, 0)
-		else
-			dtime = max(SSshuttle.emergencyCallTime - dtime, 0)
-	return round(dtime/divisor, 1)
-
 /obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
-	SSshuttle.emergencyCallTime = initial(SSshuttle.emergencyCallTime) * coefficient
+	var/call_time = SSshuttle.emergencyCallTime * coefficient
 	switch(mode)
-		if(SHUTTLE_RECALL)
+		// The shuttle can not normally be called while "recalling", so
+		// if this proc is called, it's via admin fiat
+		if(SHUTTLE_RECALL, SHUTTLE_IDLE, SHUTTLE_CALL)
 			mode = SHUTTLE_CALL
-			timer = world.time - timeLeft(1)
-		if(SHUTTLE_IDLE)
-			mode = SHUTTLE_CALL
-			timer = world.time
-		if(SHUTTLE_CALL)
-			if(world.time < timer)	//this is just failsafe
-				timer = world.time
+			setTimer(call_time)
 		else
 			return
 
@@ -238,7 +221,7 @@
 	if(mode != SHUTTLE_CALL)
 		return
 
-	timer = world.time - timeLeft(1)
+	invertTimer()
 	mode = SHUTTLE_RECALL
 
 	if(prob(70))
@@ -247,20 +230,21 @@
 		SSshuttle.emergencyLastCallLoc = null
 	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
 
-/*
-/obj/docking_port/mobile/emergency/findTransitDock()
-	. = SSshuttle.getDock("emergency_transit")
-	if(.)
-		return .
-	return ..()
-*/
-
-
 /obj/docking_port/mobile/emergency/check()
 	if(!timer)
 		return
-
 	var/time_left = timeLeft(1)
+
+	// The emergency shuttle doesn't work like others so this
+	// ripple check is slightly different
+	if(!ripples.len && (time_left <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_ESCAPE)))
+		var/destination
+		if(mode == SHUTTLE_CALL)
+			destination = SSshuttle.getDock("emergency_home")
+		else if(mode == SHUTTLE_ESCAPE)
+			destination = SSshuttle.getDock("emergency_away")
+		create_ripples(destination)
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
@@ -273,30 +257,49 @@
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
-				timer = world.time
+				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
 				feedback_add_details("emergency_shuttle", src.name)
 
-				//Gangs only have one attempt left if the shuttle has docked with the station to prevent suffering from dominator delays
+				// Gangs only have one attempt left if the shuttle has
+				// docked with the station to prevent suffering from
+				// endless dominator delays
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-
+					if(G.is_dominating)
 						G.dom_attempts = 0
 					else
 						G.dom_attempts = min(1,G.dom_attempts)
 
+
 		if(SHUTTLE_DOCKED)
+			if(time_left <= ENGINES_START_TIME)
+				if(SSshuttle.emergencyNoEscape)
+					priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+					sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
+					mode = SHUTTLE_STRANDED
+				else
+					mode = SHUTTLE_IGNITING
+					for(var/A in SSshuttle.mobile)
+						var/obj/docking_port/mobile/M = A
+						if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+							M.check_transit_zone()
+
+		if(SHUTTLE_IGNITING)
+			var/success = TRUE
+
+			success &= (check_transit_zone() == TRANSIT_READY)
+			for(var/A in SSshuttle.mobile)
+				var/obj/docking_port/mobile/M = A
+				if(M.launch_status == UNLAUNCHED)
+					success &= (M.check_transit_zone() == TRANSIT_READY)
+			if(!success)
+				setTimer(ENGINES_START_TIME)
 
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
-
-			if(time_left <= 0 && SSshuttle.emergencyNoEscape)
-				priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
-				sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
-				mode = SHUTTLE_STRANDED
 
 			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
@@ -312,7 +315,7 @@
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
-				timer = world.time
+				setTimer(SSshuttle.emergencyEscapeTime)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
 			if(time_left <= 0)
@@ -331,14 +334,6 @@
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0
-				open_dock()
-
-/obj/docking_port/mobile/emergency/proc/open_dock()
-	for(var/obj/machinery/door/poddoor/shuttledock/D in airlocks)
-		var/turf/T = get_step(D, D.checkdir)
-		if(!istype(T,/turf/open/space))
-			spawn(0)
-				D.open()
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"

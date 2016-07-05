@@ -1,3 +1,10 @@
+// Byond direction defines, because I want to put them somewhere.
+// #define NORTH 1
+// #define SOUTH 2
+// #define EAST 4
+// #define WEST 8
+
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -145,6 +152,7 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
+#define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
 #define CLICK_CD_RESIST 20
@@ -180,14 +188,14 @@
 #define STAGE_SIX 11 //From supermatter shard
 
 //zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_SPACEMAX 9
-#define ZLEVEL_MINING 5
-#define ZLEVEL_SPACEMIN 3
-#define ZLEVEL_ABANDONNEDTSAT 3
-#define ZLEVEL_CENTCOM 2
 #define ZLEVEL_STATION 1
+#define ZLEVEL_CENTCOM 2
+#define ZLEVEL_MINING 5
 #define ZLEVEL_LAVALAND 5
-#define ZLEVEL_UNDERGROUND 6
+#define ZLEVEL_EMPTY_SPACE 11
+
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_SPACEMAX 11
 
 //ticker.current_state values
 #define GAME_STATE_STARTUP		0
@@ -312,6 +320,9 @@ var/list/bloody_footprints_cache = list()
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+//Gets the turf this atom inhabits
+#define get_turf(A) (get_step(A, 0))
+
 //Bot types
 #define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
 #define MULE_BOT			2	// MULEbots
@@ -435,7 +446,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
 
-
 //Slime commands defines
 #define SLIME_FRIENDSHIP_FOLLOW 			3 //Min friendship to order it to follow
 #define SLIME_FRIENDSHIP_STOPEAT 			5 //Min friendship to order it to stop eating someone
@@ -455,3 +465,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
+//debug printing macros
+#define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
+#define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
+#define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+#define COORD(A) "([A.x],[A.y],[A.z])"

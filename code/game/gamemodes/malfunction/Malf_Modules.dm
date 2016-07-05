@@ -150,22 +150,11 @@
 	if(!canUseTopic())
 		return
 
-	var/obj/machinery/door/airlock/AL
 	for(var/obj/machinery/door/D in airlocks)
 		if(D.z != ZLEVEL_STATION)
 			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.locked = 0 //For airlocks that were bolted open.
-					AL.safe = 0 //DOOR CRUSH
-					AL.close()
-					AL.bolt() //Bolt it!
-					AL.secondsElectrified = -1  //Shock it!
-					AL.shockedby += "\[[time_stamp()]\][src](ckey:[src.ckey])"
-			else if(!D.stat) //So that only powered doors are closed.
-				D.close() //Close ALL the doors!
+		addtimer(D, "hostile_lockdown", 0, FALSE, src)
+		addtimer(D, "disable_lockdown", 900)
 
 	var/obj/machinery/computer/communications/C = locate() in machines
 	if(C)
@@ -174,29 +163,9 @@
 	verbs -= /mob/living/silicon/ai/proc/lockdown
 	minor_announce("Hostile runtime detected in door controllers. Isolation Lockdown protocols are now in effect. Please remain calm.","Network Alert:", 1)
 	src << "<span class = 'warning'>Lockdown Initiated. Network reset in 90 seconds.</span>"
-	spawn(900) //90 Seconds.
-		disablelockdown() //Reset the lockdown after 90 seconds.
-
-/mob/living/silicon/ai/proc/disablelockdown()
-	set category = "Malfunction"
-	set name = "Disable Lockdown"
-
-	var/obj/machinery/door/airlock/AL
-	for(var/obj/machinery/door/D in airlocks)
-		if(D.z != ZLEVEL_STATION)
-			continue
-		spawn()
-			if(istype(D, /obj/machinery/door/airlock))
-				AL = D
-				if(AL.canAIControl(src) && !AL.stat) //Must be powered and have working AI wire.
-					AL.unbolt()
-					AL.secondsElectrified = 0
-					AL.open()
-					AL.safe = 1
-			else if(!D.stat) //Opens only powered doors.
-				D.open() //Open everything!
-
-	minor_announce("Automatic system reboot complete. Have a secure day.","Network reset:")
+	addtimer(GLOBAL_PROC, "minor_announce", 900, FALSE,
+		"Automatic system reboot complete. Have a secure day.",
+		"Network reset:")
 
 /datum/AI_Module/large/destroy_rcd
 	module_name = "Destroy RCDs"
@@ -215,13 +184,10 @@
 	if(!canUseTopic() || malf_cooldown)
 		return
 
-	for(var/obj/item/RCD in rcd_list)
-		if(!istype(RCD, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
-			RCD.audible_message("<span class='danger'><b>[RCD] begins to vibrate and buzz loudly!</b></span>","<span class='danger'><b>[RCD] begins vibrating violently!</b></span>")
-			spawn(50) //5 seconds to get rid of it!
-				if(RCD) //Make sure it still exists (In case of chain-reaction)
-					explosion(RCD, 0, 0, 3, 1, flame_range = 1)
-					qdel(RCD)
+	for(var/I in rcd_list)
+		if(!istype(I, /obj/item/weapon/rcd/borg)) //Ensures that cyborg RCDs are spared.
+			var/obj/item/weapon/rcd/RCD = I
+			RCD.detonate_pulse()
 
 	src << "<span class='warning'>RCD detonation pulse emitted.</span>"
 	malf_cooldown = 1
@@ -425,7 +391,6 @@
 	if(success)
 		return 1
 	alert(src, alert_msg)
-	return
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -568,7 +533,6 @@
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /datum/module_picker/Topic(href, href_list)
 	..()
@@ -612,7 +576,6 @@
 			if(AM.mod_pick_name == href_list["showdesc"])
 				temp = AM.description
 	src.use(usr)
-	return
 
 /datum/AI_Module/large/eavesdrop
 	module_name = "Enhanced Surveillance"

@@ -25,7 +25,7 @@ MASS SPECTROMETER
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
 
 	if(on)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
 	var/image/I = image('icons/effects/effects.dmi', pipe, "blip", pipe.layer+1)
@@ -38,7 +38,7 @@ MASS SPECTROMETER
 
 /obj/item/device/t_scanner/process()
 	if(!on)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return null
 	scan()
 
@@ -80,15 +80,15 @@ MASS SPECTROMETER
 	materials = list(MAT_METAL=200)
 	origin_tech = "magnets=1;biotech=1"
 	var/mode = 1
-	var/scanchems = 0
+	var/scanmode = 0
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
-	if(!scanchems)
+	if(!scanmode)
 		user << "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>"
-		scanchems = 1
+		scanmode = 1
 	else
 		user << "<span class='notice'>You switch the health analyzer to check physical health.</span>"
-		scanchems = 0
+		scanmode = 0
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
@@ -104,9 +104,9 @@ MASS SPECTROMETER
 
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>")
 
-	if(!scanchems)
+	if(scanmode == 0)
 		healthscan(user, M, mode)
-	else
+	else if(scanmode == 1)
 		chemscan(user, M)
 
 	add_fingerprint(user)
@@ -149,7 +149,7 @@ MASS SPECTROMETER
 	if (M.reagents && M.reagents.get_reagent_amount("epinephrine"))
 		user << "\t<span class='info'>Bloodstream analysis located [M.reagents:get_reagent_amount("epinephrine")] units of rejuvenation chemicals.</span>"
 	if (M.getBrainLoss() >= 100 || !M.getorgan(/obj/item/organ/brain))
-		user << "\t<span class='alert'>Subject brain function is non-existant.</span>"
+		user << "\t<span class='alert'>Subject brain function is non-existent.</span>"
 	else if (M.getBrainLoss() >= 60)
 		user << "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental retardation.</span>"
 	else if (M.getBrainLoss() >= 10)

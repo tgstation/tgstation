@@ -23,7 +23,8 @@
 	sight = SEE_SELF
 	see_invisible = SEE_INVISIBLE_NOLIGHTING
 	see_in_dark = 8
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	response_help   = "passes through"
 	response_disarm = "swings through"
 	response_harm   = "punches through"
@@ -93,8 +94,8 @@
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
-		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
+		AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 
 
 //Life, Stat, Hud Updates, and Say
@@ -170,6 +171,8 @@
 /mob/living/simple_animal/revenant/narsie_act()
 	return //most humans will now be either bones or harvesters, but we're still un-alive.
 
+/mob/living/simple_animal/revenant/ratvar_act()
+	return //clocks get out reee
 
 //damage, gibbing, and dying
 /mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
@@ -180,9 +183,12 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		spawn(30)
-			inhibited = 0
-			update_action_buttons_icon()
+		addtimer(src, "reset_inhibit", 30, FALSE)
+
+/mob/living/simple_animal/revenant/proc/reset_inhibit()
+	if(src)
+		inhibited = 0
+		update_action_buttons_icon()
 
 /mob/living/simple_animal/revenant/adjustHealth(amount)
 	if(!revealed)
@@ -191,7 +197,7 @@
 	essence = max(0, essence-amount)
 	update_health_hud()
 	if(essence == 0)
-		src << "<span class='revendanger'>You feel your essence fraying!</span>"
+		death()
 
 /mob/living/simple_animal/revenant/dust()
 	death()
@@ -282,10 +288,10 @@
 		if(O.density && !O.CanPass(src, T, 5))
 			src << "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>"
 			return 0
-	if(src.inhibited)
+	if(inhibited)
 		src << "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>"
 		return 0
-	if(!src.change_essence_amount(essence_cost, 1))
+	if(!change_essence_amount(essence_cost, 1))
 		src << "<span class='revenwarning'>You lack the essence to use that ability.</span>"
 		return 0
 	return 1
@@ -322,14 +328,16 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	spawn(600) //1 minute
-		if(src && reforming)
+	addtimer(src, "try_reform", 600, FALSE)
+
+/obj/item/weapon/ectoplasm/revenant/proc/try_reform()
+	if(src)
+		if(reforming)
 			reforming = 0
-			return reform()
+			reform()
 		else
 			inert = 1
 			visible_message("<span class='warning'>[src] settles down and seems lifeless.</span>")
-			return
 
 /obj/item/weapon/ectoplasm/revenant/attack_self(mob/user)
 	if(!reforming || inert)
@@ -373,7 +381,7 @@
 			message_admins("No candidates were found for the new revenant. Oh well!")
 			inert = 1
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
-			return 0
+			return
 		var/client/C = pick(candidates)
 		key_of_revenant = C.key
 		if(!key_of_revenant)
@@ -381,7 +389,7 @@
 			message_admins("No ckey was found for the new revenant. Oh well!")
 			inert = 1
 			visible_message("<span class='revenwarning'>[src] settles down and seems lifeless.</span>")
-			return 0
+			return
 	var/datum/mind/player_mind = new /datum/mind(key_of_revenant)
 	R.essence_regen_cap = essence
 	R.essence = R.essence_regen_cap
@@ -396,7 +404,6 @@
 	qdel(src)
 	if(src) //Should never happen, but just in case
 		inert = 1
-	return 1
 
 
 //objectives

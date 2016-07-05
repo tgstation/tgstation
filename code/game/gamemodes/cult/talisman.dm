@@ -198,7 +198,7 @@
 	user.visible_message("<span class='warning'>Dust flows from [user]s hand.</span>", \
 						 "<span class='cultitalic'>You speak the words of the talisman, making nearby runes appear fake.</span>")
 	for(var/obj/effect/rune/R in orange(6,user))
-		R.desc = "A rune drawn in crayon."
+		R.desc = "A rune vandalizing the station."
 
 
 //Rite of Disruption: Weaker than rune
@@ -408,8 +408,9 @@
 	desc = "Shackles that bind the wrists with sinister magic."
 	trashtype = /obj/item/weapon/restraints/handcuffs/energy/used
 	origin_tech = "materials=2;magnets=5"
+	flags = DROPDEL
 
 /obj/item/weapon/restraints/handcuffs/energy/cult/used/dropped(mob/user)
 	user.visible_message("<span class='danger'>[user]'s shackles shatter in a discharge of dark magic!</span>", \
 							"<span class='userdanger'>Your [src] shatters in a discharge of dark magic!</span>")
-	qdel(src)
+	. = ..()

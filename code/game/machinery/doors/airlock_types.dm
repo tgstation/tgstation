@@ -327,6 +327,9 @@
 	..()
 	PoolOrNew(openingoverlaytype, src.loc)
 
+/obj/machinery/door/airlock/cult/canAIControl(mob/user)
+	return (iscultist(user) && !isAllPowerCut())
+
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
 		return 1
@@ -427,6 +430,9 @@
 	if(is_servant_of_ratvar(M))
 		return 1
 	return 0
+
+/obj/machinery/door/airlock/clockwork/hasPower()
+	return TRUE //yes we do have power
 
 /obj/machinery/door/airlock/clockwork/proc/attempt_construction(obj/item/I, mob/living/user)
 	if(!I || !user || !user.canUseTopic(src))

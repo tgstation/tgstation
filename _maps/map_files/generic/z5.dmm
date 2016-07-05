@@ -621,9 +621,7 @@
 /area/mine/abandoned)
 "bZ" = (
 /obj/structure/girder/displaced,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/abandoned)
 "ca" = (
 /obj/item/clothing/under/soviet,
@@ -651,9 +649,7 @@
 /area/mine/abandoned)
 "ce" = (
 /obj/structure/girder,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/abandoned)
 "cf" = (
 /obj/item/weapon/storage/toolbox/syndicate,
@@ -720,9 +716,7 @@
 /obj/structure/grille/broken,
 /obj/item/stack/rods,
 /obj/item/weapon/shard,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/abandoned)
 "co" = (
 /obj/structure/grille,
@@ -736,9 +730,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/abandoned)
 "cp" = (
 /turf/open/floor/plasteel/airless/asteroid/warning{
@@ -756,9 +748,7 @@
 	},
 /area/mine/unexplored)
 "cs" = (
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/unexplored)
 "ct" = (
 /turf/closed/wall/r_wall,
@@ -1006,9 +996,8 @@
 /turf/open/floor/plasteel/asteroid,
 /area/mine/laborcamp)
 "cY" = (
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating"
+/turf/open/floor/plating/astplate{
+	icon_plating = "asteroidplating"
 	},
 /area/mine/explored)
 "cZ" = (
@@ -1074,9 +1063,8 @@
 /area/mine/laborcamp)
 "dj" = (
 /obj/structure/plasticflaps/mining,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating"
+/turf/open/floor/plating/astplate{
+	icon_plating = "asteroidplating"
 	},
 /area/mine/explored)
 "dk" = (
@@ -1084,9 +1072,8 @@
 /area/mine/explored)
 "dl" = (
 /obj/structure/girder/reinforced,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating"
+/turf/open/floor/plating/astplate{
+	icon_plating = "asteroidplating"
 	},
 /area/mine/explored)
 "dm" = (
@@ -1410,9 +1397,7 @@
 	dir = 8;
 	id = "gulag"
 	},
-/turf/open/floor/plasteel{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/astplate,
 /area/mine/laborcamp)
 "ee" = (
 /obj/machinery/mineral/unloading_machine{
@@ -1420,9 +1405,7 @@
 	input_dir = 4;
 	output_dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/astplate,
 /area/mine/laborcamp)
 "ef" = (
 /obj/structure/ore_box,
@@ -1857,9 +1840,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/north_outpost)
 "fl" = (
 /turf/closed/wall/r_wall,
@@ -1894,9 +1875,8 @@
 /area/mine/laborcamp/security)
 "fr" = (
 /obj/structure/girder,
-/turf/open/floor/plating{
-	icon_plating = "asteroidplating";
-	icon_state = "asteroidplating"
+/turf/open/floor/plating/astplate{
+	icon_plating = "asteroidplating"
 	},
 /area/mine/laborcamp/security)
 "fs" = (
@@ -1968,7 +1948,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 8
 	},
 /area/mine/laborcamp/security)
@@ -1985,7 +1965,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 2
 	},
 /area/mine/laborcamp/security)
@@ -2009,7 +1989,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp)
 "fG" = (
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 4
 	},
 /area/mine/laborcamp/security)
@@ -2177,7 +2157,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/mine/laborcamp/security)
@@ -2322,9 +2302,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "gt" = (
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/north_outpost)
 "gu" = (
 /obj/structure/sign/securearea{
@@ -2516,35 +2494,27 @@
 /area/mine/explored)
 "gT" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gX" = (
 /turf/open/floor/plasteel/airless/asteroid/warning{
@@ -2556,18 +2526,14 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "gZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "ha" = (
 /obj/structure/ore_box,
@@ -2648,27 +2614,19 @@
 /turf/open/floor/bluegrid,
 /area/mine/maintenance)
 "hk" = (
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/west_outpost)
 "hl" = (
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "hm" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "hn" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "ho" = (
 /turf/closed/wall,
@@ -2706,9 +2664,7 @@
 "ht" = (
 /obj/item/clothing/under/rank/miner,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "hu" = (
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
@@ -2854,9 +2810,7 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/explored)
 "hR" = (
 /obj/structure/cable{
@@ -3154,9 +3108,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/unexplored)
 "iF" = (
 /obj/structure/table,
@@ -4265,9 +4217,7 @@
 	},
 /area/mine/production)
 "lp" = (
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/production)
 "lq" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -4354,7 +4304,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 8
 	},
 /area/mine/production)
@@ -4379,7 +4329,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 8
 	},
 /area/mine/production)
@@ -4395,7 +4345,7 @@
 	dir = 4;
 	id = "mining_external"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 4
 	},
 /area/mine/production)
@@ -4412,9 +4362,7 @@
 	dir = 4;
 	id = "mining_external"
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/production)
 "lH" = (
 /obj/machinery/light/small{
@@ -4542,9 +4490,7 @@
 	icon_state = "tube1";
 	dir = 8
 	},
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
+/turf/open/floor/plating/airless/astplate,
 /area/mine/production)
 "lY" = (
 /obj/structure/closet/crate/freezer,
@@ -4899,7 +4845,7 @@
 	input_dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 9
 	},
 /area/mine/production)
@@ -4961,7 +4907,7 @@
 	dir = 2;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 8
 	},
 /area/mine/production)
@@ -5067,7 +5013,7 @@
 	dir = 1;
 	output_dir = 2
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 9
 	},
 /area/mine/production)
@@ -5246,7 +5192,7 @@
 	},
 /obj/structure/plasticflaps,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/mine/production)
@@ -5255,7 +5201,7 @@
 	dir = 1;
 	input_dir = 4
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 9
 	},
 /area/mine/production)
@@ -5264,7 +5210,7 @@
 	dir = 8;
 	id = "mining_internal"
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/mine/production)
@@ -5277,7 +5223,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warnplate/corner{
+/turf/open/floor/plasteel/warning/corner{
 	dir = 4
 	},
 /area/mine/production)
@@ -5310,7 +5256,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/open/floor/plasteel/warnplate{
+/turf/open/floor/plasteel/warning{
 	dir = 1
 	},
 /area/mine/production)

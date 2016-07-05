@@ -1,6 +1,7 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -56,6 +57,14 @@
 		evidence of construction, hook it covertly into the \
 		telecommunications network and hope for the best."
 
+/datum/map_template/ruin/space/bigderelict1
+	id = "bigderelict1"
+	suffix = "bigderelict1.dmm"
+	name = "Derelict Tradepost"
+	description = "A once-bustling tradestation that handled imports and exports from \
+		nearby stations now lays eerily dormant. The last received message was a distress call from one of the \
+		on-board officers, but we had no success in making contact again."
+
 /datum/map_template/ruin/space/derelict1
 	id = "derelict1"
 	suffix = "derelict1.dmm"
@@ -96,6 +105,13 @@
 		treasure in this disused warehouse, launch it into space, and then \
 		ignore it. Forever."
 
+/datum/map_template/ruin/space/derelict6
+	id = "derelict6"
+	suffix = "derelict6.dmm"
+	name = "Derelict 6"
+	description = "The hush-hush of Nanotrasen when it comes to stations seemingly vanishing off the radar is an interesting topic, \
+		theories of nuclear destruction float about while Nanotrasen flat-out denies said stations ever existing."
+
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"
 	suffix = "emptyshell.dmm"
@@ -117,6 +133,14 @@
 	name = "Authorship"
 	description = "Just somewhere quiet, where I can focus on my work with \
 		no interruptions."
+
+/datum/map_template/ruin/space/caravanambush
+	id = "space/caravanambush"
+	suffix = "caravanambush.dmm"
+	name = "Syndicate Ambush"
+	description = "A caravan route used by passing cargo freights has been ambushed by a salvage \
+		team manned by the syndicate. The caravan managed to send off a distress message before being surrounded, their video feed \
+		cutting off as the sound of gunfire and a parrot was heard."
 
 /datum/map_template/ruin/space/mech_transport
 	id = "mech-transport"
@@ -143,6 +167,13 @@
 		No tabs. No violence in the inside areas. That's it. Welcome to the \
 		Rampant Golem and Yellow Hound. Can I take your order?"
 
+/datum/map_template/ruin/space/spacehotel
+	id = "spacehotel"
+	suffix = "spacehotel.dmm"
+	name = "The Twin-Nexus Hotel"
+	description = "A interstellar hotel, where the weary spaceman can rest their head \
+		 and relax, assured that the residental staff will not murder them in their sleep. Probably."
+
 /datum/map_template/ruin/space/turreted_outpost
 	id = "turreted-outpost"
 	suffix = "turretedoutpost.dmm"
@@ -150,8 +181,91 @@
 	description = "We'd ask them to stop blaring that ruskiepop music, but \
 		none of us are brave enough to go near those death turrets they have."
 
+/datum/map_template/ruin/space/oldshuttle
+	id = "spaceman-origins"
+	suffix = "shuttlerelic.dmm"
+	name = "Strange Ship"
+	description = "A ship seemingly lost, drifting along the stars. This thing looks \
+		like it belongs in ancient times."
+
 /datum/map_template/ruin/space/way_home
 	id = "way-home"
 	suffix = "way_home.dmm"
 	name = "Salvation"
 	description = "In the darkest times, we will find our way home."
+
+/datum/map_template/ruin/space/djstation
+	id = "djstation"
+	suffix = "djstation.dmm"
+	name = "DJ Station"
+	description = "Until very recently this pirate radio station was used \
+		to harangue local space stations over a variety of perceived \
+		\"ethics violations\". It seems like someone finally got sick of \
+		it, but the equipment still works."
+
+/datum/map_template/ruin/space/thederelict
+	id = "thederelict"
+	suffix = "thederelict.dmm"
+	name = "Kosmicheskaya Stantsiya 13"
+	description = "The true fate of Kosmicheskaya Stantsiya 13 is an open \
+		question to this day. Most corporations deny its existence, \
+		for fear of questioning on what became of its crew."
+
+/datum/map_template/ruin/space/abandonedteleporter
+	id = "abandonedteleporter"
+	suffix = "abandonedteleporter.dmm"
+	name = "Abandoned Teleporter"
+	description = "In space construction the teleporter is often the \
+		first system brought online. This lonely half built teleporter \
+		is a sign of a proposed structure that for one reason or another \
+		just never got built."
+
+/datum/map_template/ruin/space/crashedclownship
+	id = "crashedclownship"
+	suffix = "crashedclownship.dmm"
+	name = "Crashed Clown Ship"
+	description = "For centuries the promise of a new clown homeworld \
+		has been the siren call for countless clown vessels. Alas the \
+		clown's lust for shinanagans means that successful voyages \
+		are almost unheard of, with most vessels falling to hilarious \
+		consequences almost immediately."
+
+/datum/map_template/ruin/space/crashedship
+	id = "crashedship"
+	suffix = "crashedship.dmm"
+	name = "Crashed Ship"
+	description = "Among civilian vessels the most common cause of \
+		tragedy is lack of food. This ship was outfited with a \
+		multitude of food generating features, then summarily ran \
+		into an asteroid shortly after takeoff."
+
+/datum/map_template/ruin/space/listeningstation
+	id = "listeningstation"
+	suffix = "listeningstation.dmm"
+	name = "Syndicate Listening Station"
+	description = "Listening stations form the backbone of the \
+		syndicate's information gathering operations. Assignment to \
+		these stations is dreaded by most agents, as it entails long \
+		and lonely shifts listening to nearby stations chatter \
+		incessently about the most meaningless things."
+
+/datum/map_template/ruin/space/oldAIsat
+	id = "oldAIsat"
+	suffix = "oldAIsat.dmm"
+	name = "Abandoned Telecommunications Satellite"
+	description = "When the inspector told the employees that they \
+		were all fired, and that their jobs \"could be done by \
+		trained lizards anyway\", they reacted badly. This event and \
+		others is the reason why Central always sends an ERT squad with \
+		their competent inspectors. Incompetent inspectors are told \
+		they can \"do it alone\" because they're \"that pro\". \
+		Incompetent inspectors believe this."
+
+/datum/map_template/ruin/space/oldteleporter
+	id = "oldteleporter"
+	suffix = "oldteleporter.dmm"
+	name = "Detached Teleporter"
+	description = "The structure of this surprisingly intact \
+		teleporter suggests that it was once part of a larger structure, \
+		but what remains of said structure, if anything, can \
+		only be guessed at."

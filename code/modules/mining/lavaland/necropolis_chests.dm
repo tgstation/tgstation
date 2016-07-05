@@ -23,7 +23,7 @@
 		if(5)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
-			new /obj/item/weapon/wingpotion(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -411,37 +411,41 @@
 	vehicle_move_delay = 1
 
 //Potion of Flight
-
-/obj/item/weapon/wingpotion
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says 'erqo'hyy tvi'rf lbh jv'atf'"
+/obj/item/weapon/reagent_containers/glass/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
-	w_class = 2
-	var/used = FALSE
 
-/obj/item/weapon/wingpotion/attack_self(mob/living/M)
-	if(used)
-		M << "<span class='notice'>The flask is empty, what a shame.</span>"
+/obj/item/weapon/reagent_containers/glass/bottle/potion/flight
+	name = "strange elixir"
+	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+	list_reagents = list("flightpotion" = 5)
+
+/obj/item/weapon/reagent_containers/glass/bottle/potion/update_icon()
+	if(reagents.total_volume)
+		icon_state = "potionflask"
 	else
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			CHECK_DNA_AND_SPECIES(C)
-			if(C.wear_mask)
-				C << "<span class='notice'>It's pretty hard to drink something with a mask on!</span>"
-			else
-				if(ishumanbasic(C)) //implying xenoshumans are holy
-					C << "<span class='notice'>You down the elixir, noting nothing else but a terrible aftertaste.</span>"
-				else
-					C << "<span class='userdanger'>You down the elixir, a terrible pain travels down your back as wings burst out!</span>"
-					C.set_species(/datum/species/angel)
-					playsound(loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-					C.adjustBruteLoss(20)
-					C.emote("scream")
-				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-				src.used = TRUE
+		icon_state = "potionflask_empty"
 
+/datum/reagent/flightpotion
+	name = "Flight Potion"
+	id = "flightpotion"
+	description = "Strange mutagenic compound of unknown origins."
+	reagent_state = LIQUID
+	color = "#FFEBEB"
 
+/datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
+	if(iscarbon(M) && M.stat != DEAD)
+		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+			if(method == INGEST && show_message)
+				M << "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>"
+			return ..()
+
+		M << "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
+		M.set_species(/datum/species/angel)
+		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
+		M.adjustBruteLoss(20)
+		M.emote("scream")
+	..()
 
 
 
@@ -488,14 +492,14 @@
 /obj/item/weapon/melee/ghost_sword/New()
 	..()
 	spirits = list()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 
 /obj/item/weapon/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
 		G.invisibility = initial(G.invisibility)
 	spirits.Cut()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	. = ..()
 
@@ -692,6 +696,7 @@
 	if(!(isliving(choice)))
 		user << "[choice] is already dead!"
 		used = FALSE
+		return
 	else
 
 		var/mob/living/L = choice

@@ -20,11 +20,11 @@
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	if(!select)
-		overlays += "[initial(icon_state)]semi"
+		add_overlay("[initial(icon_state)]semi")
 	if(select == 1)
-		overlays += "[initial(icon_state)]burst"
+		add_overlay("[initial(icon_state)]burst")
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/A, mob/user, params)
@@ -176,14 +176,14 @@
 		..()
 /obj/item/weapon/gun/projectile/automatic/m90/update_icon()
 	..()
-	overlays.Cut()
+	cut_overlays()
 	switch(select)
 		if(0)
-			overlays += "[initial(icon_state)]semi"
+			add_overlay("[initial(icon_state)]semi")
 		if(1)
-			overlays += "[initial(icon_state)]burst"
+			add_overlay("[initial(icon_state)]burst")
 		if(2)
-			overlays += "[initial(icon_state)]gren"
+			add_overlay("[initial(icon_state)]gren")
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 	return
 /obj/item/weapon/gun/projectile/automatic/m90/burst_select()
@@ -263,7 +263,7 @@
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
 	if(magazine)
 		src.overlays = 0
-		overlays += "[magazine.icon_state]"
+		add_overlay("[magazine.icon_state]")
 		return
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()

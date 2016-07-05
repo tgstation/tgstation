@@ -16,18 +16,18 @@
 /obj/structure/closet/wardrobe/miner/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
-	new /obj/item/weapon/storage/backpack/industrial(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/under/rank/miner(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
-	new /obj/item/clothing/gloves/fingerless(src)
+	new /obj/item/weapon/storage/backpack/dufflebag(src)
+	new /obj/item/weapon/storage/backpack/explorer(src)
+	new /obj/item/weapon/storage/backpack/satchel_explorer(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/under/rank/miner/lavaland(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/gloves/color/black(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
@@ -36,16 +36,16 @@
 
 /obj/structure/closet/secure_closet/miner/New()
 	..()
+	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 	new /obj/item/weapon/storage/box/emptysandbags(src)
-	new /obj/item/device/radio/headset/headset_cargo(src)
-	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/device/radio/headset/headset_cargo/mining(src)
+	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
 
 
 /**********************Shuttle Computer**************************/
@@ -57,6 +57,14 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
+	var/global/list/dumb_rev_heads = list()
+
+/obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
+	if(user.z == ZLEVEL_STATION && user.mind && (user.mind in ticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
+		user << "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>"
+		dumb_rev_heads += user.mind
+		return
+	..()
 
 /*********************Pickaxe & Drills**************************/
 
@@ -358,9 +366,9 @@
 
 /obj/machinery/sleeper/survival_pod/update_icon()
 	if(state_open)
-		overlays.Cut()
+		cut_overlays()
 	else
-		overlays += "sleeper_cover"
+		add_overlay("sleeper_cover")
 
 //Computer
 /obj/item/device/gps/computer
@@ -393,7 +401,7 @@
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
 	desc = "A heated storage unit."
-	icon_state = "bedcomputer"
+	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
 	icon_on = "donkvendor"
 	icon_off = "donkvendor"
@@ -403,7 +411,7 @@
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
-	desc = "A heated storage unit. This ones seen better days."
+	desc = "A heated storage unit. This one's seen better days."
 
 /obj/machinery/smartfridge/survival_pod/empty/New()
 	return()
@@ -474,7 +482,7 @@
 //Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
-	desc = "A sign of relief for weary miners, and a warning for would be competitors to Nanotrasen's mining claims."
+	desc = "A sign of relief for weary miners, and a warning for would-be competitors to Nanotrasen's mining claims."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "ntpod"
 

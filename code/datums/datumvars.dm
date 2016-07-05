@@ -354,10 +354,10 @@ body
 		html += "<li>"
 
 	if (isnull(value))
-		html += "[name] = <span class='value'>null</span>"
+		html += "[html_encode(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[html_encode(value)]\"</span>"
+		html += "[html_encode(name)] = <span class='value'>\"[html_encode(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -365,9 +365,9 @@ body
 		var/rnd = rand(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
-		html += "[name] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		html += "[html_encode(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "[name] = /icon (<span class='value'>[value]</span>)"
+		html += "[html_encode(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 /*		else if (istype(value, /image))
@@ -382,19 +382,19 @@ body
 		#endif
 */
 	else if (isfile(value))
-		html += "[name] = <span class='value'>'[value]'</span>"
+		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
 
 	else if (istype(value, /client))
 		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
 //
 	else if (istype(value, /list))
 		var/list/L = value
-		html += "[name] = /list ([L.len])"
+		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
 			// not sure if this is completely right...
@@ -414,7 +414,7 @@ body
 				html += "</ul>"
 
 	else
-		html += "[name] = <span class='value'>[html_encode(value)]</span>"
+		html += "[html_encode(name)] = <span class='value'>[html_encode(value)]</span>"
 
 	html += "</li>"
 
@@ -902,30 +902,25 @@ body
 			if(!istype(H))
 				usr << "This can only be done to instances of type /mob/living/carbon/human"
 				return
+			if(!ishumanbasic(H))
+				usr << "This can only be done to the basic human species \
+					at the moment."
+				return
 
 			if(!H)
 				usr << "Mob doesn't exist anymore"
 				return
 
-			if(("tail_human" in H.dna.species.mutant_bodyparts) && ("ears" in H.dna.species.mutant_bodyparts))
-				if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
-					usr << "Put [H] on purrbation."
-					H << "Something is nya~t right."
-					log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
-					H.dna.features["tail_human"] = "Cat"
-					H.dna.features["ears"] = "Cat"
-				else
-					usr << "Removed [H] from purrbation."
-					H << "You are no longer a cat."
-					log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
-					message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
-					H.dna.features["tail_human"] = "None"
-					H.dna.features["ears"] = "None"
-				H.regenerate_icons()
-				return
+			var/success = purrbation_toggle(H)
+			if(success)
+				usr << "Put [H] on purrbation."
+				log_admin("[key_name(usr)] has put [key_name(H)] on purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has put [key_name(H)] on purrbation.</span>")
 
-			usr << "You can only put humans on purrbation."
+			else
+				usr << "Removed [H] from purrbation."
+				log_admin("[key_name(usr)] has removed [key_name(H)] from purrbation.")
+				message_admins("<span class='notice'>[key_name(usr)] has removed [key_name(H)] from purrbation.</span>")
 
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(0))

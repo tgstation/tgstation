@@ -152,9 +152,6 @@ var/list/airlock_overlays = list()
 			return
 	..()
 
-/obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
-	..()
-
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != 0)
 		return 1
@@ -335,30 +332,30 @@ var/list/airlock_overlays = list()
 			if(panel_open)
 				panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
 
-	//doesn't use overlays.Cut() for performance reasons
+	//doesn't use cut_overlays() for performance reasons
 	if(frame_overlay != old_frame_overlay)
 		overlays -= old_frame_overlay
-		overlays += frame_overlay
+		add_overlay(frame_overlay)
 		old_frame_overlay = frame_overlay
 	if(filling_overlay != old_filling_overlay)
 		overlays -= old_filling_overlay
-		overlays += filling_overlay
+		add_overlay(filling_overlay)
 		old_filling_overlay = filling_overlay
 	if(lights_overlay != old_lights_overlay)
 		overlays -= old_lights_overlay
-		overlays += lights_overlay
+		add_overlay(lights_overlay)
 		old_lights_overlay = lights_overlay
 	if(panel_overlay != old_panel_overlay)
 		overlays -= old_panel_overlay
-		overlays += panel_overlay
+		add_overlay(panel_overlay)
 		old_panel_overlay = panel_overlay
 	if(weld_overlay != old_weld_overlay)
 		overlays -= old_weld_overlay
-		overlays += weld_overlay
+		add_overlay(weld_overlay)
 		old_weld_overlay = weld_overlay
 	if(sparks_overlay != old_sparks_overlay)
 		overlays -= old_sparks_overlay
-		overlays += sparks_overlay
+		add_overlay(sparks_overlay)
 		old_sparks_overlay = sparks_overlay
 
 /proc/get_airlock_overlay(icon_state, icon_file)
@@ -939,8 +936,8 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-		log_game("Plasma wall ignited by [key_name(user)] in ([x],[y],[z])")
+		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]")
+		log_game("Plasma wall ignited by [key_name(user)] in [COORD(src)]")
 		ignite(C.is_hot())
 	else
 		return ..()
@@ -1159,3 +1156,23 @@ var/list/airlock_overlays = list()
 	if(do_after(user, time_to_open, target = src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			user << "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>"
+
+/obj/machinery/door/airlock/hostile_lockdown(mob/origin)
+	// Must be powered and have working AI wire.
+	if(canAIControl(src) && !stat)
+		locked = FALSE //For airlocks that were bolted open.
+		safe = FALSE //DOOR CRUSH
+		close()
+		bolt() //Bolt it!
+		secondsElectrified = -1  //Shock it!
+		if(origin)
+			shockedby += "\[[time_stamp()]\][origin](ckey:[origin.ckey])"
+
+
+/obj/machinery/door/airlock/disable_lockdown()
+	// Must be powered and have working AI wire.
+	if(canAIControl(src) && !stat)
+		unbolt()
+		secondsElectrified = 0
+		open()
+		safe = TRUE

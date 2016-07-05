@@ -630,7 +630,6 @@ var/global/list/g_fancy_list_of_types = null
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
-	return
 
 /client/proc/startSinglo()
 
@@ -735,3 +734,47 @@ var/global/list/g_fancy_list_of_types = null
 	if(!holder)
 		return
 	debug_variables(huds[i])
+
+/client/proc/jump_to_ruin()
+	set category = "Debug"
+	set name = "Jump to Ruin"
+	set desc = "Displays a list of all placed ruins to teleport to."
+	if(!holder)
+		return
+	var/list/names = list()
+	for(var/i in ruin_landmarks)
+		var/obj/effect/landmark/ruin/ruin_landmark = i
+		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
+
+		var/count = 1
+		var/name = template.name
+		var/original_name = name
+
+		while(name in names)
+			count++
+			name = "[original_name] ([count])"
+
+		names[name] = ruin_landmark
+
+	var/ruinname = input("Select ruin", "Jump to Ruin") as null|anything in names
+
+
+	var/obj/effect/landmark/ruin/landmark = names[ruinname]
+
+	if(istype(landmark))
+		var/datum/map_template/ruin/template = landmark.ruin_template
+		usr.forceMove(get_turf(landmark))
+		usr << "<span class='name'>[template.name]</span>"
+		usr << "<span class='italics'>[template.description]</span>"
+
+/client/proc/clear_dynamic_transit()
+	set category = "Debug"
+	set name = "Clear Dynamic Transit"
+	set desc = "Deallocates all transit space, restoring it to round start \
+		conditions."
+	if(!holder)
+		return
+	SSshuttle.clear_transit = TRUE
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
+	feedback_add_details("admin_verb","CDT") // If...
+	log_admin("[key_name(src)] cleared dynamic transit space.")

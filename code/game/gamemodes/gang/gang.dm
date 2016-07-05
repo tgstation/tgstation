@@ -219,7 +219,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 			if(!silent)
 				gangster_mind.current.visible_message("The frame beeps contentedly from the MMI before initalizing it.")
 			gangster_mind.current << "<FONT size=3 color=red><B>The frame's firmware detects and deletes your criminal behavior! You are no longer a gangster!</B></FONT>"
-			message_admins("[key_name_admin(gangster_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[gangster_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[gangster_mind.current]'>FLW</A>) has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
+			message_admins("[ADMIN_LOOKUPFLW(gangster_mind.current)] has been borged while being a member of the [gang.name] Gang. They are no longer a gangster.")
 		else
 			if(!silent)
 				gangster_mind.current.Paralyse(5)
@@ -252,7 +252,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gang_bosses += G.bosses
 	return gang_bosses
 
-/proc/get_domination_time(var/datum/gang/G)
+/proc/determine_domination_time(var/datum/gang/G)
 	return max(180,900 - (round((G.territory.len/start_state.num_territories)*100, 1) * 12))
 
 //////////////////////////////////////////////////////////////////////
@@ -263,10 +263,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	if(gangs.len)
 		if(!winner)
 			world << "<span class='redtext'>The station was [station_was_nuked ? "destroyed!" : "evacuated before a gang could claim it! The station wins!"]</span><br>"
-			feedback_set_details("round_end_result","win - gang domination complete")
+			feedback_set_details("round_end_result","loss - gangs failed takeover")
 		else
 			world << "<span class='redtext'>The [winner.name] Gang successfully performed a hostile takeover of the station!</span><br>"
-			feedback_set_details("round_end_result","loss - gangs failed takeover")
+			feedback_set_details("round_end_result","win - gang domination complete")
 
 	for(var/datum/gang/G in gangs)
 		var/text = "<b>The [G.name] Gang was [winner==G ? "<span class='greenannounce'>victorious</span>" : "<span class='boldannounce'>defeated</span>"] with [round((G.territory.len/start_state.num_territories)*100, 1)]% control of the station!</b>"
@@ -289,7 +289,7 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 
 /datum/gang_points/New()
 	next_point_time = world.time + next_point_interval
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /datum/gang_points/process(seconds)
 	var/list/winners = list() //stores the winners if there are any
@@ -298,9 +298,8 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		if(world.time > next_point_time)
 			G.income()
 
-		if(isnum(G.dom_timer))
-			G.dom_timer -= seconds/10
-			if(G.dom_timer < 0)
+		if(G.is_dominating)
+			if(G.domination_time_remaining() < 0)
 				winners += G
 
 	if(world.time > next_point_time)

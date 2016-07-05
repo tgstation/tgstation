@@ -1,3 +1,4 @@
+#define BUTTON_COOLDOWN 30
 
 /obj/machinery/syndicatebomb
 	icon = 'icons/obj/assemblies.dmi'
@@ -163,8 +164,8 @@
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
-				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] ([payload]) for detonation at [A.name] [ADMIN_JMP(bombturf)]</a>.")
+				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name][COORD(bombturf)]")
 				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
 
 ///Bomb Subtypes///
@@ -362,9 +363,8 @@
 			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
-		spawn(10)
-			detonate() // Detonate it again in one second, until it's out of juice.
-
+		// Detonate it again in one second, until it's out of juice.
+		addtimer(src, "detonate", 10)
 
 	// If it's not a time release bomb, do normal explosion
 
@@ -467,12 +467,12 @@
 	item_state = "electronic"
 	w_class = 1
 	origin_tech = "syndicate=3"
-	var/cooldown = 0
+	var/timer = 0
 	var/detonated =	0
 	var/existant =	0
 
 /obj/item/device/syndicatedetonator/attack_self(mob/user)
-	if(!cooldown)
+	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
 				B.timer = 0
@@ -484,11 +484,12 @@
 			var/turf/T = get_turf(src)
 			var/area/A = get_area(T)
 			detonated--
-			var/log_str = "[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>[A.name] (JMP)</a>."
+			var/log_str = "[ADMIN_LOOKUPFLW(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name] [ADMIN_JMP(T)]</a>."
 			bombers += log_str
 			message_admins(log_str)
-			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name]([T.x],[T.y],[T.z])")
+			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [A.name][COORD(T)]")
 		detonated =	0
 		existant =	0
-		cooldown = 1
-		spawn(30) cooldown = 0
+		timer = world.time + BUTTON_COOLDOWN
+
+#undef BUTTON_COOLDOWN

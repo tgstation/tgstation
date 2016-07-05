@@ -1,6 +1,6 @@
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "You sit in this. Either by will or force.\n<span class='notice'>Drag your sprite to sit in the chair. Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = 1
@@ -27,10 +27,6 @@
 /obj/structure/chair/attack_animal(mob/living/simple_animal/M)//No more buckling hostile mobs to chairs to render them immobile forever
 	if(M.environment_smash)
 		deconstruct()
-
-/obj/structure/chair/Move(atom/newloc, direct)
-	..()
-	handle_rotation()
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)
@@ -78,31 +74,24 @@
 	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
+	handle_layer()
 	if(has_buckled_mobs())
 		for(var/m in buckled_mobs)
 			var/mob/living/buckled_mob = m
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			if(!direction || !buckled_mob.Move(get_step(src, direction), direction))
-				buckled_mob.buckled = src
-				setDir(buckled_mob.dir)
-				return 0
-			buckled_mob.buckled = src //Restoring
-	handle_layer()
-	return 1
+			buckled_mob.setDir(direction)
 
 /obj/structure/chair/proc/handle_layer()
 	if(dir == NORTH)
-		layer = FLY_LAYER
+		layer = ABOVE_ALL_MOB_LAYER
 	else
 		layer = OBJ_LAYER
 
 /obj/structure/chair/proc/spin()
 	setDir(turn(dir, 90))
-	handle_layer()
-	if(has_buckled_mobs())
-		for(var/m in buckled_mobs)
-			var/mob/living/buckled_mob = m
-			buckled_mob.setDir(dir)
+
+/obj/structure/chair/setDir(newdir)
+	..()
+	handle_rotation(newdir)
 
 /obj/structure/chair/verb/rotate()
 	set name = "Rotate Chair"
@@ -168,7 +157,7 @@
 
 /obj/structure/chair/comfy/post_buckle_mob(mob/living/M)
 	if(has_buckled_mobs())
-		overlays += armrest
+		add_overlay(armrest)
 	else
 		overlays -= armrest
 

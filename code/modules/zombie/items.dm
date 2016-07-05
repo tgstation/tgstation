@@ -4,7 +4,7 @@
 		unconcious or dead humans, butchering all other living things to \
 		sustain the zombie, forcing open airlock doors and opening \
 		child-safe caps on bottles."
-	flags = NODROP|ABSTRACT
+	flags = NODROP|ABSTRACT|DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	var/icon_left = "bloodhand_left"
@@ -23,11 +23,6 @@
 			icon_state = icon_right
 		if(slot_r_hand)
 			icon_state = icon_left
-
-/obj/item/zombie_hand/dropped(mob/user)
-	. = ..()
-	// Zombie hands are force dropped upon species loss
-	qdel(src)
 
 /obj/item/zombie_hand/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()

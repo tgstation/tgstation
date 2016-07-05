@@ -16,7 +16,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
-	languages = ALL
+	languages_spoken = ALL
+	languages_understood = ALL
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
 	var/bootime = 0
@@ -56,7 +57,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
-
+	
+	if(global.cross_allowed)
+		verbs += /mob/dead/observer/proc/server_hop
+	
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -184,7 +188,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
 				facial_hair_image.alpha = 200
-				overlays += facial_hair_image
+				add_overlay(facial_hair_image)
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
@@ -193,7 +197,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				if(hair_color)
 					hair_image.color = "#" + hair_color
 				hair_image.alpha = 200
-				overlays += hair_image
+				add_overlay(hair_image)
 				ghostimage.overlays += hair_image
 
 /*
@@ -301,8 +305,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(ticker)
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+					if(G.is_dominating)
+						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -333,7 +337,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 				A.desc = message
 				var/old_layer = source.layer
 				source.layer = FLOAT_LAYER
-				A.overlays += source
+				A.add_overlay(source)
 				source.layer = old_layer
 	src << "<span class='ghostalert'><a href=?src=\ref[src];reenter=1>(Click to re-enter)</a></span>"
 	if(sound)
@@ -538,6 +542,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!target)
 		return 0
+
+	if(istype (target, /mob/living/simple_animal/hostile/megafauna))
+		src << "<span class='warning'>This creature is too powerful for you to possess!</span>"
+		return 0
+
 	if(can_reenter_corpse || (mind && mind.current))
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go foward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -548,6 +557,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	return 1
 
+/mob/dead/observer/proc/server_hop()
+	set category = "Ghost"
+	set name = "Server Hop!"
+	set desc= "Jump to the other server"
+	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
+		return 0
+	if (client && global.cross_allowed) 
+		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
+		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
+		client << link(global.cross_address)
+	else
+		src << "<span class='error'>There is no other server configured!</span>"
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -651,3 +672,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_literate()
 	return 1
+
+/mob/dead/observer/on_varedit(var_name)
+	. = ..()
+	switch(var_name)
+		if("icon")
+			ghostimage.icon = icon
+			ghostimage_default.icon = icon
+			ghostimage_simple.icon = icon
+		if("icon_state")
+			ghostimage.icon_state = icon_state
+			ghostimage_default.icon_state = icon_state
+			ghostimage_simple.icon_state = icon_state
+		if("fun_verbs")
+			if(fun_verbs)
+				verbs += /mob/dead/observer/verb/boo
+				verbs += /mob/dead/observer/verb/possess
+			else
+				verbs -= /mob/dead/observer/verb/boo
+				verbs -= /mob/dead/observer/verb/possess

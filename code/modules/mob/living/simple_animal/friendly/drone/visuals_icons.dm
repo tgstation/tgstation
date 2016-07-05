@@ -9,7 +9,7 @@
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
 	var/image/I = drone_overlays[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
@@ -142,9 +142,7 @@
 	switch(visualAppearence)
 		if(MAINTDRONE)
 			. = 0
-		if(REPAIRDRONE)
-			. = -6
-		if(SCOUTDRONE)
+		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

@@ -76,19 +76,19 @@
 	src.updateicon()
 
 /obj/item/robot_parts/robot_suit/proc/updateicon()
-	src.overlays.Cut()
+	src.cut_overlays()
 	if(src.l_arm)
-		src.overlays += "l_arm+o"
+		src.add_overlay("l_arm+o")
 	if(src.r_arm)
-		src.overlays += "r_arm+o"
+		src.add_overlay("r_arm+o")
 	if(src.chest)
-		src.overlays += "chest+o"
+		src.add_overlay("chest+o")
 	if(src.l_leg)
-		src.overlays += "l_leg+o"
+		src.add_overlay("l_leg+o")
 	if(src.r_leg)
-		src.overlays += "r_leg+o"
+		src.add_overlay("r_leg+o")
 	if(src.head)
-		src.overlays += "head+o"
+		src.add_overlay("head+o")
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
 	if(src.l_arm && src.r_arm)
@@ -247,10 +247,7 @@
 			BM.mind.transfer_to(O)
 
 			if(M.clockwork)
-				O.emagged = 1
-				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
-				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
-				ticker.mode.update_servant_icons_added(O.mind)
+				add_servant_of_ratvar(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")

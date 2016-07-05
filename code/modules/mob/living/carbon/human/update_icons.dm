@@ -63,9 +63,9 @@ There are several things that need to be remembered:
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.brutestate)
-			standing.overlays	+= "[dmgoverlaytype][BP.icon_state]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_[BP.brutestate]0"	//we're adding icon_states of the base image as overlays
 		if(BP.burnstate)
-			standing.overlays	+= "[dmgoverlaytype][BP.icon_state]_0[BP.burnstate]"
+			standing.overlays	+= "[dmgoverlaytype][BP.body_zone]_0[BP.burnstate]"
 
 	apply_overlay(DAMAGE_LAYER)
 

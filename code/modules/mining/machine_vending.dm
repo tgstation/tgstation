@@ -18,7 +18,8 @@
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
-		new /datum/data/mining_equipment("Hivelord Stabilizer",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
+		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
+		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core			 ,                     					400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
@@ -28,6 +29,8 @@
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
+		new /datum/data/mining_equipment("Medivac Balloon",     /obj/item/weapon/extraction_pack/medivac,                               800),
+		new /datum/data/mining_equipment("Fulton Pack",         /obj/item/weapon/extraction_pack,                                    	1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								2000),
@@ -155,20 +158,29 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in list("Survival Capsule and Explorer's Webbing", "Resonator", "Mining Drone", "Advanced Scanner")
+	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit")
+
+	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/weapon/storage/belt/mining(src.loc)
-			new /obj/item/weapon/survivalcapsule(src.loc)
-		if("Resonator")
+			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
+		if("Resonator and Advanced Scanner")
 			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
 			new /obj/item/weapon/weldingtool/hugetank(src.loc)
-		if("Advanced Scanner")
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+		if("Medivac Kit")
+			new /obj/item/stack/sheet/metal/five(loc)
+			new /obj/item/fulton_core(loc)
+			new /obj/item/weapon/extraction_pack/medivac(loc)
+			new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(loc)
+		if("Extraction Kit")
+			new /obj/item/stack/sheet/metal/five(loc)
+			new /obj/item/weapon/extraction_pack(loc)
+			new /obj/item/fulton_core(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)

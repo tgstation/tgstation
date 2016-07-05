@@ -178,6 +178,7 @@
 /obj/machinery/light/small,
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -193,6 +194,9 @@
 	})
 "aG" = (
 /obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -201,6 +205,9 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /obj/item/weapon/reagent_containers/glass/rag,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -231,6 +238,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -309,6 +317,7 @@
 	})
 "aX" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -396,6 +405,7 @@
 /obj/machinery/door/airlock{
 	name = "Toilet"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -412,7 +422,7 @@
 	name = "Space Bar"
 	})
 "bk" = (
-/obj/item/device/radio/beacon,
+/obj/machinery/bluespace_beacon,
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -450,6 +460,7 @@
 	})
 "bq" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
 /area/ruin/powered{
 	name = "Space Bar"
@@ -467,6 +478,350 @@
 /area/ruin/powered{
 	name = "Space Bar"
 	})
+"bt" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
+"bu" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/wood,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"by" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"bz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bA" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"bD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bF" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bG" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bH" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bJ" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bL" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bM" = (
+/obj/machinery/computer/teleporter,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bN" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bR" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bT" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bU" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bW" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bX" = (
+/obj/structure/urinal{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"bZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"ca" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"cb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered{
+	name = "Space Bar"
+	})
+"cc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/mineral,
+/area/ruin/powered)
+"ce" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cf" = (
+/obj/machinery/button/door{
+	id = "spacebardock";
+	name = "Podbay Airlock";
+	pixel_y = -24
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cg" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"ch" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/obj/machinery/meter,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"ci" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"ck" = (
+/obj/machinery/atmospherics/components/binary/valve/open,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cl" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cm" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/meter,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"cn" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered)
+"co" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"cp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
+"cq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/mineral,
+/area/space)
+"cr" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -650,19 +1005,19 @@ aa
 aa
 aa
 aa
-ac
+bt
 ab
 ab
 ab
-ac
+bt
 aa
 aa
-ac
+bt
 ab
 ab
 ab
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -690,23 +1045,23 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
 aa
 aa
 aa
@@ -732,27 +1087,27 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 aM
 al
 aM
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 aM
 aM
 aM
 aM
-ac
-ac
+bt
+bt
 al
 aO
 al
-ac
-ac
+bt
+bt
 ab
 ab
 aa
@@ -773,14 +1128,14 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
 aM
-ac
+bt
 aM
 aM
 af
@@ -793,7 +1148,7 @@ aM
 al
 aP
 al
-ac
+bt
 ab
 ab
 ab
@@ -814,9 +1169,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -855,9 +1210,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -896,9 +1251,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -937,9 +1292,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 ai
@@ -961,7 +1316,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -979,8 +1334,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 af
 af
@@ -1003,7 +1358,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1020,9 +1375,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1045,7 +1400,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1062,9 +1417,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1087,7 +1442,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1103,9 +1458,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 ad
 af
 af
@@ -1114,8 +1469,8 @@ af
 af
 af
 af
-af
-af
+bx
+bC
 af
 af
 af
@@ -1129,7 +1484,7 @@ az
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1145,9 +1500,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 ad
 af
 af
@@ -1156,8 +1511,8 @@ ah
 ah
 ah
 af
-af
-af
+by
+bD
 bo
 bs
 bo
@@ -1171,7 +1526,7 @@ aA
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1187,9 +1542,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 ae
 af
 af
@@ -1198,8 +1553,8 @@ ah
 ah
 ah
 ah
-af
-af
+by
+bD
 br
 bj
 br
@@ -1212,7 +1567,7 @@ am
 aB
 af
 af
-af
+cf
 al
 al
 al
@@ -1229,9 +1584,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 ad
 af
 ah
@@ -1240,8 +1595,8 @@ ah
 ah
 ah
 ah
-af
-af
+by
+bD
 aN
 bj
 br
@@ -1258,10 +1613,10 @@ af
 af
 af
 al
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1271,19 +1626,19 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 ad
 af
+af
 ah
-ah
 bo
 bo
 bo
 bo
-bo
-bo
+bz
+bE
 bo
 bs
 bo
@@ -1300,10 +1655,10 @@ ah
 af
 af
 al
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1314,25 +1669,25 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 ah
 bo
 ao
-ar
+bu
 aC
 aG
-aJ
+bF
 aK
 aK
 aT
 aU
 aR
 aZ
-aK
+bW
 aK
 br
 af
@@ -1342,9 +1697,9 @@ ah
 ah
 af
 al
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1356,9 +1711,9 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1367,26 +1722,26 @@ ap
 ar
 ar
 aG
-aJ
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
+bG
+bI
+bN
+bI
+bI
+bN
+bI
+bN
+bI
+bI
 br
-af
-ah
-ah
-af
-af
+cc
+cc
+cc
+cc
+cg
 aM
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1399,9 +1754,9 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 bo
@@ -1411,23 +1766,23 @@ ar
 aH
 aJ
 aK
-aK
+bO
 aQ
 aK
+bU
 aK
-aK
-aK
+bO
 aK
 aK
 aK
 br
+ce
+cg
 af
-af
-af
-af
+bD
 aM
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1441,9 +1796,9 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 bo
@@ -1453,23 +1808,23 @@ ar
 aG
 aJ
 aK
-aK
+bO
 aR
 aK
 aK
 aK
-aK
+bO
 aU
 be
 aZ
 bo
-af
-af
-af
-af
+ce
+ch
+ck
+cm
 aM
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1482,9 +1837,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1492,26 +1847,26 @@ bo
 bo
 ax
 aD
-bo
+bz
 aK
 aK
-aK
+bO
 aS
 aK
 aV
 bo
+bE
 bo
 bo
 bo
 bo
-bo
+ce
+ci
 af
-af
-af
-af
+cn
 aM
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1524,9 +1879,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1534,27 +1889,27 @@ bo
 as
 ar
 bp
-bo
-aK
-aK
-aK
+bz
+bH
+bK
+bO
 aK
 bk
 aW
 bo
-bb
+bX
 bb
 bo
 bg
 bo
 ah
 af
-af
+bx
 af
 aM
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1566,37 +1921,37 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
 bo
 at
-ar
+bv
 aE
-bo
+bA
 aL
-aK
-aQ
-aK
-aK
+bL
+bP
+bS
+bS
 aX
-bo
-bc
-bc
-bo
+bV
+bY
+ca
+bV
 bh
-bo
-ah
-af
-af
-af
-aM
-ac
-ab
-ac
+bV
+cj
+cj
+cl
+cj
+co
+cp
+cq
+cr
 aa
 aa
 aa
@@ -1608,26 +1963,26 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
 bo
 au
-ar
+bw
 bq
-bo
-aK
-aK
-aR
+bB
+bI
+bI
+bQ
 aK
 aK
 aY
 bo
-bc
-bc
+bZ
+cb
 bf
 bc
 bo
@@ -1636,9 +1991,9 @@ ah
 af
 af
 aM
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1650,9 +2005,9 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aM
 af
 af
@@ -1663,7 +2018,7 @@ ar
 aI
 aK
 aK
-aS
+aK
 aK
 aK
 aK
@@ -1678,8 +2033,8 @@ ah
 af
 af
 aM
-ac
-ac
+bt
+bt
 ab
 aa
 aa
@@ -1693,8 +2048,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 af
 af
@@ -1703,10 +2058,10 @@ av
 ay
 aF
 bo
-aK
-aK
-aK
-aK
+bJ
+bM
+bR
+bT
 aK
 aK
 ba
@@ -1720,8 +2075,8 @@ ah
 ah
 af
 aM
-ac
-ac
+bt
+bt
 ab
 aa
 aa
@@ -1735,8 +2090,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 ag
 af
 af
@@ -1762,8 +2117,8 @@ ah
 ah
 af
 aM
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1778,8 +2133,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 af
 af
@@ -1801,11 +2156,11 @@ ah
 ah
 ah
 ah
-ah
+af
 af
 al
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1820,8 +2175,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 af
 af
@@ -1841,13 +2196,13 @@ ah
 ah
 ah
 ah
-ah
-ah
+af
+af
 af
 aM
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1863,8 +2218,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+bt
+bt
 aM
 aM
 aM
@@ -1887,8 +2242,8 @@ af
 aM
 aM
 al
-ac
-ac
+bt
+bt
 aa
 aa
 aa
@@ -1905,20 +2260,20 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
 aM
 aM
 al
 aM
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
 aM
 af
 af
@@ -1926,11 +2281,11 @@ af
 af
 aM
 aM
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
 aa
 aa
 aa
@@ -1948,30 +2303,30 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+ab
+bt
+bt
+bt
+bt
+aM
+aM
+aM
+aM
+bt
+bt
+bt
 ac
 ab
-ac
-ac
-ac
-ac
-aM
-aM
-aM
-aM
-ac
-ac
-ac
-ac
-ab
-ac
+bt
 aa
 aa
 aa
@@ -1993,24 +2348,24 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 ab
 ab
 ab
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
+bt
 aa
 aa
 aa
@@ -2045,13 +2400,13 @@ ab
 aa
 aa
 aa
-ac
+bt
 ab
 ab
 ab
-ac
-ac
-ac
+bt
+bt
+bt
 aa
 aa
 aa

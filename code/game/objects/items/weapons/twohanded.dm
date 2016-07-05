@@ -405,6 +405,12 @@
 	if(wielded)
 		. = ..()
 
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer
+	name = "OOOH BABY"
+	desc = "<span class='warning'>VRRRRRRR!!!</span>"
+	armour_penetration = 100
+
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide
 	icon_state = "spearglass0"
@@ -464,7 +470,7 @@
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
 
-/obj/item/weapon/twohanded/pitchfork/update_icon()  //Currently only here to fuck with the on-mob icons.
+/obj/item/weapon/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
 
 /obj/item/weapon/twohanded/pitchfork/suicide_act(mob/user)
@@ -474,7 +480,7 @@
 /obj/item/weapon/twohanded/pitchfork/demonic/pickup(mob/user)
 	if(istype(user, /mob/living))
 		var/mob/living/U = user
-		if(!U.mind.devilinfo)
+		if(U.mind && (!U.mind.devilinfo || (U.mind.soulOwner == U.mind))) //Burn hands unless they are a devil or have sold their soul
 			U.visible_message("<span class='warning'>As [U] picks [src] up, [U]'s arms briefly catch fire.</span>", \
 				"<span class='warning'>\"As you pick up the [src] your arms ignite, reminding you of all your past sins.\"</span>")
 			if(ishuman(U))
@@ -484,7 +490,7 @@
 				U.adjustFireLoss(rand(force/2,force))
 
 /obj/item/weapon/twohanded/pitchfork/demonic/attack(mob/target, mob/living/carbon/human/user)
-	if(!user.mind.devilinfo)
+	if(user.mind && (!user.mind.devilinfo || (user.mind.soulOwner == user.mind)))
 		user << "<span class ='warning'>The [src] burns in your hands.</span>"
 		user.apply_damage(rand(force/2, force), BURN, pick("l_arm", "r_arm"))
 	..()

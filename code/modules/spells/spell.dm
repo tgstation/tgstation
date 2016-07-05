@@ -1,14 +1,44 @@
 #define TARGET_CLOSEST 1
 #define TARGET_RANDOM 2
 
+
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
+	var/active = FALSE //Used by toggle based abilities.
 
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/user, params, atom/A)
-	return
+/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
+	if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been disabled."
+		user.ranged_ability.remove_ranged_ability(user)
+		return TRUE //TRUE for failed, FALSE for passed.
+	user.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	user.face_atom(A)
+	return FALSE
 
+/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, var/msg)
+	if(!user || !user.client)
+		return
+	if(user.ranged_ability && user.ranged_ability != src)
+		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."
+		user.ranged_ability.remove_ranged_ability(user)
+	user.ranged_ability = src
+	user.client.click_intercept = user.ranged_ability
+	active = TRUE
+	if(msg)
+		user << msg
+	update_icon()
+
+/obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
+	if(!user || !user.client ||user.ranged_ability != src) //To avoid removing the wrong ability
+		return
+	user.ranged_ability = null
+	user.client.click_intercept = null
+	active = FALSE
+	if(msg)
+		user << msg
+	update_icon()
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -61,10 +91,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/critfailchance = 0
 	var/centcom_cancast = 1 //Whether or not the spell should be allowed on z2
 
-	var/datum/action/spell_action/action = null
 	var/action_icon = 'icons/mob/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
+	var/datum/action/spell_action/action
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
@@ -220,8 +250,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			spell.icon_state = overlay_icon_state
 			spell.anchored = 1
 			spell.density = 0
-			spawn(overlay_lifespan)
-				qdel(spell)
+			QDEL_IN(spell, overlay_lifespan)
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets)
 	for(var/atom/target in targets)
@@ -266,8 +295,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 
-	return
-
 /obj/effect/proc_holder/spell/proc/adjust_var(mob/living/target = usr, type, amount) //handles the adjustment of the var when the spell is used. has some hardcoded types
 	switch(type)
 		if("bruteloss")
@@ -286,7 +313,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			target.AdjustParalysis(amount)
 		else
 			target.vars[type] += amount //I bear no responsibility for the runtimes that'll happen if you try to adjust non-numeric or even non-existant vars
-	return
 
 /obj/effect/proc_holder/spell/targeted //can mean aoe for mobs (limited/unlimited number) or one target mob
 	var/max_targets = 1 //leave 0 for unlimited targets in range, 1 for one selectable target in range, more for limited number of casts (can all target one guy, depends on target_ignore_prev) in range
@@ -360,8 +386,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	perform(targets,user=user)
 
-	return
-
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
@@ -374,8 +398,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		return
 
 	perform(targets,user=user)
-
-	return
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))

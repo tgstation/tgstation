@@ -1043,30 +1043,97 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	if(confirm != "Yes")
 		return
 
-	var/keep_name = alert(src, "Do you want mobs to retain their names?", "Keep The Names?", "Yes", "No")
-
 	var/list/mobs = shuffle(living_mob_list.Copy()) // might change while iterating
 	var/who_did_it = key_name_admin(usr)
-	spawn(5) // let other things clear this tick
-		for(var/mob/living/M in mobs)
-			CHECK_TICK
-
-			if(!M || !M.name || !M.real_name)
-				continue
-
-			M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-			playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
-			var/name = M.name
-			var/real_name = M.real_name
-
-			var/mob/living/new_mob = wabbajack(M)
-			if(keep_name == "Yes" && new_mob)
-				new_mob.name = name
-				new_mob.real_name = real_name
-
-
-		message_admins("Mass polymorph started by [who_did_it] is complete.")
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
 	feedback_add_details("admin_verb","MASSWABBAJACK")
+
+	for(var/mob/living/M in mobs)
+		CHECK_TICK
+
+		if(!M)
+			continue
+
+		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
+		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+
+		wabbajack(M)
+
+	message_admins("Mass polymorph started by [who_did_it] is complete.")
+
+
+/client/proc/show_tip()
+	set category = "Admin"
+	set name = "Show Tip"
+	set desc = "Sends a tip (that you specify) to all players. After all \
+		you're the experienced player here."
+
+	if(!holder)
+		return
+
+	var/input = input(usr, "Please specify your tip that you want to send to the players.", "Tip", "") as message|null
+	if(!input)
+		return
+
+	if(!ticker)
+		return
+
+	ticker.selected_tip = input
+
+	// If we've already tipped, then send it straight away.
+	if(ticker.tipped)
+		ticker.send_tip_of_the_round()
+
+
+	message_admins("[key_name_admin(usr)] sent a tip of the round.")
+	log_admin("[key_name(usr)] sent \"[input]\" as the Tip of the Round.")
+	feedback_add_details("admin_verb","TIP")
+
+#define ON_PURRBATION(H) (!(H.dna.features["tail_human"] == "None" && H.dna.features["ears"] == "None"))
+
+/proc/mass_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_apply(M)
+		CHECK_TICK
+
+/proc/mass_remove_purrbation()
+	for(var/M in mob_list)
+		if(ishumanbasic(M))
+			purrbation_remove(M)
+		CHECK_TICK
+
+/proc/purrbation_toggle(mob/living/carbon/human/H)
+	if(!ishumanbasic(H))
+		return
+	if(!ON_PURRBATION(H))
+		purrbation_apply(H)
+		. = TRUE
+	else
+		purrbation_remove(H)
+		. = FALSE
+
+/proc/purrbation_apply(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(ON_PURRBATION(H))
+		return
+	H << "Something is nya~t right."
+	H.dna.features["tail_human"] = "Cat"
+	H.dna.features["ears"] = "Cat"
+	H.regenerate_icons()
+	playsound(get_turf(H), 'sound/effects/meow1.ogg', 50, 1, -1)
+
+/proc/purrbation_remove(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(!ON_PURRBATION(H))
+		return
+	H << "You are no longer a cat."
+	H.dna.features["tail_human"] = "None"
+	H.dna.features["ears"] = "None"
+	H.regenerate_icons()
+
+#undef ON_PURRBATION

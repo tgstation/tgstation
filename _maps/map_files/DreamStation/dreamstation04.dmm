@@ -2263,7 +2263,7 @@
 	id = "syndicate";
 	name = "syndicate infiltrator";
 	roundstart_move = "syndicate_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 18
 	},
 /obj/docking_port/stationary{
@@ -3495,7 +3495,7 @@
 	launch_status = 0;
 	name = "NT Medical Ship";
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 35
 	},
 /obj/docking_port/stationary{
@@ -3735,7 +3735,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	travelDir = -90;
+	port_angle = -90;
 	width = 15
 	},
 /turf/open/floor/plating,
@@ -4547,7 +4547,7 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 5
 	},
 /obj/docking_port/stationary{
@@ -48832,7 +48832,7 @@
 /area/crew_quarters/captain)
 "bSw" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/photo_album,
+/obj/machinery/recharger,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bSx" = (
@@ -48854,6 +48854,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 31
 	},
+/obj/item/weapon/storage/photo_album,
 /obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
@@ -63461,7 +63462,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	travelDir = 90;
+	port_angle = 90;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -64658,7 +64659,7 @@
 	},
 /area/crew_quarters/hor)
 "cxY" = (
-/obj/structure/flora/kirbyplants/dead,
+/obj/item/weapon/twohanded/required/kirbyplants/dead,
 /obj/structure/cable/pink{
 	tag = "icon-4-8";
 	icon_state = "4-8"
@@ -92487,7 +92488,7 @@ aOb
 aPS
 aRw
 aBD
-aUl
+aUj
 aVZ
 aXU
 aZx
@@ -92744,7 +92745,7 @@ aOc
 aPT
 aRx
 aLP
-aUl
+aUj
 aWa
 aXV
 aZy
@@ -97872,7 +97873,7 @@ axJ
 azh
 aAw
 aBV
-aDu
+aDr
 aEK
 atl
 aHv
@@ -115637,9 +115638,9 @@ bmZ
 bmZ
 bmZ
 bBd
-bDi
-bFB
-bHJ
+bDa
+bFt
+bHB
 bJG
 bLi
 bMJ
@@ -117693,8 +117694,8 @@ bvw
 bxA
 bzK
 bBh
-bDi
-bFB
+bDa
+bFt
 bHN
 bJG
 bLq

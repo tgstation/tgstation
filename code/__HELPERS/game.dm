@@ -13,13 +13,17 @@
 	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
 	return A
 
+/proc/get_area_name(atom/X)
+	var/area/Y = get_area(X)
+	return Y.name
+
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
 	if(A && A.master)
 		A = A.master
 	return A
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A

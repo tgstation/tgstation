@@ -18,6 +18,8 @@
 	//Value used to increment ex_act() if reactionary_explosions is on
 	var/explosion_block = 0
 
+	//overlays that should remain on top and not normally be removed, like c4.
+	var/list/priority_overlays
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -64,7 +66,6 @@
 		hulk.changeNext_move(CLICK_CD_MELEE)
 		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
-	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -139,7 +140,6 @@
 			return 1
 	else if(src in container)
 		return 1
-	return
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -302,7 +302,7 @@ var/list/blood_splatter_icons = list()
 			blood_splatter_icon.Blend(icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			blood_splatter_icon = fcopy_rsc(blood_splatter_icon)
 			blood_splatter_icons[index] = blood_splatter_icon
-		overlays += blood_splatter_icon
+		add_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/add_blood(list/blood_dna)
 	. = ..()

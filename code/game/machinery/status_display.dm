@@ -20,10 +20,11 @@
 	use_power = 1
 	idle_power_usage = 10
 	var/mode = 1	// 0 = Blank
-					// 1 = Shuttle timer
+					// 1 = Emergency Shuttle timer
 					// 2 = Arbitrary message(s)
 					// 3 = alert picture
 					// 4 = Supply shuttle timer
+					// 5 = Generic shuttle timer
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -33,6 +34,7 @@
 
 	var/frequency = 1435		// radio frequency
 	var/supply_display = 0		// true if a supply shuttle display
+	var/shuttle_id				// Id used for "generic shuttle timer" mode
 
 	var/friendc = 0      // track if Friend Computer mode
 
@@ -82,15 +84,7 @@
 		if(0)				//blank
 			remove_display()
 		if(1)				//emergency shuttle timer
-			if(SSshuttle.emergency && SSshuttle.emergency.timer)
-				var/line1 = "-[SSshuttle.emergency.getModeStr()]-"
-				var/line2 = SSshuttle.emergency.getTimerStr()
-
-				if(length(line2) > CHARS_PER_LINE)
-					line2 = "Error!"
-				update_display(line1, line2)
-			else
-				remove_display()
+			display_shuttle_status()
 		if(2)				//custom messages
 			var/line1
 			var/line2
@@ -127,11 +121,13 @@
 					line2 = "Error"
 
 			update_display(line1, line2)
+		if(5)
+			display_shuttle_status()
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
 	switch(mode)
-		if(1,2,4)
+		if(1,2,4,5)
 			user << "The display says:<br>\t<xmp>[message1]</xmp><br>\t<xmp>[message2]</xmp>"
 
 
@@ -153,7 +149,7 @@
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
 	remove_display()
-	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
@@ -162,9 +158,29 @@
 
 /obj/machinery/status_display/proc/remove_display()
 	if(overlays.len)
-		overlays.Cut()
+		cut_overlays()
 	if(maptext)
 		maptext = ""
+
+/obj/machinery/status_display/proc/display_shuttle_status()
+	var/obj/docking_port/mobile/shuttle
+
+	if(mode == 1)
+		shuttle = SSshuttle.emergency
+	else
+		shuttle = SSshuttle.getShuttle(shuttle_id)
+
+	if(!shuttle)
+		update_display("shutl?","")
+	else if(shuttle.timer)
+		var/line1 = "-[shuttle.getModeStr()]-"
+		var/line2 = shuttle.getTimerStr()
+
+		if(length(line2) > CHARS_PER_LINE)
+			line2 = "Error!"
+		update_display(line1, line2)
+	else
+		remove_display()
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
@@ -209,7 +225,7 @@
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	update()
@@ -224,7 +240,7 @@
 /obj/machinery/ai_status_display/proc/update()
 
 	if(mode==0) //Blank
-		overlays.Cut()
+		cut_overlays()
 		return
 
 	if(mode==1)	// AI emoticon
@@ -270,8 +286,8 @@
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
 	if(overlays.len)
-		overlays.Cut()
-	overlays += image('icons/obj/status_display.dmi', icon_state=picture_state)
+		cut_overlays()
+	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
 
 #undef CHARS_PER_LINE
 #undef FOND_SIZE

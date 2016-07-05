@@ -3,8 +3,20 @@
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
 
+/turf/open/space/transit/south
+	dir = SOUTH
+
+/turf/open/space/transit/north
+	dir = NORTH
+
 /turf/open/space/transit/horizontal
 	dir = WEST
+
+/turf/open/space/transit/west
+	dir = WEST
+
+/turf/open/space/transit/east
+	dir = EAST
 
 /turf/open/space/transit/Entered(atom/movable/AM, atom/OldLoc)
 	if(!AM)

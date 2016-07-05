@@ -39,24 +39,22 @@
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
 	M.z_original = 1
-	spawn(0)
-		walk_towards(M, M.dest, 1)
-	return
+	addtimer(GLOBAL_PROC, "walk_towards", 0, FALSE, M, M.dest, 1)
 
 /proc/spaceDebrisStartLoc(startSide, Z)
 	var/starty
 	var/startx
 	switch(startSide)
-		if(1) //NORTH
+		if(NORTH)
 			starty = world.maxy-(TRANSITIONEDGE+1)
 			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-		if(2) //EAST
+		if(EAST)
 			starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
 			startx = world.maxx-(TRANSITIONEDGE+1)
-		if(3) //SOUTH
+		if(SOUTH)
 			starty = (TRANSITIONEDGE+1)
 			startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
-		if(4) //WEST
+		if(WEST)
 			starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 			startx = (TRANSITIONEDGE+1)
 	var/turf/T = locate(startx, starty, Z)
@@ -66,16 +64,16 @@
 	var/endy
 	var/endx
 	switch(startSide)
-		if(1) //NORTH
+		if(NORTH)
 			endy = TRANSITIONEDGE
 			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-		if(2) //EAST
+		if(EAST)
 			endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 			endx = TRANSITIONEDGE
-		if(3) //SOUTH
+		if(SOUTH)
 			endy = world.maxy-TRANSITIONEDGE
 			endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-		if(4) //WEST
+		if(WEST)
 			endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
 			endx = world.maxx-TRANSITIONEDGE
 	var/turf/T = locate(endx, endy, Z)
@@ -116,8 +114,6 @@
 
 		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
 			get_hit()
-
-	return .
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc
@@ -163,7 +159,6 @@
 	if(istype(W, /obj/item/weapon/pickaxe))
 		make_debris()
 		qdel(src)
-		return
 	else
 		return ..()
 
@@ -252,13 +247,19 @@
 	hits = 2
 	heavy = 1
 	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human, /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
 	var/meteorgibs = /obj/effect/gibspawner/generic
 
 /obj/effect/meteor/meaty/New()
-	for(var/obj/item/organ/tongue/T in meteordrop)
-		meteordrop -= T
-		meteordrop += pick(typesof(T))
+	for(var/path in meteordrop)
+		if(path == /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant)
+			meteordrop -= path
+			meteordrop += pick(subtypesof(path))
+
+	for(var/path in meteordrop)
+		if(path == /obj/item/organ/tongue)
+			meteordrop -= path
+			meteordrop += pick(typesof(path))
 	..()
 
 /obj/effect/meteor/meaty/make_debris()

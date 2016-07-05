@@ -171,7 +171,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
-	if(N)
+	if(N && !ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
 	return 0
 
@@ -492,11 +492,12 @@ var/list/teleport_runes = list()
 			return
 		//BEGIN THE SUMMONING
 		used = 1
-		color = rgb(255, 0, 0)
 		..()
 		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
 		var/turf/T = get_turf(src)
 		sleep(40)
+		if(src)
+			color = rgb(255, 0, 0)
 		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 		cult_mode.eldergod = 0
 	else

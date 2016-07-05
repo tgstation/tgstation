@@ -46,7 +46,7 @@ Sorry Giacom. Please don't be mad :(
 			qdel(I)
 	staticOverlays.len = 0
 	remove_from_all_data_huds()
-	return QDEL_HINT_HARDDEL_NOW
+	return QDEL_HINT_HARDDEL
 
 
 /mob/living/proc/OpenCraftingMenu()
@@ -924,8 +924,8 @@ Sorry Giacom. Please don't be mad :(
 		if(ticker)
 			if(ticker.mode)
 				for(var/datum/gang/G in ticker.mode.gangs)
-					if(isnum(G.dom_timer))
-						stat(null, "[G.name] Gang Takeover: [max(G.dom_timer, 0)]")
+					if(G.is_dominating)
+						stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 
 /mob/living/cancel_camera()
 	..()
@@ -1031,6 +1031,9 @@ Sorry Giacom. Please don't be mad :(
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in, is about to be deleted
 /mob/living/proc/wabbajack_act(mob/living/new_mob)
+	new_mob.name = name
+	new_mob.real_name = real_name
+
 	if(mind)
 		mind.transfer_to(new_mob)
 	else
@@ -1041,4 +1044,4 @@ Sorry Giacom. Please don't be mad :(
 		G.summoner = new_mob
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
-			form to [new_mob]!</span>"
+			form!</span>"

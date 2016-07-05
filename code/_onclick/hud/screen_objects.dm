@@ -102,24 +102,24 @@
 	if(!blocked_overlay)
 		blocked_overlay = image("icon"='icons/mob/screen_gen.dmi', "icon_state"="blocked")
 
-	overlays.Cut()
+	cut_overlays()
 
 	if(hud && hud.mymob)
 		if(iscarbon(hud.mymob))
 			var/mob/living/carbon/C = hud.mymob
 			if(C.handcuffed)
-				overlays += handcuff_overlay
+				add_overlay(handcuff_overlay)
 			if(slot_id == slot_r_hand)
 				if(!C.has_right_hand())
-					overlays += blocked_overlay
+					add_overlay(blocked_overlay)
 			else if(slot_id == slot_l_hand)
 				if(!C.has_left_hand())
-					overlays += blocked_overlay
+					add_overlay(blocked_overlay)
 
 		if(slot_id == slot_l_hand && hud.mymob.hand)
-			overlays += active_overlay
+			add_overlay(active_overlay)
 		else if(slot_id == slot_r_hand && !hud.mymob.hand)
-			overlays += active_overlay
+			add_overlay(active_overlay)
 
 /obj/screen/inventory/hand/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -382,16 +382,16 @@
 	return 1
 
 /obj/screen/zone_sel/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_gen.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/screen_gen.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/alien
 	icon = 'icons/mob/screen_alien.dmi'
 
 /obj/screen/zone_sel/alien/update_icon(mob/user)
-	overlays.Cut()
-	overlays += image('icons/mob/screen_alien.dmi', "[selecting]")
+	cut_overlays()
+	add_overlay(image('icons/mob/screen_alien.dmi', "[selecting]"))
 	user.zone_selected = selecting
 
 /obj/screen/zone_sel/robot

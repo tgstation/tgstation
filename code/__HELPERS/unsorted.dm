@@ -720,16 +720,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		return zone
 
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
-
 /*
 
  Gets the turf this atom's *ICON* appears to inhabit
@@ -1302,7 +1292,7 @@ B --><-- A
 	set waitfor = 0
 	if(!A || !I)
 		return
-	A.overlays |= I
+	A.add_overlay(I)
 	sleep(duration)
 	A.overlays -= I
 
@@ -1384,7 +1374,29 @@ proc/pick_closest_path(value)
 	if(!istype(C))
 		return
 
-	var/old_color = C.color
 	C.color = flash_color
 	spawn(0)
-		animate(C, color = old_color, time = flash_time)
+		animate(C, color = initial(C.color), time = flash_time)
+
+#define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
+
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
+
+/proc/check_for_cleanbot_bug()
+	var/static/admins_warned //bet you didn't know you could do this!
+	var/icon/Icon_test = icon('icons/BadAss.dmi')
+	if(!istype(Icon_test))
+		var/msg = "Cleanbot bug detected in icons! Icons are mapping to [Icon_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)
+	var/sound/Sound_test = sound('sound/misc/null.ogg')
+	if(!istype(Sound_test))
+		var/msg = "Cleanbot bug detected in sounds! Sounds are mapping to [Sound_test]"
+		if (!admins_warned)
+			admins_warned = 1
+			spawn(25)
+				message_admins(msg)
+		stack_trace(msg)

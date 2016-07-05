@@ -224,13 +224,17 @@
 					anim(mobloc,mob,'icons/mob/mob.dmi',,"shadow",,L.dir)
 				L.loc = get_step(L, direct)
 			L.setDir(direct)
-		if(3) //Incorporeal move, but blocked by holy-watered tiles
+		if(3) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
+			for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
+				L << "<span class='warning'>[S] bars your passage!</span>"
+				if(istype(L, /mob/living/simple_animal/revenant))
+					var/mob/living/simple_animal/revenant/R = L
+					R.reveal(20)
+					R.stun(20)
+				return
 			if(stepTurf.flags & NOJAUNT)
 				L << "<span class='warning'>Holy energies block your path.</span>"
-				L.notransform = 1
-				spawn(2)
-					L.notransform = 0
 			else
 				L.loc = get_step(L, direct)
 				L.setDir(direct)

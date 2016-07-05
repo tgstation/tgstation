@@ -11,6 +11,7 @@
 	new /obj/item/clothing/head/welding(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/hardsuit_jetpack(src)
 	new /obj/item/weapon/cartridge/ce(src)
 	new /obj/item/device/radio/headset/heads/ce(src)
 	new /obj/item/weapon/storage/toolbox/mechanical(src)

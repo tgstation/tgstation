@@ -317,12 +317,19 @@
 	if(gang_mode)
 		takes_time = TRUE
 
+	var/wait_time = 50
+	if(PAINT_LARGE_HORIZONTAL)
+		wait_time *= 3
+
 	if(takes_time)
 		if(!do_after(user, 50, target = target))
 			return
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
+
+
+	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
 		if(gang_mode)
@@ -334,10 +341,15 @@
 			switch(paint_mode)
 				if(PAINT_NORMAL)
 					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+					affected_turfs += target
 				if(PAINT_LARGE_HORIZONTAL)
-					if(is_type_in_list(locate(target.x-1,target.y,target.z), validSurfaces)\
-					   && is_type_in_list(locate(target.x+1,target.y,target.z), validSurfaces))
-						new /obj/effect/decal/cleanable/crayon(locate(target.x-1,target.y,target.z), paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					var/turf/left = locate(target.x-1,target.y,target.z)
+					var/turf/right = locate(target.x+1,target.y,target.z)
+					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+						affected_turfs += left
+						affected_turfs += right
+						affected_turfs += target
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
@@ -352,10 +364,15 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	. = use_charges(1)
+	var/cost = 1
+	if(paint_mode == PAINT_LARGE_HORIZONTAL)
+		cost = 5
+	. = use_charges(cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
-	reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-	reagents.trans_to(target, ., volume_multiplier)
+	fraction /= affected_turfs.len
+	for(var/t in affected_turfs)
+		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
+		reagents.trans_to(t, ., volume_multiplier)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -501,9 +518,9 @@
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		overlays += image('icons/obj/crayons.dmi',crayon.item_color)
+		add_overlay(image('icons/obj/crayons.dmi',crayon.item_color))
 
 /obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -653,11 +670,11 @@
 /obj/item/toy/crayon/spraycan/update_icon()
 	icon_state = is_capped ? icon_capped : icon_uncapped
 	if(use_overlays)
-		overlays.Cut()
+		cut_overlays()
 		var/image/I = image('icons/obj/crayons.dmi',
 			icon_state = "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		I.color = paint_color
-		overlays += I
+		add_overlay(I)
 
 /obj/item/toy/crayon/spraycan/gang
 	//desc = "A modified container containing suspicious paint."
