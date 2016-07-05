@@ -362,7 +362,7 @@
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src))
 		return 0
-	user.whisper("Freinagf, urne zl jbeqf. [message]")
+	user.whisper("Freinagf, urne zl-jbeqf. [message]")
 	titled_hierophant_message(user, message)
 	return 1
 
