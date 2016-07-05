@@ -218,7 +218,7 @@
 	user << "<i>Inath-Neq: </i>[clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
-	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
+	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
 	\
 	First and foremost, you serve Ratvar, the Clockwork Justiciar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 	scale of things than your life. Through foul and unholy magics was the Celestial Derelict formed, and fouler still those which trapped your master within it for all eternity. The Justiciar \
@@ -962,7 +962,7 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggr-e guna oebxra obqvrf.\"", "\"Vg pbhyq fgvyy or hfrq, vs gurer jnf n qbbe gb-cynpr vg ba.\"")
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggr-e guna oebxra obqvrf.\"", "\"Vg pbhyq fgv'yy or hfrq, vs gurer jnf n qbbe gb-cynpr vg ba.\"")
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -980,7 +980,7 @@
 	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
-	servant_of_ratvar_messages = list("\"Jub oebxr guv'f.\"", "\"Qvq lbh oernx gur'fr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guv'f gb fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguv'at - hayvxr lbh.\"")
+	servant_of_ratvar_messages = list("\"Jub oebxr guv'f.\"", "\"Qvq lbh oernx gur'fr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guv'f gb-fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguv'at - hayvxr lbh.\"")
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -1021,7 +1021,7 @@
 	desc = "Some sort of transmitter? It seems as though it's trying to say something."
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
-	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
+	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
 	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n ober. Gur'er'f abguvat V pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V jnag gb-tb xvyy fbzrguv'at.\"", "\"HEHEHEHEHEHEH!\"", \
 	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgvpr?\"")
 	message_span = "nzcrentr"
