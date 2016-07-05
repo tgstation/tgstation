@@ -18,8 +18,7 @@ var/datum/subsystem/weather/SSweather
 		if(W.aesthetic)
 			continue
 		for(var/mob/living/L in mob_list)
-			var/area/A = get_area(L)
-			if(L.z == W.target_z && !W.immunity_type in L.weather_immunities && A in W.impacted_areas)
+			if(W.can_impact(L))
 				W.impact(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
@@ -30,7 +29,7 @@ var/datum/subsystem/weather/SSweather
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
 		run_weather(W.name)
 		eligible_zlevels -= Z
-		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, Z) //Around 5-10 minutes between weathers
+		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, TRUE, Z) //Around 5-10 minutes between weathers
 
 /datum/subsystem/weather/Initialize(start_timeofday)
 	..()

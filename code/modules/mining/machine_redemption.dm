@@ -88,13 +88,14 @@
 					else
 						process_sheet(O)
 						i++
-		var/msg = "Now available in the Cargo Bay: \n"
-		for(var/s in stack_list) // Making an announcement for cargo
-			var/obj/item/stack/sheet/mats = stack_list[s]
-			msg += "[capitalize(mats.name)]: [mats.amount] sheets \n"
-		for(var/obj/machinery/requests_console/D in allConsoles)
-			if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar" )
-				D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
+		if(i > 0)
+			var/msg = "Now available in the cargo Bay: \n"
+			for(var/s in stack_list) // Making an announcement for cargo
+				var/obj/item/stack/sheet/mats = stack_list[s]
+				msg += "[capitalize(mats.name)]: [mats.amount] sheets \n"
+			for(var/obj/machinery/requests_console/D in allConsoles)
+				if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar")
+					D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
 	if(exchange_parts(user, W))
