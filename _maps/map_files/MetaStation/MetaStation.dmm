@@ -14855,9 +14855,7 @@
 	},
 /area/security/nuke_storage)
 "azO" = (
-/obj/machinery/nuclearbomb/selfdestruct{
-	layer = 2
-	},
+/obj/machinery/nuclearbomb/selfdestruct,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

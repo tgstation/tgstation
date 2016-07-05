@@ -10,16 +10,25 @@
 </ui-display>
 <ui-display title='Timer'>
   <ui-section label='Time to Detonation'>
-    <span>{{data.timer_set}}</span>
+    <span>{{data.timing ? data.time_left : data.timer_set}}</span>
   </ui-section>
-  <ui-section label='Adjust Timer'>
-    <ui-button icon='refresh' state='{{data.disk_present && data.code_approved && data.timer_is_not_default ? null : "disabled"}}'
-      action='timer' params='{"change": "reset"}'>Reset</ui-button>
-    <ui-button icon='minus' state='{{data.disk_present && data.code_approved && data.timer_is_not_min ? null : "disabled"}}'
-      action='timer' params='{"change": "decrease"}'>Decrease</ui-button>
-    <ui-button icon='pencil' state='{{data.disk_present && data.code_approved ? null : "disabled"}}' action='timer' params='{"change": "input"}'>Set</ui-button>
-    <ui-button icon='plus' state='{{data.disk_present && data.code_approved && data.timer_is_not_max ? null : "disabled"}}'
-      action='timer' params='{"change": "increase"}'>Increase</ui-button>
+  {{^data.timing}}
+    <ui-section label='Adjust Timer'>
+      <ui-button icon='refresh' state='{{data.disk_present && data.code_approved && data.timer_is_not_default ? null : "disabled"}}'
+        action='timer' params='{"change": "reset"}'>Reset</ui-button>
+      <ui-button icon='minus' state='{{data.disk_present && data.code_approved && data.timer_is_not_min ? null : "disabled"}}'
+        action='timer' params='{"change": "decrease"}'>Decrease</ui-button>
+      <ui-button icon='pencil' state='{{data.disk_present && data.code_approved ? null : "disabled"}}' action='timer' params='{"change": "input"}'>Set</ui-button>
+      <ui-button icon='plus' state='{{data.disk_present && data.code_approved && data.timer_is_not_max ? null : "disabled"}}'
+        action='timer' params='{"change": "increase"}'>Increase</ui-button>
+    </ui-section>
+  {{/data.timing}}
+  <ui-section label='Timer'>
+    <ui-button icon='clock-o' style='{{data.timing ? "danger" : "caution"}}'
+      action='toggle_timer'
+      state='{{data.disk_present && data.code_approved && !data.safety ? null : "disabled"}}'>
+      {{data.timing ? "On" : "Off"}}
+    </ui-button>
   </ui-section>
 </ui-display>
 <ui-display title='Anchoring'>
@@ -27,7 +36,7 @@
     state='{{data.disk_present && data.code_approved ? null : "disabled"}}'
     icon='{{data.anchored ? "lock" : "unlock"}}'
     style='{{data.anchored ? null : "caution"}}'
-    action='anchor'>Engaged</ui-button>
+    action='anchor'>{{data.anchored ? "Engaged" : "Off"}}</ui-button>
 </ui-display>
 <ui-display title='Safety'>
   <ui-button

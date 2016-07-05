@@ -42,5 +42,5 @@
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_JMP(src) "(<a href='?_src_=holder;adminplayerobservecoordjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
-#define COORD(src) "([src.x],[src.y],[src.z])"
-#define ADMIN_COORDJMP(src) "[COORD(src)] [ADMIN_JMP(src)]"
+#define COORD(src) "[src ? "([src.x],[src.y],[src.z])" : "nonexistent location"]"
+#define ADMIN_COORDJMP(src) "[src ? "[COORD(src)] [ADMIN_JMP(src)]" : "nonexistent location"]"
