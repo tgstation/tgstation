@@ -283,8 +283,6 @@ var/bomb_set
 /obj/machinery/nuclearbomb/ui_act(action, params)
 	if(..())
 		return
-	world << action
-	world << json_encode(params)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
