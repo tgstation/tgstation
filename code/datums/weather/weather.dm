@@ -101,6 +101,15 @@
 	stage = END_STAGE
 	update_areas()
 
+/datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
+	if(L.z != target_z)
+		return
+	if(immunity_type in L.weather_immunities)
+		return
+	if(!(get_area(L) in impacted_areas))
+		return
+	return 1
+
 /datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
 	return
 
