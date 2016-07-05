@@ -1,0 +1,8 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Gulag prisoners can no longer duplicate their mining efforts
+through window breaking on the shuttle."
+  - bugfix: "Fixes pickaxes inside walls on lavaland, along with lava having eaten
+one of the storage units."
+  - rscadd: "More fire extinguishers for lavaland mining base."
