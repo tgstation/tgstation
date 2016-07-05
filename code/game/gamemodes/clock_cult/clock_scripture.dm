@@ -1069,7 +1069,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		invoker << "<span class='nzcrentr'>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs I xvyyrq lbh? ...Ur jbhyq? Bx.\"</span>\n\
+		invoker << "<span class='nzcrentr'>\"Gur obff fnlf lbh unir gb jnvg. Url, qb lbh guvax ur jbhyq zvaq vs V xvyyrq lbh? ...Ur jbhyq? Bx.\"</span>\n\
 		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
 		return 0
 	return 1
