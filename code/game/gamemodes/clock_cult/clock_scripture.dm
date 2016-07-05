@@ -332,7 +332,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Channeled, Mobile Area Confusion"
 	name = "Taunting Tirade"
 	desc = "Confuses and dizzies all nearby non-servants with a short invocation, then allows movement for three seconds. Chanted every second for up to thirty-five seconds."
-	chant_invocations = list("Ubfgv'yrf ba-zl onpx!", "Rarzvrf ba-zl genvy!", "Tbaan gel-naq-funxr zl-gnvy.", "Obtrlf ba-zl fvk!")
+	chant_invocations = list("Ubfgv'yrf ba zl-onpx!", "Rarzvrf ba zl-genvy!", "Tbaan gel-naq-funxr zl-gnvy.", "Obtrlf ba zl-fvk!")
 	chant_amount = 10
 	chant_interval = 5
 	required_components = list("guvax_capacitor" = 2)
@@ -968,7 +968,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
 	clockwork proselytizers will cost no replicant alloy to use."
-	invocations = list("V pnyy hcba lbh, Nezbere!!", "Y-rg lbhe znpuvangvbaf ervta ba guv'f zvfrenoyr fgngv'ba!!", "Y-rg lbhe cbjre sybj gue'bhtu gur gbbyf bs lbhe znfgre!!")
+	invocations = list("V pnyy hcba lbh, Nezbere!!", "Y-rg lbhe znpuvangv'baf ervta ba guv'f zvfrenoyr fgngv'ba!!", "Y-rg lbhe cbjre sybj gue'bhtu gur gbbyf bs lbhe znfgre!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
@@ -1027,11 +1027,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_REVENANT
 	var/list/mindbreaksayings = list("\"Bu, terng. V t-rg gb funggr-e fbzr zvaqf.\"", "\"Zber zvaqf gb-pehfu.\"", \
 	"\"Ernyyl, guv'f vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguvat vagrerfgvat va gur'z.\"", "\"Znlor V pna vafgvyy n yvggyr ovg-bs gr-eebe va guv'f bar.\"", \
-	"\"Jung n jnfgr-bs-zl cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
+	"\"Jung n jnfgr-bs zl-cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgrnq, ohg gur'l arire nfx.\"")
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcy-rgba yvxr lbh - gb-tenfc gur pbaprcg-bs jnvgvat?\"</span>\n\
+		invoker << "<span class='sevtug'>\"Vf vg ernyyl fb uneq - rira sbe n fvzcy-rgba yvxr lbh - gb-tenfc gur pbaprcg-bs jnvgv'at?\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
@@ -1221,7 +1221,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 20, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
-	T.visible_message("<span class='sevtug'>\"Ratvar, pbzr sbegu-naq-fubj guv'f fgngvba lbhe qrpbengvat fxvyyf!\"</span>")
+	T.visible_message("<span class='sevtug'>\"Ratvar, pbzr sbegu-naq-fubj guv'f fgngv'ba lbhe qrpbengvat fxvyyf!\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nzcrentr(T)

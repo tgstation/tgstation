@@ -1023,7 +1023,7 @@
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
 	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n ober. Gur'er'f abguvat V pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V jnag gb-tb xvyy fbzrguv'at.\"", "\"HEHEHEHEHEHEH!\"", \
-	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgvpr?\"")
+	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgv'pr?\"")
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk

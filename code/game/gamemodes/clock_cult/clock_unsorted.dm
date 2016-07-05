@@ -176,7 +176,7 @@ List of nuances:
 - Whereever "te" or "et" appear and there is another letter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
 - Where the word "and" appears, it is linked to the previous and following words by hyphens, i.e; "Sword-and-shield"
 - Where the word "to" appears, it is linked to the following word by a hyphen, i.e; "to-use"
-- Where the word "my" appears, it is linked to the following word by a hyphen UNLESS the previous word is a preposition, i.e; "my-light", "on-my"
+- Where the word "my" appears, it is linked to the following word by a hyphen, i.e; "my-light"
 
 - Although "Ratvar" translates to "Engine" in English, the word "Ratvar" is used regardless of language as it is a proper noun.
  - The same rule applies to Ratvar's four generals: Nezbere (Armorer), Sevtug (Fright), Nzcrentr (Amperage), and Inath-Neq (Vangu-Ard), although these words can be used in proper context if one is

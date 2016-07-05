@@ -249,13 +249,13 @@
 	var/convert_cost = 300
 
 	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"T-rg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
-	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragvn.\"", "\"Fgevir gb-t-rg n fperj ybbfr.\"")
+	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragv'n.\"", "\"Fgevir gb-t-rg n fperj ybbfr.\"")
 	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggr-e.\"", "\"Gbhpu gur nagr-aanr.\"", "\"V nyjnlf unir gb-qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
 	"\"Nqinapr sbejneq-naq-cynpr lbhe urnq o-rgjrra gur nagr-aanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegr-e, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
 	var/convert_messages = list("\"Lbh jba'g qb. Tb gb-fyrrc juvyr V gr-yy gur'fr avgjvgf ubj gb-pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg-bs pbairefvba.\"", \
 	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb-hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
 	"\"Ubj qb gur'l snvy gb hfr n Fvtvy-bs Npprffvba, naljnl?\"", "\"Jul vf vg gun'g nyy freinagf ner guv'f varcg?\"", "\"Vg'f dhvgr yvxryl lbh'yy or fghpx urer sbe n juvyr.\"")
-	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagr-erfgvat ybpngvba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGR-AANR!\"", \
+	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagr-erfgvat ybpngv'ba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGR-AANR!\"", \
 	"\"Nznmvat. Lbh fbzrubj znantrq gb-jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
 	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgvyy qb fbz-rguv'at NF FGHCVQ NF GUV'F!\"")
 
