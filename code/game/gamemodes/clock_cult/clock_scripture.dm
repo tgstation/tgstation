@@ -1218,31 +1218,33 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/turf/T = get_turf(invoker)
 	new/obj/effect/clockwork/general_marker/inathneq(T)
 	T.visible_message("<span class='inathneq'>\"Ratvar, pbzr sbegu-naq-fubj lbhe freinagf lbhe zrepl!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/sevtug(T)
 	T.visible_message("<span class='sevtug'>\"Ratvar, pbzr sbegu-naq-fubj guv'f fgngv'ba lbhe qrpbengv'at fxvyyf!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 45, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nezbere(T)
 	T.visible_message("<span class='nezbere'>\"Ratvar, pbzr sbegu-naq-fuvar lbhe yvtug npebff guv'f ernyz!\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 20, 0)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 60, 0)
 	sleep(10)
 	new/obj/effect/clockwork/general_marker/nzcrentr(T)
 	T.visible_message("<span class='nzcrentr'>\"Ratvar, pbzr sbegu.\"</span>")
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 40, 0)
+	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 75, 0)
 	sleep(10)
-	new/obj/structure/clockwork/massive/celestial_gateway(T)
-	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
-	var/list/open_turfs = list()
-	for(var/turf/open/OT in orange(1, T))
-		var/list/dense_objects = list()
-		for(var/obj/O in OT)
-			if(O.density && !O.CanPass(invoker, OT, 5))
-				dense_objects |= O
-		if(!dense_objects.len)
-			open_turfs |= OT
-	if(open_turfs.len)
-		for(var/mob/living/L in T)
-			L.forceMove(pick(open_turfs)) //shove living mobs off of the gate's new location
-	return 1
+	if(check_special_requirements())
+		new/obj/structure/clockwork/massive/celestial_gateway(T)
+		playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 100, 0)
+		var/list/open_turfs = list()
+		for(var/turf/open/OT in orange(1, T))
+			var/list/dense_objects = list()
+			for(var/obj/O in OT)
+				if(O.density && !O.CanPass(invoker, OT, 5))
+					dense_objects |= O
+			if(!dense_objects.len)
+				open_turfs |= OT
+		if(open_turfs.len)
+			for(var/mob/living/L in T)
+				L.forceMove(pick(open_turfs)) //shove living mobs off of the gate's new location
+		return 1
+	return 0
