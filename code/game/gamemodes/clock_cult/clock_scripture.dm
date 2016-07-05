@@ -966,7 +966,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
 	clockwork proselytizers will cost no replicant alloy to use."
-	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on thi's miserable stati'on!!", "Let your power flow thr'ough the tools of your master!!")
+	invocations = list("V pnyy hcba lbh, Nezbere!!", "Yrg lbhe znpuvangvbaf ervta ba guv'f zvfrenoyr fgngv'ba!!", "Yrg lbhe cbjre sybj gue'bhtu gur gbbyf bs lbhe znfgre!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
