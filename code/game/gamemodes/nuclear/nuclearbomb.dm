@@ -76,7 +76,7 @@ var/bomb_set
 	anchored = TRUE //stops it being moved
 
 /obj/machinery/nuclearbomb/syndicate
-	ui_style = "syndicate"
+	//ui_style = "syndicate" // actually the nuke op bomb is a stole nt bomb
 
 /obj/machinery/nuclearbomb/syndicate/New()
 	var/obj/machinery/nuclearbomb/existing = locate("syndienuke")
@@ -538,13 +538,16 @@ This is here to make the tiles around the station mininuke change when it's arme
 	var/turf/diskturf = get_turf(src)
 
 	if(force)
-		message_admins("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]).")
-		log_game("[src] has been !!force deleted!! in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]).")
+		message_admins("[src] has been !!force deleted!! in \
+			[ADMIN_COORDJMP(diskturf)].")
+		log_game("[src] has been !!force deleted!! in [COORD(diskturf)].")
 		poi_list -= src
 		STOP_PROCESSING(SSobj, src)
 		return ..()
 
 	var/turf/targetturf = relocate()
-	message_admins("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
-	log_game("[src] has been destroyed in ([diskturf ? "[diskturf.x], [diskturf.y] ,[diskturf.z]":"nonexistent location"]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
+	message_admins("[src] has been destroyed in [ADMIN_COORDJMP(diskturf)]. \
+		Moving it to [ADMIN_COORDJMP(targetturf)].")
+	log_game("[src] has been destroyed in [COORD(diskturf)]. Moving it to \
+		[COORD(targetturf)].")
 	return QDEL_HINT_LETMELIVE //Cancel destruction unless forced
