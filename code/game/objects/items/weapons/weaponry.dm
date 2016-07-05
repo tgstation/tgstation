@@ -298,3 +298,13 @@
 /obj/item/weapon/melee/skateboard/attack_self(mob/user)
 	new /obj/vehicle/scooter/skateboard(get_turf(user))
 	qdel(src)
+
+/obj/item/weapon/melee/baseball_bat
+	name = "baseball bat"
+	desc = "There ain't a scull in the league that can withstand a swatter"
+	icon_state = "baseball_bat"
+	item_state = "baseball_bat"
+	force = 20
+	throwforce = 10
+	attack_verb = list("beat", "smacked")
+	w_class = 5.0
