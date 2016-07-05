@@ -384,9 +384,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
 	if(timing)
-		. = max(0, detonation_timer - world.time)
-		. /= 10
-		. = round(., 1)
+		. = round(max(0, detonation_timer - world.time) / 10, 1)
 	else
 		. = timer_set
 
