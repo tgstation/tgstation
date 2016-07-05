@@ -36,3 +36,11 @@
 #define R_SPAWN			4096
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
+
+#define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
+#define ADMIN_FLW(user) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</a>)"
+#define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
+#define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
+#define ADMIN_JMP(src) "(<a href='?_src_=holder;adminplayerobservecoordjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)"
+#define COORD(src) "([src.x],[src.y],[src.z])"
+#define ADMIN_COORDJMP(src) "[COORD(src)] [ADMIN_JMP(src)]"

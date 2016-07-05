@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscdel: "Umbras have been removed."
-  - rscadd: "Revenants have been readded, though they are now vulnerable to salt piles."

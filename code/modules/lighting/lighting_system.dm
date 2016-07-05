@@ -309,6 +309,7 @@
 			lighting_changed = 0
 		if(lighting_object)
 			lighting_object.alpha = 0
+			qdel(lighting_object)
 			lighting_object = null
 	else
 		if(!lighting_object)

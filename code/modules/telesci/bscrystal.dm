@@ -9,6 +9,7 @@
 	origin_tech = "bluespace=6;materials=3"
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
+	refined_type = /obj/item/stack/sheet/bluespace_crystal
 
 /obj/item/weapon/ore/bluespace_crystal/New()
 	..()
@@ -44,3 +45,33 @@
 	origin_tech = "bluespace=3;plasmatech=4"
 	blink_range = 4 // Not as good as the organic stuff!
 	points = 0 // nice try
+	refined_type = null
+
+// Polycrystals, aka stacks
+
+/obj/item/stack/sheet/bluespace_crystal
+	name = "bluespace polycrystal"
+	icon = 'icons/obj/telescience.dmi'
+	icon_state = "polycrystal"
+	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
+	origin_tech = "bluespace=6;minerals=3"
+	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
+
+/obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
+	user << "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>"
+	return
+
+/obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
+	if (user.get_inactive_hand() == src)
+		if(zero_amount()) // in this case, a sanity check
+			return
+		var/obj/item/weapon/ore/bluespace_crystal/BC = new(src)
+		user.put_in_hands(BC)
+		amount--
+		if (amount == 0)
+			qdel(src)
+			user << "<span class='notice'>You break the final crystal off.</span>"
+		else user << "<span class='notice'>You break off a crystal.</span>"
+	else
+		..()
+	return

@@ -94,19 +94,19 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!first_sound_played)
-				world << sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 50)
+				world << sound('sound/effects/clockcult_gateway_charging.ogg', 1, channel = 8, volume = 30)
 				first_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_charging"
 		if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 			if(!second_sound_played)
-				world << sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 50)
+				world << sound('sound/effects/clockcult_gateway_active.ogg', 1, channel = 8, volume = 35)
 				second_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_active"
 		if(GATEWAY_RATVAR_COMING to GATEWAY_RATVAR_ARRIVAL)
 			if(!third_sound_played)
-				world << sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 50)
+				world << sound('sound/effects/clockcult_gateway_closing.ogg', 1, channel = 8, volume = 40)
 				third_sound_played = TRUE
 			make_glow()
 			glow.icon_state = "clockwork_gateway_closing"
@@ -118,7 +118,7 @@
 				make_glow()
 				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 126)
 				world << sound('sound/effects/ratvar_rises.ogg', 0, channel = 8) //End the sounds
-				sleep(131)
+				sleep(126)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				sleep(5)

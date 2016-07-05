@@ -269,6 +269,7 @@
 	return 0
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
+	icon_state = "brokengrille"
 	density = 0
 	health = 0
 	destroyed = 1
