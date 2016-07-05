@@ -177,4 +177,3 @@
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
-	return
