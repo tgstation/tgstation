@@ -55,12 +55,10 @@ var/datum/subsystem/augury/SSaugury
 
 /datum/action/innate/augury/Activate()
 	SSaugury.watchers |= owner
+	owner << "<span class='notice'>You are now auto-following debris.</span>"
 	active = TRUE
 
 /datum/action/innate/augury/Deactivate()
 	SSaugury.watchers -= owner
-
-/datum/action/innate/augury/UpdateButtonIcon()
-	..()
-	if(active)
-		button.icon_state = "bg_default_on"
+	owner << "<span class='notice'>You are no longer auto-following \
+		debris.</span>"

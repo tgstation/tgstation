@@ -312,7 +312,7 @@
 	meteordrop = list(/obj/item/weapon/ore/plasma)
 	threat = 50
 
-/obj/effect/meteor/Move()
+/obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
 		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(src))
