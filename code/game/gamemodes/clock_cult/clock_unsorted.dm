@@ -1,17 +1,13 @@
 //sends messages via hierophant
-/proc/send_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
+/proc/titled_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
 	if(!user || !message || !ticker || !ticker.mode)
 		return 0
-	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[message_span]'>\"[message]\"</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
+	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
+	</span><span class='[message_span]'>\"[message]\"</span>"
+	hierophant_message(parsed_message, FALSE, user)
 	return 1
 
-/proc/generic_hierophant_message(message, servantsonly, atom/target) //sends a generic message to all servants and optionally observers
+/proc/hierophant_message(message, servantsonly, atom/target) //sends a generic message to all servants and optionally observers
 	if(!message || !ticker || !ticker.mode)
 		return 0
 	for(var/M in mob_list)
@@ -21,7 +17,7 @@
 				M << "[link] [message]"
 			else
 				M << message
-		if(is_servant_of_ratvar(M))
+		else if(is_servant_of_ratvar(M))
 			M << message
 
 //Function Call action: Calls forth a Ratvarian spear.
@@ -128,7 +124,7 @@
 	var/list/states = get_scripture_states()
 	for(var/i in states)
 		if(states[i] != previous_states[i])
-			generic_hierophant_message("<span class='big_brass'>[i] Scripture has been [states[i] ? "un":""]locked.</span>")
+			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [states[i] ? "un":""]locked.</b></span>")
 
 /proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
 	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \

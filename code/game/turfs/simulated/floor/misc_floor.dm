@@ -130,6 +130,11 @@
 	change_construction_value(-1)
 	return ..()
 
+/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		change_construction_value(-1)
+	return ..()
+
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
 	START_PROCESSING(SSobj, src)
@@ -160,9 +165,11 @@
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
 		if(!do_after(user, 70 / I.toolspeed, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		make_plating()
 		return 1
 	return ..()

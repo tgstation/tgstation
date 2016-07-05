@@ -363,7 +363,7 @@
 	if(!message || !user || !user.canUseTopic(src))
 		return 0
 	user.whisper("Freinagf, urne zl jbeqf. [message]")
-	send_hierophant_message(user, message)
+	titled_hierophant_message(user, message)
 	return 1
 
 /obj/item/clothing/glasses/wraith_spectacles //Wraith spectacles: Grants night and x-ray vision at the slow cost of the wearer's sight. Nar-Sian cultists are instantly blinded.
