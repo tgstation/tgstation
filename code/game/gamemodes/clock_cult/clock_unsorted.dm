@@ -173,7 +173,7 @@ List of nuances:
 - Any time the word "of" occurs, it is linked to the previous word by a hyphen. If it is the first word, nothing is done. (i.e. "V nz-bs Ratvar." directly translates to "I am-of Ratvar.")
 - Any time "th", followed by any two letters occurs, you add an apostrophe between those two letters, i.e; "Thi's"
 - In the same vein, any time "ti", followed by one letter occurs, you add an apostrophe between "i" and the letter, i.e; "Ti'me"
-- Whereever "te" or "et" appear and there is another leter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
+- Whereever "te" or "et" appear and there is another letter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
 - if something doesn't look interesting enough, sprinkle hyphens and apostrophes until it looks better. Don't overuse it, though.
 - Although "Ratvar" translates to "Engine" in English, the word "Ratvar" is used regardless of language as it is a proper noun.
  - The same rule applies to Ratvar's four generals: Nezbere (Armorer), Sevtug (Fright), Nzcrentr (Amperage), and Inath-Neq (Vangu-Ard), although these words can be used in proper context if one is
