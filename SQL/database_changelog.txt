@@ -1,3 +1,13 @@
+3 July 2016, by Jordie0608
+
+Modified table 'poll_question', adding column 'dontshow' which was recently added to the server schema.
+
+ALTER TABLE `feedback`.`poll_question` ADD COLUMN `dontshow` TINYINT(1) NOT NULL DEFAULT '0'  AFTER `for_trialmin`
+
+Remember to add a prefix to the table name if you use them
+
+----------------------------------------------------
+
 16th April 2016
 
 Added ipintel table, only required if ip intel is enabled in the config

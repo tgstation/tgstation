@@ -211,7 +211,12 @@
 	var/hacked = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
+	..()
 	item_color = pick("red", "blue", "green", "purple")
+
+/obj/item/weapon/twohanded/dualsaber/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -219,7 +224,6 @@
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
-	return
 
 /obj/item/weapon/twohanded/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
@@ -232,12 +236,14 @@
 		impale(user)
 		return
 	if((wielded) && prob(50))
-		spawn(0)
-			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
-				user.setDir(i)
-				if(i == 8)
-					user.emote("flip")
-				sleep(1)
+		addtimer(src, "jedi_spin", 0, TRUE, user)
+
+/obj/item/weapon/twohanded/dualsaber/proc/jedi_spin(mob/living/user)
+	for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
+		user.setDir(i)
+		if(i == 8)
+			user.emote("flip")
+		sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
 	user << "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on \the [src].</span>"
@@ -265,16 +271,40 @@
 	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/unwield() //Specific unwield () to switch hitsounds.
 	sharpness = initial(sharpness)
 	w_class = initial(w_class)
 	..()
 	hitsound = "swing_hit"
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/weapon/twohanded/dualsaber/process()
+	if(wielded)
+		open_flame()
+	else
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect()
 	if(wielded)
 		return 1
+
+/obj/item/weapon/twohanded/dualsaber/ignition_effect(atom/A, mob/user)
+	// same as /obj/item/weapon/melee/energy, mostly
+	if(!wielded)
+		return ""
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask == src)
+			in_mouth = ", barely missing their nose"
+	. = "<span class='warning'>[user] swings their \
+		[src][in_mouth]. They light [A] in the process.</span>"
+	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	add_fingerprint(user)
+	// Light your candles while spinning around the room
+	addtimer(src, "jedi_spin", 0, TRUE, user)
 
 /obj/item/weapon/twohanded/dualsaber/green/New()
 	item_color = "green"

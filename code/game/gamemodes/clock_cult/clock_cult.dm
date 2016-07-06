@@ -91,13 +91,16 @@ This file's folder contains:
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
+	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar += M.mind
+	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
 	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
 	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
@@ -120,7 +123,9 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
+	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar -= M.mind
+	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
@@ -128,6 +133,7 @@ This file's folder contains:
 	M.languages_spoken &= ~RATVAR
 	M.languages_understood &= ~RATVAR
 	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -156,9 +162,9 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 30
-	required_enemies = 2
-	recommended_enemies = 4
+	required_players = 24
+	required_enemies = 3
+	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
@@ -175,7 +181,11 @@ This file's folder contains:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
+	var/starter_servants = 3 //Guaranteed three servants
+	var/number_players = num_players()
+	if(number_players > 30) //plus one servant for every additional 15 players
+		number_players -= 30
+		starter_servants += round(number_players/15)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant

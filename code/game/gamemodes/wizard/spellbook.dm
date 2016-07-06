@@ -95,7 +95,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/magicm
@@ -738,7 +738,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell = /obj/effect/proc_holder/spell/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."

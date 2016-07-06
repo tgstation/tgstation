@@ -1,3 +1,21 @@
+/*
+
+LEGION
+
+Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
+
+It has two attack modes that it constantly rotates between.
+
+In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
+In charge mode, it will spin and rush its target, attacking with melee whenever possible.
+
+When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 800
@@ -118,37 +136,38 @@
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	var/obj/machinery/lavaland_controller/linked_machine
 	var/storm_cooldown = 0
 
 /obj/item/weapon/staff_of_storms/attack_self(mob/user)
 	if(storm_cooldown > world.time)
 		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
+	if(user.z != ZLEVEL_LAVALAND)
+		user << "<span class='warning'>You can't seem to control the weather here!</span>"
+		return
 
-	if(!linked_machine || linked_machine.z != user.z)
-		for(var/obj/machinery/lavaland_controller/controller in machines)
-			if(controller.z == user.z)
-				linked_machine = controller
-				break
+	var/datum/weather/ash_storm/A
+	for(var/V in SSweather.existing_weather)
+		var/datum/weather/W = V
+		if(W.name == "ash storm")
+			A = W
+			break
+	if(!A)
+		user << "<span class='warning'>How odd! The planet seems to have lost its atmosphere!</span>"
+		return
 
-	if(linked_machine && linked_machine.ongoing_weather)
-		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "<span class='warning'>The storm is already ending. It would be a waste to use the staff now.</span>"
+	if(A.stage != END_STAGE)
+		if(A.stage == WIND_DOWN_STAGE)
+			user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
 			return
-		user.visible_message("<span class='warning'>[user] holds [src] skywards, causing its orb to flare!</span>", \
-		"<span class='notice'>With an appropriately dramatic flourish, you dispel the storm!</span>")
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 0)
-		storm_cooldown = world.time + 600
-		linked_machine.ongoing_weather.stage = WIND_DOWN_STAGE
-		linked_machine.ongoing_weather.weather_wind_down()
-
-	else if (linked_machine && !linked_machine.ongoing_weather)
-		user.visible_message("<span class='warning'>[user] holds [src] skywards, causing its orb to flare!</span>", \
-		"<span class='danger'>You lift your staff skywards, calling down a terrible storm!</span>")
-		playsound(get_turf(src),'sound/magic/Staff_Chaos.ogg', 200, 0)
-		storm_cooldown = world.time + 600
-		linked_machine.weather_cooldown = 0
-
+		user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
+		"<span class='notice'>You hold [src] skyward, dispelling the ash storm!</span>")
+		playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+		A.wind_down()
 	else
-		user << "You can't seem to control the weather here."
+		user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+		"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+		playsound(user, 'sound/magic/Staff_Chaos.ogg', 200, 0)
+		A.telegraph()
+
+	storm_cooldown = world.time + 600

@@ -82,6 +82,19 @@
 /var/const/access_syndicate = 150//General Syndicate Access
 /var/const/access_syndicate_leader = 151//Nuke Op Leader Access
 
+	//Away Missions or Ruins
+	/*For generic away-mission/ruin access. Why would normal crew have access to a long-abandoned derelict
+	or a 2000 year-old temple? */
+/var/const/access_away_general = 200//General facilities.
+/var/const/access_away_maint = 201//Away maintenance
+/var/const/access_away_med = 202//Away medical
+/var/const/access_away_sec = 203//Away security
+/var/const/access_away_engine = 204//Away engineering
+/var/const/access_away_generic1 = 205//Away generic access
+/var/const/access_away_generic2 = 206
+/var/const/access_away_generic3 = 207
+/var/const/access_away_generic4 = 208
+
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"
 /obj/var/list/req_one_access = null

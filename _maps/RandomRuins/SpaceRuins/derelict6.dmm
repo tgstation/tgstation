@@ -155,7 +155,7 @@
 	},
 /area/ruin/unpowered)
 "ax" = (
-/mob/living/simple_animal/retaliate/ghost,
+/mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/plasteel{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -359,7 +359,7 @@
 /turf/open/space,
 /area/space)
 "ba" = (
-/mob/living/simple_animal/retaliate/ghost,
+/mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/plasteel/cafeteria{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -483,47 +483,95 @@
 	icon_state = "platingdmg1"
 	},
 /area/ruin/unpowered)
-"bI" = (
+"bs" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (WEST)";
+	tag = "icon-singular (NORTH)";
+	icon_state = "singular";
+	dir = 1
+	},
+/turf/open/space,
+/area/space)
+"bt" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-side (NORTH)";
+	icon_state = "side";
+	dir = 1
+	},
+/obj/structure/lattice,
+/turf/open/space,
+/area/ruin/unpowered)
+"bu" = (
+/obj/structure/fluff/broken_flooring,
+/turf/open/space,
+/area/ruin/unpowered)
+"bv" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "pile"
+	},
+/turf/open/space,
+/area/space)
+"bw" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (NORTH)";
 	name = "broken plating";
 	icon_state = "plating";
-	dir = 8
+	dir = 1
 	},
 /turf/open/space,
 /area/ruin/unpowered)
-"bH" = (
+"bx" = (
 /obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (EAST)";
+	name = "broken plating";
 	icon_state = "plating";
-	name = "broken plating"
+	dir = 4
 	},
 /obj/structure/lattice,
 /turf/open/space,
 /area/ruin/unpowered)
-"bG" = (
+"by" = (
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-pile (EAST)";
+	icon_state = "pile";
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered)
+"bz" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-plating (EAST)";
+	name = "broken plating";
+	icon_state = "plating";
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bA" = (
+/obj/structure/fluff/broken_flooring{
+	icon_state = "singular"
+	},
+/turf/open/space,
+/area/space)
+"bB" = (
 /obj/structure/fluff/broken_flooring{
 	tag = "icon-singular (EAST)";
 	icon_state = "singular";
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/open/space,
 /area/space)
-"bF" = (
+"bC" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-side (EAST)";
-	icon_state = "side";
-	dir = 4
-	},
-/turf/open/space,
-/area/ruin/unpowered)
-"bE" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-corner (WEST)";
+	tag = "icon-corner (NORTH)";
 	icon_state = "corner";
-	dir = 8
+	dir = 1
 	},
 /turf/open/space,
 /area/ruin/unpowered)
@@ -537,98 +585,50 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered)
-"bC" = (
+"bE" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-corner (NORTH)";
+	tag = "icon-corner (WEST)";
 	icon_state = "corner";
-	dir = 1
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/unpowered)
-"bB" = (
+"bF" = (
+/obj/structure/lattice,
+/obj/structure/fluff/broken_flooring{
+	tag = "icon-side (EAST)";
+	icon_state = "side";
+	dir = 4
+	},
+/turf/open/space,
+/area/ruin/unpowered)
+"bG" = (
 /obj/structure/fluff/broken_flooring{
 	tag = "icon-singular (EAST)";
 	icon_state = "singular";
 	dir = 4
 	},
-/obj/structure/lattice,
 /turf/open/space,
 /area/space)
-"bA" = (
+"bH" = (
 /obj/structure/fluff/broken_flooring{
-	icon_state = "singular"
+	icon_state = "plating";
+	name = "broken plating"
 	},
+/obj/structure/lattice,
 /turf/open/space,
-/area/space)
-"bz" = (
+/area/ruin/unpowered)
+"bI" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
+	tag = "icon-plating (WEST)";
 	name = "broken plating";
 	icon_state = "plating";
-	dir = 4
+	dir = 8
 	},
 /turf/open/space,
 /area/ruin/unpowered)
-"by" = (
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (EAST)";
-	icon_state = "pile";
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/ruin/unpowered)
-"bx" = (
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 4
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/ruin/unpowered)
-"bw" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
-	name = "broken plating";
-	icon_state = "plating";
-	dir = 1
-	},
-/turf/open/space,
-/area/ruin/unpowered)
-"bv" = (
-/obj/structure/fluff/broken_flooring{
-	icon_state = "pile"
-	},
-/turf/open/space,
-/area/space)
-"bu" = (
-/obj/structure/fluff/broken_flooring,
-/turf/open/space,
-/area/ruin/unpowered)
-"bt" = (
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-side (NORTH)";
-	icon_state = "side";
-	dir = 1
-	},
-/obj/structure/lattice,
-/turf/open/space,
-/area/ruin/unpowered)
-"bs" = (
-/obj/structure/lattice,
-/obj/structure/fluff/broken_flooring{
-	tag = "icon-singular (NORTH)";
-	icon_state = "singular";
-	dir = 1
-	},
-/turf/open/space,
-/area/space)
 
 (1,1,1) = {"
 aa
