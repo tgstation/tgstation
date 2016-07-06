@@ -842,9 +842,6 @@
 		qdel(malf)
 	src.occupier.verbs += /mob/living/silicon/ai/proc/corereturn
 	src.occupier.cancel_camera()
-	if ((seclevel2num(get_security_level()) == SEC_LEVEL_DELTA) && malf.nuking)
-		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-			point.the_disk = src //the pinpointer will detect the shunted AI
 
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
@@ -856,11 +853,6 @@
 		src.occupier.parent.adjustOxyLoss(src.occupier.getOxyLoss())
 		src.occupier.parent.cancel_camera()
 		qdel(src.occupier)
-		if (seclevel2num(get_security_level()) == SEC_LEVEL_DELTA)
-			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-				for(var/mob/living/silicon/ai/A in ai_list)
-					if((A.stat != DEAD) && A.nuking)
-						point.the_disk = A //The pinpointer tracks the AI back into its core.
 
 	else
 		src.occupier << "<span class='danger'>Primary core damaged, unable to return core processes.</span>"
@@ -868,8 +860,8 @@
 			src.occupier.loc = src.loc
 			src.occupier.death()
 			src.occupier.gib()
-			for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-				point.the_disk = null //the pinpointer will go back to pointing at the nuke disc.
+			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+				P.switch_mode_to("nuclear") //Pinpointers go back to tracking the nuke disk
 
 
 /obj/machinery/power/apc/surplus()
