@@ -24,7 +24,7 @@
 /mob/new_player/proc/poll_player(pollid)
 	if(!pollid)
 		return
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/select_query = dbcon.NewQuery("SELECT starttime, endtime, question, polltype, multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
@@ -344,7 +344,7 @@
 	var/table = "poll_vote"
 	if (text)
 		table = "poll_textreply"
-	if(!dbcon.IsConnected())
+	if (!establish_db_connection())
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM `[format_table_name(table)]` WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -366,14 +366,17 @@
 		if (!usr || !src)
 			return 0
 		//we gots ourselfs a dirty cheater on our hands!
-		log_game("[usr]([usr.ckey]) attempted to rig the vote by voting as [ckey]")
-		message_admins("[usr]([usr.ckey]) attempted to rig the vote by voting as [ckey]")
-		usr << "You don't seem to be [ckey]."
-		src << "Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this"
+		log_game("[key_name(usr)] attempted to rig the vote by voting as [ckey]")
+		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [ckey]")
+		usr << "<span class='danger'>You don't seem to be [ckey].</span>"
+		src << "<span class='danger'>Something went horribly wrong processing your vote. Please contact an administrator, they should have gotten a message about this</span>"
 		return 0
 	return 1
 
 /mob/new_player/proc/vote_valid_check(pollid, holder, type)
+	if (!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	pollid = text2num(pollid)
 	if (!pollid || pollid < 0)
 		return 0
@@ -398,6 +401,9 @@
 	return 1
 
 /mob/new_player/proc/vote_on_irv_poll(pollid, list/votelist)
+	if (!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	if (!vote_rig_check())
 		return 0
 	pollid = text2num(pollid)
@@ -406,9 +412,6 @@
 	if (!votelist || !istype(votelist) || !votelist.len)
 		return 0
 	if (!client)
-		return 0
-	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return 0
 	//save these now so we can still process the vote if the client goes away while we process.
 	var/datum/admins/holder = client.holder
@@ -444,7 +447,7 @@
 			src << "<span class='danger'>Votes for choices that do not appear to be in the poll detected<span>"
 			return 0
 	if (!numberedvotelist.len)
-		src << "<span class='danger'>Invalid vote data<span>"
+		src << "<span class='danger'>Invalid vote data</span>"
 		return 0
 
 	//lets add the vote, first we generate a insert statement.
@@ -467,13 +470,16 @@
 	if(!query_insert.Execute())
 		var/err = query_insert.ErrorMsg()
 		log_game("SQL ERROR adding vote to table. Error : \[[err]\]\n")
-		src << "<span class='danger'>Error adding vote."
+		src << "<span class='danger'>Error adding vote.</span>"
 		return 0
 	src << browse(null,"window=playerpoll")
 	return 1
 
 
 /mob/new_player/proc/vote_on_poll(pollid, optionid)
+	if(!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	if (!vote_rig_check())
 		return 0
 	if(!pollid || !optionid)
@@ -493,6 +499,9 @@
 	return 1
 
 /mob/new_player/proc/log_text_poll_reply(pollid, replytext)
+	if(!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	if (!vote_rig_check())
 		return 0
 	if(!pollid)
@@ -519,6 +528,9 @@
 	return 1
 
 /mob/new_player/proc/vote_on_numval_poll(pollid, optionid, rating)
+	if(!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	if (!vote_rig_check())
 		return 0
 	if(!pollid || !optionid || !rating)
@@ -526,9 +538,6 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_RATING))
 		return 0
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
-		return
 	var/DBQuery/query_hasvoted = dbcon.NewQuery("SELECT id FROM [format_table_name("poll_vote")] WHERE optionid = [optionid] AND ckey = '[ckey]'")
 	if(!query_hasvoted.Execute())
 		var/err = query_hasvoted.ErrorMsg()
@@ -549,6 +558,9 @@
 	return 1
 
 /mob/new_player/proc/vote_on_multi_poll(pollid, optionid)
+	if(!establish_db_connection())
+		src << "<span class='danger'>Failed to establish database connection.</span>"
+		return 0
 	if (!vote_rig_check())
 		return 0
 	if(!pollid || !optionid)
@@ -556,9 +568,6 @@
 	//validate the poll
 	if (!vote_valid_check(pollid, client.holder, POLLTYPE_MULTI))
 		return 0
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
-		return 1
 	var/DBQuery/query_get_choicelen = dbcon.NewQuery("SELECT multiplechoiceoptions FROM [format_table_name("poll_question")] WHERE id = [pollid]")
 	if(!query_get_choicelen.Execute())
 		var/err = query_get_choicelen.ErrorMsg()
