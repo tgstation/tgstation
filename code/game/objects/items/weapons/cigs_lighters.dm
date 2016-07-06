@@ -409,6 +409,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	item_state = "cigar"
 	smoketime = 1500
 	chem_volume = 20
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "Cohiba Robusto Cigar"
@@ -436,6 +437,7 @@ MATCHBOXES ARE ALSO IN FANCY.DM
 	name = "cigar butt"
 	desc = "A manky old cigar butt."
 	icon_state = "cigarbutt"
+	species_fit = list(VOX_SHAPED)
 
 /*
 //I'll light my cigar with an energy sword if I want to, thanks
