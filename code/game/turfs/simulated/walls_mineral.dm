@@ -183,6 +183,7 @@
 	icon_state = "abductor"
 	walltype = "abductor"
 	mineral = "abductor"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
