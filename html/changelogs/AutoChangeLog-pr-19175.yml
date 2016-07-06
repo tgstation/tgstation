@@ -1,4 +1,0 @@
-author: "RemieRichards"
-delete-after: True
-changes: 
-  - tweak: "Fixes accidental buff to botany, all modifiers should now be at the point they were at pre-bees (this does not remove, nerf or alter bees)"
