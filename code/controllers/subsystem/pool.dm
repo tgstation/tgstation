@@ -3,10 +3,10 @@ var/datum/subsystem/pool/SSpool
 /datum/subsystem/pool
 	name = "Pool"
 	init_order = 20
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_FIRE_IN_LOBBY
 	var/list/global_pool
 	var/list/pool_levels = list()
-	var/sum
+	var/sum = 0
 
 	var/list/maintained_types = list(
 		/obj/item/stack/tile/plasteel = 100
@@ -22,7 +22,6 @@ var/datum/subsystem/pool/SSpool
 
 /datum/subsystem/pool/Initialize(timeofday)
 	global_pool = GlobalPool
-	..()
 
 /datum/subsystem/pool/stat_entry(msg)
 	if(global_pool)
@@ -33,15 +32,16 @@ var/datum/subsystem/pool/SSpool
 
 /datum/subsystem/pool/fire()
 	sum = 0
-	for(var/type in global_pool)
+	for(var/type in global_pool + maintained_types)
 		var/list/L = global_pool[type]
 		var/required_number = 0
 		if(type in maintained_types)
 			required_number = maintained_types[type]
 
 		// Update pool levels and tracker
-		var/amount = L.len
-		pool_levels["[type]"] = amount
+		var/amount = 0
+		if(L)
+			amount = L.len
 		sum += amount
 
 		// why yes, just inflate the pool at one item per tick

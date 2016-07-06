@@ -97,7 +97,7 @@ var/global/list/GlobalPool = list()
 		return
 
 	if(SSpool)
-		INCREMENT_TALLY(SSpool.stats_placed_in_pool, get_type)
+		INCREMENT_TALLY(SSpool.stats_placed_in_pool, diver.type)
 
 	if(!GlobalPool[diver.type])
 		GlobalPool[diver.type] = list()

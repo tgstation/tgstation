@@ -55,8 +55,6 @@ def stage3(profile_mode=False):
                 time_taken = time.time() - start_time
                 print("{} seconds for initial map loading".format(time_taken))
                 if profile_mode:
-                    p.terminate()
-                    p.kill()
                     return time_taken
             sys.stdout.write(stdout)
             sys.stdout.flush()
