@@ -1091,18 +1091,6 @@ proc/get_mob_with_client_list()
 			return zone
 
 /*
-	get_turf(): Returns the turf that contains the atom.
-	Example: A fork inside a box inside a locker will return the turf the locker is standing on.
-	The weird for loop with an empty statement is apparently the fastest way possible to do this.
-*/
-/proc/get_turf(const/atom/O)
-	if(!istype(O) || isarea(O))
-		return
-	var/atom/A
-	for(A=O, A && !isturf(A), A=A.loc);  // semicolon is for the empty statement
-	return A
-
-/*
 	get_holder_at_turf_level(): Similar to get_turf(), will return the "highest up" holder of this atom, excluding the turf.
 	Example: A fork inside a box inside a locker will return the locker. Essentially, get_just_before_turf().
 */
