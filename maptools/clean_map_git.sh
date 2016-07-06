@@ -4,7 +4,7 @@
 MAPROOT="../maps/"
 MAPFILES=(
 	$MAPROOT"tgstation.dmm"
-	$MAPROOT"vgstation.dmm"
+#	$MAPROOT"vgstation.dmm"
 	$MAPROOT"defficiency.dmm"
 	$MAPROOT"taxistation.dmm"
 	$MAPROOT"metaclub.dmm"
