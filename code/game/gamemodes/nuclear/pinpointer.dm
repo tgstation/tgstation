@@ -20,8 +20,7 @@
 	pinpointer_list += src
 
 /obj/item/weapon/pinpointer/Destroy()
-	active = 0
-	pinpointer_list -= src
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/item/weapon/pinpointer/attack_self(mob/living/user)
@@ -38,13 +37,13 @@
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
 	switch(mode)
-		if("nuclear")
+		if(TRACK_NUKE_DISK)
 			user << "Its tracking indicator reads \"nuclear_disk\"."
-		if("malf_ai")
+		if(TRACK_MALF_AI)
 			user << "Its tracking indicator reads \"01000001 01001001\"."
-		if("infiltrator")
+		if(TRACK_INFILTRATOR)
 			user << "Its tracking indicator reads \"vasvygengbefuvc\"."
-		if("operative")
+		if(TRACK_OPERATIVES)
 			user << "Its tracking indicator reads \"[target ? "Operative [target]" : "friends"]\"."
 		else
 			user << "Its tracking indicator is blank."
