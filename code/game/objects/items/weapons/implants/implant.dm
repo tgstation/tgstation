@@ -197,6 +197,9 @@ Implant Specifics:<BR>"}
 					part.droplimb(1)
 			explosion(get_turf(imp_in), -1, -1, 2, 3, 3)
 			qdel(src)
+//emp proof implant for nuclear operatives
+/obj/item/weapon/implant/explosive/nuclear/emp_act(severity)
+	return
 
 /obj/item/weapon/implant/chem
 	name = "chem"
