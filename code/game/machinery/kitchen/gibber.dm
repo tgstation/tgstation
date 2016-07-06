@@ -57,53 +57,6 @@ obj/machinery/gibber/New()
 	else
 		to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
 
-//auto-gibs anything that bumps into it
-/obj/machinery/gibber/autogibber
-	var/list/allowedTypes=list(
-		/mob/living/carbon/human,
-		/mob/living/carbon/alien,
-		/mob/living/carbon/monkey,
-		/mob/living/simple_animal/corgi
-	)
-	var/turf/input_plate
-
-/obj/machinery/gibber/autogibber/New()
-	..()
-	spawn(5)
-		for(var/i in cardinal)
-			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
-			if(input_obj)
-				if(isturf(input_obj.loc))
-					input_plate = input_obj.loc
-					qdel(input_obj)
-					break
-
-		if(!input_plate)
-			diary << "a [src] didn't find an input plate."
-			return
-
-/obj/machinery/gibber/autogibber/process()
-	if(!input_plate) return
-	if(stat & (BROKEN | NOPOWER))
-		return
-	use_power(100)
-
-	var/affecting = input_plate.contents		// moved items will be all in loc
-	spawn(1)	// slight delay to prevent infinite propagation due to map order	//TODO: please no spawn() in process(). It's a very bad idea
-		for(var/atom/movable/A in affecting)
-			if(ismob(A))
-				var/mob/M = A
-
-				if(M.loc == input_plate)
-					//var/found=0
-					for(var/t in allowedTypes)
-						if(istype(M,t))
-							//found=1
-							M.loc = src
-							startautogibbing(M)
-							break
-
-
 /obj/machinery/gibber/New()
 	..()
 	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
@@ -163,7 +116,7 @@ obj/machinery/gibber/New()
 	src.add_fingerprint(user)
 	if(do_after(user, src, 30) && G && G.affecting && !occupant)
 		user.visible_message("<span class='warning'>[user] stuffs [G.affecting] into the gibber!</span>", \
-			drugged_message = "<span class='warning'>[G.affecting] suddenly disappears! How did he do that?</span>")
+			drugged_message = "<span class='warning'>[G.affecting] suddenly disappears! How did \he do that?</span>")
 		var/mob/M = G.affecting
 		if(M.client)
 			M.client.perspective = EYE_PERSPECTIVE
@@ -237,7 +190,7 @@ obj/machinery/gibber/New()
 		return
 	if(!src.occupant)
 		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>", \
-			drugged_message = "<span class='warning'>You fainly hear a guitar solo.</span>")
+			drugged_message = "<span class='warning'>You faintly hear a guitar solo.</span>")
 		return
 	use_power(1000)
 	visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>", \
@@ -277,7 +230,7 @@ obj/machinery/gibber/New()
 		src.occupant.LAssailant = user
 
 	src.occupant.death(1)
-	src.occupant.ghostize()
+	src.occupant.ghostize(0)
 
 	qdel(src.occupant)
 	src.occupant = null
@@ -295,18 +248,43 @@ obj/machinery/gibber/New()
 		src.operating = 0
 		update_icon()
 
-/obj/machinery/gibber/proc/startautogibbing(mob/living/victim as mob)
-	if(src.operating)
+
+
+//auto-gibs anything that bumps into it
+/obj/machinery/gibber/autogibber
+	name = "autogibber"
+	desc = "Keep far, far away."
+	icon_state = "autogibber"
+
+/obj/machinery/gibber/autogibber/New()
+	..()
+	overlays = null
+
+/obj/machinery/gibber/autogibber/attack_hand(mob/user as mob)
+	Bumped(user)
+
+/obj/machinery/gibber/autogibber/attackby(var/obj/item/O as obj, var/mob/user as mob)
+	Bumped(user)
+
+/obj/machinery/gibber/autogibber/Bumped(var/atom/A)
+	if(stat & (BROKEN | NOPOWER))
 		return
+	use_power(100)
+	if(isliving(A))
+		var/mob/living/M = A
+		M.visible_message("<span class='warning'>[M] is forcefully sucked into \the [src]!</span>", \
+			drugged_message = "<span class='warning'>[M] suddenly vanishes! How did \he do that?</span>")
+		M.forceMove(src)
+		startautogibbing(M)
+
+/obj/machinery/gibber/autogibber/proc/startautogibbing(mob/living/victim as mob)
 	if(!victim)
 		visible_message("<span class='warning'>You hear a loud metallic grinding sound.</span>", \
-			drugged_message = "<span class='warning'>You fainly hear a guitar solo.</span>")
+			drugged_message = "<span class='warning'>You faintly hear a guitar solo.</span>")
 		return
 	use_power(1000)
 	visible_message("<span class='warning'>You hear a loud squelchy grinding sound.</span>", \
 		drugged_message = "<span class='warning'>You hear a band performance.</span>")
-	src.operating = 1
-	update_icon()
 	var/sourcename = victim.real_name
 	var/sourcejob = victim.job
 	var/sourcenutriment = victim.nutrition / 15
@@ -320,21 +298,22 @@ obj/machinery/gibber/New()
 	for (var/i=1 to totalslabs)
 		var/obj/item/weapon/reagent_containers/food/snacks/meat/newmeat = null
 		if(istype(victim, /mob/living/carbon/human))
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/human_meat = new
-			human_meat.name = sourcename + newmeat.name
-			human_meat.subjectname = sourcename
-			human_meat.subjectjob = sourcejob
+			var/obj/item/weapon/reagent_containers/food/snacks/meat/human/newhmeat = new /obj/item/weapon/reagent_containers/food/snacks/meat/human(src)
+			newhmeat.name = sourcename + newhmeat.name
+			newhmeat.subjectname = sourcename
+			newhmeat.subjectjob = sourcejob
+			newmeat = newhmeat
 
-			newmeat = human_meat
 		else
 			newmeat = victim.drop_meat(src)
 
 		if(newmeat==null)
 			return
+
 		newmeat.reagents.add_reagent (NUTRIMENT, sourcenutriment / totalslabs) // Thehehe. Fat guys go first
 
 		if(victim.reagents)
-			victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from the
+			victim.reagents.trans_to (newmeat, round (sourcetotalreagents / totalslabs, 1)) // Transfer all the reagents from them
 
 		allmeat[i] = newmeat
 
@@ -353,17 +332,15 @@ obj/machinery/gibber/New()
 		else
 			var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
 			O.New(Tx,2)
+	else
+		victim.ghostize(0)
 	qdel(victim)
-	spawn(src.gibtime)
-		playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
-		operating = 0
-		for (var/i=1 to totalslabs)
-			var/obj/item/meatslab = allmeat[i]
-			var/turf/Tx = locate(src.x - i, src.y, src.z)
-			meatslab.loc = src.loc
-			meatslab.throw_at(Tx,i,3)
-			if (!Tx.density)
-				var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
-				O.New(Tx,i)
-		src.operating = 0
-		update_icon()
+	playsound(get_turf(src), 'sound/effects/gib2.ogg', 50, 1)
+	for (var/i=1 to totalslabs)
+		var/obj/item/meatslab = allmeat[i]
+		var/turf/Tx = locate(src.x - i, src.y, src.z)
+		meatslab.forceMove(src.loc)
+		meatslab.throw_at(Tx,i,3)
+		if (!Tx.density)
+			var/obj/effect/decal/cleanable/blood/gibs/O = getFromPool(/obj/effect/decal/cleanable/blood/gibs, Tx)
+			O.New(Tx,i)

@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- bugfix: "The admin spawnable autogibber now actually works. I recommend not walking into it, trying to touch it with a tool, or trying to touch it with your hand."
