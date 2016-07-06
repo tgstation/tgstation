@@ -62,7 +62,12 @@
 		return
 	if (istype(M, /atom/movable))
 		if(istype(M, /mob/living/simple_animal/hostile/megafauna))
-			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src].")
+			var/mob/living/T
+			var/mob/living/simple_animal/hostile/H = M
+			if(H.target)
+				T = H.target
+			message_admins("[M] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) has teleported through [src]. Last targeting: [key_name_admin(T)]")
+
 		do_teleport(M, target, precision) ///You will appear adjacent to the beacon
 
 

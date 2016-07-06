@@ -40,10 +40,13 @@
 	if(!.)
 		return
 	var/turf/newloc = loc
+	var/mob/living/T
+	if(target)
+		T = target
 	message_admins("Megafauna [src] \
 		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[src]'>FLW</A>) \
 		moved via shuttle from ([oldloc.x],[oldloc.y],[oldloc.z]) to \
-		([newloc.x],[newloc.y],[newloc.z])")
+		([newloc.x],[newloc.y],[newloc.z]) Last targeting: [key_name_admin(T)]")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(L.stat == DEAD)
