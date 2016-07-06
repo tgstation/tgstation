@@ -459,6 +459,11 @@ var/list/ai_list = list()
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
 
 /mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+	switch(Proj.damage_type)
+		if(BRUTE)
+			adjustBruteLoss(Proj.damage)
+		if(BURN)
+			adjustFireLoss(Proj.damage)
 	..(Proj)
 	updatehealth()
 	return 2
