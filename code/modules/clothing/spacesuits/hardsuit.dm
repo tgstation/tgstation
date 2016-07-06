@@ -88,6 +88,34 @@
 		jetpack = new jetpack(src)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
+		if(jetpack)
+			user << "<span class='warning'>[src] already has a jetpack installed.</span>"
+			return
+		if(src == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
+			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
+			return
+
+		if(user.unEquip(I))
+			jetpack = I
+			I.loc = src
+			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"
+
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!jetpack)
+			user << "<span class='warning'>[src] has no jetpack installed.</span>"
+			return
+		if(src == user.get_item_by_slot(slot_wear_suit))
+			user << "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>"
+			return
+
+		jetpack.turn_off()
+		jetpack.loc = get_turf(src)
+		jetpack = null
+		user << "<span class='notice'>You successfully remove the jetpack from [src].</span>"
+
+
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
