@@ -777,7 +777,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	name = "Vitality Matrix"
 	desc = "Scribes a sigil beneath the invoker which drains life from any living non-servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-servants. \
 	Dead servants can be revived by this sigil if it has enough stored vitality."
-	invocations = list("Qvivavgl...", "fgr-ny gur've yvsr...", "sbe gur'fr furyyf!")
+	invocations = list("Qvivavgl...", "...fgr-ny gur've yvsr...", "...sbe gur'fr furyyf!")
 	channel_time = 70
 	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 3, "hierophant_ansible" = 1)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 2, "hierophant_ansible" = 1)
@@ -796,7 +796,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br> \
 	Unlike holoparasites, however, it does not transfer the damage it takes to you, instead simply gaining Fatigue as it is attacked. Marauders cannot move too far from their hosts, \
 	and will gain Fatigue at an increasing rate as they grow farther away. At maximum Fatigue, the marauder is forced to return to you and will be unable to manifest until its Fatigue is at zero."
-	invocations = list("Sevtug'f jvyy...", "...Pnyy sbegu...")
+	invocations = list("Sevtug'f jvyy...", "...pnyy sbegu...")
 	channel_time = 100
 	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 2)
@@ -827,7 +827,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.apply_damage(10, BRUTE, "head")
 		slab.busy = null
 		return 0
-	clockwork_say(invoker, "...Gur zvaq znqr...")
+	clockwork_say(invoker, "...gur zvaq znqr...")
 	invoker.notransform = FALSE
 	slab.busy = null
 	if(!check_special_requirements())
@@ -840,7 +840,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		invoker.visible_message("<span class='warning'>The tendril retracts from [invoker]'s head, sealing the entry wound as it does so!</span>", \
 		"<span class='warning'>The tendril was unsuccessful! Perhaps you should try again another time.</span>")
 		return 0
-	clockwork_say(invoker, "...Fjbeq-naq-fuvryq!")
+	clockwork_say(invoker, "...fjbeq-naq-fuvryq!")
 	var/mob/dead/observer/theghost = pick(marauder_candidates)
 	var/mob/living/simple_animal/hostile/clockwork/marauder/M = new(invoker)
 	M.key = theghost.key
