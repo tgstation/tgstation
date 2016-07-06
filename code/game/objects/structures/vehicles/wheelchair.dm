@@ -97,14 +97,14 @@
 		var/mob/living/carbon/human/H = user
 
 		if(H.l_hand == null) left_hand_exists++ //Check to see if left hand is holding anything
-		var/datum/organ/external/left_hand = H.get_organ("l_hand")
+		var/datum/organ/external/left_hand = H.get_organ(LIMB_LEFT_HAND)
 		if(!left_hand)
 			left_hand_exists = 0
 		else if(left_hand.status & ORGAN_DESTROYED)
 			left_hand_exists = 0
 
 		if(H.r_hand == null) right_hand_exists++
-		var/datum/organ/external/right_hand = H.get_organ("r_hand")
+		var/datum/organ/external/right_hand = H.get_organ(LIMB_RIGHT_HAND)
 		if(!right_hand)
 			right_hand_exists = 0
 		else if(right_hand.status & ORGAN_DESTROYED)
@@ -265,9 +265,9 @@
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/damage = rand(5,10) //We're not as heavy as a MULE. Where it does 30-90 damage, we do 15-30 damage
-	H.apply_damage(damage, BRUTE, "chest")
-	H.apply_damage(damage, BRUTE, "l_leg")
-	H.apply_damage(damage, BRUTE, "r_leg")
+	H.apply_damage(damage, BRUTE, LIMB_CHEST)
+	H.apply_damage(damage, BRUTE, LIMB_LEFT_LEG)
+	H.apply_damage(damage, BRUTE, LIMB_RIGHT_LEG)
 
 /obj/item/syndicate_wheelchair_kit
 	name = "Compressed Wheelchair Kit"

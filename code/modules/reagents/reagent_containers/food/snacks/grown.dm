@@ -115,7 +115,7 @@
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(!H.check_body_part_coverage(FEET))
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+				var/datum/organ/external/affecting = H.get_organ(pick(LIMB_LEFT_FOOT, LIMB_RIGHT_FOOT))
 				if(affecting && affecting.is_organic())
 					if(thorns_apply_damage(M, affecting))
 						to_chat(H, "<span class='danger'>You step on \the [src]'s sharp thorns!</span>")
@@ -138,7 +138,7 @@
 			return
 		if(H.check_body_part_coverage(HANDS))
 			return
-		var/datum/organ/external/affecting = H.get_organ(pick("r_hand","l_hand"))
+		var/datum/organ/external/affecting = H.get_organ(pick(LIMB_RIGHT_HAND,LIMB_LEFT_HAND))
 		if(!affecting || !affecting.is_organic())
 			return
 		if(stinging_apply_reagents(H))
@@ -152,7 +152,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/On_Consume(var/mob/living/carbon/human/H)
 	if(seed.thorny && istype(H))
-		var/datum/organ/external/affecting = H.get_organ("head")
+		var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 		if(affecting)
 			if(thorns_apply_damage(H, affecting))
 				to_chat(H, "<span class='danger'>Your mouth is cut by \the [src]'s sharp thorns!</span>")

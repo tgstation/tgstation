@@ -242,7 +242,7 @@
 
 		body.invisibility = 101
 
-		var/datum/organ/external/head_organ = body.get_organ("head")
+		var/datum/organ/external/head_organ = body.get_organ(LIMB_HEAD)
 		if(head_organ.status & ORGAN_DESTROYED)
 			new /obj/effect/decal/remains/human/noskull(T)
 			anim(target = T, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h2-nohead", sleeptime = 26)

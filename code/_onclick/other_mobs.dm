@@ -128,7 +128,7 @@
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 	var/mob/living/carbon/ML = A
-	var/dam_zone = ran_zone(pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+	var/dam_zone = ran_zone(pick(LIMB_CHEST, LIMB_LEFT_HAND, LIMB_RIGHT_HAND, LIMB_LEFT_LEG, LIMB_RIGHT_LEG))
 	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)

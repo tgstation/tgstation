@@ -211,7 +211,7 @@
 /mob/living/carbon/monkey/getarmor(var/def_zone, var/type)
 
 	var/armorscore = 0
-	if((def_zone == "head") || (def_zone == "eyes") || (def_zone == "head"))
+	if((def_zone == LIMB_HEAD) || (def_zone == "eyes") || (def_zone == LIMB_HEAD))
 		if(hat)
 			armorscore = hat.armor[type]
 	else

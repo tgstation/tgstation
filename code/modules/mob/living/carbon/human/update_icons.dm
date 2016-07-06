@@ -192,7 +192,7 @@ var/global/list/damage_icon_parts = list()
 	var/g = "m"
 	if(gender == FEMALE)	g = "f"
 
-	var/datum/organ/external/chest = get_organ("chest")
+	var/datum/organ/external/chest = get_organ(LIMB_CHEST)
 	stand_icon = chest.get_icon(g,fat)
 	if(!skeleton)
 		if(husk)
@@ -201,7 +201,7 @@ var/global/list/damage_icon_parts = list()
 			var/list/TONE = ReadRGB(hulk_color_mod)
 			stand_icon.MapColors(rgb(TONE[1],0,0),rgb(0,TONE[2],0),rgb(0,0,TONE[3]))
 
-	var/datum/organ/external/head = get_organ("head")
+	var/datum/organ/external/head = get_organ(LIMB_HEAD)
 	var/has_head = 0
 	if(head && !(head.status & ORGAN_DESTROYED))
 		has_head = 1
@@ -288,7 +288,7 @@ var/global/list/damage_icon_parts = list()
 
 	overlays -= obj_overlays[HAIR_LAYER]
 
-	var/datum/organ/external/head/head_organ = get_organ("head")
+	var/datum/organ/external/head/head_organ = get_organ(LIMB_HEAD)
 	if( !head_organ || (head_organ.status & ORGAN_DESTROYED) )
 		if(update_icons)   update_icons()
 		return

@@ -4,7 +4,7 @@
 		return //Can't bite yourself
 
 //Vampire code
-	if(M.zone_sel && M.zone_sel.selecting == "head" && src != M)
+	if(M.zone_sel && M.zone_sel.selecting == LIMB_HEAD && src != M)
 		if(M.mind && isvampire(M) && !M.mind.vampire.draining)
 			if(src.check_body_part_coverage(MOUTH))
 				to_chat(M, "<span class='warning'>Remove their mask!</span>")

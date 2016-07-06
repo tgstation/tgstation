@@ -108,7 +108,7 @@
 	var/datum/organ/internal/heart/heart = target.internal_organs_by_name["heart"]
 	target.visible_message("<span class='danger'>[target] has been shocked in the chest with the [src] by [user]!</span>")
 	target.Weaken(rand(6,12))
-	target.apply_damage(rand(30,60),BURN,"chest")
+	target.apply_damage(rand(30,60),BURN,LIMB_CHEST)
 	heart.damage += rand(5,60)
 	target.emote("scream",,, 1) //If we're going this route, it kinda hurts
 	target.updatehealth()
@@ -135,17 +135,17 @@
 		charges--
 		update_icon()
 		to_chat(user, "<span class='notice'>You shock [target] with the paddles.</span>")
-		var/datum/organ/external/head/head = target.get_organ("head")
+		var/datum/organ/external/head/head = target.get_organ(LIMB_HEAD)
 		if(!head || head.status & ORGAN_DESTROYED || M_NOCLONE in target.mutations  || !target.has_brain() || target.suiciding == 1)
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 			return
 		if(target.wear_suit && istype(target.wear_suit,/obj/item/clothing/suit/armor) && prob(95)) //75 ? Let's stay realistic here
 			to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>")
-			target.apply_damage(rand(1,5),BURN,"chest")
+			target.apply_damage(rand(1,5),BURN,LIMB_CHEST)
 			return
 		if(target.w_uniform && istype(target.w_uniform,/obj/item/clothing/under) && prob(50))
 			to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Please apply on bare skin.</span>")
-			target.apply_damage(rand(1,5),BURN,"chest")
+			target.apply_damage(rand(1,5),BURN,LIMB_CHEST)
 			return
 		if(target.mind && !target.client) //Let's call up the ghost! Also, bodies with clients only, thank you.
 			for(var/mob/dead/observer/ghost in player_list)

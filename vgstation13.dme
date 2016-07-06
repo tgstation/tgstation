@@ -20,6 +20,7 @@
 #include "code\__DEFINES\atom_locking.dm"
 #include "code\__DEFINES\error_hander.dm"
 #include "code\__DEFINES\lighting.dm"
+#include "code\__DEFINES\limb_defines.dm"
 #include "code\__HELPERS\_macros.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\constants.dm"

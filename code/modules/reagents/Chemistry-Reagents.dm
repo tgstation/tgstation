@@ -381,7 +381,7 @@
 
 				if(!M.unacidable)
 					if(prob(15) && volume >= 30)
-						var/datum/organ/external/affecting = H.get_organ("head")
+						var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 						if(affecting)
 							if(affecting.take_damage(25, 0))
 								H.UpdateDamageIcon(1)
@@ -813,7 +813,7 @@
 
 					if(!H.unacidable)
 						if(prob(15) && volume >= 30)
-							var/datum/organ/external/affecting = H.get_organ("head")
+							var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 							if(affecting)
 								if(!(VAMP_MATURE in H.mind.vampire.powers))
 									to_chat(H, "<span class='danger'>A freezing liquid covers your face. Its melting!</span>")
@@ -1108,7 +1108,7 @@
 				var/mob/living/carbon/human/H = M
 				if(H.species.name == "Grey")
 					return //Greys lurve dem some sacid
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 				if(affecting)
 					if(affecting.take_damage(25, 0))
 						H.UpdateDamageIcon(1)
@@ -1179,7 +1179,7 @@
 				return
 
 			if(!H.unacidable)
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 				if(affecting.take_damage(15, 0))
 					H.UpdateDamageIcon(1)
 				H.emote("scream", , , 1)
@@ -1202,7 +1202,7 @@
 		if(!M.unacidable)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/datum/organ/external/affecting = H.get_organ(LIMB_HEAD)
 				if(affecting.take_damage(15, 0))
 					H.UpdateDamageIcon(1)
 				H.emote("scream", , , 1)
@@ -2067,7 +2067,7 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/chest/C = H.get_organ("chest")
+		var/datum/organ/external/chest/C = H.get_organ(LIMB_CHEST)
 		for(var/datum/organ/internal/I in C.internal_organs)
 			if(I.damage > 0)
 				I.damage -= 0.20
@@ -4894,7 +4894,7 @@ var/global/list/chifir_doesnt_remove = list("chifir", "blood")
 	M.dir = prev_dir
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		for(var/zone in list("l_leg", "r_leg", "l_foot", "r_foot"))
+		for(var/zone in list(LIMB_LEFT_LEG, LIMB_RIGHT_LEG, LIMB_LEFT_FOOT, LIMB_RIGHT_FOOT))
 			H.HealDamage(zone, rand(1, 3), rand(1, 3)) //Thank you Gyro
 
 /datum/reagent/drink/tea/dantea

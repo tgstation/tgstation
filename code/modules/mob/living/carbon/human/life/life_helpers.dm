@@ -139,15 +139,15 @@
 
 	switch(body_part)
 		if(HEAD)
-			apply_damage(2.5*discomfort, BURN, "head")
+			apply_damage(2.5*discomfort, BURN, LIMB_HEAD)
 		if(UPPER_TORSO)
-			apply_damage(2.5*discomfort, BURN, "chest")
+			apply_damage(2.5*discomfort, BURN, LIMB_CHEST)
 		if(LEGS)
-			apply_damage(0.6*discomfort, BURN, "l_leg")
-			apply_damage(0.6*discomfort, BURN, "r_leg")
+			apply_damage(0.6*discomfort, BURN, LIMB_LEFT_LEG)
+			apply_damage(0.6*discomfort, BURN, LIMB_RIGHT_LEG)
 		if(ARMS)
-			apply_damage(0.4*discomfort, BURN, "l_arm")
-			apply_damage(0.4*discomfort, BURN, "r_arm")
+			apply_damage(0.4*discomfort, BURN, LIMB_LEFT_ARM)
+			apply_damage(0.4*discomfort, BURN, LIMB_RIGHT_ARM)
 */
 
 /mob/living/carbon/human/proc/get_covered_bodyparts()
@@ -170,8 +170,8 @@
 
 
 /mob/living/carbon/human/proc/randorgan()
-	var/randorgan = pick("head","chest","l_arm","r_arm","l_hand","r_hand","groin","l_leg","r_leg","l_foot","r_foot")
-	//var/randorgan = pick("head","chest","groin")
+	var/randorgan = pick(LIMB_HEAD,LIMB_CHEST,LIMB_LEFT_ARM,LIMB_RIGHT_ARM,LIMB_LEFT_HAND,LIMB_RIGHT_HAND,LIMB_GROIN,LIMB_LEFT_LEG,LIMB_RIGHT_LEG,LIMB_LEFT_FOOT,LIMB_RIGHT_FOOT)
+	//var/randorgan = pick(LIMB_HEAD,LIMB_CHEST,LIMB_GROIN)
 	return randorgan
 
 /mob/living/carbon/human/earprot()

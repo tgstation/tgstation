@@ -445,7 +445,7 @@
 
 			src.visible_message("<span class='danger'>[src] [attackVerb] [human]!</span>")
 			var/damage = 15
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			var/dam_zone = pick(LIMB_CHEST, LIMB_LEFT_HAND, LIMB_RIGHT_HAND, LIMB_LEFT_LEG, LIMB_RIGHT_LEG)
 			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))
 			var/armor = human.run_armor_check(affecting, "melee")
 			human.apply_damage(damage,BRUTE,affecting,armor)

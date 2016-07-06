@@ -175,7 +175,7 @@
 /datum/disease2/effect/organs/activate(var/mob/living/carbon/mob,var/multiplier)
 	if(istype(mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = mob
-		var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
+		var/organ = pick(list(LIMB_RIGHT_ARM,LIMB_LEFT_ARM,LIMB_RIGHT_LEG,LIMB_RIGHT_LEG))
 		var/datum/organ/external/E = H.organs_by_name[organ]
 		if (!(E.status & ORGAN_DEAD))
 			E.status |= ORGAN_DEAD
@@ -662,7 +662,7 @@ var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/mon
 	mob.emote("me",1,"exhales slowly.")
 
 	if(ishuman(H))
-		var/datum/organ/external/chest/chest = H.get_organ("chest")
+		var/datum/organ/external/chest/chest = H.get_organ(LIMB_CHEST)
 		for(var/datum/organ/internal/I in chest.internal_organs)
 			I.damage = 0
 

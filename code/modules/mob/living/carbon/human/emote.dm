@@ -427,7 +427,7 @@
 				var/t1 = round(text2num(param))
 
 				var/maximum_finger_amount = 0
-				for(var/datum/organ/external/OE in list(organs_by_name["l_hand"], organs_by_name["r_hand"]))
+				for(var/datum/organ/external/OE in list(organs_by_name[LIMB_LEFT_HAND], organs_by_name[LIMB_RIGHT_HAND]))
 					if(OE.is_usable())
 						maximum_finger_amount += 5
 

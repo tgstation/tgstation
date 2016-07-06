@@ -29,6 +29,6 @@
 				C.op_stage.butt = 4 //No having two butts.
 				to_chat(C, "<span class='warning'>Your ass just blew up!</span>")
 			playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
-			C.apply_damage(40, BRUTE, "groin")
-			C.apply_damage(10, BURN, "groin")
+			C.apply_damage(40, BRUTE, LIMB_GROIN)
+			C.apply_damage(10, BURN, LIMB_GROIN)
 	return

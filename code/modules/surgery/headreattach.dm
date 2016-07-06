@@ -14,7 +14,7 @@
 		if (affected.parent)
 			if (affected.parent.status & ORGAN_DESTROYED)
 				return 0
-		return target_zone == "head"
+		return target_zone == LIMB_HEAD
 
 
 

@@ -465,10 +465,10 @@ datum/gas_mixture/proc/calculate_firelevel(var/turf/T)
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 
-	apply_damage(2.5*mx*head_exposure, BURN, "head", 0, 0, "Fire")
-	apply_damage(2.5*mx*chest_exposure, BURN, "chest", 0, 0, "Fire")
-	apply_damage(2.0*mx*groin_exposure, BURN, "groin", 0, 0, "Fire")
-	apply_damage(0.6*mx*legs_exposure, BURN, "l_leg", 0, 0, "Fire")
-	apply_damage(0.6*mx*legs_exposure, BURN, "r_leg", 0, 0, "Fire")
-	apply_damage(0.4*mx*arms_exposure, BURN, "l_arm", 0, 0, "Fire")
-	apply_damage(0.4*mx*arms_exposure, BURN, "r_arm", 0, 0, "Fire")
+	apply_damage(2.5*mx*head_exposure, BURN, LIMB_HEAD, 0, 0, "Fire")
+	apply_damage(2.5*mx*chest_exposure, BURN, LIMB_CHEST, 0, 0, "Fire")
+	apply_damage(2.0*mx*groin_exposure, BURN, LIMB_GROIN, 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, LIMB_LEFT_LEG, 0, 0, "Fire")
+	apply_damage(0.6*mx*legs_exposure, BURN, LIMB_RIGHT_LEG, 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, LIMB_LEFT_ARM, 0, 0, "Fire")
+	apply_damage(0.4*mx*arms_exposure, BURN, LIMB_RIGHT_ARM, 0, 0, "Fire")

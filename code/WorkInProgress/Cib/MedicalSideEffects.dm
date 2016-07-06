@@ -67,7 +67,7 @@
 		if(51 to INFINITY)
 			H.custom_pain("It feels like your head is about to split open!",1)
 			H.adjustBrainLoss(3)
-			var/datum/organ/external/O = H.organs_by_name["head"]
+			var/datum/organ/external/O = H.organs_by_name[LIMB_HEAD]
 			O.take_damage(0, 1, 0, "Headache")
 
 /datum/medical_effect/headache/cure(mob/living/carbon/human/H)

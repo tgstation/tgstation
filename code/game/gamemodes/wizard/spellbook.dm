@@ -757,8 +757,8 @@
 			C.op_stage.butt = 4
 			to_chat(user, "<span class='warning'>Your ass just blew up!</span>")
 		playsound(get_turf(src), 'sound/effects/superfart.ogg', 50, 1)
-		C.apply_damage(40, BRUTE, "groin")
-		C.apply_damage(10, BURN, "groin")
+		C.apply_damage(40, BRUTE, LIMB_GROIN)
+		C.apply_damage(10, BURN, LIMB_GROIN)
 		qdel(src)
 
 /obj/item/weapon/spellbook/oneuse/lightning
@@ -768,8 +768,8 @@
 
 /obj/item/weapon/spellbook/oneuse/lightning/recoil(mob/living/carbon/user as mob)
 	if(istype(user, /mob/living/carbon/human))
-		user.apply_damage(25, BURN, "l_hand")
-		user.apply_damage(25, BURN, "r_hand")
+		user.apply_damage(25, BURN, LIMB_LEFT_HAND)
+		user.apply_damage(25, BURN, LIMB_RIGHT_HAND)
 		to_chat(user, "<span class = 'warning'>The book heats up and burns your hands!</span>")
 		qdel(src)
 

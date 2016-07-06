@@ -508,7 +508,7 @@ var/list/potential_theft_objectives=list(
 				already_completed = 1
 				return 1
 
-		var/datum/organ/external/head/head = H.get_organ("head")
+		var/datum/organ/external/head/head = H.get_organ(LIMB_HEAD)
 		if(head.disfigured)
 			return 1
 	return 0

@@ -163,9 +163,9 @@ obj/item/proc/get_clamped_volume()
 			if(istype(originator, /mob/living/simple_animal/borer))
 				var/mob/living/simple_animal/borer/B = originator
 				if(B.host == user)
-					if(B.hostlimb == "r_arm")
+					if(B.hostlimb == LIMB_RIGHT_ARM)
 						showname = "[user]'s right arm"
-					else if(B.hostlimb == "l_arm")
+					else if(B.hostlimb == LIMB_LEFT_ARM)
 						showname = "[user]'s left arm"
 
 		//make not the same mistake as me, these messages are only for slimes
@@ -185,9 +185,9 @@ obj/item/proc/get_clamped_volume()
 					if(istype(originator, /mob/living/simple_animal/borer))
 						var/mob/living/simple_animal/borer/BO = originator
 						if(BO.host == user)
-							if(BO.hostlimb == "r_arm")
+							if(BO.hostlimb == LIMB_RIGHT_ARM)
 								to_chat(user, "<span class='warning'>Your right arm attacks [M] with [I]!</span>")
-							else if(BO.hostlimb == "l_arm")
+							else if(BO.hostlimb == LIMB_LEFT_ARM)
 								to_chat(user, "<span class='warning'>Your left arm attacks [M] with [I]!</span>")
 					else
 						to_chat(user, "<span class='warning'>You attack [M] with [I]!</span>")

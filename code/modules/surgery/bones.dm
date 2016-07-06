@@ -60,7 +60,7 @@
 
 /datum/surgery_step/set_bone/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.name != "head" && (affected.open >= 2 || (target.species.flags & NO_SKIN)) && affected.stage == 1
+	return affected.name != LIMB_HEAD && (affected.open >= 2 || (target.species.flags & NO_SKIN)) && affected.stage == 1
 
 /*/datum/surgery_step/set_bone/can_operate(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
@@ -107,7 +107,7 @@
 
 /datum/surgery_step/mend_skull/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return affected.name == "head" && (affected.open >= 2 || (target.species.flags & NO_SKIN))&& affected.stage == 1
+	return affected.name == LIMB_HEAD && (affected.open >= 2 || (target.species.flags & NO_SKIN))&& affected.stage == 1
 
 /*/datum/surgery_step/mend_skull/can_operate(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

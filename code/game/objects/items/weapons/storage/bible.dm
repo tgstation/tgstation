@@ -78,7 +78,7 @@
 	if((M_CLUMSY in user.mutations) && prob(50)) //Using it while clumsy, let's have some fun
 		user.visible_message("<span class='warning'>\The [src] slips out of [user]'s hands and hits \his head.</span>",
 		"<span class='warning'>\The [src] slips out of your hands and hits your head.</span>")
-		user.apply_damage(10, BRUTE, "head")
+		user.apply_damage(10, BRUTE, LIMB_HEAD)
 		user.Stun(5)
 		return 1
 

@@ -70,7 +70,7 @@
 		return
 	else
 		var/obj/item/weapon/melee/bone_sword/S = new(get_turf(host), src)
-		if(hostlimb == "r_arm")
+		if(hostlimb == LIMB_RIGHT_ARM)
 			if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
 				if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/melee/bone_sword))
 					to_chat(src, "<span class='warning'>Your host already has a bone sword on this arm.</span>")
@@ -89,7 +89,7 @@
 		to_chat(src, "You begin to focus your efforts on sustaining a blade of bone for your host.")
 		channeling = 1
 		channeling_bone_sword = 1
-		host.visible_message("<span class='warning'>A blade of bone erupts from \the [host.name]'s [hostlimb == "r_arm" ? "right" : "left"] arm!</span>","<span class='warning'>A blade of bone erupts from your [hostlimb == "r_arm" ? "right" : "left"] arm!</span>")
+		host.visible_message("<span class='warning'>A blade of bone erupts from \the [host.name]'s [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>","<span class='warning'>A blade of bone erupts from your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>")
 		spawn()
 			var/time_spent_channeling = 0
 			while(channeling && channeling_bone_sword)
@@ -134,7 +134,7 @@
 		return
 	else
 		var/obj/item/weapon/melee/bone_hammer/S = new(get_turf(host), src)
-		if(hostlimb == "r_arm")
+		if(hostlimb == LIMB_RIGHT_ARM)
 			if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
 				if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/melee/bone_hammer))
 					to_chat(src, "<span class='warning'>Your host already has a bone hammer on this arm.</span>")
@@ -153,7 +153,7 @@
 		to_chat(src, "You begin to focus your efforts on sustaining a mass of bone for your host.")
 		channeling = 1
 		channeling_bone_hammer = 1
-		host.visible_message("<span class='warning'>A mass of bone erupts from \the [host.name]'s [hostlimb == "r_arm" ? "right" : "left"] arm!</span>","<span class='warning'>A mass of bone erupts from your [hostlimb == "r_arm" ? "right" : "left"] arm!</span>")
+		host.visible_message("<span class='warning'>A mass of bone erupts from \the [host.name]'s [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>","<span class='warning'>A mass of bone erupts from your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>")
 		spawn()
 			var/time_spent_channeling = 0
 			while(channeling && channeling_bone_hammer)
@@ -199,7 +199,7 @@
 		return
 	else
 		var/obj/item/weapon/shield/riot/bone/S = new(get_turf(host), src)
-		if(hostlimb == "r_arm")
+		if(hostlimb == LIMB_RIGHT_ARM)
 			if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
 				if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/shield/riot/bone))
 					to_chat(src, "<span class='warning'>Your host already has a bone shield on this arm.</span>")
@@ -218,7 +218,7 @@
 		to_chat(src, "You begin to focus your efforts on sustaining a shield of bone for your host.")
 		channeling = 1
 		channeling_bone_shield = 1
-		host.visible_message("<span class='warning'>A shield of bone erupts from \the [host.name]'s [hostlimb == "r_arm" ? "right" : "left"] arm!</span>","<span class='warning'>A shield of bone erupts from your [hostlimb == "r_arm" ? "right" : "left"] arm!</span>")
+		host.visible_message("<span class='warning'>A shield of bone erupts from \the [host.name]'s [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>","<span class='warning'>A shield of bone erupts from your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm!</span>")
 		spawn()
 			var/time_spent_channeling = 0
 			while(channeling && channeling_bone_shield)
@@ -266,7 +266,7 @@
 		to_chat(src, "You begin to focus your efforts on sustaining a cocoon of bone for your host.")
 		channeling = 1
 		channeling_bone_cocoon = 1
-		host.visible_message("<span class='warning'>A cocoon of bone sprouts from \the [host.name]'s [hostlimb == "r_arm" ? "right" : "left"] arm and envelops \him!</span>","<span class='warning'>A cocoon of bone erupts from your [hostlimb == "r_arm" ? "right" : "left"] arm and envelops you!</span>")
+		host.visible_message("<span class='warning'>A cocoon of bone sprouts from \the [host.name]'s [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm and envelops \him!</span>","<span class='warning'>A cocoon of bone erupts from your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm and envelops you!</span>")
 		host.forceMove(S)
 		spawn()
 			var/time_spent_channeling = 0
@@ -343,14 +343,14 @@
 			O.perma_injury = 0
 			var/minimum_broken_damage_hand = O.min_broken_damage
 			O.brute_dam = ((minimum_broken_damage_hand * config.organ_health_multiplier)-1)
-			to_chat(src, "<span class='notice'>You've repaired the bones in your host's [hostlimb == "r_arm" ? "right" : "left"] hand.</span>")
-			to_chat(host, "<span class='notice'>You feel the bones in your [hostlimb == "r_arm" ? "right" : "left"] hand mend together.</span>")
+			to_chat(src, "<span class='notice'>You've repaired the bones in your host's [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] hand.</span>")
+			to_chat(host, "<span class='notice'>You feel the bones in your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] hand mend together.</span>")
 			chemicals -= 30
 			has_healed_hand = 1
 	if(current_limb.is_broken())
 		if(chemicals < 50)
 			if(has_healed_hand)
-				to_chat(src, "<span class='warning'>You don't have enough chemicals left to heal your host's [hostlimb == "r_arm" ? "right" : "left"] arm.</span>")
+				to_chat(src, "<span class='warning'>You don't have enough chemicals left to heal your host's [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm.</span>")
 				return
 			else
 				to_chat(src, "<span class='warning'>You must have at least 50 chemicals stored to heal a broken arm.</span>")
@@ -359,9 +359,9 @@
 		current_limb.perma_injury = 0
 		var/minimum_broken_damage_arm = current_limb.min_broken_damage
 		current_limb.brute_dam = ((minimum_broken_damage_arm * config.organ_health_multiplier)-1)
-		to_chat(src, "<span class='notice'>You've repaired the bones in your host's [hostlimb == "r_arm" ? "right" : "left"] arm.</span>")
-		to_chat(host, "<span class='notice'>You feel the bones in your [hostlimb == "r_arm" ? "right" : "left"] arm mend together.</span>")
+		to_chat(src, "<span class='notice'>You've repaired the bones in your host's [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm.</span>")
+		to_chat(host, "<span class='notice'>You feel the bones in your [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm mend together.</span>")
 		chemicals -= 50
 	else
 		if(!has_healed_hand)
-			to_chat(src, "<span class='notice'>None of the bones in your host's [hostlimb == "r_arm" ? "right" : "left"] arm or hand are broken.</span>")
+			to_chat(src, "<span class='notice'>None of the bones in your host's [hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm or hand are broken.</span>")

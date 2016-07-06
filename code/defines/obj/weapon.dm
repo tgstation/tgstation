@@ -562,8 +562,8 @@
 					qdel(src)
 
 /obj/item/weapon/caution/proximity_sign/proc/dead_legs(mob/living/carbon/human/H as mob)
-	var/datum/organ/external/l = H.organs_by_name["l_leg"]
-	var/datum/organ/external/r = H.organs_by_name["r_leg"]
+	var/datum/organ/external/l = H.organs_by_name[LIMB_LEFT_LEG]
+	var/datum/organ/external/r = H.organs_by_name[LIMB_RIGHT_LEG]
 	if(l && !(l.status & ORGAN_DESTROYED))
 		l.status |= ORGAN_DESTROYED
 	if(r && !(r.status & ORGAN_DESTROYED))

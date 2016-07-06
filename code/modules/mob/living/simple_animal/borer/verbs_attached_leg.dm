@@ -70,7 +70,7 @@
 		to_chat(src, "<span class='warning'>You don't have enough chemicals stored to do this.</span>")
 		return
 	else
-		to_chat(host, "<span class='notice'>You feel the muscles in your [hostlimb == "r_leg" ? "right" : "left"] leg pulse.</span>")
+		to_chat(host, "<span class='notice'>You feel the muscles in your [hostlimb == LIMB_RIGHT_LEG ? "right" : "left"] leg pulse.</span>")
 		to_chat(src, "You begin to focus your efforts on elevating the performance of your host's [limb_to_name(hostlimb)].")
 		channeling = 1
 		channeling_speed_increase = 1
@@ -81,7 +81,7 @@
 				chemicals -= 5
 				time_spent_channeling++
 				sleep(10)
-			to_chat(host, "<span class='notice'>It feels like the muscles in your [hostlimb == "r_leg" ? "right" : "left"] leg have returned to normal.</span>")
+			to_chat(host, "<span class='notice'>It feels like the muscles in your [hostlimb == LIMB_RIGHT_LEG ? "right" : "left"] leg have returned to normal.</span>")
 			host.movement_speed_modifier -= speed_increase
 			channeling = 0
 			channeling_speed_increase = 0
@@ -127,7 +127,7 @@
 		to_chat(src, "<span class='warning'>You don't have enough chemicals stored to do this.</span>")
 		return
 	else
-		to_chat(host, "<span class='notice'>Bony talons have grown out of your [hostlimb == "r_leg" ? "right" : "left"] foot.</span>")
+		to_chat(host, "<span class='notice'>Bony talons have grown out of your [hostlimb == LIMB_RIGHT_LEG ? "right" : "left"] foot.</span>")
 		to_chat(src, "You begin to focus your efforts on elevating the performance of your host's [limb_to_name(hostlimb)].")
 		channeling = 1
 		channeling_bone_talons = 1
@@ -136,16 +136,16 @@
 		spawn()
 			var/time_spent_channeling = 0
 			while(chemicals >=3 && channeling && channeling_bone_talons)
-				if(hostlimb == "r_leg")
-					if(host.has_brain_worms("l_leg"))
-						B = host.has_brain_worms("l_leg")
+				if(hostlimb == LIMB_RIGHT_LEG)
+					if(host.has_brain_worms(LIMB_LEFT_LEG))
+						B = host.has_brain_worms(LIMB_LEFT_LEG)
 						if(B.channeling && B.channeling_bone_talons)
 							synergy = 1
 						else
 							synergy = 0
 				else
-					if(host.has_brain_worms("r_leg"))
-						B = host.has_brain_worms("r_leg")
+					if(host.has_brain_worms(LIMB_RIGHT_LEG))
+						B = host.has_brain_worms(LIMB_RIGHT_LEG)
 						if(B.channeling && B.channeling_bone_talons)
 							synergy = 1
 						else
@@ -165,7 +165,7 @@
 			if(host.has_penalized_speed)
 				if(!(B && B.channeling && B.channeling_bone_talons))
 					host.movement_speed_modifier += speed_penalty
-			to_chat(host, "<span class='notice'>The bony talons on your [hostlimb == "r_leg" ? "right" : "left"] foot crumble into nothing.</span>")
+			to_chat(host, "<span class='notice'>The bony talons on your [hostlimb == LIMB_RIGHT_LEG ? "right" : "left"] foot crumble into nothing.</span>")
 			if(!(B && B.channeling && B.channeling_bone_talons))
 				host.unslippable = 0
 			channeling = 0

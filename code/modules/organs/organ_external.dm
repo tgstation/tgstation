@@ -934,7 +934,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /datum/organ/external/chest
-	name = "chest"
+	name = LIMB_CHEST
 	icon_name = "torso"
 	display_name = "chest"
 	max_damage = 150
@@ -945,7 +945,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	encased = "ribcage"
 
 /datum/organ/external/groin
-	name = "groin"
+	name = LIMB_GROIN
 	icon_name = "groin"
 	display_name = "groin"
 	max_damage = 115
@@ -954,7 +954,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = 1
 
 /datum/organ/external/l_arm
-	name = "l_arm"
+	name = LIMB_LEFT_ARM
 	display_name = "left arm"
 	icon_name = "l_arm"
 	max_damage = 75
@@ -973,7 +973,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/l_leg
-	name = "l_leg"
+	name = LIMB_LEFT_LEG
 	display_name = "left leg"
 	icon_name = "l_leg"
 	max_damage = 75
@@ -992,7 +992,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/r_arm
-	name = "r_arm"
+	name = LIMB_RIGHT_ARM
 	display_name = "right arm"
 	icon_name = "r_arm"
 	max_damage = 75
@@ -1012,7 +1012,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/r_leg
-	name = "r_leg"
+	name = LIMB_RIGHT_LEG
 	display_name = "right leg"
 	icon_name = "r_leg"
 	max_damage = 75
@@ -1031,7 +1031,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/l_foot
-	name = "l_foot"
+	name = LIMB_LEFT_FOOT
 	display_name = "left foot"
 	icon_name = "l_foot"
 	max_damage = 40
@@ -1050,7 +1050,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/r_foot
-	name = "r_foot"
+	name = LIMB_RIGHT_FOOT
 	display_name = "right foot"
 	icon_name = "r_foot"
 	max_damage = 40
@@ -1069,7 +1069,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/r_hand
-	name = "r_hand"
+	name = LIMB_RIGHT_HAND
 	display_name = "right hand"
 	icon_name = "r_hand"
 	max_damage = 40
@@ -1089,7 +1089,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/l_hand
-	name = "l_hand"
+	name = LIMB_LEFT_HAND
 	display_name = "left hand"
 	icon_name = "l_hand"
 	max_damage = 40
@@ -1109,9 +1109,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return current_organ
 
 /datum/organ/external/head
-	name = "head"
 	icon_name = "head"
 	display_name = "head"
+	name = LIMB_HEAD
 	max_damage = 130
 	min_broken_damage = 40
 	body_part = HEAD
@@ -1283,73 +1283,73 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
 
 obj/item/weapon/organ/l_arm
 	name = "left arm"
-	icon_state = "l_arm"
-	part = "l_arm"
+	icon_state = LIMB_LEFT_ARM
+	part = LIMB_LEFT_ARM
 obj/item/weapon/organ/l_arm/New(loc, mob/living/carbon/human/H)
 	..()
 	if(H && istype(H))
-		var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_arm")
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms(LIMB_LEFT_ARM)
 		if(B)
 			B.infest_limb(src)
 
 obj/item/weapon/organ/l_foot
 	name = "left foot"
-	icon_state = "l_foot"
-	part = "l_foot"
+	icon_state = LIMB_LEFT_FOOT
+	part = LIMB_LEFT_FOOT
 
 obj/item/weapon/organ/l_hand
 	name = "left hand"
-	icon_state = "l_hand"
-	part = "l_hand"
+	icon_state = LIMB_LEFT_HAND
+	part = LIMB_LEFT_HAND
 
 obj/item/weapon/organ/l_leg
 	name = "left leg"
-	icon_state = "l_leg"
-	part = "l_leg"
+	icon_state = LIMB_LEFT_LEG
+	part = LIMB_LEFT_LEG
 obj/item/weapon/organ/l_leg/New(loc, mob/living/carbon/human/H)
 	..()
 	if(H && istype(H))
-		var/mob/living/simple_animal/borer/B = H.has_brain_worms("l_leg")
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms(LIMB_LEFT_LEG)
 		if(B)
 			B.infest_limb(src)
 
 obj/item/weapon/organ/r_arm
 	name = "right arm"
-	icon_state = "r_arm"
-	part = "r_arm"
+	icon_state = LIMB_RIGHT_ARM
+	part = LIMB_RIGHT_ARM
 obj/item/weapon/organ/r_arm/New(loc, mob/living/carbon/human/H)
 	..()
 	if(H && istype(H))
-		var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_arm")
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms(LIMB_RIGHT_ARM)
 		if(B)
 			B.infest_limb(src)
 
 obj/item/weapon/organ/r_foot
 	name = "right foot"
-	icon_state = "r_foot"
-	part = "r_foot"
+	icon_state = LIMB_RIGHT_FOOT
+	part = LIMB_RIGHT_FOOT
 
 obj/item/weapon/organ/r_hand
 	name = "right hand"
-	icon_state = "r_hand"
-	part = "r_hand"
+	icon_state = LIMB_RIGHT_HAND
+	part = LIMB_RIGHT_HAND
 
 obj/item/weapon/organ/r_leg
 	name = "right leg"
-	icon_state = "r_leg"
-	part = "r_leg"
+	icon_state = LIMB_RIGHT_LEG
+	part = LIMB_RIGHT_LEG
 obj/item/weapon/organ/r_leg/New(loc, mob/living/carbon/human/H)
 	..()
 	if(H && istype(H))
-		var/mob/living/simple_animal/borer/B = H.has_brain_worms("r_leg")
+		var/mob/living/simple_animal/borer/B = H.has_brain_worms(LIMB_RIGHT_LEG)
 		if(B)
 			B.infest_limb(src)
 
 obj/item/weapon/organ/head
 	dir = NORTH
-	name = "head"
+	name = LIMB_HEAD
 	icon_state = "head_m"
-	part = "head"
+	part = LIMB_HEAD
 	ashtype = /obj/item/weapon/skull
 	var/mob/living/carbon/brain/brainmob
 	var/brain_op_stage = 0

@@ -15,7 +15,7 @@
 	//How much results you can spawn before this datum disappears
 
 	var/stored_in_organ
-	//Example value: "head" or "arm". When an organ with the same type is cut off, this object will be transferred to it.
+	//Example value: LIMB_HEAD or "arm". When an organ with the same type is cut off, this object will be transferred to it.
 
 /datum/butchering_product/New()
 	..()
@@ -38,7 +38,7 @@
 	verb_name = "harvest teeth"
 	verb_gerund = "removing teeth from"
 
-	stored_in_organ = "head" //Cutting a "head" off will transfer teeth to the head object
+	stored_in_organ = LIMB_HEAD //Cutting a LIMB_HEAD off will transfer teeth to the head object
 
 /datum/butchering_product/teeth/desc_modifier(mob/parent, mob/user)
 	if(amount == initial_amount) return
@@ -48,7 +48,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/datum/organ/external/head = H.get_organ("head")
+		var/datum/organ/external/head = H.get_organ(LIMB_HEAD)
 		if((head.status & ORGAN_DESTROYED) || !head)
 			return //If he has no head, you can't see whether he has teeth or not!
 

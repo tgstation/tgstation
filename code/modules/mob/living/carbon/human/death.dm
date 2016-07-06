@@ -35,7 +35,7 @@
 	else
 		anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "dust-h", sleeptime = 15)
 
-	var/datum/organ/external/head_organ = get_organ("head")
+	var/datum/organ/external/head_organ = get_organ(LIMB_HEAD)
 	if(head_organ.status & ORGAN_DESTROYED)
 		new /obj/effect/decal/remains/human/noskull(loc)
 	else

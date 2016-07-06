@@ -414,26 +414,26 @@ mob/living/carbon/human/airflow_hit(atom/A)
 
 	var/b_loss = airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_damage)
 
-	var/blocked = run_armor_check("head","melee")
-	apply_damage(b_loss/3, BRUTE, "head", blocked, 0, used_weapon = "Airflow")
+	var/blocked = run_armor_check(LIMB_HEAD,"melee")
+	apply_damage(b_loss/3, BRUTE, LIMB_HEAD, blocked, 0, used_weapon = "Airflow")
 
-	blocked = run_armor_check("chest","melee")
-	apply_damage(b_loss/3, BRUTE, "chest", blocked, 0, used_weapon = "Airflow")
+	blocked = run_armor_check(LIMB_CHEST,"melee")
+	apply_damage(b_loss/3, BRUTE, LIMB_CHEST, blocked, 0, used_weapon = "Airflow")
 
-	blocked = run_armor_check("groin","melee")
-	apply_damage(b_loss/3, BRUTE, "groin", blocked, 0, used_weapon = "Airflow")
+	blocked = run_armor_check(LIMB_GROIN,"melee")
+	apply_damage(b_loss/3, BRUTE, LIMB_GROIN, blocked, 0, used_weapon = "Airflow")
 	*/
 
 	var/b_loss = airflow_speed * zas_settings.Get(/datum/ZAS_Setting/airflow_damage)
 
-	var/head_damage = ((b_loss/3)/100) * (100 - getarmor("head","melee"))
-	apply_damage(head_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+	var/head_damage = ((b_loss/3)/100) * (100 - getarmor(LIMB_HEAD,"melee"))
+	apply_damage(head_damage, BRUTE, LIMB_HEAD, 0, 0, used_weapon = "Airflow")
 
-	var/chest_damage = ((b_loss/3)/100) * (100 - getarmor("chest","melee"))
-	apply_damage(chest_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+	var/chest_damage = ((b_loss/3)/100) * (100 - getarmor(LIMB_CHEST,"melee"))
+	apply_damage(chest_damage, BRUTE, LIMB_HEAD, 0, 0, used_weapon = "Airflow")
 
-	var/groin_damage = ((b_loss/3)/100) * (100 - getarmor("groin","melee"))
-	apply_damage(groin_damage, BRUTE, "head", 0, 0, used_weapon = "Airflow")
+	var/groin_damage = ((b_loss/3)/100) * (100 - getarmor(LIMB_GROIN,"melee"))
+	apply_damage(groin_damage, BRUTE, LIMB_HEAD, 0, 0, used_weapon = "Airflow")
 
 	if((head_damage + chest_damage + groin_damage) > 15)
 		var/turf/T = get_turf(src)

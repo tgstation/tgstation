@@ -58,7 +58,7 @@
 			var/list/borers_in_host = H.get_brain_worms()
 			if(borers_in_host && borers_in_host.len) //to allow a host to drop an item at-range mid-extension
 				for(var/mob/living/simple_animal/borer/B in borers_in_host)
-					if((B.hostlimb == "r_arm" && H.get_active_hand() == H.get_held_item_by_index(GRASP_RIGHT_HAND)) || (B.hostlimb == "l_arm" && H.get_active_hand() == H.get_held_item_by_index(GRASP_LEFT_HAND)))
+					if((B.hostlimb == LIMB_RIGHT_ARM && H.get_active_hand() == H.get_held_item_by_index(GRASP_RIGHT_HAND)) || (B.hostlimb == LIMB_LEFT_ARM && H.get_active_hand() == H.get_held_item_by_index(GRASP_LEFT_HAND)))
 						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
 						F.to_be_dropped = H.get_active_hand()
 						F.item_overlay = null
@@ -79,7 +79,7 @@
 			var/mob/living/simple_animal/borer/B = usr
 			if(B.host && ishuman(B.host))
 				var/mob/living/carbon/human/H = B.host
-				if(B.hostlimb == "r_arm")
+				if(B.hostlimb == LIMB_RIGHT_ARM)
 					if(B.extend_o_arm)
 						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
 						if(H.get_held_item_by_index(GRASP_RIGHT_HAND))
@@ -91,7 +91,7 @@
 					else
 						to_chat(usr, "<span class='warning'>Your host has nothing to drop in [H.gender == FEMALE ? "her" : "his"] right hand.</span>")
 						return
-				else if(B.hostlimb == "l_arm")
+				else if(B.hostlimb == LIMB_LEFT_ARM)
 					if(B.extend_o_arm)
 						var/obj/item/weapon/gun/hookshot/flesh/F = B.extend_o_arm
 						if(H.get_held_item_by_index(GRASP_LEFT_HAND))

@@ -169,8 +169,8 @@
 			to_chat(user, "<span class='warning'>You're already doing that.</span>")
 			return
 		var/datum/organ/external/affecting = user.zone_sel.selecting
-		if(affecting == "head" || affecting == "mouth")
-			user.visible_message("<span class='danger'>[user.name] puts \the [src] [affecting == "head" ? "against their head" : "in their mouth"], ready to pull the trigger...</span>")
+		if(affecting == LIMB_HEAD || affecting == "mouth")
+			user.visible_message("<span class='danger'>[user.name] puts \the [src] [affecting == LIMB_HEAD ? "against their head" : "in their mouth"], ready to pull the trigger...</span>")
 			mouthshoot = 1
 			if(!do_after(user,src, 40))
 				user.visible_message("<span class='warning'>[user.name] chickened out.</span>")
@@ -194,7 +194,7 @@
 			playsound(user, fire_sound, 50, 1)
 			user.visible_message("<span class='danger'>[user.name] fires \the [src]!</span>", "<span class='danger'>You fire \the [src]!</span>", "You hear a [istype(in_chamber, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 			if(!P.nodamage)
-				affecting = "head"
+				affecting = LIMB_HEAD
 				user.apply_damage(300, BRUTE, affecting, used_weapon = "Shot self with [src].") // You are dead, dead, dead.
 			in_chamber = null
 			loaded.Cut(1,2)

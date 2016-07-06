@@ -120,22 +120,22 @@ proc/hasorgans(A)
 
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)	return LIMB_CHEST
 	switch(zone)
 		if("eyes")
-			zone = "head"
+			zone = LIMB_HEAD
 		if("mouth")
-			zone = "head"
-/*		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
+			zone = LIMB_HEAD
+/*		if(LIMB_LEFT_HAND)
+			zone = LIMB_LEFT_ARM
+		if(LIMB_RIGHT_HAND)
+			zone = LIMB_RIGHT_ARM
+		if(LIMB_LEFT_FOOT)
+			zone = LIMB_LEFT_LEG
+		if(LIMB_RIGHT_FOOT)
+			zone = LIMB_RIGHT_LEG
+		if(LIMB_GROIN)
+			zone = LIMB_CHEST
 */
 	return zone
 
@@ -145,16 +145,16 @@ proc/hasorgans(A)
 	if(!probability)	probability = 90
 	if(probability == 100)	return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
+	if(zone == LIMB_CHEST)
+		if(prob(probability))	return LIMB_CHEST
 		var/t = rand(1, 9)
 		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+			if(1 to 3)	return LIMB_HEAD
+			if(4 to 6)	return LIMB_LEFT_ARM
+			if(7 to 9)	return LIMB_RIGHT_ARM
 
 	if(prob(probability * 0.75))	return zone
-	return "chest"
+	return LIMB_CHEST
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
@@ -166,23 +166,23 @@ proc/hasorgans(A)
 	if(!target.locked_to && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
-			if("head")
+			if(LIMB_HEAD)
 				miss_chance = 40
-			if("l_leg")
+			if(LIMB_LEFT_LEG)
 				miss_chance = 20
-			if("r_leg")
+			if(LIMB_RIGHT_LEG)
 				miss_chance = 20
-			if("l_arm")
+			if(LIMB_LEFT_ARM)
 				miss_chance = 20
-			if("r_arm")
+			if(LIMB_RIGHT_ARM)
 				miss_chance = 20
-			if("l_hand")
+			if(LIMB_LEFT_HAND)
 				miss_chance = 50
-			if("r_hand")
+			if(LIMB_RIGHT_HAND)
 				miss_chance = 50
-			if("l_foot")
+			if(LIMB_LEFT_FOOT)
 				miss_chance = 50
-			if("r_foot")
+			if(LIMB_RIGHT_FOOT)
 				miss_chance = 50
 		miss_chance = max(miss_chance + miss_chance_mod, 0)
 		if(prob(miss_chance))
@@ -191,16 +191,16 @@ proc/hasorgans(A)
 			else
 				var/t = rand(1, 10)
 				switch(t)
-					if(1)	return "head"
-					if(2)	return "l_arm"
-					if(3)	return "r_arm"
-					if(4) 	return "chest"
-					if(5) 	return "l_foot"
-					if(6)	return "r_foot"
-					if(7)	return "l_hand"
-					if(8)	return "r_hand"
-					if(9)	return "l_leg"
-					if(10)	return "r_leg"
+					if(1)	return LIMB_HEAD
+					if(2)	return LIMB_LEFT_ARM
+					if(3)	return LIMB_RIGHT_ARM
+					if(4) 	return LIMB_CHEST
+					if(5) 	return LIMB_LEFT_FOOT
+					if(6)	return LIMB_RIGHT_FOOT
+					if(7)	return LIMB_LEFT_HAND
+					if(8)	return LIMB_RIGHT_HAND
+					if(9)	return LIMB_LEFT_LEG
+					if(10)	return LIMB_RIGHT_LEG
 
 	return zone
 

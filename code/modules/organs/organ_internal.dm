@@ -8,7 +8,7 @@
 	var/damage = 0 // amount of damage to the organ
 	var/min_bruised_damage = 10
 	var/min_broken_damage = 30
-	var/parent_organ = "chest"
+	var/parent_organ = LIMB_CHEST
 	var/robotic = 0 //For being a robot
 	var/removed_type //When removed, forms this object.
 	var/list/transplant_data // Blood DNA and colour of donor
@@ -193,24 +193,24 @@
 
 /datum/organ/internal/heart //This is not set to vital because death immediately occurs in blood.dm if it is removed.
 	name = "heart"
-	parent_organ = "chest"
+	parent_organ = LIMB_CHEST
 	removed_type = /obj/item/organ/heart
 
 /datum/organ/internal/kidney
 	name = "kidneys"
-	parent_organ = "groin"
+	parent_organ = LIMB_GROIN
 	removed_type = /obj/item/organ/kidneys
 
 /datum/organ/internal/brain
 	name = "brain"
-	parent_organ = "head"
+	parent_organ = LIMB_HEAD
 	removed_type = /obj/item/organ/brain
 	vital = 1
 
 
 /datum/organ/internal/appendix
 	name = "appendix"
-	parent_organ = "groin"
+	parent_organ = LIMB_GROIN
 	removed_type = /obj/item/organ/appendix
 
 /datum/organ/internal/proc/remove(var/mob/user, var/quiet=0)

@@ -263,9 +263,9 @@ This function restores all organs.
 
 
 /mob/living/carbon/human/proc/get_organ(var/zone)
-	if(!zone)	zone = "chest"
+	if(!zone)	zone = LIMB_CHEST
 	if (zone in list( "eyes", "mouth" ))
-		zone = "head"
+		zone = LIMB_HEAD
 	return organs_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(var/damage = 0,var/damagetype = BRUTE, var/def_zone = null, var/blocked = 0, var/sharp = 0, var/edge = 0, var/obj/used_weapon = null)

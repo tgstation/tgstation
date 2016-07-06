@@ -230,7 +230,7 @@ Subject's pulse: ??? BPM"})
 			/*
 			 * Doesn't belong here, only the advanced scanner can locate fractures
 			if(e.is_broken())
-				if((e.name == "l_arm") || (e.name == "r_arm") || (e.name == "l_leg") || (e.name == "r_leg")) //Only these limbs can be splinted
+				if((e.name == LIMB_LEFT_ARM) || (e.name == LIMB_RIGHT_ARM) || (e.name == LIMB_LEFT_LEG) || (e.name == LIMB_RIGHT_LEG)) //Only these limbs can be splinted
 					message += "<br><span class='warning'>Unsecured fracture in subject's [limb]. Splinting recommended for transport.</span>"
 			 */
 			if(e.has_infected_wound())

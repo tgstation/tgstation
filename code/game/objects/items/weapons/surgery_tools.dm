@@ -88,7 +88,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(15))
 							M:UpdateDamageIcon()
 						M.updatehealth()
@@ -97,7 +97,7 @@ LOOK FOR SURGERY.DM*/
 
 				M:eye_op_stage = 2.0
 
-	else if(user.zone_sel.selecting == "chest")
+	else if(user.zone_sel.selecting == LIMB_CHEST)
 		switch(M:alien_op_stage)
 			if(3.0)
 				var/mob/living/carbon/human/H = M
@@ -120,7 +120,7 @@ LOOK FOR SURGERY.DM*/
 					if(M == user && prob(25))
 						to_chat(user, "<span class='warning'>You mess up!</span>")
 						if(istype(M, /mob/living/carbon/human))
-							var/datum/organ/external/affecting = M:get_organ("chest")
+							var/datum/organ/external/affecting = M:get_organ(LIMB_CHEST)
 							if(affecting.take_damage(30))
 								M:UpdateDamageIcon()
 						else
@@ -136,7 +136,7 @@ LOOK FOR SURGERY.DM*/
 						user.visible_message("<span class='warning'>[user] pulls an alien organism out of [M]'s chest.</span>", "<span class='warning'>You pull the alien organism out of [M]'s chest.</span>")
 						A.loc = M.loc	//alien embryo handles cleanup
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+	else if((!(user.zone_sel.selecting == LIMB_HEAD)) || (!(user.zone_sel.selecting == LIMB_GROIN)) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 
 	return
@@ -173,7 +173,7 @@ LOOK FOR SURGERY.DM*/
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
-	if(user.zone_sel.selecting == "groin")
+	if(user.zone_sel.selecting == LIMB_GROIN)
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
 				if(1.0)
@@ -235,7 +235,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(15))
 							M:UpdateDamageIcon()
 						M.updatehealth()
@@ -243,7 +243,7 @@ LOOK FOR SURGERY.DM*/
 						M.take_organ_damage(15)
 				M:eye_op_stage = 3.0
 
-	else if(user.zone_sel.selecting == "chest")
+	else if(user.zone_sel.selecting == LIMB_CHEST)
 		if(M:alien_op_stage == 2.0 || M:alien_op_stage == 3.0)
 			var/mob/living/carbon/human/H = M
 			if(!istype(H))
@@ -259,7 +259,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("chest")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_CHEST)
 						if(affecting.take_damage(30))
 							M:UpdateDamageIcon()
 					else
@@ -279,7 +279,7 @@ LOOK FOR SURGERY.DM*/
 				else
 					to_chat(user, "<span class='notice'>You find nothing of interest.</span>")
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+	else if((!(user.zone_sel.selecting == LIMB_HEAD)) || (!(user.zone_sel.selecting == LIMB_GROIN)) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 
 	return
@@ -317,7 +317,7 @@ LOOK FOR SURGERY.DM*/
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/table/, M.loc) && M.lying && prob(50))))
 		return ..()
 
-	if(user.zone_sel.selecting == "groin")
+	if(user.zone_sel.selecting == LIMB_GROIN)
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
 				if(5.0)
@@ -368,7 +368,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(15))
 							M:UpdateDamageIcon()
 						M.updatehealth()
@@ -378,7 +378,7 @@ LOOK FOR SURGERY.DM*/
 				M.eye_stat = 0
 				M:eye_op_stage = 0.0
 
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+	else if((!(user.zone_sel.selecting == LIMB_HEAD)) || (!(user.zone_sel.selecting == LIMB_GROIN)) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 
 	return
@@ -456,7 +456,7 @@ LOOK FOR SURGERY.DM*/
 
 	src.add_fingerprint(user)
 
-	if(user.zone_sel.selecting == "groin")
+	if(user.zone_sel.selecting == LIMB_GROIN)
 		if(istype(M, /mob/living/carbon/human))
 			switch(M:appendix_op_stage)
 				if(0.0)
@@ -475,7 +475,7 @@ LOOK FOR SURGERY.DM*/
 						M:appendix_op_stage = 4.0
 		return
 
-	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/slime))
+	if(user.zone_sel.selecting == LIMB_HEAD || istype(M, /mob/living/carbon/slime))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -519,14 +519,14 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(15))
 							M:UpdateDamageIcon()
 					else
 						M.take_organ_damage(15)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:get_organ("head")
+					var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)
@@ -565,14 +565,14 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You nick an artery!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(75))
 							M:UpdateDamageIcon()
 					else
 						M.take_organ_damage(75)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:get_organ("head")
+					var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)
@@ -621,7 +621,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(15))
 							M:UpdateDamageIcon()
 					else
@@ -632,7 +632,7 @@ LOOK FOR SURGERY.DM*/
 				M:eye_op_stage = 1.0
 				to_chat(user, "<span class='notice'>So far so good after.</span>")
 
-	else if(user.zone_sel.selecting == "chest")
+	else if(user.zone_sel.selecting == LIMB_CHEST)
 		switch(M:alien_op_stage)
 			if(0.0)
 				var/mob/living/carbon/human/H = M
@@ -649,7 +649,7 @@ LOOK FOR SURGERY.DM*/
 					if(M == user && prob(25))
 						to_chat(user, "<span class='warning'>You mess up!</span>")
 						if(istype(M, /mob/living/carbon/human))
-							var/datum/organ/external/affecting = M:get_organ("chest")
+							var/datum/organ/external/affecting = M:get_organ(LIMB_CHEST)
 							if(affecting.take_damage(15))
 								M:UpdateDamageIcon()
 						else
@@ -661,7 +661,7 @@ LOOK FOR SURGERY.DM*/
 	else
 		return ..()
 /* wat
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+	else if((!(user.zone_sel.selecting == LIMB_HEAD)) || (!(user.zone_sel.selecting == LIMB_GROIN)) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()*/
 	return
 */
@@ -752,7 +752,7 @@ LOOK FOR SURGERY.DM*/
 
 	src.add_fingerprint(user)
 
-	if(user.zone_sel.selecting == "head" || istype(M, /mob/living/carbon/slime))
+	if(user.zone_sel.selecting == LIMB_HEAD || istype(M, /mob/living/carbon/slime))
 
 		var/mob/living/carbon/human/H = M
 		if(istype(H) && ( \
@@ -787,7 +787,7 @@ LOOK FOR SURGERY.DM*/
 				if(M == user && prob(25))
 					to_chat(user, "<span class='warning'>You mess up!</span>")
 					if(istype(M, /mob/living/carbon/human))
-						var/datum/organ/external/affecting = M:get_organ("head")
+						var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 						if(affecting.take_damage(40))
 							M:UpdateDamageIcon()
 						M.updatehealth()
@@ -795,7 +795,7 @@ LOOK FOR SURGERY.DM*/
 						M.take_organ_damage(40)
 
 				if(istype(M, /mob/living/carbon/human))
-					var/datum/organ/external/affecting = M:get_organ("head")
+					var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 					affecting.take_damage(7)
 				else
 					M.take_organ_damage(7)
@@ -854,7 +854,7 @@ LOOK FOR SURGERY.DM*/
 				..()
 		return
 
-	else if(user.zone_sel.selecting == "chest")
+	else if(user.zone_sel.selecting == LIMB_CHEST)
 		switch(M:alien_op_stage)
 			if(1.0)
 				var/mob/living/carbon/human/H = M
@@ -871,7 +871,7 @@ LOOK FOR SURGERY.DM*/
 					if(M == user && prob(25))
 						to_chat(user, "<span class='warning'>You mess up!</span>")
 						if(istype(M, /mob/living/carbon/human))
-							var/datum/organ/external/affecting = M:get_organ("chest")
+							var/datum/organ/external/affecting = M:get_organ(LIMB_CHEST)
 							if(affecting.take_damage(15))
 								M:UpdateDamageIcon()
 						else
@@ -883,7 +883,7 @@ LOOK FOR SURGERY.DM*/
 	else
 		return ..()
 /*
-	else if((!(user.zone_sel.selecting == "head")) || (!(user.zone_sel.selecting == "groin")) || (!(istype(M, /mob/living/carbon/human))))
+	else if((!(user.zone_sel.selecting == LIMB_HEAD)) || (!(user.zone_sel.selecting == LIMB_GROIN)) || (!(istype(M, /mob/living/carbon/human))))
 		return ..()
 */
 	return

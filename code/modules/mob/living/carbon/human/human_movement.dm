@@ -45,7 +45,7 @@
 		if(I.flags & SLOWDOWN_WHEN_CARRIED)
 			tally += I.slowdown
 
-	for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
+	for(var/organ_name in list(LIMB_LEFT_FOOT,LIMB_RIGHT_FOOT,LIMB_LEFT_LEG,LIMB_RIGHT_LEG))
 		var/datum/organ/external/E = get_organ(organ_name)
 		if(!E || (E.status & ORGAN_DESTROYED))
 			tally += 4

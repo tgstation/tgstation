@@ -1071,21 +1071,21 @@ proc/get_mob_with_client_list()
 
 /proc/parse_zone(zone)
 	switch(zone)
-		if ("r_hand")
+		if (LIMB_RIGHT_HAND)
 			return "right hand"
-		if ("l_hand")
+		if (LIMB_LEFT_HAND)
 			return "left hand"
-		if ("l_arm")
+		if (LIMB_LEFT_ARM)
 			return "left arm"
-		if ("r_arm")
+		if (LIMB_RIGHT_ARM)
 			return "right arm"
-		if ("l_leg")
+		if (LIMB_LEFT_LEG)
 			return "left leg"
-		if ("r_leg")
+		if (LIMB_RIGHT_LEG)
 			return "right leg"
-		if ("l_foot")
+		if (LIMB_LEFT_FOOT)
 			return "left foot"
-		if ("r_foot")
+		if (LIMB_RIGHT_FOOT)
 			return "right foot"
 		else
 			return zone

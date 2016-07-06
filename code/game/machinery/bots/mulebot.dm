@@ -750,12 +750,12 @@ var/global/mulebot_count = 0
 	src.visible_message("<span class='warning'>[src] drives over [H]!</span>")
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/damage = rand(5,15)
-	H.apply_damage(2*damage, BRUTE, "head")
-	H.apply_damage(2*damage, BRUTE, "chest")
-	H.apply_damage(0.5*damage, BRUTE, "l_leg")
-	H.apply_damage(0.5*damage, BRUTE, "r_leg")
-	H.apply_damage(0.5*damage, BRUTE, "l_arm")
-	H.apply_damage(0.5*damage, BRUTE, "r_arm")
+	H.apply_damage(2*damage, BRUTE, LIMB_HEAD)
+	H.apply_damage(2*damage, BRUTE, LIMB_CHEST)
+	H.apply_damage(0.5*damage, BRUTE, LIMB_LEFT_LEG)
+	H.apply_damage(0.5*damage, BRUTE, LIMB_RIGHT_LEG)
+	H.apply_damage(0.5*damage, BRUTE, LIMB_LEFT_ARM)
+	H.apply_damage(0.5*damage, BRUTE, LIMB_RIGHT_ARM)
 	bloodiness += 4
 	currentBloodColor=bloodcolor // For if species get different blood colors.
 

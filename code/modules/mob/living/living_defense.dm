@@ -72,7 +72,7 @@
 		return
 	if(istype(AM,/obj/))
 		var/obj/O = AM
-		var/zone = ran_zone("chest",75)//Hits a random part of the body, geared towards the chest
+		var/zone = ran_zone(LIMB_CHEST,75)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
@@ -80,13 +80,13 @@
 		src.visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 		var/zone_normal_name
 		switch(zone)
-			if("l_arm")
+			if(LIMB_LEFT_ARM)
 				zone_normal_name = "left arm"
-			if("r_arm")
+			if(LIMB_RIGHT_ARM)
 				zone_normal_name = "right arm"
-			if("l_leg")
+			if(LIMB_LEFT_LEG)
 				zone_normal_name = "left leg"
-			if("r_leg")
+			if(LIMB_RIGHT_LEG)
 				zone_normal_name = "right leg"
 			else
 				zone_normal_name = zone

@@ -1,7 +1,7 @@
 
 /datum/organ/internal/eyes
 	name = "eyes"
-	parent_organ = "head"
+	parent_organ = LIMB_HEAD
 	removed_type = /obj/item/organ/eyes
 
 	var/welding_proof=0

@@ -155,7 +155,7 @@
 				E.process_grasp(held_items[E.grasp_id], get_index_limb_name(E.grasp_id))
 
 			//Special effects for legs and foot
-			else if(E.name in list("l_leg", "l_foot", "r_leg", "r_foot") && !lying)
+			else if(E.name in list(LIMB_LEFT_LEG, LIMB_LEFT_FOOT, LIMB_RIGHT_LEG, LIMB_RIGHT_FOOT) && !lying)
 				if(E.is_malfunctioning() || E.is_broken())
 					stand_broken = 1 //We can't stand like this
 
@@ -175,31 +175,31 @@
 	var/hasleg_r =   1 //Have right leg
 	var/hasarm_l =   1 //Have left arm
 	var/hasarm_r =   1 //Have right arm
-	//var/datum/organ/external/E = organs_by_name["l_foot"]
+	//var/datum/organ/external/E = organs_by_name[LIMB_LEFT_FOOT]
 	var/datum/organ/external/E
-	E = organs_by_name["l_leg"]
+	E = organs_by_name[LIMB_LEFT_LEG]
 	if(!E.is_usable()) //The leg is missing, that's going to throw a wrench into our plans
 		canstand_l = 0
 		hasleg_l = 0
 	legispeg_l = E.is_peg() //Need to check this here for the feet
 
-	E = organs_by_name["r_leg"]
+	E = organs_by_name[LIMB_RIGHT_LEG]
 	if(!E.is_usable())
 		canstand_r = 0
 		hasleg_r = 0
 	legispeg_r = E.is_peg()
 
 	//We can stand if we're on a peg leg, otherwise same logic.
-	E = organs_by_name["l_foot"]
+	E = organs_by_name[LIMB_LEFT_FOOT]
 	if(!E.is_usable() && !legispeg_l)
 		canstand_l = 0
-	E = organs_by_name["r_foot"]
+	E = organs_by_name[LIMB_RIGHT_FOOT]
 	if(!E.is_usable() && !legispeg_r)
 		canstand_r = 0
-	E = organs_by_name["l_arm"]
+	E = organs_by_name[LIMB_LEFT_ARM]
 	if(!E.is_usable())
 		hasarm_l = 0
-	E = organs_by_name["r_arm"]
+	E = organs_by_name[LIMB_RIGHT_ARM]
 	if(!E.is_usable())
 		hasarm_r = 0
 

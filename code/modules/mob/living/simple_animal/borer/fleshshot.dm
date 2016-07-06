@@ -61,7 +61,7 @@
 			if(parent_borer)
 				if(parent_borer.host)
 					var/mob/living/carbon/C = chain_datum.extremity_B
-					to_chat(C, "<span class='warning'>\The [parent_borer.host]'s [parent_borer.hostlimb == "r_arm" ? "right" : "left"] arm reels you in!</span>")
+					to_chat(C, "<span class='warning'>\The [parent_borer.host]'s [parent_borer.hostlimb == LIMB_RIGHT_ARM ? "right" : "left"] arm reels you in!</span>")
 		chain_datum.rewind_chain()
 		return
 	..()
@@ -188,7 +188,7 @@
 								if(istype(parent_borer.host, /mob/living/carbon/human))
 									if(L == parent_borer.host)
 										var/mob/living/carbon/human/H = L
-										if(parent_borer.hostlimb == "r_arm")
+										if(parent_borer.hostlimb == LIMB_RIGHT_ARM)
 											if(!H.get_held_item_by_index(GRASP_RIGHT_HAND))
 												H.put_in_r_hand(C2)
 											else
@@ -251,7 +251,7 @@
 	else if(parent_borer.host)
 		if(istype(parent_borer.host, /mob/living/carbon/human))
 			var/mob/living/carbon/human/L = parent_borer.host
-			if(parent_borer.hostlimb == "r_arm")
+			if(parent_borer.hostlimb == LIMB_RIGHT_ARM)
 				if(L.get_held_item_by_index(GRASP_RIGHT_HAND))
 					I = L.get_held_item_by_index(GRASP_RIGHT_HAND)
 			else
@@ -353,7 +353,7 @@
 			if(parent_borer.host)
 				if(istype(parent_borer.host, /mob/living/carbon/human))
 					var/mob/living/carbon/human/L = parent_borer.host
-					if(parent_borer.hostlimb == "r_arm")
+					if(parent_borer.hostlimb == LIMB_RIGHT_ARM)
 						if(L.get_held_item_by_index(GRASP_RIGHT_HAND))
 							if(!parent_borer.attack_cooldown)
 								A.attackby(L.get_held_item_by_index(GRASP_RIGHT_HAND), L, 1, parent_borer)

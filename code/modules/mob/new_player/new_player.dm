@@ -307,8 +307,8 @@
 	// TODO:  Job-specific latejoin overrides.
 	character.loc = pick((assistant_latejoin.len > 0 && rank == "Assistant") ? assistant_latejoin : latejoin)
 	//Give them their fucking wheelchair where they spawn instead of inside of the splash screen
-	var/datum/organ/external/left_leg = character.get_organ("l_foot")
-	var/datum/organ/external/right_leg = character.get_organ("r_foot")
+	var/datum/organ/external/left_leg = character.get_organ(LIMB_LEFT_FOOT)
+	var/datum/organ/external/right_leg = character.get_organ(LIMB_RIGHT_FOOT)
 
 	if( (!left_leg || left_leg.status & ORGAN_DESTROYED) && (!right_leg || right_leg.status & ORGAN_DESTROYED) ) //If the character is missing both of his feet
 		var/obj/structure/bed/chair/vehicle/wheelchair/W = new(character.loc)

@@ -141,7 +141,7 @@ var/list/all_doors = list()
 				visible_message("<span class='warning'>[user] headbutts the airlock.</span>")
 				H.Stun(8)
 				H.Weaken(5)
-				var/datum/organ/external/O = H.get_organ("head")
+				var/datum/organ/external/O = H.get_organ(LIMB_HEAD)
 
 				// TODO: analyze the called proc
 				if(O.take_damage(10, 0))

@@ -243,7 +243,7 @@
 		add_logs(M, src, "attacked", admin=0)
 
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(LIMB_CHEST, LIMB_LEFT_HAND, LIMB_RIGHT_HAND, LIMB_LEFT_LEG, LIMB_RIGHT_LEG)
 
 		if(M.zone_sel && M.zone_sel.selecting)
 			dam_zone = M.zone_sel.selecting
@@ -283,7 +283,7 @@
 			damage = rand(5, 25)
 
 
-		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/dam_zone = pick(LIMB_HEAD, LIMB_CHEST, LIMB_LEFT_ARM, LIMB_RIGHT_ARM, LIMB_LEFT_LEG, LIMB_RIGHT_LEG, LIMB_GROIN)
 
 		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")
@@ -409,7 +409,7 @@
 	return face_name
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when polyacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name()
-	var/datum/organ/external/head/head_organ = get_organ("head")
+	var/datum/organ/external/head/head_organ = get_organ(LIMB_HEAD)
 	if((wear_mask && (is_slot_hidden(wear_mask.body_parts_covered,HIDEFACE)) && !istype(wear_mask,/obj/item/clothing/mask/gas/golem)) || ( head && (is_slot_hidden(head.body_parts_covered,HIDEFACE))) || !head_organ || head_organ.disfigured || (head_organ.status & ORGAN_DESTROYED) || !real_name || (M_HUSK in mutations) )	//Wearing a mask which hides our face, use id-name if possible
 		return "Unknown"
 	return real_name
@@ -428,7 +428,7 @@
 	if(status_flags & GODMODE || M_NO_SHOCK in src.mutations)	return 0	//godmode
 
 	if (!def_zone)
-		def_zone = pick("l_hand", "r_hand")
+		def_zone = pick(LIMB_LEFT_HAND, LIMB_RIGHT_HAND)
 
 	var/datum/organ/external/affected_organ = get_organ(check_zone(def_zone))
 	var/siemens_coeff = base_siemens_coeff * get_siemens_coefficient_organ(affected_organ)
@@ -1034,7 +1034,7 @@
 		O.wounds.len = 0
 		O.heal_damage(1000,1000,1,1)
 
-	var/datum/organ/external/head/h = organs_by_name["head"]
+	var/datum/organ/external/head/h = organs_by_name[LIMB_HEAD]
 	h.disfigured = 0
 
 	if(species && !(species.flags & NO_BLOOD))
@@ -1055,7 +1055,7 @@
 			internal_organs_by_name["brain"] = copied
 			internal_organs += copied
 
-			var/datum/organ/external/affected = get_organ("head")
+			var/datum/organ/external/affected = get_organ(LIMB_HEAD)
 			affected.internal_organs += copied
 			affected.status = 0
 			affected.amputated = 0
@@ -1396,11 +1396,11 @@
 /mob/living/carbon/human/can_inject(var/mob/user, var/error_msg, var/target_zone)
 	. = 1
 	if(!user)
-		target_zone = pick("chest","chest","chest","left leg","right leg","left arm", "right arm", "head")
+		target_zone = pick(LIMB_CHEST,LIMB_CHEST,LIMB_CHEST,"left leg","right leg","left arm", "right arm", LIMB_HEAD)
 	else if(!target_zone)
 		target_zone = user.zone_sel.selecting
 	/*switch(target_zone)
-		if("head")
+		if(LIMB_HEAD)
 			if(head && head.flags & THICKMATERIAL)
 				. = 0
 		else
@@ -1409,7 +1409,7 @@
 	*/
 	if(!. && error_msg && user)
  		// Might need re-wording.
-		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == "head" ? "on their head" : "on their body"] to inject into.</span>")
+		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == LIMB_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 /mob/living/carbon/human/canSingulothPull(var/obj/machinery/singularity/singulo)
 	if(!..())
 		return 0
@@ -1598,13 +1598,13 @@
 	if(target && !isturf(target) && !isturf(target.loc))
 		return 0
 
-	var/datum/organ/external/left_foot = get_organ("l_foot")
+	var/datum/organ/external/left_foot = get_organ(LIMB_LEFT_FOOT)
 	if(!left_foot)
 		return 0
 	else if(left_foot.status & ORGAN_DESTROYED)
 		return 0
 
-	var/datum/organ/external/right_foot = get_organ("r_foot")
+	var/datum/organ/external/right_foot = get_organ(LIMB_RIGHT_FOOT)
 	if(!right_foot)
 		return 0
 	else if(right_foot.status & ORGAN_DESTROYED)
@@ -1690,7 +1690,7 @@
 	if(new_amount > held_items.len)
 		for(var/i = (held_items.len + 1) to new_amount) //For all the new indexes, create a hand organ
 			if(!find_organ_by_grasp_index(i))
-				var/datum/organ/external/OE = new/datum/organ/external/r_hand(organs_by_name["groin"]) //Fuck it the new hand will grow out of the groin (it doesn't matter anyways)
+				var/datum/organ/external/OE = new/datum/organ/external/r_hand(organs_by_name[LIMB_GROIN]) //Fuck it the new hand will grow out of the groin (it doesn't matter anyways)
 				OE.grasp_id = i
 				OE.owner = src
 

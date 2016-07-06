@@ -263,7 +263,7 @@
 	if(target && ishuman(target))
 		//To prevent movement cheese, SCP snaps necks the second it ends up on the same turf as someone
 		//Or in other terms, if SCP decides it had a clean shot for a neck snap at the moment this proc fired, you're good as dead
-		target.apply_damage(rand(120, 150), BRUTE, "head")
+		target.apply_damage(rand(120, 150), BRUTE, LIMB_HEAD)
 		playsound(target.loc, pick(snap_sound), 100, 1, -1)
 
 		//Warn everyone

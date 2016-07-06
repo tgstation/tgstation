@@ -12,21 +12,21 @@
 
 /datum/surgery_step/cavity/proc/get_max_wclass(datum/organ/external/affected)
 	switch (affected.name)
-		if ("head")
+		if (LIMB_HEAD)
 			return 1
-		if ("chest")
+		if (LIMB_CHEST)
 			return 3
-		if ("groin")
+		if (LIMB_GROIN)
 			return 2
 	return 0
 
 /datum/surgery_step/cavity/proc/get_cavity(datum/organ/external/affected)
 	switch (affected.name)
-		if ("head")
+		if (LIMB_HEAD)
 			return "cranial"
-		if ("chest")
+		if (LIMB_CHEST)
 			return "thoracic"
-		if ("groin")
+		if (LIMB_GROIN)
 			return "abdominal"
 	return ""
 

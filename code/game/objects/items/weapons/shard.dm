@@ -113,7 +113,7 @@
 				var/mob/living/carbon/human/H = M
 				if(!isgolem(H))
 					if(!H.check_body_part_coverage(FEET))
-						var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
+						var/datum/organ/external/affecting = H.get_organ(pick(LIMB_LEFT_FOOT, LIMB_RIGHT_FOOT))
 						if(affecting.status & (ORGAN_ROBOT|ORGAN_PEG))
 							return
 

@@ -295,7 +295,7 @@ var/const/MAX_ACTIVE_TIME = 400
 		target.status_flags |= XENO_HOST
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = target
-			var/datum/organ/external/chest/affected = T.get_organ("chest")
+			var/datum/organ/external/chest/affected = T.get_organ(LIMB_CHEST)
 			affected.implants += E
 		target.visible_message("<span class='danger'>\The [src] falls limp after violating [target]'s face !</span>")
 		stat_collection.xeno.faces_hugged++

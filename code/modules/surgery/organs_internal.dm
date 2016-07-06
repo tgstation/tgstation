@@ -35,7 +35,7 @@
 	if (!hasorgans(target))
 		return
 	var/datum/organ/external/affected = target.get_organ(target_zone)
-	return ..() && embryo && affected.open == 3 && target_zone == "chest"
+	return ..() && embryo && affected.open == 3 && target_zone == LIMB_CHEST
 
 /datum/surgery_step/internal/remove_embryo/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."

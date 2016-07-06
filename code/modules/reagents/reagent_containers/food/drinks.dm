@@ -76,7 +76,7 @@
 			armor_block = H.run_armor_check(affecting, "melee") // For normal attack damage
 
 			//If they have a hat/helmet and the user is targeting their head.
-			if(istype(H.head, /obj/item/clothing/head) && affecting == "head")
+			if(istype(H.head, /obj/item/clothing/head) && affecting == LIMB_HEAD)
 
 				// If their head has an armour value, assign headarmor to it, else give it 0.
 				if(H.head.armor["melee"])
@@ -92,7 +92,7 @@
 		else
 			//Only humans can have armour, right?
 			armor_block = M.run_armor_check(affecting, "melee")
-			if(affecting == "head")
+			if(affecting == LIMB_HEAD)
 				armor_duration = duration + force
 		armor_duration /= 10
 
@@ -101,7 +101,7 @@
 
 		// You are going to knock someone out for longer if they are not wearing a helmet.
 		// For drinking glass
-		if(affecting == "head" && istype(M, /mob/living/carbon/))
+		if(affecting == LIMB_HEAD && istype(M, /mob/living/carbon/))
 
 			//Display an attack message.
 			for(var/mob/O in viewers(user, null))

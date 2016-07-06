@@ -268,7 +268,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	var/encoded_message = html_encode(message)
 
 	to_chat(src, "You drop words into [host]'s body: <span class='borer2host'>\"[encoded_message]\"</span>")
-	if(hostlimb == "head")
+	if(hostlimb == LIMB_HEAD)
 		to_chat(host, "<b>Your mind speaks to you:</b> <span class='borer2host'>\"[encoded_message]\"</span>")
 	else
 		to_chat(host, "<b>Your [limb_to_name(hostlimb)] speaks to you:</b> <span class='borer2host'>\"[encoded_message]\"</span>")
@@ -357,7 +357,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!check_can_do())
 		return
 
-	if(hostlimb != "head")
+	if(hostlimb != LIMB_HEAD)
 		to_chat(src, "You are not attached to your host's brain.")
 		return
 
@@ -539,7 +539,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!src)
 		return
 
-	if(hostlimb == "head")
+	if(hostlimb == LIMB_HEAD)
 		to_chat(src, "<span class='info'>You begin disconnecting from [host]'s synapses and prodding at their internal ear canal.</span>")
 	else
 		to_chat(src, "<span class='info'>You begin disconnecting from [host]'s nerve endings and prodding at the surface of their skin.</span>")
@@ -565,12 +565,12 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 			return
 
 		if(severed)
-			if(hostlimb == "head")
+			if(hostlimb == LIMB_HEAD)
 				to_chat(src, "<span class='info'>You wiggle out of the ear of \the [loc] and plop to the ground.</span>")
 			else
 				to_chat(src, "<span class='info'>You wiggle out of \the [limb_to_name(hostlimb)] and plop to the ground.</span>")
 		else
-			if(hostlimb == "head")
+			if(hostlimb == LIMB_HEAD)
 				to_chat(src, "<span class='info'>You wiggle out of [host]'s ear and plop to the ground.</span>")
 			else
 				to_chat(src, "<span class='info'>You wiggle out of [host]'s [limb_to_name(hostlimb)] and plop to the ground.</span>")
@@ -644,17 +644,17 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		return
 	var/limbname = ""
 	switch(limb)
-		if("head")
-			limbname = "head"
-		if("chest")
-			limbname = "chest"
-		if("r_arm")
+		if(LIMB_HEAD)
+			limbname = LIMB_HEAD
+		if(LIMB_CHEST)
+			limbname = LIMB_CHEST
+		if(LIMB_RIGHT_ARM)
 			limbname = "right arm"
-		if("l_arm")
+		if(LIMB_LEFT_ARM)
 			limbname = "left arm"
-		if("r_leg")
+		if(LIMB_RIGHT_LEG)
 			limbname = "right leg"
-		if("l_leg")
+		if(LIMB_LEFT_LEG)
 			limbname = "left leg"
 	return limbname
 
@@ -663,17 +663,17 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		return
 	var/mode = 0
 	switch(limb)
-		if("head")
+		if(LIMB_HEAD)
 			mode = BORER_MODE_ATTACHED_HEAD
-		if("chest")
+		if(LIMB_CHEST)
 			mode = BORER_MODE_ATTACHED_CHEST
-		if("r_arm")
+		if(LIMB_RIGHT_ARM)
 			mode = BORER_MODE_ATTACHED_ARM
-		if("l_arm")
+		if(LIMB_LEFT_ARM)
 			mode = BORER_MODE_ATTACHED_ARM
-		if("r_leg")
+		if(LIMB_RIGHT_LEG)
 			mode = BORER_MODE_ATTACHED_LEG
-		if("l_leg")
+		if(LIMB_LEFT_LEG)
 			mode = BORER_MODE_ATTACHED_LEG
 	return mode
 
@@ -687,22 +687,22 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	var/mob/living/carbon/human/H = C
 
 	switch(limb)
-		if("head")
+		if(LIMB_HEAD)
 			if(H.check_body_part_coverage(EARS))
 				return 1
-		if("chest")
-			if(H.check_body_part_coverage(UPPER_TORSO) && limb_covered(C, "r_arm") && limb_covered(C, "l_arm") && limb_covered(C, "r_leg") && limb_covered(C, "l_leg")) //any gap in protection will allow a borer to squeeze underneath chest protection
+		if(LIMB_CHEST)
+			if(H.check_body_part_coverage(UPPER_TORSO) && limb_covered(C, LIMB_RIGHT_ARM) && limb_covered(C, LIMB_LEFT_ARM) && limb_covered(C, LIMB_RIGHT_LEG) && limb_covered(C, LIMB_LEFT_LEG)) //any gap in protection will allow a borer to squeeze underneath chest protection
 				return 1
-		if("r_arm")
+		if(LIMB_RIGHT_ARM)
 			if(H.check_body_part_coverage(ARM_RIGHT) && H.check_body_part_coverage(HAND_RIGHT))
 				return 1
-		if("l_arm")
+		if(LIMB_LEFT_ARM)
 			if(H.check_body_part_coverage(ARM_LEFT) && H.check_body_part_coverage(HAND_LEFT))
 				return 1
-		if("r_leg")
+		if(LIMB_RIGHT_LEG)
 			if(H.check_body_part_coverage(LEG_RIGHT) && H.check_body_part_coverage(FOOT_RIGHT))
 				return 1
-		if("l_leg")
+		if(LIMB_LEFT_LEG)
 			if(H.check_body_part_coverage(LEG_LEFT) && H.check_body_part_coverage(FOOT_LEFT))
 				return 1
 	return 0
@@ -743,36 +743,36 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	if(!(src.Adjacent(M))) return
 
 	var/area = src.zone_sel.selecting
-	var/region = "head"
+	var/region = LIMB_HEAD
 
 	if(istype(M, /mob/living/carbon/human))
 		switch(area)
-			if("head")
-				region = "head"
+			if(LIMB_HEAD)
+				region = LIMB_HEAD
 			if("mouth")
-				region = "head"
+				region = LIMB_HEAD
 			if("eyes")
-				region = "head"
-			if("chest")
-				region = "chest"
-			if("groin")
-				region = "chest"
-			if("r_arm")
-				region = "r_arm"
-			if("r_hand")
-				region = "r_arm"
-			if("l_arm")
-				region = "l_arm"
-			if("l_hand")
-				region = "l_arm"
-			if("r_leg")
-				region = "r_leg"
-			if("r_foot")
-				region = "r_leg"
-			if("l_leg")
-				region = "l_leg"
-			if("l_foot")
-				region = "l_leg"
+				region = LIMB_HEAD
+			if(LIMB_CHEST)
+				region = LIMB_CHEST
+			if(LIMB_GROIN)
+				region = LIMB_CHEST
+			if(LIMB_RIGHT_ARM)
+				region = LIMB_RIGHT_ARM
+			if(LIMB_RIGHT_HAND)
+				region = LIMB_RIGHT_ARM
+			if(LIMB_LEFT_ARM)
+				region = LIMB_LEFT_ARM
+			if(LIMB_LEFT_HAND)
+				region = LIMB_LEFT_ARM
+			if(LIMB_RIGHT_LEG)
+				region = LIMB_RIGHT_LEG
+			if(LIMB_RIGHT_FOOT)
+				region = LIMB_RIGHT_LEG
+			if(LIMB_LEFT_LEG)
+				region = LIMB_LEFT_LEG
+			if(LIMB_LEFT_FOOT)
+				region = LIMB_LEFT_LEG
 
 		var/mob/living/carbon/human/H = M
 		var/datum/organ/external/O = H.get_organ(region)
@@ -793,22 +793,22 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		return
 
 	switch(region)
-		if("head")
+		if(LIMB_HEAD)
 			to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your leg and probing at your ear canal...</span>")
-		if("chest")
+		if(LIMB_CHEST)
 			to_chat(src, "You slither up [M] and begin probing just below their sternum...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your leg and probing just below your sternum...</span>")
-		if("r_arm")
+		if(LIMB_RIGHT_ARM)
 			to_chat(src, "You slither up [M] and begin probing at their right arm...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your leg and probing at your right arm...</span>")
-		if("l_arm")
+		if(LIMB_LEFT_ARM)
 			to_chat(src, "You slither up [M] and begin probing at their left arm...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your leg and probing at your left arm...</span>")
-		if("r_leg")
+		if(LIMB_RIGHT_LEG)
 			to_chat(src, "You slither up [M]'s right leg and begin probing at the back of their knee...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your right leg and probing just behind your knee...</span>")
-		if("l_leg")
+		if(LIMB_LEFT_LEG)
 			to_chat(src, "You slither up [M]'s left leg and begin probing at the back of their knee...")
 			to_chat(M, "<span class='sinister'>You feel something slithering up your left leg and probing just behind your knee...</span>")
 
@@ -831,7 +831,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		return
 
 	if(M in view(1, src))
-		to_chat(src, "[region == "head" ? "You wiggle into [M]'s ear." : "You burrow under [M]'s skin."]")
+		to_chat(src, "[region == LIMB_HEAD ? "You wiggle into [M]'s ear." : "You burrow under [M]'s skin."]")
 		src.perform_infestation(M, region)
 
 		return
@@ -839,7 +839,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 		to_chat(src, "They are no longer in range!")
 		return
 
-/mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M, var/body_region = "head")
+/mob/living/simple_animal/borer/proc/perform_infestation(var/mob/living/carbon/M, var/body_region = LIMB_HEAD)
 	if(!M || !istype(M))
 		error("[src]: Unable to perform_infestation on [M]!")
 		return 0
@@ -1130,7 +1130,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 	..()
 	if(host)
 		if(extend_o_arm_unlocked)
-			if(hostlimb == "r_arm" || hostlimb == "l_arm")
+			if(hostlimb == LIMB_RIGHT_ARM || hostlimb == LIMB_LEFT_ARM)
 				if(!extend_o_arm)
 					extend_o_arm = new /obj/item/weapon/gun/hookshot/flesh(src, src)
 					extend_o_arm.forceMove(host)
@@ -1146,7 +1146,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 						to_chat(src, "<span class='warning'>Something in your host's bloodstream is tightening their muscles. You can't extend your arm!</span>")
 						return
 				if(host.Adjacent(A))
-					if(hostlimb == "r_arm")
+					if(hostlimb == LIMB_RIGHT_ARM)
 						if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
 							if(attack_cooldown)
 								return
@@ -1176,7 +1176,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 								return
 				if(get_turf(A) == get_turf(host) && !istype(A, /obj/item))
 					return
-				if(hostlimb == "r_arm")
+				if(hostlimb == LIMB_RIGHT_ARM)
 					if(host.get_held_item_by_index(GRASP_RIGHT_HAND))
 						if(istype(host.get_held_item_by_index(GRASP_RIGHT_HAND), /obj/item/weapon/gun/hookshot)) //I don't want to deal with the fleshshot interacting with hookshots
 							return
@@ -1186,7 +1186,7 @@ var/global/borer_unlock_types_leg = typesof(/datum/unlockable/borer/leg) - /datu
 						else
 							if(!(extend_o_arm.hook || extend_o_arm.chain_datum || extend_o_arm.rewinding))	//If the arm is not currently extended.
 								chemicals -= 10		//It costs 10 chems to fire the fleshshot while holding an item.
-				else if(hostlimb == "l_arm")
+				else if(hostlimb == LIMB_LEFT_ARM)
 					if(host.get_held_item_by_index(GRASP_LEFT_HAND))
 						if(istype(host.get_held_item_by_index(GRASP_LEFT_HAND), /obj/item/weapon/gun/hookshot))
 							return

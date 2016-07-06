@@ -12,7 +12,7 @@ emp_act
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/armor/laserproof))
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam) || istype(P, /obj/item/projectile/forcebolt) || istype(P, /obj/item/projectile/change))
 			var/reflectchance = 60 - round(P.damage/3)
-			if(!(def_zone in list("chest", "groin")))
+			if(!(def_zone in list(LIMB_CHEST, LIMB_GROIN)))
 				reflectchance /= 2
 			if(prob(reflectchance))
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]'s [wear_suit.name]!</span>")
@@ -210,11 +210,11 @@ emp_act
 	if(originator)
 		if(ismob(originator))
 			var/mob/M = originator
-			if(M.zone_sel.selecting == "mouth" && target_zone == "head")
+			if(M.zone_sel.selecting == "mouth" && target_zone == LIMB_HEAD)
 				knock_teeth = 1
-		else if(user.zone_sel.selecting == "mouth" && target_zone == "head")
+		else if(user.zone_sel.selecting == "mouth" && target_zone == LIMB_HEAD)
 			knock_teeth = 1
-	else if(user.zone_sel.selecting == "mouth" && target_zone == "head")
+	else if(user.zone_sel.selecting == "mouth" && target_zone == LIMB_HEAD)
 		knock_teeth = 1
 	if(knock_teeth) //You can't actually hit people in the mouth - this checks if the user IS targetting mouth, and if he didn't miss!
 		if((!armor) && (I.force >= 8 || I.w_class >= W_CLASS_SMALL) && (I.is_sharp() < 1))//Minimum force=8, minimum w_class=2. Sharp items can't knock out teeth. Armor prevents this completely!
@@ -243,7 +243,7 @@ emp_act
 					H.bloody_hands(src)
 
 		switch(hit_area)
-			if("head")//Harder to score a stun but if you do it lasts a bit longer
+			if(LIMB_HEAD)//Harder to score a stun but if you do it lasts a bit longer
 				if(prob(I.force))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='danger'>[src] has been knocked unconscious!</span>")
@@ -261,7 +261,7 @@ emp_act
 						glasses.add_blood(src)
 						update_inv_glasses(0)
 
-			if("chest")//Easier to score a stun but lasts less time
+			if(LIMB_CHEST)//Easier to score a stun but lasts less time
 				if(prob((I.force + 10)))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='danger'>[src] has been knocked down!</span>")
@@ -395,25 +395,25 @@ emp_act
 
 	for(var/datum/organ/external/temp in organs)
 		switch(temp.name)
-			if("head")
+			if(LIMB_HEAD)
 				update |= temp.take_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
-			if("chest")
+			if(LIMB_CHEST)
 				update |= temp.take_damage(b_loss * 0.4, f_loss * 0.4, used_weapon = weapon_message)
-			if("l_arm")
+			if(LIMB_LEFT_ARM)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
+			if(LIMB_RIGHT_ARM)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_leg")
+			if(LIMB_LEFT_LEG)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_leg")
+			if(LIMB_RIGHT_LEG)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_foot")
+			if(LIMB_RIGHT_FOOT)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_foot")
+			if(LIMB_LEFT_FOOT)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("r_arm")
+			if(LIMB_RIGHT_ARM)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
-			if("l_arm")
+			if(LIMB_LEFT_ARM)
 				update |= temp.take_damage(b_loss * 0.05, f_loss * 0.05, used_weapon = weapon_message)
 	if(update)	UpdateDamageIcon()
 
@@ -429,7 +429,7 @@ emp_act
 		else
 			..()
 			show_message("<span class='warning'>The blob attacks you!</span>")
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+			var/dam_zone = pick(LIMB_CHEST, LIMB_LEFT_HAND, LIMB_RIGHT_HAND, LIMB_LEFT_LEG, LIMB_RIGHT_LEG)
 			var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
 			apply_damage(rand(30,40), BRUTE, affecting, run_armor_check(affecting, "melee"))
 	return

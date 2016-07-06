@@ -249,10 +249,10 @@
 	var/datum/organ/external/affected = target.get_organ(target_zone)
 	var/msg = "[user] starts to pry open the incision on [target]'s [affected.display_name] with \the [tool]."
 	var/self_msg = "You start to pry open the incision on [target]'s [affected.display_name] with \the [tool]."
-	if (target_zone == "chest")
+	if (target_zone == LIMB_CHEST)
 		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-	if (target_zone == "groin")
+	if (target_zone == LIMB_GROIN)
 		msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 		self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
 	user.visible_message(msg, self_msg)
@@ -263,10 +263,10 @@
 	var/datum/organ/external/affected = target.get_organ(target_zone)
 	var/msg = "<span class='notice'>[user] keeps the incision open on [target]'s [affected.display_name] with \the [tool].</span>"
 	var/self_msg = "<span class='notice'>You keep the incision open on [target]'s [affected.display_name] with \the [tool].</span>"
-	if (target_zone == "chest")
+	if (target_zone == LIMB_CHEST)
 		msg = "<span class='notice'>[user] keeps the ribcage open on [target]'s torso with \the [tool].</span>"
 		self_msg = "<span class='notice'>You keep the ribcage open on [target]'s torso with \the [tool].</span>"
-	if (target_zone == "groin")
+	if (target_zone == LIMB_GROIN)
 		msg = "<span class='notice'>[user] keeps the incision open on [target]'s lower abdomen with \the [tool].</span>"
 		self_msg = "<span class='notice'>You keep the incision open on [target]'s lower abdomen with \the [tool].</span>"
 	user.visible_message(msg, self_msg)
@@ -276,10 +276,10 @@
 	var/datum/organ/external/affected = target.get_organ(target_zone)
 	var/msg = "<span class='warning'>[user]'s hand slips, tearing the edges of the incision on [target]'s [affected.display_name] with \the [tool]!</span>"
 	var/self_msg = "<span class='warning'>Your hand slips, tearing the edges of the incision on [target]'s [affected.display_name] with \the [tool]!</span>"
-	if (target_zone == "chest")
+	if (target_zone == LIMB_CHEST)
 		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
 		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
-	if (target_zone == "groin")
+	if (target_zone == LIMB_GROIN)
 		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]</span>"
 		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!</span>"
 	user.visible_message(msg, self_msg)
@@ -416,7 +416,7 @@
 		return 0
 	if (affected.status & ORGAN_DESTROYED)
 		return 0
-	return target_zone != "chest" && target_zone != "groin" && target_zone != "head"
+	return target_zone != LIMB_CHEST && target_zone != LIMB_GROIN && target_zone != LIMB_HEAD
 
 /datum/surgery_step/generic/cut_limb/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/datum/organ/external/affected = target.get_organ(target_zone)

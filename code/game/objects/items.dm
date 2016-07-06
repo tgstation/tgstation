@@ -908,7 +908,7 @@
 			if (eyes.damage >= eyes.min_broken_damage)
 				if(M.stat != 2)
 					to_chat(M, "<span class='warning'>You go blind!</span>")
-		var/datum/organ/external/affecting = M:get_organ("head")
+		var/datum/organ/external/affecting = M:get_organ(LIMB_HEAD)
 		if(affecting.take_damage(7))
 			M:UpdateDamageIcon(1)
 	else
@@ -1008,7 +1008,7 @@ var/global/list/image/blood_overlays = list()
 		if(prob(70))
 			to_chat(H, "<span class='danger'>Dumb move! You strain a muscle.</span>")
 
-			H.apply_damage(rand(1,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+			H.apply_damage(rand(1,4), BRUTE, pick(LIMB_RIGHT_LEG, LIMB_LEFT_LEG, LIMB_RIGHT_FOOT, LIMB_LEFT_FOOT))
 		return
 
 	var/kick_dir = get_dir(H, src)

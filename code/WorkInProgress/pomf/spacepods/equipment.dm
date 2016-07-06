@@ -38,11 +38,11 @@
 		projone.starting = get_turf(firstloc)
 		projone.shot_from = my_atom
 		projone.firer = usr
-		projone.def_zone = "chest"
+		projone.def_zone = LIMB_CHEST
 		projtwo.starting = get_turf(secondloc)
 		projtwo.shot_from = my_atom
 		projtwo.firer = usr
-		projtwo.def_zone = "chest"
+		projtwo.def_zone = LIMB_CHEST
 		spawn(0)
 			playsound(my_atom, fire_sound, 50, 1)
 			projone.dumbfire(dir)

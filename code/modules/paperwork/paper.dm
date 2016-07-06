@@ -334,7 +334,7 @@
 			if(G.max_heat_protection_temperature)
 				prot = (G.max_heat_protection_temperature > src.autoignition_temperature)
 		if(!prot && (M_CLUMSY in H.mutations) && prob(50)) //only fail if human
-			H.apply_damage(10,BURN,(pick("l_hand", "r_hand")))
+			H.apply_damage(10,BURN,(pick(LIMB_LEFT_HAND, LIMB_RIGHT_HAND)))
 			user.drop_hands()
 			user.visible_message( \
 				"<span class='notice'>[user] tries to burn the [src.name], but burns \his hand trying!</span>", \

@@ -1301,14 +1301,14 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 
 				if("limbs")
 					var/list/limb_input = list(
-						"Left Leg [organ_data["l_leg"]]" = "l_leg",
-						"Right Leg [organ_data["r_leg"]]" = "r_leg",
-						"Left Arm [organ_data["l_arm"]]" = "l_arm",
-						"Right Arm [organ_data["r_arm"]]" = "r_arm",
-						"Left Foot [organ_data["l_foot"]]" = "l_foot",
-						"Right Foot [organ_data["r_foot"]]" = "r_foot",
-						"Left Hand [organ_data["l_hand"]]" = "l_hand",
-						"Right Hand [organ_data["r_hand"]]" = "r_hand"
+						"Left Leg [organ_data[LIMB_LEFT_LEG]]" = LIMB_LEFT_LEG,
+						"Right Leg [organ_data[LIMB_RIGHT_LEG]]" = LIMB_RIGHT_LEG,
+						"Left Arm [organ_data[LIMB_LEFT_ARM]]" = LIMB_LEFT_ARM,
+						"Right Arm [organ_data[LIMB_RIGHT_ARM]]" = LIMB_RIGHT_ARM,
+						"Left Foot [organ_data[LIMB_LEFT_FOOT]]" = LIMB_LEFT_FOOT,
+						"Right Foot [organ_data[LIMB_RIGHT_FOOT]]" = LIMB_RIGHT_FOOT,
+						"Left Hand [organ_data[LIMB_LEFT_HAND]]" = LIMB_LEFT_HAND,
+						"Right Hand [organ_data[LIMB_RIGHT_HAND]]" = LIMB_RIGHT_HAND
 						)
 
 					var/limb_name = input(user, "Which limb do you want to change?") as null|anything in limb_input
@@ -1319,35 +1319,35 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 					var/third_limb = null  // if you try to unchange the hand, the arm should also change
 					var/valid_limb_states=list("Normal","Amputated","Prothesis")
 					switch(limb_input[limb_name])
-						if("l_leg")
-							limb = "l_leg"
-							second_limb = "l_foot"
+						if(LIMB_LEFT_LEG)
+							limb = LIMB_LEFT_LEG
+							second_limb = LIMB_LEFT_FOOT
 							valid_limb_states += "Peg Leg"
-						if("r_leg")
-							limb = "r_leg"
-							second_limb = "r_foot"
+						if(LIMB_RIGHT_LEG)
+							limb = LIMB_RIGHT_LEG
+							second_limb = LIMB_RIGHT_FOOT
 							valid_limb_states += "Peg Leg"
-						if("l_arm")
-							limb = "l_arm"
-							second_limb = "l_hand"
+						if(LIMB_LEFT_ARM)
+							limb = LIMB_LEFT_ARM
+							second_limb = LIMB_LEFT_HAND
 							valid_limb_states += "Wooden Prosthesis"
-						if("r_arm")
-							limb = "r_arm"
-							second_limb = "r_hand"
+						if(LIMB_RIGHT_ARM)
+							limb = LIMB_RIGHT_ARM
+							second_limb = LIMB_RIGHT_HAND
 							valid_limb_states += "Wooden Prosthesis"
-						if("l_foot")
-							limb = "l_foot"
-							third_limb = "l_leg"
-						if("r_foot")
-							limb = "r_foot"
-							third_limb = "r_leg"
-						if("l_hand")
-							limb = "l_hand"
-							third_limb = "l_arm"
+						if(LIMB_LEFT_FOOT)
+							limb = LIMB_LEFT_FOOT
+							third_limb = LIMB_LEFT_LEG
+						if(LIMB_RIGHT_FOOT)
+							limb = LIMB_RIGHT_FOOT
+							third_limb = LIMB_RIGHT_LEG
+						if(LIMB_LEFT_HAND)
+							limb = LIMB_LEFT_HAND
+							third_limb = LIMB_LEFT_ARM
 							valid_limb_states += "Hook Prosthesis"
-						if("r_hand")
-							limb = "r_hand"
-							third_limb = "r_arm"
+						if(LIMB_RIGHT_HAND)
+							limb = LIMB_RIGHT_HAND
+							third_limb = LIMB_RIGHT_ARM
 							valid_limb_states += "Hook Prosthesis"
 
 					var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in valid_limb_states
@@ -1369,7 +1369,7 @@ NOTE:  The change will take effect AFTER any current recruiting periods."}
 						if("Peg Leg","Wooden Prosthesis","Hook Prosthesis")
 							organ_data[limb] = "peg"
 							if(second_limb)
-								if(limb == "l_arm" || limb == "r_arm")
+								if(limb == LIMB_LEFT_ARM || limb == LIMB_RIGHT_ARM)
 									organ_data[second_limb] = "peg"
 								else
 									organ_data[second_limb] = "amputated"

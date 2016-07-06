@@ -397,7 +397,7 @@
 /mob/living/proc/get_organ_target()
 	var/t = src.zone_sel.selecting
 	if ((t in list( "eyes", "mouth" )))
-		t = "head"
+		t = LIMB_HEAD
 	var/datum/organ/external/def_zone = ran_zone(t)
 	return def_zone
 

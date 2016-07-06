@@ -25,7 +25,7 @@
 
 	finish(mob/living/carbon/human/H)
 		if(!H.reagents.has_reagent(DEXALIN))
-			for(var/organ_name in list("chest","l_arm","r_arm","r_leg","l_leg","head","groin"))
+			for(var/organ_name in list(LIMB_CHEST,LIMB_LEFT_ARM,LIMB_RIGHT_ARM,LIMB_RIGHT_LEG,LIMB_LEFT_LEG,LIMB_HEAD,LIMB_GROIN))
 				var/datum/organ/external/E = H.get_organ(organ_name)
 				E.take_damage(0, 5, 0)
 
@@ -41,7 +41,7 @@
 
 	finish(mob/living/carbon/human/H)
 		if(!H.reagents.has_reagent(BICARIDINE))
-			var/organ_name = pick("chest","l_arm","r_arm","r_leg","l_leg","head","groin")
+			var/organ_name = pick(LIMB_CHEST,LIMB_LEFT_ARM,LIMB_RIGHT_ARM,LIMB_RIGHT_LEG,LIMB_LEFT_LEG,LIMB_HEAD,LIMB_GROIN)
 			var/datum/organ/external/E = H.get_organ(organ_name)
 			E.take_damage(20, 0, 0)
 			E.fracture()

@@ -160,7 +160,7 @@
 	if(user.zone_sel)
 		in_chamber.def_zone = user.zone_sel.selecting
 	else
-		in_chamber.def_zone = "chest"
+		in_chamber.def_zone = LIMB_CHEST
 
 	if(targloc == curloc)
 		user.bullet_act(in_chamber)
@@ -285,7 +285,7 @@
 					playsound(user, in_chamber.fire_sound, fire_volume, 1)
 			in_chamber.on_hit(M)
 			if (!in_chamber.nodamage)
-				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
+				user.apply_damage(in_chamber.damage*2.5, in_chamber.damage_type, LIMB_HEAD, used_weapon = "Point blank shot in the mouth with \a [in_chamber]")
 				user.stat=2 // Just to be sure
 				user.death()
 				var/suicidesound = pick('sound/misc/suicide/suicide1.ogg','sound/misc/suicide/suicide2.ogg','sound/misc/suicide/suicide3.ogg','sound/misc/suicide/suicide4.ogg','sound/misc/suicide/suicide5.ogg','sound/misc/suicide/suicide6.ogg')

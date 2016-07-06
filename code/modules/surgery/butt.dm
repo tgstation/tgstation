@@ -8,7 +8,7 @@
 	can_infect = 0
 	blood_level = 1
 	can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-		return target_zone == "groin" && hasorgans(target)
+		return target_zone == LIMB_GROIN && hasorgans(target)
 
 
 //And thus begins the madness.
@@ -25,7 +25,7 @@
 	max_duration = 70
 
 /datum/surgery_step/butt/slice_cheek/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target_zone == "groin" && target.op_stage.butt == 0 && istype(target)
+	return ..() && target_zone == LIMB_GROIN && target.op_stage.butt == 0 && istype(target)
 
 
 /datum/surgery_step/butt/slice_cheek/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -45,7 +45,7 @@
 /datum/surgery_step/butt/slice_cheek/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s ass with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cutting [target]'s ass with \the [tool]!</span>" )
-	target.apply_damage(max(10, tool.force), BRUTE, "groin")
+	target.apply_damage(max(10, tool.force), BRUTE, LIMB_GROIN)
 
 
 
@@ -85,7 +85,7 @@
 /datum/surgery_step/butt/seperate_anus/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s anus with \the [tool]!</span>", \
 	"<span class='warning'>Your hand slips, cutting a vein in [target]'s anus with \the [tool]!</span>")
-	target.apply_damage(50, BRUTE, "groin", 1)
+	target.apply_damage(50, BRUTE, LIMB_GROIN, 1)
 
 
 
@@ -101,7 +101,7 @@
 	max_duration = 70
 
 /datum/surgery_step/butt/saw_hip/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target_zone == "groin" && target.op_stage.butt == 2
+	return ..() && target_zone == LIMB_GROIN && target.op_stage.butt == 2
 
 /datum/surgery_step/butt/saw_hip/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cut off ends of [target]'s hip with \the [tool].", \
@@ -117,7 +117,7 @@
 /datum/surgery_step/butt/saw_hip/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s hip with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cracking [target]'s hip with \the [tool]!</span>" )
-	target.apply_damage(max(10, tool.force), BRUTE, "groin")
+	target.apply_damage(max(10, tool.force), BRUTE, LIMB_GROIN)
 
 
 
@@ -141,7 +141,7 @@
 	max_duration = 70
 
 /datum/surgery_step/butt/cauterize_butt/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target_zone == "groin" && target.op_stage.butt == 3
+	return ..() && target_zone == LIMB_GROIN && target.op_stage.butt == 3
 
 /datum/surgery_step/butt/cauterize_butt/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to cauterize [target]'s ass with \the [tool].", \
@@ -159,7 +159,7 @@
 /datum/surgery_step/butt/cauterize_butt/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning'>[target] lets out a small fart, which gets set alight with [user]'s [tool]!</span>" , \
 	"<span class='warning'>[target] farts into the open flame, burning his anus!</span>" )
-	target.apply_damage(max(10, tool.force), BURN, "groin")
+	target.apply_damage(max(10, tool.force), BURN, LIMB_GROIN)
 	playsound(get_turf(src), 'sound/effects/holler.ogg', 50, 1)
 
 
