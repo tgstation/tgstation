@@ -819,11 +819,18 @@
 	name = "Seed Vault"
 	})
 "br" = (
-/obj/effect/mob_spawn/human/seed_vault,
-/turf/open/floor/plasteel/green/side{
-	tag = "icon-green (NORTHWEST)";
-	icon_state = "green";
-	dir = 9;
+/obj/structure/sign/biohazard{
+	pixel_x = -32
+	},
+/obj/effect/mob_spawn/human/seed_vault{
+	desc = "An old sleeper pod that has become overgrown with vines and plantmass. They seem to originate from the inside.";
+	flavour_text = "<font size=3><b>A</b></font><b>n eerie warning siren is heard as you awaken from your vine-covered pod. You slowly remember what happened. Research... a breakthrough... harmony... unity... panic? None of that matters now. You no longer fear what you have created, and are glad it has grown so prosperously in your absence. There is still work to be done. See to it that you spread your discoveries to others.</b>";
+	name = "overgrown sleeper"
+	},
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (NORTH)";
+	icon_state = "greencorner";
+	dir = 1;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
@@ -961,22 +968,26 @@
 	name = "Seed Vault"
 	})
 "bC" = (
-/obj/structure/sign/biohazard{
-	pixel_x = -32
-	},
-/obj/effect/mob_spawn/human/seed_vault,
-/turf/open/floor/plasteel/green/corner{
-	tag = "icon-greencorner (NORTH)";
-	icon_state = "greencorner";
-	dir = 1;
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
 	name = "Seed Vault"
 	})
 "bD" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel{
+/obj/structure/sign/securearea{
+	pixel_x = -32
+	},
+/obj/effect/mob_spawn/human/seed_vault{
+	desc = "An old sleeper pod that has become overgrown with vines and plantmass. They seem to originate from the inside.";
+	flavour_text = "<font size=3><b>A</b></font><b>n eerie warning siren is heard as you awaken from your vine-covered pod. You slowly remember what happened. Research... a breakthrough... harmony... unity... panic? None of that matters now. You no longer fear what you have created, and are glad it has grown so prosperously in your absence. There is still work to be done. See to it that you spread your discoveries to others.</b>";
+	name = "overgrown sleeper"
+	},
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (WEST)";
+	icon_state = "greencorner";
+	dir = 8;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
@@ -1146,7 +1157,7 @@
 	dir = 8;
 	on = 1
 	},
-/turf/open/floor/plasteel{
+/turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
@@ -1233,14 +1244,15 @@
 	name = "Seed Vault"
 	})
 "ca" = (
-/obj/structure/sign/securearea{
-	pixel_x = -32
+/obj/effect/mob_spawn/human/seed_vault{
+	desc = "An old sleeper pod that has become overgrown with vines and plantmass. They seem to originate from the inside.";
+	flavour_text = "<font size=3><b>A</b></font><b>n eerie warning siren is heard as you awaken from your vine-covered pod. You slowly remember what happened. Research... a breakthrough... harmony... unity... panic? None of that matters now. You no longer fear what you have created, and are glad it has grown so prosperously in your absence. There is still work to be done. See to it that you spread your discoveries to others.</b>";
+	name = "overgrown sleeper"
 	},
-/obj/effect/mob_spawn/human/seed_vault,
-/turf/open/floor/plasteel/green/corner{
-	tag = "icon-greencorner (WEST)";
-	icon_state = "greencorner";
-	dir = 8;
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (SOUTHWEST)";
+	icon_state = "green";
+	dir = 10;
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
@@ -1353,11 +1365,7 @@
 	name = "Seed Vault"
 	})
 "ck" = (
-/obj/effect/mob_spawn/human/seed_vault,
-/turf/open/floor/plasteel/green/side{
-	tag = "icon-green (SOUTHWEST)";
-	icon_state = "green";
-	dir = 10;
+/turf/closed/mineral/volcanic/lava_land_surface{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
@@ -2392,6 +2400,34 @@
 /area/awaycontent/a1{
 	name = "Seed Vault"
 	})
+"dI" = (
+/obj/effect/mob_spawn/human/seed_vault{
+	desc = "An old sleeper pod that has become overgrown with vines and plantmass. They seem to originate from the inside.";
+	flavour_text = "<font size=3><b>A</b></font><b>n eerie warning siren is heard as you awaken from your vine-covered pod. You slowly remember what happened. Research... a breakthrough... harmony... unity... panic? None of that matters now. You no longer fear what you have created, and are glad it has grown so prosperously in your absence. There is still work to be done. See to it that you spread your discoveries to others.</b>";
+	name = "overgrown sleeper"
+	},
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTHWEST)";
+	icon_state = "green";
+	dir = 9;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dH" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dG" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -2438,13 +2474,13 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 ab
 ab
 ab
@@ -2469,7 +2505,7 @@ ab
 ab
 ab
 ab
-ab
+dG
 ba
 ba
 ba
@@ -2477,7 +2513,7 @@ ba
 ba
 ba
 ba
-ab
+dG
 ab
 ab
 ab
@@ -2504,9 +2540,9 @@ ab
 ba
 ba
 ba
-ba
-ba
-ba
+bA
+bN
+bZ
 ba
 ba
 ba
@@ -2535,11 +2571,11 @@ ab
 ab
 ba
 ba
-ba
-bA
-bN
-bZ
-ba
+bp
+bB
+bB
+bB
+ci
 ba
 ba
 ab
@@ -2567,11 +2603,11 @@ ab
 ab
 ba
 ba
-bp
+bq
 bB
+bO
 bB
-bB
-ci
+cj
 ba
 ba
 ab
@@ -2599,11 +2635,11 @@ ab
 ab
 ba
 ba
-bq
+bp
 bB
-bO
+bP
 bB
-cj
+ci
 ba
 ba
 ab
@@ -2631,11 +2667,11 @@ ac
 ah
 ba
 ba
-bp
-bB
-bP
-bB
-ci
+ba
+ba
+bQ
+ba
+ba
 ba
 ba
 ab
@@ -2661,15 +2697,15 @@ ap
 aB
 aN
 aR
-ba
-ba
-ba
-ba
-bQ
-ba
-ba
-ba
-ba
+ac
+ah
+dI
+br
+aE
+bD
+ca
+ah
+ck
 ab
 ac
 da
@@ -2695,11 +2731,11 @@ aC
 aS
 ac
 ah
-br
+bs
 bC
 aK
-ca
-ck
+az
+dx
 ah
 ah
 ac
@@ -2726,11 +2762,11 @@ aD
 ay
 aS
 ah
-ah
-bs
-bD
+dH
+bt
+bE
 aK
-ay
+bE
 cl
 ah
 cz
@@ -2761,7 +2797,7 @@ ac
 bg
 bt
 bE
-aK
+aE
 bE
 cm
 bJ
@@ -2857,8 +2893,8 @@ ac
 ah
 bs
 az
-az
-az
+ay
+ay
 cl
 ah
 cD
