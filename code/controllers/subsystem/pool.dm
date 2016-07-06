@@ -12,10 +12,10 @@ var/datum/subsystem/pool/SSpool
 		/obj/item/stack/tile/plasteel = 100
 	)
 
-	var/stats_placed_in_pool = list()
-	var/stats_pooled_or_newed = list()
-	var/stats_reused = list()
-	var/stats_created_new = list()
+	var/list/stats_placed_in_pool = list()
+	var/list/stats_pooled_or_newed = list()
+	var/list/stats_reused = list()
+	var/list/stats_created_new = list()
 
 /datum/subsystem/pool/New()
 	NEW_SS_GLOBAL(SSpool)
