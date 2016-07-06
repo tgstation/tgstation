@@ -112,20 +112,33 @@
 	. = ..()
 	UpdateAffectingLights()
 
+/datum/spacevine_mutation/space_covering
+	var/static/list/coverable_turfs
+
+/datum/spacevine_mutation/space_covering/New()
+	. = ..()
+	if(!coverable_turfs)
+		coverable_turfs = typecacheof(list(
+			/turf/open/space
+		))
+		coverable_turfs -= typecacheof(list(
+			/turf/open/space/transit
+		))
+
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
-	var/turf/T = get_turf(holder)
-	if(istype(T, /turf/open/space))
-		T.ChangeTurf(/turf/open/floor/vines)
+	process_mutation(holder)
 
 /datum/spacevine_mutation/space_covering/process_mutation(obj/effect/spacevine/holder)
 	var/turf/T = get_turf(holder)
-	if(istype(T, /turf/open/space))
+	if(is_type_in_typecache(T, coverable_turfs))
+		var/currtype = T.type
 		T.ChangeTurf(/turf/open/floor/vines)
+		T.baseturf = currtype
 
 /datum/spacevine_mutation/space_covering/on_death(obj/effect/spacevine/holder)
 	var/turf/T = get_turf(holder)
 	if(istype(T, /turf/open/floor/vines))
-		T.ChangeTurf(/turf/open/space)
+		T.ChangeTurf(T.baseturf)
 
 /datum/spacevine_mutation/bluespace
 	name = "bluespace"
@@ -174,10 +187,7 @@
 		qdel(src)
 	else
 		. = 1
-		addtimer(src, "delete_self", 5, unique=TRUE) // TODO replace with addqdeltimer when that's made
-
-/datum/spacevine_mutation/explosive/proc/delete_self()
-	qdel(src)
+		QDEL_IN(src, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/effect/spacevine/holder, mob/hitter, obj/item/I)
 	explosion(holder.loc, 0, 0, severity, 0, 0)
@@ -300,7 +310,7 @@
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !vineimmune(holder))
+	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
@@ -500,7 +510,7 @@
 
 /obj/effect/spacevine_controller/process()
 	if(!vines)
-		qdel(src) //space  vines exterminated. Remove the controller
+		qdel(src) //space vines exterminated. Remove the controller
 		return
 	if(!growth_queue)
 		qdel(src) //Sanity check
@@ -512,7 +522,7 @@
 	var/i = 0
 	var/list/obj/effect/spacevine/queue_end = list()
 
-	for( var/obj/effect/spacevine/SV in growth_queue )
+	for(var/obj/effect/spacevine/SV in growth_queue)
 		if(qdeleted(SV))
 			continue
 		i++
@@ -549,7 +559,7 @@
 	if(!has_buckled_mobs() && prob(25))
 		for(var/mob/living/V in src.loc)
 			entangle(V)
-			if(buckled_mobs.len)
+			if(buckled_mobs && buckled_mobs.len)
 				break //only capture one mob at a time
 
 
