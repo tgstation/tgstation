@@ -226,7 +226,7 @@
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_IRV)
 			var/datum/asset/irv_assets = get_asset_datum(/datum/asset/simple/IRV)
-			irv_assets.send()
+			irv_assets.send(src)
 
 			var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
 			if(!voted_query.Execute())
