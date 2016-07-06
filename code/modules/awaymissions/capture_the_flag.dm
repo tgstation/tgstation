@@ -337,7 +337,7 @@
 	addtimer(src, "floor_vanish", 1)
 
 /obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/proc/floor_vanish()
-	if(!ismob(loc))
+	if(isturf(loc))
 		qdel(src)
 
 /obj/item/weapon/gun/projectile/automatic/laser/ctf
@@ -354,7 +354,7 @@
 	addtimer(src, "floor_vanish", 1)
 
 /obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
-	if(!ismob(loc))
+	if(isturf(loc))
 		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
