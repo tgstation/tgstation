@@ -20,7 +20,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A simple match stick, used for lighting fine smokables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
-	var/lit = 0
+	var/lit = FALSE
+	var/burnt = FALSE
 	var/smoketime = 5
 	w_class = 1
 	origin_tech = "materials=1"
@@ -37,8 +38,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	matchignite()
 
 /obj/item/weapon/match/proc/matchignite()
-	if(lit == 0)
-		lit = 1
+	if(!lit && !burnt)
+		lit = TRUE
 		icon_state = "match_lit"
 		damtype = "fire"
 		force = 3
@@ -49,31 +50,31 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb = list("burnt","singed")
 		START_PROCESSING(SSobj, src)
 		update_icon()
-	return
 
 /obj/item/weapon/match/proc/matchburnout()
-	if(lit == 1)
-		lit = -1
+	if(lit)
+		lit = FALSE
+		burnt = TRUE
 		damtype = "brute"
 		force = initial(force)
 		icon_state = "match_burnt"
 		item_state = "cigoff"
 		name = "burnt match"
 		desc = "A match. This one has seen better days."
-		attack_verb = null
+		attack_verb = list("flicked")
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/match/dropped(mob/user)
 	matchburnout()
-	return ..()
+	. = ..()
 
 /obj/item/weapon/match/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!isliving(M))
 		return
-	if(M.IgniteMob())
+	if(lit && M.IgniteMob())
 		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
-	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
+	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
@@ -84,12 +85,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else
 		..()
 
-/obj/item/proc/help_light_cig(mob/living/carbon/M, mob/living/carbon/user)
-	if(!iscarbon(M))
-		return
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
-		return cig
+/obj/item/proc/help_light_cig(mob/living/M)
+	var/mask_item = M.get_item_by_slot(slot_wear_mask)
+	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
+		return mask_item
 
 /obj/item/weapon/match/is_hot()
 	return lit * heat
@@ -120,7 +119,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/New()
 	..()
-	create_reagents(chem_volume) // making the cigarette a chemical holder with a maximum volume of 15
+	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 15)
 
@@ -229,17 +228,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
-	if(lit == 1)
+	if(lit)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)
-	return ..()
+	. = ..()
 
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
 		return ..()
-	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
+	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
@@ -277,7 +276,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 	reagents.add_reagent("mushroomhallucinogen", 50)
 	light()
-	//for(var/mob/M in player_list)	M << 'sound/misc/Smoke_Weed_Everyday.ogg'
 
 
 /obj/item/weapon/cigbutt/roach
@@ -507,14 +505,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user.AddLuminosity(-1)
 			STOP_PROCESSING(SSobj, src)
 	else
-		return ..()
-	return
+		. = ..()
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.IgniteMob())
 		message_admins("[key_name_admin(user)] set [key_name_admin(M)] on fire")
 		log_game("[key_name(user)] set [key_name(M)] on fire")
-	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M,user)
+	var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
 	if(lit && cig && user.a_intent == "help")
 		if(cig.lit)
 			user << "<span class='notice'>The [cig.name] is already lit.</span>"
