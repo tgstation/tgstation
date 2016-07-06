@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "Instant Runoff Voting polls are now available."
