@@ -530,6 +530,9 @@
 			L.Weaken(4) //half the stun, but sets cultists on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.silent += 6
 		targetsjudged++
 		L.adjustBruteLoss(10)
 		add_logs(user, L, "struck with a judicial blast")
