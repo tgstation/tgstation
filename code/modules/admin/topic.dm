@@ -1759,8 +1759,10 @@
 			usr << "The person you are trying to contact is not wearing a headset"
 			return
 
+		message_admins("[src.owner] has started answering [key_name(H)]'s Centcomm request.")
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcom", "")
 		if(!input)
+			message_admins("[src.owner] decided not to answer [key_name(H)]'s Centcomm request.")
 			return
 
 		src.owner << "You sent [input] to [H] via a secure channel."
@@ -1777,8 +1779,10 @@
 			usr << "The person you are trying to contact is not wearing a headset"
 			return
 
+		message_admins("[src.owner] has started answering [key_name(H)]'s syndicate request.")
 		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
 		if(!input)
+			message_admins("[src.owner] decided not to answer [key_name(H)]'s syndicate request.")
 			return
 
 		src.owner << "You sent [input] to [H] via a secure channel."
