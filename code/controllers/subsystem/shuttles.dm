@@ -24,6 +24,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/emergencyNoRecall = FALSE
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -218,18 +219,20 @@ var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle/proc/canRecall()
 	if(emergency.mode != SHUTTLE_CALL)
-		return
+		return FALSE
+	if(emergencyNoRecall)
+		return FALSE
 	if(ticker.mode.name == "meteor")
-		return
+		return FALSE
 	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
-			return
+			return FALSE
 	else
 		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-			return
-	return 1
+			return FALSE
+	return TRUE
 
-/datum/subsystem/shuttle/proc/autoEvac()
+/datum/subsystem/shuttle/proc/autoEvac(force=FALSE)
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
@@ -247,11 +250,23 @@ var/datum/subsystem/shuttle/SSshuttle
 			callShuttle = 0
 			break
 
-	if(callShuttle)
+	var/delay = config.shuttle_refuel_delay - (world.time - round_start_time)
+	var/delay_fraction = max(delay, 0) / emergencyCallTime
+	var/call_multiplier = 1 + delay_fraction
+	if(callShuttle || force)
+		emergencyNoRecall = TRUE
 		if(EMERGENCY_IDLE_OR_RECALLED)
-			emergency.request(null, 2.5)
-			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
-			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+			emergency.request(null, call_multiplier)
+		if(callShuttle)
+			log_game("There is no means of calling the shuttle anymore. \
+				Shuttle automatically called and no longer recallable.")
+			message_admins("All the communications consoles were destroyed \
+				and all AIs are inactive. Shuttle called and no longer \
+				recallable.")
+		if(force)
+			log_game("Unrecallable mandatory shuttle evacuation forced.")
+			message_admins("The emergency shuttle has been force called, \
+				and cannot be recalled.")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)

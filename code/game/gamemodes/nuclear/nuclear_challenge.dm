@@ -11,6 +11,7 @@
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
 	var/declaring_war = 0
+	var/always_allowed = FALSE // for debug purposes.
 
 /obj/item/device/nuclear_challenge/attack_self(mob/living/user)
 	if(!check_allowed(user))
@@ -39,26 +40,31 @@
 	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.gamemode = /datum/game_mode/nuclear
 	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	// After the sound effect finishes playing, call the shuttle
+	// and make it unrecallable.
+	addtimer(SSshuttle, "autoEvac", 150, TRUE, TRUE)
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
+	if(always_allowed)
+		return TRUE
 	if(declaring_war)
-		return 0
+		return FALSE
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
 		user << "The enemy crew is too small to be worth declaring war on."
-		return 0
+		return FALSE
 	if(user.z != ZLEVEL_CENTCOM)
 		user << "You have to be at your base to use this."
-		return 0
+		return FALSE
 	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)
 		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."
-		return 0
+		return FALSE
 	for(var/V in syndicate_shuttle_boards)
 		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
 		if(board.moved)
 			user << "The shuttle has already been moved! You have forfeit the right to declare war."
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 #undef CHALLENGE_TELECRYSTALS
 #undef CHALLENGE_MIN_PLAYERS
