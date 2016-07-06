@@ -24,7 +24,7 @@ var/list/blob_overminds = list()
 	var/nuclear = 0
 
 	var/cores_to_spawn = 15
-	var/players_per_core = 30
+	var/players_per_core = BLOB_CORE_PROPORTION
 	var/blob_point_rate = 3
 
 	var/blobwincount = 750 // WAS: 500

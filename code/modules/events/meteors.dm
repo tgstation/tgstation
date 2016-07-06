@@ -107,7 +107,6 @@ var/global/list/thing_storm_types = list(
 		/obj/item/projectile/meteor/blob/node,
 		/obj/item/projectile/meteor/blob/node,
 		/obj/item/projectile/meteor/blob/node,
-		/obj/item/projectile/meteor/blob/core,
 	),
 )
 
@@ -166,13 +165,22 @@ var/global/list/thing_storm_types = list(
 	command_alert("The station has cleared the Blob cluster. Eradicate the blob from hit areas.", "Blob Cluster")
 
 /datum/event/thing_storm/blob_storm
+	var/cores_spawned = 0
 
 /datum/event/thing_storm/blob_storm/setup()
 	endWhen = rand(60, 90) + 10
 	storm_name="blob storm"
 
 /datum/event/thing_storm/blob_storm/tick()
-	meteor_wave(rand(20, 40), types = thing_storm_types[storm_name])
+	var/chosen_dir = meteor_wave(rand(20, 40), types = thing_storm_types[storm_name])
+	if(!cores_spawned)
+		var/living = 0
+		for(var/mob/living/M in player_list)
+			if(M.stat == CONSCIOUS)
+				living++
+		cores_spawned = round(living/BLOB_CORE_PROPORTION) //Cores spawned depends on living players
+		for(var/i = 0 to cores_spawned)
+			spawn_meteor(chosen_dir, /obj/item/projectile/meteor/blob/core)
 
 /datum/event/thing_storm/blob_storm/announce()
 	command_alert("The station is about to pass through a Blob conglomerate. Overmind brainwaves possibly detected.", "Blob Conglomerate")
