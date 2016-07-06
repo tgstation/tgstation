@@ -1,4 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Vending machine restocking units now work."

@@ -1,8 +1,0 @@
-author: "coiax, Niknakflak"
-delete-after: True
-changes: 
-  - rscadd: "Added fireplaces, fuel with logs or paper and set on fire and enjoy that warm comforting
-glow."
-  - bugfix: "Cardboard cutouts are now flammable."
-  - rscadd: "Cigarettes, fireplaces and candles now share a pool of possible igniters. So you can now esword that candle on, but turn it on first."
-  - rscadd: "Eswords will ignite plasma in the air if turned on."
