@@ -46,14 +46,25 @@
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
 		change_appearance(I, user)
-	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		I.attack(src, user)
+		return
+	// Why yes, this does closely resemble mob and object attack code.
+	if(I.flags & NOBLUDGEON)
+		return
+	if(!I.force)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+	else if(I.hitsound)
+		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
 
-/obj/item/cardboard_cutout/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(prob(I.force))
-		push_over()
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(I)
+
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit \
+			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
+			with [I]!</span>")
+
+		if(prob(I.force))
+			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
