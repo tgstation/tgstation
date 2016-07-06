@@ -32,9 +32,8 @@
 	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, shotgun shells and wands (!).
-	if (!BB)
+	if(!BB)
 		BB = new projectile_type(src)
-	return
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box))
@@ -79,6 +78,7 @@
 	var/multiload = 1
 
 /obj/item/ammo_box/New()
+	..()
 	for(var/i = 1, i <= max_ammo, i++)
 		stored_ammo += new ammo_type(src)
 	update_icon()

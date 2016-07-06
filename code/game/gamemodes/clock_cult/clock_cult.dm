@@ -91,12 +91,16 @@ This file's folder contains:
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
+	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar += M.mind
+	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
 	M.languages_understood |= RATVAR
 	all_clockwork_mobs += M
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them for whatever reason, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has been converted to the cult of Ratvar!</span>"
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
@@ -119,13 +123,17 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
+	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar -= M.mind
+	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
 	M.mind.special_role = null
 	M.languages_spoken &= ~RATVAR
 	M.languages_understood &= ~RATVAR
+	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
+	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	if(issilicon(M))
@@ -137,18 +145,6 @@ This file's folder contains:
 		S.make_laws()
 		S.update_icons()
 		S.show_laws()
-	return 1
-
-/proc/send_hierophant_message(mob/user, message, large)
-	if(!user || !message || !ticker || !ticker.mode)
-		return 0
-	var/parsed_message = "<span class='[large ? "big_brass":"heavy_brass"]'>Servant [user.name == user.real_name ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[large ? "large_brass":"brass"]'>\"[message]\"</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
 	return 1
 
 ///////////////
@@ -166,9 +162,9 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 30
-	required_enemies = 2
-	recommended_enemies = 4
+	required_players = 24
+	required_enemies = 3
+	recommended_enemies = 3
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
@@ -185,7 +181,11 @@ This file's folder contains:
 		restricted_jobs += protected_jobs
 	if(config.protect_assistant_from_antagonist)
 		restricted_jobs += "Assistant"
-	var/starter_servants = max(1, round(num_players() / 10)) //Guaranteed one cultist - otherwise, about one cultist for every ten players
+	var/starter_servants = 3 //Guaranteed three servants
+	var/number_players = num_players()
+	if(number_players > 30) //plus one servant for every additional 15 players
+		number_players -= 30
+		starter_servants += round(number_players/15)
 	while(starter_servants)
 		var/datum/mind/servant = pick(antag_candidates)
 		servants_to_serve += servant
@@ -249,8 +249,8 @@ This file's folder contains:
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
 	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using Report in your slab's interface, and you can find a \
-	concise tutorial in Recollection.</b>"
+	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
 	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
 	return 1
 

@@ -17,23 +17,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall0";
-	icon_state = "swall0"
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "e" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall_space (NORTH)";
-	icon_state = "wall_space";
-	dir = 1
-	},
+/turf/closed/wall/shuttle/smooth/overspace,
 /area/shuttle/escape)
 "f" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall2";
-	icon_state = "swall2"
-	},
+/obj/machinery/status_display,
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "g" = (
 /obj/machinery/door/airlock/shuttle{
@@ -76,10 +67,7 @@
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall8";
-	icon_state = "swall8"
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/window/shuttle,
@@ -267,49 +255,50 @@
 	},
 /area/shuttle/escape)
 "P" = (
+/obj/machinery/status_display,
 /turf/closed/wall/shuttle{
-	tag = "icon-wall_space";
-	icon_state = "wall_space"
+	tag = "icon-swall0";
+	icon_state = "swall0"
 	},
 /area/shuttle/escape)
 
 (1,1,1) = {"
 a
-i
+e
 b
 b
 b
-j
+d
 b
 b
 b
-P
+e
 a
 "}
 (2,1,1) = {"
 b
-j
+d
 p
 p
 p
-k
+d
 p
 p
 p
-j
+d
 b
 "}
 (3,1,1) = {"
 c
-k
+d
 q
 v
 q
-k
+d
 H
 H
 H
-k
+d
 c
 "}
 (4,1,1) = {"
@@ -318,25 +307,25 @@ l
 r
 r
 r
-C
+d
 H
 J
 H
-C
+d
 d
 "}
 (5,1,1) = {"
 e
-f
-n
+d
+d
 w
 f
-D
-n
-K
+d
 f
-n
-N
+K
+d
+d
+e
 "}
 (6,1,1) = {"
 a
@@ -365,8 +354,8 @@ m
 a
 "}
 (8,1,1) = {"
-f
-n
+d
+d
 s
 o
 d
@@ -374,8 +363,8 @@ m
 d
 o
 s
-f
-n
+d
+d
 "}
 (9,1,1) = {"
 g
@@ -404,8 +393,8 @@ o
 g
 "}
 (11,1,1) = {"
-f
-n
+d
+d
 s
 s
 o
@@ -413,8 +402,8 @@ o
 o
 s
 s
-f
-n
+d
+d
 "}
 (12,1,1) = {"
 a
@@ -462,10 +451,10 @@ d
 x
 d
 E
-d
+P
 x
 d
-N
+e
 a
 "}
 (16,1,1) = {"
@@ -490,20 +479,20 @@ A
 A
 A
 M
-N
+e
 a
 a
 "}
 (18,1,1) = {"
 a
 a
-u
+a
 x
 B
 G
 I
 x
-u
+a
 a
 a
 "}
@@ -515,7 +504,7 @@ e
 x
 x
 x
-N
+e
 a
 a
 a

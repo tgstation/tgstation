@@ -1,5 +1,3 @@
-
-
 /obj/machinery/particle_accelerator/control_box
 	name = "Particle Accelerator Control Console"
 	desc = "This controls the density of the particles."

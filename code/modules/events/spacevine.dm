@@ -190,6 +190,8 @@
 /datum/spacevine_mutation/fire_proof/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
 	if(I && I.damtype == "fire")
 		. = 0
+	else
+		. = expected_damage
 
 /datum/spacevine_mutation/vine_eating
 	name = "vine eating"
@@ -294,11 +296,12 @@
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
 
-/datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter)
+/datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
 	if(prob(severity) && istype(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+	. =	expected_damage
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -308,15 +311,14 @@
 /datum/spacevine_mutation/woodening/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy)
 		holder.density = 1
+	holder.maxhealth = 100
+	holder.health = holder.maxhealth
 
-/datum/spacevine_mutation/woodening/on_hit(obj/effect/spacevine/holder, mob/hitter, obj/item/I, expected_damage)
-	if(!expected_damage)
-		return
-	if(hitter)
-		if(I)
-			. = I.force * 2
-		else
-			. = 8
+/datum/spacevine_mutation/woodening/on_hit(obj/effect/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
+	if(I.is_sharp())
+		. = expected_damage * 0.5
+	else
+		. = expected_damage
 
 /datum/spacevine_mutation/flowering
 	name = "flowering"
@@ -343,6 +345,8 @@
 	layer = SPACEVINE_LAYER
 	mouse_opacity = 2 //Clicking anywhere on the turf is good enough
 	pass_flags = PASSTABLE | PASSGRILLE
+	var/health = 50
+	var/maxhealth = 50
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 	var/list/mutations = list()
@@ -385,22 +389,33 @@
 	if (!W || !user || !W.type)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
+	var/force = W.force
 
-	var/override = W.force
-	if(W.is_sharp())
-		override = 100
 	if(istype(W, /obj/item/weapon/scythe))
-		var/local_override = override
+		force = force * 4
 		for(var/obj/effect/spacevine/B in orange(1,src))
-			for(var/datum/spacevine_mutation/SM in mutations)
-				local_override = SM.on_hit(src, user, W, local_override)
-				if(prob(local_override))
-					qdel(B)
+			B.health = health - force
+			if(B.health < 1)
+				qdel(B)
+
+		health = health - force
+
+		if(health < 1)
+			qdel(src)
+
+		return
+
+	if(W.is_sharp())
+		force = force * 4
+
+	if(W && W.damtype == "fire")
+		force = force * 4
 
 	for(var/datum/spacevine_mutation/SM in mutations)
-		override = SM.on_hit(src, user, W, override) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
+		force = SM.on_hit(src, user, W, force) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 
-	if(prob(override))
+	health = health - force
+	if(health < 1)
 		qdel(src)
 
 	..()

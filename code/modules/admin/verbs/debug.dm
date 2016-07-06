@@ -573,7 +573,6 @@ var/global/list/g_fancy_list_of_types = null
 	if(!ishuman(M))
 		alert("Invalid mob")
 		return
-	//log_admin("[key_name(src)] has alienized [M.key].")
 
 
 	var/list/outfits = list("Naked","Custom","As Job...")
@@ -630,7 +629,6 @@ var/global/list/g_fancy_list_of_types = null
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(M)] to [dresscode].")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [key_name_admin(M)] to [dresscode]..</span>")
-	return
 
 /client/proc/startSinglo()
 
@@ -767,3 +765,15 @@ var/global/list/g_fancy_list_of_types = null
 		usr.forceMove(get_turf(landmark))
 		usr << "<span class='name'>[template.name]</span>"
 		usr << "<span class='italics'>[template.description]</span>"
+
+/client/proc/clear_dynamic_transit()
+	set category = "Debug"
+	set name = "Clear Dynamic Transit"
+	set desc = "Deallocates all transit space, restoring it to round start \
+		conditions."
+	if(!holder)
+		return
+	SSshuttle.clear_transit = TRUE
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
+	feedback_add_details("admin_verb","CDT") // If...
+	log_admin("[key_name(src)] cleared dynamic transit space.")

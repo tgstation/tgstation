@@ -339,7 +339,7 @@
 	new turf_type(T)
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
-		if(istype(loc, /area/mine/explored))
+		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		for(var/atom/A in urange(12,T))//Lowers chance of mob clumps
 			if(istype(A, /mob/living/simple_animal/hostile/asteroid))
@@ -625,6 +625,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
+/turf/open/chasm/straight_down/lava_land_surface/normal_air
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	if(!AM.invisibility)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
@@ -787,6 +790,7 @@
 	name = "necropolis wall"
 	desc = "A seemingly impenetrable wall."
 	icon = 'icons/turf/walls.dmi'
+	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
 
@@ -794,10 +798,10 @@
 	name = "necropolis floor"
 	desc = "It's regarding you suspiciously."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "floor"
+	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
 
 /turf/open/indestructible/necropolis/New()
 	..()
 	if(prob(12))
-		icon_state = "necropolis[rand(1,2)]"
+		icon_state = "necro[rand(2,3)]"

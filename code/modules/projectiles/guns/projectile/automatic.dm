@@ -36,7 +36,8 @@
 		if(istype(AM, mag_type))
 			if(magazine)
 				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
-				magazine.loc = get_turf(src.loc)
+				magazine.dropped()
+				magazine.forceMove(get_turf(src.loc))
 				magazine.update_icon()
 				magazine = null
 			else

@@ -208,3 +208,11 @@
 	suffix = "lavaland_surface_hermit.dmm"
 	allow_duplicates = FALSE
 	cost = 10
+
+/datum/map_template/ruin/lavaland/cult_shuttle
+	name = "Crashed Cult Hive"
+	id = "cultshuttle"
+	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
+		dark rituals mid-jump isn't the best idea."
+	suffix = "lavaland_surface_cultcrash.dmm"
+	cost = 10

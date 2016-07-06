@@ -1,5 +1,5 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
-/obj/structure/lavaland_door
+/obj/structure/necropolis_gate
 	name = "necropolis gate"
 	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
 	icon = 'icons/effects/96x96.dmi'
@@ -9,12 +9,13 @@
 	opacity = 1
 	bound_width = 96
 	bound_height = 96
+	pixel_x = -32
 	burn_state = LAVA_PROOF
 	luminosity = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 
-/obj/structure/lavaland_door/attack_hand(mob/user)
+/obj/structure/necropolis_gate/attack_hand(mob/user)
 	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
 		return
 	if(is_anyone_home)
@@ -51,10 +52,10 @@
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
-/obj/structure/lavaland_door/singularity_pull()
+/obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/lavaland_door/Destroy(force)
+/obj/structure/necropolis_gate/Destroy(force)
 	if(force)
 		. = ..()
 	else

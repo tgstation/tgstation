@@ -3,10 +3,7 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/overspace,
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
@@ -20,10 +17,7 @@
 	},
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/shuttle/smooth/nodiagonal,
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table/wood,
@@ -57,10 +51,10 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
 	},
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/computer/atmos_alert,
@@ -194,7 +188,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool{
+	can_buckle = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)
 "aH" = (
@@ -241,7 +237,10 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar{
+	can_buckle = 1;
+	name = "buckable bar stool"
+	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "aO" = (
@@ -392,10 +391,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/obj/structure/sign/bluecross_2,
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/door/airlock/shuttle{
@@ -407,17 +406,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bq" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/door/airlock/glass_medical{
+	name = "Medbay"
 	},
-/obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/shuttle/white,
@@ -450,7 +445,9 @@
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
-	dir = 4
+	dir = 4;
+	icon_state = "toilet00";
+	tag = "icon-toilet00 (NORTH)"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
@@ -459,12 +456,11 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bz" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
-/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/retractor,
+/obj/item/weapon/scalpel,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bA" = (
@@ -502,7 +498,7 @@
 "bF" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bG" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -544,12 +540,9 @@
 /area/shuttle/escape)
 "bN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
-/obj/item/weapon/lighter{
-	pixel_x = -4;
-	pixel_y = 6
-	},
+/obj/item/weapon/storage/box/drinkingglasses,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/weapon/storage/fancy/cigarettes/cigars/havana,
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bO" = (
@@ -579,26 +572,36 @@
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
 "bS" = (
-/obj/machinery/door/airlock/glass_medical,
-/turf/open/floor/plasteel/shuttle/white,
-/area/shuttle/escape)
-"bV" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/obj/structure/sign/bluecross_2,
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle/escape)
-"bU" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 0;
-	pixel_y = -30
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/turf/closed/wall/shuttle/smooth,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
 	tag = "icon-plant-10";
 	icon_state = "plant-10"
+	},
+/turf/open/floor/plasteel/bar,
+/area/shuttle/escape)
+"bU" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/escape)
+"bV" = (
+/obj/structure/table/wood/bar{
+	boot_dir = 8
+	},
+/obj/effect/fun_balloon/sentience/emergency_shuttle{
+	group_name = "bar staff on the Emergency Escape Bar"
 	},
 /turf/open/floor/plasteel/bar,
 /area/shuttle/escape)
@@ -609,34 +612,34 @@ aa
 aa
 aa
 ab
-ak
-ak
+bt
+bt
 aK
-aQ
+bt
 aT
-ak
+bt
 ac
 ac
 ac
-bf
+bt
 bg
-bl
+bt
 bo
-ak
-bf
+bt
+bt
 bA
 aa
 "}
 (2,1,1) = {"
 aa
 ab
-ak
-ak
-av
+bt
+bt
+bt
 aC
 aH
 aL
-aw
+bt
 aE
 bH
 aZ
@@ -644,7 +647,7 @@ bc
 aZ
 bH
 aE
-aw
+bt
 bp
 bs
 bx
@@ -656,11 +659,11 @@ ab
 ae
 al
 aq
-aw
+bt
 aC
 aI
 aM
-aw
+bt
 aE
 aW
 ba
@@ -668,10 +671,10 @@ bL
 bO
 bQ
 bR
-aw
+bt
 bp
 bt
-bf
+bt
 bC
 bE
 "}
@@ -680,11 +683,11 @@ ac
 af
 am
 ar
-aw
+bt
 aC
 aI
 aM
-aw
+bt
 aE
 aW
 bJ
@@ -692,8 +695,8 @@ bM
 bP
 bQ
 aE
-aw
-bp
+bt
+ak
 bu
 bx
 bC
@@ -704,7 +707,7 @@ ac
 ag
 an
 as
-ax
+bt
 ac
 aJ
 ac
@@ -716,10 +719,10 @@ bH
 bK
 bH
 aE
-aw
+aA
 bp
 bt
-bf
+bt
 bC
 bE
 "}
@@ -728,7 +731,7 @@ ac
 ah
 an
 at
-ay
+bt
 aD
 aE
 aE
@@ -764,10 +767,10 @@ aN
 aN
 aE
 aE
-bU
-ak
-ak
-bf
+ae
+bt
+bt
+bt
 bC
 bE
 "}
@@ -781,26 +784,26 @@ bG
 aE
 aO
 aR
-aR
+bV
 aR
 aR
 aR
 bd
 aN
 aE
-bV
-bh
+bn
+bi
 bw
 bz
 bC
 bE
 "}
 (9,1,1) = {"
-ad
-aj
+ab
+ae
 ap
 au
-aB
+bt
 aF
 bH
 aP
@@ -812,19 +815,19 @@ aE
 be
 aE
 aE
+bq
+bi
+bi
 bS
-bi
-bi
-bj
 bC
 bE
 "}
 (10,1,1) = {"
 aa
-ad
-ak
-ak
-av
+ab
+bt
+bt
+bt
 aG
 bH
 bI
@@ -839,7 +842,7 @@ bk
 bF
 br
 br
-bq
+bU
 bB
 bB
 "}
@@ -848,21 +851,21 @@ aa
 aa
 aa
 aa
-ad
+ab
 ac
-ak
+bt
 ac
-ak
-ak
-ak
+bt
+bt
+bt
 ac
 ac
 ac
-ak
-ak
-bn
+bt
+bt
+bt
 ac
-ak
+bt
 ac
 bD
 aa

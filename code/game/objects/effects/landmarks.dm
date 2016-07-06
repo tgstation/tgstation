@@ -4,11 +4,11 @@
 	icon_state = "x2"
 	anchored = 1
 	unacidable = 1
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/landmark/New()
 	..()
 	tag = text("landmark*[]", name)
-	invisibility = INVISIBILITY_ABSTRACT
 	landmarks_list += src
 
 	switch(name)			//some of these are probably obsolete
@@ -77,7 +77,6 @@
 /obj/effect/landmark/start/New()
 	..()
 	tag = "start*[name]"
-	invisibility = INVISIBILITY_ABSTRACT
 	start_landmarks_list += src
 	return 1
 

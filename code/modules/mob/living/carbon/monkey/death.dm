@@ -11,7 +11,7 @@
 	stat = DEAD
 
 	if(!gibbed)
-		visible_message("<b>[src]</b> lets out a faint chimper as it collapses and stops moving...")	//ded -- Urist
+		emote("deathgasp")
 
 	if(ticker && ticker.mode)
 		ticker.mode.check_win()

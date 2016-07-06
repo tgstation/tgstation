@@ -5,6 +5,7 @@
 	icon = 'icons/obj/cardboard_cutout.dmi'
 	icon_state = "cutout_basic"
 	w_class = 4
+	burn_state = FLAMMABLE
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime", "Traitor", "Nuke Op", "Cultist", "Clockwork Cultist", "Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer", \
 	"Ash Walker", "Deathsquad Officer", "Ian") //Possible restyles for the cutout; add an entry in change_appearance() if you add to here
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
@@ -57,6 +58,7 @@
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
+	alpha = 255
 	if(!deceptive)
 		color = "#FFD7A7"
 	switch(new_appearance)

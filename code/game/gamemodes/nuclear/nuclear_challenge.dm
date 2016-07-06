@@ -50,8 +50,8 @@
 	if(user.z != ZLEVEL_CENTCOM)
 		user << "You have to be at your base to use this."
 		return 0
-	if(world.time > CHALLENGE_TIME_LIMIT)
-		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make  do with what you have on hand."
+	if(world.time-round_start_time > CHALLENGE_TIME_LIMIT)
+		user << "It's too late to declare hostilities. Your benefactors are already busy with other schemes. You'll have to make do with what you have on hand."
 		return 0
 	for(var/V in syndicate_shuttle_boards)
 		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V

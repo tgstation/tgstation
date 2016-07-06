@@ -1,6 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Fellowship Armory now invokes faster for each nearby servant and provides clockwork gauntlets, which are shock-resistant and provide armor to the arms."
-  - tweak: "It's not wise to equip clockwork armor if you don't serve Ratvar."
-  - bugfix: "A full set of clockwork armor will now actually cover all limbs."

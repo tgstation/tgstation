@@ -1,3 +1,10 @@
+// Byond direction defines, because I want to put them somewhere.
+// #define NORTH 1
+// #define SOUTH 2
+// #define EAST 4
+// #define WEST 8
+
+
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -145,6 +152,7 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
+#define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
 #define CLICK_CD_RESIST 20
@@ -302,6 +310,9 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_TEXT		"TEXT"
 #define POLLTYPE_RATING		"NUMVAL"
 #define POLLTYPE_MULTI		"MULTICHOICE"
+#define POLLTYPE_IRV		"IRV"
+
+
 
 //lighting area defines
 #define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
@@ -311,6 +322,9 @@ var/list/bloody_footprints_cache = list()
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Gets the turf this atom inhabits
+#define get_turf(A) (get_step(A, 0))
 
 //Bot types
 #define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
@@ -458,3 +472,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+#define COORD(A) "([A.x],[A.y],[A.z])"

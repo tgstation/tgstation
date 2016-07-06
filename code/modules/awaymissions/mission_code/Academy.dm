@@ -121,7 +121,7 @@
 
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
 	wizmind.AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile)
-	wizmind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball)
+	wizmind.AddSpell(new /obj/effect/proc_holder/spell/fireball)
 
 	current_wizard = wizbody
 

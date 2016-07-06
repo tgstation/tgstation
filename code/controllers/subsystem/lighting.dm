@@ -57,7 +57,7 @@ var/datum/subsystem/lighting/SSlighting
 		if(T.lighting_changed)
 			T.redraw_lighting()
 		if (MC_TICK_CHECK)
-			return
+			break
 	if (i > 1)
 		changed_turfs.Cut(1,i)
 

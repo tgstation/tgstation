@@ -817,11 +817,9 @@
 						H.emote("collapse")
 					if(prob(15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
-							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
-							spawn(50)
-								H.facial_hair_style = "Shaved"
-								H.hair_style = "Bald"
-								H.update_hair()
+							H << "<span class='danger'>Your hair starts to \
+								fall out in clumps...<span>"
+							addtimer(src, "go_bald", 50, TRUE, H)
 
 				if(75 to 100)
 					if(prob(1))
@@ -831,6 +829,11 @@
 						H.domutcheck()
 		return 0
 	return 1
+
+/datum/species/proc/go_bald(mob/living/carbon/human/H)
+	H.facial_hair_style = "Shaved"
+	H.hair_style = "Bald"
+	H.update_hair()
 
 ////////////////
 // MOVE SPEED //
@@ -916,7 +919,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			if(H.health >= 0)
+			if(H.health >= 0 && !(H.status_flags & FAKEDEATH))
 				H.help_shake_act(M)
 				if(H != M)
 					add_logs(M, H, "shaked")
@@ -928,11 +931,9 @@
 				if(we_breathe && we_lung)
 					M.do_cpr(H)
 				else if(we_breathe && !we_lung)
-					M << "<span class='warning'>You have no lungs to breathe \
-						with, so cannot peform CPR.</span>"
+					M << "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>"
 				else
-					M << "<span class='notice'>You do not breathe, so \
-						cannot perform CPR.</span>"
+					M << "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>"
 
 		if("grab")
 			if(attacker_style && attacker_style.grab_act(M,H))

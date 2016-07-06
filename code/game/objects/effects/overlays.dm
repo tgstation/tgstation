@@ -17,7 +17,7 @@
 
 /obj/effect/overlay/beam/New()
 	..()
-	spawn(10) qdel(src)
+	QDEL_IN(src, 10)
 
 /obj/effect/overlay/temp
 	icon_state = "nothing"
@@ -26,17 +26,20 @@
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
+	var/timerid
 
 /obj/effect/overlay/temp/Destroy()
 	..()
+	deltimer(timerid)
 	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/overlay/temp/New()
+	..()
 	if(randomdir)
 		setDir(pick(cardinal))
 	flick("[icon_state]", src) //Because we might be pulling it from a pool, flick whatever icon it uses so it starts at the start of the icon's animation.
-	spawn(duration)
-		qdel(src)
+
+	timerid = QDEL_IN(src, duration)
 
 /obj/effect/overlay/temp/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
@@ -254,9 +257,16 @@
 	icon_state = "sigilactiveoverlay"
 	alpha = 0
 
-/obj/effect/overlay/temp/purple_sparkles
+
+/obj/effect/overlay/temp/revenant
 	name = "spooky lights"
 	icon_state = "purplesparkles"
+
+/obj/effect/overlay/temp/revenant/cracks
+	name = "glowing cracks"
+	icon_state = "purplecrack"
+	duration = 6
+
 
 /obj/effect/overlay/temp/emp
 	name = "emp sparks"
@@ -273,7 +283,7 @@
 	duration = 15
 
 /obj/effect/overlay/temp/gib_animation/New(loc, gib_icon)
-	icon_state = gib_icon
+	icon_state = gib_icon // Needs to be before ..() so icon is correct
 	..()
 
 /obj/effect/overlay/temp/gib_animation/ex_act(severity)
@@ -287,8 +297,31 @@
 	duration = 15
 
 /obj/effect/overlay/temp/dust_animation/New(loc, dust_icon)
-	icon_state = dust_icon
+	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
 	..()
+
+/obj/effect/overlay/temp/sparkle
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shieldsparkles"
+	mouse_opacity = 0
+	density = 0
+	duration = 10
+	var/atom/movable/attached_to
+
+/obj/effect/overlay/temp/sparkle/New(atom/movable/AM)
+	..()
+	if(istype(AM))
+		attached_to = AM
+		attached_to.overlays += src
+
+/obj/effect/overlay/temp/sparkle/Destroy()
+	if(attached_to)
+		attached_to.overlays -= src
+	attached_to = null
+	. = ..()
+
+/obj/effect/overlay/temp/sparkle/tailsweep
+	icon_state = "tailsweep"
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

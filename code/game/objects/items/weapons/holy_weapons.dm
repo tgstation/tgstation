@@ -263,27 +263,15 @@
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 
-/obj/item/weapon/nullrod/whip/afterattack(atom/movable/AM, mob/user, proximity)
-	if(!proximity)
-		return
-	if(istype(AM, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = AM
-		if(is_shadow(H))
-			var/phrase = pick("Die monster! You don't belong in this world!!!", "You steal men's souls and make them your slaves!!!", "Your words are as empty as your soul!!!", "Mankind ill needs a savior such as you!!!")
-			user.say("[phrase]")
-			H.adjustBruteLoss(8) //Bonus damage
-
 /obj/item/weapon/nullrod/fedora
 	name = "atheist's fedora"
-	desc = "The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God."
+	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."
 	icon_state = "fedora"
 	item_state = "fedora"
 	slot_flags = SLOT_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
-	force = 0
-	throw_speed = 4
-	throw_range = 7
-	throwforce = 20
+	sharpness = IS_SHARP
+	attack_verb = list("enlightened", "redpilled")
 
 /obj/item/weapon/nullrod/armblade
 	name = "dark blessing"
