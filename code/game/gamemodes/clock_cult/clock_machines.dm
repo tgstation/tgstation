@@ -579,7 +579,7 @@
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
 			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
-			send_hierophant_message(user, input, "big_brass", "large_brass")
+			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"

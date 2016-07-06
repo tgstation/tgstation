@@ -138,4 +138,4 @@
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-	send_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES
+	titled_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES

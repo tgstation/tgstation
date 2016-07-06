@@ -24,11 +24,11 @@
 
 /obj/structure/clockwork/New()
 	..()
-	clockwork_construction_value += construction_value
+	change_construction_value(construction_value)
 	all_clockwork_objects += src
 
 /obj/structure/clockwork/Destroy()
-	clockwork_construction_value -= construction_value
+	change_construction_value(-construction_value)
 	all_clockwork_objects -= src
 	return ..()
 
@@ -155,11 +155,15 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
+	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
 
 /obj/structure/clockwork/cache/Destroy()
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
+	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
