@@ -1,695 +1,3355 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
-"a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+"aa" = (
+/turf/template_noop,
 /area/lavaland/surface/outdoors)
-"b" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+"ab" = (
+/turf/closed/mineral/volcanic/lava_land_surface{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/lavaland/surface/outdoors)
-"c" = (
-/turf/closed/wall/r_wall,
-/area/ruin/powered)
-"d" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
+"ac" = (
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/turf/closed/mineral/volcanic/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"e" = (
-/obj/machinery/smartfridge,
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ad" = (
+/obj/structure/bed,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ae" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23;
+	req_access = list(0)
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"af" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ag" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"f" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/cultivator,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/hatchet,
-/obj/item/weapon/hatchet,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ah" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"g" = (
-/obj/machinery/hydroponics/constructable,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ai" = (
+/obj/machinery/button/door{
+	id = "seed_Dorm2";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = -25;
+	req_access_txt = "0";
+	specialfunctions = 4
 	},
-/area/ruin/powered)
-"h" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/seed_vault,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"i" = (
-/obj/machinery/plantgenes/seedvault,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aj" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
 	},
-/area/ruin/powered)
-"j" = (
-/obj/item/weapon/hatchet,
-/obj/item/weapon/storage/bag/plants,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"k" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/bag/plants,
-/obj/item/weapon/storage/bag/plants,
-/obj/item/weapon/storage/bag/plants,
-/obj/item/weapon/storage/bag/plants,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ak" = (
+/obj/structure/chair/stool,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"l" = (
-/obj/structure/table/wood,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/gun/energy/floragun,
-/obj/item/weapon/storage/box/disks_plantgene,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"al" = (
+/obj/machinery/light/small{
+	dir = 4
 	},
-/area/ruin/powered)
-"m" = (
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"n" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 8
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"o" = (
-/obj/effect/mob_spawn/human/seed_vault,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"p" = (
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/structure/mirror{
+	pixel_x = -28
 	},
-/area/ruin/powered)
-"q" = (
-/obj/machinery/vending/hydronutrients,
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"r" = (
-/obj/machinery/vending/hydroseeds,
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"am" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/window/reinforced,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"an" = (
+/obj/machinery/door/airlock{
+	id_tag = "seed_Dorm2";
+	name = "Dorm 2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ao" = (
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms";
+	req_access_txt = "0"
+	},
 /turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/powered)
-"s" = (
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ap" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/table,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/device/multitool,
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTHWEST)";
+	icon_state = "neutral";
+	dir = 9;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aq" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ar" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"as" = (
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (NORTH)";
+	icon_state = "neutral";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"at" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"au" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (EAST)";
+	icon_state = "neutralcorner";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"av" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aw" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ax" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23;
+	req_access = list(0)
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (NORTH)";
+	icon_state = "neutralcorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ay" = (
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"az" = (
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fernybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aB" = (
+/obj/structure/table,
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/obj/item/trash/plate,
+/obj/item/trash/candy,
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (WEST)";
+	icon_state = "neutral";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aC" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aG" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aH" = (
+/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (WEST)";
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aJ" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/neutral/corner{
+	tag = "icon-neutralcorner (WEST)";
+	icon_state = "neutralcorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aM" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aN" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	frequency = 1439;
+	locked = 0;
+	pixel_x = -23;
+	pixel_y = 0;
+	req_access = list(0)
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (WEST)";
+	icon_state = "neutral";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aO" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	tag = "icon-neutral (EAST)";
+	icon_state = "neutral";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aP" = (
+/obj/machinery/door/airlock{
+	id_tag = "seed_Dorm1";
+	name = "Dorm 1"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aQ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aR" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 10;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aS" = (
+/turf/open/floor/plasteel/neutral/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aT" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aU" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aV" = (
+/obj/machinery/button/door{
+	id = "seed_Dorm1";
+	name = "Dorm Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 0;
+	pixel_y = 25;
+	req_access_txt = "0";
+	specialfunctions = 4
+	},
+/obj/structure/closet/secure_closet/personal/cabinet,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aW" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aX" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Dormitories"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aY" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Dormitories"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"aZ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ba" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bb" = (
+/obj/structure/bed,
+/obj/machinery/light/small,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bc" = (
+/obj/structure/table,
+/turf/open/floor/carpet{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bd" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"be" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bf" = (
+/obj/structure/closet/emcloset,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bg" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bh" = (
+/obj/machinery/light{
+	tag = "icon-tube1 (NORTH)";
+	icon_state = "tube1";
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23;
+	req_access = list(0)
+	},
+/obj/machinery/plantgenes/seedvault,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bi" = (
+/obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 5
 	},
-/obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace,
 /obj/item/weapon/reagent_containers/glass/beaker/bluespace,
-/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
-/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = 30
 	},
-/area/ruin/powered)
-"t" = (
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"u" = (
-/obj/machinery/door/airlock,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"v" = (
-/obj/machinery/door/airlock/external,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"w" = (
-/obj/machinery/door/airlock/external,
-/obj/structure/fans/tiny,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"x" = (
-/obj/structure/disposalpipe/trunk,
-/obj/machinery/disposal/bin,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"y" = (
-/obj/machinery/seed_extractor,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"z" = (
-/obj/machinery/biogenerator,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"A" = (
-/obj/machinery/chem_dispenser/mutagen,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"B" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"C" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/obj/item/clothing/under/rank/hydroponics,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"D" = (
-/obj/machinery/chem_master/condimaster,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"E" = (
-/obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"F" = (
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/structure/table/wood,
-/turf/open/floor/plasteel/freezer{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/powered)
-"G" = (
-/obj/structure/disposalpipe/segment,
-/turf/closed/wall/r_wall,
-/area/ruin/powered)
-"H" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"I" = (
-/obj/structure/disposalpipe/trunk{
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bj" = (
+/obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/green/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (WEST)";
+	icon_state = "greencorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bn" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bo" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/lavaland/surface/outdoors)
+"bp" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/effect/spawner/lootdrop/seed_vault{
+	loot = list(/obj/item/seeds/gatfruit = 1, /obj/item/seeds/cherry = 10, /obj/item/seeds/berry/glow = 10, /obj/item/seeds/sunflower/moonflower = 10, /obj/item/seeds/ambrosia/gaia = 5, /obj/item/seeds/watermelon/holy = 10, /obj/item/seeds/replicapod = 10, /obj/item/seeds/tomato/killer = 10, /obj/item/seeds/tomato/blue/bluespace = 10)
+	},
+/turf/open/floor/plasteel/darkwarning{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bq" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/seed_vault{
+	loot = list(/obj/item/seeds/gatfruit = 1, /obj/item/seeds/cherry = 10, /obj/item/seeds/berry/glow = 10, /obj/item/seeds/sunflower/moonflower = 10, /obj/item/seeds/ambrosia/gaia = 5, /obj/item/seeds/watermelon/holy = 10, /obj/item/seeds/replicapod = 10, /obj/item/seeds/tomato/killer = 10, /obj/item/seeds/tomato/blue/bluespace = 10)
+	},
+/turf/open/floor/plasteel/darkwarning{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"br" = (
+/obj/effect/mob_spawn/human/seed_vault,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTHWEST)";
+	icon_state = "green";
+	dir = 9;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bs" = (
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTH)";
+	icon_state = "green";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bt" = (
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTH)";
+	icon_state = "green";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bu" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTHEAST)";
+	icon_state = "green";
+	dir = 5;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bv" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fernybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bw" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/stalkybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bx" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"by" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (WEST)";
+	icon_state = "greencorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bz" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bA" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bB" = (
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bC" = (
+/obj/structure/sign/biohazard{
+	pixel_x = -32
+	},
+/obj/effect/mob_spawn/human/seed_vault,
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (NORTH)";
+	icon_state = "greencorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bD" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bE" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bF" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (EAST)";
+	icon_state = "green";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bG" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bH" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_y = 16
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bI" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/genericbush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (WEST)";
+	icon_state = "green";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bL" = (
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 9
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bM" = (
+/obj/structure/closet/emcloset,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plating/warnplate{
+	dir = 5;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bN" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/sign/securearea{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bO" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bP" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bQ" = (
+/obj/machinery/door/airlock/vault{
+	locked = 1;
+	name = "Seed Vault"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bR" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bT" = (
+/obj/machinery/chem_dispenser/mutagen,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (EAST)";
+	icon_state = "green";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bU" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/genericbush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bV" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bW" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bX" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bY" = (
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"bZ" = (
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/machinery/airalarm{
+	dir = 4;
+	frequency = 1439;
+	locked = 0;
+	pixel_x = -23;
+	pixel_y = 0;
+	req_access = list(0)
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ca" = (
+/obj/structure/sign/securearea{
+	pixel_x = -32
+	},
+/obj/effect/mob_spawn/human/seed_vault,
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (WEST)";
+	icon_state = "greencorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cb" = (
+/obj/machinery/hydroponics/constructable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cc" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (EAST)";
+	icon_state = "green";
+	dir = 4;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cd" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ce" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_y = -16
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cf" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 10
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cg" = (
+/obj/structure/rack{
+	dir = 8;
+	layer = 2.9
+	},
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating/warnplate{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 6
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ch" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ci" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/effect/spawner/lootdrop/seed_vault{
+	loot = list(/obj/item/seeds/gatfruit = 1, /obj/item/seeds/cherry = 10, /obj/item/seeds/berry/glow = 10, /obj/item/seeds/sunflower/moonflower = 10, /obj/item/seeds/ambrosia/gaia = 5, /obj/item/seeds/watermelon/holy = 10, /obj/item/seeds/replicapod = 10, /obj/item/seeds/tomato/killer = 10, /obj/item/seeds/tomato/blue/bluespace = 10)
+	},
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cj" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/machinery/light/small,
+/obj/effect/spawner/lootdrop/seed_vault{
+	loot = list(/obj/item/seeds/gatfruit = 1, /obj/item/seeds/cherry = 10, /obj/item/seeds/berry/glow = 10, /obj/item/seeds/sunflower/moonflower = 10, /obj/item/seeds/ambrosia/gaia = 5, /obj/item/seeds/watermelon/holy = 10, /obj/item/seeds/replicapod = 10, /obj/item/seeds/tomato/killer = 10, /obj/item/seeds/tomato/blue/bluespace = 10)
+	},
+/turf/open/floor/plasteel/darkwarning{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ck" = (
+/obj/effect/mob_spawn/human/seed_vault,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (SOUTHWEST)";
+	icon_state = "green";
+	dir = 10;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cl" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel/green/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cm" = (
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (WEST)";
+	icon_state = "greencorner";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cn" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/green/corner{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"co" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (SOUTHEAST)";
+	icon_state = "green";
+	dir = 6;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cp" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cq" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTHWEST)";
+	icon_state = "green";
+	dir = 9;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (NORTH)";
+	icon_state = "greencorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cs" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	frequency = 1439;
+	locked = 0;
+	pixel_x = 23;
+	pixel_y = 0;
+	req_access = list(0)
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ct" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cu" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cv" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/stalkybush{
+	layer = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cw" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (NORTH)";
+	icon_state = "greencorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cy" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cz" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cA" = (
+/turf/open/floor/plasteel/green/corner{
+	tag = "icon-greencorner (NORTH)";
+	icon_state = "greencorner";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cB" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cC" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cD" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/genericbush{
+	layer = 5
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cE" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23;
+	req_access = list(0)
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cF" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics Foyer"
+	},
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (NORTH)";
+	icon_state = "green";
+	dir = 1;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cG" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cH" = (
+/obj/structure/table,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cI" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cJ" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cK" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cL" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cM" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cN" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics Foyer"
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cO" = (
+/obj/machinery/light/small,
+/obj/structure/window/reinforced{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cP" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (WEST)";
+	icon_state = "green";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cQ" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fernybush{
+	layer = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cR" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cS" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = -16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cT" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cU" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cV" = (
+/obj/structure/window/reinforced{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cW" = (
+/obj/structure/window/reinforced{
+	tag = "icon-rwindow (NORTH)";
+	icon_state = "rwindow";
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cX" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 26;
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"cY" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/closed/mineral/volcanic/lava_land_surface{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors)
+"cZ" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"da" = (
+/obj/machinery/power/smes/engineering,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"db" = (
+/turf/open/floor/plasteel/green/side{
+	tag = "icon-green (WEST)";
+	icon_state = "green";
+	dir = 8;
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dc" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/genericbush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dd" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/grassybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"de" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/stalkybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"df" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dg" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fernybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dh" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"di" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dj" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dk" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Power Storage"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dl" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dm" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dn" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"do" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dp" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dq" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics Foyer"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dr" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/leafybush{
+	layer = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"ds" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/floorgrime{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dt" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"du" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dv" = (
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 4;
+	locked = 0;
+	name = "Seed Vault APC";
+	pixel_x = 24;
+	req_access = list(0)
+	},
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dw" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = -16;
+	pixel_y = 0
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = -16
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dx" = (
+/turf/open/floor/plasteel/green/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dy" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass{
+	name = "Hydroponics Foyer"
+	},
+/turf/open/floor/plasteel/green/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dz" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_x = 16
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dA" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_y = 16
+	},
+/obj/structure/flora/ausbushes/sparsegrass{
+	pixel_x = 16
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/stalkybush{
+	layer = 5
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dB" = (
+/obj/machinery/light/small,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/ausbushes/fernybush{
+	layer = 5
+	},
+/obj/item/stack/rods{
+	item_state = "rods-1"
+	},
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dC" = (
+/obj/machinery/light/small,
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dD" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dE" = (
+/obj/machinery/light/small,
+/obj/structure/table,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
+"dF" = (
+/obj/machinery/light/small,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/flora/ausbushes/fullgrass{
+	pixel_y = 16
+	},
+/obj/item/weapon/shard,
+/turf/open/floor/grass{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-c
-c
-c
-c
-c
-c
-a
-a
-a
-a
-a
-b
-b
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}
 (2,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-c
-o
-o
-o
-o
-c
-a
-a
-a
-a
-a
-b
-b
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
 "}
 (3,1,1) = {"
-b
-b
-a
-a
-a
-a
-c
-c
-m
-m
-m
-m
-c
-c
-a
-a
-a
-b
-a
-b
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
 "}
 (4,1,1) = {"
-b
-b
-a
-a
-a
-c
-c
-c
-c
-u
-u
-c
-c
-c
-c
-a
-a
-a
-a
-a
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
 "}
 (5,1,1) = {"
-a
-a
-a
-a
-a
-c
-e
-m
-p
-m
-m
-p
-m
-p
-c
-a
-a
-a
-a
-a
+aa
+aa
+aa
+ab
+ab
+aa
+ab
+ab
+ab
+ab
+ab
+ba
+ba
+ba
+bA
+bN
+bZ
+ba
+ba
+ba
+ab
+ab
+cY
+ab
+ab
+ab
+ab
+ab
+aa
+aa
 "}
 (6,1,1) = {"
-a
-a
-a
-a
-a
-c
-f
-m
-m
-m
-m
-m
-m
-C
-c
-a
-a
-a
-a
-a
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ba
+ba
+bp
+bB
+bB
+bB
+ci
+ba
+ba
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
 "}
 (7,1,1) = {"
-a
-a
-a
-a
-a
-c
-g
-m
-g
-m
-m
-g
-m
-g
-c
-a
-a
-a
-a
-a
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ba
+ba
+bq
+bB
+bO
+bB
+cj
+ba
+ba
+ab
+ac
+ac
+ac
+ac
+ac
+ab
+ab
+ab
+aa
 "}
 (8,1,1) = {"
-a
-a
-a
-a
-a
-c
-h
-m
-q
-m
-m
-x
-B
-B
-G
-H
-a
-a
-a
-a
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ah
+ah
+ac
+ah
+ba
+ba
+bp
+bB
+bP
+bB
+ci
+ba
+ba
+ab
+ac
+cZ
+di
+du
+ac
+ab
+ab
+ab
+aa
 "}
 (9,1,1) = {"
-a
-a
-a
-a
-a
-c
-i
-m
-e
-m
-m
-y
-m
-m
-c
-I
-a
-a
-a
-a
+aa
+ab
+ab
+ab
+ab
+ab
+ac
+ap
+aB
+aN
+aR
+ba
+ba
+ba
+ba
+bQ
+ba
+ba
+ba
+ba
+ab
+ac
+da
+dj
+dv
+ac
+ab
+ab
+ab
+aa
 "}
 (10,1,1) = {"
-a
-a
-a
-a
-a
-c
-g
-m
-r
-m
-m
-z
-m
-g
-c
-b
-a
-a
-a
-a
+ab
+ab
+ab
+ab
+ab
+ab
+ah
+aq
+aC
+aC
+aS
+ac
+ah
+br
+bC
+aK
+ca
+ck
+ah
+ah
+ac
+ah
+ac
+dk
+ah
+ah
+ab
+ab
+ab
+ab
 "}
 (11,1,1) = {"
-a
-a
-a
-a
-a
-c
-j
-m
-s
-m
-m
-A
-m
-D
-c
-a
-a
-a
-a
-a
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ar
+aD
+ay
+aS
+ah
+ah
+bs
+bD
+aK
+ay
+cl
+ah
+cz
+cI
+cP
+db
+dl
+cC
+ah
+ah
+ab
+ab
+ab
 "}
 (12,1,1) = {"
-a
-a
-a
-a
-a
-c
-g
-m
-m
-m
-m
-m
-m
-g
-c
-a
-a
-a
-a
-a
+ab
+ab
+ab
+ab
+ab
+ah
+ah
+as
+aE
+az
+aT
+ac
+bg
+bt
+bE
+aK
+bE
+cm
+bJ
+cA
+cJ
+cQ
+aQ
+dm
+dw
+dB
+ac
+ab
+ab
+ab
 "}
 (13,1,1) = {"
-a
-a
-a
-a
-a
-c
-k
-m
-m
-g
-g
-m
-m
-E
-c
-a
-a
-a
-a
-a
+aa
+ab
+ab
+ab
+ab
+ah
+am
+as
+aF
+aO
+aU
+ah
+bh
+bt
+bE
+bR
+cb
+av
+ct
+cB
+cK
+cR
+dc
+aK
+dx
+ah
+ac
+ab
+ab
+ab
 "}
 (14,1,1) = {"
-a
-a
-a
-a
-a
-c
-l
-m
-t
-m
-m
-t
-m
-F
-c
-a
-a
-a
-a
-a
+aa
+ab
+ab
+ac
+ac
+ac
+ah
+at
+aG
+ah
+ah
+ac
+bi
+bt
+bE
+bS
+bE
+cn
+bJ
+cC
+cL
+cS
+dd
+aE
+az
+dC
+ah
+ab
+ab
+ab
 "}
 (15,1,1) = {"
-a
-a
-a
-a
-a
-c
-c
-c
-c
-v
-v
-c
-c
-c
-c
-a
-a
-a
-a
-a
+aa
+ab
+ab
+ac
+ad
+ai
+ac
+au
+aF
+ac
+aV
+ac
+ah
+bs
+az
+az
+az
+cl
+ah
+cD
+cM
+cT
+de
+dn
+ay
+dD
+ah
+ab
+ab
+ab
 "}
 (16,1,1) = {"
-a
-a
-b
-a
-a
-d
-c
-n
-c
-m
-m
-c
-n
-c
-n
-a
-a
-a
-a
-a
+ab
+ab
+ab
+ac
+ae
+aj
+an
+av
+aH
+aP
+aW
+bb
+ac
+bu
+bF
+bT
+cc
+co
+ah
+cE
+ay
+cU
+df
+do
+ay
+dD
+ah
+ab
+ab
+aa
 "}
 (17,1,1) = {"
-a
-a
-a
-a
-a
-b
-a
-b
-c
-w
-w
-c
-b
-b
-b
-a
-a
-a
-b
-b
+ab
+ab
+ab
+ac
+af
+ak
+ah
+aw
+aI
+ah
+ak
+bc
+ac
+ah
+ac
+ah
+ah
+ah
+ac
+bt
+az
+cV
+dg
+dp
+ay
+dE
+ac
+ab
+ab
+aa
 "}
 (18,1,1) = {"
-a
-a
-a
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-b
-b
+ab
+ab
+ab
+ac
+ac
+ac
+ah
+ax
+aJ
+ah
+ac
+ah
+ah
+ah
+bG
+bU
+cd
+ah
+ah
+cF
+cN
+cW
+dh
+dq
+dy
+ah
+ac
+ab
+ab
+ab
 "}
 (19,1,1) = {"
-a
-a
-a
-a
-b
-b
-a
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-b
-b
-b
+ab
+ab
+ab
+ac
+ag
+al
+ao
+ay
+aK
+az
+aX
+bd
+bj
+bv
+bH
+bV
+ce
+cp
+cu
+cG
+az
+ay
+ay
+dr
+dz
+dF
+ah
+ab
+ab
+ab
 "}
 (20,1,1) = {"
-a
-a
-a
-b
-b
-b
-a
-b
-b
-b
-b
-b
-b
-b
-a
-a
-a
-b
-b
-a
+ab
+ab
+ab
+ac
+ac
+ac
+ah
+az
+aL
+aQ
+aY
+aQ
+bk
+bw
+bI
+bW
+bJ
+bJ
+cv
+aQ
+aQ
+cX
+aQ
+ds
+dA
+ah
+ah
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+aA
+aM
+ah
+ah
+be
+bl
+bx
+bJ
+bJ
+bJ
+cq
+cw
+az
+ah
+ah
+ah
+dt
+dt
+ah
+ab
+ab
+ab
+aa
+"}
+(22,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ah
+ah
+ah
+aZ
+ay
+bm
+by
+bK
+bK
+bK
+cr
+cx
+ay
+cO
+ac
+ah
+ah
+ac
+ac
+ab
+ab
+ab
+aa
+"}
+(23,1,1) = {"
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ah
+ah
+bf
+bn
+bz
+az
+ay
+ay
+cs
+cy
+cH
+ah
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+ac
+ah
+ah
+ah
+bX
+ac
+ah
+ah
+ac
+ah
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+bL
+bY
+cf
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ac
+bM
+bY
+cg
+ac
+ab
+ab
+ab
+ab
+ab
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(27,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ac
+ac
+bX
+ac
+ac
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(28,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bo
+bo
+bo
+bo
+ch
+bo
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(29,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bo
+bo
+bo
+bo
+bo
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+bo
+bo
+bo
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
