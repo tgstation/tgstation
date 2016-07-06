@@ -41,7 +41,7 @@
 	doomsday_device = DOOM
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
 	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-		P.switch_mode_to("malf_ai") //Pinpointers start tracking the AI wherever it goes
+		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'

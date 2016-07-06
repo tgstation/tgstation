@@ -861,8 +861,8 @@
 			src.occupier.death()
 			src.occupier.gib()
 			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-				P.switch_mode_to("nuclear") //Pinpointers go back to tracking the nuke disk
-
+				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
+				P.nuke_warning = FALSE
 
 /obj/machinery/power/apc/surplus()
 	if(terminal)

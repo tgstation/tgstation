@@ -38,6 +38,7 @@
 #include "code\__DEFINES\math.dm"
 #include "code\__DEFINES\MC.dm"
 #include "code\__DEFINES\misc.dm"
+#include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"
 #include "code\__DEFINES\qdel.dm"

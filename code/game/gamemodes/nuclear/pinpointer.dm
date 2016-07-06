@@ -13,7 +13,7 @@
 	var/active = FALSE
 	var/atom/movable/target = null //The thing we're searching for
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
-	var/mode = "nuclear" //What are we looking for?
+	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
 /obj/item/weapon/pinpointer/New()
 	..()
@@ -68,21 +68,24 @@
 				target = null
 		return
 	switch(mode)
-		if("nuclear") //We track the nuke disk, for protection or more nefarious purposes
+		if(TRACK_NUKE_DISK) //We track the nuke disk, for protection or more nefarious purposes
 			var/obj/item/weapon/disk/nuclear/N = locate()
 			target = N
-		if("malf_ai") //We track the AI, who wants to blow us all to smithereens
-			for(var/mob/living/silicon/ai/A in ai_list)
+		if(TRACK_MALF_AI) //We track the AI, who wants to blow us all to smithereens
+			for(var/V in ai_list)
+				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
 					target = A
-			for(var/obj/machinery/power/apc/A in apcs_list)
+			for(var/V in apcs_list)
+				var/obj/machinery/power/apc/A = V
 				if(A.malfhack && A.occupier)
 					target = A
-		if("infiltrator") //We track the Syndicate infiltrator, so we can find our way back
+		if(TRACK_INFILTRATOR) //We track the Syndicate infiltrator, so we can find our way back
 			target = SSshuttle.getShuttle("syndicate")
-		if("operative")
+		if(TRACK_OPERATIVES)
 			var/list/possible_targets = list()
-			for(var/datum/mind/M in ticker.mode.syndicates)
+			for(var/V in ticker.mode.syndicates)
+				var/datum/mind/M = V
 				if(M.current && M.current.stat != DEAD && M.current.client)
 					possible_targets |= M.current
 			if(possible_targets.len)
@@ -98,10 +101,10 @@
 	if(!target || here.z != there.z)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
 		return
-	setDir(get_dir(here, there))
 	if(here == there)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]direct"
 	else
+		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
 				icon_state = "pinon[nuke_warning ? "alert" : "close"]"
@@ -136,5 +139,5 @@
 /obj/item/weapon/pinpointer/syndicate/cyborg //Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
-	mode = "operative"
+	mode = TRACK_OPERATIVES
 	flags = NODROP
