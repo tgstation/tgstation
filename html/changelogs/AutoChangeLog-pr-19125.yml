@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "You can now reload your gun in CTF."
+  - rscadd: "Dying in CTF will spawn a short lived ammo pickup, which you can walk over to reload all your weapons."
+  - rscadd: "If reduced to critical status in CTF, you will automatically die, so you no longer have to succumb or be coup de graced. If you are conscious, you will now heal slowly if some damage got through your shield and didn't crit you."
