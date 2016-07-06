@@ -87,6 +87,33 @@
 			kill_objective.find_target()
 		traitor.objectives += kill_objective
 
+	if(prob(20))
+		var/datum/mind/protector = pick(traitors - traitor)
+
+		if(protector)
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = traitor
+			kill_objective.find_target()
+
+			//Make sure that the target exists, and that we don't already have an objective to protect the target
+			var/block_objective_generation = 0
+			if(!kill_objective.target)
+				block_objective_generation = 1
+			else
+				for(var/datum/objective/protect/P in traitor.objectives)
+					if(P.target == kill_objective.target)
+						block_objective_generation = 1
+						break
+
+			if(!block_objective_generation)
+				kill_objective.explanation_text = "[kill_objective.explanation_text] Be wary, they may be under protection of another agent."
+				traitor.objectives += kill_objective
+
+				var/datum/objective/protect/protect_objective = new
+				protect_objective.owner = protector
+				protect_objective.target = kill_objective.target
+				protect_objective.explanation_text = "Protect [protect_objective.target.current.real_name], the [protect_objective.target.assigned_role] from another agent."
+				protector.objectives += protect_objective
 
 	// Escape
 	if(prob(15))

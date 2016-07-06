@@ -1,0 +1,6 @@
+author: Unid
+
+delete-after: True
+
+changes: 
+- rscadd: Double agents now have a 20% chance to receive an objective to assassinate a civilian (non-antagonist). When such an objective is given, another double agent receives an objective to protect the civilian.
