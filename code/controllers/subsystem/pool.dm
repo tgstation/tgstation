@@ -34,9 +34,7 @@ var/datum/subsystem/pool/SSpool
 	sum = 0
 	for(var/type in global_pool + maintained_types)
 		var/list/L = global_pool[type]
-		var/required_number = 0
-		if(type in maintained_types)
-			required_number = maintained_types[type]
+		var/required_number = maintained_types[type] || 0
 
 		// Update pool levels and tracker
 		var/amount = 0
