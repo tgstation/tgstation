@@ -87,6 +87,7 @@
 				output += "<p><input type='submit' value='Vote'>"
 				output += "</form>"
 			output += "</div>"
+			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_TEXT)
 			var/DBQuery/voted_query = dbcon.NewQuery("SELECT replytext FROM [format_table_name("poll_textreply")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -117,6 +118,7 @@
 			else
 				vote_text = replacetext(vote_text, "\n", "<br>")
 				output += "[vote_text]"
+			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_RATING)
 			var/DBQuery/voted_query = dbcon.NewQuery("SELECT o.text, v.rating FROM [format_table_name("poll_option")] o, [format_table_name("poll_vote")] v WHERE o.pollid = [pollid] AND v.ckey = '[ckey]' AND o.id = v.optionid")
@@ -172,6 +174,7 @@
 				output += "<input type='hidden' name='minid' value='[minid]'>"
 				output += "<input type='hidden' name='maxid' value='[maxid]'>"
 				output += "<p><input type='submit' value='Submit'></form>"
+			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 		if(POLLTYPE_MULTI)
 			var/DBQuery/voted_query = dbcon.NewQuery("SELECT optionid FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
@@ -223,6 +226,7 @@
 			if(!votedfor.len)
 				output += "<p><input type='submit' value='Vote'></form>"
 			output += "</div>"
+			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x250")
 		if(POLLTYPE_IRV)
 			var/datum/asset/irv_assets = get_asset_datum(/datum/asset/simple/IRV)
@@ -337,6 +341,7 @@
 				</div>
 					<p><input type='submit' value='[( votedfor.len ? "Re" : "")]Vote'></form>
 			"}
+			src << browse(null ,"window=playerpolllist")
 			src << browse(output,"window=playerpoll;size=500x500")
 	return
 
