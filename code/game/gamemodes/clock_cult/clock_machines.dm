@@ -220,7 +220,7 @@
 		if(stored_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
-		user.whisper("Genafzhgr vagb jngre.")
+		user.whisper("Genafzhgr vagb jngr-e.")
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
 		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
 		stored_alloy = stored_alloy + 2500
@@ -587,7 +587,7 @@
 			if(!try_use_power(gateway_cost))
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
-			if(procure_gateway(user, 100, 5, 1))
+			if(procure_gateway(user, 100, 5, 1) && !gateway_active)
 				clockwork_say(user, "Fcngv'ny Tngrjnl, npgv'ingr!")
 			else
 				return_power(gateway_cost)
