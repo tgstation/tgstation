@@ -218,7 +218,7 @@
 	user << "<i>Inath-Neq: </i>[clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
-	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hageh’guf naq ubabe Ratvar.</center></b></font><br><br>\
+	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
 	\
 	First and foremost, you serve Ratvar, the Clockwork Justiciar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
 	scale of things than your life. Through foul and unholy magics was the Celestial Derelict formed, and fouler still those which trapped your master within it for all eternity. The Justiciar \
@@ -561,7 +561,7 @@
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
 			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, user)
-		clockwork_say(user, "Xarry, urn'guraf!")
+		clockwork_say(user, "Xarry, urngur'af!")
 		user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/T = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(T, user)
@@ -969,7 +969,7 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggre guna oebxra obqvrf.\"", "\"Vg pbhyq fgvyy or hfrq, vs gurer jnf n qbbe gb cynpr vg ba.\"")
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggr-e gun'a oebxra obqvrf.\"", "\"Vg pbhyq fgv'yy or hfrq, vs gur'er jnf n qbbe gb-cynpr vg ba.\"")
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -978,7 +978,8 @@
 	icon_state = "guvax_capacitor"
 	component_id = "guvax_capacitor"
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
-	servant_of_ratvar_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", "\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
+	servant_of_ratvar_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", \
+	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
 	message_span = "sevtug"
 
 /obj/item/clockwork/component/guvax_capacitor/antennae
@@ -987,7 +988,8 @@
 	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
-	servant_of_ratvar_messages = list("\"Jub oebxr guvf.\"", "\"Qvq lbh oernx gurfr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guvf gb fhpu fvzcyrgbaf, naljnl?\"", "\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguvat - hayvxr lbh.\"")
+	servant_of_ratvar_messages = list("\"Jub oebxr guv'f.\"", "\"Qvq lbh oernx gur'fr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guv'f gb-fhpu fvzcy-rgbaf, naljnl?\"", \
+	"\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguv'at - hayvxr lbh.\"")
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -995,7 +997,8 @@
 	icon_state = "replicant_alloy"
 	component_id = "replicant_alloy"
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
-	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", "A detailed image of Ratvar appears in the alloy for a moment.")
+	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", \
+	"A detailed image of Ratvar appears in the alloy for a moment.")
 	message_span = "nezbere"
 
 /obj/item/clockwork/component/replicant_alloy/examine(mob/user)
@@ -1028,9 +1031,9 @@
 	desc = "Some sort of transmitter? It seems as though it's trying to say something."
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
-	cultist_message = "\"Gur obff nlf vg'f abg ntnvafg gur ehyrf gb xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n'ober. Gurer'f abguvat v'pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V'jnag gb tb xvyy fbzrguvat.\"", "\"HEHEHEHEHEHEH!\"", \
-	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guvax gur obff jbhyq abgvpr?\"")
+	cultist_message = "\"Gur obff fnlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
+	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n ober. Gur'er'f abguvat V pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V jnag gb-tb xvyy fbzrguv'at.\"", "\"HEHEHEHEHEHEH!\"", \
+	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgv'pr?\"")
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk
@@ -1038,8 +1041,8 @@
 	desc = "A prism that occasionally glows brightly. It seems not-quite there."
 	clockwork_desc = "The prism from a clockwork obelisk. Likely suitable as a substitute for a hierophant ansible."
 	cultist_message = "The prism flickers wildly in your hands before resuming its normal glow."
-	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment.","\"Uvrebcu'nag Oe'b'nq pnf'g snvy'her.\"",\
-	"The obelisk flickers wildly, as if trying to open a gateway.", "\"Fcng'vny Tn'g'r jn'l snv'yher.\"")
+	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment.","\"Uvrebcu'nag Oe'b'nqpnf'g snvy'her.\"",\
+	"The obelisk flickers wildly, as if trying to open a gateway.", "\"Fcng'v'ny Tn'gr-jn'l snv'yher.\"")
 	icon_state = "obelisk_prism"
 	w_class = 3
 

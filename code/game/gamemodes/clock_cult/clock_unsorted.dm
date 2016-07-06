@@ -190,13 +190,20 @@ This cipher is known as "rot13" for "rotate 13 places" and there are many sites 
 sentence thirteen places ahead changes it right back to plain English.
 
 	There are, however, a few parts of the Ratvarian tongue that aren't typical and are implemented for fluff reasons. Some words may have apostrophes, hyphens, and spaces, making the plain
-English translation apparent but disjoined (for instance, "Oru`byq zl-cbjre!" translates directly to "Beh'old my-power!") although this can be ignored without impacting overall quality. When
-translating from Ratvar's tongue to plain English, simply remove the disjointments and use the finished sentence. This would make "Oru`byq zl-cbjre!" into "Behold my power!" after removing the
+English translation apparent but disjoined (for instance, "Orubyq zl-cbjre!" translates directly to "Behold my-power!") although this can be ignored without impacting overall quality. When
+translating from Ratvar's tongue to plain English, simply remove the disjointments and use the finished sentence. This would make "Orubyq zl-cbjre!" into "Behold my power!" after removing the
 abnormal spacing, hyphens, and grave accents.
 
 List of nuances:
 
-- Any time the word "of" occurs, it is linked to the previous word by a hyphen. If it is the first word, nothing is done. (i.e. "V nz-bs Ratvar." directly translates to "I am-of Ratvar.")
+- Any time the word "of" occurs, it is linked to the previous word by a hyphen. (i.e. "V nz-bs Ratvar." directly translates to "I am-of Ratvar.")
+- Any time "th", followed by any two letters occurs, you add an apostrophe between those two letters, i.e; "Thi's"
+- In the same vein, any time "ti", followed by one letter occurs, you add an apostrophe between "i" and the letter, i.e; "Ti'me"
+- Whereever "te" or "et" appear and there is another letter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
+- Where the word "and" appears, it is linked to the previous and following words by hyphens, i.e; "Sword-and-shield"
+- Where the word "to" appears, it is linked to the following word by a hyphen, i.e; "to-use"
+- Where the word "my" appears, it is linked to the following word by a hyphen, i.e; "my-light"
+
 - Although "Ratvar" translates to "Engine" in English, the word "Ratvar" is used regardless of language as it is a proper noun.
  - The same rule applies to Ratvar's four generals: Nezbere (Armorer), Sevtug (Fright), Nzcrentr (Amperage), and Inath-Neq (Vangu-Ard), although these words can be used in proper context if one is
    not referring to the four generals and simply using the words themselves.

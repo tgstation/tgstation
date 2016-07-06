@@ -192,7 +192,7 @@
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL-YVTUG FUNYY FUVAR NPEBFF GUV'F CNGU-RGV'P ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
