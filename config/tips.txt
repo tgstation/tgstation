@@ -155,7 +155,7 @@ As a Cultist, do not cause too much chaos before your objective is completed. If
 As a Cultist, your team starts off very weak, but if necessary can quickly convert everything they have into raw power. Make sure you have the numbers and equipment to support going loud, or the cult will fall flat on its face.
 As a Cultist, the Blood Boil rune instantly crits all non-cultists who can see it, but has a chance to explode runes near it, incuding itself.
 As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
-As a Servant, your clockwork slab fits in pockets and does not need to be held to communicate with other Servants.
+As a Servant, your clockwork Slab fits in pockets and does not need to be held to communicate with other Servants.
 As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it stuns and mutes anyone still on it after 3 seconds. It is also useful for stunning already-stunned enemies for long enough to convert them or finish them off.
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
 As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-servant they can see and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
@@ -163,7 +163,7 @@ As a Servant, Mending Motors can be powered with replicant alloy by striking it 
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
 As a Servant, you can repair Clockwork Structures with a Clockwork Proselytizer at a rate of 1 health to 2 liquified alloy.
 As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls, or placing Tinkerer's Daemons within those caches.
-As a Servant, only held Clockwork Slabs will generate components, and they must be held or in a storage object to do so, so holding more than one slab is a waste of time.
+As a Servant, only held Clockwork Slabs will generate components, and they must be held, in a pocket, or in a storage object to do so, so holding more than one slab is a waste of time.
 As a Servant, You can attempt to convert any number of adjacent people in melee range by using the "Guvax" scripture. Be aware that, like slab generation, Guvax's invoke time will become slower with each servant above 5 that is valid for scripture unlocks.
 As a Servant, be aware that Cogscarabs are not very efficient in large numbers, as they all require replicant alloy to convert objects and repair structures. Too many scarabs will likely result in a rapid loss of replicant alloy as they consume it to convert the station.
 As a Servant, placing components in a slab or cache places those components in a globally-accessable storage that slabs will draw from to invoke scripture.
