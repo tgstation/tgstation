@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Servants should now be more aware of when scripture tiers are locked or unlocked."

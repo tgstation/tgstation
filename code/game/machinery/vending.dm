@@ -305,7 +305,9 @@
 			if(canister.charges[STANDARD_CHARGE] == 0)
 				user << "<span class='notice'>This [canister.name] is empty!</span>"
 			else
-				var/transfered = refill_inventory(canister,product_records,user)
+				var/transfered = refill_inventory(canister,product_records,STANDARD_CHARGE)
+				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
+				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
 				if(transfered)
 					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
 				else

@@ -125,7 +125,6 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
-	return
 
 /*
  *	Water reaction to an object

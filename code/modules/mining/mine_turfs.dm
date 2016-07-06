@@ -790,6 +790,7 @@
 	name = "necropolis wall"
 	desc = "A seemingly impenetrable wall."
 	icon = 'icons/turf/walls.dmi'
+	icon_state = "necro"
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/necropolis
 
@@ -797,10 +798,10 @@
 	name = "necropolis floor"
 	desc = "It's regarding you suspiciously."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "floor"
+	icon_state = "necro1"
 	baseturf = /turf/open/indestructible/necropolis
 
 /turf/open/indestructible/necropolis/New()
 	..()
 	if(prob(12))
-		icon_state = "necropolis[rand(1,2)]"
+		icon_state = "necro[rand(2,3)]"

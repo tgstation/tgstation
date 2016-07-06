@@ -33,8 +33,6 @@
 	var/datum/ui_state/state = null // Topic state used to determine status/interactability.
 	var/datum/tgui/master_ui // The parent UI.
 	var/list/datum/tgui/children = list() // Children of this UI.
-	var/titlebar = TRUE
-	var/custom_browser_id = FALSE
 
  /**
   * public
@@ -53,12 +51,11 @@
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state, browser_id)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "\ref[src_object]-[ui_key]"
-	src.custom_browser_id = browser_id ? TRUE : FALSE
+	src.window_id = "\ref[src_object]-[ui_key]"
 
 	set_interface(interface)
 
@@ -99,8 +96,7 @@
 
 	var/debugable = check_rights_for(user.client, R_DEBUG)
 	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	if (custom_browser_id)
-		winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
+	winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 
  /**
@@ -220,7 +216,7 @@
 			"style"     = style,
 			"interface" = interface,
 			"fancy"     = user.client.prefs.tgui_fancy,
-			"locked"    = user.client.prefs.tgui_lock && !custom_browser_id,
+			"locked"    = user.client.prefs.tgui_lock,
 			"window"    = window_id,
 			"ref"       = "\ref[src]",
 			"user"      = list(
@@ -230,8 +226,7 @@
 			"srcObject" = list(
 				"name" = "[src_object]",
 				"ref"  = "\ref[src_object]"
-			),
-			"titlebar" = titlebar
+			)
 		)
 	return config_data
 
@@ -273,7 +268,7 @@
 
 	switch(action)
 		if("tgui:initialize")
-			user << output(url_encode(get_json(initial_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:initialize")
+			user << output(url_encode(get_json(initial_data)), "[window_id].browser:initialize")
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
@@ -325,7 +320,7 @@
 		return // Cannot update UI, we have no visibility.
 
 	// Send the new JSON to the update() Javascript function.
-	user << output(url_encode(get_json(data)), "[custom_browser_id ? window_id : "[window_id].browser"]:update")
+	user << output(url_encode(get_json(data)), "[window_id].browser:update")
 
  /**
   * private
@@ -372,6 +367,3 @@
 			src.status = status
 			if(status == UI_DISABLED || push) // Update if the UI just because disabled, or a push is requested.
 				push_data(null, force = 1)
-
-/datum/tgui/proc/set_titlebar(value)
-	titlebar = value
