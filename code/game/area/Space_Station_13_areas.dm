@@ -199,6 +199,9 @@ var/list/teleportlocs = list()
 
 /area/centcom/arrivals
 	name = "Centcom Departure Facility"
+	requires_power = TRUE
+	has_gravity = TRUE
+	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 //SYNDICATES
 
 /area/syndicate_mothership

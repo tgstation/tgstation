@@ -7244,7 +7244,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/space,
+/turf/open/floor/plating,
 /area/space)
 "vd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

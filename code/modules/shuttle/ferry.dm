@@ -2,7 +2,9 @@
 	name = "transport ferry console"
 	circuit = /obj/item/weapon/circuitboard/computer/ferry
 	shuttleId = "ferry"
-	possible_destinations = "ferry_home;ferry_away"
+	possible_destinations = "ferry_home;ferry_away;ferry_departures"
+	req_access = list(access_cent_general)
+	emag_proof = TRUE
 
 
 /obj/machinery/computer/shuttle/ferry/request
