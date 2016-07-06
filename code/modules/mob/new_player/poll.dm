@@ -412,7 +412,9 @@
 		return 0
 	//save these now so we can still process the vote if the client goes away while we process.
 	var/datum/admins/holder = client.holder
-	var/rank = holder.rank
+	var/rank = "Player"
+	if (holder)
+		rank = holder.rank
 	var/ckey = client.ckey
 	var/address = client.address
 
@@ -451,7 +453,7 @@
 	for (var/vote in numberedvotelist)
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
-		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', '[sanitizeSQL(address)]', '[(holder ? sanitizeSQL(rank) : "Player")]')"
+		sqlrowlist += "(Now(), [pollid], [vote], '[sanitizeSQL(ckey)]', '[sanitizeSQL(address)]', '[sanitizeSQL(rank)]')"
 
 	//now lets delete their old votes (if any)
 	var/DBQuery/voted_query = dbcon.NewQuery("DELETE FROM [format_table_name("poll_vote")] WHERE pollid = [pollid] AND ckey = '[ckey]'")
