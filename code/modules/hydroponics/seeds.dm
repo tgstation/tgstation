@@ -34,7 +34,7 @@
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
 
-	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
+	var/innate_yieldmod = 0 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
 	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
 
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
