@@ -58,6 +58,7 @@
 	scan_for_target()
 	point_to_target()
 	my_god_jc_a_bomb()
+	addtimer(src, "refresh_target", 50, TRUE)
 
 /obj/item/weapon/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
 	if(target)
@@ -67,10 +68,10 @@
 				target = null
 		return
 	switch(mode)
-		if(TRACK_NUKE_DISK) //We track the nuke disk, for protection or more nefarious purposes
+		if(TRACK_NUKE_DISK)
 			var/obj/item/weapon/disk/nuclear/N = locate()
 			target = N
-		if(TRACK_MALF_AI) //We track the AI, who wants to blow us all to smithereens
+		if(TRACK_MALF_AI)
 			for(var/V in ai_list)
 				var/mob/living/silicon/ai/A = V
 				if(A.nuking)
@@ -79,16 +80,26 @@
 				var/obj/machinery/power/apc/A = V
 				if(A.malfhack && A.occupier)
 					target = A
-		if(TRACK_INFILTRATOR) //We track the Syndicate infiltrator, so we can find our way back
+		if(TRACK_INFILTRATOR)
 			target = SSshuttle.getShuttle("syndicate")
 		if(TRACK_OPERATIVES)
 			var/list/possible_targets = list()
+			var/turf/here = get_turf(src)
 			for(var/V in ticker.mode.syndicates)
 				var/datum/mind/M = V
-				if(M.current && M.current.stat != DEAD && M.current.client)
+				if(M.current && M.current.stat != DEAD)
 					possible_targets |= M.current
-			if(possible_targets.len)
-				target = pick(possible_targets)
+			var/mob/living/closest_operative
+			var/shortest_distance = 255
+			for(var/V in possible_targets)
+				var/mob/living/L = V
+				var/turf/there = get_turf(L)
+				var/distance = get_dist(here, there)
+				if(isnull(distance) || distance < shortest_distance)
+					closest_operative = L
+					shortest_distance = get_dist(here, get_turf(L))
+			if(closest_operative)
+				target = closest_operative
 
 /obj/item/weapon/pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
 	if(!active)
@@ -123,13 +134,16 @@
 					var/mob/living/L = loc
 					L << "<span class='userdanger'>Your [name] vibrates and lets out a tinny alarm. Uh oh.</span>"
 
-/obj/item/weapon/pinpointer/proc/switch_mode_to(new_mode)
+/obj/item/weapon/pinpointer/proc/switch_mode_to(new_mode) //If we shouldn't be tracking what we are
 	if(isliving(loc))
 		var/mob/living/L = loc
 		L << "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>"
 		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	target = null //Switch modes so we can find the new target
+
+/obj/item/weapon/pinpointer/proc/refresh_target() //Periodically removes the target to allow the pinpointer to update (i.e. malf AI shunts, an operative dies)
+	target = null
 
 /obj/item/weapon/pinpointer/syndicate //Syndicate pinpointers automatically point towards the infiltrator once the nuke is active.
 	name = "syndicate pinpointer"
