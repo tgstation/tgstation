@@ -306,6 +306,7 @@
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
+	arena_cleared = FALSE
 	var/area/A = get_area(src)
 	for(var/i in mob_list)
 		var/mob/M = i
