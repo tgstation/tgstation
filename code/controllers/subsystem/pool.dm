@@ -3,8 +3,19 @@ var/datum/subsystem/pool/SSpool
 /datum/subsystem/pool
 	name = "Pool"
 	init_order = 20
-	flags = SS_NO_FIRE
+	flags = SS_BACKGROUND
 	var/list/global_pool
+	var/list/pool_levels = list()
+	var/sum
+
+	var/list/maintained_types = list(
+		/obj/item/stack/tile/plasteel = 100
+	)
+
+	var/stats_placed_in_pool = list()
+	var/stats_pooled_or_newed = list()
+	var/stats_reused = list()
+	var/stats_created_new = list()
 
 /datum/subsystem/pool/New()
 	NEW_SS_GLOBAL(SSpool)
@@ -15,7 +26,25 @@ var/datum/subsystem/pool/SSpool
 
 /datum/subsystem/pool/stat_entry(msg)
 	if(global_pool)
-		msg += "Types: [global_pool.len]"
+		msg += "Types: [global_pool.len]|Total Pooled Objects: [sum]"
 	else
 		msg += "NULL POOL"
 	..(msg)
+
+/datum/subsystem/pool/fire()
+	sum = 0
+	for(var/type in global_pool)
+		var/list/L = global_pool[type]
+		var/required_number = 0
+		if(type in maintained_types)
+			required_number = maintained_types[type]
+
+		// Update pool levels and tracker
+		var/amount = L.len
+		pool_levels["[type]"] = amount
+		sum += amount
+
+		// why yes, just inflate the pool at one item per tick
+		if(amount < required_number)
+			var/diver = new type
+			qdel(diver)
