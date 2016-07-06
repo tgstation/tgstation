@@ -62,6 +62,10 @@
 
 /obj/item/weapon/pinpointer/proc/scan_for_target() //Looks for whatever it's tracking
 	if(target)
+		if(isliving(target))
+			var/mob/living/L = target
+			if(L.stat == DEAD)
+				target = null
 		return
 	switch(mode)
 		if("nuclear") //We track the nuke disk, for protection or more nefarious purposes
