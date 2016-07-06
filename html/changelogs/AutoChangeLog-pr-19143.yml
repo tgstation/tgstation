@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "The tesla now dusts all carbon mobs on the turf that it moves to,
-grounding rod or no."
