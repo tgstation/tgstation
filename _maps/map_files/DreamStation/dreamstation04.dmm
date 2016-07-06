@@ -30994,7 +30994,9 @@
 	tag = "icon-manifold-r-f (NORTH)";
 	dir = 1
 	},
-/turf/open/floor/plasteel/green/side,
+/turf/open/floor/plasteel/green/corner{
+	dir = 8
+	},
 /area/hallway/primary/port{
 	name = "Fore Port Hallway"
 	})
@@ -43262,17 +43264,11 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bHJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
-	dir = 4
-	},
-/area/bridge)
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/green/side,
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
 "bHK" = (
 /obj/machinery/airalarm{
 	dir = 1;
@@ -98924,7 +98920,7 @@ bgc
 aRP
 big
 bjR
-bld
+bla
 bmG
 bol
 bqz
@@ -99181,7 +99177,7 @@ aSP
 aRO
 biv
 bjS
-bkX
+bHJ
 bmE
 boj
 bqA
@@ -99438,7 +99434,7 @@ aSQ
 bhr
 biw
 bjR
-bkT
+bld
 bmE
 boj
 bqA
