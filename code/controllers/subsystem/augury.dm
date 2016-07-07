@@ -33,10 +33,10 @@ var/datum/subsystem/augury/SSaugury
 
 	if(doombringers.len)
 		for(var/i in player_list)
-			if(isobserver(i) && (!(i in observers_given_action)))
+			if(isobserver(i) && (!(observers_given_action[i])))
 				var/datum/action/innate/augury/A = new
 				A.Grant(i)
-				observers_given_action += i
+				observers_given_action[i] = TRUE
 
 	for(var/w in watchers)
 		if(!w)
@@ -54,7 +54,7 @@ var/datum/subsystem/augury/SSaugury
 	button_icon_state = "flaming"
 
 /datum/action/innate/augury/Activate()
-	SSaugury.watchers |= owner
+	SSaugury.watchers[owner] = TRUE
 	owner << "<span class='notice'>You are now auto-following debris.</span>"
 	active = TRUE
 	UpdateButtonIcon()

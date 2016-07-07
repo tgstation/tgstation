@@ -175,7 +175,7 @@
 /obj/effect/meteor/proc/meteor_effect()
 	if(heavy)
 		for(var/mob/M in player_list)
-			if((M.orbiting) && (M in SSaugury.watchers))
+			if((M.orbiting) && (SSaugury.watchers[M]))
 				continue
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
