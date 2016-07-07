@@ -57,7 +57,7 @@
 		they have been changed, they wish to spread their miracles to others."
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
-allow_duplicates = FALSE
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
