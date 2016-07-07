@@ -302,9 +302,15 @@
 /obj/item/weapon/melee/baseball_bat
 	name = "baseball bat"
 	desc = "There ain't a scull in the league that can withstand a swatter"
+	icon = 'icons/obj/items.dmi'
 	icon_state = "baseball_bat"
 	item_state = "baseball_bat"
-	force = 20
-	throwforce = 10
+	force = 10
+	throwforce = 12
 	attack_verb = list("beat", "smacked")
 	w_class = 5.0
+
+/obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	target.throw_at(throw_target, rand(1,2), 7, user)
