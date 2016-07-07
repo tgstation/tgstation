@@ -41,8 +41,11 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/grid_models = list()
 	var/key_len = 0
 
-	dmmRegex.next = 1
-	while(dmmRegex.Find(tfile, dmmRegex.next))
+	var/dmm_suite/loaded_map/LM = new
+
+	LM.index = 1
+	while(dmmRegex.Find(tfile, LM.index))
+		LM.index = dmmRegex.next
 
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
@@ -130,6 +133,8 @@ var/global/dmm_suite/preloader/_preloader = new
 			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], cropMap ? min(maxx, world.maxx) : maxx)
 
 		CHECK_TICK
+
+	qdel(LM)
 
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
@@ -394,6 +399,10 @@ var/global/dmm_suite/preloader/_preloader = new
 			value = deepCopyList(value)
 		what.vars[attribute] = value
 	use_preloader = FALSE
+
+/dmm_suite/loaded_map
+	parent_type = /datum
+	var/index = 1 // To store the state of the regex
 
 /area/template_noop
 	name = "Area Passthrough"
