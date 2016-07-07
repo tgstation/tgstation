@@ -46,7 +46,7 @@ var/datum/subsystem/augury/SSaugury
 		if(O.orbiting)
 			continue
 		else if(biggest_doom)
-			O.orbit(biggest_doom)
+			addtimer(O, "orbit", 0, FALSE, biggest_doom)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"
@@ -71,4 +71,4 @@ var/datum/subsystem/augury/SSaugury
 	if(active)
 		button.icon_state = "bg_default_on"
 	else
-		button.icon_state = initial(button.icon_state)
+		button.icon_state = background_icon_state

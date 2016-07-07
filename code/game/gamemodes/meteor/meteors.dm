@@ -1,3 +1,4 @@
+#define DEFAULT_METEOR_LIFETIME 1800
 /var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
 //set to at least 100 unless you want evarr ruining every round
 
@@ -97,6 +98,7 @@
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
 	var/z_original = 1
 	var/threat = 0 // used for determining which meteors are most interesting
+	var/lifetime = DEFAULT_METEOR_LIFETIME
 
 	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
@@ -124,6 +126,7 @@
 	if(SSaugury)
 		SSaugury.register_doom(src, threat)
 	SpinAnimation()
+	QDEL_IN(src, lifetime)
 
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
@@ -347,3 +350,4 @@
 	..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
+#undef DEFAULT_METEOR_LIFETIME

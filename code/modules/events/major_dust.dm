@@ -2,7 +2,9 @@
 	name = "Major Space Dust"
 	typepath = /datum/round_event/meteor_wave/major_dust
 	weight = 30
-	min_players = 5
+
+/datum/round_event/meteor_wave/major_dust
+	wave_name = "space dust"
 
 /datum/round_event/meteor_wave/major_dust/announce()
 	var/reason = pick(
@@ -15,7 +17,3 @@
 		"A neighbouring station is throwing rocks at you. (Perhaps they've \
 		grown tired of your messages.)")
 	priority_announce(pick(reason), "Collision Alert")
-
-/datum/round_event/meteor_wave/major_dust/New()
-	..()
-	wave_type = meteorsC
