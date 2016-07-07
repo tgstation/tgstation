@@ -37,6 +37,7 @@
 	var/shuttle_id				// Id used for "generic shuttle timer" mode
 
 	var/friendc = 0      // track if Friend Computer mode
+	var/ignores_signals = FALSE
 
 	maptext_height = 26
 	maptext_width = 32
@@ -184,6 +185,8 @@
 
 
 /obj/machinery/status_display/receive_signal(datum/signal/signal)
+	if(ignores_signals)
+		return
 
 	switch(signal.data["command"])
 		if("blank")
@@ -204,7 +207,13 @@
 			if(supply_display)
 				mode = 4
 
+/obj/machinery/status_display/locked
+	ignores_signals = TRUE
 
+/obj/machinery/status_display/locked/departures
+	name = "arrival status display"
+	mode = 5
+	shuttle_id = "arrival"
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

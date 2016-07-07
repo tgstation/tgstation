@@ -77,3 +77,6 @@
 		emagged = 1
 		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
+
+/obj/machinery/computer/shuttle/arrival
+	name = "arrival shuttle console"

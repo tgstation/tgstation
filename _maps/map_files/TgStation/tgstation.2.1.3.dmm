@@ -17130,27 +17130,15 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aLs" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Arrivals Shuttle Airlock"
-	},
-/obj/docking_port/mobile{
-	dwidth = 5;
-	height = 7;
-	id = "arrival";
-	name = "arrival shuttle";
-	port_angle = -90;
-	preferred_direction = 8;
-	width = 15
-	},
 /obj/docking_port/stationary{
 	dwidth = 5;
 	height = 7;
 	id = "arrival_home";
-	name = "port bay 1";
+	name = "station arrivals shuttle dock";
 	width = 15
 	},
-/turf/open/floor/plating,
-/area/shuttle/arrival)
+/turf/open/space,
+/area/space)
 "aLt" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
@@ -17793,9 +17781,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aNi" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
-	},
+/obj/effect/landmark/observer_spawn,
 /turf/open/floor/goonplaque,
 /area/hallway/secondary/entry)
 "aNj" = (
@@ -21840,7 +21826,7 @@
 /area/bridge)
 "aWX" = (
 /obj/machinery/newscaster{
-	pixel_y = -32
+	pixel_y = -29
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25077,7 +25063,7 @@
 /area/hallway/secondary/exit)
 "beH" = (
 /obj/machinery/newscaster{
-	pixel_y = -32
+	pixel_y = -29
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/escape{
@@ -69005,11 +68991,11 @@ aaa
 aaf
 aaa
 aaa
-aCT
-aCV
-aCV
-aCV
-aKf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaf
@@ -69262,11 +69248,11 @@ aaa
 aaf
 aaa
 aaa
-aCS
-aFC
-aEr
-aIG
-aCS
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaf
@@ -69519,11 +69505,11 @@ aaa
 aAC
 aaa
 aaa
-aCS
-aFC
-aEr
-aIG
-aCS
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aAC
@@ -69775,13 +69761,13 @@ awW
 asE
 arB
 aaa
-aCT
-aEp
-aFD
-aHs
-aIH
-aEp
-aKf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 arB
 asE
@@ -70032,13 +70018,13 @@ ayk
 awW
 aAD
 awW
-aCS
-aEo
-aEr
-aEr
-aEr
-aKg
-aCS
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 awW
 awW
@@ -70289,12 +70275,12 @@ ayl
 azy
 auP
 azy
-aCU
-aEr
-aFE
-aFE
-aFE
-aEr
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aLs
 azy
 auP
@@ -70546,13 +70532,13 @@ ayk
 awW
 awW
 awW
-aCS
-aEr
-aEr
-aEr
-aEr
-aEr
-aCS
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 awW
 awW
@@ -70803,13 +70789,13 @@ aym
 azz
 aAF
 awW
-aCV
-aEr
-aFE
-aFE
-aFE
-aEr
-aCV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 aOf
 azz
@@ -71060,13 +71046,13 @@ ayl
 ayl
 aAE
 awW
-aCV
-aEr
-aEr
-aEr
-aEr
-aEr
-aCV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 aOe
 ayl
@@ -71317,13 +71303,13 @@ ayl
 ayl
 aAH
 awW
-aCV
-aEr
-aFE
-aFE
-aFE
-aEr
-aCV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 aOh
 ayl
@@ -71574,13 +71560,13 @@ ayn
 azA
 aAG
 awW
-aCV
-aEr
-aEr
-aEr
-aEr
-aEr
-aCV
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 aOg
 azA
@@ -71831,13 +71817,13 @@ ayk
 awW
 awW
 awW
-aCS
-aEw
-aFE
-aFE
-aFE
-aKh
-aCS
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 awW
 awW
@@ -72088,13 +72074,13 @@ ayl
 azy
 auP
 azy
-aCU
-aEr
-aEr
-aEr
-aEr
-aEr
-aCU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 azy
 auP
 azy
@@ -72345,13 +72331,13 @@ ayp
 awW
 aAD
 awW
-aCX
-aEy
-aEy
-aEy
-aEy
-aEy
-aLu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 awW
 awW
 awW
@@ -72602,13 +72588,13 @@ ayo
 azB
 awW
 aaa
-aCW
-aEx
-aFF
-aFF
-aFF
-aKi
-aLt
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 awW
 aPt

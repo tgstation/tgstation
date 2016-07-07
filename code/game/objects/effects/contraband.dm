@@ -181,6 +181,9 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/official = 0
 	var/placespeed = 37 // don't change this, otherwise the animation will not sync to the progress bar
 
+/obj/structure/sign/poster/official
+	official = TRUE
+
 /obj/structure/sign/poster/New(serial,rolled_official)
 	serial_number = serial
 	official = rolled_official

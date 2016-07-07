@@ -71,7 +71,8 @@
 	return 0
 
 /obj/item/device/radio/intercom/arrival
-	name = "Centcom intercom"
+	name = "Centcom public address system"
+	desc = "Maybe they'll have some information about your train?"
 	centcom = TRUE
 	frequency = CENTCOM_FREQ
 	freqlock = TRUE

@@ -24,10 +24,6 @@
 			wizardstart += loc
 			qdel(src)
 			return
-		if("JoinLate")
-			latejoin += loc
-			qdel(src)
-			return
 		if("prisonwarp")
 			prisonwarp += loc
 			qdel(src)
@@ -258,7 +254,20 @@
 	name = "science_sec"
 
 /obj/effect/landmark/latejoin
-	name = "JoinLate"
+	name = "late join start"
+
+/obj/effect/landmark/latejoin/New()
+	. = ..()
+	latejoin += loc
+	qdel(src)
+
+/obj/effect/landmark/observer_spawn
+	name = "observer start"
+
+/obj/effect/landmark/observer_spawn/New()
+	. = ..()
+	observer_spawn += loc
+	qdel(src)
 
 //generic event spawns
 /obj/effect/landmark/event_spawn
