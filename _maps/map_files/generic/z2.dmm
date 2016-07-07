@@ -2272,16 +2272,19 @@
 	},
 /area/centcom/evac)
 "gR" = (
-/obj/structure/chair{
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/arrival{
-	pixel_x = -29;
-	pixel_y = 0
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
 	},
-/turf/open/floor/plasteel/green/side{
-	dir = 8
-	},
+/turf/open/floor/plating,
 /area/centcom/arrivals)
 "gS" = (
 /turf/open/floor/grass,
@@ -2667,13 +2670,17 @@
 	},
 /area/centcom/evac)
 "ie" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "air_in"
+/obj/structure/chair{
+	dir = 4
 	},
-/turf/open/floor/plating/airless,
-/area/space)
+/obj/item/device/radio/intercom/arrival{
+	pixel_x = -29;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
 "if" = (
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
@@ -2738,15 +2745,10 @@
 	},
 /area/centcom/evac)
 "ip" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
-	name = "Centcom Monitor";
-	network = list("Centcom");
-	pixel_x = 0;
-	pixel_y = 2
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4;
+	frequency = 1441;
+	id = "air_in"
 	},
 /turf/open/floor/plating/airless,
 /area/space)
@@ -2906,7 +2908,14 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/indestructible/riveted,
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
 /area/space)
 "iO" = (
 /turf/open/floor/plating/beach/coastline_b,
@@ -6178,7 +6187,9 @@
 /turf/open/floor/carpet,
 /area/centcom/arrivals)
 "tw" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
 /turf/open/floor/wood,
 /area/centcom/arrivals)
 "tx" = (
@@ -7031,9 +7042,7 @@
 "vB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/centcom/arrivals)
@@ -7330,18 +7339,11 @@
 /turf/open/floor/plating/airless,
 /area/centcom/arrivals)
 "wg" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "0"
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
-/area/centcom/arrivals)
+/turf/closed/indestructible/riveted,
+/area/space)
 "wh" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -7701,8 +7703,7 @@
 /turf/open/floor/plating,
 /area/centcom/arrivals)
 "wY" = (
-/obj/structure/sign/poster{
-	official = 1;
+/obj/structure/sign/poster/official{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -7776,9 +7777,10 @@
 /turf/open/floor/plating,
 /area/centcom/arrivals)
 "xf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/obj/structure/sign/poster{
-	official = 1;
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/obj/structure/sign/poster/official{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/neutral/side{
@@ -7892,14 +7894,7 @@
 "xs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "co2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/neutral/corner,
 /area/centcom/arrivals)
@@ -7944,6 +7939,12 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"ya" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel,
 /area/centcom/arrivals)
 "xZ" = (
 /obj/structure/lattice,
@@ -8090,10 +8091,12 @@
 /area/centcom/arrivals)
 "xB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = 32;
-	pixel_y = 0
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/structure/sign/poster/official{
+	pixel_x = 32
 	},
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
@@ -64359,7 +64362,7 @@ rW
 tt
 vY
 we
-ie
+ip
 ab
 ab
 ab
@@ -64616,7 +64619,7 @@ rW
 tt
 vZ
 wf
-ip
+iN
 ab
 ab
 ab
@@ -64872,8 +64875,8 @@ ab
 ab
 tt
 tt
+gR
 wg
-iN
 tt
 tt
 tt
@@ -66134,9 +66137,9 @@ tt
 uq
 uA
 uQ
+uQ
+uQ
 xB
-uQ
-uQ
 uQ
 uQ
 uQ
@@ -66671,7 +66674,7 @@ xF
 vX
 wa
 wj
-gR
+ie
 wj
 wB
 tt
@@ -66927,7 +66930,7 @@ xJ
 vU
 vX
 wb
-ul
+ya
 wp
 wv
 wv
