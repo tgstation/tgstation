@@ -76,7 +76,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	if(!ratvar_awakens && !slab.no_cost)
 		for(var/i in required_components)
-			if(slab.stored_components[i] + clockwork_component_cache[i] < required_components[i])
+			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
+			if(slab.stored_components[i] + cache_components < required_components[i])
 				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
 				return 0
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
