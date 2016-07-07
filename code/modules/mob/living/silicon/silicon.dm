@@ -178,6 +178,8 @@
 	return 1
 
 /mob/living/silicon/bullet_act(obj/item/projectile/Proj)
+	if((Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		adjustBruteLoss(Proj.damage)
 	Proj.on_hit(src)
 	return 2
 
