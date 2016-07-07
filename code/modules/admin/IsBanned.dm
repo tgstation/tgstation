@@ -122,9 +122,9 @@
 		if (cachedban && ckey != bannedckey)
 			newmatch = TRUE
 			if (cachedban["keys"])
-				if (ckey in cachedban["keys"])
+				if (cachedban["keys"][ckey])
 					newmatch = FALSE
-			if (ckey in cachedban["matches_this_round"])
+			if (cachedban["matches_this_round"][ckey])
 				newmatch = FALSE
 
 		if (newmatch && cachedban)
@@ -132,11 +132,11 @@
 			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
 			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
 
-			newmatches += ckey
+			newmatches[ckey] = ckey
 			if (C)
-				newmatches_connected += ckey
+				newmatches_connected[ckey] = ckey
 			if (admin)
-				newmatches_admin += ckey
+				newmatches_admin[ckey] = ckey
 
 			if (\
 				newmatches.len > STICKYBAN_MAX_MATCHES || \

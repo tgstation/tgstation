@@ -205,7 +205,13 @@
 	if (!ban)
 		return null
 	. = params2list(ban)
-	.["keys"] = splittext(.["keys"], ",")
+	if (.["keys"])
+		var/keys = splittext(.["keys"], ",")
+		var/ckeys = list()
+		for (var/key in keys)
+			var/ckey = ckey(key)
+			ckeys[ckey] = ckey //to make searching faster.
+		.["keys"] = ckeys
 	.["type"] = splittext(.["type"], ",")
 	.["IP"] = splittext(.["IP"], ",")
 	.["computer_id"] = splittext(.["computer_id"], ",")
