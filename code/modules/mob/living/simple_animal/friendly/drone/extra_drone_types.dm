@@ -134,6 +134,9 @@
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
 
+/mob/living/simple_animal/drone/cogscarab/binarycheck()
+	return FALSE
+
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
