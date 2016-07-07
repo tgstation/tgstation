@@ -1,6 +1,7 @@
 /obj/effect/proc_holder/changeling/revive
-	name = "Regenerate"
+	name = "Revive"
 	desc = "We regenerate, healing all damage from our form."
+	helptext = "Does not regrow lost organs or limbs."
 	req_stat = DEAD
 	always_keep = 1
 
@@ -9,8 +10,8 @@
 	user.status_flags &= ~(FAKEDEATH)
 	user.tod = null
 	user.revive(full_heal = 1)
-	user.regenerate_limbs(0, list("head")) //regenerate all limbs except the head
-	user << "<span class='notice'>We have regenerated.</span>"
+	// Does not restore limbs, 
+	user << "<span class='notice'>We have revived ourselves.</span>"
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1
