@@ -710,8 +710,9 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
-	force = 17 //Extra damage is dealt to silicons in afterattack()
+	force = 17 //Extra damage is dealt to silicons in attack()
 	throwforce = 40
+	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = 4
