@@ -212,7 +212,6 @@
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /***********************************
 *   Microwave Menu Handling/Cooking
@@ -340,4 +339,3 @@
 		if ("dispose")
 			dispose()
 	updateUsrDialog()
-	return
