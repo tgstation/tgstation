@@ -308,7 +308,7 @@
 	force = 10
 	throwforce = 12
 	attack_verb = list("beat", "smacked")
-	w_class = 5.0
+	w_class = 5
 
 /obj/item/weapon/melee/baseball_bat/attack(mob/living/target, mob/living/user)
 	. = ..()
