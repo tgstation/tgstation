@@ -2241,9 +2241,7 @@
 	},
 /area/centcom/evac)
 "gM" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast doorend"
-	},
+/obj/machinery/door/poddoor/shuttledock/east,
 /turf/open/floor/engine,
 /area/centcom/evac)
 "gN" = (
@@ -2274,9 +2272,17 @@
 	},
 /area/centcom/evac)
 "gR" = (
-/obj/machinery/door/poddoor/shuttledock,
-/turf/open/floor/engine,
-/area/centcom/evac)
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/arrival{
+	pixel_x = -29;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
 "gS" = (
 /turf/open/floor/grass,
 /area/centcom/control)
@@ -2661,11 +2667,13 @@
 	},
 /area/centcom/evac)
 "ie" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door3"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4;
+	frequency = 1441;
+	id = "air_in"
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/turf/open/floor/plating/airless,
+/area/space)
 "if" = (
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
@@ -2730,11 +2738,18 @@
 	},
 /area/centcom/evac)
 "ip" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door2"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "iq" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
@@ -2888,11 +2903,11 @@
 	},
 /area/centcom/evac)
 "iN" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door1"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/turf/closed/indestructible/riveted,
+/area/space)
 "iO" = (
 /turf/open/floor/plating/beach/coastline_b,
 /area/centcom/holding)
@@ -7203,7 +7218,7 @@
 	name = "arrival shuttle";
 	port_angle = -90;
 	preferred_direction = 8;
-	roundstart_move = "arrivals_home";
+	roundstart_move = "arrival_home";
 	width = 15
 	},
 /obj/docking_port/stationary{
@@ -7929,45 +7944,6 @@
 	dir = 5
 	},
 /turf/open/floor/plating/airless,
-/area/centcom/arrivals)
-"yd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/indestructible/riveted,
-/area/space)
-"yc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
-	name = "Centcom Monitor";
-	network = list("Centcom");
-	pixel_x = 0;
-	pixel_y = 2
-	},
-/turf/open/floor/plating/airless,
-/area/space)
-"yb" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4;
-	frequency = 1441;
-	id = "air_in"
-	},
-/turf/open/floor/plating/airless,
-/area/space)
-"ya" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/item/device/radio/intercom/arrival{
-	pixel_x = -29;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/green/side{
-	dir = 8
-	},
 /area/centcom/arrivals)
 "xZ" = (
 /obj/structure/lattice,
@@ -46586,18 +46562,18 @@ fN
 fN
 fN
 gM
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-ie
-ip
-iN
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
 fN
 fN
 fN
@@ -64383,7 +64359,7 @@ rW
 tt
 vY
 we
-yb
+ie
 ab
 ab
 ab
@@ -64640,7 +64616,7 @@ rW
 tt
 vZ
 wf
-yc
+ip
 ab
 ab
 ab
@@ -64897,7 +64873,7 @@ ab
 tt
 tt
 wg
-yd
+iN
 tt
 tt
 tt
@@ -66695,7 +66671,7 @@ xF
 vX
 wa
 wj
-ya
+gR
 wj
 wB
 tt
