@@ -18,6 +18,8 @@
       },
       styles () {
         let extra = ''
+        if (this.get('class'))
+		  extra += ' ' + this.get('class');
         if (this.get('tooltip-side'))
           extra = ` tooltip-${this.get('tooltip-side')}`
         if (this.get('grid'))
