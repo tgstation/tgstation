@@ -187,6 +187,7 @@
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/G = new
 		G.copy_from_turf(src)
+		G.archive()
 		if(air.compare(G))
 			if(!our_excited_group)
 				var/datum/excited_group/EG = new
