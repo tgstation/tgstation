@@ -799,6 +799,10 @@
 	malf.malfhacking = TRUE
 	addtimer(malf, "malfhacked", 600, FALSE, src)
 
+	var/obj/screen/alert/hackingapc/A
+	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
+	A.target = src
+
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
