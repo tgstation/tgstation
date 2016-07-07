@@ -284,10 +284,11 @@
 				spawn(1)
 					M.client.color = initial(M.client.color)
 			shake_camera(M, 4, 3)
-		var/r_success_modifier = (ticker.mode.servants_of_ratvar.len * 2) //2% for each cultist
-		var/n_success_modifier = (ticker.mode.cult.len * 2)
+		var/r_success_modifier = min(ticker.mode.servants_of_ratvar.len * 2, 50) //2% for each cultist
+		var/n_success_modifier = ticker.mode.cult.len * 2
 		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
 			n_success_modifier += 2
+		n_success_modifier = min(n_success_modifier, 50)
 		if(prob(base_victory_chance + r_success_modifier))
 			winner = "Ratvar"
 			break
