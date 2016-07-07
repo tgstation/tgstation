@@ -57,10 +57,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
-	
+
 	if(global.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -99,7 +99,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	update_icon()
 
 	if(!T)
-		T = pick(latejoin)			//Safety in case we cannot find the body's position
+		T = pick(observer_spawn)
+
+	if(!T)
+		T = pick(latejoin)
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
