@@ -115,7 +115,7 @@ This file's folder contains:
 		var/datum/action/innate/hierophant/H = new()
 		H.Grant(S)
 		H.title = null //so it's just the borg's name
-		S << "<psna class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
+		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		C.present_tasks(M) //Memorize the objectives
