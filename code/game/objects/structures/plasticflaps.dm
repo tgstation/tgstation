@@ -59,9 +59,13 @@
 
 /obj/structure/plasticflaps/mining/New()
 	air_update_turf(1)
+	. = ..()
 	
 /obj/structure/plasticflaps/mining/CanAtmosPass()
 	return FALSE
 
 /obj/structure/plasticflaps/mining/Destroy()
-	air_update_turf(1)
+	var/oldloc = loc
+	. = ..()
+	if (oldloc)
+		oldloc.air_update_turf(1)
