@@ -258,9 +258,8 @@
 
 	if(istype(T, /turf/open/floor)) //intact floor, pop the tile
 		var/turf/open/floor/myturf = T
-		if(myturf.builtin_tile)
-			myturf.builtin_tile.loc = T
-			myturf.builtin_tile = null
+		if(myturf.floor_tile)
+			PoolOrNew(myturf.floor_tile, T)
 		myturf.make_plating()
 
 	if(direction)		// direction is specified

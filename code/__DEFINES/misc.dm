@@ -474,3 +474,4 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
+#define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
