@@ -99,16 +99,17 @@
 	show_hierophant(user)
 
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
-	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target) && (ishuman(target) || isdrone(target))) //internal slabs mean we need to check for things we expect to hold a slab
+	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
 		var/obj/item/clockwork/slab/targetslab
 		var/highest_component_amount = 0
 		for(var/obj/item/clockwork/slab/S in target.GetAllContents())
-			var/totalcomponents = 0
-			for(var/i in S.stored_components)
-				totalcomponents += S.stored_components[i]
-			if(!targetslab || totalcomponents > highest_component_amount)
-				highest_component_amount = totalcomponents
-				targetslab = S
+			if(!istype(S, /obj/item/clockwork/slab/internal))
+				var/totalcomponents = 0
+				for(var/i in S.stored_components)
+					totalcomponents += S.stored_components[i]
+				if(!targetslab || totalcomponents > highest_component_amount)
+					highest_component_amount = totalcomponents
+					targetslab = S
 		if(targetslab)
 			for(var/i in stored_components)
 				targetslab.stored_components[i] += stored_components[i]
