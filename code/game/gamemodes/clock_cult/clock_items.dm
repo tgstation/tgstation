@@ -365,7 +365,8 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
+		user << "Attacking a slab or cache with this slab will transfer this slab's components into the slab's components or the global cache, respectively."
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
