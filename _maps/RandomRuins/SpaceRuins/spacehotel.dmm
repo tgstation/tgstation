@@ -1423,7 +1423,7 @@
 "do" = (
 /obj/structure/closet/crate,
 /obj/item/weapon/card/id{
-	access = list(12);
+	access = list(200,201);
 	name = "Staff ID"
 	},
 /turf/open/floor/plasteel/whitebot,
@@ -2114,30 +2114,12 @@
 /area/ruin/hotel/workroom)
 "fo" = (
 /obj/structure/table,
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
-/obj/item/weapon/card/id{
-	access = list(12);
-	name = "Staff ID"
-	},
+/obj/item/weapon/card/id/away/hotel,
+/obj/item/weapon/card/id/away/hotel,
+/obj/item/weapon/card/id/away/hotel,
+/obj/item/weapon/card/id/away/hotel,
+/obj/item/weapon/card/id/away/hotel,
+/obj/item/weapon/card/id/away/hotel,
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
 "fp" = (
@@ -3252,10 +3234,7 @@
 /area/ruin/hotel/pool)
 "hN" = (
 /obj/structure/table,
-/obj/item/weapon/card/id{
-	access = list(200,201,203);
-	name = "Security Staff ID"
-	},
+/obj/item/weapon/card/id/away/hotel/securty,
 /turf/open/floor/plasteel/darkred,
 /area/ruin/hotel/security)
 "hO" = (

@@ -53,7 +53,7 @@
   *
   * return datum/tgui The requested UI.
  **/
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state, browser_id)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state, browser_id = null)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
@@ -99,7 +99,7 @@
 
 	var/debugable = check_rights_for(user.client, R_DEBUG)
 	user << browse(get_html(debugable), "window=[window_id];[window_size][list2params(window_options)]") // Open the window.
-	if (custom_browser_id)
+	if (!custom_browser_id)
 		winset(user, window_id, "on-close=\"uiclose \ref[src]\"") // Instruct the client to signal UI when the window is closed.
 	SStgui.on_open(src)
 

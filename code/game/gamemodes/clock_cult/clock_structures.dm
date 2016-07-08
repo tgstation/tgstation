@@ -24,11 +24,11 @@
 
 /obj/structure/clockwork/New()
 	..()
-	clockwork_construction_value += construction_value
+	change_construction_value(construction_value)
 	all_clockwork_objects += src
 
 /obj/structure/clockwork/Destroy()
-	clockwork_construction_value -= construction_value
+	change_construction_value(-construction_value)
 	all_clockwork_objects -= src
 	return ..()
 
@@ -155,11 +155,15 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
+	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
 
 /obj/structure/clockwork/cache/Destroy()
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
+	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -526,8 +530,12 @@
 			L.Weaken(4) //half the stun, but sets cultists on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.silent += 6
 		targetsjudged++
 		L.adjustBruteLoss(10)
+		add_logs(user, L, "struck with a judicial blast")
 	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
 	QDEL_IN(src, 3) //so the animation completes properly
 

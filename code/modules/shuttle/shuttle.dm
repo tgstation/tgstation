@@ -435,6 +435,8 @@
 		if(S0.area_type)
 			area_type = S0.area_type
 
+	var/destination_turf_type = S1.turf_type
+
 	var/list/L0 = return_ordered_turfs(x, y, z, dir, areaInstance)
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
@@ -466,6 +468,7 @@
 			continue
 		if(T0.type != T0.baseturf) //So if there is a hole in the shuttle we don't drag along the space/asteroid/etc to wherever we are going next
 			T0.copyTurf(T1)
+			T1.baseturf = destination_turf_type
 			areaInstance.contents += T1
 
 			//copy over air

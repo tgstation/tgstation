@@ -30985,7 +30985,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/side,
+/turf/open/floor/plasteel/green/corner,
 /area/hallway/primary/port{
 	name = "Fore Port Hallway"
 	})
@@ -31002,9 +31002,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/green/corner{
-	dir = 8
-	},
+/turf/open/floor/plasteel/green/side,
 /area/hallway/primary/port{
 	name = "Fore Port Hallway"
 	})
@@ -40419,17 +40417,13 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bDi" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel/green/corner{
+	dir = 8
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
-	dir = 4
-	},
-/area/bridge)
+/area/hallway/primary/port{
+	name = "Fore Port Hallway"
+	})
 "bDj" = (
 /obj/machinery/firealarm{
 	dir = 2;
@@ -41757,15 +41751,17 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bFB" = (
-/obj/structure/cable/blue{
-	tag = "icon-4-8";
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
+/turf/open/floor/plasteel/brown/corner,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/area/bridge)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel/warningline/corner,
+/area/hallway/primary/starboard{
+	name = "Aft Starboard Hallway"
+	})
 "bFC" = (
 /obj/structure/cable/blue{
 	tag = "icon-4-8";
@@ -43262,17 +43258,24 @@
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "bHJ" = (
+/turf/open/floor/plasteel/brown/corner{
+	tag = "icon-browncorner (WEST)";
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/darkblue/side{
-	tag = "icon-darkblue (EAST)";
-	dir = 4
+/turf/open/floor/plasteel/warningline/corner{
+	tag = "icon-warninglinecorners (WEST)";
+	icon_state = "warninglinecorners";
+	dir = 8
 	},
-/area/bridge)
+/area/hallway/primary/starboard{
+	name = "Aft Starboard Hallway"
+	})
 "bHK" = (
 /obj/machinery/airalarm{
 	dir = 1;
@@ -52595,13 +52598,14 @@
 	name = "Aft Starboard Hallway"
 	})
 "bZn" = (
+/turf/open/floor/plasteel/brown,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel/warning,
+/turf/open/floor/plasteel/warningline,
 /area/hallway/primary/starboard{
 	name = "Aft Starboard Hallway"
 	})
@@ -98153,7 +98157,7 @@ aKx
 bhq
 biu
 bjP
-bla
+bkT
 bmE
 boj
 bqx
@@ -99181,7 +99185,7 @@ aSP
 aRO
 biv
 bjS
-bkX
+bDi
 bmE
 boj
 bqA
@@ -115908,7 +115912,7 @@ bJG
 bVn
 bWF
 bXN
-bZm
+bFB
 caE
 ccn
 cet
@@ -116422,7 +116426,7 @@ bMQ
 bJG
 bWH
 bXN
-bZo
+bHJ
 caH
 ccp
 cev

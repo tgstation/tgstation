@@ -120,6 +120,8 @@
 	var/b_loss = null
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
+	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 
 	switch (severity)
 		if (1)

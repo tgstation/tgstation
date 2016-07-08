@@ -567,11 +567,24 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	else
 		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
-/obj/item/proc/open_flame()
+/obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		var/success = FALSE
+		if(src == M.get_item_by_slot(slot_l_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_r_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_wear_mask))
+			success = TRUE
+		if(success)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(flame_heat, 5)
+
+/obj/item/proc/ignition_effect(atom/A, mob/user)
+	if(is_hot())
+		. = "<span class='notice'>[user] lights [A] with [src].</span>"
+	else
+		. = ""

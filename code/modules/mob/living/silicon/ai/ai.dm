@@ -45,7 +45,6 @@ var/list/ai_list = list()
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
 	var/list/datum/AI_Module/current_modules = list()
-	var/fire_res_on_core = 0
 	var/can_dominate_mechs = 0
 	var/shunted = 0 //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
 

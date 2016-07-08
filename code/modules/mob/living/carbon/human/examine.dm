@@ -289,7 +289,9 @@
 
 		if(getorgan(/obj/item/organ/brain))
 			if(istype(src,/mob/living/carbon/human/interactive))
-				msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
+				var/mob/living/carbon/human/interactive/auto = src
+				if(auto.showexaminetext)
+					msg += "<span class='deadsay'>[t_He] [t_is] appears to be some sort of sick automaton, [t_his] eyes are glazed over and [t_his] mouth is slightly agape.</span>\n"
 			else if(!key)
 				msg += "<span class='deadsay'>[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.</span>\n"
 			else if(!client)

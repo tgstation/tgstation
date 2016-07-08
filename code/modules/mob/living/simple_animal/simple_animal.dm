@@ -423,16 +423,25 @@
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
+	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (1)
-			gib()
-			return
-
+			if(prob(bomb_armor))
+				adjustBruteLoss(500)
+			else
+				gib()
+				return
 		if (2)
-			adjustBruteLoss(60)
+			var/bloss = 60
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 		if(3)
-			adjustBruteLoss(30)
+			var/bloss = 30
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
