@@ -5,7 +5,11 @@
 	w_class = 4
 	var/priority = 1
 
-/*obj/item/weapon/storage/internal/pocket/New()
+/obj/item/weapon/storage/internal/ClickAccesible(mob/user, depth=1)
+	if(loc)
+		return loc.ClickAccesible(user, depth)
+
+/obj/item/weapon/storage/internal/pocket/New()
 	..()
 	if(loc) name = loc.name
 
@@ -32,8 +36,8 @@
 	..()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
 
-
-proc/isstorage(var/atom/A)
+/*
+/proc/isstorage(var/atom/A)
 	if(istype(A, /obj/item/weapon/storage))
 		return 1
 
