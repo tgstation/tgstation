@@ -89,15 +89,7 @@
 				var/datum/mind/M = V
 				if(M.current && M.current.stat != DEAD)
 					possible_targets |= M.current
-			var/mob/living/closest_operative
-			var/shortest_distance = 255
-			for(var/V in possible_targets)
-				var/mob/living/L = V
-				var/turf/there = get_turf(L)
-				var/distance = get_dist(here, there)
-				if(isnull(distance) || distance < shortest_distance)
-					closest_operative = L
-					shortest_distance = get_dist(here, get_turf(L))
+			var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 			if(closest_operative)
 				target = closest_operative
 
