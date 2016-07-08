@@ -39,7 +39,6 @@
 		return
 
 	titled_hierophant_message(owner, input, "heavy_brass", "brass", title)
-	return
 
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
