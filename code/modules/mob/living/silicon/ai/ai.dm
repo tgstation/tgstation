@@ -156,7 +156,9 @@ var/list/ai_list = list()
 	shuttle_caller_list -= src
 	SSshuttle.autoEvac()
 	qdel(eyeobj) // No AI, no Eye
-	return ..()
+	malfhack = null
+
+	. = ..()
 
 
 /mob/living/silicon/ai/verb/pick_icon()
@@ -319,8 +321,6 @@ var/list/ai_list = list()
 		if(C)
 			C.post_status("shuttle")
 
-	return
-
 /mob/living/silicon/ai/cancel_camera()
 	src.view_core()
 
@@ -383,8 +383,6 @@ var/list/ai_list = list()
 		if(3)
 			if (stat != DEAD)
 				adjustBruteLoss(30)
-
-	return
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -469,7 +467,6 @@ var/list/ai_list = list()
 		return
 
 	..()
-	return
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
 
@@ -745,7 +742,6 @@ var/list/ai_list = list()
 	light_cameras()
 
 	src << "Camera lights activated."
-	return
 
 //AI_CAMERA_LUMINOSITY
 
@@ -897,3 +893,27 @@ var/list/ai_list = list()
 	if(..()) //successfully ressuscitated from death
 		icon_state = "ai"
 		. = 1
+
+/mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
+	malfhack = null
+	malfhacking = FALSE
+
+	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
+		src << "Hack aborted. The designated APC no longer exists on the \
+			power network."
+		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
+	else if(apc.aidisabled)
+		src << "Hack aborted. \The [apc] is no longer responding \
+			to our systems."
+		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
+	else
+		malf_picker.processing_time += 10
+
+		apc.malfai = parent || src
+		apc.malfhack = TRUE
+		apc.locked = TRUE
+
+		playsound(get_turf(src), 'sound/machines/ding.ogg', 50, 1)
+		src << "Hack complete. \The [apc] is now under your \
+			exclusive control."
+		apc.update_icon()
