@@ -2239,3 +2239,12 @@
 
 		custom_outfits.Add(O)
 		message_admins("[key_name(usr)] created \"[O.name]\" outfit!")
+
+	else if(href_list["set_selfdestruct_code"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/code = random_nukecode()
+		for(var/obj/machinery/nuclearbomb/selfdestruct/SD in nuke_list)
+			SD.r_code = code
+		message_admins("[key_name_admin(usr)] has set the self-destruct \
+			code to \"[code]\".")
