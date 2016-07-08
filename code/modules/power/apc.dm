@@ -114,7 +114,7 @@
 	setDir(SOUTH)
 
 	if(auto_name)
-		name = "[get_area(src)] APC"
+		name = "\improper [get_area(src)] APC"
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
@@ -147,7 +147,7 @@
 		qdel(cell)
 	if(terminal)
 		disconnect_terminal()
-	return ..()
+	. = ..()
 
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
@@ -797,24 +797,11 @@
 	malf << "Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."
 	malf.malfhack = src
 	malf.malfhacking = TRUE
-	addtimer(src, "malfhacked", 600, FALSE, malf)
+	addtimer(malf, "malfhacked", 600, FALSE, src)
 
-/obj/machinery/power/apc/proc/malfhacked(mob/living/silicon/ai/malf)
-	if(!istype(malf))
-		return
-	malf.malfhack = null
-	malf.malfhacking = FALSE
-	if(src && !src.aidisabled)
-		malf.malf_picker.processing_time += 10
-
-		malfai = malf.parent || malf
-		malfhack = TRUE
-		locked = TRUE
-
-		malf << "Hack complete. The APC is now under your exclusive control."
-		update_icon()
-	else
-		malf << "Hack aborted. The designated APC has stopped responding and no longer exists on the power network."
+	var/obj/screen/alert/hackingapc/A
+	A = malf.throw_alert("hackingapc", /obj/screen/alert/hackingapc)
+	A.target = src
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)
 	if(!istype(malf))

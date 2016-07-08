@@ -1,15 +1,24 @@
 //sends messages via hierophant
-/proc/send_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
+/proc/titled_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
 	if(!user || !message || !ticker || !ticker.mode)
 		return 0
-	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: </span><span class='[message_span]'>\"[message]\"</span>"
-	for(var/M in mob_list)
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, user)
-			M << "[link] [parsed_message]"
-		else if(is_servant_of_ratvar(M))
-			M << parsed_message
+	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
+	</span><span class='[message_span]'>\"[message]\"</span>"
+	hierophant_message(parsed_message, FALSE, user)
 	return 1
+
+/proc/hierophant_message(message, servantsonly, atom/target) //sends a generic message to all servants and optionally observers
+	if(!message || !ticker || !ticker.mode)
+		return 0
+	for(var/M in mob_list)
+		if(!servantsonly && isobserver(M))
+			if(target)
+				var/link = FOLLOW_LINK(M, target)
+				M << "[link] [message]"
+			else
+				M << message
+		else if(is_servant_of_ratvar(M))
+			M << message
 
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
@@ -111,6 +120,23 @@
 				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 250 CV, and there are no living, non-servant ais
 	return 0
 
+/proc/scripture_unlock_alert(list/previous_states) //reports to servants when scripture is locked or unlocked
+	var/list/states = get_scripture_states()
+	for(var/i in states)
+		if(states[i] != previous_states[i])
+			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [states[i] ? "un":""]locked.</b></span>")
+
+/proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
+	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
+	"Application" = scripture_unlock_check(SCRIPTURE_APPLICATION), \
+	"Revenant" = scripture_unlock_check(SCRIPTURE_REVENANT), \
+	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
+
+/proc/change_construction_value(amount)
+	var/list/scripture_states = get_scripture_states()
+	clockwork_construction_value += amount
+	scripture_unlock_alert(scripture_states)
+
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
 	if(specific_component_id)
 		clockwork_component_cache[specific_component_id]++
@@ -164,13 +190,20 @@ This cipher is known as "rot13" for "rotate 13 places" and there are many sites 
 sentence thirteen places ahead changes it right back to plain English.
 
 	There are, however, a few parts of the Ratvarian tongue that aren't typical and are implemented for fluff reasons. Some words may have apostrophes, hyphens, and spaces, making the plain
-English translation apparent but disjoined (for instance, "Oru`byq zl-cbjre!" translates directly to "Beh'old my-power!") although this can be ignored without impacting overall quality. When
-translating from Ratvar's tongue to plain English, simply remove the disjointments and use the finished sentence. This would make "Oru`byq zl-cbjre!" into "Behold my power!" after removing the
+English translation apparent but disjoined (for instance, "Orubyq zl-cbjre!" translates directly to "Behold my-power!") although this can be ignored without impacting overall quality. When
+translating from Ratvar's tongue to plain English, simply remove the disjointments and use the finished sentence. This would make "Orubyq zl-cbjre!" into "Behold my power!" after removing the
 abnormal spacing, hyphens, and grave accents.
 
 List of nuances:
 
-- Any time the word "of" occurs, it is linked to the previous word by a hyphen. If it is the first word, nothing is done. (i.e. "V nz-bs Ratvar." directly translates to "I am-of Ratvar.")
+- Any time the word "of" occurs, it is linked to the previous word by a hyphen. (i.e. "V nz-bs Ratvar." directly translates to "I am-of Ratvar.")
+- Any time "th", followed by any two letters occurs, you add an apostrophe between those two letters, i.e; "Thi's"
+- In the same vein, any time "ti", followed by one letter occurs, you add an apostrophe between "i" and the letter, i.e; "Ti'me"
+- Whereever "te" or "et" appear and there is another letter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
+- Where the word "and" appears, it is linked to the previous and following words by hyphens, i.e; "Sword-and-shield"
+- Where the word "to" appears, it is linked to the following word by a hyphen, i.e; "to-use"
+- Where the word "my" appears, it is linked to the following word by a hyphen, i.e; "my-light"
+
 - Although "Ratvar" translates to "Engine" in English, the word "Ratvar" is used regardless of language as it is a proper noun.
  - The same rule applies to Ratvar's four generals: Nezbere (Armorer), Sevtug (Fright), Nzcrentr (Amperage), and Inath-Neq (Vangu-Ard), although these words can be used in proper context if one is
    not referring to the four generals and simply using the words themselves.

@@ -40,9 +40,7 @@
 	SSshuttle.emergencyNoEscape = TRUE
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
-	for(var/M in mob_list)
-		if(is_servant_of_ratvar(M) || isobserver(M))
-			M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>"
+	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	SSshuttle.emergencyNoEscape = FALSE
@@ -54,9 +52,7 @@
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
-		for(var/M in mob_list)
-			if(is_servant_of_ratvar(M) || isobserver(M))
-				M << "<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>"
+		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
 		world << sound(null, 0, channel = 8)
 	qdel(glow)
 	glow = null
@@ -85,7 +81,7 @@
 	return 0 //Nice try, Toxins!
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
-	if(!progress_in_seconds || prob(5))
+	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
 			M << "<span class='warning'><b>You hear otherworldly sounds from the [dir2text(get_dir(get_turf(M), get_turf(src)))]...</span>"
 	if(!health)
@@ -116,9 +112,9 @@
 				takes_damage = FALSE
 				purpose_fulfilled = TRUE
 				make_glow()
-				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 126)
+				animate(glow, transform = matrix() * 1.5, alpha = 255, time = 125)
 				world << sound('sound/effects/ratvar_rises.ogg', 0, channel = 8) //End the sounds
-				sleep(126)
+				sleep(125)
 				make_glow()
 				animate(glow, transform = matrix() * 3, alpha = 0, time = 5)
 				sleep(5)
@@ -192,7 +188,7 @@
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL YVTUG FUNYY FUVAR NPEBFF GUVF CNGURGVP ERNYZ!!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL-YVTUG FUNYY FUVAR NPEBFF GUV'F CNGU-RGV'P ERNYZ!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
@@ -288,10 +284,11 @@
 				spawn(1)
 					M.client.color = initial(M.client.color)
 			shake_camera(M, 4, 3)
-		var/r_success_modifier = (ticker.mode.servants_of_ratvar.len * 2) //2% for each cultist
-		var/n_success_modifier = (ticker.mode.cult.len * 2)
+		var/r_success_modifier = min(ticker.mode.servants_of_ratvar.len * 2, 50) //2% for each cultist
+		var/n_success_modifier = ticker.mode.cult.len * 2
 		for(var/mob/living/simple_animal/hostile/construct/harvester/C in player_list)
 			n_success_modifier += 2
+		n_success_modifier = min(n_success_modifier, 50)
 		if(prob(base_victory_chance + r_success_modifier))
 			winner = "Ratvar"
 			break

@@ -72,6 +72,7 @@
 	var/forceProcess = 0
 	var/processTime = 8
 	var/lastProc = 0
+	var/showexaminetext = 1	//If we show our telltale examine text
 
 	var/list/knownStrings = list()
 

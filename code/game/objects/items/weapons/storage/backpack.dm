@@ -285,7 +285,7 @@
 
 /obj/item/weapon/storage/backpack/satchel_flat/New()
 	..()
-	new /obj/item/stack/tile/plasteel(src)
+	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
 
 /obj/item/weapon/storage/backpack/dufflebag

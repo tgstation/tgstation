@@ -93,23 +93,6 @@
 	world << "<B>The AI cleansed the station of life with the doomsday device!</B>"
 	ticker.force_ending = 1
 
-/datum/AI_Module/large/fireproof_core
-	module_name = "Core Upgrade"
-	mod_pick_name = "coreup"
-	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
-	cost = 50
-	one_time = 1
-
-	power_type = /mob/living/silicon/ai/proc/fireproof_core
-
-/mob/living/silicon/ai/proc/fireproof_core()
-	set category = "Malfunction"
-	set name = "Fireproof Core"
-	for(var/mob/living/silicon/ai/ai in player_list)
-		ai.fire_res_on_core = 1
-	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
-	src << "<span class='notice'>Core fireproofed.</span>"
-
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret Upgrade"
 	mod_pick_name = "turret"

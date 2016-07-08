@@ -219,5 +219,3 @@
 
 /obj/proc/CanAStarPass()
 	. = !density
-
-

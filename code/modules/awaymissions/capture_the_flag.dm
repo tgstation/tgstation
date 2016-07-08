@@ -4,6 +4,7 @@
 #define FLAG_RETURN_TIME 200 // 20 seconds
 #define INSTAGIB_RESPAWN 50 //5 seconds
 #define DEFAULT_RESPAWN 150 //15 seconds
+#define AMMO_DROP_LIFETIME 300
 
 
 
@@ -131,6 +132,8 @@
 	var/control_points = 0
 	var/control_points_to_win = 180
 	var/list/team_members = list()
+	var/list/spawned_mobs = list()
+	var/list/recently_dead_ckeys = list()
 	var/ctf_enabled = FALSE
 	var/ctf_gear = /datum/outfit/ctf
 	var/instagib_gear = /datum/outfit/ctf/instagib
@@ -157,6 +160,21 @@
 	poi_list.Remove(src)
 	..()
 
+/obj/machinery/capture_the_flag/process()
+	for(var/i in spawned_mobs)
+		if(!i)
+			spawned_mobs -= i
+			continue
+		// Anyone in crit, automatically reap
+		var/mob/living/M = i
+		if(M.InCritical() || M.stat == DEAD)
+			ctf_dust_old(M)
+		else
+			// The changes that you've been hit with no shield but not
+			// instantly critted are low, but have some healing.
+			M.adjustBruteLoss(-1)
+			M.adjustFireLoss(-1)
+
 /obj/machinery/capture_the_flag/red
 	name = "Red CTF Controller"
 	icon_state = "syndbeacon"
@@ -177,11 +195,12 @@
 	if(ticker.current_state != GAME_STATE_PLAYING)
 		return
 	if(user.ckey in team_members)
-		if(user.mind.current && user.mind.current.timeofdeath + respawn_cooldown > world.time)
+		if(user.ckey in recently_dead_ckeys)
 			user << "It must be more than [respawn_cooldown/10] seconds from your last death to respawn!"
 			return
 		var/client/new_team_member = user.client
-		dust_old(user)
+		if(user.mind && user.mind.current)
+			ctf_dust_old(user.mind.current)
 		spawn_team_member(new_team_member)
 		return
 
@@ -196,15 +215,20 @@
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
-	dust_old(user)
+	if(user.mind && user.mind.current)
+		ctf_dust_old(user.mind.current)
 	spawn_team_member(new_team_member)
 
-/obj/machinery/capture_the_flag/proc/dust_old(mob/user)
-	if(user.mind && user.mind.current && user.mind.current.z == src.z)
-		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
-		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
-		user.mind.current.dust()
+/obj/machinery/capture_the_flag/proc/ctf_dust_old(mob/living/body)
+	if(isliving(body) && body.z == src.z)
+		var/turf/T = get_turf(body)
+		new /obj/effect/ctf/ammo(T)
+		recently_dead_ckeys += body.ckey
+		addtimer(src, "clear_cooldown", respawn_cooldown, TRUE, body.ckey)
+		body.dust()
 
+/obj/machinery/capture_the_flag/proc/clear_cooldown(var/ckey)
+	recently_dead_ckeys -= ckey
 
 /obj/machinery/capture_the_flag/proc/spawn_team_member(client/new_team_member)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(src))
@@ -212,6 +236,7 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(ctf_gear)
+	spawned_mobs += M
 
 /obj/machinery/capture_the_flag/Topic(href, href_list)
 	if(href_list["join"])
@@ -281,12 +306,15 @@
 
 /obj/machinery/capture_the_flag/proc/stop_ctf()
 	ctf_enabled = FALSE
+	arena_cleared = FALSE
 	var/area/A = get_area(src)
 	for(var/i in mob_list)
 		var/mob/M = i
 		if((get_area(A) == A) && (M.ckey in team_members))
 			M.dust()
 	team_members.Cut()
+	spawned_mobs.Cut()
+	recently_dead_ckeys.Cut()
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
@@ -300,23 +328,43 @@
 			CTF.ctf_gear = initial(ctf_gear)
 			CTF.respawn_cooldown = DEFAULT_RESPAWN
 
-/obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 75
+
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/dropped()
+	. = ..()
+	addtimer(src, "floor_vanish", 1)
+
+/obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/weapon/gun/projectile/automatic/laser/ctf
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf
 	desc = "This looks like it could really hurt in melee."
 	force = 50
+	flags = NODROP | DROPDEL
 
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
+
+/obj/item/ammo_box/magazine/recharge/ctf/dropped()
+	. = ..()
+	addtimer(src, "floor_vanish", 1)
+
+/obj/item/ammo_box/magazine/recharge/ctf/proc/floor_vanish()
+	if(isturf(loc))
+		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/item/projectile/beam/ctf
 
 /obj/item/projectile/beam/ctf
 	damage = 150
+	icon_state = "omnilaser"
+
+// RED TEAM GUNS
 
 /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/red
@@ -329,6 +377,8 @@
 
 /obj/item/projectile/beam/ctf/red
 	icon_state = "laser"
+
+// BLUE TEAM GUNS
 
 /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/blue
@@ -344,16 +394,34 @@
 
 /datum/outfit/ctf
 	name = "CTF"
-	/obj/item/device/radio/headset
+	ears = /obj/item/device/radio/headset
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate
-	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/CTF
+	belt = /obj/item/weapon/gun/projectile/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf
 	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf
+
+/datum/outfit/ctf/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+	if(visualsOnly)
+		return
+	var/list/no_drops = list()
+	var/obj/item/weapon/card/id/W = H.wear_id
+	no_drops += W
+	W.registered_name = H.real_name
+	W.update_label(W.registered_name, W.assignment)
+
+	// The shielded hardsuit is already NODROP
+	no_drops += H.get_item_by_slot(slot_gloves)
+	no_drops += H.get_item_by_slot(slot_shoes)
+	no_drops += H.get_item_by_slot(slot_w_uniform)
+	no_drops += H.get_item_by_slot(slot_ears)
+	for(var/i in no_drops)
+		var/obj/item/I = i
+		I.flags |= NODROP
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill
@@ -363,6 +431,8 @@
 	ears = /obj/item/device/radio/headset/syndicate/alt
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
 	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/red
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/red
 
 /datum/outfit/ctf/red/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill/red
@@ -372,17 +442,21 @@
 	ears = /obj/item/device/radio/headset/headset_cent/commander
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
 	r_hand = /obj/item/weapon/gun/projectile/automatic/laser/ctf/blue
+	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
+	r_pocket = /obj/item/ammo_box/magazine/recharge/ctf/blue
 
 /datum/outfit/ctf/blue/instagib
 	r_hand = /obj/item/weapon/gun/energy/laser/instakill/blue
 	shoes = /obj/item/clothing/shoes/jackboots/fast
 
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
+	..()
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(SYND_FREQ)
 	R.freqlock = 1
 
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
+	..()
 	var/obj/item/device/radio/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
 	R.freqlock = 1
@@ -406,7 +480,7 @@
 /obj/structure/divine/trap/ctf/trap_effect(mob/living/L)
 	if(!(src.team in L.faction))
 		L << "<span class='danger'><B>Stay out of the enemy spawn!</B></span>"
-		L.dust()
+		L.death()
 
 
 /obj/structure/divine/trap/ctf/red
@@ -430,7 +504,48 @@
 	invisibility = INVISIBILITY_OBSERVER
 	alpha = 100
 
+/obj/effect/ctf/ammo
+	name = "ammo pickup"
+	desc = "You like revenge, right? Everybody likes revenge! Well, \
+		let's go get some!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "at_shield1"
+	layer = ABOVE_MOB_LAYER
+	alpha = 255
+	invisibility = 0
+
+/obj/effect/ctf/ammo/New()
+	..()
+	QDEL_IN(src, AMMO_DROP_LIFETIME)
+
+/obj/effect/ctf/ammo/Crossed(atom/movable/AM)
+	reload(AM)
+
+/obj/effect/ctf/ammo/Bump(atom/movable/AM)
+	reload(AM)
+
+/obj/effect/ctf/ammo/Bumped(atom/movable/AM)
+	reload(AM)
+
+/obj/effect/ctf/ammo/proc/reload(mob/living/M)
+	if(!ishuman(M))
+		return
+	for(var/obj/machinery/capture_the_flag/CTF in machines)
+		if(M in CTF.spawned_mobs)
+			var/outfit = CTF.ctf_gear
+			var/datum/outfit/O = new outfit
+			for(var/obj/item/weapon/gun/G in M)
+				M.unEquip(G)
+				qdel(G)
+			O.equip(M)
+			M << "<span class='notice'>Ammunition reloaded!</span>"
+			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			qdel(src)
+			break
+
 /obj/effect/ctf/dead_barricade
+	name = "dead barrier"
+	desc = "It provided cover in fire fights. And now it's gone."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barrier0"
 
