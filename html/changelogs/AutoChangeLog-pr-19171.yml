@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Damage to a shuttle while it is moving will now correctly make
+transit space turfs, rather than non-moving space."

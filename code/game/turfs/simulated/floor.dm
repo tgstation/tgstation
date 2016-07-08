@@ -48,8 +48,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(target == src)
 		src.ChangeTurf(src.baseturf)
 	if(target != null)
-		ex_act(3)
-		return
+		severity = 3
 
 	switch(severity)
 		if(1)

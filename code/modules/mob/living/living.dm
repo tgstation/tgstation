@@ -225,7 +225,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity, target)
+/mob/living/ex_act(severity, origin)
+	if(istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 	flash_eyes()
 
