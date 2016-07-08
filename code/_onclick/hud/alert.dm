@@ -242,9 +242,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 // CLOCKCULT
 /obj/screen/alert/nocache
-	name = "No Clockwork Cache"
+	name = "No Tinkerer's Cache"
 	desc = "In order to share components and unlock higher tier \
-		scripture, a clockwork cache must be constructed somewhere \
+		scripture, a tinkerer's cache must be constructed somewhere \
 		in the world. Try to place it somewhere accessible, yet hidden."
 	icon_state = "nocache"
 
