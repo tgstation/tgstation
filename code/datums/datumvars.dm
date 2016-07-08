@@ -1,5 +1,7 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
+
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
@@ -399,7 +401,7 @@ body
 			for(var/entry in L)
 				var/state = "INDEX"
 				var/val = null
-				if(isnum(entry) || name == "contents" || name == "verbs" || name == "screen" || name == "images")
+				if(isnum(entry) || internal_byond_list_vars[entry])
 					state = "INDEX"
 				else
 					val = L[entry]
