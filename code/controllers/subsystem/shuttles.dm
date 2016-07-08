@@ -233,7 +233,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	return TRUE
 
 /datum/subsystem/shuttle/proc/autoEvac(force=FALSE)
-	var/callShuttle = 1
+	var/callShuttle = TRUE
 
 	for(var/thing in shuttle_caller_list)
 		if(istype(thing, /mob/living/silicon/ai))
@@ -247,26 +247,23 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		var/turf/T = get_turf(thing)
 		if(T && T.z == ZLEVEL_STATION)
-			callShuttle = 0
+			callShuttle = FALSE
 			break
 
 	var/delay = config.shuttle_refuel_delay - (world.time - round_start_time)
 	var/delay_fraction = max(delay, 0) / emergencyCallTime
 	var/call_multiplier = 1 + delay_fraction
 	if(callShuttle || force)
-		emergencyNoRecall = TRUE
 		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, call_multiplier)
 		if(callShuttle)
 			log_game("There is no means of calling the shuttle anymore. \
-				Shuttle automatically called and no longer recallable.")
+				Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed \
-				and all AIs are inactive. Shuttle called and no longer \
-				recallable.")
+				and all AIs are inactive. Shuttle called.")
 		if(force)
-			log_game("Unrecallable mandatory shuttle evacuation forced.")
-			message_admins("The emergency shuttle has been force called, \
-				and cannot be recalled.")
+			log_game("An auto-evacuation shuttle has been forced.")
+			message_admins("The emergency shuttle has been force called.")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)

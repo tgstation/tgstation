@@ -29,7 +29,7 @@
 	declaring_war = 1
 	var/war_declaration = "[user.real_name] has declared his intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them."
 	priority_announce(war_declaration, title = "Declaration of War", sound = 'sound/machines/Alarm.ogg')
-	user << "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission."
+	user << "You've attracted the attention of powerful forces within the syndicate. A bonus bundle of telecrystals has been granted to your team. Great things await you if you complete the mission. Mostly bragging rights."
 
 	for(var/V in syndicate_shuttle_boards)
 		var/obj/item/weapon/circuitboard/computer/syndicate_shuttle/board = V
@@ -43,6 +43,7 @@
 	// After the sound effect finishes playing, call the shuttle
 	// and make it unrecallable.
 	addtimer(SSshuttle, "autoEvac", 150, TRUE, TRUE)
+	SSshuttle.emergencyNoRecall = TRUE
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
