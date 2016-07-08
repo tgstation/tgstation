@@ -1,6 +1,6 @@
-#define CHALLENGE_TELECRYSTALS 280
+#define CHALLENGE_TELECRYSTALS 168
 #define CHALLENGE_TIME_LIMIT 3000
-#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_MIN_PLAYERS 30
 #define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
 
 /obj/item/device/nuclear_challenge
