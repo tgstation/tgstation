@@ -11,8 +11,8 @@
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
 		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
-		"Ash Walker", "Deathsquad Officer", "Ian", "slaughter demon",
-		"laughter demon")
+		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
+		"Laughter Demon")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
 
@@ -56,7 +56,7 @@
 		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
 
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(I)
+	user.do_attack_animation(src)
 
 	if(I.force)
 		user.visible_message("<span class='danger'>[user] has hit \
