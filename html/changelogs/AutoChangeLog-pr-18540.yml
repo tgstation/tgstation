@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Podpeople (and venus human traps) are now no longer damaged,
+poisoned or obstructed by space vines. Explosive vines still damage
+them, because there's an actual explosion."
