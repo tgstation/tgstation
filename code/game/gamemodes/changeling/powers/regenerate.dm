@@ -5,8 +5,8 @@
 		blood volume."
 	helptext = "Will alert nearby crew if any external limbs are \
 		regenerated. Can be used while unconscious."
-	chemical_cost = 20
-	dna_cost = 1
+	chemical_cost = 10
+	dna_cost = 0
 	req_stat = UNCONSCIOUS
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
