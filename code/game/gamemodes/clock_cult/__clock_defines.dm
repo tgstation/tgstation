@@ -14,11 +14,11 @@ var/global/ratvar_awakens = FALSE //If Ratvar has been summoned
 #define SCRIPTURE_REVENANT 4
 #define SCRIPTURE_JUDGEMENT 5
 
-#define SLAB_PRODUCTION_TIME 600 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute
+#define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
 
-#define SLAB_SERVANT_SLOWDOWN 200 //how much each servant above 5 slows down slab-based generation; defaults to 20 seconds per sevant
+#define SLAB_SERVANT_SLOWDOWN 300 //how much each servant above 5 slows down slab-based generation; defaults to 30 seconds per sevant
 
-#define SLAB_SLOWDOWN_MAXIMUM 2400 //maximum slowdown from additional servants; defaults to 4 minutes
+#define SLAB_SLOWDOWN_MAXIMUM 2700 //maximum slowdown from additional servants; defaults to 4 minutes 30 seconds
 
 #define CACHE_PRODUCTION_TIME 900 //how long(deciseconds) caches require to produce a component; defaults to 1 minute 30 seconds
 
