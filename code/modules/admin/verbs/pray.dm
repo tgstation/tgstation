@@ -72,7 +72,7 @@
 	msg = "<span class='adminnotice'>\
 		<b><font color=orange>NUKE CODE REQUEST:</font>\
 		[ADMIN_FULLMONTY(Sender)] [ADMIN_BSA(Sender)] \
-		[ADMIN_CENTCOM_REPLY(Sender)]\
+		[ADMIN_CENTCOM_REPLY(Sender)] \
 		[ADMIN_SET_SD_CODE]:</b> \
 		[msg]</span>"
 	admins << msg
