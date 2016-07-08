@@ -65,7 +65,7 @@
 	return FALSE
 
 /obj/structure/plasticflaps/mining/Destroy()
-	var/oldloc = loc
+	var/atom/oldloc = loc
 	. = ..()
 	if (oldloc)
 		oldloc.air_update_turf(1)
