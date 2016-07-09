@@ -59,7 +59,7 @@
 	},
 /area/ruin/powered)
 "ak" = (
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/floor/plating/lava/smooth,
 /area/ruin/powered)
 "al" = (
 /obj/structure/disposalpipe/segment{
