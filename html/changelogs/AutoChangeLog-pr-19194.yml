@@ -1,0 +1,4 @@
+author: "Crazylemon"
+delete-after: True
+changes: 
+  - bugfix: "The map loader no longer resets when reading another map mid-load"
