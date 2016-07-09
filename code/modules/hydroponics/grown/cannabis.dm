@@ -2,7 +2,6 @@
 /obj/item/seeds/cannabis
 	name = "pack of cannabis seeds"
 	desc = "Taxable."
-	icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_state = "seed-cannabis"
 	species = "cannabis"
 	plantname = "Cannabis Plant"
