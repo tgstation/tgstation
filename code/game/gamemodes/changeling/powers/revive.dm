@@ -1,16 +1,29 @@
 /obj/effect/proc_holder/changeling/revive
-	name = "Regenerate"
+	name = "Revive"
 	desc = "We regenerate, healing all damage from our form."
+	helptext = "Does not regrow lost organs or a missing head."
 	req_stat = DEAD
-	always_keep = 1
+	always_keep = TRUE
+	ignores_fakedeath = TRUE
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
 	user.status_flags &= ~(FAKEDEATH)
 	user.tod = null
 	user.revive(full_heal = 1)
-	user.regenerate_limbs(0, list("head")) //regenerate all limbs except the head
-	user << "<span class='notice'>We have regenerated.</span>"
+	var/list/missing = user.get_missing_limbs()
+	missing -= "head" // headless changelings are funny
+	if(missing.len)
+		playsound(user, 'sound/magic/Demon_consume.ogg', 50, 1)
+		user.visible_message("<span class='warning'>[user]'s missing limbs \
+			reform, making a loud, grotesque sound!</span>",
+			"<span class='userdanger'>Your limbs regrow, making a \
+			loud, crunchy sound and giving you great pain!</span>",
+			"<span class='italics'>You hear organic matter ripping \
+			and tearing!</span>")
+		user.emote("scream")
+		user.regenerate_limbs(0, list("head"))
+	user << "<span class='notice'>We have revived ourselves.</span>"
 	user.mind.changeling.purchasedpowers -= src
 	feedback_add_details("changeling_powers","CR")
 	return 1
