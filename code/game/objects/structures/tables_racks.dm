@@ -272,12 +272,13 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		spawn(5)
-			// Check again in a bit though
-			if(AM.loc == get_turf(src))
-				check_break(AM)
+		addtimer(src, "throw_check", 5, FALSE, AM)
 	else
 		check_break(AM)
+
+/obj/structure/table/glass/proc/throw_check(mob/living/M)
+	if(M.loc == get_turf(src))
+		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
 	if(has_gravity(M) && M.mob_size > MOB_SIZE_SMALL)
@@ -364,7 +365,7 @@
 					user << "<span class='notice'>You weaken the table.</span>"
 					deconstruction_ready = 1
 	else
-		return ..()
+		. = ..()
 
 /obj/structure/table/reinforced/brass
 	name = "brass table"
@@ -595,19 +596,18 @@
 
 /obj/item/weapon/rack_parts/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal( user.loc )
+		new /obj/item/stack/sheet/metal(user.loc)
 		qdel(src)
-		return
 	else
-		return ..()
+		. = ..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
-	user << "<span class='notice'>You start constructing rack...</span>"
-	if (do_after(user, 50, target = src))
+	user << "<span class='notice'>You start constructing a rack...</span>"
+	if(do_after(user, 50, target = src, progress=TRUE))
 		if(!user.drop_item())
 			return
-		var/obj/structure/rack/R = new /obj/structure/rack( user.loc )
+		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
+		user.visible_message("<span class='notice'>[user] assembles \a [R].\
+			</span>", "<span class='notice'>You assemble \a [R].</span>")
 		R.add_fingerprint(user)
 		qdel(src)
-		return
-
