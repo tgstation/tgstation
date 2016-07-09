@@ -65,7 +65,7 @@
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(pockets)
-		pockets.attackby(W, user, params)
+		return pockets.attackby(W, user, params)
 	else
 		return ..()
 
