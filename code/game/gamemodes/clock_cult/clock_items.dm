@@ -230,8 +230,8 @@
 	\
 	This is done through <b>Components</b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
 	in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so. The most basic of these links lies \
-	in the clockwork slab, which will slowly generate components over time - around one component of a random type is produced every minute, which is obviously inefficient. There are other ways \
-	to create these components through scripture and certain structures.<br><br>\
+	in the clockwork slab, which will slowly generate components over time - one component of a random type is produced every 1 minute and 30 seconds, plus 30 seconds per each servant above 5, \
+	which is obviously inefficient. There are other ways to create these components through scripture and certain structures.<br><br>\
 	\
 	In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
 	\
