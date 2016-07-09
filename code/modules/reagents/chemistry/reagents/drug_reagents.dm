@@ -40,7 +40,9 @@
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		M << "<span class='notice'>[smoke_message]</span>"
+	M.AdjustParalysis(-1, 0)
 	M.AdjustStunned(-1, 0)
+	M.AdjustWeakened(-1, 0)
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	..()
 	. = 1
