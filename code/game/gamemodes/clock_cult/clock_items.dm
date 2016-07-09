@@ -281,9 +281,9 @@
 	var/text_to_add = ""
 	var/drivers = "<font color=#BE8700 size=3><b>Drivers</b></font>"
 	var/scripts = "<font color=#BE8700 size=3><b>Scripts</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
-	var/applications = "<font color=#BE8700 size=3><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 50CV.</i>"
-	var/revenant = "<font color=#BE8700 size=3><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 100CV.</i>"
-	var/judgement = "<font color=#BE8700 size=3><b>Judgement</b></font><br><i>These scriptures require at least ten servants and 100CV. In addition, there may not be an active non-servant AI.</i>"
+	var/applications = "<font color=#BE8700 size=3><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 100CV.</i>"
+	var/revenant = "<font color=#BE8700 size=3><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 200CV.</i>"
+	var/judgement = "<font color=#BE8700 size=3><b>Judgement</b></font><br><i>These scriptures require at least twelve servants and 300CV. In addition, there may not be any active non-servant AIs.</i>"
 	for(var/V in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/S = V
 		var/datum/clockwork_scripture/S2 = new V
