@@ -272,12 +272,12 @@
 	name = "Soviet Admiral"
 
 	uniform = /obj/item/clothing/under/soviet
-	head = /obj/item/clothing/head/hgpiratecap
+	head = /obj/item/clothing/head/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/device/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	suit = /obj/item/clothing/suit/hgpirate
+	suit = /obj/item/clothing/suit/pirate/captain
 	back = /obj/item/weapon/storage/backpack/satchel
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 

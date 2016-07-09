@@ -11,6 +11,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
 	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/cultivator,/obj/item/weapon/reagent_containers/spray/pestspray,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 //Captain
 /obj/item/clothing/suit/captunic
@@ -62,6 +63,8 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/weapon/kitchen)
 	togglename = "sleeves"
+	pockets = /obj/item/weapon/storage/internal/pocket
+
 
 //Cook
 /obj/item/clothing/suit/apron/chef
@@ -85,6 +88,7 @@
 	armor = list(melee = 25, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/det_suit/grey
 	name = "noir trenchcoat"
@@ -101,6 +105,7 @@
 	blood_overlay_type = "armor"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals/emergency_oxygen,/obj/item/device/t_scanner,/obj/item/device/radio)
 	burn_state = FIRE_PROOF
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer

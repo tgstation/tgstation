@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/internal
 	storage_slots = 2
 	max_w_class = 2
-	max_combined_w_class = 4
+	max_combined_w_class = 50 // Limited by slots, not combined weight class
 	w_class = 4
 
 
@@ -21,17 +21,14 @@
 
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = 3
-	max_combined_w_class = 6
 
 /obj/item/weapon/storage/internal/pocket/small
 	storage_slots = 1
-	max_combined_w_class = 2
 	priority = FALSE
 
 /obj/item/weapon/storage/internal/pocket/tiny
 	storage_slots = 1
 	max_w_class = 1
-	max_combined_w_class = 1
 	priority = FALSE
 
 
