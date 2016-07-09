@@ -33,6 +33,7 @@
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
 	hooded = 1
 	hoodtype = /obj/item/clothing/head/chaplain_hood
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/head/chaplain_hood
 	name = "chaplain hood"
@@ -51,6 +52,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/weapon/storage/book/bible, /obj/item/weapon/nullrod, /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater, /obj/item/weapon/storage/fancy/candle_box, /obj/item/candle, /obj/item/weapon/tank/internals/emergency_oxygen)
+	pockets = /obj/item/weapon/storage/internal/pocket
 
 //Chef
 /obj/item/clothing/suit/toggle/chef
