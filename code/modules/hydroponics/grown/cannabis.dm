@@ -112,4 +112,4 @@
 	seed = /obj/item/seeds/cannabis/ultimate
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 69
+	volume = 420
