@@ -71,7 +71,7 @@ var/list/freqtospan = list(
 		return "[verb_yell], \"[attach_spans(input, spans)]\""
 	input = attach_spans(input, spans)
 	if(istype(src, /mob/dead/observer))
-		return "[pick("complains", "moans", "whines", "laments", "blubbers", "cries")] \"[input]\""
+		return "[pick("complains", "moans", "whines", "laments", "blubbers", "cries")], \"[input]\""
 	if(ending == "?")
 		return "[verb_ask], \"[input]\""
 	if(ending == "!")
