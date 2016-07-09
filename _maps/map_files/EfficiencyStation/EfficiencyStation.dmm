@@ -56961,22 +56961,15 @@
 /turf/closed/indestructible/opshuttle,
 /area/shuttle/syndicate)
 "ckh" = (
-/obj/structure/table/wood,
-/obj/machinery/airalarm{
-	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -22
+/obj/machinery/porta_turret/syndicate{
+	dir = 4
 	},
-/obj/item/weapon/storage/crayons{
-	pixel_x = 3;
-	pixel_y = 3
+/turf/closed/wall/shuttle{
+	tag = "icon-gwall_space (WEST)";
+	icon_state = "gwall_space";
+	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel/redblue,
-/area/space)
+/area/shuttle/syndicate)
 "cki" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate{
@@ -57055,7 +57048,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Private Restroom";
-	req_access_txt = "56"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
