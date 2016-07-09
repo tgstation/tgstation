@@ -275,7 +275,35 @@ BLIND     // can't see anything
 	slot_flags = SLOT_OCLOTHING
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	var/obj/item/weapon/storage/internal/pockets/pockets
+	var/slots_n = 2
+	var/slot_s = 2
 
+
+/obj/item/clothing/suit/New()
+	..()
+	pockets = new/obj/item/weapon/storage/internal/pockets(src, slots = slots_n, slot_size = slot_s)
+
+/obj/item/clothing/suit/Destroy()
+	qdel(pockets)
+	pockets = null
+	return ..()
+
+/obj/item/clothing/suit/attack_hand(mob/user as mob)
+	if (pockets.handle_attack_hand(user))
+		..(user)
+
+/obj/item/clothing/suit/MouseDrop(obj/over_object as obj)
+	if (pockets.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/clothing/suit/attackby(obj/item/W as obj, mob/user as mob)
+	..()
+	pockets.attackby(W, user)
+
+/obj/item/clothing/suit/emp_act(severity)
+	pockets.emp_act(severity)
+	..()
 
 /obj/item/clothing/suit/worn_overlays(var/isinhands = FALSE)
 	. = list()
