@@ -1,5 +1,5 @@
 <ui-display>
-	<center><ui-button action="handle_id">{{data.id ? data.id.name : "-------------"}}</ui-button></center>
+	<center><ui-button action="handle_id">{{data.id ? data.id_name : "-------------"}}</ui-button></center>
 </ui-display>
 <ui-display title='Stored Items'>
 	{{#each data.mobs}}

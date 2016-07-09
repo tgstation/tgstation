@@ -24,11 +24,11 @@
 
 /obj/structure/clockwork/New()
 	..()
-	clockwork_construction_value += construction_value
+	change_construction_value(construction_value)
 	all_clockwork_objects += src
 
 /obj/structure/clockwork/Destroy()
-	clockwork_construction_value -= construction_value
+	change_construction_value(-construction_value)
 	all_clockwork_objects -= src
 	return ..()
 
@@ -155,12 +155,20 @@
 /obj/structure/clockwork/cache/New()
 	..()
 	START_PROCESSING(SSobj, src)
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches++
+	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
+	for(var/i in all_clockwork_mobs)
+		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
+	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
+	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
+	for(var/i in all_clockwork_mobs)
+		cache_check(i)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -196,16 +204,9 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		clockwork_component_cache["belligerent_eye"] += S.stored_components["belligerent_eye"]
-		clockwork_component_cache["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
-		clockwork_component_cache["guvax_capacitor"] += S.stored_components["guvax_capacitor"]
-		clockwork_component_cache["replicant_alloy"] += S.stored_components["replicant_alloy"]
-		clockwork_component_cache["hierophant_ansible"] += S.stored_components["hierophant_ansible"]
-		S.stored_components["belligerent_eye"] = 0
-		S.stored_components["vanguard_cogwheel"] = 0
-		S.stored_components["guvax_capacitor"] = 0
-		S.stored_components["replicant_alloy"] = 0
-		S.stored_components["hierophant_ansible"] = 0
+		for(var/i in S.stored_components)
+			clockwork_component_cache[i] += S.stored_components[i]
+			S.stored_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
@@ -526,8 +527,12 @@
 			L.Weaken(4) //half the stun, but sets cultists on fire
 			L.adjust_fire_stacks(2)
 			L.IgniteMob()
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.silent += 6
 		targetsjudged++
 		L.adjustBruteLoss(10)
+		add_logs(user, L, "struck with a judicial blast")
 	user << "<span class='brass'><b>[targetsjudged ? "Successfully judged <span class='neovgre'>[targetsjudged]</span>":"Judged no"] heretic[!targetsjudged || targetsjudged > 1 ? "s":""].</b></span>"
 	QDEL_IN(src, 3) //so the animation completes properly
 

@@ -5497,9 +5497,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "alu" = (
-/obj/machinery/nuclearbomb/selfdestruct{
-	layer = 4
-	},
+/obj/machinery/nuclearbomb/selfdestruct,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -27539,8 +27537,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -28507,6 +28505,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bmk" = (
@@ -32638,11 +32637,8 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "buC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -60671,6 +60667,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"cCo" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 
 (1,1,1) = {"
 aaa
@@ -79569,11 +79572,11 @@ bjl
 bkG
 bkp
 bmj
-bjr
-bmb
-bjr
-bjr
-bjr
+bjt
+cCo
+bjt
+bjt
+biq
 bvV
 blW
 aaa
@@ -79830,7 +79833,7 @@ bjr
 bmb
 bjr
 bjr
-bjr
+buC
 bvV
 blW
 aaa
@@ -80087,7 +80090,7 @@ boK
 bpz
 boK
 bjr
-buC
+bkt
 bvV
 blW
 aaa

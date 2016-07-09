@@ -132,10 +132,6 @@ var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
 	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
 	"Chi", "Psi", "Omega")
 
-var/global/list/roman_numerals = list("I", "II", "III", "IV", "V", "VI",
-	"VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI",
-	"XVII", "XVIII", "XIX", "XX")
-
 var/global/list/phonetic_alphabet = list("Alpha", "Bravo", "Charlie",
 	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
 	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
@@ -151,6 +147,7 @@ var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
 	var/list/L
 	for(var/i in 1 to 99)
 		L += "[i]"
+		L += "\Roman[i]"
 	return L
 
-var/global/list/station_numerals = greek_letters + roman_numerals + phonetic_alphabet + numbers_as_words + generate_number_strings()
+var/global/list/station_numerals = greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings()

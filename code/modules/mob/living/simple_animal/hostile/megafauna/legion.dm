@@ -1,3 +1,21 @@
+/*
+
+LEGION
+
+Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
+
+It has two attack modes that it constantly rotates between.
+
+In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
+In charge mode, it will spin and rush its target, attacking with melee whenever possible.
+
+When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 800
@@ -89,7 +107,7 @@
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
+			src.loot = list(/obj/item/weapon/staff/storm)
 		else if(prob(5))
 			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -106,7 +124,7 @@
 
 //Loot
 
-/obj/item/weapon/staff_of_storms
+/obj/item/weapon/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
@@ -120,7 +138,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff_of_storms/attack_self(mob/user)
+/obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
 		user << "<span class='warning'>The staff is still recharging!</span>"
 		return

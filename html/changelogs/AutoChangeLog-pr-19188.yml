@@ -1,0 +1,10 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscdel: "Fleshmend no longer regrows lost limbs."
+  - rscadd: "Added free Regenerate power to changelings, which regrows all
+external limbs and internal organs
+(including the tongue if you lost your head). It costs 10 chemicals to
+use."
+  - rscadd: "Fleshmend now costs 20 chemicals, down from 25."
+  - tweak: "Changeling revive power name changed from Regenerate to Revive."

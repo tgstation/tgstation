@@ -239,7 +239,7 @@
 		if(agentcount < 3)
 			return 0
 
-		var/nuke_code = "[rand(10000, 99999)]"
+		var/nuke_code = random_nukecode()
 
 		var/obj/machinery/nuclearbomb/nuke = locate("syndienuke") in nuke_list
 		if(nuke)

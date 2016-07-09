@@ -250,8 +250,8 @@
 		PoolOrNew(/obj/effect/overlay/temp/revenant, T)
 	if(!istype(T, /turf/open/floor/plating) && !istype(T, /turf/open/floor/engine/cult) && istype(T, /turf/open/floor) && prob(15))
 		var/turf/open/floor/floor = T
-		if(floor.intact)
-			floor.builtin_tile.loc = floor
+		if(floor.intact && floor.floor_tile)
+			PoolOrNew(floor.floor_tile, floor)
 		floor.broken = 0
 		floor.burnt = 0
 		floor.make_plating(1)

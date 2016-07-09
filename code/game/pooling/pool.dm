@@ -40,14 +40,22 @@ var/global/list/GlobalPool = list()
 	if(!get_type)
 		return
 
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_pooled_or_newed, get_type)
+
 	. = GetFromPool(get_type,second_arg)
 
 	if(!.)
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_created_new, get_type)
 		if(ispath(get_type))
 			if(islist(second_arg))
 				. = new get_type (arglist(second_arg))
 			else
 				. = new get_type (second_arg)
+	else
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_reused, get_type)
 
 
 /proc/GetFromPool(get_type,second_arg)
@@ -87,6 +95,9 @@ var/global/list/GlobalPool = list()
 
 	if(diver in GlobalPool[diver.type])
 		return
+
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_placed_in_pool, diver.type)
 
 	if(!GlobalPool[diver.type])
 		GlobalPool[diver.type] = list()

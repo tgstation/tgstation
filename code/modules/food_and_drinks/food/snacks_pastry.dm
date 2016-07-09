@@ -161,6 +161,13 @@
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/dankpocket
+	name = "\improper Dank-pocket"
+	desc = "The food of choice for the seasoned botanist."
+	icon_state = "dankpocket"
+	list_reagents = list("lipolicide" = 3, "space_drugs" = 3, "nutriment" = 4)
+	filling_color = "#00FF00"
+
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
