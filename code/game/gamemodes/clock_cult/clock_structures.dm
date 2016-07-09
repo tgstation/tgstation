@@ -204,16 +204,9 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		clockwork_component_cache["belligerent_eye"] += S.stored_components["belligerent_eye"]
-		clockwork_component_cache["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
-		clockwork_component_cache["guvax_capacitor"] += S.stored_components["guvax_capacitor"]
-		clockwork_component_cache["replicant_alloy"] += S.stored_components["replicant_alloy"]
-		clockwork_component_cache["hierophant_ansible"] += S.stored_components["hierophant_ansible"]
-		S.stored_components["belligerent_eye"] = 0
-		S.stored_components["vanguard_cogwheel"] = 0
-		S.stored_components["guvax_capacitor"] = 0
-		S.stored_components["replicant_alloy"] = 0
-		S.stored_components["hierophant_ansible"] = 0
+		for(var/i in S.stored_components)
+			clockwork_component_cache[i] += S.stored_components[i]
+			S.stored_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))

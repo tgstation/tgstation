@@ -98,8 +98,32 @@
 /obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
 	show_hierophant(user)
 
+/obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
+	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
+		var/obj/item/clockwork/slab/targetslab
+		var/highest_component_amount = 0
+		for(var/obj/item/clockwork/slab/S in target.GetAllContents())
+			if(!istype(S, /obj/item/clockwork/slab/internal))
+				var/totalcomponents = 0
+				for(var/i in S.stored_components)
+					totalcomponents += S.stored_components[i]
+				if(!targetslab || totalcomponents > highest_component_amount)
+					highest_component_amount = totalcomponents
+					targetslab = S
+		if(targetslab)
+			for(var/i in stored_components)
+				targetslab.stored_components[i] += stored_components[i]
+				stored_components[i] = 0
+			user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
+			"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
+		else
+			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
+	else
+		return ..()
+
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
+	var/ratvarian = is_servant_of_ratvar(user)
+	if(istype(I, /obj/item/clockwork/component) && ratvarian)
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
@@ -108,6 +132,12 @@
 		user.drop_item()
 		qdel(C)
 		return 1
+	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
+		var/obj/item/clockwork/slab/S = I
+		for(var/i in stored_components)
+			stored_components[i] += S.stored_components[i]
+			S.stored_components[i] = 0
+		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
 	else
 		return ..()
 
@@ -358,7 +388,8 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
+		user << "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively."
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
