@@ -1,0 +1,4 @@
+author: "MrStonedOne, coiax"
+delete-after: True
+changes: 
+  - rscadd: "View Variables can expand on associated lists with type keys. Only 90s admins will truely understand."
