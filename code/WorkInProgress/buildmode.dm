@@ -387,7 +387,7 @@ obj/effect/bmode/buildholder/New()
 				else if(istype(object,/turf/simulated/wall))
 					var/turf/T = object
 					T.ChangeTurf(/turf/simulated/wall/r_wall)
-					log_admin("[key_name(usr)] made a rwall at [formatJumpTo(T)]")
+					log_admin("[key_name(usr)] made an rwall at [formatJumpTo(T)]")
 					return
 			else if(pa.Find("right"))
 				if(istype(object,/turf/simulated/wall))
@@ -613,6 +613,8 @@ obj/effect/bmode/buildholder/New()
 
 		if(4)
 			if(pa.Find("left"))
+				if(!istype(object, /atom/movable))
+					return
 				log_admin("[key_name(usr)] is selecting [object] for throwing at [formatJumpTo(RT)]")
 				holder.throw_atom = object
 			if(pa.Find("right"))
