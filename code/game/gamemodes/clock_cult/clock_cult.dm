@@ -119,6 +119,7 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		C.present_tasks(M) //Memorize the objectives
+	cache_check(M)
 	return 1
 
 /proc/remove_servant_of_ratvar(mob/living/M, silent = FALSE)
@@ -138,6 +139,7 @@ This file's folder contains:
 	M.languages_understood &= ~RATVAR
 	M.update_action_buttons_icon() //because a few clockcult things are action buttons and we may be wearing/holding them, we need to update buttons
 	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
+	M.clear_alert("nocache")
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
 	for(var/datum/action/innate/hierophant/H in M.actions) //Removes any communication actions

@@ -197,6 +197,12 @@
 		AM.say(message)
 	AM.languages_spoken = old_languages_spoken
 
+/proc/cache_check(mob/M)
+	if(!clockwork_caches)
+		M.throw_alert("nocache", /obj/screen/alert/nocache)
+	else
+		M.clear_alert("nocache")
+
 /*
 
 The Ratvarian Language
