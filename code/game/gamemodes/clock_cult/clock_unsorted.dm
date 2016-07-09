@@ -64,8 +64,9 @@
 	if(!ratvar_awakens)
 		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
 		addtimer(R, "break_spear", 3000, FALSE)
-	addtimer(src, "update_actions", base_cooldown, FALSE)
 	cooldown = base_cooldown + world.time
+	owner.update_action_buttons_icon()
+	addtimer(src, "update_actions", base_cooldown, FALSE)
 	return 1
 
 /datum/action/innate/function_call/proc/update_actions()
