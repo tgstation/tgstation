@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "When a player uses a communication console to ask for the codes to
-the self destruct, for better or for worse, the admins can set them with
-a single click. Whether the admins a) click the button b) actually give
-the random person the codes, is another thing entirely."

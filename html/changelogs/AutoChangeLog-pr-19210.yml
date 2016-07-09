@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "You can now transfer components between two clockwork slabs by attacking one slab, or a person holding a slab, with the other; this will transfer the attacking slab's components into the target slab."
