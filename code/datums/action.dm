@@ -199,7 +199,7 @@
 
 /datum/action/item_action/hierophant
 	name = "Hierophant Network"
-	button_icon_state = "hierophant"
+	button_icon_state = "hierophant_slab"
 	background_icon_state = "bg_clock"
 
 /datum/action/item_action/hierophant/IsAvailable()

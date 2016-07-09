@@ -107,11 +107,15 @@ This file's folder contains:
 			var/mob/living/silicon/robot/R = S
 			R.UnlinkSelf()
 			R.emagged = 1
-			R << "<span class='warning'><b>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</b></span>"
+			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
 		S.show_laws()
+		var/datum/action/innate/hierophant/H = new()
+		H.Grant(S)
+		H.title = null //so it's just the borg's name
+		S << "<span class='heavy_brass'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		C.present_tasks(M) //Memorize the objectives
@@ -136,6 +140,8 @@ This file's folder contains:
 	M.attack_log += "\[[time_stamp()]\] <span class='brass'>Has renounced the cult of Ratvar!</span>"
 	for(var/datum/action/innate/function_call/F in M.actions) //Removes any bound Ratvarian spears
 		qdel(F)
+	for(var/datum/action/innate/hierophant/H in M.actions) //Removes any communication actions
+		qdel(H)
 	if(issilicon(M))
 		var/mob/living/silicon/S = M
 		if(isrobot(S))
