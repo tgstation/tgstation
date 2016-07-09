@@ -20543,9 +20543,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/nuclearbomb/selfdestruct{
-	layer = 4
-	},
+/obj/machinery/nuclearbomb/selfdestruct,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},

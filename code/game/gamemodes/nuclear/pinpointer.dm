@@ -72,7 +72,7 @@
 	..()
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
-			user << "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]"
+			user << "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]"
 
 
 /obj/item/weapon/pinpointer/advpinpointer

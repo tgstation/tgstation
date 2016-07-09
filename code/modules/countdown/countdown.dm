@@ -81,7 +81,7 @@
 	if(!istype(N))
 		return
 	else if(N.timing)
-		return N.timeleft
+		return round(N.get_time_left(), 1)
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
