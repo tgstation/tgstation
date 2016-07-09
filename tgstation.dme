@@ -1196,6 +1196,7 @@
 #include "code\modules\hydroponics\grown\banana.dm"
 #include "code\modules\hydroponics\grown\beans.dm"
 #include "code\modules\hydroponics\grown\berries.dm"
+#include "code\modules\hydroponics\grown\cannabis.dm"
 #include "code\modules\hydroponics\grown\cereals.dm"
 #include "code\modules\hydroponics\grown\chili.dm"
 #include "code\modules\hydroponics\grown\citrus.dm"
