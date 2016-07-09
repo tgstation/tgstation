@@ -40,15 +40,17 @@
 
 	titled_hierophant_message(owner, input, "heavy_brass", "brass", title)
 
-//Function Call action: Calls forth a Ratvarian spear.
+//Function Call action: Calls forth a Ratvarian spear once every 5 minutes
 /datum/action/innate/function_call
 	name = "Function Call"
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/cooldown = 0
+	var/base_cooldown = 3000
 
 /datum/action/innate/function_call/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
+	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
 		return 0
 	return ..()
 
@@ -56,12 +58,19 @@
 	if(owner.l_hand && owner.r_hand)
 		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
 		return 0
-	owner.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
-	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
-		qdel(F)
+	if(!ratvar_awakens)
+		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
+		addtimer(R, "break_spear", 3000, FALSE)
+	addtimer(src, "update_actions", base_cooldown, FALSE)
+	cooldown = base_cooldown + world.time
 	return 1
+
+/datum/action/innate/function_call/proc/update_actions()
+	if(owner)
+		owner.update_action_buttons_icon()
 
 //allows a mob to select a target to gate to
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
