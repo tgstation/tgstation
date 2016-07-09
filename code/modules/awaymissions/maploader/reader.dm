@@ -41,8 +41,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/grid_models = list()
 	var/key_len = 0
 
-	dmmRegex.next = 1
-	while(dmmRegex.Find(tfile, dmmRegex.next))
+	var/stored_index = 1
+	while(dmmRegex.Find(tfile, stored_index))
+		stored_index = dmmRegex.next
 
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model

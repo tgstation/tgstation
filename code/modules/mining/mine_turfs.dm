@@ -487,11 +487,10 @@
 		if(3)
 			return
 		if(2)
-			if (prob(20))
+			if(prob(20))
 				src.gets_dug()
 		if(1)
 			src.gets_dug()
-	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
 	//note that this proc does not call ..()
@@ -619,10 +618,12 @@
 
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	planetary_atmos = TRUE
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 
 /turf/open/chasm/straight_down/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
 /turf/open/chasm/straight_down/lava_land_surface/normal_air
@@ -677,6 +678,7 @@
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
 /turf/closed/mineral/gibtonite/volcanic
@@ -762,6 +764,7 @@
 	baseturf = /turf/open/floor/plating/ash //I assume this will be a chasm eventually, once this becomes an actual surface
 	slowdown = 1
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	planetary_atmos = TRUE
 
 /turf/open/floor/plating/ash/New()
 	pixel_y = -4

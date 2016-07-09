@@ -38,6 +38,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/New(atom/start, atom/end)
 	..()
+	if(SSaugury)
+		SSaugury.register_doom(src, 2000)
 	z_original = z
 	destination = end
 	notify_ghosts("\A [src] is inbound!",

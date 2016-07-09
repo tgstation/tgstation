@@ -1,7 +1,6 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
 	desc = "A rechargable electrochemical power cell."
-	var/ratingdesc
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cell"
 	item_state = "cell"
@@ -17,13 +16,14 @@
 	var/rigged = 0		// true if rigged to explode
 	var/chargerate = 100 //how much power is given every tick in a recharger
 	var/self_recharge = 0 //does it self recharge, over time, or not?
+	var/ratingdesc = TRUE
 
 /obj/item/weapon/stock_parts/cell/New()
 	..()
 	START_PROCESSING(SSobj, src)
 	charge = maxcharge
-	ratingdesc = " This one has a power rating of [maxcharge], and you should not swallow it."
-	desc = desc + ratingdesc
+	if(ratingdesc)
+		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
 	updateicon()
 
 /obj/item/weapon/stock_parts/cell/Destroy()
@@ -263,6 +263,20 @@
 
 /obj/item/weapon/stock_parts/cell/infinite/use()
 	return 1
+
+/obj/item/weapon/stock_parts/cell/infinite/abductor
+	name = "void core"
+	desc = "An alien power cell that produces energy seemingly out of nowhere."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "cell"
+	origin_tech =  "abductor=5;powerstorage=8;engineering=6"
+	maxcharge = 50000
+	rating = 12
+	ratingdesc = FALSE
+
+/obj/item/weapon/stock_parts/cell/infinite/abductor/update_icon()
+	return
+
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"

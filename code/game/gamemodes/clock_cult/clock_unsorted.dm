@@ -20,6 +20,26 @@
 		else if(is_servant_of_ratvar(M))
 			M << message
 
+//Hierophant Network action, allows a servant with it to communicate
+/datum/action/innate/hierophant
+	name = "Hierophant Network"
+	button_icon_state = "hierophant"
+	background_icon_state = "bg_clock"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/title = "Servant"
+
+/datum/action/innate/hierophant/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/innate/hierophant/Activate()
+	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
+	if(!input || !IsAvailable())
+		return
+
+	titled_hierophant_message(owner, input, "heavy_brass", "brass", title)
+
 //Function Call action: Calls forth a Ratvarian spear.
 /datum/action/innate/function_call
 	name = "Function Call"
