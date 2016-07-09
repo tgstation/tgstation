@@ -158,7 +158,7 @@ var/datum/subsystem/ticker/ticker
 			SSjob.ResetOccupations()
 			return 0
 	else
-		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
+		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...")
 
 	if(hide_mode)
 		var/list/modes = new
