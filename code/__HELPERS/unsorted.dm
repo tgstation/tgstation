@@ -1029,7 +1029,7 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
-
+/atom/var/list/orbiters = null
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -1046,6 +1046,9 @@ B --><-- A
 		stop_orbit()
 
 	orbiting = A
+	if(!A.orbiters)
+		A.orbiters = list()
+	A.orbiters += A
 	var/matrix/initial_transform = matrix(transform)
 	var/lastloc = loc
 
@@ -1073,7 +1076,7 @@ B --><-- A
 		loc = targetloc
 		lastloc = loc
 		stoplag()
-
+	A.orbiters -= A
 	if (orbiting == A) //make sure we haven't started orbiting something else.
 		orbiting = null
 		SpinAnimation(0,0)
