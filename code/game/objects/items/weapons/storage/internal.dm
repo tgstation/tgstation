@@ -4,10 +4,13 @@
 	max_combined_w_class = 50 // Limited by slots, not combined weight class
 	w_class = 4
 
-
 /obj/item/weapon/storage/internal/ClickAccesible(mob/user, depth=1)
 	if(loc)
 		return loc.ClickAccesible(user, depth)
+
+/obj/item/weapon/storage/internal/Adjacent(A)
+	if(loc)
+		return loc.Adjacent(A)
 
 /obj/item/weapon/storage/internal/pocket
 	var/priority = TRUE
