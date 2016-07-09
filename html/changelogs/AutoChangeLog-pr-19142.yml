@@ -1,9 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "During a meteor shower, observers can automatically orbit
-threatening meteors via an action button and watch them hit the station."
-  - rscadd: "Added Major Space Dust event, which is a meteor shower
-containing only space dust."
-  - bugfix: "Fixes bug where meteors wouldn't move when spawned."
-  - rscadd: "Meteor Shower split into three different events, Normal, Threatening and Catastrophic. They all have the same crew messages, but admins can tell the difference."

@@ -1,5 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - experiment: "Atmos on planets is now more realistic. There is an unseen upper atmosphere that gas changes get carried away into, causing planet turfs to revert back to their original gas mixture."
-  - tweak: "This should massively improve atmos run speed as all of lavaland won't be processing the moment somebody opens a door anymore"

@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "The global component cache can only be accessed by clockwork slabs if there is at least one Tinkerer's Cache active."
