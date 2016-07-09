@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Servants of Ratvar get an alert if they have no tinkerer's caches constructed. Because it's important that they should."
