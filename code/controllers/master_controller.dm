@@ -103,7 +103,7 @@ datum/controller/game_controller/proc/setup()
 	log_startup_progress("  Finished caching damage icons in [stop_watch(watch)]s.")
 
 	log_startup_progress("Caching space parallax simulation...")
-	cachespaceparallax()
+	create_global_parallax_icons()
 	log_startup_progress("  Finished caching space parallax simulation in [stop_watch(watch)]s.")
 
 	buildcamlist()

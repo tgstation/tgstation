@@ -33,7 +33,7 @@ var/list/camera_names=list()
 
 	var/hear_voice = 0
 
-	var/vision_flags = SEE_SELF | SEE_PIXELS //Only applies when viewing the camera through a console. REMOVE SEE_PIXELS IF IT IS DEEMED TOO BUGGY TO WORK AND LUMMOX REFUSES TO FIX IT
+	var/vision_flags = SEE_SELF //Only applies when viewing the camera through a console.
 
 /obj/machinery/camera/update_icon()
 	var/EMPd = stat & EMPED

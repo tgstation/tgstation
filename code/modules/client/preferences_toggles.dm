@@ -259,7 +259,7 @@
 		to_chat(usr, "Space parallax is now activated.")
 
 	if(mob && mob.hud_used)
-		mob.hud_used.update_parallax_and_dust()
+		mob.hud_used.update_parallax_existence()
 
 /client/verb/toggle_space_dust()
 	set name = "Toggle Space Dust"
@@ -275,7 +275,7 @@
 		to_chat(usr, "Space dust is now activated.")
 
 	if(mob && mob.hud_used)
-		mob.hud_used.update_parallax_and_dust()
+		mob.hud_used.update_parallax_existence()
 
 /client/verb/toggle_parallax_speed()
 	set name = "Change Parallax Speed"

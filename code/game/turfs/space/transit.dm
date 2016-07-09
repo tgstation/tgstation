@@ -1,5 +1,5 @@
 /turf/space/transit
-	plane = PLANE_BASE
+	plane = PLANE_TURF
 	var/pushdirection // push things that get caught in the transit tile this direction
 
 /turf/space/transit/New()
