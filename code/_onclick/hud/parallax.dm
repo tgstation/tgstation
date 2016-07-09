@@ -41,8 +41,8 @@ var/list/parallax_on_clients = list()
 	0,0,0,0,
 	0,0,0,0,
 	0,0,0,0,
-	0,0,0,0,
-	1,1,1,1)
+	1,1,1,1,
+	0,0,0,0)
 
 /obj/screen/plane_master/parallax_dustmaster
 	plane = PLANE_SPACE_DUST
