@@ -43,26 +43,30 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	canSmoothWith = list(/turf/closed/wall/clockwork)
-	smooth = SMOOTH_MORE
 	explosion_block = 2
+	var/obj/effect/clockwork/overlay/wall/realappearence
 
 /turf/closed/wall/clockwork/New()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
+	realappearence.linked = src
 	change_construction_value(5)
 
 /turf/closed/wall/clockwork/Destroy()
-	change_construction_value(-5)
+	be_removed()
 	return ..()
 
 /turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
 	if(path != type)
-		change_construction_value(-5)
+		be_removed()
 	return ..()
+
+/turf/closed/wall/clockwork/proc/be_removed()
+	change_construction_value(-5)
+	qdel(realappearence)
+	realappearence = null
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
