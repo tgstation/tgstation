@@ -24,10 +24,59 @@
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
 
+	var/obj/item/weapon/storage/internal/pocket/pockets = null
+
+/obj/item/clothing/New()
+	..()
+	if(ispath(pockets))
+		pockets = new pockets(src)
+
+/obj/item/clothing/MouseDrop(atom/over_object)
+	var/mob/M = usr
+
+	if(pockets && over_object == M)
+		return pockets.MouseDrop(over_object)
+
+	if(istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		return
+
+	if(!M.restrained() && !M.stat && loc == M && istype(over_object, /obj/screen/inventory/hand))
+		var/obj/screen/inventory/hand/H = over_object
+		if(!M.unEquip(src))
+			return
+		switch(H.slot_id)
+			if(slot_r_hand)
+				M.put_in_r_hand(src)
+			if(slot_l_hand)
+				M.put_in_l_hand(src)
+
+		add_fingerprint(usr)
+
+/obj/item/clothing/throw_at(atom/target, range, speed, mob/thrower, spin)
+	if(pockets)
+		pockets.close_all()
+	return ..()
+
+/obj/item/clothing/attack_hand(mob/user)
+	if(pockets && pockets.priority && ismob(loc))
+		pockets.show_to(user)
+	else
+		return ..()
+
+/obj/item/clothing/attackby(obj/item/W, mob/user, params)
+	if(pockets)
+		pockets.attackby(W, user, params)
+	else
+		return ..()
+
+
 
 /obj/item/clothing/Destroy()
 	if(isliving(loc))
 		dropped(loc)
+	if(pockets)
+		qdel(pockets)
+		pockets = null
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
 
