@@ -187,7 +187,7 @@
 				message_admins("The roundtype ([config_tag]) has no antagonists, continuous round has been defaulted to on and midround_antag has been defaulted to off.")
 				config.continuous[config_tag] = 1
 				config.midround_antag[config_tag] = 0
-				SSshuttle.emergencyNoEscape = 0
+				SSshuttle.clearHostileEnvironment(src)
 				return 0
 
 

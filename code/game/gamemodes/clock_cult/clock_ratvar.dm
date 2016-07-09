@@ -37,28 +37,25 @@
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	SSshuttle.emergencyNoEscape = TRUE
+	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.emergencyNoEscape = FALSE
-	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-		SSshuttle.emergency.mode = SHUTTLE_DOCKED
-		SSshuttle.emergency.timer = world.time
-		if(!purpose_fulfilled)
-			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
 		world << sound(null, 0, channel = 8)
-	qdel(glow)
-	glow = null
-	qdel(countdown)
-	countdown = null
-	return ..()
+	if(glow)
+		qdel(glow)
+		glow = null
+	if(countdown)
+		qdel(countdown)
+		countdown = null
+	. = ..()
 
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
 	countdown.stop()

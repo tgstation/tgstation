@@ -60,7 +60,6 @@
 	set_domination_time(determine_domination_time(src) * modifier)
 	is_dominating = TRUE
 	set_security_level("delta")
-	SSshuttle.emergencyNoEscape = 1
 
 /datum/gang/proc/set_domination_time(d)
 	domination_timer = world.time + (10 * d)

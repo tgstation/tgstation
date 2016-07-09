@@ -35,10 +35,10 @@
 	src << "<span class='notice'>Nuclear device armed.</span>"
 	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
 	set_security_level("delta")
-	SSshuttle.emergencyNoEscape = 1
 	nuking = 1
 	var/obj/machinery/doomsday_device/DOOM = new /obj/machinery/doomsday_device(src)
 	doomsday_device = DOOM
+	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
 	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
 		for(var/mob/living/silicon/ai/A in ai_list)
@@ -53,29 +53,52 @@
 	anchored = 1
 	density = 1
 	verb_exclaim = "blares"
-	var/timing = 1
-	var/timer = 450
+	var/timing = FALSE
+	var/default_timer = 4500
+	var/obj/effect/countdown/doomsday/countdown
+	var/detonation_timer
+	var/list/milestones = list()
+
+/obj/machinery/doomsday_device/New()
+	..()
+	countdown = new(src)
+
+/obj/machinery/doomsday_device/Destroy()
+	if(countdown)
+		qdel(countdown)
+		countdown = null
+	STOP_PROCESSING(SSfastprocess, src)
+	SSshuttle.clearHostileEnvironment(src)
+	. = ..()
+
+/obj/machinery/doomsday_device/proc/start()
+	detonation_timer = world.time + default_timer
+	timing = TRUE
+	countdown.start()
+	START_PROCESSING(SSfastprocess, src)
+	SSshuttle.registerHostileEnvironment(src)
+
+/obj/machinery/doomsday_device/proc/seconds_remaining()
+	. = max(0, (round(detonation_timer - world.time) / 10))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
-		SSshuttle.emergencyNoEscape = 0
-		if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-			SSshuttle.emergency.mode = SHUTTLE_DOCKED
-			SSshuttle.emergency.timer = world.time
-			priority_announce("Hostile environment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 	if(!timing)
+		STOP_PROCESSING(SSfastprocess, src)
 		return
-	if(timer <= 0)
-		timing = 0
+	var/sec_left = seconds_remaining()
+	if(sec_left <= 0)
+		timing = FALSE
 		detonate(T.z)
 		qdel(src)
 	else
-		timer--
-		if(!(timer%60))
-			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		if(!(sec_left % 60) && (!milestones[sec_left]))
+			milestones[sec_left] = TRUE
+			var/message = "[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)
