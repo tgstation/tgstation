@@ -487,11 +487,10 @@
 		if(3)
 			return
 		if(2)
-			if (prob(20))
+			if(prob(20))
 				src.gets_dug()
 		if(1)
 			src.gets_dug()
-	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
 	//note that this proc does not call ..()
