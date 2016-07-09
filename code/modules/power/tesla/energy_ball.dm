@@ -70,7 +70,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 				var/range = rand(1, Clamp(orbiting_balls.len, 3, 7)) * (orbiters.len / 2)
 				tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 			else
-				var/range = rand(1, Clamp(orbiting_balls.len, 3, 7)) * (orbiters.len / 2)
+				var/range = rand(1, Clamp(orbiting_balls.len, 3, 7))
 				tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
