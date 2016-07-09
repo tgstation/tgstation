@@ -263,9 +263,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	checkHostileEnvironment()
 
 /datum/subsystem/shuttle/proc/checkHostileEnvironment()
-	for(var/atom/a in hostileEnvironments)
-		if(!istype(a) || qdeleted(a))
-			hostileEnvironments -= a
+	for(var/datum/d in hostileEnvironments)
+		if(!istype(d) || qdeleted(d))
+			hostileEnvironments -= d
 	emergencyNoEscape = hostileEnvironments.len
 
 	if(emergencyNoEscape && (emergency.mode == SHUTTLE_IGNITING))

@@ -431,15 +431,12 @@
 
 /obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
-		return ..()
+		. = ..()
 	else
 		usr << "The storage unit will only unlock during a Red or Delta security alert."
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
-	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
-		return ..()
-	else
-		user << "The storage unit will only unlock during a Red or Delta security alert."
+	return
 
 
 /obj/docking_port/mobile/emergency/backup
