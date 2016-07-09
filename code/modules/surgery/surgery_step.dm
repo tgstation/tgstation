@@ -60,7 +60,7 @@
 		if(advance)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
-				surgery.complete(target)
+				surgery.complete()
 
 	surgery.step_in_progress = 0
 
