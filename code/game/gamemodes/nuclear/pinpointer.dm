@@ -118,7 +118,6 @@
 /obj/item/weapon/pinpointer/proc/my_god_jc_a_bomb() //If we should get the hell back to the ship
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
-			icon_state = "pinonalert"
 			if(!nuke_warning)
 				nuke_warning = TRUE
 				playsound(src, 'sound/items/Nuke_toy_lowpower.ogg', 50, 0)
