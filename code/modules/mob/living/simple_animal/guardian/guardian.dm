@@ -383,7 +383,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
+	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = 0
 	var/allowling = 1
@@ -452,6 +452,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Assassin")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
 
+		if("Dextrous")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/dextrous
+
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
@@ -491,7 +494,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
