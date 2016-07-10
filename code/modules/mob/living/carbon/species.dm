@@ -588,6 +588,15 @@ var/global/list/whitelisted_species = list("Human")
 		if("Chef")
 			suit=/obj/item/clothing/suit/space/vox/civ/chef
 			helm=/obj/item/clothing/head/helmet/space/vox/civ/chef
+		if("Botanist")
+			suit=/obj/item/clothing/suit/space/vox/civ/botanist
+			helm=/obj/item/clothing/head/helmet/space/vox/civ/botanist
+		if("Janitor")
+			suit=/obj/item/clothing/suit/space/vox/civ/janitor
+			helm=/obj/item/clothing/head/helmet/space/vox/civ/janitor
+		if("Cargo Technician","Quartermaster")
+			suit=/obj/item/clothing/suit/space/vox/civ/cargo
+			helm=/obj/item/clothing/head/helmet/space/vox/civ/cargo
 		if("Chaplain")
 			suit=/obj/item/clothing/suit/space/vox/civ/chaplain
 			helm=/obj/item/clothing/head/helmet/space/vox/civ/chaplain
@@ -635,9 +644,9 @@ var/global/list/whitelisted_species = list("Human")
 			suit=/obj/item/clothing/suit/space/vox/civ/security
 			helm=/obj/item/clothing/head/helmet/space/vox/civ/security
 
-		if("Clown","Mime")
-			tank_slot=null
-			tank_slot_name = "hand"
+//		if("Clown","Mime")
+//			tank_slot=null
+//			tank_slot_name = "hand"
 		if("Trader")
 			suit = /obj/item/clothing/suit/space/vox/pressure
 			helm = /obj/item/clothing/head/helmet/space/vox/pressure

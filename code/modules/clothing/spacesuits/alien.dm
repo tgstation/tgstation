@@ -182,6 +182,30 @@
 	name = "vox chef pressure helmet"
 	icon_state = "vox-civ-chef"
 
+/obj/item/clothing/suit/space/vox/civ/botanist
+	name = "vox botanist pressure suit"
+	icon_state = "vox-civ-botanist"
+
+/obj/item/clothing/head/helmet/space/vox/civ/botanist
+	name = "vox botanist pressure helmet"
+	icon_state = "vox-civ-botanist"
+
+/obj/item/clothing/suit/space/vox/civ/janitor
+	name = "vox janitor pressure suit"
+	icon_state = "vox-civ-janitor"
+
+/obj/item/clothing/head/helmet/space/vox/civ/janitor
+	name = "vox janitor pressure helmet"
+	icon_state = "vox-civ-janitor"
+
+/obj/item/clothing/suit/space/vox/civ/cargo
+	name = "vox cargo pressure suit"
+	icon_state = "vox-civ-cargo"
+
+/obj/item/clothing/head/helmet/space/vox/civ/cargo
+	name = "vox cargo pressure helmet"
+	icon_state = "vox-civ-cargo"
+
 /obj/item/clothing/suit/space/vox/civ/librarian
 	name = "vox librarian pressure suit"
 	icon_state = "vox-civ-librarian"
