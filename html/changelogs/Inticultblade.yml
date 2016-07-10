@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Cult blades found through Xenoarchaeology no longer require you to be a cultist to use them. As a result, they also have only 15 force as opposed to 30."
