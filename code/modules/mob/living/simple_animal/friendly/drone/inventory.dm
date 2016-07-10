@@ -27,7 +27,7 @@
 			if(!((I.slot_flags & SLOT_HEAD) || (I.slot_flags & SLOT_MASK)))
 				return 0
 			return 1
-		if(slot_drone_storage)
+		if(slot_generic_dextrous_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -38,7 +38,7 @@
 	switch(slot_id)
 		if(slot_head)
 			return head
-		if(slot_drone_storage)
+		if(slot_generic_dextrous_storage)
 			return internal_storage
 	..()
 
@@ -67,7 +67,7 @@
 		if(slot_head)
 			head = I
 			update_inv_head()
-		if(slot_drone_storage)
+		if(slot_generic_dextrous_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
@@ -76,7 +76,7 @@
 
 
 /mob/living/simple_animal/drone/getBackSlot()
-	return slot_drone_storage
+	return slot_generic_dextrous_storage
 
 /mob/living/simple_animal/drone/getBeltSlot()
-	return slot_drone_storage
+	return slot_generic_dextrous_storage

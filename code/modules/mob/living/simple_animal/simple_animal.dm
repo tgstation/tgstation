@@ -604,6 +604,9 @@
 	if(dextrous)
 		handcrafting.ui_interact(src)
 
+/mob/living/simple_animal/can_hold_items()
+	return dextrous
+
 /mob/living/simple_animal/IsAdvancedToolUser()
 	return dextrous
 

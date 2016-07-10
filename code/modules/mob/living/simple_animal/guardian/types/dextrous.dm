@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/hostile/guardian/dextrous/can_equip(obj/item/I, slot)
 	switch(slot)
-		if(slot_drone_storage)
+		if(slot_generic_dextrous_storage)
 			if(internal_storage)
 				return 0
 			return 1
@@ -95,17 +95,17 @@
 	I.layer = ABOVE_HUD_LAYER
 
 	switch(slot)
-		if(slot_drone_storage)
+		if(slot_generic_dextrous_storage)
 			internal_storage = I
 			update_inv_internal_storage()
 		else
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBackSlot()
-	return slot_drone_storage
+	return slot_generic_dextrous_storage
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBeltSlot()
-	return slot_drone_storage
+	return slot_generic_dextrous_storage
 
 /mob/living/simple_animal/hostile/guardian/dextrous/proc/update_inv_internal_storage()
 	if(internal_storage && client && hud_used && hud_used.hud_shown)

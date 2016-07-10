@@ -200,18 +200,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		var/can_hold_items = FALSE
-		if(ismonkey(usr) || ishuman(usr))
-			can_hold_items = TRUE
-		else if(isalien(usr))
-			var/mob/living/carbon/alien/A = usr
-			if(A.has_fine_manipulation)
-				can_hold_items = TRUE
-		else if(isanimal(usr))
-			var/mob/living/simple_animal/A = usr
-			if(A.dextrous)
-				can_hold_items = TRUE
-		if(!item_chair || !can_hold_items || has_buckled_mobs() || src.flags & NODECONSTRUCT)
+		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
 			usr << "<span class='warning'>You can't do that right now!</span>"

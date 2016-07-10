@@ -8,7 +8,7 @@
 	inv_box.icon_state = "suit_storage"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_drone_storage
-	inv_box.slot_id = slot_drone_storage
+	inv_box.slot_id = slot_generic_dextrous_storage
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
