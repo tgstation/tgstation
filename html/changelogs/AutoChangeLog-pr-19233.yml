@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Function Call action that summons a Ratvarian Spear is no longer one-use; instead, it can be reused once every five minutes."
