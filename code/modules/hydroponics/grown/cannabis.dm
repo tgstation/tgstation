@@ -63,21 +63,21 @@
 	plantname = "Omega Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/ultimate
 	mutatelist = list()
-	reagents_add = list("space_drugs" = 0.03,
-						"mindbreaker" = 0.03,
-						"mercury" = 0.015,
-						"lithium" = 0.015,
-						"atropine" = 0.015,
-						"haloperidol" = 0.015,
-						"methamphetamine" = 0.015,
-						"capsaicin" = 0.015,
-						"barbers_aid" = 0.015,
-						"bath_salts" = 0.015,
-						"itching_powder" = 0.015,
-						"crank" = 0.015,
-						"krokodil" = 0.015,
-						"histamine" = 0.015,
-						"lipolicide" = 0.015)
+	reagents_add = list("space_drugs" = 0.3,
+						"mindbreaker" = 0.3,
+						"mercury" = 0.15,
+						"lithium" = 0.15,
+						"atropine" = 0.15,
+						"haloperidol" = 0.15,
+						"methamphetamine" = 0.15,
+						"capsaicin" = 0.15,
+						"barbers_aid" = 0.15,
+						"bath_salts" = 0.15,
+						"itching_powder" = 0.15,
+						"crank" = 0.15,
+						"krokodil" = 0.15,
+						"histamine" = 0.15,
+						"lipolicide" = 0.15)
 	rarity = 69
 
 
@@ -112,4 +112,4 @@
 	seed = /obj/item/seeds/cannabis/ultimate
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 69
+	volume = 420
