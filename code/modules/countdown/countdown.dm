@@ -70,7 +70,7 @@
 	if(!istype(S))
 		return
 	else if(S.active)
-		return S.timer
+		return S.seconds_remaining()
 
 /obj/effect/countdown/nuclearbomb
 	name = "nuclear bomb countdown"
