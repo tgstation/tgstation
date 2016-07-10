@@ -442,6 +442,16 @@
 	slot = "kidneys"
 	var/waste_filtered = 0
 	var/power = 2
+	var/warning_level = 1000
+	var/danger_level = 2000
+	var/maximum_capacity = 3000
+	var/unlocked = FALSE
+	var/emped = FALSE
+
+/obj/item/organ/kidneys/New()
+	..()
+	// otherwise everyone's going to start out in perfect sync
+	waste_filtered = rand(0, warning_level)
 
 /obj/item/organ/kidneys/on_life()
 	if(owner.stat == DEAD)
@@ -453,7 +463,45 @@
 	if(NORENAL in H.dna.species.specflags)
 		return
 
-	var/waste_levels = H.reagents.get_reagent_amount("waste_products")
-	var/to_remove = max(waste_levels, power)
-	H.reagents.remove_reagent("waste_products", to_remove)
-	waste_filtered += to_remove
+	if(waste_filtered < maximum_capacity)
+		var/waste_levels = H.reagents.get_reagent_amount("waste_products")
+		var/to_remove = max(waste_levels, power)
+		H.reagents.remove_reagent("waste_products", to_remove)
+		waste_filtered += to_remove + rand(0,2)
+
+	switch(waste_filtered)
+		if(0 to warning_level)
+			H.clear_alert("needtogo")
+		if(warning_level to danger_level)
+			H.throw_alert("needtogo", /obj/screen/alert/needtogo_warning)
+			unlocked = TRUE
+		if(danger_level to maximum_capacity)
+			H.throw_alert("needtogo", /obj/screen/alert/needtogo_danger)
+			unlocked = TRUE
+			H.Jitter(5)
+			H.Dizzy(5)
+
+/obj/item/organ/kidneys/proc/empty()
+	waste_filtered = 0
+	owner.clear_alert("needtogo")
+	owner << "<span class='notice'>You feel better.</span>"
+
+/obj/item/organ/kidneys/electronic
+	name = "electronic kidneys"
+	desc = "They look like electronic beans."
+
+/obj/item/organ/kidneys/electronic/on_life()
+	. = ..()
+	if(!emped)
+		waste_filtered = 0
+	else
+		waste_filtered = (danger_level + maximum_capacity) / 2
+
+/obj/item/organ/kidneys/electronic/emp_act(severity)
+	if(emped)
+		return
+	emped = TRUE
+	addtimer(src, "reboot", 300 / severity)
+
+/obj/item/organ/kidneys/electronic/proc/reboot()
+	emped = FALSE

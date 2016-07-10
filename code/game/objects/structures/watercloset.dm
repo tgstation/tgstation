@@ -61,10 +61,23 @@
 				I.loc = get_turf(src)
 			user << "<span class='notice'>You find [I] in the cistern.</span>"
 			w_items -= I.w_class
+	else if(!open)
+		open = !open
+		update_icon()
 	else
+		if(ishuman(user) && open)
+			var/mob/living/carbon/human/H = user
+			var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
+			if(istype(kidneys) && kidneys.unlocked)
+				if(do_mob(H, src, 60, progress=TRUE))
+					kidneys.empty()
+					return
 		open = !open
 		update_icon()
 
+/obj/structure/toilet/AltClick()
+	open = !open
+	update_icon()
 
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
@@ -101,7 +114,7 @@
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
 	else
-		return ..()
+		. = ..()
 
 
 
@@ -126,8 +139,14 @@
 			GM.adjustBruteLoss(8)
 		else
 			user << "<span class='warning'>You need a tighter grip!</span>"
-	else
-		..()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
+		if(istype(kidneys) && kidneys.unlocked)
+			if(do_mob(H, src, 60, progress=TRUE))
+				kidneys.empty()
+				return
+	. = ..()
 
 /obj/machinery/shower
 	name = "shower"
@@ -356,7 +375,7 @@
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
-	desc = "A sink used for washing one's hands and face."
+	desc = "Used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
 
