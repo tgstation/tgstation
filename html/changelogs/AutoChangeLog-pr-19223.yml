@@ -1,0 +1,4 @@
+author: "optional name here"
+delete-after: True
+changes: 
+  - bugfix: "The search function on security records consoles now works."
