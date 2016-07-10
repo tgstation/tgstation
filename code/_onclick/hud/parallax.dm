@@ -22,7 +22,7 @@ var/list/parallax_on_clients = list()
 
 /obj/screen/plane_master
 	appearance_flags = PLANE_MASTER
-	screen_loc = "1,1"
+	screen_loc = "CENTER,CENTER"
 	globalscreen = 1
 
 /obj/screen/plane_master/parallax_master
@@ -43,6 +43,10 @@ var/list/parallax_on_clients = list()
 	0,0,0,0,
 	1,1,1,1,
 	0,0,0,0)
+
+/obj/screen/plane_master/parallax_spacemaster/New()
+	..()
+	overlays += image(icon = 'icons/mob/screen1.dmi', icon_state = "blank")
 
 /obj/screen/plane_master/parallax_dustmaster
 	plane = PLANE_SPACE_DUST
