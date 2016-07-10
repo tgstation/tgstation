@@ -4,7 +4,6 @@
 	gender = PLURAL
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "slagcold"
-	anchored = 1
 	melt_temperature=0
 	light_color = LIGHT_COLOR_ORANGE
 

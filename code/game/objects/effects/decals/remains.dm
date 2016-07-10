@@ -7,7 +7,6 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	anchored = 1
 
 /obj/effect/decal/remains/human/attack_hand(mob/user)
 	if(icon_state == "remains")
@@ -34,7 +33,6 @@
 	gender = PLURAL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remainsxeno"
-	anchored = 1
 
 /obj/effect/decal/remains/robot
 	name = "remains"
@@ -42,4 +40,3 @@
 	gender = PLURAL
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "remainsrobot"
-	anchored = 1

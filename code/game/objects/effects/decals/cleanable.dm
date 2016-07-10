@@ -3,6 +3,7 @@
 	var/targeted_by = null	//Used so cleanbots can claim a mess.
 	mouse_opacity = 1 //N3X made this 0, which made it impossible to click things, and in the current 510 version right-click things.
 	w_type = NOT_RECYCLABLE
+	anchored = 1
 
 	// For tracking shit across the floor.
 	var/amount=0 // 0 = don't track
