@@ -409,7 +409,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 	idle_power_usage = 20
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
-	var/mode = 0
+	var/mode = 1
 	var/condi = 0
 	var/windowtype = "chem_master" //For the browser windows
 	var/useramount = 30 // Last used amount
