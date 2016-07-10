@@ -349,10 +349,16 @@
 /turf/open/floor/plasteel/bar
 	icon_state = "bar"
 
+/turf/open/floor/plasteel/airless/bar
+	icon_state = "bar"
+
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
 
 /turf/open/floor/plasteel/cafeteria
+	icon_state = "cafeteria"
+
+/turf/open/floor/plasteel/airless/cafeteria
 	icon_state = "cafeteria"
 
 /turf/open/floor/plasteel/vault
