@@ -6,42 +6,6 @@
 //Drone hands
 
 
-
-
-/mob/living/simple_animal/drone/activate_hand(selhand)
-
-	if(istext(selhand))
-		selhand = lowertext(selhand)
-
-		if(selhand == "right" || selhand == "r")
-			selhand = 0
-		if(selhand == "left" || selhand == "l")
-			selhand = 1
-
-	if(selhand != src.hand)
-		swap_hand()
-	else
-		mode()
-
-
-/mob/living/simple_animal/drone/swap_hand()
-	var/obj/item/held_item = get_active_hand()
-	if(held_item)
-		if(istype(held_item, /obj/item/weapon/twohanded))
-			var/obj/item/weapon/twohanded/T = held_item
-			if(T.wielded == 1)
-				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
-				return
-
-	hand = !hand
-	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
-		var/obj/screen/inventory/hand/H
-		H = hud_used.inv_slots[slot_l_hand]
-		H.update_icon()
-		H = hud_used.inv_slots[slot_r_hand]
-		H.update_icon()
-
-
 /mob/living/simple_animal/drone/unEquip(obj/item/I, force)
 	if(..(I,force))
 		update_inv_hands()
@@ -110,13 +74,6 @@
 			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
 			return
 
-
-/mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)
-
-
-/mob/living/simple_animal/drone/stripPanelEquip(obj/item/what, mob/who, where)
-	..(what, who, where, 1)
 
 /mob/living/simple_animal/drone/getBackSlot()
 	return slot_drone_storage

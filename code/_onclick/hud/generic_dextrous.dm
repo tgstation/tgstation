@@ -9,6 +9,12 @@
 	using.screen_loc = ui_drone_drop
 	static_inventory += using
 
+	pull_icon = new /obj/screen/pull()
+	pull_icon.icon = ui_style
+	pull_icon.update_icon(mymob)
+	pull_icon.screen_loc = ui_drone_pull
+	static_inventory += pull_icon
+
 	inv_box = new /obj/screen/inventory/hand()
 	inv_box.name = "right hand"
 	inv_box.icon = ui_style
@@ -35,6 +41,14 @@
 	using.icon = ui_style
 	using.icon_state = "swap_2"
 	using.screen_loc = ui_swaphand2
+	static_inventory += using
+
+	zone_select = new /obj/screen/zone_sel()
+	zone_select.icon = ui_style
+	zone_select.update_icon(mymob)
+
+	using = new /obj/screen/inventory/craft
+	using.icon = ui_style
 	static_inventory += using
 
 	mymob.client.screen = list()

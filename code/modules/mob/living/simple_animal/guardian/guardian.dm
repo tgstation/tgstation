@@ -31,6 +31,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
+	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/summoner
@@ -121,6 +122,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	med_hud_set_status()
 	if(summoner)
 		if(summoner.stat == DEAD)
+			forceMove(summoner.loc)
 			src << "<span class='danger'>Your summoner has died!</span>"
 			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
@@ -128,13 +130,13 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				if(!summoner.unEquip(W))
 					qdel(W)
 			summoner.dust()
-			ghostize()
+			death(TRUE)
 			qdel(src)
-	else
+	/*else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
-		ghostize()
-		qdel(src)
+		death(TRUE)
+		qdel(src)*/
 	snapback()
 
 /mob/living/simple_animal/hostile/guardian/Stat()
@@ -178,8 +180,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/death()
 	..()
-	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
-	summoner.death()
+	if(summoner)
+		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
+		summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner && hud_used && hud_used.healths)
@@ -504,6 +507,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the parasite. Automatically extinguishes the user if they catch on fire.<br>
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
+ <br>
+ <b>Dextrous</b>: Can hold and use items, but is fragile, and its melee attack is weak.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>

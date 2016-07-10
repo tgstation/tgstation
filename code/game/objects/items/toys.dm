@@ -172,8 +172,8 @@
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)

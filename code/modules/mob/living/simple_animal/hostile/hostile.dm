@@ -234,7 +234,7 @@
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
-	if(dextrous)
+	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
 		..()
 	else
 		AttackingTarget()
