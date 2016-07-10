@@ -433,3 +433,27 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
+
+/obj/item/organ/kidneys
+	name = "kidneys"
+	desc = "They look like beans."
+	icon_state = "kidneys"
+	zone = "chest"
+	slot = "kidneys"
+	var/waste_filtered = 0
+	var/power = 2
+
+/obj/item/organ/kidneys/on_life()
+	if(owner.stat == DEAD)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!ishuman(owner))
+		return
+	CHECK_DNA_AND_SPECIES(H)
+	if(NORENAL in H.dna.species.specflags)
+		return
+
+	var/waste_levels = H.reagents.get_reagent_amount("waste_products")
+	var/to_remove = max(waste_levels, power)
+	H.reagents.remove_reagent("waste_products", to_remove)
+	waste_filtered += to_remove

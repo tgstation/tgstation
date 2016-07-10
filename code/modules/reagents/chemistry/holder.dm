@@ -302,8 +302,6 @@ var/const/INJECT = 5 //injection
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
 		flags &= ~(REAGENT_NOREACT)
 		START_PROCESSING(SSobj, src)
 	else
@@ -542,10 +540,10 @@ var/const/INJECT = 5 //injection
 		add_reagent(r_id, amt, data)
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
-	
+
 	if(isnull(amount))
 		amount = INFINITY
-		
+
 	if(!isnum(amount))
 		return 1
 

@@ -138,6 +138,7 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+	var/obj/item/organ/kidneys/kidneys = C.getorganslot("kidneys")
 
 	if((NOBLOOD in specflags) && heart)
 		heart.Remove(C)
@@ -159,6 +160,13 @@
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
 		appendix.Insert(C)
+
+	if((NORENAL in specflags) && kidneys)
+		kidneys.Remove(C)
+		qdel(kidneys)
+	else if((!(NORENAL in specflags)) && (!kidneys))
+		kidneys = new()
+		kidneys.Insert(C)
 
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()

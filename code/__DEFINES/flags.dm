@@ -72,6 +72,7 @@
 #define EASYDISMEMBER	20
 #define EASYLIMBATTACHMENT 21
 #define TOXINLOVER		22
+#define NORENAL			23
 
 #define FLYING	65536
 
@@ -88,5 +89,10 @@
 #define SWARMER 64
 #define RATVAR 128
 
-// Flags for reagents
+// Flags for reagent containers
 #define REAGENT_NOREACT 1
+
+// Flags for reagents
+#define REAGENT_CANNOT_SYNTH 1
+#define REAGENT_SILENT_OVERDOSE 2
+#define REAGENT_SILENT_ADDICTION 4

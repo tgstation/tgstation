@@ -33,11 +33,12 @@
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
 
-		//heart attack stuff
 		handle_heart()
+		handle_waste()
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -320,6 +321,11 @@
 			if(src.reagents)
 				src.reagents.add_reagent("toxin", 2)
 
+/mob/living/carbon/human/proc/handle_waste()
+	CHECK_DNA_AND_SPECIES(src)
+	if(!(NORENAL in dna.species.specflags))
+		if(reagents)
+			reagents.add_reagent("waste_products", 1)
 /*
 Alcohol Poisoning Chart
 Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
