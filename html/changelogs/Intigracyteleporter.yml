@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Test firing a teleporter will now remove the 5% chance of spacing you for 3 seconds."

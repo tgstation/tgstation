@@ -44,19 +44,6 @@
 			to_chat(usr, "A message flashes across the screen reminding the traveller that the nuclear authentication disk is to remain on the station at all times.")
 			qdel(I)
 
-			/* FUCK YOU
-			if(C.data == "Clown Land")
-				//whoops
-				for(var/mob/O in hearers(src, null))
-					O.show_message("<span class='warning'>Incoming bluespace portal detected, unable to lock in.</span>", 2)
-
-				for(var/obj/machinery/teleport/hub/H in range(1))
-					var/amount = rand(2,5)
-					for(var/i=0;i<amount;i++)
-						new /mob/living/simple_animal/hostile/carp(get_turf(H))
-				//
-			else
-			*/
 			say("Locked in")
 			src.locked = L
 			one_time_use = 1
@@ -68,7 +55,7 @@
 	..()
 	if(locked)
 		var/area/locked_area = get_area(locked)
-		to_chat(user, "The destination is set to \"[locked_area.name]\"")
+		to_chat(user, "The destination is set to \"[locked_area.name]\".")
 
 /obj/machinery/computer/teleporter/attack_paw(var/mob/user)
 	src.attack_hand(user)
@@ -196,8 +183,10 @@
 	density = 1
 	anchored = 1.0
 	var/lockeddown = 0
+	var/engaged = 0
 	ghost_read=0 // #519
 	ghost_write=0
+
 
 
 /obj/machinery/teleport/hub
@@ -209,10 +198,21 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
-	var/engaged = 0
 	density = 0
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
+
+/obj/machinery/teleport/hub/power_change()
+	..()
+	if(stat & (BROKEN|NOPOWER))
+		engaged = 0
+	update_icon()
+
+/obj/machinery/teleport/hub/update_icon()
+	if(stat & (BROKEN|NOPOWER) || !engaged)
+		icon_state = "tele0"
+	else
+		icon_state = "tele1"
 
 /obj/machinery/teleport/hub/attackby(obj/item/weapon/O as obj, mob/user as mob)
 	return(..())
@@ -244,14 +244,7 @@
 	)
 
 	RefreshParts()
-/*
-/obj/machinery/teleport/hub/Bumped(M as mob|obj)
-	spawn()
-		if (src.engaged)
-			teleport(M)
-			use_power(5000)
-	return
-*/
+
 /obj/machinery/teleport/hub/Crossed(AM as mob|obj)
 	if(AM == src)	return//DUH
 	if(istype(AM,/obj/item/projectile/beam))
@@ -287,119 +280,13 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
-		for(var/mob/B in hearers(src, null))
-			B.show_message("<span class='notice'>Test fire completed.</span>")
-	return
-/*
-/proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision)
-	if(istype(M, /obj/effect))
-		del(M)
-		return
-	if (istype(M, /obj/item/weapon/disk/nuclear)) // Don't let nuke disks get teleported --NeoFite
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='danger'>The [] bounces off of the portal!</span>", M.name), 1)
-		return
-	if (istype(M, /mob/living))
-		var/mob/living/MM = M
-		if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
-			MM.visible_message("<span class='danger'>[MM] bounces off the portal!</span>","<span class='warning'>You're unable to go to that destination!</span>")
-			return
-
-		if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
-			to_chat(MM, "<span class='warning'>Something you are carrying seems to be unable to pass through the portal. Better drop it if you want to go through.</span>")
-			return
-	var/disky = 0
-	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		to_chat(world, "Checking [O]([O.type]) for teleport")
-		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
-			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
-					for (var/obj/OOO in OO.contents)
-						if (istype(OOO, /obj/item/weapon/disk/nuclear))
-							disky = 1
-				if (istype(OO, /obj/item/weapon/disk/nuclear))
-					disky = 1
-		if (istype(O, /obj/item/weapon/disk/nuclear))
-			disky = 1
-		if (istype(O, /mob/living))
-			var/mob/living/MM = O
-			if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
-				M.visible_message("<span class='danger'>[M] bounces off the portal!</span>")
-				return
-			if(MM.check_contents_for(/obj/item/weapon/disk/nuclear))
-				disky = 1
-	if (disky)
-		for(var/mob/P in viewers(M, null))
-			P.show_message(text("<span class='danger'>The [] bounces off of the portal!</span>", M.name), 1)
-		return
-
-//Bags of Holding cause bluespace teleportation to go funky. --NeoFite
-	if (istype(M, /mob/living))
-		var/mob/living/MM = M
-		if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
-			MM.visible_message("<span class='danger'>[MM] bounces off the portal!</span>","<span class='warning'>You're unable to go to that destination!</span>")
-			return
-
-		if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
-			to_chat(MM, "<span class='warning'>The Bluespace interface on your Bag of Holding interferes with the teleport!</span>")
-			precision = rand(1,100)
-	if (istype(M, /obj/item/weapon/storage/backpack/holding))
-		precision = rand(1,100)
-	for (var/atom/O in M.contents) //I'm pretty sure this accounts for the maximum amount of container in container stacking. --NeoFite
-		to_chat(world, "Checking [O]([O.type]) for teleport")
-		if (istype(O, /obj/item/weapon/storage) || istype(O, /obj/item/weapon/gift))
-			for (var/obj/OO in O.contents)
-				if (istype(OO, /obj/item/weapon/storage) || istype(OO, /obj/item/weapon/gift))
-					for (var/obj/OOO in OO.contents)
-						if (istype(OOO, /obj/item/weapon/storage/backpack/holding))
-							precision = rand(1,100)
-				if (istype(OO, /obj/item/weapon/storage/backpack/holding))
-					precision = rand(1,100)
-		if (istype(O, /obj/item/weapon/storage/backpack/holding))
-			precision = rand(1,100)
-		if (istype(O, /mob/living))
-			var/mob/living/MM = O
-			if(MM.locked_to_z != 0 && destination.z != MM.locked_to_z)
-				M.visible_message("<span class='danger'>[M] bounces off the portal!</span>")
-				return
-			if(MM.check_contents_for(/obj/item/weapon/storage/backpack/holding))
-				precision = rand(1,100)
 
 
-	var/turf/destturf = get_turf(destination)
-
-	var/tx = destturf.x + rand(precision * -1, precision)
-	var/ty = destturf.y + rand(precision * -1, precision)
-
-	var/tmploc
-
-	if (ismob(destination.loc)) //If this is an implant.
-		tmploc = locate(tx, ty, destturf.z)
-	else
-		tmploc = locate(tx, ty, destination.z)
-
-	if(tx == destturf.x && ty == destturf.y && (istype(destination.loc, /obj/structure/closet) || istype(destination.loc, /obj/structure/closet/secure_closet)))
-		tmploc = destination.loc
-
-	if(tmploc==null)
-		return
-
-	//M.loc = tmploc
-	M.forceMove(tmploc)
-	sleep(2)
-
-	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-	s.set_up(5, 1, M)
-	s.start()
-	return
-*/
 
 /obj/machinery/teleport/station
 	name = "station"
 	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
-	var/active = 0
-	var/engaged = 0
 	var/opened = 0.0
 	use_power = 1
 	idle_power_usage = 10
@@ -407,6 +294,17 @@
 
 	machine_flags = SCREWTOGGLE | CROWDESTROY
 
+/obj/machinery/teleport/station/power_change()
+	..()
+	if(stat & (BROKEN|NOPOWER))
+		disengage()
+	update_icon()
+
+/obj/machinery/teleport/station/update_icon()
+	if(stat & NOPOWER)
+		icon_state = "controller-p"
+	else
+		icon_state = "controller"
 
 /********************************************************************
 **   Adding Stock Parts to VV so preconstructed shit has its candy **
@@ -453,11 +351,10 @@ obj/machinery/teleport/station/New()
 		return
 
 	var/atom/l = src.loc
-	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com)
-		var/obj/machinery/teleport/hub/H = com
-		H.engaged = 1
-		H.icon_state = "tele1"
+	var/obj/machinery/teleport/hub/hub = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
+	if (hub)
+		hub.engaged = 1
+		hub.update_icon()
 		use_power(5000)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='notice'>Teleporter engaged!</span>", 2)
@@ -466,15 +363,11 @@ obj/machinery/teleport/station/New()
 	return
 
 /obj/machinery/teleport/station/proc/disengage()
-	if(stat & (BROKEN|NOPOWER))
-		return
-
 	var/atom/l = src.loc
-	var/atom/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com)
-		var/obj/machinery/teleport/hub/H = com
-		H.engaged = 0
-		H.icon_state = "tele0"
+	var/obj/machinery/teleport/hub/hub = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
+	if (hub)
+		hub.engaged = 0
+		hub.update_icon()
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='notice'>Teleporter disengaged!</span>", 2)
 	src.add_fingerprint(usr)
@@ -490,29 +383,25 @@ obj/machinery/teleport/station/New()
 		return
 
 	var/atom/l = src.loc
-	var/obj/machinery/teleport/hub/com = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
-	if (com && !active)
-		active = 1
+	var/obj/machinery/teleport/hub/hub = locate(/obj/machinery/teleport/hub, locate(l.x + 1, l.y, l.z))
+	if (hub)
+		engaged = 1
+		var/wasaccurate = hub.accurate //let's make sure if you have a mapped in accurate tele that it stays that way
+		hub.accurate = 1
+		hub.engaged = 1
+		hub.update_icon()
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span class='notice'>Test firing!</span>", 2)
-		com.teleport()
+			O.show_message("<span class='notice'>Test firing! Teleporter temporarily calibrated to be more accurate.</span>", 2)
+		hub.teleport()
 		use_power(5000)
 
 		spawn(30)
-			active=0
+			hub.accurate = wasaccurate
+			for(var/mob/B in hearers(src, null))
+				B.show_message("<span class='notice'>Test fire completed.</span>", 2)
 
 	src.add_fingerprint(usr)
 	return
-
-/obj/machinery/teleport/station/power_change()
-	..()
-	if(stat & NOPOWER)
-		icon_state = "controller-p"
-		var/obj/machinery/teleport/hub/com = locate(/obj/machinery/teleport/hub, locate(x + 1, y, z))
-		if(com)
-			com.icon_state = "tele0"
-	else
-		icon_state = "controller"
 
 
 /obj/effect/laser/Bump()
