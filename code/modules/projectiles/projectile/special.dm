@@ -318,7 +318,7 @@ obj/item/projectile/kinetic/New()
 		forceMove(get_step(loc,dir))
 
 	if(!(locate(/obj/effect/portal) in loc))
-		P.open_portal(setting,loc,A)
+		P.open_portal(setting,loc,A,firer)
 	bullet_die()
 
 

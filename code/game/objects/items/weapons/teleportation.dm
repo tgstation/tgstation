@@ -197,6 +197,8 @@ Frequency:
 	P2.creator = src
 	P1.blend_icon(P2)
 	P2.blend_icon(P1)
+	P1.owner = user
+	P2.owner = user
 	portals += P1
 	portals += P2
 	src.add_fingerprint(user)

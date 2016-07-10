@@ -58,7 +58,7 @@
 	icon_state = "portalgun[setting]"
 	item_state = "portalgun[setting]"
 
-/obj/item/weapon/gun/portalgun/proc/open_portal(var/proj_setting,var/turf/T,var/atom/A = null)
+/obj/item/weapon/gun/portalgun/proc/open_portal(var/proj_setting,var/turf/T,var/atom/A = null,var/mob/firer)
 	if(!T)
 		return
 
@@ -71,7 +71,7 @@
 				blue_portal = null
 			blue_portal = new_portal
 			blue_portal.creator = src
-
+			blue_portal.owner = firer
 		if(1)
 			if(red_portal)
 				qdel(red_portal)
@@ -79,6 +79,7 @@
 			red_portal = new_portal
 			red_portal.icon_state = "portal1"
 			red_portal.creator = src
+			red_portal.owner = firer
 
 	sync_portals()
 
