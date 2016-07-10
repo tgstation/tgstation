@@ -9,7 +9,8 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "bluetie"
-	item_state = ""	//no inhands
+	item_state = ""	//no inhands by default
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/clothing_accessories.dmi', "right_hand" = 'icons/mob/in-hand/right/clothing_accessories.dmi')
 	_color = "bluetie"
 	flags = FPRINT
 	slot_flags = 0
@@ -20,21 +21,25 @@
 
 /obj/item/clothing/accessory/New()
 	..()
+	update_icon()
+
+/obj/item/clothing/accessory/update_icon()
+	if(attached_to)
+		attached_to.overlays -= inv_overlay
 	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlays.dmi', "icon_state" = "[_color || icon_state]")
+	if(attached_to)
+		attached_to.overlays += inv_overlay
+		if(ishuman(attached_to.loc))
+			var/mob/living/carbon/human/H = attached_to.loc
+			H.update_inv_by_slot(attached_to.slot_flags)
 
 /obj/item/clothing/accessory/proc/can_attach_to(obj/item/clothing/C)
 	return istype(C, /obj/item/clothing/under) //By default, accessories can only be attached to jumpsuits
 
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/C, mob/user as mob)
+/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/C)
 	if(!istype(C))
 		return
 	attached_to = C
-	if(user)
-		if(user.drop_item(src, attached_to))
-			to_chat(user, "<span class='notice'>You attach [src] to [attached_to].</span>")
-			add_fingerprint(user)
-	else
-		forceMove(attached_to)
 	attached_to.overlays += inv_overlay
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user as mob)

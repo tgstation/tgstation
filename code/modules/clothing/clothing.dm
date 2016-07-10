@@ -32,9 +32,9 @@
 			to_chat(user, "<span class='notice'>\The [A] cannot be attached to [src].</span>")
 			return
 		if(user.drop_item(I, src))
-			accessories.Add(A)
-			A.on_attached(src, user)
-			update_verbs()
+			to_chat(user, "<span class='notice'>You attach [A] to [src].</span>")
+			attach_accessory(A)
+			A.add_fingerprint(user)
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
 			H.update_inv_by_slot(slot_flags)
@@ -61,6 +61,12 @@
 				return 1
 		return
 	return ..()
+
+/obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/accessory)
+	accessories += accessory
+	accessory.forceMove(src)
+	accessory.on_attached(src)
+	update_verbs()
 
 /obj/item/clothing/proc/priority_accessories()
 	if(!accessories.len)

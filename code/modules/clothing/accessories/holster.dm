@@ -1,66 +1,46 @@
-/obj/item/clothing/accessory/holster
-	name = "shoulder holster"
-	desc = "A handgun holster."
+/obj/item/clothing/accessory/holster/
+	name = "holster"
 	icon_state = "holster"
 	_color = "holster"
 	origin_tech = "combat=2"
-	var/obj/item/weapon/gun/holstered = null
+	var/obj/item/holstered = null
 	accessory_exclusion = HOLSTER
 
 /obj/item/clothing/accessory/holster/proc/can_holster(obj/item/weapon/gun/W)
-	if(!W || !istype(W))
-		return
-	return W.isHandgun()
-
-/obj/item/clothing/accessory/holster/armpit
-	name = "shoulder holster"
-	desc = "A worn-out handgun holster. Perfect for concealed carry."
-	icon_state = "holster"
-	_color = "holster"
-
-/obj/item/clothing/accessory/holster/waist
-	name = "shoulder holster"
-	desc = "A handgun holster. Made of expensive leather."
-	icon_state = "holster"
-	_color = "holster_low"
+	return
 
 /obj/item/clothing/accessory/holster/proc/holster(obj/item/I, mob/user as mob)
-	if (!istype(I, /obj/item/weapon/gun))
-		to_chat(user, "<span class='warning'>Only guns can be holstered!</span>")
-		return
-
 	if(holstered)
-		to_chat(user, "<span class='warning'>There is already a [holstered] holstered here!</span>")
+		to_chat(user, "<span class='warning'>There is already \a [holstered] holstered here!</span>")
 		return
 
-	var/obj/item/weapon/gun/W = I
-	if (!can_holster(W))
-		to_chat(user, "<span class='warning'>This [W] won't fit in the [src]!</span>")
+	if (!can_holster(I))
+		to_chat(user, "<span class='warning'>\The [I] won't fit in the [src]!</span>")
 		return
 
-	holstered = W
-	user.drop_from_inventory(holstered)
-	holstered.loc = src
-	holstered.add_fingerprint(user)
-	user.visible_message("<span class='notice'>[user] holsters the [holstered].</span>", "<span class='notice'>You holster the [holstered].</span>")
-	return 1
+	if(user.drop_item(I, src))
+		holstered = I
+		holstered.add_fingerprint(user)
+		user.visible_message("<span class='notice'>[user] holsters \the [holstered].</span>", "<span class='notice'>You holster \the [holstered].</span>")
+		update_icon()
+		return 1
+	else
+		to_chat(user, "<span class='warning'>You can't let go of \the [I]!</span>")
 
 /obj/item/clothing/accessory/holster/proc/unholster(mob/user as mob)
 	if(!holstered)
 		return
 
-	if(user.get_active_hand() && user.get_inactive_hand())
-		to_chat(user, "<span class='warning'>You need an empty hand to draw the [holstered]!</span>")
-	else
-		if(user.a_intent == I_HURT)
-			usr.visible_message("<span class='warning'>[user] draws the [holstered], ready to shoot!</span></span>", \
-			"<span class='warning'>You draw the [holstered], ready to shoot!</span>")
-		else
-			user.visible_message("<span class='notice'>[user] draws the [holstered], pointing it at the ground.</span>", \
-			"<span class='notice'>You draw the [holstered], pointing it at the ground.</span>")
-		user.put_in_hands(holstered)
+	if(user.put_in_hands(holstered))
+		unholster_message(user)
 		holstered.add_fingerprint(user)
 		holstered = null
+		update_icon()
+	else
+		to_chat(user, "<span class='warning'>You need an empty hand to draw \the [holstered]!</span>")
+
+/obj/item/clothing/accessory/holster/proc/unholster_message(user)
+	return
 
 /obj/item/clothing/accessory/holster/verb/holster_verb()
 	set name = "Holster"
@@ -82,11 +62,9 @@
 		to_chat(usr, "<span class='warning'>Something is very wrong.</span>")
 
 	if(!H.holstered)
-		if(!istype(usr.get_active_hand(), /obj/item/weapon/gun))
-			to_chat(usr, "<span class='warning'>You need your gun equiped to holster it.</span>")
-			return
-		var/obj/item/weapon/gun/W = usr.get_active_hand()
-		H.holster(W, usr)
+		var/obj/item/W = usr.get_active_hand()
+		if(istype(W))
+			H.holster(W, usr)
 	else
 		H.unholster(usr)
 
@@ -112,14 +90,88 @@
 /obj/item/clothing/accessory/holster/examine(mob/user)
 	..(user)
 	if (holstered)
-		to_chat(user, "A [holstered] is holstered here.")
+		to_chat(user, "A [holstered.name] is holstered here.")
 	else
 		to_chat(user, "It is empty.")
 
-/obj/item/clothing/accessory/holster/on_attached(obj/item/clothing/under/S, mob/user as mob)
+/obj/item/clothing/accessory/holster/on_attached(obj/item/clothing/under/S)
 	..()
 	attached_to.verbs += /obj/item/clothing/accessory/holster/verb/holster_verb
 
 /obj/item/clothing/accessory/holster/on_removed(mob/user as mob)
 	attached_to.verbs -= /obj/item/clothing/accessory/holster/verb/holster_verb
 	..()
+
+//
+// Handguns
+//
+/obj/item/clothing/accessory/holster/handgun/can_holster(obj/item/weapon/gun/W)
+	if(!istype(W))
+		return
+	return W.isHandgun()
+
+/obj/item/clothing/accessory/holster/handgun/unholster_message(mob/user)
+	if(user.a_intent == I_HURT)
+		user.visible_message("<span class='warning'>[user] draws \the [holstered], ready to shoot!</span></span>", \
+		"<span class='warning'>You draw \the [holstered], ready to shoot!</span>")
+	else
+		user.visible_message("<span class='notice'>[user] draws \the [holstered], pointing it at the ground.</span>", \
+		"<span class='notice'>You draw \the [holstered], pointing it at the ground.</span>")
+
+/obj/item/clothing/accessory/holster/handgun
+	name = "shoulder holster"
+	desc = "A handgun holster. Perfect for concealed carry."
+
+/obj/item/clothing/accessory/holster/handgun/wornout
+	desc = "A worn-out handgun holster. Perfect for concealed carry."
+
+/obj/item/clothing/accessory/holster/handgun/biogenerator
+	desc = "A leather handgun holster. It smells faintly of potato."
+
+/obj/item/clothing/accessory/holster/handgun/waist
+	name = "waistband holster"
+	desc = "A handgun holster. Made of expensive leather."
+	_color = "holster_low"
+
+//
+// Knives
+//
+/obj/item/clothing/accessory/holster/knife/can_holster(obj/item/weapon/W)
+	if(!istype(W))
+		return
+	if(istype(W, /obj/item/weapon/kitchen/utensil/knife/large/butch))
+		return
+	return is_type_in_list(W, list(\
+		/obj/item/weapon/kitchen/utensil, \
+		/obj/item/weapon/hatchet/unathiknife, \
+		/obj/item/weapon/screwdriver, \
+		/obj/item/weapon/wirecutters))
+
+/obj/item/clothing/accessory/holster/knife/unholster_message(mob/user)
+	user.visible_message("<span class='warning'>[user] pulls \a [holstered] from it's holster!</span>", \
+	"<span class='warning'>You draw your [holstered.name]!</span>")
+
+/obj/item/clothing/accessory/holster/knife/boot
+	name = "knife holster"
+	desc = "A knife holster that can be attached to any pair of boots."
+	item_state = "bootknife"
+	icon_state = "bootknife"
+	_color = "bootknife"
+
+/obj/item/clothing/accessory/holster/knife/boot/can_attach_to(obj/item/clothing/C)
+	return istype(C, /obj/item/clothing/shoes)
+
+/obj/item/clothing/accessory/holster/knife/update_icon()
+	if(holstered)
+		icon_state = "[initial(icon_state)]_1"
+		_color = "[initial(_color)]_1"
+	else
+		icon_state = "[initial(icon_state)]_0"
+		_color = "[initial(_color)]_0"
+	..()
+
+/obj/item/clothing/accessory/holster/knife/boot/preloaded/New()
+	..()
+	if(!holstered)
+		holstered = new /obj/item/weapon/kitchen/utensil/knife/tactical(src)
+		update_icon()

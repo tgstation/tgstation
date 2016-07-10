@@ -30,7 +30,7 @@
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/device/radio/headset/heads/hos(H), slot_ears)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
+		H.equip_or_collect(new /obj/item/clothing/shoes/jackboots/knifeholster(H), slot_shoes)
 		//H.equip_or_collect(new /obj/item/device/pda/heads/hos(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/gloves/black(H), slot_gloves)
 //		H.equip_or_collect(new /obj/item/clothing/mask/gas(H), slot_wear_mask) //Grab one from the armory you donk

@@ -190,6 +190,13 @@ obj/item/weapon/wirerod/attackby(var/obj/item/I, mob/user as mob)
 		R.use(1)
 		qdel(src)
 
+/obj/item/weapon/kitchen/utensil/knife/tactical
+	name = "tactical knife"
+	desc = "It makes you run faster."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "tacknife"
+	item_state = "knife"
+	force = 10
 
 obj/item/weapon/banhammer/admin
 	desc = "A banhammer specifically reserved for admins. Legends tell of a weapon that destroys the target to the utmost capacity."

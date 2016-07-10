@@ -107,7 +107,7 @@
 	id="moneybag"
 	name="Money Bag"
 	result=/obj/item/weapon/storage/bag/money
-	
+
 /datum/biogen_recipe/leather/plants
 	cost=350
 	id="plants"
@@ -137,6 +137,18 @@
 	id="briefcase"
 	name="Leather Briefcase"
 	result=/obj/item/weapon/storage/briefcase/biogen
+
+/datum/biogen_recipe/leather/knifeholster
+	cost=250
+	id="knifeholster"
+	name="Boot Knife Holster"
+	result=/obj/item/clothing/accessory/holster/knife/boot
+
+/datum/biogen_recipe/leather/handgunholster
+	cost=350
+	id="handgunholster"
+	name="Handgun Holster"
+	result=/obj/item/clothing/accessory/holster/handgun/biogenerator
 
 /datum/biogen_recipe/paper
 	category="Paper"

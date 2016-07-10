@@ -400,7 +400,7 @@
 		/obj/item/clothing/accessory/armband,
 		/obj/item/clothing/accessory/armband/engine,
 		/obj/item/clothing/accessory/armband/hydro,
-		/obj/item/clothing/accessory/holster/armpit,
+		/obj/item/clothing/accessory/holster/handgun/wornout,
 		/obj/item/clothing/under/blackskirt,
 		/obj/item/clothing/mask/gas/voice,
 		/obj/item/clothing/head/bandana,
