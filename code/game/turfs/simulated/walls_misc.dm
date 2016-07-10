@@ -157,7 +157,7 @@
 	icon_state = "shuttle"
 	walltype = "shuttle"
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle, /obj/machinery/door/airlock/glass, /obj/machinery/door/airlock/shuttle)
 
 /turf/closed/wall/shuttle/smooth/nodiagonal
 	smooth = SMOOTH_MORE
