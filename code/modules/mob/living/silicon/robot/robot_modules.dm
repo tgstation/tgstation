@@ -331,21 +331,7 @@ obj/item/weapon/robot_module/proc/fix_modules() //call this proc to enable click
 
 	src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 
-	src.modules += new /obj/item/weapon/dice/d2(src)
-
-	src.modules += new /obj/item/weapon/dice/d4(src)
-
-	src.modules += new /obj/item/weapon/dice(src)
-
-	src.modules += new /obj/item/weapon/dice/d8(src)
-
-	src.modules += new /obj/item/weapon/dice/d10(src)
-
-	src.modules += new /obj/item/weapon/dice/d00(src)
-
-	src.modules += new /obj/item/weapon/dice/d12(src)
-
-	src.modules += new /obj/item/weapon/dice/d20(src)
+	src.modules += new /obj/item/weapon/dice/borg(src)
 
 	src.modules += new /obj/item/weapon/crowbar(src)
 

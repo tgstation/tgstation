@@ -1,2 +1,3 @@
 author: Faptastic
-changes: []
+changes: 
+- rscadd: The service borg dice have been replaced with a digital die, change dice type via alt+click or yellow button.
