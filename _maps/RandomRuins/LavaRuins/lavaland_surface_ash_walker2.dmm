@@ -1,0 +1,1274 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/template_noop,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"c" = (
+/turf/closed/wall/mineral/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"d" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor6";
+	icon_state = "floor6"
+	},
+/obj/effect/mob_spawn/human/ash_walker,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"e" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor2";
+	icon_state = "floor2"
+	},
+/obj/effect/light_emitter,
+/mob/living/simple_animal/hostile/spawner/ash_walker,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"f" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor4";
+	icon_state = "floor4"
+	},
+/obj/effect/mob_spawn/human/ash_walker,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"g" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"h" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor4";
+	icon_state = "floor4"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"i" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"j" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor3";
+	icon_state = "floor3"
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/sinew,
+/obj/item/stack/sheet/bone,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"k" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"l" = (
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"m" = (
+/obj/structure/mineral_door/iron,
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor3";
+	icon_state = "floor3"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"n" = (
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"o" = (
+/obj/structure/chair,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"p" = (
+/obj/structure/rack,
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"q" = (
+/obj/structure/rack,
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"r" = (
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"s" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"t" = (
+/obj/structure/table,
+/obj/item/clothing/head/helmet/skull,
+/obj/item/clothing/suit/armor/bone,
+/obj/item/clothing/gloves/bracer,
+/obj/item/weapon/twohanded/bonespear,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"u" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"v" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"w" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 0;
+	pixel_y = 14
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -6;
+	pixel_y = 0
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/weapon/bedsheet{
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"x" = (
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -12;
+	pixel_y = 18
+	},
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"y" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 20;
+	pixel_y = 2
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"z" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 10;
+	pixel_y = 14
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -11;
+	pixel_y = 18
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -8;
+	pixel_y = -11
+	},
+/obj/effect/decal/cleanable/pie_smudge{
+	desc = "Those ashwalker eggs have to come from somewhere, after all.";
+	icon_state = "smashed_pie";
+	name = "white stain"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"A" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/syndicate,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"B" = (
+/obj/structure/closet/crate,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"C" = (
+/obj/item/weapon/shovel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"D" = (
+/obj/item/weapon/ore/silver{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"E" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 7;
+	pixel_y = 23
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = 11;
+	pixel_y = 18
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"F" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/bowl{
+	pixel_x = 3;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/glass/bowl,
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath{
+	pixel_x = 3;
+	pixel_y = 14
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath{
+	pixel_y = 3
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"G" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 14;
+	pixel_y = 0
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/weapon/bedsheet{
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"H" = (
+/obj/item/weapon/bedsheet,
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"I" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/obj/item/weapon/ore/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"J" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining car.";
+	name = "Mining car"
+	},
+/obj/item/weapon/ore/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"K" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/table,
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"L" = (
+/obj/structure/table/optable,
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor3";
+	icon_state = "floor3"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"M" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/weapon/rcd/loaded,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"N" = (
+/obj/structure/rack,
+/obj/item/weapon/wirecutters{
+	icon_state = "cutters_red"
+	},
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/kitchen/knife,
+/obj/item/weapon/hatchet,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"O" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"P" = (
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"Q" = (
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"R" = (
+/obj/item/weapon/ore/silver{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"S" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+"T" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a3{
+	has_gravity = 1;
+	name = "Ash Walker Nest 2"
+	})
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+n
+n
+n
+n
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+n
+n
+t
+A
+n
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+n
+p
+r
+B
+n
+b
+b
+n
+n
+n
+n
+b
+b
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+n
+q
+l
+B
+n
+b
+b
+n
+K
+N
+n
+n
+b
+b
+a
+"}
+(7,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+n
+n
+u
+n
+n
+b
+b
+n
+l
+l
+O
+n
+b
+b
+a
+"}
+(8,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+s
+b
+b
+b
+b
+n
+L
+l
+O
+n
+b
+b
+a
+"}
+(9,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+v
+s
+b
+b
+b
+n
+n
+u
+n
+n
+b
+b
+a
+"}
+(10,1,1) = {"
+b
+b
+c
+c
+c
+c
+c
+b
+b
+b
+b
+s
+b
+b
+b
+b
+s
+s
+b
+b
+b
+b
+b
+"}
+(11,1,1) = {"
+b
+b
+c
+d
+g
+k
+c
+c
+b
+r
+s
+s
+s
+s
+I
+b
+s
+b
+b
+b
+b
+b
+b
+"}
+(12,1,1) = {"
+b
+b
+c
+e
+h
+i
+l
+m
+i
+s
+s
+C
+s
+b
+s
+s
+s
+b
+b
+b
+b
+b
+b
+"}
+(13,1,1) = {"
+b
+b
+c
+f
+i
+g
+k
+c
+o
+l
+b
+b
+s
+b
+b
+s
+b
+b
+b
+b
+s
+s
+T
+"}
+(14,1,1) = {"
+b
+b
+c
+c
+j
+l
+c
+c
+b
+b
+b
+D
+s
+b
+b
+s
+s
+b
+b
+Q
+S
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+b
+c
+c
+c
+c
+b
+b
+b
+b
+s
+b
+b
+b
+b
+s
+s
+b
+s
+b
+b
+b
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+n
+u
+n
+n
+b
+J
+s
+s
+P
+R
+b
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+n
+n
+l
+F
+n
+b
+b
+M
+s
+b
+b
+b
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+n
+w
+l
+G
+n
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+b
+b
+b
+b
+b
+b
+n
+x
+l
+l
+n
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+b
+b
+b
+b
+b
+b
+b
+n
+y
+l
+H
+n
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(21,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+n
+z
+E
+n
+n
+b
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+b
+b
+b
+b
+b
+n
+n
+n
+n
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+a
+a
+"}
