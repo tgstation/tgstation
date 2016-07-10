@@ -1214,6 +1214,7 @@
 	})
 "bX" = (
 /obj/machinery/door/airlock/external,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
@@ -2400,6 +2401,19 @@
 /area/awaycontent/a1{
 	name = "Seed Vault"
 	})
+"dG" = (
+/turf/closed/wall/r_wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/lavaland/surface/outdoors)
+"dH" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/plasteel/black{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/awaycontent/a1{
+	name = "Seed Vault"
+	})
 "dI" = (
 /obj/effect/mob_spawn/human/seed_vault{
 	desc = "An old sleeper pod that has become overgrown with vines and plantmass. They seem to originate from the inside.";
@@ -2415,19 +2429,6 @@
 /area/awaycontent/a1{
 	name = "Seed Vault"
 	})
-"dH" = (
-/obj/machinery/smartfridge,
-/turf/open/floor/plasteel/black{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/awaycontent/a1{
-	name = "Seed Vault"
-	})
-"dG" = (
-/turf/closed/wall/r_wall{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
