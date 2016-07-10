@@ -734,7 +734,7 @@
 		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 
-/obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
+/obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long when summoned.
 	name = "ratvarian spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
 	clockwork_desc = "A fragile spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last long."
@@ -754,11 +754,6 @@
 	..()
 	impale_cooldown = 0
 	update_force()
-	spawn(1)
-		if(isliving(loc))
-			var/mob/living/L = loc
-			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
 
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
