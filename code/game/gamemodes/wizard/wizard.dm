@@ -118,10 +118,7 @@
 		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
 	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
 
-	var/obj_count = 1
-	for(var/datum/objective/objective in wizard.objectives)
-		wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	wizard.announce_objectives()
 	return
 
 
