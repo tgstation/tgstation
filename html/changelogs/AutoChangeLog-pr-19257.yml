@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Hotel staff can now actually use their own lockers."
