@@ -181,6 +181,11 @@
 		return 1
 	return ..()
 
+/turf/open/floor/clockwork/make_plating()
+	new/obj/item/clockwork/alloy_shards/small(src)
+	new/obj/item/clockwork/alloy_shards/medium(src)
+	return ..()
+
 /turf/open/floor/clockwork/ratvar_act()
 	return 0
 

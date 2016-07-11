@@ -116,7 +116,12 @@
 	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
-	new/obj/item/clockwork/alloy_shards(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/large(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/medium(src)
+	for(var/i in 1 to 3)
+		new/obj/item/clockwork/alloy_shards/small(src)
 
 
 /turf/closed/wall/vault

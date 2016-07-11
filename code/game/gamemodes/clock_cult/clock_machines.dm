@@ -141,7 +141,10 @@
 	max_health = 150
 	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
+	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
+	/obj/item/clockwork/alloy_shards/medium = 1, \
+	/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/component/vanguard_cogwheel = 1)
 	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
 	var/max_alloy = 25000
 	var/mob_cost = 200
@@ -243,7 +246,9 @@
 	max_health = 80
 	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
+	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/guvax_capacitor/antennae = 1)
 	var/mania_cost = 150
 	var/convert_attempt_cost = 150
 	var/convert_cost = 300
@@ -535,7 +540,8 @@
 	max_health = 200
 	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
+	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
