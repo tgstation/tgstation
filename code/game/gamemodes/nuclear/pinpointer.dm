@@ -1,3 +1,4 @@
+//Pinpointers are used to track atoms from a distance as long as they're on the same z-level. The captain and nuke ops have ones that track the nuclear authentication disk.
 /obj/item/weapon/pinpointer
 	name = "pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals."
@@ -12,6 +13,9 @@
 	materials = list(MAT_METAL = 500, MAT_GLASS = 250)
 	var/active = FALSE
 	var/atom/movable/target = null //The thing we're searching for
+	var/atom/movable/constant_target = null //The thing we're always focused on, if we're in the right mode
+	var/target_x = 0 //The target coordinates if we're tracking those
+	var/target_y = 0
 	var/nuke_warning = FALSE // If we've set off a miniature alarm about an armed nuke
 	var/mode = TRACK_NUKE_DISK //What are we looking for?
 
@@ -34,19 +38,32 @@
 		target = null //Restarting the pinpointer forces a target reset
 		STOP_PROCESSING(SSfastprocess, src)
 
+/obj/item/weapon/pinpointer/attackby(obj/item/I, mob/living/user, params)
+	if(mode != TRACK_ATOM)
+		return ..()
+	user.visible_message("<span class='notice'>[user] tunes [src] to [I].</span>", "<span class='notice'>You fine-tune [src]'s tracking to track [I].</span>")
+	playsound(src, 'sound/machines/click.ogg', 50, 1)
+	constant_target = I
+
 /obj/item/weapon/pinpointer/examine(mob/user)
 	..()
+	var/msg = "Its tracking indicator reads "
 	switch(mode)
 		if(TRACK_NUKE_DISK)
-			user << "Its tracking indicator reads \"nuclear_disk\"."
+			msg += "\"nuclear_disk\"."
 		if(TRACK_MALF_AI)
-			user << "Its tracking indicator reads \"01000001 01001001\"."
+			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
-			user << "Its tracking indicator reads \"vasvygengbefuvc\"."
+			msg += "\"vasvygengbefuvc\"."
 		if(TRACK_OPERATIVES)
-			user << "Its tracking indicator reads \"[target ? "Operative [target]" : "friends"]\"."
+			msg += "\"[target ? "Operative [target]" : "friends"]\"."
+		if(TRACK_ATOM)
+			msg += "\"[initial(constant_target.name)]\"."
+		if(TRACK_COORDINATES)
+			msg += "\"([target_x], [target_y])\"."
 		else
-			user << "Its tracking indicator is blank."
+			msg = "Its tracking indicator is blank."
+	user << msg
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
 			user << "Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()]"
@@ -92,15 +109,22 @@
 			var/mob/living/closest_operative = get_closest_atom(/mob/living/carbon/human, possible_targets, here)
 			if(closest_operative)
 				target = closest_operative
+		if(TRACK_ATOM)
+			if(constant_target)
+				target = constant_target
+		if(TRACK_COORDINATES)
+			var/turf/T = get_turf(src)
+			target = locate(target_x, target_y, T.z)
 
 /obj/item/weapon/pinpointer/proc/point_to_target() //If we found what we're looking for, show the distance and direction
 	if(!active)
 		return
+	if(!target || (mode == TRACK_ATOM && !constant_target))
+		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
+		return
 	var/turf/here = get_turf(src)
-	var/turf/there
-	if(target)
-		there = get_turf(target)
-	if(!target || here.z != there.z)
+	var/turf/there = get_turf(target)
+	if(here.z != there.z)
 		icon_state = "pinon[nuke_warning ? "alert" : ""]null"
 		return
 	if(here == there)
