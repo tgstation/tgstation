@@ -273,8 +273,8 @@
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
-		var/armor = run_armor_check(affecting, "melee")
-		apply_damage(damage, M.melee_damage_type, affecting, armor, "", "", M.armour_penetration)
+		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
+		apply_damage(damage, M.melee_damage_type, affecting, armor)
 		updatehealth()
 
 
