@@ -80,6 +80,9 @@
 		return
 	if(crayon.check_empty(user))
 		return
+	if(crayon.is_capped)
+		user << "<span class='warning'>Take the cap off first!</span>"
+		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon || !user.canUseTopic(src))
 		return
@@ -155,12 +158,12 @@
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."
 			icon_state = "cutout_ian"
-		if("slaughter demon")
+		if("Slaughter Demon")
 			name = "slaughter demon"
 			desc = "A cardboard cutout of a slaughter demon."
 			icon = 'icons/mob/mob.dmi'
 			icon_state = "daemon"
-		if("laughter demon")
+		if("Laughter Demon")
 			name = "laughter demon"
 			desc = "A cardboard cutout of a laughter demon."
 			icon = 'icons/mob/mob.dmi'
