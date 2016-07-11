@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Syndicate bombs now use a more accurate timer."
-  - bugfix: "Fixed a separate bug that caused bomb timers to take twice as long (ie. 60 seconds took 120 seconds)"
