@@ -24,8 +24,9 @@
 	if(nuking)
 		set_security_level("red")
 		nuking = FALSE
-		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-			point.the_disk = null //Point back to the disk.
+		for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+			P.nuke_warning = FALSE
 
 	if(doomsday_device)
 		doomsday_device.timing = FALSE
