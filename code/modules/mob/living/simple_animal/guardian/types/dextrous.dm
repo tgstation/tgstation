@@ -75,24 +75,8 @@
 	..()
 
 /mob/living/simple_animal/hostile/guardian/dextrous/equip_to_slot(obj/item/I, slot)
-	if(!slot)
+	if(!..())
 		return
-	if(!istype(I))
-		return
-
-	if(I == l_hand)
-		l_hand = null
-	else if(I == r_hand)
-		r_hand = null
-	update_inv_hands()
-
-	if(I.pulledby)
-		I.pulledby.stop_pulling()
-
-	I.screen_loc = null // will get moved if inventory is visible
-	I.loc = src
-	I.equipped(src, slot)
-	I.layer = ABOVE_HUD_LAYER
 
 	switch(slot)
 		if(slot_generic_dextrous_storage)
@@ -112,24 +96,6 @@
 		internal_storage.screen_loc = ui_id
 		client.screen += internal_storage
 
-/mob/living/simple_animal/hostile/guardian/dextrous/proc/update_inv_hands()
-	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		if(r_hand)
-			r_hand.layer = ABOVE_HUD_LAYER
-			r_hand.screen_loc = ui_rhand
-			client.screen |= r_hand
-
-		if(l_hand)
-			l_hand.layer = ABOVE_HUD_LAYER
-			l_hand.screen_loc = ui_lhand
-			client.screen |= l_hand
-
-/mob/living/simple_animal/hostile/guardian/dextrous/update_inv_l_hand()
-	update_inv_hands()
-
-/mob/living/simple_animal/hostile/guardian/dextrous/update_inv_r_hand()
-	update_inv_hands()
-
 /mob/living/simple_animal/hostile/guardian/dextrous/regenerate_icons()
-	update_inv_hands()
+	..()
 	update_inv_internal_storage()

@@ -1,6 +1,9 @@
 
 var/global/list/parasites = list() //all currently existing/living guardians
 
+#define GUARDIAN_HANDS_LAYER 1
+#define GUARDIAN_TOTAL_LAYERS 1
+
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
@@ -32,6 +35,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
+	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/summoner
@@ -223,6 +227,84 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		summoner.gib()
 	ghostize()
 	qdel(src)
+
+//HAND HANDLING
+
+/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/I, slot)
+	if(!slot)
+		return FALSE
+	if(!istype(I))
+		return FALSE
+
+	. = TRUE
+	if(I == l_hand)
+		l_hand = null
+	else if(I == r_hand)
+		r_hand = null
+	update_inv_hands()
+
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+
+	I.screen_loc = null // will get moved if inventory is visible
+	I.loc = src
+	I.equipped(src, slot)
+	I.layer = ABOVE_HUD_LAYER
+
+/mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
+	var/image/I = guardian_overlays[cache_index]
+	if(I)
+		add_overlay(I)
+
+/mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
+	if(guardian_overlays[cache_index])
+		overlays -= guardian_overlays[cache_index]
+		guardian_overlays[cache_index] = null
+
+/mob/living/simple_animal/hostile/guardian/proc/update_inv_hands()
+	remove_overlay(GUARDIAN_HANDS_LAYER)
+	var/list/hands_overlays = list()
+
+	if(r_hand)
+		var/r_state = r_hand.item_state
+		if(!r_state)
+			r_state = r_hand.icon_state
+
+		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+
+		hands_overlays += r_hand_image
+
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.screen_loc = ui_rhand
+			client.screen |= r_hand
+
+	if(l_hand)
+		var/l_state = l_hand.item_state
+		if(!l_state)
+			l_state = l_hand.icon_state
+
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+
+		hands_overlays += l_hand_image
+
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.screen_loc = ui_lhand
+			client.screen |= l_hand
+
+	if(hands_overlays.len)
+		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
+	apply_overlay(GUARDIAN_HANDS_LAYER)
+
+/mob/living/simple_animal/hostile/guardian/update_inv_l_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/hostile/guardian/update_inv_r_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/hostile/guardian/regenerate_icons()
+	update_inv_hands()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
