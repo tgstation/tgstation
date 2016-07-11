@@ -401,7 +401,7 @@ body
 			for(var/entry in L)
 				var/state = "INDEX"
 				var/val = null
-				if(isnum(entry) || internal_byond_list_vars[entry])
+				if(isnum(entry) || internal_byond_list_vars[name])
 					state = "INDEX"
 				else
 					val = L[entry]
