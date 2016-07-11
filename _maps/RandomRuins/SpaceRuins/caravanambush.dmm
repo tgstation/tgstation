@@ -296,24 +296,18 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
 "aY" = (
-/turf/open/floor/wood{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/wood/airless,
 /area/space)
 "aZ" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/weapon/gun/projectile/automatic/pistol/APS,
-/turf/open/floor/wood{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/wood/airless,
 /area/space)
 "ba" = (
 /mob/living/simple_animal/hostile/pirate/space{
 	environment_smash = 0
 	},
-/turf/open/floor/wood{
-	initial_gas_mix = "TEMP=2.7"
-	},
+/turf/open/floor/wood/airless,
 /area/space)
 "bb" = (
 /turf/closed/wall/shuttle{
@@ -697,7 +691,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "ce" = (
 /obj/item/stack/rods,
@@ -791,7 +785,7 @@
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -800,7 +794,7 @@
 "ct" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cu" = (
 /obj/structure/closet/crate,
@@ -809,7 +803,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -877,7 +871,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cG" = (
 /obj/structure/closet/crate{
@@ -890,14 +884,14 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 10
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cH" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "cI" = (
 /obj/machinery/computer,
@@ -976,7 +970,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 20
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cT" = (
 /obj/structure/closet/crate{
@@ -989,12 +983,12 @@
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 5
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cU" = (
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "cV" = (
 /obj/structure/table,
@@ -1035,14 +1029,14 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/plasteel/airless/shuttle/yellow,
 /area/ruin/unpowered)
 "db" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/plasteel/airless/shuttle,
 /area/ruin/unpowered)
 "dc" = (
 /obj/structure/shuttle/engine/heater,
@@ -1128,189 +1122,22 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
-"dS" = (
-/obj/structure/table,
-/obj/item/weapon/clipboard,
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dR" = (
-/mob/living/simple_animal/hostile/pirate/space/ranged{
+"dm" = (
+/obj/machinery/suit_storage_unit,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dn" = (
+/mob/living/simple_animal/hostile/pirate/ranged{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dQ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg3";
-	icon_state = "platingdmg3"
-	},
-/area/ruin/unpowered)
-"dP" = (
-/obj/structure/door_assembly/door_assembly_shuttle{
-	density = 0;
-	name = "broken airlock"
-	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
-/area/ruin/unpowered)
-"dO" = (
-/mob/living/simple_animal/hostile/pirate/space{
-	environment_smash = 0
-	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
-/area/ruin/unpowered)
-"dN" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dM" = (
-/turf/closed/wall/shuttle,
-/area/ruin/unpowered)
-"dL" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dK" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dJ" = (
-/mob/living/simple_animal/hostile/pirate/space{
-	environment_smash = 0
-	},
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
-	},
-/area/ruin/unpowered)
-"dH" = (
-/turf/open/floor/plasteel/airless/shuttle,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f5";
-	icon_state = "swall_f5"
-	},
-/area/ruin/unpowered)
-"dG" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/black,
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dF" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/ruin/unpowered)
-"dE" = (
-/obj/machinery/button/door{
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel/airless/shuttle,
-/area/ruin/unpowered)
-"dD" = (
-/obj/item/stack/sheet/metal,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/stack/rods,
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg3";
-	icon_state = "platingdmg3"
-	},
-/area/ruin/unpowered)
-"dC" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f10";
-	icon_state = "swall_f10"
-	},
-/area/ruin/unpowered)
-"dB" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall4";
-	icon_state = "swall4"
-	},
-/area/ruin/unpowered)
-"dA" = (
-/turf/open/floor/plasteel/airless/shuttle/yellow,
-/obj/structure/door_assembly/door_assembly_shuttle{
-	density = 0;
-	name = "broken airlock"
-	},
-/turf/open/floor/plating/airless{
-	icon_plating = "platingdmg2";
-	icon_state = "platingdmg2"
-	},
-/area/ruin/unpowered)
-"dz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
-	},
-/area/ruin/unpowered)
-"dy" = (
-/obj/structure/girder,
-/turf/open/space,
-/area/space)
-"dx" = (
-/obj/structure/closet/crate/secure/weapon,
-/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube,
-/turf/open/floor/wood{
-	initial_gas_mix = "TEMP=2.7"
-	},
-/area/space)
-"dw" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
-"dv" = (
-/turf/open/space,
-/turf/open/floor/plating/airless{
-	icon = 'icons/obj/smooth_structures/lattice.dmi';
-	icon_plating = "lattice";
-	icon_state = "lattice";
-	name = "anchor chain"
-	},
-/area/space)
-"du" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
-/obj/item/weapon/tank/internals/plasma/full,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
-"dt" = (
-/obj/item/weapon/coin/mythril,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
-"ds" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/pirate,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
-"dr" = (
+"do" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/money/vault,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
-"dq" = (
-/obj/structure/table,
-/mob/living/simple_animal/parrot{
-	faction = list("pirate");
-	name = "Pegwing"
+/obj/item/stack/sheet/mineral/gold{
+	amount = 25
 	},
+/obj/item/weapon/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
 "dp" = (
@@ -1324,24 +1151,189 @@
 /obj/item/weapon/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
-"do" = (
+"dq" = (
 /obj/structure/table,
-/obj/item/stack/sheet/mineral/gold{
-	amount = 25
+/mob/living/simple_animal/parrot{
+	faction = list("pirate");
+	name = "Pegwing"
 	},
-/obj/item/weapon/coin/plasma,
 /turf/open/floor/plasteel,
 /area/ruin/powered)
-"dn" = (
-/mob/living/simple_animal/hostile/pirate/ranged{
+"dr" = (
+/obj/structure/table,
+/obj/item/weapon/storage/bag/money/vault,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"ds" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/pirate,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dt" = (
+/obj/item/weapon/coin/mythril,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"du" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/obj/item/weapon/tank/internals/plasma/full,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dv" = (
+/turf/open/space,
+/turf/open/floor/plating/airless{
+	icon = 'icons/obj/smooth_structures/lattice.dmi';
+	icon_plating = "lattice";
+	icon_state = "lattice";
+	name = "anchor chain"
+	},
+/area/space)
+"dw" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel,
+/area/ruin/powered)
+"dx" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube,
+/turf/open/floor/wood/airless,
+/area/space)
+"dy" = (
+/obj/structure/girder,
+/turf/open/space,
+/area/space)
+"dz" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall2";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dA" = (
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/obj/structure/door_assembly/door_assembly_shuttle{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg2";
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"dB" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-swall4";
+	icon_state = "swall4"
+	},
+/area/ruin/unpowered)
+"dC" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f10";
+	icon_state = "swall_f10"
+	},
+/area/ruin/unpowered)
+"dD" = (
+/obj/item/stack/sheet/metal,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"dE" = (
+/obj/machinery/button/door{
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dF" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dG" = (
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dH" = (
+/turf/open/floor/plasteel/airless/shuttle,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall_f5";
+	icon_state = "swall_f5"
+	},
+/area/ruin/unpowered)
+"dI" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall1";
+	dir = 2
+	},
+/area/ruin/unpowered)
+"dJ" = (
+/mob/living/simple_animal/hostile/pirate/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel,
-/area/ruin/powered)
-"dm" = (
-/obj/machinery/suit_storage_unit,
-/turf/open/floor/plasteel,
-/area/ruin/powered)
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dK" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dL" = (
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dM" = (
+/turf/closed/wall/shuttle,
+/area/ruin/unpowered)
+"dN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed,
+/obj/item/weapon/bedsheet/black,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dO" = (
+/mob/living/simple_animal/hostile/pirate/space{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/area/ruin/unpowered)
+"dP" = (
+/obj/structure/door_assembly/door_assembly_shuttle{
+	density = 0;
+	name = "broken airlock"
+	},
+/turf/open/floor/plasteel/airless/shuttle/yellow,
+/area/ruin/unpowered)
+"dQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_plating = "platingdmg3";
+	icon_state = "platingdmg3"
+	},
+/area/ruin/unpowered)
+"dR" = (
+/mob/living/simple_animal/hostile/pirate/space/ranged{
+	environment_smash = 0
+	},
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
+"dS" = (
+/obj/structure/table,
+/obj/item/weapon/clipboard,
+/turf/open/floor/plasteel/airless/shuttle,
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 aa
@@ -2356,13 +2348,13 @@ aa
 aa
 aa
 bd
-bO
-cc
-cc
-cc
-cc
-cc
-cc
+bl
+bm
+bm
+bm
+bm
+bm
+bm
 bd
 aa
 aa
@@ -2406,10 +2398,10 @@ aR
 bp
 cd
 cr
-cE
-cE
-cc
-cc
+bt
+bt
+bm
+bm
 bd
 aa
 aa
@@ -2452,11 +2444,11 @@ aa
 aa
 bP
 bR
-cs
-cE
+br
+bt
 cS
-cE
-ch
+bt
+bu
 bb
 aa
 aa
@@ -2500,10 +2492,10 @@ aN
 bi
 bR
 ct
-cE
+bt
 cT
-cZ
-cc
+cn
+bm
 be
 aa
 aa
@@ -2547,10 +2539,10 @@ aa
 aa
 ce
 bR
-cs
-cE
+br
+bt
 cu
-cc
+bm
 be
 aa
 aa
@@ -2595,9 +2587,9 @@ aR
 cf
 cg
 cF
-cE
-cE
-cc
+bt
+bt
+bm
 be
 aa
 aa
@@ -2641,10 +2633,10 @@ aa
 aR
 bR
 ct
-cE
+bt
 cG
 da
-di
+dE
 be
 aa
 aa
@@ -2687,9 +2679,9 @@ aa
 aa
 bQ
 dQ
-cs
+br
 dM
-aW
+dP
 dz
 dF
 dI
@@ -2734,11 +2726,11 @@ bh
 aa
 bo
 bk
-cE
-cE
+bt
+bt
 cU
 db
-cc
+bm
 bg
 aa
 aa
@@ -2781,11 +2773,11 @@ aa
 bB
 bR
 bR
-cc
+bm
 cH
-cc
-cc
-cc
+bm
+bm
+bm
 dB
 aa
 aa
@@ -2827,11 +2819,11 @@ aa
 aa
 bc
 dH
-ch
-aj
-cI
-ch
-bf
+bu
+dL
+bJ
+bu
+dS
 ar
 aG
 aa

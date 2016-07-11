@@ -2,7 +2,6 @@
 /obj/item/seeds/cannabis
 	name = "pack of cannabis seeds"
 	desc = "Taxable."
-	icon = 'goon/icons/obj/hydroponics.dmi'
 	icon_state = "seed-cannabis"
 	species = "cannabis"
 	plantname = "Cannabis Plant"
@@ -63,21 +62,21 @@
 	plantname = "Omega Weed"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/ultimate
 	mutatelist = list()
-	reagents_add = list("space_drugs" = 0.03,
-						"mindbreaker" = 0.03,
-						"mercury" = 0.015,
-						"lithium" = 0.015,
-						"atropine" = 0.015,
-						"haloperidol" = 0.015,
-						"methamphetamine" = 0.015,
-						"capsaicin" = 0.015,
-						"barbers_aid" = 0.015,
-						"bath_salts" = 0.015,
-						"itching_powder" = 0.015,
-						"crank" = 0.015,
-						"krokodil" = 0.015,
-						"histamine" = 0.015,
-						"lipolicide" = 0.015)
+	reagents_add = list("space_drugs" = 0.3,
+						"mindbreaker" = 0.3,
+						"mercury" = 0.15,
+						"lithium" = 0.15,
+						"atropine" = 0.15,
+						"haloperidol" = 0.15,
+						"methamphetamine" = 0.15,
+						"capsaicin" = 0.15,
+						"barbers_aid" = 0.15,
+						"bath_salts" = 0.15,
+						"itching_powder" = 0.15,
+						"crank" = 0.15,
+						"krokodil" = 0.15,
+						"histamine" = 0.15,
+						"lipolicide" = 0.15)
 	rarity = 69
 
 
@@ -95,21 +94,25 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/rainbow
 	seed = /obj/item/seeds/cannabis/rainbow
+	name = "rainbow cannabis leaf"
 	desc = "Is it supposed to be glowing like that...?"
 	icon_state = "megacannabis"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/death
 	seed = /obj/item/seeds/cannabis/death
+	name = "death cannabis leaf"
 	desc = "Looks a bit dark. Oh well."
 	icon_state = "blackcannabis"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/white
 	seed = /obj/item/seeds/cannabis/white
+	name = "white cannabis leaf"
 	desc = "It feels smooth and nice to the touch."
 	icon_state = "whitecannabis"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cannabis/ultimate
 	seed = /obj/item/seeds/cannabis/ultimate
+	name = "omega cannibas leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 69
+	volume = 420

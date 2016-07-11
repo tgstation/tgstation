@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Application scripture now requires 100 CV, from 75, Revenant scripture now requires 200 CV, from 150, and Judgment scripture now requires 300 CV, from 250."
-  - experiment: "However, converted windows, windoors, airlocks, and grilles will all provide some CV."

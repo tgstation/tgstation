@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Nuclear bombs now use a more accurate timer system, the same as gang dominators and shuttles."
-  - rscadd: "Nuclear bombs now have a TGUI interface."

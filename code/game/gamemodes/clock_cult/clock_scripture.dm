@@ -601,8 +601,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/function_call //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 	descname = "Summonable Spear"
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear that will deal significant damage to Nar-Sie's dogs in addition to silicon lifeforms. \
-	It will vanish five minutes after being called."
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every five minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
+	vanish five minutes after being summoned."
 	invocations = list("Tenag zr...", "...gur zvtug-bs oenff!")
 	channel_time = 20
 	required_components = list("replicant_alloy" = 2, "hierophant_ansible" = 1)

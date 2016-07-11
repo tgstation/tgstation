@@ -112,7 +112,7 @@
 "ch" = (/obj/machinery/camera{network = list("Bunker1")},/turf/open/floor/plating,/area/ruin/unpowered)
 "ci" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plating,/area/ruin/unpowered)
 "cj" = (/obj/machinery/door/poddoor{id = "bunker2";name = "Bunker Door";tag = "outer"},/turf/open/floor/plating,/area/ruin/unpowered)
-"ck" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered)
+"ck" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -6,11 +6,7 @@
 	if(!blob_cores.len) //blob is dead
 		if(config.continuous["blob"])
 			continuous_sanity_checked = 1 //Nonstandard definition of "alive" gets past the check otherwise
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+			SSshuttle.clearHostileEnvironment(src)
 			return ..()
 		return 1
 	return ..()

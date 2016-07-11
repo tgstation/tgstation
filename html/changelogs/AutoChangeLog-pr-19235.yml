@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - tweak: "The AI doomsday device timer is more accurate."
+  - bugfix: "Fixes a bug where the doomsday device would take twice as long as
+it should."

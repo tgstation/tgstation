@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Clockwork Slabs now produce a component every 1 minute, 30 seconds, from every 1 minute."
-  - experiment: "The slab production time gain from each servant above 5 has been increased from 20 seconds to 30 seconds, and the maximum production time has been increased from 5 minutes to 6 minutes."
