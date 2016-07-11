@@ -135,3 +135,13 @@
 	else if(T.cooldown)
 		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
 		return "[round(seconds_left)]"
+
+/obj/effect/countdown/doomsday
+	name = "doomsday countdown"
+
+/obj/effect/countdown/doomsday/get_value()
+	var/obj/machinery/doomsday_device/DD = attached_to
+	if(!istype(DD))
+		return
+	else if(DD.timing)
+		. = DD.seconds_remaining()

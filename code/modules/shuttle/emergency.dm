@@ -274,19 +274,20 @@
 
 		if(SHUTTLE_DOCKED)
 			if(time_left <= ENGINES_START_TIME)
-				if(SSshuttle.emergencyNoEscape)
-					priority_announce("Hostile environment detected. Departure has been postponed indefinitely pending conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
-					sound_played = 0 //Since we didn't launch, we will need to rev up the engines again next pass.
-					mode = SHUTTLE_STRANDED
-				else
-					mode = SHUTTLE_IGNITING
-					for(var/A in SSshuttle.mobile)
-						var/obj/docking_port/mobile/M = A
-						if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
-							M.check_transit_zone()
+				mode = SHUTTLE_IGNITING
+				SSshuttle.checkHostileEnvironment()
+				if(mode == SHUTTLE_STRANDED)
+					return
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
+					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
+						M.check_transit_zone()
 
 		if(SHUTTLE_IGNITING)
 			var/success = TRUE
+			SSshuttle.checkHostileEnvironment()
+			if(mode == SHUTTLE_STRANDED)
+				return
 
 			success &= (check_transit_zone() == TRANSIT_READY)
 			for(var/A in SSshuttle.mobile)
@@ -317,6 +318,8 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergencyEscapeTime)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+		if(SHUTTLE_STRANDED)
+			SSshuttle.checkHostileEnvironment()
 		if(SHUTTLE_ESCAPE)
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
@@ -428,12 +431,13 @@
 
 /obj/item/weapon/storage/pod/MouseDrop(over_object, src_location, over_location)
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
-		return ..()
+		. = ..()
 	else
 		usr << "The storage unit will only unlock during a Red or Delta security alert."
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return
+
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
