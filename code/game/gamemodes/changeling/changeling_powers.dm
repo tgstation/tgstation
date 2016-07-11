@@ -1001,7 +1001,7 @@ var/list/datum/dna/hivemind_bank = list()
 		drop_item(held_items[good_hand], force_drop = 1)
 		var/obj/item/weapon/armblade/A = new (src)
 		put_in_hand(good_hand, A)
-		H.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>",
+		H.visible_message("<span class='warning'>A grotesque blade forms around [name]\'s arm!</span>",
 			"<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>",
 			"<span class='italics'>You hear organic matter ripping and tearing!</span>")
 		playsound(H, 'sound/weapons/bloodyslice.ogg', 30, 1)
