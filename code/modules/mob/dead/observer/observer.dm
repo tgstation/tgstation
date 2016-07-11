@@ -643,7 +643,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		higher values can lag your client, be cautious."
 	set category = "Ghost"
 
-	var/list/values = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+	var/list/values = list(1,2,3,4,5,6,7,8,9,10,11,12,13,14)
 	if(client.view == world.view)
 		client.view = input("Select view range:", "Change View Range", 7) in values
 	else
