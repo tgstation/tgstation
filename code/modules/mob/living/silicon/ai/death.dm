@@ -29,9 +29,8 @@
 			SSshuttle.emergency.mode = SHUTTLE_DOCKED
 			SSshuttle.emergency.timer = world.time
 			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
-				P.switch_mode_to(TRACK_NUKE_DISK)
-				P.nuke_warning = FALSE
+		for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
+			point.the_disk = null //Point back to the disk.
 
 	if(doomsday_device)
 		doomsday_device.timing = 0
