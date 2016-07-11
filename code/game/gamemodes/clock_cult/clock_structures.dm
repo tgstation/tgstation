@@ -662,6 +662,40 @@
 	animate(src, alpha = 0, time = 10)
 	QDEL_IN(src, 10)
 
+/obj/effect/clockwork/overlay
+	mouse_opacity = 0
+	var/atom/linked
+
+/obj/effect/clockwork/overlay/examine(mob/user)
+	if(linked)
+		linked.examine(user)
+
+/obj/effect/clockwork/overlay/ex_act()
+	return FALSE
+
+/obj/effect/clockwork/overlay/Destroy()
+	if(linked)
+		linked = null
+	..()
+	return QDEL_HINT_PUTINPOOL
+
+/obj/effect/clockwork/overlay/wall
+	name = "clockwork wall"
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall)
+	smooth = SMOOTH_TRUE
+	layer = CLOSED_TURF_LAYER
+
+/obj/effect/clockwork/overlay/wall/Destroy()
+	..()
+	return QDEL_HINT_QUEUE
+
+/obj/effect/clockwork/overlay/floor
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clockwork_floor"
+	layer = TURF_LAYER
+
 /obj/effect/clockwork/general_marker/nezbere
 	name = "Nezbere, the Brass Eidolon"
 	desc = "A towering colossus clad in nigh-impenetrable brass armor. Its gaze is stern yet benevolent, even upon you."

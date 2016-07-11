@@ -29,7 +29,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
-	var/obj/effect/clockwork/gateway_glow/glow
+	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
 /obj/structure/clockwork/massive/celestial_gateway/New()
@@ -74,8 +74,8 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = new(get_turf(src))
-		glow.linked_gate = src
+		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow.linked = src
 
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
 	return 0 //Nice try, Toxins!
@@ -146,27 +146,12 @@
 			if(GATEWAY_RATVAR_COMING to INFINITY)
 				user << "<span class='warning'><b>Something is coming through!</b></span>"
 
-/obj/effect/clockwork/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
+/obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	mouse_opacity = 0
 	layer = MASSIVE_OBJ_LAYER
-	var/obj/structure/clockwork/massive/celestial_gateway/linked_gate
-
-/obj/effect/clockwork/gateway_glow/Destroy()
-	if(linked_gate)
-		linked_gate.glow = null
-		linked_gate = null
-	return ..()
-
-/obj/effect/clockwork/gateway_glow/examine(mob/user)
-	if(linked_gate)
-		linked_gate.examine(user)
-
-/obj/effect/clockwork/gateway_glow/ex_act(severity, target)
-	return FALSE
 
 
 /obj/structure/clockwork/massive/ratvar
