@@ -183,6 +183,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
+	drop_l_hand()
+	drop_r_hand()
 	..()
 	if(summoner)
 		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
@@ -593,7 +595,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
- <b>Dextrous</b>: Can hold and use items, but is fragile, and its melee attack is weak.<br>
+ <b>Dextrous</b>: Can hold and use items, store a single item in its internal storage, has high damage resist, but its melee attack is weak. If it recalls or leashes to you, any items in its hands are dropped.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>

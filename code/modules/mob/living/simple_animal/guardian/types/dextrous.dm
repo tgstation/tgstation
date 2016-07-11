@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/guardian/dextrous
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	playstyle_string = "<span class='holoparasite'>As a <b>dextrous</b> type you can hold items, store an item within yourself, and have high damage resistance, but do low damage on attacks. Recalling will force you to drop unstored items!</span>"
+	playstyle_string = "<span class='holoparasite'>As a <b>dextrous</b> type you can hold items, store an item within yourself, and have high damage resistance, but do low damage on attacks. Recalling and leashing will force you to drop unstored items!</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Drone, a dextrous master of construction and repair.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Dextrous combat modules loaded. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! It can hold stuff in its fins, sort of.</span>"
@@ -54,9 +54,15 @@
 		return 0
 	drop_l_hand()
 	drop_r_hand()
-	return ..()
+	return ..() //lose items, then return
 
-//slot handling bullshit
+/mob/living/simple_animal/hostile/guardian/dextrous/snapback()
+	if(summoner && !(get_dist(get_turf(summoner),get_turf(src)) <= range))
+		drop_l_hand()
+		drop_r_hand()
+		..() //lose items, then return
+
+//SLOT HANDLING BULLSHIT FOR INTERNAL STORAGE
 /mob/living/simple_animal/hostile/guardian/dextrous/unEquip(obj/item/I, force)
 	if(..(I,force))
 		update_inv_hands()
