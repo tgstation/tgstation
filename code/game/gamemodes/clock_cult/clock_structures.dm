@@ -649,19 +649,6 @@
 			qdel(linked_gateway)
 	return 1
 
-/obj/effect/clockwork/general_marker
-	name = "general marker"
-	desc = "Some big guy. For you."
-	clockwork_desc = "One of Ratvar's generals."
-	alpha = 200
-	layer = MASSIVE_OBJ_LAYER
-
-/obj/effect/clockwork/general_marker/New()
-	..()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
-	animate(src, alpha = 0, time = 10)
-	QDEL_IN(src, 10)
-
 /obj/effect/clockwork/overlay
 	mouse_opacity = 0
 	var/atom/linked
@@ -687,7 +674,13 @@
 	smooth = SMOOTH_TRUE
 	layer = CLOSED_TURF_LAYER
 
+/obj/effect/clockwork/overlay/wall/New()
+	..()
+	queue_smooth_neighbors(src)
+	addtimer(GLOBAL_PROC, "queue_smooth", 1, FALSE, src)
+
 /obj/effect/clockwork/overlay/wall/Destroy()
+	queue_smooth_neighbors(src)
 	..()
 	return QDEL_HINT_QUEUE
 
@@ -695,6 +688,19 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
 	layer = TURF_LAYER
+
+/obj/effect/clockwork/general_marker
+	name = "general marker"
+	desc = "Some big guy. For you."
+	clockwork_desc = "One of Ratvar's generals."
+	alpha = 200
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/clockwork/general_marker/New()
+	..()
+	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
+	animate(src, alpha = 0, time = 10)
+	QDEL_IN(src, 10)
 
 /obj/effect/clockwork/general_marker/nezbere
 	name = "Nezbere, the Brass Eidolon"
