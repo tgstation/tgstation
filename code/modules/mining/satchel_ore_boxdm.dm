@@ -55,23 +55,23 @@
 
 	for (var/obj/item/weapon/ore/C in contents)
 		if (istype(C,/obj/item/weapon/ore/diamond))
-			amt_diamond++;
+			amt_diamond++
 		if (istype(C,/obj/item/weapon/ore/glass))
-			amt_glass++;
+			amt_glass++
 		if (istype(C,/obj/item/weapon/ore/plasma))
-			amt_plasma++;
+			amt_plasma++
 		if (istype(C,/obj/item/weapon/ore/iron))
-			amt_iron++;
+			amt_iron++
 		if (istype(C,/obj/item/weapon/ore/silver))
-			amt_silver++;
+			amt_silver++
 		if (istype(C,/obj/item/weapon/ore/gold))
-			amt_gold++;
+			amt_gold++
 		if (istype(C,/obj/item/weapon/ore/uranium))
-			amt_uranium++;
+			amt_uranium++
 		if (istype(C,/obj/item/weapon/ore/bananium))
-			amt_clown++;
+			amt_clown++
 		if (istype(C,/obj/item/weapon/ore/titanium))
-			amt_titanium++;
+			amt_titanium++
 		if (istype(C,/obj/item/weapon/ore/bluespace_crystal))
 			amt_bluespace++
 
