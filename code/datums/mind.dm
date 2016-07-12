@@ -1326,8 +1326,9 @@
 /datum/mind/proc/announce_objectives()
 	var/obj_count = 1
 	current << "<span class='notice'>Your current objectives:</span>"
-	for(var/datum/objective/objective in objectives)
-		current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+	for(var/objective in objectives)
+		var/datum/objective/O = objective
+		current << "<B>Objective #[obj_count]</B>: [O.explanation_text]"
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()

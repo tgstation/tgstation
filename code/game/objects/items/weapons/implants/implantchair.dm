@@ -33,7 +33,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "implantchair", name, 375, 250, master_ui, state)
+		ui = new(user, src, ui_key, "implantchair", name, 375, 280, master_ui, state)
 		ui.open()
 
 
