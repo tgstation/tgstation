@@ -8,9 +8,13 @@
 	volume = 80
 	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	list_reagents = list("nutriment" = 5)
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
 	name = "margherita"

@@ -6,6 +6,8 @@
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
 	desc = "The cornerstone of every nutritious breakfast."

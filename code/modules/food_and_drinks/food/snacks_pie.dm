@@ -7,6 +7,8 @@
 	volume = 80
 	list_reagents = list("nutriment" = 10, "vitamin" = 2)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/pie/plain
 	name = "plain pie"
 	desc = "A simple pie, still delicious."
@@ -21,6 +23,9 @@
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
+
+	targetTemperature = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?
@@ -135,6 +140,8 @@
 	filling_color = "#FFA500"
 	list_reagents = list("nutriment" = 2)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/pie/appletart
 	name = "golden apple streusel tart"
 	desc = "A tasty dessert that won't make it through a metal detector."
@@ -166,6 +173,8 @@
 	filling_color = "#1E90FF"
 	list_reagents = list("nutriment" = 2)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/pie/dulcedebatata
 	name = "dulce de batata"
 	desc = "A delicious jelly made with sweet potatoes."
@@ -173,6 +182,11 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 8)
+
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 50
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/dulcedebatataslice
 	name = "dulce de batata slice"
@@ -183,8 +197,16 @@
 	filling_color = "#8B4513"
 	list_reagents = list("nutriment" = 2)
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 50
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/pie/frostypie
 	name = "frosty pie"
 	desc = "Tastes like blue and cold."
 	icon_state = "frostypie"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 6)
+
+	targetTemperature = 5
+	shouldBeHot = FALSE

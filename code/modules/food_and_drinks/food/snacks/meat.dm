@@ -2,6 +2,9 @@
 	var/subjectname = ""
 	var/subjectjob = null
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab
 	name = "meat"
 	desc = "A slab of meat"
@@ -202,6 +205,8 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#B22222"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human
@@ -283,6 +288,8 @@
 	list_reagents = list("nutriment" = 2)
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	filling_color = "#B22222"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain
 

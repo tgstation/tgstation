@@ -13,6 +13,8 @@
 	filling_color = "#CD853F"
 	list_reagents = list("nutriment" = 6, "capsaicin" = 1)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	name = "carp fillet"
 	desc = "A fillet of spess carp meat."
@@ -20,6 +22,9 @@
 	list_reagents = list("nutriment" = 3, "carpotoxin" = 2, "vitamin" = 2)
 	bitesize = 6
 	filling_color = "#FA8072"
+
+	targetTemperature = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/carpmeat/New()
 	..()
@@ -38,6 +43,8 @@
 	bitesize = 1
 	filling_color = "#CD853F"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/fishandchips
 	name = "fish and chips"
 	desc = "I do say so myself chap."
@@ -45,6 +52,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#FA8072"
+
+	targetTemperature = 50
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -55,6 +64,9 @@
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
@@ -62,6 +74,9 @@
 	list_reagents = list("nutriment" = 2, "toxin" = 2)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	filling_color = "#000000"
+
+	targetTemperature = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/cornedbeef
 	name = "corned beef and cabbage"
@@ -71,6 +86,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 5)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/bearsteak
 	name = "Filet migrawr"
 	desc = "Because eating bear wasn't manly enough."
@@ -79,12 +96,16 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 6)
 	list_reagents = list("nutriment" = 2, "vitamin" = 5, "manlydorf" = 5)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/faggot
 	name = "faggot"
 	desc = "A great meal all round. Not a cord of wood."
 	icon_state = "faggot"
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#800000"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "sausage"
@@ -93,6 +114,8 @@
 	filling_color = "#CD5C5C"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage/New()
 	..()
@@ -103,6 +126,8 @@
 	icon_state = "kebab"
 	w_class = 3
 	list_reagents = list("nutriment" = 8)
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	name = "human-kebab"
@@ -131,6 +156,9 @@
 	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/khinkali
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/khinkali
 	name = "khinkali"
 	desc = "One hundred khinkalis? Do I look like a pig?"
@@ -139,6 +167,8 @@
 	bitesize = 3
 	filling_color = "#F0F0F0"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube
 	name = "monkey cube"
 	desc = "Just add water!"
@@ -146,6 +176,8 @@
 	bitesize = 12
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#CD853F"
+
+	canRot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	visible_message("<span class='notice'>[src] expands!</span>")
@@ -161,6 +193,8 @@
 	filling_color = "#FFA07A"
 	list_reagents = list("nutriment" = 8, "capsaicin" = 6)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat
 	name = "stewed soy meat"
 	desc = "Even non-vegetarians will LOVE this!"
@@ -169,6 +203,8 @@
 	bonus_reagents = list("nutriment" = 1)
 	list_reagents = list("nutriment" = 8)
 	filling_color = "#D2691E"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat/New()
 	..()
@@ -183,6 +219,8 @@
 	list_reagents = list("nutriment" = 3, "capsaicin" = 2)
 	filling_color = "#000000"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 	name = "green eggs and ham"
 	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
@@ -193,6 +231,8 @@
 	bitesize = 4
 	filling_color = "#7FFF00"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "carp sashimi"
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
@@ -201,22 +241,27 @@
 	list_reagents = list("nutriment" = 6, "capsaicin" = 5)
 	filling_color = "#FA8072"
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 #define LUMP "lump"
 #define STAR "star"
 #define LIZARD "lizard"
 #define CORGI "corgi"
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget
-    name = "chicken nugget"
-    filling_color = "#B22222"
-    bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
-    list_reagents = list("nutriment" = 2)
+	name = "chicken nugget"
+	filling_color = "#B22222"
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2)
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/nugget/New()
-    ..()
-    var/shape = pick(LUMP, STAR, LIZARD, CORGI)
-    desc = "A 'chicken' nugget vaguely shaped like a [shape]."
-    icon_state = "nugget_[shape]"
+	..()
+	var/shape = pick(LUMP, STAR, LIZARD, CORGI)
+	desc = "A 'chicken' nugget vaguely shaped like a [shape]."
+	icon_state = "nugget_[shape]"
 
 #undef LUMP
 #undef STAR

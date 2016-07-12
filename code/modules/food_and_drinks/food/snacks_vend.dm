@@ -11,6 +11,9 @@
 	junkiness = 25
 	filling_color = "#D2691E"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky
 	name = "\improper Scaredy's Private Reserve Beef Jerky"
 	icon_state = "sosjerky"
@@ -19,6 +22,9 @@
 	list_reagents = list("nutriment" = 1, "sugar" = 3)
 	junkiness = 25
 	filling_color = "#8B0000"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -30,6 +36,9 @@
 	junkiness = 20
 	filling_color = "#FFD700"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
 	icon_state = "4no_raisins"
@@ -39,6 +48,9 @@
 	junkiness = 25
 	filling_color = "#8B0000"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/spacetwinkie
 	name = "space twinkie"
 	icon_state = "space_twinkie"
@@ -46,6 +58,8 @@
 	list_reagents = list("sugar" = 4)
 	junkiness = 25
 	filling_color = "#FFD700"
+
+	canRot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers
 	name = "cheesie honkers"
@@ -56,6 +70,9 @@
 	junkiness = 25
 	filling_color = "#FFD700"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
 	icon_state = "syndi_cakes"
@@ -63,3 +80,6 @@
 	trash = /obj/item/trash/syndi_cakes
 	list_reagents = list("nutriment" = 4, "doctorsdelight" = 5)
 	filling_color = "#F5F5DC"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE

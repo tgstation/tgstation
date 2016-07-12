@@ -7,6 +7,9 @@
 	w_class = 3
 	list_reagents = list("nutriment" = 7, "vitamin" = 2)
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/salad/New()
 	..()
 	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp")
@@ -73,6 +76,9 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 
+	targetTemperature = 50
+	shouldBeHot = TRUE
+
 /obj/item/weapon/reagent_containers/food/snacks/salad/ricepudding
 	name = "rice pudding"
 	desc = "Everybody loves rice pudding!"
@@ -85,8 +91,14 @@
 	icon_state = "riceporkbowl"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
 
+	targetTemperature = 50
+	shouldBeHot = TRUE
+
 /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
 	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
+
+	targetTemperature = 50
+	shouldBeHot = TRUE

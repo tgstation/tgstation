@@ -21,6 +21,8 @@
 	var/ingredients_placement = INGREDIENTS_FILL
 	var/customname = "custom"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine(mob/user)
 	..()
 	var/ingredients_listed = ""
