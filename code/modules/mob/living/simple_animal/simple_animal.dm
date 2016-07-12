@@ -525,14 +525,12 @@
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, TRUE))
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	else
 		..()
 
 /mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
 	if(!canUseTopic(who, TRUE))
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	else
 		..()
