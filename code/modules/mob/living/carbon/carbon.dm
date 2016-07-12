@@ -790,3 +790,16 @@
 			blood_volume -= amount
 	return ..()
 
+/mob/living/carbon/smoke_act(var/obj/effect/particle_effect/smoke/smoke)
+	if(internal != null || has_smoke_protection())
+		. = FALSE
+	else if(smoke_delay && (!smoke.ignores_smoke_delay))
+		. = FALSE
+	else
+		if(!smoke.ignores_smoke_delay)
+			smoke_delay = TRUE
+			addtimer(src, "remove_smoke_delay", 10)
+		. = TRUE
+
+/mob/living/carbon/proc/remove_smoke_delay()
+	smoke_delay = FALSE

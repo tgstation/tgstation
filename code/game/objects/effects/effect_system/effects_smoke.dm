@@ -15,6 +15,7 @@
 	var/amount = 4
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
+	var/ignores_smoke_delay = FALSE
 
 
 /obj/effect/particle_effect/smoke/proc/fade_out(frames = 16)
@@ -35,7 +36,7 @@
 
 /obj/effect/particle_effect/smoke/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	return ..()
+	. = ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
 	STOP_PROCESSING(SSobj, src)
@@ -51,22 +52,10 @@
 		smoke_mob(L)
 	return 1
 
-/obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/carbon/C)
-	if(!istype(C))
-		return 0
+/obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/M)
 	if(lifetime<1)
-		return 0
-	if(C.internal != null || C.has_smoke_protection())
-		return 0
-	if(C.smoke_delay)
-		return 0
-	C.smoke_delay++
-	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
-	return 1
-
-/obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
-	if(C)
-		C.smoke_delay = 0
+		return FALSE
+	. = M.smoke_act(src)
 
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
@@ -89,9 +78,9 @@
 			newsmokes.Add(S)
 
 	if(newsmokes.len)
-		spawn(1) //the smoke spreads rapidly but not instantly
-			for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
-				SM.spread_smoke()
+		for(var/obj/effect/particle_effect/smoke/SM in newsmokes)
+			// the smoke spreads rapidly but not instantly
+			addtimer(SM, "spread_smoke", 1)
 
 
 /datum/effect_system/smoke_spread
@@ -121,11 +110,12 @@
 /obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
-/obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
-	if(..())
-		M.drop_item()
-		M.adjustOxyLoss(1)
-		M.emote("cough")
+/obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/M)
+	if(..() && iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.drop_item()
+		C.adjustOxyLoss(1)
+		C.emote("cough")
 		return 1
 
 /obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
@@ -199,11 +189,12 @@
 	color = "#9C3636"
 	lifetime = 10
 
-/obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/carbon/M)
-	if(..())
-		M.drop_item()
-		M.Sleeping(max(M.sleeping,10))
-		M.emote("cough")
+/obj/effect/particle_effect/smoke/sleeping/smoke_mob(mob/living/M)
+	if(..() && iscarbon(M))
+		var/mob/living/carbon/C = M
+		C.drop_item()
+		C.Sleeping(max(M.sleeping,10))
+		C.emote("cough")
 		return 1
 
 /datum/effect_system/smoke_spread/sleeping
@@ -215,6 +206,7 @@
 
 /obj/effect/particle_effect/smoke/chem
 	lifetime = 10
+	ignores_smoke_delay = TRUE
 
 
 /obj/effect/particle_effect/smoke/chem/process()
@@ -229,20 +221,11 @@
 		reagents.reaction(T, TOUCH, fraction)
 		return 1
 
-/obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
-	if(lifetime<1)
-		return 0
-	if(!istype(M))
-		return 0
-	var/mob/living/carbon/C = M
-	if(C.internal != null || C.has_smoke_protection())
-		return 0
-	var/fraction = 1/initial(lifetime)
-	reagents.copy_to(C, fraction*reagents.total_volume)
-	reagents.reaction(M, INGEST, fraction)
-	return 1
-
-
+/obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/M)
+	if(..())
+		var/fraction = 1/initial(lifetime)
+		reagents.copy_to(M, fraction*reagents.total_volume)
+		reagents.reaction(M, INGEST, fraction)
 
 /datum/effect_system/smoke_spread/chem
 	var/obj/chemholder
@@ -258,7 +241,7 @@
 /datum/effect_system/smoke_spread/chem/Destroy()
 	qdel(chemholder)
 	chemholder = null
-	return ..()
+	. = ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = 0)
 	if(istype(loca, /turf/))
@@ -283,7 +266,7 @@
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
-				more = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</a>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) "
+				more = "[ADMIN_QUE(M)] [ADMIN_FLW(M)] "
 			message_admins("A chemical smoke reaction has taken place in ([whereLink])[contained]. Last associated key is [carry.my_atom.fingerprintslast][more].", 0, 1)
 			log_game("A chemical smoke reaction has taken place in ([where])[contained]. Last associated key is [carry.my_atom.fingerprintslast].")
 		else

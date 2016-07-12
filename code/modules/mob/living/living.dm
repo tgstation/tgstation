@@ -1045,3 +1045,6 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form!</span>"
+
+/mob/living/proc/smoke_act(var/obj/effect/particle_effect/smoke/smoke)
+	return FALSE
