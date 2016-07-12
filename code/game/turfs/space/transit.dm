@@ -50,11 +50,8 @@
 			_y = min
 
 	var/turf/T = locate(_x, _y, _z)
-	AM.loc = T
-	AM.newtonian_move(dir)
-
-
-
+	if(T)
+		AM.SpaceTransit(T)
 
 //Overwrite because we dont want people building rods in space.
 /turf/open/space/transit/attackby()
