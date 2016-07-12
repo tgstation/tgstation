@@ -1,0 +1,4 @@
+author: "hornygranny"
+delete-after: True
+changes: 
+  - bugfix: "Attacks will no longer miss missing limbs"
