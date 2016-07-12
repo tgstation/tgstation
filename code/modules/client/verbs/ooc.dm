@@ -28,11 +28,11 @@
 			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "<span class='danger'>You cannot use OOC (muted).</span>"
+			src << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[key]:</EM> <span class='message'>[msg]</span></span></font>"
 			return
 		if(src.mob)
 			if(jobban_isbanned(src.mob, "OOC"))
-				src << "<span class='danger'>You have been banned from OOC.</span>"
+				src << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[key]:</EM> <span class='message'>[msg]</span></span></font>"
 				return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
