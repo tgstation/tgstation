@@ -761,7 +761,7 @@
 	metabolization_rate = 0 // filtered by the kidneys
 	overdose_threshold = 10
 	flags = REAGENT_SILENT_OVERDOSE
-	color = "#EED202"
+	color = "#8E3975"
 
 /datum/reagent/toxin/waste_product/overdose_process(mob/living/M)
 	// When built up in excess, slowly converts to toxin
