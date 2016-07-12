@@ -466,7 +466,10 @@ BLIND     // can't see anything
 		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	else
-		rolldown()
+		if(hastie)
+			removetie(user)
+		else
+			rolldown()
 
 /obj/item/clothing/under/verb/jumpsuit_adjust()
 	set name = "Adjust Jumpsuit Style"
@@ -507,13 +510,10 @@ BLIND     // can't see anything
 	else
 		user << "Alt-click on [src] to wear it casually."
 
-/obj/item/clothing/under/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	if(!istype(usr, /mob/living))
+/obj/item/clothing/under/proc/removetie(mob/user)
+	if(!isliving(user))
 		return
-	if(!can_use(usr))
+	if(!can_use(user))
 		return
 
 	if(hastie)
@@ -522,7 +522,10 @@ BLIND     // can't see anything
 		hastie.pixel_y += 8
 		hastie.layer = initial(hastie.layer)
 		overlays = null
-		usr.put_in_hands(hastie)
+		if(user.put_in_hands(hastie))
+			user << "You deattach [hastie] from [src]."
+		else
+			user << "You deattach [hastie] from [src] and it falls on the floor."
 		hastie = null
 
 		if(istype(loc, /mob/living/carbon/human))
