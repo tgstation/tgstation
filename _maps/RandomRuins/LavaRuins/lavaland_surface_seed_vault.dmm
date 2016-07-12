@@ -12,6 +12,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ad" = (
@@ -20,6 +21,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ae" = (
@@ -37,6 +39,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "af" = (
@@ -46,6 +49,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ag" = (
@@ -56,6 +60,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ah" = (
@@ -63,6 +68,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ai" = (
@@ -79,6 +85,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aj" = (
@@ -89,6 +96,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ak" = (
@@ -97,6 +105,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "al" = (
@@ -116,6 +125,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "am" = (
@@ -125,6 +135,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "an" = (
@@ -138,6 +149,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ao" = (
@@ -149,6 +161,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ap" = (
@@ -170,6 +183,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aq" = (
@@ -183,6 +197,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ar" = (
@@ -197,6 +212,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "as" = (
@@ -207,6 +223,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "at" = (
@@ -218,6 +235,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "au" = (
@@ -231,6 +249,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "av" = (
@@ -239,6 +258,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aw" = (
@@ -252,6 +272,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ax" = (
@@ -271,6 +292,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ay" = (
@@ -278,6 +300,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "az" = (
@@ -285,6 +308,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aA" = (
@@ -300,6 +324,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aB" = (
@@ -316,6 +341,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aC" = (
@@ -326,6 +352,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aD" = (
@@ -337,6 +364,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aE" = (
@@ -347,6 +375,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aF" = (
@@ -357,6 +386,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aG" = (
@@ -368,6 +398,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aH" = (
@@ -376,6 +407,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aI" = (
@@ -389,6 +421,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aJ" = (
@@ -401,6 +434,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aK" = (
@@ -411,6 +445,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aL" = (
@@ -421,6 +456,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aM" = (
@@ -432,6 +468,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aN" = (
@@ -454,6 +491,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aO" = (
@@ -467,6 +505,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aP" = (
@@ -479,6 +518,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aQ" = (
@@ -487,6 +527,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aR" = (
@@ -496,6 +537,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aS" = (
@@ -503,6 +545,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aT" = (
@@ -511,6 +554,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aU" = (
@@ -519,6 +563,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aV" = (
@@ -536,6 +581,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aW" = (
@@ -549,6 +595,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aX" = (
@@ -560,6 +607,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aY" = (
@@ -572,6 +620,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "aZ" = (
@@ -588,6 +637,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ba" = (
@@ -608,6 +658,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bc" = (
@@ -616,6 +667,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bd" = (
@@ -627,6 +679,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "be" = (
@@ -638,6 +691,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bf" = (
@@ -647,6 +701,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bg" = (
@@ -680,6 +735,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bh" = (
@@ -699,6 +755,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bi" = (
@@ -720,6 +777,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bj" = (
@@ -740,6 +798,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bk" = (
@@ -750,6 +809,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bl" = (
@@ -766,6 +826,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bm" = (
@@ -776,6 +837,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bn" = (
@@ -786,6 +848,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bo" = (
@@ -802,6 +865,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bq" = (
@@ -816,6 +880,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "br" = (
@@ -834,6 +899,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bs" = (
@@ -847,6 +913,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bt" = (
@@ -857,6 +924,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bu" = (
@@ -868,6 +936,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bv" = (
@@ -888,6 +957,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bw" = (
@@ -905,6 +975,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bx" = (
@@ -928,6 +999,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "by" = (
@@ -939,6 +1011,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bz" = (
@@ -950,6 +1023,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bA" = (
@@ -958,6 +1032,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bB" = (
@@ -965,6 +1040,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bC" = (
@@ -973,6 +1049,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bD" = (
@@ -991,6 +1068,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bE" = (
@@ -999,6 +1077,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bF" = (
@@ -1010,6 +1089,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bG" = (
@@ -1022,6 +1102,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bH" = (
@@ -1033,6 +1114,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bI" = (
@@ -1051,6 +1133,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bJ" = (
@@ -1059,6 +1142,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bK" = (
@@ -1070,6 +1154,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bL" = (
@@ -1079,6 +1164,7 @@
 	dir = 9
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bM" = (
@@ -1092,6 +1178,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bN" = (
@@ -1105,6 +1192,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bO" = (
@@ -1116,6 +1204,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bP" = (
@@ -1126,6 +1215,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bQ" = (
@@ -1140,6 +1230,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bR" = (
@@ -1150,6 +1241,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bS" = (
@@ -1161,6 +1253,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bT" = (
@@ -1172,6 +1265,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bU" = (
@@ -1187,6 +1281,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bV" = (
@@ -1196,6 +1291,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bW" = (
@@ -1210,6 +1306,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bX" = (
@@ -1219,6 +1316,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bY" = (
@@ -1226,6 +1324,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "bZ" = (
@@ -1242,6 +1341,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ca" = (
@@ -1257,6 +1357,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cb" = (
@@ -1266,6 +1367,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cc" = (
@@ -1277,6 +1379,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cd" = (
@@ -1293,6 +1396,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ce" = (
@@ -1304,6 +1408,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cf" = (
@@ -1315,6 +1420,7 @@
 	dir = 10
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cg" = (
@@ -1328,6 +1434,7 @@
 	dir = 6
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ch" = (
@@ -1337,9 +1444,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/awaycontent/a1{
-	name = "Seed Vault"
-	})
+/area/lavaland/surface/outdoors)
 "ci" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/effect/spawner/lootdrop/seed_vault{
@@ -1350,6 +1455,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cj" = (
@@ -1363,6 +1469,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ck" = (
@@ -1378,6 +1485,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cm" = (
@@ -1388,6 +1496,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cn" = (
@@ -1396,6 +1505,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "co" = (
@@ -1407,6 +1517,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cp" = (
@@ -1422,6 +1533,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cq" = (
@@ -1435,6 +1547,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cr" = (
@@ -1446,6 +1559,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cs" = (
@@ -1461,6 +1575,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ct" = (
@@ -1473,6 +1588,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cu" = (
@@ -1490,6 +1606,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cv" = (
@@ -1510,6 +1627,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cw" = (
@@ -1521,6 +1639,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cx" = (
@@ -1531,6 +1650,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cy" = (
@@ -1542,6 +1662,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cz" = (
@@ -1557,6 +1678,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cA" = (
@@ -1567,6 +1689,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cB" = (
@@ -1580,6 +1703,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cC" = (
@@ -1591,6 +1715,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cD" = (
@@ -1605,6 +1730,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cE" = (
@@ -1628,6 +1754,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cF" = (
@@ -1642,6 +1769,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cG" = (
@@ -1659,6 +1787,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cH" = (
@@ -1667,6 +1796,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cI" = (
@@ -1681,6 +1811,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cJ" = (
@@ -1699,6 +1830,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cK" = (
@@ -1718,6 +1850,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cL" = (
@@ -1736,6 +1869,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cM" = (
@@ -1750,6 +1884,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cN" = (
@@ -1761,6 +1896,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cO" = (
@@ -1778,6 +1914,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cP" = (
@@ -1795,6 +1932,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cQ" = (
@@ -1814,6 +1952,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cR" = (
@@ -1829,6 +1968,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cS" = (
@@ -1851,6 +1991,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cT" = (
@@ -1865,6 +2006,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cU" = (
@@ -1881,6 +2023,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cV" = (
@@ -1904,6 +2047,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cW" = (
@@ -1923,6 +2067,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cX" = (
@@ -1938,6 +2083,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "cY" = (
@@ -1955,6 +2101,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "da" = (
@@ -1967,6 +2114,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "db" = (
@@ -1977,6 +2125,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dc" = (
@@ -1996,6 +2145,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dd" = (
@@ -2011,6 +2161,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "de" = (
@@ -2025,6 +2176,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "df" = (
@@ -2035,6 +2187,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dg" = (
@@ -2059,6 +2212,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dh" = (
@@ -2074,6 +2228,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "di" = (
@@ -2088,6 +2243,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dj" = (
@@ -2104,6 +2260,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dk" = (
@@ -2117,6 +2274,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dl" = (
@@ -2137,6 +2295,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dm" = (
@@ -2145,6 +2304,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dn" = (
@@ -2166,6 +2326,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "do" = (
@@ -2174,6 +2335,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dp" = (
@@ -2192,6 +2354,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dq" = (
@@ -2206,6 +2369,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dr" = (
@@ -2226,6 +2390,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "ds" = (
@@ -2236,6 +2401,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dt" = (
@@ -2244,6 +2410,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "du" = (
@@ -2254,6 +2421,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dv" = (
@@ -2270,6 +2438,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dw" = (
@@ -2291,6 +2460,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dx" = (
@@ -2298,6 +2468,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dy" = (
@@ -2309,6 +2480,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dz" = (
@@ -2326,6 +2498,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dA" = (
@@ -2343,6 +2516,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dB" = (
@@ -2358,6 +2532,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dC" = (
@@ -2367,6 +2542,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dD" = (
@@ -2377,6 +2553,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dE" = (
@@ -2386,6 +2563,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dF" = (
@@ -2399,19 +2577,24 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dG" = (
 /turf/closed/wall/r_wall{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/lavaland/surface/outdoors)
+/area/awaycontent/a1{
+	has_gravity = 1;
+	name = "Seed Vault"
+	})
 "dH" = (
 /obj/machinery/smartfridge,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 "dI" = (
@@ -2427,6 +2610,7 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/awaycontent/a1{
+	has_gravity = 1;
 	name = "Seed Vault"
 	})
 
@@ -2507,13 +2691,13 @@ ab
 ab
 ab
 dG
-ba
-ba
-ba
-ba
-ba
-ba
-ba
+dG
+dG
+dG
+dG
+dG
+dG
+dG
 dG
 ab
 ab
@@ -2538,15 +2722,15 @@ ab
 ab
 ab
 ab
-ba
-ba
-ba
+dG
+dG
+dG
 bA
 bN
 bZ
-ba
-ba
-ba
+dG
+dG
+dG
 ab
 ab
 ab
@@ -2570,15 +2754,15 @@ ab
 ab
 ab
 ab
-ba
-ba
+dG
+dG
 bp
 bB
 bB
 bB
 ci
-ba
-ba
+dG
+dG
 ab
 ab
 cY
@@ -2602,15 +2786,15 @@ ab
 ab
 ab
 ab
-ba
-ba
+dG
+dG
 bq
 bB
 bO
 bB
 cj
-ba
-ba
+dG
+dG
 ab
 ab
 ab
@@ -2634,15 +2818,15 @@ ab
 ab
 ab
 ab
-ba
-ba
+dG
+dG
 bp
 bB
 bP
 bB
 ci
-ba
-ba
+dG
+dG
 ab
 ac
 ac
@@ -2666,15 +2850,15 @@ ah
 ah
 ac
 ah
-ba
-ba
-ba
-ba
+dG
+dG
+dG
+dG
 bQ
-ba
-ba
-ba
-ba
+dG
+dG
+dG
+dG
 ab
 ac
 cZ
@@ -2706,7 +2890,7 @@ aE
 bD
 ca
 ah
-ck
+ab
 ab
 ac
 da
