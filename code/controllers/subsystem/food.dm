@@ -1,9 +1,9 @@
-var/datum/subsystem/food/SSFood
+var/datum/subsystem/food/SSfood
 
 /datum/subsystem/food
 	name = "Food Health"
 	priority = 25
-
+	flags = SS_NO_INIT
 	var/list/curFood = list()
 
 /datum/subsystem/food/proc/insertFood(toInsert)
@@ -12,10 +12,10 @@ var/datum/subsystem/food/SSFood
 		F.initialDesc = F.desc
 		for(var/datum/reagent/R in F.reagents)
 			F.bestReagents += R
-		curFood |= toInsert
+		curFood[toInsert] = 1
 
 /datum/subsystem/food/New()
-	NEW_SS_GLOBAL(SSFood)
+	NEW_SS_GLOBAL(SSfood)
 
 /datum/subsystem/food/stat_entry()
 	..("Watched: [curFood.len]")
