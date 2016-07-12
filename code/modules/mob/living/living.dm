@@ -1045,3 +1045,9 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form!</span>"
+
+/mob/living/proc/fakefireextinguish()
+	return
+
+/mob/living/proc/fakefire()
+	return
