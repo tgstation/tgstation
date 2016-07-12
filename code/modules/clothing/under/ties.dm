@@ -104,7 +104,7 @@
 			if(user == M)
 				delay = 0
 			else
-				user.visible_message("[user] is trying to pin [src] on [M]'s chest." \
+				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			if(do_after(user, delay, target = M))
 				if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
