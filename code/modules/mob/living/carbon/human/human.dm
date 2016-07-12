@@ -1077,6 +1077,9 @@
 /mob/living/carbon/human/is_literate()
 	return 1
 
+/mob/living/carbon/human/can_hold_items()
+	return TRUE
+
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()

@@ -151,7 +151,7 @@
 							temp_img = icon("icons/ass/assfemale.png")
 						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
 							temp_img = icon("icons/ass/assmale.png")
-					else if(isdrone (ass) || istype(ass,/mob/living/simple_animal/drone)) //Drones are hot
+					else if(isdrone(ass)) //Drones are hot
 						temp_img = icon("icons/ass/assdrone.png")
 					else
 						break
