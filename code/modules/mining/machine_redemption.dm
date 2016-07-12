@@ -105,7 +105,7 @@
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
-			I.loc = src
+			I.forcemove(src)
 			inserted_id = I
 			interact(user)
 		return
