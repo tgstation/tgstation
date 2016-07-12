@@ -102,6 +102,7 @@
 
 	var/list/meteordrop = list(/obj/item/weapon/ore/iron)
 	var/dropamt = 2
+	var/no_transit = TRUE
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
@@ -116,6 +117,12 @@
 
 		if(prob(10) && !istype(T, /turf/open/space))//randomly takes a 'hit' from ramming
 			get_hit()
+
+/obj/effect/meteor/SpaceTransit(turf/destination)
+	if(no_transit)
+		qdel(src)
+	else
+		. = ..()
 
 /obj/effect/meteor/Destroy()
 	walk(src,0) //this cancels the walk_towards() proc
