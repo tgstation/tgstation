@@ -93,7 +93,7 @@
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
-	charge_max = 10
+	charge_max = 200
 	clothes_req = 0
 	selection_type = "range"
 	range = -1
@@ -121,6 +121,7 @@
 		else
 			user.notransform = 1
 			user.fakefire()
+			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
 			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
 		start_recharge()
 		return
