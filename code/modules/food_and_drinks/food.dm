@@ -6,12 +6,14 @@
 	volume = 50	//Sets the default container amount for all food items.
 	burn_state = FLAMMABLE
 
+	var/list/validLocations = list(/obj/structure/closet/secure_closet/freezer,/obj/machinery/smartfridge,/obj/machinery/food_cart,/obj/machinery/vending)
+
 	// food degrading
 	var/lifetime = 360 // our initial "life" in which we are freshest, and do not lose a lot of goodness
 	var/temperature = 0 // current temperature
 	var/reachTemp = 0 // temperature we want to reach, set through other external sources
 	var/meltable = FALSE // is the food gooey and meltable, like cheese
-	var/targetTemperature = 15 // our ideal temperature, in centigrade,by default it's just below "room" temp
+	var/targetTemperature = 19 // our ideal temperature, in centigrade,by default it's just below "room" temp
 	var/meltingPoint = 100 // the temperature we melt at, if any
 	var/shouldBeHot = TRUE // are we a hot food?
 	var/freshness = 100 // current freshness rating of the food, negative is worse, positive is better, in percentage of 100
@@ -40,8 +42,9 @@
 // degrade handling
 /obj/item/weapon/reagent_containers/food/proc/updateFood()
 	if(src.loc) // less intensive but hackier way to make sure frozen food is fine
-		if(istype(src.loc,/obj/structure/closet/secure_closet/freezer))
-			reachTemp = -50
+		for(var/S in validLocations)
+			if(istype(src.loc,S))
+				reachTemp = -50
 	if(canRot)
 		if(!src.reagents)
 			create_reagents(50)
@@ -62,9 +65,9 @@
 		else
 			reachTemp = targetTemperature // if we're in nullspace or just not able to get our pos, preserve our selves
 
-		if((temperature < targetTemperature && shouldBeHot) || (temperature > targetTemperature && !shouldBeHot))
+		if((temperature < (targetTemperature - 1) && shouldBeHot) || (temperature > (targetTemperature + 1) && !shouldBeHot))
 			freshness += (lifetime > 0 ? 0 : degradeSpeed) // we're rotting, panic!
-		else if((temperature < targetTemperature && !shouldBeHot) || (temperature > targetTemperature && shouldBeHot))
+		else if((temperature < (targetTemperature - 1) && !shouldBeHot) || (temperature > (targetTemperature + 1) && shouldBeHot))
 			freshness -= (lifetime > 0 ? 0 : degradeSpeed) // we're getting a bit better.
 
 		if(meltable && temperature > meltingPoint) // we jelly now

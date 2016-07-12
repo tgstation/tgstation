@@ -185,6 +185,11 @@
 	var/cone_type
 	bitesize = 3
 
+	meltable = TRUE
+	targetTemperature = -5
+	meltingPoint = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/icecream/New()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 4)
