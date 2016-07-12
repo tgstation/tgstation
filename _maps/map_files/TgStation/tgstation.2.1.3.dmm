@@ -20385,22 +20385,14 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTN" = (
-/obj/structure/plasticflaps,
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (NORTH)";
-	icon_state = "conveyor0";
-	dir = 1
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/warning/corner{
+	dir = 4
 	},
-/turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTO" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen";
-	name = "kitchen shutters"
-	},
-/obj/structure/plasticflaps,
-/obj/machinery/conveyor/preserver,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aTP" = (
 /obj/structure/rack,
@@ -21147,13 +21139,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVB" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/stack/packageWrap,
-/obj/item/weapon/kitchen/rollingpin,
-/obj/item/weapon/book/manual/chef_recipes,
+/obj/machinery/servingplate,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVC" = (
@@ -22025,10 +22011,8 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aXm" = (
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (WEST)";
-	icon_state = "conveyor0";
-	dir = 8
+/obj/effect/landmark/start{
+	name = "Cook"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -22667,9 +22651,9 @@
 "aYL" = (
 /obj/machinery/light,
 /obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (NORTH)";
+	tag = "icon-conveyor0 (NORTHEAST)";
 	icon_state = "conveyor0";
-	dir = 1
+	dir = 5
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -22678,7 +22662,11 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/conveyor/preserver,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (SOUTHEAST)";
+	icon_state = "conveyor0";
+	dir = 6
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYN" = (
@@ -23206,23 +23194,21 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "baj" = (
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen";
 	name = "kitchen shutters"
 	},
-/obj/machinery/servingplate,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (WEST)";
+	icon_state = "conveyor0";
+	dir = 8
+	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bak" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen";
-	name = "kitchen shutters"
-	},
-/obj/machinery/servingplate,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bal" = (
 /obj/structure/sink{
@@ -23765,11 +23751,8 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "bbz" = (
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (NORTHWEST)";
-	icon_state = "conveyor0";
-	dir = 9
-	},
+/obj/item/weapon/storage/fancy/donut_box,
+/obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bbA" = (
@@ -23778,11 +23761,7 @@
 	dir = 2;
 	network = list("SS13")
 	},
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (SOUTHWEST)";
-	icon_state = "conveyor0";
-	dir = 10
-	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bbB" = (
@@ -24364,7 +24343,7 @@
 /area/bridge/meeting_room)
 "bdb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bdc" = (
 /obj/structure/extinguisher_cabinet{
@@ -24372,7 +24351,7 @@
 	pixel_y = -30
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bdd" = (
 /obj/machinery/vending/cola,
@@ -24485,12 +24464,16 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bdq" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/fork,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bdr" = (
-/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bds" = (
@@ -25024,8 +25007,10 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
 "bey" = (
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bez" = (
 /obj/structure/cable{
@@ -59690,6 +59675,11 @@
 /area/space)
 "cAg" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (EAST)";
+	icon_state = "conveyor0";
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cAh" = (
@@ -60249,16 +60239,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "cBm" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel/cafeteria,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "cBn" = (
 /obj/machinery/camera{
@@ -60698,19 +60680,59 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"cCy" = (
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/crew_quarters/kitchen)
+"cCx" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/warning/corner{
+	dir = 8
+	},
+/area/crew_quarters/kitchen)
+"cCw" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCv" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCu" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "kitchen shutters"
+	},
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (SOUTHWEST)";
+	icon_state = "conveyor0";
+	dir = 10
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "cCt" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (NORTHWEST)";
+	icon_state = "conveyor0";
+	dir = 9
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCs" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
 /turf/open/floor/plating,
-/area/crew_quarters/kitchen)
-"cCs" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (SOUTHEAST)";
-	icon_state = "conveyor0";
-	dir = 6
-	},
-/turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cCr" = (
 /obj/machinery/conveyor/preserver{
@@ -60721,21 +60743,21 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cCq" = (
-/obj/machinery/conveyor/preserver{
-	tag = "icon-conveyor0 (NORTHEAST)";
-	icon_state = "conveyor0";
-	dir = 5
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/crew_quarters/kitchen)
-"cCp" = (
-/obj/effect/landmark/start{
-	name = "Cook"
-	},
+/obj/structure/disposalpipe/segment,
 /obj/machinery/conveyor_switch/oneway{
 	id = "kitchenconveyor";
 	name = "kitchen conveyor switch"
 	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCp" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/stack/packageWrap,
+/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/book/manual/chef_recipes,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 
@@ -98130,9 +98152,9 @@ aJI
 aYK
 aJI
 aJI
-bdr
-bdr
-bdr
+cCx
+aTO
+aTO
 bfK
 bhk
 bix
@@ -98385,11 +98407,11 @@ aVz
 aVz
 aVz
 aYJ
-cCt
-aVz
-aVz
-aVz
-aVz
+cCs
+bbz
+cCy
+bak
+bak
 bfK
 bhj
 biw
@@ -98639,14 +98661,14 @@ aJI
 aRC
 aSK
 aVz
-cCp
-cCq
-aYL
-aTN
-bbz
-bey
-bdq
+aXm
 aVz
+aYL
+cCt
+cCv
+cCy
+bdq
+bak
 bfK
 bhl
 biy
@@ -98895,15 +98917,15 @@ aOI
 aJI
 aRy
 aSJ
-aVz
+cCp
 aVB
+aVz
 cCr
-aVz
 baj
-aXm
+cCv
+cCy
 bey
-cBm
-aVz
+bak
 bfK
 bfK
 bfK
@@ -99152,15 +99174,15 @@ aON
 aQk
 aRD
 aSM
-aVz
 aVE
+aVB
+aVz
 cCr
-aVz
-bak
-aXm
+baj
+cCw
+cCy
 bey
-aVG
-aVz
+bak
 bfL
 bhn
 biz
@@ -99409,15 +99431,15 @@ aOM
 aQj
 aRB
 aSL
-aVz
 aVD
-cCr
+aVB
+aVz
 cAg
-bak
-aXm
-bey
+baj
 aVG
-cAg
+cCy
+bey
+cBm
 bfL
 bhm
 bhm
@@ -99666,14 +99688,14 @@ aMF
 aJI
 aRG
 aSO
-aVz
 aTM
-cCr
+aVB
 aVz
-bak
-aXm
+cCr
+baj
+cCv
+cCy
 bey
-aVG
 bdc
 bfL
 beY
@@ -99925,12 +99947,12 @@ aRF
 aSN
 aVF
 aVF
-cCs
+cCq
 aYM
-aTO
+cCu
 bbA
-bey
-aVG
+cCy
+bdr
 bdb
 bdN
 blr
@@ -100184,11 +100206,11 @@ aVz
 aVH
 aXn
 aYN
-cCt
-aVz
-aVz
-aVz
-aVz
+cCs
+aVG
+cCy
+bak
+bak
 bfL
 bhm
 biz
@@ -100443,9 +100465,9 @@ aJI
 aJI
 aJI
 aJI
-bdr
-bdr
-bdr
+aTN
+aTO
+aTO
 bfL
 bhp
 biB
