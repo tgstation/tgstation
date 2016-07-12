@@ -314,3 +314,14 @@
 	. = ..()
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, rand(1,2), 7, user)
+
+/obj/item/weapon/melee/flyswatter
+	name = "Flyswatter"
+	desc = "Useful for killing insects of all sizes."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "flyswatter"
+	item_state = "flyswatter"
+	force = 1
+	throwforce = 1
+	attack_verb = list("swatted", "smacked")
+	w_class = 2

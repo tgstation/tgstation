@@ -243,6 +243,12 @@
 		return 1
 	return 0
 
+/mob/living/simple_animal/hostile/poison/bees/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(istype(I, /obj/item/weapon/melee/flyswatter))
+		user << "<span class='warning'>You easily splat the [src].</span>"
+		new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
+		Destroy()
 
 /obj/item/queen_bee
 	name = "queen bee"
@@ -276,6 +282,10 @@
 				name = queen.name
 			else
 				user << "<span class='warning'>You don't have enough units of that chemical to modify the bee's DNA!</span>"
+	if(istype(I,/obj/item/weapon/melee/flyswatter))
+		user << "<span class='warning'>You easily splat the [src].</span>"
+		new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
+		Destroy()
 	..()
 
 
