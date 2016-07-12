@@ -24,6 +24,14 @@
 	if(loc)
 		name = loc.name
 
+/obj/item/weapon/storage/internal/pocket/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+	. = ..()
+	if(. && silent && !prevent_warning)
+		if(quickdraw)
+			user << "<span class='notice'>You discreetly slip [W] into [src]. Alt-click [src] to remove it.</span>"
+		else
+			user << "<span class='notice'>You discreetly slip [W] into [src]."
+
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = 3
 
