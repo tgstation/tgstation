@@ -1,4 +1,4 @@
-var/datum/subsystem/food/SSFood
+var/datum/subsystem/food/SSfood
 
 /datum/subsystem/food
 	name = "Food Health"
@@ -14,26 +14,29 @@ var/datum/subsystem/food/SSFood
 	insertProcess[toInsert] = 1
 
 /datum/subsystem/food/New()
-	NEW_SS_GLOBAL(SSFood)
+	NEW_SS_GLOBAL(SSfood)
 
 /datum/subsystem/food/stat_entry()
 	..("Watched: [curFood.len]")
 
 /datum/subsystem/food/fire(resumed = 0)
 	for(var/thing in insertProcess)
-		/obj/item/weapon/reagent_containers/food/F = thing
+		var/obj/item/weapon/reagent_containers/food/F = thing
 		F.initialDesc = F.desc
 		for(var/datum/reagent/R in F.reagents)
 			F.bestReagents += R
 		curFood[F] = 1
 	insertProcess.Cut()
-	
+
 	if(!resumed)
 		src.currentrun = curFood.Copy()
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		/obj/item/weapon/reagent_containers/food/F = currentrun[currentrun.len]
+		var/obj/item/weapon/reagent_containers/food/F = currentrun[currentrun.len]
 		currentrun.len--
-		F.updateFood()
+		if(F)
+			F.updateFood()
+		else
+			curFood -= F
 		if (MC_TICK_CHECK)
 			return

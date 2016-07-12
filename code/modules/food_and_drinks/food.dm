@@ -29,8 +29,7 @@
 	..()
 	pixel_x = rand(-5, 5)	//Randomizes postion slightly.
 	pixel_y = rand(-5, 5)
-	spawn(10)
-		SSfood.insertFood(src) // wait a moment then insert, for food init to be done
+	SSfood.insertFood(src)
 	if(targetTemperature >= 50) // gotcha to make sure any missed flags dont break
 		shouldBeHot = TRUE
 	if(!src.reagents)
