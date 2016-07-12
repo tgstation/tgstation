@@ -22,6 +22,7 @@
 	var/list/extraToxins = list() // extra stuff we can produce from being mouldy
 	var/initialDesc = "" // we store our own copy of the initial desc just in case food changes on spawn
 	var/ticksRotted = 0 // how much we've rotted, seperate from just checkign toxins for "poison" food, like carp
+	var/visibleRot = FALSE // are we now visibly rotting
 
 
 /obj/item/weapon/reagent_containers/food/New()
@@ -84,6 +85,10 @@
 			if(freshness < mouldRating)
 				ticksRotted++
 				src.reagents.add_reagent("toxin",1)
+				if(ticksRotted > 50 && !visibleRot)
+					visibleRot = TRUE
+					var/image/stank = image('icons/effects/effects.dmi', icon_state = "stinky")
+					add_overlay(stank)
 
 		//charcoooaaal
 		if(temperature > targetTemperature * 3) // if we're much higher than our target, turn black and be charcoal
