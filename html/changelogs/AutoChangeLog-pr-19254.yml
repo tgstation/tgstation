@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Added dextrous guardians to the code, able to hold and use items and store a single item within themselves."
+  - experiment: "Dextrous guardians do low damage on punches, have medium damage resist, and recalling or leashing will force them to drop any items in their hands."
