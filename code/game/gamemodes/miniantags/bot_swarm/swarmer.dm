@@ -556,7 +556,7 @@
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
-	var/rendered = "<B>Swarm communication - [src]</b> states: [say_quote(message, get_spans())]"
+	var/rendered = "<B>Swarm communication - [src]</b> [say_quote(message, get_spans())]"
 	if(message)
 		for(var/mob/M in mob_list)
 			if(isswarmer(M))
