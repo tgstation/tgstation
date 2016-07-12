@@ -1087,3 +1087,28 @@
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
 	burn_state = LAVA_PROOF
+	var/randomsinglesprite = FALSE
+	var/randomspritemax = 2
+
+/obj/item/clockwork/alloy_shards/New()
+	..()
+	if(randomsinglesprite)
+		name = "replicant alloy shard"
+		desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
+		clockwork_desc = "A broken shard of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+		icon_state = "[icon_state][rand(1, randomspritemax)]"
+		pixel_x = rand(-9, 9)
+		pixel_y = rand(-9, 9)
+
+/obj/item/clockwork/alloy_shards/large
+	randomsinglesprite = TRUE
+	icon_state = "shard_large"
+
+/obj/item/clockwork/alloy_shards/medium
+	randomsinglesprite = TRUE
+	icon_state = "shard_medium"
+
+/obj/item/clockwork/alloy_shards/small
+	randomsinglesprite = TRUE
+	randomspritemax = 3
+	icon_state = "shard_small"

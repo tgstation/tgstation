@@ -19,7 +19,9 @@
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
-	var/list/debris = list(/obj/item/clockwork/alloy_shards) //Parts left behind when a structure breaks
+	var/list/debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/medium = 2, \
+	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 
 /obj/structure/clockwork/New()
@@ -36,7 +38,8 @@
 	if(!takes_damage)
 		return 0
 	for(var/I in debris)
-		new I (get_turf(src))
+		for(var/i in 1 to debris[I])
+			new I (get_turf(src))
 	visible_message(break_message)
 	playsound(src, break_sound, 50, 1)
 	qdel(src)
@@ -305,7 +308,7 @@
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
-	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
+	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	burn_state = LAVA_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
@@ -443,7 +446,9 @@
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards)
+	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/medium = 4, \
+	/obj/item/clockwork/alloy_shards/small = 2) //slightly more debris than the default, totals 26 alloy
 
 /obj/structure/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
