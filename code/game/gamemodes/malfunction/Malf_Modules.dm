@@ -107,7 +107,7 @@
 	sleep(100)
 	for(var/mob/living/L in mob_list)
 		var/turf/T = get_turf(L)
-		if(T.z != z_level)
+		if(!T || T.z != z_level)
 			continue
 		if(issilicon(L))
 			continue
