@@ -440,7 +440,7 @@
 	icon_state = "kidneys"
 	zone = "chest"
 	slot = "kidneys"
-	var/waste_filtered = 0
+	var/filtered = 0
 	var/power = 2
 	var/warning_level = 1000
 	var/danger_level = 2000
@@ -451,7 +451,9 @@
 /obj/item/organ/kidneys/New()
 	..()
 	// otherwise everyone's going to start out in perfect sync
-	waste_filtered = rand(0, warning_level)
+	filtered = rand(0, warning_level)
+	create_reagents(10)
+	reagents.set_reacting(FALSE)
 
 /obj/item/organ/kidneys/on_life()
 	if(owner.stat == DEAD)
@@ -463,27 +465,36 @@
 	if(NORENAL in H.dna.species.specflags)
 		return
 
-	if(waste_filtered < maximum_capacity)
-		var/waste_levels = H.reagents.get_reagent_amount("waste_products")
-		var/to_remove = max(waste_levels, power)
-		H.reagents.remove_reagent("waste_products", to_remove)
-		waste_filtered += to_remove + rand(0,2)
+	// Absorb as much from the host reagent pool
+	// (most of the time, life ticks will put the waste_products directly
+	// in our own reagent pool, but sometimes other sources will add to
+	// the host)
+	H.reagents.trans_id_to(src, "waste_products", amount=INFINITY)
 
-	switch(waste_filtered)
-		if(0 to warning_level)
-			H.clear_alert("needtogo")
-		if(warning_level to danger_level)
-			H.throw_alert("needtogo", /obj/screen/alert/needtogo_warning)
-			unlocked = TRUE
-		if(danger_level to maximum_capacity)
-			H.throw_alert("needtogo", /obj/screen/alert/needtogo_danger)
-			unlocked = TRUE
-			H.Jitter(5)
-			H.Dizzy(5)
+	// Then from our own reagent pool, process any waste
+	if(filtered < maximum_capacity)
+		var/waste_levels = reagents.get_reagent_amount("waste_products")
+		var/to_remove = max(waste_levels, power)
+		reagents.remove_reagent("waste_products", to_remove)
+		filtered += to_remove + rand(0,2)
+
+	unlocked = (filtered > (warning_level / 2))
+
+	if((filtered >= 0) && (filtered < warning_level))
+		H.clear_alert("needtogo")
+	else if((filtered >= warning_level) && (filtered < danger_level))
+		H.throw_alert("needtogo", /obj/screen/alert/needtogo_warning)
+	else
+		H.throw_alert("needtogo", /obj/screen/alert/needtogo_danger)
+		H.Jitter(50)
+		H.Dizzy(50)
 
 /obj/item/organ/kidneys/proc/empty()
-	waste_filtered = 0
+	filtered = 0
+	unlocked = FALSE
 	owner.clear_alert("needtogo")
+	owner.jitteriness = 0
+	owner.dizziness = 0
 	owner << "<span class='notice'>You feel better.</span>"
 
 /obj/item/organ/kidneys/electronic
@@ -493,9 +504,9 @@
 /obj/item/organ/kidneys/electronic/on_life()
 	. = ..()
 	if(!emped)
-		waste_filtered = 0
+		filtered = 0
 	else
-		waste_filtered = (danger_level + maximum_capacity) / 2
+		filtered = (danger_level + maximum_capacity) / 2
 
 /obj/item/organ/kidneys/electronic/emp_act(severity)
 	if(emped)

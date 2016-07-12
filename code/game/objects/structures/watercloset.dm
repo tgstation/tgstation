@@ -1,3 +1,16 @@
+#define USAGE_TIME 60
+var/list/euphemisms = list(
+	"You start to visit the little clown's room...",
+	"You begin to see a man about their dog...",
+	"You start a Space Chinese singing lesson...",
+	"You begin to drop some hardwood floors at the pool...",
+	"You begin to spend a penny...",
+	"You start to water your horse...",
+	"You begin to write your name in the snow...",
+	"You start to vote for president...",
+)
+
+
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
@@ -65,13 +78,17 @@
 		open = !open
 		update_icon()
 	else
-		if(ishuman(user) && open)
+		if(ishuman(user) && open && (user.loc == loc))
 			var/mob/living/carbon/human/H = user
 			var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
 			if(istype(kidneys) && kidneys.unlocked)
-				if(do_mob(H, src, 60, progress=TRUE))
+				H << "<span class='notice'>[pick(euphemisms)]</span>"
+				if(do_mob(H, src, USAGE_TIME, progress=TRUE))
 					kidneys.empty()
 					return
+			else
+				H << "<span class='notice'>You don't need to right now.\
+					</span>"
 		open = !open
 		update_icon()
 
@@ -143,9 +160,13 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
 		if(istype(kidneys) && kidneys.unlocked)
-			if(do_mob(H, src, 60, progress=TRUE))
+			H << "<span class='notice'>[pick(euphemisms)]</span>"
+			if(do_mob(H, src, USAGE_TIME, progress=TRUE))
 				kidneys.empty()
 				return
+			else
+				H << "<span class='notice'>You don't need to right now.\
+					</span>"
 	. = ..()
 
 /obj/machinery/shower
@@ -497,3 +518,4 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+#undef USAGE_TIME
