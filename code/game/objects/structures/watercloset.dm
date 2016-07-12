@@ -1,3 +1,16 @@
+#define USAGE_TIME 60
+var/list/euphemisms = list(
+	"You start to visit the little clown's room...",
+	"You begin to see a man about their dog...",
+	"You start a Space Chinese singing lesson...",
+	"You begin to drop some hardwood floors at the pool...",
+	"You begin to spend a penny...",
+	"You start to water your horse...",
+	"You begin to write your name in the snow...",
+	"You start to vote for president...",
+)
+
+
 /obj/structure/toilet
 	name = "toilet"
 	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean."
@@ -61,10 +74,27 @@
 				I.loc = get_turf(src)
 			user << "<span class='notice'>You find [I] in the cistern.</span>"
 			w_items -= I.w_class
+	else if(!open)
+		open = !open
+		update_icon()
 	else
+		if(ishuman(user) && open && (user.loc == loc))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
+			if(istype(kidneys) && kidneys.unlocked)
+				H << "<span class='notice'>[pick(euphemisms)]</span>"
+				if(do_mob(H, src, USAGE_TIME, progress=TRUE))
+					kidneys.empty()
+					return
+			else
+				H << "<span class='notice'>You don't need to right now.\
+					</span>"
 		open = !open
 		update_icon()
 
+/obj/structure/toilet/AltClick()
+	open = !open
+	update_icon()
 
 /obj/structure/toilet/update_icon()
 	icon_state = "toilet[open][cistern]"
@@ -101,7 +131,7 @@
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
 	else
-		return ..()
+		. = ..()
 
 
 
@@ -126,8 +156,18 @@
 			GM.adjustBruteLoss(8)
 		else
 			user << "<span class='warning'>You need a tighter grip!</span>"
-	else
-		..()
+	else if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/kidneys/kidneys = H.getorganslot("kidneys")
+		if(istype(kidneys) && kidneys.unlocked)
+			H << "<span class='notice'>[pick(euphemisms)]</span>"
+			if(do_mob(H, src, USAGE_TIME, progress=TRUE))
+				kidneys.empty()
+				return
+			else
+				H << "<span class='notice'>You don't need to right now.\
+					</span>"
+	. = ..()
 
 /obj/machinery/shower
 	name = "shower"
@@ -356,7 +396,7 @@
 	name = "sink"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "sink"
-	desc = "A sink used for washing one's hands and face."
+	desc = "Used for washing one's hands and face."
 	anchored = 1
 	var/busy = 0 	//Something's being washed at the moment
 
@@ -478,3 +518,4 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+#undef USAGE_TIME

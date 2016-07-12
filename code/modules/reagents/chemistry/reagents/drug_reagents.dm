@@ -20,7 +20,8 @@
 	..()
 
 /datum/reagent/drug/space_drugs/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You start tripping hard!</span>"
+	if(!(flags & REAGENT_SILENT_OVERDOSE))
+		M << "<span class='userdanger'>You start tripping hard!</span>"
 
 
 /datum/reagent/drug/space_drugs/overdose_process(mob/living/M)

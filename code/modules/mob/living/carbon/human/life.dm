@@ -33,11 +33,12 @@
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
 
-		//heart attack stuff
 		handle_heart()
+		handle_waste()
 
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -317,9 +318,21 @@
 			// circulation, and without it, our tissues die and start
 			// gaining toxins
 			adjustBruteLoss(3)
-			if(src.reagents)
-				src.reagents.add_reagent("toxin", 2)
+			reagents.add_reagent("waste_products", 3)
 
+/mob/living/carbon/human/proc/handle_waste()
+	CHECK_DNA_AND_SPECIES(src)
+	var/waste_produced = 1
+
+	if(!(NORENAL in dna.species.specflags))
+		var/datum/reagents/selected_reagents = reagents
+		var/obj/item/organ/kidneys/kidneys = getorganslot("kidneys")
+		if(istype(kidneys))
+			var/datum/reagents/KR = kidneys.reagents
+			if((KR.maximum_volume - KR.total_volume) >= waste_produced)
+				selected_reagents = KR
+
+		selected_reagents.add_reagent("waste_products", 1)
 /*
 Alcohol Poisoning Chart
 Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)

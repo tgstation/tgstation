@@ -210,6 +210,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		var/mob/living/L = usr
 		return L.resist()
 
+/obj/screen/alert/needtogo_warning
+	name = "Need to Go"
+	desc = "When you gotta go, you gotta go."
+	icon_state = "needtogo1"
+
+/obj/screen/alert/needtogo_danger
+	name = "Really Need to Go"
+	desc = "You REALLY need to go. It's probably not healthy to spend this \
+		long in this state."
+	icon_state = "needtogo2"
+
 
 //ALIENS
 

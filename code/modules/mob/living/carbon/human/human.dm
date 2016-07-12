@@ -42,6 +42,9 @@
 	if(!(NOBLOOD in dna.species.specflags))
 		internal_organs += new /obj/item/organ/heart
 
+	if(!(NORENAL in dna.species.specflags))
+		internal_organs += new /obj/item/organ/kidneys
+
 	internal_organs += new /obj/item/organ/brain
 
 	//Note: Additional organs are generated/replaced on the dna.species level
@@ -180,7 +183,6 @@
 	var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	apply_damage(5, BRUTE, affecting, run_armor_check(affecting, "melee"))
-	return
 
 /mob/living/carbon/human/bullet_act()
 	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
@@ -1015,6 +1017,10 @@
 		if(!(NOBLOOD in dna.species.specflags) && !getorganslot("heart"))
 			var/obj/item/organ/heart/H = new()
 			H.Insert(src)
+
+		if(!(NORENAL in dna.species.specflags) && !getorganslot("kidneys"))
+			var/obj/item/organ/kidneys/K = new()
+			K.Insert(src)
 
 		if(!getorganslot("tongue"))
 			var/obj/item/organ/tongue/T

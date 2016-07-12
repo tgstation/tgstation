@@ -71,7 +71,6 @@
 /datum/reagent/toxin/plasma/reaction_turf(turf/open/T, reac_volume)
 	if(istype(T))
 		T.atmos_spawn_air("plasma=[reac_volume];TEMP=[T20C]")
-	return
 
 /datum/reagent/toxin/plasma/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
 	if(!istype(M, /mob/living))
@@ -752,3 +751,30 @@
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()
+
+/datum/reagent/toxin/waste_product
+	name = "Waste Products"
+	id = "waste_products"
+	description = "Natural waste products produced by the metabolism, \
+		only found in great amounts in subjects with renal failure."
+	toxpwr = 0
+	metabolization_rate = 0 // filtered by the kidneys
+	overdose_threshold = 10
+	flags = REAGENT_SILENT_OVERDOSE
+	color = "#8E3975"
+
+/datum/reagent/toxin/waste_product/overdose_process(mob/living/M)
+	// When built up in excess, slowly converts to toxin
+	// but at a rate slower than its normal buildup in humans
+	var/toxlover = FALSE
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.dna && H.dna.species && (TOXINLOVER in H.dna.species.specflags))
+			toxlover = TRUE
+	if(!toxlover)
+		M.adjustToxLoss(1, 0)
+	else
+		M.adjustToxLoss(-1, 0)
+	holder.remove_reagent(id, 0.5)
+	..()
+	. = 1

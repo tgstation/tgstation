@@ -18,6 +18,7 @@
 	var/current_cycle = 0
 	var/volume = 0
 	var/color = "#000000" // rgb: 0, 0, 0
+	var/flags = 0
 	var/can_synth = 1
 	var/metabolization_rate = REAGENTS_METABOLISM //how fast the reagent is metabolized by the mob
 	var/overrides_metab = 0
@@ -50,7 +51,6 @@
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	current_cycle++
 	holder.remove_reagent(src.id, metabolization_rate * M.metabolism_efficiency) //By default it slowly disappears.
-	return
 
 // Called when this reagent is removed while inside a mob
 /datum/reagent/proc/on_mob_delete(mob/M)
@@ -83,28 +83,24 @@
 	return
 
 /datum/reagent/proc/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
-	return
+	if(!(flags & REAGENT_SILENT_OVERDOSE))
+		M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
-	if(prob(30))
+	if(prob(30) && (!(flags & REAGENT_SILENT_ADDICTION)))
 		M << "<span class='notice'>You feel like some [name] right about now.</span>"
-	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
-	if(prob(30))
+	if(prob(30) && (!(flags & REAGENT_SILENT_ADDICTION)))
 		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
-	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
-	if(prob(30))
+	if(prob(30) && (!(flags & REAGENT_SILENT_ADDICTION)))
 		M << "<span class='danger'>You have an intense craving for [name].</span>"
-	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
-	if(prob(30))
+	if(prob(30) && (!(flags & REAGENT_SILENT_ADDICTION)))
 		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
-	return
 
 /proc/pretty_string_from_reagent_list(var/list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

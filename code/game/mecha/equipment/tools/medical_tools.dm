@@ -396,7 +396,6 @@
 	if(filter.get("purge_all"))
 		reagents.clear_reagents()
 		return
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
@@ -488,7 +487,7 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(R.can_synth && add_known_reagent(R.id,R.name))
+		if((!(R.flags & REAGENT_CANNOT_SYNTH)) && add_known_reagent(R.id,R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 	occupant_message("Analyzis complete.")
@@ -506,12 +505,10 @@
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return 1
-	return
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change()
 	..()
 	update_equip_info()
-	return
 
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process()
