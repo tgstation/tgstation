@@ -545,7 +545,7 @@
 						M.Paralyse(10)
 						M.ex_act(2)
 
-			else
+			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
 				if(!AM.anchored)
 					step(AM, dir)
 				else
