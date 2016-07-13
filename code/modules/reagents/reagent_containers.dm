@@ -6,7 +6,7 @@
 	w_class = 1
 	var/amount_per_transfer_from_this = 5
 	var/list/possible_transfer_amounts = list(5,10,15,20,25,30)
-	var/volume = 30
+	var/volume = DEFAULT_REAGENT_SIZE
 	var/list/list_reagents = null
 	var/spawned_disease = null
 	var/disease_amount = 20

@@ -1,12 +1,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Food.
 ////////////////////////////////////////////////////////////////////////////////
+
+var/list/whitelist_foodlocs = typecacheof(list(/obj/structure/closet/secure_closet/freezer,/obj/machinery/smartfridge,/obj/machinery/food_cart,/obj/machinery/vending))
+
 /obj/item/weapon/reagent_containers/food
 	possible_transfer_amounts = list()
 	volume = 50	//Sets the default container amount for all food items.
 	burn_state = FLAMMABLE
-
-	var/list/validLocations = list(/obj/structure/closet/secure_closet/freezer,/obj/machinery/smartfridge,/obj/machinery/food_cart,/obj/machinery/vending)
 
 	// food degrading
 	var/lifetime = 360 // our initial "life" in which we are freshest, and do not lose a lot of goodness
@@ -42,12 +43,11 @@
 // degrade handling
 /obj/item/weapon/reagent_containers/food/proc/updateFood()
 	if(src.loc) // less intensive but hackier way to make sure frozen food is fine
-		for(var/S in validLocations)
-			if(istype(src.loc,S))
-				reachTemp = -50
+		if(is_type_in_typecache(src.loc, whitelist_foodlocs))
+			reachTemp = -50
 	if(canRot)
 		if(!src.reagents)
-			create_reagents(50)
+			create_reagents(DEFAULT_REAGENT_SIZE)
 			src.reagents.add_reagent("nutriment",1) // if we somehow got here with not having a reagent holder, make one and give us a tiny bit of nutriment to work with.
 		if(lifetime > 0)
 			--lifetime
