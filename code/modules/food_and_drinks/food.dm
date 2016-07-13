@@ -118,39 +118,41 @@ var/list/whitelist_foodlocs = typecacheof(list(/obj/structure/closet/secure_clos
 			color = rgb(255,min(ticksRotted,255),255)
 
 /proc/fluffTemp(var/what)
-	if(what <= -90)
-		return "Frozen"
-	if(what < -50 && what > -90)
-		return "Freezing"
-	if(what < -20 && what > -60)
-		return "Chilled"
-	if(what < 0 && what > -30)
-		return "Cool"
-	if(what > 0 && what < 30)
-		return "Lukewarm"
-	if(what > 20 && what < 60)
-		return "Warm"
-	if(what > 50 && what < 90)
-		return "Hot"
-	if(what >= 90)
-		return "Boiling"
+	switch(what)
+		if(-INFINITY to -90)
+			return "Frozen"
+		if(-89 to -50)
+			return "Freezing"
+		if(-49 to -20)
+			return "Chilled"
+		if(-19 to 0)
+			return "Cool"
+		if(1 to 30)
+			return "Lukewarm"
+		if(31 to 60)
+			return "Warm"
+		if(61 to 90)
+			return "Hot"
+		if(90 to INFINITY)
+			return "Boiling"
 	return "Ambient"
 
 /proc/tempColor(var/what)
-	if(what <= -90)
-		return "#3385FF"
-	if(what < -50 && what > -90)
-		return "#4D94FF"
-	if(what < -20 && what > -60)
-		return "#66A3FF"
-	if(what < 0 && what > -30)
-		return "#80B2FF"
-	if(what > 0 && what < 30)
-		return "#DB704D"
-	if(what > 20 && what < 60)
-		return "#D65C33"
-	if(what > 50 && what < 90)
-		return "#D14719"
-	if(what >= 90)
-		return "#CC3300"
+	switch(what)
+		if(-INFINITY to -90)
+			return "#3385FF"
+		if(-89 to -50)
+			return "#4D94FF"
+		if(-49 to -20)
+			return "#66A3FF"
+		if(-19 to 0)
+			return "#80B2FF"
+		if(1 to 30)
+			return "#DB704D"
+		if(31 to 60)
+			return "#D65C33"
+		if(61 to 90)
+			return "#D14719"
+		if(90 to INFINITY)
+			return "#CC3300"
 	return "#000000"
