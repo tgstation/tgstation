@@ -688,7 +688,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
 			your stolen goods. Comes with a crowbar and a floor tile inside."
-	item = /obj/item/weapon/storage/backpack/satchel_flat
+	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 2
 	surplus = 30
 

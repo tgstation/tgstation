@@ -38,7 +38,7 @@ Captain
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1, /obj/item/station_charter=1)
 
 	backpack = /obj/item/weapon/storage/backpack/captain
-	satchel = /obj/item/weapon/storage/backpack/satchel_cap
+	satchel = /obj/item/weapon/storage/backpack/satchel/cap
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/captain
 
 /datum/outfit/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
