@@ -324,4 +324,5 @@
 	force = 1
 	throwforce = 1
 	attack_verb = list("swatted", "smacked")
+	hitsound = 'sound/effects/snap.ogg'
 	w_class = 2

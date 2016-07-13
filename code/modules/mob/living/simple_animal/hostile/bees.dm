@@ -248,7 +248,7 @@
 	if(istype(I, /obj/item/weapon/melee/flyswatter))
 		user << "<span class='warning'>You easily splat the [src].</span>"
 		new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
-		Destroy()
+		qdel(src)
 
 /obj/item/queen_bee
 	name = "queen bee"
@@ -285,7 +285,7 @@
 	if(istype(I,/obj/item/weapon/melee/flyswatter))
 		user << "<span class='warning'>You easily splat the [src].</span>"
 		new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
-		Destroy()
+		qdel(src)
 	..()
 
 
