@@ -407,7 +407,7 @@ body
 					val = L[entry]
 					if(!isnull(val))
 						state = "ASSOC"
-					if(!isnull(L[index]))
+					if(isnull(L[index]))
 						state = "ASSOC"
 
 				switch(state)
