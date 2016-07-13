@@ -40,10 +40,8 @@
 	doomsday_device = DOOM
 	doomsday_device.start()
 	verbs -= /mob/living/silicon/ai/proc/nuke_station
-	for(var/obj/item/weapon/pinpointer/point in pinpointer_list)
-		for(var/mob/living/silicon/ai/A in ai_list)
-			if((A.stat != DEAD) && A.nuking)
-				point.the_disk = A //The pinpointer now tracks the AI core
+	for(var/obj/item/weapon/pinpointer/P in pinpointer_list)
+		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
