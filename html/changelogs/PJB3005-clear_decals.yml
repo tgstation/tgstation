@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - rscadd: "Gave the tile painter the ability to clear decals on a tile."

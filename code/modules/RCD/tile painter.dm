@@ -10,6 +10,8 @@
 
 	sparky				= 0
 
+	schematics = list(/datum/rcd_schematic/clear_decals)
+
 /obj/item/device/rcd/tile_painter/New()
-	schematics = typesof(/datum/rcd_schematic/tile)	//For some stupid reason typesof() isn't constant.
+	schematics += typesof(/datum/rcd_schematic/tile)
 	. = ..()

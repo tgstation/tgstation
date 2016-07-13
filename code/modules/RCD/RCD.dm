@@ -27,7 +27,7 @@
 
 	var/datum/html_interface/rcd/interface
 	var/datum/effect/effect/system/spark_spread/spark_system
-	
+
 	var/obj/screen/close/closer
 
 /obj/item/device/rcd/New()
@@ -146,6 +146,8 @@
 
 	if(selected.flags & RCD_GET_TURF)	//Get the turf because RCD_GET_TURF is on.
 		A = get_turf(A)
+		if (!A)
+			return // Thing clicked was in nullspace, so we won't pass a null turf.
 
 	if(selected.flags ^ RCD_SELF_SANE && get_energy(user) < selected.energy_cost)	//Handle energy amounts, but only if not SELF_SANE.
 		return 1
