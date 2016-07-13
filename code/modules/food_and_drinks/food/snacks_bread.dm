@@ -4,6 +4,9 @@
 	volume = 80
 	slices_num = 5
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -13,6 +16,9 @@
 	list_reagents = list("nutriment" = 2)
 	slot_flags = SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -147,3 +153,6 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	bitesize = 3
 	w_class = 3
+
+	targetTemperature = 15
+	shouldBeHot = FALSE

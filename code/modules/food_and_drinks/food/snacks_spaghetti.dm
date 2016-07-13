@@ -8,6 +8,8 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	filling_color = "#F0E68C"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti
 	name = "boiled spaghetti"
 	desc = "A plain dish of noodles, this needs more ingredients."
@@ -18,6 +20,8 @@
 	list_reagents = list("nutriment" = 2, "vitamin" = 1)
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	filling_color = "#F0E68C"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "spaghetti"
@@ -30,6 +34,8 @@
 	list_reagents = list("nutriment" = 6, "tomatojuice" = 10, "vitamin" = 4)
 	filling_color = "#DC143C"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/copypasta
 	name = "copypasta"
 	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."
@@ -41,6 +47,8 @@
 	list_reagents = list("nutriment" = 12, "tomatojuice" = 20, "vitamin" = 8)
 	filling_color = "#DC143C"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/meatballspaghetti
 	name = "spaghetti and meatballs"
 	desc = "Now that's a nic'e meatball!"
@@ -50,6 +58,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
 	list_reagents = list("nutriment" = 8, "vitamin" = 4)
 	filling_color = "#F0E68C"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "spesslaw"
@@ -61,6 +71,8 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 6)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/chowmein
 	name = "chow mein"
 	desc = "A nice mix of noodles and fried vegetables."
@@ -70,6 +82,8 @@
 	bonus_reagents = list("nutriment" = 3, "vitamin" = 4)
 	list_reagents = list("nutriment" = 7, "vitamin" = 6)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/beefnoodle
 	name = "beef noodle"
 	desc = "Nutritious, beefy and noodly."
@@ -77,3 +91,5 @@
 	icon_state = "beefnoodle"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)
+
+	targetTemperature = 50

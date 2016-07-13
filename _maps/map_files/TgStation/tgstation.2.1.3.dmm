@@ -20385,14 +20385,14 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aTN" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/warning/corner{
+	dir = 4
+	},
 /area/crew_quarters/kitchen)
 "aTO" = (
-/obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
-/turf/open/floor/plasteel/cafeteria,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "aTP" = (
 /obj/structure/rack,
@@ -21139,11 +21139,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVB" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
-/obj/item/stack/packageWrap,
+/obj/machinery/servingplate,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aVC" = (
@@ -22639,7 +22635,8 @@
 /area/crew_quarters/bar)
 "aYJ" = (
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_x = -20;
+	pixel_y = 25
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -22653,6 +22650,11 @@
 /area/crew_quarters/kitchen)
 "aYL" = (
 /obj/machinery/light,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (NORTHEAST)";
+	icon_state = "conveyor0";
+	dir = 5
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYM" = (
@@ -22660,12 +22662,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/button/door{
-	id = "kitchen";
-	name = "Kitchen Shutters Control";
-	pixel_x = -1;
-	pixel_y = -24;
-	req_access_txt = "28"
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (SOUTHEAST)";
+	icon_state = "conveyor0";
+	dir = 6
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -22673,6 +22673,13 @@
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 8
+	},
+/obj/machinery/button/door{
+	id = "kitchen";
+	name = "Kitchen Shutters Control";
+	pixel_x = 25;
+	pixel_y = 10;
+	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -23187,23 +23194,21 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "baj" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen";
 	name = "kitchen shutters"
 	},
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (WEST)";
+	icon_state = "conveyor0";
+	dir = 8
+	},
+/obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "bak" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen";
-	name = "kitchen shutters"
-	},
-/turf/open/floor/plasteel/cafeteria,
+/turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bal" = (
 /obj/structure/sink{
@@ -23746,20 +23751,19 @@
 /turf/closed/wall,
 /area/crew_quarters/bar)
 "bbz" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/primary/starboard)
+/obj/item/weapon/storage/fancy/donut_box,
+/obj/structure/table,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "bbA" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 2";
 	dir = 2;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 1
-	},
-/area/hallway/primary/starboard)
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 "bbB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass{
@@ -24339,20 +24343,16 @@
 /area/bridge/meeting_room)
 "bdb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/white/side{
-	dir = 2
-	},
-/area/hallway/primary/starboard)
+/turf/open/floor/plasteel,
+/area/crew_quarters/kitchen)
 "bdc" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
 	pixel_y = -30
 	},
 /obj/machinery/light,
-/turf/open/floor/plasteel/white/corner{
-	dir = 2
-	},
-/area/hallway/primary/starboard)
+/turf/open/floor/plasteel,
+/area/crew_quarters/kitchen)
 "bdd" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/wood,
@@ -24469,13 +24469,13 @@
 	on = 1
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
+/area/crew_quarters/kitchen)
 "bdr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
+/area/crew_quarters/kitchen)
 "bds" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 4";
@@ -25007,10 +25007,11 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
 "bey" = (
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/area/hallway/primary/starboard)
+/turf/open/floor/plasteel,
+/area/crew_quarters/kitchen)
 "bez" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -59674,6 +59675,11 @@
 /area/space)
 "cAg" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (EAST)";
+	icon_state = "conveyor0";
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "cAh" = (
@@ -60235,7 +60241,7 @@
 "cBm" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
+/area/crew_quarters/kitchen)
 "cBn" = (
 /obj/machinery/camera{
 	c_tag = "Locker Room Toilets";
@@ -60674,6 +60680,86 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
+"cCy" = (
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/crew_quarters/kitchen)
+"cCx" = (
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/warning/corner{
+	dir = 8
+	},
+/area/crew_quarters/kitchen)
+"cCw" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/food/condiment/peppermill{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCv" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCu" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen";
+	name = "kitchen shutters"
+	},
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (SOUTHWEST)";
+	icon_state = "conveyor0";
+	dir = 10
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCt" = (
+/obj/structure/plasticflaps,
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (NORTHWEST)";
+	icon_state = "conveyor0";
+	dir = 9
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCs" = (
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/turf/open/floor/plating,
+/area/crew_quarters/kitchen)
+"cCr" = (
+/obj/machinery/conveyor/preserver{
+	tag = "icon-conveyor0 (EAST)";
+	icon_state = "conveyor0";
+	dir = 4
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCq" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/conveyor_switch/oneway{
+	id = "kitchenconveyor";
+	name = "kitchen conveyor switch"
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
+"cCp" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	layer = 5
+	},
+/obj/item/stack/packageWrap,
+/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/book/manual/chef_recipes,
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -97809,7 +97895,7 @@ aXk
 aQc
 aQc
 aJC
-aYV
+bcs
 aYV
 bev
 bfK
@@ -98066,9 +98152,9 @@ aJI
 aYK
 aJI
 aJI
-bcs
-aYV
-aYV
+cCx
+aTO
+aTO
 bfK
 bhk
 bix
@@ -98321,11 +98407,11 @@ aVz
 aVz
 aVz
 aYJ
-aJI
+cCs
 bbz
-aYV
-aYV
-aYV
+cCy
+bak
+bak
 bfK
 bhj
 biw
@@ -98575,14 +98661,14 @@ aJI
 aRC
 aSK
 aVz
-aVz
+aXm
 aVz
 aYL
-aJI
-bbz
-aYV
+cCt
+cCv
+cCy
 bdq
-aYV
+bak
 bfK
 bhl
 biy
@@ -98831,15 +98917,15 @@ aOI
 aJI
 aRy
 aSJ
-aTM
+cCp
 aVB
 aVz
-aVz
+cCr
 baj
-bbz
-aYV
-bdp
-aYV
+cCv
+cCy
+bey
+bak
 bfK
 bfK
 bfK
@@ -99088,15 +99174,15 @@ aON
 aQk
 aRD
 aSM
-aVG
 aVE
-aXm
+aVB
 aVz
+cCr
+baj
+cCw
+cCy
+bey
 bak
-bbz
-aYV
-bdp
-aYV
 bfL
 bhn
 biz
@@ -99345,14 +99431,14 @@ aOM
 aQj
 aRB
 aSL
-aTN
 aVD
+aVB
 aVz
 cAg
-bak
-bbz
-aYV
-bdp
+baj
+aVG
+cCy
+bey
 cBm
 bfL
 bhm
@@ -99602,14 +99688,14 @@ aMF
 aJI
 aRG
 aSO
-aTO
-aVG
+aTM
+aVB
 aVz
-aVz
-bak
-bbz
-aYV
-bdp
+cCr
+baj
+cCv
+cCy
+bey
 bdc
 bfL
 beY
@@ -99861,11 +99947,11 @@ aRF
 aSN
 aVF
 aVF
-aVF
+cCq
 aYM
-aJI
+cCu
 bbA
-aYV
+cCy
 bdr
 bdb
 bdN
@@ -100120,11 +100206,11 @@ aVz
 aVH
 aXn
 aYN
-aJI
-bbz
-aYV
-aYV
-bey
+cCs
+aVG
+cCy
+bak
+bak
 bfL
 bhm
 biz
@@ -100379,9 +100465,9 @@ aJI
 aJI
 aJI
 aJI
-bcq
-bcq
-bcq
+aTN
+aTO
+aTO
 bfL
 bhp
 biB

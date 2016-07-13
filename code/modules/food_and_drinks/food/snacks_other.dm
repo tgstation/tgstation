@@ -10,6 +10,11 @@
 	list_reagents = list("nutriment" = 15, "vitamin" = 5)
 	w_class = 3
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 50
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
@@ -17,11 +22,19 @@
 	filling_color = "#FFD700"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 50
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
 	desc = "A slice of watery goodness."
 	icon_state = "watermelonslice"
 	filling_color = "#FF1493"
+
+	targetTemperature = 7
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -30,6 +43,11 @@
 	list_reagents = list("nutriment" = 4, "sugar" = 2)
 	filling_color = "#FF8C00"
 
+	meltable = TRUE
+	targetTemperature = 15
+	meltingPoint = 150
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
@@ -37,11 +55,19 @@
 	list_reagents = list("nutriment" = 2, "sugar" = 2, "cocoa" = 2)
 	filling_color = "#A0522D"
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 30
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
 	desc = "A slice from a huge mushroom."
 	icon_state = "hugemushroomslice"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+
+	targetTemperature = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	name = "popcorn"
@@ -51,6 +77,8 @@
 	list_reagents = list("nutriment" = 2)
 	bitesize = 0.1 //this snack is supposed to be eating during looooong time. And this it not dinner food! --rastaf0
 	filling_color = "#FFEFD5"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn/New()
 	..()
@@ -64,6 +92,8 @@
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#D2B48C"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/fries
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."
@@ -71,6 +101,8 @@
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 4)
 	filling_color = "#FFD700"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -80,6 +112,8 @@
 	list_reagents = list("nutriment" = 2)
 	filling_color = "#DEB887"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesyfries
 	name = "cheesy fries"
 	desc = "Fries. Covered in cheese. Duh."
@@ -88,6 +122,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#FFD700"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -104,6 +140,8 @@
 	list_reagents = list("nutriment" = 3, "oculine" = 3, "vitamin" = 2)
 	filling_color = "#FFA500"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
 	desc = "An apple coated in sugary sweetness."
@@ -112,6 +150,11 @@
 	bonus_reagents = list("nutriment" = 2, "sugar" = 3)
 	list_reagents = list("nutriment" = 3, "sugar" = 2)
 	filling_color = "#FF4500"
+
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 150
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/mint
 	name = "mint"
@@ -122,6 +165,11 @@
 	list_reagents = list("minttoxin" = 1)
 	filling_color = "#800000"
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 30
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/eggwrap
 	name = "egg wrap"
 	desc = "The precursor to Pigs in a Blanket."
@@ -129,6 +177,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/beans
 	name = "tin of beans"
@@ -138,12 +188,16 @@
 	list_reagents = list("nutriment" = 10)
 	filling_color = "#B22222"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/spidereggs
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
 	list_reagents = list("nutriment" = 2, "toxin" = 2)
 	filling_color = "#008000"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
@@ -152,6 +206,11 @@
 	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
 	list_reagents = list("nutriment" = 3, "cocoa" = 1)
 	filling_color = "#A0522D"
+
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 30
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/fudgedice
 	name = "fudge dice"
@@ -162,6 +221,11 @@
 	filling_color = "#A0522D"
 	trash = /obj/item/weapon/dice/fudge
 
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 30
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
 	desc = "A festive chocolate orange"
@@ -169,6 +233,11 @@
 	bonus_reagents = list("nutriment" = 1, "sugar" = 1)
 	list_reagents = list("nutriment" = 3, "sugar" = 1)
 	filling_color = "#A0522D"
+
+	meltable = TRUE
+	targetTemperature = 5
+	meltingPoint = 30
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/eggplantparm
 	name = "eggplant parmigiana"
@@ -179,6 +248,8 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#BA55D3"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
 	desc = "The base for all your burritos."
@@ -186,6 +257,8 @@
 	icon_state = "tortilla"
 	list_reagents = list("nutriment" = 3, "vitamin" = 1)
 	filling_color = "#FFEFD5"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito
 	name = "burrito"
@@ -195,6 +268,8 @@
 	list_reagents = list("nutriment" = 4, "vitamin" = 1)
 	filling_color = "#FFEFD5"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesyburrito
 	name = "cheesy burrito"
 	desc = "It's a burrito filled with cheese."
@@ -202,6 +277,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
 	list_reagents = list("nutriment" = 4, "vitamin" = 2)
 	filling_color = "#FFD800"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/carneburrito
 	name = "carne asada burrito"
@@ -211,6 +288,8 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#A0522D"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
 	name = "fuego plasma burrito"
 	desc = "A super spicy burrito."
@@ -218,6 +297,8 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	list_reagents = list("nutriment" = 4, "capsaicin" = 5, "vitamin" = 3)
 	filling_color = "#FF2000"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/yakiimo
 	name = "yaki imo"
@@ -227,6 +308,8 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 4)
 	filling_color = "#8B1105"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/roastparsnip
 	name = "roast parsnip"
 	desc = "Sweet and crunchy."
@@ -234,6 +317,8 @@
 	trash = /obj/item/trash/plate
 	list_reagents = list("nutriment" = 3, "vitamin" = 4)
 	filling_color = "#FF5500"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/melonfruitbowl
 	name = "melon fruit bowl"
@@ -244,6 +329,9 @@
 	filling_color = "#FF5500"
 	w_class = 3
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
 	desc = "The best icecream in space."
@@ -251,6 +339,11 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5, "vitamin" = 4)
 	filling_color = "#87CEFA"
+
+	meltable = TRUE
+	targetTemperature = -5
+	meltingPoint = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/sundae
 	name = "sundae"
@@ -260,6 +353,11 @@
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	filling_color = "#FFFACD"
 
+	meltable = TRUE
+	targetTemperature = -5
+	meltingPoint = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/honkdae
 	name = "honkdae"
 	desc = "The clown's favorite dessert."
@@ -267,6 +365,11 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "banana" = 10, "vitamin" = 4)
 	filling_color = "#FFFACD"
+
+	meltable = TRUE
+	targetTemperature = -5
+	meltingPoint = 5
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/nachos
 	name = "nachos"
@@ -276,6 +379,8 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#F4A460"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/cheesynachos
 	name = "cheesy nachos"
 	desc = "The delicious combination of nachos and melting cheese."
@@ -284,6 +389,8 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 3)
 	filling_color = "#FFD700"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/cubannachos
 	name = "cuban nachos"
 	desc = "That's some dangerously spicy nachos."
@@ -291,6 +398,8 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
 	list_reagents = list("nutriment" = 7, "capsaicin" = 8, "vitamin" = 4)
 	filling_color = "#DC143C"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/melonkeg
 	name = "melon keg"
@@ -302,6 +411,9 @@
 	volume = 80
 	bitesize = 5
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/honeybar
 	name = "honey nut bar"
 	desc = "Oats and nuts compressed together into a bar, held together with a honey glaze."
@@ -310,9 +422,13 @@
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
 
+	canRot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/stuffedlegion
 	name = "stuffed legion"
 	desc = "The former skull of a damned human, filled with goliath meat. It has a decorative lava pool made of ketchup and hotsauce."
 	icon_state = "stuffed_legion"
 	bonus_reagents = list("vitamin" = 3, "capsaicin" = 1, "tricordrazine" = 5)
 	list_reagents = list("nutriment" = 5, "vitamin" = 5, "capsaicin" = 2, "tricordrazine" = 10,)
+
+	targetTemperature = 50

@@ -11,6 +11,9 @@
 	list_reagents = list("nutriment" = 6)
 	w_class = 3
 
+	targetTemperature = 5
+	shouldBeHot = FALSE
+
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
@@ -37,6 +40,9 @@
 	list_reagents = list("nutriment" = 6)
 	w_class = 3
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/pizzabread
 	name = "pizza bread"
 	desc = "Add ingredients to make a pizza"
@@ -46,6 +52,8 @@
 	list_reagents = list("nutriment" = 7)
 	w_class = 3
 
+	targetTemperature = 50
+
 
 /obj/item/weapon/reagent_containers/food/snacks/doughslice
 	name = "dough slice"
@@ -54,6 +62,9 @@
 	icon_state = "doughslice"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/bun
 	filling_color = "#CD853F"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 
 /obj/item/weapon/reagent_containers/food/snacks/bun
@@ -65,6 +76,8 @@
 	custom_food_type = /obj/item/weapon/reagent_containers/food/snacks/customizable/burger
 	filling_color = "#CD853F"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter
 	name = "cake batter"
 	desc = "Cook it to get a cake."
@@ -73,6 +86,9 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/store/cake/plain
 	list_reagents = list("nutriment" = 9)
 	w_class = 3
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 // Cake batter + rolling pin = pie dough
 /obj/item/weapon/reagent_containers/food/snacks/cakebatter/attackby(obj/item/I, mob/user, params)
@@ -97,6 +113,9 @@
 	list_reagents = list("nutriment" = 9)
 	w_class = 3
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/rawpastrybase
 	name = "raw pastry base"
 	desc = "Must be cooked before use."
@@ -106,6 +125,9 @@
 	filling_color = "#CD853F"
 	list_reagents = list("nutriment" = 1)
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/pastrybase
 	name = "pastry base"
 	desc = "A base for any self-respecting pastry"
@@ -113,4 +135,7 @@
 	icon_state = "pastrybase"
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#CD853F"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 

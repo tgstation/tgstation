@@ -6,6 +6,8 @@
 	volume = 80
 	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/soup/New()
 	..()
 	eatverb = pick("slurp","sip","suck","inhale","drink")

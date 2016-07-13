@@ -12,6 +12,9 @@
 	var/extra_reagent = null
 	filling_color = "#D2691E"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/donut/New()
 	..()
 	if(prob(30))
@@ -78,6 +81,9 @@
 	list_reagents = list("nutriment" = 6)
 	filling_color = "#F4A460"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/muffin/berry
 	name = "berry muffin"
 	icon_state = "berrymuffin"
@@ -97,6 +103,8 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#FFE4E1"
 
+	targetTemperature = 50
+
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
@@ -108,6 +116,8 @@
 	list_reagents = list("nutriment" = 8, "vitamin" = 1)
 	filling_color = "#D2691E"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/soylentgreen
 	name = "\improper Soylent Green"
 	desc = "Not made of people. Honest." //Totally people.
@@ -116,6 +126,8 @@
 	bonus_reagents = list("vitamin" = 1)
 	list_reagents = list("nutriment" = 10, "vitamin" = 1)
 	filling_color = "#9ACD32"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "\improper Soylent Virdians"
@@ -126,6 +138,8 @@
 	list_reagents = list("nutriment" = 10, "vitamin" = 1)
 	filling_color = "#9ACD32"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/rofflewaffles
 	name = "roffle waffles"
 	desc = "Waffles from Roffle. Co."
@@ -135,6 +149,8 @@
 	bonus_reagents = list("vitamin" = 2)
 	list_reagents = list("nutriment" = 8, "mushroomhallucinogen" = 2, "vitamin" = 2)
 	filling_color = "#00BFFF"
+
+	targetTemperature = 50
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -147,6 +163,9 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "\improper Donk-pocket"
 	desc = "The food of choice for the seasoned traitor."
@@ -155,11 +174,16 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
 	filling_color = "#CD853F"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket/warm
 	name = "warm Donk-pocket"
 	desc = "The heated food of choice for the seasoned traitor."
 	bonus_reagents = list("omnizine" = 3)
 	list_reagents = list("nutriment" = 4, "omnizine" = 3)
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/dankpocket
 	name = "\improper Dank-pocket"
@@ -167,6 +191,8 @@
 	icon_state = "dankpocket"
 	list_reagents = list("lipolicide" = 3, "space_drugs" = 3, "nutriment" = 4)
 	filling_color = "#00FF00"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -184,6 +210,8 @@
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 30
+
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit
 	name = "plump helmet biscuit"
 	desc = "This is a finely-prepared plump helmet biscuit. The ingredients are exceptionally minced plump helmet, and well-minced dwarven wheat flour."
@@ -191,6 +219,8 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5)
 	filling_color = "#F0E68C"
+
+	targetTemperature = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/plumphelmetbiscuit/New()
 	..()
@@ -209,6 +239,8 @@
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#F0E68C"
 
+	canRot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "Fresh footlong ready to go down on."
@@ -218,6 +250,8 @@
 	list_reagents = list("nutriment" = 6, "ketchup" = 3, "vitamin" = 3)
 	filling_color = "#8B0000"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	name = "meat bun"
 	desc = "Has the potential to not be Dog."
@@ -226,12 +260,16 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 2)
 	filling_color = "#8B0000"
 
+	targetTemperature = 50
+
 /obj/item/weapon/reagent_containers/food/snacks/khachapuri
 	name = "khachapuri"
 	desc = "Bread with egg and cheese?"
 	icon_state = "khachapuri"
 	list_reagents = list("nutriment" = 12, "vitamin" = 2)
 	filling_color = "#FFFF4D"
+
+	targetTemperature = 50
 
 
 /obj/item/weapon/reagent_containers/food/snacks/sugarcookie
@@ -242,6 +280,9 @@
 	list_reagents = list("nutriment" = 3, "sugar" = 3)
 	filling_color = "#CD853F"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
 	desc = "Which side's the head, the fat end or the thin end?"
@@ -249,6 +290,9 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#FFE4C4"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/oatmealcookie
 	name = "oatmeal cookie"
@@ -258,6 +302,9 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#D2691E"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
 	desc = "Why would you put raisins on a cookie?"
@@ -265,6 +312,9 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE
 
 /obj/item/weapon/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"
@@ -274,6 +324,9 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/bluecherrycupcake
 	name = "blue cherry cupcake"
 	desc = "Blue cherries inside a delicious cupcake"
@@ -282,6 +335,9 @@
 	list_reagents = list("nutriment" = 5, "vitamin" = 1)
 	filling_color = "#F0E68C"
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/honeybun
 	name = "honey bun"
 	desc = "A sticky pastry bun glazed with honey."
@@ -289,3 +345,6 @@
 	bonus_reagents = list("nutriment" = 1, "honey" = 1)
 	list_reagents = list("nutriment" = 5, "honey" = 5)
 	filling_color = "#F2CE91"
+
+	targetTemperature = 15
+	shouldBeHot = FALSE

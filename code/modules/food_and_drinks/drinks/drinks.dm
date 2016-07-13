@@ -11,6 +11,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
 	burn_state = FIRE_PROOF
+	canRot = FALSE // drinks don't really tend to go too bad, and for simplicity's sake, they can just be immortal
 
 /obj/item/weapon/reagent_containers/food/drinks/New()
 	..()

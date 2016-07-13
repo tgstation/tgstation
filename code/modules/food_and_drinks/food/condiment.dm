@@ -26,6 +26,9 @@
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
+	targetTemperature = 15
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)

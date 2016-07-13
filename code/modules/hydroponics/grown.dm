@@ -17,6 +17,9 @@
 	burn_state = FLAMMABLE
 	origin_tech = "biotech=1"
 
+	targetTemperature = 19 // roughly room temperature
+	shouldBeHot = FALSE
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	..()
 	if(new_seed)
