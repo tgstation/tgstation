@@ -248,7 +248,7 @@
 	if(istype(I, /obj/item/weapon/melee/flyswatter))
 		user << "<span class='warning'>You easily splat the [src].</span>"
 		new /obj/effect/decal/cleanable/deadcockroach(get_turf(src))
-		qdel(src)
+		death(1)
 
 /obj/item/queen_bee
 	name = "queen bee"
