@@ -32,8 +32,6 @@
 			return 0
 
 	if(istype(A, /obj/mecha))
-		if(istype(A,/obj/mecha/combat/phazon)) //Since it is a bluespace mech, silly flaps can't stop it.
-			return 1
 		return 0
 
 
