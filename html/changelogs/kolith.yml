@@ -1,4 +1,0 @@
-author: kolith
-delete-after: True
-changes: 
-  - rscadd: "Adds a secway vehicle. It behaves as a janicart, except that you crash into things and are stunned for a short time if you are clumsy or very drunk."
