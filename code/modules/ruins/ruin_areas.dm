@@ -53,6 +53,9 @@
 /area/ruin/powered/authorship
 	name = "Authorship"
 
+/area/ruin/powered/aesthetic
+	name = "Aesthetic"
+	ambientsounds = list('sound/ambience/ambivapor1.ogg')
 
 /area/ruin/hotel
 	name = "Hotel"
