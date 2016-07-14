@@ -243,6 +243,7 @@
 		return 1
 	return 0
 
+
 /obj/item/queen_bee
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
