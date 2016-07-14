@@ -482,8 +482,9 @@
 		dat += "<BR><font color=grey><B>Uniform:</B> Obscured by [wear_suit]</font>"
 	else
 		dat += "<BR><B>Uniform:</B> <A href='?src=\ref[src];item=[slot_w_uniform]'>[makeStrippingButton(w_uniform)]</A>"
+		if(w_uniform)
+			dat += "<BR>[HTMLTAB]&#8627;<B>Suit Sensors:</B> <A href='?src=\ref[src];sensors=1'>Set</A>"
 	if(w_uniform)
-		dat += "<BR>[HTMLTAB]&#8627; <A href='?src=\ref[src];sensors=1'>Set suit sensors</A>"
 		dat += "<BR>[HTMLTAB]&#8627;<B>Belt:</B> <A href='?src=\ref[src];item=[slot_belt]'>[makeStrippingButton(belt)]</A>"
 		if(pickpocket)
 			dat += "<BR>[HTMLTAB]&#8627;<B>Pockets:</B> <A href='?src=\ref[src];pockets=left'>[(l_store && !(src.l_store.abstract)) ? l_store : "<font color=grey>Left (Empty)</font>"]</A>"
