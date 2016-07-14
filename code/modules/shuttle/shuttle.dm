@@ -194,8 +194,8 @@
 	var/last_timer_length
 
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
-	var/callTime = 150				//time spent in transit (deciseconds)
-	var/ignitionTime = 100			// time spent "starting the engines"
+	var/callTime = 50				//time spent in transit (deciseconds)
+	var/ignitionTime = 10			// time spent "starting the engines"
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 
 	// The direction the shuttle prefers to travel in
