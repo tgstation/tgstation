@@ -588,8 +588,7 @@ Sorry Giacom. Please don't be mad :(
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
-		// It's ugly. But everything related to inventory/storage is. -- c0
+	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
 /mob/living/movement_delay()

@@ -36,6 +36,7 @@
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
+//	pockets = /obj/item/weapon/storage/internal/pocket
 	strip_delay = 80
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
@@ -72,6 +73,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	dog_fashion = null
+//	pockets = /obj/item/weapon/storage/internal/pocket
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
