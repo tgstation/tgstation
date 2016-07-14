@@ -40,6 +40,7 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
+	SpinAnimation(8,-1)
 	return
 
 /obj/singularity/Destroy()

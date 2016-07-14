@@ -146,7 +146,7 @@
 				next_run = world.time
 				sleep(1)
 				continue
-			
+
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -186,11 +186,7 @@
 			step_towards(src, locate(new_x, new_y, z))
 			next_run += max(world.tick_lag, speed)
 			var/delay = next_run - world.time
-			if(delay <= world.tick_lag*2)
-				pixel_x = pixel_x_offset
-				pixel_y = pixel_y_offset
-			else
-				animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)))
+			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = delay)
 
 			if(original && (original.layer>=2.75) || ismob(original))
 				if(loc == get_turf(original))
@@ -199,7 +195,7 @@
 			Range()
 			if (delay > 0)
 				sleep(delay)
-			
+
 	else //old projectile system
 		set waitfor = 0
 		while(loc)

@@ -941,5 +941,14 @@ var/next_mob_id = 0
 /mob/proc/can_hold_items()
 	return FALSE
 
+
 /mob/proc/get_idcard()
+	return
+
+/mob/verb/fpssetting(fps as num)
+	if(fps <= 144 && fps >= 10)
+		client.fps = fps
+		src << "Your Frames Per Second(FPS) has been set to [fps]."
+	else
+		src << "Your FPS must be between 10 and 144."
 	return
