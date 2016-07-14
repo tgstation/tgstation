@@ -1,6 +1,0 @@
-author: "lordpidey"
-delete-after: True
-changes: 
-  - tweak: "Infernal jaunt now has a cooldown, to prevent trying to jaunt while already jaunting.  This should have no practical changes."
-  - bugfix: "Infernal jaunt no longer occasionally leaves you permanently on fire."
-  - bugfix: "Pitchforks no longer burn devils and soul-sellers, as intended."

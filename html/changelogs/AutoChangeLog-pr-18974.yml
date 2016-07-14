@@ -1,5 +1,0 @@
-author: "Bawhoppen"
-delete-after: True
-changes: 
-  - rscadd: "Added two new materials, Titanium and plastitanium. Titanium is naturally occuring, and plastitanium is an alloy made of plasma and titanium."
-  - rscadd: "These materials can be used to build shuttle walls and floors, though this serves no current purpose."
