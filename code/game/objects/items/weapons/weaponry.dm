@@ -326,3 +326,15 @@
 	attack_verb = list("swatted", "smacked")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = 2
+
+/obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag)
+		if(istype(target, /mob/living/simple_animal/hostile/poison/bees/) || istype(target, /mob/living/simple_animal/butterfly) || istype(target, /mob/living/simple_animal/cockroach))
+			var/mob/living/simple_animal/bug = target
+			new /obj/effect/decal/cleanable/deadcockroach(get_turf(bug))
+			bug.death(1)
+			user << "<span class='warning'>You easily splat the [bug].</span>"
+		else if(istype(target, /obj/item/queen_bee/))
+			qdel(target)
+			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
+			user << "<span class='warning'>You easily splat the [target].</span>"
