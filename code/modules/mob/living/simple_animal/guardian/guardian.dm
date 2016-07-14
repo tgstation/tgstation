@@ -28,6 +28,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	attacktext = "punches"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
+	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
 	melee_damage_lower = 15
@@ -469,10 +470,14 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
-	var/allowmultiple = 0
-	var/allowling = 1
+	var/allowmultiple = FALSE
+	var/allowling = TRUE
+	var/allowguardian = FALSE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+	if(isguardian(user) && !allowguardian)
+		user << "<span class='holoparasite'>[mob_name] chains are not allowed.</span>"
+		return
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>"
@@ -636,8 +641,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
-	allowmultiple = 1
-	allowling = 1
+	allowmultiple = TRUE
+	allowling = TRUE
 	random = TRUE
 
 /obj/item/weapon/guardiancreator/carp/choose
