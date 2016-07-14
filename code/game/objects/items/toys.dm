@@ -6,6 +6,7 @@
  *		Toy gun
  *		Toy crossbow
  *		Toy swords
+ *		Foam armblade
  *      Bomb clock
  *		Crayons
  *		Snap pops
@@ -367,6 +368,19 @@
 	throwforce = 5
 	w_class = W_CLASS_MEDIUM
 	attack_verb = list("attacks", "slashes", "stabs", "slices")
+
+/*
+ * Foam armblade
+ */
+/obj/item/toy/foamblade
+	name = "foam armblade"
+	desc = "it says \"Sternside Changs #1 fan\" on it. "
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "foamblade"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+	item_state = "armblade"
+	attack_verb = list("pricked", "absorbed", "gored", "stung")
+	w_class = W_CLASS_MEDIUM
 
 /*
  * Clock bomb
