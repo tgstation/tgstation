@@ -28,6 +28,18 @@
 	else
 		addtimer(src, "close", 0, TRUE)
 
+/obj/machinery/door/poddoor/shuttledock/north
+	checkdir = NORTH
+
+/obj/machinery/door/poddoor/shuttledock/south
+	checkdir = SOUTH
+
+/obj/machinery/door/poddoor/shuttledock/east
+	checkdir = EAST
+
+/obj/machinery/door/poddoor/shuttledock/west
+	checkdir = WEST
+
 /obj/machinery/door/poddoor/Bumped(atom/AM)
 	if(density)
 		return 0

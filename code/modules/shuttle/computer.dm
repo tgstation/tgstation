@@ -6,8 +6,9 @@
 	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
-	var/admin_controlled
-	var/no_destination_swap = 0
+	var/admin_controlled = FALSE
+	var/no_destination_swap = FALSE
+	var/emag_proof = FALSE
 
 /obj/machinery/computer/shuttle/New(location, obj/item/weapon/circuitboard/computer/shuttle/C)
 	..()
@@ -71,8 +72,11 @@
 				usr << "<span class='notice'>Unable to comply.</span>"
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
-	if(!emagged)
+	if(!emagged && !emag_proof)
 		src.req_access = list()
 		emagged = 1
 		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
+
+/obj/machinery/computer/shuttle/arrival
+	name = "arrival shuttle console"

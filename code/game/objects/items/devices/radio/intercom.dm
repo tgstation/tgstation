@@ -69,3 +69,12 @@
 
 /obj/item/device/radio/intercom/add_blood(list/blood_dna)
 	return 0
+
+/obj/item/device/radio/intercom/arrival
+	name = "Centcom public address system"
+	desc = "Maybe they'll have some information about your train?"
+	centcom = TRUE
+	frequency = CENTCOM_FREQ
+	freqlock = TRUE
+	canhear_range = 5
+	prison_radio = TRUE

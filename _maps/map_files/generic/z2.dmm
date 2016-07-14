@@ -6,8 +6,17 @@
 /turf/open/space,
 /area/space)
 "ac" = (
-/turf/open/space/transit/horizontal,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
 "ad" = (
 /turf/closed/indestructible/riveted,
 /area/space)
@@ -206,31 +215,35 @@
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
 "aN" = (
-/obj/docking_port/stationary/transit{
-	dheight = 0;
-	dir = 2;
-	dwidth = 11;
-	height = 22;
-	id = "whiteship_transit";
-	width = 35
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/space/transit/horizontal,
-/area/space)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/arrivals)
 "aO" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/holofloor/carpet,
 /area/holodeck/rec_center/lounge)
 "aP" = (
-/obj/docking_port/stationary/transit{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	id = "pod3_transit";
-	turf_type = /turf/open/space/transit/horizontal;
-	width = 3
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
-/turf/open/space/transit/horizontal,
-/area/space)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
 "aQ" = (
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack{
@@ -525,16 +538,17 @@
 	},
 /area/holodeck/rec_center/dodgeball)
 "bI" = (
-/obj/docking_port/stationary/transit{
-	dir = 4;
-	dwidth = 1;
-	height = 4;
-	id = "pod4_transit";
-	turf_type = /turf/open/space/transit/horizontal;
-	width = 3
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
 	},
-/turf/open/space/transit/horizontal,
-/area/space)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
 "bJ" = (
 /obj/structure/window{
 	dir = 1
@@ -738,15 +752,19 @@
 	},
 /area/holodeck/rec_center/dodgeball)
 "cl" = (
-/obj/docking_port/stationary/transit{
-	dir = 4;
-	dwidth = 9;
-	height = 11;
-	id = "emergency_transit";
-	width = 22
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/space/transit,
-/area/space)
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
 "cm" = (
 /obj/structure/window,
 /turf/open/floor/holofloor{
@@ -1069,15 +1087,9 @@
 /turf/open/floor/bluegrid,
 /area/tdome/arena_source)
 "de" = (
-/obj/docking_port/stationary/transit{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_transit";
-	width = 9
-	},
-/turf/open/space/transit,
-/area/space)
+/obj/machinery/vending/clothing,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
 "df" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -1104,73 +1116,65 @@
 /turf/open/floor/plasteel/black,
 /area/tdome/arena_source)
 "di" = (
-/obj/docking_port/stationary/transit{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 22;
-	id = "syndicate_transit";
-	width = 18
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
-/turf/open/space/transit,
-/area/space)
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
 "dj" = (
-/obj/docking_port/stationary/transit{
-	dir = 8;
-	dwidth = 2;
-	height = 12;
-	id = "ferry_transit";
-	width = 5
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/space/transit/horizontal,
-/area/space)
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
 "dk" = (
-/obj/docking_port/stationary/transit{
-	dwidth = 1;
-	height = 4;
-	id = "pod1_transit";
-	width = 3
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/space/transit,
-/area/space)
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/arrivals)
 "dl" = (
-/obj/docking_port/stationary/transit{
-	dwidth = 1;
-	height = 4;
-	id = "pod2_transit";
-	width = 3
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/space/transit,
-/area/space)
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
 "dm" = (
-/obj/docking_port/stationary/transit{
-	dir = 8;
-	dwidth = 5;
-	height = 7;
-	id = "supply_transit";
-	width = 12
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
-/turf/open/space/transit,
-/area/space)
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
+	},
+/area/centcom/arrivals)
 "dn" = (
-/obj/docking_port/stationary/transit{
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_transit";
-	width = 7
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
 	},
-/turf/open/space/transit,
-/area/space)
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/centcom/arrivals)
 "do" = (
-/obj/docking_port/stationary/transit{
-	dwidth = 3;
-	height = 7;
-	id = "steel_rain_transit";
-	width = 7
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4
 	},
-/turf/open/space/transit/horizontal,
-/area/space)
+/area/centcom/arrivals)
 "dp" = (
 /turf/closed/indestructible/riveted,
 /area/start)
@@ -2237,9 +2241,7 @@
 	},
 /area/centcom/evac)
 "gM" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast doorend"
-	},
+/obj/machinery/door/poddoor/shuttledock/east,
 /turf/open/floor/engine,
 /area/centcom/evac)
 "gN" = (
@@ -2270,9 +2272,20 @@
 	},
 /area/centcom/evac)
 "gR" = (
-/obj/machinery/door/poddoor/shuttledock,
-/turf/open/floor/engine,
-/area/centcom/evac)
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
 "gS" = (
 /turf/open/floor/grass,
 /area/centcom/control)
@@ -2657,11 +2670,17 @@
 	},
 /area/centcom/evac)
 "ie" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door3"
+/obj/structure/chair{
+	dir = 4
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/obj/item/device/radio/intercom/arrival{
+	pixel_x = -29;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
 "if" = (
 /obj/machinery/door/airlock/centcom{
 	aiControlDisabled = 1;
@@ -2726,11 +2745,13 @@
 	},
 /area/centcom/evac)
 "ip" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door2"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4;
+	frequency = 1441;
+	id = "air_in"
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/turf/open/floor/plating/airless,
+/area/space)
 "iq" = (
 /obj/docking_port/stationary{
 	area_type = /area/syndicate_mothership;
@@ -2884,11 +2905,18 @@
 	},
 /area/centcom/evac)
 "iN" = (
-/obj/machinery/door/poddoor/shuttledock{
-	name = "blast door1"
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/engine,
-/area/centcom/evac)
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/airless,
+/area/space)
 "iO" = (
 /turf/open/floor/plating/beach/coastline_b,
 /area/centcom/holding)
@@ -5410,9 +5438,10 @@
 /turf/open/floor/plasteel/red,
 /area/ctf)
 "qR" = (
-/obj/structure/barricade/security/ctf,
-/turf/open/floor/plasteel/circuit/rcircuit,
-/area/ctf)
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/centcom/arrivals)
 "qS" = (
 /turf/open/floor/plasteel/darkblue/side{
 	tag = "icon-darkblue (NORTH)";
@@ -6148,6 +6177,1947 @@
 /obj/item/weapon/storage/box/drinkingglasses,
 /turf/open/floor/carpet,
 /area/hades)
+"tt" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"tu" = (
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tv" = (
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tx" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"ty" = (
+/obj/structure/table/wood,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/pen,
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tz" = (
+/obj/structure/table/wood,
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tA" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/security/telescreen{
+	desc = "You probably shouldn't be looking at this you filthy observing ghost.";
+	name = "Centcom Monitor";
+	network = list("Centcom");
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tB" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tC" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tD" = (
+/obj/structure/closet,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tE" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tF" = (
+/obj/structure/showcase/fakesec,
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tG" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/centcom/arrivals)
+"tH" = (
+/obj/machinery/light/small,
+/obj/machinery/button/door{
+	id = "adminshut";
+	name = "Administrative Shutter-Control";
+	pixel_y = -30
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tI" = (
+/obj/structure/showcase/fakesec,
+/turf/open/floor/wood,
+/area/centcom/arrivals)
+"tJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"tK" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 8
+	},
+/area/centcom/arrivals)
+"tL" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/centcom/arrivals)
+"tM" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "adminshut";
+	name = "Administrative Shutters"
+	},
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
+/area/centcom/arrivals)
+"tN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"tO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/space)
+"tP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/space)
+"tQ" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 8
+	},
+/area/centcom/arrivals)
+"tR" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 4
+	},
+/area/centcom/arrivals)
+"tS" = (
+/turf/closed/indestructible/fakedoor{
+	name = "Centcom"
+	},
+/area/centcom/arrivals)
+"tT" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"tU" = (
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"tV" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"tW" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"tX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"tY" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"tZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"ua" = (
+/obj/structure/sign/poster{
+	official = 1;
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"ub" = (
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uc" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"ud" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/vending/clothing,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"ue" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"uf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"ug" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uh" = (
+/obj/structure/closet/crate/medical,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/warnplate{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"ui" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	layer = 5
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"uj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ul" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"um" = (
+/obj/machinery/vending/cigarette,
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"un" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uo" = (
+/obj/structure/closet/crate/internals,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating/warnplate{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"up" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ur" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"us" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ut" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"uu" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uv" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uw" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4;
+	initialize_directions = 11
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ux" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"uy" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uz" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 0;
+	frequency = 1441;
+	id_tag = "n2_out";
+	initialize_directions = 1;
+	internal_pressure_bound = 4000;
+	on = 1;
+	pressure_checks = 2;
+	pump_direction = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uB" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uC" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uD" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uE" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"uF" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uG" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/arrival{
+	pixel_x = 29
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"uJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"uK" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uL" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uM" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uN" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uO" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows";
+	dir = 1
+	},
+/area/centcom/arrivals)
+"uP" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"uR" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 4
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"uS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uT" = (
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Lounge North";
+	dir = 1;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"uU" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/structure/window{
+	icon_state = "window";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/effect/landmark/latejoin,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"uV" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"uW" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/machinery/power/apc{
+	cell_type = 15000;
+	dir = 2;
+	name = "Centcom North Arrivals APC";
+	pixel_x = 0;
+	pixel_y = -24;
+	req_access = list(201)
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uY" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"uZ" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"va" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"vb" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vc" = (
+/turf/closed/indestructible/fakeglass{
+	icon_state = "fakewindows2";
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"ve" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/space)
+"vf" = (
+/obj/machinery/computer/shuttle/ferry,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"vg" = (
+/turf/open/floor/plasteel/warning{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vh" = (
+/obj/machinery/door/poddoor/shuttledock/east,
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"vi" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 12;
+	id = "ferry_departures";
+	name = "departures ferry dock";
+	turf_type = /turf/open/space;
+	width = 5
+	},
+/turf/open/space,
+/area/space)
+"vj" = (
+/obj/item/weapon/twohanded/required/kirbyplants,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"vk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vl" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/arrivals)
+"vm" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"vo" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/status_display/locked/departures{
+	step_x = -32
+	},
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vp" = (
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vq" = (
+/obj/structure/chair,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vr" = (
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Dock North";
+	dir = 2;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vs" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vt" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vu" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"vv" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"vw" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"vx" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vy" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 1;
+	scrub_Toxins = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vz" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vA" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vC" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vE" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vF" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"vG" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vH" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/warning,
+/area/centcom/arrivals)
+"vI" = (
+/turf/open/floor/plasteel/warning,
+/area/centcom/arrivals)
+"vJ" = (
+/obj/structure/sign/vacuum{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/warning,
+/area/centcom/arrivals)
+"vK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Transfer North";
+	dir = 4;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vM" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/space,
+/area/space)
+"vN" = (
+/obj/machinery/door/poddoor/shuttledock/south,
+/turf/open/floor/engine,
+/area/centcom/arrivals)
+"vO" = (
+/obj/structure/lattice,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/open/space,
+/area/space)
+"vP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vR" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vS" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vT" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vU" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrivals Shuttle Airlock"
+	},
+/obj/docking_port/mobile{
+	dwidth = 5;
+	height = 7;
+	id = "arrival";
+	name = "arrival shuttle";
+	port_angle = -90;
+	preferred_direction = 8;
+	roundstart_move = "arrival_home";
+	width = 15
+	},
+/obj/docking_port/stationary{
+	dwidth = 5;
+	height = 7;
+	id = "arrival_home";
+	name = "station arrivals shuttle dock";
+	width = 15
+	},
+/turf/open/floor/plating,
+/area/space)
+"vV" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8;
+	initialize_directions = 11
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"vW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"vX" = (
+/obj/machinery/door/poddoor/shuttledock/north,
+/turf/open/floor/engine,
+/area/centcom/arrivals)
+"vY" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"vZ" = (
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
+	},
+/obj/machinery/power/smes/magical,
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"wa" = (
+/obj/structure/sign/vacuum{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"wb" = (
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"wc" = (
+/obj/structure/sign/vacuum{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/warning{
+	dir = 1
+	},
+/area/centcom/arrivals)
+"wd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Transfer South";
+	dir = 4;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"we" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"wf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"wg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted,
+/area/space)
+"wh" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wi" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8";
+	tag = ""
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wj" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"wk" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wl" = (
+/obj/machinery/status_display/locked/departures{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"wm" = (
+/obj/structure/closet/emcloset,
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"wn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/turf/closed/indestructible/riveted,
+/area/centcom/arrivals)
+"wo" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wp" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ws" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"wv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"ww" = (
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wx" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 8;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"wy" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/green/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"wz" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"wA" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"wB" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/centcom/arrivals)
+"wC" = (
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = -26
+	},
+/turf/open/floor/plasteel/green/side,
+/area/centcom/arrivals)
+"wD" = (
+/turf/open/floor/plasteel/green/corner{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"wE" = (
+/turf/open/floor/plasteel/green/corner,
+/area/centcom/arrivals)
+"wF" = (
+/obj/machinery/light,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22;
+	req_access = list(201)
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Dock South";
+	dir = 1;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/green/side,
+/area/centcom/arrivals)
+"wG" = (
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/green/side,
+/area/centcom/arrivals)
+"wH" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/green/side{
+	dir = 6
+	},
+/area/centcom/arrivals)
+"wI" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/closet/emcloset,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wJ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wK" = (
+/obj/machinery/status_display/locked/departures{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/green/side{
+	dir = 10
+	},
+/area/centcom/arrivals)
+"wL" = (
+/turf/open/floor/plasteel/green/side{
+	dir = 6
+	},
+/area/centcom/arrivals)
+"wM" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wO" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"wP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"wQ" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wR" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wS" = (
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wT" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wU" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wV" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wW" = (
+/obj/structure/grille/broken,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wX" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"wY" = (
+/obj/structure/sign/poster/official{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"wZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 1;
+	on = 1;
+	scrub_N2O = 0;
+	scrub_Toxins = 0
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"xa" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc{
+	cell_type = 15000;
+	dir = 4;
+	name = "Centcom South Arrivals APC";
+	pixel_x = 24;
+	pixel_y = 0;
+	req_access = list(201)
+	},
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xc" = (
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"xd" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"xe" = (
+/obj/structure/rack,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xf" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/obj/structure/sign/poster/official{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xh" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xi" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xk" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xl" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Centcom Arrivals";
+	opacity = 1;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"xm" = (
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"xn" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "0"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/centcom/arrivals)
+"xo" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"xp" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Centcom Arrivals Lobby South";
+	dir = 2;
+	network = list("Centcom")
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/centcom/arrivals)
+"xq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xr" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"xs" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/neutral/corner,
+/area/centcom/arrivals)
+"xt" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	frequency = 1439;
+	pixel_y = 23;
+	req_access = list(201)
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xu" = (
+/obj/structure/sign/nosmoking_2{
+	pixel_x = 0;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"xv" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"xw" = (
+/turf/open/space,
+/area/centcom/holding)
+"xx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"xy" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
+/area/centcom/arrivals)
+"ya" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	on = 1
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"xZ" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/centcom/arrivals)
+"xY" = (
+/turf/open/space,
+/area/centcom/arrivals)
+"xX" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_l";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/space)
+"xW" = (
+/obj/machinery/status_display/locked/departures{
+	pixel_y = -32
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xV" = (
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = -29
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xU" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xT" = (
+/obj/structure/table,
+/obj/item/weapon/phone,
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xS" = (
+/obj/machinery/door/airlock/glass{
+	name = "Arrivals Shuttle Cockpit"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xR" = (
+/obj/machinery/computer/shuttle/arrival,
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xQ" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/space)
+"xP" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xO" = (
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xN" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xM" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r";
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/space)
+"xL" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/space)
+"xK" = (
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space{
+	pixel_y = 21
+	})
+"xJ" = (
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xI" = (
+/obj/machinery/status_display/locked/departures{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"xH" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/space)
+"xG" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrivals Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/space)
+"xF" = (
+/turf/closed/wall/shuttle/smooth/nodiagonal,
+/area/space)
+"xE" = (
+/turf/closed/wall/shuttle/smooth/overspace,
+/area/space)
+"xD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/status_display/locked/departures{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 8
+	},
+/area/centcom/arrivals)
+"xC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel,
+/area/centcom/arrivals)
+"xB" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/structure/sign/poster/official{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/neutral/side{
+	dir = 4
+	},
+/area/centcom/arrivals)
+"xA" = (
+/obj/item/weapon/twohanded/required/kirbyplants{
+	layer = 5
+	},
+/obj/machinery/status_display/locked/departures{
+	pixel_x = -32
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
+"xz" = (
+/obj/structure/closet/crate/bin,
+/obj/item/device/radio/intercom/arrival{
+	pixel_y = 24
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/arrivals)
 
 (1,1,1) = {"
 ab
@@ -7172,8 +9142,8 @@ sX
 sh
 sw
 tp
-tq
-tr
+sO
+sw
 sh
 ab
 "}
@@ -7430,7 +9400,7 @@ th
 sw
 tp
 sO
-tr
+sw
 sh
 ab
 "}
@@ -44595,18 +46565,18 @@ fN
 fN
 fN
 gM
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-gR
-ie
-ip
-iN
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
 fN
 fN
 fN
@@ -62131,11 +64101,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+rW
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -62387,12 +64357,12 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
+rW
+rW
+tt
+vY
+we
+ip
 ab
 ab
 ab
@@ -62645,11 +64615,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+rW
+tt
+vZ
+wf
+iN
 ab
 ab
 ab
@@ -62903,27 +64873,27 @@ ab
 ab
 ab
 ab
+tt
+tt
+gR
+wg
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+xw
+xw
 ab
 ab
 ab
@@ -63160,27 +65130,27 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+xY
+tt
+wh
+wn
+tN
+wI
+wM
+wQ
+wT
+wW
+wW
+uf
+uf
+xe
+xg
+tN
+tN
+tN
+tN
+xx
+di
 ab
 ab
 ab
@@ -63416,28 +65386,28 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rW
+xZ
+tt
+wi
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+xn
+xy
+dj
 ab
 ab
 ab
@@ -63649,52 +65619,52 @@ ab
 ab
 ab
 ab
+tt
+tt
+tt
+uO
+vb
+vb
+vb
+vb
+vb
+vb
+vb
+vb
+vl
+tt
+tt
+tt
+rW
+ab
+xE
+xH
+xH
+xH
+xE
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+xY
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+uO
+vb
+vb
+vl
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+ac
+dj
 ab
 ab
 ab
@@ -63906,52 +65876,52 @@ ab
 ab
 ab
 ab
+tt
+up
+uz
+uP
+uP
+uP
+uP
+uP
+uP
+uP
+uP
+uP
+uP
+vx
+uP
+tt
+ab
+ab
+xF
+xN
+xR
+xT
+xF
 ab
 ab
 ab
 ab
+rW
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+rW
+tt
+ac
+dj
 ab
 ab
 ab
@@ -64163,52 +66133,52 @@ ab
 ab
 ab
 ab
+tt
+uq
+uA
+uQ
+uQ
+uQ
+xB
+uQ
+uQ
+uQ
+xB
+vk
+vm
+vy
+ub
+tt
+vM
+ab
+xF
+xO
+xP
+xJ
+xF
+ab
+vM
 ab
 ab
 ab
 ab
+rW
+ab
+rW
 ab
 ab
 ab
+rW
+ab
+rW
+ab
+rW
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+ac
+dj
 ab
 ab
 ab
@@ -64419,55 +66389,55 @@ ab
 ab
 ab
 ab
+tt
+tt
+ur
+uB
+tt
+tt
+tt
+tt
+vf
+vg
+vj
+tt
+tt
+vn
+vz
+vz
+tt
+tt
+xE
+xF
+xH
+xS
+xH
+xF
+xE
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+rW
+rW
+ab
+rW
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rW
+rW
+rW
+rW
+rW
+tt
+tt
+aN
+dk
+tt
+tt
 ab
 ab
 ab
@@ -64675,57 +66645,57 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tt
+xA
+uq
+uC
+ui
+tt
+tt
+tt
+tt
+vh
+tt
+tt
+tt
+vo
+ub
+ub
+vH
+vN
+xF
+xI
+xJ
+xJ
+xJ
+xU
+xF
+vX
+wa
+wj
+ie
+wj
+wB
+tt
+tt
+tt
+tt
+uO
+vl
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+xm
+aP
+uV
+tY
+tt
+tt
 ab
 ab
 ab
@@ -64932,57 +66902,57 @@ ab
 ab
 ab
 ab
+tt
+xz
+uj
+us
+uD
+ub
+tQ
 ab
 ab
 ab
+vi
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tQ
+vp
+ub
+ub
+vI
+vN
+xG
+xJ
+xP
+xP
+xP
+xJ
+vU
+vX
+wb
+ya
+wp
+wv
+wv
+wJ
+wN
+wR
+wU
+wN
+xa
+wN
+wN
+wN
+wN
+wN
+wN
+wJ
+xo
+bI
+uC
+ub
+ui
+tt
 ab
 ab
 ab
@@ -65189,57 +67159,57 @@ ab
 ab
 ab
 ab
+tt
+tZ
+ub
+ut
+uE
+uR
+vc
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+vc
+vp
+ub
+vE
+vI
+vN
+xF
+xJ
+xJ
+xJ
+xJ
+xV
+xF
+vX
+wb
+ub
+wq
+uA
+wC
+tN
+tN
+wS
+wV
+wX
+xb
+wW
+wW
+uf
+xh
+xe
+tN
+tN
+xp
+cl
+dl
+cl
+dm
+tQ
 ab
 ab
 ab
@@ -65446,57 +67416,57 @@ ab
 ab
 ab
 ab
+tt
+ua
+ub
+uu
+uF
+uS
+tR
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tR
+vq
+vA
+uD
+vI
+vN
+xH
+xJ
+xP
+xP
+xP
+xJ
+xH
+vX
+wb
+ub
+wq
+uC
+wD
+wK
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+wl
+xq
+uS
+uS
+uS
+dn
+vc
 ab
 ab
 ab
@@ -65703,57 +67673,57 @@ ab
 ab
 ab
 ab
+tS
+ub
+ub
+uq
+uC
+ub
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+vr
+ub
+uC
+vI
+vN
+xH
+xJ
+xJ
+xJ
+xJ
+xJ
+xH
+vX
+wb
+ub
+wq
+uC
+ub
+ub
+wO
+uP
+vx
+wY
+uP
+uP
+uP
+xf
+xi
+xj
+xk
+uk
+xr
+ub
+ub
+ub
+ub
+vc
 ab
 ab
 ab
@@ -65960,57 +67930,57 @@ ab
 ab
 ab
 ab
+tS
+ub
+ub
+uq
+uC
+uT
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+vs
+ub
+uC
+vI
+vN
+xH
+xJ
+xP
+xP
+xP
+xJ
+xH
+vX
+wb
+uA
+wr
+ww
+vA
+vA
+wP
+uQ
+uQ
+wZ
+xc
+xd
+xc
+xc
+xc
+xc
+xl
+ub
+uq
+ub
+ub
+ub
+ub
+vc
 ab
 ab
 ab
@@ -66217,57 +68187,57 @@ ab
 ab
 ab
 ab
+tt
+ua
+ub
+ut
+uE
+uR
+tQ
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tQ
+vt
+ub
+uC
+vI
+vN
+xH
+xJ
+xJ
+xJ
+xJ
+xJ
+xH
+vX
+wb
+uC
+wq
+wx
+wE
+wL
+tt
+tt
+uO
+vb
+vl
+tt
+uO
+vb
+vl
+tt
+tt
+wm
+xs
+uR
+uR
+uR
+do
+vc
 ab
 ab
 ab
@@ -66469,6 +68439,45 @@ ab
 ab
 ab
 ab
+tt
+tt
+tt
+tt
+tt
+tt
+uc
+uk
+uv
+uG
+uU
+vc
+ab
+ab
+ab
+ab
+ab
+ab
+vc
+vt
+vB
+uC
+vI
+vN
+xF
+xK
+xP
+xP
+xP
+xW
+xF
+vX
+wb
+uC
+wq
+ub
+wF
+tt
+nU
 ab
 ab
 ab
@@ -66478,53 +68487,14 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tt
+xt
+uS
+uS
+uS
+qR
+tR
 ab
 ab
 ab
@@ -66722,6 +68692,48 @@ ab
 ab
 ab
 ab
+tt
+tt
+tt
+tt
+tt
+rW
+rW
+rW
+rW
+tt
+ud
+ul
+uw
+uH
+uC
+tR
+ab
+ab
+ab
+ab
+ab
+ab
+tR
+vt
+uq
+uC
+vI
+vN
+xG
+xJ
+xJ
+xJ
+xJ
+xJ
+xG
+vX
+wb
+uC
+wq
+ub
+wG
+tt
 ab
 ab
 ab
@@ -66733,55 +68745,13 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+xu
+ub
+ub
+ub
+ui
+tt
 ab
 ab
 ab
@@ -66979,6 +68949,48 @@ ab
 ab
 ab
 ab
+tt
+tu
+tw
+tD
+tJ
+tO
+tO
+tO
+tJ
+tJ
+ue
+um
+ux
+uI
+uV
+tt
+ab
+ab
+ab
+ab
+ab
+ab
+tt
+vu
+uq
+uC
+vJ
+vN
+xF
+xL
+xL
+xL
+xL
+xL
+xF
+vX
+wc
+uC
+wq
+wy
+wH
+tt
 ab
 ab
 ab
@@ -66990,55 +69002,13 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+xv
+de
+wz
+ux
+tt
+tt
 ab
 ab
 ab
@@ -67236,6 +69206,48 @@ ab
 ab
 ab
 ab
+tt
+tu
+tx
+tE
+tt
+rW
+rW
+rW
+tt
+tT
+tt
+tt
+tt
+uJ
+uW
+tt
+ab
+ab
+ab
+ab
+ab
+ab
+tt
+tt
+xC
+uC
+tt
+tt
+xE
+xM
+xQ
+xQ
+xQ
+xX
+xE
+tt
+tt
+uC
+wq
+tt
+tt
+tt
 ab
 ab
 ab
@@ -67247,54 +69259,12 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tt
+tt
+tt
+tt
+tt
 ab
 ab
 ab
@@ -67493,6 +69463,34 @@ ab
 ab
 ab
 ab
+tt
+tv
+ty
+tF
+tK
+ab
+ab
+rW
+tQ
+tU
+tU
+un
+tt
+uK
+uX
+tt
+ab
+ab
+ab
+ab
+ab
+ab
+tt
+tt
+ur
+uB
+tt
+vO
 ab
 ab
 ab
@@ -67500,39 +69498,11 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+vO
+tt
+uB
+ws
+tt
 ab
 ab
 ab
@@ -67750,47 +69720,47 @@ ab
 ab
 ab
 ab
+tt
+tv
+tz
+tG
+tL
+ab
+rW
+rW
+tR
+tV
+uf
+uf
+uy
+uL
+uY
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tY
+uq
+uC
+tt
+tt
+uO
+vb
+vb
+vb
+vb
+vb
+vl
+tt
+tt
+uC
+wq
+tt
+tt
 ab
 ab
 ab
@@ -68007,47 +69977,47 @@ ab
 ab
 ab
 ab
+tt
+tv
+tA
+tv
+tM
+rW
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+rW
+tt
+tW
+ug
+ug
+tt
+uM
+uZ
+vd
+ve
+ve
+ve
+ve
+ve
+ve
+vd
+vv
+vC
+vF
+vK
+xD
+vQ
+vP
+vP
+vP
+vP
+vP
+vV
+xD
+wd
+wk
+wt
+wz
+tt
 ab
 ab
 ab
@@ -68264,47 +70234,47 @@ ab
 ab
 ab
 ab
+tt
+tu
+tB
+tH
+tN
+tP
+tP
+tP
+tN
+tX
+uh
+uo
+tt
+uN
+va
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+vw
+vD
+vG
+vL
+vL
+vR
+vS
+vL
+vL
+vL
+vT
+vW
+vL
+vL
+vG
+wu
+wA
+tt
 ab
 ab
 ab
@@ -68521,47 +70491,47 @@ ab
 ab
 ab
 ab
+tt
+tu
+tC
+tI
+tt
+ab
+ab
+rW
+rW
+tt
+tt
+tt
+tt
+tt
+tt
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tt
+tt
+tt
+uO
+vb
+vl
+tt
+uO
+vb
+vl
+tt
+uO
+vb
+vl
+tt
+tt
+tt
+tt
 ab
 ab
 ab
@@ -68778,29 +70748,29 @@ ab
 ab
 ab
 ab
+tt
+tt
+tt
+tt
+tt
+rW
+ab
+rW
+ab
+tt
+ab
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
 ab
 ab
 ab
@@ -69039,25 +71009,25 @@ ab
 ab
 ab
 ab
+tt
+rW
+ab
+rW
+ab
+tt
+ab
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
 ab
 ab
 ab
@@ -69296,25 +71266,25 @@ ab
 ab
 ab
 ab
+tt
+rW
+rW
+rW
+ab
+tt
+ab
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
 ab
 ab
 ab
@@ -69553,25 +71523,25 @@ ab
 ab
 ab
 ab
+tt
+rW
+ab
+ab
+ab
+tt
+ab
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
 ab
 ab
 ab
@@ -69810,25 +71780,25 @@ ab
 ab
 ab
 ab
+tt
+rW
+ab
+ab
+ab
+tt
+ab
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
 ab
 ab
 ab
@@ -70067,25 +72037,25 @@ ab
 ab
 ab
 ab
+tt
+ab
+ab
+ab
+ab
+tt
 ab
 ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+tt
+tt
+tt
+tt
+tt
+tt
+tt
+tt
 ab
 ab
 ab
