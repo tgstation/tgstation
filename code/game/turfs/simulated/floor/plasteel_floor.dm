@@ -290,9 +290,11 @@
 
 /turf/open/floor/plasteel/shuttle
 	icon_state = "shuttlefloor"
+	floor_tile = /obj/item/stack/tile/mineral/titanium //old shuttle floors so i don't have to change the map paths in this pr
 /turf/open/floor/plasteel/shuttle/red
 	name = "Brig floor"
 	icon_state = "shuttlefloor4"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 /turf/open/floor/plasteel/shuttle/yellow
 	icon_state = "shuttlefloor2"
 /turf/open/floor/plasteel/shuttle/white

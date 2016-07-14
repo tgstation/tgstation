@@ -26,82 +26,92 @@
 	if(machine.ore_iron || machine.ore_glass || machine.ore_plasma || machine.ore_uranium || machine.ore_gold || machine.ore_silver || machine.ore_diamond || machine.ore_clown || machine.ore_adamantine)
 		if(machine.ore_iron)
 			if (machine.selected_iron==1)
-				dat += text("<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_iron=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Iron: [machine.ore_iron]<br>")
+				dat += "<A href='?src=\ref[src];sel_iron=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Iron: [machine.ore_iron]<br>"
 		else
 			machine.selected_iron = 0
 
 		//sand - glass
 		if(machine.ore_glass)
 			if (machine.selected_glass==1)
-				dat += text("<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_glass=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Sand: [machine.ore_glass]<br>")
+				dat += "<A href='?src=\ref[src];sel_glass=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Sand: [machine.ore_glass]<br>"
 		else
 			machine.selected_glass = 0
 
 		//plasma
 		if(machine.ore_plasma)
 			if (machine.selected_plasma==1)
-				dat += text("<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_plasma=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Plasma: [machine.ore_plasma]<br>")
+				dat += "<A href='?src=\ref[src];sel_plasma=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Plasma: [machine.ore_plasma]<br>"
 		else
 			machine.selected_plasma = 0
 
 		//uranium
 		if(machine.ore_uranium)
 			if (machine.selected_uranium==1)
-				dat += text("<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_uranium=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Uranium: [machine.ore_uranium]<br>")
+				dat += "<A href='?src=\ref[src];sel_uranium=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Uranium: [machine.ore_uranium]<br>"
 		else
 			machine.selected_uranium = 0
 
 		//gold
 		if(machine.ore_gold)
 			if (machine.selected_gold==1)
-				dat += text("<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_gold=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Gold: [machine.ore_gold]<br>")
+				dat += "<A href='?src=\ref[src];sel_gold=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Gold: [machine.ore_gold]<br>"
 		else
 			machine.selected_gold = 0
 
 		//silver
 		if(machine.ore_silver)
 			if (machine.selected_silver==1)
-				dat += text("<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_silver=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Silver: [machine.ore_silver]<br>")
+				dat += "<A href='?src=\ref[src];sel_silver=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Silver: [machine.ore_silver]<br>"
 		else
 			machine.selected_silver = 0
 
 		//diamond
 		if(machine.ore_diamond)
 			if (machine.selected_diamond==1)
-				dat += text("<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_diamond=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Diamond: [machine.ore_diamond]<br>")
+				dat += "<A href='?src=\ref[src];sel_diamond=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Diamond: [machine.ore_diamond]<br>"
 		else
 			machine.selected_diamond = 0
 
 		//bananium
 		if(machine.ore_clown)
 			if (machine.selected_clown==1)
-				dat += text("<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> ")
+				dat += "<A href='?src=\ref[src];sel_clown=no'><font color='green'>Smelting</font></A> "
 			else
-				dat += text("<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> ")
-			dat += text("Bananium: [machine.ore_clown]<br>")
+				dat += "<A href='?src=\ref[src];sel_clown=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Bananium: [machine.ore_clown]<br>"
 		else
 			machine.selected_clown = 0
+
+		//titanium
+		if(machine.ore_titanium)
+			if (machine.selected_titanium==1)
+				dat += "<A href='?src=\ref[src];sel_titanium=no'><font color='green'>Smelting</font></A> "
+			else
+				dat += "<A href='?src=\ref[src];sel_titanium=yes'><font color='red'>Not smelting</font></A> "
+			dat += "Titanium: [machine.ore_titanium]<br>"
+		else
+			machine.selected_titanium = 0
 
 
 		//On or off
@@ -163,6 +173,11 @@
 			machine.selected_clown = 1
 		else
 			machine.selected_clown = 0
+	if(href_list["sel_titanium"])
+		if (href_list["sel_titanium"] == "yes")
+			machine.selected_titanium = 1
+		else
+			machine.selected_titanium = 0
 	if(href_list["set_on"])
 		if (href_list["set_on"] == "on")
 			machine.on = 1
@@ -190,6 +205,7 @@
 	var/ore_iron = 0;
 	var/ore_clown = 0;
 	var/ore_adamantine = 0;
+	var/ore_titanium = 0;
 	var/selected_gold = 0
 	var/selected_silver = 0
 	var/selected_diamond = 0
@@ -198,86 +214,102 @@
 	var/selected_uranium = 0
 	var/selected_iron = 0
 	var/selected_clown = 0
+	var/selected_titanium = 0
 	var/on = 0 //0 = off, 1 =... oh you know!
 
 /obj/machinery/mineral/processing_unit/process()
-	var/i
-	for (i = 0; i < 10; i++)
+	for(var/i in 1 to 10)
 		if (on)
-			if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_glass > 0)
-					ore_glass--;
+					ore_glass--
 					generate_mineral(/obj/item/stack/sheet/glass)
 				else
 					on = 0
 				continue
-			if (selected_glass == 1 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+			if (selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
 				if (ore_glass > 0 && ore_iron > 0)
-					ore_glass--;
-					ore_iron--;
+					ore_glass--
+					ore_iron--
 					generate_mineral(/obj/item/stack/sheet/rglass)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 1 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+			if (!selected_glass && selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_gold > 0)
-					ore_gold--;
+					ore_gold--
 					generate_mineral(/obj/item/stack/sheet/mineral/gold)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 1 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_silver > 0)
-					ore_silver--;
+					ore_silver--
 					generate_mineral(/obj/item/stack/sheet/mineral/silver)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && !selected_silver && selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_diamond > 0)
-					ore_diamond--;
+					ore_diamond--
 					generate_mineral(/obj/item/stack/sheet/mineral/diamond)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_plasma > 0)
-					ore_plasma--;
+					ore_plasma--
 					generate_mineral(/obj/item/stack/sheet/mineral/plasma)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && selected_uranium && !selected_iron && !selected_clown && !selected_titanium)
 				if (ore_uranium > 0)
-					ore_uranium--;
+					ore_uranium--
 					generate_mineral(/obj/item/stack/sheet/mineral/uranium)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
 				if (ore_iron > 0)
-					ore_iron--;
+					ore_iron--
 					generate_mineral(/obj/item/stack/sheet/metal)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 1 && selected_uranium == 0 && selected_iron == 1 && selected_clown == 0)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && selected_iron && !selected_clown && !selected_titanium)
 				if (ore_iron > 0 && ore_plasma > 0)
-					ore_iron--;
-					ore_plasma--;
+					ore_iron--
+					ore_plasma--
 					generate_mineral(/obj/item/stack/sheet/plasteel)
 				else
 					on = 0
 				continue
-			if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 0 && selected_plasma == 0 && selected_uranium == 0 && selected_iron == 0 && selected_clown == 1)
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && selected_clown && !selected_titanium)
 				if (ore_clown > 0)
-					ore_clown--;
+					ore_clown--
 					generate_mineral(/obj/item/stack/sheet/mineral/bananium)
+				else
+					on = 0
+				continue
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && !selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium)
+				if (ore_titanium > 0)
+					ore_titanium--
+					generate_mineral(/obj/item/stack/sheet/mineral/titanium)
+				else
+					on = 0
+				continue
+			if (!selected_glass && !selected_gold && !selected_silver && !selected_diamond && selected_plasma && !selected_uranium && !selected_iron && !selected_clown && selected_titanium)
+				if (ore_titanium > 0)
+					ore_titanium--
+					ore_plasma--
+					generate_mineral(/obj/item/stack/sheet/mineral/plastitanium)
 				else
 					on = 0
 				continue
 			//THESE TWO ARE CODED FOR URIST TO USE WHEN HE GETS AROUND TO IT.
 			//They were coded on 18 Feb 2012. If you're reading this in 2015, then firstly congratulations on the world not ending on 21 Dec 2012 and secondly, Urist is apparently VERY lazy. ~Errorage
+			//Even in the dark year of 2016, where /tg/ is dead, Urist still hasn't finished this -Bawhoppennn
 			/*if (selected_glass == 0 && selected_gold == 0 && selected_silver == 0 && selected_diamond == 1 && selected_plasma == 0 && selected_uranium == 1 && selected_iron == 0 && selected_clown == 0)
 				if (ore_uranium >= 2 && ore_diamond >= 1)
 					ore_uranium -= 2
