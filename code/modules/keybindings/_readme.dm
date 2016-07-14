@@ -30,9 +30,14 @@
 	No client-set keybindings at this time, but it shouldn't be too hard if someone wants.
 
 	Notes about certain keys
-	tab is given special behavior and isn't sent through this system
+	tab has client-sided behavior but acts normally
 	backspace isn't defined so you can remove the say " in the chat bar when in chat mode
+	t and o move focus to the input when pressed. This fires the keyUp macro right away.
 	c isn't included so the client-sided ctrl-c shortcut works for copying output text
 	\ needs to be escaped in the dmf so any usage is \\
+
+	You cannot TICK_CHECK or check world.tick_usage inside of procs called by key down and up
+	events. They happen outside of a byond tick and have no meaning there. Key looping
+	works correctly since it's part of a subsystem, not direct input.
 
 */

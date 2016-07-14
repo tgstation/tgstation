@@ -1,7 +1,10 @@
 macro "default"
 	elem
-		name = "TAB"
-		command = ".winset \"input.focus=true?map.focus=true input.background-color=#F0F0F0:input.focus=true input.background-color=#D3B5B5\""
+		name = "tab"
+		command = "keyDown tab\n.winset \"input.focus=true?map.focus=true input.background-color=#F0F0F0:input.focus=true input.background-color=#D3B5B5\""
+	elem
+		name = "tab+UP"
+		command = "KeyUp tab"
 	elem
 		name = "center"
 		command = "keyDown center"
@@ -346,7 +349,7 @@ macro "default"
 		command = "keyUp n"
 	elem
 		name = "o"
-		command = "keyDown o"
+		command = "keyDown o\nooc"
 	elem
 		name = "o+UP"
 		command = "keyUp o"
@@ -376,7 +379,7 @@ macro "default"
 		command = "keyUp s"
 	elem
 		name = "t"
-		command = "keyDown t"
+		command = "keyDown t\nsay"
 	elem
 		name = "t+UP"
 		command = "keyUp t"

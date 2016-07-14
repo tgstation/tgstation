@@ -1,5 +1,5 @@
-/datum/admins/keyDown(key, client/user)
-	switch(key)
+/datum/admins/keyDown(_key, client/user)
+	switch(_key)
 		if("F5")
 			user.admin_ghost()
 		if("F6")

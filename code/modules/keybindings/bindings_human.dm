@@ -1,5 +1,5 @@
-/mob/living/carbon/human/keyDown(key, client/user)
-	switch(key)
+/mob/living/carbon/human/keyDown(_key, client/user)
+	switch(_key)
 		if("e")
 			quick_equip()
 	..()

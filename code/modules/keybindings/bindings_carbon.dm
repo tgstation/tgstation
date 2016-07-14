@@ -1,8 +1,8 @@
-/mob/living/carbon/keyDown(key, client/user)
-	switch(key)
-		if("numpad1", "r")
+/mob/living/carbon/keyDown(_key, client/user)
+	switch(_key)
+		if("numpad1", "southwest", "r")
 			toggle_throw_mode()
-		if("numpad7", "q")
+		if("numpad7", "northwest", "q")
 			if(!get_active_hand())
 				src << "<span class='warning'>You have nothing to drop in your hand!</span>"
 			else
