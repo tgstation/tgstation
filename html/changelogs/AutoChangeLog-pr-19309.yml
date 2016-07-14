@@ -1,0 +1,4 @@
+author: "Kor"
+delete-after: True
+changes: 
+  - tweak: "Shuttle travel time has been shortened from 25 seconds to 6 seconds"
