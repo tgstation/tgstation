@@ -478,3 +478,45 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+
+
+//Shower Curtains//
+
+#define SHOWER_OPEN_LAYER OBJ_LAYER + 0.4
+#define SHOWER_CLOSED_LAYER MOB_LAYER + 0.2
+
+/obj/structure/curtain
+	name = "curtain"
+	desc = "Contains less than 1% mercury"
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "open"
+	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	layer = SHOWER_CLOSED_LAYER
+	anchored = 1
+	opacity = 0
+	density = 0
+	var/open = TRUE
+
+
+/obj/structure/curtain/proc/toggle()
+	open = !open
+	update_icon()
+/obj/structure/curtain/update_icon()
+	if(!open)
+		icon_state = "closed"
+		layer = SHOWER_CLOSED_LAYER
+		density = 1
+		open = FALSE
+
+	else
+		icon_state = "open"
+		layer = SHOWER_OPEN_LAYER
+		density = 0
+		open = TRUE
+
+/obj/structure/curtain/attack_hand(mob/user)
+	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
+	toggle()
+	..()
+

@@ -29970,13 +29970,14 @@
 /area/crew_quarters/captain)
 "bpm" = (
 /obj/machinery/shower{
-	dir = 4
+	dir = 1
 	},
 /obj/item/weapon/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain)
 "bpn" = (
