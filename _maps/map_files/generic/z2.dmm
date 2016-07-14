@@ -5852,289 +5852,287 @@
 /area/holodeck/rec_center/medical)
 "sh" = (
 /turf/closed/indestructible/riveted,
-/area/hades)
+/area/space)
 "si" = (
 /obj/structure/bookcase/random/religion,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sj" = (
 /obj/structure/piano,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sk" = (
 /obj/effect/gibspawner/human,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sl" = (
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sm" = (
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sn" = (
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "so" = (
 /obj/effect/gibspawner/human,
 /mob/living/simple_animal/hostile/hadesacolyte,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sp" = (
 /mob/living/simple_animal/hostile/hadesacolyte,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sq" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sr" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/candle/infinite,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "ss" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/candle/infinite,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "st" = (
 /obj/structure/table/reinforced/brass,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "su" = (
 /obj/structure/table/reinforced/brass,
 /obj/item/candle/infinite,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sv" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sw" = (
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sx" = (
 /obj/structure/chair/wood/normal{
 	icon_state = "wooden_chair";
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/hadesacolyte,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sy" = (
 /obj/structure/chair/wood/normal{
 	icon_state = "wooden_chair";
 	dir = 1
 	},
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "sz" = (
 /obj/effect/gibspawner/human,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sA" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sB" = (
 /obj/structure/dresser,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sC" = (
 /obj/structure/table/wood,
 /obj/item/trash/candle,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sD" = (
 /obj/structure/flora/grass/green,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sE" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sF" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sG" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sH" = (
 /obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sI" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sJ" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sK" = (
 /obj/structure/bookcase/random/religion,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sL" = (
 /obj/structure/kitchenspike,
 /turf/open/floor/mineral/diamond,
-/area/hades)
+/area/space)
 "sM" = (
 /mob/living/simple_animal/hostile/hadesacolyte,
 /turf/open/floor/mineral/gold,
-/area/hades)
+/area/space)
 "sN" = (
 /turf/open/floor/mineral/gold,
-/area/hades)
+/area/space)
 "sO" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sP" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sQ" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sR" = (
 /obj/structure/flora/ausbushes/genericbush,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sS" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sT" = (
 /obj/structure/closet/cabinet,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sU" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper/hades_instructions,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sV" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/grass,
-/area/hades)
+/area/space)
 "sW" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/black,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sX" = (
 /mob/living/simple_animal/hostile/hadesacolyte,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sY" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/matches,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "sZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel,
-/area/hades)
+/area/space)
 "ta" = (
 /obj/machinery/door/airlock/wood,
-/turf/open/floor/plasteel/hades,
-/area/hades)
+/turf/open/floor/plasteel,
+/area/space)
 "tb" = (
 /obj/structure/table/wood,
 /obj/item/weapon/lipstick,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tc" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/fancy/candle_box,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "td" = (
 /obj/structure/chair/wood/normal{
 	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "te" = (
 /obj/structure/chair/wood/normal{
 	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tf" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/crayons,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tg" = (
 /obj/structure/table/wood,
 /obj/item/weapon/razor,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "th" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "ti" = (
-/obj/structure/chair/hades,
 /turf/open/floor/mineral/diamond,
-/area/hades)
+/area/space)
 "tj" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tk" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tl" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tm" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tn" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/donkpockets,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "to" = (
 /obj/machinery/chem_dispenser/drinks,
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tp" = (
 /obj/structure/chair/wood/normal,
 /mob/living/simple_animal/hostile/hadesacolyte,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 "tq" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plating/airless,
@@ -6147,7 +6145,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/drinkingglasses,
 /turf/open/floor/carpet,
-/area/hades)
+/area/space)
 
 (1,1,1) = {"
 ab
