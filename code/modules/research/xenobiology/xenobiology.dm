@@ -133,7 +133,7 @@
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
+	icon_state = "potsilver"
 
 /obj/item/slimepotion/docility/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -159,7 +159,7 @@
 	name = "sentience potion"
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels. Unlike normal slime potions, it can be absorbed by any nonsentient being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle19"
+	icon_state = "potpink"
 	origin_tech = "biotech=6"
 	var/list/not_interested = list()
 	var/being_used = 0
@@ -206,7 +206,7 @@
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle6"
+	icon_state = "potorange"
 	origin_tech = "biotech=6"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
@@ -251,7 +251,7 @@
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = "potred"
 
 /obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
@@ -275,13 +275,13 @@
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract an additional use."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potpurple"
 
 /obj/item/slimepotion/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
+	icon_state = "potcyan"
 
 /obj/item/slimepotion/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -302,7 +302,7 @@
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potgreen"
 
 /obj/item/slimepotion/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
@@ -327,7 +327,7 @@
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle3"
+	icon_state = "potyellow"
 	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
@@ -358,7 +358,7 @@
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "potblue"
 	origin_tech = "biotech=5"
 	var/uses = 3
 

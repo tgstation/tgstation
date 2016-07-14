@@ -93,7 +93,7 @@
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
-	charge_max = 10
+	charge_max = 200
 	clothes_req = 0
 	selection_type = "range"
 	range = -1
@@ -121,6 +121,7 @@
 		else
 			user.notransform = 1
 			user.fakefire()
+			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
 			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
 		start_recharge()
 		return
@@ -159,20 +160,7 @@
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
-
-/mob/living/proc/fakefire()
-	return
-
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/proc/fakefireextinguish()
-	return
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
+	addtimer(src, "fakefireextinguish", 15,TRUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"

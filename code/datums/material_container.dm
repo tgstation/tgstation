@@ -26,7 +26,6 @@
 	for(var/mat_type in subtypesof(/datum/material))
 		var/datum/material/MT = mat_type
 		possible_mats[initial(MT.id)] = mat_type
-
 	for(var/id in mat_list)
 		if(possible_mats[id])
 			var/mat_path = possible_mats[id]
@@ -264,3 +263,8 @@
 	id = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	coin_type = /obj/item/weapon/coin/clown
+
+/datum/material/titanium
+	name = "Titanium"
+	id = MAT_TITANIUM
+	sheet_type = /obj/item/stack/sheet/mineral/titanium

@@ -195,10 +195,7 @@
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	traitor.current << "<B><font size=3 color=red>You are the [traitor_name].</font></B>"
-	var/obj_count = 1
-	for(var/datum/objective/objective in traitor.objectives)
-		traitor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	traitor.announce_objectives()
 	return
 
 

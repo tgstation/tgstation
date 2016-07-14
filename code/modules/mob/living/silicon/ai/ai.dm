@@ -322,7 +322,7 @@ var/list/ai_list = list()
 			C.post_status("shuttle")
 
 /mob/living/silicon/ai/cancel_camera()
-	src.view_core()
+	view_core()
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
@@ -896,15 +896,16 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
-	malfhacking = FALSE
+	malfhacking = 0
+	clear_alert("hackingapc")
 
 	if(!istype(apc) || qdeleted(apc) || apc.stat & BROKEN)
-		src << "Hack aborted. The designated APC no longer exists on the \
-			power network."
+		src << "<span class='danger'>Hack aborted. The designated APC no \
+			longer exists on the power network.</span>"
 		playsound(get_turf(src), 'sound/machines/buzz-two.ogg', 50, 1)
 	else if(apc.aidisabled)
-		src << "Hack aborted. \The [apc] is no longer responding \
-			to our systems."
+		src << "<span class='danger'>Hack aborted. \The [apc] is no \
+			longer responding to our systems.</span>"
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 1)
 	else
 		malf_picker.processing_time += 10

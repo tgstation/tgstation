@@ -1,0 +1,5 @@
+author: "Fox McCloud"
+delete-after: True
+changes: 
+  - bugfix: "Fixes borg stun arm not having a hitsound, bypassing shields, and not doing an attack animation"
+  - bugfix: "Fixes simple mobs not properly having armor penetration"

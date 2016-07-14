@@ -100,12 +100,19 @@
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
-			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
-				if(user == M)
-					user << "<span class='notice'>You attach [src] to [U].</span>"
-				else
-					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
-										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
+			var/delay = 20
+			if(user == M)
+				delay = 0
+			else
+				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
+									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
+			if(do_after(user, delay, target = M))
+				if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
+					if(user == M)
+						user << "<span class='notice'>You attach [src] to [U].</span>"
+					else
+						user.visible_message("[user] pins \the [src] on [M]'s chest.", \
+											 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
 		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
 	else ..()

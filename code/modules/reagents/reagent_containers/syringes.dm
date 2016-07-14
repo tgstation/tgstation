@@ -207,6 +207,9 @@
 /obj/item/weapon/reagent_containers/syringe/lethal/choral
 	list_reagents = list("chloralhydrate" = 50)
 
+/obj/item/weapon/reagent_containers/syringe/lethal/execution
+	list_reagents = list("plasma" = 15, "formaldehyde" = 15, "cyanide" = 10, "facid" = 10)
+
 /obj/item/weapon/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."

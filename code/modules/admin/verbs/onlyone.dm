@@ -20,10 +20,7 @@
 		H.mind.objectives += hijack_objective
 
 		H << "<B>You are the traitor.</B>"
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-			obj_count++
+		H.mind.announce_objectives()
 
 		for (var/obj/item/I in H)
 			if (istype(I, /obj/item/weapon/implant))
@@ -67,10 +64,7 @@
 		H.mind.objectives += hijack_objective
 
 		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-			obj_count++
+		H.mind.announce_objectives()
 
 		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
 		qdel(slot_item_ID)

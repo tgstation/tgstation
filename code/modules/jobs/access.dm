@@ -114,16 +114,16 @@
 	else if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
-		if(src.check_access(H.get_active_hand()) || src.check_access(H.wear_id))
+		if(check_access(H.get_active_hand()) || src.check_access(H.wear_id))
 			return 1
 	else if(istype(M, /mob/living/carbon/monkey) || istype(M, /mob/living/carbon/alien/humanoid))
 		var/mob/living/carbon/george = M
 		//they can only hold things :(
-		if(src.check_access(george.get_active_hand()))
+		if(check_access(george.get_active_hand()))
 			return 1
 	else if(isanimal(M))
 		var/mob/living/simple_animal/A = M
-		if(check_access(A.access_card))
+		if(check_access(A.get_active_hand()) || check_access(A.access_card))
 			return 1
 	return 0
 
