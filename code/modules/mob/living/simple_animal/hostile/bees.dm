@@ -5,6 +5,7 @@
 #define BEE_PROB_GOROAM			5 //Probability to go roaming when idle is above BEE_IDLE_ROAMING
 #define BEE_TRAY_RECENT_VISIT	200	//How long in deciseconds until a tray can be visited by a bee again
 #define BEE_DEFAULT_COLOUR		"#e5e500" //the colour we make the stripes of the bee if our reagent has no colour (or we have no reagent)
+#define BEE_SMOKE_SLEEP 300
 
 #define BEE_POLLINATE_YIELD_CHANCE		10
 #define BEE_POLLINATE_PEST_CHANCE		33
@@ -49,6 +50,8 @@
 	var/icon_base = "bee"
 	var/static/list/bee_icons = list()
 
+	var/smoke_counter = 0
+
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -64,7 +67,7 @@
 		beehome.bees -= src
 		beehome = null
 	beegent = null
-	return ..()
+	. = ..()
 
 
 /mob/living/simple_animal/hostile/poison/bees/death(gibbed)
@@ -77,7 +80,8 @@
 
 /mob/living/simple_animal/hostile/poison/bees/examine(mob/user)
 	..()
-
+	if(smoke_counter)
+		user << "It looks docile."
 	if(!beehome)
 		user << "<span class='warning'>This bee is homeless!</span>"
 
@@ -144,17 +148,20 @@
 	else
 		if(beegent && isliving(target))
 			var/mob/living/L = target
-			beegent.reaction_mob(L, INJECT)
-			L.reagents.add_reagent(beegent.id, rand(1,5))
+			if(L.reagents)
+				beegent.reaction_mob(L, INJECT)
+				L.reagents.add_reagent(beegent.id, rand(1,5))
 		target.attack_animal(src)
 
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
 		beegent = R
-		name = "[initial(name)] ([R.name])"
-		generate_bee_visuals()
-
+	if(beegent)
+		name = "[initial(name)] ([beegent.name])"
+	else
+		name = "[initial(name)]"
+	generate_bee_visuals()
 
 /mob/living/simple_animal/hostile/poison/bees/proc/pollinate(obj/machinery/hydroponics/Hydro)
 	if(!istype(Hydro) || !Hydro.myseed || Hydro.dead || Hydro.recent_bee_visit)
@@ -164,9 +171,7 @@
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
-	spawn(BEE_TRAY_RECENT_VISIT)
-		if(Hydro)
-			Hydro.recent_bee_visit = FALSE
+	addtimer(Hydro, "reset_bee_visit", BEE_TRAY_RECENT_VISIT)
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
@@ -180,7 +185,6 @@
 
 	if(beehome)
 		beehome.bee_resources = min(beehome.bee_resources + growth, 100)
-
 
 /mob/living/simple_animal/hostile/poison/bees/handle_automated_action()
 	. = ..()
@@ -286,5 +290,23 @@
 
 /obj/item/queen_bee/Destroy()
 	qdel(queen)
-	return ..()
+	. = ..()
 
+/mob/living/simple_animal/hostile/poison/bees/smoke_act(var/obj/effect/particle_effect/smoke/smoke)
+	// Smoke makes bees docile.
+	smoke_counter++
+	if(smoke_counter == 1)
+		AIStatus = AI_OFF
+		stop_automated_movement = TRUE
+		SpinAnimation(speed=100 + rand(-20, 20), clockwise=prob(50))
+		name = "docile [name]"
+		walk(src, 0)
+	addtimer(src, "smoke_timeout", BEE_SMOKE_SLEEP)
+
+/mob/living/simple_animal/hostile/poison/bees/proc/smoke_timeout()
+	smoke_counter--
+	if(!smoke_counter)
+		AIStatus = AI_IDLE
+		stop_automated_movement = initial(stop_automated_movement)
+		SpinAnimation(0,0)
+		assign_reagent() // resets the name

@@ -10,8 +10,8 @@
 
 /obj/item/weapon/grenade/smokebomb/New()
 	..()
-	src.smoke = new /datum/effect_system/smoke_spread/bad
-	src.smoke.attach(src)
+	smoke = new /datum/effect_system/smoke_spread/bad
+	smoke.attach(src)
 
 /obj/item/weapon/grenade/smokebomb/Destroy()
 	qdel(smoke)
