@@ -664,7 +664,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	if(ratvar_awakens)
 		portal_uses = max(portal_uses, 100) //Very powerful if Ratvar has been summoned
 		duration = max(duration, 100)
-	return invoker.procure_gateway(invoker, duration, portal_uses)
+	return slab.procure_gateway(invoker, duration, portal_uses)
 
 
 
