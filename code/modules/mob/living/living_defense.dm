@@ -370,8 +370,13 @@
 //adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned/examined, if any
 	if(!islist(stun_absorption))
 		stun_absorption = list()
-	stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
-	"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
+	if(stun_absorption[key])
+		stun_absorption[key]["end_time"] = world.time + duration
+		stun_absorption[key]["priority"] = priority
+		stun_absorption[key]["stuns_absorbed"] = 0
+	else
+		stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
+		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
 
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
 	if(!stat && islist(stun_absorption))

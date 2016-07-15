@@ -1187,7 +1187,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	for(var/mob/living/L in affected_servants)
 		L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
 		L.status_flags &= ~GODMODE
-		L.stun_absorption["inathneq"] = null
 	return 1
 
 
