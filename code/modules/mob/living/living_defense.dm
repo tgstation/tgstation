@@ -366,18 +366,19 @@
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
-/mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message) //adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned
+/mob/living/proc/add_stun_absorption(key, duration, priority, message, self_message, examine_message)
+//adds a stun absorption with a key, a duration in deciseconds, its priority, and the messages it makes when you're stunned/examined, if any
 	if(!islist(stun_absorption))
 		stun_absorption = list()
 	stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
-	"visible_message" = message, "self_message" = self_message)
+	"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
 
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
 	if(!stat && islist(stun_absorption))
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
-			if(islist(stun_absorption[i]) && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+			if(!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority)
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = stun_absorption[i]["priority"]
 		if(priority_absorb_key && priority_absorb_key["end_time"] > world.time)
@@ -392,7 +393,7 @@
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
-			if(islist(stun_absorption[i]) && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
+			if(!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority)
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = priority_absorb_key["priority"]
 		if(priority_absorb_key && priority_absorb_key["end_time"] > world.time)
