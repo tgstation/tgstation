@@ -229,7 +229,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/total_duration = 200
 
 /datum/clockwork_scripture/vanguard/check_special_requirements()
-	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"]["duration"] > world.time)
+	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["duration"] > world.time)
 		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
 		return 0
 	return 1
@@ -244,7 +244,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			return
 		var/vanguard = invoker.stun_absorption["vanguard"]
 		var/stuns_blocked = 0
-		if(vanguard)
+		if(!ratvar_awakens && vanguard)
 			stuns_blocked = max(vanguard["stuns_absorbed"] * 0.5, 20)
 		if(invoker.stat != DEAD)
 			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
