@@ -249,7 +249,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 			var/otheractiveabsorptions = FALSE
 			for(var/i in invoker.stun_absorption)
-				if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["priority"] > vanguard["priority"])
+				if(invoker.stun_absorption[i]["end_time"] > world.time && invoker.stun_absorption[i]["priority"] > vanguard["priority"])
 					otheractiveabsorptions = TRUE
 			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 				invoker.Stun(stuns_blocked)
@@ -1187,8 +1187,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
 		affected_servants += L
 	spawn(total_duration)
-		for(var/M in affected_servants)
-			var/mob/living/L = M
+		for(var/mob/living/L in affected_servants)
 			L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
 			L.status_flags &= ~GODMODE
 	return 1
