@@ -112,6 +112,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 30
 	heat = 1000
+	var/e_cig = FALSE
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
@@ -213,26 +214,40 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
-	if(isliving(loc))
-		M.IgniteMob()
-	smoketime--
-	if(smoketime < 1)
-		new type_butt(location)
-		if(ismob(loc))
-			M << "<span class='notice'>Your [name] goes out.</span>"
-			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
-		qdel(src)
-		return
-	open_flame()
+	if(!e_cig)
+		if(isliving(loc))
+			M.IgniteMob()
+		smoketime--
+		if(smoketime < 1)
+			new type_butt(location)
+			if(ismob(loc))
+				M << "<span class='notice'>Your [name] goes out.</span>"
+				M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
+			qdel(src)
+			return
+		open_flame()
 	if(reagents && reagents.total_volume)
 		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
-	if(lit)
-		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
-		new type_butt(user.loc)
-		new /obj/effect/decal/cleanable/ash(user.loc)
-		qdel(src)
+	if(!e_cig)
+		if(lit)
+			user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
+			new type_butt(user.loc)
+			new /obj/effect/decal/cleanable/ash(user.loc)
+			qdel(src)
+	else
+		switch(lit) // fam
+			if(TRUE)
+				lit = FALSE // not chill dude
+				icon_state = icon_off
+				user << "You turn off [src]."
+				STOP_PROCESSING(SSobj, src)
+			if(FALSE)
+				lit = TRUE // chill dude
+				icon_state = icon_on
+				user << "You turn on [src]."
+				START_PROCESSING(SSobj, src)
 	. = ..()
 
 /obj/item/clothing/mask/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -433,6 +448,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
 	smoketime = 0
+
+/obj/item/clothing/mask/cigarette/ecig
+	name = "electronic cigarette"
+	desc = "Vape Vation, dude!"
+	icon_state = "ecigoff"
+	icon_on = "ecigon"
+	icon_off = "ecigoff"
+	e_cig = TRUE
+	chem_volume = 100
+	flags = OPENCONTAINER
+
+/obj/item/clothing/mask/cigarette/ecig/process()
+	..()
+	if(prob(1) && ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.say(";GO GREEN")
 
 
 /////////
