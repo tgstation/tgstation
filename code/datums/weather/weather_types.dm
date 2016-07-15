@@ -39,7 +39,7 @@
 	telegraph_message = "<span class='warning'>The lights begin to dim... is the power going out?</span>"
 	telegraph_duration = 150
 
-	weather_message = "<span class='userdanger'>This isn't your everday darkness... this is <i>advanced</i> darkness!</span>"
+	weather_message = "<span class='userdanger'>This isn't your average everday darkness... this is <i>advanced</i> darkness!</span>"
 	weather_duration_lower = 300
 	weather_duration_upper = 300
 
