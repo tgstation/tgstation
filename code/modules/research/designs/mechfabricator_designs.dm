@@ -270,7 +270,7 @@
 	id = "gygax_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_armor
-	materials = list(MAT_METAL=10000,MAT_DIAMOND=10000,MAT_TITANIUM=15000)
+	materials = list(MAT_METAL=10000,MAT_DIAMOND=10000)
 	construction_time = 600
 	category = list("Gygax")
 
@@ -343,7 +343,7 @@
 	id = "durand_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armor
-	materials = list(MAT_METAL=25000,MAT_URANIUM=30000,MAT_TITANIUM=25000)
+	materials = list(MAT_METAL=25000,MAT_URANIUM=30000)
 	construction_time = 600
 	category = list("Durand")
 
@@ -481,7 +481,7 @@
 	id = "phazon_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_armor
-	materials = list(MAT_METAL=25000,MAT_PLASMA=30000,MAT_TITANIUM=20000)
+	materials = list(MAT_METAL=25000,MAT_PLASMA=30000)
 	construction_time = 300
 	category = list("Phazon")
 
@@ -664,7 +664,7 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/lavaproof
 	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
-	materials = list(MAT_METAL = 8000, MAT_PLASMA = 8000, MAT_TITANIUM = 4000)
+	materials = list(MAT_METAL = 8000, MAT_PLASMA = 8000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
