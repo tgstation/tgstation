@@ -383,10 +383,10 @@
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
-			if(!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = stun_absorption[i]["priority"]
-		if(priority_absorb_key && priority_absorb_key["end_time"] > world.time)
+		if(priority_absorb_key)
 			if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
 				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
@@ -398,10 +398,10 @@
 		var/priority_absorb_key
 		var/highest_priority
 		for(var/i in stun_absorption)
-			if(!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority)
+			if(stun_absorption[i]["end_time"] > world.time && (!priority_absorb_key || stun_absorption[i]["priority"] > highest_priority))
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = priority_absorb_key["priority"]
-		if(priority_absorb_key && priority_absorb_key["end_time"] > world.time)
+		if(priority_absorb_key)
 			if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
 				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 			priority_absorb_key["stuns_absorbed"] += amount
