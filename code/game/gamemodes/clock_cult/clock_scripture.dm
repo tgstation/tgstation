@@ -237,8 +237,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/vanguard/scripture_effects()
 	if(!islist(invoker.stun_absorption))
 		invoker.stun_absorption = list()
-	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!")
-	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next thirty seconds.</span>")
+	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	spawn(total_duration)
 		if(!invoker)
 			return
@@ -247,15 +247,15 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(vanguard)
 			stuns_blocked = max(vanguard["stuns_absorbed"] * 0.5, 20)
 		if(invoker.stat != DEAD)
+			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 			if(stuns_blocked)
 				invoker.Stun(stuns_blocked)
 				invoker.Weaken(stuns_blocked)
-				invoker << "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
+				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 				if(stuns_blocked >= 15)
-					invoker << "<span class='userdanger'>You faint from the exertion!</span>"
+					message_to_invoker += "\n<span class='userdanger'>You faint from the exertion!</span>"
 					invoker.Paralyse(stuns_blocked * 2)
-			else
-				invoker << "<span class='warning'>You feel your Vanguard quietly fade...</span>"
+			invoker.visible_message("<span class='warning'>[invoker]'s glowing aura fades!</span>", message_to_invoker)
 	return 1
 
 
@@ -1179,7 +1179,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
 		L.color = "#1E8CE1"
 		L.fully_heal()
-		L.add_stun_absorption("inathneq", world.time + total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!")
+		L.add_stun_absorption("inathneq", world.time + total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
 		L.status_flags |= GODMODE
 		animate(L, color = initial(L.color), time = 150, easing = EASE_IN)
 		affected_servants += L
