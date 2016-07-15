@@ -14,7 +14,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain/human = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/human
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/burger
 	name = "Burger"
@@ -24,7 +24,7 @@
 	)
 
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/plain
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/corgiburger
 	name = "Corgi burger"
@@ -34,7 +34,7 @@
 	)
 
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/corgi
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/appendixburger
 	name = "Appendix burger"
@@ -43,7 +43,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/appendix
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/brainburger
 	name = "Brain burger"
@@ -52,7 +52,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/brain
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/xenoburger
 	name = "Xeno burger"
@@ -61,7 +61,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/xeno
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/bearger
 	name = "Bearger"
@@ -70,7 +70,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bearger
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/fishburger
 	name = "Fish burger"
@@ -79,7 +79,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fish
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/tofuburger
 	name = "Tofu burger"
@@ -88,7 +88,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/ghostburger
 	name = "Ghost burger"
@@ -97,7 +97,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/clownburger
 	name = "Clown burger"
@@ -106,7 +106,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/clown
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/mimeburger
 	name = "Mime burger"
@@ -115,7 +115,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/mime
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/redburger
 	name = "Red burger"
@@ -125,7 +125,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/red
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/orangeburger
 	name = "Orange burger"
@@ -135,7 +135,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/orange
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/yellowburger
 	name = "Yellow burger"
@@ -145,7 +145,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/yellow
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/greenburger
 	name = "Green burger"
@@ -155,7 +155,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/green
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/blueburger
 	name = "Blue burger"
@@ -165,7 +165,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/blue
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/purpleburger
 	name = "Purple burger"
@@ -175,7 +175,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/purple
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/spellburger
 	name = "Spell burger"
@@ -183,7 +183,7 @@
 		/obj/item/clothing/head/wizard/fake = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/spell
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/spellburger2
 	name = "Spell burger"
@@ -192,7 +192,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/spell
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/bigbiteburger
 	name = "Big bite burger"
@@ -201,7 +201,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/bigbite
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/superbiteburger
 	name = "Super bite burger"
@@ -216,7 +216,7 @@
 
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/slimeburger
 	name = "Jelly burger"
@@ -225,7 +225,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/jellyburger
 	name = "Jelly burger"
@@ -234,7 +234,7 @@
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
@@ -243,7 +243,7 @@
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
-	category = CAT_FOOD
+	category = CAT_BURGER
 
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
@@ -252,4 +252,4 @@
 			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat
-	category = CAT_FOOD
+	category = CAT_BURGER
