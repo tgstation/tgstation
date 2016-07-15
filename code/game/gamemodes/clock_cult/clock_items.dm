@@ -160,7 +160,7 @@
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
+		show_stats(user) //if it's not human, show it stats
 		return 0
 	access_display(user)
 
