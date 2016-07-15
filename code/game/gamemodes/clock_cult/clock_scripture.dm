@@ -1187,7 +1187,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
 		affected_servants += L
 	spawn(total_duration)
-		for(var/M in servants)
+		for(var/M in affected_servants)
 			var/mob/living/L = M
 			L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
 			L.status_flags &= ~GODMODE
