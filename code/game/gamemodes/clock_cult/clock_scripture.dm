@@ -235,20 +235,23 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	if(!islist(invoker.stun_absorption))
-		invoker.stun_absorption = list()
 	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
 	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	spawn(total_duration)
 		if(!invoker)
 			return
+
 		var/vanguard = invoker.stun_absorption["vanguard"]
 		var/stuns_blocked = 0
-		if(!ratvar_awakens && vanguard)
+		if(vanguard)
 			stuns_blocked = max(vanguard["stuns_absorbed"] * 0.5, 20)
 		if(invoker.stat != DEAD)
 			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
-			if(stuns_blocked)
+			var/otheractiveabsorptions = FALSE
+			for(var/i in invoker.stun_absorption)
+				if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["priority"] > vanguard["priority"])
+					otheractiveabsorptions = TRUE
+			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 				invoker.Stun(stuns_blocked)
 				invoker.Weaken(stuns_blocked)
 				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
@@ -1181,12 +1184,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		L.fully_heal()
 		L.add_stun_absorption("inathneq", world.time + total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
 		L.status_flags |= GODMODE
-		animate(L, color = initial(L.color), time = 150, easing = EASE_IN)
+		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
 		affected_servants += L
-	sleep(150)
-	for(var/mob/living/L in affected_servants)
-		L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
-		L.status_flags &= ~GODMODE
+	spawn(total_duration)
+		for(var/M in servants)
+			var/mob/living/L = M
+			L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
+			L.status_flags &= ~GODMODE
 	return 1
 
 
