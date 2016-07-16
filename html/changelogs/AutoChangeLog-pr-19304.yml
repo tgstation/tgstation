@@ -1,0 +1,4 @@
+author: "lordpidey"
+delete-after: True
+changes: 
+  - rscadd: "Flyswatters are now included in beekeeping crates, they are great at killing insects and flies of all sizes."
