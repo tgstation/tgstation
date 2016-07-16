@@ -613,6 +613,15 @@
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
+/datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.20, S.success_multiplier)
+			// +20% success propability on each step, useful while operating in less-than-perfect conditions
+	..()
+
 /datum/reagent/iron
 	name = "Iron"
 	id = "iron"

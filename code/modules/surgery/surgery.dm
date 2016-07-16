@@ -12,6 +12,8 @@
 	var/mob/living/carbon/target							//Operation target mob
 	var/obj/item/organ/organ								//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
+	var/success_multiplier = 0								//Step success propability multiplier
+
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_organ)
 	..()
@@ -54,6 +56,19 @@
 /datum/surgery/proc/complete()
 	qdel(src)
 
+
+/datum/surgery/proc/get_propability_multiplier()
+	var/propability = 0.5
+	var/turf/T = get_turf(target)
+
+	if(locate(/obj/structure/table/optable, T))
+		propability = 1
+	else if(locate(/obj/structure/table, T))
+		propability = 0.8
+	else if(locate(/obj/structure/bed, T))
+		propability = 0.7
+
+	return propability + success_multiplier
 
 
 
