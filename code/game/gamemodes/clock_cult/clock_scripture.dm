@@ -1183,7 +1183,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
 		L.color = "#1E8CE1"
 		L.fully_heal()
-		L.add_stun_absorption("inathneq", world.time + total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
+		L.add_stun_absorption("inathneq", total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
 		L.status_flags |= GODMODE
 		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
 		affected_servants += L
