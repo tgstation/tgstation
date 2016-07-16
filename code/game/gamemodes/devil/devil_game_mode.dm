@@ -31,15 +31,12 @@
 /datum/game_mode/devil
 
 
-/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
+/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind, objectives = 2)
 	var/mob/living/carbon/human/S = devil_mind.current
 	var/trueName= randomDevilName()
-	var/datum/objective/devil/soulquantity/soulquant = new
-	soulquant.owner = devil_mind
-	var/datum/objective/devil/obj_2 = pick(new /datum/objective/devil/soulquality(null), new /datum/objective/devil/sintouch(null))
-	obj_2.owner = devil_mind
-	devil_mind.objectives += obj_2
-	devil_mind.objectives += soulquant
+	var/i
+	for(i=0,i<objectives,i++)
+		add_devil_objectives(devil_mind)
 	devil_mind.devilinfo = devilInfo(trueName, 1)
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
@@ -49,6 +46,9 @@
 		if(devil_mind.assigned_role == "Clown")
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
+
+/datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind)
+	var/datum/objective/devil/objective = pict(new /datum/objective/devil/soulquantity, new /datum/objective/devil/soulquality, new /datum/objective/devil/soulquantity, new /datum/objective/devil/sintouch, new /datum/objective/devil/buy_target)
 
 /datum/mind/proc/announceDevilLaws()
 	if(!devilinfo)

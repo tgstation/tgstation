@@ -1004,6 +1004,8 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/return_soul()
 	if(mind)
+		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
+			mind.soulOwner.devilinfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)
