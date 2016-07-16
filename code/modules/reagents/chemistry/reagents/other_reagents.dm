@@ -387,8 +387,10 @@
 			if(initial(S.blacklisted))
 				continue
 			possible_morphs += S
+
+		var/current_species = H.dna.species.type
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation)
+		if(mutation && mutation != current_species)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
 		else
@@ -607,13 +609,13 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("radium", reac_volume)
 
-/datum/reagent/sterilizine
+/datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-/datum/reagent/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+/datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
 		var/mob/living/carbon/C = M
 		for(var/s in C.surgeries)
