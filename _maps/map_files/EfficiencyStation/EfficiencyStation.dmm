@@ -38470,21 +38470,13 @@
 	name = "\improper Captain's Quarters"
 	})
 "byU" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Private Shower";
-	req_access_txt = "0"
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/toilet,
+/obj/structure/window/reinforced/tinted{
+	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain{
@@ -39199,26 +39191,34 @@
 	name = "\improper Captain's Quarters"
 	})
 "bAn" = (
-/obj/structure/toilet{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/effect/landmark/start{
 	name = "Captain"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/obj/machinery/door/window{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Private Shower";
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
 	})
 "bAo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
 /obj/item/weapon/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
@@ -89882,8 +89882,8 @@ btw
 bHe
 bww
 bxM
-byV
 bAo
+byV
 bBv
 cjL
 bEm
