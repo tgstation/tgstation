@@ -26,15 +26,10 @@
 		return QDEL_HINT_LETMELIVE
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
-	if(destination_z)
-		var/turf/T = locate(destination_x, destination_y, destination_z)
-		user.forceMove(T)
+	Entered(user)
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
-
-/turf/open/space/ChangeTurf(path)
-	. = ..()
 
 /turf/open/space/TakeTemperature(temp)
 
@@ -99,23 +94,13 @@
 
 /turf/open/space/Entered(atom/movable/A)
 	..()
-	if ((!(A) || src != A.loc))
+	if(!istype(A))
 		return
 
 	if(destination_z)
-		A.x = destination_x
-		A.y = destination_y
-		A.z = destination_z
-
-		if(isliving(A))
-			var/mob/living/L = A
-			if(L.pulling)
-				var/turf/T = get_step(L.loc,turn(A.dir, 180))
-				L.pulling.loc = T
-
-		//now we're on the new z_level, proceed the space drifting
-		stoplag()//Let a diagonal move finish, if necessary
-		A.newtonian_move(A.inertia_dir)
+		var/turf/T = locate(destination_x, destination_y, destination_z)
+		if(T)
+			A.SpaceTransit(T)
 
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x

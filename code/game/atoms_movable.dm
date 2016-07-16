@@ -364,3 +364,19 @@
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
+
+/atom/movable/proc/SpaceTransit(var/turf/destination)
+	forceMove(destination)
+	stoplag()
+	newtonian_move(inertia_dir)
+
+/mob/living/SpaceTransit(var/turf/destination)
+	var/old_pulling
+	if(pulling)
+		old_pulling = pulling
+		var/turf/T = get_step(destination, turn(dir, 180))
+		pulling.forceMove(T)
+	forceMove(destination)
+	pulling = old_pulling
+	stoplag()
+	newtonian_move(inertia_dir)
