@@ -244,7 +244,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		var/vanguard = invoker.stun_absorption["vanguard"]
 		var/stuns_blocked = 0
 		if(vanguard)
-			stuns_blocked = max(vanguard["stuns_absorbed"] * 0.5, 20)
+			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.5, 20)
 		if(invoker.stat != DEAD)
 			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
 			var/otheractiveabsorptions = FALSE
@@ -252,6 +252,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				if(invoker.stun_absorption[i]["end_time"] > world.time && invoker.stun_absorption[i]["priority"] > vanguard["priority"])
 					otheractiveabsorptions = TRUE
 			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+				vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 				invoker.Stun(stuns_blocked)
 				invoker.Weaken(stuns_blocked)
 				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"

@@ -387,8 +387,13 @@
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = stun_absorption[i]["priority"]
 		if(priority_absorb_key)
-			if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
 	..()
@@ -402,8 +407,13 @@
 				priority_absorb_key = stun_absorption[i]
 				highest_priority = priority_absorb_key["priority"]
 		if(priority_absorb_key)
-			if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
-				visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+			if(priority_absorb_key["visible_message"] || priority_absorb_key["self_message"])
+				if(priority_absorb_key["visible_message"] && priority_absorb_key["self_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>", "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
+				else if(priority_absorb_key["visible_message"])
+					visible_message("<span class='warning'>[src][priority_absorb_key["visible_message"]]</span>")
+				else if(priority_absorb_key["self_message"])
+					src << "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>"
 			priority_absorb_key["stuns_absorbed"] += amount
 			return 0
 	..()
