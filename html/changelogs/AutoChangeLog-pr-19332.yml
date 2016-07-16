@@ -1,0 +1,6 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "The Vanguard scripture no longer prevents you from using slabs while active, but you cannot reactivate it if it is currently active."
+  - tweak: "It now only lasts 20 seconds, instead of 30."
+  - tweak: "When Vanguard deactivates, it now stuns for half the time of all stuns absorbed, instead of all of them."
