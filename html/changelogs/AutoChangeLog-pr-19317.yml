@@ -1,0 +1,4 @@
+author: "Gun Hog and WJohnston"
+delete-after: True
+changes: 
+  - rscadd: "Aliens (Xenos) now have the ability to sense the direction and rough distance of their queen!"
