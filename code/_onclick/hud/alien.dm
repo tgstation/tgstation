@@ -21,11 +21,18 @@
 	if(T)
 		T.fire(A)
 
-
 /obj/screen/alien/plasma_display
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "power_display2"
 	name = "plasma stored"
+	screen_loc = ui_alienplasmadisplay
+
+
+/obj/screen/alien/alien_queen_finder
+	icon = 'icons/mob/screen_alien.dmi'
+	icon_state = "queen_finder"
+	name = "queen sense"
+	desc = "Allows you to sense the general direction of your Queen."
 	screen_loc = ui_alienplasmadisplay
 
 /datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
@@ -109,6 +116,9 @@
 
 	alien_plasma_display = new /obj/screen/alien/plasma_display()
 	infodisplay += alien_plasma_display
+	if(!istype(mymob, /mob/living/carbon/alien/humanoid/royal/queen))
+		alien_queen_finder = new /obj/screen/alien/alien_queen_finder
+		infodisplay += alien_queen_finder
 
 	zone_select = new /obj/screen/zone_sel/alien()
 	zone_select.update_icon(mymob)
