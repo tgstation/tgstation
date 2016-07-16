@@ -297,6 +297,9 @@
 			W.icon_state = "doublegodeye"
 			W.item_state = "doublegodeye"
 			W.desc = "A pair of strange eyes, said to have been torn from an omniscient creature that used to roam the wastes. There's no real reason to have two, but that isn't stopping you."
+			if(iscarbon(user))
+				var/mob/living/carbon/C = user
+				C.update_inv_wear_mask()
 		else
 			user << "<span class='notice'>The eye winks at you and vanishes into the abyss, you feel really unlucky.</span>"
 		qdel(src)
