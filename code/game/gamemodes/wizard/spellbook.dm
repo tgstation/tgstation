@@ -470,7 +470,7 @@
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	feedback_add_details("wizard_spell_learned",log_name)
 	rightandwrong(1, user, 0)
-	book.uses += 1
+	book.uses += 2
 	active = 1
 	playsound(get_turf(user),"sound/magic/CastSummon.ogg",50,1)
 	user << "<span class='notice'>You have cast summon magic and gained an extra charge for your spellbook.</span>"
