@@ -4,12 +4,16 @@
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
 	w_class = 3
+	var/spawnwithmagazine = 1
 
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 
 /obj/item/weapon/gun/projectile/New()
 	..()
+	if(!spawnwithmagazine)
+		update_icon()
+		return
 	if (!magazine)
 		magazine = new mag_type(src)
 	chamber_round()

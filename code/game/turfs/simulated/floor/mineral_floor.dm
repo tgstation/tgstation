@@ -6,6 +6,7 @@
  * Bananium floor
  * Diamond floor
  * Uranium floor
+ * Shuttle floor (Titanium)
  */
 
 /turf/open/floor/mineral
@@ -70,6 +71,21 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+
+//TITANIUM (shuttle)
+
+/turf/open/floor/mineral/titanium
+	name = "shuttle floor"
+	icon_state = "shuttlefloor3"
+	floor_tile = /obj/item/stack/tile/mineral/titanium
+	icons = list("shuttlefloor3","shuttle_dam")
+
+//PLASTITANIUM (syndieshuttle)
+/turf/open/floor/mineral/plastitanium
+	name = "shuttle floor"
+	icon_state = "shuttlefloor4"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium
+	icons = list("shuttlefloor4","shuttle_dam")
 
 //BANANIUM
 

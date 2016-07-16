@@ -77,9 +77,14 @@
 
 	var/attacked_sound = "punch" //Played when someone punches the creature
 
+	var/dextrous = FALSE //If the creature has, and can use, hands
+	var/dextrous_hud_type = /datum/hud/dextrous
+	var/datum/personal_crafting/handcrafting
+
 
 /mob/living/simple_animal/New()
 	..()
+	handcrafting = new()
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
@@ -398,6 +403,9 @@
 	if(loot.len)
 		for(var/i in loot)
 			new i(loc)
+	if(dextrous)
+		unEquip(r_hand)
+		unEquip(l_hand)
 	if(!gibbed)
 		if(death_sound)
 			playsound(get_turf(src),death_sound, 200, 1)
@@ -418,16 +426,25 @@
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
+	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (1)
-			gib()
-			return
-
+			if(prob(bomb_armor))
+				adjustBruteLoss(500)
+			else
+				gib()
+				return
 		if (2)
-			adjustBruteLoss(60)
+			var/bloss = 60
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 		if(3)
-			adjustBruteLoss(30)
+			var/bloss = 30
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -495,16 +512,25 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return 0
+	if(no_dextery || dextrous)
+		if(be_close && !in_range(M, src))
+			return 0
+	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
 
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
@@ -566,3 +592,73 @@
 
 /mob/living/simple_animal/get_idcard()
 	return access_card
+
+//Dextrous simple mobs can use hands!
+/mob/living/simple_animal/create_mob_hud()
+	if(client && !hud_used && dextrous)
+		hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+
+/mob/living/simple_animal/OpenCraftingMenu()
+	if(dextrous)
+		handcrafting.ui_interact(src)
+
+/mob/living/simple_animal/can_hold_items()
+	return dextrous
+
+/mob/living/simple_animal/IsAdvancedToolUser()
+	return dextrous
+
+/mob/living/simple_animal/activate_hand(selhand)
+	if(!dextrous)
+		return ..()
+	if(istext(selhand))
+		selhand = lowertext(selhand)
+		if(selhand == "right" || selhand == "r")
+			selhand = 0
+		if(selhand == "left" || selhand == "l")
+			selhand = 1
+	if(selhand != src.hand)
+		swap_hand()
+	else
+		mode()
+
+/mob/living/simple_animal/swap_hand()
+	if(!dextrous)
+		return ..()
+	var/obj/item/held_item = get_active_hand()
+	if(held_item)
+		if(istype(held_item, /obj/item/weapon/twohanded))
+			var/obj/item/weapon/twohanded/T = held_item
+			if(T.wielded == 1)
+				usr << "<span class='warning'>Your other hand is too busy holding the [T.name].</span>"
+				return
+	hand = !hand
+	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
+		var/obj/screen/inventory/hand/H
+		H = hud_used.inv_slots[slot_l_hand]
+		H.update_icon()
+		H = hud_used.inv_slots[slot_r_hand]
+		H.update_icon()
+
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+	if(!dextrous)
+		return ..()
+	if(!ismob(A))
+		A.attack_hand(src)
+		update_hand_icons()
+
+/mob/living/simple_animal/put_in_hands(obj/item/I)
+	..()
+	update_hand_icons()
+
+/mob/living/simple_animal/proc/update_hand_icons()
+	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+		if(r_hand)
+			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.screen_loc = ui_rhand
+			client.screen |= r_hand
+		if(l_hand)
+			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.screen_loc = ui_lhand
+			client.screen |= l_hand
+

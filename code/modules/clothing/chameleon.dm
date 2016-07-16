@@ -303,7 +303,7 @@
 	flags = NOSLIP
 	origin_tech = "syndicate=2"
 	burn_state = FIRE_PROOF
-	can_hold_items = 1
+	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/shoes/chameleon/New()

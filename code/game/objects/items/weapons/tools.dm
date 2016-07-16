@@ -342,11 +342,11 @@
 		check_fuel()
 		if(M)
 			M.flash_eyes(light_intensity)
-		return 1
+		return TRUE
 	else
 		if(M)
 			M << "<span class='warning'>You need more welding fuel to complete this task!</span>"
-		return 0
+		return FALSE
 
 
 //Returns whether or not the welding tool is currently on.
@@ -424,7 +424,13 @@
 			user.put_in_hands(F)
 		else
 			user << "<span class='warning'>You need one rod to start building a flamethrower!</span>"
-			return
+
+/obj/item/weapon/weldingtool/ignition_effect(atom/A, mob/user)
+	if(welding && remove_fuel(1, user))
+		. = "<span class='notice'>[user] casually lights [A] with [src], \
+			what a badass.</span>"
+	else
+		. = ""
 
 /obj/item/weapon/weldingtool/largetank
 	name = "industrial welding tool"

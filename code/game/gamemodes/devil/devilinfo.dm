@@ -35,7 +35,7 @@ var/global/list/lawlorify = list (
 			BAN_STRIKEUNCONCIOUS = "This devil only shows interest in those who are awake.",
 			BAN_HURTLIZARD = "This devil will not strike a lizardman first.",
 			BAN_HURTANIMAL = "This devil avoids hurting animals.",
-			BANISH_WATER = "To banish the devil, you must sprinkle holy water upon it's body.",
+			BANISH_WATER = "To banish the devil, you must infuse it's body with holy water.",
 			BANISH_COFFIN = "This devil will return to life if it's remains are not placed within a coffin.",
 			BANISH_FORMALDYHIDE = "To banish the devil, you must inject it's lifeless body with embalming fluid.",
 			BANISH_RUNES = "This devil will resurrect after death, unless it's remains are within a rune.",
@@ -138,11 +138,10 @@ var/global/list/lawlorify = list (
 	return pick(BANISH_WATER, BANISH_COFFIN, BANISH_FORMALDYHIDE, BANISH_RUNES, BANISH_CANDLES, BANISH_DESTRUCTION, BANISH_FUNERAL_GARB)
 
 /datum/devilinfo/proc/add_soul(datum/mind/soul)
-	var/mob/living/carbon/human/H = owner.current
 	if(soulsOwned.Find(soul))
 		return
 	soulsOwned += soul
-	H.nutrition = NUTRITION_LEVEL_FULL
+	owner.current.nutrition = NUTRITION_LEVEL_FULL
 	owner.current << "<span class='warning'>You feel satiated as you received a new soul.</span>"
 	update_hud()
 	switch(SOULVALUE)
@@ -297,7 +296,7 @@ var/global/list/lawlorify = list (
 
 /datum/devilinfo/proc/give_base_spells(give_summon_contract = 0)
 	remove_spells()
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
 	if(give_summon_contract)
 		give_summon_contract()
@@ -305,13 +304,13 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/give_lizard_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 
 /datum/devilinfo/proc/give_true_spells()
 	remove_spells()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater(null))
-	owner.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball/hellish(null))
+	owner.AddSpell(new /obj/effect/proc_holder/spell/fireball/hellish(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/infernal_jaunt(null))
 	owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/sintouch(null))
 

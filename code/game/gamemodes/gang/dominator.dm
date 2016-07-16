@@ -100,12 +100,9 @@
 				takeover_in_progress = 1
 				break
 		if(!takeover_in_progress)
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-			else
+			var/was_stranded = SSshuttle.emergency.mode == SHUTTLE_STRANDED
+			SSshuttle.clearHostileEnvironment(src)
+			if(!was_stranded)
 				priority_announce("All hostile activity within station systems has ceased.","Network Alert")
 
 			if(get_security_level() == "delta")
@@ -194,6 +191,7 @@
 		gang.dom_attempts --
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
+		SSshuttle.registerHostileEnvironment(src)
 		src.name = "[gang.name] Gang [src.name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"

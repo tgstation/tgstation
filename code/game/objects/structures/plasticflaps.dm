@@ -23,13 +23,17 @@
 		return prob(60)
 
 	var/obj/structure/bed/B = A
-	if (istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
+	if(istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
 		return 0
 
-	if (istype(A, /obj/structure/closet/cardboard))
+	if(istype(A, /obj/structure/closet/cardboard))
 		var/obj/structure/closet/cardboard/C = A
 		if(C.move_delay)
 			return 0
+
+	if(istype(A, /obj/mecha))
+		return 0
+
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
@@ -57,15 +61,15 @@
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
-/obj/structure/plasticflaps/mining/New() //set the turf below the flaps to block air
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = 1
-	..()
+/obj/structure/plasticflaps/mining/New()
+	air_update_turf(1)
+	. = ..()
+	
+/obj/structure/plasticflaps/mining/CanAtmosPass()
+	return FALSE
 
-/obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor //wow this is terrible
-	var/turf/T = get_turf(loc)
-	if(T)
-		if(istype(T, /turf/open/floor))
-			T.blocks_air = 0
-	return ..()
+/obj/structure/plasticflaps/mining/Destroy()
+	var/atom/oldloc = loc
+	. = ..()
+	if (oldloc)
+		oldloc.air_update_turf(1)

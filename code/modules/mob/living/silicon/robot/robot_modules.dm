@@ -336,7 +336,7 @@
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/weapon/pinpointer/operative(src)
+	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)
 	emag = null
 	fix_modules()
 
@@ -357,7 +357,7 @@
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/weapon/pinpointer/operative(src)
+	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)
 	emag = null
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())

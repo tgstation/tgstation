@@ -67,7 +67,7 @@
 			synd_spawn += get_turf(A)
 			continue
 
-	var/nuke_code = "[rand(10000, 99999)]"
+	var/nuke_code = random_nukecode()
 	var/leader_selected = 0
 	var/agent_number = 1
 	var/spawnpos = 1
@@ -147,11 +147,7 @@
 /datum/game_mode/proc/greet_syndicate(datum/mind/syndicate, you_are=1)
 	if(you_are)
 		syndicate.current << "<span class='notice'>You are a [syndicate_name()] agent!</span>"
-	var/obj_count = 1
-	for(var/datum/objective/objective in syndicate.objectives)
-		syndicate.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
-	return
+	syndicate.announce_objectives()
 
 /datum/game_mode/proc/equip_syndicate(mob/living/carbon/human/synd_mob, telecrystals = TRUE)
 	synd_mob.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
@@ -296,7 +292,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/weapon/storage/backpack
 	ears = /obj/item/device/radio/headset/syndicate/alt
-	l_pocket = /obj/item/weapon/pinpointer/nukeop
+	l_pocket = /obj/item/weapon/pinpointer/syndicate
 	id = /obj/item/weapon/card/id/syndicate
 	belt = /obj/item/weapon/gun/projectile/automatic/pistol
 	backpack_contents = list(/obj/item/weapon/storage/box/syndie=1)

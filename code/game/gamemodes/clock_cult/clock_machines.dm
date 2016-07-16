@@ -141,15 +141,18 @@
 	max_health = 150
 	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
-	var/stored_alloy = 0 //250W = 1 alloy
-	var/max_alloy = 50000
+	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
+	/obj/item/clockwork/alloy_shards/medium = 1, \
+	/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/component/vanguard_cogwheel = 1)
+	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
+	var/max_alloy = 25000
 	var/mob_cost = 200
 	var/structure_cost = 250
 	var/cyborg_cost = 300
 
 /obj/structure/clockwork/powered/mending_motor/prefilled
-	stored_alloy = 5000 //starts with 20 alloy
+	stored_alloy = 2500 //starts with 1 replicant alloy/100 liquified alloy
 
 /obj/structure/clockwork/powered/mending_motor/total_accessable_power()
 	. = ..()
@@ -170,11 +173,11 @@
 /obj/structure/clockwork/powered/mending_motor/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='alloy'>It has [stored_alloy*0.004]/[max_alloy*0.004] units of replicant alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
+		user << "<span class='alloy'>It contains [stored_alloy*0.04]/[max_alloy*0.04] units of liquified alloy, which is equivalent to [stored_alloy]W/[max_alloy]W of power.</span>"
 		user << "<span class='inathneq_small'>It requires [mob_cost]W to heal clockwork mobs, [structure_cost]W for clockwork structures, and [cyborg_cost]W for cyborgs.</span>"
 
 /obj/structure/clockwork/powered/mending_motor/process()
-	if(!..())
+	if(..() < mob_cost)
 		visible_message("<span class='warning'>[src] emits an airy chuckling sound and falls dark!</span>")
 		toggle()
 		return
@@ -210,7 +213,7 @@
 
 /obj/structure/clockwork/powered/mending_motor/attack_hand(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE))
-		if(!total_accessable_power() >= 300)
+		if(total_accessable_power() < mob_cost)
 			user << "<span class='warning'>[src] needs more power or replicant alloy to function!</span>"
 			return 0
 		toggle(0, user)
@@ -220,7 +223,7 @@
 		if(stored_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
-		user.whisper("Genafzhgr vagb jngre.")
+		user.whisper("Genafzhgr vagb jngr-e.")
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
 		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
 		stored_alloy = stored_alloy + 2500
@@ -243,18 +246,23 @@
 	max_health = 80
 	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
+	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/guvax_capacitor/antennae = 1)
 	var/mania_cost = 150
 	var/convert_attempt_cost = 150
 	var/convert_cost = 300
 
-	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"Trg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
-	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragvn.\"", "\"Fgevir gb trg n fperj ybbfr.\"")
-	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
-	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gung'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
-	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gurfr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gurfr vqvbgf va gur neg bs pbairefvba.\"", \
-	"\"Bu, bs pbhefr, fbzrbar jr pna'g pbaireg. Gurfr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
-	"\"Ubj qb gurl snvy gb hfr n Fvtvy bs Npprffvba, naljnl?\"", "\"Jul vf vg gung nyy freinagf ner guvf varcg?\"", "\"Vg'f abg yvxryl lbh'yy or fghpx urer ybat.\"")
+	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"T-rg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
+	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragv'n.\"", "\"Fgevir gb-t-rg n fperj ybbfr.\"")
+	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggr-e.\"", "\"Gbhpu gur nagr-aanr.\"", "\"V nyjnlf unir gb-qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
+	"\"Nqinapr sbejneq-naq-cynpr lbhe urnq o-rgjrra gur nagr-aanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegr-e, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
+	var/convert_messages = list("\"Lbh jba'g qb. Tb gb-fyrrc juvyr V gr-yy gur'fr avgjvgf ubj gb-pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg-bs pbairefvba.\"", \
+	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb-hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
+	"\"Ubj qb gur'l snvy gb hfr n Fvtvy-bs Npprffvba, naljnl?\"", "\"Jul vf vg gun'g nyy freinagf ner guv'f varcg?\"", "\"Vg'f dhvgr yvxryl lbh'yy or fghpx urer sbe n juvyr.\"")
+	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagr-erfgvat ybpngv'ba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGR-AANR!\"", \
+	"\"Nznmvat. Lbh fbzrubj znantrq gb-jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
+	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgv'yy qb fbz-rguv'at NF FGHCVQ NF GUV'F!\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
@@ -271,11 +279,27 @@
 		return
 	if(try_use_power(mania_cost))
 		var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
+		for(var/mob/living/carbon/human/H in view(1, src))
+			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
+				if(is_eligible_servant(H) && try_use_power(convert_cost))
+					H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
+					H.playsound_local(T, hum, 80, 1)
+					add_servant_of_ratvar(H)
+				else if(!H.stat)
+					if(H.getBrainLoss() >= H.maxHealth)
+						H.Paralyse(5)
+						H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+					else
+						H.adjustBrainLoss(100)
+						H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
+			else
+				visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
+				playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
 		for(var/mob/living/carbon/human/H in range(10, src))
-			if(!is_servant_of_ratvar(H) && !H.null_rod_check())
+			if(!is_servant_of_ratvar(H) && !H.null_rod_check() && H.stat == CONSCIOUS)
 				var/distance = get_dist(T, get_turf(H))
-				var/falloff_distance = (110) - distance * 10
-				var/sound_distance = falloff_distance * 0.4
+				var/falloff_distance = min((110) - distance * 10, 80)
+				var/sound_distance = falloff_distance * 0.5
 				var/targetbrainloss = H.getBrainLoss()
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
@@ -289,26 +313,26 @@
 								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
 							else
 								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
-						if(targetbrainloss <= 70)
-							H.adjustBrainLoss(70 - targetbrainloss) //got too close had brain eaten
+						if(targetbrainloss <= 50)
+							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
 						if(targetdruggy <= 150)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(11)
 						if(targethallu <= 150)
-							H.hallucination += 10
+							H.hallucination += 11
 					if(4 to 5)
 						if(targetbrainloss <= 50)
-							H.adjustBrainLoss(5)
+							H.adjustBrainLoss(3)
 						if(targetdruggy <= 120)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(9)
 						if(targethallu <= 120)
-							H.hallucination += 10
+							H.hallucination += 9
 					if(6 to 7)
 						if(targetbrainloss <= 30)
 							H.adjustBrainLoss(2)
 						if(prob(falloff_distance) && targetdruggy <= 90)
-							H.adjust_drugginess(10)
+							H.adjust_drugginess(7)
 						else if(targethallu <= 90)
-							H.hallucination += 10
+							H.hallucination += 7
 					if(8 to 9)
 						if(H.getBrainLoss() <= 10)
 							H.adjustBrainLoss(1)
@@ -318,24 +342,23 @@
 							H.hallucination += 5
 					if(10 to INFINITY)
 						if(prob(falloff_distance) && targetdruggy <= 30)
-							H.adjust_drugginess(5)
+							H.adjust_drugginess(3)
 						else if(targethallu <= 30)
-							H.hallucination += 5
-					else //if it's a distance of 1 or they're on top of it(how'd they get on top of it???)
-						if(try_use_power(convert_attempt_cost))
-							if(is_eligible_servant(H) && try_use_power(convert_cost))
-								H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
-								add_servant_of_ratvar(H)
-							else if(!H.stat)
-								if(targetbrainloss >= H.maxHealth)
-									H.Paralyse(5)
-									H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+							H.hallucination += 3
+					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
+						if(targetbrainloss <= 99)
+							if(prob(falloff_distance))
+								if(prob(falloff_distance))
+									H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+								else if(prob(falloff_distance))
+									H << "<span class='sevtug'>[pick(close_messages)]</span>"
 								else
-									H.adjustBrainLoss(100)
-									H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
-						else
-							visible_message("<span class='warning'>[src]'s antennae fizzle quietly.</span>")
-							playsound(src, 'sound/effects/light_flicker.ogg', 50, 1)
+									H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+							H.adjustBrainLoss(99 - targetbrainloss)
+						if(targetdruggy <= 200)
+							H.adjust_drugginess(15)
+						if(targethallu <= 200)
+							H.hallucination += 15
 
 			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
 				H.adjustBrainLoss(-H.getBrainLoss()) //heals servants of braindamage, hallucination, and druggy
@@ -517,7 +540,8 @@
 	max_health = 200
 	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
+	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
@@ -560,8 +584,8 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
-			send_hierophant_message(user, input, 1)
+			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgv'ingr!")
+			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"
@@ -569,8 +593,8 @@
 			if(!try_use_power(gateway_cost))
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
-			if(procure_gateway(user, 100, 5, 1))
-				clockwork_say(user, "Fcnpvny Tngrjnl, npgvingr!")
+			if(procure_gateway(user, 100, 5, 1) && !gateway_active)
+				clockwork_say(user, "Fcngv'ny Tngrjnl, npgv'ingr!")
 			else
 				return_power(gateway_cost)
 		if("Cancel")

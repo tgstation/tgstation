@@ -1,3 +1,28 @@
+/*
+
+ASH DRAKE
+
+Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
+
+It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+
+Whenever possible, the drake will breathe fire in the four cardinal directions, igniting and heavily damaging anything caught in the blast.
+It also often causes fire to rain from the sky - many nearby turfs will flash red as a fireball crashes into them, dealing damage to anything on the turfs.
+The drake also utilizes its wings to fly into the sky and crash down onto a specified point. Anything on this point takes tremendous damage.
+ - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+
+When an ash drake dies, it leaves behind a chest that can contain four things:
+ 1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
+ 2. A lava staff that allows its wielder to create lava
+ 3. A spellbook and wand of fireballs
+ 4. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
+
+When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."

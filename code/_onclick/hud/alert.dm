@@ -240,6 +240,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
+// CLOCKCULT
+/obj/screen/alert/nocache
+	name = "No Tinkerer's Cache"
+	desc = "In order to share components and unlock higher tier \
+		scripture, a tinkerer's cache must be constructed somewhere \
+		in the world. Try to place it somewhere accessible, yet hidden."
+	icon_state = "nocache"
+
 //GUARDIANS
 
 /obj/screen/alert/cancharge
@@ -296,6 +304,23 @@ office by your AI master or any qualified human may resolve this matter. Robotic
 so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
+
+/obj/screen/alert/hackingapc
+	name = "Hacking APC"
+	desc = "An Area Power Controller is being hacked. When the process is \
+		complete, you will have exclusive control of it, and you will gain \
+		additional processing time to unlock more malfunction abilities."
+	icon_state = "hackingapc"
+	timeout = 600
+	var/atom/target = null
+
+/obj/screen/alert/hackingapc/Click()
+	if(!usr || !usr.client) return
+	if(!target) return
+	var/mob/living/silicon/ai/AI = usr
+	var/turf/T = get_turf(target)
+	if(T)
+		AI.eyeobj.setLoc(T)
 
 //MECHS
 

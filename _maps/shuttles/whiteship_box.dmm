@@ -25,7 +25,7 @@
 	launch_status = 0;
 	name = "NT Medical Ship";
 	roundstart_move = "whiteship_away";
-	travelDir = 180;
+	port_angle = 180;
 	width = 35;
 	timid = 1
 	},

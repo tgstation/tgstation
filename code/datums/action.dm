@@ -11,8 +11,10 @@
 	var/processing = 0
 	var/obj/screen/movable/action_button/button = null
 	var/button_icon = 'icons/mob/actions.dmi'
-	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
+
+	var/icon_icon = 'icons/mob/actions.dmi'
+	var/button_icon_state = "default"
 	var/mob/owner
 
 /datum/action/New(Target)
@@ -88,9 +90,9 @@
 
 /datum/action/proc/ApplyIcon(obj/screen/movable/action_button/current_button)
 	current_button.cut_overlays()
-	if(button_icon && button_icon_state)
+	if(icon_icon && button_icon_state)
 		var/image/img
-		img = image(button_icon, current_button, button_icon_state)
+		img = image(icon_icon, current_button, button_icon_state)
 		img.pixel_x = 0
 		img.pixel_y = 0
 		current_button.add_overlay(img)
@@ -184,6 +186,7 @@
 
 /datum/action/item_action/toggle_flame
 	name = "Summon/Dismiss Ratvar's Flame"
+	background_icon_state = "bg_clock"
 
 /datum/action/item_action/toggle_flame/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
@@ -194,6 +197,15 @@
 			return 0
 	return ..()
 
+/datum/action/item_action/hierophant
+	name = "Hierophant Network"
+	button_icon_state = "hierophant_slab"
+	background_icon_state = "bg_clock"
+
+/datum/action/item_action/hierophant/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

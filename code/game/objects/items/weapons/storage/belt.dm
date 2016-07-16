@@ -129,7 +129,8 @@
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/restraints/legcuffs/bola
 		)
 
 /obj/item/weapon/storage/belt/security/full/New()

@@ -541,7 +541,7 @@
 "bC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
@@ -676,7 +676,7 @@
 "bU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
@@ -704,7 +704,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
@@ -751,8 +751,12 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "cf" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/mineral,
+/obj/machinery/button/door{
+	id = "spacebardock";
+	name = "Podbay Airlock";
+	pixel_y = -24
+	},
+/turf/open/floor/plating/asteroid,
 /area/ruin/powered)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -794,7 +798,7 @@
 "cn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
-	on = 1;
+	on = 1
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
@@ -1312,7 +1316,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1354,7 +1358,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1396,7 +1400,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1438,7 +1442,7 @@ af
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1480,7 +1484,7 @@ az
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1522,7 +1526,7 @@ aA
 af
 af
 af
-bl
+aP
 bm
 aP
 aP
@@ -1563,7 +1567,7 @@ am
 aB
 af
 af
-af
+cf
 al
 al
 al
@@ -1730,8 +1734,8 @@ bI
 bI
 br
 cc
-cd
-cd
+cc
+cc
 cc
 cg
 aM
@@ -1940,7 +1944,7 @@ ca
 bV
 bh
 bV
-cf
+cj
 cj
 cl
 cj

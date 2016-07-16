@@ -1,11 +1,12 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
+
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
-	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -343,8 +344,6 @@ body
 
 	usr << browse(html, "window=variables\ref[D];size=475x650")
 
-	return
-
 /client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
@@ -354,10 +353,10 @@ body
 		html += "<li>"
 
 	if (isnull(value))
-		html += "[name] = <span class='value'>null</span>"
+		html += "[html_encode(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[html_encode(value)]\"</span>"
+		html += "[html_encode(name)] = <span class='value'>\"[html_encode(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -365,9 +364,9 @@ body
 		var/rnd = rand(1,10000)
 		var/rname = "tmp\ref[I][rnd].png"
 		usr << browse_rsc(I, rname)
-		html += "[name] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		html += "[html_encode(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "[name] = /icon (<span class='value'>[value]</span>)"
+		html += "[html_encode(name)] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 /*		else if (istype(value, /image))
@@ -382,39 +381,45 @@ body
 		#endif
 */
 	else if (isfile(value))
-		html += "[name] = <span class='value'>'[value]'</span>"
+		html += "[html_encode(name)] = <span class='value'>'[value]'</span>"
 
 	else if (istype(value, /datum))
 		var/datum/D = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [D.type]"
 
 	else if (istype(value, /client))
 		var/client/C = value
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[html_encode(name)] \ref[value]</a> = [C] [C.type]"
 //
 	else if (istype(value, /list))
 		var/list/L = value
-		html += "[name] = /list ([L.len])"
+		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-			// not sure if this is completely right...
-			if(0)   //(L.vars.len > 0)
-				html += "<ol>"
-				html += "</ol>"
-			else
-				html += "<ul>"
-				var/index = 1
-				for (var/entry in L)
-					if(istext(entry))
-						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
-					else
+			html += "<ul>"
+			var/index = 1
+			for(var/entry in L)
+				var/state = "INDEX"
+				var/val = null
+				if(isnum(entry) || internal_byond_list_vars[name])
+					state = "INDEX"
+				else
+					val = L[entry]
+					if(!isnull(val))
+						state = "ASSOC"
+					if(isnull(L[index]))
+						state = "ASSOC"
+
+				switch(state)
+					if("INDEX")
 						html += debug_variable(index, L[index], level + 1)
-					index++
-				html += "</ul>"
+					if("ASSOC")
+						html += debug_variable(entry, val, level + 1)
+				index++
+			html += "</ul>"
 
 	else
-		html += "[name] = <span class='value'>[html_encode(value)]</span>"
+		html += "[html_encode(name)] = <span class='value'>[html_encode(value)]</span>"
 
 	html += "</li>"
 
@@ -961,7 +966,3 @@ body
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
-
-
-	return
-

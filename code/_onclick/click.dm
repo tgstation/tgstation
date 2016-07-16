@@ -110,7 +110,7 @@
 		return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
-	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
+	if(A.ClickAccessible(src, depth=INVENTORY_DEPTH))
 		// No adjacency needed
 		if(W)
 			var/resolved = A.attackby(W,src)
@@ -273,6 +273,21 @@
 
 /atom/proc/CtrlShiftClick(mob/user)
 	return
+
+/*
+	Helper to check can the mob click/access an item.
+	Used by mob inventory and storage items.
+*/
+/atom/proc/ClickAccessible(mob/user, depth=1)
+	if(src == user.loc || (src in user.contents))
+		return TRUE
+
+	if(loc && depth > 1)
+		return loc.ClickAccessible(user, depth-1)
+
+/turf/ClickAccessible(mob/user, depth=1)
+	return
+
 
 /*
 	Misc helpers

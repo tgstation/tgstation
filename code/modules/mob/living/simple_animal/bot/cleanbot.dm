@@ -239,7 +239,7 @@
 			if(prob(75))
 				var/turf/open/T = loc
 				if(istype(T))
-					T.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
+					T.MakeSlippery(min_wet_time = 20, wet_time_to_add = 15)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				PoolOrNew(/obj/effect/particle_effect/foam, loc)
