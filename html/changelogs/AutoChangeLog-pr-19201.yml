@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - experiment: "Added a system to detect when stickybans go rogue and revert all recent matches."
