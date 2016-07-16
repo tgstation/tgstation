@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Cogscarabs(and other nonhuman mobs able to hold clockwork slabs) can now check the stats of the clockwork cult by using a clockwork slab. They remain unable to use slabs under normal conditions."
