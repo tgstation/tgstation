@@ -326,15 +326,24 @@
 	attack_verb = list("swatted", "smacked")
 	hitsound = 'sound/effects/snap.ogg'
 	w_class = 2
+	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/list/strong_against
+
+/obj/item/weapon/melee/flyswatter/New()
+	strong_against = typecacheof(list(
+					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/butterfly,
+					/mob/living/simple_animal/cockroach,
+					/obj/item/queen_bee/
+	))
 
 /obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
-		if(istype(target, /mob/living/simple_animal/hostile/poison/bees/) || istype(target, /mob/living/simple_animal/butterfly) || istype(target, /mob/living/simple_animal/cockroach))
-			var/mob/living/simple_animal/bug = target
-			new /obj/effect/decal/cleanable/deadcockroach(get_turf(bug))
-			bug.death(1)
-			user << "<span class='warning'>You easily splat the [bug].</span>"
-		else if(istype(target, /obj/item/queen_bee/))
-			qdel(target)
+		if(is_type_in_typecache(target, strong_against))
 			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
 			user << "<span class='warning'>You easily splat the [target].</span>"
+			if(istype(target, /mob/living/))
+				var/mob/living/bug = target
+				bug.death(1)
+			else
+				qdel(target)
