@@ -75,7 +75,7 @@
 		glow.linked = src
 
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
-	var/damage = max((health * 0.60) / severity, 40) //requires multiple bombs to take down
+	var/damage = max((health * 0.70) / severity, 100) //requires multiple bombs to take down
 	take_damage(damage, BRUTE)
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
