@@ -14,8 +14,8 @@ span.button
   @extend {context} $fontReset
   display: inline-block
   vertical-align: middle
-  height: 20px
-  line-height: @height - 3px
+  min-height: 20px
+  line-height: @min-height - 3px
   padding: 0 5px
   white-space: nowrap
 
@@ -39,3 +39,5 @@ span:not(.button) + span.button
 
 span.button + span:not(.button)
   margin-left: 5px
+
+
