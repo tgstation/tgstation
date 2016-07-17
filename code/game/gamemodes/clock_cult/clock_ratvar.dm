@@ -37,13 +37,11 @@
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
@@ -73,9 +71,6 @@
 	if(!glow)
 		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
 		glow.linked = src
-
-/obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
-	return 0 //Nice try, Toxins!
 
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
@@ -175,7 +170,7 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
