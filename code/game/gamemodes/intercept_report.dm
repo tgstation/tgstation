@@ -1,4 +1,4 @@
-//Intercept reports are sent to the station every round to
+//Intercept reports are sent to the station every round to warn the crew of possible threats. They consist of five possibilites, one of which is always correct.
 
 /datum/intercept_text
 	var/text
