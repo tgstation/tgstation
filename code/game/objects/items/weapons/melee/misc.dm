@@ -10,7 +10,7 @@
 	slot_flags = SLOT_BELT
 	force = 10
 	throwforce = 7
-	w_class = 4
+	w_class = 3
 	origin_tech = "combat=5"
 	attack_verb = list("flogged", "whipped", "lashed", "disciplined")
 	hitsound = 'sound/weapons/slash.ogg' //pls replace
@@ -29,7 +29,7 @@
 	flags = CONDUCT
 	force = 15
 	throwforce = 10
-	w_class = 3
+	w_class = 4
 	block_chance = 50
 	armour_penetration = 50
 	sharpness = IS_SHARP

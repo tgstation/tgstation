@@ -429,10 +429,9 @@
 /obj/item/weapon/storage/belt/rapier/update_icon()
 	icon_state = "[initial(icon_state)]"
 	item_state = "[initial(item_state)]"
-	for(var/obj/item/I in contents)
-		if(I)
-			icon_state = "[initial(icon_state)]-rapier"
-			item_state = "[initial(item_state)]-rapier"
+	if(contents.len)
+		icon_state = "[initial(icon_state)]-rapier"
+		item_state = "[initial(item_state)]-rapier"
 	if(loc && istype(loc, /mob/living))
 		var/mob/living/L = loc
 		L.regenerate_icons()
