@@ -342,12 +342,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to four times over twenty-four seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
+/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
 	descname = "Channeled, Mobile Area Confusion"
 	name = "Taunting Tirade"
-	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to twenty-four seconds."
+	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Ubfgv'yrf ba zl-onpx!", "Rarzvrf ba zl-genvy!", "Tbaan gel-naq-funxr zl-gnvy.", "Obtrlf ba zl-fvk!")
-	chant_amount = 4
+	chant_amount = 5
 	chant_interval = 10
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
