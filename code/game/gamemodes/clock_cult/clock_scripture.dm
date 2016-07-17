@@ -1040,6 +1040,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
+	invokers_required = 3
+	multiple_invokers_used = TRUE
 	var/list/mindbreaksayings = list("\"Bu, terng. V t-rg gb funggr-e fbzr zvaqf.\"", "\"Zber zvaqf gb-pehfu.\"", \
 	"\"Ernyyl, guv'f vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguv'at vagr-erfgvat va gur'z.\"", "\"Znlor V pna vafgv'yy n yvggyr ovg-bs gr-eebe va guv'f bar.\"", \
 	"\"Jung n jnfgr-bs zl-cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgr-nq, ohg gur'l arire nfx.\"")
@@ -1065,9 +1067,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
 			var/messaged = FALSE
-			var/visualsdistance = max(175 - distance, 15)
-			var/minordistance = max(125 - distance, 10)
-			var/majordistance = max(75 - distance, 5)
+			var/visualsdistance = max(150 - distance, 5)
+			var/minordistance = max(200 - distance*2, 5)
+			var/majordistance = max(150 - distance*3, 5)
 			if(H.null_rod_check())
 				visualsdistance = round(visualsdistance * 0.25)
 				minordistance = round(minordistance * 0.25)
