@@ -9,7 +9,7 @@
 	origin_tech = "bluespace=4;plasmatech=3"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Subspace Transmitter, 5 Pieces of cable, 1 Subspace Crystal, 1 Subspace Amplifier and 1 Console Screen."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator/pico" = 2,
+							"/obj/item/weapon/stock_parts/manipulator/nano/pico" = 2,
 							"/obj/item/weapon/stock_parts/subspace/transmitter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1,
@@ -26,7 +26,7 @@
 	origin_tech = "bluespace=4;plasmatech=3"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Subspace Transmitter, 5 Pieces of cable, 1 Subspace Crystal, 1 Subspace Amplifier and 1 Console Screen."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator/pico" = 2,
+							"/obj/item/weapon/stock_parts/manipulator/nano/pico" = 2,
 							"/obj/item/weapon/stock_parts/subspace/transmitter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/subspace/amplifier" = 1,
@@ -43,7 +43,7 @@
 	origin_tech = "magnets=3;powerstorage=4"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Subspace Filter, 5 Pieces of cable, 1 Subspace Treatment disk, 1 Subspace Analyzer and 1 Console Screen."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator/pico" = 2,
+							"/obj/item/weapon/stock_parts/manipulator/nano/pico" = 2,
 							"/obj/item/weapon/stock_parts/subspace/filter" = 1,
 							"/obj/item/weapon/stock_parts/subspace/treatment" = 1,
 							"/obj/item/weapon/stock_parts/subspace/analyzer" = 1,

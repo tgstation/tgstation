@@ -1,0 +1,4 @@
+author: PJB3005
+delete-after: true
+changes:
+  - bugfix: "Fixes the R-UST and shield generator circuits being broken and unable to be built into machinery. You've got the author of Bus Station to thank for that."

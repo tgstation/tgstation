@@ -48,8 +48,8 @@
 	origin_tech = "bluespace=3;plasmatech=4;magnets=5;powerstorage=6"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Ultra Micro-Laser, 5 Pieces of Cable, 1 Subspace Crystal and 1 Console Screen."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator/pico" = 2,
-							"/obj/item/weapon/stock_parts/micro_laser/ultra" = 1,
+							"/obj/item/weapon/stock_parts/manipulator/nano/pico" = 2,
+							"/obj/item/weapon/stock_parts/micro_laser/high/ultra" = 1,
 							"/obj/item/weapon/stock_parts/subspace/crystal" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
@@ -64,9 +64,9 @@
 	origin_tech = "powerstorage=3;engineering=4;plasmatech=4;materials=6"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Phasic Scanning Module, 1 Super Matter Bin, 1 Console Screen and 5 Pieces of Cable."
 	req_components = list(
-							"/obj/item/weapon/stock_parts/manipulator/pico" = 2,
-							"/obj/item/weapon/stock_parts/scanning_module/phasic" = 1,
-							"/obj/item/weapon/stock_parts/matter_bin/super" = 1,
+							"/obj/item/weapon/stock_parts/manipulator/nano/pico" = 2,
+							"/obj/item/weapon/stock_parts/scanning_module/adv/phasic" = 1,
+							"/obj/item/weapon/stock_parts/matter_bin/adv/super" = 1,
 							"/obj/item/weapon/stock_parts/console_screen" = 1,
 							"/obj/item/stack/cable_coil" = 5)
 
