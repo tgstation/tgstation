@@ -1,0 +1,5 @@
+author: "CoreOverload"
+delete-after: True
+changes: 
+  - rscadd: "Sterilizine now reduces probability of step failure if you apply it after starting surgery. Useful while operating in less-than-perfect conditions."
+  - rscadd: "Potent alcohol can be used as replacement for sterilizine."
