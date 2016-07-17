@@ -63,15 +63,14 @@ var/datum/subsystem/ticker/ticker
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
-	setupFactions()
 	..()
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
-			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
+			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
