@@ -88,6 +88,8 @@ var/list/preferences_datums = list()
 
 	var/unlock_content = 0
 
+	var/list/bosses_killed = list()
+
 	var/list/ignoring = list()
 
 /datum/preferences/New(client/C)

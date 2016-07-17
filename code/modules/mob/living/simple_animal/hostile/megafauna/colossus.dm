@@ -55,6 +55,7 @@ Difficulty: Very Hard
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	unlock_type = COLOSSUS
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 

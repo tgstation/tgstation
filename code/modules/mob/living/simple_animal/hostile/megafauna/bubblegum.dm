@@ -52,6 +52,7 @@ Difficulty: Hard
 	var/charging = 0
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
+	unlock_type = BUBBLEGUM
 
 /obj/item/device/gps/internal/bubblegum
 	icon_state = null
