@@ -15,7 +15,7 @@
 	var/static/list/available_vr_spawnpoints
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
-
+	var/outfit = /datum/outfit/vr_basic
 
 /obj/machinery/vr_sleeper/New()
 	..()
@@ -162,6 +162,9 @@
 		vr_human.undershirt = H.undershirt
 		vr_human.underwear = H.underwear
 		vr_human.updateappearance(1,1,1)
+		if(outfit)
+			var/datum/outfit/O = new outfit()
+			O.equip(vr_human)
 		if(transfer && H.mind)
 			H.mind.transfer_to(vr_human)
 
@@ -173,3 +176,9 @@
 
 /obj/effect/landmark/vr_spawn //places you can spawn in VR, auto selected by the vr_sleeper during get_vr_spawnpoint()
 	var/vr_category = "default" //So we can have specific sleepers, eg: "Basketball VR Sleeper", etc.
+
+
+/datum/outfit/vr_basic
+	name = "basic vr"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
