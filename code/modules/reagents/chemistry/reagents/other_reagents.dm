@@ -181,12 +181,12 @@
 		else if(is_servant_of_ratvar(M) && prob(5))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
-					M.say("...[pick("Ratvar... lbhe yvtug tebjf qnex", "Jurer ner lbh, znfgre?", "Ur yvrf ehfgvat va Reebe", "Chetr nyy hagehguf naq... naq... fbzrguvat")]...")
+					clockwork_say(M, "...[pick("Ratvar... lbhe yvtug tebjf qnex...", "Jurer ner lbh, znfgr-e?", "Ur yvrf ehfgv'at va Reebe...", "Chetr nyy hagehguf-naq... naq... fbzrguv'at...")]")
 				if("message")
-					M << "<span class='warning'><b>[pick("Ratvar's illumination of your mind has begun to flicker.", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay.", \
-					"You can't save him. Nothing can save him now.", "It seems that Nar-Sie will triumph after all.")]</b></span>"
+					M << "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"
 				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")]</span>")
+					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
