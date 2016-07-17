@@ -17,13 +17,13 @@
 	reroll_friendly = 1
 	enemy_minimum_age = 0
 
+	announce_span = "danger"
+	announce_text = "There are Syndicate agents on the station!\n\
+	<span class='danger'>Traitors</span>: Accomplish your objectives.\n\
+	<span class='notice'>Crew</span>: Do not let the traitors succeed!"
+
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
-
-
-/datum/game_mode/traitor/announce()
-	world << "<B>The current game mode is - Traitor!</B>"
-	world << "<B>There are syndicate traitors on the station. Do not let the traitors succeed!</B>"
 
 
 /datum/game_mode/traitor/pre_setup()

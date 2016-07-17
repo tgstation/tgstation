@@ -29,13 +29,10 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 	recommended_enemies = 2
 	enemy_minimum_age = 14
 
-///////////////////////////
-//Announces the game type//
-///////////////////////////
-/datum/game_mode/gang/announce()
-	world << "<B>The current game mode is - Gang War!</B>"
-	world << "<B>A violent turf war has erupted on the station!<BR>Gangsters -  Take over the station by activating and defending a Dominator! <BR>Crew - The gangs will try to keep you on the station. Successfully evacuate the station to win!</B>"
-
+	announce_span = "danger"
+	announce_text = "A violent turf war has erupted on the station!\n\
+	<span class='danger'>Gangsters</span>: Take over the station with a dominator.\n\
+	<span class='notice'>Crew</span>: Prevent the gangs from expanding and initiating takeover."
 
 ///////////////////////////////////////////////////////////////////////////////
 //Gets the round setup, cancelling if there's not enough players at the start//

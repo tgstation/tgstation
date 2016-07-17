@@ -164,8 +164,8 @@ var/datum/subsystem/ticker/ticker
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
-		world << "<B>The current game mode is - Secret!</B>"
-		world << "<B>Possibilities:</B> [english_list(modes)]"
+		world << "<b>The gamemode is: secret!\n\
+		Possibilities:</B> [english_list(modes)]"
 	else
 		mode.announce()
 

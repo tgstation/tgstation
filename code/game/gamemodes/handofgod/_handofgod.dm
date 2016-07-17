@@ -29,13 +29,12 @@ var/global/list/global_handofgod_structuretypes = list()
 	recommended_enemies = 8
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 
-
-/datum/game_mode/hand_of_god/announce()
-	world << "<B>The current game mode is - Hand of God!</B>"
-	world << "<B>Two cults are onboard the station, seeking to overthrow the other, and anyone who stands in their way.</B>"
-	world << "<B>Followers</B> - Complete your deity's objectives. Convert crewmembers to your cause by using your deity's nexus. Remember - there is no you, there is only the cult."
-	world << "<B>Prophets</B> - Command your cult by the will of your deity.  You are a high-value target, so be careful!"
-	world << "<B>Personnel</B> - Do not let any cult succeed in its mission. Mindshield implants and holy water will revert them to neutral, hopefully nonviolent crew."
+	announce_span = "danger"
+	announce_text = "Two cults are trying to overthrow one another!\n\
+	<span class='warning'>Gods</span>: Protect your nexus and eliminate the enemy god.\n\
+	<span class='danger'><i>Prophets</i></span>: Lead your cult by your deity's will.\n\
+	<span class='danger'>Followers</span>: Follow your prophet's orders and lead your deity to victory.\n\
+	<span class='notice'>Crew</span>: Destroy both cults before they can grow in strength."
 
 
 /////////////

@@ -4,7 +4,7 @@
 	var/text
 
 /datum/intercept_text/proc/build(mode_type)
-	text = "<br><br>"
+	text = "<hr>"
 	switch(mode_type)
 		if("blob")
 			text += "A CMP scientist by the name of [pick("Griff", "Pasteur", "Chamberland", "Buist", "Rivers", "Stanley")] boasted about his corporation's \"finest creation\" - a macrobiological \
@@ -51,8 +51,7 @@
 			text += "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \
 			Nanotrasen employees are Syndicate agents with hidden memories that may be activated at a moment's notice, so it's possible that these agents might not even know their positions."
 		if("wizard")
-			text += "A dangerous Wizards' Federation individual by the name of Old Man Henderson has recently escaped confinement from an unlisted prison facility. This man \
-			is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, his \
-			execution is highly encouraged, as is the preservation of his body for later study."
-	text += "<br><br><hr>"
+			text += "A dangerous Wizards' Federation individual by the name of [pick(wizard_first)] [pick(wizard_second)] has recently escaped confinement from an unlisted prison facility. This \
+			man is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, \
+			his execution is highly encouraged, as is the preservation of his body for later study."
 	return text

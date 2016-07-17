@@ -23,6 +23,10 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	recommended_enemies = 4
 	reroll_friendly = 1
 
+	announce_span = "green"
+	announce_text = "Alien changelings have infiltrated the crew!\n\
+	<span class='green'>Changelings</span>: Accomplish the objectives assigned to you.\n\
+	<span class='notice'>Crew</span>: Root out and eliminate the changeling menace."
 
 	var/const/prob_int_murder_target = 50 // intercept names the assassination target half the time
 	var/const/prob_right_murder_target_l = 25 // lower bound on probability of naming right assassination target
@@ -44,10 +48,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/const/changeling_amount = 4 //hard limit on changelings if scaling is turned off
 
 	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
-
-/datum/game_mode/changeling/announce()
-	world << "<b>The current game mode is - Changeling!</b>"
-	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
 
 /datum/game_mode/changeling/pre_setup()
 
