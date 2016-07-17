@@ -2,13 +2,13 @@
 // These are the main datums that emit light.
 
 /datum/light_source
-	var/atom/top_atom       // The atom we're emitting light from (for example a mob if we're from a flashlight that's being held).
-	var/atom/source_atom    // The atom that we belong to.
+	var/atom/top_atom        // The atom we're emitting light from (for example a mob if we're from a flashlight that's being held).
+	var/atom/source_atom     // The atom that we belong to.
 
-	var/turf/source_turf    // The turf under the above.
-	var/light_power         // Intensity of the emitter light.
-	var/light_range         // The range of the emitted light.
-	var/light_color         // The colour of the light, string, decomposed by parse_light_color()
+	var/turf/source_turf     // The turf under the above.
+	var/light_power    // Intensity of the emitter light.
+	var/light_range      // The range of the emitted light.
+	var/light_color    // The colour of the light, string, decomposed by parse_light_color()
 
 	// Variables for keeping track of the colour.
 	var/lum_r
@@ -23,11 +23,11 @@
 	var/list/datum/lighting_corner/effect_str     // List used to store how much we're affecting corners.
 	var/list/turf/affecting_turfs
 
-	var/applied             // Whether we have applied our light yet or not.
+	var/applied = FALSE // Whether we have applied our light yet or not.
 
-	var/vis_update          // Whether we should smartly recalculate visibility. and then only update tiles that became (in)visible to us.
-	var/needs_update        // Whether we are queued for an update.
-	var/destroyed           // Whether we are destroyed and need to stop emitting light.
+	var/vis_update      // Whether we should smartly recalculate visibility. and then only update tiles that became (in)visible to us.
+	var/needs_update    // Whether we are queued for an update.
+	var/destroyed       // Whether we are destroyed and need to stop emitting light.
 	var/force_update
 
 /datum/light_source/New(var/atom/owner, var/atom/top)

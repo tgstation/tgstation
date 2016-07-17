@@ -30,6 +30,9 @@
 
 		T.lighting_corners_initialised = TRUE
 		for (var/i = 1 to 4)
+			if (!T.corners)
+				T.corners = list(null, null, null, null)
+
 			if (T.corners[i]) // Already have a corner on this direction.
 				continue
 
