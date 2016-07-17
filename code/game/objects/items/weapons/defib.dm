@@ -197,7 +197,7 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fix the bug with the paddles when other player stole you the defib when you have the paddles equiped
 	if(ismob(paddles.loc))
 		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
