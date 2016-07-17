@@ -97,8 +97,8 @@
 	picked = TRUE
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
-	health = 45
-	maxHealth = 45
+	health = 60
+	maxHealth = 60
 	hacked = 1
 	density = TRUE
 	ventcrawler = 0

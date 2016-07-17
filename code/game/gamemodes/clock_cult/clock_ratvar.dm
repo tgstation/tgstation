@@ -72,6 +72,9 @@
 		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
 		glow.linked = src
 
+/obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
+	return 0 //Nice try, Toxins!
+
 /obj/structure/clockwork/massive/celestial_gateway/process()
 	if(!progress_in_seconds || prob(7))
 		for(var/M in mob_list)
@@ -170,7 +173,7 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
+	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.3)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()
