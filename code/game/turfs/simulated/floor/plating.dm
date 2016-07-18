@@ -214,7 +214,6 @@
 	icon_state = "lava"
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	var/processing = 0
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
@@ -222,13 +221,10 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
-	if(!processing)
-		processing = 1
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		processing = 0
 		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/make_plating()
