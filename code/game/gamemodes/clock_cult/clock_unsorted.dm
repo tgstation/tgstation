@@ -23,6 +23,7 @@
 //Hierophant Network action, allows a servant with it to communicate
 /datum/action/innate/hierophant
 	name = "Hierophant Network"
+	desc = "Allows you to communicate with other Servants."
 	button_icon_state = "hierophant"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
@@ -43,6 +44,7 @@
 //Function Call action: Calls forth a Ratvarian spear once every 5 minutes
 /datum/action/innate/function_call
 	name = "Function Call"
+	desc = "Allows you to summon a Ratvarian spear to fight enemies."
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS

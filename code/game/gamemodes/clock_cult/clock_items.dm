@@ -33,7 +33,7 @@
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
-	actions_types = list(/datum/action/item_action/hierophant)
+	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -96,7 +96,25 @@
 		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
-	show_hierophant(user)
+	switch(actiontype)
+		if(/datum/action/item_action/clock/hierophant)
+			show_hierophant(user)
+		if(/datum/action/item_action/clock/guvax)
+			if(src == user.get_active_hand())
+				var/datum/clockwork_scripture/guvax/convert = new
+				convert.slab = src
+				convert.invoker = user
+				convert.run_scripture()
+			else
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+		if(/datum/action/item_action/clock/vanguard)
+			if(src == user.get_active_hand())
+				var/datum/clockwork_scripture/vanguard/antistun = new
+				antistun.slab = src
+				antistun.invoker = user
+				antistun.run_scripture()
+			else
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
 	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
@@ -160,7 +178,7 @@
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
+		show_stats(user) //if it's not human, show it stats
 		return 0
 	access_display(user)
 
@@ -173,7 +191,7 @@
 	switch(action)
 		if("Recital")
 			if(user.get_active_hand() != src)
-				user << "<span class='warning'>You need to hold the slab to recite scripture!</span>"
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 				return
 			recite_scripture(user)
 		if("Records")
@@ -482,7 +500,7 @@
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
-	actions_types = list(/datum/action/item_action/toggle_flame)
+	actions_types = list(/datum/action/item_action/clock/toggle_flame)
 
 /obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
 	if(slot != slot_glasses)

@@ -162,15 +162,15 @@
 		A.loc = new_xeno
 	..()
 
-//For alien evolution/promotion procs. Checks for
-proc/alien_type_present(var/alienpath)
+//For alien evolution/promotion/queen finder procs. Checks for an active alien of that type
+proc/get_alien_type(var/alienpath)
 	for(var/mob/living/carbon/alien/humanoid/A in living_mob_list)
 		if(!istype(A, alienpath))
 			continue
 		if(!A.key || A.stat == DEAD) //Only living aliens with a ckey are valid.
 			continue
-		return 1
-	return 0
+		return A
+	return FALSE
 
 
 /mob/living/carbon/alien/humanoid/check_breath(datum/gas_mixture/breath)

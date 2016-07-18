@@ -269,3 +269,13 @@
 		teleporter suggests that it was once part of a larger structure, \
 		but what remains of said structure, if anything, can \
 		only be guessed at."
+
+/datum/map_template/ruin/space/vaporwave
+	id = "vaporwave"
+	suffix = "vaporwave.dmm"
+	name = "Aesthetic Outpost"
+	description = "Pause and remember-- You are unique.\
+		You are special. Every mistake, trial, and \
+		hardship has helped to sculpt your real \
+		beauty. Stop hating yourself and start \
+		appreciating and loving yourself!"

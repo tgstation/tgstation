@@ -370,6 +370,9 @@
 	icon_state = "cult"
 	name = "engraved floor"
 
+/turf/open/floor/plasteel/vaporwave
+	icon_state = "pinkblack"
+
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"
 	name = "Commemorative Plaque"

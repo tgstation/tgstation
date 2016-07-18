@@ -181,12 +181,12 @@
 		else if(is_servant_of_ratvar(M) && prob(5))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
-					M.say("...[pick("Ratvar... lbhe yvtug tebjf qnex", "Jurer ner lbh, znfgre?", "Ur yvrf ehfgvat va Reebe", "Chetr nyy hagehguf naq... naq... fbzrguvat")]...")
+					clockwork_say(M, "...[pick("Ratvar... lbhe yvtug tebjf qnex...", "Jurer ner lbh, znfgr-e?", "Ur yvrf ehfgv'at va Reebe...", "Chetr nyy hagehguf-naq... naq... fbzrguv'at...")]")
 				if("message")
-					M << "<span class='warning'><b>[pick("Ratvar's illumination of your mind has begun to flicker.", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay.", \
-					"You can't save him. Nothing can save him now.", "It seems that Nar-Sie will triumph after all.")]</b></span>"
+					M << "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"
 				if("emote")
-					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")]</span>")
+					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
@@ -387,8 +387,10 @@
 			if(initial(S.blacklisted))
 				continue
 			possible_morphs += S
+
+		var/current_species = H.dna.species.type
 		var/datum/species/mutation = pick(possible_morphs)
-		if(prob(90) && mutation)
+		if(mutation && mutation != current_species)
 			H << "<span class='danger'>The pain subsides. You feel... different.</span>"
 			H.set_species(mutation)
 		else
@@ -607,11 +609,20 @@
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
 			GG.reagents.add_reagent("radium", reac_volume)
 
-/datum/reagent/sterilizine
+/datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
 	description = "Sterilizes wounds in preparation for surgery."
 	color = "#C8A5DC" // rgb: 200, 165, 220
+
+/datum/reagent/space_cleaner/sterilizine/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+		var/mob/living/carbon/C = M
+		for(var/s in C.surgeries)
+			var/datum/surgery/S = s
+			S.success_multiplier = max(0.20, S.success_multiplier)
+			// +20% success propability on each step, useful while operating in less-than-perfect conditions
+	..()
 
 /datum/reagent/iron
 	name = "Iron"

@@ -20,7 +20,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab
 	var/mob/living/invoker //The slab's holder
 	var/whispered = FALSE //If the invocation is whispered rather than spoken aloud
-	var/consumed_component_override = FALSE //If consumed components are unique to a scripture regardless of tier
 	var/usage_tip = "This piece seems to serve no purpose and is a waste of components." //A generalized tip that gives advice on a certain scripture
 	var/invokers_required = 1 //How many people are required, assuming that a scripture requires multiple
 	var/multiple_invokers_used = FALSE //If scripture requires more than one invoker
@@ -175,13 +174,13 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 // DRIVERS //
 /////////////
 
-/datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to ten times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
+/datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to fiteen times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
 	descname = "Channeled, Area Slowdown"
 	name = "Belligerent"
-	desc = "Forces all nearby non-servants to walk rather than run. Chanted every three seconds for up to thirty seconds."
-	chant_invocations = list("Chavfu gur've oyvaqarff!") //"Punish their blindness!"
-	chant_amount = 10
-	chant_interval = 30
+	desc = "Forces all nearby non-servants to walk rather than run. Chanted every two seconds for up to thirty seconds."
+	chant_invocations = list("Chavfu gur've oyvaqarff!", "Gnxr gv'zr, znxr fybj!") //"Punish their blindness!", "Take time, make slow!"
+	chant_amount = 15
+	chant_interval = 20
 	required_components = list("belligerent_eye" = 1)
 	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
 	tier = SCRIPTURE_DRIVER
@@ -216,36 +215,50 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/vanguard //Vanguard: Provides thirty seconds of stun immunity. At the end of the thirty seconds, all stuns absorbed are stacked on the invoker.
+/datum/clockwork_scripture/vanguard //Vanguard: Provides twenty seconds of stun immunity. At the end of the twenty seconds, 50% of all stuns absorbed are applied to the invoker.
 	descname = "Self Stun Immunity"
 	name = "Vanguard"
-	desc = "Provides thirty seconds of stun immunity. At the end of the thirty seconds, the invoker is stunned for the equivalent of how many stuns they absorbed. \
+	desc = "Provides twenty seconds of stun immunity. At the end of the twenty seconds, the invoker is stunned for the equivalent of 50% of all stuns they absorbed. \
 	Excessive absorption will cause unconsciousness."
 	invocations = list("Fuvryq zr...", "...sebz qnexarff!") //"Shield me from darkness!"
 	channel_time = 30
 	required_components = list("vanguard_cogwheel" = 1)
-	usage_tip = "Your slab will be unusable while it is shielding you from stuns."
+	usage_tip = "You cannot reactivate Vanguard while still shielded by it."
 	tier = SCRIPTURE_DRIVER
+	var/total_duration = 200
+
+/datum/clockwork_scripture/vanguard/check_special_requirements()
+	if(islist(invoker.stun_absorption) && invoker.stun_absorption["vanguard"] && invoker.stun_absorption["vanguard"]["duration"] > world.time)
+		invoker << "<span class='warning'>You are already shielded by a Vanguard!</span>"
+		return 0
+	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	for(var/obj/item/clockwork/slab/S in invoker.GetAllContents())
-		S.busy = "Vanguard in progress" //To prevent circumventing the Vanguard by carrying multiple slabs
-	invoker.stun_absorption = TRUE
-	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next thirty seconds.</span>")
-	sleep(300)
-	if(!invoker)
-		return 0
-	invoker.stun_absorption = FALSE
-	if(invoker.stun_absorption_count && invoker.stat != DEAD)
-		invoker.Stun(invoker.stun_absorption_count)
-		invoker.Weaken(invoker.stun_absorption_count)
-		invoker << "<span class='warning'><b>The weight of the vanguard's protection crashes down upon you!</b></span>"
-		if(invoker.stun_absorption_count >= 25)
-			invoker << "<span class='userdanger'>You faint from the exertion!</span>"
-			invoker.Paralyse(invoker.stun_absorption_count * 1.5)
-	invoker.stun_absorption_count = 0
-	for(var/obj/item/clockwork/slab/S in invoker.GetAllContents())
-		S.busy = null
+	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	spawn(total_duration)
+		if(!invoker)
+			return
+
+		var/vanguard = invoker.stun_absorption["vanguard"]
+		var/stuns_blocked = 0
+		if(vanguard)
+			stuns_blocked = min(vanguard["stuns_absorbed"] * 0.5, 20)
+		if(invoker.stat != DEAD)
+			var/message_to_invoker = "<span class='warning'>You feel your Vanguard quietly fade...</span>"
+			var/otheractiveabsorptions = FALSE
+			for(var/i in invoker.stun_absorption)
+				if(invoker.stun_absorption[i]["end_time"] > world.time && invoker.stun_absorption[i]["priority"] > vanguard["priority"])
+					otheractiveabsorptions = TRUE
+			if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+				vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
+				invoker.Stun(stuns_blocked)
+				invoker.Weaken(stuns_blocked)
+				message_to_invoker = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
+				if(stuns_blocked >= 15)
+					message_to_invoker += "\n<span class='userdanger'>You faint from the exertion!</span>"
+					invoker.Paralyse(stuns_blocked * 2)
+			invoker.visible_message("<span class='warning'>[invoker]'s glowing aura fades!</span>", message_to_invoker)
 	return 1
 
 
@@ -329,18 +342,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to ten times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
+/datum/clockwork_scripture/channeled/taunting_tirade //Taunting Tirade: Channeled for up to five times over thirty seconds. Confuses non-servants that can hear it and allows movement for a brief time after each channel
 	descname = "Channeled, Mobile Area Confusion"
 	name = "Taunting Tirade"
-	desc = "Confuses and dizzies all nearby non-servants with a short invocation, then allows movement for three seconds. Chanted every second for up to thirty-five seconds."
+	desc = "Weakens, confuses and dizzies all nearby non-servants with a short invocation, then allows movement for five seconds. Chanted every second for up to thirty seconds."
 	chant_invocations = list("Ubfgv'yrf ba zl-onpx!", "Rarzvrf ba zl-genvy!", "Tbaan gel-naq-funxr zl-gnvy.", "Obtrlf ba zl-fvk!")
-	chant_amount = 10
-	chant_interval = 5
+	chant_amount = 5
+	chant_interval = 10
 	required_components = list("guvax_capacitor" = 2)
 	consumed_components = list("guvax_capacitor" = 1)
 	usage_tip = "Useful for fleeing attackers, as few will be able to follow someone using this scripture."
 	tier = SCRIPTURE_DRIVER
-	var/flee_time = 27 //allow fleeing for 3 seconds
+	var/flee_time = 47 //allow fleeing for 5 seconds
 	var/grace_period = 3 //very short grace period so you don't have to stop immediately
 	var/datum/progressbar/progbar
 
@@ -349,10 +362,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(!is_servant_of_ratvar(L) && !L.null_rod_check())
 			L.confused = min(L.confused + 20, 100)
 			L.dizziness = min(L.dizziness + 20, 100)
+			L.Weaken(1)
+	invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
+	invoker.color = "#AF0AAF"
+	animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
 	if(chant_number != chant_amount) //if this is the last chant, we don't have a movement period because the chant is over
-		invoker.visible_message("<span class='warning'>[invoker] is suddenly covered with a thin layer of dark purple smoke!</span>")
-		invoker.color = "#AF0AAF"
-		animate(invoker, color = initial(invoker.color), time = flee_time+grace_period)
 		var/endtime = world.time + flee_time
 		var/starttime = world.time
 		progbar = new(invoker, flee_time, invoker)
@@ -1026,6 +1040,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	usage_tip = "Causes brain damage, hallucinations, confusion, and dizziness in massive amounts."
 	tier = SCRIPTURE_REVENANT
+	invokers_required = 3
+	multiple_invokers_used = TRUE
 	var/list/mindbreaksayings = list("\"Bu, terng. V t-rg gb funggr-e fbzr zvaqf.\"", "\"Zber zvaqf gb-pehfu.\"", \
 	"\"Ernyyl, guv'f vf nyzbfg obevat.\"", "\"Abar-bs gur'fr zvaqf unir nalguv'at vagr-erfgvat va gur'z.\"", "\"Znlor V pna vafgv'yy n yvggyr ovg-bs gr-eebe va guv'f bar.\"", \
 	"\"Jung n jnfgr-bs zl-cbjre.\"", "\"V'z fher V pbhyq whfg pbageby gur'fr zvaqf vafgr-nq, ohg gur'l arire nfx.\"")
@@ -1051,9 +1067,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			var/distance = 0
 			distance += get_dist(T, get_turf(H))
 			var/messaged = FALSE
-			var/visualsdistance = max(175 - distance, 15)
-			var/minordistance = max(125 - distance, 10)
-			var/majordistance = max(75 - distance, 5)
+			var/visualsdistance = max(150 - distance, 5)
+			var/minordistance = max(200 - distance*2, 5)
+			var/majordistance = max(150 - distance*3, 5)
 			if(H.null_rod_check())
 				visualsdistance = round(visualsdistance * 0.25)
 				minordistance = round(minordistance * 0.25)
@@ -1137,7 +1153,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/invoke_inathneq //Invoke Inath-Neq, the Resonant Cogwheel: Grants a huge health boost to nearby servants that rapidly decreases to original levels.
+/datum/clockwork_scripture/invoke_inathneq //Invoke Inath-Neq, the Resonant Cogwheel: Grants invulnerability and stun immunity for 15 seconds
 	descname = "Area Invuln"
 	name = "Invoke Inath-Neq, the Resonant Cogwheel"
 	desc = "Taps the limitless power of Inath-Neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all servants in range for fifteen seconds."
@@ -1147,6 +1163,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("vanguard_cogwheel" = 6, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	usage_tip = "Those affected by this scripture are only weak to things that outright destroy bodies, such as bombs or the singularity."
 	tier = SCRIPTURE_REVENANT
+	var/total_duration = 150
 
 /datum/clockwork_scripture/invoke_inathneq/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["inath-neq"] > world.time)
@@ -1168,15 +1185,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		<span class='notice'>Inath-Neq's power flows through you!</span>"
 		L.color = "#1E8CE1"
 		L.fully_heal()
-		L.stun_absorption = TRUE
+		L.add_stun_absorption("inathneq", total_duration, 2, "'s flickering blue aura momentarily intensifies!", "Inath-Neq's ward absorbs the stun!", " is glowing with a flickering blue light!")
 		L.status_flags |= GODMODE
-		animate(L, color = initial(L.color), time = 150, easing = EASE_IN)
+		animate(L, color = initial(L.color), time = total_duration, easing = EASE_IN)
 		affected_servants += L
-	sleep(150)
-	for(var/mob/living/L in affected_servants)
-		L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
-		L.status_flags &= ~GODMODE
-		L.stun_absorption = FALSE
+	spawn(total_duration)
+		for(var/mob/living/L in affected_servants)
+			L << "<span class='notice'>You feel Inath-Neq's power fade from your body.</span>"
+			L.status_flags &= ~GODMODE
 	return 1
 
 
