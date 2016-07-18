@@ -20,6 +20,11 @@
 	recommended_enemies = 3
 	enemy_minimum_age = 14
 
+	announce_span = "danger"
+	announce_text = "Some crewmembers are attempting a coup!\n\
+	<span class='danger'>Revolutionaries</span>: Expand your cause and overthrow the heads of staff by execution or otherwise.\n\
+	<span class='notice'>Crew</span>: Prevent the revolutionaries from taking over the station."
+
 	var/finished = 0
 	var/check_counter = 0
 	var/max_headrevs = 3

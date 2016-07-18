@@ -46,6 +46,11 @@
 	recommended_enemies = 4
 	enemy_minimum_age = 14
 
+	announce_span = "cult"
+	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
+	<span class='cult'>Cultists</span>: Carry out Nar-Sie's will.\n\
+	<span class='notice'>Crew</span>: Prevent the cult from expanding and drive it out."
+
 	var/finished = 0
 	var/eldergod = 1 //for the summon god objective
 
@@ -54,12 +59,6 @@
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
 	var/list/cultists_to_cult = list() //the cultists we'll convert
-
-
-/datum/game_mode/cult/announce()
-	world << "<B>The current game mode is - Cult!</B>"
-	world << "<B>Some crewmembers are attempting to start a cult!<BR>\nCultists - sacrifice your target and summon Nar-Sie at all costs. Convert crewmembers to your cause by using the convert rune, or sacrifice them and turn them into constructs. Remember - there is no you, there is only the cult.<BR>\nPersonnel - Do not let the cult succeed in its mission. Forced consumption of holy water will convert a cultist back to a Nanotrasen-sanctioned faith.</B>"
-
 
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
