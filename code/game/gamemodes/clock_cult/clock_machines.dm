@@ -141,7 +141,10 @@
 	max_health = 150
 	health = 150
 	break_message = "<span class='warning'>The prism collapses with a heavy thud!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/vanguard_cogwheel)
+	debris = list(/obj/item/clockwork/alloy_shards/small = 5, \
+	/obj/item/clockwork/alloy_shards/medium = 1, \
+	/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/component/vanguard_cogwheel = 1)
 	var/stored_alloy = 0 //2500W = 1 alloy = 100 liquified alloy
 	var/max_alloy = 25000
 	var/mob_cost = 200
@@ -220,7 +223,7 @@
 		if(stored_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
-		user.whisper("Genafzhgr vagb jngre.")
+		user.whisper("Genafzhgr vagb jngr-e.")
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
 		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
 		stored_alloy = stored_alloy + 2500
@@ -243,21 +246,23 @@
 	max_health = 80
 	health = 80
 	break_message = "<span class='warning'>The antenna break off, leaving a pile of shards!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards, /obj/item/clockwork/component/guvax_capacitor/antennae)
+	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/guvax_capacitor/antennae = 1)
 	var/mania_cost = 150
 	var/convert_attempt_cost = 150
 	var/convert_cost = 300
 
-	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"Trg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
-	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragvn.\"", "\"Fgevir gb trg n fperj ybbfr.\"")
-	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggre.\"", "\"Gbhpu gur nagraanr.\"", "\"V nyjnlf unir gb qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
-	"\"Nqinapr sbejneq naq cynpr lbhe urnq orgjrra gur nagraanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegre, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
-	var/convert_messages = list("\"Lbh jba'g qb. Tb gb fyrrc juvyr V gryy gur'fr avgjvgf ubj gb pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg-bs pbairefvba.\"", \
-	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
+	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"T-rg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
+	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragv'n.\"", "\"Fgevir gb-t-rg n fperj ybbfr.\"")
+	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggr-e.\"", "\"Gbhpu gur nagr-aanr.\"", "\"V nyjnlf unir gb-qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
+	"\"Nqinapr sbejneq-naq-cynpr lbhe urnq o-rgjrra gur nagr-aanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegr-e, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
+	var/convert_messages = list("\"Lbh jba'g qb. Tb gb-fyrrc juvyr V gr-yy gur'fr avgjvgf ubj gb-pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg-bs pbairefvba.\"", \
+	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb-hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
 	"\"Ubj qb gur'l snvy gb hfr n Fvtvy-bs Npprffvba, naljnl?\"", "\"Jul vf vg gun'g nyy freinagf ner guv'f varcg?\"", "\"Vg'f dhvgr yvxryl lbh'yy or fghpx urer sbe n juvyr.\"")
-	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagrerfgvat ybpngvba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGRAANR!\"", \
-	"\"Nznmvat. Lbh fbzrubj znantrq gb jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
-	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgvyy qb fbzrguv'at NF FGHCVQ NF GUV'F!\"")
+	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagr-erfgvat ybpngv'ba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGR-AANR!\"", \
+	"\"Nznmvat. Lbh fbzrubj znantrq gb-jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
+	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgv'yy qb fbz-rguv'at NF FGHCVQ NF GUV'F!\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
@@ -535,7 +540,8 @@
 	max_health = 200
 	health = 200
 	break_message = "<span class='warning'>The obelisk falls to the ground, undamaged!</span>"
-	debris = list(/obj/item/clockwork/component/hierophant_ansible/obelisk)
+	debris = list(/obj/item/clockwork/alloy_shards/small = 3, \
+	/obj/item/clockwork/component/hierophant_ansible/obelisk = 1)
 	var/hierophant_cost = 50 //how much it costs to broadcast with large text
 	var/gateway_cost = 2000 //how much it costs to open a gateway
 	var/gateway_active = FALSE
@@ -578,8 +584,8 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgvingr!")
-			send_hierophant_message(user, input, "big_brass", "large_brass")
+			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgv'ingr!")
+			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(gateway_active)
 				user << "<span class='warning'>The obelisk is already sustaining a gateway!</span>"
@@ -587,8 +593,8 @@
 			if(!try_use_power(gateway_cost))
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
-			if(procure_gateway(user, 100, 5, 1))
-				clockwork_say(user, "Fcnpvny Tngrjnl, npgvingr!")
+			if(procure_gateway(user, 100, 5, 1) && !gateway_active)
+				clockwork_say(user, "Fcngv'ny Tngrjnl, npgv'ingr!")
 			else
 				return_power(gateway_cost)
 		if("Cancel")

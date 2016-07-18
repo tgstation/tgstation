@@ -790,3 +790,10 @@
 			blood_volume -= amount
 	return ..()
 
+/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
+	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
+	apply_overlay(FIRE_LAYER)
+
+/mob/living/carbon/fakefireextinguish()
+	remove_overlay(FIRE_LAYER)
+

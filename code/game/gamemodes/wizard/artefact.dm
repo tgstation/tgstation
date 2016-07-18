@@ -430,11 +430,11 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
 		if("soviet")
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/pirate/captain(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/hgpirate(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/pirate/captain(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 

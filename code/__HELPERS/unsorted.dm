@@ -720,16 +720,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		return zone
 
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
-
 /*
 
  Gets the turf this atom's *ICON* appears to inhabit
@@ -1410,3 +1400,10 @@ proc/pick_closest_path(value)
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
+
+/proc/random_nukecode()
+	var/val = rand(0, 99999)
+	var/str = "[val]"
+	while(length(str) < 5)
+		str = "0" + str
+	. = str

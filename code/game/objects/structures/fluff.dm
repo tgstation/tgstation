@@ -8,9 +8,12 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
+	var/deconstructible = 1
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
+		if(!deconstructible)
+			return
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
@@ -37,7 +40,7 @@
 
 /obj/structure/fluff/empty_sleeper/nanotrasen
 	name = "broken hypersleep chamber"
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. \
+	desc = "A Nanotrasen hypersleep chamber - this one appears broken. \
 		There are exposed bolts for easy disassembly using a wrench."
 	icon_state = "sleeper-o"
 
@@ -52,6 +55,17 @@
 
 /obj/structure/fluff/broken_flooring
 	name = "broken tiling"
-	desc = "A segment of broken flooring"
+	desc = "A segment of broken flooring."
 	icon = 'icons/obj/brokentiling.dmi'
 	icon_state = "corner"
+
+/obj/structure/fluff/drake_statue //Ash drake status spawn on either side of the necropolis gate in lavaland.
+	name = "drake statue"
+	desc = "A towering basalt sculpture of a proud and regal drake. Its eyes are six glowing gemstones."
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "drake_statue"
+	density = TRUE
+
+/obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
+	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
+	icon_state = "drake_statue_falling"

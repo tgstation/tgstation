@@ -183,7 +183,63 @@
 	icon_state = "abductor"
 	walltype = "abductor"
 	mineral = "abductor"
+	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
+
+/turf/closed/wall/shuttle //nosmoothing shuttle walls
+	name = "wall"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	walltype = "shuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	smooth = SMOOTH_FALSE
+
+/turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
+	name = "wall"
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle"
+	walltype = "shuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/mineral/titanium/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "shuttle_nd"
+
+/turf/closed/wall/mineral/titanium/overspace
+	icon_state = "overspace"
+	fixed_underlay = list("space"=1)
+
+//sub-type to be used for interior shuttle walls
+//won't get an underlay of the destination turf on shuttle move
+/turf/closed/wall/shuttle/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.color != color)
+		T.color = color
+	if(T.dir != dir)
+		T.dir = dir
+	T.transform = transform
+	return T
+
+/turf/closed/wall/shuttle/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform
+
+/turf/closed/wall/mineral/plastitanium
+	name = "wall"
+	walltype = "syndieshuttle"
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall3"
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+	smooth = SMOOTH_FALSE

@@ -159,11 +159,7 @@
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
-		var/obj_count = 1
-		H << "<span class='notice'>Your current objectives:</span>"
-		for(var/datum/objective/objective in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		H.mind.announce_objectives()
 		ticker.mode.update_abductor_icons_added(H.mind)
 
 		for(var/obj/item/organ/gland/G in H.internal_organs)

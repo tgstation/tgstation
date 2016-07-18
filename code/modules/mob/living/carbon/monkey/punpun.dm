@@ -18,7 +18,7 @@
 	if(ancestor_name)
 		name = ancestor_name
 		if(ancestor_chain > 1)
-			name += " [num2roman(ancestor_chain)]"
+			name += " \Roman[ancestor_chain]"
 	else
 		if(prob(5))
 			name = pick(rare_pet_monkey_names)

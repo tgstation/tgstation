@@ -115,63 +115,29 @@
 		var/mob/living/sinPerson = M
 		lastJudge = world.time
 		var/sinPersonchoice = pick("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath")
+
+		src.say("Your sin, [sinPerson], is [sinPersonchoice].")
+		var/isIndulged = prob(50)
+		if(isIndulged)
+			src.say("I will indulge your sin, [sinPerson].")
+		else
+			src.say("Your sin will be punished, [sinPerson]!")
+
 		switch(sinPersonchoice)
 			if("Greed")
-				src.say("Your sin, [sinPerson], is Greed.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Greed(sinPerson, TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Greed(sinPerson, FALSE)
+				sin_Greed(sinPerson, isIndulged)
 			if("Gluttony")
-				src.say("Your sin, [sinPerson], is Gluttony.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Gluttony(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Gluttony(sinPerson,FALSE)
+				sin_Gluttony(sinPerson, isIndulged)
 			if("Pride")
-				src.say("Your sin, [sinPerson], is Pride.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Pride(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Pride(sinPerson,FALSE)
+				sin_Pride(sinPerson, isIndulged)
 			if("Lust")
-				src.say("Your sin, [sinPerson], is Lust.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Lust(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Lust(sinPerson,TRUE)
+				sin_Lust(sinPerson, isIndulged)
 			if("Envy")
-				src.say("Your sin, [sinPerson], is Envy.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Envy(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Envy(sinPerson,FALSE)
+				sin_Envy(sinPerson, isIndulged)
 			if("Sloth")
-				src.say("Your sin, [sinPerson], is Sloth.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Sloth(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Sloth(sinPerson,FALSE)
+				sin_Sloth(sinPerson, isIndulged)
 			if("Wrath")
-				src.say("Your sin, [sinPerson], is Wrath.")
-				if(prob(50))
-					src.say("I will indulge your sin, [sinPerson].")
-					sin_Wrath(sinPerson,TRUE)
-				else
-					src.say("Your sin will be punished, [sinPerson]!")
-					sin_Wrath(sinPerson,FALSE)
+				sin_Wrath(sinPerson, isIndulged)
 	else
 		..()
 		user << "The [src] is still recharging."

@@ -247,7 +247,7 @@
 		S.handle_item_insertion(src)
 		return 1
 
-	S = M.get_item_by_slot(slot_drone_storage)	//else we put in whatever is in drone storage
+	S = M.get_item_by_slot(slot_generic_dextrous_storage)	//else we put in whatever is in drone storage
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
 

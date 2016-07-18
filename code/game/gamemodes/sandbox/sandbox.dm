@@ -14,4 +14,4 @@
 
 /datum/game_mode/sandbox/post_setup()
 	..()
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)

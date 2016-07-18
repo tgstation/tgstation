@@ -27,7 +27,11 @@
 			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
 			qdel(AA)
 		alternate_appearances = null
-
+	if(viewing_alternate_appearances)
+		for(var/aakey in viewing_alternate_appearances)
+			for(var/aa in viewing_alternate_appearances[aakey])
+				var/datum/alternate_appearance/AA = aa
+				AA.hide(list(src))
 	return ..()
 
 

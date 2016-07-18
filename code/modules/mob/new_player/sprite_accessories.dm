@@ -492,6 +492,11 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
+/datum/sprite_accessory/hair/boddicker
+	name = "Boddicker"
+	icon_state = "hair_boddicker"
+
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////

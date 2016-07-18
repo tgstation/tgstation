@@ -520,6 +520,11 @@
 		debris -= I
 		qdel(I)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	change_construction_value(fulltile ? 3 : 2)
+
+/obj/structure/window/reinforced/clockwork/Destroy()
+	change_construction_value(fulltile ? -3 : -2)
+	return ..()
 
 /obj/structure/window/reinforced/clockwork/ratvar_act()
 	health = maxhealth

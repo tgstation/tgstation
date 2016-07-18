@@ -13,8 +13,9 @@
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
-	air_contents.assert_gas(gas_type)
-	air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
 
 	ion_trail = new
 	ion_trail.set_up(src)
@@ -110,20 +111,34 @@
 	distribute_pressure = 0
 	gas_type = "co2"
 
+
 /obj/item/weapon/tank/jetpack/suit
-	name = "suit inbuilt jetpack"
-	desc = "A device that will use your internals tank as a gas source for propulsion."
-	icon_state = "jetpack-void"
-	item_state =  "jetpack-void"
+	name = "hardsuit jetpack upgrade"
+	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
+	origin_tech = "materials=4;magnets=4;engineering=5"
+	icon_state = "jetpack-upgrade"
+	item_state =  "jetpack-black"
+	w_class = 3
 	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	volume = 1
+	slot_flags = null
+	gas_type = null
+	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/weapon/tank/internals/tank = null
 
 /obj/item/weapon/tank/jetpack/suit/New()
 	..()
 	STOP_PROCESSING(SSobj, src)
-	air_contents = null
+	temp_air_contents = air_contents
+
+/obj/item/weapon/tank/jetpack/suit/attack_self()
+	return
 
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
+		user << "<span class='warning'>\The [src] must be connected to a hardsuit!</span>"
+		return
+
 	var/mob/living/carbon/human/H = user
 	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
 		user << "<span class='warning'>You need a tank in your suit storage!</span>"
@@ -131,7 +146,7 @@
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/turn_on()
-	if(!ishuman(loc.loc))
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
 		return
 	var/mob/living/carbon/human/H = loc.loc
 	tank = H.s_store
@@ -141,12 +156,12 @@
 
 /obj/item/weapon/tank/jetpack/suit/turn_off()
 	tank = null
-	air_contents = null
+	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/tank/jetpack/suit/process()
-	if(!ishuman(loc.loc))
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
 		turn_off()
 		return
 	var/mob/living/carbon/human/H = loc.loc

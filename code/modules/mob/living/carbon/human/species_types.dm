@@ -104,6 +104,15 @@
 	heatmod = 1.5
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 
+/datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.faction |= "plants"
+	C.faction |= "vines"
+
+/datum/species/pod/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.faction -= "plants"
+	C.faction -= "vines"
 
 /datum/species/pod/spec_life(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
@@ -146,8 +155,6 @@
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
-	return
-	
 
 /*
  SHADOWPEOPLE
@@ -615,6 +622,11 @@
 			H.visible_message("<span class='danger'>[H] vomits on the floor!</span>", \
 						"<span class='userdanger'>You throw up on the floor!</span>")
 	..()
+
+/datum/species/fly/check_weakness(obj/item/weapon, mob/living/attacker)
+	if(istype(weapon,/obj/item/weapon/melee/flyswatter))
+		return 29 //Flyswatters deal 30x damage to flypeople.
+	return 0
 
 /*
  SKELETONS

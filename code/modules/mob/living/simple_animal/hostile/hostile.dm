@@ -232,6 +232,13 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	target = A
+	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
+		..()
+	else
+		AttackingTarget()
+
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)
 

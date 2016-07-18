@@ -199,15 +199,20 @@ obj/item/device/flashlight/lamp/bananalamp
 	..()
 
 /obj/item/device/flashlight/flare/process()
-	var/turf/pos = get_turf(src)
-	if(pos)
-		pos.hotspot_expose(produce_heat, 5)
+	open_flame(heat)
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
 			icon_state = "[initial(icon_state)]-empty"
 		STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
+	if(fuel && on)
+		. = "<span class='notice'>[user] lights [A] with [src] like a real \
+			badass.</span>"
+	else
+		. = ""
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0

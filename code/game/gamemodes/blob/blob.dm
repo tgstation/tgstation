@@ -78,7 +78,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		B.loc = T
 		B.base_point_rate = blob_point_rate
 
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)
 
 	// Disable the blob event for this round.
 	var/datum/round_event_control/blob/B = locate() in SSevent.control

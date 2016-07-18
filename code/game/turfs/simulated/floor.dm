@@ -19,7 +19,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	//NOTE: Floor code has been refactored, many procs were removed and refactored
 	//- you should use istype() if you want to find out whether a floor has a certain type
 	//- floor_tile is now a path, and not a tile obj
-	//- builtin_tile should be dropped if needed for performance reasons (eg singularity_act())
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 
@@ -31,7 +30,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/broken = 0
 	var/burnt = 0
 	var/floor_tile = null //tile that this floor drops
-	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	var/list/burnt_states = list()
 
@@ -41,14 +39,6 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(floor_tile)
-		builtin_tile = new floor_tile
-
-/turf/open/floor/Destroy()
-	if(builtin_tile)
-		qdel(builtin_tile)
-		builtin_tile = null
-	return ..()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
@@ -58,8 +48,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(target == src)
 		src.ChangeTurf(src.baseturf)
 	if(target != null)
-		ex_act(3)
-		return
+		severity = 3
 
 	switch(severity)
 		if(1)
@@ -151,7 +140,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
 				user << "<span class='danger'>You remove the floor tile.</span>"
-				builtin_tile.loc = src
+				if(floor_tile)
+					PoolOrNew(floor_tile, src)
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		return 1
@@ -160,18 +150,18 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 /turf/open/floor/singularity_pull(S, current_size)
 	if(current_size == STAGE_THREE)
 		if(prob(30))
-			if(builtin_tile)
-				builtin_tile.loc = src
+			if(floor_tile)
+				PoolOrNew(floor_tile, src)
 				make_plating()
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
-			if(builtin_tile)
-				builtin_tile.loc = src
+			if(floor_tile)
+				PoolOrNew(floor_tile, src)
 				make_plating()
 	else if(current_size >= STAGE_FIVE)
-		if(builtin_tile)
+		if(floor_tile)
 			if(prob(70))
-				builtin_tile.loc = src
+				PoolOrNew(floor_tile, src)
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()

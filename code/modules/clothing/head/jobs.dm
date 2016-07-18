@@ -8,7 +8,7 @@
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
 	put_on_delay = 10
-
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
@@ -64,7 +64,7 @@
 	icon_state = "detective"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 	var/candy_cooldown = 0
-
+	pockets = /obj/item/weapon/storage/internal/pocket/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
 /obj/item/clothing/head/det_hat/AltClick()

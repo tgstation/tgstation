@@ -1180,7 +1180,7 @@
 						special_role = null
 						current << "<span class='userdanger'>Your infernal link has been severed! You are no longer a devil!</span>"
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/infernal_jaunt)
-						RemoveSpell(/obj/effect/proc_holder/spell/dumbfire/fireball/hellish)
+						RemoveSpell(/obj/effect/proc_holder/spell/fireball/hellish)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_contract)
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
 						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
@@ -1319,13 +1319,17 @@
 				log_admin("[key_name(usr)] attempted to give [current] an uplink.")
 
 	else if (href_list["obj_announce"])
-		var/obj_count = 1
-		current << "<span class='notice'>Your current objectives:</span>"
-		for(var/datum/objective/objective in objectives)
-			current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-			obj_count++
+		announce_objectives()
 
 	edit_memory()
+
+/datum/mind/proc/announce_objectives()
+	var/obj_count = 1
+	current << "<span class='notice'>Your current objectives:</span>"
+	for(var/objective in objectives)
+		var/datum/objective/O = objective
+		current << "<B>Objective #[obj_count]</B>: [O.explanation_text]"
+		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
 	var/list/L = current.get_contents()

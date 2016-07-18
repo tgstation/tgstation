@@ -10,6 +10,8 @@ Mineral Sheets
 		- Gold
 		- Silver
 		- Clown
+		- Titanium
+		- Plastitanium
 	Others:
 		- Adamantine
 		- Mythril
@@ -236,6 +238,60 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 	..()
+
+/*
+ * Titanium
+ */
+/obj/item/stack/sheet/mineral/titanium
+	name = "titanium"
+	icon_state = "sheet-titanium"
+	singular_name = "titanium sheet"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=4"
+	sheettype = "titanium"
+	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
+
+var/global/list/datum/stack_recipe/titanium_recipes = list ( \
+	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
+	)
+
+/obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
+	recipes = titanium_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
+
+/*
+ * Plastitanium
+ */
+/obj/item/stack/sheet/mineral/plastitanium
+	name = "plastitanium"
+	icon_state = "sheet-plastitanium"
+	singular_name = "plastitanium sheet"
+	force = 5
+	throwforce = 5
+	w_class = 3
+	throw_speed = 1
+	throw_range = 3
+	origin_tech = "materials=4"
+	sheettype = "plastitanium"
+	materials = list(MAT_TITANIUM=6000, MAT_PLASMA=6000)
+
+var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
+	new/datum/stack_recipe("plas-titanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
+	)
+
+/obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)
+	recipes = plastitanium_recipes
+	pixel_x = rand(0,4)-4
+	pixel_y = rand(0,4)-4
+	..()
+
 
 /*
  * Snow

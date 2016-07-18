@@ -116,12 +116,9 @@
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-
 	dog_fashion = /datum/dog_fashion/head/pirate
 
-/obj/item/clothing/head/hgpiratecap
-	name = "pirate hat"
-	desc = "Yarr."
+/obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -136,6 +133,7 @@
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -176,6 +174,7 @@
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)

@@ -201,6 +201,8 @@
 	if(href_list["votepollid"] && href_list["votetype"])
 		var/pollid = text2num(href_list["votepollid"])
 		var/votetype = href_list["votetype"]
+		//lets take data from the user to decide what kind of poll this is, without validating it
+		//what could go wrong
 		switch(votetype)
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
@@ -219,6 +221,7 @@
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
+					                            //(protip, this stops no exploits)
 					usr << "The option ID difference is too big. Please contact administration or the database admin."
 					return
 
@@ -257,6 +260,14 @@
 								usr << "<span class='danger'>Maximum replies reached.</span>"
 								break
 				usr << "<span class='notice'>Vote successful.</span>"
+			if(POLLTYPE_IRV)
+				if (!href_list["IRVdata"])
+					src << "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>"
+				var/list/votelist = splittext(href_list["IRVdata"], ",")
+				if (!vote_on_irv_poll(pollid, votelist))
+					src << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					return
+				src << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

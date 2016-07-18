@@ -100,10 +100,7 @@
 				hijack.owner = user.mind
 				user.mind.objectives += hijack
 				user << "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>"
-				var/obj_count = 1
-				for(var/datum/objective/OBJ in user.mind.objectives)
-					user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-					obj_count++
+				user.mind.announce_objectives()
 				user.set_species(/datum/species/shadow)
 			if("Peace")
 				user << "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>"
