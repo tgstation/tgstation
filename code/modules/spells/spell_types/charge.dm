@@ -62,11 +62,12 @@
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))
 				var/obj/item/weapon/stock_parts/cell/C = item
-				if(prob(80))
-					C.maxcharge -= 200
-				if(C.maxcharge <= 1) //Div by 0 protection
-					C.maxcharge = 1
-					burnt_out = 1
+				if(!C.self_recharge)
+					if(prob(80))
+						C.maxcharge -= 200
+					if(C.maxcharge <= 1) //Div by 0 protection
+						C.maxcharge = 1
+						burnt_out = 1
 				C.charge = C.maxcharge
 				charged_item = C
 				break
@@ -75,11 +76,12 @@
 				for(I in item.contents)
 					if(istype(I, /obj/item/weapon/stock_parts/cell/))
 						var/obj/item/weapon/stock_parts/cell/C = I
-						if(prob(80))
-							C.maxcharge -= 200
-						if(C.maxcharge <= 1) //Div by 0 protection
-							C.maxcharge = 1
-							burnt_out = 1
+						if(!C.self_recharge)
+							if(prob(80))
+								C.maxcharge -= 200
+							if(C.maxcharge <= 1) //Div by 0 protection
+								C.maxcharge = 1
+								burnt_out = 1
 						C.charge = C.maxcharge
 						item.update_icon()
 						charged_item = item
