@@ -1,0 +1,5 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Added communication intercept texts for gamemodes that were missing them."
+  - tweak: "Changed all intercept texts and improved grammar for a lot of key game code."
