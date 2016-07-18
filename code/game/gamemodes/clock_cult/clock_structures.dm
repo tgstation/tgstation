@@ -185,7 +185,7 @@
 	return ..()
 
 /obj/structure/clockwork/cache/process()
-	for(var/turf/closed/wall/clockwork/C in view(5, src))
+	for(var/turf/closed/wall/clockwork/C in view(4, src))
 		if(!C.linkedcache && !linkedwall)
 			C.linkedcache = src
 			linkedwall = C
