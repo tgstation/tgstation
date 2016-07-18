@@ -586,9 +586,9 @@
 /turf/open/chasm/proc/drop_stuff()
 	. = 0
 	for(var/thing in contents)
-		if(droppable(AM))
+		if(droppable(thing))
 			. = 1
-			drop(AM)
+			drop(thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
 	if(!ismob(AM) && !isobj(AM))
