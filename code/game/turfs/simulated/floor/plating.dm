@@ -241,8 +241,10 @@
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
-		if(istype(thing, /obj))
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -253,7 +255,7 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
