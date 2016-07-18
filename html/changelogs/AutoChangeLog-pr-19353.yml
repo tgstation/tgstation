@@ -1,0 +1,4 @@
+author: "RemieRichards"
+delete-after: True
+changes: 
+  - rscadd: "Added VR Sleepers that allow users to enter a virtual body in a virtual world (Currently not mapped in ;_;)"
