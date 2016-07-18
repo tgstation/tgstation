@@ -2,63 +2,77 @@
 	name = "jetpack (empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = 4.0
 	item_state = "jetpack"
+	w_class = 4
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
-	action_button_name = "Toggle Jetpack"
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
-	var/on = 0.0
-	var/stabilization_on = 0
-	var/volume_rate = 500              //Needed for borg jetpack transfer
+	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	var/gas_type = "o2"
+	var/on = FALSE
+	var/stabilizers = FALSE
+	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/weapon/tank/jetpack/New()
 	..()
-	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+
+	ion_trail = new
 	ion_trail.set_up(src)
 
-
-/obj/item/weapon/tank/jetpack/verb/toggle_rockets()
-	set name = "Toggle Jetpack Stabilization"
-	set category = "Object"
-	src.stabilization_on = !( src.stabilization_on )
-	usr << "You toggle the stabilization [stabilization_on? "on":"off"]."
-	return
-
-
-/obj/item/weapon/tank/jetpack/verb/toggle()
-	set name = "Toggle Jetpack"
-	set category = "Object"
-	on = !on
-	if(on)
-		icon_state = "[icon_state]-on"
-	//	item_state = "[item_state]-on"
-		ion_trail.start()
+/obj/item/weapon/tank/jetpack/ui_action_click(mob/user, actiontype)
+	if(actiontype == /datum/action/item_action/toggle_jetpack)
+		cycle(user)
+	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
+		if(on)
+			stabilizers = !stabilizers
+			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
 	else
-		icon_state = initial(icon_state)
-	//	item_state = initial(item_state)
-		ion_trail.stop()
-	return
+		toggle_internals(user)
 
 
-/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user as mob)
-	if(!(src.on))
-		return 0
-	if((num < 0.005 || src.air_contents.total_moles() < num))
-		src.ion_trail.stop()
-		return 0
+/obj/item/weapon/tank/jetpack/proc/cycle(mob/user)
+	if(user.incapacitated())
+		return
 
-	var/datum/gas_mixture/G = src.air_contents.remove(num)
+	if(!on)
+		turn_on()
+		user << "<span class='notice'>You turn the jetpack on.</span>"
+	else
+		turn_off()
+		user << "<span class='notice'>You turn the jetpack off.</span>"
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 
-	var/allgases = G.carbon_dioxide + G.nitrogen + G.oxygen + G.toxins	//fuck trace gases	-Pete
-	if(allgases >= 0.005)
-		return 1
 
-	qdel(G)
-	return
+/obj/item/weapon/tank/jetpack/proc/turn_on()
+	on = TRUE
+	icon_state = "[initial(icon_state)]-on"
+	ion_trail.start()
 
-/obj/item/weapon/tank/jetpack/ui_action_click()
-	toggle()
+/obj/item/weapon/tank/jetpack/proc/turn_off()
+	on = FALSE
+	stabilizers = FALSE
+	icon_state = initial(icon_state)
+	ion_trail.stop()
 
+/obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
+	if(!on)
+		return
+	if((num < 0.005 || air_contents.total_moles() < num))
+		turn_off()
+		return
+
+	var/datum/gas_mixture/removed = air_contents.remove(num)
+	if(removed.total_moles() < 0.005)
+		turn_off()
+		return
+
+	var/turf/T = get_turf(user)
+	T.assume_air(removed)
+
+	return 1
 
 /obj/item/weapon/tank/jetpack/void
 	name = "void jetpack (oxygen)"
@@ -66,20 +80,11 @@
 	icon_state = "jetpack-void"
 	item_state =  "jetpack-void"
 
-/obj/item/weapon/tank/jetpack/void/New()
-	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-
-
 /obj/item/weapon/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
 	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
 	item_state = "jetpack"
-
-/obj/item/weapon/tank/jetpack/oxygen/New()
-	..()
-	air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /obj/item/weapon/tank/jetpack/oxygen/harness
 	name = "jet harness (oxygen)"
@@ -90,15 +95,97 @@
 	throw_range = 7
 	w_class = 3
 
+/obj/item/weapon/tank/jetpack/oxygen/captain
+	name = "\improper Captain's jetpack"
+	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
+	icon_state = "jetpack-captain"
+	item_state = "jetpack-captain"
+	w_class = 3
+	volume = 90
+
 /obj/item/weapon/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
-	distribute_pressure = 0
 	icon_state = "jetpack-black"
 	item_state =  "jetpack-black"
+	distribute_pressure = 0
+	gas_type = "co2"
 
-/obj/item/weapon/tank/jetpack/carbondioxide/New()
+
+/obj/item/weapon/tank/jetpack/suit
+	name = "hardsuit jetpack upgrade"
+	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
+	origin_tech = "materials=4;magnets=4;engineering=5"
+	icon_state = "jetpack-upgrade"
+	item_state =  "jetpack-black"
+	w_class = 3
+	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
+	volume = 1
+	slot_flags = null
+	gas_type = null
+	var/datum/gas_mixture/temp_air_contents
+	var/obj/item/weapon/tank/internals/tank = null
+
+/obj/item/weapon/tank/jetpack/suit/New()
 	..()
-	ion_trail = new /datum/effect/effect/system/ion_trail_follow()
-	ion_trail.set_up(src)
-	air_contents.carbon_dioxide = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	STOP_PROCESSING(SSobj, src)
+	temp_air_contents = air_contents
+
+/obj/item/weapon/tank/jetpack/suit/attack_self()
+	return
+
+/obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
+		user << "<span class='warning'>\The [src] must be connected to a hardsuit!</span>"
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
+		user << "<span class='warning'>You need a tank in your suit storage!</span>"
+		return
+	..()
+
+/obj/item/weapon/tank/jetpack/suit/turn_on()
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
+		return
+	var/mob/living/carbon/human/H = loc.loc
+	tank = H.s_store
+	air_contents = tank.air_contents
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/tank/jetpack/suit/turn_off()
+	tank = null
+	air_contents = temp_air_contents
+	STOP_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/weapon/tank/jetpack/suit/process()
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
+		turn_off()
+		return
+	var/mob/living/carbon/human/H = loc.loc
+	if(!tank || tank != H.s_store)
+		turn_off()
+		return
+	..()
+
+
+//Return a jetpack that the mob can use
+//Back worn jetpacks, hardsuit internal packs, and so on.
+//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
+
+/mob/proc/get_jetpack()
+	return
+
+/mob/living/carbon/get_jetpack()
+	var/obj/item/weapon/tank/jetpack/J = back
+	if(istype(J))
+		return J
+
+/mob/living/carbon/human/get_jetpack()
+	var/obj/item/weapon/tank/jetpack/J = ..()
+	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
+		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
+		J = C.jetpack
+	return J

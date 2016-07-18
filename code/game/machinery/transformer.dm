@@ -1,21 +1,39 @@
 /obj/machinery/transformer
 	name = "\improper Automatic Robotic Factory 5000"
-	desc = "A large metalic machine with an entrance and an exit. A sign on the side reads, 'human go in, robot come out', human must be lying down and alive. Has to cooldown between each use."
+	desc = "A large metallic machine with an entrance and an exit. A sign on \
+		the side reads, 'human go in, robot come out'. The human must be \
+		lying down and alive. Has to cooldown between each use."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
-	layer = MOB_LAYER+1 // Overhead
+	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	anchored = 1
 	density = 0
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute
 	var/cooldown = 0
+	var/cooldown_timer
 	var/robot_cell_charge = 5000
+	var/obj/effect/countdown/transformer/countdown
 
 /obj/machinery/transformer/New()
 	// On us
 	..()
 	new /obj/machinery/conveyor/auto(loc, WEST)
+	countdown = new(src)
+	countdown.start()
+
+/obj/machinery/transformer/examine(mob/user)
+	. = ..()
+	if(cooldown && (issilicon(user) || isobserver(user)))
+		var/seconds_remaining = (cooldown_timer - world.time) / 10
+		user << "It will be ready in [max(0, seconds_remaining)] seconds."
+
+/obj/machinery/transformer/Destroy()
+	if(countdown)
+		qdel(countdown)
+	countdown = null
+	. = ..()
 
 /obj/machinery/transformer/power_change()
 	..()
@@ -28,8 +46,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/Bumped(var/atom/movable/AM)
-
+/obj/machinery/transformer/Bumped(atom/movable/AM)
 	if(cooldown == 1)
 		return
 
@@ -42,14 +59,21 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(!ishuman(mover)) // Allows items to go through, to stop them from blocking the conveyour belt.
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
+	// Allows items to go through,
+	// to stop them from blocking the conveyor belt.
+	if(!ishuman(mover))
 		var/dir = get_dir(src, mover)
 		if(dir == EAST)
 			return ..()
 	return 0
 
-/obj/machinery/transformer/proc/do_transform(var/mob/living/carbon/human/H)
+/obj/machinery/transformer/process()
+	if(cooldown && (cooldown_timer <= world.time))
+		cooldown = FALSE
+		update_icon()
+
+/obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(stat & (BROKEN|NOPOWER))
 		return
 	if(cooldown == 1)
@@ -61,15 +85,12 @@
 
 	// Activate the cooldown
 	cooldown = 1
+	cooldown_timer = world.time + cooldown_duration
 	update_icon()
-	spawn(cooldown_duration)
-		cooldown = 0
-		update_icon()
 
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
-	H.handle_regular_hud_updates() // Make sure they see the pain.
 
 	// Sleep for a couple of ticks to allow the human to see the pain
 	sleep(5)
@@ -82,25 +103,27 @@
 
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
-	spawn(50)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
-		sleep(30)
-		if(R)
-			R.SetLockdown(0)
-			R.notify_ai(1)
+	addtimer(src, "unlock_new_robot", 50, FALSE, R)
+
+/obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
+	playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+	sleep(30)
+	if(R)
+		R.SetLockdown(0)
+		R.notify_ai(1)
 
 /obj/machinery/transformer/conveyor/New()
 	..()
 	var/turf/T = loc
 	if(T)
-		// Spawn Conveyour Belts
+		// Spawn Conveyor Belts
 
 		//East
 		var/turf/east = locate(T.x + 1, T.y, T.z)
-		if(istype(east, /turf/simulated/floor))
+		if(istype(east, /turf/open/floor))
 			new /obj/machinery/conveyor/auto(east, WEST)
 
 		// West
 		var/turf/west = locate(T.x - 1, T.y, T.z)
-		if(istype(west, /turf/simulated/floor))
+		if(istype(west, /turf/open/floor))
 			new /obj/machinery/conveyor/auto(west, WEST)

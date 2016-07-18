@@ -9,181 +9,117 @@ Note: Must be placed west/left of and R&D console to function.
 */
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
+	desc = "Converts raw materials into useful objects."
 	icon_state = "protolathe"
 	flags = OPENCONTAINER
 
-	var/max_material_storage = 100000 //All this could probably be done better with a list but meh.
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/gold_amount = 0.0
-	var/silver_amount = 0.0
-	var/plasma_amount = 0.0
-	var/uranium_amount = 0.0
-	var/diamond_amount = 0.0
-	var/clown_amount = 0.0
-	var/adamantine_amount = 0.0
+	var/datum/material_container/materials
 	var/efficiency_coeff
-	
-	reagents = new()
+
+	var/list/categories = list(
+								"Power Designs",
+								"Medical Designs",
+								"Bluespace Designs",
+								"Stock Parts",
+								"Equipment",
+								"Mining Designs",
+								"Electronics",
+								"Weapons",
+								"Ammo",
+								"Firing Pins"
+								)
 
 
 /obj/machinery/r_n_d/protolathe/New()
 	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/protolathe(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(src)
-	RefreshParts()
-	
-	reagents.my_atom = src
+	create_reagents(0)
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
+	B.apply_default_parts(src)
 
-/obj/machinery/r_n_d/protolathe/proc/TotalMaterials() //returns the total of all the stored materials. Makes code neater.
-	return m_amount + g_amount + gold_amount + silver_amount + plasma_amount + uranium_amount + diamond_amount + clown_amount
+/obj/item/weapon/circuitboard/machine/protolathe
+	name = "circuit board (Protolathe)"
+	build_path = /obj/machinery/r_n_d/protolathe
+	origin_tech = "engineering=2;programming=2"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/manipulator = 2,
+							/obj/item/weapon/reagent_containers/glass/beaker = 2)
+
+/obj/machinery/r_n_d/protolathe/Destroy()
+	qdel(materials)
+	return ..()
 
 /obj/machinery/r_n_d/protolathe/RefreshParts()
-	var/T = 0
+	reagents.maximum_volume = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.maximum_volume += G.volume
 		G.reagents.trans_to(src, G.reagents.total_volume)
+
+	materials.max_amount = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		T += M.rating
-	max_material_storage = T * 75000
-	T = 0
+		materials.max_amount += M.rating * 75000
+
+	var/T = 1.2
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
-		T += (M.rating/3)
-	efficiency_coeff = max(T, 1)
+		T -= M.rating/10
+	efficiency_coeff = min(max(0, T), 1)
 
-/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, var/M)	// now returns how many times the item can be built with the material
-	switch(M)
-		if("$metal")
-			return (m_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$glass")
-			return (g_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$gold")
-			return (gold_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$silver")
-			return (silver_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$plasma")
-			return (plasma_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$uranium")
-			return (uranium_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$diamond")
-			return (diamond_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		if("$clown")
-			return (clown_amount / max(1, (being_built.materials[M]/efficiency_coeff)))
-		else
-			return (reagents.has_reagent(M, (being_built.materials[M]/efficiency_coeff)))
+/obj/machinery/r_n_d/protolathe/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+	var/list/all_materials = being_built.reagents + being_built.materials
 
-/obj/machinery/r_n_d/protolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (shocked)
-		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", O))
-		if(linked_console)
-			linked_console.linked_lathe = null
-			linked_console = null
-		return
+	var/A = materials.amount(M)
+	if(!A)
+		A = reagents.get_reagent_amount(M)
 
-	if(exchange_parts(user, O))
-		return
+	return round(A / max(1, (all_materials[M]*efficiency_coeff)))
 
-	if (panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
-			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
-				reagents.trans_to(G, G.reagents.maximum_volume)
-			if(m_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(m_amount / G.perunit)
-			if(g_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(g_amount / G.perunit)
-			if(plasma_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/plasma/G = new /obj/item/stack/sheet/mineral/plasma(src.loc)
-				G.amount = round(plasma_amount / G.perunit)
-			if(silver_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/silver/G = new /obj/item/stack/sheet/mineral/silver(src.loc)
-				G.amount = round(silver_amount / G.perunit)
-			if(gold_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-				G.amount = round(gold_amount / G.perunit)
-			if(uranium_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/uranium/G = new /obj/item/stack/sheet/mineral/uranium(src.loc)
-				G.amount = round(uranium_amount / G.perunit)
-			if(diamond_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-				G.amount = round(diamond_amount / G.perunit)
-			if(clown_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/clown/G = new /obj/item/stack/sheet/mineral/clown(src.loc)
-				G.amount = round(clown_amount / G.perunit)
-			if(adamantine_amount >= MINERAL_MATERIAL_AMOUNT)
-				var/obj/item/stack/sheet/mineral/adamantine/G = new /obj/item/stack/sheet/mineral/adamantine(src.loc)
-				G.amount = round(adamantine_amount / G.perunit)
-			default_deconstruction_crowbar(O)
+//we eject the materials upon deconstruction.
+/obj/machinery/r_n_d/protolathe/deconstruction()
+	for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
+		reagents.trans_to(G, G.reagents.maximum_volume)
+	materials.retrieve_all()
+	..()
+
+
+/obj/machinery/r_n_d/protolathe/disconnect_console()
+	linked_console.linked_lathe = null
+	..()
+
+/obj/machinery/r_n_d/protolathe/Insert_Item(obj/item/O, mob/user)
+
+	if(istype(O, /obj/item/stack/sheet))
+		. = 1
+		if(!is_insertion_ready(user))
+			return
+		var/sheet_material = materials.get_item_material_amount(O)
+		if(!sheet_material)
+			return
+
+		if(!materials.has_space(sheet_material))
+			user << "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>"
+			return 1
+
+		var/obj/item/stack/sheet/stack = O
+		var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
+		if(!in_range(src, stack) || !user.Adjacent(src))
+			return
+		var/amount_inserted = materials.insert_stack(O,amount)
+		if(!amount_inserted)
 			return 1
 		else
-			user << "<span class='warning'>You can't load the [src.name] while it's opened.</span>"
-			return 1
-	if (disabled)
-		return
-	if (!linked_console)
-		user << "\The protolathe must be linked to an R&D console first!"
-		return 1
-	if (busy)
-		user << "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>"
-		return 1
-	if (O.is_open_container())
-		return
-	if (!istype(O, /obj/item/stack/sheet) || istype(O, /obj/item/stack/sheet/mineral/wood))
-		user << "<span class='warning'>You cannot insert this item into the protolathe!</span>"
-		return 1
-	if (stat)
-		return 1
-	if(istype(O,/obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = O
-		if (TotalMaterials() + S.perunit > max_material_storage)
-			user << "<span class='warning'>The protolathe's material bin is full. Please remove material before adding more.</span>"
-			return 1
+			var/stack_name = stack.name
+			busy = 1
+			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
+			user << "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>"
+			add_overlay("protolathe_[stack_name]")
+			sleep(10)
+			overlays -= "protolathe_[stack_name]"
+			busy = 0
+		updateUsrDialog()
 
-	var/obj/item/stack/sheet/stack = O
-	var/amount = round(input("How many sheets do you want to add?") as num)//No decimals
-	if(!stack || stack.amount <= 0 || amount <= 0)
-		return
-	if(amount > stack.amount)
-		amount = stack.amount
-	if(max_material_storage - TotalMaterials() < (amount*stack.perunit))//Can't overfill
-		amount = min(stack.amount, round((max_material_storage-TotalMaterials())/stack.perunit))
-
-	icon_state = "protolathe"
-	busy = 1
-	use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount/10)))
-	user << "<span class='notice'>You add [amount] sheets to the [src.name].</span>"
-	icon_state = "protolathe"
-	if(istype(stack, /obj/item/stack/sheet/metal))
-		m_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/glass))
-		g_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-		gold_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/silver))
-		silver_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/plasma))
-		plasma_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/uranium))
-		uranium_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-		diamond_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/clown))
-		clown_amount += amount * MINERAL_MATERIAL_AMOUNT
-	else if(istype(stack, /obj/item/stack/sheet/mineral/adamantine))
-		adamantine_amount += amount * MINERAL_MATERIAL_AMOUNT
-	stack.use(amount)
-	busy = 0
-	src.updateUsrDialog()
-
-	src.overlays += "protolathe_[stack.name]"
-	sleep(10)
-	src.overlays -= "protolathe_[stack.name]"
-
-	return
+	else if(user.a_intent != "harm")
+		user << "<span class='warning'>You cannot insert this item into the [name]!</span>"
+		return 1
+	else
+		return 0

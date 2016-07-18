@@ -24,7 +24,7 @@ Bonus
 	transmittable = -2
 	level = 4
 
-/datum/symptom/damage_converter/Activate(var/datum/disease/advance/A)
+/datum/symptom/damage_converter/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB * 10))
 		var/mob/living/M = A.affected_mob
@@ -33,29 +33,30 @@ Bonus
 				Convert(M)
 	return
 
-/datum/symptom/damage_converter/proc/Convert(var/mob/living/M)
+/datum/symptom/damage_converter/proc/Convert(mob/living/M)
 
 	var/get_damage = rand(1, 2)
 
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 
-		var/list/parts = H.get_damaged_organs(1,1) //1,1 because it needs inputs.
+		var/list/parts = H.get_damaged_bodyparts(1,1) //1,1 because it needs inputs.
 
 		if(!parts.len)
 			return
 
-		for(var/obj/item/organ/limb/L in parts)
+		for(var/obj/item/bodypart/L in parts)
 			L.heal_damage(get_damage, get_damage, 0)
+		M.adjustToxLoss(get_damage*parts.len)
 
 	else
 		if(M.getFireLoss() > 0 || M.getBruteLoss() > 0)
 			M.adjustFireLoss(-get_damage)
 			M.adjustBruteLoss(-get_damage)
+			M.adjustToxLoss(get_damage)
 		else
 			return
 
-	M.adjustToxLoss(get_damage)
 	return 1
 
 

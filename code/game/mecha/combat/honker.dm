@@ -26,19 +26,12 @@
 	return
 */
 
-
-/obj/mecha/combat/honker/melee_action(target)
-	if(!melee_can_hit)
-		return
-	else if(istype(target, /mob))
-		step_away(target,src,15)
-	return
-
 /obj/mecha/combat/honker/get_stats_part()
 	var/integrity = health/initial(health)*100
 	var/cell_charge = get_charge()
-	var/tank_pressure = internal_tank ? round(internal_tank.return_pressure(),0.01) : "None"
-	var/tank_temperature = internal_tank ? internal_tank.return_temperature() : "Unknown"
+	var/datum/gas_mixture/int_tank_air = internal_tank.return_air()
+	var/tank_pressure = internal_tank ? round(int_tank_air.return_pressure(),0.01) : "None"
+	var/tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 	var/cabin_pressure = round(return_pressure(),0.01)
 	var/output = {"[report_internal_damage()]
 						[integrity<30?"<font color='red'><b>DAMAGE LEVEL CRITICAL</b></font><br>":null]
@@ -53,7 +46,7 @@
 						<b>HONK pressure: </b>[cabin_pressure>WARNING_HIGH_PRESSURE ? "<font color='red'>[cabin_pressure]</font>": cabin_pressure]kPa<br>
 						<b>HONK temperature: </b> [return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C<br>
 						<b>Lights: </b>[lights?"on":"off"]<br>
-						[src.dna?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[src.dna]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
+						[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=\ref[src];reset_dna=1'>Reset</a>\]<br>":null]
 					"}
 	return output
 
@@ -145,7 +138,7 @@
 			squeak = 0
 	return result
 
-obj/mecha/combat/honker/Topic(href, href_list)
+/obj/mecha/combat/honker/Topic(href, href_list)
 	..()
 	if (href_list["play_sound"])
 		switch(href_list["play_sound"])
@@ -153,7 +146,7 @@ obj/mecha/combat/honker/Topic(href, href_list)
 				playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 	return
 
-proc/rand_hex_color()
+/proc/rand_hex_color()
 	var/list/colors = list("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
 	var/color=""
 	for (var/i=0;i<6;i++)

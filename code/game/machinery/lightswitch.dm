@@ -5,7 +5,7 @@
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
@@ -36,11 +36,9 @@
 		else
 			icon_state = "light0"
 
-/obj/machinery/light_switch/examine()
-	set src in oview(1)
+/obj/machinery/light_switch/examine(mob/user)
 	..()
-	if(usr && !usr.stat)
-		usr << "It is [on? "on" : "off"]."
+	user << "It is [on? "on" : "off"]."
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)

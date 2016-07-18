@@ -1,11 +1,4 @@
-/mob/living/silicon/ai/examine()
-	set src in oview()
-
-	if(!usr || !src)	return
-	if( (usr.sdisabilities & BLIND || usr.blinded || usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
-		return
-
+/mob/living/silicon/ai/examine(mob/user)
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] <EM>[src]</EM>!\n"
 	if (src.stat == DEAD)
 		msg += "<span class='deadsay'>It appears to be powered-down.</span>\n"
@@ -21,11 +14,9 @@
 				msg += "It looks slightly charred.\n"
 			else
 				msg += "<B>Its casing is melted and heat-warped!</B>\n"
-
-		if (src.stat == UNCONSCIOUS)
-			msg += "It is non-responsive and displaying the text: \"RUNTIME: Sensory Overload, stack 26/3\".\n"
 		msg += "</span>"
+		if (shunted == 0 && !src.client)
+			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
 	msg += "*---------*</span>"
 
-	usr << msg
-	return
+	user << msg

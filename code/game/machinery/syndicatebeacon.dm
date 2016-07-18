@@ -19,7 +19,7 @@
 	var/selfdestructing = 0
 	var/charges = 1
 
-/obj/machinery/syndicate_beacon/attack_hand(var/mob/user as mob)
+/obj/machinery/syndicate_beacon/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 	if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
@@ -55,7 +55,7 @@
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
 				src.updateUsrDialog()
-				spawn(rand(50,200)) selfdestruct()
+				addtimer(src, "selfdestruct", rand(50, 200))
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
@@ -87,20 +87,109 @@
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
 
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+			M.mind.announce_objectives()
 
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
 	selfdestructing = 1
 	spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
 
+////////////////////////////////////////
+//Singularity beacon
+////////////////////////////////////////
+/obj/machinery/power/singularity_beacon
+	name = "ominous beacon"
+	desc = "This looks suspicious..."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "beacon"
 
+	anchored = 0
+	density = 1
+	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
+	stat = 0
+
+	var/active = 0
+	var/icontype = "beacon"
+
+
+/obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
+	if(surplus() < 1500)
+		if(user) user << "<span class='notice'>The connected wire doesn't have enough current.</span>"
+		return
+	for(var/obj/singularity/singulo in world)
+		if(singulo.z == z)
+			singulo.target = src
+	icon_state = "[icontype]1"
+	active = 1
+	machines |= src
+	if(user)
+		user << "<span class='notice'>You activate the beacon.</span>"
+
+
+/obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
+	for(var/obj/singularity/singulo in world)
+		if(singulo.target == src)
+			singulo.target = null
+	icon_state = "[icontype]0"
+	active = 0
+	if(user)
+		user << "<span class='notice'>You deactivate the beacon.</span>"
+
+
+/obj/machinery/power/singularity_beacon/attack_ai(mob/user)
+	return
+
+
+/obj/machinery/power/singularity_beacon/attack_hand(mob/user)
+	if(anchored)
+		return active ? Deactivate(user) : Activate(user)
+	else
+		user << "<span class='warning'>You need to screw the beacon to the floor first!</span>"
+		return
+
+
+/obj/machinery/power/singularity_beacon/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W,/obj/item/weapon/screwdriver))
+		if(active)
+			user << "<span class='warning'>You need to deactivate the beacon first!</span>"
+			return
+
+		if(anchored)
+			anchored = 0
+			user << "<span class='notice'>You unscrew the beacon from the floor.</span>"
+			disconnect_from_network()
+			return
+		else
+			if(!connect_to_network())
+				user << "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>"
+				return
+			anchored = 1
+			user << "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>"
+			return
+	else
+		return ..()
+
+/obj/machinery/power/singularity_beacon/Destroy()
+	if(active)
+		Deactivate()
+	return ..()
+
+//stealth direct power usage
+/obj/machinery/power/singularity_beacon/process()
+	if(!active)
+		return PROCESS_KILL
+	else
+		if(surplus() > 1500)
+			add_load(1500)
+		else
+			Deactivate()
+
+
+/obj/machinery/power/singularity_beacon/syndicate
+	icontype = "beaconsynd"
+	icon_state = "beaconsynd0"
 
 // SINGULO BEACON SPAWNER
 /obj/item/device/sbeacondrop
@@ -108,14 +197,14 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon"
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
-	origin_tech = "bluespace=1;syndicate=7"
+	origin_tech = "bluespace=6;syndicate=5"
 	w_class = 2
-	var/droptype = /obj/machinery/singularity_beacon/syndicate
+	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
 
-/obj/item/device/sbeacondrop/attack_self(mob/user as mob)
+/obj/item/device/sbeacondrop/attack_self(mob/user)
 	if(user)
-		user << "\blue Locked In"
+		user << "<span class='notice'>Locked In.</span>"
 		new droptype( user.loc )
 		playsound(src, 'sound/effects/pop.ogg', 100, 1, 1)
 		qdel(src)
@@ -124,119 +213,9 @@
 /obj/item/device/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
+	origin_tech = "bluespace=5;syndicate=5"
 
-#define SCREWED 32
-
-/obj/machinery/singularity_beacon //not the best place for it but it's a hack job anyway -- Urist
-	name = "ominous beacon"
-	desc = "This looks suspicious..."
-	icon = 'icons/obj/singularity.dmi'
-	icon_state = "beacon"
-
-	anchored = 0
-	density = 1
-	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
-	stat = 0
-
-	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
-	var/icontype = "beacon"
-	var/obj/structure/cable/attached = null
-
-
-/obj/machinery/singularity_beacon/proc/Activate(mob/user = null)
-	if(!checkWirePower())
-		if(user) user << "\blue The connected wire doesn't have enough current."
-		return
-	for(var/obj/machinery/singularity/singulo in world)
-		if(singulo.z == z)
-			singulo.target = src
-	icon_state = "[icontype]1"
-	active = 1
-	if(user) user << "\blue You activate the beacon."
-
-
-/obj/machinery/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/machinery/singularity/singulo in world)
-		if(singulo.target == src)
-			singulo.target = null
-	icon_state = "[icontype]0"
-	active = 0
-	if(user) user << "\blue You deactivate the beacon."
-
-
-/obj/machinery/singularity_beacon/attack_ai(mob/user as mob)
-	return
-
-
-/obj/machinery/singularity_beacon/attack_hand(var/mob/user as mob)
-	if(stat & SCREWED)
-		return active ? Deactivate(user) : Activate(user)
-	else
-		user << "\red You need to screw the beacon to the floor first!"
-		return
-
-
-/obj/machinery/singularity_beacon/attackby(obj/item/weapon/W as obj, mob/user as mob)
-	if(istype(W,/obj/item/weapon/screwdriver))
-		if(active)
-			user << "\red You need to deactivate the beacon first!"
-			return
-
-		if(stat & SCREWED)
-			stat &= ~SCREWED
-			anchored = 0
-			user << "\blue You unscrew the beacon from the floor."
-			attached = null
-			return
-		else
-			var/turf/T = loc
-			if(isturf(T) && !T.intact)
-				attached = locate() in T
-			if(!attached)
-				user << "This device must be placed over an exposed cable."
-				return
-			stat |= SCREWED
-			anchored = 1
-			user << "\blue You screw the beacon to the floor and attach the cable."
-			return
-	..()
-	return
-
-
-/obj/machinery/singularity_beacon/Destroy()
-	if(active) Deactivate()
-	..()
-
-	/*
-	* Added for a simple way to check power. Verifies that the beacon
-	* is connected to a wire, the wire is part of a powernet (that part's
-	* sort of redundant, since all wires either join or create one when placed)
-	* and that the powernet has at least 1500 power units available for use.
-	* Doesn't use them, though, just makes sure they're there.
-	* - QualityVan, Aug 11 2012
-	*/
-/obj/machinery/singularity_beacon/proc/checkWirePower()
-	if(!attached)
-		return 0
-	var/datum/powernet/PN = attached.get_powernet()
-	if(!PN)
-		return 0
-	if(PN.avail < 1500)
-		return 0
-	return 1
-
-/obj/machinery/singularity_beacon/process()
-	if(!active)
-		return
-	else
-		if(!checkWirePower())
-			Deactivate()
-	return
-
-
-/obj/machinery/singularity_beacon/syndicate
-	icontype = "beaconsynd"
-	icon_state = "beaconsynd0"
-
-#undef SCREWED
-
+/obj/item/device/sbeacondrop/powersink
+	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
+	droptype = /obj/item/device/powersink
+	origin_tech = "bluespace=4;syndicate=5"

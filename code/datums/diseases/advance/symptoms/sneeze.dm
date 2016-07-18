@@ -24,8 +24,9 @@ Bonus
 	stage_speed = 0
 	transmittable = 4
 	level = 1
+	severity = 1
 
-/datum/symptom/sneeze/Activate(var/datum/disease/advance/A)
+/datum/symptom/sneeze/Activate(datum/disease/advance/A)
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
@@ -34,5 +35,5 @@ Bonus
 				M.emote("sniff")
 			else
 				M.emote("sneeze")
-				A.spread(A.holder, 5, AIRBORNE)
+				A.spread(A.holder, 5)
 	return

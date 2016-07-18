@@ -7,9 +7,6 @@
 /mob/proc/update_icons()
 	return
 
-/mob/proc/update_hud()
-	return
-
 /mob/proc/update_transform()
 	return
 
@@ -43,10 +40,10 @@
 /mob/proc/update_inv_head()
 	return
 
-/mob/proc/update_inv_gloves()
+/mob/proc/update_hair()
 	return
 
-/mob/proc/update_mutations()
+/mob/proc/update_inv_gloves()
 	return
 
 /mob/proc/update_inv_wear_id()

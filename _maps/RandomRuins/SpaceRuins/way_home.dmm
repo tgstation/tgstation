@@ -1,0 +1,37 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav/way_home)
+"c" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav/way_home)
+"d" = (/obj/structure/signpost/salvation,/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav/way_home)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaabaaaaaaaaaaaaaaa
+aaaaaaaaaaaaabbbaaaaaaaaaaaaaa
+aaaaaaaaaabbbbbbbbbaaaaaaaaaaa
+aaaaaaaaaaabbbbbbbbaaaaaaaaaaa
+aaaaaaaaaabbbbbbbbaaaaaaaaaaaa
+aaaaaaaaabbbbbbbbbaaaaaaaaaaaa
+aaaaaaaaabbbbbbbbbbaaaaaaaaaaa
+aaaaaaaabbbbbbbbbbbbaaaaaaaaaa
+aaaaaaabbbbbbbbcbbbaaaaaaaaaaa
+aaaaaaabbbbbbbcccaaaaaaaaaaaaa
+aaaaaabbbbbbbbccaaaaaaaaaaaaaa
+aaaaaabbbbbbcccaaaaaaaaaaaaaaa
+aaaaaaabbbcccccaaaaaaaaaaaaaaa
+aaaaaaabbaacccccaaaaaaaaaaaaaa
+aaaaaaaaaaaaaccccaaaaaaaaaaaaa
+aaaaaaaaaaaaaccdccaaaaaaaaaaaa
+aaaaaaaaaaaaaccccccaaaaaaaaaaa
+aaaaaaaaaaaaaaccccccaaaaaaaaaa
+aaaaaaaaaaaaaacccbccaaaaaaaaaa
+aaaaaaaaaaaaaaaccbbccaaaaaaaaa
+aaaaaaaaaaaaaaacbbbbbaaaaaaaaa
+aaaaaaaaaaaaaaacbbbbbbaaaaaaaa
+aabbaaaaaaaaaaaabbbbbbbaaaaaaa
+aabbbaaaaaaaaaabbbbbbbbbaaaaaa
+aaabaaaaaaaaaabbaaabbbabaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

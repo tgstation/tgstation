@@ -2,13 +2,13 @@
 	name = "tracking beacon"
 	desc = "A beacon used by a teleporter."
 	icon_state = "beacon"
-	item_state = "signaler"
+	item_state = "beacon"
 	var/code = "electronic"
 	origin_tech = "bluespace=1"
+	dog_fashion = null
 
-/obj/item/device/radio/beacon/hear_talk()
+/obj/item/device/radio/beacon/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	return
-
 
 /obj/item/device/radio/beacon/send_hear()
 	return null
@@ -27,7 +27,7 @@
 	return
 
 /*
-/obj/item/device/radio/beacon/bacon //Probably a better way of doing this, I'm lazy.
-	proc/digest_delay()
-		spawn(600)
-			qdel(src)*/ //Bacon beacons are no more rip in peace
+//Probably a better way of doing this, I'm lazy.
+/obj/item/device/radio/beacon/bacon/proc/digest_delay()
+	spawn(600)
+		qdel(src)*/ //Bacon beacons are no more rip in peace

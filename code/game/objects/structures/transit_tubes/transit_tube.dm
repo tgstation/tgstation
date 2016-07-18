@@ -1,17 +1,17 @@
-
 // Basic transit tubes. Straight pieces, curved sections,
 //  and basic splits/joins (no routing logic).
 // Mappers: you can use "Generate Instances from Icon-states"
 //  to get the different pieces.
 /obj/structure/transit_tube
-	icon = 'icons/obj/pipes/transit_tube.dmi'
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = 1
-	layer = 3.1
-	anchored = 1.0
+	layer = ABOVE_OBJ_LAYER
+	anchored = 1
+	var/tube_construction = /obj/structure/c_transit_tube
 	var/list/tube_dirs = null
-	var/exit_delay = 2
-	var/enter_delay = 1
+	var/exit_delay = 1
+	var/enter_delay = 0
 
 	// alldirs in global.dm is the same list of directions, but since
 	//  the specific order matters to get a usable icon_state, it is
@@ -19,28 +19,18 @@
 	//  this continues to work.
 	var/global/list/tube_dir_list = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
+/obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return 1
+	return !density
 
 // When destroyed by explosions, properly handle contents.
-obj/structure/transit_tube/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.loc = loc
-				AM.ex_act(severity++)
-
-			qdel(src)
-			return
-		if(2.0)
-			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.loc = loc
-					AM.ex_act(severity++)
-
-				qdel(src)
-				return
-		if(3.0)
-			return
-
+obj/structure/transit_tube/ex_act(severity, target)
+	if(3 - severity >= 0)
+		var/oldloc = loc
+		..(severity + 1)
+		for(var/atom/movable/AM in contents)
+			AM.loc = oldloc
 
 /obj/structure/transit_tube/New(loc)
 	..(loc)
@@ -48,6 +38,42 @@ obj/structure/transit_tube/ex_act(severity)
 	if(tube_dirs == null)
 		init_dirs()
 
+/obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/wrench))
+		if(copytext(icon_state, 1, 3) != "D-") //decorative diagonals cannot be unwrenched directly
+			for(var/obj/structure/transit_tube_pod/pod in src.loc)
+				user << "<span class='warning'>Remove the pod first!</span>"
+				return
+			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if(do_after(user, 35/W.toolspeed, target = src))
+				user << "<span class='notice'>You deattach the [name].</span>"
+				var/obj/structure/R = new tube_construction(src.loc)
+				R.icon_state = src.icon_state
+				src.transfer_fingerprints_to(R)
+				R.add_fingerprint(user)
+				src.destroy_diagonals()
+				qdel(src)
+	else if(istype(W, /obj/item/weapon/crowbar))
+		for(var/obj/structure/transit_tube_pod/pod in src.loc)
+			pod.attackby(W, user)
+	else
+		return ..()
+
+//destroys disconnected decorative diagonals
+/obj/structure/transit_tube/proc/destroy_diagonals()
+	for(var/obj/structure/transit_tube/D in orange(1, src))
+		if(copytext(D.icon_state, 1, 3) == "D-") //is diagonal
+			var/my_dir = text2dir_extended(copytext(D.icon_state, 3, 5))
+			var/is_connecting = 0
+			for(var/obj/structure/transit_tube/N in orange(1,D))
+				if( (( get_dir(D,N) == turn(my_dir, -45) && D.has_exit(turn(my_dir, 90)) ) || \
+					( get_dir(D,N) == turn(my_dir, 45) && D.has_exit(turn(my_dir, -90))) ) && \
+					D != src )
+					is_connecting = 1
+					break
+			if(!is_connecting)
+				qdel(D)
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
@@ -56,7 +82,6 @@ obj/structure/transit_tube/ex_act(severity)
 // Called when a pod stops in this tube section.
 /obj/structure/transit_tube/proc/pod_stopped(pod, from_dir)
 	return
-
 
 // Returns a /list of directions this tube section can connect to.
 //  Tubes that have some sort of logic or changing direction might
@@ -239,7 +264,7 @@ obj/structure/transit_tube/ex_act(severity)
 	if(text in direction_table)
 		return direction_table[text]
 
-	var/list/split_text = text2list(text, "-")
+	var/list/split_text = splittext(text, "-")
 
 	// If the first token is D, the icon_state represents
 	//  a purely decorative tube, and doesn't actually
@@ -258,53 +283,3 @@ obj/structure/transit_tube/ex_act(severity)
 
 	direction_table[text] = directions
 	return directions
-
-
-
-// A copy of text2dir, extended to accept one and two letter
-//  directions, and to clearly return 0 otherwise.
-/obj/structure/transit_tube/proc/text2dir_extended(direction)
-	switch(uppertext(direction))
-		if("NORTH", "N")
-			return 1
-		if("SOUTH", "S")
-			return 2
-		if("EAST", "E")
-			return 4
-		if("WEST", "W")
-			return 8
-		if("NORTHEAST", "NE")
-			return 5
-		if("NORTHWEST", "NW")
-			return 9
-		if("SOUTHEAST", "SE")
-			return 6
-		if("SOUTHWEST", "SW")
-			return 10
-		else
-	return 0
-
-
-
-// A copy of dir2text, which returns the short one or two letter
-//  directions used in tube icon states.
-/obj/structure/transit_tube/proc/dir2text_short(direction)
-	switch(direction)
-		if(1)
-			return "N"
-		if(2)
-			return "S"
-		if(4)
-			return "E"
-		if(8)
-			return "W"
-		if(5)
-			return "NE"
-		if(6)
-			return "SE"
-		if(9)
-			return "NW"
-		if(10)
-			return "SW"
-		else
-	return

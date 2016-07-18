@@ -3,6 +3,7 @@
 	typepath = /datum/round_event/wormholes
 	max_occurrences = 3
 	weight = 2
+	min_players = 2
 
 
 /datum/round_event/wormholes
@@ -19,8 +20,8 @@
 	endWhen = rand(40, 80)
 
 /datum/round_event/wormholes/start()
-	for(var/turf/simulated/floor/T in world)
-		if(T.z == 1)
+	for(var/turf/open/floor/T in world)
+		if(T.z == ZLEVEL_STATION)
 			pick_turfs += T
 
 	for(var/i = 1, i <= number_of_wormholes, i++)
@@ -34,7 +35,8 @@
 	if(activeFor % shift_frequency == 0)
 		for(var/obj/effect/portal/wormhole/O in wormholes)
 			var/turf/T = pick(pick_turfs)
-			if(T)	O.loc = T
+			if(T)
+				O.loc = T
 
 /datum/round_event/wormholes/end()
 	portals.Remove(wormholes)
@@ -52,7 +54,7 @@
 /obj/effect/portal/wormhole/attack_hand(mob/user)
 	teleport(user)
 
-/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user)
+/obj/effect/portal/wormhole/attackby(obj/item/I, mob/user, params)
 	teleport(user)
 
 /obj/effect/portal/wormhole/teleport(atom/movable/M)
@@ -67,5 +69,6 @@
 			var/obj/effect/portal/P = pick(portals)
 			if(P && isturf(P.loc))
 				target = P.loc
-		if(!target)	return
+		if(!target)
+			return
 		do_teleport(M, target, 1, 1, 0, 0) ///You will appear adjacent to the beacon

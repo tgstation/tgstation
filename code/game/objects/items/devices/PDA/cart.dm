@@ -17,11 +17,15 @@
 	var/access_janitor = 0
 //	var/access_flora = 0
 	var/access_reagent_scanner = 0
+	var/access_newscaster = 0
 	var/access_remote_door = 0 //Control some blast doors remotely!!
 	var/remote_door_id = ""
 	var/access_status_display = 0
 	var/access_quartermaster = 0
 	var/access_hydroponics = 0
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	var/spam_enabled = 0 //Enables "Send to All" Option
+
 	var/mode = null
 	var/menu
 	var/datum/data/record/active1 = null //General
@@ -32,35 +36,40 @@
 	var/message1	// used for status_displays
 	var/message2
 	var/list/stored_data = list()
+	var/current_channel
+
+	var/mob/living/simple_animal/bot/active_bot
+	var/list/botlist = list()
 
 /obj/item/weapon/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
 	access_engine = 1
+	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/atmos
 	name = "\improper BreatheDeep cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/medical
 	name = "\improper Med-U cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
+	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/chemistry
 	name = "\improper ChemWhiz cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
+	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
-
-/obj/item/weapon/cartridge/security/New()
-	..()
-	radio = new /obj/item/radio/integrated/beepsky(src)
+	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/detective
 	name = "\improper D.E.T.E.C.T. cartridge"
@@ -68,21 +77,20 @@
 	access_security = 1
 	access_medical = 1
 	access_manifest = 1
-
-/obj/item/weapon/cartridge/detective/New()
-	..()
-	radio = new /obj/item/radio/integrated/beepsky(src)
+	bot_access_flags = SEC_BOT
 
 /obj/item/weapon/cartridge/janitor
 	name = "\improper CustodiPRO cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
 	access_janitor = 1
+	bot_access_flags = CLEAN_BOT
 
 /obj/item/weapon/cartridge/lawyer
 	name = "\improper P.R.O.V.E. cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "\improper Honkworks 5.0 cartridge"
@@ -95,12 +103,23 @@
 	icon_state = "cart-mi"
 	access_mime = 1
 	var/mime_charges = 5
+
+/obj/item/weapon/cartridge/librarian
+	name = "\improper Lib-Tweet cartridge"
+	icon_state = "cart-s"
+	access_newscaster = 1
+
 /*
 /obj/item/weapon/cartridge/botanist
 	name = "\improper Green Thumb v4.20 cartridge"
 	icon_state = "cart-b"
 	access_flora = 1
 */
+
+/obj/item/weapon/cartridge/roboticist
+	name = "\improper B.O.O.P. Remote Control cartridge"
+	desc = "Packed with heavy duty triple-bot interlink!"
+	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/signal
 	name = "generic signaler cartridge"
@@ -124,10 +143,7 @@
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
 	access_quartermaster = 1
-
-/obj/item/weapon/cartridge/quartermaster/New()
-	..()
-	radio = new /obj/item/radio/integrated/mule(src)
+	bot_access_flags = MULE_BOT
 
 /obj/item/weapon/cartridge/head
 	name = "\improper Easy-Record DELUXE cartridge"
@@ -140,13 +156,11 @@
 	icon_state = "cart-h"
 	access_manifest = 1
 	access_status_display = 1
-	access_quartermaster = 1
+	bot_access_flags = MULE_BOT|CLEAN_BOT
 	access_janitor = 1
 	access_security = 1
-
-/obj/item/weapon/cartridge/hop/New()
-	..()
-	radio = new /obj/item/radio/integrated/mule(src)
+	access_newscaster = 1
+	access_quartermaster = 1
 
 /obj/item/weapon/cartridge/hos
 	name = "\improper R.O.B.U.S.T. DELUXE cartridge"
@@ -154,10 +168,8 @@
 	access_manifest = 1
 	access_status_display = 1
 	access_security = 1
+	bot_access_flags = SEC_BOT
 
-/obj/item/weapon/cartridge/hos/New()
-	..()
-	radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/ce
 	name = "\improper Power-On DELUXE cartridge"
@@ -166,6 +178,7 @@
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
+	bot_access_flags = FLOOR_BOT
 
 /obj/item/weapon/cartridge/cmo
 	name = "\improper Med-U DELUXE cartridge"
@@ -174,6 +187,7 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_medical = 1
+	bot_access_flags = MED_BOT
 
 /obj/item/weapon/cartridge/rd
 	name = "\improper Signal Ace DELUXE cartridge"
@@ -182,6 +196,7 @@
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+	bot_access_flags = FLOOR_BOT|CLEAN_BOT|MED_BOT
 
 /obj/item/weapon/cartridge/rd/New()
 	..()
@@ -189,7 +204,7 @@
 
 /obj/item/weapon/cartridge/captain
 	name = "\improper Value-PAK cartridge"
-	desc = "Now with 200% more value!"
+	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime and Clown)
 	icon_state = "cart-c"
 	access_manifest = 1
 	access_engine = 1
@@ -198,10 +213,15 @@
 	access_reagent_scanner = 1
 	access_status_display = 1
 	access_atmos = 1
+	access_newscaster = 1
+	access_quartermaster = 1
+	access_janitor = 1
+	bot_access_flags = SEC_BOT|MULE_BOT|FLOOR_BOT|CLEAN_BOT|MED_BOT
+	spam_enabled = 1
 
 /obj/item/weapon/cartridge/captain/New()
 	..()
-	radio = new /obj/item/radio/integrated/beepsky(src)
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/syndicate
 	name = "\improper Detomatix cartridge"
@@ -218,20 +238,21 @@
 	print_to_host(menu)
 	return
 
-/obj/item/weapon/cartridge/proc/print_to_host(var/text)
+/obj/item/weapon/cartridge/proc/print_to_host(text)
 	if (!istype(loc, /obj/item/device/pda))
 		return
-	loc:cart = text
+	var/obj/item/device/pda/P = loc
+	P.cart = text
 
 	for (var/mob/M in viewers(1, loc.loc))
 		if (M.client && M.machine == loc)
-			loc:attack_self(M)
+			P.attack_self(M)
 
 	return
 
-/obj/item/weapon/cartridge/proc/post_status(var/command, var/data1, var/data2)
+/obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(1435)
+	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
 	if(!frequency) return
 
@@ -249,9 +270,11 @@
 
 	frequency.post_signal(src, status_signal)
 
-/obj/item/weapon/cartridge/proc/generate_menu()
+
+/obj/item/weapon/cartridge/proc/generate_menu(mob/user)
 	switch(mode)
 		if(40) //signaller
+			var/obj/item/radio/integrated/signal/S = radio
 			menu = "<h4><img src=pda_signaler.png> Remote Signaling System</h4>"
 
 			menu += {"
@@ -259,14 +282,14 @@
 Frequency:
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-10'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=-2'>-</a>
-[format_frequency(radio:frequency)]
+[format_frequency(S.frequency)]
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=2'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Frequency;sfreq=10'>+</a><br>
 <br>
 Code:
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-5'>-</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=-1'>-</a>
-[radio:code]
+[S.code]
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=1'>+</a>
 <a href='byond://?src=\ref[src];choice=Signal Code;scode=5'>+</a><br>"}
 		if (41) //crew manifest
@@ -300,36 +323,36 @@ Code:
 
 
 
-			for(var/obj/machinery/computer/monitor/pMon in world)
+			for(var/obj/machinery/computer/monitor/pMon in machines)
 				if(!(pMon.stat & (NOPOWER|BROKEN)) )
 					powercount++
 					powermonitors += pMon
 
 
 			if(!powercount)
-				menu += "\red No connection<BR>"
+				menu += "<span class='danger'>No connection<BR></span>"
 			else
 
 				menu += "<FONT SIZE=-1>"
 				var/count = 0
 				for(var/obj/machinery/computer/monitor/pMon in powermonitors)
 					count++
-					menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'> [pMon] </a><BR>"
+					menu += "<a href='byond://?src=\ref[src];choice=Power Select;target=[count]'>[pMon] </a><BR>"
 
 				menu += "</FONT>"
 
 		if (433)
 			menu = "<h4><img src=pda_power.png> Power Monitor </h4><BR>"
 			if(!powmonitor)
-				menu += "\red No connection<BR>"
+				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
-				for(var/obj/machinery/power/terminal/term in powmonitor.powernet.nodes)
+				for(var/obj/machinery/power/terminal/term in powmonitor.attached.powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
 						L += A
 
-				menu += "<PRE>Total power: [powmonitor.powernet.avail] W<BR>Total load:  [num2text(powmonitor.powernet.viewload,10)] W<BR>"
+				menu += "<PRE>Total power: [powmonitor.attached.powernet.viewavail] W<BR>Total load:  [num2text(powmonitor.attached.powernet.viewload,10)] W<BR>"
 
 				menu += "<FONT SIZE=-1>"
 
@@ -455,129 +478,37 @@ Code:
 				menu += "<b>Record Lost!</b><br>"
 
 			menu += "<br>"
-		if (46) //beepsky control
-			var/obj/item/radio/integrated/beepsky/SC = radio
-			if(!SC)
-				menu = "Interlink Error - Please reinsert cartridge."
-				return
-
-			menu = "<h4><img src=pda_cuffs.png> Securitron Interlink</h4>"
-
-			if(!SC.active)
-				// list of bots
-				if(!SC.botlist || (SC.botlist && SC.botlist.len==0))
-					menu += "No bots found.<BR>"
-
-				else
-					for(var/obj/machinery/bot/secbot/B in SC.botlist)
-						menu += "<A href='byond://?src=\ref[SC];op=control;bot=\ref[B]'>[B] at [B.loc.loc]</A><BR>"
-
-				menu += "<BR><A href='byond://?src=\ref[SC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
-
-			else	// bot selected, control it
-
-				menu += "<B>[SC.active]</B><BR> Status: (<A href='byond://?src=\ref[SC];op=control;bot=\ref[SC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
-
-				if(!SC.botstatus)
-					menu += "Waiting for response...<BR>"
-				else
-
-					menu += "Location: [SC.botstatus["loca"] ]<BR>"
-					menu += "Mode: "
-
-					switch(SC.botstatus["mode"])
-						if(0)
-							menu += "Ready"
-						if(1)
-							menu += "Apprehending target"
-						if(2,3)
-							menu += "Arresting target"
-						if(4)
-							menu += "Starting patrol"
-						if(5)
-							menu += "On patrol"
-						if(6)
-							menu += "Responding to summons"
-
-					menu += "<BR>\[<A href='byond://?src=\ref[SC];op=stop'>Stop Patrol</A>\] "
-					menu += "\[<A href='byond://?src=\ref[SC];op=go'>Start Patrol</A>\] "
-					menu += "\[<A href='byond://?src=\ref[SC];op=summon'>Summon Bot</A>\]<BR>"
-					menu += "<HR><A href='byond://?src=\ref[SC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
 
 		if (47) //quartermaster order records
 			menu = "<h4><img src=pda_crate.png> Supply Record Interlink</h4>"
 
 			menu += "<BR><B>Supply shuttle</B><BR>"
-			menu += "Location: [supply_shuttle.moving ? "Moving to station ([supply_shuttle.eta] Mins.)":supply_shuttle.at_station ? "Station":"Dock"]<BR>"
-			menu += "Current approved orders: <BR><ol>"
-			for(var/S in supply_shuttle.shoppinglist)
+			menu += "Location: "
+			switch(SSshuttle.supply.mode)
+				if(SHUTTLE_CALL)
+					menu += "Moving to "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "station"
+					else
+						menu += "centcomm"
+					menu += " ([SSshuttle.supply.timeLeft(600)] Mins)"
+				else
+					menu += "At "
+					if(SSshuttle.supply.z != ZLEVEL_STATION)
+						menu += "centcomm"
+					else
+						menu += "station"
+			menu += "<BR>Current approved orders: <BR><ol>"
+			for(var/S in SSshuttle.shoppinglist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] approved by [SO.orderedby] [SO.comment ? "([SO.comment])":""]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] approved by [SO.orderer] [SO.reason ? "([SO.reason])":""]</li>"
 			menu += "</ol>"
 
 			menu += "Current requests: <BR><ol>"
-			for(var/S in supply_shuttle.requestlist)
+			for(var/S in SSshuttle.requestlist)
 				var/datum/supply_order/SO = S
-				menu += "<li>#[SO.ordernum] - [SO.object.name] requested by [SO.orderedby]</li>"
+				menu += "<li>#[SO.id] - [SO.pack.name] requested by [SO.orderer]</li>"
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
-
-		if (48) //mulebot control
-			var/obj/item/radio/integrated/mule/QC = radio
-			if(!QC)
-				menu = "Interlink Error - Please reinsert cartridge."
-				return
-
-			menu = "<h4><img src=pda_mule.png> M.U.L.E. bot Interlink V0.8</h4>"
-
-			if(!QC.active)
-				// list of bots
-				if(!QC.botlist || (QC.botlist && QC.botlist.len==0))
-					menu += "No bots found.<BR>"
-
-				else
-					for(var/obj/machinery/bot/mulebot/B in QC.botlist)
-						menu += "<A href='byond://?src=\ref[QC];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
-
-				menu += "<BR><A href='byond://?src=\ref[QC];op=scanbots'><img src=pda_scanner.png> Scan for active bots</A><BR>"
-
-			else	// bot selected, control it
-
-				menu += "<B>[QC.active]</B><BR> Status: (<A href='byond://?src=\ref[QC];op=control;bot=\ref[QC.active]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
-
-				if(!QC.botstatus)
-					menu += "Waiting for response...<BR>"
-				else
-
-					menu += "Location: [QC.botstatus["loca"] ]<BR>"
-					menu += "Mode: "
-
-					switch(QC.botstatus["mode"])
-						if(0)
-							menu += "Ready"
-						if(1)
-							menu += "Loading/Unloading"
-						if(2)
-							menu += "Navigating to Delivery Location"
-						if(3)
-							menu += "Navigating to Home"
-						if(4)
-							menu += "Waiting for clear path"
-						if(5,6)
-							menu += "Calculating navigation path"
-						if(7)
-							menu += "Unable to locate destination"
-					var/obj/structure/closet/crate/C = QC.botstatus["load"]
-					menu += "<BR>Current Load: [ !C ? "<i>none</i>" : "[C.name] (<A href='byond://?src=\ref[QC];op=unload'><i>unload</i></A>)" ]<BR>"
-					menu += "Destination: [!QC.botstatus["dest"] ? "<i>none</i>" : QC.botstatus["dest"] ] (<A href='byond://?src=\ref[QC];op=setdest'><i>set</i></A>)<BR>"
-					menu += "Power: [QC.botstatus["powr"]]%<BR>"
-					menu += "Home: [!QC.botstatus["home"] ? "<i>none</i>" : QC.botstatus["home"] ]<BR>"
-					menu += "Auto Return Home: [QC.botstatus["retn"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=retoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=reton'><i>On</i></A>) <B>Off</B>"]<BR>"
-					menu += "Auto Pickup Crate: [QC.botstatus["pick"] ? "<B>On</B> <A href='byond://?src=\ref[QC];op=pickoff'>Off</A>" : "(<A href='byond://?src=\ref[QC];op=pickon'><i>On</i></A>) <B>Off</B>"]<BR><BR>"
-
-					menu += "\[<A href='byond://?src=\ref[QC];op=stop'>Stop</A>\] "
-					menu += "\[<A href='byond://?src=\ref[QC];op=go'>Proceed</A>\] "
-					menu += "\[<A href='byond://?src=\ref[QC];op=home'>Return Home</A>\]<BR>"
-					menu += "<HR><A href='byond://?src=\ref[QC];op=botlist'><img src=pda_back.png>Return to bot list</A>"
 
 		if (49) //janitorial locator
 			menu = "<h4><img src=pda_bucket.png> Persistent Custodial Object Locator</h4>"
@@ -623,7 +554,7 @@ Code:
 				menu += "<h4>Located Cleanbots:</h4>"
 
 				ldat = null
-				for (var/obj/machinery/bot/cleanbot/B in world)
+				for (var/mob/living/simple_animal/bot/cleanbot/B in living_mob_list)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -641,6 +572,31 @@ Code:
 				menu += "ERROR: Unable to determine current location."
 			menu += "<br><br><A href='byond://?src=\ref[src];choice=49'>Refresh GPS Locator</a>"
 
+		if (53) // Newscaster
+			menu = "<h4><img src=pda_notes.png> Newscaster Access</h4>"
+			menu += "<br> Current Newsfeed: <A href='byond://?src=\ref[src];choice=Newscaster Switch Channel'>[current_channel ? current_channel : "None"]</a> <br>"
+			var/datum/newscaster/feed_channel/current
+			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(!current)
+				menu += "<h5> ERROR : NO CHANNEL FOUND </h5>"
+				return
+			var/i = 1
+			for(var/datum/newscaster/feed_message/msg in current.messages)
+				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
+				if(msg.img)
+					user << browse_rsc(msg.img, "tmp_photo[i].png")
+					menu +="<img src='tmp_photo[i].png' width = '180'><BR>"
+				i++
+				for(var/datum/newscaster/feed_comment/comment in msg.comments)
+					menu +="<font size=1><small>[comment.body]</font><br><font size=1><small><small><small>[comment.author] [comment.time_stamp]</small></small></small></small></font><br>"
+			menu += "<br> <A href='byond://?src=\ref[src];choice=Newscaster Message'>Post Message</a>"
+
+		if (54) // Beepsky, Medibot, Floorbot, and Cleanbot access
+			menu = "<h4><img src=pda_medbot.png> Bots Interlink</h4>"
+			bot_control()
 
 /obj/item/weapon/cartridge/Topic(href, href_list)
 	..()
@@ -650,12 +606,14 @@ Code:
 		usr << browse(null, "window=pda")
 		return
 
+	var/obj/item/device/pda/pda = loc
+
 	switch(href_list["choice"])
 		if("Medical Records")
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active2 = find_record("id", href_list["target"], data_core.medical)
-			loc:mode = 441
+			pda.mode = 441
 			mode = 441
 			if(!active2)
 				active1 = null
@@ -664,25 +622,28 @@ Code:
 			active1 = find_record("id", href_list["target"], data_core.general)
 			if(active1)
 				active3 = find_record("id", href_list["target"], data_core.security)
-			loc:mode = 451
+			pda.mode = 451
 			mode = 451
 			if(!active3)
 				active1 = null
 
 		if("Send Signal")
 			spawn( 0 )
-				radio:send_signal("ACTIVATE")
+				var/obj/item/radio/integrated/signal/S = radio
+				S.send_signal("ACTIVATE")
 				return
 
 		if("Signal Frequency")
-			var/new_frequency = sanitize_frequency(radio:frequency + text2num(href_list["sfreq"]))
-			radio:set_frequency(new_frequency)
+			var/obj/item/radio/integrated/signal/S = radio
+			var/new_frequency = sanitize_frequency(S.frequency + text2num(href_list["sfreq"]))
+			S.set_frequency(new_frequency)
 
 		if("Signal Code")
-			radio:code += text2num(href_list["scode"])
-			radio:code = round(radio:code)
-			radio:code = min(100, radio:code)
-			radio:code = max(1, radio:code)
+			var/obj/item/radio/integrated/signal/S = radio
+			S.code += text2num(href_list["scode"])
+			S.code = round(S.code)
+			S.code = min(100, S.code)
+			S.code = max(1, S.code)
 
 		if("Status")
 			switch(href_list["statdisp"])
@@ -701,8 +662,117 @@ Code:
 		if("Power Select")
 			var/pnum = text2num(href_list["target"])
 			powmonitor = powermonitors[pnum]
-			loc:mode = 433
+			pda.mode = 433
 			mode = 433
 
-	generate_menu()
+		if("Supply Orders")
+			pda.mode =47
+			mode = 47
+
+		if("Newscaster Access")
+			mode = 53
+
+		if("Newscaster Message")
+			var/pda_owner_name = pda.id ? "[pda.id.registered_name] ([pda.id.assignment])" : "Unknown"
+			var/message = pda.msg_input()
+			var/datum/newscaster/feed_channel/current
+			for(var/datum/newscaster/feed_channel/chan in news_network.network_channels)
+				if (chan.channel_name == current_channel)
+					current = chan
+			if(current.locked && current.author != pda_owner_name)
+				pda.cart += "<h5> ERROR : NOT AUTHORIZED [pda.id ? "" : "- ID SLOT EMPTY"] </h5>"
+				pda.Topic(null,list("choice"="Refresh"))
+				return
+			news_network.SubmitArticle(message,pda.owner,current_channel)
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+		if("Newscaster Switch Channel")
+			current_channel = pda.msg_input()
+			pda.Topic(null,list("choice"=num2text(mode)))
+			return
+
+	//Bot control section! Viciously ripped from radios for being laggy and terrible.
+	if(href_list["op"])
+		switch(href_list["op"])
+
+			if("control")
+				active_bot = locate(href_list["bot"])
+
+			if("botlist")
+				active_bot = null
+			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
+				active_bot.bot_control(command= "summon", user_turf= get_turf(usr), user_access= pda.GetAccess())
+			else //Forward all other bot commands to the bot itself!
+				active_bot.bot_control(command= href_list["op"], user= usr)
+
+	if(href_list["mule"]) //MULEbots are special snowflakes, and need different args due to how they work.
+
+		active_bot.bot_control(command= href_list["mule"], user= usr, pda= 1)
+
+	generate_menu(usr)
 	print_to_host(menu)
+
+
+
+/obj/item/weapon/cartridge/proc/bot_control()
+
+
+	var/mob/living/simple_animal/bot/Bot
+
+//	if(!SC)
+//		menu = "Interlink Error - Please reinsert cartridge."
+//		return
+	if(active_bot)
+		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;bot=\ref[active_bot]'><img src=pda_refresh.png><i>refresh</i></A>)<BR>"
+		menu += "Model: [active_bot.model]<BR>"
+		menu += "Location: [get_area(active_bot)]<BR>"
+		menu += "Mode: [active_bot.get_mode()]"
+		if(active_bot.allow_pai)
+			menu += "<BR>pAI: "
+			if(active_bot.paicard && active_bot.paicard.pai)
+				menu += "[active_bot.paicard.pai.name]"
+				if(active_bot.bot_core.allowed(usr))
+					menu += " (<A href='byond://?src=\ref[src];op=ejectpai'><i>eject</i></A>)"
+			else
+				menu += "<i>none</i>"
+
+		//MULEs!
+		if(active_bot.bot_type == MULE_BOT)
+			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
+			var/atom/Load = MULE.load
+			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=\ref[src];mule=unload'><i>unload</i></A>)" ]<BR>"
+			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=\ref[src];mule=destination'><i>set</i></A>)<BR>"
+			menu += "Set ID: [MULE.suffix] <A href='byond://?src=\ref[src];mule=setid'><i> Modify</i></A><BR>"
+			menu += "Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>"
+			menu += "Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>"
+			menu += "Delivery Reporting: <A href='byond://?src=\ref[src];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
+			menu += "Auto Return Home: <A href='byond://?src=\ref[src];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
+			menu += "Auto Pickup Crate: <A href='byond://?src=\ref[src];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue.
+
+			menu += "\[<A href='byond://?src=\ref[src];mule=stop'>Stop</A>\] "
+			menu += "\[<A href='byond://?src=\ref[src];mule=go'>Proceed</A>\] "
+			menu += "\[<A href='byond://?src=\ref[src];mule=home'>Return Home</A>\]<BR>"
+
+		else
+			menu += "<BR>\[<A href='byond://?src=\ref[src];op=patroloff'>Stop Patrol</A>\] "	//patrolon
+			menu += "\[<A href='byond://?src=\ref[src];op=patrolon'>Start Patrol</A>\] "	//patroloff
+			menu += "\[<A href='byond://?src=\ref[src];op=summon'>Summon Bot</A>\]<BR>"		//summon
+			menu += "Keep an ID inserted to upload access codes upon summoning."
+
+		menu += "<HR><A href='byond://?src=\ref[src];op=botlist'><img src=pda_back.png>Return to bot list</A>"
+	else
+		menu += "<BR><A href='byond://?src=\ref[src];op=botlist'><img src=pda_refresh.png>Scan for active bots</A><BR><BR>"
+		var/turf/current_turf = get_turf(src)
+		var/zlevel = current_turf.z
+		var/botcount = 0
+		for(Bot in living_mob_list) //Git da botz
+			if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
+				continue //Also, the PDA must have access to the bot type.
+			menu += "<A href='byond://?src=\ref[src];op=control;bot=\ref[Bot]'><b>[Bot.name]</b> ([Bot.get_mode()])<BR>"
+			botcount++
+		if(!botcount) //No bots at all? Lame.
+			menu += "No bots found.<BR>"
+			return
+
+	return menu

@@ -106,7 +106,7 @@
 					<div id=\"rightmenu\">[right_part]</div>
 				</div>
 			</body>
-			</html>"}
+			</html>"} //"
 	usr << browse(dat, "window=pai;size=640x480;border=0;can_close=1;can_resize=1;can_minimize=1;titlebar=1")
 	onclose(usr, "pai")
 	temp = null
@@ -164,6 +164,8 @@
 					pID = 8
 				if("What")
 					pID = 9
+				if("Null")
+					pID = 10
 			src.card.setEmotion(pID)
 
 		if("signaller")
@@ -171,8 +173,7 @@
 			if(href_list["send"])
 
 				sradio.send_signal("ACTIVATE")
-				for(var/mob/O in hearers(1, src.loc))
-					O.show_message(text("\icon[] *beep* *beep*", src), 3, "*beep* *beep*", 2)
+				audible_message("\icon[src] *beep* *beep*")
 
 			if(href_list["freq"])
 
@@ -236,13 +237,25 @@
 					temp = "Unable to locate requested security record. Record may have been deleted, or never have existed."
 		if("securityhud")
 			if(href_list["toggle"])
-				src.secHUD = !src.secHUD
+				secHUD = !secHUD
+				if(secHUD)
+					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
-				src.medHUD = !src.medHUD
+				medHUD = !medHUD
+				if(medHUD)
+					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				src.universal_speak = !src.universal_speak
+				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
+				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
+				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -253,8 +266,7 @@
 			if(href_list["cable"])
 				var/turf/T = get_turf(src.loc)
 				src.cable = new /obj/item/weapon/pai_cable(T)
-				for (var/mob/M in viewers(T))
-					M.show_message("\red A port on [src] opens to reveal [src.cable], which promptly falls to the floor.", 3, "\red You hear the soft click of something light and hard falling to the ground.", 2)
+				T.visible_message("<span class='warning'>A port on [src] opens to reveal [src.cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -301,7 +313,7 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[(src.universal_speak) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -360,10 +372,10 @@
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
 	if(answer == "Yes")
-		var/turf/T = get_turf(P.loc)
-		for (var/mob/v in viewers(T))
-			v.show_message("\blue [M] presses \his thumb against [P].", 3, "\blue [P] makes a sharp clicking sound as it extracts DNA material from [M].", 2)
-		if(!check_dna_integrity(M))
+		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
+						"<span class='notice'>You press your thumb against [P].</span>",\
+						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
+		if(!M.has_dna())
 			P << "<b>No DNA detected</b>"
 			return
 		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
@@ -454,7 +466,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
-				The device is currently [ (src.universal_speak) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				The device is currently [ ((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
 				"}
 	return .
@@ -504,9 +516,9 @@
 		for(var/datum/disease/D in M.viruses)
 			dat += {"<h4>Infection Detected.</h4><br>
 					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
+					 Type: [D.spread_text]<br>
 					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
+					 Possible Cure: [D.cure_text]<br>
 					"}
 		dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
@@ -520,6 +532,7 @@
 		dat += "Unable to obtain a reading.<br>"
 	else
 		var/datum/gas_mixture/environment = T.return_air()
+		var/list/env_gases = environment.gases
 
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
@@ -527,17 +540,10 @@
 		dat += "Air Pressure: [round(pressure,0.1)] kPa<br>"
 
 		if (total_moles)
-			var/o2_level = environment.oxygen/total_moles
-			var/n2_level = environment.nitrogen/total_moles
-			var/co2_level = environment.carbon_dioxide/total_moles
-			var/plasma_level = environment.toxins/total_moles
-			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
-			dat += "Nitrogen: [round(n2_level*100)]%<br>"
-			dat += "Oxygen: [round(o2_level*100)]%<br>"
-			dat += "Carbon Dioxide: [round(co2_level*100)]%<br>"
-			dat += "Plasma: [round(plasma_level*100)]%<br>"
-			if(unknown_level > 0.01)
-				dat += "OTHER: [round(unknown_level)]%<br>"
+			for(var/id in env_gases)
+				var/gas_level = env_gases[id][MOLES]/total_moles
+				if(gas_level > 0.01)
+					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"
 	dat += "<br>"
@@ -620,13 +626,14 @@
 
 	var/dat = "<h3>Digital Messenger</h3>"
 	dat += {"<b>Signal/Receiver Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;toggler=1'>
-	[(pda.toff) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br>
+	[(pda.toff) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br>
 	<b>Ringer Status:</b> <A href='byond://?src=\ref[src];software=pdamessage;ringer=1'>
-	[(pda.silent) ? "<font color='red'> \[Off\]</font>" : "<font color='green'> \[On\]</font>"]</a><br><br>"}
+	[(pda.silent) ? "<font color='red'>\[Off\]</font>" : "<font color='green'>\[On\]</font>"]</a><br><br>"}
 	dat += "<ul>"
 	if(!pda.toff)
-		for (var/obj/item/device/pda/P in sortAtom(get_viewable_pdas()))
-			if (P == src.pda)	continue
+		for (var/obj/item/device/pda/P in sortNames(get_viewable_pdas()))
+			if (P == src.pda)
+				continue
 			dat += "<li><a href='byond://?src=\ref[src];software=pdamessage;target=\ref[P]'>[P]</a>"
 			dat += "</li>"
 	dat += "</ul>"

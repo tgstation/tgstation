@@ -4,36 +4,73 @@
 	return
 
 // No comment
-/atom/proc/attackby(obj/item/W, mob/user)
+/atom/proc/attackby(obj/item/W, mob/user, params)
 	return
-/atom/movable/attackby(obj/item/W, mob/user)
-	if(W && !(W.flags&NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
-/mob/living/attackby(obj/item/I, mob/user)
+/obj/attackby(obj/item/I, mob/living/user, params)
+	return I.attack_obj(src, user)
+
+/mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	I.attack(src, user)
+	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
+		var/sharpness = I.is_sharp()
+		if(sharpness)
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80/sharpness))
+				harvest(user)
+			return 1
+	return I.attack(src, user)
 
-/mob/living/proc/attacked_by(var/obj/item/I, var/mob/living/user, var/def_zone)
-	apply_damage(I.force, I.damtype)
-	if(I.damtype == "brute")
-		if(prob(33) && I.force)
-			var/turf/location = src.loc
-			if(istype(location, /turf/simulated))
-				location.add_blood_floor(src)
 
-	var/showname = "."
-	if(user)
-		showname = " by [user]!"
-	if(!(user in viewers(src, null)))
-		showname = "."
+/obj/item/proc/attack(mob/living/M, mob/living/user)
+	if(flags & NOBLUDGEON)
+		return
+	if(!force)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+	else if(hitsound)
+		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
 
-	if(I.attack_verb && I.attack_verb.len)
-		src.visible_message("<span class='danger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>",
-		"<span class='userdanger'>[src] has been [pick(I.attack_verb)] with [I][showname]</span>")
-	else if(I.force)
-		src.visible_message("<span class='danger'>[src] has been attacked with [I][showname]</span>",
-		"<span class='userdanger'>[src] has been attacked with [I][showname]</span>")
+	user.lastattacked = M
+	M.lastattacker = user
+
+	M.attacked_by(src, user)
+
+	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
+	add_fingerprint(user)
+
+
+//the equivalent of the standard version of attack() but for object targets.
+/obj/item/proc/attack_obj(obj/O, mob/living/user)
+	if(flags & NOBLUDGEON)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(O)
+	O.attacked_by(src, user)
+
+
+
+/atom/movable/proc/attacked_by()
+	return
+
+/obj/attacked_by(obj/item/I, mob/living/user)
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", "<span class='danger'>You hit [src] with [I]!</span>")
+
+/mob/living/attacked_by(obj/item/I, mob/living/user)
+	if(user != src)
+		user.do_attack_animation(src)
+	if(send_item_attack_message(I, user))
+		if(apply_damage(I.force, I.damtype))
+			if(I.damtype == BRUTE)
+				if(prob(33))
+					I.add_mob_blood(src)
+					var/turf/location = get_turf(src)
+					add_splatter_floor(location)
+					if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
+						user.add_mob_blood(src)
+	return TRUE
+
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -41,30 +78,36 @@
 	return
 
 
-obj/item/proc/get_clamped_volume()
-	if(src.force && src.w_class)
-		return Clamp((src.force + src.w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
-	else if(!src.force && src.w_class)
-		return Clamp(src.w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+/obj/item/proc/get_clamped_volume()
+	if(w_class)
+		if(force)
+			return Clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+		else
+			return Clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
+/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
+	var/message_verb = "attacked"
+	if(I.attack_verb && I.attack_verb.len)
+		message_verb = "[pick(I.attack_verb)]"
+	else if(!I.force)
+		return 0
+	var/message_hit_area = ""
+	if(hit_area)
+		message_hit_area = " in the [hit_area]"
 
-	if (!istype(M)) // not sure if this is the right thing...
-		return
-
-	if (hitsound && force > 0) //If an item's hitsound is defined and the item's force is greater than zero...
-		playsound(loc, hitsound, get_clamped_volume(), 1, -1) //...play the item's hitsound at get_clamped_volume() with varying frequency and -1 extra range.
-	else if (force == 0)//Otherwise, if the item's force is zero...
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)//...play tap.ogg at get_clamped_volume()
-	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
-
-	add_logs(user, M, "attacked", object=src.name, addition="(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-
-	//spawn(1800)            // this wont work right
-	//	M.lastattacker = null
-	/////////////////////////
-	M.attacked_by(src, user, def_zone)
-	add_fingerprint(user)
+	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
+	if(user in viewers(src, null))
+		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
+	visible_message("<span class='danger'>[attack_message]</span>",
+		"<span class='userdanger'>[attack_message]</span>")
 	return 1
+
+/mob/living/simple_animal/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
+	if(!I.force)
+		user.visible_message("<span class='warning'>[user] gently taps [src] with [I].</span>",\
+						"<span class='warning'>This weapon is ineffective, it does no damage!</span>")
+	else if(I.force < force_threshold || I.damtype == STAMINA)
+		visible_message("<span class='warning'>[I] bounces harmlessly off of [src].</span>",\
+					"<span class='warning'>[I] bounces harmlessly off of [src]!</span>")
+	else
+		return ..()

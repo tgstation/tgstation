@@ -11,8 +11,8 @@
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 
-	redcoat
-		item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
+/obj/item/clothing/shoes/sneakers/black/redcoat
+	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/brown
 	name = "brown shoes"
@@ -20,18 +20,23 @@
 	icon_state = "brown"
 	item_color = "brown"
 
-	captain
-		item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
-	hop
-		item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
-	ce
-		item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
-	rd
-		item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
-	cmo
-		item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
+/obj/item/clothing/shoes/sneakers/brown/captain
+	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/hop
+	item_color = "hop"		//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/ce
+	item_color = "chief"		//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/rd
+	item_color = "director"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/cmo
+	item_color = "medical"	//Exists for washing machines. Is not different from brown shoes in any way.
+
+/obj/item/clothing/shoes/sneakers/brown/qm
+	item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
 /obj/item/clothing/shoes/sneakers/blue
 	name = "blue shoes"
@@ -81,19 +86,21 @@
 	icon_state = "orange"
 	item_color = "orange"
 
-/obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user as mob)
+/obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
 	if (src.chained)
 		src.chained = null
 		src.slowdown = SHOES_SLOWDOWN
-		new /obj/item/weapon/handcuffs( user.loc )
+		new /obj/item/weapon/restraints/handcuffs( user.loc )
 		src.icon_state = "orange"
 	return
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(H as obj, loc)
+/obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
-	if ((istype(H, /obj/item/weapon/handcuffs) && !( src.chained )))
+	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
 		//H = null
 		if (src.icon_state != "orange") return
+		if(istype(H, /obj/item/weapon/restraints/handcuffs/cable))
+			return 0
 		qdel(H)
 		src.chained = 1
 		src.slowdown = 15
@@ -104,6 +111,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && src.chained == 1)
-			user << "<span class='notice'>You need help taking these off!</span>"
+			user << "<span class='warning'>You need help taking these off!</span>"
 			return
 	..()

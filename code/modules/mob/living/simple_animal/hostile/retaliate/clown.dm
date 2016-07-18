@@ -9,12 +9,11 @@
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
-	response_harm = "hits"
+	response_harm = "robusts"
 	speak = list("HONK", "Honk!", "Welcome to clown planet!")
-	emote_see = list("honks")
+	emote_see = list("honks", "squeaks")
 	speak_chance = 1
 	a_intent = "harm"
-	stop_automated_movement_when_pulled = 0
 	maxHealth = 75
 	health = 75
 	speed = 0
@@ -24,17 +23,20 @@
 	attacktext = "attacks"
 	attack_sound = 'sound/items/bikehorn.ogg'
 	environment_smash = 0
+	del_on_death = 1
+	loot = list(/obj/effect/mob_spawn/human/corpse/clown)
 
-	min_oxy = 5
-	max_oxy = 0
-	min_tox = 0
-	max_tox = 1
-	min_co2 = 0
-	max_co2 = 5
-	min_n2 = 0
-	max_n2 = 0
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
-	heat_damage_per_tick = 15	//amount of damage applied if animal's body temperature is higher than maxbodytemp
-	cold_damage_per_tick = 10	//same as heat_damage_per_tick, only if the bodytemperature it's lower than minbodytemp
-	unsuitable_atoms_damage = 10
+	unsuitable_atmos_damage = 10
+
+/mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
+	if(bodytemperature < minbodytemp)
+		adjustBruteLoss(10)
+	else if(bodytemperature > maxbodytemp)
+		adjustBruteLoss(15)
+
+/mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/M)
+	..()
+	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)

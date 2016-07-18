@@ -5,7 +5,7 @@
 #define AIRLOCK_STATE_DEPRESSURIZE	1
 #define AIRLOCK_STATE_OUTOPEN		2
 
-datum/computer/file/embedded_program/airlock_controller
+/datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
@@ -17,7 +17,7 @@ datum/computer/file/embedded_program/airlock_controller
 	var/target_state = AIRLOCK_STATE_CLOSED
 	var/sensor_pressure = null
 
-datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
+/datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal, receive_method, receive_param)
 	var/receive_tag = signal.data["tag"]
 	if(!receive_tag) return
 
@@ -45,7 +45,7 @@ datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/sig
 				else
 					target_state = AIRLOCK_STATE_INOPEN
 
-datum/computer/file/embedded_program/airlock_controller/receive_user_command(command)
+/datum/computer/file/embedded_program/airlock_controller/receive_user_command(command)
 	switch(command)
 		if("cycle_closed")
 			target_state = AIRLOCK_STATE_CLOSED
@@ -56,7 +56,7 @@ datum/computer/file/embedded_program/airlock_controller/receive_user_command(com
 		if("abort")
 			target_state = AIRLOCK_STATE_CLOSED
 
-datum/computer/file/embedded_program/airlock_controller/process()
+/datum/computer/file/embedded_program/airlock_controller/process()
 	var/process_again = 1
 	while(process_again)
 		process_again = 0
@@ -201,7 +201,7 @@ datum/computer/file/embedded_program/airlock_controller/process()
 	return 1
 
 
-obj/machinery/embedded_controller/radio/airlock_controller
+/obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 
@@ -219,7 +219,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	var/sensor_tag
 	var/sanitize_external
 
-obj/machinery/embedded_controller/radio/airlock_controller/initialize()
+/obj/machinery/embedded_controller/radio/airlock_controller/initialize()
 	..()
 
 	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
@@ -234,7 +234,7 @@ obj/machinery/embedded_controller/radio/airlock_controller/initialize()
 	new_prog.master = src
 	program = new_prog
 
-obj/machinery/embedded_controller/radio/airlock_controller/update_icon()
+/obj/machinery/embedded_controller/radio/airlock_controller/update_icon()
 	if(on && program)
 		if(program.memory["processing"])
 			icon_state = "airlock_control_process"
@@ -244,7 +244,7 @@ obj/machinery/embedded_controller/radio/airlock_controller/update_icon()
 		icon_state = "airlock_control_off"
 
 
-obj/machinery/embedded_controller/radio/airlock_controller/return_text()
+/obj/machinery/embedded_controller/radio/airlock_controller/return_text()
 	var/state_options = null
 
 	var/state = 0
@@ -283,10 +283,10 @@ obj/machinery/embedded_controller/radio/airlock_controller/return_text()
 <div class='statusDisplay'>
 <div class='line'><div class='statusLabel'>Current Status:</div><div class='statusValue'>[current_status]</div></div>
 <div class='line'>&nbsp;</div>
-<div class='line'><div class='statusLabel'> \> Chamber Pressure:</div><div class='statusValue'>[sensor_pressure] kPa</div></div>
-<div class='line'><div class='statusLabel'> \> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
-<div class='line'><div class='statusLabel'> \> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
-<div class='line'><div class='statusLabel'> \> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Chamber Pressure:</div><div class='statusValue'>[sensor_pressure] kPa</div></div>
+<div class='line'><div class='statusLabel'>\> Control Pump:</div><div class='statusValue'>[pump_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Interior Door:</div><div class='statusValue'>[interior_status]</div></div>
+<div class='line'><div class='statusLabel'>\> Exterior Door:</div><div class='statusValue'>[exterior_status]</div></div>
 </div>
 [state_options]"}
 

@@ -1,12 +1,10 @@
 /datum/game_mode/meteor
 	name = "meteor"
 	config_tag = "meteor"
-	var/const/meteordelay = 2000
-	var/nometeors = 1
+	var/meteordelay = 2000
+	var/nometeors = 0
+	var/rampupdelta = 5
 	required_players = 0
-
-	uplink_welcome = "EVIL METEOR Uplink Console:"
-	uplink_uses = 10
 
 
 /datum/game_mode/meteor/announce()
@@ -14,44 +12,45 @@
 	world << "<B>The space station has been stuck in a major meteor shower. You must escape from the station or at least live.</B>"
 
 
-/datum/game_mode/meteor/post_setup()
-//	defer_powernet_rebuild = 2//Might help with the lag
-	spawn(meteordelay)
-		nometeors = 0
-	..()
-
-
 /datum/game_mode/meteor/process()
-	if(nometeors) return
-	/*if(prob(80))
-		spawn()
-			dust_swarm("norm")
-	else
-		spawn()
-			dust_swarm("strong")*/
-	spawn() spawn_meteors(6)
+	if(nometeors || meteordelay > world.time - round_start_time) 
+		return
+	
+	var/list/wavetype = meteors_normal
+	var/meteorminutes = (world.time - round_start_time - meteordelay) / 10 / 60
+	
+	
+	if (prob(meteorminutes))
+		wavetype = meteors_threatening
+
+	if (prob(meteorminutes/2))
+		wavetype = meteors_catastrophic
+
+	var/ramp_up_final = Clamp(round(meteorminutes/rampupdelta), 1, 10)
+
+	spawn_meteors(ramp_up_final, wavetype)
 
 
 /datum/game_mode/meteor/declare_completion()
 	var/text
 	var/survivors = 0
+
 	for(var/mob/living/player in player_list)
 		if(player.stat != DEAD)
-			var/turf/location = get_turf(player.loc)
-			if(!location)	continue
-			switch(location.loc.type)
-				if( /area/shuttle/escape/centcom )
-					text += "<br><b><font size=2>[player.real_name] escaped on the emergency shuttle</font></b>"
-				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod4/centcom )
-					text += "<br><font size=2>[player.real_name] escaped in a life pod.</font>"
-				else
-					text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
-			survivors++
+			++survivors
+
+			if(player.onCentcom())
+				text += "<br><b><font size=2>[player.real_name] escaped to the safety of Centcom.</font></b>"
+			else if(player.onSyndieBase())
+				text += "<br><b><font size=2>[player.real_name] escaped to the (relative) safety of Syndicate Space.</font></b>"
+			else
+				text += "<br><font size=1>[player.real_name] survived but is stranded without any hope of rescue.</font>"
+
 
 	if(survivors)
-		world << "\blue <B>The following survived the meteor storm</B>:[text]"
+		world << "<span class='boldnotice'>The following survived the meteor storm</span>:[text]"
 	else
-		world << "\blue <B>Nobody survived the meteor storm!</B>"
+		world << "<span class='boldnotice'>Nobody survived the meteor storm!</span>"
 
 	feedback_set_details("round_end_result","end - evacuation")
 	feedback_set("round_end_result",survivors)

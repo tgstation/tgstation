@@ -20,6 +20,31 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 var/intercom_range_display_status = 0
 
+var/list/admin_verbs_debug_mapping = list(
+	/client/proc/do_not_use_these, 			//-errorage
+	/client/proc/camera_view, 				//-errorage
+	/client/proc/sec_camera_report, 		//-errorage
+	/client/proc/intercom_view, 			//-errorage
+	/client/proc/air_status, //Air things
+	/client/proc/Cell, //More air things
+	/client/proc/atmosscan, //check plumbing
+	/client/proc/powerdebug, //check power
+	/client/proc/count_objects_on_z_level,
+	/client/proc/count_objects_all,
+	/client/proc/cmd_assume_direct_control,	//-errorage
+	/client/proc/startSinglo,
+	/client/proc/set_server_fps,	//allows you to set the ticklag.
+	/client/proc/cmd_admin_grantfullaccess,
+	/client/proc/cmd_admin_areatest,
+	/client/proc/cmd_admin_rejuvenate,
+	/datum/admins/proc/show_traitor_panel,
+	/client/proc/disable_communication,
+	/client/proc/print_pointers,
+	/client/proc/cmd_show_at_list,
+	/client/proc/cmd_show_at_list,
+	/client/proc/manipulate_organs
+)
+
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "yellow"
@@ -58,7 +83,7 @@ var/intercom_range_display_status = 0
 	set category = "Mapping"
 	set name = "Camera Report"
 
-	if(!master_controller)
+	if(!Master)
 		alert(usr,"Master_controller not found.","Sec Camera Report")
 		return 0
 
@@ -114,59 +139,37 @@ var/intercom_range_display_status = 0
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_show_at_list()
+	set category = "Mapping"
+	set name = "Show roundstart AT list"
+	set desc = "Displays a list of active turfs coordinates at roundstart"
+
+	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
+	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+
+	for(var/i=1; i<=active_turfs_startlist.len; i++)
+		dat += active_turfs_startlist[i]
+		dat += "<br>"
+
+	usr << browse(dat, "window=at_list")
+
+	feedback_add_details("admin_verb","mATL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
-	set name = "Debug verbs"
+	set name = "Debug verbs - Enable"
+	if(!check_rights(R_DEBUG))
+		return
+	verbs -= /client/proc/enable_debug_verbs
+	verbs.Add(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
+	feedback_add_details("admin_verb","mDVE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	if(!check_rights(R_DEBUG)) return
-
-	src.verbs += /client/proc/do_not_use_these 			//-errorage
-	src.verbs += /client/proc/camera_view 				//-errorage
-	src.verbs += /client/proc/sec_camera_report 		//-errorage
-	src.verbs += /client/proc/intercom_view 			//-errorage
-	src.verbs += /client/proc/air_status //Air things
-	src.verbs += /client/proc/Cell //More air things
-	src.verbs += /client/proc/atmosscan //check plumbing
-	src.verbs += /client/proc/powerdebug //check power
-	src.verbs += /client/proc/count_objects_on_z_level
-	src.verbs += /client/proc/count_objects_all
-	src.verbs += /client/proc/cmd_assume_direct_control	//-errorage
-	src.verbs += /client/proc/startSinglo
-	src.verbs += /client/proc/ticklag	//allows you to set the ticklag.
-	src.verbs += /client/proc/cmd_admin_grantfullaccess
-	src.verbs += /client/proc/kaboom
-	src.verbs += /client/proc/cmd_admin_areatest
-	src.verbs += /client/proc/cmd_admin_rejuvenate
-	src.verbs += /datum/admins/proc/show_traitor_panel
-	src.verbs += /client/proc/print_jobban_old
-	src.verbs += /client/proc/print_jobban_old_filter
-	src.verbs += /client/proc/forceEvent
-	src.verbs += /client/proc/kill_pipe_processing
-	src.verbs += /client/proc/kill_air_processing
-	src.verbs += /client/proc/disable_communication
-	src.verbs += /client/proc/disable_movement
-	src.verbs += /client/proc/print_pointers
-	src.verbs += /client/proc/count_movable_instances
-	src.verbs += /client/proc/SDQL2_query
-	src.verbs += /client/proc/cmd_display_del_log
-	//src.verbs += /client/proc/cmd_admin_rejuvenate
-
-	feedback_add_details("admin_verb","mDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/count_movable_instances()
+/client/proc/disable_debug_verbs()
 	set category = "Debug"
-	set name = "Count Movable Instances"
-
-	var/count = 0;
-
-	// Apparently there's a BYOND limit on the number of instances for non-turfs.
-
-	for(var/thing in world)
-		if(isturf(thing))
-			continue
-		count++;
-	usr << "There are [count]/[MAX_FLAG] instances of non-turfs in the world."
-
+	set name = "Debug verbs - Disable"
+	verbs.Remove(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
+	verbs += /client/proc/enable_debug_verbs
+	feedback_add_details("admin_verb", "mDVD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
@@ -238,25 +241,6 @@ var/intercom_range_display_status = 0
 	world << "There are [count] objects of type [type_path] in the game world"
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/kill_pipe_processing()
-	set category = "Mapping"
-	set name = "Kill pipe processing"
-
-	pipe_processing_killed = !pipe_processing_killed
-	if(pipe_processing_killed)
-		message_admins("[src.ckey] used 'kill pipe processing', stopping all pipe processing.")
-	else
-		message_admins("[src.ckey] used 'kill pipe processing', restoring all pipe processing.")
-
-/client/proc/kill_air_processing()
-	set category = "Mapping"
-	set name = "Kill air processing"
-
-	air_processing_killed = !air_processing_killed
-	if(air_processing_killed)
-		message_admins("[src.ckey] used 'kill air processing', stopping all air processing.")
-	else
-		message_admins("[src.ckey] used 'kill air processing', restoring all air processing.")
 
 //This proc is intended to detect lag problems relating to communication procs
 var/global/say_disabled = 0
@@ -269,17 +253,3 @@ var/global/say_disabled = 0
 		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
 		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
-
-//This proc is intended to detect lag problems relating to movement
-var/global/movement_disabled = 0
-var/global/movement_disabled_exception //This is the client that calls the proc, so he can continue to run around to gauge any change to lag.
-/client/proc/disable_movement()
-	set category = "Mapping"
-	set name = "Disable all movement"
-
-	movement_disabled = !movement_disabled
-	if(movement_disabled)
-		message_admins("[src.ckey] used 'Disable all movement', killing all movement.")
-		movement_disabled_exception = usr.ckey
-	else
-		message_admins("[src.ckey] used 'Disable all movement', restoring all movement.")

@@ -8,6 +8,7 @@
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
+	speed_process = 1
 
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
@@ -18,7 +19,7 @@
 		else
 			qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(user as mob)
+/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
 
 	var/obj/item/stack/sheet/s
 	var/dat
@@ -61,7 +62,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()

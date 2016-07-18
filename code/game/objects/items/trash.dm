@@ -2,7 +2,8 @@
 /obj/item/trash
 	icon = 'icons/obj/janitor.dmi'
 	desc = "This is rubbish."
-	w_class = 1.0
+	w_class = 1
+	burn_state = FLAMMABLE
 
 /obj/item/trash/raisins
 	name = "\improper 4no raisins"
@@ -33,16 +34,13 @@
 	icon_state = "syndi_cakes"
 
 /obj/item/trash/waffles
-	name = "waffles"
+	name = "waffles tray"
 	icon_state = "waffles"
 
 /obj/item/trash/plate
 	name = "plate"
 	icon_state = "plate"
-
-/obj/item/trash/snack_bowl
-	name = "snack bowl"
-	icon_state	= "snack_bowl"
+	burn_state = FIRE_PROOF
 
 /obj/item/trash/pistachios
 	name = "pistachios pack"
@@ -55,6 +53,7 @@
 /obj/item/trash/tray
 	name = "tray"
 	icon_state = "tray"
+	burn_state = FIRE_PROOF
 
 /obj/item/trash/candle
 	name = "candle"
@@ -64,6 +63,7 @@
 /obj/item/trash/can
 	name = "crushed can"
 	icon_state = "cola"
+	burn_state = FIRE_PROOF
 
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

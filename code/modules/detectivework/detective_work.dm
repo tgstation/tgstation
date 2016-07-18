@@ -1,15 +1,15 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
-atom/var/list/suit_fibers
+/atom/var/list/suit_fibers
 
-atom/proc/add_fibers(mob/living/carbon/human/M)
+/atom/proc/add_fibers(mob/living/carbon/human/M)
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood(G.bloody_hands_mob)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood(G.blood_DNA)) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
-		if(add_blood(M.bloody_hands_mob))
+		if(add_blood(M.blood_DNA))
 			M.bloody_hands--
 	if(!suit_fibers) suit_fibers = list()
 	var/fibertext
@@ -47,87 +47,62 @@ atom/proc/add_fibers(mob/living/carbon/human/M)
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 
-/atom/proc/add_hiddenprint(mob/living/M as mob)
-	if(isnull(M)) return
-	if(isnull(M.key)) return
+
+/atom/proc/add_hiddenprint(mob/living/M)
+	if(!M || !M.key)
+		return
+
+	if(!fingerprintshidden) //Add the list if it does not exist
+		fingerprintshidden = list()
+
+	var/hasgloves = ""
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!istype(H.dna, /datum/dna))
-			return 0
 		if(H.gloves)
-			if(fingerprintslast != H.ckey)
-				fingerprintshidden += text("\[[time_stamp()]\] (Wearing gloves). Real name: [], Key: []",H.real_name, H.key)
-				fingerprintslast = H.ckey
-			return 0
-		if(!( fingerprints ))
-			if(fingerprintslast != H.ckey)
-				fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",H.real_name, H.key)
-				fingerprintslast = H.ckey
-			return 1
+			hasgloves = "(gloves)"
+
+	var/current_time = time_stamp()
+	if(!fingerprintshidden[M.key])
+		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]."
 	else
-		if(fingerprintslast != M.ckey)
-			fingerprintshidden += text("\[[time_stamp()]\] Real name: [], Key: []",M.real_name, M.key)
-			fingerprintslast = M.ckey
-	return
+		var/laststamppos = findtext(fingerprintshidden[M.key], " Last: ")
+		if(laststamppos)
+			fingerprintshidden[M.key] = copytext(fingerprintshidden[M.key], 1, laststamppos)
+		fingerprintshidden[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]."
+
+	fingerprintslast = M.ckey
+
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
-/atom/proc/add_fingerprint(mob/living/M as mob, ignoregloves = 0)
-	if(isnull(M)) return
-	if(isnull(M.key)) return
+/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
+	if(!M || !M.key)
+		return
+
+	add_hiddenprint(M)
+
 	if(ishuman(M))
-		//Add the list if it does not exist.
-		if(!fingerprintshidden)
-			fingerprintshidden = list()
-
-		//Fibers~
-		add_fibers(M)
-
-		//Now, lets get to the dirty work.
-		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
-		check_dna_integrity(H)	//sets up dna and its variables if it was missing somehow
 
-		//Now, deal with gloves.
-		if(!ignoregloves)
-			if(H.gloves && H.gloves != src)
-				if(fingerprintslast != H.ckey)
-					fingerprintshidden += text("\[[]\](Wearing gloves). Real name: [], Key: []",time_stamp(), H.real_name, H.key)
-					fingerprintslast = H.ckey
-				H.gloves.add_fingerprint(M)
+		add_fibers(H)
 
-			//Deal with gloves the pass finger/palm prints.
-			if(H.gloves != src)
-				if(prob(75) && istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
-				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
-					return 0
+		if(H.gloves) //Check if the gloves (if any) hide fingerprints
+			var/obj/item/clothing/gloves/G = H.gloves
+			if(G.transfer_prints)
+				ignoregloves = 1
 
-		//More adminstuffz
-		if(fingerprintslast != H.ckey)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)
-			fingerprintslast = H.ckey
+			if(!ignoregloves)
+				H.gloves.add_fingerprint(H, 1) //ignoregloves = 1 to avoid infinite loop.
+				return
 
-		//Make the list if it does not exist.
-		if(!fingerprints)
+		if(!fingerprints) //Add the list if it does not exist
 			fingerprints = list()
-
-		//Hash this shit.
 		var/full_print = md5(H.dna.uni_identity)
-
-		// Add the fingerprints
 		fingerprints[full_print] = full_print
 
-		return 1
-	else
-		//Smudge up dem prints some
-		if(fingerprintslast != M.ckey)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
-			fingerprintslast = M.ckey
-
-	return
 
 
-/atom/proc/transfer_fingerprints_to(var/atom/A)
+
+/atom/proc/transfer_fingerprints_to(atom/A)
 
 	// Make sure everything are lists.
 	if(!islist(A.fingerprints))
