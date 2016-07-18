@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Invoking Sevtug is less potent at long ranges, and slightly more potent if extremely close."
-  - experiment: "Invoking Sevtug now requires 3 invokers instead of 1."
