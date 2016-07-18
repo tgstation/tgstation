@@ -50,7 +50,7 @@
 			var/mob/living/carbon/human/H = speech.speaker
 			if(H.check_body_part_coverage(MOUTH)) //OR MASKS
 				return
-		ai.Hear(args) //He can only read the lips of mobs, I cant think of objects using lips
+		ai.Hear(speech, rendered_speech) //He can only read the lips of mobs, I cant think of objects using lips
 
 
 // AI MOVEMENT
