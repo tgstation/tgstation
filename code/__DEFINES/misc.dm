@@ -487,3 +487,4 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BUBBLEGUM "Bubblegum Killer"
 #define DRAKE "Drake Killer"
 #define BOSS_KILLER "Boss Killer"
+#define TENDRIL_CLEAR "Tendril Exterminator"

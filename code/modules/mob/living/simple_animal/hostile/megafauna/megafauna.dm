@@ -42,9 +42,11 @@
 			continue
 		if(L.client)
 			var/client/C = L.client
-			C.prefs.bosses_killed |= unlock_type
-			C.prefs.bosses_killed |= BOSS_KILLER
+			C.prefs.bosses_killed[unlock_type] += 1
+			C.prefs.bosses_killed[BOSS_KILLER] += 1
+			C.prefs.save_preferences()
 			L << "Achievement Unlocked: [unlock_type]"
+			L << "Achievement Unlocked: [BOSS_KILLER]"
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc

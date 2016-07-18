@@ -88,7 +88,7 @@ var/list/preferences_datums = list()
 
 	var/unlock_content = 0
 
-	var/list/bosses_killed = list()
+	var/list/bosses_killed = list(LEGION = 0, DRAKE = 0, BOSS_KILLER = 0, BUBBLEGUM = 0, COLOSSUS = 0, TENDRIL_CLEAR = 0)
 
 	var/list/ignoring = list()
 
