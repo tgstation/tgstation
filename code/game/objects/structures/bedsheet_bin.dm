@@ -176,7 +176,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/nanotrasen
 	name = "nanotrasen bedsheet"
-	desc = "It has the nanotrasen logo on it and has an auro of duty."
+	desc = "It has the Nanotrasen logo on it and has an aura of duty."
 	icon_state = "sheetNT"
 	item_color = "nanotrasen"
 
