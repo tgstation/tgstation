@@ -111,7 +111,7 @@
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
 	if(location == "mouth")
-		H.facial_hair_style = "Shaved"
+		H.change_facial_hair("Shaved")
 	else
 		H.hair_style = "Skinhead"
 

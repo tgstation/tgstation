@@ -716,9 +716,9 @@
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
 	if(gender == MALE)
-		facial_hair_style = "Full Beard"
+		change_facial_hair("Full Beard")
 	else
-		facial_hair_style = "Shaved"
+		change_facial_hair("Shaved")
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	update_body()
@@ -1078,3 +1078,26 @@
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float
 	..()
+
+/mob/living/carbon/human/proc/change_facial_hair(var/new_facial_hair)
+	if(facial_hair_effect)
+		for(var/ckey in preferences_datums)
+			var/datum/preferences/P = preferences_datums[ckey]
+			if(P.spawn_mob_ref == "\ref[src]")
+				var/datum/sprite_accessory/facial_hair/beard = facial_hair_styles_list[P.beard_level_beard]
+				var/datum/sprite_accessory/facial_hair/new_beard = facial_hair_styles_list[new_facial_hair]
+				if(beard && new_beard)
+					var/character_slot = P.characters_spawned[P.characters_spawned.len]
+					P.load_consecutive_rounds(character_slot)
+					if(new_beard.beard_level > P.beard_level)
+						P.beard_level = 0
+						P.beard_level_beard = "Shaved"
+						facial_hair_effect = null
+						src << "<span class='notice'>As your facial hair changes, the surface of your face starts to feel extremely boring. You feel an inescapable urge to shave it off when you get back home.</span>"
+					else
+						if(new_beard.beard_level < beard.beard_level)
+							P.beard_level = new_beard.beard_level
+						P.beard_level_beard = new_facial_hair
+					P.save_consecutive_rounds(character_slot)
+				break
+	facial_hair_style = new_facial_hair

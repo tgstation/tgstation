@@ -352,6 +352,8 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/proc/declare_completion()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
+	var/list/survivors = list()
+	var/list/escapees = list()
 	var/num_survivors = 0
 	var/num_escapees = 0
 
@@ -361,17 +363,48 @@ var/datum/subsystem/ticker/ticker
 	for(var/mob/Player in mob_list)
 		if(Player.mind && !isnewplayer(Player))
 			if(Player.stat != DEAD && !isbrain(Player))
-				num_survivors++
+				survivors += Player
 				if(station_evacuated) //If the shuttle has already left the station
 					if(!Player.onCentcom() && !Player.onSyndieBase())
 						Player << "<font color='blue'><b>You managed to survive, but were marooned on [station_name()]...</b></FONT>"
 					else
-						num_escapees++
+						escapees += Player
 						Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 				else
 					Player << "<font color='green'><b>You managed to survive the events on [station_name()] as [Player.real_name].</b></FONT>"
 			else
 				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
+
+	num_survivors = survivors.len
+	num_escapees = escapees.len
+
+	for(var/ckey in preferences_datums)
+		var/datum/preferences/P = preferences_datums[ckey]
+		if(P.characters_spawned.len)
+			var/survived = FALSE
+			for(var/survivor in (station_evacuated ? escapees : survivors))
+				if("\ref[survivor]" == P.spawn_mob_ref)
+					var/slot = P.characters_spawned[P.characters_spawned.len]
+					P.load_consecutive_rounds(slot)
+					survived = TRUE
+					if(P.beard_level_enabled)
+						P.beard_level++
+					P.consecutive_rounds_survived++
+					P.save_consecutive_rounds(slot)
+					break
+			var/spawned_chars_num = P.characters_spawned.len
+			var/list/reset_chars = P.characters_spawned.Copy(1, (spawned_chars_num+(survived ? 0 : 1)))
+			var/old_beard_level = P.beard_level
+			var/old_consecutive_rounds_survived = P.consecutive_rounds_survived
+			for(var/character in reset_chars)
+				P.load_consecutive_rounds(character)
+				P.beard_level = 0
+				P.consecutive_rounds_survived = 0
+				P.beard_level_beard = "Shaved"
+				P.save_consecutive_rounds(character)
+			if(survived)
+				P.beard_level = old_beard_level
+				P.consecutive_rounds_survived = old_consecutive_rounds_survived
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()

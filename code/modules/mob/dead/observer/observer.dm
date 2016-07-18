@@ -57,10 +57,10 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 
 /mob/dead/observer/New(mob/body)
 	verbs += /mob/dead/observer/proc/dead_tele
-	
+
 	if(global.cross_allowed)
 		verbs += /mob/dead/observer/proc/server_hop
-	
+
 	ghostimage = image(src.icon,src,src.icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -183,7 +183,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
 			S = facial_hair_styles_list[facial_hair_style]
-			if(S)
+			if(S && S.icon_state)
 				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
@@ -192,7 +192,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
-			if(S)
+			if(S && S.icon_state)
 				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 				if(hair_color)
 					hair_image.color = "#" + hair_color
@@ -563,7 +563,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set desc= "Jump to the other server"
 	if (alert(src, "Jump to server running at [global.cross_address]?", "Server Hop", "Yes", "No") != "Yes")
 		return 0
-	if (client && global.cross_allowed) 
+	if (client && global.cross_allowed)
 		src << "<span class='notice'>Sending you to [global.cross_address].</span>"
 		winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 		client << link(global.cross_address)

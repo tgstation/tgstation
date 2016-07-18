@@ -295,6 +295,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2)		//fatal, can't load any data
 		return 0
 
+	load_consecutive_rounds(slot, S)
+
 	//Species
 	var/species_id
 	S["species"]			>> species_id
@@ -321,6 +323,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["skin_tone"]			>> skin_tone
 	S["hair_style_name"]	>> hair_style
 	S["facial_style_name"]	>> facial_hair_style
+	S["beard_level_enabled"] >> beard_level_enabled
+	S["facial_hair_effect"] >> facial_hair_effect
 	S["underwear"]			>> underwear
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
@@ -381,6 +385,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
 		underwear		= sanitize_inlist(underwear, underwear_f)
 		undershirt		= sanitize_inlist(undershirt, undershirt_f)
+	facial_hair_effect = sanitize_inlist(facial_hair_effect, facial_hair_effects)
+	beard_level_enabled = sanitize_integer(beard_level_enabled, 0, 1, initial(beard_level_enabled))
 	socks			= sanitize_inlist(socks, socks_list)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
@@ -434,6 +440,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["skin_tone"]			<< skin_tone
 	S["hair_style_name"]	<< hair_style
 	S["facial_style_name"]	<< facial_hair_style
+	S["facial_style_name"]	<< facial_hair_style
+	S["beard_level_enabled"] << beard_level_enabled
+	S["facial_hair_effect"] << facial_hair_effect
 	S["underwear"]			<< underwear
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
@@ -469,6 +478,52 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return 1
 
+/datum/preferences/proc/get_consecutive_rounds_savefile(slot, savefile/S)
+	if(!path)
+		return 0
+	if(!S)
+		S = new /savefile(path)
+	if(!S)
+		return 0
+	if(!slot)
+		slot = default_slot
+	slot = sanitize_integer(slot, 1, max_save_slots, FALSE)
+	if(!slot)
+		return 0
+	S.cd = "/character[slot]"
+	return S
+
+/datum/preferences/proc/save_consecutive_rounds(slot, savefile/S)
+	S = get_consecutive_rounds_savefile(slot, S)
+	if(!S)
+		return 0
+
+	S["consecutive_rounds_survived"] << consecutive_rounds_survived
+	S["beard_level"] << beard_level
+	S["beard_level_beard"] << beard_level_beard
+
+	return 1
+
+#define POSITIVE_OR_ZERO(num) ((isnum(num) && (num >= 1)) ? num : 0)
+
+/datum/preferences/proc/load_consecutive_rounds(slot, savefile/S)
+	if(path && (!fexists(path)))
+		return 0
+	S = get_consecutive_rounds_savefile(slot, S)
+	if(!S)
+		return 0
+
+	S["consecutive_rounds_survived"] >> consecutive_rounds_survived
+	S["beard_level"] >> beard_level
+	S["beard_level_beard"] >> beard_level_beard
+
+	consecutive_rounds_survived = round(POSITIVE_OR_ZERO(consecutive_rounds_survived))
+	beard_level = round(POSITIVE_OR_ZERO(beard_level))
+	beard_level_beard = sanitize_inlist(beard_level_beard, facial_hair_styles_list, "Shaved")
+
+	return 1
+
+#undef POSITIVE_OR_ZERO
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

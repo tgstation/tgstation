@@ -412,6 +412,9 @@
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(new_character)
+	if(!(mind.assigned_role in nonhuman_positions))
+		client.prefs.spawn_mob_ref = "\ref[new_character]"
+		client.prefs.characters_spawned += client.prefs.default_slot
 	new_character.dna.update_dna_identity()
 	if(mind)
 		mind.active = 0					//we wish to transfer the key manually

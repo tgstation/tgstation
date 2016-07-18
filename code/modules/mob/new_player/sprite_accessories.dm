@@ -33,7 +33,7 @@
 				continue
 		var/datum/sprite_accessory/D = new path()
 
-		if(D.icon_state)
+		if(D.name)
 			L[D.name] = D
 		else
 			L += D.name
@@ -495,14 +495,20 @@
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
+
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human_face.dmi'
-	gender = MALE // barf (unless you're a dorf, dorfs dig chix w/ beards :P)
+	gender = MALE
+	var/beard_level = 5
+	var/grow_beard = FALSE
+	var/list/effect_cache = list()
 
 /datum/sprite_accessory/facial_hair/shaved
 	name = "Shaved"
 	icon_state = null
 	gender = NEUTER
+	beard_level = 0
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -527,22 +533,29 @@
 /datum/sprite_accessory/facial_hair/neckbeard
 	name = "Neckbeard"
 	icon_state = "facial_neckbeard"
+	beard_level = 7
 
 /datum/sprite_accessory/facial_hair/fullbeard
 	name = "Full Beard"
 	icon_state = "facial_fullbeard"
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/longbeard
 	name = "Long Beard"
 	icon_state = "facial_longbeard"
+	beard_level = 7
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/vlongbeard
 	name = "Very Long Beard"
 	icon_state = "facial_wise"
+	beard_level = 10
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/elvis
 	name = "Elvis Sideburns"
 	icon_state = "facial_elvis"
+	beard_level = 5
 
 /datum/sprite_accessory/facial_hair/abe
 	name = "Abraham Lincoln Beard"
@@ -567,14 +580,42 @@
 /datum/sprite_accessory/facial_hair/dwarf
 	name = "Dwarf Beard"
 	icon_state = "facial_dwarf"
+	beard_level = 13
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/fiveoclock
 	name = "Five o Clock Shadow"
 	icon_state = "facial_fiveoclock"
+	beard_level = 3
+	grow_beard = TRUE
 
 /datum/sprite_accessory/facial_hair/fu
 	name = "Fu Manchu"
 	icon_state = "facial_fumanchu"
+
+///////////////////////////////
+// Beard Effects Definitions //
+///////////////////////////////
+
+/datum/sprite_accessory/beard_effect
+	icon = 'icons/effects/effects.dmi'
+
+/datum/sprite_accessory/beard_effect/rainbow
+	name = "Rainbow"
+	icon_state = "rainbow"
+
+/datum/sprite_accessory/beard_effect/shadow
+	name = "Shadow"
+	icon_state = "bhole3"
+
+/datum/sprite_accessory/beard_effect/electric
+	name = "Electric"
+	icon_state = "electricity"
+
+/datum/sprite_accessory/beard_effect/fire
+	name = "Blaze"
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "3"
 
 ///////////////////////////
 // Underwear Definitions //

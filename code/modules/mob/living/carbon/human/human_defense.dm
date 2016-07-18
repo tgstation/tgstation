@@ -243,7 +243,7 @@
 			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
 				affecting.take_damage(acidity, 2*acidity)
 				emote("scream")
-				facial_hair_style = "Shaved"
+				change_facial_hair("Shaved")
 				hair_style = "Bald"
 				update_hair()
 				status_flags |= DISFIGURED

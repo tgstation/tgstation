@@ -197,8 +197,26 @@
 
 	if(H.facial_hair_style && (FACEHAIR in specflags) && !facialhair_hidden)
 		S = facial_hair_styles_list[H.facial_hair_style]
-		if(S)
+		if(S && S.icon_state)
 			var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
+
+			if(H.facial_hair_effect)
+
+				var/datum/sprite_accessory/facial_hair/B = S
+				var/datum/sprite_accessory/beard_effect/BE = facial_hair_effects[H.facial_hair_effect]
+				if(BE)
+					var/icon/icon_facial_effect = B.effect_cache[BE.name]
+					if(!icon_facial_effect)
+						var/icon/icon_facial_s = icon(img_facial_s.icon, img_facial_s.icon_state)
+						icon_facial_effect = icon(BE.icon, BE.icon_state)
+						icon_facial_effect.AddAlphaMask(icon_facial_s)
+						B.effect_cache[BE.name] = icon_facial_effect
+
+					var/image/img_facial_effect = image(icon_facial_effect)
+					img_facial_effect.appearance_flags = RESET_COLOR
+
+					img_facial_s.overlays += img_facial_effect
+
 
 			if(!forced_colour)
 				if(hair_color)
@@ -230,10 +248,8 @@
 
 		else if(H.hair_style && (HAIR in specflags))
 			S = hair_styles_list[H.hair_style]
-			if(S)
+			if(S && S.icon_state)
 				var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
-
-				img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 
 				if(!forced_colour)
 					if(hair_color)
@@ -278,12 +294,12 @@
 	//Underwear, Undershirts & Socks
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
-		if(U)
+		if(U && U.icon_state)
 			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[H.undershirt]
-		if(U2)
+		if(U2 && U2.icon_state)
 			if(H.dna.species.sexes && H.gender == FEMALE)
 				standing	+=	wear_female_version("[U2.icon_state]_s", U2.icon, BODY_LAYER)
 			else
@@ -291,7 +307,7 @@
 
 	if(H.socks && H.get_num_legs() >= 2)
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
-		if(U3)
+		if(U3 && U3.icon_state)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
 
 	if(standing.len)
@@ -386,15 +402,15 @@
 				if("tail_lizard")
 					S = tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("waggingtail_lizard")
-					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
+					S = animated_tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("tail_human")
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
-					S.= animated_tails_list_human[H.dna.features["tail_human"]]
+					S = animated_tails_list_human[H.dna.features["tail_human"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
-					S.= animated_spines_list[H.dna.features["spines"]]
+					S = animated_spines_list[H.dna.features["spines"]]
 				if("snout")
 					S = snouts_list[H.dna.features["snout"]]
 				if("frills")
@@ -410,7 +426,7 @@
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
 
-			if(!S || S.icon_state == "none")
+			if(!S || !S.icon_state || S.icon_state == "none")
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
@@ -819,7 +835,7 @@
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
 							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 							spawn(50)
-								H.facial_hair_style = "Shaved"
+								H.change_facial_hair("Shaved")
 								H.hair_style = "Bald"
 								H.update_hair()
 

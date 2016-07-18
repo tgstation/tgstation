@@ -42,7 +42,7 @@ BONUS
 					if(!(H.facial_hair_style == "Shaved") || !(H.hair_style == "Bald"))
 						H << "<span class='warning'>Your hair starts to fall out in clumps...</span>"
 						spawn(50)
-							H.facial_hair_style = "Shaved"
+							H.change_facial_hair("Shaved")
 							H.hair_style = "Bald"
 							H.update_hair()
 	return
