@@ -254,7 +254,7 @@
 		T.lighting_object = null
 	
 /atom/movable/light/New()
-	if (!loc || !isturf(loc))
+	if (!isturf(loc))
 		PutOut()
 		throw EXCEPTION("Invalid light placement: loc must be a turf")
 	var/turf/T = loc
