@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Belligerent is now chanted more often."
+  - experiment: "Taunting Tirade now weakens nearby nonservants, but is now only invoked once every 6 seconds(1 second chant, 5 second flee time) and is only chanted five times."
