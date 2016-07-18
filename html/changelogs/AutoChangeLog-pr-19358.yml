@@ -1,0 +1,6 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscdel: "The shuttle can now leave while a celestial gateway exists."
+  - rscadd: "If the shuttle docks at Central Command while a celestial gateway exists, Ratvar's servants will win a minor victory. His arrival will still award a major victory."
+  - rscadd: "The celestial gateway can now take damage from explosions."
