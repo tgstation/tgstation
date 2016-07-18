@@ -299,11 +299,16 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
 			feedback_set_details("round_end_result", "win - servants summoned ratvar")
 		else
-			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
+			var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			if(!G)
+				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+				feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
+			else
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
+				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

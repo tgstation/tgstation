@@ -37,13 +37,11 @@
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
