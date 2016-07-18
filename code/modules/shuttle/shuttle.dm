@@ -194,8 +194,8 @@
 	var/last_timer_length
 
 	var/mode = SHUTTLE_IDLE			//current shuttle mode
-	var/callTime = 150				//time spent in transit (deciseconds)
-	var/ignitionTime = 100			// time spent "starting the engines"
+	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
+	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
 	var/roundstart_move				//id of port to send shuttle to at roundstart
 
 	// The direction the shuttle prefers to travel in
@@ -525,30 +525,31 @@
 		// The corresponding tile will not be changed, so no roadkill
 
 		for(var/atom/movable/AM in T1)
-			if(isliving(AM) && (!(AM in hurt_mobs)))
-				hurt_mobs |= AM
-				var/mob/living/M = AM
-				if(M.buckled)
-					M.buckled.unbuckle_mob(M, 1)
-				if(M.pulledby)
-					M.pulledby.stop_pulling()
-				M.stop_pulling()
-				M.visible_message("<span class='warning'>[M] is hit by \
-						a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
-						"<span class='userdanger'>You feel an immense \
-						crushing pressure as the space around you ripples.</span>")
-				if(M.anchored)
-					M.gib()
-				else
-					M.Paralyse(10)
-					M.ex_act(2)
-					step(M, dir)
-				continue
+			if(ismob(AM))
+				if(isliving(AM) && !(AM in hurt_mobs))
+					hurt_mobs |= AM
+					var/mob/living/M = AM
+					if(M.buckled)
+						M.buckled.unbuckle_mob(M, 1)
+					if(M.pulledby)
+						M.pulledby.stop_pulling()
+					M.stop_pulling()
+					M.visible_message("<span class='warning'>[M] is hit by \
+							a hyperspace ripple[M.anchored ? "":" and is thrown clear"]!</span>",
+							"<span class='userdanger'>You feel an immense \
+							crushing pressure as the space around you ripples.</span>")
+					if(M.anchored)
+						M.gib()
+					else
+						step(M, dir)
+						M.Paralyse(10)
+						M.ex_act(2)
 
-			if(!AM.anchored)
-				step(AM, dir)
-			else
-				qdel(AM)
+			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+				if(!AM.anchored)
+					step(AM, dir)
+				else
+					qdel(AM)
 
 //used by shuttle subsystem to check timers
 /obj/docking_port/mobile/proc/check()

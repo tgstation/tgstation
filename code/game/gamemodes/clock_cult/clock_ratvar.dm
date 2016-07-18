@@ -29,7 +29,7 @@
 	var/first_sound_played = FALSE
 	var/second_sound_played = FALSE
 	var/third_sound_played = FALSE
-	var/obj/effect/clockwork/gateway_glow/glow
+	var/obj/effect/clockwork/overlay/gateway_glow/glow
 	var/obj/effect/countdown/clockworkgate/countdown
 
 /obj/structure/clockwork/massive/celestial_gateway/New()
@@ -37,28 +37,25 @@
 	glow = new(get_turf(src))
 	countdown = new(src)
 	countdown.start()
-	SSshuttle.emergencyNoEscape = TRUE
+	SSshuttle.registerHostileEnvironment(src)
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
 	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
-	SSshuttle.emergencyNoEscape = FALSE
-	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-		SSshuttle.emergency.mode = SHUTTLE_DOCKED
-		SSshuttle.emergency.timer = world.time
-		if(!purpose_fulfilled)
-			priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+	SSshuttle.clearHostileEnvironment(src)
 	STOP_PROCESSING(SSobj, src)
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has fallen at [gate_area.map_name]!</b></span>")
 		world << sound(null, 0, channel = 8)
-	qdel(glow)
-	glow = null
-	qdel(countdown)
-	countdown = null
-	return ..()
+	if(glow)
+		qdel(glow)
+		glow = null
+	if(countdown)
+		qdel(countdown)
+		countdown = null
+	. = ..()
 
 /obj/structure/clockwork/massive/celestial_gateway/destroyed()
 	countdown.stop()
@@ -74,8 +71,8 @@
 
 /obj/structure/clockwork/massive/celestial_gateway/proc/make_glow()
 	if(!glow)
-		glow = new(get_turf(src))
-		glow.linked_gate = src
+		glow = PoolOrNew(/obj/effect/clockwork/overlay/gateway_glow, get_turf(src))
+		glow.linked = src
 
 /obj/structure/clockwork/massive/celestial_gateway/ex_act(severity)
 	return 0 //Nice try, Toxins!
@@ -146,27 +143,12 @@
 			if(GATEWAY_RATVAR_COMING to INFINITY)
 				user << "<span class='warning'><b>Something is coming through!</b></span>"
 
-/obj/effect/clockwork/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
+/obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
 	pixel_x = -32
 	pixel_y = -32
-	mouse_opacity = 0
 	layer = MASSIVE_OBJ_LAYER
-	var/obj/structure/clockwork/massive/celestial_gateway/linked_gate
-
-/obj/effect/clockwork/gateway_glow/Destroy()
-	if(linked_gate)
-		linked_gate.glow = null
-		linked_gate = null
-	return ..()
-
-/obj/effect/clockwork/gateway_glow/examine(mob/user)
-	if(linked_gate)
-		linked_gate.examine(user)
-
-/obj/effect/clockwork/gateway_glow/ex_act(severity, target)
-	return FALSE
 
 
 /obj/structure/clockwork/massive/ratvar

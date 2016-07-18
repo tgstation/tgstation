@@ -11,7 +11,10 @@
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = 1
 
-	var/timer = 60
+	var/minimum_timer = 60
+	var/timer_set = 60
+	var/maximum_timer = 60000
+
 	var/open_panel = FALSE 	//are the wires exposed?
 	var/active = FALSE		//is the bomb counting down?
 	var/defused = FALSE		//is the bomb capable of exploding?
@@ -21,22 +24,48 @@
 	var/delayedlittle  = FALSE	//activation wire pulsed?
 	var/obj/effect/countdown/syndicatebomb/countdown
 
+	var/next_beep
+	var/detonation_timer
+	var/explode_now = FALSE
+
 /obj/machinery/syndicatebomb/process()
-	if(active && !defused && (timer > 0)) 	//Tick Tock
-		var/volume = (timer <= 5 ? 50 : 2) // Tick louder when the bomb is closer to being detonated.
+	if(!active)
+		STOP_PROCESSING(SSfastprocess, src)
+		detonation_timer = null
+		next_beep = null
+		countdown.stop()
+		return
+
+	if(!isnull(next_beep) && (next_beep <= world.time))
+		var/volume
+		switch(seconds_remaining())
+			if(0 to 5)
+				volume = 50
+			if(5 to 10)
+				volume = 40
+			if(10 to 15)
+				volume = 30
+			if(15 to 20)
+				volume = 20
+			if(20 to 25)
+				volume = 10
+			else
+				volume = 5
 		playsound(loc, beepsound, volume, 0)
-		timer--
-	if(active && !defused && (timer <= 0))	//Boom
-		active = 0
-		timer = initial(timer)
+		next_beep = world.time + 10
+
+	if(active && !defused && ((detonation_timer <= world.time) || explode_now))
+		active = FALSE
+		timer_set = initial(timer_set)
 		update_icon()
 		if(payload in src)
 			payload.detonate()
-		return
-	if(!active || defused)					//Counter terrorists win
+	//Counter terrorists win
+	else if(!active || defused)
 		if(defused && payload in src)
 			payload.defuse()
 			countdown.stop()
+			STOP_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/syndicatebomb/New()
 	wires = new /datum/wires/syndicatebomb(src)
@@ -49,14 +78,24 @@
 /obj/machinery/syndicatebomb/Destroy()
 	qdel(wires)
 	wires = null
-	return ..()
+	if(countdown)
+		qdel(countdown)
+		countdown = null
+	STOP_PROCESSING(SSfastprocess, src)
+	. = ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
-	user << "A digital display on it reads \"[timer]\"."
+	user << "A digital display on it reads \"[seconds_remaining()]\"."
 
 /obj/machinery/syndicatebomb/update_icon()
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
+
+/obj/machinery/syndicatebomb/proc/seconds_remaining()
+	if(active)
+		. = max(0, round((detonation_timer - world.time) / 10))
+	else
+		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -124,9 +163,8 @@
 			user << "<span class='notice'>You cut the [src] apart.</span>"
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
-			return
 	else
-		return ..()
+		. = ..()
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
@@ -142,22 +180,27 @@
 		else if(anchored)
 			user << "<span class='warning'>The bomb is bolted to the floor!</span>"
 
+/obj/machinery/syndicatebomb/proc/activate()
+	active = TRUE
+	START_PROCESSING(SSfastprocess, src)
+	countdown.start()
+	next_beep = world.time + 10
+	detonation_timer = world.time + (timer_set * 10)
+	playsound(loc, 'sound/machines/click.ogg', 30, 1)
+
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
-	newtime = Clamp(newtime, initial(timer), 60000)
+	var/new_timer = input(user, "Please set the timer.", "Timer", "[timer_set]") as num
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
-		timer = newtime
-		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
+		timer_set = Clamp(new_timer, minimum_timer, maximum_timer)
+		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer_set] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
 				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
-			countdown.start()
-			playsound(loc, 'sound/machines/click.ogg', 30, 1)
-			active = 1
+			src.loc.visible_message("<span class='danger'>\icon[src] [timer_set] seconds until detonation, please clear the area.</span>")
+			activate()
 			update_icon()
 			add_fingerprint(user)
 
@@ -197,7 +240,7 @@
 	desc = "An ominous looking device designed to detonate an explosive payload. Can be bolted down using a wrench."
 	payload = null
 	open_panel = TRUE
-	timer = 120
+	timer_set = 120
 
 /obj/machinery/syndicatebomb/empty/New()
 	..()
@@ -475,9 +518,11 @@
 	if(timer < world.time)
 		for(var/obj/machinery/syndicatebomb/B in machines)
 			if(B.active)
-				B.timer = 0
+				B.explode_now = TRUE
 				detonated++
 			existant++
+			var/turf/T = get_turf(B)
+			world << "[COORD(T)]"
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
 		user << "<span class='notice'>[existant] found, [detonated] triggered.</span>"
 		if(detonated)

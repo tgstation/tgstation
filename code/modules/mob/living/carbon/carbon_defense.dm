@@ -18,12 +18,11 @@
 		take_organ_damage(10)
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying)
-		if(surgeries.len)
-			if(user != src && user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
+	if(lying && surgeries.len)
+		if(user != src && user.a_intent == "help")
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user))
+					return 1
 	return ..()
 
 
@@ -39,12 +38,11 @@
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
-	if(lying)
+	if(lying && surgeries.len)
 		if(user.a_intent == "help")
-			if(surgeries.len)
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user))
+					return 1
 	return 0
 
 

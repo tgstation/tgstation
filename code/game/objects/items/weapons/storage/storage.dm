@@ -27,7 +27,7 @@
 
 
 /obj/item/weapon/storage/MouseDrop(atom/over_object)
-	if(iscarbon(usr) || isdrone(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
+	if(ismob(usr)) //all the check for item manipulation are in other places, you can safely open any storages as anything and its not buggy, i checked
 		var/mob/M = usr
 
 		if(!over_object)
@@ -36,8 +36,9 @@
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 			return
 
-		if(over_object == M && Adjacent(M)) // this must come before the screen objects only block
-			orient2hud(M)					// dunno why it wasn't before
+		// this must come before the screen objects only block, dunno why it wasn't before
+		if(over_object == M && (src.ClickAccessible(M, depth=STORAGE_VIEW_DEPTH) || Adjacent(M)))
+			orient2hud(M)
 			if(M.s_active)
 				M.s_active.close(M)
 			show_to(M)
@@ -205,7 +206,7 @@
 	number = 1
 
 
-//This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
+//This proc determines the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /obj/item/weapon/storage/proc/orient2hud(mob/user)
 	var/adjusted_contents = contents.len
 

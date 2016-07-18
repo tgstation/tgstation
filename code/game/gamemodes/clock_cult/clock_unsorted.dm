@@ -20,15 +20,39 @@
 		else if(is_servant_of_ratvar(M))
 			M << message
 
-//Function Call action: Calls forth a Ratvarian spear.
+//Hierophant Network action, allows a servant with it to communicate
+/datum/action/innate/hierophant
+	name = "Hierophant Network"
+	desc = "Allows you to communicate with other Servants."
+	button_icon_state = "hierophant"
+	background_icon_state = "bg_clock"
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/title = "Servant"
+
+/datum/action/innate/hierophant/IsAvailable()
+	if(!is_servant_of_ratvar(owner))
+		return 0
+	return ..()
+
+/datum/action/innate/hierophant/Activate()
+	var/input = stripped_input(usr, "Please enter a message to send to other servants.", "Hierophant Network", "")
+	if(!input || !IsAvailable())
+		return
+
+	titled_hierophant_message(owner, input, "heavy_brass", "brass", title)
+
+//Function Call action: Calls forth a Ratvarian spear once every 5 minutes
 /datum/action/innate/function_call
 	name = "Function Call"
+	desc = "Allows you to summon a Ratvarian spear to fight enemies."
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	var/cooldown = 0
+	var/base_cooldown = 3000
 
 /datum/action/innate/function_call/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
+	if(!is_servant_of_ratvar(owner) || cooldown > world.time)
 		return 0
 	return ..()
 
@@ -36,12 +60,20 @@
 	if(owner.l_hand && owner.r_hand)
 		usr << "<span class='warning'>You need an empty to hand to call forth your spear!</span>"
 		return 0
-	owner.visible_message("<span class='warning'>A strange spear materializes in [usr]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
+	owner.visible_message("<span class='warning'>A strange spear materializes in [owner]'s hands!</span>", "<span class='brass'>You call forth your spear!</span>")
 	var/obj/item/clockwork/ratvarian_spear/R = new(get_turf(usr))
 	owner.put_in_hands(R)
-	for(var/datum/action/innate/function_call/F in owner.actions) //Removes any bound Ratvarian spears
-		qdel(F)
+	if(!ratvar_awakens)
+		owner << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
+		addtimer(R, "break_spear", 3000, FALSE)
+	cooldown = base_cooldown + world.time
+	owner.update_action_buttons_icon()
+	addtimer(src, "update_actions", base_cooldown, FALSE)
 	return 1
+
+/datum/action/innate/function_call/proc/update_actions()
+	if(owner)
+		owner.update_action_buttons_icon()
 
 //allows a mob to select a target to gate to
 /atom/movable/proc/procure_gateway(mob/living/invoker, time_duration, gateway_uses, two_way)
@@ -78,8 +110,8 @@
 		return 0
 	var/input_target_key = input(invoker, "Choose a target to form a rift to.", "Spatial Gateway") as null|anything in possible_targets
 	var/atom/movable/target = possible_targets[input_target_key]
-	if(!target || !invoker.canUseTopic(src, BE_CLOSE))
-		return 0
+	if(!src || !target || !invoker || !invoker.canUseTopic(src, BE_CLOSE) || !is_servant_of_ratvar(invoker) || (istype(src, /obj/item) && invoker.get_active_hand() != src))
+		return 0 //if any of the involved things no longer exist, the invoker is stunned, too far away to use the object, or does not serve ratvar, or if the object is an item and not in the mob's active hand, fail
 	var/istargetobelisk = istype(target, /obj/structure/clockwork/powered/clockwork_obelisk)
 	if(istargetobelisk)
 		gateway_uses *= 2
@@ -110,14 +142,14 @@
 			if(servants >= 5 && clockwork_caches)
 				return 1 //5 or more non-brain servants and any number of clockwork caches
 		if(SCRIPTURE_APPLICATION)
-			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 75)
-				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 75 CV
+			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
+				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
 		if(SCRIPTURE_REVENANT)
-			if(servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 150)
-				return 1 //10 or more non-brain servants, 4+ clockwork caches, and at least 150 CV
+			if(servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
+				return 1 //10 or more non-brain servants, 4+ clockwork caches, and at least 200 CV
 		if(SCRIPTURE_JUDGEMENT)
-			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 250 && !unconverted_ai_exists)
-				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 250 CV, and there are no living, non-servant ais
+			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 300 && !unconverted_ai_exists)
+				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 300 CV, and there are no living, non-servant ais
 	return 0
 
 /proc/scripture_unlock_alert(list/previous_states) //reports to servants when scripture is locked or unlocked
@@ -176,6 +208,12 @@
 	else
 		AM.say(message)
 	AM.languages_spoken = old_languages_spoken
+
+/proc/cache_check(mob/M)
+	if(!clockwork_caches)
+		M.throw_alert("nocache", /obj/screen/alert/nocache)
+	else
+		M.clear_alert("nocache")
 
 /*
 

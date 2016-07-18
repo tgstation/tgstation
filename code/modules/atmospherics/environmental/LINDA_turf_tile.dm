@@ -30,6 +30,8 @@
 	var/datum/gas_mixture/air
 
 	var/obj/effect/hotspot/active_hotspot
+	var/atmos_cooldown  = 0
+	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
 	var/list/atmos_overlay_types = list() //gas IDs of current active gas overlays
 
@@ -129,6 +131,9 @@
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
 	var/adjacent_turfs_length = adjacent_turfs.len
+	atmos_cooldown++
+	if (planetary_atmos)
+		adjacent_turfs_length++
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
@@ -179,6 +184,18 @@
 
 		/******************* GROUP HANDLING FINISH *********************************************************************/
 
+	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
+		var/datum/gas_mixture/G = new
+		G.copy_from_turf(src)
+		G.archive()
+		if(air.compare(G))
+			if(!our_excited_group)
+				var/datum/excited_group/EG = new
+				EG.add_turf(src)
+				our_excited_group = excited_group
+			air.share(G, adjacent_turfs_length)
+			last_share_check()
+
 	air.react()
 
 	update_visuals()
@@ -193,8 +210,11 @@
 			if(consider_superconductivity(starting = 1))
 				remove = 0
 
+	if (atmos_cooldown > EXCITED_GROUP_DISMANTLE_CYCLES*2)
+		SSair.remove_from_active(src)
 	if(!our_excited_group && remove == 1)
 		SSair.remove_from_active(src)
+
 
 /turf/open/proc/share_air(turf/open/T, fire_count, adjacent_turfs_length)
 	if(T.current_cycle < fire_count)
@@ -217,8 +237,10 @@
 /turf/open/proc/last_share_check()
 	if(air.last_share > MINIMUM_AIR_TO_SUSPEND)
 		excited_group.reset_cooldowns()
+		atmos_cooldown = 0
 	else if(air.last_share > MINIMUM_MOLES_DELTA_TO_MOVE)
 		excited_group.dismantle_cooldown = 0
+		atmos_cooldown = 0
 
 /turf/open/proc/high_pressure_movements()
 	for(var/atom/movable/M in src)
@@ -295,6 +317,7 @@
 	for(var/t in turf_list)
 		var/turf/open/T = t
 		T.air.copy_from(A)
+		T.atmos_cooldown = 0
 		T.update_visuals()
 
 	breakdown_cooldown = 0

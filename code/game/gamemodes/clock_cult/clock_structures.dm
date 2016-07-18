@@ -19,7 +19,9 @@
 	var/takes_damage = TRUE //If the structure can be damaged
 	var/break_message = "<span class='warning'>The frog isn't a meme after all!</span>" //The message shown when a structure breaks
 	var/break_sound = 'sound/magic/clockwork/anima_fragment_death.ogg' //The sound played when a structure breaks
-	var/list/debris = list(/obj/item/clockwork/alloy_shards) //Parts left behind when a structure breaks
+	var/list/debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/medium = 2, \
+	/obj/item/clockwork/alloy_shards/small = 3) //Parts left behind when a structure breaks
 	var/construction_value = 0 //How much value the structure contributes to the overall "power" of the structures on the station
 
 /obj/structure/clockwork/New()
@@ -36,7 +38,8 @@
 	if(!takes_damage)
 		return 0
 	for(var/I in debris)
-		new I (get_turf(src))
+		for(var/i in 1 to debris[I])
+			new I (get_turf(src))
 	visible_message(break_message)
 	playsound(src, break_sound, 50, 1)
 	qdel(src)
@@ -159,12 +162,16 @@
 	clockwork_caches++
 	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
+	for(var/i in all_clockwork_mobs)
+		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
 	var/list/scripture_states = get_scripture_states()
 	clockwork_caches--
 	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
+	for(var/i in all_clockwork_mobs)
+		cache_check(i)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
@@ -200,16 +207,9 @@
 		return 1
 	else if(istype(I, /obj/item/clockwork/slab))
 		var/obj/item/clockwork/slab/S = I
-		clockwork_component_cache["belligerent_eye"] += S.stored_components["belligerent_eye"]
-		clockwork_component_cache["vanguard_cogwheel"] += S.stored_components["vanguard_cogwheel"]
-		clockwork_component_cache["guvax_capacitor"] += S.stored_components["guvax_capacitor"]
-		clockwork_component_cache["replicant_alloy"] += S.stored_components["replicant_alloy"]
-		clockwork_component_cache["hierophant_ansible"] += S.stored_components["hierophant_ansible"]
-		S.stored_components["belligerent_eye"] = 0
-		S.stored_components["vanguard_cogwheel"] = 0
-		S.stored_components["guvax_capacitor"] = 0
-		S.stored_components["replicant_alloy"] = 0
-		S.stored_components["hierophant_ansible"] = 0
+		for(var/i in S.stored_components)
+			clockwork_component_cache[i] += S.stored_components[i]
+			S.stored_components[i] = 0
 		user.visible_message("<span class='notice'>[user] empties [S] into [src].</span>", "<span class='notice'>You offload your slab's components into [src].</span>")
 		return 1
 	else if(istype(I, /obj/item/clockwork/daemon_shell))
@@ -308,7 +308,7 @@
 	construction_value = 15
 	layer = HIGH_OBJ_LAYER
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
-	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye)
+	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	burn_state = LAVA_PROOF
 	var/damage_per_tick = 3
 	var/sight_range = 3
@@ -446,7 +446,9 @@
 	desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, or just climb over it."
 	clockwork_desc = "A massive brass gear. You could probably secure or unsecure it with a wrench, just climb over it, or proselytize it into replicant alloy."
 	break_message = "<span class='warning'>The gear breaks apart into shards of alloy!</span>"
-	debris = list(/obj/item/clockwork/alloy_shards)
+	debris = list(/obj/item/clockwork/alloy_shards/large = 1, \
+	/obj/item/clockwork/alloy_shards/medium = 4, \
+	/obj/item/clockwork/alloy_shards/small = 2) //slightly more debris than the default, totals 26 alloy
 
 /obj/structure/clockwork/wall_gear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
@@ -651,6 +653,46 @@
 			qdel(src)
 			qdel(linked_gateway)
 	return 1
+
+/obj/effect/clockwork/overlay
+	mouse_opacity = 0
+	var/atom/linked
+
+/obj/effect/clockwork/overlay/examine(mob/user)
+	if(linked)
+		linked.examine(user)
+
+/obj/effect/clockwork/overlay/ex_act()
+	return FALSE
+
+/obj/effect/clockwork/overlay/Destroy()
+	if(linked)
+		linked = null
+	..()
+	return QDEL_HINT_PUTINPOOL
+
+/obj/effect/clockwork/overlay/wall
+	name = "clockwork wall"
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	canSmoothWith = list(/obj/effect/clockwork/overlay/wall)
+	smooth = SMOOTH_TRUE
+	layer = CLOSED_TURF_LAYER
+
+/obj/effect/clockwork/overlay/wall/New()
+	..()
+	queue_smooth_neighbors(src)
+	addtimer(GLOBAL_PROC, "queue_smooth", 1, FALSE, src)
+
+/obj/effect/clockwork/overlay/wall/Destroy()
+	queue_smooth_neighbors(src)
+	..()
+	return QDEL_HINT_QUEUE
+
+/obj/effect/clockwork/overlay/floor
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "clockwork_floor"
+	layer = TURF_LAYER
 
 /obj/effect/clockwork/general_marker
 	name = "general marker"
@@ -898,7 +940,7 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing [vitality] units of vitality.</span>"
+		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
 		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
@@ -929,6 +971,8 @@
 			var/total_damage = clone_to_heal + tox_to_heal + burn_to_heal + brute_to_heal + oxy_to_heal
 			if(L.stat == DEAD)
 				var/revival_cost = base_revive_cost + total_damage - oxy_to_heal //ignores oxygen damage
+				if(ratvar_awakens)
+					revival_cost = 0
 				var/mob/dead/observer/ghost = L.get_ghost(TRUE)
 				if(ghost)
 					if(vitality >= revival_cost)
@@ -943,36 +987,42 @@
 			if(!total_damage)
 				break
 			var/vitality_for_cycle = min(vitality, 3)
+			var/vitality_used = 0
+			if(ratvar_awakens)
+				vitality_for_cycle = 3
 
 			if(clone_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, clone_to_heal)
 				vitality_for_cycle -= healing
 				L.adjustCloneLoss(-healing)
-				vitality -= healing
+				vitality_used += healing
 
 			if(tox_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, tox_to_heal)
 				vitality_for_cycle -= healing
 				L.adjustToxLoss(-healing)
-				vitality -= healing
+				vitality_used += healing
 
 			if(burn_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, burn_to_heal)
 				vitality_for_cycle -= healing
 				L.adjustFireLoss(-healing)
-				vitality -= healing
+				vitality_used += healing
 
 			if(brute_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, brute_to_heal)
 				vitality_for_cycle -= healing
 				L.adjustBruteLoss(-healing)
-				vitality -= healing
+				vitality_used += healing
 
 			if(oxy_to_heal && vitality_for_cycle)
 				var/healing = min(vitality_for_cycle, oxy_to_heal)
 				vitality_for_cycle -= healing
 				L.adjustOxyLoss(-healing)
-				vitality -= healing
+				vitality_used += healing
+
+			if(!ratvar_awakens)
+				vitality -= vitality_used
 		sleep(2)
 
 	animation_number = initial(animation_number)

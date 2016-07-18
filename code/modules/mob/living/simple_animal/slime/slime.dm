@@ -292,7 +292,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 		if(stat == DEAD && surgeries.len)
 			if(M.a_intent == "help")
 				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(M, src))
+					if(S.next_step(M))
 						return 1
 		if(..()) //successful attack
 			attacked += 10
@@ -307,7 +307,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	if(stat == DEAD && surgeries.len)
 		if(user.a_intent == "help")
 			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, src))
+				if(S.next_step(user))
 					return 1
 	if(istype(W,/obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		if (user in Friends)

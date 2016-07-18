@@ -43,26 +43,30 @@
 /turf/closed/wall/clockwork
 	name = "clockwork wall"
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
-	icon = 'icons/turf/walls/clockwork_wall.dmi'
-	icon_state = "clockwork_wall"
-	canSmoothWith = list(/turf/closed/wall/clockwork)
-	smooth = SMOOTH_MORE
 	explosion_block = 2
+	var/obj/effect/clockwork/overlay/wall/realappearence
 
 /turf/closed/wall/clockwork/New()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/wall, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
+	realappearence.linked = src
 	change_construction_value(5)
 
 /turf/closed/wall/clockwork/Destroy()
-	change_construction_value(-5)
+	be_removed()
 	return ..()
 
 /turf/closed/wall/clockwork/ChangeTurf(path, defer_change = FALSE)
 	if(path != type)
-		change_construction_value(-5)
+		be_removed()
 	return ..()
+
+/turf/closed/wall/clockwork/proc/be_removed()
+	change_construction_value(-5)
+	qdel(realappearence)
+	realappearence = null
 
 /turf/closed/wall/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -112,7 +116,12 @@
 	return new/obj/structure/clockwork/wall_gear(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
-	new/obj/item/clockwork/alloy_shards(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/large(src)
+	for(var/i in 1 to 2)
+		new/obj/item/clockwork/alloy_shards/medium(src)
+	for(var/i in 1 to 3)
+		new/obj/item/clockwork/alloy_shards/small(src)
 
 
 /turf/closed/wall/vault
@@ -151,13 +160,19 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
+/turf/closed/wall/shuttle/syndie
+	icon_state = "wall3"
+	walltype = "syndieshuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
+
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "shuttle"
 	walltype = "shuttle"
+	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
+	canSmoothWith = list(/turf/closed/wall/shuttle/smooth, /obj/structure/window/shuttle, /obj/structure/shuttle, /obj/machinery/door/airlock/glass, /obj/machinery/door/airlock/shuttle)
 
 /turf/closed/wall/shuttle/smooth/nodiagonal
 	smooth = SMOOTH_MORE
@@ -189,11 +204,3 @@
 	. = ..()
 	T.transform = transform
 
-
-//why don't shuttle walls habe smoothwall? now i gotta do rotation the dirty way <- DOUBLE GOOFBALL FOR NOT CALLING PARENT
-/turf/closed/wall/shuttle/shuttleRotate(rotation)
-	if(smooth)
-		return ..()
-	var/matrix/M = transform
-	M.Turn(rotation)
-	transform = M

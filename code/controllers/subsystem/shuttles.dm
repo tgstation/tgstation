@@ -24,6 +24,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -252,6 +253,34 @@ var/datum/subsystem/shuttle/SSshuttle
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+
+/datum/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+	hostileEnvironments[bad] = TRUE
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+	hostileEnvironments -= bad
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/checkHostileEnvironment()
+	for(var/datum/d in hostileEnvironments)
+		if(!istype(d) || qdeleted(d))
+			hostileEnvironments -= d
+	emergencyNoEscape = hostileEnvironments.len
+
+	if(emergencyNoEscape && (emergency.mode == SHUTTLE_IGNITING))
+		emergency.mode = SHUTTLE_STRANDED
+		emergency.timer = null
+		emergency.sound_played = FALSE
+		priority_announce("Hostile environment detected. \
+			Departure has been postponed indefinitely pending \
+			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+	if(!emergencyNoEscape && (emergency.mode == SHUTTLE_STRANDED))
+		emergency.mode = SHUTTLE_DOCKED
+		emergency.setTimer(emergencyDockTime)
+		priority_announce("Hostile environment resolved. \
+			You have 3 minutes to board the Emergency Shuttle.",
+			null, 'sound/AI/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)

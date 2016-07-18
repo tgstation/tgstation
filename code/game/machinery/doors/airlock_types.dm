@@ -408,6 +408,11 @@
 	var/turf/T = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/door, T)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam/door, T)
+	change_construction_value(3)
+
+/obj/machinery/door/airlock/clockwork/Destroy()
+	change_construction_value(-3)
+	return ..()
 
 /obj/machinery/door/airlock/clockwork/canAIControl(mob/user)
 	return (is_servant_of_ratvar(user) && !isAllPowerCut())

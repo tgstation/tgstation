@@ -43,13 +43,11 @@
 	else
 		icon_state = "bg_default"
 	UpdateIcon()
-	return
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
 	cut_overlays()
 	var/image/img = image(icon, src, hidden ? "show" : "hide")
 	add_overlay(img)
-	return
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)

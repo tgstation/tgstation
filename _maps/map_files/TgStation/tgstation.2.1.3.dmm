@@ -5497,9 +5497,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/security/armory)
 "alu" = (
-/obj/machinery/nuclearbomb/selfdestruct{
-	layer = 4
-	},
+/obj/machinery/nuclearbomb/selfdestruct,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -29972,13 +29970,14 @@
 /area/crew_quarters/captain)
 "bpm" = (
 /obj/machinery/shower{
-	dir = 4
+	dir = 1
 	},
 /obj/item/weapon/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain)
 "bpn" = (

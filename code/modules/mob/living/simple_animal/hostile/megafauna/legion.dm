@@ -107,7 +107,7 @@ Difficulty: Medium
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
+			src.loot = list(/obj/item/weapon/staff/storm)
 		else if(prob(5))
 			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -124,7 +124,7 @@ Difficulty: Medium
 
 //Loot
 
-/obj/item/weapon/staff_of_storms
+/obj/item/weapon/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
@@ -138,7 +138,7 @@ Difficulty: Medium
 	hitsound = 'sound/weapons/sear.ogg'
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff_of_storms/attack_self(mob/user)
+/obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
 		user << "<span class='warning'>The staff is still recharging!</span>"
 		return

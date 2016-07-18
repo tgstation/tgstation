@@ -270,6 +270,10 @@
 	item_state = "fedora"
 	slot_flags = SLOT_HEAD
 	icon = 'icons/obj/clothing/hats.dmi'
+	force = 0
+	throw_speed = 4
+	throw_range = 7
+	throwforce = 30
 	sharpness = IS_SHARP
 	attack_verb = list("enlightened", "redpilled")
 

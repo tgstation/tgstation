@@ -1,5 +1,0 @@
-author: "RemieRichards"
-delete-after: True
-changes: 
-  - rscadd: "Added a Compact mode to the crafting tgui"
-  - tweak: "Modified the back end of the crafting tgui so that it has well let's just say \"a lot less\" calls to certain functions, should lag a little less but don't expect miracles (you'd have to wait till we get a new version of ractive for those!)"

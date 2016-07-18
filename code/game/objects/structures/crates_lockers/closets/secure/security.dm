@@ -187,7 +187,7 @@
 /obj/structure/closet/secure_closet/injection/New()
 	..()
 	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/syringe/lethal/choral(src)
+		new /obj/item/weapon/reagent_containers/syringe/lethal/execution(src)
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"

@@ -82,7 +82,7 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		greet_revolutionary(rev_mind)
 	modePlayer += head_revolutionaries
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)
 	..()
 
 
@@ -106,14 +106,11 @@
 		rev_mind.objectives += rev_obj
 
 /datum/game_mode/proc/greet_revolutionary(datum/mind/rev_mind, you_are=1)
-	var/obj_count = 1
 	update_rev_icons_added(rev_mind)
 	if (you_are)
 		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
-	for(var/datum/objective/objective in rev_mind.objectives)
-		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		rev_mind.special_role = "Head Revolutionary"
-		obj_count++
+	rev_mind.special_role = "Head Revolutionary"
+	rev_mind.announce_objectives()
 
 /////////////////////////////////////////////////////////////////////////////////
 //This are equips the rev heads with their gear, and makes the clown not clumsy//
@@ -216,12 +213,8 @@
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
 	if(config.continuous["revolution"])
-		if(finished != 0)
-			SSshuttle.emergencyNoEscape = 0
-			if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
-				SSshuttle.emergency.mode = SHUTTLE_DOCKED
-				SSshuttle.emergency.timer = world.time
-				priority_announce("Hostile enviroment resolved. You have 3 minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+		if(finished)
+			SSshuttle.clearHostileEnvironment(src)
 		return ..()
 	if(finished != 0)
 		return 1

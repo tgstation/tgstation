@@ -10,7 +10,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/carrot
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/cheesecake
 	name = "Cheese cake"
@@ -19,7 +19,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/cheese
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/applecake
 	name = "Apple cake"
@@ -28,7 +28,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/apple
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/orangecake
 	name = "Orange cake"
@@ -37,7 +37,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/orange
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/limecake
 	name = "Lime cake"
@@ -46,7 +46,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lime
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/lemoncake
 	name = "Lemon cake"
@@ -55,7 +55,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/lemon
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/chocolatecake
 	name = "Chocolate cake"
@@ -64,7 +64,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/chocolate
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/birthdaycake
 	name = "Birthday cake"
@@ -73,7 +73,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/birthday
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/braincake
 	name = "Brain cake"
@@ -82,7 +82,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/brain
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/slimecake
 	name = "Slime cake"
@@ -91,7 +91,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/store/cake/plain = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/slimecake
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/pumpkinspicecake
 	name = "Pumpkin spice cake"
@@ -100,7 +100,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/store/cake/pumpkinspice
-	category = CAT_FOOD
+	category = CAT_CAKE
 
 /datum/crafting_recipe/food/cak
 	name = "Living cat/cake hybrid"
@@ -114,4 +114,4 @@
 		/datum/reagent/toxin/teslium = 1 //To shock the whole thing into life
 	)
 	result = /mob/living/simple_animal/pet/cat/cak
-	category = CAT_FOOD //Cat! Haha, get it? CAT? GET IT???
+	category = CAT_CAKE //Cat! Haha, get it? CAT? GET IT???

@@ -6,20 +6,32 @@
 	icon_state = "cutout_basic"
 	w_class = 4
 	burn_state = FLAMMABLE
-	var/list/possible_appearances = list("Assistant", "Clown", "Mime", "Traitor", "Nuke Op", "Cultist", "Clockwork Cultist", "Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer", \
-	"Ash Walker", "Deathsquad Officer", "Ian") //Possible restyles for the cutout; add an entry in change_appearance() if you add to here
+	// Possible restyles for the cutout;
+	// add an entry in change_appearance() if you add to here
+	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
+		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
+		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
+		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
+		"Laughter Demon")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/deceptive = FALSE //If the cutout actually appears as what it portray and not a discolored version
+
+	var/lastattacker = null
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == "help" || pushed_over)
 		return ..()
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+	push_over()
+
+/obj/item/cardboard_cutout/proc/push_over()
 	name = initial(name)
 	desc = "[initial(desc)] It's been pushed over."
+	icon = initial(icon)
 	icon_state = "cutout_pushed_over"
 	color = initial(color)
+	alpha = initial(alpha)
 	pushed_over = TRUE
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
@@ -27,24 +39,38 @@
 		return
 	user << "<span class='notice'>You right [src].</span>"
 	desc = initial(desc)
+	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
 		change_appearance(I, user)
-	else
-		return ..()
+		return
+	// Why yes, this does closely resemble mob and object attack code.
+	if(I.flags & NOBLUDGEON)
+		return
+	if(!I.force)
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
+	else if(I.hitsound)
+		playsound(loc, I.hitsound, get_clamped_volume(), 1, -1)
+
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+
+	if(I.force)
+		user.visible_message("<span class='danger'>[user] has hit \
+			[src] with [I]!</span>", "<span class='danger'>You hit [src] \
+			with [I]!</span>")
+
+		if(prob(I.force))
+			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', 50, 1)
 	if(prob(P.damage))
-		name = initial(name)
-		desc = "[initial(desc)] It's been pushed over."
-		icon_state = "cutout_pushed_over"
-		color = initial(color)
-		pushed_over = TRUE
+		push_over()
 
 /obj/item/cardboard_cutout/proc/change_appearance(obj/item/toy/crayon/crayon, mob/living/user)
 	if(!crayon || !user)
@@ -52,13 +78,21 @@
 	if(pushed_over)
 		user << "<span class='warning'>Right [src] first!</span>"
 		return
+	if(crayon.check_empty(user))
+		return
+	if(crayon.is_capped)
+		user << "<span class='warning'>Take the cap off first!</span>"
+		return
 	var/new_appearance = input(user, "Choose a new appearance for [src].", "26th Century Deception") as null|anything in possible_appearances
 	if(!new_appearance || !crayon || !user.canUseTopic(src))
+		return
+	if(!do_after(user, 10, FALSE, src, TRUE))
 		return
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255
+	icon = initial(icon)
 	if(!deceptive)
 		color = "#FFD7A7"
 	switch(new_appearance)
@@ -124,7 +158,20 @@
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."
 			icon_state = "cutout_ian"
+		if("Slaughter Demon")
+			name = "slaughter demon"
+			desc = "A cardboard cutout of a slaughter demon."
+			icon = 'icons/mob/mob.dmi'
+			icon_state = "daemon"
+		if("Laughter Demon")
+			name = "laughter demon"
+			desc = "A cardboard cutout of a laughter demon."
+			icon = 'icons/mob/mob.dmi'
+			icon_state = "bowmon"
 	return 1
+
+/obj/item/cardboard_cutout/setDir(newdir)
+	dir = SOUTH
 
 /obj/item/cardboard_cutout/adaptive //Purchased by Syndicate agents, these cutouts are indistinguishable from normal cutouts but aren't discolored when their appearance is changed
 	deceptive = TRUE

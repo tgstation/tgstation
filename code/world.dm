@@ -163,6 +163,14 @@ var/last_irc_status = 0
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
 
+	else if("adminmsg" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
+
+
+
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)

@@ -53,10 +53,13 @@
 	var/list/data = list()
 	var/can_reclaim = FALSE
 
+	if(allowed(user))
+		can_reclaim = TRUE
+
 	if(inserted_id)
 		data["id"] = inserted_id
-		data["id"]["name"] = inserted_id.registered_name
-		if(inserted_id.points >= inserted_id.goal || allowed(user))
+		data["id_name"] = inserted_id.registered_name
+		if(inserted_id.points >= inserted_id.goal)
 			can_reclaim = TRUE
 
 	var/list/mobs = list()

@@ -1,6 +1,9 @@
 
 var/global/list/parasites = list() //all currently existing/living guardians
 
+#define GUARDIAN_HANDS_LAYER 1
+#define GUARDIAN_TOTAL_LAYERS 1
+
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
@@ -25,12 +28,15 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	attacktext = "punches"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
+	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
 	environment_smash = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 	AIStatus = AI_OFF
+	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
+	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
 	var/reset = 0 //if the summoner has reset the guardian already
 	var/cooldown = 0
 	var/mob/living/summoner
@@ -121,6 +127,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	med_hud_set_status()
 	if(summoner)
 		if(summoner.stat == DEAD)
+			forceMove(summoner.loc)
 			src << "<span class='danger'>Your summoner has died!</span>"
 			visible_message("<span class='danger'><B>\The [src] dies along with its user!</B></span>")
 			summoner.visible_message("<span class='danger'><B>[summoner]'s body is completely consumed by the strain of sustaining [src]!</B></span>")
@@ -128,12 +135,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 				if(!summoner.unEquip(W))
 					qdel(W)
 			summoner.dust()
-			ghostize()
+			death(TRUE)
 			qdel(src)
 	else
 		src << "<span class='danger'>Your summoner has died!</span>"
 		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
-		ghostize()
+		death(TRUE)
 		qdel(src)
 	snapback()
 
@@ -177,9 +184,12 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		return 1
 
 /mob/living/simple_animal/hostile/guardian/death()
+	drop_l_hand()
+	drop_r_hand()
 	..()
-	summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
-	summoner.death()
+	if(summoner)
+		summoner << "<span class='danger'><B>Your [name] died somehow!</span></B>"
+		summoner.death()
 
 /mob/living/simple_animal/hostile/guardian/update_health_hud()
 	if(summoner && hud_used && hud_used.healths)
@@ -220,6 +230,84 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		summoner.gib()
 	ghostize()
 	qdel(src)
+
+//HAND HANDLING
+
+/mob/living/simple_animal/hostile/guardian/equip_to_slot(obj/item/I, slot)
+	if(!slot)
+		return FALSE
+	if(!istype(I))
+		return FALSE
+
+	. = TRUE
+	if(I == l_hand)
+		l_hand = null
+	else if(I == r_hand)
+		r_hand = null
+	update_inv_hands()
+
+	if(I.pulledby)
+		I.pulledby.stop_pulling()
+
+	I.screen_loc = null // will get moved if inventory is visible
+	I.loc = src
+	I.equipped(src, slot)
+	I.layer = ABOVE_HUD_LAYER
+
+/mob/living/simple_animal/hostile/guardian/proc/apply_overlay(cache_index)
+	var/image/I = guardian_overlays[cache_index]
+	if(I)
+		add_overlay(I)
+
+/mob/living/simple_animal/hostile/guardian/proc/remove_overlay(cache_index)
+	if(guardian_overlays[cache_index])
+		overlays -= guardian_overlays[cache_index]
+		guardian_overlays[cache_index] = null
+
+/mob/living/simple_animal/hostile/guardian/proc/update_inv_hands()
+	remove_overlay(GUARDIAN_HANDS_LAYER)
+	var/list/hands_overlays = list()
+
+	if(r_hand)
+		var/r_state = r_hand.item_state
+		if(!r_state)
+			r_state = r_hand.icon_state
+
+		var/image/r_hand_image = r_hand.build_worn_icon(state = r_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = r_hand.righthand_file, isinhands = TRUE)
+
+		hands_overlays += r_hand_image
+
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			r_hand.layer = ABOVE_HUD_LAYER
+			r_hand.screen_loc = ui_rhand
+			client.screen |= r_hand
+
+	if(l_hand)
+		var/l_state = l_hand.item_state
+		if(!l_state)
+			l_state = l_hand.icon_state
+
+		var/image/l_hand_image = l_hand.build_worn_icon(state = l_state, default_layer = GUARDIAN_HANDS_LAYER, default_icon_file = l_hand.lefthand_file, isinhands = TRUE)
+
+		hands_overlays += l_hand_image
+
+		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
+			l_hand.layer = ABOVE_HUD_LAYER
+			l_hand.screen_loc = ui_lhand
+			client.screen |= l_hand
+
+	if(hands_overlays.len)
+		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
+	apply_overlay(GUARDIAN_HANDS_LAYER)
+
+/mob/living/simple_animal/hostile/guardian/update_inv_l_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/hostile/guardian/update_inv_r_hand()
+	update_inv_hands()
+
+/mob/living/simple_animal/hostile/guardian/regenerate_icons()
+	update_inv_hands()
 
 //MANIFEST, RECALL, TOGGLE MODE/LIGHT, SHOW TYPE
 
@@ -380,12 +468,16 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Chaos", "Standard", "Ranged", "Support", "Explosive", "Lightning", "Protector", "Charger", "Assassin")
+	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
-	var/allowmultiple = 0
-	var/allowling = 1
+	var/allowmultiple = FALSE
+	var/allowling = TRUE
+	var/allowguardian = FALSE
 
 /obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+	if(isguardian(user) && !allowguardian)
+		user << "<span class='holoparasite'>[mob_name] chains are not allowed.</span>"
+		return
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>"
@@ -449,6 +541,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		if("Assassin")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
 
+		if("Dextrous")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/dextrous
+
 	var/list/guardians = user.hasparasites()
 	if(guardians.len && !allowmultiple)
 		user << "<span class='holoparasite'>You already have a [mob_name]!</span>" //nice try, bucko
@@ -492,6 +587,9 @@ var/global/list/parasites = list() //all currently existing/living guardians
 
 /obj/item/weapon/guardiancreator/tech/choose
 	random = FALSE
+
+/obj/item/weapon/guardiancreator/tech/choose/dextrous
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/weapon/paper/guardian
 	name = "Holoparasite Guide"
@@ -543,8 +641,8 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
-	allowmultiple = 1
-	allowling = 1
+	allowmultiple = TRUE
+	allowling = TRUE
 	random = TRUE
 
 /obj/item/weapon/guardiancreator/carp/choose

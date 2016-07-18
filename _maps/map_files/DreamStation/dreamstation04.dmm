@@ -48815,12 +48815,13 @@
 /area/crew_quarters/captain)
 "bSu" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = -28
 	},
 /obj/item/weapon/soap/deluxe,
 /obj/machinery/shower{
-	dir = 8
+	pixel_y = 12
 	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/captain)
 "bSv" = (

@@ -24,6 +24,9 @@
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
+/turf/open/floor/wood/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/grass
 	name = "Grass patch"
 	icon_state = "grass"

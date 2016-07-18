@@ -414,7 +414,6 @@
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
-	return
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -440,7 +439,6 @@
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == "help")
 		visible_message("[L.name] rubs its head against [src].")
-	return
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")

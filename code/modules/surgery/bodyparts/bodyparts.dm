@@ -78,6 +78,8 @@
 /obj/item/bodypart/throw_impact(atom/hit_atom)
 	..()
 	playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
+	pixel_x = rand(-3, 3)
+	pixel_y = rand(-3, 3)
 
 /obj/item/bodypart/proc/drop_organs(mob/user)
 	var/turf/T = get_turf(src)

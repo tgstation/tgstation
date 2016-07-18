@@ -33,7 +33,7 @@
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
 	var/produces_components = TRUE //if it produces components at all
-	actions_types = list(/datum/action/item_action/hierophant)
+	actions_types = list(/datum/action/item_action/clock/hierophant, /datum/action/item_action/clock/guvax, /datum/action/item_action/clock/vanguard)
 
 /obj/item/clockwork/slab/starter
 	stored_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -96,10 +96,52 @@
 		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
 
 /obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
-	show_hierophant(user)
+	switch(actiontype)
+		if(/datum/action/item_action/clock/hierophant)
+			show_hierophant(user)
+		if(/datum/action/item_action/clock/guvax)
+			if(src == user.get_active_hand())
+				var/datum/clockwork_scripture/guvax/convert = new
+				convert.slab = src
+				convert.invoker = user
+				convert.run_scripture()
+			else
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+		if(/datum/action/item_action/clock/vanguard)
+			if(src == user.get_active_hand())
+				var/datum/clockwork_scripture/vanguard/antistun = new
+				antistun.slab = src
+				antistun.invoker = user
+				antistun.run_scripture()
+			else
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+
+/obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
+	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
+		var/obj/item/clockwork/slab/targetslab
+		var/highest_component_amount = 0
+		for(var/obj/item/clockwork/slab/S in target.GetAllContents())
+			if(!istype(S, /obj/item/clockwork/slab/internal))
+				var/totalcomponents = 0
+				for(var/i in S.stored_components)
+					totalcomponents += S.stored_components[i]
+				if(!targetslab || totalcomponents > highest_component_amount)
+					highest_component_amount = totalcomponents
+					targetslab = S
+		if(targetslab)
+			for(var/i in stored_components)
+				targetslab.stored_components[i] += stored_components[i]
+				stored_components[i] = 0
+			user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
+			"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
+		else
+			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
+	else
+		return ..()
 
 /obj/item/clockwork/slab/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/clockwork/component) && is_servant_of_ratvar(user))
+	var/ratvarian = is_servant_of_ratvar(user)
+	if(istype(I, /obj/item/clockwork/component) && ratvarian)
 		var/obj/item/clockwork/component/C = I
 		if(!C.component_id)
 			return 0
@@ -108,6 +150,12 @@
 		user.drop_item()
 		qdel(C)
 		return 1
+	else if(istype(I, /obj/item/clockwork/slab) && ratvarian)
+		var/obj/item/clockwork/slab/S = I
+		for(var/i in stored_components)
+			stored_components[i] += S.stored_components[i]
+			S.stored_components[i] = 0
+		user.visible_message("<span class='notice'>[user] empties [src] into [S].</span>", "<span class='notice'>You transfer your slab's components into [S].</span>")
 	else
 		return ..()
 
@@ -130,7 +178,7 @@
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='warning'>[src] hums quietly in your hands, but you can't seem to get it to do anything.</span>"
+		show_stats(user) //if it's not human, show it stats
 		return 0
 	access_display(user)
 
@@ -143,7 +191,7 @@
 	switch(action)
 		if("Recital")
 			if(user.get_active_hand() != src)
-				user << "<span class='warning'>You need to hold the slab to recite scripture!</span>"
+				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 				return
 			recite_scripture(user)
 		if("Records")
@@ -230,8 +278,8 @@
 	\
 	This is done through <b>Components</b> - pieces of the Justiciar's body that have since fallen off in the countless years since his imprisonment. Ratvar's unfortunate condition results \
 	in the fragmentation of his body. These components still house great power on their own, and can slowly be drawn from Reebe by links capable of doing so. The most basic of these links lies \
-	in the clockwork slab, which will slowly generate components over time - around one component of a random type is produced every minute, which is obviously inefficient. There are other ways \
-	to create these components through scripture and certain structures.<br><br>\
+	in the clockwork slab, which will slowly generate components over time - one component of a random type is produced every 1 minute and 30 seconds, plus 30 seconds per each servant above 5, \
+	which is obviously inefficient. There are other ways to create these components through scripture and certain structures.<br><br>\
 	\
 	In addition to their ability to pull components, slabs also possess other functionalities...<br><br>\
 	\
@@ -251,9 +299,9 @@
 	var/text_to_add = ""
 	var/drivers = "<font color=#BE8700 size=3><b>Drivers</b></font>"
 	var/scripts = "<font color=#BE8700 size=3><b>Scripts</b></font><br><i>These scriptures require at least five servants and a tinkerer's cache.</i>"
-	var/applications = "<font color=#BE8700 size=3><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 50CV.</i>"
-	var/revenant = "<font color=#BE8700 size=3><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 100CV.</i>"
-	var/judgement = "<font color=#BE8700 size=3><b>Judgement</b></font><br><i>These scriptures require at least ten servants and 100CV. In addition, there may not be an active non-servant AI.</i>"
+	var/applications = "<font color=#BE8700 size=3><b>Applications</b></font><br><i>These scriptures require at least eight servants, three tinkerer's caches, and 100CV.</i>"
+	var/revenant = "<font color=#BE8700 size=3><b>Revenant</b></font><br><i>These scriptures require at least ten servants and 200CV.</i>"
+	var/judgement = "<font color=#BE8700 size=3><b>Judgement</b></font><br><i>These scriptures require at least twelve servants and 300CV. In addition, there may not be any active non-servant AIs.</i>"
 	for(var/V in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/S = V
 		var/datum/clockwork_scripture/S2 = new V
@@ -358,7 +406,8 @@
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components."
+		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
+		user << "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively."
 		if(clockwork_caches)
 			user << "<b>Stored components (with global cache):</b>"
 			user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [stored_components["belligerent_eye"]] ([stored_components["belligerent_eye"] + clockwork_component_cache["belligerent_eye"]])</span>"
@@ -451,7 +500,7 @@
 	var/recharging = FALSE //If the visor is currently recharging
 	var/obj/item/weapon/ratvars_flame/flame //The linked flame object
 	var/recharge_cooldown = 300 //divided by 10 if ratvar is alive
-	actions_types = list(/datum/action/item_action/toggle_flame)
+	actions_types = list(/datum/action/item_action/clock/toggle_flame)
 
 /obj/item/clothing/glasses/judicial_visor/item_action_slot_check(slot, mob/user)
 	if(slot != slot_glasses)
@@ -703,7 +752,7 @@
 		addtimer(user, "unEquip", 1, FALSE, src, 1)
 
 
-/obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long.
+/obj/item/clockwork/ratvarian_spear //Ratvarian spear: A fragile spear from the Celestial Derelict. Deals extreme damage to silicons and enemy cultists, but doesn't last long when summoned.
 	name = "ratvarian spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
 	clockwork_desc = "A fragile spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last long."
@@ -723,11 +772,6 @@
 	..()
 	impale_cooldown = 0
 	update_force()
-	spawn(1)
-		if(isliving(loc))
-			var/mob/living/L = loc
-			L << "<span class='warning'>Your spear begins to break down in this plane of existence. You can't use it for long!</span>"
-		addtimer(src, "break_spear", 3000, FALSE) //5 minutes
 
 /obj/item/clockwork/ratvarian_spear/proc/update_force()
 	if(ratvar_awakens) //If Ratvar is alive, the spear is extremely powerful
@@ -1061,3 +1105,28 @@
 	clockwork_desc = "Broken shards of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 	icon_state = "alloy_shards"
 	burn_state = LAVA_PROOF
+	var/randomsinglesprite = FALSE
+	var/randomspritemax = 2
+
+/obj/item/clockwork/alloy_shards/New()
+	..()
+	if(randomsinglesprite)
+		name = "replicant alloy shard"
+		desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
+		clockwork_desc = "A broken shard of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
+		icon_state = "[icon_state][rand(1, randomspritemax)]"
+		pixel_x = rand(-9, 9)
+		pixel_y = rand(-9, 9)
+
+/obj/item/clockwork/alloy_shards/large
+	randomsinglesprite = TRUE
+	icon_state = "shard_large"
+
+/obj/item/clockwork/alloy_shards/medium
+	randomsinglesprite = TRUE
+	icon_state = "shard_medium"
+
+/obj/item/clockwork/alloy_shards/small
+	randomsinglesprite = TRUE
+	randomspritemax = 3
+	icon_state = "shard_small"

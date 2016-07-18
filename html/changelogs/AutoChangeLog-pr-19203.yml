@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "AIs get a notification when hacking an APC, which can be clicked to jump your camera to the APC's location. AIs also get notification sounds when a hack has completed or failed."

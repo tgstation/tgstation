@@ -236,7 +236,7 @@
 		slot_ears, slot_glasses,\
 		slot_belt, slot_s_store,\
 		slot_l_store, slot_r_store,\
-		slot_drone_storage
+		slot_generic_dextrous_storage
 	)
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
