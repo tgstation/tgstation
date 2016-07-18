@@ -4229,7 +4229,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/porktenderloin
 	name = "pork tenderloin"
 	desc = "Delicious, gravy-covered meat that will melt-in-your-beak. Or mouth."
-	icon_state = "zhulongcaofan"
+	icon_state = "porktenderloin"
 	bitesize = 4
 	New()
 		..()

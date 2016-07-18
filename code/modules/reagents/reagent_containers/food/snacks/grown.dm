@@ -792,7 +792,7 @@
 	plantname = "woodapple"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pitcher
-	name = "slipping pitcher"
+	name = "pitcher plant" //results in "slippery pitcher plant"
 	desc = "A fragile, but slippery exotic plant from tropical climates. Powerful digestive acid contained within dissolves prey."
 	icon_state = "pitcher"
 	filling_color = "7E8507"
