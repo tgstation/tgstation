@@ -197,11 +197,10 @@
 	if(slot == user.getBackSlot())
 		return 1
 
-/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
-	var/mob/living/carbon/human/M = user
-	if(paddles in get_both_hands(M))
+/obj/item/weapon/defibrillator/proc/remove_paddles(mob/user) //this fox the bug with the paddles when other player stole you the defib when you have the paddles equiped
+	if(ismob(paddles.loc))
+		var/mob/M = paddles.loc
 		M.unEquip(paddles,1)
-	update_icon()
 	return
 
 /obj/item/weapon/defibrillator/Destroy()
