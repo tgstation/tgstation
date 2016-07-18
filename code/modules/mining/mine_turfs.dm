@@ -591,9 +591,7 @@
 			drop(thing)
 
 /turf/open/chasm/proc/droppable(atom/movable/AM)
-	if(!ismob(AM) && !isobj(AM))
-		return 0
-	if(isobserver(AM))
+	if(!isliving(AM) && !isobj(AM))
 		return 0
 	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
 		return 0
@@ -601,11 +599,11 @@
 		//Portals aren't affected by gravity. Probably.
 		return 0
 	//Flies right over the chasm
-	if(istype(AM, /mob/living/simple_animal))
+	if(isanimal(AM))
 		var/mob/living/simple_animal/SA = AM
 		if(SA.flying)
 			return 0
-	if(istype(AM, /mob/living/carbon/human))
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
 			var/obj/item/device/wormhole_jaunter/J = H.belt
@@ -613,17 +611,20 @@
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
 			return 0
-		if(H.dna.species && (FLYING in H.dna.species.specflags))
+		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
 			return 0
 	return 1
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
-	AM.forceMove(locate(drop_x, drop_y, drop_z))
-	AM.visible_message("<span class='boldwarning'>[AM] falls from above!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		L.Weaken(5)
-		L.adjustBruteLoss(30)
+	var/turf/T = locate(drop_x, drop_y, drop_z)
+	if(T)
+		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
+		T.visible_message("<span class='boldwarning'>[AM] falls from above!</span>")
+		AM.forceMove(T)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.Weaken(5)
+			L.adjustBruteLoss(30)
 
 /turf/open/chasm/straight_down/New()
 	..()
