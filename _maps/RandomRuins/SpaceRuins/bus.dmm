@@ -1,0 +1,66 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/mineral/ash_rock,/area/space)
+"c" = (/obj/item/trash/sosjerky,/turf/open/space,/area/space)
+"d" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating/asteroid/airless,/area/space)
+"e" = (/obj/item/stack/rods{amount = 50},/obj/item/weapon/stock_parts/manipulator/femto,/turf/open/floor/plating/asteroid/airless,/area/space)
+"f" = (/obj/item/stack/cable_coil{amount = 5},/obj/item/weapon/shard{icon_state = "small"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"g" = (/turf/open/floor/plating/asteroid/airless,/area/space)
+"h" = (/mob/living/simple_animal/hostile/lizard,/turf/open/floor/plating/asteroid/airless,/area/space)
+"i" = (/obj/item/weapon/book/random,/turf/open/floor/plating/asteroid/airless,/area/space)
+"j" = (/obj/effect/decal/cleanable/salt,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/turf/open/floor/plating/asteroid/airless,/area/space)
+"k" = (/obj/structure/bus/dense,/turf/open/floor/plating/asteroid/airless,/area/space)
+"l" = (/obj/structure/bus/dense{tag = "icon-wheredahoodat"; icon_state = "wheredahoodat"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"m" = (/obj/item/clothing/head/cone,/turf/open/floor/plating/asteroid/airless,/area/space)
+"n" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"o" = (/obj/structure/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"p" = (/obj/structure/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"q" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"r" = (/obj/structure/bus/passable/seat{icon_state = "backseat"; pixel_y = 15; tag = "icon-backseat"},/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"s" = (/obj/structure/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"t" = (/obj/structure/bus/passable/seat{tag = "icon-backseat"; icon_state = "backseat"},/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"u" = (/obj/structure/bus/passable/seat/driver{icon_state = "driverseat"; pixel_y = 17; tag = "icon-driverseat"},/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"v" = (/obj/structure/bus/dense{tag = "icon-hoodtop"; icon_state = "hoodtop"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"w" = (/obj/structure/bus/passable,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"x" = (/obj/structure/bus/passable,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"y" = (/obj/structure/bus/passable,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"z" = (/obj/structure/bus/passable,/obj/structure/closet/crate/freezer,/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/item/weapon/reagent_containers/food/snacks/faggot,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"A" = (/obj/structure/bus/passable,/obj/effect/mine/sound/bwoink,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"B" = (/obj/structure/bus/passable,/obj/item/weapon/reagent_containers/food/condiment/saltshaker,/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"C" = (/obj/structure/bus/passable,/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"D" = (/obj/structure/bus/passable{tag = "icon-topdoor"; icon_state = "topdoor"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/black{tag = "icon-bus"; icon_state = "bus"},/area/space)
+"E" = (/obj/structure/bus/dense{tag = "icon-hoodbottom"; icon_state = "hoodbottom"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"F" = (/obj/effect/decal/cleanable/robot_debris/old,/turf/open/floor/plating/asteroid/airless,/area/space)
+"G" = (/obj/item/weapon/reagent_containers/food/snacks/faggot,/turf/open/floor/plating/asteroid/airless,/area/space)
+"H" = (/obj/structure/bus/dense{tag = "icon-frontwallbottomrear"; icon_state = "frontwallbottomrear"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"I" = (/obj/structure/bus/dense{tag = "icon-frontwallbottom"; icon_state = "frontwallbottom"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"J" = (/obj/structure/bus/dense{tag = "icon-reartire"; icon_state = "reartire"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"K" = (/obj/structure/bus/dense{tag = "icon-frontwallbottom"; icon_state = "frontwallbottom"},/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"L" = (/obj/structure/bus/passable{icon_state = "bottomdoor"; layer = 3; tag = "icon-bottomdoor"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"M" = (/obj/structure/bus/dense{tag = "icon-fronttire"; icon_state = "fronttire"},/turf/open/floor/plating/asteroid/airless,/area/space)
+"N" = (/obj/item/weapon/storage/toolbox/mechanical,/obj/effect/decal/cleanable/oil,/turf/open/floor/plating/asteroid/airless,/area/space)
+"O" = (/obj/item/clothing/head/helmet/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"P" = (/obj/effect/decal/remains/human,/obj/item/clothing/head/helmet/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"Q" = (/obj/effect/decal/cleanable/shreds,/turf/open/floor/plating/asteroid/airless,/area/space)
+"R" = (/obj/effect/decal/remains/human,/obj/item/clothing/suit/space,/turf/open/floor/plating/asteroid/airless,/area/space)
+"S" = (/obj/item/stack/sheet/metal{amount = 50},/turf/open/floor/plating/asteroid/airless,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaabbbabbbaaaaaaa
+aaaaaaabbbbbbbbbbaaaaca
+aaaaabbbbbbbbbbbbbaaaaa
+aaabbbbbbbbbbbbbbbbaaaa
+aabbbbbbbbbbbbbbbbbbaaa
+abbbbbbbbbbbdefbbbbbbaa
+abbbbbghgggggggibbbbbaa
+abbbggggggggggggbbbbbaa
+agggjgkkkkkkkkklmgbbgaa
+aggnggopoqrstouvgggggga
+agnggnwxyzABwCDEgFgggga
+aggGggHIJIIKIILMgggggga
+aaggggggggNgOFggmgPggaa
+aaaagggggQgRggGggggggaa
+aaaaaaggggggSggggggaaaa
+aaaaaaaaagmgggaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaa
+"}

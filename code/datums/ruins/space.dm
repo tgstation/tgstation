@@ -279,3 +279,12 @@
 		hardship has helped to sculpt your real \
 		beauty. Stop hating yourself and start \
 		appreciating and loving yourself!"
+
+/datum/map_template/ruin/space/bus
+	id = "bus"
+	suffix = "bus.dmm"
+	name = "Waylaid Bus"
+	description = "This seems to be a bus that pulled over for repairs. \
+		What were they doing..? Its cargo sure seems to be filled with \
+		a strange mix. Anyway, it looks like some people tried to fix it \
+		up for a long time and didn't really get anywhere..."
