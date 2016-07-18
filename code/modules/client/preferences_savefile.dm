@@ -346,7 +346,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["deity_name"]			>> custom_names["deity"]
 
 	//Jobs
-	S["userandomjob"]		>> userandomjob
+	S["joblessrole"]		>> joblessrole
 	S["job_civilian_high"]	>> job_civilian_high
 	S["job_civilian_med"]	>> job_civilian_med
 	S["job_civilian_low"]	>> job_civilian_low
@@ -398,7 +398,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 
-	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
+	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
 	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
@@ -456,7 +456,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["deity_name"]			<< custom_names["deity"]
 
 	//Jobs
-	S["userandomjob"]		<< userandomjob
+	S["joblessrole"]		<< joblessrole
 	S["job_civilian_high"]	<< job_civilian_high
 	S["job_civilian_med"]	<< job_civilian_med
 	S["job_civilian_low"]	<< job_civilian_low
