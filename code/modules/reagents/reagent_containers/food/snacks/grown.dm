@@ -824,6 +824,8 @@
 	pop(M)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/device/analyzer/plant_analyzer))
+		return
 	pop(user)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/vaporsac/proc/pop(mob/popper)
