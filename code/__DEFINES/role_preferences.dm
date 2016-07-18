@@ -50,3 +50,8 @@ var/global/list/special_roles = list(
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 )
+
+//Job defines for what happens when you fail to qualify for any job during job selection
+#define BEASSISTANT 	1
+#define BERANDOMJOB 	2
+#define RETURNTOLOBBY 	3
