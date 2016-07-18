@@ -10,6 +10,6 @@
 	w_class = 3
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=6;magnets=6;syndicate=5"
-	ammo_type = list(/obj/item/ammo_casing/white_only/heatgun)
+	ammo_type = list(/obj/item/ammo_casing/white_only/energy/heatgun)
 	selfcharge = 1
 	charge_delay = 2
