@@ -115,15 +115,13 @@
 		contents -= tool_state
 		var/obj/item/TS = tool_state
 		if(!Target)
-			Target = get_turf(src)
+			Target = src.loc
 
-		TS.layer=initial(TS.layer)
-		TS.loc = Target
+		TS.forceMove(Target)
 
-		if(istype(Target, /turf))
-			var/turf/T = Target
-			T.Entered(tool_state)
+		//this all should be using remove_from_mob() but I couldn't easily get it to work for some reason so for now it continues to be copypasted ass
 		TS.dropped(src)
+		TS.layer=initial(TS.layer)
 		tool_state = null
 		module_active=null
 		inv_tool.icon_state="inv1"
@@ -138,6 +136,9 @@
 	var/obj/item/TS
 	if(isnull(module_active))
 		return
+	if(stat != CONSCIOUS || !isturf(loc))
+		return
+
 	if((module_active in src.contents) && !(module_active in src.module.modules) && (module_active != src.module.emag) && candrop)
 		TS = tool_state
 		drop_item(TS)
