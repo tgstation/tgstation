@@ -93,3 +93,16 @@
 
 /datum/objective/devil/outsell/update_explanation_text()
 	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.truename]"
+
+/datum/objective/devil/outsell/check_completion()
+	var/selfcount = 0
+	for(var/S in owner.devilinfo.soulsOwned)
+		var/datum/mind/L = S
+		if(L.soulOwner == owner)
+			selfcount++
+	var/targetcount = 0
+	for(var/S in target.devilinfo.soulsOwned)
+		var/datum/mind/L = S
+		if(L.soulOwner == target)
+			targetcount++
+	return selfcount > targetcount
