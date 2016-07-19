@@ -102,7 +102,7 @@
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
 			else if (result)
-				player << "<font color='green'><B>Achievement unlocked: [medal]!</B></font>"
+				player << "<span class='greenannounce'><B>Achievement unlocked: [medal]!</B></span>"
 
 
 /proc/SetScore(score,client/player,increment,force)
