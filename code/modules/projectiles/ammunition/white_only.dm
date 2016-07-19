@@ -42,3 +42,19 @@
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic
 	max_ammo = 16
+
+/datum/design/white_only/traumatic
+	name = "pistol magazine (traumatic)"
+	id = "9mm_traumatic"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20000)
+	build_path = /obj/item/ammo_box/magazine/white_only/traumatic
+	category = list("initial", "Security")
+
+/datum/design/white_only/traumatic/lethal
+	name = "pistol magazine (lethal)"
+	id = "9mm_lethal"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 40000)
+	build_path = /obj/item/ammo_box/magazine/white_only/traumatic/lethal
+	category = list("hacked", "Security")
