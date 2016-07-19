@@ -100,6 +100,8 @@
 		if(/datum/action/item_action/clock/hierophant)
 			show_hierophant(user)
 		if(/datum/action/item_action/clock/guvax)
+			if(!nonhuman_usable && !ishuman(user))
+				return
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/guvax/convert = new
 				convert.slab = src
@@ -108,6 +110,8 @@
 			else
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 		if(/datum/action/item_action/clock/vanguard)
+			if(!nonhuman_usable && !ishuman(user))
+				return
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/vanguard/antistun = new
 				antistun.slab = src
@@ -129,11 +133,14 @@
 					highest_component_amount = totalcomponents
 					targetslab = S
 		if(targetslab)
-			for(var/i in stored_components)
-				targetslab.stored_components[i] += stored_components[i]
-				stored_components[i] = 0
-			user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
-			"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
+			if(targetslab == src)
+				user << "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>"
+			else
+				for(var/i in stored_components)
+					targetslab.stored_components[i] += stored_components[i]
+					stored_components[i] = 0
+				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
+				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
 			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
 	else

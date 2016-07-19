@@ -169,6 +169,51 @@
 	clockwork_construction_value += amount
 	scripture_unlock_alert(scripture_states)
 
+/proc/get_component_name(id) //returns a component name from a component id
+	switch(id)
+		if("belligerent_eye")
+			return "Belligerent Eye"
+		if("vanguard_cogwheel")
+			return "Vanguard Cogwheel"
+		if("guvax_capacitor")
+			return "Guvax Capacitor"
+		if("replicant_alloy")
+			return "Replicant Alloy"
+		if("hierophant_ansible")
+			return "Hierophant Ansible"
+		else
+			return null
+
+/proc/get_component_span(id) //returns a component spanclass from a component id
+	switch(id)
+		if("belligerent_eye")
+			return "neovgre"
+		if("vanguard_cogwheel")
+			return "inathneq"
+		if("guvax_capacitor")
+			return "sevtug"
+		if("replicant_alloy")
+			return "nezbere"
+		if("hierophant_ansible")
+			return "nzcrentr"
+		else
+			return null
+
+/proc/get_component_id(name) //returns a component id from a component name
+	switch(name)
+		if("Belligerent Eye")
+			return "belligerent_eye"
+		if("Vanguard Cogwheel")
+			return "vanguard_cogwheel"
+		if("Guvax Capacitor")
+			return "guvax_capacitor"
+		if("Replicant Alloy")
+			return "replicant_alloy"
+		if("Hierophant Ansible")
+			return "hierophant_ansible"
+		else
+			return null
+
 /proc/generate_cache_component(specific_component_id) //generates a component in the global component cache, either random based on lowest or a specific component
 	if(specific_component_id)
 		clockwork_component_cache[specific_component_id]++
