@@ -107,7 +107,7 @@
 		..()
 
 /obj/item/weapon/paper/contract/infernal/update_text()
-	info = "This shouldn't be seen.  Error DEVIL:5"
+	info = "This shouldn't be seen.  Error DEVIL:6"
 
 /obj/item/weapon/paper/contract/infernal/power/update_text(var/signature = "____________")
 	info = "<center><B>Contract for infernal power</B></center><BR><BR><BR>I, [target] of sound mind, do hereby willingly offer my soul to the infernal hells by way of the infernal agent [owner.devilinfo.truename], in exchange for power and physical strength.  I understand that upon my demise, my soul shall fall into the infernal hells, and my body may not be resurrected, cloned, or otherwise brought back to life.  I also understand that this will prevent my brain from being used in an MMI.<BR><BR><BR>Signed, <i>[signature]</i>"
@@ -152,7 +152,7 @@
 /obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user)
 	if(user.IsAdvancedToolUser() && user.is_literate())
 		if(user.mind == target)
-			if(user.mind.soulOwner == user.mind)
+			if(user.mind.soulOwner != owner)
 				if (contractType == CONTRACT_REVIVE)
 					user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
 				else
@@ -199,6 +199,8 @@
 
 /obj/item/weapon/paper/contract/infernal/proc/FulfillContract(mob/living/carbon/human/user = target.current)
 	signed = 1
+	if(user.mind.soulOwner != user.mind) //They already sold their soul to someone else?
+		mind.soulOwner.devilinfo.remove_soul(mind) //Then they lose their claim.
 	user.mind.soulOwner = owner
 	user.hellbound = contractType
 	user.mind.damnation_type = contractType
