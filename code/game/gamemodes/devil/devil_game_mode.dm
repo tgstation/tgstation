@@ -34,9 +34,7 @@
 /datum/game_mode/proc/finalize_devil(datum/mind/devil_mind, objectives = 2)
 	var/mob/living/carbon/human/S = devil_mind.current
 	var/trueName= randomDevilName()
-	var/i
-	for(i=0,i<objectives,i++)
-		add_devil_objectives(devil_mind)
+	add_devil_objectives(devil_mind, objectives)
 	devil_mind.devilinfo = devilInfo(trueName, 1)
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
@@ -47,8 +45,13 @@
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
 
-/datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind)
-	var/datum/objective/devil/objective = pict(new /datum/objective/devil/soulquantity, new /datum/objective/devil/soulquality, new /datum/objective/devil/soulquantity, new /datum/objective/devil/sintouch, new /datum/objective/devil/buy_target)
+/datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity = 2)
+	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
+	for(var/i = 1 to quantity)
+		var/type = pick(validtypes)
+		var/datum/objective/devil/objective = new type(null)
+		if(!istype(type, /datum/objective/buy_target))
+			validtypes -= type //prevent duplicate objectives, EXCEPT for buy_target.
 
 /datum/mind/proc/announceDevilLaws()
 	if(!devilinfo)
