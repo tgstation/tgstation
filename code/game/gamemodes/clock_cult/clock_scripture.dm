@@ -417,6 +417,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 
+/datum/clockwork_scripture/create_object/tinkerers_cache/run_scripture()
+	var/cache_cost_increase = round(clockwork_caches*0.5)
+	required_components["replicant_alloy"] += cache_cost_increase
+	consumed_components["replicant_alloy"] += cache_cost_increase
+	return ..()
+
 
 
 /datum/clockwork_scripture/create_object/wraith_spectacles //Wraith Spectacles: Creates a pair of wraith spectacles.
