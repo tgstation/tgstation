@@ -376,8 +376,10 @@
 			. += L
 		else if(B)
 			if(B.burn_state != ON_FIRE)
-				L << "<span class='warning'>Your [B] bursts into flames!</span>"
-				B.fire_act()
+				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
+			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+				if(BI.burn_state != ON_FIRE)
+					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
