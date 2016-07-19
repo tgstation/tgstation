@@ -1011,6 +1011,23 @@
 	qdel(gps)
 	. = ..()
 
+/mob/living/simple_animal/hostile/spawner/lavaland/death()
+	var/last_tendril = TRUE
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+		if(other != src)
+			last_tendril = FALSE
+			break
+	if(last_tendril)
+		for(var/mob/living/L in view(7,src))
+			if(L.stat)
+				continue
+			if(L.client)
+				var/client/C = L.client
+				var/suffixm = ALL_KILL_MEDAL
+				UnlockMedal("Tendril [suffixm]",C)
+				SetScore(TENDRIL_CLEAR_SCORE,C,1)
+
+
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"
 	desc = "Get clear!"

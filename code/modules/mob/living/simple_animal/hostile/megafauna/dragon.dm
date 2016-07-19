@@ -56,6 +56,8 @@ Difficulty: Medium
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
+	medal_type = "Drake"
+	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)

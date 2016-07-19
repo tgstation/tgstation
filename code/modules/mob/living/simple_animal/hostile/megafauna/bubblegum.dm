@@ -50,6 +50,8 @@ Difficulty: Hard
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	var/charging = 0
+	medal_type = "Bubblegum"
+	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
 
