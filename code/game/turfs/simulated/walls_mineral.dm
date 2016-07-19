@@ -198,7 +198,7 @@
 	smooth = SMOOTH_FALSE
 
 /turf/closed/wall/mineral/titanium //has to use this path due to how building walls works
-	name = "wall"
+	name = "titanium wall"
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
@@ -243,7 +243,8 @@
 	T.transform = transform
 
 /turf/closed/wall/mineral/plastitanium
-	name = "wall"
+	name = "plastitanium wall"
+	desc = "An evil wall of plasma and titanium."
 	walltype = "syndieshuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	icon_state = "wall3"
