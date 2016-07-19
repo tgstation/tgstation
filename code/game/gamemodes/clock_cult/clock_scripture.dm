@@ -408,8 +408,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Pbafgehpgv'at...", "...n pnpur!")
 	channel_time = 50
-	required_components = list("replicant_alloy" = 2)
-	consumed_components = list("replicant_alloy" = 1)
+	required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
+	consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 1, "hierophant_ansible" = 0)
 	object_path = /obj/structure/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
@@ -419,8 +419,12 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/create_object/tinkerers_cache/run_scripture()
 	var/cache_cost_increase = round(clockwork_caches*0.5)
-	required_components["replicant_alloy"] += cache_cost_increase
-	consumed_components["replicant_alloy"] += cache_cost_increase
+	for(var/i in required_components)
+		if(i != "replicant_alloy")
+			required_components[i] += cache_cost_increase
+	for(var/i in consumed_components)
+		if(i != "replicant_alloy")
+			consumed_components[i] += cache_cost_increase
 	return ..()
 
 
