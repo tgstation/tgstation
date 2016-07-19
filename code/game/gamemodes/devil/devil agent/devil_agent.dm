@@ -8,15 +8,16 @@
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 6 // Six additional traitors
+	objective_count = 1
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
 
-/datum/game_mode/devil/double_agents/announce()
+/datum/game_mode/devil/devil_agents/announce()
 	world << "<B>The current game mode is - Devil Agents!</B>"
 	world << "<B>There are several devils onboard the station, trying to each sell more souls than the other.</B>"
 
-/datum/game_mode/devil/double_agents/post_setup()
+/datum/game_mode/devil/devil_agents/post_setup()
 	var/i = 0
 	for(var/datum/mind/devil in devils)
 		i++
@@ -25,16 +26,17 @@
 		target_list[devil] = devils[i + 1]
 	..()
 
-/datum/game_mode/devil/double_agents/forge_traitor_objectives(datum/mind/devil)
+/datum/game_mode/devil/devil_agents/add_devil_objectives(datum/mind/devil_mind, quantity)
+	..(devil_mind, quantity - give_outsell_objective(devil_mind))
 
+/datum/game_mode/devil/give_outsell_objective(datum/mind/devil)
+	//If you override this method, have it return the number of objectives added.
 	if(target_list.len && target_list[devil]) // Is a double agent
-		// Assassinate
 		var/datum/mind/target_mind = target_list[devil]
 		var/datum/objective/devil/outsell/outsellobjective = new
 		outsellobjective.owner = devil
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
 		devil.objectives += outsellobjective
-	else
-		..() // Give them standard objectives.
-	return
+		return 1
+	return 0

@@ -3,7 +3,7 @@
 /obj/item/weapon/paper/contract
 	throw_range = 3
 	throw_speed = 3
-	var/signed = 0
+	var/signedsigned = FALSE
 	var/datum/mind/target
 	flags = NOBLUDGEON
 
@@ -150,16 +150,19 @@
 		return ..()
 
 /obj/item/weapon/paper/contract/infernal/proc/attempt_signature(mob/living/carbon/human/user)
-	if(user.IsAdvancedToolUser())
+	if(user.IsAdvancedToolUser() && user.is_literate())
 		if(user.mind == target)
 			if(user.mind.soulOwner == user.mind)
 				if (contractType == CONTRACT_REVIVE)
 					user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
 				else
-					user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
-					if(FulfillContract()<=0)
-						user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
-					return 1
+					if(signed)
+						user<< "<span class='notice'>This contract has already been signed.  It may not be signed again.</span>"
+					else
+						user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+						if(FulfillContract()<=0)
+							user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
+						return 1
 			else
 				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
 		else

@@ -45,6 +45,7 @@
 /mob/living/carbon/true_devil/Login()
 	..()
 	mind.announceDevilLaws()
+	mind.announce_objectives()
 
 
 /mob/living/carbon/true_devil/death(gibbed)

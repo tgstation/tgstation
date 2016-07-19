@@ -34,6 +34,7 @@
 	Mind.transfer_to(devil)
 	ticker.mode.finalize_devil(Mind)
 	Mind.announceDevilLaws()
+	Mind.announce_objectives()
 
 
 	spawned_mobs += devil
