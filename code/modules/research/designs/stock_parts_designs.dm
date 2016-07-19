@@ -141,7 +141,7 @@
 	id = "femto_mani"
 	req_tech = list("materials" = 7, "programming" = 5, "engineering" = 5, "bluespace" = 5)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 200, MAT_DIAMOND = 60)
+	materials = list(MAT_METAL = 200, MAT_DIAMOND = 30, MAT_TITANIUM = 30)
 	build_path = /obj/item/weapon/stock_parts/manipulator/femto
 	category = list("Stock Parts")
 
