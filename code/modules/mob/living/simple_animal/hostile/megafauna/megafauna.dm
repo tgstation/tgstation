@@ -184,4 +184,8 @@
 		else
 			message_admins("Medal: [medal] was not found for [player.ckey]. Unable to clear.")
 
+
+/proc/ClearScore(client/player)
+	world.SetScores(player.ckey, "", global.medal_hub, global.medal_pass)
+
 #undef MEDAL_PREFIX
