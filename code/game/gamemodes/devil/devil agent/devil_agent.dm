@@ -15,7 +15,7 @@
 
 /datum/game_mode/devil/devil_agents/announce()
 	world << "<B>The current game mode is - Devil Agents!</B>"
-	world << "<B>There are several devils onboard the station, trying to each sell more souls than the other.</B>"
+	world << "<B>There are several devils onboard the station, trying to each buy more souls than the other.</B>"
 
 /datum/game_mode/devil/devil_agents/post_setup()
 	var/i = 0
