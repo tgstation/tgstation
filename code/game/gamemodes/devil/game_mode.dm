@@ -49,7 +49,8 @@
 	for(var/i = 1 to quantity)
 		var/type = pick(validtypes)
 		var/datum/objective/devil/objective = new type(null)
-		if(!istype(type, /datum/objective/buy_target))
+		devil_mind.objectives += objective
+		if(!istype(type, /datum/objective/devil/buy_target))
 			validtypes -= type //prevent duplicate objectives, EXCEPT for buy_target.
 
 /datum/mind/proc/announceDevilLaws()

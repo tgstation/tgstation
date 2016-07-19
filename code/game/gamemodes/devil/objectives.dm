@@ -25,10 +25,10 @@
 /datum/objective/devil/soulquality
 	explanation_text = "You shouldn't see this text.  Error:DEVIL2"
 	var/contractType
+	var/contractName
 
 /datum/objective/devil/soulquality/New()
 	contractType = pick(CONTRACT_POWER, CONTRACT_WEALTH, CONTRACT_PRESTIGE, CONTRACT_MAGIC, CONTRACT_REVIVE, CONTRACT_KNOWLEDGE/*, CONTRACT_UNWILLING*/)
-	var/contractName
 	target_amount = pick(1,2)
 	switch(contractType)
 		if(CONTRACT_POWER)
@@ -80,7 +80,7 @@
 	update_explanation_text()
 
 /datum/objective/devil/buy_target/update_explanation_text()
-	explanation_text = "Purchase and retain the soul of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+	explanation_text = "Purchase and retain the soul of [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/buy_target/check_completion()
 	return target.soulOwner == owner
@@ -92,4 +92,4 @@
 /datum/objective/devil/outsell/New()
 
 /datum/objective/devil/outsell/update_explanation_text()
-	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.trueName]"
+	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.truename]"
