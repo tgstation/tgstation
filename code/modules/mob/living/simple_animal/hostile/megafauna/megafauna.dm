@@ -79,16 +79,17 @@
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
 		return
 
-	for(var/mob/living/L in view(7,src))
-		if(L.stat)
-			continue
-		if(L.client)
-			var/client/C = L.client
-			var/suffixm = BOSS_KILL_MEDAL
-			UnlockMedal("Boss [suffixm]",C)
-			UnlockMedal("[medaltype] [suffixm]",C)
-			SetScore(BOSS_SCORE,C,1)
-			SetScore(score_type,C,1)
+	if(global.medal_hub && global.medal_pass && global.medals_enabled)
+		for(var/mob/living/L in view(7,src))
+			if(L.stat)
+				continue
+			if(L.client)
+				var/client/C = L.client
+				var/suffixm = BOSS_KILL_MEDAL
+				UnlockMedal("Boss [suffixm]",C)
+				UnlockMedal("[medaltype] [suffixm]",C)
+				SetScore(BOSS_SCORE,C,1)
+				SetScore(score_type,C,1)
 
 /proc/UnlockMedal(medal,client/player)
 

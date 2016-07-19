@@ -1019,15 +1019,16 @@
 			last_tendril = FALSE
 			break
 	if(last_tendril)
-		for(var/mob/living/L in view(7,src))
-			if(L.stat)
-				continue
-			if(L.client)
-				var/client/C = L.client
-				var/suffixm = ALL_KILL_MEDAL
-				var/prefix = MEDAL_PREFIX
-				UnlockMedal("[prefix] [suffixm]",C)
-				SetScore(TENDRIL_CLEAR_SCORE,C,1)
+		if(global.medal_hub && global.medal_pass && global.medals_enabled)
+			for(var/mob/living/L in view(7,src))
+				if(L.stat)
+					continue
+				if(L.client)
+					var/client/C = L.client
+					var/suffixm = ALL_KILL_MEDAL
+					var/prefix = MEDAL_PREFIX
+					UnlockMedal("[prefix] [suffixm]",C)
+					SetScore(TENDRIL_CLEAR_SCORE,C,1)
 	..()
 #undef MEDAL_PREFIX
 
