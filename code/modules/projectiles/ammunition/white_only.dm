@@ -11,19 +11,34 @@
 	projectile_type = /obj/item/projectile/white_only/energy/heatgun
 
 /obj/item/ammo_casing/white_only/traumatic
-	desc = "A 10mm traumatic bullet casing."
-	caliber = "10mm"
+	desc = "A 9mm traumatic bullet casing."
+	caliber = "9mm"
 	projectile_type = /obj/item/projectile/white_only/pistol/traumaticbullet
 
-/////////////////////////////////////////////Magazines////////////////////////////////////////////////////////////
+/obj/item/ammo_casing/white_only/traumatic/lethal
+	projectile_type = /obj/item/projectile/white_only/pistol/lethalbullet
 
+/////////////////////////////////////////////Magazines////////////////////////////////////////////////////////////
 
 /obj/item/ammo_box/magazine/white_only/traumatic
 	name = "pistol magazine (traumatic)"
 	desc = "A gun magazine."
-	icon_state = "9x19p"
+	icon_state = "oldrifle"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic
-	caliber = "10mm"
-	max_ammo = 8
+	caliber = "9mm"
+	max_ammo = 12
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/white_only/traumatic/lethal
+	name = "pistol magazine (lethal)"
+	desc = "A gun magazine."
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/white_only/traumatic/lethal
+
+/obj/item/ammo_box/magazine/white_only/traumatic/enhanced
+	name = "enhanced pistol magazine (traumatic)"
+	desc = "A gun magazine."
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/white_only/traumatic
+	max_ammo = 16

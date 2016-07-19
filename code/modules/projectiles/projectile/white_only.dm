@@ -35,3 +35,7 @@
 /obj/item/projectile/white_only/pistol/traumaticbullet //for traumatic pistol, heavy stamina damage
 	damage = 3
 	stamina = 90
+
+/obj/item/projectile/white_only/pistol/lethalbullet //for traumatic pistol, heavy brute and stamina
+	damage = 25
+	stamina = 30
