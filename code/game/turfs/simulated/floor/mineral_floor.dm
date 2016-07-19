@@ -80,12 +80,24 @@
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	icons = list("shuttlefloor3","shuttle_dam")
 
+/turf/open/floor/mineral/titanium/blue
+	icon_state = "shuttlefloor"
+
+/turf/open/floor/mineral/titanium/yellow
+	icon_state = "shuttlefloor2"
+
+/turf/open/floor/mineral/titanium/purple
+	icon_state = "shuttlefloor5"
+
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
 	icon_state = "shuttlefloor4"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	icons = list("shuttlefloor4","shuttle_dam")
+
+/turf/open/floor/mineral/plastitanium/brig
+	name = "Brig floor"
 
 //BANANIUM
 

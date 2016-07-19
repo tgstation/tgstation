@@ -28,20 +28,15 @@
 	name = "Shuttle"
 	})
 "d" = (
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (EAST)";
-	icon_state = "wall3";
-	dir = 4
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "e" = (
 /turf/open/space,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (NORTHEAST)";
-	icon_state = "wall3";
-	dir = 5
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered{
 	name = "Shuttle"
@@ -57,31 +52,30 @@
 	name = "Shuttle"
 	})
 "g" = (
-/turf/closed/wall/shuttle,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (SOUTHEAST)";
-	icon_state = "wall3";
-	dir = 6
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "h" = (
-/turf/closed/wall/shuttle,
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "i" = (
-/turf/closed/wall/shuttle/smooth/overspace,
+/turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "j" = (
 /turf/open/space,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered{
 	name = "Shuttle"
@@ -120,10 +114,8 @@
 	})
 "q" = (
 /turf/open/space,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (SOUTHWEST)";
-	icon_state = "wall3";
-	dir = 10
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered{
 	name = "Shuttle"
@@ -187,22 +179,26 @@
 	name = "Shuttle"
 	})
 "z" = (
-/turf/closed/wall/shuttle,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (NORTHEAST)";
-	icon_state = "wall3";
-	dir = 5
+/turf/open/floor/plating,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
 "A" = (
 /turf/open/space,
-/turf/closed/indestructible/opshuttle{
-	tag = "icon-wall3 (SOUTHEAST)";
-	icon_state = "wall3";
-	dir = 6
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
+/area/ruin/powered{
+	name = "Shuttle"
+	})
+"B" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered{
 	name = "Shuttle"
 	})
@@ -318,9 +314,9 @@ g
 h
 n
 h
-h
+B
 w
-h
+B
 h
 n
 h
@@ -334,7 +330,7 @@ k
 k
 h
 h
-h
+B
 h
 h
 k

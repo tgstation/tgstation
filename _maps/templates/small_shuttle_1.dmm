@@ -3,11 +3,7 @@
 /turf/open/space,
 /area/space)
 "b" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f6";
-	icon_state = "swall_f6"
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/space)
 "c" = (
 /obj/structure/grille,
@@ -22,19 +18,16 @@
 	},
 /area/space)
 "e" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall3";
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/space)
 "f" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "g" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "h" = (
 /turf/closed/wall/shuttle{
@@ -50,7 +43,7 @@
 /area/space)
 "j" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "k" = (
 /turf/closed/wall/shuttle{
@@ -62,13 +55,13 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "m" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/space)
 "n" = (
 /obj/structure/shuttle/engine/heater,
@@ -116,13 +109,13 @@ j
 j
 e
 e
-o
+b
 "}
 (2,1,1) = {"
 b
 e
 e
-h
+e
 l
 l
 f
@@ -135,7 +128,7 @@ p
 c
 f
 f
-i
+e
 f
 f
 f
@@ -161,7 +154,7 @@ q
 c
 f
 f
-k
+e
 f
 f
 f
@@ -171,10 +164,10 @@ n
 q
 "}
 (6,1,1) = {"
-d
+b
 e
 e
-h
+e
 m
 m
 f
@@ -187,12 +180,12 @@ r
 a
 a
 a
-d
+b
 e
 e
 j
 j
 e
 e
-s
+b
 "}

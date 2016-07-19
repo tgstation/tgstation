@@ -3,7 +3,7 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/shuttle/smooth/overspace,
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
@@ -17,7 +17,7 @@
 	},
 /area/shuttle/escape)
 "ae" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table/wood,
@@ -150,7 +150,7 @@
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aB" = (
 /turf/closed/wall/shuttle{
@@ -160,7 +160,7 @@
 /area/shuttle/escape)
 "aC" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aD" = (
 /obj/machinery/flasher{
@@ -204,10 +204,10 @@
 	pixel_x = -24;
 	pixel_y = -6
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aI" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aJ" = (
 /obj/machinery/door/airlock/glass{
@@ -221,20 +221,20 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aL" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aN" = (
 /obj/structure/chair/stool/bar{
@@ -362,7 +362,7 @@
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
 "bi" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bj" = (
 /obj/structure/table/reinforced,
@@ -394,7 +394,7 @@
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /obj/structure/sign/bluecross_2,
-/turf/open/floor/plasteel/freezer,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
 /obj/machinery/door/airlock/shuttle{
@@ -409,13 +409,13 @@
 /obj/machinery/door/airlock/glass_medical{
 	name = "Medbay"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "br" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bs" = (
 /obj/machinery/door/airlock{
@@ -424,7 +424,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/escape)
 "bt" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "bu" = (
 /obj/machinery/door/airlock{
@@ -441,7 +441,7 @@
 "bw" = (
 /obj/structure/table/optable,
 /obj/item/weapon/surgical_drapes,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/toilet{
@@ -461,21 +461,16 @@
 /obj/item/weapon/hemostat,
 /obj/item/weapon/retractor,
 /obj/item/weapon/scalpel,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bA" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-gwall_space";
-	icon_state = "gwall_space";
-	dir = 2
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "bB" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3";
-	icon_state = "wall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 "bC" = (
 /obj/structure/window/reinforced{
@@ -485,10 +480,10 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bD" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-gwall_space (EAST)";
-	icon_state = "gwall_space";
-	dir = 4
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/escape)
 "bE" = (
@@ -578,7 +573,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bT" = (
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -594,7 +589,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table/wood/bar{
