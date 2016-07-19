@@ -13,9 +13,9 @@
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/objective_count = 2
 
-/datum/game_mode/devil/announce()
-	world << "<B>The current game mode is - Devil!</B>"
-	world << "<B>There are devils on the station.  Resist the lure of sin and remain pure!</B>"
+	announce_text = "There are devils onboard the station!\n\
+		+	<span class='danger'>Devils</span>: Purchase souls and tempt the crew to sin!\n\
+		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/pre_setup()
 

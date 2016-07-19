@@ -13,9 +13,9 @@
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
 
-/datum/game_mode/devil/devil_agents/announce()
-	world << "<B>The current game mode is - Devil Agents!</B>"
-	world << "<B>There are several devils onboard the station, trying to each buy more souls than the other.</B>"
+	announce_text = "There are devil agents onboard the station, trying to outbid each other!\n\
+		+	<span class='danger'>Devils</span>: Purchase souls and interfere with your rivals!\n\
+		+	<span class='notice'>Crew</span>: Resist the lure of sin and remain pure!"
 
 /datum/game_mode/devil/devil_agents/post_setup()
 	var/i = 0
