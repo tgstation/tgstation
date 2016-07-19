@@ -190,6 +190,9 @@
 	minimal_access = list(access_medical, access_virology)
 	alt_titles = list("Pathologist", "Microbiologist")
 
+	pdaslot=slot_belt
+	pdatype=/obj/item/device/pda/viro
+
 	equip(var/mob/living/carbon/human/H)
 		if(!H)	return 0
 		H.equip_or_collect(new /obj/item/device/radio/headset/headset_med(H), slot_ears)
@@ -198,7 +201,6 @@
 			if(3) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel_vir, slot_back)
 			if(4) H.equip_or_collect(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 		H.equip_or_collect(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
-		H.equip_or_collect(new /obj/item/device/pda/viro(H), slot_belt)
 		H.equip_or_collect(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 		H.equip_or_collect(new /obj/item/clothing/shoes/white(H), slot_shoes)
 		H.equip_or_collect(new /obj/item/clothing/suit/storage/labcoat/virologist(H), slot_wear_suit)

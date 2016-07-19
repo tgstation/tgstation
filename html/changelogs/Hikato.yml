@@ -1,0 +1,4 @@
+author: Hikato
+delete-after: True
+changes: 
+- bugfix: Virologists will only spawn with one PDA.
