@@ -271,6 +271,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["bosses_killed"]      << bosses_killed
 
 	return 1
 

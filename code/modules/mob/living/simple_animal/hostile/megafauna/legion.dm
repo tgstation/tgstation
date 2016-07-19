@@ -46,6 +46,7 @@ Difficulty: Medium
 	vision_range = 13
 	aggro_vision_range = 18
 	idle_vision_range = 13
+	unlock_type = LEGION
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()

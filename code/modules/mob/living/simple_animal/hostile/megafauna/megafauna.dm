@@ -14,11 +14,13 @@
 	maxbodytemp = INFINITY
 	anchored = TRUE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
+	var/unlock_type = BOSS_KILLER
 
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
 	else
+		grant_achievement()
 		feedback_set_details("megafauna_kills","[initial(name)]")
 		..()
 
@@ -33,6 +35,18 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement()
+	for(var/mob/living/L in view(7,src))
+		if(L.stat)
+			continue
+		if(L.client)
+			var/client/C = L.client
+			C.prefs.bosses_killed[unlock_type] += 1
+			C.prefs.bosses_killed[BOSS_KILLER] += 1
+			C.prefs.save_preferences()
+			L << "Achievement Unlocked: [unlock_type]"
+			L << "Achievement Unlocked: [BOSS_KILLER]"
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc

@@ -481,3 +481,10 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH		3
 #define STORAGE_VIEW_DEPTH	2
+
+#define LEGION "Legion Killer"
+#define COLOSSUS "Colossus Killer"
+#define BUBBLEGUM "Bubblegum Killer"
+#define DRAKE "Drake Killer"
+#define BOSS_KILLER "Boss Killer"
+#define TENDRIL_CLEAR "Tendril Exterminator"
