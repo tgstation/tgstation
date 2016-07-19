@@ -1,3 +1,4 @@
+#define MEDAL_PREFIX "Legion"
 /*
 
 LEGION
@@ -40,7 +41,7 @@ Difficulty: Medium
 	ranged_cooldown_time = 20
 	var/size = 10
 	var/charging = 0
-	medal_type = "Legion"
+	medal_type = MEDAL_PREFIX
 	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
@@ -175,3 +176,5 @@ Difficulty: Medium
 		A.telegraph()
 
 	storm_cooldown = world.time + 600
+
+#undef MEDAL_PREFIX

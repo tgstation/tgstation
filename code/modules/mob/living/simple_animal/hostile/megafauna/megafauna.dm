@@ -1,3 +1,6 @@
+#define MEDAL_PREFIX "Boss"
+
+
 /mob/living/simple_animal/hostile/megafauna
 	name = "boss of this gym"
 	desc = "Attack the weak point for massive damage."
@@ -12,7 +15,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	var/medal_type = "Boss"
+	var/medal_type = MEDAL_PREFIX
 	var/score_type = BOSS_SCORE
 	var/elimination = 0
 	anchored = TRUE
@@ -180,3 +183,5 @@
 			message_admins("Medal: [medal] removed for [player.ckey]")
 		else
 			message_admins("Medal: [medal] was not found for [player.ckey]. Unable to clear.")
+
+#undef MEDAL_PREFIX
