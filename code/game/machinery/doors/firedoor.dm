@@ -240,21 +240,20 @@
 				if(reinforced)
 					user << "<span class='warning'>[src] is already reinforced.</span>"
 					return
-				if(P.amount < 2)
+				if(P.get_amount() < 2)
 					user << "<span class='warning'>You need more plasteel to reinforce [src].</span>"
 					return
 				user.visible_message("<span class='notice'>[user] begins reinforcing [src]...</span>", \
 									 "<span class='notice'>You begin reinforcing [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(!do_after(user, 60, target = src))
-					return
-				if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.amount < 2)
-					return
-				user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
-									 "<span class='notice'>You reinforce [src].</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				P.use(2)
-				reinforced = 1
+				if(do_after(user, 60, target = src))
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.get_amount() < 2 || !P)
+						return
+					user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
+										 "<span class='notice'>You reinforce [src].</span>")
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					P.use(2)
+					reinforced = 1
 				return
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
@@ -307,22 +306,21 @@
 				return
 			if(istype(C, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/B = C
-				if(B.amount < 5)
+				if(B.get_amount() < 5)
 					user << "<span class='warning'>You need more wires to add wiring to [src].</span>"
 					return
 				user.visible_message("<span class='notice'>[user] begins wiring [src]...</span>", \
 									 "<span class='notice'>You begin adding wires to [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(!do_after(user, 60, target = src))
-					return
-				if(constructionStep != CONSTRUCTION_GUTTED || B.amount < 5)
-					return
-				user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
-									 "<span class='notice'>You wire [src].</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				B.use(5)
-				constructionStep = CONSTRUCTION_WIRES_EXPOSED
-				update_icon()
+				if(do_after(user, 60, target = src))
+					if(constructionStep != CONSTRUCTION_GUTTED || B.get_amount() < 5 || !B)
+						return
+					user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
+										 "<span class='notice'>You wire [src].</span>")
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					B.use(5)
+					constructionStep = CONSTRUCTION_WIRES_EXPOSED
+					update_icon()
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
 			if(istype(C, /obj/item/weapon/weldingtool))

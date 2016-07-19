@@ -246,10 +246,27 @@
 	anchored = 1
 
 /atom/movable/light/Destroy(force)
-	if(force)
-		. = ..()
-	else
+	if(!force)
 		return QDEL_HINT_LETMELIVE
+	var/turf/T = loc
+	. = ..()
+	if (T.lighting_object == src)
+		T.lighting_object = null
+	
+/atom/movable/light/New()
+	if (!isturf(loc))
+		PutOut()
+		throw EXCEPTION("Invalid light placement: loc must be a turf")
+	var/turf/T = loc
+	
+	if (T.lighting_object && T.lighting_object != src)
+		PutOut()
+		throw EXCEPTION("BUG: /atom/movable/light created on a turf that already has one")
+	T.lighting_object = src
+	
+/atom/movable/light/proc/PutOut()
+	alpha = 0
+	qdel(src, force = TRUE)
 
 /atom/movable/light/Move()
 	return 0
@@ -288,6 +305,7 @@
 	update_lumcount(old_lumcount)
 	baseturf = oldbaseturf
 	lighting_object = locate() in src
+
 	init_lighting()
 
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
@@ -308,9 +326,7 @@
 		if(lighting_changed)
 			lighting_changed = 0
 		if(lighting_object)
-			lighting_object.alpha = 0
-			qdel(lighting_object)
-			lighting_object = null
+			lighting_object.PutOut()
 	else
 		if(!lighting_object)
 			lighting_object = new (src)
@@ -323,8 +339,7 @@
 	if(lighting_changed)
 		lighting_changed = 0
 	if(lighting_object)
-		lighting_object.alpha = 0
-		lighting_object = null
+		lighting_object.PutOut()
 
 /turf/proc/redraw_lighting(instantly = 0)
 	if(lighting_object)

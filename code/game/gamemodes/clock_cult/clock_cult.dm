@@ -176,13 +176,11 @@ This file's folder contains:
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
+	announce_span = "brass"
+	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
+	<span class='brass'>Servants</span>: Take over the station and summon Ratvar.\n\
+	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
 	var/servants_to_serve = list()
-
-/datum/game_mode/clockwork_cult/announce()
-	world << "<b>The game mode is: Clockwork Cult!</b>"
-	world << "<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>"
-	world << "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>"
-	world << "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>"
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -301,11 +299,16 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
 			feedback_set_details("round_end_result", "win - servants summoned ratvar")
 		else
-			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
+			var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+			if(!G)
+				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+				feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
+			else
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
+				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"

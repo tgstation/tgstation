@@ -325,3 +325,36 @@
 	. = ..()
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, rand(1,2), 7, user)
+
+/obj/item/weapon/melee/flyswatter
+	name = "Flyswatter"
+	desc = "Useful for killing insects of all sizes."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "flyswatter"
+	item_state = "flyswatter"
+	force = 1
+	throwforce = 1
+	attack_verb = list("swatted", "smacked")
+	hitsound = 'sound/effects/snap.ogg'
+	w_class = 2
+	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
+	var/list/strong_against
+
+/obj/item/weapon/melee/flyswatter/New()
+	strong_against = typecacheof(list(
+					/mob/living/simple_animal/hostile/poison/bees/,
+					/mob/living/simple_animal/butterfly,
+					/mob/living/simple_animal/cockroach,
+					/obj/item/queen_bee/
+	))
+
+/obj/item/weapon/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
+	if(proximity_flag)
+		if(is_type_in_typecache(target, strong_against))
+			new /obj/effect/decal/cleanable/deadcockroach(get_turf(target))
+			user << "<span class='warning'>You easily splat the [target].</span>"
+			if(istype(target, /mob/living/))
+				var/mob/living/bug = target
+				bug.death(1)
+			else
+				qdel(target)
