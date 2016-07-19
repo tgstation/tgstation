@@ -56,7 +56,5 @@
 				devil.announceDevilLaws()
 				devil.announce_objectives()
 	modePlayer += devils
-	for(var/datum/mind/devil in devils)
-
 	..()
 	return 1
