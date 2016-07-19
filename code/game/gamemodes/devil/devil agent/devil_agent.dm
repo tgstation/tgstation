@@ -8,7 +8,7 @@
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
 	num_modifier = 6 // Six additional traitors
-	objective_count = 1
+	objective_count = 2
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()

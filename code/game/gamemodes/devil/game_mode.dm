@@ -29,11 +29,10 @@
 	world << text
 
 
-/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind, objectives = 2)
+/datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
 	var/mob/living/carbon/human/S = devil_mind.current
 	var/trueName= randomDevilName()
-	if(objectives)
-		add_devil_objectives(devil_mind, objectives)
+
 	devil_mind.devilinfo = devilInfo(trueName, 1)
 	devil_mind.store_memory("Your devilic true name is [devil_mind.devilinfo.truename]<br>[lawlorify[LAW][devil_mind.devilinfo.ban]]<br>You may not use violence to coerce someone into selling their soul.<br>You may not directly and knowingly physically harm a devil, other than yourself.<br>[lawlorify[LAW][devil_mind.devilinfo.bane]]<br>[lawlorify[LAW][devil_mind.devilinfo.obligation]]<br>[lawlorify[LAW][devil_mind.devilinfo.banish]]<br>")
 	devil_mind.devilinfo.owner = devil_mind
@@ -49,6 +48,7 @@
 	for(var/i = 1 to quantity)
 		var/type = pick(validtypes)
 		var/datum/objective/devil/objective = new type(null)
+		objective.owner = devil_mind
 		devil_mind.objectives += objective
 		if(!istype(type, /datum/objective/devil/buy_target))
 			validtypes -= type //prevent duplicate objectives, EXCEPT for buy_target.

@@ -51,7 +51,12 @@
 	for(var/datum/mind/devil in devils)
 		spawn(rand(10,100))
 			finalize_devil(devil, objective_count)
-			devil.announceDevilLaws()
+			spawn(100)
+				add_devil_objectives(devil, objective_count) //This has to be in a separate loop, as we need devil names to be generated before we give objectives in devil agent.
+				devil.announceDevilLaws()
+				devil.announce_objectives()
 	modePlayer += devils
+	for(var/datum/mind/devil in devils)
+
 	..()
 	return 1

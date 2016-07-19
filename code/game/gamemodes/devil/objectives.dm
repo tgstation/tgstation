@@ -80,7 +80,10 @@
 	update_explanation_text()
 
 /datum/objective/devil/buy_target/update_explanation_text()
-	explanation_text = "Purchase and retain the soul of [target.name], the [target.assigned_role]."
+	if(target)
+		explanation_text = "Purchase and retain the soul of [target.name], the [target.assigned_role]."
+	else
+		explanation_text = "Free objective. ERROR: DEVIL9"
 
 /datum/objective/devil/buy_target/check_completion()
 	return target.soulOwner == owner
