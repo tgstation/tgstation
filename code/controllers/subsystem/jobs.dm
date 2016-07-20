@@ -328,7 +328,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		else if(player.client.prefs.joblessrole == BERANDOMJOB)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -339,8 +339,15 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		Debug("AC2 Assistant located, Player: [player]")
-		AssignRole(player, "Assistant")
+		if(player.client.prefs.joblessrole == BEASSISTANT)
+			Debug("AC2 Assistant located, Player: [player]")
+			AssignRole(player, "Assistant")
+		else // For those who don't want to play if their preference were filled, back you go.
+			RejectPlayer(player)
+
+	for(var/mob/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
+		GiveRandomJob(player)
+
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -470,7 +477,8 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
-	Debug("Popcap overflow Check observer located, Player: [player]")
+	if(PopcapReached())
+		Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player
 	player.ready = 0

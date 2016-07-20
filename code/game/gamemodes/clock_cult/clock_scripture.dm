@@ -309,11 +309,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/guvax //Guvax: Converts anyone adjacent to the invoker after completion.
 	descname = "Melee Area Convert"
 	name = "Guvax"
-	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby servants."
+	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby Servants."
 	invocations = list("Rayvtugr-a guv'f urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hagehguf-naq-ubabe Ratvar.")
 	channel_time = 50
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
+	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/guvax/run_scripture()
@@ -323,7 +323,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			servants++
 	if(servants > 5)
 		servants -= 5
-		channel_time = min(channel_time + servants*7.5, 150) //if above 5 servants, is slower
+		channel_time = min(channel_time + servants*10, 200) //if above 5 servants, is much slower
 	return ..()
 
 /datum/clockwork_scripture/guvax/scripture_effects()
