@@ -377,8 +377,15 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check())
+		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
 			. += L
+		else if(B)
+			if(B.burn_state != ON_FIRE)
+				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
+			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+				if(BI.burn_state != ON_FIRE)
+					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))

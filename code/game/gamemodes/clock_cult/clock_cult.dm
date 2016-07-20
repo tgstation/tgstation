@@ -1,6 +1,6 @@
 /*
 
-CLOCKWORK CULT: Based off of the failed pull requests from vgstation
+CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
 While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
 Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
@@ -8,12 +8,7 @@ Imprisoned within a massive construct known as the Celestial Derelict - or Reebe
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
-This is a team-based gamemode.
-
-There are three possible objectives the Enlightened - Ratvar's minions - can have:
-	1. Ensure X amount of Enlightened escape the station through the shuttle or otherwise.
-	2. Convert all silicon lifeforms on the station to Ratvar's cause.
-	3. Summon Ratvar via construction of a Gateway.
+This is a team-based gamemode, and the team's objective is shared by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
 
 The clockwork version of an arcane tome is the clockwork slab.
 While it can perform certain actions, it consumes a resource called components.
@@ -23,11 +18,13 @@ Game-wise, clockwork slabs will generate components over time, with more powerfu
 This file's folder contains:
 	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
+	clock_items.dm: Items (excluding the proselytizer).
+	clock_machines.dm: Machinery like the mending motor.
 	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_items.dm: Items
-	clock_structures.dm: Structures and effects
+	clock_proselytizer: The clockwork proselytizer and all of its special interactions.
 	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
 	clock_scripture.dm: Scripture and rites.
+	clock_structures.dm: Structures and effects
 	clock_unsorted.dm: Anything else with no place to be
 
 */
@@ -222,7 +219,6 @@ This file's folder contains:
 	if(silicons_possible)
 		possible_objectives += "silicons"
 	clockwork_objective = pick(possible_objectives)
-	clockwork_objective = "gateway" //TEMPORARY, to be removed before merge
 	switch(clockwork_objective)
 		if("escape")
 			required_escapees = max(1, num_players() / 3) //33% of the player count must be cultists
@@ -300,16 +296,20 @@ This file's folder contains:
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
 			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants summoned ratvar")
+			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
-			var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
-			if(!G)
-				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
-			else
+			var/half_victory = FALSE
+			if(clockwork_objective == "gateway")
+				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				if(G)
+					half_victory = TRUE
+			if(!half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
 				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
-		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
+			else
+				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
+		text += "<br><b>The servants' objective was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
