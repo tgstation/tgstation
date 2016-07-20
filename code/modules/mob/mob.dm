@@ -516,6 +516,20 @@ var/next_mob_id = 0
 	reset_perspective(null)
 	unset_machine()
 
+/mob/verb/setfps(newfps as num|null)
+	set name = "Set FPS"
+	set category = "Preferences"
+	set desc = "Changes the frame rate of your client (Rounds based on resulting millisecond tick rate)"
+	if (!client)
+		return
+	if (!newfps)
+		client.fps = 0
+		usr << "Your FPS has been reset to [world.fps]"
+	//byond ignores fps rates lower then the world's and starts rounding numbers higher then 143 wildly
+	//	144-166 -> 167, 168-199 -> 200, 201-249 -> 250 ...
+
+	usr << "Your FPS has been changed to [client.fps = Clamp(newfps, world.fps, 143)]"
+
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
