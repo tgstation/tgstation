@@ -405,7 +405,8 @@
 
 /turf/simulated/wall/r_wall/dismantle_wall(devastated = 0, explode = 0)
 	if(!devastated)
-		getFromPool(/obj/item/stack/sheet/plasteel, src)//Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods
+		getFromPool(/obj/item/stack/sheet/plasteel, src)//Reinforced girder has deconstruction steps too. If no girder, drop ONE plasteel sheet AND rods 
+		new girder_type(src)
 	else
 		getFromPool(/obj/item/stack/rods, src, 2)
 		getFromPool(/obj/item/stack/sheet/plasteel, src)
