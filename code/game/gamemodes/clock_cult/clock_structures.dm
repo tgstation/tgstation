@@ -153,7 +153,7 @@
 	max_health = 80
 	health = 80
 	var/wall_generation_cooldown
-	var/wall_found = FALSE //if we've found a wall and finished our windup delay
+	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
 /obj/structure/clockwork/cache/New()
 	..()
@@ -170,6 +170,9 @@
 	clockwork_caches--
 	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
+	if(linkedwall)
+		linkedwall.linkedcache = null
+		linkedwall = null
 	for(var/i in all_clockwork_mobs)
 		cache_check(i)
 	return ..()
@@ -182,13 +185,14 @@
 	return ..()
 
 /obj/structure/clockwork/cache/process()
-	for(var/turf/closed/wall/clockwork/C in orange(1, src))
-		if(!wall_found)
-			wall_found = TRUE
+	for(var/turf/closed/wall/clockwork/C in view(4, src))
+		if(!C.linkedcache && !linkedwall)
+			C.linkedcache = src
+			linkedwall = C
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
-		if(wall_generation_cooldown <= world.time)
+		if(linkedwall && wall_generation_cooldown <= world.time)
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()
 			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
@@ -290,6 +294,8 @@
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
+		if(linkedwall)
+			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
 		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
