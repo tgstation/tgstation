@@ -471,7 +471,20 @@
 
 	return new_character
 
+
 /proc/window_flash(var/client_or_usr)
 	if (!client_or_usr)
 		return
 	winset(client_or_usr, "mainwindow", "flash=5")
+
+//moves an atom in tune with another atom
+/atom/movable/proc/move_in_tune(var/atom/movable/mover, atom/T, Dir)
+	set waitfor = 0
+	if (glide_timer)
+		deltimer(glide_timer)
+	glide_timer = addtimer(src, "reset_glide_animation", world.icon_size/glide_size*world.tick_lag*1.5)
+	animate_movement = 3
+	glide_size = mover.glide_size
+
+	Move(T, Dir)
+
