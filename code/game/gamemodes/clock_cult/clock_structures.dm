@@ -11,7 +11,7 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	layer = BELOW_OBJ_LAYER
+	layer = OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
@@ -316,7 +316,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	burn_state = LAVA_PROOF
-	var/damage_per_tick = 3
+	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
