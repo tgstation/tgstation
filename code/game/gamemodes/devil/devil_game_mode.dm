@@ -12,6 +12,7 @@
 	var/traitors_possible = 4 //hard limit on devils if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/objective_count = 2
+	var/minimum_devils = 1
 
 	announce_text = "There are devils onboard the station!\n\
 		+	<span class='danger'>Devils</span>: Purchase souls and tempt the crew to sin!\n\
@@ -27,9 +28,9 @@
 	var/num_devils = 1
 
 	if(config.traitor_scaling_coeff)
-		num_devils = max(1, min( round(num_players()/(config.traitor_scaling_coeff*2))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff)) + num_modifier ))
+		num_devils = max(minimum_devils, min( round(num_players()/(config.traitor_scaling_coeff*3))+ 2 + num_modifier, round(num_players()/(config.traitor_scaling_coeff*1.5)) + num_modifier ))
 	else
-		num_devils = max(1, min(num_players(), traitors_possible))
+		num_devils = max(minimum_devils, min(num_players(), traitors_possible))
 
 	for(var/j = 0, j < num_devils, j++)
 		if (!antag_candidates.len)

@@ -7,11 +7,12 @@
 	reroll_friendly = 0
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
-	num_modifier = 6 // Six additional traitors
+	num_modifier = 4
 	objective_count = 2
 
 	var/list/target_list = list()
 	var/list/late_joining_list = list()
+	minimum_devils = 3
 
 	announce_text = "There are devil agents onboard the station, trying to outbid each other!\n\
 		+	<span class='danger'>Devils</span>: Purchase souls and interfere with your rivals!\n\
