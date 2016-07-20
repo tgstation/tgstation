@@ -174,6 +174,7 @@
 				if(H.species.chem_flags & NO_DRINK)
 					reagents.reaction(get_turf(H), TOUCH)
 					H.visible_message("<span class='warning'>The contents in [src] fall through and splash onto the ground, what a mess!</span>")
+					reagents.remove_any(gulp_size)
 					return 0
 
 			reagents.reaction(M, INGEST)
@@ -263,6 +264,7 @@
 			if(H.species.chem_flags & NO_DRINK)
 				reagents.reaction(get_turf(H), TOUCH)
 				H.visible_message("<span class='warning'>The contents in [src] fall through and splash onto the ground, what a mess!</span>")
+				reagents.remove_any(gulp_size)
 				return 0
 
 		reagents.reaction(user, INGEST)
