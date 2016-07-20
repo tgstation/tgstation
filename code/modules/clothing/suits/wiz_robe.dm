@@ -148,3 +148,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
 	burn_state = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/paper
+	name = "papier-mâché robe"
+	desc = "A robe held together by various bits of clear-tape and paste."
+	icon_state = "wizard-paper"
