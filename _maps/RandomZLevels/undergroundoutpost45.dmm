@@ -1155,7 +1155,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 351.9;
+	temperature = 351.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -1171,7 +1171,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 351.9;
+	temperature = 351.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2782,7 +2782,7 @@
 	heat_capacity = 1e+006;
 	icon_plating = "asteroidplating";
 	icon_state = "asteroidplating";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -2967,7 +2967,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -3386,7 +3386,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3703,7 +3703,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -3967,7 +3967,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -4206,7 +4206,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4550,7 +4550,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -4564,7 +4564,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -4609,7 +4609,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -6329,7 +6329,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -6378,7 +6378,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -6625,7 +6625,7 @@
 	name = "UO45 Central Hall"
 	})
 "kd" = (
-/obj/item/weapon/storage/backpack/satchel_tox,
+/obj/item/weapon/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/suit/toggle/labcoat/science,
 /obj/effect/decal/cleanable/dirt,
@@ -8454,7 +8454,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/storage/backpack/satchel_eng,
+/obj/item/weapon/storage/backpack/satchel/eng,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/glasses/meson,
@@ -8642,7 +8642,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a6{
 	has_gravity = 1;
@@ -10843,7 +10843,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10862,7 +10862,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -10882,7 +10882,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a3{
 	has_gravity = 1;
@@ -11285,7 +11285,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11642,7 +11642,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11661,7 +11661,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -11680,7 +11680,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -13119,7 +13119,7 @@
 	name = "miner's equipment";
 	req_access = list(201)
 	},
-/obj/item/weapon/storage/backpack/satchel_eng,
+/obj/item/weapon/storage/backpack/satchel/eng,
 /obj/item/clothing/gloves/fingerless,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 2;
@@ -14511,7 +14511,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a2{
 	has_gravity = 1;
@@ -15358,7 +15358,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -15673,7 +15673,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a5{
 	has_gravity = 1;
@@ -16055,7 +16055,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17483,7 +17483,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -17495,7 +17495,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17512,7 +17512,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17533,7 +17533,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17553,7 +17553,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17574,7 +17574,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17594,7 +17594,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17613,7 +17613,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17631,7 +17631,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17651,7 +17651,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17668,7 +17668,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17685,7 +17685,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17703,7 +17703,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17723,7 +17723,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17741,7 +17741,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17759,7 +17759,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17777,7 +17777,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17796,7 +17796,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17813,7 +17813,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17830,7 +17830,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17848,7 +17848,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17865,7 +17865,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17883,7 +17883,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17904,7 +17904,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17924,7 +17924,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17944,7 +17944,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17963,7 +17963,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -17984,7 +17984,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;
@@ -18002,7 +18002,7 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	heat_capacity = 1e+006;
 	name = "Cave Floor";
-	temperature = 363.9;
+	temperature = 363.9
 	},
 /area/awaycontent/a7{
 	always_unpowered = 1;

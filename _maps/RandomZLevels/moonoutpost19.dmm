@@ -5671,7 +5671,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/storage/backpack/satchel_tox,
+/obj/item/weapon/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -8947,7 +8947,7 @@
 	})
 "ml" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/item/weapon/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;

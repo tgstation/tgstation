@@ -8720,7 +8720,7 @@
 /area/medical/virology)
 "aqf" = (
 /obj/structure/closet/wardrobe/virology_white,
-/obj/item/weapon/storage/backpack/satchel_vir,
+/obj/item/weapon/storage/backpack/satchel/vir,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "aqg" = (
@@ -16480,7 +16480,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -25
 	},
-/obj/item/weapon/storage/backpack/satchel_gen,
+/obj/item/weapon/storage/backpack/satchel/gen,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
 	},
@@ -23097,7 +23097,7 @@
 	pixel_x = -30
 	},
 /obj/structure/closet/wardrobe/chemistry_white,
-/obj/item/weapon/storage/backpack/satchel_chem,
+/obj/item/weapon/storage/backpack/satchel/chem,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "aSx" = (
@@ -35256,7 +35256,7 @@
 	icon_state = "alarm0";
 	pixel_y = -22
 	},
-/obj/item/weapon/storage/backpack/satchel_hyd,
+/obj/item/weapon/storage/backpack/satchel/hyd,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -35265,7 +35265,7 @@
 "bsr" = (
 /obj/machinery/light/small,
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/weapon/storage/backpack/satchel_hyd,
+/obj/item/weapon/storage/backpack/satchel/hyd,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bss" = (
@@ -35274,7 +35274,7 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/hydroponics,
-/obj/item/weapon/storage/backpack/satchel_hyd,
+/obj/item/weapon/storage/backpack/satchel/hyd,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "bst" = (
