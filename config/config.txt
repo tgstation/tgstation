@@ -188,10 +188,11 @@ TICKLAG 0.5
 #CROSS_COMMS_NAME
 
 ## Hub address for tracking stats
-MEDAL_HUB_ADDRESS
+## example: Hubmakerckey.Hubname
+#MEDAL_HUB_ADDRESS 
 
 ## Password for the hub page
-MEDAL_HUB_PASSWORD
+#MEDAL_HUB_PASSWORD
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 #SEE_OWN_NOTES

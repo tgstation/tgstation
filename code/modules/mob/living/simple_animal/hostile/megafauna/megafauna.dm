@@ -25,9 +25,10 @@
 	if(health > 0)
 		return
 	else
-		feedback_set_details("megafauna_kills","[initial(name)]")
-		if(!elimination)	//used so the achievment only occurs for the last legion to die.
-			grant_achievement(medal_type,score_type)
+		if(!admin_spawned)
+			feedback_set_details("megafauna_kills","[initial(name)]")
+			if(!elimination)	//used so the achievment only occurs for the last legion to die.
+				grant_achievement(medal_type,score_type)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/gib()
@@ -77,6 +78,9 @@
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype,scoretype)
 
 	if(medal_type == "Boss")	//Don't award medals if the medal type isn't set
+		return
+
+	if(admin_spawned)
 		return
 
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)

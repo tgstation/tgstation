@@ -219,6 +219,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+		A.admin_spawned = admin_spawned
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
@@ -1018,7 +1019,7 @@
 		if(other != src)
 			last_tendril = FALSE
 			break
-	if(last_tendril)
+	if(last_tendril && !admin_spawned)
 		if(global.medal_hub && global.medal_pass && global.medals_enabled)
 			for(var/mob/living/L in view(7,src))
 				if(L.stat)
