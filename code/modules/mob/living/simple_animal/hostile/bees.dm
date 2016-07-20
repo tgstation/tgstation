@@ -55,7 +55,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/vapor//wave
 	name = "vaporizing bee"
-	desc = "You don't understand, it's all in your head"
+	desc = "You don't understand, it's all in your hands"
 	transfer_type = VAPOR//WAVE
 
 /mob/living/simple_animal/hostile/poison/bees/touch
