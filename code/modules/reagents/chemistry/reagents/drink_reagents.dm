@@ -115,6 +115,7 @@
 	id = "laughter"
 	description = "Some say that this is the best medicine, but recent studies have proven that to be untrue."
 	metabolization_rate = INFINITY
+	color = "#FF4DD2"
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/M)
 	M.emote("laugh")
