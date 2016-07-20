@@ -144,7 +144,7 @@
 		. = TRUE
 
 /obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
-	// god bless tgui and all of its arguments
+	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -466,6 +466,11 @@
 	item_color = "purple"
 	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
 
+/obj/item/toy/crayon/black
+	icon_state = "crayonblack"
+	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
+	item_color = "black"
+
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
@@ -502,7 +507,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = 2
-	storage_slots = 6
+	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon
 	)
@@ -515,6 +520,7 @@
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
+	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()
