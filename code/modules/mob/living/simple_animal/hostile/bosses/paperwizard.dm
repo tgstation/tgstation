@@ -14,7 +14,7 @@
 	melee_damage_upper = 20
 	health = 1000
 	maxHealth = 1000
-	loot = list(/obj/effect/paperwiz_dying)
+	loot = list(/obj/effect/overlay/temp/paperwiz_dying)
 	projectiletype = /obj/item/projectile/temp
 	projectilesound = 'sound/weapons/emitter.ogg'
 	attack_sound = 'sound/hallucinations/growl1.ogg'
@@ -30,7 +30,7 @@
 	boss_cost = 30
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
-	say_when_triggered = "Rise, my creations! Jump off your pages into this realm!"
+	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
 
 /datum/action/boss/wizard_summon_minions/Trigger()
 	if(..())
@@ -118,35 +118,34 @@
 		retreat_distance = 3
 		for(var/copy in copies)
 			qdel(copy)
-			..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/examine(mob/user)
 	..()
 	qdel(src) //I see through your ruse!
 
 //fancy effects
-/obj/effect/paper_scatter
+/obj/effect/overlay/temp/paper_scatter
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
 	anchored = TRUE
+	duration = 5
+	randomdir = FALSE
 
-/obj/effect/paper_scatter/New()
-	..()
-	spawn(6)
-		qdel(src)
-
-/obj/effect/paperwiz_dying
+/obj/effect/overlay/temp/paperwiz_dying
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
 	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
 	anchored = TRUE
+	duration = 18
+	randomdir = FALSE
 
-/obj/effect/paperwiz_dying/New()
+/obj/effect/overlay/temp/paperwiz_dying/New()
 	..()
 	visible_message("<span class='boldannounce'>The wizard cries out in pain as a gate appears behind him, sucking him in!</span>")
 	playsound(get_turf(src),'sound/magic/MandSwap.ogg', 50, 1, 1)
@@ -155,10 +154,9 @@
 		for(var/mob/M in range(7,src))
 			shake_camera(M, 7, 1)
 		playsound(get_turf(src),'sound/magic/Summon_Magic.ogg', 50, 1, 1)
-		new /obj/effect/paper_scatter(src)
+		new /obj/effect/overlay/temp/paper_scatter(src)
 		new /obj/item/clothing/suit/wizrobe/paper(src)
 		new /obj/item/clothing/head/collectable/paper(src)
-		qdel(src)
 
 
 

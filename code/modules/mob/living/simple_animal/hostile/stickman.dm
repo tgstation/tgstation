@@ -48,4 +48,4 @@
 
 /mob/living/simple_animal/hostile/stickman/New()
 	..()
-	new /obj/effect/paper_scatter(src)
+	new /obj/effect/overlay/temp/paper_scatter(src)
