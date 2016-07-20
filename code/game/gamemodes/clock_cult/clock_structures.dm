@@ -788,7 +788,7 @@
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
-/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for about twice the stun
+/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for a longer stun
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -804,10 +804,10 @@
 	if(iscultist(L))
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
-		L.Weaken(4)
+		L.Weaken(7)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(3)
+	L.Stun(5)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
 	return 1
@@ -815,12 +815,12 @@
 /obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
 	desc = "A luminous golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for seven seconds."
 	icon_state = "sigilsubmission"
 	color = "#FAE48C"
 	alpha = 125
 	stat_affected = UNCONSCIOUS
-	var/convert_time = 50
+	var/convert_time = 70
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
 	var/delete_on_finish = TRUE
@@ -834,7 +834,7 @@
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
-	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
+	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	animate(src, color = "#AF0AAF", time = convert_time)
 	var/obj/effect/overlay/temp/ratvar/sigil/glow
 	if(glow_type)
@@ -879,7 +879,7 @@
 /obj/effect/clockwork/sigil/submission/accession //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
 	name = "terrifying sigil"
 	desc = "A luminous brassy sigil. Something about it makes you want to flee."
-	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for five seconds. \n\
+	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for seven seconds. \n\
 	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
 	icon_state = "sigiltransgression"
 	color = "#A97F1B"
@@ -894,7 +894,7 @@
 	if(isloyal(L))
 		delete_on_finish = TRUE
 		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guvf chal gevaxrg jvyy abg fgbc zr.</span>")
+		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guv'f chal gevax-rg jvyy abg fgbc zr.</span>")
 		for(var/obj/item/weapon/implant/mindshield/M in L)
 			if(M.implanted)
 				qdel(M)
