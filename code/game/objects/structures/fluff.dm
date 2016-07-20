@@ -8,12 +8,10 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
-	var/deconstructible = 1
+	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
-		if(!deconstructible)
-			return
+	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
 		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
 		if(!do_after(user, 50, target = src))
@@ -64,7 +62,9 @@
 	desc = "A towering basalt sculpture of a proud and regal drake. Its eyes are six glowing gemstones."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
+	pixel_x = -16
 	density = TRUE
+	deconstructible = FALSE
 
 /obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."

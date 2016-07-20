@@ -575,41 +575,56 @@
 	var/drop_y = 1
 	var/drop_z = 1
 
-
 /turf/open/chasm/Entered(atom/movable/AM)
-	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile))
-		return
+	START_PROCESSING(SSobj, src)
+	drop_stuff()
+
+/turf/open/chasm/process()
+	if(!drop_stuff())
+		STOP_PROCESSING(SSobj, src)
+
+/turf/open/chasm/proc/drop_stuff()
+	. = 0
+	for(var/thing in contents)
+		if(droppable(thing))
+			. = 1
+			drop(thing)
+
+/turf/open/chasm/proc/droppable(atom/movable/AM)
+	if(!isliving(AM) && !isobj(AM))
+		return 0
+	if(istype(AM, /obj/singularity) || istype(AM, /obj/item/projectile) || AM.throwing)
+		return 0
 	if(istype(AM, /obj/effect/portal))
-		// Portals aren't affected by gravity. Probably.
-		return
-	// Flies right over the chasm
-	if(istype(AM, /mob/living/simple_animal))
-		// apparently only simple_animals can fly??
+		//Portals aren't affected by gravity. Probably.
+		return 0
+	//Flies right over the chasm
+	if(isanimal(AM))
 		var/mob/living/simple_animal/SA = AM
 		if(SA.flying)
-			return
-	if(istype(AM, /mob/living/carbon/human))
+			return 0
+	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
 			var/obj/item/device/wormhole_jaunter/J = H.belt
-			// To freak out any bystanders
+			//To freak out any bystanders
 			visible_message("<span class='boldwarning'>[H] falls into [src]!</span>")
 			J.chasm_react(H)
-			return
-		if(H.dna.species && (FLYING in H.dna.species.specflags))
-			return
-	drop(AM)
-
+			return 0
+		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
+			return 0
+	return 1
 
 /turf/open/chasm/proc/drop(atom/movable/AM)
-	/*visible_message("[AM] falls into [src]!")
-	qdel(AM)*/
-	AM.forceMove(locate(drop_x, drop_y, drop_z))
-	AM.visible_message("<span class='boldwarning'>[AM] falls from above!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
-	if(istype(AM, /mob/living))
-		var/mob/living/L = AM
-		L.Weaken(5)
-		L.adjustBruteLoss(30)
+	var/turf/T = locate(drop_x, drop_y, drop_z)
+	if(T)
+		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>GAH! Ah... where are you?</span>")
+		T.visible_message("<span class='boldwarning'>[AM] falls from above!</span>")
+		AM.forceMove(T)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.Weaken(5)
+			L.adjustBruteLoss(30)
 
 /turf/open/chasm/straight_down/New()
 	..()
@@ -636,22 +651,21 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
-	if(!AM.invisibility)
-		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
-		into the enveloping dark.</span>")
-		if(isliving(AM))
-			var/mob/living/L = AM
-			L.notransform = TRUE
-			L.Stun(10)
-			L.resting = TRUE
-		animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
-		for(var/i in 1 to 5)
-			AM.pixel_y--
-			sleep(2)
-		if(isrobot(AM))
-			var/mob/living/silicon/robot/S = AM
-			qdel(S.mmi)
-		qdel(AM)
+	AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
+	into the enveloping dark.</span>")
+	if(isliving(AM))
+		var/mob/living/L = AM
+		L.notransform = TRUE
+		L.Stun(10)
+		L.resting = TRUE
+	animate(AM, transform = matrix() - matrix(), alpha = 0, color = rgb(0, 0, 0), time = 10)
+	for(var/i in 1 to 5)
+		AM.pixel_y--
+		sleep(2)
+	if(isrobot(AM))
+		var/mob/living/silicon/robot/S = AM
+		qdel(S.mmi)
+	qdel(AM)
 
 /turf/closed/mineral/volcanic/lava_land_surface
 	environment_type = "basalt"
