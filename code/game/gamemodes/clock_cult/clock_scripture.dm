@@ -74,11 +74,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	if(!ratvar_awakens && !slab.no_cost)
+		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
+		var/failed = FALSE
 		for(var/i in required_components)
 			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
-			if(slab.stored_components[i] + cache_components < required_components[i])
-				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
-				return 0
+			var/total_components = slab.stored_components[i] + cache_components
+			if(required_components[i] && total_components < required_components[i])
+				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[required_components[i]]</b> \
+				[get_component_name(i)][i != "replicant_alloy" ? "s":""].</span>"
+				failed = TRUE
+		if(failed)
+			component_printout += "</span>"
+			invoker << component_printout
+			return 0
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
