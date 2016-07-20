@@ -181,8 +181,8 @@ ALLOW_HOLIDAYS
 ##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
-##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
-TICKLAG 0.5
+##Defines the process rate for the server.  11 is the old one, 21 is smoother new one.
+FPS 21
 
 ## Comment this out to disable automuting
 #AUTOMUTE_ON
