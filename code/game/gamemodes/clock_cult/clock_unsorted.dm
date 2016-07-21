@@ -235,6 +235,7 @@ List of nuances:
 - Any time "th", followed by any two letters occurs, you add a grave (`) between those two letters, i.e; "Thi`s"
 - In the same vein, any time "ti", followed by one letter occurs, you add a grave (`) between "i" and the letter, i.e; "Ti`me"
 - Whereever "te" or "et" appear and there is another letter next to the e(i.e; "m"etal, greate"r"), add a hyphen between "e" and the letter, i.e; "M-etal", "Greate-r"
+- Where "gua" appears, add a hyphen between "gu" and "a", i.e "Gu-ard"
 - Where the WORD "and" appears it is linked to all surrounding words by hyphens, i.e; "Sword-and-shield"
 - Where the WORD "to" appears, it is linked to the following word by a hyphen, i.e; "to-use"
 - Where the WORD "my" appears, it is linked to the following word by a hyphen, i.e; "my-light"
