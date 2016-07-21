@@ -237,7 +237,7 @@
 
 /obj/singularity/proc/eat()
 	set background = BACKGROUND_ENABLED
-	for(var/tile in spiral_range_turfs(grav_pull, src, 1))
+	for(var/tile in spiral_range_turfs(grav_pull, src))
 		var/turf/T = tile
 		if(!T || !isturf(loc))
 			continue
@@ -246,7 +246,7 @@
 		else
 			consume(T)
 		for(var/thing in T)
-			if(isturf(loc))
+			if(isturf(loc) && thing != src)
 				var/atom/movable/X = thing
 				if(get_dist(X, src) > consume_range)
 					X.singularity_pull(src, current_size)
