@@ -4,48 +4,58 @@
 /obj/item/clothing/head/beanie //Default is white, this is meant to be seen
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
-	icon_state = "beaniewhite"
-	item_color = "beaniewhite"
+	icon_state = "beanie" //Default white
+	item_color = "white"
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
-	icon_state = "beanieblack"
-	item_color = "beanieblack"
+	icon_state = "white"
+	color = "#4A4A4B" //Grey but it looks black
+	item_color = "black"
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
-	icon_state = "beaniered"
-	item_color = "beaniered"
+	icon_state = "beanie"
+	color = "#D91414" //Red
+	item_color = "red"
 
 /obj/item/clothing/head/beanie/green
 	name = "green beanie"
-	icon_state = "beaniegreen"
-	item_color = "beaniegreen"
+	icon_state = "beanie"
+	color = "#5C9E54" //Green
+	item_color = "green"
 
 /obj/item/clothing/head/beanie/blue
 	name = "blue beanie"
-	icon_state = "beanieblue"
-	item_color = "beanieblue"
+	icon_state = "beanie"
+	color = "#1E85BC" //Blue
+	item_color = "blue"
 
 /obj/item/clothing/head/beanie/purple
 	name = "purple beanie"
-	icon_state = "beaniepurple"
-	item_color = "beaniepurple"
+	icon_state = "beanie"
+	color = "#9557C5" //purple
+	item_color = "purple"
 
 /obj/item/clothing/head/beanie/yellow
 	name = "yellow beanie"
-	icon_state = "beanieyellow"
-	item_color = "beanieyellow"
+	icon_state = "beanie"
+	color = "#E0C14F" //Yellow
+	item_color = "yellow"
 
 /obj/item/clothing/head/beanie/orange
 	name = "orange beanie"
-	icon_state = "beanieorange"
-	item_color = "beanieorange"
+	icon_state = "beanie"
+	color = "#C67A4B" //orange
+	item_color = "orange"
 
 /obj/item/clothing/head/beanie/cyan
 	name = "cyan beanie"
-	icon_state = "beaniecyan"
-	item_color = "beaniecyan"
+	icon_state = "beanie"
+	color = #54A3CE //Cyan (Or close to it)
+	item_color = "cyan"
+
+//Striped Beanies have unique sprites
 
 /obj/item/clothing/head/beanie/christmas
 	name = "christmas beanie"
