@@ -1028,7 +1028,10 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
-
+/datum/sprite_accessory/undershirt/shirt_vape
+	name = "Vape Nation Shirt"
+	icon_state = "shirt_vape"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //

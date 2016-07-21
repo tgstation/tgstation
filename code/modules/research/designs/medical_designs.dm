@@ -115,6 +115,17 @@
 	build_path = /obj/item/device/extinguisher_refill
 	category = list("Medical Designs")
 
+/datum/design/ecig
+	name = "Electronic Cigarette"
+	desc = "nobody can read these"
+	id = "ecig"
+	req_tech = list("magnets" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
+	build_path = /obj/item/clothing/mask/cigarette/ecig
+	category = list("Medical Designs")
+
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////
