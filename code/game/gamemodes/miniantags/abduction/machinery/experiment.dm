@@ -52,13 +52,13 @@
 
 	var/datum/sprite_accessory/S
 	S = hair_styles_list[H.hair_style]
-	if(S && (HAIR in H.dna.species.specflags))
+	if(S && S.icon_state && (HAIR in H.dna.species.specflags))
 		var/icon/hair_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 		hair_s.Blend("#[H.hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 	S = facial_hair_styles_list[H.facial_hair_style]
-	if(S && (FACEHAIR in H.dna.species.specflags))
+	if(S && S.icon_state && (FACEHAIR in H.dna.species.specflags))
 		var/icon/facial_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
 		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
 		eyes_s.Blend(facial_s, ICON_OVERLAY)

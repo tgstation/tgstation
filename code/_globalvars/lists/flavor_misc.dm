@@ -6,6 +6,7 @@ var/global/list/hair_styles_female_list = list()	//stores only hair names
 var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessory/facial_hair indexed by name
 var/global/list/facial_hair_styles_male_list = list()	//stores only hair names
 var/global/list/facial_hair_styles_female_list = list()	//stores only hair names
+var/global/list/facial_hair_effects = list()		//stores /datum/sprite_accesory/beard_effect indexed by name
 	//Underwear
 var/global/list/underwear_list = list()		//stores /datum/sprite_accessory/underwear indexed by name
 var/global/list/underwear_m = list()	//stores only underwear name

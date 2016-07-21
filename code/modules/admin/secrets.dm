@@ -519,7 +519,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","DF")
 			for(var/mob/living/carbon/human/B in mob_list)
-				B.facial_hair_style = "Dward Beard"
+				B.facial_hair_style = "Dwarf Beard" //don't change to change_facial_hair, as it's an admin button, and we don't want admins to ruin earn your beard every time they use this
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
 
