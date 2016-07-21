@@ -105,6 +105,13 @@ var/global/list/initial_materials	//Stores all the matids = 0 in helping New
 
 	return material_list[mat_id]
 
+/datum/materials/proc/makeSheets(var/atom/loc)
+	for (var/id in storage)
+		var/amount = getAmount(id)
+		if(amount)
+			var/datum/material/mat = getMaterial(id)
+			getFromPool(mat.sheettype, loc, Floor(amount / mat.cc_per_sheet))
+
 //HOOKS//
 /atom/proc/onMaterialChange(matID, amount)
 	return
