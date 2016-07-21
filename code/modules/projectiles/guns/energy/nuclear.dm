@@ -36,6 +36,7 @@
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
 	icon_state = "hoslaser"
 	origin_tech = null
+	cell_type = /obj/item/weapon/stock_parts/cell/pulse/pistol
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 4
