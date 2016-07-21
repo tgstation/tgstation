@@ -52,7 +52,7 @@
 /obj/item/clothing/head/beanie/cyan
 	name = "cyan beanie"
 	icon_state = "beanie"
-	color = #54A3CE //Cyan (Or close to it)
+	color = "#54A3CE" //Cyan (Or close to it)
 	item_color = "cyan"
 
 //Striped Beanies have unique sprites
