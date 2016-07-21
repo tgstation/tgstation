@@ -1,0 +1,8 @@
+serverip = 127.0.0.1 //SS13 server IP
+serverport = 7812 //SS13 server port
+commskey = this_is_a_test_key //API key of the server
+GitHub_bot_name = testbot_github //It'll get the data from this bot
+IRC_bot_name = testbot_BYOND //This'll be our name
+IRC_server = irc.rizon.net:6670 //format - server:port
+IRC_channel = #ircchannel
+Nickserv_auth = _NONE_ //leave _NONE_ if your bot does not require nickserv authentication

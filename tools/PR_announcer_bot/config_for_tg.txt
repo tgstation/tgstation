@@ -1,0 +1,8 @@
+serverip = 127.0.0.1 //SS13 server IP
+serverport = 1337 //SS13 server port
+commskey = fill_your_own_in //API key of the server
+GitHub_bot_name = TheGhostOfWhibyl1 //It'll get the data from this bot
+IRC_bot_name = PR_Listener_Bot //This'll be our name
+IRC_server = irc.rizon.net:6670 //format - server:port
+IRC_channel = #coderbus
+Nickserv_auth = _NONE_ //leave _NONE_ if your bot does not require nickserv authentication
