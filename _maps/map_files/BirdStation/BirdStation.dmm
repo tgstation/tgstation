@@ -8134,9 +8134,9 @@
 "auc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/wardrobe/grey,
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
 /obj/item/weapon/storage/backpack/dufflebag,
 /obj/item/weapon/storage/backpack/dufflebag,
 /obj/item/weapon/storage/backpack/dufflebag,
@@ -10833,8 +10833,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "aAZ" = (
