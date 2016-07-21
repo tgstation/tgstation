@@ -229,12 +229,10 @@
 			if(!user.drop_item(O, src))
 				return 1
 
-			var/sanitized_name = sanitize(O.name, list("\"" = "", "'" = "", "+" = "plus", ";" = "", "^" = "", "&" = "", "<" = "", ">" = ""))
-			O.name = sanitized_name
-			if(item_quants[sanitized_name])
-				item_quants[sanitized_name]++
+			if(item_quants[O.name])
+				item_quants[O.name]++
 			else
-				item_quants[sanitized_name] = 1
+				item_quants[O.name] = 1
 			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 								 "<span class='notice'>You add \the [O] to \the [src].")
 
@@ -248,12 +246,10 @@
 					return 1
 				else
 					bag.remove_from_storage(G,src)
-					var/sanitized_name = sanitize(G.name, list("\"" = "", "'" = "", "+" = "plus", ";" = "", "^" = "", "&" = "", "<" = "", ">" = ""))
-					G.name = sanitized_name
-					if(item_quants[sanitized_name])
-						item_quants[sanitized_name]++
+					if(item_quants[G.name])
+						item_quants[G.name]++
 					else
-						item_quants[sanitized_name] = 1
+						item_quants[G.name] = 1
 					objects_loaded++
 		if(objects_loaded)
 
