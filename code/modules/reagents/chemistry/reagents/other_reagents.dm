@@ -181,7 +181,7 @@
 		else if(is_servant_of_ratvar(M) && prob(5))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
-					clockwork_say(M, "...[pick("Ratvar... lbhe yvtug tebjf qnex...", "Jurer ner lbh, znfgr-e?", "Ur yvrf ehfgv'at va Reebe...", "Chetr nyy hagehguf-naq... naq... fbzrguv'at...")]")
+					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
 				if("message")
 					M << "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
 					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"

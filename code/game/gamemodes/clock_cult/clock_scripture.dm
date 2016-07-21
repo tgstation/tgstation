@@ -1001,7 +1001,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
-	hierophant_message("<span class='nezbere'>Nezbere: \"[text2ratvar("I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nezbere'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
 		W.damage_per_tick *= 1.5
@@ -1056,7 +1056,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_sevtug/scripture_effects()
 	new/obj/effect/clockwork/general_marker/sevtug(get_turf(invoker))
-	hierophant_message("<span class='sevtug'>Sevtug: \"[text2ratvar("I heed your call, idiots. Get going and use this chance while it lasts!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='sevtug'>[text2ratvar("Fright: \"I heed your call, idiots. Get going and use this chance while it lasts!")]\"</span>", FALSE, invoker)
 	clockwork_generals_invoked["sevtug"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	var/hum = get_sfx('sound/effects/screech.ogg') //like playsound, same sound for everyone affected
 	var/turf/T = get_turf(invoker)
