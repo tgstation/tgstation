@@ -277,7 +277,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/sentinels_compromise/scripture_effects()
 	var/list/nearby_cultists = list()
 	for(var/mob/living/C in range(7, invoker))
-		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getBruteLoss()))
+		if(C.stat != DEAD && is_servant_of_ratvar(C) && (C.getBruteLoss() || C.getFireLoss()))
 			nearby_cultists += C
 	if(!nearby_cultists.len)
 		invoker << "<span class='warning'>There are no eligible servants nearby!</span>"
