@@ -291,7 +291,7 @@
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
 	randomise_action.UpdateButtonIcon()
 
-/obj/item/clothing/mask/chameleon/attack_self(mob/user)
+/obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	user << "<span class='notice'>The [src] does not have a voice changer.</span>"
 
 /obj/item/clothing/shoes/chameleon
