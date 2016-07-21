@@ -16,6 +16,7 @@
 	var/finish_name = "turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
 	var/gun_charge = 0			//the gun charge of the gun type installed
+	var/gun_fire_mode = 1
 
 /obj/machinery/porta_turret_construct/New()
 	..()
@@ -91,6 +92,7 @@
 				var/obj/item/weapon/gun/energy/E = I
 				if(!user.drop_item())
 					return
+				gun_fire_mode=E.select
 				installation = I.type
 				gun_charge = E.power_supply.charge //the gun's charge is stored in gun_charge
 				user << "<span class='notice'>You add [I] to the turret.</span>"
@@ -159,6 +161,7 @@
 					turret.name = finish_name
 					turret.installation = installation
 					turret.gun_charge = gun_charge
+					turret.fire_mode = gun_fire_mode
 					turret.setup()
 
 					qdel(src)
