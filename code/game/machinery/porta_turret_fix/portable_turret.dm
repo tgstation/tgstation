@@ -29,6 +29,7 @@
 	var/controllock = 0		//if the turret responds to control panels
 
 	var/installation = /obj/item/weapon/gun/energy/gun/turret		//the type of weapon installed
+	var/fire_mode = 1
 	var/gun_charge = 0		//the charge of the gun inserted
 	var/projectile = null	//holder for bullettype
 	var/eprojectile = null	//holder for the shot when emagged
@@ -89,9 +90,8 @@
 
 /obj/machinery/porta_turret_fixed/proc/setup()
 
-	var/obj/item/weapon/gun/energy/E= new installation	//All energy-based weapons are applicable
-	var/obj/item/ammo_casing/shottype = E.ammo_type[1]
-
+	var/obj/item/weapon/gun/energy/E = new installation	//All energy-based weapons are applicable
+	var/obj/item/ammo_casing/shottype=E.ammo_type[fire_mode]
 	projectile = shottype.projectile_type
 	eprojectile = projectile
 	shot_sound = shottype.fire_sound
