@@ -220,17 +220,10 @@
 		var/component_type
 		switch(alert(user, "Will this daemon produce a specific type of component or produce randomly?.", , "Specific Type", "Random Component"))
 			if("Specific Type")
-				switch(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eyes", "Vanguard Cogwheels", "Guvax Capacitors", "Replicant Alloys", "Hierophant Ansibles"))
-					if("Belligerent Eyes")
-						component_type = "belligerent_eye"
-					if("Vanguard Cogwheels")
-						component_type = "vanguard_cogwheel"
-					if("Guvax Capacitors")
-						component_type = "guvax_capacitor"
-					if("Replicant Alloys")
-						component_type = "replicant_alloy"
-					if("Hierophant Ansibles")
-						component_type = "hierophant_ansibles"
+				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
+				if(!component_type)
+					user << "<span class='heavy_brass'>\"Indecisive, are you?\"</span>\n<span class='warning'>You decide not to place this daemon within the cache just yet.</span>"
+					return 0
 		if(!user || !user.canUseTopic(src) || !user.canUseTopic(I))
 			return 0
 		var/obj/item/clockwork/tinkerers_daemon/D = new(src)
@@ -248,44 +241,20 @@
 	if(!is_servant_of_ratvar(user))
 		return 0
 	var/list/possible_components = list()
-	if(clockwork_component_cache["belligerent_eye"])
-		possible_components += "Belligerent Eye"
-	if(clockwork_component_cache["vanguard_cogwheel"])
-		possible_components += "Vanguard Cogwheel"
-	if(clockwork_component_cache["guvax_capacitor"])
-		possible_components += "Guvax Capacitor"
-	if(clockwork_component_cache["replicant_alloy"])
-		possible_components += "Replicant Alloy"
-	if(clockwork_component_cache["hierophant_ansible"])
-		possible_components += "Hierophant Ansible"
+	for(var/i in clockwork_component_cache)
+		if(clockwork_component_cache[i])
+			possible_components += get_component_name(i)
 	if(!possible_components.len)
 		user << "<span class='warning'>[src] is empty!</span>"
 		return 0
-	var/component_to_withdraw = input(user, "Choose a component to withdraw.", name) as null|anything in possible_components
-	if(!user || !user.canUseTopic(src) || !component_to_withdraw)
+	var/componentid = get_component_id(input(user, "Choose a component to withdraw.", name) as null|anything in possible_components)
+	if(!user || !user.canUseTopic(src) || !componentid)
 		return 0
 	var/obj/item/clockwork/component/the_component
-	switch(component_to_withdraw)
-		if("Belligerent Eye")
-			if(clockwork_component_cache["belligerent_eye"])
-				the_component = new/obj/item/clockwork/component/belligerent_eye(get_turf(src))
-				clockwork_component_cache["belligerent_eye"]--
-		if("Vanguard Cogwheel")
-			if(clockwork_component_cache["vanguard_cogwheel"])
-				the_component = new/obj/item/clockwork/component/vanguard_cogwheel(get_turf(src))
-				clockwork_component_cache["vanguard_cogwheel"]--
-		if("Guvax Capacitor")
-			if(clockwork_component_cache["guvax_capacitor"])
-				the_component = new/obj/item/clockwork/component/guvax_capacitor(get_turf(src))
-				clockwork_component_cache["guvax_capacitor"]--
-		if("Replicant Alloy")
-			if(clockwork_component_cache["replicant_alloy"])
-				the_component = new/obj/item/clockwork/component/replicant_alloy(get_turf(src))
-				clockwork_component_cache["replicant_alloy"]--
-		if("Hierophant Ansible")
-			if(clockwork_component_cache["hierophant_ansible"])
-				the_component = new/obj/item/clockwork/component/hierophant_ansible(get_turf(src))
-				clockwork_component_cache["hierophant_ansible"]--
+	var/component_path = text2path("/obj/item/clockwork/component/[componentid]")
+	if(clockwork_component_cache[componentid])
+		the_component = new component_path(get_turf(src))
+		clockwork_component_cache[componentid]--
 	if(the_component)
 		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
 		user.put_in_hands(the_component)
@@ -297,11 +266,8 @@
 		if(linkedwall)
 			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
-		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
-		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
-		user << "<span class='sevtug_small'><i>Guvax Capacitors:</i> [clockwork_component_cache["guvax_capacitor"]]</span>"
-		user << "<span class='nezbere_small'><i>Replicant Alloys:</i> [clockwork_component_cache["replicant_alloy"]]</span>"
-		user << "<span class='nzcrentr_small'><i>Hierophant Ansibles:</i> [clockwork_component_cache["hierophant_ansible"]]</span>"
+		for(var/i in clockwork_component_cache)
+			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> [clockwork_component_cache[i]]</span>"
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
