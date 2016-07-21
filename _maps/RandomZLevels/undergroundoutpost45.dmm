@@ -43,19 +43,13 @@
 	name = "UO45 Central Hall"
 	})
 "af" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "UO45 Central Hall"
 	})
 "ag" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "UO45 Central Hall"
@@ -48802,10 +48796,10 @@ ad
 ad
 ae
 af
-ai
-ai
-ai
-av
+ag
+ag
+ag
+af
 an
 aS
 aS
@@ -49062,7 +49056,7 @@ ag
 aj
 ak
 aq
-aw
+ag
 an
 aF
 aS
@@ -49833,7 +49827,7 @@ ag
 am
 ap
 fu
-aA
+ag
 ae
 aG
 aL
@@ -50086,11 +50080,11 @@ ad
 ad
 ad
 ae
-ah
-ai
-ai
-ai
-aE
+af
+ag
+ag
+ag
+af
 an
 aH
 aS

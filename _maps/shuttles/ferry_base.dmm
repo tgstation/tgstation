@@ -7,16 +7,10 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "d" = (
 /obj/structure/window/shuttle,
@@ -29,37 +23,32 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "g" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "h" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "i" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "j" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "k" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "l" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "m" = (
 /obj/machinery/door/airlock/shuttle,
@@ -74,7 +63,7 @@
 	width = 5;
 	timid = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -94,13 +83,13 @@
 /area/shuttle/transport)
 "p" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "q" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "r" = (
 /turf/closed/wall/shuttle{
@@ -113,15 +102,15 @@
 a
 b
 k
-n
+b
 a
 "}
 (2,1,1) = {"
 b
 g
 l
-o
-n
+g
+b
 "}
 (3,1,1) = {"
 c
@@ -191,5 +180,5 @@ f
 d
 m
 d
-r
+f
 "}

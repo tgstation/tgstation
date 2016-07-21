@@ -17,20 +17,20 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "d" = (
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "e" = (
-/turf/closed/wall/shuttle/smooth/overspace,
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "f" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "g" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "h" = (
 /obj/machinery/door/airlock/shuttle{
@@ -44,7 +44,7 @@
 	width = 19;
 	timid = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "i" = (
 /turf/closed/wall/shuttle{
@@ -67,7 +67,7 @@
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/vending/wallmed,
-/turf/closed/wall/shuttle/smooth/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "m" = (
 /obj/structure/window/shuttle,
@@ -81,7 +81,7 @@
 	},
 /area/shuttle/escape)
 "o" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "p" = (
 /obj/structure/shuttle/engine/heater{
@@ -99,22 +99,20 @@
 	icon_state = "sleeper-open";
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "r" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "t" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall_floor";
-	icon_state = "wall_floor"
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "u" = (
 /turf/open/space,
@@ -122,13 +120,13 @@
 "v" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "w" = (
 /obj/machinery/door/airlock/glass{
 	name = "Emergency Shuttle Infirmary"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "x" = (
 /obj/structure/window/shuttle,
@@ -138,7 +136,7 @@
 "y" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/toolbox/emergency,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "z" = (
 /obj/structure/table/reinforced,
@@ -151,13 +149,13 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "A" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "B" = (
 /obj/structure/window/reinforced{
@@ -168,7 +166,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "C" = (
 /turf/closed/wall/shuttle{
@@ -187,10 +185,10 @@
 	name = "Emergency Shuttle Cockpit";
 	req_access_txt = "19"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "F" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "G" = (
 /obj/machinery/computer/emergency_shuttle,
@@ -198,13 +196,13 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "H" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "I" = (
 /obj/structure/table/reinforced,
@@ -213,22 +211,22 @@
 	pixel_x = 0
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "J" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "K" = (
 /obj/machinery/door/airlock/glass{
 	name = "Emergency Shuttle Brig";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "L" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "M" = (
 /obj/structure/table/reinforced,
@@ -238,7 +236,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "N" = (
 /turf/closed/wall/shuttle{
@@ -440,7 +438,7 @@ s
 o
 s
 s
-O
+t
 d
 a
 "}
@@ -451,7 +449,7 @@ d
 x
 d
 E
-P
+f
 x
 d
 e
