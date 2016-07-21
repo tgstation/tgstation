@@ -260,18 +260,21 @@
 
 /obj/screen/clicker/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr))
+	var/turf/T = screen_loc2turf(modifiers["screen-loc"], get_turf(usr), usr)
 	T.Click(location, control, params)
 	return 1
 
-/proc/screen_loc2turf(scr_loc, turf/origin)
+/proc/screen_loc2turf(scr_loc, turf/origin, mob/user)
 	var/list/screenxy = splittext(scr_loc, ",")
 	var/list/screenx = splittext(screenxy[1], ":")
 	var/list/screeny = splittext(screenxy[2], ":")
 	var/X = screenx[1]
 	var/Y = screeny[1]
-	X = Clamp((origin.x + text2num(X) - (world.view + 1)), 1, world.maxx)
-	Y = Clamp((origin.y + text2num(Y) - (world.view + 1)), 1, world.maxy)
+	var/view = world.view
+	if(user && user.client)
+		view = user.client.view
+	X = Clamp((origin.x + text2num(X) - (view + 1)), 1, world.maxx)
+	Y = Clamp((origin.y + text2num(Y) - (view + 1)), 1, world.maxy)
 	return locate(X, Y, origin.z)
 
 /obj/screen/Click(location, control, params)

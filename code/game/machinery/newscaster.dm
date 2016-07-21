@@ -359,7 +359,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 					else
 						active_num--
 
-				dat += {"Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories." //TODO: CONTINU
+				dat += {"Network currently serves a total of [total_num] Feed channels, [active_num] of which are active, and a total of [message_num] Feed Stories.
 					<BR><BR><B>Liquid Paper remaining:</B> [(src.paper_remaining) *100 ] cm^3
 					<BR><BR><A href='?src=\ref[src];print_paper=[0]'>Print Paper</A>
 					<BR><A href='?src=\ref[src];setScreen=[NEWSCASTER_MENU]'>Cancel</A>"}

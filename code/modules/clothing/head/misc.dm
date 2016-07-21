@@ -207,9 +207,9 @@
 /obj/item/clothing/head/fedora/verb/tip_fedora()
 	set name = "Tip Fedora"
 	set category = "Object"
-	set desc = "Show that CIS SCUM who's boss."
+	set desc = "Show that CIS SCUM who's boss." //I'm pretty sure you're mincing memes here, but whatever
 
-	usr.visible_message("[usr] tips his fedora.", "You tip your fedora.")
+	usr.visible_message("[usr] tips \his fedora.", "You tip your fedora.")
 
 /obj/item/clothing/head/fez
 	name = "\improper fez"
