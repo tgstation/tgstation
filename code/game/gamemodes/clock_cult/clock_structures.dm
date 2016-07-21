@@ -11,7 +11,7 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	layer = BELOW_OBJ_LAYER
+	layer = OBJ_LAYER
 	var/max_health = 100 //All clockwork structures have health that can be removed via attacks
 	var/health = 100
 	var/repair_amount = 5 //how much a proselytizer can repair each cycle
@@ -153,7 +153,7 @@
 	max_health = 80
 	health = 80
 	var/wall_generation_cooldown
-	var/wall_found = FALSE //if we've found a wall and finished our windup delay
+	var/turf/closed/wall/clockwork/linkedwall //if we've got a linked wall and are producing
 
 /obj/structure/clockwork/cache/New()
 	..()
@@ -170,6 +170,9 @@
 	clockwork_caches--
 	scripture_unlock_alert(scripture_states)
 	STOP_PROCESSING(SSobj, src)
+	if(linkedwall)
+		linkedwall.linkedcache = null
+		linkedwall = null
 	for(var/i in all_clockwork_mobs)
 		cache_check(i)
 	return ..()
@@ -182,13 +185,14 @@
 	return ..()
 
 /obj/structure/clockwork/cache/process()
-	for(var/turf/closed/wall/clockwork/C in orange(1, src))
-		if(!wall_found)
-			wall_found = TRUE
+	for(var/turf/closed/wall/clockwork/C in view(4, src))
+		if(!C.linkedcache && !linkedwall)
+			C.linkedcache = src
+			linkedwall = C
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			visible_message("<span class='warning'>[src] starts to whirr in the presence of [C]...</span>")
 			break
-		if(wall_generation_cooldown <= world.time)
+		if(linkedwall && wall_generation_cooldown <= world.time)
 			wall_generation_cooldown = world.time + CACHE_PRODUCTION_TIME
 			generate_cache_component()
 			playsound(C, 'sound/magic/clockwork/fellowship_armory.ogg', rand(15, 20), 1, -3, 1, 1)
@@ -290,6 +294,8 @@
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
+		if(linkedwall)
+			user << "<span class='brass'>It is linked and will generate components!</span>"
 		user << "<b>Stored components:</b>"
 		user << "<span class='neovgre_small'><i>Belligerent Eyes:</i> [clockwork_component_cache["belligerent_eye"]]</span>"
 		user << "<span class='inathneq_small'><i>Vanguard Cogwheels:</i> [clockwork_component_cache["vanguard_cogwheel"]]</span>"
@@ -310,7 +316,7 @@
 	break_message = "<span class='warning'>The warden's eye gives a glare of utter hate before falling dark!</span>"
 	debris = list(/obj/item/clockwork/component/belligerent_eye/blind_eye = 1)
 	burn_state = LAVA_PROOF
-	var/damage_per_tick = 3
+	var/damage_per_tick = 2.5
 	var/sight_range = 3
 	var/atom/movable/target
 	var/list/idle_messages = list(" sulkily glares around.", " lazily drifts from side to side.", " looks around for something to burn.", " slowly turns in circles.")
@@ -371,8 +377,15 @@
 /obj/structure/clockwork/ocular_warden/proc/acquire_nearby_targets()
 	. = list()
 	for(var/mob/living/L in viewers(sight_range, src)) //Doesn't attack the blind
-		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check())
+		var/obj/item/weapon/storage/book/bible/B = L.bible_check()
+		if(!is_servant_of_ratvar(L) && !L.stat && L.mind && !(L.disabilities & BLIND) && !L.null_rod_check() && !B)
 			. += L
+		else if(B)
+			if(B.burn_state != ON_FIRE)
+				L << "<span class='warning'>Your [B.name] bursts into flames!</span>"
+			for(var/obj/item/weapon/storage/book/bible/BI in L.GetAllContents())
+				if(BI.burn_state != ON_FIRE)
+					BI.fire_act()
 	for(var/N in mechas_list)
 		var/obj/mecha/M = N
 		if(get_dist(M, src) <= sight_range && M.occupant && !is_servant_of_ratvar(M.occupant) && (M in view(sight_range, src)))
@@ -782,7 +795,7 @@
 
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
-/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for about twice the stun
+/obj/effect/clockwork/sigil/transgression //Sigil of Transgression: Stuns and flashes the first non-servant to walk on it. Nar-Sian cultists are damaged and knocked down for a longer stun
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."
 	icon = 'icons/effects/clockwork_effects.dmi'
@@ -798,10 +811,10 @@
 	if(iscultist(L))
 		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
 		L.adjustBruteLoss(10)
-		L.Weaken(4)
+		L.Weaken(7)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
-	L.Stun(3)
+	L.Stun(5)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/transgression, get_turf(src))
 	qdel(src)
 	return 1
@@ -809,12 +822,12 @@
 /obj/effect/clockwork/sigil/submission //Sigil of Submission: After a short time, converts any non-servant standing on it. Knocks down and silences them for five seconds afterwards.
 	name = "ominous sigil"
 	desc = "A luminous golden sigil. Something about it really bothers you."
-	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for five seconds."
+	clockwork_desc = "A sigil that will enslave the first person to cross it, provided they remain on it for seven seconds."
 	icon_state = "sigilsubmission"
 	color = "#FAE48C"
 	alpha = 125
 	stat_affected = UNCONSCIOUS
-	var/convert_time = 50
+	var/convert_time = 70
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
 	var/delete_on_finish = TRUE
@@ -828,7 +841,7 @@
 /obj/effect/clockwork/sigil/submission/proc/post_channel(mob/living/L)
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
-	visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>")
+	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	animate(src, color = "#AF0AAF", time = convert_time)
 	var/obj/effect/overlay/temp/ratvar/sigil/glow
 	if(glow_type)
@@ -873,7 +886,7 @@
 /obj/effect/clockwork/sigil/submission/accession //Sigil of Accession: After a short time, converts any non-servant standing on it though implants. Knocks down and silences them for five seconds afterwards.
 	name = "terrifying sigil"
 	desc = "A luminous brassy sigil. Something about it makes you want to flee."
-	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for five seconds. \n\
+	clockwork_desc = "A sigil that will enslave any person who crosses it, provided they remain on it for seven seconds. \n\
 	It can convert a mindshielded target once before disppearing, but can convert any number of non-implanted targets."
 	icon_state = "sigiltransgression"
 	color = "#A97F1B"
@@ -888,7 +901,7 @@
 	if(isloyal(L))
 		delete_on_finish = TRUE
 		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guvf chal gevaxrg jvyy abg fgbc zr.</span>")
+		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guv'f chal gevax-rg jvyy abg fgbc zr.</span>")
 		for(var/obj/item/weapon/implant/mindshield/M in L)
 			if(M.implanted)
 				qdel(M)

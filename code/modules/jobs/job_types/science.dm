@@ -41,7 +41,7 @@ Research Director
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 /datum/outfit/job/rd/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -80,7 +80,7 @@ Scientist
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 /*
 Roboticist
@@ -111,6 +111,6 @@ Roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 	pda_slot = slot_l_store

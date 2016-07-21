@@ -3,10 +3,7 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
@@ -20,10 +17,8 @@
 	},
 /area/shuttle/escape)
 "ae" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
-	},
+/turf/open/floor/mineral/titanium,
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "af" = (
 /obj/structure/table,
@@ -56,10 +51,7 @@
 	},
 /area/shuttle/escape)
 "ak" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "al" = (
 /obj/machinery/computer/atmos_alert,
@@ -139,10 +131,7 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "az" = (
 /turf/open/chasm/straight_down/lava_land_surface/normal_air,
@@ -169,7 +158,7 @@
 /obj/item/weapon/greentext/quiet{
 	anchored = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "aE" = (
 /obj/machinery/door/airlock/glass{
@@ -200,10 +189,7 @@
 	},
 /area/shuttle/escape)
 "aJ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aK" = (
 /obj/structure/table,
@@ -392,7 +378,7 @@ ab
 ak
 ak
 ak
-aI
+ak
 aL
 ak
 ac
@@ -400,11 +386,11 @@ ac
 ac
 ak
 aS
-aI
+ak
 aS
 ak
 ak
-bg
+ab
 aa
 "}
 (2,1,1) = {"
@@ -412,11 +398,11 @@ aa
 ab
 ak
 ak
-au
+ak
 az
 az
 az
-av
+ak
 an
 aO
 aO
@@ -424,23 +410,23 @@ aO
 aO
 aO
 an
-av
+ak
 aZ
 aZ
 bd
-aw
-bg
+ak
+ab
 "}
 (3,1,1) = {"
 ab
 ae
 al
 aq
-av
+ak
 az
 aD
 az
-av
+ak
 aM
 an
 an
@@ -448,7 +434,7 @@ an
 an
 an
 aT
-av
+ak
 aZ
 aZ
 bd
@@ -460,11 +446,11 @@ ac
 af
 am
 ar
-av
+ak
 az
 az
 az
-av
+ak
 an
 aP
 aP
@@ -484,7 +470,7 @@ ac
 ag
 an
 as
-aw
+ak
 ac
 aE
 ac
@@ -496,7 +482,7 @@ aQ
 aQ
 aQ
 an
-av
+ak
 ba
 aZ
 bf
@@ -508,7 +494,7 @@ ac
 ah
 an
 an
-av
+ak
 aA
 an
 aF
@@ -520,7 +506,7 @@ an
 an
 an
 an
-aW
+ay
 ak
 ak
 ak
@@ -576,11 +562,11 @@ bh
 bj
 "}
 (9,1,1) = {"
-ad
-aj
+ab
+ae
 ap
 at
-av
+ak
 aB
 an
 an
@@ -591,7 +577,7 @@ an
 an
 an
 an
-aU
+an
 ac
 aA
 aA
@@ -601,10 +587,10 @@ bj
 "}
 (10,1,1) = {"
 aa
-ad
+ab
 ak
 ak
-au
+ak
 aC
 aA
 aA
@@ -620,15 +606,15 @@ ac
 bb
 bc
 bb
-aw
-bi
+ak
+ab
 "}
 (11,1,1) = {"
 aa
 aa
 aa
 aa
-ad
+ab
 ac
 ak
 ac
@@ -640,10 +626,10 @@ ac
 ac
 ak
 ak
-aY
+ak
 ac
 ak
 ac
-bi
+ab
 aa
 "}

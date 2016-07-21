@@ -11,7 +11,7 @@
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_norm(src)
+		new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/patient
@@ -31,7 +31,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
+	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)

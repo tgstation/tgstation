@@ -286,7 +286,7 @@
 					H.playsound_local(T, hum, 80, 1)
 					add_servant_of_ratvar(H)
 				else if(!H.stat)
-					if(H.getBrainLoss() >= H.maxHealth)
+					if(H.getBrainLoss() >= 100)
 						H.Paralyse(5)
 						H << "<span class='sevtug'>[pick(convert_messages)]</span>"
 					else
@@ -315,36 +315,36 @@
 								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
 						if(targetbrainloss <= 50)
 							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
-						if(targetdruggy <= 150)
-							H.adjust_drugginess(11)
-						if(targethallu <= 150)
-							H.hallucination += 11
+						if(targetdruggy <= 100)
+							H.adjust_drugginess(8)
+						if(targethallu <= 100)
+							H.hallucination += 8
 					if(4 to 5)
 						if(targetbrainloss <= 50)
-							H.adjustBrainLoss(3)
-						if(targetdruggy <= 120)
-							H.adjust_drugginess(9)
-						if(targethallu <= 120)
-							H.hallucination += 9
+							H.adjustBrainLoss(1)
+						if(targetdruggy <= 80)
+							H.adjust_drugginess(6)
+						if(targethallu <= 80)
+							H.hallucination += 6
 					if(6 to 7)
 						if(targetbrainloss <= 30)
-							H.adjustBrainLoss(2)
-						if(prob(falloff_distance) && targetdruggy <= 90)
-							H.adjust_drugginess(7)
-						else if(targethallu <= 90)
-							H.hallucination += 7
-					if(8 to 9)
-						if(H.getBrainLoss() <= 10)
 							H.adjustBrainLoss(1)
 						if(prob(falloff_distance) && targetdruggy <= 60)
 							H.adjust_drugginess(5)
 						else if(targethallu <= 60)
 							H.hallucination += 5
-					if(10 to INFINITY)
-						if(prob(falloff_distance) && targetdruggy <= 30)
+					if(8 to 9)
+						if(H.getBrainLoss() <= 10)
+							H.adjustBrainLoss(1)
+						if(prob(falloff_distance) && targetdruggy <= 40)
 							H.adjust_drugginess(3)
-						else if(targethallu <= 30)
+						else if(targethallu <= 40)
 							H.hallucination += 3
+					if(10 to INFINITY)
+						if(prob(falloff_distance) && targetdruggy <= 20)
+							H.adjust_drugginess(2)
+						else if(targethallu <= 20)
+							H.hallucination += 2
 					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
 						if(targetbrainloss <= 99)
 							if(prob(falloff_distance))
@@ -355,9 +355,9 @@
 								else
 									H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
 							H.adjustBrainLoss(99 - targetbrainloss)
-						if(targetdruggy <= 200)
+						if(targetdruggy <= 150)
 							H.adjust_drugginess(15)
-						if(targethallu <= 200)
+						if(targethallu <= 150)
 							H.hallucination += 15
 
 			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts

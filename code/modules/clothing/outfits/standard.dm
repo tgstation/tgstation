@@ -194,7 +194,7 @@
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 	r_pocket = /obj/item/weapon/lighter
 	l_pocket = /obj/item/ammo_box/a357
-	back = /obj/item/weapon/storage/backpack/satchel
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/centcom_commander/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -222,7 +222,7 @@
 	head = /obj/item/clothing/head/helmet/space/beret
 	belt = /obj/item/weapon/gun/energy/pulse/pistol/m1911
 	r_pocket = /obj/item/weapon/lighter
-	back = /obj/item/weapon/storage/backpack/satchel
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	id = /obj/item/weapon/card/id
 
 /datum/outfit/spec_ops/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -278,7 +278,7 @@
 	ears = /obj/item/device/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	suit = /obj/item/clothing/suit/pirate/captain
-	back = /obj/item/weapon/storage/backpack/satchel
+	back = /obj/item/weapon/storage/backpack/satchel/leather
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
 	id = /obj/item/weapon/card/id

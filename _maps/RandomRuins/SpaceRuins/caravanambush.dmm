@@ -3,11 +3,7 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	smooth = 0
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
 "ac" = (
 /obj/machinery/door/airlock/external{
@@ -85,11 +81,7 @@
 	icon_state = "heater";
 	dir = 8
 	},
-/turf/closed/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	smooth = 0
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
 "aq" = (
 /obj/structure/bed,
@@ -172,11 +164,7 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
 "aD" = (
-/turf/closed/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	smooth = 0
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/space)
 "aE" = (
 /obj/machinery/door/airlock/external{
@@ -206,11 +194,7 @@
 	icon_state = "heater";
 	dir = 8
 	},
-/turf/closed/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	smooth = 0
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/space)
 "aJ" = (
 /obj/structure/chair,
@@ -323,10 +307,7 @@
 	},
 /area/ruin/unpowered)
 "bd" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-swall12";
-	icon_state = "swall12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/unpowered)
 "be" = (
 /turf/open/floor/plating,
@@ -384,10 +365,10 @@
 /area/ruin/unpowered)
 "bl" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bm" = (
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bn" = (
 /obj/structure/fluff/broken_flooring{
@@ -416,24 +397,24 @@
 /obj/item/ammo_casing/shotgun/techshell,
 /obj/item/ammo_casing/shotgun/pulseslug,
 /obj/item/weapon/storage/box/lethalshot,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "br" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bs" = (
 /mob/living/simple_animal/hostile/pirate/space/ranged{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bt" = (
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bu" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bv" = (
 /turf/open/floor/plating,
@@ -454,30 +435,24 @@
 /area/space)
 "bx" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "by" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bz" = (
 /turf/open/space,
-/turf/closed/wall{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	dir = 9;
-	smooth = 0
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered)
 "bA" = (
 /turf/open/space,
-/turf/closed/wall{
-	tag = "icon-wall3 (NORTHEAST)";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	dir = 5;
-	smooth = 0
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered)
 "bB" = (
@@ -520,7 +495,7 @@
 /obj/item/ammo_casing/shotgun/frag12,
 /obj/item/weapon/storage/box/beanbag,
 /obj/item/weapon/storage/box/rubbershot,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bG" = (
 /obj/structure/closet/crate/secure/gear,
@@ -528,13 +503,13 @@
 /obj/item/ammo_casing/shotgun/meteorshot,
 /obj/item/ammo_casing/shotgun/meteorshot,
 /obj/item/ammo_casing/shotgun/meteorshot,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bH" = (
 /obj/structure/closet/crate/secure/gear,
 /obj/item/ammo_box/a40mm,
 /obj/item/ammo_box/a40mm,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bI" = (
 /obj/structure/chair{
@@ -542,11 +517,11 @@
 	},
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bJ" = (
 /obj/machinery/computer,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bK" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
@@ -561,15 +536,15 @@
 	icon_state = "heater";
 	dir = 8
 	},
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/ruin/unpowered)
 "bM" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "bN" = (
 /obj/machinery/computer,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "bO" = (
 /obj/effect/decal/cleanable/dirt,
@@ -608,7 +583,7 @@
 /obj/item/device/gps{
 	gpstag = "Distress Signal"
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bU" = (
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -623,17 +598,17 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/weapon/storage/toolbox/electrical,
 /obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "bW" = (
 /obj/item/weapon/shard,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bX" = (
 /obj/structure/table_frame,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "bY" = (
 /turf/open/floor/plating/airless{
@@ -642,7 +617,7 @@
 	},
 /area/ruin/unpowered)
 "bZ" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "ca" = (
 /obj/structure/chair{
@@ -652,7 +627,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Pilot"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cb" = (
 /obj/structure/closet/crate/secure/engineering,
@@ -680,7 +655,7 @@
 	name = "experimental crowbar";
 	toolspeed = 3
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cc" = (
 /turf/open/floor/plasteel/shuttle,
@@ -691,7 +666,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "ce" = (
 /obj/item/stack/rods,
@@ -724,24 +699,24 @@
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/weapon/gun/projectile/shotgun/riot,
 /obj/item/weapon/gun/projectile/shotgun/riot,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cj" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/weapon/gun/syringe/syndicate,
 /obj/item/weapon/gun/syringe/rapidsyringe,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "ck" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted,
 /obj/item/weapon/gun/projectile/automatic/c20r/toy/unrestricted,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cl" = (
 /obj/structure/closet/crate/secure/weapon,
 /obj/item/weapon/gun/projectile/revolver/grenadelauncher/unrestricted,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cm" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
@@ -756,7 +731,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "co" = (
 /obj/item/stack/rods,
@@ -778,14 +753,14 @@
 /obj/structure/closet/crate/secure/engineering,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cr" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -794,7 +769,7 @@
 "ct" = (
 /obj/item/stack/sheet/metal,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cu" = (
 /obj/structure/closet/crate,
@@ -803,12 +778,12 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/clipboard,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cw" = (
 /obj/structure/closet/crate/secure/plasma,
@@ -817,22 +792,22 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cx" = (
 /obj/structure/closet/crate/secure/plasma,
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cy" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cz" = (
 /obj/item/chair,
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cA" = (
 /obj/item/stack/rods,
@@ -871,7 +846,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cG" = (
 /obj/structure/closet/crate{
@@ -884,14 +859,14 @@
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 10
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cH" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cI" = (
 /obj/machinery/computer,
@@ -903,20 +878,20 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 25
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cK" = (
 /obj/structure/closet/crate/secure/engineering,
 /obj/item/organ/cyberimp/arm/toolset,
 /obj/item/organ/cyberimp/arm/toolset,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cL" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper{
 	environment_smash = 0;
 	name = "Syndicate Salvage Leader"
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cM" = (
 /obj/item/stack/rods,
@@ -925,7 +900,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cN" = (
 /obj/item/weapon/shard,
@@ -942,7 +917,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cQ" = (
 /obj/structure/closet/crate/secure/plasma,
@@ -954,13 +929,13 @@
 	},
 /obj/item/weapon/tank/internals/plasma/full,
 /obj/item/weapon/tank/internals/plasma/full,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cR" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cS" = (
 /obj/structure/closet/crate,
@@ -970,7 +945,7 @@
 /obj/item/stack/sheet/rglass{
 	amount = 20
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cT" = (
 /obj/structure/closet/crate{
@@ -983,17 +958,17 @@
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 5
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cU" = (
 /obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "cV" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "cW" = (
 /obj/structure/closet/crate/secure/plasma,
@@ -1001,11 +976,11 @@
 	amount = 25
 	},
 /obj/item/weapon/tank/internals/plasma/full,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cX" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cY" = (
 /obj/structure/closet/crate,
@@ -1015,7 +990,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "cZ" = (
 /mob/living/simple_animal/hostile/syndicate/melee/space{
@@ -1029,22 +1004,18 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "db" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/space{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dc" = (
 /obj/structure/shuttle/engine/heater,
-/turf/closed/wall{
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	smooth = 0
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/ruin/powered)
 "dd" = (
 /obj/structure/closet/crate{
@@ -1057,7 +1028,7 @@
 /obj/item/stack/sheet/mineral/gold{
 	amount = 25
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "de" = (
 /obj/structure/chair{
@@ -1067,7 +1038,7 @@
 	environment_smash = 0;
 	name = "Syndicate Salvage Pilot"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "df" = (
 /obj/structure/shuttle/engine/propulsion/burst,
@@ -1077,7 +1048,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "dh" = (
 /obj/structure/closet/crate,
@@ -1090,7 +1061,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 25
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/powered)
 "di" = (
 /obj/machinery/button/door{
@@ -1100,12 +1071,9 @@
 /area/ruin/unpowered)
 "dj" = (
 /turf/open/space,
-/turf/closed/wall{
-	tag = "icon-wall3 (SOUTHEAST)";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "wall3";
-	dir = 6;
-	smooth = 0
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
 /area/ruin/powered)
 "dk" = (
@@ -1213,7 +1181,7 @@
 	},
 /area/ruin/unpowered)
 "dA" = (
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /obj/structure/door_assembly/door_assembly_shuttle{
 	density = 0;
 	name = "broken airlock"
@@ -1230,11 +1198,7 @@
 	},
 /area/ruin/unpowered)
 "dC" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f10";
-	icon_state = "swall_f10"
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/ruin/unpowered)
 "dD" = (
 /obj/item/stack/sheet/metal,
@@ -1249,7 +1213,7 @@
 /obj/machinery/button/door{
 	pixel_x = 24
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dF" = (
 /turf/closed/wall/shuttle{
@@ -1260,14 +1224,11 @@
 "dG" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/black,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dH" = (
-/turf/open/floor/plasteel/airless/shuttle,
-/turf/closed/wall/shuttle{
-	tag = "icon-swall_f5";
-	icon_state = "swall_f5"
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/ruin/unpowered)
 "dI" = (
 /turf/closed/wall/shuttle{
@@ -1279,18 +1240,18 @@
 /mob/living/simple_animal/hostile/pirate/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dK" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dL" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dM" = (
 /turf/closed/wall/shuttle,
@@ -1299,20 +1260,20 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/black,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dO" = (
 /mob/living/simple_animal/hostile/pirate/space{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "dP" = (
 /obj/structure/door_assembly/door_assembly_shuttle{
 	density = 0;
 	name = "broken airlock"
 	},
-/turf/open/floor/plasteel/airless/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/ruin/unpowered)
 "dQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1327,12 +1288,12 @@
 /mob/living/simple_animal/hostile/pirate/space/ranged{
 	environment_smash = 0
 	},
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 "dS" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
-/turf/open/floor/plasteel/airless/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)
 
 (1,1,1) = {"
@@ -2206,15 +2167,15 @@ aa
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
@@ -2304,7 +2265,7 @@ bd
 bL
 bL
 bL
-bb
+bd
 bL
 bL
 bL
@@ -2449,7 +2410,7 @@ bt
 cS
 bt
 bu
-bb
+bd
 aa
 aa
 aa
@@ -2680,11 +2641,11 @@ aa
 bQ
 dQ
 br
-dM
+bd
 dP
-dz
-dF
-dI
+bd
+bd
+bd
 aa
 aa
 aa
@@ -2778,7 +2739,7 @@ cH
 bm
 bm
 bm
-dB
+bd
 aa
 aa
 aa
@@ -2824,8 +2785,8 @@ dL
 bJ
 bu
 dS
-ar
-aG
+dH
+dC
 aa
 aa
 aa
@@ -2871,7 +2832,7 @@ bv
 bv
 bv
 bv
-aG
+dC
 aa
 aa
 aa
@@ -3475,11 +3436,11 @@ aa
 aN
 aa
 aa
-dB
+bd
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
@@ -3569,7 +3530,7 @@ dy
 aa
 aA
 aa
-bb
+bd
 bL
 bL
 bL
@@ -3706,7 +3667,7 @@ aa
 aa
 aa
 aa
-bb
+bd
 dD
 bp
 bp
@@ -3714,7 +3675,7 @@ bF
 bt
 ci
 bu
-bb
+bd
 aa
 aa
 ay
@@ -3941,15 +3902,15 @@ aZ
 ba
 aY
 aY
-dz
-dF
-dI
+bd
+bd
+bd
 bx
-dM
+bd
 dP
-dz
-dF
-dI
+bd
+bd
+bd
 aa
 aa
 ay
@@ -4035,7 +3996,7 @@ aa
 aa
 aa
 aa
-dB
+bd
 dG
 dJ
 bm
@@ -4043,7 +4004,7 @@ bI
 bm
 dR
 bm
-dB
+bd
 aa
 aa
 ay
@@ -4089,8 +4050,8 @@ dL
 bJ
 bT
 dS
-ar
-aG
+dH
+dC
 aa
 aa
 aa
@@ -4136,7 +4097,7 @@ bv
 bv
 bv
 bv
-aG
+dC
 aa
 aa
 aa
@@ -4602,15 +4563,15 @@ aa
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
-dB
+bd
 aa
 aa
 aa
@@ -4700,7 +4661,7 @@ bd
 bL
 bL
 bL
-bb
+bd
 bL
 bL
 bL
@@ -4837,7 +4798,7 @@ aa
 aa
 aa
 aa
-bb
+bd
 bu
 bt
 bt
@@ -4845,7 +4806,7 @@ cw
 bt
 bt
 bu
-bb
+bd
 aa
 aa
 aa
@@ -5072,15 +5033,15 @@ aa
 aa
 aa
 aa
-dz
-dF
-dI
+bd
+bd
+bd
 dP
-dM
+bd
 dP
-dz
-dF
-dI
+bd
+bd
+bd
 aa
 aa
 aa
@@ -5166,7 +5127,7 @@ aa
 aa
 aa
 aa
-dB
+bd
 dN
 bW
 bl
@@ -5174,7 +5135,7 @@ cz
 cM
 bl
 bm
-dB
+bd
 aa
 aa
 aa
@@ -5220,8 +5181,8 @@ co
 cA
 cN
 cV
-ar
-aG
+dH
+dC
 aa
 aa
 aa
@@ -5267,7 +5228,7 @@ cp
 cB
 aR
 bY
-aG
+dC
 aa
 aa
 aa

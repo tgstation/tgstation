@@ -74,11 +74,19 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/proc/has_requirements() //if we have the components and invokers to do it
 	if(!ratvar_awakens && !slab.no_cost)
+		var/component_printout = "<span class='warning'>You lack the components to recite this piece of scripture!"
+		var/failed = FALSE
 		for(var/i in required_components)
 			var/cache_components = clockwork_caches ? clockwork_component_cache[i] : 0
-			if(slab.stored_components[i] + cache_components < required_components[i])
-				invoker << "<span class='warning'>You lack the components to recite this piece of scripture! Check Recollection for component costs.</span>"
-				return 0
+			var/total_components = slab.stored_components[i] + cache_components
+			if(required_components[i] && total_components < required_components[i])
+				component_printout += "\nYou have <span class='[get_component_span(i)]_small'><b>[total_components]/[required_components[i]]</b> \
+				[get_component_name(i)][i != "replicant_alloy" ? "s":""].</span>"
+				failed = TRUE
+		if(failed)
+			component_printout += "</span>"
+			invoker << component_printout
+			return 0
 	if(multiple_invokers_used && !multiple_invokers_optional && !ratvar_awakens && !slab.no_cost)
 		var/nearby_servants = 0
 		for(var/mob/living/L in range(1, invoker))
@@ -309,11 +317,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/guvax //Guvax: Converts anyone adjacent to the invoker after completion.
 	descname = "Melee Area Convert"
 	name = "Guvax"
-	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby servants."
+	desc = "Enlists all nearby living unshielded creatures into servitude to Ratvar. Also purges holy water from nearby Servants."
 	invocations = list("Rayvtugr-a guv'f urngura!", "Nyy ner vafrpgf orsber Ratvar!", "Chetr nyy hagehguf-naq-ubabe Ratvar.")
 	channel_time = 50
 	required_components = list("guvax_capacitor" = 1)
-	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission."
+	usage_tip = "Only works on those in melee range and does not penetrate mindshield implants. Much more efficient than a Sigil of Submission at low Servant amounts."
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/guvax/run_scripture()
@@ -323,7 +331,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			servants++
 	if(servants > 5)
 		servants -= 5
-		channel_time = min(channel_time + servants*7.5, 150) //if above 5 servants, is slower
+		channel_time = min(channel_time + servants*10, 200) //if above 5 servants, is much slower
 	return ..()
 
 /datum/clockwork_scripture/guvax/scripture_effects()
@@ -408,14 +416,24 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	desc = "Forms a cache that can store an infinite amount of components. All caches are linked and will provide components to slabs."
 	invocations = list("Pbafgehpgv'at...", "...n pnpur!")
 	channel_time = 50
-	required_components = list("replicant_alloy" = 2)
-	consumed_components = list("replicant_alloy" = 1)
+	required_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 2, "hierophant_ansible" = 0)
+	consumed_components = list("belligerent_eye" = 0, "vanguard_cogwheel" = 0, "guvax_capacitor" = 0, "replicant_alloy" = 1, "hierophant_ansible" = 0)
 	object_path = /obj/structure/clockwork/cache
 	creator_message = "<span class='brass'>You form a tinkerer's cache, which is capable of storing components, which will automatically be used by slabs.</span>"
 	observer_message = "<span class='warning'>A hollow brass spire rises and begins to blaze!</span>"
 	usage_tip = "Slabs will draw components from the global cache after the slab's own repositories, making caches very efficient."
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
+
+/datum/clockwork_scripture/create_object/tinkerers_cache/run_scripture()
+	var/cache_cost_increase = min(round(clockwork_caches*0.34), 5)
+	for(var/i in required_components)
+		if(i != "replicant_alloy")
+			required_components[i] += cache_cost_increase
+	for(var/i in consumed_components)
+		if(i != "replicant_alloy")
+			consumed_components[i] += cache_cost_increase
+	return ..()
 
 
 

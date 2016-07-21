@@ -175,6 +175,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return N
 	return 0
 
+/mob/proc/bible_check() //The bible, if held, might protect against certain things
+	var/obj/item/weapon/storage/book/bible/B = locate() in src
+	if(B && (l_hand == B || r_hand == B))
+		return B
+	return 0
+
 //Rite of Binding: A paper on top of the rune to a talisman.
 /obj/effect/rune/imbue
 	cultist_name = "Create Talisman"
