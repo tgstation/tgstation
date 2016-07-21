@@ -107,8 +107,10 @@ This file's folder contains:
 			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
 		else if(isAI(S))
 			var/mob/living/silicon/ai/A = S
-			for(var/R in A.connected_robots)
-				add_servant_of_ratvar(R)
+			for(var/C in A.connected_robots)
+				var/mob/living/silicon/robot/R = C
+				if(R.connected_ai == A)
+					add_servant_of_ratvar(R)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
