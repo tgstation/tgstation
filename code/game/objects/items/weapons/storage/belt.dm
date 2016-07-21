@@ -19,7 +19,7 @@
 
 /obj/item/weapon/storage/belt/can_quick_store(var/obj/item/I)
 	return can_be_inserted(I,1)
-	
+
 /obj/item/weapon/storage/belt/quick_store(var/obj/item/I)
 	return handle_item_insertion(I,0)
 
@@ -117,8 +117,23 @@
 		"/obj/item/device/silicate_sprayer"
 		)
 
-/obj/item/weapon/storage/belt/utility/chief/New()
+/obj/item/weapon/storage/belt/utility/chief/full/New() //This is mostly for testing I guess
 	..()
+	new /obj/item/weapon/crowbar(src)
+	new /obj/item/weapon/screwdriver(src)
+	new /obj/item/weapon/weldingtool/hugetank(src)
+	new /obj/item/weapon/wirecutters(src)
+	new /obj/item/weapon/wrench(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/stack/cable_coil(src)
+	new /obj/item/device/t_scanner(src)
+	new /obj/item/device/analyzer(src)
+	new /obj/item/weapon/solder/pre_fueled(src)
+	new /obj/item/device/silicate_sprayer(src)
+	new /obj/item/device/rcd/rpd(src)
+	new /obj/item/device/rcd/matter/engineering/pre_loaded(src)
+
 
 /obj/item/weapon/storage/belt/medical
 	name = "medical belt"

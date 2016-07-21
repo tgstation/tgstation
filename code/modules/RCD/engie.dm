@@ -18,6 +18,10 @@
 	visible_message("<span class='danger'>[user] is using the deconstruct function on \the [src] on \himself! It looks like \he's  trying to commit suicide!</span>")
 	return (user.death(1))
 
+/obj/item/device/rcd/matter/engineering/pre_loaded/New() //Comes with max energy
+	..()
+	matter = max_matter
+
 /obj/item/device/rcd/borg/engineering
 	schematics = list(
 	/datum/rcd_schematic/decon,

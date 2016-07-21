@@ -284,7 +284,7 @@
 					genemutcheck(user,NOBREATHBLOCK,null,MUTCHK_FORCED)
 					genemutcheck(user,FIREBLOCK,null,MUTCHK_FORCED)
 					user.update_mutations()
-					to_chat(user, "<span class=danger><B>You have been rewarded hanesomely with rare minerals and powers! </span></B>")
+					to_chat(user, "<span class=danger><B>You have been rewarded handsomely with rare minerals and powers! </span></B>")
 
 			if(prob(15))
 				deactivated = 1

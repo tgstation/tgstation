@@ -699,6 +699,11 @@
 			"<span class='warn'>The tool is too thirsty!</span>")
 		return 0
 
+/obj/item/weapon/solder/pre_fueled/New()
+	. = ..()
+	reagents.add_reagent(SACID, 50)
+	update_icon()
+
 /*
 * Fuel Can
 * A special, large container that fits on the belt

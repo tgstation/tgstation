@@ -4,15 +4,15 @@
 //**************************************************************
 
 /datum/map/active
-	nameShort = "test"
+	nameShort = "test_box"
 	nameLong = "Test Station"
-	map_dir = "teststation"
-	tDomeX = 100
-	tDomeY = 100
+	map_dir = "teststation_box"
+	tDomeX = 8
+	tDomeY = 8
 	tDomeZ = 1
 	zLevels = list(
 		/datum/zLevel/station,
 		)
 
 ////////////////////////////////////////////////////////////////
-#include "test_map.dmm"
+#include "test_box.dmm"

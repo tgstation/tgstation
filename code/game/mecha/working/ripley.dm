@@ -63,6 +63,14 @@
 	HC.attach(src)
 	src.hydraulic_clamp = HC
 
+/obj/mecha/working/ripley/preloaded/New() //Starts with DD, tracking beacon, and clamp
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill/D = new /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
+	D.attach(src)
+	var/obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/tool/hydraulic_clamp
+	HC.attach(src)
+	src.hydraulic_clamp = HC
+
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)
 		return 0

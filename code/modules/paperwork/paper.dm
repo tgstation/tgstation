@@ -472,3 +472,7 @@ var/global/list/paper_folding_results = list ( \
 /obj/item/weapon/paper/voxresearch/voxresearchescape
 	name = "paper- 'Recent Attack'"
 	info = "We still do not know who were responsible for the recent attack and escape of several test subjects.  The initial investigation points to the Syndicate but we cannot say for sure at this time.  This has violated our contract with REDACTED and REDACTED.  We may have to close the facility. "
+
+/obj/item/weapon/paper/outoforder
+	name = "paper- 'OUT OF ORDER'"
+	info = "<B>OUT OF ORDER</B>"
