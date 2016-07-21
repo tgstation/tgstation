@@ -189,4 +189,3 @@ Difficulty: Hard
 	desc = "Though not yet strong enough to create a true physical form, it's nonetheless determined to murder you."
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
-

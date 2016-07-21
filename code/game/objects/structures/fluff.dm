@@ -105,3 +105,18 @@
 
 /obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
 	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
+
+/obj/structure/fluff/paper
+	name = "dense lining of papers"
+	desc = "A lining of paper scattered across the bottom of a wall."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "paper"
+	deconstructible = FALSE
+
+/obj/structure/fluff/paper/corner
+	icon_state = "papercorner"
+
+/obj/structure/fluff/paper/stack
+	name = "dense stack of papers"
+	desc = "A stack of various papers, childish scribbles scattered across each page."
+	icon_state = "paperstack"
