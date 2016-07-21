@@ -75,7 +75,7 @@
 		honey_frames += HF
 
 	for(var/i in 1 to get_max_bees())
-		var/mob/living/simple_animal/hostile/poison/bees/B = new(src)
+		var/mob/living/simple_animal/hostile/poison/bees/B = new pick((subtypesof(/mob/living/simple_animal/hostile/poison/bees) - /mob/living/simple_animal/hostile/poison/bees/queen))(src)
 		bees += B
 		B.beehome = src
 		B.assign_reagent(R)
@@ -102,7 +102,7 @@
 			if((bee_resources >= BEE_RESOURCE_NEW_BEE_COST && prob(BEE_PROB_NEW_BEE)) || freebee)
 				if(!freebee)
 					bee_resources = max(bee_resources - BEE_RESOURCE_NEW_BEE_COST, 0)
-				var/mob/living/simple_animal/hostile/poison/bees/B = new(src)
+				var/mob/living/simple_animal/hostile/poison/bees/B = new pick((subtypesof(/mob/living/simple_animal/hostile/poison/bees) - /mob/living/simple_animal/hostile/poison/bees/queen))(src)
 				B.beehome = src
 				B.assign_reagent(queen_bee.beegent)
 				bees += B

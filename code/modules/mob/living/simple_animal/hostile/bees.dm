@@ -25,8 +25,8 @@
 	response_help  = "shoos"
 	response_disarm = "swats away"
 	response_harm   = "squashes"
-	maxHealth = 10
-	health = 10
+	maxHealth = 15
+	health = 15
 	faction = list("hostile")
 	move_to_delay = 0
 	environment_smash = 0
@@ -48,7 +48,46 @@
 	var/isqueen = FALSE
 	var/icon_base = "bee"
 	var/static/list/bee_icons = list()
+	
+	var/transfer_type = INJECT
+	var/transfer_min = 1
+	var/transfer_max = 5
 
+/mob/living/simple_animal/hostile/poison/bees/vapor//wave
+	name = "vaporizing bee"
+	desc = "You don't understand, it's all in your hands"
+	transfer_type = VAPOR//WAVE
+
+/mob/living/simple_animal/hostile/poison/bees/touch
+	name = "fuzzy bee"
+	desc = "You think touching that is a bad idea."
+	transfer_type = TOUCH
+
+/mob/living/simple_animal/hostile/poison/bees/highcap
+	name = "high-capacity bee"
+	desc = "This bee has an engorged sack. Looks kinda weak, though."
+	maxHealth = 5
+	health = 5
+	transfer_min = 5
+	transfer_max = 10
+	
+/mob/living/simple_animal/hostile/poison/bees/strong
+	name = "big bee"
+	desc = "This bee has been lifting lately.."
+	transfer_min = 1
+	transfer_max = 3
+	maxHealth = 25
+	health = 25
+
+/mob/living/simple_animal/hostile/poison/bees/damage
+	name = "wasp"
+	desc = "This 'bee' looks kind of violent."
+	maxHealth = 10
+	health = 10
+	transfer_min = 1
+	transfer_max = 1
+	melee_damage_lower = 5
+	melee_damage_upper = 5
 
 /mob/living/simple_animal/hostile/poison/bees/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -125,7 +164,7 @@
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
 			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
 			return 1
-	if(isliving(A))
+	if(isliving(A) && !issilicon(A))
 		var/mob/living/H = A
 		return !H.bee_friendly()
 	return 0
@@ -144,8 +183,8 @@
 	else
 		if(beegent && isliving(target))
 			var/mob/living/L = target
-			beegent.reaction_mob(L, INJECT)
-			L.reagents.add_reagent(beegent.id, rand(1,5))
+			beegent.reaction_mob(L, transfer_type)
+			L.reagents.add_reagent(beegent.id, rand(transfer_min, transfer_max))
 		target.attack_animal(src)
 
 
