@@ -40,15 +40,16 @@
 
 /obj/item/organ/brain/examine(mob/user)
 	..()
-	if(brainmob && brainmob.client)//if thar be a brain inside... the brain.
-		if(mind_can_reenter(brainmob.mind))// This checks if the ghost can re-enter (ghost.can_reenter_corpse)
-			to_chat(user, "<span class='deadsay'>This one seems unresponsive.</span>")// Should probably make this more realistic,
-
-			                                                                    //  but this message ties it in with MMI errors.
-		else
+	if(brainmob)
+		if(brainmob.client)
 			to_chat(user, "<span class='notice'>You can feel the small spark of life still left in this one.</span>")
-	else
-		to_chat(user, "<span class='deadsay'>This one seems particularly lifeless. Perhaps it will regain some of its luster later..</span>")
+			return
+		var/mob/dead/observer/ghost = get_ghost_from_mind(brainmob.mind)
+		if(ghost && ghost.client && ghost.can_reenter_corpse)
+			to_chat(user, "<span class='deadsay'>It seems particularly lifeless, but not yet gone. Perhaps it will regain some of its luster later...</span>")
+			return
+		to_chat(user, "<span class='deadsay'>This one seems unresponsive.</span>")// Should probably make this more realistic, but this message ties it in with MMI errors.
+		return
 
 /obj/item/organ/brain/removed(var/mob/living/target,var/mob/living/user)
 

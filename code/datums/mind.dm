@@ -1396,10 +1396,15 @@ proc/clear_memory(var/silent = 1)
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
 
+/proc/get_ghost_from_mind(var/datum/mind/mind)
+	if(!mind)
+		return
+	for(var/mob/dead/observer/G in player_list)
+		if(G.mind == mind)
+			return G
 
 /proc/mind_can_reenter(var/datum/mind/mind)
-	if(mind)
-		for(var/mob/dead/observer/G in player_list)
-			if(G.can_reenter_corpse && G.mind == mind)
-				return TRUE
+	var/mob/dead/observer/G = get_ghost_from_mind(mind)
+	if(G && G.client && G.can_reenter_corpse)
+		return TRUE
 	return FALSE

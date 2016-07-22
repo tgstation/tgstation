@@ -810,11 +810,11 @@ var/global/list/whitelisted_species = list("Human")
 			else
 				if(!client)
 					to_chat(user, "<span class='notice'>As you press \the [A] into \the [src], it shudders briefly, but falls still.</span>")
-					for(var/mob/dead/observer/ghost in player_list)
-						if(ghost.mind == mind && ghost.client && ghost.can_reenter_corpse)
-							ghost << 'sound/effects/adminhelp.ogg'
-							to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to resurrect you. Return to your body if you want to live again!</b> \
-								(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
+					var/mob/dead/observer/ghost = get_ghost_from_mind(mind)
+					if(ghost && ghost.client && ghost.can_reenter_corpse)
+						ghost << 'sound/effects/adminhelp.ogg'
+						to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to resurrect you. Return to your body if you want to live again!</b> \
+							(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
 				else
 					anim(target = src, a_icon = 'icons/mob/mob.dmi', flick_anim = "reverse-dust-g", sleeptime = 15)
 					var/mob/living/carbon/human/golem/G = new /mob/living/carbon/human/golem

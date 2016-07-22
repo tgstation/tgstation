@@ -45,11 +45,11 @@ var/global/list/hasbeendiona = list() // Stores ckeys and a timestamp for ghost 
 			source = B.data["donor"]
 			to_chat(user, "The strange, sluglike seeds quiver gently and swell with blood.")
 			if(!source.client && source.mind)
-				for(var/mob/dead/observer/O in player_list)
-					if(O.mind == source.mind && config.revival_pod_plants)
-						to_chat(O, "<span class='interface'><b><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> \)
-							(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[O];reentercorpse=1'>click here!</a>)</font></span>"
-						break
+				var/mob/dead/observer/O = get_ghost_from_mind(source.mind)
+				if(O && O.client && config.revival_pod_plants)
+					to_chat(O, "<span class='interface'><b><font size = 3>Your blood has been placed into a replica pod seed. Return to your body if you want to be returned to life as a pod person!</b> \)
+						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[O];reentercorpse=1'>click here!</a>)</font></span>"
+					break
 		else
 			to_chat(user, "Nothing happens.")
 			return

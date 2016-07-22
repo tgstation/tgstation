@@ -148,13 +148,13 @@
 			target.apply_damage(rand(1,5),BURN,LIMB_CHEST)
 			return
 		if(target.mind && !target.client) //Let's call up the ghost! Also, bodies with clients only, thank you.
-			for(var/mob/dead/observer/ghost in player_list)
-				if(ghost.mind == target.mind  && ghost.client && ghost.can_reenter_corpse)
-					ghost << 'sound/effects/adminhelp.ogg'
-					to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to revive your body. Return to it if you want to be resurrected!</b> \
-						(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
-					to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>")
-					return
+			var/mob/dead/observer/ghost = get_ghost_from_mind(target.mind)
+			if(ghost && ghost.client && ghost.can_reenter_corpse)
+				ghost << 'sound/effects/adminhelp.ogg'
+				to_chat(ghost, "<span class='interface'><b><font size = 3>Someone is trying to revive your body. Return to it if you want to be resurrected!</b> \
+					(Verbs -> Ghost -> Re-enter corpse, or <a href='?src=\ref[ghost];reentercorpse=1'>click here!</a>)</font></span>")
+				to_chat(user, "<span class='warning'>[src] buzzes: Defibrillation failed. Vital signs are too weak, please try again in five seconds.</span>")
+				return
 			//we couldn't find a suitable ghost.
 			target.visible_message("<span class='warning'>[src] buzzes: Defibrillation failed. Patient's condition does not allow reviving.</span>")
 			return
