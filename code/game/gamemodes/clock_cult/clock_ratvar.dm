@@ -39,7 +39,7 @@
 	countdown.start()
 	START_PROCESSING(SSobj, src)
 	var/area/gate_area = get_area(src)
-	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>")
+	hierophant_message("<span class='large_brass'><b>A gateway to the Celestial Derelict has been created in [gate_area.map_name]!</b></span>", FALSE, src)
 
 /obj/structure/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -169,7 +169,7 @@
 	for(var/obj/item/clockwork/ratvarian_spear/R in all_clockwork_objects)
 		R.update_force()
 	START_PROCESSING(SSobj, src)
-	world << "<span class='heavy_brass'><font size=6>\"BAPR NTNVA ZL-YVTUG FUNYY FUVAR NPEBFF GUV'F CNGU-RGV'P ERNYZ!!\"</font></span>"
+	world << "<span class='heavy_brass'><font size=6>\"[text2ratvar("ONCE AGAIN MY LIGHT SHALL SHINE ACROSS THIS PATHETIC REALM")]!!\"</font></span>"
 	world << 'sound/effects/ratvar_reveal.ogg'
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
@@ -288,7 +288,7 @@
 		base_victory_chance++ //The clash has a higher chance of resolving each time both gods attack one another
 	switch(winner)
 		if("Ratvar")
-			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", "EBG SBE PRAGHEVRF NF V UNIR!!")]\"</font></span>" //nar-sie get out
+			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
 			world << 'sound/magic/demon_dies.ogg'

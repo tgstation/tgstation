@@ -741,19 +741,20 @@
 /obj/effect/clockwork/general_marker/nzcrentr
 	name = "Nzcrentr, the Forgotten Arbiter"
 	desc = "A terrifying war machine crackling with limitless energy."
-	clockwork_desc = "One of Ratvar's four generals. Nzcrentr is the result of Neovgre - Nezbere's finest war machine, commandeerable only be a mortal - fusing with its pilot and driving her \
-	insane. Nzcrentr seeks out any and all sentient life to slaughter it for sport."
+	clockwork_desc = "One of Ratvar's four generals. Before becoming one of Ratvar's generals, Nzcrentr sook out any and all sentient life to slaughter it for sport.\
+	Nzcrentr was coerced by Ratvar into entering a shell constructed by Nezbere, ostensibly made to grant Nzcrentr more power. In reality, the shell was made to trap and control it.\
+	Nzcrentr now serves loyally, though even one of Nezbere's finest creations was not enough to totally eliminate its will."
 	icon = 'icons/effects/254x361.dmi'
 	icon_state = "nzcrentr"
 	pixel_x = -111
 	pixel_y = -164
 
 /obj/effect/clockwork/general_marker/inathneq
-	name = "Inath-Neq, the Resonant Cogwheel"
+	name = "Inath-neq, the Resonant Cogwheel"
 	desc = "A humanoid form blazing with blue fire. It radiates an aura of kindness and caring."
-	clockwork_desc = "One of Ratvar's four generals. Before her current form, Inath-Neq was a powerful warrior priestess commanding the Resonant Cogs, a sect of Ratvarian warriors renowned for \
-	their prowess. After a lost battle with Nar-Sian cultists, Inath-Neq was struck down and stated in her dying breath, \
-	\"The Resonant Cogs shall not fall silent this day, but will come together to form a wheel that shall never stop turning.\" Ratvar, touched by this, granted Inath-Neq an eternal body and \
+	clockwork_desc = "One of Ratvar's four generals. Before her current form, Inath-neq was a powerful warrior priestess commanding the Resonant Cogs, a sect of Ratvarian warriors renowned for \
+	their prowess. After a lost battle with Nar-Sian cultists, Inath-neq was struck down and stated in her dying breath, \
+	\"The Resonant Cogs shall not fall silent this day, but will come together to form a wheel that shall never stop turning.\" Ratvar, touched by this, granted Inath-neq an eternal body and \
 	merged her soul with those of the Cogs slain with her on the battlefield."
 	icon = 'icons/effects/187x381.dmi'
 	icon_state = "inath-neq"
@@ -901,7 +902,7 @@
 	if(isloyal(L))
 		delete_on_finish = TRUE
 		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
-		"<span class='sevtug'>Lbh jvyy or zvar-naq-uvf. Guv'f chal gevax-rg jvyy abg fgbc zr.</span>")
+		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")
 		for(var/obj/item/weapon/implant/mindshield/M in L)
 			if(M.implanted)
 				qdel(M)
@@ -992,7 +993,8 @@
 						ghost.reenter_corpse()
 						L.revive(1, 1)
 						playsound(L, 'sound/magic/Staff_Healing.ogg', 50, 1)
-						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", "<span class='inathneq'>\"Lbh jvyy or bxnl, puvyq.\"</span>")
+						L.visible_message("<span class='warning'>[L] suddenly gets back up, their mouth dripping blue ichor!</span>", \
+						"<span class='inathneq'>\"[text2ratvar("You will be okay, child.")]\"</span>")
 						vitality -= revival_cost
 						break
 				else
