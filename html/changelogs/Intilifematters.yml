@@ -1,0 +1,4 @@
+author: Intigracy
+delete-after: True
+changes: 
+- tweak: "Supermatter crates ordered from cargo now cost 500 credits, as opposed to 100."

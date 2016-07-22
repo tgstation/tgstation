@@ -1094,7 +1094,7 @@ var/list/all_supply_groups = list("Supplies","Clothing","Security","Hospitality"
 /datum/supply_packs/supermatter_shard
 	contains = list(/obj/machinery/power/supermatter/shard)
 	name = "Supermatter Shard"
-	cost = 100 //So cargo thinks twice before killing themselves with it
+	cost = 500 //So cargo thinks thrice before killing themselves with it. You're going to need a department account most likely.
 	containertype = /obj/structure/closet/crate/secure/engisec
 	containername = "Supermatter Shard Crate"
 	group = "Engineering"
