@@ -696,13 +696,13 @@ The _flatIcons list is a cache for generated icon files.
 			copy = image(curicon, curstate)
 		else
 			var/icon/dirIcon
-			if(curdir % 2 == 0)
+			if(curdir == NORTH || curdir == SOUTH || curdir == EAST || curdir == WEST)
 				dirIcon = icon('icons/effects/effects.dmi', "nothing_4way")
 			else
 				dirIcon = icon('icons/effects/effects.dmi', "nothing_8way")
 			var/icon/copyicon = icon(curicon, curstate)
 			dirIcon.Blend(copyicon, ICON_OVERLAY)
-			copy = image(icon=dirIcon)
+			copy = image(dirIcon)
 		copy.dir = curdir
 		copy.color = A.color
 		copy.alpha = A.alpha
