@@ -98,10 +98,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 			for(var/mob/living/L in range(1, invoker))
 				if(is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal())
 					for(var/invocation in invocations)
-						clockwork_say(L, invocation, whispered)
+						clockwork_say(L, text2ratvar(invocation), whispered)
 		else
 			for(var/invocation in invocations)
-				clockwork_say(invoker, invocation, whispered)
+				clockwork_say(invoker, text2ratvar(invocation), whispered)
 	invoker << "<span class='brass'>You [channel_time <= 0 ? "recite" : "begin reciting"] a piece of scripture entitled \"[name]\".</span>"
 	if(!channel_time)
 		return 1
