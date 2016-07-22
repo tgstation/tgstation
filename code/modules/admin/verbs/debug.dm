@@ -777,3 +777,17 @@ var/global/list/g_fancy_list_of_types = null
 	message_admins("<span class='adminnotice'>[key_name_admin(src)] cleared dynamic transit space.</span>")
 	feedback_add_details("admin_verb","CDT") // If...
 	log_admin("[key_name(src)] cleared dynamic transit space.")
+
+
+/client/proc/toggle_medal_disable()
+	set category = "Debug"
+	set name = "Toggle Medal Disable"
+	set desc = "Toggles the safety lock on trying to contact the medal hub."
+	if(!holder)
+		return
+
+	global.medals_enabled = !global.medals_enabled
+
+	message_admins("<span class='adminnotice'>[key_name_admin(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.</span>")
+	feedback_add_details("admin_verb","TMH") // If...
+	log_admin("[key_name(src)] [global.medals_enabled ? "disabled" : "enabled"] the medal hub lockout.")

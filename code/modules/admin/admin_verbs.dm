@@ -149,7 +149,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/jump_to_ruin,
-	/client/proc/clear_dynamic_transit
+	/client/proc/clear_dynamic_transit,
+	/client/proc/toggle_medal_disable
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

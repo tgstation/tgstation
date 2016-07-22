@@ -481,3 +481,20 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 // 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH		3
 #define STORAGE_VIEW_DEPTH	2
+
+
+
+// Medal names
+
+#define BOSS_KILL_MEDAL "Killer"
+
+#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
+
+// Score names
+
+#define LEGION_SCORE "Legion Killed"
+#define COLOSSUS_SCORE "Colossus Killed"
+#define BUBBLEGUM_SCORE "Bubblegum Killed"
+#define DRAKE_SCORE "Drakes Killed"
+#define BOSS_SCORE "Bosses Killed"
+#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
