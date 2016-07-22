@@ -148,9 +148,8 @@
 	contains = list(/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/grenade/smokebomb)
-	crate_name = "emergency crate"
+	crate_name = "internals crate"
 	crate_type = /obj/structure/closet/crate/internals
-	dangerous = TRUE
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Security ////////////////////////////////////////
