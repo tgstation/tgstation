@@ -86,6 +86,18 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 		-->
 		<div class="commit sansserif">
 
+			<h2 class="date">2016.07.22</h2>
+			<h3 class="author">9600bauds updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a bug where limbs that had burn damage would not be severed from the body via brute damage. This was most commonly seen when trying to decapitate people that were lasered.</li>
+				<li class="rscadd">Trying to put a brain in a MMI now produces a special message telling you to try again if the brain has ghosted but can still rejoin their body, much like how cloners work with corpses. When this happens, the ghosted player will get bwoinked and told to rejoin their corpse.</li>
+				<li class="bugfix">Fixed the message you get when examining a brain, which was supposed to differentiate brains with a player still inside and brains belonging to a ghosted player.</li>
+			</ul>
+			<h3 class="author">Intigracy updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Supermatter crates ordered from cargo now cost 500 credits, as opposed to 100.</li>
+			</ul>
+
 			<h2 class="date">2016.07.21</h2>
 			<h3 class="author">Hikato updated:</h3>
 			<ul class="changes bgimages16">
@@ -1515,63 +1527,6 @@ ADDING CREDITS?  EDIT templates/header.html (or footer.html if they're for old t
 				<li class="bugfix">Fixed some bugs with cages. Cyborgs can now interact with cages.</li>
 				<li class="tweak">Cages can now be quickly opened with some weapons or tools.</li>
 				<li class="soundadd">Cages make a sound when opened or closed</li>
-			</ul>
-
-			<h2 class="date">2016.02.19</h2>
-			<h3 class="author">CptWad updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">PBJ's code that makes it so now supermatters not on your z-level exploding will have no effect on your z-level.</li>
-				<li class="tweak">The following apply to Boxstation</li>
-				<li class="rscadd">Enlarged maint in the south east and north east quarters of the map.</li>
-				<li class="experiment">Moved Toxins Test Site/Zoo back a few tiles for dylan</li>
-				<li class="rscadd">New toys scattered around the station, collect them all!</li>
-				<li class="rscadd">More loot at goonecode sat, just bring a weapon or two.</li>
-				<li class="rscadd">New SME shard at derelict. Blessed be the crab</li>
-				<li class="rscadd">New Holopads in CMO and HoS offices.</li>
-				<li class="rscadd">Pen and paper in Chemistry</li>
-				<li class="rscadd">Added all but one of Nigglys pets to their respective homes.</li>
-				<li class="rscadd">Viro expanded a tad, new newscaster.</li>
-				<li class="rscadd">Added 1 pill collector and 2 more antibody scanners.</li>
-				<li class="bugfix">Turned that one vent at arrivals on that should have been on in the first place.</li>
-				<li class="bugfix">Repaired the pipes at cryo.</li>
-				<li class="bugfix">The lightswitch in atmospherics is now reachable.</li>
-				<li class="tweak">Moved the Phalanximine out of the CMO's office. You can still find it however.</li>
-			</ul>
-			<h3 class="author">Skullyton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The following changes are to Defficiency</li>
-				<li class="rscadd">Ported over metaclubs Centcomm, so ERT and Deathsquad can exist and more room for bus</li>
-				<li class="rscadd">Added the Vox Skipjack from box, so now Vox Raiders can happen on Defficiency</li>
-				<li class="rscadd">Added the salvage shuttle to Z level 6, but as Defficiency is defficient of an aux-docking port, it cant dock to the station properly.</li>
-				<li class="rscadd">Fixed a piping error in xenobiology, gave it and the research corridor some more vents considering the size</li>
-				<li class="rscadd">Expanded the xenobotany area on the research outpost. It now also has gas-controlled trays (just need to wrench them down)</li>
-				<li class="rscadd">Added an autolathe to R&D</li>
-				<li class="rscadd">Fixed a few area mishaps (Area in front of the HoPs office that had no defined area, areas in the SME room that werent correct)</li>
-				<li class="rscadd">Relocated the Mancrowave in medical to somewhere a bit more sensible, removed the Sec outpost from medical as it was unused.</li>
-				<li class="rscadd">Removed stools from the brig as they no longer counted as chairs, but weapons.</li>
-				<li class="rscadd">Added a vox outpost to the asteroid z-level, a bit off the beaten track</li>
-			</ul>
-			<h3 class="author">SonixApache updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Ian now wears his engineering RIG properly. He can also wear security vests and a SWAT helmet.</li>
-			</ul>
-			<h3 class="author">Sood updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="experiment">Deus Ex Update:</li>
-				<li class="tweak">(Deus Ex Update hijacked by Sood from N3X15)</li>
-				<li class="rscadd">Lungs are now fully modular and actually process gas for humans.  Lungs must be compatible with a species or they will die of suffocation.</li>
-				<li class="rscadd">Vox and Plasmamen have their own lungs.</li>
-				<li class="rscadd">Most species currently exhale CO<sub>2</sub>.  Vox may be tweaked later to exhale N<sub>2</sub>O. Plasmamen exhale oxygen, though.</li>
-				<li class="rscadd">Robotics can make Advanced Lungs (programming 2, biomech 4), which are compatible with all species and filter out some gasses (N2O and plasma), up to certain partial pressures.</li>
-				<li class="rscadd">Livers are also modular and can be set to enhance "natural" removal rates of reagents. Nothing yet makes any use of this, so all livers are standard UNTIL YOU CODE IT.</li>
-				<li class="rscadd">Livers which are bruised will deal toxin damage to their owner if the user has any toxic reagents in their system. Ethanol with a bruised liver is extremely dangerous.</li>
-				<li class="rscadd">Livers become damaged over time if their owner has a lot of toxin damage. Doctors beware.</li>
-				<li class="rscadd">Eyes are modular and Advanced Type 1 eyes can grant enhanced nightvision and built-in welder goggles.</li>
-			</ul>
-			<h3 class="author">Unid updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added cages. Mobs inside cages can interact with the outside world, unless the cage's cover is closed. Alt-clicking a cage will toggle its cover. Cages with closed covers can be used to safely transport hostile animals (or assistants).</li>
-				<li class="rscadd">Cages can be crafted with 6 plasteel sheets.</li>
 			</ul>
 		</div>
 		<!--
