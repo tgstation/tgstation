@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - bugfix: "Fixes super darkness from lighting creating two darkness overlays on the same turf but only changing the darkness of one of the overlays"

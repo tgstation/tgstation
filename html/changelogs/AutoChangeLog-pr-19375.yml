@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - bugfix: "You can now throw items and mobs over chasms without causing them to drop."
-  - bugfix: "You can now throw items over lava without burning them. Mobs will still burn, however."

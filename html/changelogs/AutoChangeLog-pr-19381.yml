@@ -1,5 +1,0 @@
-author: "Incoming5643"
-delete-after: True
-changes: 
-  - rscadd: "You now have the ability to automatically \"back out\" of a round if you miss your chance at all the jobs you have set to low or higher. This is found on the toggle at the bottom of the jobs window"
-  - rscadd: "Due to a quirk of game mode code this option will fail to work if you've been selected as an antag (what a tragedy!) In this situation, you'll be assigned a random job."

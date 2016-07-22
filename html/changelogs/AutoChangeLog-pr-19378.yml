@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - experiment: "Tinkerer's Caches now link to a nearby unlinked clockwork wall, and will not generate components unless linked. As compensation, they will link to nearby walls(and can generate components) in a larger area."

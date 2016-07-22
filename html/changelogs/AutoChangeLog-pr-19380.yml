@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Sigils of Transgression now stun for about 7 seconds."
-  - experiment: "Sigils of Submission/Accession now take 7 seconds to convert successfully, and have an obvious message to the person on them that their mind is being invaded."

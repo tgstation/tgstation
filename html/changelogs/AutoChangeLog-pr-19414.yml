@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Revenant scriptures now announce to all servants and ghosts when used instead of having a visible message."

@@ -1,5 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - bugfix: "Camera bugs can now show camera views."
-  - bugfix: "The chameleon masks in the chameleon kit can once again have their voice changers toggled."

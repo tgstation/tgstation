@@ -1,5 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - rscadd: "Clockwork cultists may now have the \"Escape\" and \"Silicon\" objectives, requiring a certain amount of servants to escape on the shuttle and all silicons to be converted respectively."
-  - rscadd: "Ocular wardens are now forced to target bibles rather than the people holding them."

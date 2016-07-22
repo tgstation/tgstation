@@ -1,6 +1,0 @@
-author: "Bawhoppen"
-delete-after: True
-changes: 
-  - rscadd: "Titanium now spawns in mining again."
-  - rscadd: "It has uses in R&D and robotics production."
-  - rscadd: "All shuttle walls are now using a new proper smoothing path. Mappers please make sure to use this path correctly in the future. (along with tiles)"

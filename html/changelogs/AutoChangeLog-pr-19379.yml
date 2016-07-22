@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - wip: "Guvax is now slightly slower when above 5 valid servants; 1 additional second of invoke time for each one above 5, from 0.75 additional seconds, up to a maximum of 20 seconds of invoke time, from 15 seconds."
