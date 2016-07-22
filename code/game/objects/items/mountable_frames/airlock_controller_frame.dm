@@ -18,7 +18,7 @@
 /////////////////////////////////////////////////////////////
 
 /obj/item/weapon/circuitboard/ecb
-	board_type="embedded controller"
+	board_type= EMBEDDED_CONTROLLER
 	icon_state = "mainboard"
 	origin_tech = "programming=3"
 

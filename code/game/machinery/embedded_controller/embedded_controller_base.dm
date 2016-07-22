@@ -47,7 +47,7 @@
 					return 1
 				if(istype(W, /obj/item/weapon/circuitboard))
 					var/obj/item/weapon/circuitboard/C=W
-					if(C.board_type!="embedded controller")
+					if(C.board_type!= EMBEDDED_CONTROLLER)
 						to_chat(user, "<span class='warning'>You cannot install this type of board into an embedded controller.</span>")
 						return
 					to_chat(usr, "You begin to insert \the [C] into \the [src].")

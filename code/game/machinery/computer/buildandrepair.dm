@@ -30,7 +30,7 @@
 	var/id_tag = null
 	var/frequency = null
 	var/build_path = null
-	var/board_type = "computer"
+	var/board_type = COMPUTER
 	var/list/req_components = null
 	var/powernet = null
 	var/list/records = null
@@ -50,7 +50,7 @@
 /obj/item/weapon/circuitboard/aicore
 	name = "Circuit board (AI core)"
 	origin_tech = "programming=4;biotech=2"
-	board_type = "other"
+	board_type = OTHER
 /obj/item/weapon/circuitboard/aiupload
 	name = "Circuit board (AI Upload)"
 	build_path = "/obj/machinery/computer/aiupload"
@@ -342,7 +342,7 @@
 				return 1
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
-				if(B.board_type == "computer")
+				if(B.board_type == COMPUTER)
 					if(!user.drop_item(B, src)) return
 
 					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)

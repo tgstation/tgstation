@@ -330,7 +330,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	item_state = "circuitboard"
-	board_type = "other"
+	board_type = OTHER
 	flags = FPRINT
 	siemens_coefficient = 1
 	force = 5.0

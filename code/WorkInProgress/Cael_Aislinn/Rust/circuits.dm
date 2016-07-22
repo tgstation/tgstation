@@ -44,7 +44,7 @@
 /obj/item/weapon/circuitboard/rust_core
 	name = "Internal circuitry (R-UST Mk. 7 tokamak core)"
 	build_path = "/obj/machinery/power/rust_core"
-	board_type = "machine"
+	board_type = MACHINE
 	origin_tech = "bluespace=3;plasmatech=4;magnets=5;powerstorage=6"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Ultra Micro-Laser, 5 Pieces of Cable, 1 Subspace Crystal and 1 Console Screen."
 	req_components = list(
@@ -60,7 +60,7 @@
 /obj/item/weapon/circuitboard/rust_injector
 	name = "Internal circuitry (R-UST Mk. 7 fuel injector)"
 	build_path = "/obj/machinery/power/rust_fuel_injector"
-	board_type = "machine"
+	board_type = MACHINE
 	origin_tech = "powerstorage=3;engineering=4;plasmatech=4;materials=6"
 	frame_desc = "Requires 2 Pico Manipulators, 1 Phasic Scanning Module, 1 Super Matter Bin, 1 Console Screen and 5 Pieces of Cable."
 	req_components = list(
