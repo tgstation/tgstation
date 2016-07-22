@@ -605,10 +605,6 @@
 			return 0
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.shoes, /obj/item/clothing/shoes/bhop))
-			var/obj/item/clothing/shoes/bhop/B = H.shoes
-			if(B.jumping)
-				return 0
 		if(istype(H.belt, /obj/item/device/wormhole_jaunter))
 			var/obj/item/device/wormhole_jaunter/J = H.belt
 			//To freak out any bystanders

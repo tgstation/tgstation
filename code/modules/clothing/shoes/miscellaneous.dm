@@ -169,24 +169,17 @@
 	burn_state = FIRE_PROOF
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes
 	actions_types = list(/datum/action/item_action/bhop)
-	var/recharging = FALSE
+	var/recharging_time = 0
 	var/jumping = FALSE
 
 /obj/item/clothing/shoes/bhop/ui_action_click(mob/user, actiontype)
-	bhop()
-
-/obj/item/clothing/shoes/bhop/verb/bhop()
-	set category = "Object"
-	set name = "Activate Jump Boots"
-	set src in usr
-
 	if(!istype(usr, /mob/living))
 		return
 
 	if(jumping)
 		return
 
-	if(recharging)
+	if(recharging_time > world.time)
 		usr << "<span class='warning'>The boot's internal propulsion needs to recharge still!</span>"
 		return
 
@@ -196,8 +189,5 @@
 	playsound(src.loc, 'sound/effects/stealthoff.ogg', 50, 1, 1)
 	usr.visible_message("<span class='warning'>[usr] dashes foward into the air!</span>")
 	usr.throw_at(target,3,1, spin=0, diagonals_first = 1)
-	recharging = TRUE
 	jumping = FALSE
-	spawn(60)
-		recharging = FALSE
-		usr << "<span class='notice'>The boot's let out a chime, indicating that they're recharged.</span>"
+	recharging_time = world.time + 60
