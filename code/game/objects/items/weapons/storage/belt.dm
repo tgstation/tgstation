@@ -435,5 +435,4 @@
 	if(loc && istype(loc, /mob/living))
 		var/mob/living/L = loc
 		L.regenerate_icons()
-		world << "AM I INFINITE LOOPING?"
 	..()
