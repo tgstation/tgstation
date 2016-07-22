@@ -2023,8 +2023,7 @@
 	description = "Heals eye damage"
 	reagent_state = LIQUID
 	color = "#C8A5DC" //rgb: 200, 165, 220
-	overdose = REAGENTS_OVERDOSE
-
+	
 /datum/reagent/imidazoline/on_mob_life(var/mob/living/M)
 
 	if(..()) return 1
