@@ -1166,6 +1166,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				L.Weaken(8)
 				playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
 		else
+			playsound(invoker, 'sound/magic/Disintegrate.ogg', 50, 1)
 			invoker.gib()
 		return 1
 	else
