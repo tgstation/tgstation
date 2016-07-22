@@ -1,0 +1,37 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"c" = (/turf/unsimulated/mineral/random,/area/mine/unexplored)
+"d" = (/turf/unsimulated/mineral/random/high_chance_clown,/area/mine/unexplored)
+"e" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"f" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/mob/living/simple_animal/hostile/asteroid/basilisk,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"g" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/mob/living/simple_animal/hostile/asteroid/goliath,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"h" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/pickaxe/drill/diamond,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"i" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/mob/living/simple_animal/hostile/asteroid/hivelord,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+"j" = (/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/weapon/ore/phazon,/obj/item/stack/sheet/mineral/diamond,/turf/unsimulated/floor/asteroid,/area/mine/unexplored)
+
+(1,1,1) = {"
+aaaaaaabbbaaaaaaaaaaaaa
+aaaabbbbbbbaaaaaaaaaaaa
+accccccbbbbaaaaacccccca
+acddddccbccccaaacddddcc
+ccdddddcccddcaabcdddddc
+cdddddddddddcaabcdddddc
+cddddeedddddcaabcdddddc
+ccdddefegdddcaaccddddcc
+acddddehedddccacdddddca
+accdddeijedddcacdddddca
+aaccdddfegdddcacdddddca
+aaaccddddddddcaccddddca
+aaaacddddddddcaaccddcca
+aaaaccdddddddcaaaccccaa
+aaaaacccccccccaaaaaaaaa
+aaaaaaaaaaaaaaaaabbaaaa
+aaaaaccccaaaaaccccbbaaa
+aaacccddccaaaccddccbbaa
+aaccdddddccaccddddccbba
+aacdddddddcacddddddcbba
+aacdddddddcaccdddddcbaa
+aacddddddccaaccddcccaaa
+aaccdddddcaaaaccccaaaaa
+aaacccccccaaaaaaaaaaaaa
+"}

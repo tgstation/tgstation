@@ -194,6 +194,11 @@ datum/controller/game_controller/proc/cachedamageicons()
 		log_startup_progress("Not generating vaults - SKIP_VAULT_GENERATION found in config/config.txt")
 
 	watch = start_watch()
+	log_startup_progress("Building powernets...")
+	makepowernets()
+	log_startup_progress("  Finished building powernets in [stop_watch(watch)]s.")
+
+	watch = start_watch()
 	log_startup_progress("Initializing objects...")
 	//sleep(-1) // Why
 	//var/last_init_type = null

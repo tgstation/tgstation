@@ -65,5 +65,17 @@ var/list/existing_vaults = list()
 /datum/map_element/vault/biodome
 	file_path = "maps/randomvaults/biodome.dmm"
 
+/datum/map_element/vault/iou_vault
+	file_path = "maps/randomvaults/iou_fort.dmm"
+
+/datum/map_element/vault/asteroids
+	file_path = "maps/randomvaults/asteroids.dmm"
+
+/datum/map_element/vault/listening
+	file_path = "maps/randomvaults/listening.dmm"
+
+/datum/map_element/vault/hivebot_crash
+	file_path = "maps/randomvaults/hivebot_crash.dmm"
+
 /datum/map_element/vault/brokeufo
 	file_path = "maps/randomvaults/brokeufo.dmm"

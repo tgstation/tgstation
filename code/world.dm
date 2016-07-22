@@ -93,7 +93,6 @@ var/savefile/panicfile
 
 	src.update_status()
 
-	makepowernets()
 	paperwork_setup()
 
 	//sun = new /datum/sun()
