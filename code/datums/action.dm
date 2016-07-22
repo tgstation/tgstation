@@ -409,3 +409,9 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+//Stickmemes
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	button_icon_state = "art_summon"

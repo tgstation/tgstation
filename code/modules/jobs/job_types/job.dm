@@ -141,7 +141,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
 	var/backpack = /obj/item/weapon/storage/backpack
-	var/satchel  = /obj/item/weapon/storage/backpack/satchel_norm
+	var/satchel  = /obj/item/weapon/storage/backpack/satchel
 	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	var/box = /obj/item/weapon/storage/box/survival
 
@@ -152,11 +152,11 @@
 		if(GBACKPACK)
 			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel_norm //Grey satchel
+			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
 		if(GDUFFLEBAG)
 			back = /obj/item/weapon/storage/backpack/dufflebag //Grey Dufflebag
 		if(LSATCHEL)
-			back = /obj/item/weapon/storage/backpack/satchel //Leather Satchel
+			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
 		if(DDUFFLEBAG)

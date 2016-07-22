@@ -5079,46 +5079,77 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/neutral,
 /area/ruin/hotel/custodial)
-"mS" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock{
-	name = "Theatre";
-	req_access_txt = "200"
+"my" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
-/area/ruin/hotel/bar)
-"mR" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
+"mz" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
+/turf/open/floor/carpet,
+/area/ruin/hotel)
+"mA" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/turf/open/floor/wood,
+/area/ruin/hotel/dock)
+"mB" = (
+/obj/structure/sink/kitchen{
+	pixel_y = 28
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
-"mQ" = (
-/obj/structure/window/reinforced{
-	dir = 4
+"mC" = (
+/obj/machinery/processor,
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/hotel/bar)
+"mD" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/plasteel/bar,
+/area/ruin/hotel/bar)
+"mE" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
 	},
-/turf/open/floor/plasteel/grimy,
+/turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
-"mP" = (
-/turf/open/floor/plasteel/grimy,
-/area/ruin/hotel/bar)
-"mO" = (
+"mF" = (
+/turf/open/floor/carpet{
+	icon_state = "carpetsymbol"
+	},
+/area/ruin/hotel/dock)
+"mG" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/violin,
 /turf/open/floor/plasteel/grimy,
-/area/ruin/hotel/bar)
-"mN" = (
-/obj/machinery/smartfridge,
+/area/ruin/hotel/dock)
+"mH" = (
+/turf/open/floor/plasteel/grimy,
+/area/ruin/hotel/dock)
+"mI" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
-"mM" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+"mJ" = (
+/obj/structure/table/wood,
+/obj/item/device/instrument/guitar,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/chair/stool,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/hotel/bar)
+"mK" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/bar)
 "mL" = (
@@ -5131,79 +5162,48 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/bar)
-"mK" = (
+"mM" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/chair/stool,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/bar)
-"mJ" = (
+"mN" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/hotel/bar)
+"mO" = (
 /obj/structure/table/wood,
-/obj/item/device/instrument/guitar,
+/obj/item/device/instrument/violin,
+/turf/open/floor/plasteel/grimy,
+/area/ruin/hotel/bar)
+"mP" = (
+/turf/open/floor/plasteel/grimy,
+/area/ruin/hotel/bar)
+"mQ" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
 /area/ruin/hotel/bar)
-"mI" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
-/turf/open/floor/plasteel/cafeteria,
-/area/ruin/hotel/bar)
-"mH" = (
-/turf/open/floor/plasteel/grimy,
-/area/ruin/hotel/dock)
-"mG" = (
-/obj/structure/table/wood,
-/turf/open/floor/plasteel/grimy,
-/area/ruin/hotel/dock)
-"mF" = (
-/turf/open/floor/carpet{
-	icon_state = "carpetsymbol"
-	},
-/area/ruin/hotel/dock)
-"mE" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo"
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/hotel/bar)
-"mD" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/drinks/beer,
-/turf/open/floor/plasteel/bar,
-/area/ruin/hotel/bar)
-"mC" = (
-/obj/machinery/processor,
-/turf/open/floor/plasteel/cafeteria,
-/area/ruin/hotel/bar)
-"mB" = (
-/obj/structure/sink/kitchen{
-	pixel_y = 28
-	},
-/turf/open/floor/plasteel/cafeteria,
-/area/ruin/hotel/bar)
-"mA" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
-/turf/open/floor/wood,
-/area/ruin/hotel/dock)
-"mz" = (
+"mR" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
-"my" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
+/turf/open/floor/plasteel/cafeteria,
+/area/ruin/hotel/bar)
+"mS" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock{
+	name = "Theatre";
+	req_access_txt = "200"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
-/turf/open/floor/carpet,
-/area/ruin/hotel)
+/turf/open/floor/plasteel/grimy,
+/area/ruin/hotel/bar)
 
 (1,1,1) = {"
 aa
@@ -7135,8 +7135,8 @@ aa
 aa
 aa
 aa
-it
-iv
+aa
+aa
 aa
 aa
 aa
@@ -7212,8 +7212,8 @@ aa
 aa
 aa
 aa
-iu
-iw
+aa
+aa
 aa
 aa
 aa

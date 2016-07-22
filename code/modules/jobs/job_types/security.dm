@@ -49,7 +49,7 @@ Head of Security
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
@@ -107,7 +107,7 @@ Warden
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 
@@ -217,7 +217,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
-	satchel = /obj/item/weapon/storage/backpack/satchel_sec
+	satchel = /obj/item/weapon/storage/backpack/satchel/sec
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/sec
 	box = /obj/item/weapon/storage/box/security
 

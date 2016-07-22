@@ -51,9 +51,7 @@
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/door/airlock/shuttle{
@@ -128,10 +126,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "w" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "x" = (
 /turf/closed/wall/shuttle{
@@ -140,9 +135,7 @@
 	},
 /area/shuttle/escape)
 "y" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "z" = (
 /turf/closed/wall/shuttle{
@@ -157,25 +150,21 @@
 	},
 /area/shuttle/escape)
 "B" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (WEST)";
-	icon_state = "wall3";
-	dir = 8
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/escape)
 
 (1,1,1) = {"
 w
 c
-a
+y
 k
-z
+y
 b
 b
 b
-A
+y
 q
-a
+y
 q
 B
 u
@@ -229,7 +218,7 @@ t
 v
 "}
 (5,1,1) = {"
-x
+w
 y
 j
 y
@@ -240,7 +229,7 @@ b
 y
 y
 y
-A
+y
 B
 u
 "}

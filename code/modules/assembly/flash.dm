@@ -115,7 +115,7 @@
 		var/mob/living/silicon/robot/R = M
 		add_logs(user, R, "flashed", src)
 		update_icon(1)
-		M.Weaken(3)
+		M.Weaken(6)
 		R.confused += 5
 		R.flash_eyes(affect_silicon = 1)
 		user.visible_message("<span class='disarm'>[user] overloads [R]'s sensors with the flash!</span>", "<span class='danger'>You overload [R]'s sensors with the flash!</span>")

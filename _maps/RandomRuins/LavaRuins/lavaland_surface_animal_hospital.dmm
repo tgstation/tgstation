@@ -17,8 +17,8 @@
 	},
 /area/lavaland/surface/outdoors)
 "ae" = (
-/turf/closed/wall/shuttle/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/closed/wall/mineral/titanium/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered)
 "af" = (
@@ -229,8 +229,8 @@
 /area/ruin/powered)
 "aG" = (
 /obj/structure/extinguisher_cabinet,
-/turf/closed/wall/shuttle/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/closed/wall/mineral/titanium/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered)
 "aH" = (
@@ -639,8 +639,8 @@
 /obj/structure/sign/bluecross_2{
 	name = "animal hospital"
 	},
-/turf/closed/wall/shuttle/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/closed/wall/mineral/titanium/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered)
 "bJ" = (
@@ -787,8 +787,8 @@
 /area/lavaland/surface/outdoors)
 "cc" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/closed/wall/shuttle/smooth{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/turf/closed/wall/mineral/titanium/nodiagonal{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered)
 "cd" = (
@@ -815,35 +815,19 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cm" = (
+"cg" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Tool Storage"
+	name = "Break Room"
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plasteel/cmo{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cl" = (
+"ch" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Safety Supplies"
+	name = "Emergency Care"
 	},
 /turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"ck" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Medical Supplies"
-	},
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
-	},
-/area/ruin/powered)
-"cj" = (
-/obj/machinery/door/unpowered/shuttle{
-	name = "Morgue"
-	},
-/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -856,19 +840,35 @@
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"ch" = (
+"cj" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Emergency Care"
+	name = "Morgue"
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"ck" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Medical Supplies"
 	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
-"cg" = (
+"cl" = (
 /obj/machinery/door/unpowered/shuttle{
-	name = "Break Room"
+	name = "Safety Supplies"
 	},
-/turf/open/floor/plasteel/cmo{
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/ruin/powered)
+"cm" = (
+/obj/machinery/door/unpowered/shuttle{
+	name = "Tool Storage"
+	},
+/turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
@@ -1002,14 +1002,14 @@ ae
 ae
 ae
 ae
-aE
+ae
 ci
 ae
-aE
+ae
 aT
 aY
 bf
-aE
+ae
 ae
 ae
 ae
@@ -1065,11 +1065,11 @@ ag
 aF
 aK
 aK
-aE
 ae
 ae
 ae
-aE
+ae
+ae
 aL
 bq
 bz
@@ -1272,7 +1272,7 @@ ae
 ae
 ae
 ae
-aH
+aG
 aL
 aP
 ae
@@ -1305,7 +1305,7 @@ aA
 ae
 aL
 aP
-aE
+ae
 ae
 ae
 ae
@@ -1362,18 +1362,18 @@ ae
 ap
 ao
 aB
-aI
+ae
 aL
 aP
 ae
 ae
 ae
 ae
-aE
+ae
 af
 bx
 ae
-aE
+ae
 af
 bx
 ae
@@ -1392,7 +1392,7 @@ ae
 aq
 ao
 aC
-aI
+ae
 aN
 aQ
 aS
@@ -1422,7 +1422,7 @@ ae
 ar
 aw
 aD
-aI
+ae
 aO
 aR
 aR

@@ -18,7 +18,7 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag(src)
 	new /obj/item/weapon/storage/backpack/explorer(src)
-	new /obj/item/weapon/storage/backpack/satchel_explorer(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)
 	new /obj/item/clothing/under/rank/miner/lavaland(src)

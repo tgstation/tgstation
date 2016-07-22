@@ -293,6 +293,7 @@
 	mineral = "metal"
 	walltype = "iron"
 	canSmoothWith = list(/obj/structure/falsewall/iron, /turf/closed/wall/mineral/iron)
+
 /obj/structure/falsewall/abductor
 	name = "alien wall"
 	desc = "A wall with alien alloy plating."
@@ -301,3 +302,21 @@
 	mineral = "abductor"
 	walltype = "abductor"
 	canSmoothWith = list(/obj/structure/falsewall/abductor, /turf/closed/wall/mineral/abductor)
+
+/obj/structure/falsewall/titanium
+	name = "titanium wall"
+	desc = "A light-weight titanium wall used in shuttles."
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle"
+	mineral = "titanium"
+	walltype = "shuttle"
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
+
+/obj/structure/falsewall/plastitanium
+	name = "plastitanium wall"
+	desc = "An evil wall of plasma and titanium."
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall3"
+	mineral = "plastitanium"
+	walltype = "syndieshuttle"
+	smooth = SMOOTH_FALSE

@@ -173,7 +173,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/weapon/gun/energy/gun
 	l_pocket = /obj/item/weapon/pen
-	back = /obj/item/weapon/storage/backpack/satchel_norm
+	back = /obj/item/weapon/storage/backpack/satchel
 	r_pocket = /obj/item/device/pda/heads
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id

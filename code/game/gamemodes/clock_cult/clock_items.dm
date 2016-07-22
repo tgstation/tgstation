@@ -100,6 +100,8 @@
 		if(/datum/action/item_action/clock/hierophant)
 			show_hierophant(user)
 		if(/datum/action/item_action/clock/guvax)
+			if(!nonhuman_usable && !ishuman(user))
+				return
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/guvax/convert = new
 				convert.slab = src
@@ -108,6 +110,8 @@
 			else
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 		if(/datum/action/item_action/clock/vanguard)
+			if(!nonhuman_usable && !ishuman(user))
+				return
 			if(src == user.get_active_hand())
 				var/datum/clockwork_scripture/vanguard/antistun = new
 				antistun.slab = src
@@ -129,11 +133,14 @@
 					highest_component_amount = totalcomponents
 					targetslab = S
 		if(targetslab)
-			for(var/i in stored_components)
-				targetslab.stored_components[i] += stored_components[i]
-				stored_components[i] = 0
-			user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
-			"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
+			if(targetslab == src)
+				user << "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>"
+			else
+				for(var/i in stored_components)
+					targetslab.stored_components[i] += stored_components[i]
+					stored_components[i] = 0
+				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
+				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
 			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
 	else
@@ -263,7 +270,7 @@
 	user << "<i>Nezbere: </i>[clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 	user << "<i>Sevtug: </i>[clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 	user << "<i>Nzcrentr: </i>[clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
-	user << "<i>Inath-Neq: </i>[clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
+	user << "<i>Inath-neq: </i>[clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
 
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
 	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
@@ -427,7 +434,7 @@
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src))
 		return 0
-	user.whisper("Freinagf, urne zl-jbeqf. [message]")
+	clockwork_say(user, text2ratvar("Servants, hear my words. [message]"), TRUE)
 	titled_hierophant_message(user, message)
 	return 1
 
@@ -618,7 +625,7 @@
 			V.recharging = TRUE //To prevent exploiting multiple visors to bypass the cooldown
 			V.update_status()
 			addtimer(V, "recharge_visor", (ratvar_awakens ? visor.recharge_cooldown*0.1 : visor.recharge_cooldown) * 2, FALSE, user)
-		clockwork_say(user, "Xarry, urngur'af!")
+		clockwork_say(user, text2ratvar("Kneel, heathens!"))
 		user.visible_message("<span class='warning'>The flame in [user]'s hand rushes to [target]!</span>", "<span class='heavy_brass'>You direct [visor]'s power to [target]. You must wait for some time before doing this again.</span>")
 		var/turf/T = get_turf(target)
 		new/obj/effect/clockwork/judicial_marker(T, user)
@@ -974,7 +981,7 @@
 	burn_state = LAVA_PROOF
 	var/component_id //What the component is identified as
 	var/cultist_message = "You are not worthy of this meme." //Showed to Nar-Sian cultists if they pick up the component in addition to chaplains
-	var/list/servant_of_ratvar_messages = list("ayy", "lmao") //Fluff, shown to servants of Ratvar on a low chance
+	var/list/servant_of_ratvar_messages = list("ayy" = FALSE, "lmao" = TRUE) //Fluff, shown to servants of Ratvar on a low chance, if associated value is TRUE, will automatically apply ratvarian
 	var/message_span = "heavy_brass"
 
 /obj/item/clockwork/component/pickup(mob/living/user)
@@ -982,7 +989,8 @@
 	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
 		user << "<span class='[message_span]'>[cultist_message]</span>"
 	if(is_servant_of_ratvar(user) && prob(20))
-		user << "<span class='[message_span]'>[pick(servant_of_ratvar_messages)]</span>"
+		var/pickedmessage = pick(servant_of_ratvar_messages)
+		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar("pickedmessage")]" : "pickedmessage"]</span>"
 
 /obj/item/clockwork/component/examine(mob/user)
 	..()
@@ -995,7 +1003,7 @@
 	icon_state = "belligerent_eye"
 	component_id = "belligerent_eye"
 	cultist_message = "The eye gives you an intensely hateful glare."
-	servant_of_ratvar_messages = list("\"...\"", "For a moment, your mind is flooded with extremely violent thoughts.", "\"...Qvr.\"")
+	servant_of_ratvar_messages = list("\"...\"" = FALSE, "For a moment, your mind is flooded with extremely violent thoughts." = FALSE, "\"...Die.\"" = 1)
 	message_span = "neovgre"
 
 /obj/item/clockwork/component/belligerent_eye/blind_eye
@@ -1004,7 +1012,7 @@
 	clockwork_desc = "A smashed ocular warden covered in dents. Might still be serviceable as a substitute for a belligerent eye."
 	icon_state = "blind_eye"
 	cultist_message = "The eye flickers at you with intense hate before falling dark."
-	servant_of_ratvar_messages = list("The eye flickers before falling dark.", "You feel watched.", "\"...\"")
+	servant_of_ratvar_messages = list("The eye flickers before falling dark." = FALSE, "You feel watched." = FALSE, "\"...\"" = FALSE)
 	w_class = 3
 
 /obj/item/clockwork/component/vanguard_cogwheel
@@ -1013,7 +1021,7 @@
 	icon_state = "vanguard_cogwheel"
 	component_id = "vanguard_cogwheel"
 	cultist_message = "\"Pray to your god that we never meet.\""
-	servant_of_ratvar_messages = list("\"Be safe, child.\"", "You feel unexplainably comforted.", "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"")
+	servant_of_ratvar_messages = list("\"Be safe, child.\"" = FALSE, "You feel unexplainably comforted." = FALSE, "\"Never forget: pain is temporary. The Justiciar's glory is eternal.\"" = FALSE)
 	message_span = "inathneq"
 
 /obj/item/clockwork/component/vanguard_cogwheel/pinion_lock
@@ -1022,7 +1030,8 @@
 	clockwork_desc = "A broken gear lock for pinion airlocks. Might still be serviceable as a substitute for a vanguard cogwheel."
 	icon_state = "pinion_lock"
 	cultist_message = "The gear grows warm in your hands."
-	servant_of_ratvar_messages = list("The lock isn't getting any lighter.", "\"Qnzntrq trnef ner orggr-e gun'a oebxra obqvrf.\"", "\"Vg pbhyq fgv'yy or hfrq, vs gur'er jnf n qbbe gb-cynpr vg ba.\"")
+	servant_of_ratvar_messages = list("The lock isn't getting any lighter." = FALSE, "\"Damaged gears are better than broken bodies.\"" = TRUE, \
+	"\"It could still be used, if there was a door to place it on.\"" = TRUE)
 	w_class = 3
 
 /obj/item/clockwork/component/guvax_capacitor
@@ -1031,8 +1040,8 @@
 	icon_state = "guvax_capacitor"
 	component_id = "guvax_capacitor"
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
-	servant_of_ratvar_messages = list("\"Disgusting.\"", "\"Well, aren't you an inquisitive fellow?\"", "A foul presence pervades your mind, then vanishes.", \
-	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"")
+	servant_of_ratvar_messages = list("\"Disgusting.\"" = FALSE, "\"Well, aren't you an inquisitive fellow?\"" = FALSE, "A foul presence pervades your mind, then vanishes." = FALSE, \
+	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
 
 /obj/item/clockwork/component/guvax_capacitor/antennae
@@ -1041,8 +1050,8 @@
 	clockwork_desc = "The antennae from a mania motor. May be usable as a substitute for a guvax capacitor."
 	icon_state = "mania_motor_antennae"
 	cultist_message = "Your head is filled with a burst of static."
-	servant_of_ratvar_messages = list("\"Jub oebxr guv'f.\"", "\"Qvq lbh oernx gur'fr bss LBHEFRYS?\"", "\"Jul qvq jr tvir guv'f gb-fhpu fvzcy-rgbaf, naljnl?\"", \
-	"\"Ng yrnfg jr pna hfr gur'fr sbe fbzrguv'at - hayvxr lbh.\"")
+	servant_of_ratvar_messages = list("\"Who broke this.\"" = TRUE, "\"Did you break these off YOURSELF?\"" = TRUE, "\"Why did we give this to such simpletons, anyway?\"" = TRUE, \
+	"\"At least we can use these for something - unlike you.\"" = TRUE)
 
 /obj/item/clockwork/component/replicant_alloy
 	name = "replicant alloy"
@@ -1050,8 +1059,8 @@
 	icon_state = "replicant_alloy"
 	component_id = "replicant_alloy"
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
-	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"", "\"Idle hands are worse than broken ones. Get to work.\"", \
-	"A detailed image of Ratvar appears in the alloy for a moment.")
+	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"" = FALSE, "\"Idle hands are worse than broken ones. Get to work.\"" = FALSE, \
+	"A detailed image of Ratvar appears in the alloy for a moment." = FALSE)
 	message_span = "nezbere"
 
 /obj/item/clockwork/component/replicant_alloy/examine(mob/user)
@@ -1065,7 +1074,7 @@
 	clockwork_desc = "The sad remains of an anima fragment. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "smashed_anime_fragment"
 	cultist_message = "The shards vibrate in your hands for a moment."
-	servant_of_ratvar_messages = list("\"...still fight...\"", "\"...where am I...?\"", "\"...put me... slab...\"")
+	servant_of_ratvar_messages = list("\"...still fight...\"" = FALSE, "\"...where am I...?\"" = FALSE, "\"...put me... slab...\"" = FALSE)
 	message_span = "heavy_brass"
 	w_class = 3
 
@@ -1075,7 +1084,7 @@
 	clockwork_desc = "The armor from a former clockwork marauder. Might still be serviceable as a substitute for replicant alloy."
 	icon_state = "fallen_armor"
 	cultist_message = "Red flame sputters from the mask's eye before winking out."
-	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment.", "Red flame appears in the cuirass before sputtering out.")
+	servant_of_ratvar_messages = list("A piece of armor hovers away from the others for a moment." = FALSE, "Red flame appears in the cuirass before sputtering out." = FALSE)
 	message_span = "heavy_brass"
 	w_class = 3
 
@@ -1085,8 +1094,8 @@
 	icon_state = "hierophant_ansible"
 	component_id = "hierophant_ansible"
 	cultist_message = "\"Gur obff fnlf vg'f abg ntnvafg gur ehyrf gb-xvyy lbh.\""
-	servant_of_ratvar_messages = list("\"Rkvyr vf fhpu n ober. Gur'er'f abguvat V pna uhag va urer.\"", "\"Jung'f xrrcvat lbh? V jnag gb-tb xvyy fbzrguv'at.\"", "\"HEHEHEHEHEHEH!\"", \
-	"\"Vs V xvyyrq lbh snfg rabhtu, qb lbh guv'ax gur obff jbhyq abgv'pr?\"")
+	servant_of_ratvar_messages = list("\"Exile is such a bore. There's nothing I can hunt in here.\"" = TRUE, "\"What's keeping you? I want to go kill something.\"" = TRUE, \
+	"\"HEHEHEHEHEHEH!\"" = FALSE, "\"If I killed you fast enough, do you think the boss would notice?\"" = TRUE)
 	message_span = "nzcrentr"
 
 /obj/item/clockwork/component/hierophant_ansible/obelisk
@@ -1094,8 +1103,8 @@
 	desc = "A prism that occasionally glows brightly. It seems not-quite there."
 	clockwork_desc = "The prism from a clockwork obelisk. Likely suitable as a substitute for a hierophant ansible."
 	cultist_message = "The prism flickers wildly in your hands before resuming its normal glow."
-	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment.","\"Uvrebcu'nag Oe'b'nqpnf'g snvy'her.\"",\
-	"The obelisk flickers wildly, as if trying to open a gateway.", "\"Fcng'v'ny Tn'gr-jn'l snv'yher.\"")
+	servant_of_ratvar_messages = list("You hear the distinctive sound of the Hierophant Network for a moment." = FALSE, "\"Hieroph'ant Br'o'adcas't fail'ure.\"" = TRUE, \
+	"The obelisk flickers wildly, as if trying to open a gateway." = FALSE, "\"Spa'tial Ga'tewa'y fai'lure.\"" = TRUE)
 	icon_state = "obelisk_prism"
 	w_class = 3
 
