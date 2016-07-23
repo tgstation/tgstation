@@ -50,7 +50,7 @@
 		var/datum/objective/devil/objective = new type(null)
 		objective.owner = devil_mind
 		devil_mind.objectives += objective
-		if(!istype(type, /datum/objective/devil/buy_target))
+		if(!istype(objective, /datum/objective/devil/buy_target))
 			validtypes -= type //prevent duplicate objectives, EXCEPT for buy_target.
 		else
 			objective.find_target()

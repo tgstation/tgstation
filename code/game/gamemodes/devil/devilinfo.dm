@@ -169,7 +169,7 @@ var/global/list/lawlorify = list (
 	//Yes, fallthrough behavior is intended, so I can't use a switch statement.
 	if(form == TRUE_DEVIL && SOULVALUE < TRUE_THRESHOLD)
 		regress_blood_lizard()
-	if(form == BLOOD LIZARD && SOULVALUE < BLOOD_THRESHOLD)
+	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_THRESHOLD)
 		regress_humanoid()
 	if(SOULVALUE < 0)
 		remove_spells()
