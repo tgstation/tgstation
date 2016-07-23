@@ -237,7 +237,7 @@
 		stat(null, "Current True Name: [true_name]")
 		stat(null, "Host: [host ? host : "NONE"]")
 		if(host)
-			var/resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
+			var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 			if(iscarbon(host)
 				resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
@@ -442,7 +442,7 @@
 		src << "<span class='warning'>You don't have a host!</span>"
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/try_emerge
 		return 0
-	var/resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
+	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
 	if(iscarbon(host)
 		resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
