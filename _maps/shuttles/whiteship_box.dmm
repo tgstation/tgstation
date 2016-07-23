@@ -219,7 +219,7 @@
 /area/shuttle/abandoned)
 "aL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "aM" = (
@@ -349,11 +349,11 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aW
 aC
-ab
+aC
 aa
 aa
 aa
@@ -589,11 +589,11 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aW
 aC
-ab
+aC
 aa
 aa
 aa
@@ -637,11 +637,11 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aW
 aC
-ab
+aC
 aa
 aa
 aa
@@ -660,13 +660,13 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aX
 aj
 aX
 aC
-ab
+aC
 aa
 aa
 aa
@@ -677,7 +677,7 @@ aa
 aa
 "}
 (15,1,1) = {"
-ab
+aC
 ag
 an
 an
@@ -697,17 +697,17 @@ an
 an
 an
 aB
-ab
+aC
 aa
 "}
 (16,1,1) = {"
-ab
+aC
 aC
 ao
 ao
 ao
 aC
-ab
+aC
 aC
 aj
 aj
@@ -715,18 +715,18 @@ aj
 aj
 aj
 aC
-ab
+aC
 aC
 ao
 ao
 ao
 aC
-ab
+aC
 aa
 "}
 (17,1,1) = {"
 aa
-ab
+aC
 ap
 at
 at
@@ -744,14 +744,14 @@ ap
 at
 at
 ap
-ab
+aC
 aa
 aa
 "}
 (18,1,1) = {"
 aa
 aa
-ab
+aC
 ap
 at
 at
@@ -767,7 +767,7 @@ aC
 at
 at
 ap
-ab
+aC
 aa
 aa
 aa
@@ -776,21 +776,21 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aD
 aC
 aC
 aC
-aM
+aL
 be
-aM
+aL
 aC
 aC
 aC
 aD
 aC
-ab
+aC
 aa
 aa
 aa
@@ -800,7 +800,7 @@ aa
 aa
 aa
 aa
-ab
+aC
 aC
 aj
 aj
@@ -814,7 +814,7 @@ aj
 aj
 aj
 aC
-ab
+aC
 aa
 aa
 aa
@@ -823,7 +823,7 @@ aa
 (21,1,1) = {"
 aa
 aa
-ab
+aC
 aC
 aX
 aE
@@ -839,14 +839,14 @@ aj
 aj
 aC
 aC
-ab
+aC
 aa
 aa
 aa
 "}
 (22,1,1) = {"
 aa
-ab
+aC
 aC
 aX
 aj
@@ -864,12 +864,12 @@ aj
 aC
 aC
 aC
-ab
+aC
 aa
 aa
 "}
 (23,1,1) = {"
-ab
+aC
 aC
 aC
 aC
@@ -913,7 +913,7 @@ aC
 aj
 bg
 aC
-ab
+aC
 aa
 "}
 (25,1,1) = {"
@@ -1057,7 +1057,7 @@ aC
 aj
 aj
 aX
-ab
+aC
 aa
 "}
 (31,1,1) = {"
@@ -1085,7 +1085,7 @@ aa
 aa
 "}
 (32,1,1) = {"
-ab
+aC
 aC
 aC
 aw
@@ -1104,7 +1104,7 @@ bd
 aH
 aC
 aC
-ab
+aC
 aa
 aa
 "}
@@ -1127,7 +1127,7 @@ aj
 aj
 aX
 aC
-ab
+aC
 aa
 aa
 aa
@@ -1135,7 +1135,7 @@ aa
 (34,1,1) = {"
 aa
 aa
-ab
+aC
 ay
 aC
 aX
@@ -1150,7 +1150,7 @@ aj
 aj
 aX
 aC
-ab
+aC
 aa
 aa
 aa
@@ -1161,9 +1161,9 @@ aa
 aa
 aa
 aa
-ab
 aC
 aC
+aC
 aL
 aL
 aL
@@ -1173,7 +1173,7 @@ aL
 aL
 aC
 aC
-ab
+aC
 aa
 aa
 aa
