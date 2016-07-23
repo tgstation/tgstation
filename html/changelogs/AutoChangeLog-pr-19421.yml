@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "The Tinkerer's Cache cost increase for having multiple Tinkerer's Caches now happens every 5 caches, from every 3."
