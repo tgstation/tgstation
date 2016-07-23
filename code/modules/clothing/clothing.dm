@@ -387,7 +387,10 @@ BLIND     // can't see anything
 			var/tie_color = hastie.item_color
 			if(!tie_color)
 				tie_color = hastie.icon_state
-			. += image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+			var/image/tI = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]")
+			tI.alpha = hastie.alpha
+			tI.color = hastie.color
+			. += tI
 
 
 /obj/item/clothing/under/New()
