@@ -488,7 +488,7 @@
 		over lava and slightly decreasing the recharge time.</span>"
 	C.name = "lava-proof [C.name]"
 	C.lavaupgrade = TRUE
-	C.burn_state = TRUE
+	C.burn_state = LAVA_PROOF
 	C.recharging_rate -= 10
 	uses--
 	if(!uses)
