@@ -422,8 +422,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 	one_per_tile = TRUE
 
-/datum/clockwork_scripture/create_object/tinkerers_cache/run_scripture()
-	var/cache_cost_increase = min(round(clockwork_caches*0.34), 5)
+/datum/clockwork_scripture/create_object/tinkerers_cache/New()
+	var/cache_cost_increase = min(round(clockwork_caches*0.2), 5)
 	for(var/i in required_components)
 		if(i != "replicant_alloy")
 			required_components[i] += cache_cost_increase
