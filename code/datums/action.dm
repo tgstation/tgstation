@@ -419,5 +419,5 @@
 //surf_ss13
 /datum/action/item_action/bhop
 	name = "Activate Jump Boots"
-	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 2-wide gaps."
+	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
 	button_icon_state = "jetboot"
