@@ -1470,6 +1470,7 @@ var/default_colour_matrix = list(1,0,0,0,\
 #define I_NTSL     "ntsl"
 #define I_SINGULO  "singulo"
 #define I_ATMOS    "atmos"
+#define I_CHEMS	   "chems"
 
 // delayNext() flags.
 #define DELAY_MOVE    1

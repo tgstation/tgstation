@@ -17,6 +17,7 @@
 	var/obj/item/slime_extract/C = null	//for Ex grenades
 	var/obj/item/weapon/reagent_containers/glass/beaker/noreactgrenade/reservoir = null
 	var/extract_uses = 0
+	var/mob/primed_by = "N/A" //"name (ckey)". For logging purposes
 
 /obj/item/weapon/grenade/chem_grenade/attack_self(mob/user as mob)
 	if(!stage || stage==1)
@@ -42,6 +43,7 @@
 		log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src].</font>")
 		log_admin("ATTACK: [user] ([user.ckey]) primed \a [src].")
 		message_admins("ATTACK: [user] ([user.ckey]) primed \a [src].")
+		primed_by = "[user] ([user.ckey])"
 
 		activate()
 		add_fingerprint(user)
@@ -172,6 +174,7 @@
 			log_attack("<font color='red'>[user.name] ([user.ckey]) primed \a [src]</font>")
 			log_admin("ATTACK: [user] ([user.ckey]) primed \a [src]")
 			message_admins("ATTACK: [user] ([user.ckey]) primed \a [src]")
+			primed_by = "[user] ([user.ckey])"
 
 	return
 
@@ -231,6 +234,8 @@
 				C.reagents.trans_to(reservoir, C.reagents.total_volume)
 
 		reservoir.reagents.update_total()
+
+	investigation_log(I_CHEMS, "has detonated, containing [reservoir.reagents.get_reagent_ids(1)] - Primed by: [primed_by]")
 
 	reservoir.reagents.trans_to(src, reservoir.reagents.total_volume)
 

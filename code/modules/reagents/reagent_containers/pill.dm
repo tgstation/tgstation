@@ -53,12 +53,7 @@
 		return
 
 	var/target_was_empty = (target.reagents.total_volume == 0)
-	var/list/bad_reagents = reagents.get_bad_reagent_names()
-	var/tx_amount = reagents.trans_to(target, reagents.total_volume)
-
-	// Log transfers of 'bad 'things' (/vg/)
-	if (tx_amount > 0 && target.log_reagents && bad_reagents && bad_reagents.len > 0)
-		log_reagents(user, src, target, tx_amount, bad_reagents)
+	var/tx_amount = reagents.trans_to(target, reagents.total_volume, log_transfer = TRUE, whodunnit = user)
 
 	// Show messages
 	if (tx_amount > 0)

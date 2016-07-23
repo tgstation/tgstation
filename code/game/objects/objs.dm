@@ -1,4 +1,4 @@
-var/global/list/reagents_to_log = list(FUEL  =  "welder fuel", PLASMA=  PLASMA, PACID =  "polytrinic acid", SACID =  "sulphuric acid", AMUTATIONTOXIN = "slime mutation toxin")
+var/global/list/reagents_to_log = list(FUEL, PLASMA, PACID, SACID, AMUTATIONTOXIN, MINDBREAKER, SPIRITBREAKER, CYANIDE, IMPEDREZENE)
 /obj
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
@@ -15,7 +15,7 @@ var/global/list/reagents_to_log = list(FUEL  =  "welder fuel", PLASMA=  PLASMA, 
 
 	var/damtype = "brute"
 	var/force = 0
-	
+
 	//Should we alert about reagents that should be logged?
 	var/log_reagents = 1
 
@@ -65,13 +65,13 @@ var/global/list/reagents_to_log = list(FUEL  =  "welder fuel", PLASMA=  PLASMA, 
 
 /obj/proc/cultify()
 	qdel(src)
-	
+
 /obj/proc/wrenchable()
 	return 0
-	
+
 /obj/proc/can_wrench_shuttle()
 	return 0
-	
+
 /obj/proc/is_sharp()
 	return sharpness
 
@@ -350,10 +350,10 @@ a {
 
 /obj/proc/verb_pickup(mob/living/user)
 	return 0
-	
+
 /obj/proc/can_quick_store(var/obj/item/I) //proc used to check that the current object can store another through quick equip
 	return 0
-	
+
 /obj/proc/quick_store(var/obj/item/I) //proc used to handle quick storing
 	return 0
 

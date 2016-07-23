@@ -31,7 +31,6 @@
 				to_chat(user, "<span class='notice'>You squirt the solution onto the [target]!</span>")
 				update_icon()
 		return
-	var/list/bad_reagents = reagents.get_bad_reagent_names() // Used for logging
 	if(reagents.total_volume)
 
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
@@ -66,26 +65,18 @@
 
 			var/mob/living/M = target
 
-			var/list/injected = list()
-			for(var/datum/reagent/R in src.reagents.reagent_list)
-				injected += R.name
-			var/contained = english_list(injected)
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [contained]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been squirted with [src.name] by [user.name] ([user.ckey]). Reagents: [reagents.get_reagent_ids(1)]</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to squirt [M.name] ([M.key]). Reagents: [reagents.get_reagent_ids(1)]</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) squirted [M.name] ([M.key]) with [src.name]. Reagents: [reagents.get_reagent_ids(1)] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			if(!iscarbon(user))
 				M.LAssailant = null
 			else
 				M.LAssailant = user
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, log_transfer = TRUE, whodunnit = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
 		update_icon()
 
-		// /vg/: Logging transfers of bad things
-		if(istype(target))
-			if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-				log_reagents(user, src, target, trans, bad_reagents)
 	else
 
 		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
@@ -96,9 +87,7 @@
 			to_chat(user, "<span class='warning'>[target] is empty.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		if(istype(reagents_to_log) && reagents_to_log.len && target.log_reagents)
-			log_reagents(user, src, target, trans, bad_reagents)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, log_transfer = TRUE, whodunnit = user)
 
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the solution.</span>")
 

@@ -12,15 +12,16 @@
 #define INVESTIGATE_DIR "data/investigate/"
 
 // Just in case
-#define AVAILABLE_INVESTIGATIONS list("hrefs","notes","ntsl","singulo","atmos")
+#define AVAILABLE_INVESTIGATIONS list(I_HREFS,I_NOTES,I_NTSL,I_SINGULO,I_ATMOS,I_CHEMS)
 
 // Actual list of global controllers.
 var/global/list/investigations=list(
-	"hrefs"   = null, // Set on world.New()
-	"notes"   = new /datum/log_controller("notes"),
-	"ntsl"    = new /datum/log_controller("ntsl"),
-	"singulo" = new /datum/log_controller("singulo"),
-	"atmos"   = null, //new /datum/log_controller("atmos",filename="data/logs/[date_string] atmos.htm", persist=TRUE),
+	I_HREFS   = null, // Set on world.New()
+	I_NOTES   = new /datum/log_controller(I_NOTES),
+	I_NTSL    = new /datum/log_controller(I_NTSL),
+	I_SINGULO = new /datum/log_controller(I_SINGULO),
+	I_ATMOS   = null, //new /datum/log_controller("atmos",filename="data/logs/[date_string] atmos.htm", persist=TRUE),
+	I_CHEMS = null // Set on world.New() with hrefs and atmos
 )
 
 // Handles appending shit to log.
@@ -66,7 +67,15 @@ var/global/list/investigations=list(
 
 // Permits special snowflake formatting.
 /atom/proc/format_investigation_text(var/message)
-	return "<small>[time2text(world.timeofday,"hh:mm")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br />"
+	return "<small>[time2text(world.timeofday,"hh:mm:ss")] \ref[src] ([x],[y],[z])</small> || [src] [message]<br />"
+
+// For non-atoms or very specific messages.
+/proc/minimal_investigation_log(var/subject, var/message, var/prefix)
+	var/datum/log_controller/I = investigations[subject]
+	if(!I)
+		warning("SOME ASSHAT USED INVALID INVESTIGATION ID [subject]")
+		return
+	I.write("<small>[time2text(world.timeofday,"hh:mm:ss")][prefix]</small> || [message]<br />")
 
 //ADMINVERBS
 /client/proc/investigate_show(var/subject in AVAILABLE_INVESTIGATIONS)

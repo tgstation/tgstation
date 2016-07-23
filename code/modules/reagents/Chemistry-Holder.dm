@@ -91,9 +91,18 @@ var/const/INGEST = 2
 
 	return the_id
 
-/datum/reagents/proc/trans_to(var/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/* Transfers reagents from one reagents datum to another.
+ * target: Can be either a specific reagents datum, or an atom (in which case the atom's respective reagent datum will be used)
+ * amount: Desired amount to transfer. If the target doesn't have enough space, it will only transfer as much as possible rather than the full amount.
+ * multiplier: Magically multiplies the amount of reagents that the target will receive (does not affect how much is removed from the source)
+ * preserve_data: If false, the reagents data will be lost. Useful if you use data for some strange stuff and don't want it to be transferred.
+ * log_transfer: If true, will log the transfer of these reagents to the chemistry investigation file. If the reagents transferred contain a logged reagent, it will also alert admins.
+ * whodunnit: If available, the mob that directly caused this transfer. Used for logging.
+ */
+/datum/reagents/proc/trans_to(var/target, var/amount=1, var/multiplier=1, var/preserve_data=1, var/log_transfer = FALSE, var/mob/whodunnit)
 	if (!target)
 		return
+
 	var/datum/reagents/R
 	if (istype(target, /datum/reagents))
 		R = target
@@ -103,9 +112,18 @@ var/const/INGEST = 2
 			return
 		else
 			R = AM.reagents
+
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
+
+	if(istype(R.my_atom, /obj))
+		var/obj/O = R.my_atom
+		if(!O.log_reagents)
+			log_transfer = FALSE
+	var/list/logged_message = list()
+	var/list/adminwarn_message = list()
+
 	for (var/datum/reagent/current_reagent in src.reagent_list)
 		if (!current_reagent)
 			continue
@@ -116,6 +134,10 @@ var/const/INGEST = 2
 		var/current_reagent_transfer = current_reagent.volume * part
 		if(preserve_data)
 			trans_data = current_reagent.data
+		if(log_transfer)
+			logged_message += "[current_reagent_transfer]u of [current_reagent.name]"
+			if(current_reagent.id in reagents_to_log)
+				adminwarn_message += "[current_reagent_transfer]u of <span class='warning'>[current_reagent.name]</span>"
 
 		R.add_reagent(current_reagent.id, (current_reagent_transfer * multiplier), trans_data)
 		src.remove_reagent(current_reagent.id, current_reagent_transfer)
@@ -125,7 +147,19 @@ var/const/INGEST = 2
 	//R.update_total()
 	R.handle_reactions()
 	src.handle_reactions()
+
+	if(log_transfer && logged_message.len)
+		var/turf/T = get_turf(my_atom)
+		minimal_investigation_log(I_CHEMS, "[whodunnit ? "[whodunnit] ([whodunnit.ckey])" : "(unknown whodunnit, last whodunnit processed: [usr.ckey])"] \
+		transferred [english_list(logged_message)] from \a [my_atom] \ref[my_atom] to \a [R.my_atom] \ref[R.my_atom].", prefix=" ([T.x],[T.y],[T.z])")
+		if(adminwarn_message.len)
+			message_admins("[whodunnit ? "[whodunnit] ([whodunnit.ckey]) (<A HREF='?_src_=holder;adminplayeropts=\ref[whodunnit]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[whodunnit]'>?</A>)" : "(unknown whodunnit, last whodunnit processed: [usr.ckey])"]\
+			has transferred [english_list(adminwarn_message)] from \a [my_atom] (<A HREF='?_src_=vars;Vars=\ref[my_atom]'>VV</A>) to \a [R.my_atom] (<A HREF='?_src_=vars;Vars=\ref[R.my_atom]'>VV</A>).\
+			[whodunnit ? " (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[whodunnit.x];Y=[whodunnit.y];Z=[whodunnit.z]'>JMP</a>)" : ""]")
+
 	return amount
+
+//I totally cannot tell why this proc exists
 /datum/reagents/proc/trans_to_holder(var/datum/reagents/target, var/amount=1, var/multiplier=1, var/preserve_data=1)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	if (!target || src.is_empty())
 		return
@@ -354,9 +388,9 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 
 					var/created_volume = C.result_amount*multiplier
 					if(C.result)
-						feedback_add_details("chemical_reaction","[C.result]|[C.result_amount*multiplier]")
+						feedback_add_details("chemical_reaction","[C.result][created_volume]")
 						multiplier = max(multiplier, 1) //this shouldnt happen ...
-						add_reagent(C.result, C.result_amount*multiplier)
+						add_reagent(C.result, created_volume)
 						set_data(C.result, preserved_data)
 
 						//add secondary products
@@ -365,10 +399,13 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 
 					if	(istype(my_atom, /obj/item/weapon/grenade/chem_grenade))
 						my_atom.visible_message("<span class='caution'>[bicon(my_atom)] Something comes out of \the [my_atom].</span>")
+						//Logging inside chem_grenade.dm, prime()
 					else if	(istype(my_atom, /mob/living/carbon/human))
 						my_atom.visible_message("<span class='notice'>[my_atom] shudders a little.</span>","<span class='notice'>You shudder a little.</span>")
+						//Since the are no fingerprints to be had here, we'll trust the attack logs to log this
 					else
 						my_atom.visible_message("<span class='notice'>[bicon(my_atom)] The solution begins to bubble.</span>")
+						C.log_reaction(src, created_volume)
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
@@ -590,10 +627,10 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 	var/list/stuff = list()
 	for(var/datum/reagent/A in reagent_list)
 		if(and_amount)
-			stuff += "[get_reagent_amount(A.id)]U of [A.id]"
+			stuff += "[get_reagent_amount(A.id)]u of [A.id]"
 		else
 			stuff += A.id
-	return english_list(stuff)
+	return english_list(stuff, "no reagents")
 
 /datum/reagents/proc/remove_all_type(var/reagent_type, var/amount, var/strict = 0, var/safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount)) return 1
@@ -640,17 +677,16 @@ trans_to_atmos(var/datum/gas_mixture/target, var/amount=1, var/multiplier=1, var
 
 /**
  * Helper proc to retrieve the 'bad' reagents in the holder. Used for logging.
+ * Example of result: "5u of Polytrinic Acid, 5u of Cyanide, and 15u of Mindbreaker Toxin"
  */
-/datum/reagents/proc/get_bad_reagent_names()
-	if (!istype(reagents_to_log) || reagents_to_log.len == 0)
-		return null
+/datum/reagents/proc/write_logged_reagents()
+	. = list()
 
-	var/list/bad_reagents = list()
-	for (var/reagent_id in reagents_to_log)
-		if (src.has_reagent(reagent_id))
-			bad_reagents += reagents_to_log[reagent_id]
+	for(var/datum/reagent/R in reagent_list)
+		if(R.id in reagents_to_log) //reagents_to_log being a global list in objs.dm
+			. += "[R.volume]u of [R.name]"
 
-	return bad_reagents
+	return english_list(., nothing_text = "")
 
 /datum/reagents/proc/is_empty()
 	return total_volume <= 0

@@ -1,3 +1,6 @@
+#define ALERT_AMOUNT_ONLY 1
+#define ALERT_ALL_REAGENTS 2
+
 ///////////////////////////////////////////////////////////////////////////////////
 /datum/chemical_reaction
 	var/name = null
@@ -14,45 +17,54 @@
 	var/secondary = 0 //Set to nonzero if secondary reaction
 	var/list/secondary_results = list() //Additional reagents produced by the reaction
 	var/requires_heating = 0
+	var/alert_admins = 0 //1 to alert admins with name and amount, 2 to alert with name and amount of all reagents
 
-///vg/: Send admin alerts with standardized code.
-/datum/chemical_reaction/proc/send_admin_alert(var/datum/reagents/holder, var/reaction_name = src.name)
-	var/message_prefix = "\A [reaction_name] reaction has occured"
-	var/message = "[message_prefix]"
+/datum/chemical_reaction/proc/log_reaction(var/datum/reagents/holder, var/amt)
+	var/datum/log_controller/I = investigations[I_CHEMS]
 	var/atom/A = holder.my_atom
+	var/turf/T = get_turf(holder.my_atom)
+	var/mob/M = get_holder_of_type(A, /mob) //if held by a mob (not necessarily true)
 
-	if(A)
-		var/turf/T = get_turf(A)
-		var/area/my_area = get_area(T)
+	var/obj/machinery/O = get_holder_of_type(A, /obj/machinery) //rather than showing "in a large beaker" let's show the name of the machine if it's inside one
+	if(istype(O))
+		A = O
 
-		message += " in [formatJumpTo(T)]. (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>)"
-		var/mob/M = get_holder_of_type(A, /mob)
-		if(M)
-			message += " - Carried By: [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
-			log_game("[message_prefix] in [my_area.name] ([T.x],[T.y],[T.z]) - Carried by [M.real_name] ([M.key])")
-		else
-			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
-			log_game("[message_prefix] in [my_area.name] ([T.x],[T.y],[T.z]) - last fingerprint  [(A.fingerprintslast ? A.fingerprintslast : "N/A")]")
+	var/investigate_text = "<small>[time2text(world.timeofday,"hh:mm:ss")] \ref[A] ([T.x],[T.y],[T.z])</small> || "
+
+	if(result)
+		investigate_text += "[amt]u of [result] have been created"
 	else
-		message += "."
+		investigate_text += "\A [name] reaction ([amt]u total combined) has taken place"
 
-	message_admins(message, 0, 1)
+	if(M)
+		investigate_text += " in \a [A] \ref[A], carried by [M.real_name] ([M.key])<br />"
+	else
+		investigate_text += " in \a [A] \ref[A], last touched by [(A.fingerprintslast ? A.fingerprintslast : "N/A (Last user processed: [usr.ckey])")]<br />"
+
+	I.write(investigate_text)
+
+	if(alert_admins)
+		var/admin_text = "[name] reaction [alert_admins == 2 ? "([holder.get_reagent_ids(1)])" : "([amt]u total combined)"] at [formatJumpTo(T)]"
+		if(M)
+			admin_text += " in \a [A] (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>), carried by [M.real_name] ([M.key]) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[M]'>?</A>)"
+		else
+			admin_text += " in \a [A] (<A HREF='?_src_=vars;Vars=\ref[A]'>VV</A>), last touched by [(A.fingerprintslast ? A.fingerprintslast : "N/A (Last user processed: [usr.ckey])")]"
+		message_admins(admin_text, 0, 1)
+	return investigate_text
 
 /datum/chemical_reaction/proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 	return
 
 //I recommend you set the result amount to the total volume of all components.
 /datum/chemical_reaction/explosion_potassium
-	name = "Explosion"
+	name = "Water Potassium Explosion"
 	id = "explosion_potassium"
 	result = null
 	required_reagents = list(WATER = 1, POTASSIUM = 1)
 	result_amount = 2
+	alert_admins = ALERT_AMOUNT_ONLY
 
 /datum/chemical_reaction/explosion_potassium/on_reaction(var/datum/reagents/holder, var/created_volume)
-
-	send_admin_alert(holder, reaction_name = "water/potassium explosion")
-
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/10, 1), holder.my_atom, 0, 0)
 	e.holder_damage(holder.my_atom)
@@ -400,16 +412,14 @@
 	result_amount = 1
 
 /datum/chemical_reaction/nitroglycerin
-	name = "Nitroglycerin"
+	name = "Nitroglycerin Explosion"
 	id = NITROGLYCERIN
 	result = NITROGLYCERIN
 	required_reagents = list(GLYCEROL = 1, PACID = 1, SACID = 1)
 	result_amount = 2
+	alert_admins = ALERT_AMOUNT_ONLY
 
 /datum/chemical_reaction/nitroglycerin/on_reaction(var/datum/reagents/holder, var/created_volume)
-
-	send_admin_alert(holder, reaction_name = "nitroglycerin explosion")
-
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/2, 1), holder.my_atom, 0, 0)
 	e.holder_damage(holder.my_atom)
@@ -490,6 +500,7 @@
 	required_reagents = list(POTASSIUM = 1, SUGAR = 1, PHOSPHORUS = 1)
 	result_amount = null
 	secondary = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/chemsmoke/on_reaction(var/datum/reagents/holder, var/created_volume)
 	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
@@ -802,14 +813,10 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/grey
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimespawn/on_reaction(var/datum/reagents/holder)
 	if(!is_in_airtight_object(holder.my_atom)) //Don't pop while ventcrawling.
-		if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
-			send_admin_alert(holder, reaction_name = "grey slime in a grenade")
-		else
-			send_admin_alert(holder, reaction_name = "grey slime")
-
 		feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 
 		if(istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
@@ -1000,22 +1007,20 @@
 
 //Gold
 /datum/chemical_reaction/slimecrit
-	name = "Slime Crit"
+	name = "Slime Crit (Summon Monsters)"
 	id = "m_tele"
 	result = null
 	required_reagents = list(PLASMA = 5)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimecrit/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently!</span>")
-		send_admin_alert(holder, reaction_name = "gold slime + plasma")
 		sleep(50)
-	else
-		send_admin_alert(holder, reaction_name = "gold slime + plasma in a grenade!!") //Expect to this this one spammed in the times to come
 
 	var/blocked = list(
 		/mob/living/simple_animal/hostile/alien/queen/large,
@@ -1058,22 +1063,20 @@
 				step(C, pick(NORTH,SOUTH,EAST,WEST))
 
 /datum/chemical_reaction/slimecritlesser
-	name = "Slime Crit Lesser"
+	name = "Slime Crit Lesser (Summon Monsters)"
 	id = "m_tele3"
 	result = null
 	required_reagents = list(BLOOD = 5)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimecritlesser/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently !</span>")
-		send_admin_alert(holder, reaction_name = "gold slime + blood")
 		sleep(50)
-	else
-		send_admin_alert(holder, reaction_name = "gold slime + blood in a grenade")
 
 	var/blocked = list(
 		/mob/living/simple_animal/hostile/alien/queen/large,
@@ -1088,8 +1091,6 @@
 		/mob/living/simple_animal/hostile/mining_drone,
 		) + typesof(/mob/living/simple_animal/hostile/humanoid) + typesof(/mob/living/simple_animal/hostile/asteroid) //Exclusion list for things you don't want the reaction to create.
 	var/list/critters = existing_typesof(/mob/living/simple_animal/hostile) - blocked //List of possible hostile mobs
-
-	send_admin_alert(holder, reaction_name = "gold slime + blood")
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -1117,14 +1118,12 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimecritweak/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to slowly vibrate!</span>")
-		send_admin_alert(holder, reaction_name = "gold slime + water")
-	else
-		send_admin_alert(holder, reaction_name = "gold slime + water in a grenade")
 
 	spawn(50)
 		var/atom/location = holder.my_atom.loc
@@ -1314,15 +1313,13 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/darkblue
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimefreeze/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently!</span>")
-		send_admin_alert(holder, reaction_name = "dark blue slime + plasma (Freeze)")
 		sleep(50)
-	else
-		send_admin_alert(holder, reaction_name = "dark blue slime + plasma (Freeze) in a grenade")
 
 	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -1358,22 +1355,21 @@
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 
 /datum/chemical_reaction/slimefire
-	name = "Slime fire"
+	name = "Slime Napalm"
 	id = "m_fire"
 	result = null
 	required_reagents = list(PLASMA = 5)
 	result_amount = 1
 	required_container = /obj/item/slime_extract/orange
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimefire/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently!</span>")
-		send_admin_alert(holder, reaction_name = "orange slime + plasma (Napalm)")
 		sleep(50)
-	else
-		send_admin_alert(holder, reaction_name = "orange slime + plasma (Napalm) in a grenade")
+
 	var/turf/location = get_turf(holder.my_atom.loc)
 	for(var/turf/simulated/floor/target_tile in range(0, location))
 
@@ -1393,13 +1389,10 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/yellow
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimeoverload/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "yellow slime + blood (EMP)")
-	else
-		send_admin_alert(holder, reaction_name = "yellow slime + blood (EMP) in a grenade")
 	empulse(get_turf(holder.my_atom), 3, 7)
 
 /datum/chemical_reaction/slimecell
@@ -1456,11 +1449,10 @@
 	result_amount = 10
 	required_container = /obj/item/slime_extract/purple
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimejam/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[replacetext(name, " ", "_")]")
-	if(istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name="purple slime + sugar (Slime Jelly) in a grenade")
 
 //Dark Purple
 /datum/chemical_reaction/slimeplasma
@@ -1487,11 +1479,10 @@
 	result_amount = 8
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimeglycerol/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-	if(istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "red slime + plasma (Glycerol) in a grenade")
 
 /datum/chemical_reaction/slimeres
 	name = "Slime Res"
@@ -1515,14 +1506,10 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/red
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimebloodlust/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-
-	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "red slime + blood (Slime Frenzy)")
-	else
-		send_admin_alert(holder, reaction_name = "red slime + blood (Slime Frenzy) in a grenade")
 
 	for(var/mob/living/carbon/slime/slime in viewers(get_turf(holder.my_atom), null))
 		slime.rabid()
@@ -1555,11 +1542,10 @@
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimemutate2/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-	if(istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "black slime + plasma (Mutates to Slime) in a grenade")
 
 /datum/chemical_reaction/slimemednanobots
 	name = "Slime Medical Nanobots"
@@ -1569,10 +1555,10 @@
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimemednanobots/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-	send_admin_alert(holder, reaction_name = "black slime + gold (Medical Nanobots) in a grenade")
 
 /datum/chemical_reaction/slimecomnanobots
 	name  = "Slime Combat Nanobots"
@@ -1582,10 +1568,10 @@
 	result_amount = 1
 	required_other = 1
 	required_container = /obj/item/slime_extract/black
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimecomnanobots/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-	send_admin_alert(holder, reaction_name = "black slime + uranium (Combat Nanobots) in a grenade")
 
 //Oil
 /datum/chemical_reaction/slimeexplosion
@@ -1596,15 +1582,13 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/oil
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimeexplosion/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
 	if(!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
 		holder.my_atom.visible_message("<span class='warning'>The slime extract begins to vibrate violently!</span>")
-		send_admin_alert(holder, reaction_name = "oil slime + plasma (Explosion)")
 		sleep(50)
-	else
-		send_admin_alert(holder, reaction_name = "oil slime + plasma (Explosion) in a grenade")
 	explosion(get_turf(holder.my_atom), 1 ,3, 6)
 
 /datum/chemical_reaction/slimegenocide
@@ -1615,15 +1599,10 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/oil
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimegenocide/on_reaction(var/datum/reagents/holder)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-
-	if(!istype(holder.my_atom.loc, /obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name="oil slime + blood (Slime Genocide)")
-	else
-		send_admin_alert(holder, reaction_name="oil slime + blood (Slime Genocide) in a grenade")
-
 	for(var/mob/living/carbon/slime/S in viewers(get_turf(holder.my_atom), null)) //Kills slimes
 		S.death(0)
 	for(var/mob/living/simple_animal/slime/S in viewers(get_turf(holder.my_atom), null)) //Kills pet slimes too
@@ -1727,14 +1706,10 @@
 	result_amount = 1
 	required_container = /obj/item/slime_extract/bluespace
 	required_other = 1
+	alert_admins = ALERT_ALL_REAGENTS
 
 /datum/chemical_reaction/slimeteleport/on_reaction(var/datum/reagents/holder, var/created_volume)
 	feedback_add_details("slime_cores_used", "[replacetext(name, " ", "_")]")
-
-	if(!istype(holder.my_atom.loc,/obj/item/weapon/grenade/chem_grenade))
-		send_admin_alert(holder, reaction_name = "bluespace slime + plasma (Mass Teleport)")
-	else
-		send_admin_alert(holder, reaction_name = "bluespace slime + plasma (Mass Teleport) in a grenade")
 
 	//Calculate new position (searches through beacons in world)
 	var/obj/item/beacon/chosen
@@ -2721,3 +2696,7 @@
 	result = PAROXETINE
 	required_reagents = list(MINDBREAKER = 1, OXYGEN = 1, INAPROVALINE = 1)
 	result_amount = 3
+
+
+#undef ALERT_AMOUNT_ONLY
+#undef ALERT_ALL_REAGENTS
