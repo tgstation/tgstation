@@ -277,16 +277,21 @@ This file's folder contains:
 			return FALSE
 		if("silicons")
 			var/total_silicons = 0
+			var/converted_silicons = 0
 			var/successful = TRUE
 			for(var/mob/living/silicon/robot/S in living_mob_list) //Only check robots and AIs
 				total_silicons++
 				if(!is_servant_of_ratvar(S))
 					successful = FALSE
+				else
+					converted_silicons++
 			for(var/mob/living/silicon/ai/A in living_mob_list)
 				total_silicons++
 				if(!is_servant_of_ratvar(A))
 					successful = FALSE
-			clockwork_explanation += " [total_silicons] were converted!"
+				else
+					converted_silicons++
+			clockwork_explanation += " [converted_silicons] silicons were converted, out of [total_silicons] silicons!"
 			return successful
 		if("gateway")
 			return ratvar_awakens
