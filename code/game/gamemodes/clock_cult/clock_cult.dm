@@ -287,7 +287,7 @@ This file's folder contains:
 				if(!is_servant_of_ratvar(A))
 					successful = FALSE
 			clockwork_explanation += " [total_silicons] were converted!"
-			return TRUE
+			return successful
 		if("gateway")
 			return ratvar_awakens
 	return FALSE //This shouldn't ever be reached, but just in case it is
