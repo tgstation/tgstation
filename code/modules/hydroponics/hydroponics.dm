@@ -615,7 +615,7 @@
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 	if(S.has_reagent("saltpetre", 1))
-		adjustHealth(round(S.get_reagent_amount("saltpetre") * 0.10))
+		adjustHealth(round(S.get_reagent_amount("saltpetre") * 0.25))
 		if(myseed)
 			myseed.adjust_production(-round(S.get_reagent_amount("saltpetre") * 0.01))
 			myseed.adjust_potency(round(S.get_reagent_amount("saltpetre") * 0.04))
