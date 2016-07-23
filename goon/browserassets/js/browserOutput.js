@@ -126,7 +126,7 @@ function highlightTerms(el) {
 							break;
 						}
 					}
-					newText += newWord ? newWord : words[w];
+					newText += (newWord ? newWord : words[w]).replace("<", "&lt;");
 					newText += w >= words.length ? '' : ' ';
 				}
 			} else { //Every other type of element

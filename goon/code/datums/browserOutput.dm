@@ -124,7 +124,7 @@ For the main html chat area
 
 /datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
 	if(islist(data))
-		data = list2json(data)
+		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
 
 //Sends client connection details to the chat to handle and save
