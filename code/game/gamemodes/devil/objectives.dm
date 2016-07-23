@@ -75,10 +75,6 @@
 /datum/objective/devil/buy_target
 	explanation_text = "You shouldn't see this text.  Error:DEVIL4"
 
-/datum/objective/devil/buy_target/New()
-	find_target()
-	update_explanation_text()
-
 /datum/objective/devil/buy_target/update_explanation_text()
 	if(target)
 		explanation_text = "Purchase and retain the soul of [target.name], the [target.assigned_role]."
