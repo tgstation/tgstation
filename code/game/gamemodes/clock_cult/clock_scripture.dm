@@ -1049,7 +1049,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	name = "Invoke Sevtug, the Formless Pariah"
 	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to cause mass hallucinations and confusion \
 	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may reduce its effects."
-	invocations = list("I call upon you, Fright!!", "Let your power shatter the sanity of the weak minded!!", "Let your tendrils hold sway over all!!")
+	invocations = list("I call upon you, Fright!!", "Let your power shatter the sanity of the weak-minded!!", "Let your tendrils hold sway over all!!")
 	channel_time = 150
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 6, "hierophant_ansible" = 3)

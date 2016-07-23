@@ -178,7 +178,7 @@
 		M.Dizzy(5)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
-		else if(is_servant_of_ratvar(M) && prob(5))
+		else if(is_servant_of_ratvar(M) && prob(8))
 			switch(pick("speech", "message", "emote"))
 				if("speech")
 					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")

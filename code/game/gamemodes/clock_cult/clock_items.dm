@@ -984,7 +984,7 @@
 		user << "<span class='[message_span]'>[cultist_message]</span>"
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
-		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar("pickedmessage")]" : "pickedmessage"]</span>"
+		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
 
 /obj/item/clockwork/component/examine(mob/user)
 	..()
@@ -997,7 +997,7 @@
 	icon_state = "belligerent_eye"
 	component_id = "belligerent_eye"
 	cultist_message = "The eye gives you an intensely hateful glare."
-	servant_of_ratvar_messages = list("\"...\"" = FALSE, "For a moment, your mind is flooded with extremely violent thoughts." = FALSE, "\"...Die.\"" = 1)
+	servant_of_ratvar_messages = list("\"...\"" = FALSE, "For a moment, your mind is flooded with extremely violent thoughts." = FALSE, "\"...Die.\"" = TRUE)
 	message_span = "neovgre"
 
 /obj/item/clockwork/component/belligerent_eye/blind_eye
