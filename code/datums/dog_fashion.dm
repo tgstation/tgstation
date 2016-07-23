@@ -10,6 +10,8 @@
 	// sprite that the associated item uses
 	var/icon_file
 	var/icon_state
+	var/alpha
+	var/color
 
 /datum/dog_fashion/New(mob/M)
 	name = replacetext(name, "REAL_NAME", M.real_name)
@@ -31,7 +33,10 @@
 
 /datum/dog_fashion/proc/get_image(var/dir)
 	if(icon_file && icon_state)
-		return image(icon_file, icon_state = icon_state, dir = dir)
+		var/image/corgI = image(icon_file, icon_state = icon_state, dir = dir)
+		corgI.alpha = alpha
+		corgI.color = color
+		return corgI
 
 
 /datum/dog_fashion/head
@@ -39,8 +44,6 @@
 
 /datum/dog_fashion/back
 	icon_file = 'icons/mob/corgi_back.dmi'
-
-/datum/dog_fashion/head
 
 /datum/dog_fashion/head/helmet
 	name = "Sergeant REAL_NAME"
