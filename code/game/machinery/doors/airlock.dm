@@ -771,6 +771,7 @@ About the new airlock wires panel:
 							to_chat(usr, "<span class='warning'>Nope.</span>")
 							return 0
 						src.locked = 1
+						to_chat(usr, "The door is now unbolted.")
 						log_attack("<font color='red'>[usr] ([usr.ckey]) bolted the [name] at [x] [y] [z]</font>")
 						update_icon()
 				if(5)
@@ -782,12 +783,14 @@ About the new airlock wires panel:
 							to_chat(usr, "<span class='warning'>Nope.</span>")
 							return 0
 						src.secondsElectrified = 0
+						to_chat(usr, "The door is now un-electrified.")
 						log_attack("<font color='red'>[usr] ([usr.ckey]) un-electrified the [name] at [x] [y] [z]</font>")
 					else if(src.secondsElectrified>0)
 						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified"))
 							to_chat(usr, "<span class='warning'>Nope.</span>")
 							return 0
 						src.secondsElectrified = 0
+						to_chat(usr, "The door is now un-electrified.")
 						log_attack("<font color='red'>[usr] ([usr.ckey]) un-electrified the [name] at [x] [y] [z]</font>")
 
 				if(8)
@@ -877,6 +880,7 @@ About the new airlock wires panel:
 								to_chat(usr, "<span class='warning'>Nope.</span>")
 								return 0
 							src.locked = 0
+							to_chat(usr, "The door is now bolted.")
 							update_icon()
 						else
 							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
@@ -916,6 +920,7 @@ About the new airlock wires panel:
 						shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 						usr.attack_log += text("\[[time_stamp()]\] <font color='red'>Electrified the [name] at [x] [y] [z]</font>")
 						log_attack("<font color='red'>[usr] ([usr.ckey]) Electrified the [name] at [x] [y] [z]</font>")
+						to_chat(usr, "The door is now electrified indefinitely.")
 						if(isobserver(usr) && !canGhostWrite(usr,src,"electrified (permanent)"))
 							to_chat(usr, "<span class='warning'>Nope.</span>")
 							return 0
