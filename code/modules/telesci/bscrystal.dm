@@ -54,7 +54,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "polycrystal"
 	desc = "A stable polycrystal, made of fused-together bluespace crystals. You could probably break one off."
-	origin_tech = "bluespace=6;minerals=3"
+	origin_tech = "bluespace=6;materials=3"
 	attack_verb = list("bluespace polybashed", "bluespace polybattered", "bluespace polybludgeoned", "bluespace polythrashed", "bluespace polysmashed")
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user) // to prevent the construction menu from ever happening
