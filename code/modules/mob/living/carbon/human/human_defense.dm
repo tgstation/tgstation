@@ -272,6 +272,22 @@
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
 			return 0
 		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		if(ishostile(M))
+			var/mob/living/simple_animal/hostile/H = M
+			if(H.limb_destroyer)
+				var/obj/item/bodypart/affecting
+				var/list/things_to_ruin = shuffle(bodyparts.Copy())
+				for(var/B in things_to_ruin)
+					var/obj/item/bodypart/bodypart = B
+					if(bodypart.body_zone == "head" || bodypart.body_zone == "chest")
+						continue
+					if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
+						affecting = bodypart
+				if(affecting)
+					dam_zone = affecting.body_zone
+					if(affecting.get_damage() >= affecting.max_damage)
+						affecting.dismember()
+						return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
