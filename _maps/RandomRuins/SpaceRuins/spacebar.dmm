@@ -29,10 +29,7 @@
 /area/ruin/powered)
 "ai" = (
 /turf/open/floor/plating/asteroid,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered)
 "aj" = (
 /obj/structure/grille,
@@ -51,16 +48,13 @@
 /turf/closed/wall,
 /area/ruin/powered)
 "am" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
 "an" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "ao" = (
 /obj/structure/table,
@@ -118,7 +112,7 @@
 	name = "Space Bar"
 	})
 "aw" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "ax" = (
 /obj/machinery/door/airlock{
@@ -139,16 +133,13 @@
 "az" = (
 /turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered)
 "aA" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Escape Pod Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "aB" = (
 /turf/open/floor/plating,
@@ -1381,10 +1372,10 @@ bt
 aM
 af
 af
-ak
+ai
 am
 am
-aB
+az
 af
 af
 af
@@ -1561,10 +1552,10 @@ br
 af
 af
 af
-ak
+ai
 am
 am
-aB
+az
 af
 af
 cf

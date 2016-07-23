@@ -7,28 +7,17 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "c" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "d" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "e" = (
 /turf/open/floor/plasteel/freezer,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
 /obj/structure/chair{
@@ -181,15 +170,15 @@
 a
 b
 p
-r
+b
 a
 "}
 (2,1,1) = {"
 b
 e
 i
-s
-r
+e
+b
 "}
 (3,1,1) = {"
 c
@@ -259,5 +248,5 @@ d
 o
 q
 o
-x
+d
 "}

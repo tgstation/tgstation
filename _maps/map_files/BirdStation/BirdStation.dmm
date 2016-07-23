@@ -16,26 +16,15 @@
 /turf/open/space,
 /area/space)
 "aac" = (
-/turf/open/space,
-/obj/machinery/porta_turret/syndicate,
-/turf/closed/wall/shuttle{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aad" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aae" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/shutters{
-	id = "syndieshutters";
-	name = "blast shutters"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aaf" = (
 /turf/open/space,
@@ -47,11 +36,23 @@
 /area/shuttle/syndicate)
 "aag" = (
 /obj/structure/table,
-/obj/machinery/microwave,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aah" = (
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Intercom";
+	pixel_y = -32;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aai" = (
 /obj/structure/table,
@@ -62,8 +63,11 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
 "aaj" = (
-/obj/machinery/computer/shuttle/syndicate,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aak" = (
 /obj/structure/table,
@@ -80,11 +84,11 @@
 /area/shuttle/syndicate)
 "aam" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+/obj/item/stack/sheet/glass{
+	amount = 10
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/device/multitool,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aan" = (
 /obj/structure/chair/comfy/black{
@@ -120,10 +124,6 @@
 /area/shuttle/syndicate)
 "aar" = (
 /turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "diagonalWall3"
-	},
 /area/shuttle/syndicate)
 "aas" = (
 /obj/machinery/door/window{
@@ -134,7 +134,10 @@
 /area/shuttle/syndicate)
 "aat" = (
 /turf/open/space,
-/turf/closed/wall/shuttle{
+/obj/machinery/porta_turret/syndicate{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
@@ -146,12 +149,10 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
 "aav" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/zipties{
-	pixel_x = 1;
-	pixel_y = 2
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aaw" = (
 /obj/structure/chair{
@@ -191,8 +192,9 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
 "aaD" = (
-/obj/structure/closet/syndicate/nuclear,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/table,
+/obj/item/device/aicard,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aaE" = (
 /obj/structure/chair/stool,
@@ -200,8 +202,27 @@
 /area/shuttle/syndicate)
 "aaF" = (
 /obj/structure/table,
-/obj/item/device/aicard,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/c4{
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/obj/item/weapon/c4{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/c4{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/weapon/c4{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/weapon/c4{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aaG" = (
 /obj/machinery/door/poddoor{
@@ -271,11 +292,13 @@
 /area/shuttle/syndicate)
 "aaL" = (
 /obj/machinery/door/window{
+	base_state = "right";
 	dir = 4;
+	icon_state = "right";
 	name = "EVA Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aaM" = (
 /obj/machinery/door/airlock/external{
@@ -334,8 +357,8 @@
 /turf/open/space,
 /area/space)
 "aaU" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/bed/roller,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "aaV" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -393,11 +416,9 @@
 /area/shuttle/syndicate)
 "abc" = (
 /obj/structure/table,
-/obj/item/weapon/weldingtool/largetank{
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/item/weapon/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abd" = (
 /obj/machinery/door/window{
@@ -405,14 +426,14 @@
 	name = "Infirmary";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abe" = (
 /obj/machinery/door/window/westright{
 	name = "Tool Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abf" = (
 /obj/structure/table,
@@ -421,10 +442,13 @@
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
 "abg" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/table,
+/obj/item/robot_parts/r_arm,
+/obj/item/robot_parts/l_arm,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abh" = (
 /obj/machinery/door/window{
@@ -434,7 +458,7 @@
 	name = "Infirmary";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abi" = (
 /obj/machinery/door/window{
@@ -442,26 +466,36 @@
 	name = "Tool Storage";
 	req_access_txt = "150"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abj" = (
 /obj/structure/table,
-/obj/item/weapon/gun/syringe{
-	pixel_x = 1;
-	pixel_y = 2
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/firstaid/brute,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abk" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe/charcoal,
-/obj/item/weapon/reagent_containers/syringe/charcoal{
-	pixel_y = 2
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/obj/item/weapon/reagent_containers/syringe/charcoal{
-	pixel_y = 4
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = -3
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abl" = (
 /obj/structure/window/reinforced{
@@ -486,7 +520,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/sbeacondrop/bomb,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abo" = (
 /obj/structure/table,
@@ -497,7 +531,7 @@
 /obj/item/weapon/grenade/syndieminibomb{
 	pixel_x = -1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abp" = (
 /obj/structure/sink{
@@ -509,7 +543,7 @@
 /obj/structure/mirror{
 	pixel_x = 30
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abq" = (
 /obj/machinery/telecomms/allinone{
@@ -519,7 +553,12 @@
 /area/shuttle/syndicate)
 "abr" = (
 /obj/machinery/nuclearbomb/syndicate,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Secure Storage";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abs" = (
 /turf/closed/wall,
@@ -537,24 +576,20 @@
 /area/engine/engineering)
 "abv" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
 /obj/item/weapon/cautery,
-/obj/item/weapon/surgicaldrill,
-/obj/item/robot_parts/l_arm,
-/obj/item/robot_parts/r_arm,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/scalpel,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abw" = (
 /obj/structure/table/optable,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/item/weapon/surgical_drapes,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abx" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel,
 /obj/item/weapon/retractor,
 /obj/item/weapon/hemostat,
-/obj/item/weapon/surgical_drapes,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "aby" = (
 /obj/structure/shuttle/engine/heater,
@@ -564,20 +599,27 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "abz" = (
-/obj/structure/frame/computer,
-/obj/item/weapon/paper{
-	info = "<h3>Teleporter Instruction</h3><hr><ol><li>Install circuit board, glass and wiring to complete Teleporter Control Console</li><li>Use a screwdriver, wirecutter and screwdriver again on the Teleporter Station to connect it</li><li>Set destination with Teleporter Control Computer</li><li>Activate Teleporter Hub with Teleporter Station</li></ol>";
-	name = "Teleporter Instructions"
-	},
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abA" = (
-/obj/machinery/teleport/station,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/rods{
+	amount = 50
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abB" = (
-/obj/machinery/teleport/hub/syndicate,
-/turf/open/floor/plasteel/shuttle/red,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/black/red,
+/obj/item/clothing/head/helmet/space/syndicate/black/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abC" = (
 /turf/open/floor/plasteel/black,
@@ -6903,16 +6945,10 @@
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
 "ara" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/supply)
 "arb" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "arc" = (
 /turf/closed/wall/shuttle{
@@ -8134,9 +8170,9 @@
 "auc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/closet/wardrobe/grey,
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
 /obj/item/weapon/storage/backpack/dufflebag,
 /obj/item/weapon/storage/backpack/dufflebag,
 /obj/item/weapon/storage/backpack/dufflebag,
@@ -9027,10 +9063,7 @@
 	},
 /area/shuttle/mining)
 "awi" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/mining)
 "awj" = (
 /obj/structure/grille,
@@ -9046,9 +9079,7 @@
 	},
 /area/shuttle/mining)
 "awl" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc3"
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/supply)
 "awm" = (
 /turf/closed/wall/shuttle{
@@ -10833,8 +10864,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/weapon/storage/backpack/satchel_norm,
-/obj/item/weapon/storage/backpack/satchel_norm,
+/obj/item/weapon/storage/backpack/satchel,
+/obj/item/weapon/storage/backpack/satchel,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "aAZ" = (
@@ -11850,16 +11881,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "aDn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/escape)
 "aDo" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aDp" = (
 /turf/closed/wall/shuttle{
@@ -12488,10 +12513,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/asmaint2)
 "aEQ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc4";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "aER" = (
 /obj/machinery/computer/emergency_shuttle,
@@ -19831,10 +19853,7 @@
 	},
 /area/shuttle/arrival)
 "aWG" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "aWH" = (
 /obj/item/device/assembly/mousetrap/armed,
@@ -22379,16 +22398,10 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "bcP" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bcQ" = (
 /obj/structure/window/shuttle,
@@ -22401,10 +22414,7 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bcS" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "bcT" = (
 /obj/machinery/light{
@@ -23056,10 +23066,7 @@
 	name = "port bay 1";
 	width = 9
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "bet" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -23263,6 +23270,330 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
+"Zza" = (
+/turf/open/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"Zzb" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Zzc" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters{
+	id = "syndieshutters";
+	name = "blast shutters"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/space)
+"Zzd" = (
+/turf/open/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"Zze" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzf" = (
+/obj/machinery/computer/shuttle/syndicate,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzg" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "syndieshutters";
+	name = "remote shutter control";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzh" = (
+/obj/structure/frame/computer,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzi" = (
+/obj/structure/closet/syndicate/personal,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzj" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"Zzk" = (
+/obj/machinery/door/window{
+	name = "Cockpit";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzl" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
+"Zzm" = (
+/obj/structure/table,
+/obj/item/stack/cable_coil,
+/obj/item/weapon/crowbar/red,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzn" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/zipties{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzo" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 4
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzp" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzq" = (
+/obj/structure/closet/syndicate/nuclear,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzr" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzs" = (
+/obj/machinery/door/poddoor{
+	auto_close = 300;
+	id = "smindicate";
+	name = "outer blast door"
+	},
+/obj/machinery/button/door{
+	id = "smindicate";
+	name = "external door control";
+	pixel_x = -26;
+	pixel_y = 0;
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate";
+	name = "syndicate infiltrator";
+	port_angle = 0;
+	roundstart_move = "syndicate_away";
+	width = 18
+	},
+/obj/docking_port/stationary{
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space;
+	width = 18
+	},
+/turf/open/floor/plating,
+/area/space)
+"Zzt" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/space)
+"Zzu" = (
+/obj/machinery/door/window{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzv" = (
+/obj/machinery/door/window{
+	dir = 4;
+	name = "EVA Storage";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzw" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzx" = (
+/turf/open/space,
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"Zzy" = (
+/obj/item/device/radio/intercom{
+	desc = "Talk through this. Evilly";
+	freerange = 1;
+	frequency = 1213;
+	name = "Syndicate Intercom";
+	pixel_x = -32;
+	subspace_transmission = 1;
+	syndie = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"Zzz" = (
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzA" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzB" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzC" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzD" = (
+/obj/structure/table,
+/obj/item/stack/medical/ointment,
+/obj/item/stack/medical/bruise_pack,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzE" = (
+/obj/structure/table,
+/obj/item/weapon/stock_parts/cell/high{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/stock_parts/cell/high,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzF" = (
+/obj/structure/table,
+/obj/item/weapon/screwdriver{
+	pixel_y = 9
+	},
+/obj/item/device/assembly/voice{
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzG" = (
+/obj/structure/table,
+/obj/item/weapon/wrench,
+/obj/item/device/assembly/infra,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzH" = (
+/obj/structure/table,
+/obj/item/device/assembly/signaler,
+/obj/item/device/assembly/signaler,
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/prox_sensor{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzI" = (
+/obj/structure/table,
+/obj/item/weapon/weldingtool/largetank{
+	pixel_y = 3
+	},
+/obj/item/device/multitool,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzJ" = (
+/obj/structure/sign/bluecross_2,
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzK" = (
+/obj/machinery/recharge_station,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzL" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzM" = (
+/obj/machinery/door/window{
+	dir = 1;
+	name = "Surgery";
+	req_access_txt = "150"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzO" = (
+/obj/structure/table,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/circular_saw,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/syndicate)
+"ZzP" = (
+/obj/machinery/telecomms/allinone{
+	intercept = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/syndicate)
+"ZzQ" = (
+/turf/open/space,
+/obj/machinery/porta_turret/syndicate{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/syndicate)
 "ZzR" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -37931,16 +38262,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaz
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aar
+Zza
+aac
+aac
+aac
+aac
+ZzL
+aac
+aac
+aac
+Zzj
 aaa
 aaa
 aaa
@@ -38182,19 +38513,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaz
-aad
-aad
-aad
-aad
-aad
-aad
+Zza
+aac
+aac
+aac
+aac
+aac
+aac
+Zzz
 aaU
-aah
+Zzz
+ZzA
 abg
-abg
-aah
+ZzO
 abv
 aby
 abH
@@ -38439,19 +38770,19 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
-aaC
-aaC
-aaC
-aaC
-aaC
-aad
-aaU
-aah
-aah
-aah
-aah
+Zzb
+Zzp
+Zzp
+Zzp
+Zzp
+Zzp
+aac
+ZzA
+ZzA
+ZzA
+ZzA
+ZzM
+ZzA
 abw
 aby
 abI
@@ -38696,18 +39027,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
-aah
-aah
-aah
-aah
-aah
-aad
-aaV
-aah
-aah
-aah
+Zzb
+aae
+aae
+aae
+aae
+aae
+aac
+ZzB
+ZzA
+ZzA
+ZzA
+ZzN
 abp
 abx
 aby
@@ -38946,28 +39277,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zza
 aac
-aad
-aad
-aad
+aac
+aac
+Zzj
 aar
 aaa
-aaa
-aad
-aah
-aaE
-aah
-aah
-aah
-aad
-aaW
-aaE
-aah
+Zzb
+aae
+Zzr
+aae
+aae
+aae
+aac
+ZzC
+ZzA
+ZzA
+ZzA
 abj
-aad
-aad
-aad
+aac
+aac
+aac
 aat
 aaa
 aaa
@@ -39203,26 +39534,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zzb
 aad
 aag
 aam
-aao
-aad
+aac
+aar
 aaa
-aaa
-aad
+Zzb
+Zzq
 aaD
 aaF
-aaK
-aah
-aah
-aad
-aaX
-aah
-aah
+aae
+aae
+aac
+ZzD
+ZzA
+ZzA
+ZzA
 abk
-aad
+aac
 aaa
 aaa
 aaa
@@ -39460,28 +39791,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zzc
 aae
-aah
-aah
-aah
-aad
-aad
-aad
-aad
-aad
-aad
-aad
+aae
+aae
+aac
+aac
+aac
+aac
+aac
+aac
+aac
+Zzv
 aaL
-aaO
-aad
-aad
+aac
+aac
+ZzJ
 abd
 abh
-aad
-aad
-aad
-aar
+aac
+aac
+aac
+Zzj
 aaa
 aaa
 aaa
@@ -39717,26 +40048,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zzc
+Zze
 aae
-aai
-aah
-aah
-aad
-aau
-aaw
-aaw
-aaw
-aaw
-aah
-aah
-aah
-aaS
-aah
-aah
-aah
-abl
-abq
+aae
+aac
+Zzm
+aae
+aae
+aae
+aae
+aaP
+aae
+aae
+Zzy
+aae
+aae
+aae
+aae
+aae
+aaP
 aby
 abH
 aaa
@@ -39974,25 +40305,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aae
+Zzc
+Zzf
 aaj
-aan
-aah
-aas
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-abm
+aae
+Zzk
+aae
+aae
+aae
+aae
+aae
+Zzu
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aae
 abr
 aby
 abI
@@ -40231,26 +40562,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zzc
+Zzg
 aae
-aak
 aah
-aap
-aad
+aac
+Zzn
 aav
-aax
-aax
-aax
-aax
-aah
-aah
-aah
-aah
-aah
-aah
-aah
-abl
-aah
+aav
+aav
+aav
+aaP
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aae
+aaP
 aby
 abJ
 aaa
@@ -40488,28 +40819,28 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zzc
+Zzh
 aae
-aal
-aah
-aah
-aad
-aad
-aad
-aaA
-aad
-aad
-aad
-aaM
+aae
+aac
+aac
+aac
+Zzo
+aac
+aac
+aac
+Zzw
 aaP
-aad
-aad
+aac
+aac
+aac
 abe
 abi
-aad
-aad
-aad
-aat
+aac
+aac
+aac
+Zzl
 aaa
 aaa
 aaa
@@ -40745,27 +41076,27 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aad
-aal
-aah
-aaq
-aad
-aaa
-aaa
+Zzb
+Zzh
+aae
+Zzi
+aac
+Zzl
 aaa
 aaa
-aad
-aah
-aah
-aah
-aad
-aaY
-aah
-aah
+aaa
+Zzb
+aae
+aae
+aae
+aac
+ZzE
+aae
+aae
+aae
 abn
-aad
-aaa
+ZzP
+Zzb
 aaa
 aaa
 aaa
@@ -41002,29 +41333,29 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aad
-aad
-aad
-aat
-aaa
-aaa
-aaa
-aaa
-aaG
-aah
-aah
-aah
-aad
-aaZ
-aaE
-aah
-abo
-aad
-aad
-aad
+Zzd
+aac
+aac
+aac
+Zzl
 aar
+aaa
+aaa
+aaa
+Zzs
+aae
+aae
+aae
+aac
+ZzF
+aae
+aae
+aae
+abo
+aac
+aac
+aac
+ZzQ
 aaa
 aaa
 aaa
@@ -41268,17 +41599,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaH
-aah
-aah
-aaQ
-aad
-aba
-aah
-aah
-aah
-aah
+Zzt
+aae
+aae
+aae
+aac
+ZzG
+aae
+aae
+aae
+aae
+aae
 abz
 aby
 abH
@@ -41525,17 +41856,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaI
-aad
-aad
-aad
-aad
-abb
-aaE
-aah
-aah
-aah
+Zzd
+aac
+aac
+aac
+aac
+ZzH
+Zzr
+aae
+aae
+aae
+aae
 abA
 aby
 abI
@@ -41785,14 +42116,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aad
+Zzx
+Zzb
+ZzI
 abc
-abf
-aah
-aah
-aah
+aae
+ZzK
+ZzK
+aae
 abB
 aby
 abJ
@@ -42043,16 +42374,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaI
-aad
-aad
-aad
-aad
-aad
-aad
-aad
-aat
+Zzd
+aac
+aac
+aac
+aac
+Zzo
+aac
+aac
+aac
+Zzl
 aaa
 aaa
 aaa
@@ -46486,7 +46817,7 @@ aaa
 aaa
 aaa
 aDn
-aEU
+aDo
 aDZ
 aHf
 aDZ
@@ -46494,7 +46825,7 @@ aDZ
 aDZ
 aDZ
 aDZ
-aMf
+aDn
 aaa
 aaa
 aaa
@@ -46751,8 +47082,8 @@ aIN
 aIN
 aIN
 aHS
-aMg
-aMf
+aEQ
+aDn
 aaa
 aaa
 aaa
@@ -46998,7 +47329,7 @@ aaa
 aaa
 aaa
 aaa
-aDY
+aDo
 aER
 aFH
 aES
@@ -47769,7 +48100,7 @@ aaa
 aaa
 aaa
 aaa
-aEa
+aDo
 aET
 aES
 aET
@@ -47780,8 +48111,8 @@ aHW
 aHT
 aHT
 aMh
-aMg
-aMf
+aEQ
+aDn
 aaa
 aaa
 aaa
@@ -48026,11 +48357,11 @@ aaa
 aaa
 aaa
 aaa
-aDp
-aEU
+aDo
+aDo
 bah
 aDZ
-aDY
+aDo
 aHT
 aHT
 aHT
@@ -48295,7 +48626,7 @@ aHT
 aHT
 aHT
 aNc
-aDY
+aDo
 aaa
 aaa
 aaa
@@ -49058,7 +49389,7 @@ aDo
 aEV
 aFJ
 aGt
-aEa
+aDo
 aHT
 aHT
 aJM
@@ -49568,19 +49899,19 @@ aaa
 aaa
 aaa
 aDn
-aEb
-aEf
-aEf
-aEf
+aDo
+aDo
+aDo
+aDo
 aEQ
 aHT
 aHT
-aJN
-aEU
+aDo
+aDo
 aHh
 aDZ
-aJN
-aHj
+aDo
+aDo
 aaa
 aaa
 aaa
@@ -50342,12 +50673,12 @@ aDo
 aEe
 aEe
 aEe
-aGv
-aHi
+aEQ
+aDo
 aHX
 aHX
-aGv
-aHi
+aDo
+aEQ
 aLp
 aMi
 aNf
@@ -50595,20 +50926,20 @@ aaa
 aaa
 aaa
 aaa
-aDp
+aDo
 aEf
 aEf
 aEf
-aGw
-aHj
+aDo
+aDo
 aHT
 aHT
-aDp
-aGw
+aDo
+aDo
 aEf
 aEf
 aEf
-aHj
+aDo
 aaa
 aaa
 aaa
@@ -50852,16 +51183,16 @@ aaa
 aaa
 aaa
 aaa
-aDq
+aDn
 aEg
 aEX
 aFK
 aGx
-aDY
+aDo
 aHX
 aIP
-aDY
-aDq
+aDo
+aDn
 aEg
 aEX
 aFK
@@ -51356,7 +51687,7 @@ atG
 atG
 atG
 aso
-awm
+arb
 awU
 axJ
 ayn
@@ -51666,7 +51997,7 @@ aaa
 aaa
 bcO
 bdf
-bdo
+bcO
 aaa
 aaa
 aaa
@@ -51924,7 +52255,7 @@ bcO
 bda
 bdg
 bdp
-bdo
+bcO
 aaa
 aaa
 aaa
@@ -52384,7 +52715,7 @@ atH
 aup
 atH
 aso
-awm
+arb
 awW
 axK
 ayr
@@ -52633,7 +52964,7 @@ aaa
 aaa
 aaa
 aaa
-arc
+ara
 arH
 arH
 ath
@@ -52641,7 +52972,7 @@ atI
 arH
 auU
 avA
-awo
+awl
 aaa
 axK
 ays

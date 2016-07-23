@@ -1,3 +1,4 @@
+#define MEDAL_PREFIX "Legion"
 /*
 
 LEGION
@@ -40,10 +41,13 @@ Difficulty: Medium
 	ranged_cooldown_time = 20
 	var/size = 10
 	var/charging = 0
+	medal_type = MEDAL_PREFIX
+	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
+	elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
 
@@ -108,6 +112,7 @@ Difficulty: Medium
 				break
 		if(last_legion)
 			src.loot = list(/obj/item/weapon/staff/storm)
+			elimination = 0
 		else if(prob(5))
 			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -171,3 +176,5 @@ Difficulty: Medium
 		A.telegraph()
 
 	storm_cooldown = world.time + 600
+
+#undef MEDAL_PREFIX

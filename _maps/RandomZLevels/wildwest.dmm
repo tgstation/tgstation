@@ -2108,14 +2108,10 @@
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
 "gI" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6"
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/wwrefine)
 "gJ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/wwrefine)
 "gK" = (
 /turf/closed/wall/shuttle{
@@ -2154,9 +2150,7 @@
 	},
 /area/awaymission/wwrefine)
 "gS" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc1"
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/wwrefine)
 "gT" = (
 /turf/closed/wall/shuttle{
@@ -28350,10 +28344,10 @@ aa
 aa
 aa
 gI
-gO
-gO
-gO
-gR
+gJ
+gJ
+gJ
+gI
 aa
 aa
 aa
@@ -28611,10 +28605,10 @@ gP
 gP
 gP
 gS
-gO
-gO
-gO
-gR
+gJ
+gJ
+gJ
+gI
 aa
 aa
 aa
@@ -28863,7 +28857,7 @@ fj
 fo
 fo
 gG
-gK
+gJ
 gP
 gP
 gP
@@ -29377,7 +29371,7 @@ gA
 fo
 fo
 gG
-gM
+gJ
 gP
 gP
 gP
@@ -29638,11 +29632,11 @@ gJ
 gP
 gP
 gP
-gT
-gO
-gO
-gO
-gU
+gS
+gJ
+gJ
+gJ
+gI
 aa
 aa
 aa
@@ -29891,11 +29885,11 @@ eJ
 aa
 aa
 aa
-gN
-gO
-gO
-gO
-gU
+gI
+gJ
+gJ
+gJ
+gI
 aa
 aa
 aa

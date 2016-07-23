@@ -215,6 +215,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(user.getPlasma() < p_cost)
 		user << "<span class='warning'>You need at least [p_cost] plasma to spit.</span>"
+		remove_ranged_ability(user)
 		return
 
 	var/turf/T = user.loc

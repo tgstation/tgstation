@@ -5671,7 +5671,7 @@
 	name = "research director's locker";
 	req_access_txt = "201"
 	},
-/obj/item/weapon/storage/backpack/satchel_tox,
+/obj/item/weapon/storage/backpack/satchel/tox,
 /obj/item/clothing/gloves/color/latex,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -8269,19 +8269,13 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "ld" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8789,11 +8783,8 @@
 	name = "MO19 Arrivals"
 	})
 "lV" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8801,7 +8792,7 @@
 "lW" = (
 /obj/structure/table,
 /obj/item/weapon/storage/lockbox,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8809,7 +8800,7 @@
 "lX" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8828,7 +8819,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8840,13 +8831,13 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "mb" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8855,7 +8846,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8868,14 +8859,14 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "me" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -8947,7 +8938,7 @@
 	})
 "ml" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/satchel/withwallet,
+/obj/item/weapon/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plasteel/black,
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9013,7 +9004,7 @@
 "mp" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9025,13 +9016,13 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
 	})
 "mr" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9040,7 +9031,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9052,7 +9043,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9064,7 +9055,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9206,7 +9197,7 @@
 	})
 "mG" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9215,7 +9206,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Shuttle Cockpit"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9224,7 +9215,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9239,7 +9230,7 @@
 /obj/effect/landmark{
 	name = "awaystart"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9248,7 +9239,7 @@
 /obj/machinery/door/airlock/shuttle{
 	name = "Shuttle Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9410,7 +9401,7 @@
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9420,7 +9411,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9439,7 +9430,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9522,7 +9513,7 @@
 	})
 "nf" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9532,7 +9523,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -9543,7 +9534,7 @@
 	pixel_y = -30
 	},
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a1{
 	has_gravity = 1;
 	name = "MO19 Arrivals"
@@ -10248,7 +10239,7 @@
 	})
 "of" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10263,7 +10254,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10278,7 +10269,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10290,7 +10281,7 @@
 	poweralm = 0
 	})
 "oi" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10307,7 +10298,7 @@
 	destroyed = 1;
 	icon_state = "brokengrille"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10320,7 +10311,7 @@
 	})
 "ok" = (
 /obj/item/stack/rods,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10333,7 +10324,7 @@
 	})
 "ol" = (
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10348,7 +10339,7 @@
 /obj/item/stack/cable_coil{
 	amount = 5
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10365,7 +10356,7 @@
 	icon_state = "coil_red2";
 	item_state = "coil_red2"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10382,7 +10373,7 @@
 	icon_state = "coil_red1";
 	item_state = "coil_red1"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10542,7 +10533,7 @@
 	poweralm = 0
 	})
 "oy" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -10797,7 +10788,7 @@
 	poweralm = 0
 	})
 "oN" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/awaycontent/a3{
 	always_unpowered = 1;
 	ambientsounds = list('sound/ambience/ambimine.ogg');
@@ -36013,7 +36004,7 @@ lc
 lA
 lA
 lA
-nd
+lc
 ba
 ba
 ba
@@ -36270,8 +36261,8 @@ lV
 mp
 mG
 mV
-ne
-nd
+lV
+lc
 ba
 ba
 ba
@@ -37036,13 +37027,13 @@ jS
 eI
 ba
 ba
-ly
-lY
-lC
+ld
+ld
+ld
 mH
-mX
-lY
-nn
+ld
+ld
+ld
 ba
 ba
 ba
@@ -37550,13 +37541,13 @@ fQ
 eJ
 hI
 ba
-lz
+ld
 ma
 mc
 mr
 mc
 ng
-lz
+ld
 ba
 ba
 ba
@@ -38064,13 +38055,13 @@ jU
 ku
 io
 ba
-lB
+ld
 mc
 mt
 mJ
 mt
 mc
-lB
+ld
 ba
 ba
 ba
@@ -38321,13 +38312,13 @@ jU
 kv
 io
 ba
-lz
+ld
 md
 ms
 mI
 ms
 nh
-lz
+ld
 ba
 ba
 ba
@@ -38835,14 +38826,14 @@ jV
 kw
 hI
 lc
-lC
+ld
 me
 mb
 mr
 mb
 me
-mX
-nd
+ld
+lc
 ba
 ba
 ba
@@ -39348,15 +39339,15 @@ jr
 jW
 kv
 io
-le
+lc
 lE
 mf
-lC
+ld
 mK
-mX
+ld
 lE
 mf
-nv
+lc
 ba
 ba
 ba
