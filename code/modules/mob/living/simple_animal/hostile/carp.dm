@@ -81,6 +81,7 @@
 
 	melee_damage_lower = 20
 	melee_damage_upper = 30
+	move_to_delay = 0
 
 
 /mob/living/simple_animal/hostile/carp/cayenne
