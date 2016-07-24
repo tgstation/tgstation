@@ -271,7 +271,7 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			clockwork_explanation += " [surviving_servants] managed to escape!"
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. [surviving_servants] managed to escape!"
 			if(surviving_servants >= required_escapees)
 				return TRUE
 			return FALSE
@@ -291,7 +291,7 @@ This file's folder contains:
 					successful = FALSE
 				else
 					converted_silicons++
-			clockwork_explanation += " [converted_silicons] silicons were converted, out of [total_silicons] silicons!"
+			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. [converted_silicons]/[total_silicons] silicons were converted!"
 			return successful
 		if("gateway")
 			return ratvar_awakens
