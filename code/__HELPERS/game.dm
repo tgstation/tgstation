@@ -397,14 +397,14 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300)
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_list = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client)
+		if(!G.key || !G.client || (ignore_list && G.ckey in ignore_list))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
@@ -417,7 +417,7 @@
 				continue
 		spawn(0)
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+			switch(ignore_list ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 				if(1)
 					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>poll_time)
@@ -427,6 +427,9 @@
 						candidates += G
 				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
+				if(3)
+					ignore_list[G.ckey] = 1
+					G << "<span class='danger'>Choice registered: Never for this round.</span>"
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
