@@ -72,7 +72,7 @@ effective or pretty fucking useless.
 	materials = list(MAT_METAL=400)
 	origin_tech = "magnets=3;biotech=5;syndicate=3"
 	var/irradiate = 1
-	var/intensity = 42.0 // how much damage the radiation does
+	var/intensity = 69.0 // how much damage the radiation does
 	var/wavelength = 10 // time it takes for the radiation to kick in, in seconds
 	var/used = 0 // is it cooling down?
 
@@ -89,8 +89,6 @@ effective or pretty fucking useless.
 		user << "<span class='warning'>Successfully irradiated [M].</span>"
 		spawn((wavelength+(intensity*4))*5)
 			if(M)
-				if(intensity >= 5)
-					M.apply_effect(5, PARALYZE)
 				M.rad_act(intensity*10)
 	else
 		user << "<span class='warning'>The radioactive microlaser is still recharging.</span>"
