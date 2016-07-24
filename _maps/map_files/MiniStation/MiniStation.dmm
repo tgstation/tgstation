@@ -14756,7 +14756,15 @@
 	dwidth = 8;
 	height = 9;
 	name = "Mini emergency shuttle";
-	timid = 1;
+	timid = 0;
+	width = 21
+	},
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 8;
+	height = 9;
+	id = "emergency_home";
+	name = "emergency evac bay";
 	width = 21
 	},
 /turf/open/floor/mineral/titanium/blue,

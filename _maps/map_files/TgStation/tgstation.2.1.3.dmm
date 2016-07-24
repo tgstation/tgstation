@@ -2367,8 +2367,17 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1;
-	name = "Box emergency shuttle"
+	name = "Box emergency shuttle";
+	timid = 0
+	},
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 12;
+	height = 18;
+	id = "emergency_home";
+	name = "BoxStation emergency evac bay";
+	turf_type = /turf/open/space;
+	width = 32
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -58778,10 +58787,19 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
-	roundstart_move = "whiteship_away";
 	port_angle = 180;
-	width = 35;
-	timid = 1
+	roundstart_move = "whiteship_away";
+	timid = 0;
+	width = 35
+	},
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 22;
+	id = "whiteship_home";
+	name = "SS13 Arrival Docking";
+	turf_type = /turf/open/space;
+	width = 35
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -69700,12 +69718,12 @@ cyi
 cyi
 cyi
 cyi
-cyD
-cyl
-cyl
-cyl
-cyl
-cyM
+cyc
+cyc
+cyc
+cyc
+cyc
+cyc
 cyi
 cyi
 cyc
@@ -69957,7 +69975,7 @@ cyc
 cyc
 cyw
 cyi
-czh
+cyc
 cyV
 cyi
 cyi
@@ -70214,12 +70232,12 @@ cyx
 cyw
 cyc
 cyi
-czh
+cyc
 cyW
 cyi
 cze
 czm
-czh
+cyc
 cyi
 cyi
 cyc
@@ -70476,7 +70494,7 @@ cyi
 cyi
 cyi
 czl
-czh
+cyc
 cyi
 cyi
 cyc
@@ -70728,12 +70746,12 @@ cyi
 cyi
 cyc
 cyi
-cyK
-cyl
-cyl
-cyl
-cyl
-czk
+cyc
+cyc
+cyc
+cyc
+cyc
+cyc
 cyi
 cyI
 cyR

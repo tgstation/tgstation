@@ -38,16 +38,8 @@
 	dwidth = 5;
 	height = 14;
 	name = "Meta emergency shuttle";
+	timid = 1;
 	width = 25
-	},
-/obj/docking_port/stationary{
-	dheight = 0;
-	dir = 2;
-	dwidth = 9;
-	height = 25;
-	id = "emergency_home";
-	name = "MetaStation emergency evac bay";
-	width = 29
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)

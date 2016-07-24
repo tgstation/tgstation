@@ -34,9 +34,10 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
-	port_angle = -90;
-	preferred_direction = 4;
+	port_angle = 180;
+	preferred_direction = 1;
 	roundstart_move = "whiteship_away";
+	timid = 1;
 	width = 27
 	},
 /obj/machinery/door/airlock/shuttle{
@@ -45,14 +46,6 @@
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
-	},
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 11;
-	height = 15;
-	id = "whiteship_home";
-	name = "SS13: Auxiliary Dock, Station-Port";
-	width = 27
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
