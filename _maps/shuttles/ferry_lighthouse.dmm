@@ -17,7 +17,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "ad" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "ae" = (
 /turf/open/space,
@@ -34,18 +34,18 @@
 /area/shuttle/transport)
 "ai" = (
 /obj/machinery/vending/liberationstation,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aj" = (
 /obj/machinery/door/airlock/vault,
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "ak" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "al" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "am" = (
 /obj/structure/grille{
@@ -59,13 +59,13 @@
 	dir = 8
 	},
 /obj/machinery/vending/autodrobe,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ao" = (
 /obj/structure/mirror/magic/badmin{
 	pixel_x = 30
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ap" = (
 /turf/closed/wall,
@@ -75,7 +75,7 @@
 	dir = 8
 	},
 /obj/machinery/vending/clothing,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
 /obj/structure/chair,
@@ -146,47 +146,43 @@
 /area/shuttle/transport)
 "aF" = (
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aG" = (
 /obj/machinery/vending/snack,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aH" = (
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aI" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/wiz,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aK" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aL" = (
 /turf/closed/wall/rust,
 /area/shuttle/transport)
 "aM" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/wood,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/transport)
 "aN" = (
 /obj/machinery/power/grounding_rod{
 	anchored = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aO" = (
 /obj/machinery/door/airlock/shuttle,
@@ -201,11 +197,11 @@
 	port_angle = 180;
 	width = 16
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aP" = (
 /obj/machinery/vending/magivend,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aQ" = (
 /obj/structure/grille,
@@ -226,26 +222,26 @@
 "aT" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/centcom,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aU" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/rainbow,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aV" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aX" = (
 /obj/structure/window/fulltile,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aY" = (
 /obj/structure/grille,
@@ -253,10 +249,7 @@
 /turf/closed/wall/shuttle/smooth,
 /area/shuttle/transport)
 "aZ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/shuttle/transport)
 "ba" = (
 /obj/machinery/conveyor{
@@ -400,7 +393,7 @@ bj
 "}
 (5,1,1) = {"
 ad
-ad
+aM
 ai
 ak
 ao
@@ -418,8 +411,8 @@ bj
 "}
 (6,1,1) = {"
 ae
-ad
-ad
+aZ
+aM
 al
 ap
 ap
@@ -431,15 +424,15 @@ ap
 aL
 be
 bh
-ad
+aM
 ad
 "}
 (7,1,1) = {"
 ae
 ae
+aZ
 ad
-ad
-ad
+aM
 ar
 au
 au
@@ -448,8 +441,8 @@ au
 au
 aL
 bf
-ad
-ad
+aM
+aZ
 ae
 "}
 (8,1,1) = {"
@@ -483,8 +476,8 @@ aC
 aS
 aC
 bc
-ad
-ad
+aM
+aZ
 ae
 ae
 "}
@@ -518,8 +511,8 @@ aD
 aD
 aD
 aD
-ad
-ad
+aM
+aZ
 ae
 ae
 ae
@@ -553,8 +546,8 @@ ap
 aE
 aN
 aE
-ad
-ad
+aM
+aZ
 ae
 ae
 ae
@@ -639,7 +632,7 @@ ae
 ae
 ae
 ae
-ax
+ad
 aG
 aE
 aU
@@ -657,11 +650,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 aH
 aE
 aV
-ax
+ad
 ae
 ae
 ae
@@ -693,11 +686,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 ak
 aE
 aW
-ax
+ad
 ae
 ae
 ae
@@ -711,11 +704,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 aJ
 aE
 aW
-ax
+ad
 ae
 ae
 ae
@@ -729,11 +722,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 aJ
 aE
 aW
-ax
+ad
 ae
 ae
 ae
@@ -765,11 +758,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 aJ
 aE
 aW
-ax
+ad
 ae
 ae
 ae
@@ -783,11 +776,11 @@ ae
 ae
 ae
 ae
-ax
+ad
 aK
 aE
 aW
-ax
+ad
 ae
 ae
 ae
@@ -801,7 +794,7 @@ ae
 ae
 ae
 ae
-aA
+aZ
 ay
 aO
 ay

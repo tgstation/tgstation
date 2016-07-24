@@ -16,7 +16,9 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "e" = (
-/turf/closed/indestructible/opshuttle,
+/turf/closed/wall/mineral/plastitanium{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/lavaland/surface/outdoors)
 "f" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -33,12 +35,13 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered)
 "h" = (
-/turf/closed/indestructible/opshuttle,
+/turf/closed/wall/mineral/plastitanium{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/ruin/unpowered)
 "i" = (
-/turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+/turf/open/floor/mineral/plastitanium/brig{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/lavaland/surface/outdoors)
 "j" = (
@@ -47,21 +50,20 @@
 /obj/item/weapon/pickaxe,
 /obj/item/weapon/pickaxe,
 /obj/item/device/flashlight/lantern,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "k" = (
 /obj/effect/mob_spawn/human/prisoner_transport,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "l" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+/turf/open/floor/mineral/plastitanium/brig{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "m" = (
@@ -69,32 +71,31 @@
 /obj/effect/decal/cleanable/blood,
 /obj/item/device/flashlight/seclite,
 /obj/effect/light_emitter,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "n" = (
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "o" = (
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "p" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "q" = (
 /obj/item/weapon/shard,
-/turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+/turf/open/floor/mineral/plastitanium/brig{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/lavaland/surface/outdoors)
 "r" = (
@@ -108,15 +109,14 @@
 /obj/effect/mob_spawn/human/nanotrasensoldier,
 /obj/item/weapon/gun/projectile/automatic/pistol/m1911,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=16;n2=23"
+/turf/open/floor/mineral/plastitanium/brig{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
 "t" = (
 /obj/structure/closet/crate/internals,
 /obj/item/weapon/crowbar/large,
-/turf/open/floor/plasteel/shuttle/red{
+/turf/open/floor/mineral/plastitanium/brig{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/unpowered)
@@ -469,7 +469,7 @@ a
 a
 h
 h
-r
+p
 e
 e
 b

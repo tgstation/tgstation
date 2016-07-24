@@ -181,42 +181,42 @@
 	},
 /area/ruin/powered)
 "E" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/closed/wall/mineral/titanium/interior{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/ruin/powered)
 "F" = (
-/turf/closed/wall/shuttle{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 2;
-	icon_state = "swall12"
+/turf/closed/wall/mineral/titanium{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "G" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/turf/closed/wall/shuttle{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
+/turf/closed/wall/mineral/titanium/interior{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/ruin/powered)
 "H" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Escape Pod Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
 /area/ruin/powered)
 "I" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle{
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+/turf/open/floor/mineral/titanium/blue{
+	baseturf = /turf/open/floor/plating/lava/smooth
 	},
 /area/ruin/powered)
 "J" = (
@@ -504,7 +504,7 @@ a
 a
 G
 J
-K
+G
 "}
 (16,1,1) = {"
 a

@@ -223,7 +223,7 @@
 		if(stored_alloy + 2500 > max_alloy)
 			user << "<span class='warning'>[src] is too full to accept any more alloy!</span>"
 			return 0
-		user.whisper("Genafzhgr vagb jngr-e.")
+		clockwork_say(user, text2ratvar("Transmute into water."), TRUE)
 		user.visible_message("<span class='notice'>[user] liquifies [I] and pours it onto [src].</span>", \
 		"<span class='notice'>You liquify [src] and pour it onto [src], transferring the alloy into its reserves.</span>")
 		stored_alloy = stored_alloy + 2500
@@ -253,16 +253,16 @@
 	var/convert_attempt_cost = 150
 	var/convert_cost = 300
 
-	var/mania_messages = list("\"Tb ahgf.\"", "\"Gnxr n penpx ng penml.\"", "\"Znxr n ovq sbe vafnavgl.\"", "\"T-rg xbbxl.\"", "\"Zbir gbjneqf znavn.\"", "\"Orpbzr orjvyqrerq.\"", "\"Jnk jvyq.\"", \
-	"\"Tb ebhaq gur oraq.\"", "\"Ynaq va yhanpl.\"", "\"Gel qrzragv'n.\"", "\"Fgevir gb-t-rg n fperj ybbfr.\"")
-	var/compel_messages = list("\"Pbzr pybfre.\"", "\"Nccebnpu gur genafzvggr-e.\"", "\"Gbhpu gur nagr-aanr.\"", "\"V nyjnlf unir gb-qrny jvgu vqvbgf. Zbir gbjneqf gur znavn zbgbe.\"", \
-	"\"Nqinapr sbejneq-naq-cynpr lbhe urnq o-rgjrra gur nagr-aanr - gun'g'f nyy vg'f tbbq sbe.\"", "\"Vs lbh jrer fznegr-e, lbh'q or bire urer nyernql.\"", "\"Zbir SBEJNEQ, lbh sbby.\"")
-	var/convert_messages = list("\"Lbh jba'g qb. Tb gb-fyrrc juvyr V gr-yy gur'fr avgjvgf ubj gb-pbaireg lbh.\"", "\"Lbh ner vafhssvpvrag. V zhfg vafgehpg gur'fr vqvbgf va gur neg-bs pbairefvba.\"", \
-	"\"Bu-bs pbhefr, fbzrbar jr pna'g pbaireg. Gur'fr freinagf ner sbbyf.\"", "\"Ubj uneq vf vg gb-hfr n Fvtvy, naljnl? Nyy vg gnxrf vf qenttvat fbzrbar bagb vg.\"", \
-	"\"Ubj qb gur'l snvy gb hfr n Fvtvy-bs Npprffvba, naljnl?\"", "\"Jul vf vg gun'g nyy freinagf ner guv'f varcg?\"", "\"Vg'f dhvgr yvxryl lbh'yy or fghpx urer sbe n juvyr.\"")
-	var/close_messages = list("\"Jryy, lbh pna'g ernpu gur zbgbe sebz GUR'ER, lbh zbeba.\"", "\"Vagr-erfgvat ybpngv'ba. V'q cersre vs lbh jrag fbzrjurer lbh pbhyq NPGHNYYL GBHPU GUR NAGR-AANR!\"", \
-	"\"Nznmvat. Lbh fbzrubj znantrq gb-jrqtr lbhefrys fbzrjurer lbh pna'g npghnyyl ernpu gur zbgbe sebz.\"", "\"Fhpu n fubj-bs vqvbpl vf hacnenyyryrq. Creuncf V fubhyq chg lbh ba qvfcynl?\"", \
-	"\"Qvq lbh qb guv'f ba checbfr? V pna'g vzntvar lbh qbvat fb nppvqragnyyl. Bu, jnvg, V pna.\"", "\"Ubj vf vg gun'g fhpu fzneg perngherf pna fgv'yy qb fbz-rguv'at NF FGHCVQ NF GUV'F!\"")
+	var/mania_messages = list("\"Go nuts.\"", "\"Take a crack at crazy.\"", "\"Make a bid for insanity.\"", "\"Get kooky.\"", "\"Move towards mania.\"", "\"Become bewildered.\"", "\"Wax wild.\"", \
+	"\"Go round the bend.\"", "\"Land in lunacy.\"", "\"Try dementia.\"", "\"Strive to get a screw loose.\"")
+	var/compel_messages = list("\"Come closer.\"", "\"Approach the transmitter.\"", "\"Touch the ante-nnae.\"", "\"I always have to deal with idiots. Move towards the mania motor.\"", \
+	"\"Advance forward and place your head between the antennae - that's all it's good for.\"", "\"If you were smarter, you'd be over here already.\"", "\"Move FORWARD, you fool.\"")
+	var/convert_messages = list("\"You won't do. Go to sleep while I tell these nitwits how to convert you.\"", "\"You are insufficient. I must instruct these idiots in the art of conversion.\"", \
+	"\"Oh of course, someone we can't convert. These servants are fools.\"", "\"How hard is it to use a Sigil, anyway? All it takes is dragging someone onto it.\"", \
+	"\"How do they fail to use a Sigil of Accession, anyway?\"", "\"Why is it that all servants are this inept?\"", "\"It's quite likely you'll be stuck here for a while.\"")
+	var/close_messages = list("\"Well, you can't reach the motor from THERE, you moron.\"", "\"Interesting location. I'd prefer if you went somewhere you could ACTUALLY TOUCH THE ANTENNAE!\"", \
+	"\"Amazing. You somehow managed to wedge yourself somewhere you can't actually reach the motor from.\"", "\"Such a show of idiocy is unparalleled. Perhaps I should put you on display?\"", \
+	"\"Did you do this on purpose? I can't imagine you doing so accidentally. Oh, wait, I can.\"", "\"How is it that such smart creatures can still do something AS STUPID AS THIS!\"")
 
 
 /obj/structure/clockwork/powered/mania_motor/examine(mob/user)
@@ -282,13 +282,13 @@
 		for(var/mob/living/carbon/human/H in view(1, src))
 			if(H.Adjacent(src) && try_use_power(convert_attempt_cost))
 				if(is_eligible_servant(H) && try_use_power(convert_cost))
-					H << "<span class='sevtug'>\"Lbh ner zvar-naq-uvf, abj.\"</span>"
+					H << "<span class='sevtug'>\"[text2ratvar("You are mine and his, now.")]\"</span>"
 					H.playsound_local(T, hum, 80, 1)
 					add_servant_of_ratvar(H)
 				else if(!H.stat)
-					if(H.getBrainLoss() >= H.maxHealth)
+					if(H.getBrainLoss() >= 100)
 						H.Paralyse(5)
-						H << "<span class='sevtug'>[pick(convert_messages)]</span>"
+						H << "<span class='sevtug'>[text2ratvar(pick(convert_messages))]</span>"
 					else
 						H.adjustBrainLoss(100)
 						H.visible_message("<span class='warning'>[H] reaches out and touches [src].</span>", "<span class='sevtug'>You touch [src] involuntarily.</span>")
@@ -304,60 +304,60 @@
 				var/targethallu = H.hallucination
 				var/targetdruggy = H.druggy
 				if(distance >= 4 && prob(falloff_distance))
-					H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+					H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
 				H.playsound_local(T, hum, sound_distance, 1)
 				switch(distance)
 					if(2 to 3)
 						if(prob(falloff_distance))
 							if(prob(falloff_distance))
-								H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+								H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
 							else
-								H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+								H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
 						if(targetbrainloss <= 50)
 							H.adjustBrainLoss(50 - targetbrainloss) //got too close had brain eaten
-						if(targetdruggy <= 150)
-							H.adjust_drugginess(11)
-						if(targethallu <= 150)
-							H.hallucination += 11
+						if(targetdruggy <= 100)
+							H.adjust_drugginess(8)
+						if(targethallu <= 100)
+							H.hallucination += 8
 					if(4 to 5)
 						if(targetbrainloss <= 50)
-							H.adjustBrainLoss(3)
-						if(targetdruggy <= 120)
-							H.adjust_drugginess(9)
-						if(targethallu <= 120)
-							H.hallucination += 9
+							H.adjustBrainLoss(1)
+						if(targetdruggy <= 80)
+							H.adjust_drugginess(6)
+						if(targethallu <= 80)
+							H.hallucination += 6
 					if(6 to 7)
 						if(targetbrainloss <= 30)
-							H.adjustBrainLoss(2)
-						if(prob(falloff_distance) && targetdruggy <= 90)
-							H.adjust_drugginess(7)
-						else if(targethallu <= 90)
-							H.hallucination += 7
-					if(8 to 9)
-						if(H.getBrainLoss() <= 10)
 							H.adjustBrainLoss(1)
 						if(prob(falloff_distance) && targetdruggy <= 60)
 							H.adjust_drugginess(5)
 						else if(targethallu <= 60)
 							H.hallucination += 5
-					if(10 to INFINITY)
-						if(prob(falloff_distance) && targetdruggy <= 30)
+					if(8 to 9)
+						if(H.getBrainLoss() <= 10)
+							H.adjustBrainLoss(1)
+						if(prob(falloff_distance) && targetdruggy <= 40)
 							H.adjust_drugginess(3)
-						else if(targethallu <= 30)
+						else if(targethallu <= 40)
 							H.hallucination += 3
+					if(10 to INFINITY)
+						if(prob(falloff_distance) && targetdruggy <= 20)
+							H.adjust_drugginess(2)
+						else if(targethallu <= 20)
+							H.hallucination += 2
 					else //if it's a distance of 1 and they can't see it/aren't adjacent or they're on top of it(how'd they get on top of it and still trigger this???)
 						if(targetbrainloss <= 99)
 							if(prob(falloff_distance))
 								if(prob(falloff_distance))
-									H << "<span class='sevtug'>[pick(compel_messages)]</span>"
+									H << "<span class='sevtug'>[text2ratvar(pick(compel_messages))]</span>"
 								else if(prob(falloff_distance))
-									H << "<span class='sevtug'>[pick(close_messages)]</span>"
+									H << "<span class='sevtug'>[text2ratvar(pick(close_messages))]</span>"
 								else
-									H << "<span class='sevtug_small'>[pick(mania_messages)]</span>"
+									H << "<span class='sevtug_small'>[text2ratvar(pick(mania_messages))]</span>"
 							H.adjustBrainLoss(99 - targetbrainloss)
-						if(targetdruggy <= 200)
+						if(targetdruggy <= 150)
 							H.adjust_drugginess(15)
-						if(targethallu <= 200)
+						if(targethallu <= 150)
 							H.hallucination += 15
 
 			if(is_servant_of_ratvar(H) && (H.getBrainLoss() || H.hallucination || H.druggy)) //not an else so that newly converted servants are healed of the damage it inflicts
@@ -584,7 +584,7 @@
 			if(!try_use_power(hierophant_cost))
 				user << "<span class='warning'>The obelisk lacks the power to broadcast!</span>"
 				return
-			clockwork_say(user, "Uvrebcunag Oebnqpnfg, npgv'ingr!")
+			clockwork_say(user, text2ratvar("Hierophant Broadcast, activate!"))
 			titled_hierophant_message(user, input, "big_brass", "large_brass")
 		if("Spatial Gateway")
 			if(gateway_active)
@@ -594,7 +594,7 @@
 				user << "<span class='warning'>The obelisk lacks the power to open a gateway!</span>"
 				return
 			if(procure_gateway(user, 100, 5, 1) && !gateway_active)
-				clockwork_say(user, "Fcngv'ny Tngrjnl, npgv'ingr!")
+				clockwork_say(user, text2ratvar("Spatial Gateway, activate!"))
 			else
 				return_power(gateway_cost)
 		if("Cancel")

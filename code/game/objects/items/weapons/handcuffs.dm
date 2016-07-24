@@ -168,11 +168,13 @@
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 6)
+		if(M.get_amount() < 6)
 			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
 			return
 		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
 		if(do_after(user, 35, target = src))
+			if(M.get_amount() < 6 || !M)
+				return
 			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)

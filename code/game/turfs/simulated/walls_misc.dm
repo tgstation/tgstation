@@ -45,6 +45,7 @@
 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
 	explosion_block = 2
 	var/obj/effect/clockwork/overlay/wall/realappearence
+	var/obj/structure/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/New()
 	..()
@@ -53,6 +54,11 @@
 	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/wall, src)
 	realappearence.linked = src
 	change_construction_value(5)
+
+/turf/closed/wall/clockwork/examine(mob/user)
+	..()
+	if((is_servant_of_ratvar(user) || isobserver(user)) && linkedcache)
+		user << "<span class='brass'>It is linked, generating components in a cache!</span>"
 
 /turf/closed/wall/clockwork/Destroy()
 	be_removed()
@@ -64,6 +70,9 @@
 	return ..()
 
 /turf/closed/wall/clockwork/proc/be_removed()
+	if(linkedcache)
+		linkedcache.linkedwall = null
+		linkedcache = null
 	change_construction_value(-5)
 	qdel(realappearence)
 	realappearence = null
