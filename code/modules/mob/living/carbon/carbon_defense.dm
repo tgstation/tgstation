@@ -124,4 +124,5 @@
 		if(affecting.get_damage() >= affecting.max_damage)
 			affecting.dismember()
 			return null
-	return affecting.body_zone
+		return affecting.body_zone
+	return dam_zone
