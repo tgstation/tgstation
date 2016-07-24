@@ -108,15 +108,17 @@
 	if(istype(user))
 		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			var/continuing = 0
-			if(istype(get_area(src), /area/shuttle)) // Can always phase in in a shuttle.
+			if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
 				continuing = 1
 			else
 				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
 					if (C.mind && C.mind.soulOwner == C.mind)
 						continuing = 1
 						break
-			if(continuing && do_mob(user,user,150))
-				user.infernalphasein()
+			if(continuing)
+				user << "<span class='warning'>You are now phasing in.</span>
+				if(do_mob(user,user,150))
+					user.infernalphasein()
 			else
 				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
@@ -128,7 +130,7 @@
 			if(do_mob(user,user,150))
 				user.infernalphaseout()
 			else
-				user << "<span class='warning'>You must remain still while exiting."
+				user << "<span class='warning'>You must remain still while exiting.</span>"
 				user.ExtinguishMob()
 		start_recharge()
 		return
