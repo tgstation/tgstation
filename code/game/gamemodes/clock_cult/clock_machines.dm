@@ -392,7 +392,7 @@
 	var/recharge_time = 1200 //if it drains no power and affects no objects, it turns off for two minutes
 	var/disabled = FALSE //if it's actually usable
 	var/interdiction_range = 14 //how large an area it drains and disables in
-	var/disrupt_cost = 100 //how much power to use when disabling an object
+	var/disrupt_cost = 50 //how much power to use when disabling an object
 
 /obj/structure/clockwork/powered/interdiction_lens/examine(mob/user)
 	..()
