@@ -208,10 +208,12 @@
 				G.message_gangtools("Enemy takeover attempt detected in [locname]: Estimated [time] minutes until our defeat.",1,1)
 
 /obj/machinery/dominator/attack_hulk(mob/user)
+	..(user, 1)
 	user.visible_message("<span class='danger'>[user] smashes [src].</span>",\
 	"<span class='danger'>You punch [src].</span>",\
 	"<span class='italics'>You hear metal being slammed.</span>")
 	take_damage(5)
+	return 1
 
 /obj/machinery/dominator/attacked_by(obj/item/I, mob/living/user)
 	add_fingerprint(user)
