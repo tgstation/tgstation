@@ -7,7 +7,7 @@
 /obj/item/toy/carpplushie/dehy_carp
 	var/mob/owner = null	//Carp doesn't attack owner, set when using in hand
 	var/owned = 0	//Boolean, no owner to begin with
-	var/mobtype = /mob/living/simple_animal/hostile/carp //So admins can change what mob spawns via var fuckery
+	var/mobtype = /mob/living/simple_animal/hostile/carp/traitor //So admins can change what mob spawns via var fuckery
 
 //Attack self
 /obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
