@@ -1,0 +1,11 @@
+{{#if data.notice}}
+  <ui-notice>
+    {{data.notice}}
+  </ui-notice>
+{{/if}}
+<ui-display title='Shield Satellite Network Control' button>
+  <ui-section label='Human DNA'>
+    <span>Detected satellites : {{data.sats}}</span>
+  </ui-section>
+  <ui-button icon='crosshairs' action={{ data.active ? 'deactivate' : 'activate'}}>{{data.active ? "Deactivate Network" : "Activate Network"}}</ui-button>
+</ui-display>

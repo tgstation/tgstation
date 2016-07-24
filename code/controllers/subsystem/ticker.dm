@@ -55,7 +55,6 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
-
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -442,6 +441,8 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	mode.declare_station_goal_completion()
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)
