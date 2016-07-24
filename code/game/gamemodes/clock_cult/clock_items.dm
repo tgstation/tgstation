@@ -248,7 +248,7 @@
 			scripture_to_recite = new C
 	if(!scripture_to_recite || user.get_active_hand() != src)
 		return 0
-	if(!scripture_unlock_check(scripture_to_recite.tier))
+	if(!ratvar_awakens && !no_cost && !scripture_unlock_check(scripture_to_recite.tier))
 		user << "<span class='warning'>That scripture is no longer unlocked, and cannot be recited!</span>"
 		return 0
 	scripture_to_recite.slab = src
