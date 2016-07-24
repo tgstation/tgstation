@@ -9,9 +9,9 @@
 	// This isn't applied to the dog, but stores the icon_state of the
 	// sprite that the associated item uses
 	var/icon_file
-	var/icon_state
-	var/alpha
-	var/color
+	var/obj_icon_state
+	var/obj_alpha
+	var/obj_color
 
 /datum/dog_fashion/New(mob/M)
 	name = replacetext(name, "REAL_NAME", M.real_name)
@@ -32,10 +32,10 @@
 		D.speak_emote = speak_emote
 
 /datum/dog_fashion/proc/get_image(var/dir)
-	if(icon_file && icon_state)
-		var/image/corgI = image(icon_file, icon_state = icon_state, dir = dir)
-		corgI.alpha = alpha
-		corgI.color = color
+	if(icon_file && obj_icon_state)
+		var/image/corgI = image(icon_file, icon_state = obj_icon_state, dir = dir)
+		corgI.alpha = obj_alpha
+		corgI.color = obj_color
 		return corgI
 
 
@@ -132,7 +132,7 @@
 	emote_see = list("stumbles around.", "shivers.")
 	emote_hear = list("howls!","groans.")
 	desc = "Spooky!"
-	icon_state = "sheet"
+	obj_icon_state = "sheet"
 
 /datum/dog_fashion/head/santa
 	name = "Santa's Corgi Helper"

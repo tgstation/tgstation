@@ -400,9 +400,12 @@
 		var/image/head_icon
 		var/datum/dog_fashion.DF = new inventory_head.dog_fashion(src)
 
-		DF.icon_state = inventory_head.icon_state
-		DF.alpha = inventory_head.alpha
-		DF.color = inventory_head.color
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_head.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_head.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_head.color
 
 		if(health <= 0)
 			head_icon = DF.get_image(dir = EAST)
@@ -417,9 +420,9 @@
 		var/image/back_icon
 		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
 
-		DF.icon_state = inventory_back.icon_state
-		DF.alpha = inventory_back.alpha
-		DF.color = inventory_back.color
+		DF.obj_icon_state = inventory_back.icon_state
+		DF.obj_alpha = inventory_back.alpha
+		DF.obj_color = inventory_back.color
 
 		if(health <= 0)
 			back_icon = DF.get_image(dir = EAST)
