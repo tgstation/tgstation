@@ -27,6 +27,20 @@ var/global/list/uplinks = list()
 	uplinks -= src
 	return ..()
 
+/obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
+	for(var/item in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/UI = item
+		var/path = initial(UI.item)
+		var/cost = initial(UI.cost)
+		var/refundable = initial(UI.refundable)
+		if(I.type == path && refundable && I.check_uplink_validity())
+			telecrystals += cost
+			spent_telecrystals -= cost
+			user << "<span class='notice'>[I] refunded.</span>"
+			qdel(I)
+			return
+	..()
+
 /obj/item/device/uplink/interact(mob/user)
 	active = TRUE
 	ui_interact(user)
@@ -89,18 +103,7 @@ var/global/list/uplinks = list()
 
 // Refund certain items by hitting the uplink with it.
 /obj/item/device/radio/uplink/attackby(obj/item/I, mob/user, params)
-	for(var/item in subtypesof(/datum/uplink_item))
-		var/datum/uplink_item/UI = item
-		var/path = initial(UI.item)
-		var/cost = initial(UI.cost)
-		var/refundable = initial(UI.refundable)
-		if(I.type == path && refundable)
-			hidden_uplink.telecrystals += cost
-			hidden_uplink.spent_telecrystals -= cost
-			user << "<span class='notice'>[I] refunded.</span>"
-			qdel(I)
-			return
-	..()
+	return hidden_uplink.attackby(I, user, params)
 
 // A collection of pre-set uplinks, for admin spawns.
 /obj/item/device/radio/uplink/New()
