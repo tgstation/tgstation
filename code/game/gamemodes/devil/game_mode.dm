@@ -12,8 +12,8 @@
 			var/datum/mind/sintouched_mind = S
 			text += printplayer(sintouched_mind)
 			text += printobjectives(sintouched_mind)
+			text += "<br>"
 		text += "<br>"
-	text += "<br>"
 	world << text
 
 /datum/game_mode/proc/auto_declare_completion_devils()
@@ -25,6 +25,7 @@
 			text += printplayer(devil)
 			text += printdevilinfo(devil)
 			text += printobjectives(devil)
+			text += "<br>"
 		text += "<br>"
 	world << text
 
