@@ -1,0 +1,4 @@
+author: mph55
+delete-after: True
+changes: 
+- bugfix: "Fixed an unreported bug which items removed from the switchtool were stuck on your hands after being picked up."
