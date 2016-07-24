@@ -771,7 +771,7 @@ About the new airlock wires panel:
 							to_chat(usr, "<span class='warning'>Nope.</span>")
 							return 0
 						src.locked = 1
-						to_chat(usr, "The door is now unbolted.")
+						to_chat(usr, "The door is now bolted.")
 						log_attack("<font color='red'>[usr] ([usr.ckey]) bolted the [name] at [x] [y] [z]</font>")
 						update_icon()
 				if(5)
@@ -880,7 +880,7 @@ About the new airlock wires panel:
 								to_chat(usr, "<span class='warning'>Nope.</span>")
 								return 0
 							src.locked = 0
-							to_chat(usr, "The door is now bolted.")
+							to_chat(usr, "The door is now unbolted.")
 							update_icon()
 						else
 							to_chat(usr, text("Cannot raise door bolts due to power failure.<br>\n"))
