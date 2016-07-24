@@ -116,7 +116,7 @@
 						continuing = 1
 						break
 			if(continuing)
-				user << "<span class='warning'>You are now phasing in.</span>
+				user << "<span class='warning'>You are now phasing in.</span>"
 				if(do_mob(user,user,150))
 					user.infernalphasein()
 			else
