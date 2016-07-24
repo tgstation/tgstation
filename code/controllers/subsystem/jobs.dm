@@ -90,7 +90,7 @@ var/datum/subsystem/job/SSjob
 		if(!job.player_old_enough(player.client))
 			Debug("FOC player not old enough, Player: [player]")
 			continue
-		if(flag && (!(flag in player.client.prefs.be_special)))
+		if(flag && (!player.client.prefs.be_special[flag]))
 			Debug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
 		if(player.mind && job.title in player.mind.restricted_roles)
@@ -221,7 +221,10 @@ var/datum/subsystem/job/SSjob
 
 	//Get the players who are ready
 	for(var/mob/new_player/player in player_list)
-		if(player.ready && player.mind && !player.mind.assigned_role)
+		if(player.ready && player.client && player.mind && !player.mind.assigned_role)
+			if (player.client.prefs.be_special[ROLE_ONLY_ANTAG] && !player.mind.special_role)
+				RejectPlayer(player)
+				continue
 			unassigned += player
 
 	initial_players_to_assign = unassigned.len

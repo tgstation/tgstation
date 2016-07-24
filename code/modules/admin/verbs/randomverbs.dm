@@ -216,7 +216,7 @@
 		for(var/mob/M in player_list)
 			if(M.stat != DEAD)
 				continue	//we are not dead!
-			if(!(ROLE_ALIEN in M.client.prefs.be_special))
+			if(!M.client.prefs.be_special[ROLE_ALIEN])
 				continue	//we don't want to be an alium
 			if(M.client.is_afk())
 				continue	//we are afk
@@ -441,7 +441,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	var/datum/round_event/ion_storm/ion = new(0, announce_ion_laws, input)
 	ion.start()
-	
+
 	feedback_add_details("admin_verb","IONC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_rejuvenate(mob/living/M in mob_list)
