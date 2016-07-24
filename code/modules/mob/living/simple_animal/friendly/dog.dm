@@ -420,9 +420,12 @@
 		var/image/back_icon
 		var/datum/dog_fashion.DF = new inventory_back.dog_fashion(src)
 
-		DF.obj_icon_state = inventory_back.icon_state
-		DF.obj_alpha = inventory_back.alpha
-		DF.obj_color = inventory_back.color
+		if(!DF.obj_icon_state)
+			DF.obj_icon_state = inventory_back.icon_state
+		if(!DF.obj_alpha)
+			DF.obj_alpha = inventory_back.alpha
+		if(!DF.obj_color)
+			DF.obj_color = inventory_back.color
 
 		if(health <= 0)
 			back_icon = DF.get_image(dir = EAST)
