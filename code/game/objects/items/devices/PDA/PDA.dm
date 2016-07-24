@@ -850,9 +850,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(T)
 		T.hotspot_expose(700,125)
 		if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
-			explosion(T, 2, 4, 6, 8)
+			explosion(T, -1, 8, 12, 16)
 		else
-			explosion(T, 1, 2, 3, 4)
+			explosion(T, -1, 4, 6, 8)
 	qdel(src)
 	return
 
