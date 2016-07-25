@@ -42,7 +42,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_TRAITOR in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_TRAITOR])
 			if(!applicant.stat)
 				if(applicant.mind)
 					if (!applicant.mind.special_role)
@@ -78,7 +78,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_CHANGELING])
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
 				if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
@@ -111,7 +111,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_REV in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_REV])
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
 				if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
@@ -153,7 +153,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_CULTIST in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_CULTIST])
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
 				if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
@@ -186,7 +186,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_SERVANT_OF_RATVAR])
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
 				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
@@ -371,7 +371,7 @@
 	var/mob/living/carbon/human/H = null
 
 	for(var/mob/living/carbon/human/applicant in player_list)
-		if(ROLE_GANG in applicant.client.prefs.be_special)
+		if(applicant.client.prefs.be_special[ROLE_GANG])
 			var/turf/T = get_turf(applicant)
 			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
 				if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))

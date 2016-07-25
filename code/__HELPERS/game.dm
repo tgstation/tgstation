@@ -301,7 +301,7 @@
 		for(var/mob/dead/observer/G in player_list)
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
-					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
+					if(!G.client.is_afk(afk_bracket) && (G.client.prefs.be_special[be_special_type]))
 						if (jobbanType)
 							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
 								candidates += G.client
@@ -407,7 +407,7 @@
 		if(!G.key || !G.client)
 			continue
 		if(be_special_flag)
-			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
+			if(!(G.client.prefs) || !(G.client.prefs.be_special[be_special_flag]))
 				continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))

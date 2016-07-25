@@ -1103,10 +1103,10 @@ var/list/preferences_datums = list()
 
 				if("be_special")
 					var/be_special_type = href_list["be_special_type"]
-					if(be_special_type in be_special)
+					if(be_special[be_special_type])
 						be_special -= be_special_type
 					else
-						be_special += be_special_type
+						be_special[be_special_type] = 1
 
 				if("name")
 					be_random_name = !be_random_name

@@ -6,6 +6,7 @@
 
 //These are synced with the Database, if you change the values of the defines
 //then you MUST update the database!
+#define ROLE_ONLY_ANTAG			"only an antag"
 #define ROLE_TRAITOR			"traitor"
 #define ROLE_OPERATIVE			"operative"
 #define ROLE_CHANGELING			"changeling"
@@ -30,6 +31,7 @@
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
 //(in game days played) to play that role
 var/global/list/special_roles = list(
+	ROLE_ONLY_ANTAG,
 	ROLE_TRAITOR = /datum/game_mode/traitor,
 	ROLE_OPERATIVE = /datum/game_mode/nuclear,
 	ROLE_CHANGELING = /datum/game_mode/changeling,

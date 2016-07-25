@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	16
+#define SAVEFILE_VERSION_MAX	17
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -88,8 +88,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
 	if(current_version < 11)
 		chat_toggles = TOGGLES_DEFAULT_CHAT
 		toggles = TOGGLES_DEFAULT
@@ -97,7 +95,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ignoring = list()
 	if(current_version < 15)
 		toggles |= SOUND_ANNOUNCEMENTS
-	
+
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -123,7 +121,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BERANDOMJOB
 		else
 			joblessrole = BEASSISTANT
-		
+	if(current_version < 17)
+		if (be_special)
+			for (var/role in be_special)
+				be_special[role] = 1
+
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

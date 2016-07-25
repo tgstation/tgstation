@@ -283,7 +283,7 @@
 		else
 			text += "head|loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 
-		if(current && current.client && (ROLE_REV in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_REV])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -301,7 +301,7 @@
 		else
 			text += "<B>NONE</B>"
 
-		if(current && current.client && (ROLE_GANG in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_GANG])
 			text += "|Enabled in Prefs<BR>"
 		else
 			text += "|Disabled in Prefs<BR>"
@@ -348,7 +348,7 @@
 		else
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];cult=cultist'>cultist</a>"
 
-		if(current && current.client && (ROLE_CULTIST in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_CULTIST])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -368,7 +368,7 @@
 		else
 			text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
 
-		if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_SERVANT_OF_RATVAR])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -388,7 +388,7 @@
 		else
 			text += "<a href='?src=\ref[src];wizard=wizard'>yes</a>|<b>NO</b>"
 
-		if(current && current.client && (ROLE_WIZARD in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_WIZARD])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -418,7 +418,7 @@
 //			if (istype(changeling) && changeling.changelingdeath)
 //				text += "<br>All the changelings are dead! Restart in [round((changeling.TIME_TO_GET_REVIVED-(world.time-changeling.changelingdeathtime))/10)] seconds."
 
-		if(current && current.client && (ROLE_CHANGELING in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_CHANGELING])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -443,7 +443,7 @@
 		else
 			text += "<a href='?src=\ref[src];nuclear=nuclear'>operative</a>|<b>NANOTRASEN</b>"
 
-		if(current && current.client && (ROLE_OPERATIVE in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_OPERATIVE])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -462,7 +462,7 @@
 	else
 		text += "<a href='?src=\ref[src];traitor=traitor'>traitor</a>|<b>LOYAL</b>"
 
-	if(current && current.client && (ROLE_TRAITOR in current.client.prefs.be_special))
+	if(current && current.client && current.client.prefs.be_special[ROLE_TRAITOR])
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -481,7 +481,7 @@
 	else
 		text += "<a href='?src=\ref[src];abductor=abductor'>Abductor</a>|<b>human</b>"
 
-	if(current && current.client && (ROLE_ABDUCTOR in current.client.prefs.be_special))
+	if(current && current.client && current.client.prefs.be_special[ROLE_ABDUCTOR])
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
@@ -508,12 +508,12 @@
 	else
 		text += "<a href='?src=\ref[src];handofgod=red_god'>red god</a>|<a href='?src=\ref[src];handofgod=red prophet'>red prophet</a>|<a href='?src=\ref[src];handofgod=red follower'>red follower</a>|<B>EMPLOYEE</b>|<a href='?src=\ref[src];handofgod=blue god'>blue god</a>|<a href='?src=\ref[src];handofgod=blue prophet'>blue prophet</a>|<a href='?src=\ref[src];handofgod=blue follower'>blue follower</a>"
 
-	if(current && current.client && (ROLE_HOG_GOD in current.client.prefs.be_special))
+	if(current && current.client && current.client.prefs.be_special[ROLE_HOG_GOD])
 		text += "|HOG God Enabled in Prefs"
 	else
 		text += "|HOG God Disabled in Prefs"
 
-	if(current && current.client && (ROLE_HOG_CULTIST in current.client.prefs.be_special))
+	if(current && current.client && current.client.prefs.be_special[ROLE_HOG_CULTIST])
 		text += "|HOG Cultist Enabled in Prefs"
 	else
 		text += "|HOG Disabled in Prefs"
@@ -541,7 +541,7 @@
 		else
 			text += "healthy|infected|human|<b>OTHER</b>"
 
-		if(current && current.client && (ROLE_MONKEY in current.client.prefs.be_special))
+		if(current && current.client && current.client.prefs.be_special[ROLE_MONKEY])
 			text += "|Enabled in Prefs"
 		else
 			text += "|Disabled in Prefs"
@@ -560,7 +560,7 @@
 	else
 		text += "<a href='?src=\ref[src];devil=devil'>devil</a>|<a href='?src=\ref[src];devil=sintouched'>sintouched</a>|<b>HUMAN</b>"
 
-	if(current && current.client && (ROLE_DEVIL in current.client.prefs.be_special))
+	if(current && current.client && current.client.prefs.be_special[ROLE_DEVIL])
 		text += "|Enabled in Prefs"
 	else
 		text += "|Disabled in Prefs"
