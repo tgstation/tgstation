@@ -7,7 +7,8 @@
 	var/turf/teleport_target
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
-	target.Move(src.loc)
+	if(!target.buckled)
+		target.forceMove(get_turf(src))
 
 /obj/machinery/abductor/pad/proc/Send()
 	if(teleport_target == null)
@@ -35,7 +36,7 @@
 	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
 	sleep(80)
 	flick("alien-pad", src)
-	for(var/mob/living/target in src.loc)
+	for(var/mob/living/target in get_turf(src))
 		target.forceMove(place)
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
