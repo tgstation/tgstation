@@ -1,0 +1,5 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "Fixed  a bug where some objects in photos would not be displayed if they were facing a certain direction."
+  - bugfix: "Photograph descriptions will no longer claim that mobs with low max health are hurt when they are not."
