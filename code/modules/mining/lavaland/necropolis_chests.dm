@@ -212,7 +212,11 @@
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
+	actions_types = list(/datum/action/item_action/immortality)
 	var/cooldown = 0
+
+/datum/action/item_action/immortality
+	name = "Immortality"
 
 /obj/item/device/immortality_talisman/Destroy(force)
 	if(force)
