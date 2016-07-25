@@ -1,4 +1,6 @@
 //Each lists stores ckeys for "Never for this round" option category
 
-var/list/sentience_potion_ignore = list() //sentience potion query
-var/list/pai_ignore = list() //pai's
+#define POLL_IGNORE_PAI "pai"
+#define POLL_IGNORE_SENTIENCE_POTION "sentience_potion"
+
+var/list/poll_ignore = list(POLL_IGNORE_PAI = list(),POLL_IGNORE_SENTIENCE_POTION = list())

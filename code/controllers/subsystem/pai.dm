@@ -178,7 +178,7 @@ var/datum/subsystem/pai/SSpai
 	user << browse(dat, "window=findPai")
 
 /datum/subsystem/pai/proc/requestRecruits()
-	var/list/candidates = pollCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_PAI, null, ROLE_PAI,300, ignore_list = pai_ignore)
+	var/list/candidates = pollCandidates("Someone is requesting a pAI personality. Would you like to play as a personal AI?", ROLE_PAI, null, ROLE_PAI,300, ignore_category = POLL_IGNORE_PAI)
 	for(var/V in candidates)
 		recruitWindow(V)
 	return
