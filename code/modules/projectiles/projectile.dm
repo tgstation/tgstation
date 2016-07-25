@@ -10,7 +10,7 @@
 	mouse_opacity = 0
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
-	pressure_resistance = INFINITY
+
 	burn_state = LAVA_PROOF
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -227,3 +227,7 @@
 /obj/item/projectile/proc/dumbfire(var/dir)
 	current = get_ranged_target_turf(src, dir, world.maxx)
 	fire()
+
+
+/obj/item/projectile/experience_pressure_difference()
+	return
