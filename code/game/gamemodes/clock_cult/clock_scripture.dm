@@ -1113,9 +1113,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/invoke_nzcrentr //Invoke Nzcrentr, the Forgotten Arbiter: Imbues an immense amount of energy into the invoker. After several seconds, everyone nearby will be hit with a devastating chain lightning blast.
+/datum/clockwork_scripture/invoke_nzcrentr //Invoke Nzcrentr, the Eternal Thunderbolt: Imbues an immense amount of energy into the invoker. After several seconds, everyone nearby will be hit with a devastating chain lightning blast.
 	descname = "Lightning Blast"
-	name = "Invoke Nzcrentr, the Forgotten Arbiter"
+	name = "Invoke Nzcrentr, the Eternal Thunderbolt"
 	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. The immense energy Nzcrentr wields will allow you to imbue a tiny fraction of it into your body. After several \
 	seconds, anyone nearby will be struck by a devastating lightning bolt."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
@@ -1135,7 +1135,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	hierophant_message("<span class='nzcrentr'>[text2ratvar("Amperage: \"[invoker.name] has called forth my power. Hope they do not shatter under it!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nzcrentr'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope they do not shatter under it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
