@@ -436,3 +436,7 @@
 		var/mob/living/L = loc
 		L.regenerate_icons()
 	..()
+
+/obj/item/weapon/storage/belt/rapier/New()
+	..()
+	new /obj/item/weapon/melee/rapier(src)
