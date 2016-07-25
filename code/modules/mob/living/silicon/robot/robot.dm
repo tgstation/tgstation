@@ -162,7 +162,7 @@
 	return ..()
 
 
-/mob/living/silicon/robot/proc/pick_module()
+/mob/living/silicon/robot/proc/pick_module(override = null)
 	if(module)
 		return
 
@@ -172,7 +172,10 @@
 	if(!config.forbid_secborg)
 		modulelist += "Security"
 
-	designation = input("Please, select a module!", "Robot", null, null) in modulelist
+	if(override)
+		designation = override
+	else
+		designation = input("Please, select a module!", "Robot", null, null) in modulelist
 	var/animation_length = 0
 
 	if(module)
@@ -1311,3 +1314,16 @@
 			locked = 1
 		notify_ai(1)
 		. = 1
+
+
+/mob/living/silicon/robot/proc/security_level(security_level = SEC_LEVEL_GREEN)
+	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
+		if(designation == "Peacekeeper")
+			var/obj/item/borg/upgrade/reset/re = new
+			re.action(src)
+			pick_module("Security")
+	else
+		if(designation == "Security")
+			var/obj/item/borg/upgrade/reset/re = new
+			re.action(src)
+			pick_module("Peacekeeper")

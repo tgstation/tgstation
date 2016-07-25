@@ -160,7 +160,7 @@
 /proc/CheckMedal(medal,client/player)
 
 	if(!player || !medal)
-		return
+		return 0
 	if(global.medal_hub && global.medal_pass && global.medals_enabled)
 
 		var/result = world.GetMedal(medal, player, global.medal_hub, global.medal_pass)
@@ -171,6 +171,8 @@
 			message_admins("Error! Failed to contact hub to get [medal] medal for [player.ckey]!")
 		else if (result)
 			player << "[medal] is unlocked"
+			return 1
+	return 0
 
 /proc/LockMedal(medal,client/player)
 
