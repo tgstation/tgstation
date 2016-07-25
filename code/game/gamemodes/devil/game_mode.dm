@@ -71,13 +71,13 @@
 
 /datum/game_mode/proc/printdevilinfo(datum/mind/ply)
 	if(!ply.devilinfo)
-		return ""
+		return "Target is not a devil."
 	var/text = "</br>The devil's true name is: [ply.devilinfo.truename]</br>"
 	text += "The devil's bans were:</br>"
 	text += "	[lawlorify[LORE][ply.devilinfo.ban]]</br>"
 	text += "	[lawlorify[LORE][ply.devilinfo.bane]]</br>"
 	text += "	[lawlorify[LORE][ply.devilinfo.obligation]]</br>"
-	text += "	[lawlorify[LORE][ply.devilinfo.banish]]</br>"
+	text += "	[lawlorify[LORE][ply.devilinfo.banish]]</br></br>"
 	return text
 
 /datum/game_mode/proc/update_devil_icons_added(datum/mind/devil_mind)
