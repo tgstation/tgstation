@@ -58478,7 +58478,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "cxh" = (
 /obj/structure/chair{
@@ -112873,7 +112873,7 @@ cwI
 crx
 cxf
 crx
-cwI
+cxm
 cwL
 cxr
 cxr

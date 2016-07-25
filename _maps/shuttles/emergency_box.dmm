@@ -196,7 +196,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/mineral/plastitanium/brig,
+/turf/open/floor/plating,
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/chair{
@@ -369,10 +369,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bj" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bk" = (
 /obj/structure/shuttle/engine/propulsion,
@@ -484,7 +481,7 @@ ak
 ac
 aH
 ac
-ak
+bj
 an
 aT
 aT
