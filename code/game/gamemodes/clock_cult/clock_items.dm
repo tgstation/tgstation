@@ -231,7 +231,7 @@
 		if("Judgement")
 			tier_to_browse = SCRIPTURE_JUDGEMENT
 	if(!tier_to_browse)
-		user << "<span class='warning'>That section of scripture is too powerful right now!</span>"
+		user << "<span class='warning'>That section of scripture is still locked!</span>"
 		return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
@@ -247,6 +247,9 @@
 		if("[initial(C.name)] ([initial(C.descname)])" == chosen_scripture)
 			scripture_to_recite = new C
 	if(!scripture_to_recite || user.get_active_hand() != src)
+		return 0
+	if(!ratvar_awakens && !no_cost && !scripture_unlock_check(scripture_to_recite.tier))
+		user << "<span class='warning'>That scripture is no longer unlocked, and cannot be recited!</span>"
 		return 0
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
