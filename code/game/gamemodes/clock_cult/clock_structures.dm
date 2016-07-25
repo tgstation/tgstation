@@ -682,7 +682,6 @@
 
 /obj/effect/clockwork/general_marker/New()
 	..()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	animate(src, alpha = 0, time = 10)
 	QDEL_IN(src, 10)
 
