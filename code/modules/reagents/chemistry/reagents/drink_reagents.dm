@@ -117,18 +117,21 @@
 	metabolization_rate = INFINITY
 	color = "#FF4DD2"
 
-/datum/reagent/consumable/laughter/on_mob_life(mob/living/M)
-	M.emote("laugh")
-	var/laughnum = rand(1,2)
-	if(M.gender == MALE)
-		if(laughnum == 1)
+/datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
+	if(!iscarbon(M))
+		return
+	if(!M.silent)//cant laugh if you're mute
+		M.emote("laugh")
+		var/laughnum = rand(1,2)
+		if(M.gender == MALE)
+			if(laughnum == 1)
+				playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
+			if(laughnum == 2)
+				playsound(get_turf(M), 'sound/voice/human/manlaugh2.ogg', 50, 1)
+		else if(M.gender == FEMALE)
+			playsound(get_turf(M), 'sound/voice/human/womanlaugh.ogg', 65, 1)
+		else//non-binary gender just sounds like a man
 			playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
-		if(laughnum == 2)
-			playsound(get_turf(M), 'sound/voice/human/manlaugh2.ogg', 50, 1)
-	else if(M.gender == FEMALE)
-		playsound(get_turf(M), 'sound/voice/human/womanlaugh.ogg', 65, 1)
-	else//non-binary gender just sounds like a man
-		playsound(get_turf(M), 'sound/voice/human/manlaugh1.ogg', 50, 1)
 	..()
 
 /datum/reagent/consumable/potato_juice
