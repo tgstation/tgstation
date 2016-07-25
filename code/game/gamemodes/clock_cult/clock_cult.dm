@@ -273,20 +273,31 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			if(surviving_servants <= required_escapees)
-				return 1
-			return 0
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. [surviving_servants] managed to escape!"
+			if(surviving_servants >= required_escapees)
+				return TRUE
+			return FALSE
 		if("silicons")
-			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
+			var/total_silicons = 0
+			var/converted_silicons = 0
+			var/successful = TRUE
+			for(var/mob/living/silicon/robot/S in living_mob_list) //Only check robots and AIs
+				total_silicons++
 				if(!is_servant_of_ratvar(S))
-					return 0
-			for(var/mob/living/silicon/ai/A in mob_list)
+					successful = FALSE
+				else
+					converted_silicons++
+			for(var/mob/living/silicon/ai/A in living_mob_list)
+				total_silicons++
 				if(!is_servant_of_ratvar(A))
-					return 0
-			return 1
+					successful = FALSE
+				else
+					converted_silicons++
+			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. [converted_silicons]/[total_silicons] silicons were converted!"
+			return successful
 		if("gateway")
 			return ratvar_awakens
-	return 0 //This shouldn't ever be reached, but just in case it is
+	return FALSE //This shouldn't ever be reached, but just in case it is
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
@@ -305,7 +316,7 @@ This file's folder contains:
 				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
 				if(G)
 					half_victory = TRUE
-			if(!half_victory)
+			if(half_victory)
 				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
 				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 			else
