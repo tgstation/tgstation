@@ -271,7 +271,9 @@
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		if(check_shields(damage, "the [M.name]", null, MELEE_ATTACK, M.armour_penetration))
 			return 0
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = dismembering_strike(M, pick("chest", "l_hand", "r_hand", "l_leg", "r_leg"))
+		if(!dam_zone) //Dismemberment successful
+			return 1
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
@@ -301,7 +303,9 @@
 		if(check_shields(damage, "the [M.name]"))
 			return 0
 
-		var/dam_zone = pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg", "groin")
+		var/dam_zone = dismembering_strike(M, pick("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg"))
+		if(!dam_zone) //Dismemberment successful
+			return 1
 
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		var/armor_block = run_armor_check(affecting, "melee")

@@ -3,6 +3,7 @@
 	icon_state = "alien_s"
 	pass_flags = PASSTABLE
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5, /obj/item/stack/sheet/animalhide/xeno = 1)
+	limb_destroyer = 1
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/caste = ""
