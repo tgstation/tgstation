@@ -1084,6 +1084,10 @@
 		var/target_ckey = href_list["shownoteckey"]
 		show_note(target_ckey)
 
+	else if(href_list["shownoteckeylinkless"])
+		var/target_ckey = href_list["shownoteckeylinkless"]
+		show_note(target_ckey, null, 1)
+
 	else if(href_list["notessearch"])
 		var/target = href_list["notessearch"]
 		show_note(index = target)
