@@ -5,55 +5,47 @@
 	name = "white beanie"
 	desc = "A stylish beanie. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their heads."
 	icon_state = "beanie" //Default white
-	item_color = "white"
+	item_color = "beanie"
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
-	icon_state = "white"
+	icon_state = "beanie"
 	color = "#4A4A4B" //Grey but it looks black
-	item_color = "black"
 
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
 	icon_state = "beanie"
 	color = "#D91414" //Red
-	item_color = "red"
 
 /obj/item/clothing/head/beanie/green
 	name = "green beanie"
 	icon_state = "beanie"
 	color = "#5C9E54" //Green
-	item_color = "green"
 
-/obj/item/clothing/head/beanie/blue
-	name = "blue beanie"
+/obj/item/clothing/head/beanie/darkblue
+	name = "dark blue beanie"
 	icon_state = "beanie"
 	color = "#1E85BC" //Blue
-	item_color = "blue"
 
 /obj/item/clothing/head/beanie/purple
 	name = "purple beanie"
 	icon_state = "beanie"
 	color = "#9557C5" //purple
-	item_color = "purple"
 
 /obj/item/clothing/head/beanie/yellow
 	name = "yellow beanie"
 	icon_state = "beanie"
 	color = "#E0C14F" //Yellow
-	item_color = "yellow"
 
 /obj/item/clothing/head/beanie/orange
 	name = "orange beanie"
 	icon_state = "beanie"
 	color = "#C67A4B" //orange
-	item_color = "orange"
 
 /obj/item/clothing/head/beanie/cyan
 	name = "cyan beanie"
 	icon_state = "beanie"
 	color = "#54A3CE" //Cyan (Or close to it)
-	item_color = "cyan"
 
 //Striped Beanies have unique sprites
 
