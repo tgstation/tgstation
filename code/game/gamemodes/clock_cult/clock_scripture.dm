@@ -1122,7 +1122,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	channel_time = 150
 	required_components = list("belligerent_eye" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 6)
 	consumed_components = list("belligerent_eye" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 6)
-	usage_tip = "Struck targets will also be knocked down for eight seconds."
+	usage_tip = "Struck targets will also be knocked down for about sixteen seconds."
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
@@ -1147,23 +1147,27 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		"<span class='nzcrentr'>\"[text2ratvar("I told you you wouldn't be able to handle it.")]\"</span>\n \
 		<span class='userdanger'>TOO... MUCH! CAN'T... TAKE IT!</span>")
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
-		animate(invoker, color = initial(invoker.color), time = 10)
-		for(var/mob/living/L in view(7, invoker))
-			if(is_servant_of_ratvar(L))
-				continue
-			invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
-			var/randdamage = rand(40, 60)
-			if(iscarbon(L))
-				L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)
-			else
-				L.adjustFireLoss(randdamage)
-				L.visible_message(
-				"<span class='danger'>[L] was shocked by Nzcrentr's power!</span>", \
-				"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
-				"<span class='italics'>You hear a heavy electrical crack.</span>" \
-				)
-			L.Weaken(8)
-			playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
+		if(invoker.stat == CONSCIOUS)
+			animate(invoker, color = initial(invoker.color), time = 10)
+			for(var/mob/living/L in view(7, invoker))
+				if(is_servant_of_ratvar(L))
+					continue
+				invoker.Beam(L, icon_state = "nzcrentrs_power", icon = 'icons/effects/beam.dmi', time = 10)
+				var/randdamage = rand(40, 60)
+				if(iscarbon(L))
+					L.electrocute_act(randdamage, "Nzcrentr's power", 1, randdamage)
+				else
+					L.adjustFireLoss(randdamage)
+					L.visible_message(
+					"<span class='danger'>[L] was shocked by Nzcrentr's power!</span>", \
+					"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+					"<span class='italics'>You hear a heavy electrical crack.</span>" \
+					)
+				L.Weaken(8)
+				playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
+		else
+			playsound(invoker, 'sound/magic/Disintegrate.ogg', 50, 1)
+			invoker.gib()
 		return 1
 	else
 		return 0
