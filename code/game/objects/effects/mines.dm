@@ -133,8 +133,10 @@
 	victim.drop_r_hand()
 	victim.drop_l_hand()
 	victim.put_in_hands(chainsaw)
-
+	chainsaw.attack_self(victim)
+	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
+	victim.reagents.add_reagent("synaptizine",25)
 
 	victim.client.color = pure_red
 	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)
