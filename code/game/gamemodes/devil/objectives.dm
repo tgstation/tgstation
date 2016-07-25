@@ -91,7 +91,7 @@
 /datum/objective/devil/outsell/New()
 
 /datum/objective/devil/outsell/update_explanation_text()
-	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.truename]"
+	explanation_text = "Purchase and retain control over more souls than [target.devilinfo.truename], known to mortals as [target.name], the [target.assigned_role]."
 
 /datum/objective/devil/outsell/check_completion()
 	var/selfcount = 0
