@@ -38,8 +38,8 @@
 	dwidth = 5;
 	height = 14;
 	name = "Meta emergency shuttle";
-	width = 25;
-	timid = 1
+	timid = 1;
+	width = 25
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -363,7 +363,7 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aU" = (
 /turf/closed/wall/shuttle{
@@ -681,10 +681,8 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bL" = (
-/obj/structure/sign/bluecross_2,
-/turf/closed/wall/shuttle{
-	icon_state = "swall2"
-	},
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bM" = (
 /obj/structure/rack{
@@ -770,16 +768,17 @@
 /turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "bS" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 0;
+	pixel_y = 0;
+	req_access_txt = "0";
+	use_power = 0
 	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bT" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
 "bU" = (
 /turf/open/floor/mineral/plastitanium/brig,
@@ -791,10 +790,10 @@ aa
 au
 au
 au
-aK
+ad
 au
 au
-aK
+ad
 au
 au
 au
@@ -803,22 +802,21 @@ aa
 "}
 (2,1,1) = {"
 aa
-aj
+ad
 av
 av
 av
-aK
+ad
 av
 av
-aK
+ad
 av
 av
 av
-bB
+ad
 aa
 "}
 (3,1,1) = {"
-ab
 ad
 ad
 ad
@@ -831,7 +829,8 @@ ad
 ad
 ad
 ad
-ab
+ad
+ad
 "}
 (4,1,1) = {"
 ac
@@ -876,7 +875,7 @@ aC
 aR
 ad
 bf
-ad
+bT
 be
 be
 bf
@@ -891,7 +890,7 @@ aq
 aq
 aq
 aW
-bg
+bU
 ad
 by
 by
@@ -1062,7 +1061,7 @@ ac
 ar
 aq
 aE
-aJ
+bL
 ar
 aq
 aE
@@ -1094,7 +1093,7 @@ ah
 aq
 aq
 aE
-aI
+bS
 ar
 aq
 aE
@@ -1170,18 +1169,18 @@ bR
 ad
 "}
 (25,1,1) = {"
-ab
+ad
+ad
+ac
 ad
 ac
 ad
 ac
 ad
-ac
-ad
 ad
 ad
 ac
 ac
 ad
-ab
+ad
 "}

@@ -14756,6 +14756,7 @@
 	dwidth = 8;
 	height = 9;
 	name = "Mini emergency shuttle";
+	timid = 0;
 	width = 21
 	},
 /obj/docking_port/stationary{
@@ -14766,7 +14767,7 @@
 	name = "emergency evac bay";
 	width = 21
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "HW" = (
 /obj/structure/chair,
@@ -37853,7 +37854,7 @@ aa
 aa
 aa
 aa
-Ht
+Hw
 Hw
 Hw
 Hw
@@ -37871,7 +37872,7 @@ Hw
 Hw
 Hw
 Hw
-Ht
+Hw
 aa
 aa
 aa
@@ -38109,7 +38110,7 @@ aa
 aa
 aa
 aa
-Ht
+Hw
 Hw
 Hz
 Hy
@@ -38129,7 +38130,7 @@ Hw
 Ie
 Ii
 HL
-Ht
+Hw
 aa
 aa
 aa
@@ -38371,7 +38372,7 @@ Hv
 Hy
 Hy
 Hy
-HJ
+HS
 HM
 HM
 HM
@@ -38386,7 +38387,7 @@ Hw
 Id
 Id
 Il
-HJ
+HS
 aa
 aa
 aa
@@ -38628,7 +38629,7 @@ Hv
 HA
 HH
 HA
-HJ
+HS
 HM
 HR
 HR
@@ -38643,7 +38644,7 @@ Ib
 HM
 HM
 Io
-HJ
+HS
 aa
 aa
 aa
@@ -38888,11 +38889,11 @@ Hw
 HL
 HM
 HQ
-HJ
-HJ
+HS
+HS
 HT
-HJ
-HJ
+HS
+HS
 HW
 HM
 HM
@@ -38900,7 +38901,7 @@ Ia
 HM
 HM
 In
-HJ
+HS
 aa
 aa
 aa
@@ -39141,7 +39142,7 @@ Hs
 Hv
 HC
 HC
-HJ
+HS
 Hy
 HM
 HP
@@ -39157,7 +39158,7 @@ Hw
 Ig
 HM
 Io
-HJ
+HS
 aa
 aa
 aa
@@ -39414,7 +39415,7 @@ Hw
 If
 If
 Ip
-HJ
+HS
 aa
 aa
 aa
@@ -39651,11 +39652,11 @@ aa
 aa
 aa
 aa
-Ht
+Hw
 Hw
 HD
 HD
-HJ
+HS
 HN
 HM
 HR
@@ -39671,15 +39672,15 @@ Hw
 Ih
 Ij
 HL
-Ht
+Hw
 aa
 aa
 aa
-jc
 vm
-ph
 vm
-jc
+HS
+vm
+vm
 aa
 aa
 aa
@@ -39909,7 +39910,7 @@ aa
 aa
 aa
 aa
-Ht
+Hw
 Hw
 Hw
 Hw
@@ -39927,7 +39928,7 @@ Hw
 Hw
 Hw
 Hw
-Ht
+Hw
 aa
 aa
 aa
@@ -40417,14 +40418,14 @@ aa
 aa
 aa
 aa
-Hk
 Hm
 Hm
 Hm
 Hm
 Hm
 Hm
-Hk
+Hm
+Hm
 am
 am
 fW
@@ -40445,13 +40446,13 @@ aa
 aa
 aa
 aa
-jc
+vm
 vm
 vm
 vq
 vm
 vm
-jc
+vm
 Is
 Ix
 IB
@@ -41959,14 +41960,14 @@ aa
 aa
 aa
 aa
-Hk
+Hm
 Hm
 Hq
 Hm
 Hr
 Hm
 Hm
-Hk
+Hm
 kf
 kP
 ln
@@ -43022,11 +43023,11 @@ wx
 wx
 vm
 vm
-Iw
+It
 Iu
 ID
 Iu
-Iw
+It
 aa
 aa
 aa
@@ -43272,13 +43273,13 @@ lK
 kf
 kf
 am
-jc
+vm
 vZ
 vZ
 vZ
 vZ
 vZ
-jc
+vm
 bx
 bx
 bM

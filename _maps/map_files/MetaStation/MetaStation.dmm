@@ -641,9 +641,8 @@
 	},
 /area/security/prison)
 "abv" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
 "abw" = (
 /obj/machinery/door/airlock/shuttle{
@@ -1704,11 +1703,10 @@
 	name = "\improper Recreation Area"
 	})
 "adn" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
 "ado" = (
 /turf/closed/wall/mineral/titanium,
@@ -25662,9 +25660,8 @@
 	name = "Arrivals"
 	})
 "aSK" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "aSL" = (
 /obj/machinery/door/airlock/shuttle{
@@ -92598,7 +92595,7 @@
 	},
 /area/chapel/main)
 "ddb" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ddc" = (
 /turf/closed/wall/shuttle{
@@ -92607,7 +92604,7 @@
 /area/shuttle/escape)
 "ddd" = (
 /obj/structure/sign/nosmoking_2,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "dde" = (
 /turf/closed/wall/shuttle{
@@ -92654,7 +92651,7 @@
 /area/shuttle/escape)
 "ddk" = (
 /obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ddl" = (
 /obj/structure/chair{
@@ -92678,7 +92675,7 @@
 /area/shuttle/escape)
 "ddo" = (
 /obj/structure/sign/bluecross_2,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ddp" = (
 /obj/structure/table,
@@ -92938,7 +92935,7 @@
 /area/shuttle/escape)
 "ddY" = (
 /obj/structure/reagent_dispensers/peppertank,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ddZ" = (
 /obj/structure/rack,
@@ -93080,10 +93077,14 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "deq" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
+/obj/machinery/vending/wallmed{
+	name = "Emergency NanoMed";
+	pixel_x = 0;
+	pixel_y = 0;
+	req_access_txt = "0";
+	use_power = 0
 	},
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "der" = (
 /obj/structure/sink,
@@ -93112,7 +93113,8 @@
 /turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "deu" = (
-/turf/closed/wall/mineral/plastitanium,
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "dev" = (
 /turf/open/space,
@@ -99555,11 +99557,11 @@ aaa
 aaa
 aaa
 aaa
-cZx
+cZz
 cZz
 cZC
 cZz
-cZx
+cZz
 aaa
 aaa
 aaa
@@ -100064,21 +100066,21 @@ aaa
 aaa
 aaa
 aaa
-cZx
-cZB
+cZz
+cZz
 cZY
 cZY
-cZB
+cZz
 cZz
 cZz
 dba
 cZz
 cZz
-cZB
+cZz
 cZY
 cZY
 cZz
-cZx
+cZz
 aaa
 aaa
 aaa
@@ -101616,7 +101618,7 @@ daT
 dbd
 dbs
 dai
-cZB
+cZz
 cZz
 dbY
 cZz
@@ -101867,7 +101869,7 @@ cZz
 cZz
 cZz
 cZz
-cZB
+cZz
 dai
 daV
 dbf
@@ -102381,7 +102383,7 @@ cZA
 cZP
 dag
 dat
-cZB
+cZz
 cZz
 cZz
 dbg
@@ -102856,7 +102858,7 @@ aaa
 aaa
 aaa
 aaa
-aOy
+aQb
 aQb
 aQb
 aSK
@@ -103148,11 +103150,11 @@ aYp
 aYo
 aYo
 aYo
-cZB
+cZz
 cZQ
 dah
 cZz
-cZB
+cZz
 dai
 daV
 dbh
@@ -103370,7 +103372,7 @@ aaa
 aaa
 aaa
 aaa
-aOy
+aQb
 aQb
 aQb
 aSK
@@ -103919,11 +103921,11 @@ aYq
 aYo
 aYo
 aYo
-cZB
+cZz
 cZz
 dal
 cZz
-cZB
+cZz
 dai
 daU
 dbm
@@ -104694,13 +104696,13 @@ cZA
 cZV
 dam
 dax
-cZB
+cZz
 cZz
 cZz
 dbn
 cZz
 cZz
-cZB
+cZz
 dbV
 dch
 dcv
@@ -105204,7 +105206,7 @@ bOI
 aSJ
 aaa
 aaf
-cZx
+cZz
 cZz
 cZA
 cZz
@@ -105218,7 +105220,7 @@ cZz
 cZz
 cZA
 cZz
-cZx
+cZz
 aaa
 aaa
 aaf
@@ -105979,13 +105981,13 @@ aaa
 aaa
 aaa
 aaa
-cZx
+cZz
 cZA
 cZA
 cZA
 cZA
 cZA
-cZx
+cZz
 aaa
 aaa
 aaa
@@ -108240,15 +108242,14 @@ asj
 atA
 aaf
 aaa
-axa
+axb
 axb
 axc
 axb
 axc
 axb
-axa
+axb
 aaa
-cYL
 cYM
 cYM
 cYM
@@ -108258,7 +108259,8 @@ cYM
 cYM
 cYM
 cYM
-cYL
+cYM
+cYM
 aaa
 aaa
 alQ
@@ -109268,13 +109270,13 @@ asj
 atA
 aaf
 aaa
-axa
+axb
 axb
 axc
 aAR
 axc
 axb
-axa
+axb
 aaa
 cYM
 cYP
@@ -109790,7 +109792,7 @@ aCj
 ayz
 aaf
 aaa
-cYL
+cYM
 cYM
 cYM
 cYQ
@@ -109800,7 +109802,7 @@ cYT
 cWM
 cYM
 cYM
-cYL
+cYM
 aaa
 aaf
 alQ
@@ -116056,10 +116058,10 @@ aaa
 ddg
 ddg
 ddg
-deu
+ddb
 ddg
 ddg
-deu
+ddb
 ddg
 ddg
 ddg
@@ -116309,18 +116311,18 @@ cTH
 cRh
 cOU
 aaa
-deu
+ddb
 ddi
 ddi
 ddi
-deu
+ddb
 ddi
 ddi
-deu
+ddb
 ddi
 ddi
 ddi
-deu
+ddb
 aaa
 aaa
 aaa
@@ -116461,15 +116463,15 @@ aor
 apK
 ahj
 agw
-atT
-avc
-awg
 avc
 avc
 awg
 avc
 avc
-atT
+awg
+avc
+avc
+avc
 aDN
 aDN
 aDN
@@ -116566,18 +116568,18 @@ cSB
 cTI
 cOU
 ddb
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
-dcC
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
+ddb
 ddb
 aaa
 aaa
@@ -116830,7 +116832,7 @@ dei
 dek
 dej
 del
-dcU
+deu
 ddI
 ddI
 ddI
@@ -117087,7 +117089,7 @@ ddW
 ddj
 dcI
 ddv
-dcC
+ddb
 dcP
 dcP
 dcP
@@ -117344,7 +117346,7 @@ dcI
 dcI
 ded
 ddx
-dcC
+ddb
 deb
 dcC
 dcP
@@ -117489,7 +117491,7 @@ aov
 ajs
 arf
 agw
-atT
+avc
 avc
 awk
 avc
@@ -117497,7 +117499,7 @@ avc
 avc
 aBm
 avc
-atT
+avc
 aDN
 aGy
 aIg
@@ -117603,7 +117605,7 @@ dcI
 dcI
 ddS
 ddD
-dcC
+ddb
 dea
 dea
 dcz
@@ -117850,20 +117852,20 @@ cSY
 cTp
 cTJ
 cUh
-dcC
-dcC
+ddb
+ddb
 ddk
-dcC
+ddb
 ddN
-dcC
+ddb
 ddk
-dcC
-dcC
-dcC
-dcC
+ddb
+ddb
+ddb
+ddb
 ddk
-dcC
-dcC
+ddb
+ddb
 aaa
 aaa
 aaa
@@ -118107,7 +118109,7 @@ cTa
 cTr
 cTL
 cOU
-dcC
+ddb
 ddH
 dcI
 dcI
@@ -118115,12 +118117,12 @@ dcI
 dcI
 dcI
 ddH
-dcC
+ddb
 ddA
 ddA
 ddA
 den
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -118621,7 +118623,7 @@ cOU
 cOU
 cOU
 cOU
-dcC
+ddb
 ddf
 dcI
 ddl
@@ -118749,7 +118751,7 @@ aaa
 aaa
 aaf
 aaa
-aaM
+aaX
 aaX
 aaX
 abv
@@ -118882,16 +118884,16 @@ dcB
 dcI
 dcI
 ddl
-dcV
+deq
 ddf
 dcI
 ddl
-dcC
+ddb
 ddC
 ddV
 ddV
 ddB
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -119143,12 +119145,12 @@ dcz
 ddf
 dcI
 ddh
-dcC
-dcC
+ddb
+ddb
 ddY
 ddk
-dcC
-dcC
+ddb
+ddb
 aaa
 aaa
 aaa
@@ -119263,7 +119265,7 @@ aaa
 aaf
 aaf
 aaa
-aaM
+aaX
 aaX
 aaX
 abv
@@ -119396,16 +119398,16 @@ dcB
 dcI
 dcI
 ddl
-dcU
+deu
 ddf
 dcI
 ddl
-dcC
+ddb
 ddu
 ddt
 ddw
 dep
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -120176,7 +120178,7 @@ ddK
 ddK
 dcI
 ddp
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -120429,11 +120431,11 @@ ddf
 dcI
 ddl
 ddo
-dcC
+ddb
 dcz
 ddm
-dcK
-dcC
+ddo
+ddb
 aaa
 aaa
 aaa
@@ -120677,7 +120679,7 @@ cTd
 cRK
 cRK
 cRK
-dcC
+ddb
 dcM
 dcI
 ddl
@@ -120685,12 +120687,12 @@ dcz
 ddf
 dcI
 ddl
-dcC
+ddb
 ddL
 ddZ
 dee
 des
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -120947,7 +120949,7 @@ ddM
 dcT
 dcP
 ddy
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -121199,7 +121201,7 @@ dcz
 ddf
 dcI
 ddl
-dcU
+deu
 ddR
 dcP
 dcP
@@ -121705,7 +121707,7 @@ cRq
 cRK
 cRK
 cRK
-dcC
+ddb
 dcI
 dcI
 dcI
@@ -121718,7 +121720,7 @@ ddT
 dcP
 dcP
 det
-dcC
+ddb
 aaa
 aaa
 aaa
@@ -121962,7 +121964,7 @@ aaf
 aaa
 aaa
 aaf
-dcC
+ddb
 dcH
 dcG
 dcH
@@ -121975,7 +121977,7 @@ ddU
 ddT
 ddT
 dcO
-dcC
+ddb
 aaf
 aaf
 aaf
@@ -122220,18 +122222,18 @@ aaf
 aaf
 aaf
 ddb
-dcC
+ddb
 dcz
-dcC
+ddb
 dcz
-dcF
+ddb
 dcz
-dcC
-dcC
-dcC
+ddb
+ddb
+ddb
 dcz
 dcz
-dcC
+ddb
 ddb
 aaa
 aaa
@@ -132121,9 +132123,9 @@ aaa
 aaf
 aaf
 aai
-adp
+ado
 adM
-adp
+ado
 aeI
 afJ
 afJ

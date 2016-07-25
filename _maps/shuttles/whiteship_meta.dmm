@@ -34,10 +34,11 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Recovery White-Ship";
-	roundstart_move = "whiteship_away";
 	port_angle = 180;
-	width = 27;
-	timid = 1
+	preferred_direction = 1;
+	roundstart_move = "whiteship_away";
+	timid = 1;
+	width = 27
 	},
 /obj/machinery/door/airlock/shuttle{
 	name = "recovery shuttle external airlock"
@@ -572,8 +573,6 @@
 	},
 /area/shuttle/abandoned)
 "ba" = (
-/obj/structure/frame/machine,
-/obj/item/weapon/circuitboard/machine/cyborgrecharger,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -632,7 +631,10 @@
 	req_access_txt = "0";
 	use_power = 0
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
 /area/shuttle/abandoned)
 "bh" = (
 /turf/closed/wall/shuttle{
@@ -718,7 +720,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/abandoned)
 "br" = (
-/obj/structure/frame/computer,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1288,7 +1289,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ct" = (
 /obj/machinery/processor,
@@ -1322,7 +1323,6 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cw" = (
-/obj/structure/fluff/empty_sleeper/nanotrasen,
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
@@ -1697,11 +1697,11 @@ aa
 aa
 aa
 aa
-ab
+ac
 ac
 ah
 ac
-ab
+ac
 aa
 aa
 aa
@@ -1726,7 +1726,7 @@ cO
 aa
 "}
 (3,1,1) = {"
-ab
+ac
 ac
 aD
 aD
@@ -1740,7 +1740,7 @@ ac
 aD
 aD
 ac
-ab
+ac
 "}
 (4,1,1) = {"
 ac
@@ -1919,9 +1919,9 @@ aL
 aY
 ac
 aL
-bA
+bx
 bL
-bX
+bx
 aL
 ac
 ac
@@ -1931,18 +1931,18 @@ ac
 "}
 (15,1,1) = {"
 ac
-ac
+av
 aM
 ac
 ac
 aL
-bB
+bz
 bM
-bY
+bz
 ce
 ac
 cw
-cH
+bx
 cV
 ac
 "}
@@ -1975,8 +1975,8 @@ bO
 ax
 aL
 ac
-cx
-cJ
+bx
+bx
 cX
 ac
 "}
@@ -1987,9 +1987,9 @@ aO
 ac
 ac
 aL
-bA
+bx
 bP
-bX
+bx
 aL
 ac
 ac
@@ -2004,9 +2004,9 @@ aP
 ba
 ac
 aL
-bA
+bx
 bQ
-bY
+bz
 aL
 cn
 cy
@@ -2058,7 +2058,7 @@ br
 bC
 aL
 bZ
-cf
+bx
 ac
 cA
 cN
@@ -2066,7 +2066,7 @@ db
 ac
 "}
 (23,1,1) = {"
-ab
+ac
 ac
 ae
 ac
@@ -2080,7 +2080,7 @@ ac
 ac
 ae
 ac
-ab
+ac
 "}
 (24,1,1) = {"
 aa
@@ -2121,13 +2121,13 @@ aa
 aa
 aa
 aa
-ab
+ac
 ae
 ae
 ae
 ae
 ae
-ab
+ac
 aa
 aa
 aa

@@ -2085,11 +2085,10 @@
 /turf/open/floor/plating,
 /area/security/main)
 "aeD" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_3)
 "aeE" = (
 /turf/closed/wall/mineral/titanium,
@@ -2368,7 +2367,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle"
+	name = "Box emergency shuttle";
+	timid = 0
 	},
 /obj/docking_port/stationary{
 	dir = 4;
@@ -2376,6 +2376,7 @@
 	height = 18;
 	id = "emergency_home";
 	name = "BoxStation emergency evac bay";
+	turf_type = /turf/open/space;
 	width = 32
 	},
 /turf/open/floor/plating,
@@ -8621,9 +8622,8 @@
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
 "asD" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "asE" = (
 /turf/closed/wall,
@@ -8648,9 +8648,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "asH" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_2)
 "asI" = (
 /turf/open/floor/plating,
@@ -54557,11 +54556,10 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cpc" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
 "cpd" = (
 /turf/closed/wall/mineral/titanium,
@@ -58480,7 +58478,7 @@
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "cxh" = (
 /obj/structure/chair{
@@ -58569,7 +58567,7 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "cxu" = (
 /turf/closed/wall/mineral/titanium,
@@ -58792,6 +58790,7 @@
 	port_angle = -90;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
+	timid = null;
 	width = 35
 	},
 /obj/docking_port/stationary{
@@ -58800,6 +58799,7 @@
 	height = 22;
 	id = "whiteship_home";
 	name = "SS13 Arrival Docking";
+	turf_type = /turf/open/space;
 	width = 35
 	},
 /turf/open/floor/mineral/titanium,
@@ -59035,7 +59035,7 @@
 /area/shuttle/supply)
 "cyR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "cyS" = (
@@ -59116,6 +59116,9 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czb" = (
+/obj/structure/chair{
+	dir = 4
+	},
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
@@ -59143,27 +59146,22 @@
 	},
 /area/shuttle/supply)
 "czh" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f6"
-	},
-/area/shuttle/supply)
-"czi" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
-	},
-/area/shuttle/supply)
-"czj" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
+	icon_state = "swall12";
 	dir = 2
 	},
 /area/shuttle/abandoned)
+"czi" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/abandoned)
+"czj" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/abandoned)
 "czk" = (
 /turf/closed/wall/shuttle{
-	icon_state = "swall_s9";
-	dir = 2
+	icon_state = "swall_f13"
 	},
 /area/shuttle/abandoned)
 "czl" = (
@@ -59183,11 +59181,11 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned)
 "czn" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
+/obj/structure/frame/computer{
+	anchored = 1
 	},
-/area/shuttle/supply)
+/turf/open/floor/plasteel/shuttle/white,
+/area/shuttle/abandoned)
 "czo" = (
 /turf/open/space,
 /area/shuttle/syndicate)
@@ -64324,11 +64322,11 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cye
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -66894,11 +66892,11 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cye
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -67408,11 +67406,11 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cye
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -67664,13 +67662,13 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cyw
 cyi
 cyw
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -67914,7 +67912,7 @@ aaa
 aaa
 aaa
 aae
-cya
+cyc
 cyf
 cym
 cym
@@ -67934,7 +67932,7 @@ cym
 cym
 cym
 cyF
-cya
+cyc
 aaa
 aaa
 aaa
@@ -68171,13 +68169,13 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cyo
 cyo
 cyo
 cyc
-cya
+cyc
 cyc
 cyi
 cyi
@@ -68185,13 +68183,13 @@ cyi
 cyi
 cyi
 cyc
-cya
+cyc
 cyc
 cyo
 cyo
 cyo
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -68429,7 +68427,7 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyn
 cyv
 cyv
@@ -68447,7 +68445,7 @@ cyn
 cyv
 cyv
 cyn
-cya
+cyc
 aaa
 aaa
 aaa
@@ -68687,7 +68685,7 @@ aaa
 aaa
 aaa
 aaa
-cya
+cyc
 cyn
 cyv
 cyv
@@ -68703,7 +68701,7 @@ cyc
 cyv
 cyv
 cyn
-cya
+cyc
 aaa
 aaa
 aaa
@@ -68945,21 +68943,21 @@ aaf
 aaa
 aaa
 aaa
-cya
+cyc
 cyc
 cyH
 cyc
 cyc
 cyc
-cyU
+cyR
 cza
-cyU
+cyR
 cyc
 cyc
 cyc
 cyH
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -69199,10 +69197,10 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
-aaf
-cya
+aaa
+aaa
+aaa
+cyc
 cyc
 cyi
 cyi
@@ -69216,7 +69214,7 @@ cyi
 cyi
 cyi
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -69457,8 +69455,8 @@ aaa
 aAC
 aaf
 aaa
-aaf
-cya
+aaa
+cyc
 cyc
 cyw
 cyI
@@ -69474,7 +69472,7 @@ cyi
 cyi
 cyc
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -69714,25 +69712,25 @@ asE
 arB
 aaf
 aaa
-cya
-cyc
-cyw
-cyi
-cyi
-cyi
-cyi
-cyw
-cyc
-cyc
 cyc
 cyc
 cyw
 cyi
 cyi
+cyi
+cyi
 cyc
 cyc
 cyc
-cya
+cyc
+cyc
+cyc
+cyi
+cyi
+cyc
+cyc
+cyc
+cyc
 aaa
 aaa
 aaa
@@ -69934,7 +69932,7 @@ aaa
 aaa
 aaa
 aaa
-apF
+aqF
 aqF
 aqF
 asD
@@ -69970,7 +69968,7 @@ ayk
 awW
 aAD
 awW
-cya
+cyc
 cyc
 cyc
 cyc
@@ -69983,7 +69981,7 @@ cyV
 cyi
 cyi
 cyi
-cye
+czi
 cyi
 cyi
 cye
@@ -70247,7 +70245,7 @@ cyc
 cyi
 czB
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -70448,7 +70446,7 @@ aaa
 aaa
 aaa
 aaa
-apF
+aqF
 aqF
 aqF
 asD
@@ -70492,7 +70490,7 @@ cyi
 cyJ
 cyc
 cyi
-cye
+czi
 cyi
 cyi
 cyi
@@ -70749,12 +70747,12 @@ cyi
 cyi
 cyc
 cyi
-cyw
 cyc
 cyc
 cyc
 cyc
-cyw
+cyc
+cyc
 cyi
 cyI
 cyR
@@ -70962,7 +70960,7 @@ aaa
 aaa
 aaa
 aaa
-apI
+aqH
 aqH
 aqH
 asH
@@ -71476,7 +71474,7 @@ aaa
 aaa
 aaa
 aaa
-apI
+aqH
 aqH
 aqH
 asH
@@ -71522,7 +71520,7 @@ cyc
 cyc
 cyc
 cyR
-cza
+czj
 cyR
 cyc
 cyc
@@ -71789,7 +71787,7 @@ cyc
 cyi
 cyi
 cyw
-cya
+cyc
 aaa
 aaa
 aaa
@@ -72015,11 +72013,11 @@ azy
 ayl
 aRY
 awW
-cxx
+cxu
 cxv
 cxE
 cxv
-cxx
+cxu
 awW
 awZ
 ayl
@@ -72283,7 +72281,7 @@ ayk
 awW
 aAD
 awW
-cya
+cyc
 cyc
 cyc
 cyz
@@ -72299,10 +72297,10 @@ cyi
 cyi
 cyi
 czx
-czy
+czn
 cyc
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -72558,7 +72556,7 @@ cyi
 cyi
 cyw
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -72799,7 +72797,7 @@ arB
 aaf
 aaf
 aaf
-cya
+cyc
 cyA
 cyc
 cyw
@@ -72814,7 +72812,7 @@ cyi
 cyi
 cyw
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -73058,9 +73056,9 @@ aaf
 aaf
 aaf
 aaf
-cya
 cyc
 cyc
+cyc
 cyR
 cyR
 cyR
@@ -73070,7 +73068,7 @@ cyR
 cyR
 cyc
 cyc
-cya
+cyc
 aaa
 aaa
 aaa
@@ -76397,7 +76395,6 @@ bea
 bfq
 bji
 bkF
-cyt
 cys
 cys
 cys
@@ -76407,7 +76404,8 @@ cys
 cys
 cys
 cys
-cyt
+cys
+cys
 aaa
 aaa
 aaa
@@ -77939,7 +77937,7 @@ bgs
 bhQ
 bjk
 bkF
-cyt
+cys
 cys
 cys
 cyN
@@ -77949,7 +77947,7 @@ cyT
 cyZ
 cys
 cys
-cyt
+cys
 aaa
 aaa
 aaa
@@ -80009,13 +80007,13 @@ aaa
 aaa
 aaa
 aaa
-ajY
+akD
 akD
 ajX
 akD
 ajX
 akD
-ajY
+akD
 aaa
 bCq
 bPS
@@ -81037,13 +81035,13 @@ bzR
 byd
 bxx
 aaa
-ajY
+akD
 akD
 ajX
 bJc
 ajX
 akD
-ajY
+akD
 aaa
 bCq
 bPV
@@ -82518,15 +82516,15 @@ aaa
 aaa
 aaa
 aaa
-ajY
-akD
-alk
 akD
 akD
 alk
 akD
 akD
-ajY
+alk
+akD
+akD
+akD
 aaa
 aaa
 aaa
@@ -83546,7 +83544,7 @@ aaa
 aaa
 aaa
 aaa
-ajY
+akD
 akD
 alo
 akD
@@ -83554,7 +83552,7 @@ akD
 akD
 anO
 akD
-ajY
+akD
 aaa
 aaa
 arP
@@ -94950,9 +94948,9 @@ clY
 clZ
 bOh
 aaf
-cpe
+cpd
 cpM
-cpe
+cpd
 aaf
 aaa
 aaa
@@ -96386,9 +96384,9 @@ aaa
 aaa
 aaa
 aaa
-aeF
+aeE
 afs
-aeF
+aeE
 aaa
 aaa
 aaa
@@ -111843,7 +111841,7 @@ aaa
 aaa
 aaa
 aaa
-cry
+cwI
 cwI
 cwI
 cxg
@@ -111859,7 +111857,7 @@ cwI
 cxK
 cwI
 cwI
-cry
+cwI
 aaa
 aaa
 aaa
@@ -112097,7 +112095,7 @@ aaa
 aaa
 aaa
 aaa
-cry
+cwI
 cwI
 cwI
 cwI
@@ -112117,7 +112115,7 @@ cxQ
 cxQ
 cxU
 cwI
-cry
+cwI
 aaa
 aaa
 aaa
@@ -112353,7 +112351,7 @@ aae
 aaa
 aaa
 aaa
-cry
+cwI
 crO
 cwK
 cwP
@@ -112875,7 +112873,7 @@ cwI
 crx
 cxf
 crx
-cxm
+cwI
 cwL
 cxr
 cxr
@@ -113895,7 +113893,7 @@ aaa
 aaa
 aaa
 aaa
-cry
+cwI
 crO
 cwN
 cwS
@@ -114153,7 +114151,7 @@ aaa
 aaa
 aaa
 aaa
-cry
+cwI
 cwI
 cwI
 cwI
@@ -114173,7 +114171,7 @@ cxS
 cxT
 cxS
 cwI
-cry
+cwI
 aaa
 aaa
 aaa
@@ -114413,23 +114411,23 @@ aaa
 aaa
 aaa
 aaa
-cry
-crx
 cwI
 crx
 cwI
-cwI
-cwI
-crx
-crx
 crx
 cwI
 cwI
 cwI
 crx
+crx
+crx
+cwI
+cwI
 cwI
 crx
-cry
+cwI
+crx
+cwI
 aaa
 aaa
 aaa
