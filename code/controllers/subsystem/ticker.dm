@@ -377,33 +377,34 @@ var/datum/subsystem/ticker/ticker
 	num_survivors = survivors.len
 	num_escapees = escapees.len
 
-	for(var/ckey in preferences_datums)
-		var/datum/preferences/P = preferences_datums[ckey]
-		if(P.characters_spawned.len)
-			var/survived = FALSE
-			for(var/survivor in (station_evacuated ? escapees : survivors))
-				if("\ref[survivor]" == P.spawn_mob_ref)
-					var/slot = P.characters_spawned[P.characters_spawned.len]
-					P.load_consecutive_rounds(slot)
-					survived = TRUE
-					if(P.beard_level_enabled)
-						P.beard_level++
-					P.consecutive_rounds_survived++
-					P.save_consecutive_rounds(slot)
-					break
-			var/spawned_chars_num = P.characters_spawned.len
-			var/list/reset_chars = P.characters_spawned.Copy(1, (spawned_chars_num+(survived ? 0 : 1)))
-			var/old_beard_level = P.beard_level
-			var/old_consecutive_rounds_survived = P.consecutive_rounds_survived
-			for(var/character in reset_chars)
-				P.load_consecutive_rounds(character)
-				P.beard_level = 0
-				P.consecutive_rounds_survived = 0
-				P.beard_level_beard = "Shaved"
-				P.save_consecutive_rounds(character)
-			if(survived)
-				P.beard_level = old_beard_level
-				P.consecutive_rounds_survived = old_consecutive_rounds_survived
+	if(!survival_streak_frozen)
+		for(var/ckey in preferences_datums)
+			var/datum/preferences/P = preferences_datums[ckey]
+			if(P.characters_spawned.len)
+				var/survived = FALSE
+				for(var/survivor in (station_evacuated ? escapees : survivors))
+					if("\ref[survivor]" == P.spawn_mob_ref)
+						var/slot = P.characters_spawned[P.characters_spawned.len]
+						P.load_consecutive_rounds(slot)
+						survived = TRUE
+						if(P.beard_level_enabled)
+							P.beard_level++
+						P.consecutive_rounds_survived++
+						P.save_consecutive_rounds(slot, to_buffer = FALSE)
+						break
+				var/spawned_chars_num = P.characters_spawned.len
+				var/list/reset_chars = P.characters_spawned.Copy(1, (spawned_chars_num+(survived ? 0 : 1)))
+				var/old_beard_level = P.beard_level
+				var/old_consecutive_rounds_survived = P.consecutive_rounds_survived
+				for(var/character in reset_chars)
+					P.load_consecutive_rounds(character)
+					P.beard_level = 0
+					P.consecutive_rounds_survived = 0
+					P.beard_level_beard = "Shaved"
+					P.save_consecutive_rounds(character, to_buffer = FALSE)
+				if(survived)
+					P.beard_level = old_beard_level
+					P.consecutive_rounds_survived = old_consecutive_rounds_survived
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()

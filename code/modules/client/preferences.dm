@@ -21,6 +21,7 @@ var/list/preferences_datums = list()
 
 	var/spawn_mob_ref = ""
 	var/list/characters_spawned = list()
+	var/list/consecutive_rounds_buffer = list()
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change

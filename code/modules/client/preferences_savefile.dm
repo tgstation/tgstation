@@ -97,7 +97,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		ignoring = list()
 	if(current_version < 15)
 		toggles |= SOUND_ANNOUNCEMENTS
-	
+
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -123,7 +123,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BERANDOMJOB
 		else
 			joblessrole = BEASSISTANT
-		
+
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -444,29 +444,42 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[slot]"
 	return S
 
-/datum/preferences/proc/save_consecutive_rounds(slot, savefile/S)
-	S = get_consecutive_rounds_savefile(slot, S)
-	if(!S)
-		return 0
+/datum/preferences/proc/save_consecutive_rounds(slot, savefile/S, to_buffer = TRUE)
+	if(to_buffer)
+		var/list/B = list()
+		B["consecutive_rounds_survived"] = consecutive_rounds_survived
+		B["beard_level"] = beard_level
+		B["beard_level_beard"] = beard_level_beard
+		consecutive_rounds_buffer["slot[slot]"] = B
+	else
+		S = get_consecutive_rounds_savefile(slot, S)
+		if(!S)
+			return 0
 
-	S["consecutive_rounds_survived"] << consecutive_rounds_survived
-	S["beard_level"] << beard_level
-	S["beard_level_beard"] << beard_level_beard
+		S["consecutive_rounds_survived"] << consecutive_rounds_survived
+		S["beard_level"] << beard_level
+		S["beard_level_beard"] << beard_level_beard
 
 	return 1
 
 #define POSITIVE_OR_ZERO(num) ((isnum(num) && (num >= 1)) ? num : 0)
 
-/datum/preferences/proc/load_consecutive_rounds(slot, savefile/S)
-	if(path && (!fexists(path)))
-		return 0
-	S = get_consecutive_rounds_savefile(slot, S)
-	if(!S)
-		return 0
+/datum/preferences/proc/load_consecutive_rounds(slot, savefile/S, from_buffer = TRUE)
+	var/list/B = consecutive_rounds_buffer["slot[slot]"]
+	if(from_buffer && B)
+		consecutive_rounds_survived = B["consecutive_rounds_survived"]
+		beard_level = B["beard_level"]
+		beard_level_beard = B["beard_level_beard"]
+	else
+		if(path && (!fexists(path)))
+			return 0
+		S = get_consecutive_rounds_savefile(slot, S)
+		if(!S)
+			return 0
 
-	S["consecutive_rounds_survived"] >> consecutive_rounds_survived
-	S["beard_level"] >> beard_level
-	S["beard_level_beard"] >> beard_level_beard
+		S["consecutive_rounds_survived"] >> consecutive_rounds_survived
+		S["beard_level"] >> beard_level
+		S["beard_level_beard"] >> beard_level_beard
 
 	consecutive_rounds_survived = round(POSITIVE_OR_ZERO(consecutive_rounds_survived))
 	beard_level = round(POSITIVE_OR_ZERO(beard_level))
