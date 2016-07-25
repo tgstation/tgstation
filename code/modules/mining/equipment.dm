@@ -460,36 +460,3 @@
 	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
-
-/obj/item/jumpbootupgrade
-	name = "Jump Boot Upgrade Module"
-	desc = "A modification for the jump boot's propulsion system with an improved heat sink \
-		to allow reliable dashes across lava with little to no user harm."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "modkit"
-	origin_tech = "programming=2;materials=2;magnets=4"
-	var/uses = 1
-
-/obj/item/jumpbootupgrade/afterattack(obj/item/clothing/shoes/bhop/C, mob/user)
-	..()
-	if(!uses)
-		qdel(src)
-		return
-	if(!istype(C))
-		user << "<span class='warning'>This kit can only modify jump boots!</span>"
-		return ..()
-
-	if(C.lavaupgrade)
-		user << "<span class='warning'>This [C] already has \
-			these upgrades.</span>"
-		return ..()
-
-	user <<"<span class='notice'>You upgrade the [C]'s heat sink, allowing for safe dashing \
-		over lava and slightly decreasing the recharge time.</span>"
-	C.name = "lava-proof [C.name]"
-	C.lavaupgrade = TRUE
-	C.burn_state = LAVA_PROOF
-	C.recharging_rate -= 10
-	uses--
-	if(!uses)
-		qdel(src)

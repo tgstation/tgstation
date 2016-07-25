@@ -172,7 +172,6 @@
 	actions_types = list(/datum/action/item_action/bhop)
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/recharging_rate = 60 //default 6 seconds between each dash
-	var/lavaupgrade = FALSE
 	var/recharging_time = 0 //time until next dash
 	var/jumping = FALSE //are we mid-jump?
 

@@ -269,12 +269,6 @@
 					var/mob/living/live = L.buckled
 					if("lava" in live.weather_immunities)
 						continue
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				if(istype(H.shoes, /obj/item/clothing/shoes/bhop))
-					var/obj/item/clothing/shoes/bhop/B = H.shoes
-					if(B.lavaupgrade && B.jumping)
-						return 0
 
 			L.adjustFireLoss(20)
 			if(L) //mobs turning into object corpses could get deleted here.
