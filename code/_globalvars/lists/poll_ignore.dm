@@ -3,4 +3,4 @@
 #define POLL_IGNORE_PAI "pai"
 #define POLL_IGNORE_SENTIENCE_POTION "sentience_potion"
 
-var/list/poll_ignore = list(POLL_IGNORE_PAI = list(),POLL_IGNORE_SENTIENCE_POTION = list())
+var/list/poll_ignore = list()

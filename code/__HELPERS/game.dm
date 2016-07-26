@@ -404,7 +404,7 @@
 		Question = "Would you like to be a special role?"
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client || (ignore_category && G.ckey in poll_ignore[ignore_category]))
+		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
@@ -428,6 +428,9 @@
 				if(2)
 					G << "<span class='danger'>Choice registered: No.</span>"
 				if(3)
+					var/list/L = poll_ignore[ignore_category]
+					if(!L)
+						poll_ignore[ignore_category] = list()
 					poll_ignore[ignore_category] += G.ckey
 					G << "<span class='danger'>Choice registered: Never for this round.</span>"
 	sleep(poll_time)
