@@ -126,29 +126,31 @@ var/list/parallax_on_clients = list()
 		C.previous_turf = posobj
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
-	C.parallax_offset["horizontal"] += posobj.x - C.previous_turf.x
-	C.parallax_offset["vertical"] += posobj.y - C.previous_turf.y
+	var/offsetx = C.parallax_offset["horizontal"] + posobj.x - C.previous_turf.x
+	var/offsety = C.parallax_offset["vertical"] + posobj.y - C.previous_turf.y
+	C.parallax_offset["horizontal"] = offsetx
+	C.parallax_offset["vertical"] = offsety
 
 	C.previous_turf = posobj
 
+	var/maxoffset = 480 //480 = (15 tiles * 32 icon_size * 3 grid size / 2) - (15 tiles * 32 icon size / 2) for centering
+	var/minoffset = -960 //960 = (15 tiles * 32 icon_size * 3 grid size / 2) + (15 tiles * 32 icon size / 2) for centering
+
 	for(var/obj/screen/parallax/bgobj in C.parallax_movable)
-		if(bgobj.parallax_speed)//only the middle and front layers actually move
-			var/accumulated_offset_x = bgobj.base_offset_x - round(C.parallax_offset["horizontal"] * bgobj.parallax_speed * (C.prefs.parallax_speed/2))
-			var/accumulated_offset_y = bgobj.base_offset_y - round(C.parallax_offset["vertical"] * bgobj.parallax_speed * (C.prefs.parallax_speed/2))
+		var/accumulated_offset_x = bgobj.base_offset_x - round(offsetx * bgobj.parallax_speed * C.prefs.parallax_speed)
+		var/accumulated_offset_y = bgobj.base_offset_y - round(offsety * bgobj.parallax_speed * C.prefs.parallax_speed)
 
-			while(accumulated_offset_x > 720)
-				accumulated_offset_x -= 1440
-			while(accumulated_offset_x < -720)
-				accumulated_offset_x += 1440
+		if(accumulated_offset_x > maxoffset)
+			accumulated_offset_x -= 1440 //3x3 grid, 15 tiles * 32 icon_size * 3 grid size
+		if(accumulated_offset_x < minoffset)
+			accumulated_offset_x += 1440
 
-			while(accumulated_offset_y > 720)
-				accumulated_offset_y -= 1440
-			while(accumulated_offset_y < -720)
-				accumulated_offset_y += 1440
+		if(accumulated_offset_y > maxoffset)
+			accumulated_offset_y -= 1440
+		if(accumulated_offset_y < minoffset)
+			accumulated_offset_y += 1440
 
-			bgobj.screen_loc = "CENTER:[accumulated_offset_x],CENTER:[accumulated_offset_y]"
-		else
-			bgobj.screen_loc = "CENTER:[bgobj.base_offset_x],CENTER:[bgobj.base_offset_y]"
+		bgobj.screen_loc = "CENTER:[accumulated_offset_x],CENTER:[accumulated_offset_y]"
 
 //Parallax generation code below
 
@@ -200,7 +202,7 @@ var/list/parallax_on_clients = list()
 				L += I
 
 		parallax_layer.overlays = L
-		parallax_layer.parallax_speed = 1
+		parallax_layer.parallax_speed = 0.5
 		parallax_layer.calibrate_parallax(i+1)
 		parallax_icon[index] = parallax_layer
 		index++
@@ -216,7 +218,7 @@ var/list/parallax_on_clients = list()
 				L += I
 
 		parallax_layer.overlays = L
-		parallax_layer.parallax_speed = 2
+		parallax_layer.parallax_speed = 1
 		parallax_layer.calibrate_parallax(i+1)
 		parallax_icon[index] = parallax_layer
 		index++
@@ -231,8 +233,8 @@ var/list/parallax_on_clients = list()
 	4	5	6
 	7	8	9
 	*/
-	base_offset_x = -7*world.icon_size
-	base_offset_y = -7*world.icon_size
+	base_offset_x = -PARALLAX_IMAGE_WIDTH*world.icon_size/2
+	base_offset_y = -PARALLAX_IMAGE_WIDTH*world.icon_size/2
 
 	switch(i)
 		if(1,4,7)
