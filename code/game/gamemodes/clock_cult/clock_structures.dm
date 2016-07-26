@@ -739,7 +739,7 @@
 	burntime = 1
 	var/affects_servants = FALSE
 	var/stat_affected = CONSCIOUS
-	var/resist_string = "blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
+	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
 	if(I.force && !is_servant_of_ratvar(user))
@@ -763,8 +763,8 @@
 			if((!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && affects_servants)) && L.mind)
 				if(L.null_rod_check())
 					var/obj/item/I = L.null_rod_check()
-					L.visible_message("<span class='warning'>[L]'s [I.name] glows [resist_string], protecting them from [src]'s effects!</span>", \
-					"<span class='userdanger'>Your [I.name] glows [resist_string], protecting you!</span>")
+					L.visible_message("<span class='warning'>[L]'s [I.name] [resist_string], protecting them from [src]'s effects!</span>", \
+					"<span class='userdanger'>Your [I.name] [resist_string], protecting you!</span>")
 					return
 				sigil_effects(L)
 			return 1
@@ -803,7 +803,7 @@
 	color = "#FAE48C"
 	alpha = 125
 	stat_affected = UNCONSCIOUS
-	resist_string = "faintly yellow"
+	resist_string = "glows faintly yellow"
 	var/convert_time = 70
 	var/glow_light = 2 //soft light
 	var/glow_falloff = 1
@@ -873,7 +873,7 @@
 	delete_on_finish = FALSE
 	sigil_name = "Sigil of Accession"
 	glow_type = /obj/effect/overlay/temp/ratvar/sigil/accession
-	resist_string = "bright orange"
+	resist_string = "glows bright orange"
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(isloyal(L))
@@ -891,7 +891,7 @@
 	icon_state = "sigiltransmission"
 	color = "#EC8A2D"
 	alpha = 50
-	resist_string = "faintly"
+	resist_string = "glows faintly"
 	var/power_charge = 2500 //starts with 2500W by default
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
@@ -924,7 +924,7 @@
 	alpha = 75
 	affects_servants = TRUE
 	stat_affected = DEAD
-	resist_string = "shimmering yellow"
+	resist_string = "glows shimmering yellow"
 	var/vitality = 0
 	var/base_revive_cost = 20
 	var/sigil_active = FALSE
