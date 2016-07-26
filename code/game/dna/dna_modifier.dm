@@ -271,7 +271,10 @@
 	return
 
 /obj/machinery/dna_scannernew/proc/go_out(var/exit = src.loc)
-	if ((!(occupant) || locked))
+	if (!occupant)
+		return 0
+	if(locked)
+		visible_message("Can't eject occupants while \the [src] is locked.")
 		return 0
 	occupant.forceMove(exit)
 	occupant.reset_view()
