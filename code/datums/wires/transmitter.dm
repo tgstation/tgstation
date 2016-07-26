@@ -3,6 +3,16 @@
 	wire_count = 5
 	var/counter = null
 
+/datum/wires/transmitter/New()
+	wire_names=list(
+		"[TRANS_POWER]" 	= "Power",
+		"[TRANS_RAD_ONE]" 	= "Rad 1",
+		"[TRANS_RAD_TWO]" 	= "Rad 2",
+		"[TRANS_LINK]" 		= "Link",
+		"[TRANS_SETTINGS]" 	= "Settings"
+	)
+	..()
+
 var/const/TRANS_POWER = 1 //Power. Cut for shock and off. Pulse toggles.
 var/const/TRANS_RAD_ONE = 2 //Reduces rad output by 50%. Requires at least one to function. Pulse does nothing.
 var/const/TRANS_RAD_TWO = 4 //Reduces rad output by 50%. Requires at least one to function. Pulse does nothing.

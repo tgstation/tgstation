@@ -3,6 +3,16 @@
 	holder_type = /mob/living/silicon/robot
 	wire_count = 5
 
+/datum/wires/robot/New()
+	wire_names=list(
+		"[BORG_WIRE_MAIN_POWER]" 	= "Power",
+		"[BORG_WIRE_LOCKED_DOWN]" 	= "Lockdown",
+		"[BORG_WIRE_CAMERA]" 		= "Camera",
+		"[BORG_WIRE_AI_CONTROL]" 	= "AI Control",
+		"[BORG_WIRE_LAWCHECK]" 		= "LawSync"
+	)
+	..()
+
 /* /tg/ ordering doesn't work for us, we need lawsync at the end for MoMMIs.
 var/const/BORG_WIRE_LAWCHECK    = 1
 var/const/BORG_WIRE_MAIN_POWER  = 2 // The power wires do nothing whyyyyyyyyyyyyy

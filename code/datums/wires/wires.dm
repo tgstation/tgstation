@@ -86,7 +86,8 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 	popup.open()
 
 /datum/wires/proc/GetWireName(var/i)
-	return wire_names["[i]"]
+	if(wire_names.len)
+		return wire_names["[i]"]
 
 /datum/wires/proc/GetInteractWindow()
 	var/html = "<div class='block'>"
@@ -120,7 +121,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				if(iswirecutter(I))
 					var/colour = href_list["cut"]
 					CutWireColour(colour)
-					log_attack("[key_name(usr)] has [IsColourCut(colour) ? "cut" : "mended"] the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
+					holder.investigation_log(I_WIRES, "|| [GetWireName(wires[colour]) || colour] wire [IsColourCut(colour) ? "cut" : "mended"] by [key_name(usr)] ([src.type])")
 				else
 					to_chat(L, "<span class='error'>You need wirecutters!</span>")
 
@@ -128,7 +129,7 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 				if(istype(I, /obj/item/device/multitool))
 					var/colour = href_list["pulse"]
 					PulseColour(colour)
-					log_attack("[key_name(usr)] has pulsed the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
+					holder.investigation_log(I_WIRES, "|| [GetWireName(wires[colour]) || colour] wire pulsed by [key_name(usr)] ([src.type])")
 				else
 					to_chat(L, "<span class='error'>You need a multitool!</span>")
 
@@ -139,14 +140,14 @@ var/list/wireColours = list("red", "blue", "green", "black", "orange", "brown", 
 					var/obj/item/O = Detach(colour)
 					if(O)
 						L.put_in_hands(O)
-						log_attack("[key_name(usr)] has detached the remote signaler on the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
+						holder.investigation_log(I_WIRES, "|| [O] \ref[O] detached from [GetWireName(wires[colour]) || colour] wire by [key_name(usr)] ([src.type])")
 
 				// Attach
 				else
 					if(istype(I, /obj/item/device/assembly/signaler))
 						if(L.drop_item(I))
 							Attach(colour, I)
-							log_attack("[key_name(usr)] has attached a remote signaler on the [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z].")
+							holder.investigation_log(I_WIRES, "|| [I] \ref[I] attached to [GetWireName(wires[colour]) || colour] wire by [key_name(usr)] ([src.type])")
 					else
 						to_chat(L, "<span class='error'>You need a remote signaller!</span>")
 
@@ -263,7 +264,7 @@ var/const/POWER = 8
 	for(var/colour in signallers)
 		if(S == signallers[colour])
 			PulseColour(colour)
-			log_attack("The [GetWireName(wires[colour])] wire of airlock named \"[holder]\" at [holder.x],[holder.y],[holder.z] has been pulsed with [S], activated by [key_name(usr)].")
+			holder.investigation_log(I_WIRES, "|| [GetWireName(wires[colour]) || colour] wire pulsed by \a [S] \ref[S] ([src.type])")
 			break
 
 

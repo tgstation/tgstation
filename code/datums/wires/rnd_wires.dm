@@ -2,6 +2,13 @@
 	holder_type = /obj/machinery/r_n_d
 	wire_count = 5
 
+/datum/wires/rnd/New()
+	wire_names=list(
+		"[RND_WIRE_DISABLE]"	= "Disable",
+		"[RND_WIRE_SHOCK]" 		= "Shock",
+		"[RND_WIRE_HACK]" 		= "Hack"
+	)
+	..()
 
 var/const/RND_WIRE_DISABLE = 1
 var/const/RND_WIRE_SHOCK = 2

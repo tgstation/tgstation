@@ -2,6 +2,15 @@
 	holder_type = /obj/machinery/vending
 	wire_count = 4
 
+/datum/wires/vending/New()
+	wire_names=list(
+		"[VENDING_WIRE_THROW]" 		= "Firing",
+		"[VENDING_WIRE_CONTRABAND]" = "Contraband",
+		"[VENDING_WIRE_ELECTRIFY]" 	= "Shock",
+		"[VENDING_WIRE_IDSCAN]" 	= "ID Scan"
+	)
+	..()
+
 var/const/VENDING_WIRE_THROW = 1
 var/const/VENDING_WIRE_CONTRABAND = 2
 var/const/VENDING_WIRE_ELECTRIFY = 4

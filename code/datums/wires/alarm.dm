@@ -3,6 +3,16 @@
 	holder_type = /obj/machinery/alarm
 	wire_count = 5
 
+/datum/wires/alarm/New()
+	wire_names=list(
+		"[AALARM_WIRE_IDSCAN]" 		= "ID scan",
+		"[AALARM_WIRE_POWER]" 		= "Power",
+		"[AALARM_WIRE_SYPHON]" 		= "Syphon",
+		"[AALARM_WIRE_AI_CONTROL]" 	= "AI Control",
+		"[AALARM_WIRE_AALARM]" 		= "Alarm"
+	)
+	..()
+
 var/const/AALARM_WIRE_IDSCAN = 1
 var/const/AALARM_WIRE_POWER = 2
 var/const/AALARM_WIRE_SYPHON = 4

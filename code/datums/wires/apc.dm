@@ -2,6 +2,15 @@
 	holder_type = /obj/machinery/power/apc
 	wire_count = 4
 
+/datum/wires/apc/New()
+	wire_names=list(
+		"[APC_WIRE_IDSCAN]" 		= "ID scan",
+		"[APC_WIRE_MAIN_POWER1]" 	= "Power 1",
+		"[APC_WIRE_MAIN_POWER2]" 	= "Power 2",
+		"[APC_WIRE_AI_CONTROL]" 	= "AI Control"
+	)
+	..()
+
 var/const/APC_WIRE_IDSCAN = 1
 var/const/APC_WIRE_MAIN_POWER1 = 2
 var/const/APC_WIRE_MAIN_POWER2 = 4

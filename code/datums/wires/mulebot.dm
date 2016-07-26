@@ -3,6 +3,20 @@
 	holder_type = /obj/machinery/bot/mulebot
 	wire_count = 10
 
+/datum/wires/mulebot/New()
+	wire_names=list(
+		"[WIRE_POWER1]" 	= "Power 1",
+		"[WIRE_POWER2]" 	= "Power 2",
+		"[WIRE_AVOIDANCE]" 	= "Avoidance",
+		"[WIRE_LOADCHECK]" 	= "Load Check",
+		"[WIRE_MOTOR1]" 	= "Motor 1",
+		"[WIRE_MOTOR2]" 	= "Motor 2",
+		"[WIRE_REMOTE_RX]" 	= "Remote RX",
+		"[WIRE_REMOTE_TX]" 	= "Remote TX",
+		"[WIRE_BEACON_RX]" 	= "Beacon RX"
+	)
+	..()
+
 var/const/WIRE_POWER1 = 1			// power connections
 var/const/WIRE_POWER2 = 2
 var/const/WIRE_AVOIDANCE = 4		// mob avoidance

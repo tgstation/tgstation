@@ -2,6 +2,14 @@
 	holder_type = /obj/item/device/radio
 	wire_count = 3
 
+/datum/wires/radio/New()
+	wire_names=list(
+		"[WIRE_SIGNAL]" 	= "Signal",
+		"[WIRE_RECEIVE]" 	= "Receive",
+		"[WIRE_TRANSMIT]" 	= "Transmit"
+	)
+	..()
+
 var/const/WIRE_SIGNAL = 1
 var/const/WIRE_RECEIVE = 2
 var/const/WIRE_TRANSMIT = 4

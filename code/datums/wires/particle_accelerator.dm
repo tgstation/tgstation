@@ -2,6 +2,15 @@
 	wire_count = 5
 	holder_type = /obj/machinery/particle_accelerator/control_box
 
+/datum/wires/particle_acc/control_box/New()
+	wire_names=list(
+		"[PARTICLE_TOGGLE_WIRE]" 		= "Toggle",
+		"[PARTICLE_STRENGTH_WIRE]" 		= "Strength",
+		"[PARTICLE_INTERFACE_WIRE]" 	= "Interface",
+		"[PARTICLE_LIMIT_POWER_WIRE]" 	= "Power Limit"
+	)
+	..()
+
 var/const/PARTICLE_TOGGLE_WIRE = 1 // Toggles whether the PA is on or not.
 var/const/PARTICLE_STRENGTH_WIRE = 2 // Determines the strength of the PA.
 var/const/PARTICLE_INTERFACE_WIRE = 4 // Determines the interface showing up.
