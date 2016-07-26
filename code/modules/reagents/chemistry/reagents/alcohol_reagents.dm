@@ -56,8 +56,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with ethanol isn't quite as good as fuel.
 	if(!istype(M, /mob/living))
 		return
-	if(method == TOUCH || method == VAPOR)
+
+	if(method in list(TOUCH, VAPOR, PATCH))
 		M.adjust_fire_stacks(reac_volume / 15)
+
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
+
+			for(var/s in C.surgeries)
+				var/datum/surgery/S = s
+				S.success_multiplier = max(0.10*power_multiplier, S.success_multiplier)
+				// +10% success propability on each step, useful while operating in less-than-perfect conditions
 	return ..()
 
 /datum/reagent/consumable/ethanol/beer
@@ -702,6 +712,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Lemon juice/whiskey/sugar mixture. Moderate alcohol content."
 	color = rgb(255, 201, 49)
 	boozepwr = 35
+
+/datum/reagent/consumable/ethanol/hcider
+	name = "Hard Cider"
+	id = "hcider"
+	description = "Apple juice, for adults."
+	color = "#CD6839"
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	boozepwr = 25
+
 
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"

@@ -34,7 +34,7 @@
 				if(WEST)
 					buckled_mob.pixel_x = 2
 			if(buckled_mob.get_num_legs() > 0)
-				buckled_mob.pixel_y = 4
+				buckled_mob.pixel_y = 5
 			else
 				buckled_mob.pixel_y = -4
 
@@ -74,6 +74,18 @@
 		visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 
+/obj/vehicle/scooter/skateboard/MouseDrop(atom/over_object)
+	var/mob/living/carbon/M = usr
+	if(!istype(M) || M.incapacitated() || !Adjacent(M))
+		return
+	if(has_buckled_mobs() && over_object == M)
+		M << "<span class='warning'>You can't lift this up when somebody's on it.</span>"
+		return
+	if(over_object == M)
+		var/obj/item/weapon/melee/skateboard/board = new /obj/item/weapon/melee/skateboard()
+		M.put_in_hands(board)
+		qdel(src)
+
 //CONSTRUCTION
 /obj/item/scooter_frame
 	name = "scooter frame"
@@ -92,11 +104,13 @@
 
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
-		if(M.amount < 5)
+		if(M.get_amount() < 5)
 			user << "<span class='warning'>You need at least five metal sheets to make proper wheels!</span>"
 			return
 		user << "<span class='notice'>You begin to add wheels to [src].</span>"
 		if(do_after(user, 80, target = src))
+			if(!M || M.get_amount() < 5)
+				return
 			M.use(5)
 			user << "<span class='notice'>You finish making wheels for [src].</span>"
 			new /obj/vehicle/scooter/skateboard(user.loc)
@@ -119,6 +133,8 @@
 			return
 		user << "<span class='notice'>You begin making handlebars for [src].</span>"
 		if(do_after(user, 25, target = src))
+			if(!C || C.get_amount() < 2)
+				return
 			user << "<span class='notice'>You add the rods to [src], creating handlebars.</span>"
 			C.use(2)
 			new/obj/vehicle/scooter(get_turf(src))

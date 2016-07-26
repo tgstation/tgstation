@@ -11,7 +11,8 @@
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2
-	languages = ALIEN
+	languages_spoken = ALIEN
+	languages_understood = ALIEN
 	sight = SEE_MOBS
 	see_in_dark = 4
 	verb_say = "hisses"
@@ -227,3 +228,5 @@ Des: Removes all infected images from the alien.
 	if(see_override)
 		see_invisible = see_override
 
+/mob/living/carbon/alien/can_hold_items()
+	return has_fine_manipulation

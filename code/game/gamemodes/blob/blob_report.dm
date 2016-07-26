@@ -16,7 +16,7 @@
 			print_command_report(intercepttext,"Level 5-6 Biohazard Response Procedures")
 			priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/AI/outbreak5.ogg')
 		if(2)
-			var/nukecode = rand(10000, 99999)
+			var/nukecode = random_nukecode()
 			for(var/obj/machinery/nuclearbomb/bomb in machines)
 				if(bomb && bomb.r_code)
 					if(bomb.z == ZLEVEL_STATION)

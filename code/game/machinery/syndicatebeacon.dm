@@ -55,7 +55,7 @@
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
 				src.updateUsrDialog()
-				spawn(rand(50,200)) selfdestruct()
+				addtimer(src, "selfdestruct", rand(50, 200))
 				return
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/N = M
@@ -87,13 +87,9 @@
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
 
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+			M.mind.announce_objectives()
 
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()

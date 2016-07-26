@@ -17,7 +17,7 @@
 
 /obj/effect/blob/core/New(loc, client/new_overmind = null, new_rate = 2, placed = 0)
 	blob_cores += src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
@@ -45,7 +45,7 @@
 	if(overmind)
 		overmind.blob_core = null
 	overmind = null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
 	return ..()
 

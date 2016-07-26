@@ -233,20 +233,18 @@
 
 	return 1
 
-/obj/item/borg/upgrade/ashplating
-	name = "mining cyborg ash storm plating"
-	desc = "An upgrade kit to apply specialized plating and internal weather stripping to mining cyborgs, enabling them to withstand the heaviest of ash storms."
+/obj/item/borg/upgrade/lavaproof
+	name = "mining cyborg lavaproof tracks"
+	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
 	require_module = 1
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
 
-/obj/item/borg/upgrade/ashplating/action(mob/living/silicon/robot/R)
+/obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
 	if(..())
 		return
-	R.weather_immunities += "ash"
-	R.icon_state = "ashborg"
-
+	R.weather_immunities += "lava"
 	return 1
 
 /obj/item/borg/upgrade/selfrepair
@@ -280,10 +278,10 @@
 	on = !on
 	if(on)
 		cyborg << "<span class='notice'>You activate the self-repair module.</span>"
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		cyborg << "<span class='notice'>You deactivate the self-repair module.</span>"
-		SSobj.processing -= src
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/borg/upgrade/selfrepair/update_icon()
@@ -296,7 +294,7 @@
 		icon_state = "cyborg_upgrade5"
 
 /obj/item/borg/upgrade/selfrepair/proc/deactivate()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	on = FALSE
 	update_icon()
 

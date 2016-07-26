@@ -349,7 +349,14 @@
 	var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 	if(set_dir)
 		E.setDir(set_dir)
+	else
+		E.setDir(dir)
 	debris += new/obj/item/clockwork/component/vanguard_cogwheel(src)
+	change_construction_value(2)
+
+/obj/machinery/door/window/clockwork/Destroy()
+	change_construction_value(-2)
+	return ..()
 
 /obj/machinery/door/window/clockwork/ratvar_act()
 	health = initial(health)

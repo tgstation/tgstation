@@ -247,10 +247,7 @@
 			BM.mind.transfer_to(O)
 
 			if(M.clockwork)
-				O.emagged = 1
-				O.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
-				"<span class='warning'><b>As you serve Ratvar, your onboard camera is not active and your safeties are disabled.</b></span>")
-				ticker.mode.update_servant_icons_added(O.mind)
+				add_servant_of_ratvar(O)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")

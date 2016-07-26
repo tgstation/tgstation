@@ -171,8 +171,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /mob/proc/null_rod_check() //The null rod, if equipped, will protect the holder from the effects of most runes
 	var/obj/item/weapon/nullrod/N = locate() in src
-	if(N)
+	if(N && !ratvar_awakens) //If Nar-Sie or Ratvar are alive, null rods won't protect you
 		return N
+	return 0
+
+/mob/proc/bible_check() //The bible, if held, might protect against certain things
+	var/obj/item/weapon/storage/book/bible/B = locate() in src
+	if(B && (l_hand == B || r_hand == B))
+		return B
 	return 0
 
 //Rite of Binding: A paper on top of the rune to a talisman.

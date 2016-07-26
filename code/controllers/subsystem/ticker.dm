@@ -36,6 +36,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft = 1200						//pregame timer
 
@@ -62,15 +63,14 @@ var/datum/subsystem/ticker/ticker
 		syndicate_code_phrase	= generate_code_phrase()
 	if(!syndicate_code_response)
 		syndicate_code_response	= generate_code_phrase()
-	setupFactions()
 	..()
 
 /datum/subsystem/ticker/fire()
 	switch(current_state)
 		if(GAME_STATE_STARTUP)
 			timeLeft = config.lobby_countdown * 10
-			world << "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>"
-			world << "Please, setup your character and select ready. Game will start in [config.lobby_countdown] seconds"
+			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
+			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
 
 		if(GAME_STATE_PREGAME)
@@ -88,8 +88,8 @@ var/datum/subsystem/ticker/ticker
 			timeLeft -= wait
 
 			if(timeLeft <= 300 && !tipped)
-				send_random_tip()
-				tipped = 1
+				send_tip_of_the_round()
+				tipped = TRUE
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
@@ -157,15 +157,15 @@ var/datum/subsystem/ticker/ticker
 			SSjob.ResetOccupations()
 			return 0
 	else
-		world << "<span class='notice'>DEBUG: Bypassing prestart checks..."
+		message_admins("<span class='notice'>DEBUG: Bypassing prestart checks...</span>")
 
 	if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
 			modes += M.name
 		modes = sortList(modes)
-		world << "<B>The current game mode is - Secret!</B>"
-		world << "<B>Possibilities:</B> [english_list(modes)]"
+		world << "<b>The gamemode is: secret!\n\
+		Possibilities:</B> [english_list(modes)]"
 	else
 		mode.announce()
 
@@ -447,13 +447,21 @@ var/datum/subsystem/ticker/ticker
 
 	return 1
 
-/datum/subsystem/ticker/proc/send_random_tip()
-	var/list/randomtips = file2list("config/tips.txt")
-	var/list/memetips = file2list("config/sillytips.txt")
-	if(randomtips.len && prob(95))
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(randomtips))]</font>"
-	else if(memetips.len)
-		world << "<font color='purple'><b>Tip of the round: </b>[html_encode(pick(memetips))]</font>"
+/datum/subsystem/ticker/proc/send_tip_of_the_round()
+	var/m
+	if(selected_tip)
+		m = selected_tip
+	else
+		var/list/randomtips = file2list("config/tips.txt")
+		var/list/memetips = file2list("config/sillytips.txt")
+		if(randomtips.len && prob(95))
+			m = pick(randomtips)
+		else if(memetips.len)
+			m = pick(memetips)
+
+	if(m)
+		world << "<font color='purple'><b>Tip of the round: \
+			</b>[html_encode(m)]</font>"
 
 /datum/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len || !config.hard_popcap)
@@ -525,6 +533,7 @@ var/datum/subsystem/ticker/ticker
 
 	triai = ticker.triai
 	tipped = ticker.tipped
+	selected_tip = ticker.selected_tip
 
 	timeLeft = ticker.timeLeft
 

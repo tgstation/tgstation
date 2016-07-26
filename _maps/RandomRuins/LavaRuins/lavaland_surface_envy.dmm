@@ -73,7 +73,7 @@
 	pixel_y = 28;
 	shattered = 1
 	},
-/obj/item/weapon/knife/envy,
+/obj/item/weapon/kitchen/knife/envy,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

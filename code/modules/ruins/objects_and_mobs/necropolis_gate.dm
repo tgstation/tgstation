@@ -1,5 +1,5 @@
 //The necropolis gate is used to call forth Legion from the Necropolis.
-/obj/structure/lavaland_door
+/obj/structure/necropolis_gate
 	name = "necropolis gate"
 	desc = "A tremendous and impossibly large gateway, bored into dense bedrock."
 	icon = 'icons/effects/96x96.dmi'
@@ -9,12 +9,13 @@
 	opacity = 1
 	bound_width = 96
 	bound_height = 96
+	pixel_x = -32
 	burn_state = LAVA_PROOF
 	luminosity = 1
 	var/boss = FALSE
 	var/is_anyone_home = FALSE
 
-/obj/structure/lavaland_door/attack_hand(mob/user)
+/obj/structure/necropolis_gate/attack_hand(mob/user)
 	for(var/mob/living/simple_animal/hostile/megafauna/legion/L in mob_list)
 		return
 	if(is_anyone_home)
@@ -46,14 +47,15 @@
 			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
 			M << 'sound/creatures/legion_spawn.ogg'
 			flash_color(M, flash_color = "#FF0000", flash_time = 50)
-	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
+	var/image/door_overlay = image('icons/effects/effects.dmi', "legiondoor")
+	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, alert_overlay = door_overlay, action = NOTIFY_JUMP)
 	is_anyone_home = FALSE
 	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
 
-/obj/structure/lavaland_door/singularity_pull()
+/obj/structure/necropolis_gate/singularity_pull()
 	return 0
 
-/obj/structure/lavaland_door/Destroy(force)
+/obj/structure/necropolis_gate/Destroy(force)
 	if(force)
 		. = ..()
 	else

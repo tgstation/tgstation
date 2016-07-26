@@ -30,19 +30,17 @@
 /obj/effect/particle_effect/smoke/New()
 	..()
 	create_reagents(500)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/effect/particle_effect/smoke/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/particle_effect/smoke/proc/kill_smoke()
-	SSobj.processing.Remove(src)
-	spawn(0)
-		fade_out()
-	spawn(10)
-		qdel(src)
+	STOP_PROCESSING(SSobj, src)
+	addtimer(src, "fade_out", 0)
+	QDEL_IN(src, 10)
 
 /obj/effect/particle_effect/smoke/process()
 	lifetime--
@@ -63,10 +61,12 @@
 	if(C.smoke_delay)
 		return 0
 	C.smoke_delay++
-	spawn(10)
-		if(C)
-			C.smoke_delay = 0
+	addtimer(src, "remove_smoke_delay", 10, FALSE, C)
 	return 1
+
+/obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
+	if(C)
+		C.smoke_delay = 0
 
 /obj/effect/particle_effect/smoke/proc/spread_smoke()
 	var/turf/t_loc = get_turf(src)
@@ -178,7 +178,6 @@
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)
 			Item.extinguish()
-	return
 
 /datum/effect_system/smoke_spread/freezing/set_up(radius = 5, loca, blasting = 0)
 	..()

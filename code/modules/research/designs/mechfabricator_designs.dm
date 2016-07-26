@@ -270,7 +270,7 @@
 	id = "gygax_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/gygax_armor
-	materials = list(MAT_METAL=25000,MAT_DIAMOND=10000)
+	materials = list(MAT_METAL=15000,MAT_DIAMOND=10000,MAT_TITANIUM=10000)
 	construction_time = 600
 	category = list("Gygax")
 
@@ -343,7 +343,7 @@
 	id = "durand_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_armor
-	materials = list(MAT_METAL=50000,MAT_URANIUM=30000)
+	materials = list(MAT_METAL=30000,MAT_URANIUM=25000,MAT_TITANIUM=20000)
 	construction_time = 600
 	category = list("Durand")
 
@@ -481,7 +481,7 @@
 	id = "phazon_armor"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/phazon_armor
-	materials = list(MAT_METAL=45000,MAT_PLASMA=30000)
+	materials = list(MAT_METAL=25000,MAT_PLASMA=20000,MAT_TITANIUM=20000)
 	construction_time = 300
 	category = list("Phazon")
 
@@ -649,7 +649,7 @@
 	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_upgrade_hyperka
-	name = "Cyborg (Hyper-Kinetic Accelerator)"
+	name = "Cyborg Upgrade (Hyper-Kinetic Accelerator)"
 	id = "borg_upgrade_hyperka"
 	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
 	build_type = MECHFAB //Reqs same as human Hyper KA
@@ -658,13 +658,13 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_ashplating
-	name = "Cyborg Upgrade (Ash Storm Plating)"
-	id = "borg_upgrade_ashplating"
+/datum/design/borg_upgrade_lavaproof
+	name = "Cyborg Upgrade (Lavaproof Tracks)"
+	id = "borg_upgrade_lavaproof"
 	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/ashplating
+	build_path = /obj/item/borg/upgrade/lavaproof
 	req_tech = list("plasmatech" = 4, "materials" = 4, "engineering" = 4)
-	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
+	materials = list(MAT_METAL = 10000, MAT_PLASMA = 4000, MAT_TITANIUM = 5000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 

@@ -63,3 +63,23 @@
 	origin_tech = "materials=6;abductor=1"
 	turf_type = /turf/open/floor/mineral/abductor
 	mineralType = "abductor"
+
+/obj/item/stack/tile/mineral/titanium
+	name = "titanium tile"
+	singular_name = "titanium floor tile"
+	desc = "A tile made of titanium, used for shuttles."
+	icon_state = "tile_shuttle"
+	origin_tech = "materials=2"
+	turf_type = /turf/open/floor/mineral/titanium
+	mineralType = "titanium"
+	materials = list(MAT_TITANIUM=500)
+
+/obj/item/stack/tile/mineral/plastitanium
+	name = "plas-titanium tile"
+	singular_name = "plas-titanium floor tile"
+	desc = "A tile made of plas-titanium, used for very evil shuttles."
+	icon_state = "tile_darkshuttle"
+	origin_tech = "materials=2"
+	turf_type = /turf/open/floor/mineral/plastitanium
+	mineralType = "plastitanium"
+	materials = list(MAT_TITANIUM=250, MAT_PLASMA=250)

@@ -4,6 +4,7 @@ import subprocess
 import os
 import sys
 import argparse
+import time
 from subprocess import PIPE, STDOUT
 
 null = open("/dev/null", "wb")
@@ -36,7 +37,8 @@ def stage2(map):
     p = subprocess.Popen(args, shell=True)
     wait(p)
 
-def stage3():
+def stage3(profile_mode=False):
+    start_time = time.time()
     play("sound/misc/compiler-stage2.ogg")
     logfile = open('server.log~','w')
     p = subprocess.Popen(
@@ -45,9 +47,15 @@ def stage3():
     try:
         while p.returncode is None:
             stdout = p.stdout.readline()
-            t = "Initializations complete."
-            if t in stdout:
+            if "Initializations complete." in stdout:
                 play("sound/misc/server-ready.ogg")
+                time_taken = time.time() - start_time
+                print("{} seconds taken to fully start".format(time_taken))
+            if "Map is ready." in stdout:
+                time_taken = time.time() - start_time
+                print("{} seconds for initial map loading".format(time_taken))
+                if profile_mode:
+                    return time_taken
             sys.stdout.write(stdout)
             sys.stdout.flush()
             logfile.write(stdout)
@@ -63,6 +71,7 @@ def main():
     parser.add_argument('-s','---stage',default=1,type=int)
     parser.add_argument('--only',action='store_true')
     parser.add_argument('-m','--map',type=str)
+    parser.add_argument('--profile-mode',action='store_true')
     args = parser.parse_args()
     stage = args.stage
     assert stage in (1,2,3)
@@ -75,7 +84,9 @@ def main():
         if not args.only:
             stage = 3
     if stage == 3:
-        stage3()
+        value = stage3(profile_mode=args.profile_mode)
+        with open('profile~', 'a') as f:
+            f.write("{}\n".format(value))
 
 if __name__=='__main__':
     try:

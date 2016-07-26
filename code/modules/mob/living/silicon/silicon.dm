@@ -1,7 +1,8 @@
 /mob/living/silicon
 	gender = NEUTER
 	voice_name = "synthesized voice"
-	languages = ROBOT | HUMAN
+	languages_spoken = ROBOT | HUMAN
+	languages_understood = ROBOT | HUMAN
 	has_unlimited_silicon_privilege = 1
 	verb_say = "states"
 	verb_ask = "queries"
@@ -9,6 +10,8 @@
 	verb_yell = "alarms"
 	see_in_dark = 8
 	bubble_icon = "machine"
+	weather_immunities = list("ash")
+
 	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/list/alarms_to_show = list()
@@ -411,7 +414,6 @@
 			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
 							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
-	return
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	if(..())
@@ -437,7 +439,6 @@
 /mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
 	if(L.a_intent == "help")
 		visible_message("[L.name] rubs its head against [src].")
-	return
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user)
 	if(user.a_intent == "harm")

@@ -318,6 +318,8 @@
 	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
 	modules += new /obj/item/weapon/shovel(src)
+	modules += new /obj/item/weapon/weldingtool/mini(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
 	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
 	modules += new /obj/item/device/t_scanner/adv_mining_scanner(src)
 	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
@@ -334,7 +336,7 @@
 	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/weapon/pinpointer/operative(src)
+	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)
 	emag = null
 	fix_modules()
 
@@ -355,7 +357,7 @@
 	modules += new /obj/item/roller/robo(src)
 	modules += new /obj/item/weapon/card/emag(src)
 	modules += new /obj/item/weapon/crowbar/cyborg(src)
-	modules += new /obj/item/weapon/pinpointer/operative(src)
+	modules += new /obj/item/weapon/pinpointer/syndicate/cyborg(src)
 	emag = null
 
 	add_module(new /obj/item/stack/medical/gauze/cyborg())

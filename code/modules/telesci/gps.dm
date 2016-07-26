@@ -118,3 +118,38 @@ var/list/GPS_list = list()
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
+
+/obj/item/device/gps/visible_debug
+	name = "visible GPS"
+	gpstag = "ADMIN"
+	desc = "This admin-spawn GPS unit leaves the coordinates visible \
+		on any turf that it passes over, for debugging. Especially useful \
+		for marking the area around the transition edges."
+	var/list/turf/tagged
+
+/obj/item/device/gps/visible_debug/New()
+	. = ..()
+	tagged = list()
+	SSfastprocess.processing += src
+
+/obj/item/device/gps/visible_debug/process()
+	var/turf/T = get_turf(src)
+	if(T)
+		// I assume it's faster to color,tag and OR the turf in, rather
+		// then checking if its there
+		T.color = RANDOM_COLOUR
+		T.maptext = "[T.x],[T.y],[T.z]"
+		tagged |= T
+
+/obj/item/device/gps/visible_debug/proc/clear()
+	while(tagged.len)
+		var/turf/T = pop(tagged)
+		T.color = initial(T.color)
+		T.maptext = initial(T.maptext)
+
+/obj/item/device/gps/visible_debug/Destroy()
+	if(tagged)
+		clear()
+	tagged = null
+	SSfastprocess.processing -= src
+	. = ..()

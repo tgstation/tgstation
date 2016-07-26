@@ -36,10 +36,11 @@
 			damage = 0
 	health -= damage
 	if(health <= 0)
-		if(debris_type)
-			new debris_type(get_turf(src), 3)
+		make_debris()
 		qdel(src)
 
+/obj/structure/barricade/proc/make_debris()
+	return
 
 /obj/structure/barricade/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
@@ -109,7 +110,9 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodenbarricade"
 	material = WOOD
-	debris_type = /obj/item/stack/sheet/mineral/wood
+
+/obj/structure/barricade/wooden/make_debris()
+	new /obj/item/stack/sheet/mineral/wood(get_turf(src), 3)
 
 
 /obj/structure/barricade/sandbags
@@ -121,7 +124,7 @@
 	maxhealth = 280
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
-	material = null
+	material = SAND
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
@@ -142,11 +145,13 @@
 
 /obj/structure/barricade/security/New()
 	..()
-	spawn(40)
-		icon_state = "barrier1"
-		density = 1
-		anchored = 1
-		visible_message("<span class='warning'>[src] deploys!</span>")
+	addtimer(src, "deploy", 40)
+
+/obj/structure/barricade/security/proc/deploy()
+	icon_state = "barrier1"
+	density = 1
+	anchored = 1
+	visible_message("<span class='warning'>[src] deploys!</span>")
 
 
 /obj/item/weapon/grenade/barrier

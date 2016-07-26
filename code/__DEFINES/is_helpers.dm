@@ -15,6 +15,7 @@
 #define isplasmaman(A) (is_species(A, /datum/species/plasmaman))
 #define ispodperson(A) (is_species(A, /datum/species/podperson))
 #define isflyperson(A) (is_species(A, /datum/species/fly))
+#define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
@@ -44,6 +45,10 @@
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
 
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
@@ -72,7 +77,7 @@
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
-#define isumbra(A) (istype(A, /mob/living/simple_animal/umbra))
+#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
 #define islimb(A) (istype(A, /obj/item/bodypart))
 

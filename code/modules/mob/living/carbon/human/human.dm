@@ -120,6 +120,8 @@
 	var/b_loss = null
 	var/f_loss = null
 	var/bomb_armor = getarmor(null, "bomb")
+	if(istype(ex_target, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 
 	switch (severity)
 		if (1)
@@ -854,7 +856,7 @@
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
 
-	if(C.stat == DEAD)
+	if(C.stat == DEAD || (C.status_flags & FAKEDEATH))
 		src << "<span class='warning'>[C.name] is dead!</span>"
 		return
 	if(is_mouth_covered())
@@ -1113,6 +1115,9 @@
 
 /mob/living/carbon/human/is_literate()
 	return 1
+
+/mob/living/carbon/human/can_hold_items()
+	return TRUE
 
 /mob/living/carbon/human/update_gravity(has_gravity,override = 0)
 	override = dna.species.override_float

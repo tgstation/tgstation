@@ -46,14 +46,22 @@
 	density = TRUE
 
 /obj/structure/cursed_money/New()
-	spawn(600)
-		if(src)
-			visible_message("<span class='warning'>[src] falls in on itself, canvas rotting away and contents vanishing.</span>")
-			qdel(src)
+	. = ..()
+	addtimer(src, "collapse", 600)
+
+/obj/structure/cursed_money/proc/collapse()
+	visible_message("<span class='warning'>[src] falls in on itself, \
+		canvas rotting away and contents vanishing.</span>")
+	qdel(src)
 
 /obj/structure/cursed_money/attack_hand(mob/living/user)
-	user.visible_message("<span class='boldwarning'>You open the bag...!</span>\n<span class='danger'>And see a bag full of dice. Confused, you take one... and the bag vanishes.</span>")
-	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(get_turf(user))
+	user.visible_message("<span class='warning'>[user] opens the bag and \
+		and removes a die. The bag then vanishes.</span>",
+		"<span class='boldwarning'>You open the bag...!</span>\n\
+		<span class='danger'>And see a bag full of dice. Confused, \
+		you take one... and the bag vanishes.</span>")
+	var/turf/T = get_turf(user)
+	var/obj/item/weapon/dice/d20/fate/one_use/critical_fail = new(T)
 	user.put_in_hands(critical_fail)
 	qdel(src)
 
@@ -98,7 +106,7 @@
 
 //can't be bothered to do sloth right now, will make later
 
-/obj/item/weapon/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+/obj/item/weapon/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
 	icon = 'icons/obj/wizard.dmi'
@@ -109,7 +117,7 @@
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/weapon/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+/obj/item/weapon/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
 	..()
 	if(!proximity)
 		return

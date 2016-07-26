@@ -18,12 +18,11 @@
 		take_organ_damage(10)
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying)
-		if(surgeries.len)
-			if(user != src && user.a_intent == "help")
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
+	if(lying && surgeries.len)
+		if(user != src && user.a_intent == "help")
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user))
+					return 1
 	return ..()
 
 
@@ -39,12 +38,11 @@
 		if(D.IsSpreadByTouch())
 			ContractDisease(D)
 
-	if(lying)
+	if(lying && surgeries.len)
 		if(user.a_intent == "help")
-			if(surgeries.len)
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, src))
-						return 1
+			for(var/datum/surgery/S in surgeries)
+				if(S.next_step(user))
+					return 1
 	return 0
 
 
@@ -106,3 +104,25 @@
 		C.forceMove(src)
 		stomach_contents.Add(C)
 		add_logs(src, C, "devoured")
+
+/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
+	if(!attacker.limb_destroyer || !has_limbs)
+		return dam_zone
+	var/obj/item/bodypart/affecting
+	if(dam_zone && attacker.client)
+		affecting = get_bodypart(ran_zone(dam_zone))
+	else
+		var/list/things_to_ruin = shuffle(bodyparts.Copy())
+		for(var/B in things_to_ruin)
+			var/obj/item/bodypart/bodypart = B
+			if(bodypart.body_zone == "head" || bodypart.body_zone == "chest")
+				continue
+			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
+				affecting = bodypart
+	if(affecting)
+		dam_zone = affecting.body_zone
+		if(affecting.get_damage() >= affecting.max_damage)
+			affecting.dismember()
+			return null
+		return affecting.body_zone
+	return dam_zone

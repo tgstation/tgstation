@@ -53,14 +53,14 @@
 	air_contents = new(volume) //liters
 	air_contents.temperature = T20C
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
 	if(air_contents)
 		qdel(air_contents)
 
-	SSobj.processing -= src
-	return ..()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
@@ -127,7 +127,7 @@
 	else if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)
 	else
-		return ..()
+		. = ..()
 
 /obj/item/weapon/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = hands_state)

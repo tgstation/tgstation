@@ -36,6 +36,7 @@
 	description = "The documentation hasn't been finished yet for this \
 		shuttle.\n\
 		In case of emergency: Break glass."
+	admin_notes = "No brig, no medical facilities, no air."
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -44,11 +45,12 @@
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
-	description = "Features include a very tough Bardrone, with laws to be \
-		a good bartender, bathroom, a quality lounge for the heads, and a \
-		small gambling table."
-	admin_notes = "Bardrone should be controlled by a player, either admin \
-		or ghost, has modified drone laws, can speak human and see normally."
+	description = "Features include sentient bar staff (a Bardrone and a \
+		Barmaid), bathroom, a quality lounge for the heads, and a \
+		large gathering table."
+	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically \
+		sentienced by the fun balloon at 60 seconds before arrival. Has \
+		medical facilities."
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -71,7 +73,7 @@
 		short. Have a fun ride!"
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
-		accidental dropping."
+		accidental dropping. No brig."
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -102,8 +104,9 @@
 		darkness between the stars on route to the station. Let's not think \
 		too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive \
-		constructs. Put players in constructs if you want them to move. \
-		Cloning pods in 'medbay' area are showcases and nonfunctional."
+		constructs. Cult mobs will automatically be sentienced by fun \
+		balloon. Cloning pods in 'medbay' area are showcases and \
+		nonfunctional."
 
 /datum/map_template/shuttle/emergency/supermatter
 	suffix = "supermatter"

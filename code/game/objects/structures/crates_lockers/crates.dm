@@ -41,11 +41,20 @@
 		return
 	..()
 
+/obj/structure/closet/crate/open(mob/living/user)
+	. = ..()
+	if(. && manifest)
+		user << "<span class='notice'>The manifest is torn off [src].</span>"
+		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+		manifest.forceMove(get_turf(src))
+		manifest = null
+		update_icon()
+
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	user << "<span class='notice'>You tear the manifest off of [src].</span>"
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
 
-	manifest.loc = loc
+	manifest.forceMove(loc)
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null

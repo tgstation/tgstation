@@ -144,7 +144,7 @@
 		. = TRUE
 
 /obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = hands_state)
-	// god bless tgui and all of its arguments
+	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -241,7 +241,7 @@
 	update_icon()
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
-	var/list/base = char_split(lowertext(text))
+	var/list/base = string2charlist(lowertext(text))
 	var/list/out = list()
 	for(var/a in base)
 		if(a in (letters|numerals))
@@ -317,12 +317,19 @@
 	if(gang_mode)
 		takes_time = TRUE
 
+	var/wait_time = 50
+	if(PAINT_LARGE_HORIZONTAL)
+		wait_time *= 3
+
 	if(takes_time)
 		if(!do_after(user, 50, target = target))
 			return
 
 	if(length(text_buffer))
 		drawing = copytext(text_buffer,1,2)
+
+
+	var/list/turf/affected_turfs = list()
 
 	if(actually_paints)
 		if(gang_mode)
@@ -334,10 +341,15 @@
 			switch(paint_mode)
 				if(PAINT_NORMAL)
 					new /obj/effect/decal/cleanable/crayon(target, paint_color, drawing, temp, graf_rot)
+					affected_turfs += target
 				if(PAINT_LARGE_HORIZONTAL)
-					if(is_type_in_list(locate(target.x-1,target.y,target.z), validSurfaces)\
-					   && is_type_in_list(locate(target.x+1,target.y,target.z), validSurfaces))
-						new /obj/effect/decal/cleanable/crayon(locate(target.x-1,target.y,target.z), paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					var/turf/left = locate(target.x-1,target.y,target.z)
+					var/turf/right = locate(target.x+1,target.y,target.z)
+					if(is_type_in_list(left, validSurfaces) && is_type_in_list(right, validSurfaces))
+						new /obj/effect/decal/cleanable/crayon(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+						affected_turfs += left
+						affected_turfs += right
+						affected_turfs += target
 					else
 						user << "<span class='warning'>There isn't enough space to paint!</span>"
 						return
@@ -352,10 +364,15 @@
 		audible_message("<span class='notice'>You hear spraying.</span>")
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 
-	. = use_charges(1)
+	var/cost = 1
+	if(paint_mode == PAINT_LARGE_HORIZONTAL)
+		cost = 5
+	. = use_charges(cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
-	reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-	reagents.trans_to(target, ., volume_multiplier)
+	fraction /= affected_turfs.len
+	for(var/t in affected_turfs)
+		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
+		reagents.trans_to(t, ., volume_multiplier)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -449,6 +466,11 @@
 	item_color = "purple"
 	reagent_contents = list("nutriment" = 1, "purplecrayonpowder" = 1)
 
+/obj/item/toy/crayon/black
+	icon_state = "crayonblack"
+	paint_color = "#1C1C1C" //Not completely black because total black looks bad. So Mostly Black.
+	item_color = "black"
+
 /obj/item/toy/crayon/white
 	icon_state = "crayonwhite"
 	paint_color = "#FFFFFF"
@@ -485,7 +507,7 @@
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = 2
-	storage_slots = 6
+	storage_slots = 7
 	can_hold = list(
 		/obj/item/toy/crayon
 	)
@@ -498,6 +520,7 @@
 	new /obj/item/toy/crayon/green(src)
 	new /obj/item/toy/crayon/blue(src)
 	new /obj/item/toy/crayon/purple(src)
+	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
 /obj/item/weapon/storage/crayons/update_icon()

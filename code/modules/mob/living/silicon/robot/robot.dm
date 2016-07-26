@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -213,7 +213,7 @@
 		if("Miner")
 			module = new /obj/item/weapon/robot_module/miner(src)
 			hands.icon_state = "miner"
-			icon_state = "minerborg"
+			icon_state = "ashborg"
 			animation_length = 30
 			modtype = "Miner"
 			feedback_inc("cyborg_miner",1)
@@ -718,8 +718,7 @@
 			if (prob(85))
 				Stun(2)
 				step(src,get_dir(M,src))
-				spawn(5)
-					step(src,get_dir(M,src))
+				addtimer(src, "step", 5, FALSE, src, get_dir(M, src))
 				add_logs(M, src, "pushed")
 				playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \

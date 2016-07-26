@@ -38,12 +38,12 @@
 	fire_sound = shot.fire_sound
 	fire_delay = shot.delay
 	if(selfcharge)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	update_icon()
 	return
 
 /obj/item/weapon/gun/energy/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/gun/energy/process()
@@ -161,9 +161,9 @@
 /obj/item/weapon/gun/energy/on_varedit(modified_var)
 	if(modified_var == "selfcharge")
 		if(selfcharge)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
-			SSobj.processing -= src
+			STOP_PROCESSING(SSobj, src)
 	..()
 
 /obj/item/weapon/gun/energy/burn()

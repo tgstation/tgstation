@@ -9,8 +9,8 @@
 	heat = 3500
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
+						"<span class='suicide'>[user] is falling on [src]! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -63,6 +63,16 @@
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
+/obj/item/weapon/melee/energy/sword/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/melee/energy/sword/process()
+	if(active)
+		open_flame()
+	else
+		STOP_PROCESSING(SSobj, src)
+
 /obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
 		return ..()
@@ -87,6 +97,7 @@
 		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
+		START_PROCESSING(SSobj, src)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -98,11 +109,25 @@
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
+		STOP_PROCESSING(SSobj, src)
 	add_fingerprint(user)
-	return
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
+
+/obj/item/weapon/melee/energy/ignition_effect(atom/A, mob/user)
+	if(!active)
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask == src)
+			in_mouth = ", barely missing their nose"
+	. = "<span class='warning'>[user] swings their \
+		[src][in_mouth]. They light [A] in the process.</span>"
+	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 50
@@ -156,21 +181,19 @@
 
 /obj/item/weapon/melee/energy/sword/saber/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		if(W == src)
-			user << "<span class='notice'>You try to attach the end of the energy sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else
-			user << "<span class='notice'>You attach the ends of the two energy swords, making a single double-bladed weapon! You're cool.</span>"
-			var/obj/item/weapon/twohanded/dualsaber/newSaber = new /obj/item/weapon/twohanded/dualsaber(user.loc)
-			if(src.hacked) // That's right, we'll only check the "original" esword.
-				newSaber.hacked = 1
-				newSaber.item_color = "rainbow"
-			user.unEquip(W)
-			user.unEquip(src)
-			qdel(W)
-			qdel(src)
-			user.put_in_hands(newSaber)
+		user << "<span class='notice'>You attach the ends of the two \
+			energy swords, making a single double-bladed weapon! \
+			You're cool.</span>"
+		var/obj/item/weapon/melee/energy/sword/saber/other_esword = W
+		var/obj/item/weapon/twohanded/dualsaber/newSaber = new(user.loc)
+		if(hacked || other_esword.hacked)
+			newSaber.hacked = TRUE
+			newSaber.item_color = "rainbow"
+		user.unEquip(W)
+		user.unEquip(src)
+		qdel(W)
+		qdel(src)
+		user.put_in_hands(newSaber)
 	else if(istype(W, /obj/item/device/multitool))
 		if(hacked == 0)
 			hacked = 1

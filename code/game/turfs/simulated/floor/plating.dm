@@ -168,12 +168,15 @@
 
 /turf/open/floor/engine/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)
-		if(builtin_tile)
+		if(floor_tile)
 			if(prob(30))
-				builtin_tile.loc = src
+				PoolOrNew(floor_tile, src)
 				make_plating()
 		else if(prob(30))
 			ReplaceWithLattice()
+
+/turf/open/floor/engine/cult/airless
+	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
@@ -211,7 +214,6 @@
 	icon_state = "lava"
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	var/processing = 0
 	luminosity = 1
 
 /turf/open/floor/plating/lava/airless
@@ -219,14 +221,11 @@
 
 /turf/open/floor/plating/lava/Entered(atom/movable/AM)
 	burn_stuff()
-	if(!processing)
-		processing = 1
-		SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/process()
 	if(!burn_stuff())
-		processing = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /turf/open/floor/plating/lava/make_plating()
 	return
@@ -242,8 +241,10 @@
 /turf/open/floor/plating/lava/proc/burn_stuff()
 	. = 0
 	for(var/thing in contents)
-		if(istype(thing, /obj))
+		if(isobj(thing))
 			var/obj/O = thing
+			if(O.burn_state == LAVA_PROOF || O.throwing)
+				continue
 			if(istype(O, /obj/effect/decal/cleanable/ash)) //So we don't get stuck burning the same ash pile forever
 				qdel(O)
 				continue
@@ -254,7 +255,7 @@
 			O.fire_act()
 
 
-		else if (istype(thing, /mob/living))
+		else if (isliving(thing))
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
@@ -298,11 +299,7 @@
 /turf/open/floor/plating/lava/smooth/airless
 	initial_gas_mix = "TEMP=2.7"
 
-/turf/open/floor/plating/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/airless/warnplate
-	icon_state = "warnplate"
-/turf/open/floor/plating/warnplate/corner
-	icon_state = "warnplatecorner"
-/turf/open/floor/plating/airless/warnplate/corner
-	icon_state = "warnplatecorner"
+/turf/open/floor/plating/astplate
+	icon_state = "asteroidplating"
+/turf/open/floor/plating/airless/astplate
+	icon_state = "asteroidplating"

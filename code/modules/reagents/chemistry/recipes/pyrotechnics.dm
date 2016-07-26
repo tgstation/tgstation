@@ -63,8 +63,17 @@
 	if(created_volume >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
 		strengthdiv = 8
+		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
+			var/diety = ticker.Bible_deity_name
+			if(!ticker.Bible_deity_name)
+				diety = "Christ"
+			R << "<span class='userdanger'>The power of [diety] compels you!</span>"
+			R.stun(20)
+			R.reveal(100)
+			R.adjustHealth(50)
+		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
-			if(iscultist(C) || is_handofgod_cultist(C) || C.dna.species.id == "shadowling" || C.dna.species.id == "l_shadowling")
+			if(iscultist(C) || is_handofgod_cultist(C))
 				C << "<span class='userdanger'>The divine explosion sears you!</span>"
 				C.Weaken(2)
 				C.adjust_fire_stacks(5)

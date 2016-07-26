@@ -257,29 +257,7 @@
 			else
 				user << "<span class='warning'>Access denied.</span>"
 	else if(istype(W, /obj/item/device/paicard))
-		if(paicard)
-			user << "<span class='warning'>A [paicard] is already inserted!</span>"
-		else if(allow_pai && !key)
-			if(!locked && !open)
-				var/obj/item/device/paicard/card = W
-				if(card.pai && card.pai.mind)
-					if(!user.drop_item())
-						return
-					W.forceMove(src)
-					paicard = card
-					user.visible_message("[user] inserts [W] into [src]!","<span class='notice'>You insert [W] into [src].</span>")
-					paicard.pai.mind.transfer_to(src)
-					src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
-					bot_name = name
-					name = paicard.pai.name
-					faction = user.faction
-					add_logs(user, paicard.pai, "uploaded to [src.bot_name],")
-				else
-					user << "<span class='warning'>[W] is inactive.</span>"
-			else
-				user << "<span class='warning'>The personality slot is locked.</span>"
-		else
-			user << "<span class='warning'>[src] is not compatible with [W]</span>"
+		insertpai(user, W)
 	else if(istype(W, /obj/item/weapon/hemostat) && paicard)
 		if(open)
 			user << "<span class='warning'>Close the access panel before manipulating the personality slot!</span>"
@@ -757,7 +735,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	dat = get_controls(M)
 	var/datum/browser/popup = new(M,window_id,window_name,350,600)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(use_onclose = 0)
 	onclose(M,window_id,ref=src)
 	return
 
@@ -863,6 +841,31 @@ Pass a positive integer as an argument to override a bot's default speed.
 			eject += "<BR>"
 		eject += "<BR>"
 	return eject
+
+/mob/living/simple_animal/bot/proc/insertpai(mob/user, obj/item/device/paicard/card)
+	if(paicard)
+		user << "<span class='warning'>A [paicard] is already inserted!</span>"
+	else if(allow_pai && !key)
+		if(!locked && !open)
+			if(card.pai && card.pai.mind)
+				if(!user.drop_item())
+					return
+				card.forceMove(src)
+				paicard = card
+				user.visible_message("[user] inserts [card] into [src]!","<span class='notice'>You insert [card] into [src].</span>")
+				paicard.pai.mind.transfer_to(src)
+				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
+				bot_name = name
+				name = paicard.pai.name
+				faction = user.faction
+				add_logs(user, paicard.pai, "uploaded to [bot_name],")
+				return 1
+			else
+				user << "<span class='warning'>[card] is inactive.</span>"
+		else
+			user << "<span class='warning'>The personality slot is locked.</span>"	
+	else
+		user << "<span class='warning'>[src] is not compatible with [card]</span>"
 
 /mob/living/simple_animal/bot/proc/ejectpai(mob/user = null, announce = 1)
 	if(paicard)

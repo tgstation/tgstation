@@ -1,3 +1,29 @@
+#define MEDAL_PREFIX "Drake"
+/*
+
+ASH DRAKE
+
+Ash drakes spawn randomly wherever a lavaland creature is able to spawn. They are the draconic guardians of the Necropolis.
+
+It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+
+Whenever possible, the drake will breathe fire in the four cardinal directions, igniting and heavily damaging anything caught in the blast.
+It also often causes fire to rain from the sky - many nearby turfs will flash red as a fireball crashes into them, dealing damage to anything on the turfs.
+The drake also utilizes its wings to fly into the sky and crash down onto a specified point. Anything on this point takes tremendous damage.
+ - Sometimes it will chain these swooping attacks over and over, making swiftness a necessity.
+
+When an ash drake dies, it leaves behind a chest that can contain four things:
+ 1. A spectral blade that allows its wielder to call ghosts to it, enhancing its power
+ 2. A lava staff that allows its wielder to create lava
+ 3. A spellbook and wand of fireballs
+ 4. A bottle of dragon's blood with several effects, including turning its imbiber into a drake themselves.
+
+When butchered, they leave behind diamonds, sinew, bone, and ash drake hide. Ash drake hide can be used to create a hooded cloak that protects its wearer from ash storms.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/dragon
 	name = "ash drake"
 	desc = "Guardians of the necropolis."
@@ -31,6 +57,8 @@
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
+	medal_type = MEDAL_PREFIX
+	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -42,6 +70,11 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
 	qdel(internal)
 	. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
+	if(severity == 3)
+		return
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
 	if(swooping)
@@ -61,21 +94,25 @@
 	return 1
 
 /obj/effect/overlay/temp/fireball
-	icon = 'icons/obj/projectiles.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
 	randomdir = 0
-	duration = 10
+	duration = 12
 	pixel_z = 500
+
+/obj/effect/overlay/temp/fireball/New(loc)
+	..()
+	animate(src, pixel_z = 0, time = 12)
 
 /obj/effect/overlay/temp/target
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
 	luminosity = 2
-	duration = 10
+	duration = 12
 
 /obj/effect/overlay/temp/dragon_swoop
 	name = "certain death"
@@ -91,17 +128,16 @@
 /obj/effect/overlay/temp/target/ex_act()
 	return
 
-/obj/effect/overlay/temp/target/New()
+/obj/effect/overlay/temp/target/New(loc)
 	..()
-	spawn()
-		var/turf/T = get_turf(src)
-		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
-		animate(F, pixel_z = 0, time = 12)
-		sleep(12)
-		explosion(T, 0, 0, 1, 0, 0, 0, 1)
-		qdel(F)
-		qdel(src)
+	addtimer(src, "fall", 0)
+
+/obj/effect/overlay/temp/target/proc/fall()
+	var/turf/T = get_turf(src)
+	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+	PoolOrNew(/obj/effect/overlay/temp/fireball,T)
+	sleep(12)
+	explosion(T, 0, 0, 1, 0, 0, 0, 1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -124,10 +160,10 @@
 		fire_walls()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_rain()
-	visible_message("<span class='danger'>Fire rains from the sky!</span>")
+	visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
-			new /obj/effect/overlay/temp/target(turf)
+			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
@@ -136,20 +172,22 @@
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
 	for(var/d in attack_dirs)
-		spawn(0)
-			var/turf/E = get_edge_target_turf(src, d)
-			var/range = 10
-			for(var/turf/open/J in getline(src,E))
-				if(!range)
-					break
-				range--
-				PoolOrNew(/obj/effect/hotspot,J)
-				J.hotspot_expose(700,50,1)
-				for(var/mob/living/L in J)
-					if(L != src)
-						L.adjustFireLoss(20)
-						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
-				sleep(1)
+		addtimer(src, "fire_wall", 0, FALSE, d)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
+	var/turf/E = get_edge_target_turf(src, d)
+	var/range = 10
+	for(var/turf/open/J in getline(src,E))
+		if(!range)
+			break
+		range--
+		PoolOrNew(/obj/effect/hotspot,J)
+		J.hotspot_expose(700,50,1)
+		for(var/mob/living/L in J)
+			if(L != src)
+				L.adjustFireLoss(20)
+				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
 	if(stat || swooping)
@@ -164,7 +202,7 @@
 	swooping = 1
 	density = 0
 	icon_state = "swoop"
-	visible_message("<span class='danger'>[src] swoops up high!</span>")
+	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 	if(prob(50))
 		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
 	else
@@ -181,20 +219,20 @@
 	else
 		tturf = get_turf(src)
 	forceMove(tturf)
-	new/obj/effect/overlay/temp/dragon_swoop(tturf)
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))
 		if(L.stat)
-			visible_message("<span class='danger'>[src] slams down on [L], crushing them!</span>")
+			visible_message("<span class='warning'>[src] slams down on [L], crushing them!</span>")
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
 			if(L && !qdeleted(L)) // Some mobs are deleted on death
 				var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 				L.throw_at_fast(throwtarget)
-				visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
+				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
@@ -207,7 +245,7 @@
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "You need to wait 20 seconds between swoop attacks!"
+		src << "<span class='warning'>You need to wait 20 seconds between swoop attacks!M/span>"
 		return
 	swoop_attack(1, A)
 
@@ -226,3 +264,4 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
 
+#undef MEDAL_PREFIX

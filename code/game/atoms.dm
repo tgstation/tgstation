@@ -6,6 +6,7 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
+	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -27,7 +28,11 @@
 			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
 			qdel(AA)
 		alternate_appearances = null
-
+	if(viewing_alternate_appearances)
+		for(var/aakey in viewing_alternate_appearances)
+			for(var/aa in viewing_alternate_appearances[aakey])
+				var/datum/alternate_appearance/AA = aa
+				AA.hide(list(src))
 	return ..()
 
 
@@ -66,7 +71,6 @@
 		hulk.changeNext_move(CLICK_CD_MELEE)
 		add_logs(hulk, src, "punched", "hulk powers")
 		hulk.do_attack_animation(src)
-	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -141,7 +145,6 @@
 			return 1
 	else if(src in container)
 		return 1
-	return
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -441,3 +444,7 @@ var/list/blood_splatter_icons = list()
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
 	dir = newdir
+
+/atom/on_varedit(modified_var)
+	if(!Debug2)
+		admin_spawned = TRUE

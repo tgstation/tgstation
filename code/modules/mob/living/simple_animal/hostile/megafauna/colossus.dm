@@ -1,3 +1,28 @@
+
+#define MEDAL_PREFIX "Colossus"
+/*
+
+COLOSSUS
+
+The colossus spawns randomly wherever a lavaland creature is able to spawn. It is powerful, ancient, and extremely deadly.
+The colossus has a degree of sentience, proving this in speech during its attacks.
+
+It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+
+The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armor in a variety of ways:
+ 1. The colossus fires death bolts in alternating patterns: the cardinal directions and the diagonal directions.
+ 2. The colossus fires death bolts in a shotgun-like pattern, instantly downing anything unfortunate enough to be hit by all of them.
+ 3. The colossus fires a spiral of death bolts.
+At 33% health, the colossus gains an additional attack:
+ 4. The colossus fires two spirals of death bolts, spinning in opposite directions.
+
+When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
+For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
+
+Difficulty: Very Hard
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/colossus
 	name = "colossus"
 	desc = "A monstrous creature protected by heavy shielding."
@@ -26,6 +51,8 @@
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	del_on_death = 1
+	medal_type = MEDAL_PREFIX
+	score_type = COLOSSUS_SCORE
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 
@@ -96,15 +123,14 @@
 	duration = 8
 	var/target
 
-/obj/effect/overlay/temp/at_shield/New()
+/obj/effect/overlay/temp/at_shield/New(new_loc, new_target)
 	..()
-	spawn()
-		orbit(target, 0, FALSE, 0, 0, FALSE, TRUE)
+	target = new_target
+	addtimer(src, "orbit", 0, FALSE, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = new(src.loc)
-		AT.target = src
+		var/obj/effect/overlay/temp/at_shield/AT = PoolOrNew(/obj/effect/overlay/temp/at_shield, src.loc, src)
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
 
@@ -117,60 +143,57 @@
 	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
 
 	sleep(10)
-	spawn()
-		spiral_shoot()
-	spawn()
-		spiral_shoot(1)
+	addtimer(src, "spiral_shoot", 0)
+	addtimer(src, "spiral_shoot", 0, FALSE, 1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
-	spawn()
-		var/counter = 1
-		var/turf/marker
-		for(var/i in 1 to 80)
-			switch(counter)
-				if(1)
-					marker = locate(x,y - 2,z)
-				if(2)
-					marker = locate(x - 1,y - 2,z)
-				if(3)
-					marker = locate(x - 2, y - 2,z)
-				if(4)
-					marker = locate(x - 2,y - 1,z)
-				if(5)
-					marker = locate (x -2 ,y,z)
-				if(6)
-					marker = locate(x - 2, y+1,z)
-				if(7)
-					marker = locate(x - 2, y + 2, z)
-				if(8)
-					marker = locate(x - 1, y + 2,z)
-				if(9)
-					marker = locate(x, y + 2,z)
-				if(10)
-					marker = locate(x + 1, y+2,z)
-				if(11)
-					marker = locate(x+ 2, y + 2,z)
-				if(12)
-					marker = locate(x+2,y+1,z)
-				if(13)
-					marker = locate(x+2,y,z)
-				if(14)
-					marker = locate(x+2, y - 1, z)
-				if(15)
-					marker = locate(x+2, y - 2, z)
-				if(16)
-					marker = locate(x+1, y -2, z)
+	var/counter = 1
+	var/turf/marker
+	for(var/i in 1 to 80)
+		switch(counter)
+			if(1)
+				marker = locate(x,y - 2,z)
+			if(2)
+				marker = locate(x - 1,y - 2,z)
+			if(3)
+				marker = locate(x - 2, y - 2,z)
+			if(4)
+				marker = locate(x - 2,y - 1,z)
+			if(5)
+				marker = locate (x -2 ,y,z)
+			if(6)
+				marker = locate(x - 2, y+1,z)
+			if(7)
+				marker = locate(x - 2, y + 2, z)
+			if(8)
+				marker = locate(x - 1, y + 2,z)
+			if(9)
+				marker = locate(x, y + 2,z)
+			if(10)
+				marker = locate(x + 1, y+2,z)
+			if(11)
+				marker = locate(x+ 2, y + 2,z)
+			if(12)
+				marker = locate(x+2,y+1,z)
+			if(13)
+				marker = locate(x+2,y,z)
+			if(14)
+				marker = locate(x+2, y - 1, z)
+			if(15)
+				marker = locate(x+2, y - 2, z)
+			if(16)
+				marker = locate(x+1, y -2, z)
 
-			if(negative)
-				counter--
-			else
-				counter++
-			if(counter > 16)
-				counter = 0
-			if(counter < 0)
-				counter = 16
-			shoot_projectile(marker)
-			sleep(1)
+		if(negative)
+			counter--
+		else
+			counter++
+		if(counter > 16)
+			counter = 0
+		if(counter < 0)
+			counter = 16
+		shoot_projectile(marker)
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
 	var/turf/startloc = get_turf(src)
@@ -190,9 +213,8 @@
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
-	spawn()
-		for(var/turf/turf in range(1, target))
-			shoot_projectile(turf)
+	for(var/turf/turf in range(1, target))
+		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
 	var/turf/T = locate(x + 2, y + 2, z)
@@ -213,9 +235,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))
 		if(M.client)
-			M.client.color = rgb(200, 0, 0)
-			spawn(1)
-				M.client.color = initial(M.client.color)
+			flash_color(M.client, rgb(200, 0, 0), 1)
 			shake_camera(M, 4, 3)
 	playsound(get_turf(src),'sound/magic/clockwork/narsie_attack.ogg', 200, 1)
 
@@ -328,3 +348,5 @@
 
 /obj/machinery/smartfridge/black_box/default_deconstruction_crowbar()
 	return
+
+#undef MEDAL_PREFIX

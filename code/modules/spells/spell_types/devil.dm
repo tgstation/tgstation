@@ -75,7 +75,7 @@
 			user << "<span class='notice'>[C] seems to not be sentient.  You cannot summon a contract for them.</span>"
 
 
-/obj/effect/proc_holder/spell/dumbfire/fireball/hellish
+/obj/effect/proc_holder/spell/fireball/hellish
 	name = "Hellfire"
 	desc = "This spell launches hellfire at the target."
 
@@ -86,22 +86,14 @@
 	invocation_type = "shout"
 	range = 2
 
-	proj_icon_state = "fireball"
-	proj_name = "a fireball"
-	proj_type = /obj/effect/proc_holder/spell/turf/fireball/infernal
-
-	proj_lifespan = 200
-	proj_step_delay = 1
+	fireball_type = /obj/item/projectile/magic/fireball/infernal
 
 	action_background_icon_state = "bg_demon"
-
-/obj/effect/proc_holder/spell/turf/fireball/infernal/cast(turf/T,mob/user = usr)
-	explosion(T, -1, -1, 1, 4, 0, flame_range = 5)
 
 /obj/effect/proc_holder/spell/targeted/infernal_jaunt
 	name = "Infernal Jaunt"
 	desc = "Use hellfire to phase out of existence."
-	charge_max = 10
+	charge_max = 200
 	clothes_req = 0
 	selection_type = "range"
 	range = -1
@@ -129,6 +121,7 @@
 		else
 			user.notransform = 1
 			user.fakefire()
+			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
 			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
 		start_recharge()
 		return
@@ -167,20 +160,7 @@
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
-
-/mob/living/proc/fakefire()
-	return
-
-/mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
-	overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
-	apply_overlay(FIRE_LAYER)
-
-/mob/living/proc/fakefireextinguish()
-	return
-
-/mob/living/carbon/fakefireextinguish()
-	remove_overlay(FIRE_LAYER)
+	addtimer(src, "fakefireextinguish", 15,TRUE)
 
 /obj/effect/proc_holder/spell/targeted/sintouch
 	name = "Sin Touch"

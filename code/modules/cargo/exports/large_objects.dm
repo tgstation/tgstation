@@ -1,9 +1,5 @@
 // Large objects that don't fit in crates, but must be sellable anyway.
 
-/datum/export/large
-	shuttle_floor = TRUE
-
-
 // Crates, boxes, lockers.
 /datum/export/large/crate
 	cost = 500

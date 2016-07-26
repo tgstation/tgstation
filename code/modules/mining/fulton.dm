@@ -58,6 +58,7 @@ var/list/total_extraction_beacons = list()
 	else
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
 			user << "[src] is not safe for use with living creatures, they wouldn't survive the trip back!"
+			return
 		if(A.loc == user || A == user) // no extracting stuff you're holding in your hands/yourself
 			return
 		if(A.anchored)

@@ -148,3 +148,36 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 0
 	burn_state = FLAMMABLE
+
+/obj/item/clothing/suit/wizrobe/paper
+	name = "papier-mâché robe"
+	desc = "A robe held together by various bits of clear-tape and paste."
+	icon_state = "wizard-paper"
+	item_state = "wizrobe"
+	var/robe_charge = TRUE
+	actions_types = list(/datum/action/item_action/stickmen)
+
+
+/obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, actiontype)
+	stickmen()
+
+
+/obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
+	set category = "Object"
+	set name = "Summon Stick Minions"
+	set src in usr
+	if(!istype(usr, /mob/living))
+		return
+	if(!robe_charge)
+		usr << "<span class='warning'>\The robe's internal magic supply is still recharging!</span>"
+		return
+
+	usr.say("Rise, my creation! Off your page into this realm!")
+	playsound(src.loc, 'sound/magic/Summon_Magic.ogg', 50, 1, 1)
+	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
+	var/list/factions = usr.faction
+	M.faction = factions
+	src.robe_charge = FALSE
+	sleep(30)
+	src.robe_charge = TRUE
+	usr << "<span class='notice'>\The robe hums, its internal magic supply restored.</span>"

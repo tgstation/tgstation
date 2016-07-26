@@ -1,5 +1,6 @@
 /obj/item/weapon/paper_bin
 	name = "paper bin"
+	desc = "Contains all the paper you'll never need."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
 	item_state = "sheet-metal"
@@ -10,18 +11,24 @@
 	pressure_resistance = 8
 	burn_state = FLAMMABLE
 	var/amount = 30					//How much paper is in the bin.
-	var/list/papers = new/list()	//List of papers put in the bin for reference.
+	var/list/papers = list()	//List of papers put in the bin for reference.
 
 /obj/item/weapon/paper_bin/fire_act()
 	if(!amount)
 		return
 	..()
 
+/obj/item/weapon/paper_bin/Destroy()
+	if(papers)
+		for(var/i in papers)
+			qdel(i)
+		papers = null
+	. = ..()
+
 /obj/item/weapon/paper_bin/burn()
 	amount = 0
 	extinguish()
 	update_icon()
-	return
 
 /obj/item/weapon/paper_bin/MouseDrop(atom/over_object)
 	var/mob/living/M = usr

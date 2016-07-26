@@ -15,7 +15,8 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
-	var/always_keep = 0 // important for abilities like regenerate that screw you if you lose them.
+	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
+	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 
 
 /obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
@@ -56,16 +57,16 @@
 		user << "<span class='warning'>We cannot do that in this form!</span>"
 		return 0
 	var/datum/changeling/c = user.mind.changeling
-	if(c.chem_charges<chemical_cost)
+	if(c.chem_charges < chemical_cost)
 		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
 		return 0
-	if(c.absorbedcount<req_dna)
+	if(c.absorbedcount < req_dna)
 		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
 		return 0
 	if(req_stat < user.stat)
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
-	if((user.status_flags & FAKEDEATH) && name != "Regenerate")
+	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
 		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if(c.geneticdamage > max_genetic_damage)

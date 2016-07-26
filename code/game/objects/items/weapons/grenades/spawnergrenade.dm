@@ -19,6 +19,7 @@
 
 		for(var/i=1, i<=deliveryamt, i++)
 			var/atom/movable/x = new spawner_type
+			x.admin_spawned = admin_spawned
 			x.loc = T
 			if(prob(50))
 				for(var/j = 1, j <= rand(1, 3), j++)
@@ -31,7 +32,7 @@
 /obj/item/weapon/grenade/spawnergrenade/manhacks
 	name = "viscerator delivery grenade"
 	spawner_type = /mob/living/simple_animal/hostile/viscerator
-	deliveryamt = 5
+	deliveryamt = 10
 	origin_tech = "materials=3;magnets=4;syndicate=3"
 
 /obj/item/weapon/grenade/spawnergrenade/spesscarp
