@@ -594,6 +594,10 @@ var/list/VVckey_edit = list("key", "ckey")
 	switch(class)
 
 		if("list")
+			if(!istype(O.vars[variable],/list))
+				var/listchange = alert(usr,"Force change to empty list?","Change to list?","Yes","No")
+				if(listchange == "Yes")
+					O.vars[variable] = list()	//Unlike all other VV operations, the type change must be set here, not at the end of setting data. Hence the warning
 			mod_list(O.vars[variable], O, original_name, variable)
 			return
 
