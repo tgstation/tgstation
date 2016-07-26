@@ -546,6 +546,8 @@
 						M.ex_act(2)
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+				if(istype(AM, /obj/structure/clockwork/massive/ratvar) || istype(AM, /obj/singularity)) //it's either a god or a singularity. Either way...
+					continue
 				if(!AM.anchored)
 					step(AM, dir)
 				else
