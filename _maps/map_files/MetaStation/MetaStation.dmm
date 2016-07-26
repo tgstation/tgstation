@@ -9989,12 +9989,7 @@
 /area/crew_quarters/sleep)
 "arM" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -11593,12 +11588,7 @@
 /area/security/main)
 "aul" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/security/main)
 "aum" = (
@@ -11952,15 +11942,10 @@
 	})
 "auV" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2{
 	name = "Port Maintenance"
@@ -21513,12 +21498,7 @@
 /area/crew_quarters/sleep)
 "aLa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/crew_quarters/sleep)
@@ -22997,12 +22977,7 @@
 /area/crew_quarters/locker)
 "aOa" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/hallway/secondary/construction{
 	name = "\improper Garden"
@@ -24535,12 +24510,7 @@
 /area/crew_quarters/locker)
 "aQR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -25095,12 +25065,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/crew_quarters/courtroom)
 "aRP" = (
@@ -26574,12 +26539,7 @@
 /area/hallway/primary/fore)
 "aUz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/crew_quarters/courtroom)
 "aUA" = (
@@ -27082,25 +27042,15 @@
 	})
 "aVu" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
 	})
 "aVv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry{
 	name = "Arrivals"
@@ -34397,11 +34347,10 @@
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bhJ" = (
-/turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
 "bhK" = (
 /turf/closed/wall/mineral/titanium,
@@ -69112,12 +69061,7 @@
 "cpa" = (
 /obj/structure/grille,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plating,
 /area/medical/research{
 	name = "Research Division"
@@ -77788,12 +77732,7 @@
 	})
 "cDj" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -85841,12 +85780,7 @@
 /area/chapel/office)
 "cQv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/tinted{
-	dir = 5;
-	health = 120;
-	icon_state = "twindow";
-	reinf = 0
-	},
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "cQw" = (
@@ -116465,10 +116399,10 @@ ahj
 agw
 avc
 avc
-awg
+atU
 avc
 avc
-awg
+atU
 avc
 avc
 avc
@@ -132120,9 +132054,9 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
 aai
+aaa
+aaa
 ado
 adM
 ado
@@ -132377,9 +132311,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aag
+aaa
+aaa
 aaa
 bjU
 aaa
@@ -132634,9 +132568,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aai
+aaf
+aaf
 aaf
 aai
 aaf
@@ -137821,11 +137755,11 @@ ayr
 ayo
 bdf
 aBZ
-aaf
-bhL
+aaa
+bhK
 bjV
-bhL
-aaf
+bhK
+aaa
 aaf
 brt
 aaf
@@ -138083,7 +138017,7 @@ aaa
 cYF
 aaa
 aaf
-aaa
+aaf
 brt
 aaa
 aaf
