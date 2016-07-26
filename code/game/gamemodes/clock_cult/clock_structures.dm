@@ -74,9 +74,9 @@
 		if(1)
 			damage = max_health //100% max health lost
 		if(2)
-			damage = max_health * rand(0.5, 0.7) //50-70% max health lost
+			damage = max_health * (0.01 * rand(50, 70)) //50-70% max health lost
 		if(3)
-			damage = max_health * rand(0.1, 0.3) //10-30% max health lost
+			damage = max_health * (0.01 * rand(10, 30)) //10-30% max health lost
 	if(damage)
 		take_damage(damage, BRUTE)
 
@@ -686,6 +686,9 @@
 	animate(src, alpha = 0, time = 10)
 	QDEL_IN(src, 10)
 
+/obj/effect/clockwork/general_marker/ex_act()
+	return FALSE
+
 /obj/effect/clockwork/general_marker/nezbere
 	name = "Nezbere, the Brass Eidolon"
 	desc = "A towering colossus clad in nigh-impenetrable brass armor. Its gaze is stern yet benevolent, even upon you."
@@ -746,6 +749,10 @@
 		qdel(src)
 		return 1
 	..()
+
+/obj/effect/clockwork/sigil/ex_act(severity)
+	visible_message("<span class='warning'>[src] scatters into thousands of particles.</span>")
+	qdel(src)
 
 /obj/effect/clockwork/sigil/Crossed(atom/movable/AM)
 	..()
@@ -881,6 +888,13 @@
 	color = "#EC8A2D"
 	alpha = 50
 	var/power_charge = 2500 //starts with 2500W by default
+
+/obj/effect/clockwork/sigil/transmission/ex_act(severity)
+	if(severity == 3)
+		modify_charge(-500)
+		visible_message("<span class='warning'>[src] flares a brilliant orange!</span>")
+	else
+		..()
 
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
