@@ -3,14 +3,14 @@
 
 /obj/screen/ai/Click()
 	if(isobserver(usr))
-		return
+		return 1
 
 /obj/screen/ai/aicore
 	name = "AI core"
 	icon_state = "ai_core"
 
 /obj/screen/ai/aicore/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.view_core()
@@ -29,7 +29,7 @@
 	icon_state = "track"
 
 /obj/screen/ai/camera_track/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
@@ -40,7 +40,7 @@
 	icon_state = "camera_light"
 
 /obj/screen/ai/camera_light/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.toggle_camera_light()
@@ -50,7 +50,7 @@
 	icon_state = "crew_monitor"
 
 /obj/screen/ai/crew_monitor/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	crewmonitor.show(AI)
@@ -60,7 +60,7 @@
 	icon_state = "manifest"
 
 /obj/screen/ai/crew_manifest/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_roster()
@@ -70,7 +70,7 @@
 	icon_state = "alerts"
 
 /obj/screen/ai/alerts/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_alerts()
@@ -80,7 +80,7 @@
 	icon_state = "announcement"
 
 /obj/screen/ai/announcement/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.announcement()
@@ -90,7 +90,7 @@
 	icon_state = "call_shuttle"
 
 /obj/screen/ai/call_shuttle/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.ai_call_shuttle()
@@ -100,7 +100,7 @@
 	icon_state = "state_laws"
 
 /obj/screen/ai/state_laws/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.checklaws()
@@ -110,7 +110,7 @@
 	icon_state = "pda_send"
 
 /obj/screen/ai/pda_msg_send/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.cmd_send_pdamesg(usr)
@@ -120,7 +120,7 @@
 	icon_state = "pda_receive"
 
 /obj/screen/ai/pda_msg_show/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
 	AI.cmd_show_message_log(usr)
@@ -154,7 +154,7 @@
 	icon_state = "ai_sensor"
 
 /obj/screen/ai/sensors/Click()
-	if(!..())
+	if(..())
 		return
 	var/mob/living/silicon/S = usr
 	S.sensor_mode()

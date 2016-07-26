@@ -70,6 +70,8 @@
 	screen_loc = ui_lingstingdisplay
 
 /obj/screen/ling/sting/Click()
+	if(isobserver(usr))
+		return
 	var/mob/living/carbon/U = usr
 	U.unset_sting()
 

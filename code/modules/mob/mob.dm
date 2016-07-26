@@ -2,6 +2,10 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -277,12 +281,13 @@ var/next_mob_id = 0
 
 /mob/dead/reset_perspective(atom/A)
 	if(client)
-		if(ismob(client.eye) && (client.eye != src) && client.eye.observers)
+		if(ismob(client.eye) && (client.eye != src))
 			var/mob/target = client.eye
-			target.observers -= src
-			var/list/L = target.observers
-			if(!L.len)
-				target.observers = null
+			if(target.observers)
+				target.observers -= src
+				var/list/L = target.observers
+				if(!L.len)
+					target.observers = null
 	if(..())
 		if(hud_used)
 			client.screen = list()
