@@ -692,7 +692,11 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		var/icon/copyicon = icon(curicon, curstate, dir=curdir)
+		if(IsBlankIcon(copyicon))
+			curdir = SOUTH
+		copy = image(icon=curicon, icon_state=curstate, layer=A.layer)
+		copy.dir = curdir
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend
@@ -915,6 +919,12 @@ var/global/list/friendly_animal_types = list()
 		final_average = BlendRGB(final_average, colour, 1)
 	return final_average
 
+/proc/IsBlankIcon(icon/I)
+	for(var/y_pixel = 1 to I.Height())
+		for(var/x_pixel = 1 to I.Width())
+			if(I.GetPixel(x_pixel, y_pixel))
+				return 0
+	return 1
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
