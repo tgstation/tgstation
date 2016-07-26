@@ -61,7 +61,7 @@
 
 	var/rendered
 
-	rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something in their final breath.</span>"
+	rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something...</span>"
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
