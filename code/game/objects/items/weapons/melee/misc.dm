@@ -21,6 +21,27 @@
 		return (OXYLOSS)
 
 
+/obj/item/weapon/melee/rapier
+	name = "captain's rapier"
+	desc = "An elegant weapon, for a more civilized age."
+	icon_state = "rapier"
+	item_state = "rapier"
+	flags = CONDUCT
+	force = 15
+	throwforce = 10
+	w_class = 4
+	block_chance = 50
+	armour_penetration = 75
+	sharpness = IS_SHARP
+	origin_tech = "combat=5"
+	attack_verb = list("lunged at", "stabbed")
+	hitsound = 'sound/weapons/slash.ogg'
+	materials = list(MAT_METAL = 1000)
+
+/obj/item/weapon/melee/rapier/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight
+	return ..()
 
 /obj/item/weapon/melee/classic_baton
 	name = "police baton"

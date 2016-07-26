@@ -414,3 +414,29 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+
+/obj/item/weapon/storage/belt/rapier
+	name = "rapier sheath"
+	desc = "Can hold rapiers."
+	icon_state = "sheath"
+	item_state = "sheath"
+	storage_slots = 1
+	max_w_class = 4
+	can_hold = list(
+		/obj/item/weapon/melee/rapier
+		)
+
+/obj/item/weapon/storage/belt/rapier/update_icon()
+	icon_state = "[initial(icon_state)]"
+	item_state = "[initial(item_state)]"
+	if(contents.len)
+		icon_state = "[initial(icon_state)]-rapier"
+		item_state = "[initial(item_state)]-rapier"
+	if(loc && istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.regenerate_icons()
+	..()
+
+/obj/item/weapon/storage/belt/rapier/New()
+	..()
+	new /obj/item/weapon/melee/rapier(src)
