@@ -181,7 +181,6 @@
 	density = 1
 	var/constructionStep = CONSTRUCTION_NOCIRCUIT
 	var/reinforced = 0
-	var/construction_type = /obj/machinery/door/firedoor
 
 /obj/structure/firelock_frame/examine(mob/user)
 	..()
@@ -218,7 +217,7 @@
 				return
 			if(istype(C, /obj/item/weapon/wrench))
 				if(locate(/obj/machinery/door/firedoor) in get_turf(src))
-					user << "<span class='warning'>There's already a firelock there.</span>"
+					user << "<span class='warning'>There's already a firlock there.</span>"
 					return
 				playsound(get_turf(src), 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] starts bolting down [src]...</span>", \
@@ -233,7 +232,7 @@
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
 				else
-					new construction_type(get_turf(src))
+					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
 			if(istype(C, /obj/item/stack/sheet/plasteel))
@@ -241,21 +240,20 @@
 				if(reinforced)
 					user << "<span class='warning'>[src] is already reinforced.</span>"
 					return
-				if(P.amount < 2)
+				if(P.get_amount() < 2)
 					user << "<span class='warning'>You need more plasteel to reinforce [src].</span>"
 					return
 				user.visible_message("<span class='notice'>[user] begins reinforcing [src]...</span>", \
 									 "<span class='notice'>You begin reinforcing [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(!do_after(user, 60, target = src))
-					return
-				if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.amount < 2)
-					return
-				user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
-									 "<span class='notice'>You reinforce [src].</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				P.use(2)
-				reinforced = 1
+				if(do_after(user, 60, target = src))
+					if(constructionStep != CONSTRUCTION_PANEL_OPEN || reinforced || P.get_amount() < 2 || !P)
+						return
+					user.visible_message("<span class='notice'>[user] reinforces [src].</span>", \
+										 "<span class='notice'>You reinforce [src].</span>")
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					P.use(2)
+					reinforced = 1
 				return
 
 		if(CONSTRUCTION_WIRES_EXPOSED)
@@ -308,22 +306,21 @@
 				return
 			if(istype(C, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/B = C
-				if(B.amount < 5)
+				if(B.get_amount() < 5)
 					user << "<span class='warning'>You need more wires to add wiring to [src].</span>"
 					return
 				user.visible_message("<span class='notice'>[user] begins wiring [src]...</span>", \
 									 "<span class='notice'>You begin adding wires to [src]...</span>")
 				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				if(!do_after(user, 60, target = src))
-					return
-				if(constructionStep != CONSTRUCTION_GUTTED || B.amount < 5)
-					return
-				user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
-									 "<span class='notice'>You wire [src].</span>")
-				playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
-				B.use(5)
-				constructionStep = CONSTRUCTION_WIRES_EXPOSED
-				update_icon()
+				if(do_after(user, 60, target = src))
+					if(constructionStep != CONSTRUCTION_GUTTED || B.get_amount() < 5 || !B)
+						return
+					user.visible_message("<span class='notice'>[user] adds wires to [src].</span>", \
+										 "<span class='notice'>You wire [src].</span>")
+					playsound(get_turf(src), 'sound/items/Deconstruct.ogg', 50, 1)
+					B.use(5)
+					constructionStep = CONSTRUCTION_WIRES_EXPOSED
+					update_icon()
 				return
 		if(CONSTRUCTION_NOCIRCUIT)
 			if(istype(C, /obj/item/weapon/weldingtool))
@@ -366,17 +363,3 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
-
-/obj/machinery/door/firedoor/floodlock
-	name = "floodlock"
-	desc = "A specialized door for controlling water flow."
-	icon = 'icons/obj/doors/floodlock.dmi'
-	heat_proof = FALSE
-	assemblytype = /obj/structure/firelock_frame/floodlock
-
-/obj/structure/firelock_frame/floodlock
-	name = "floodlock frame"
-	desc = "A partially completed floodlock."
-	icon = 'icons/obj/doors/floodlock.dmi'
-	icon_state = "frame1"
-	construction_type = /obj/machinery/door/firedoor/floodlock
