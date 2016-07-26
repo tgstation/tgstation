@@ -665,7 +665,7 @@ USE THIS CHEMISTRY DISPENSER FOR MAPS SO THEY START AT 100 ENERGY
 			if(!name)
 				return
 
-			var/logged_message = " - [usr] ([usr.ckey]) has made [count] pill[count > 1 ? "s, each" : ""] named '[name]' and containing "
+			var/logged_message = " - [key_name(usr)] has made [count] pill[count > 1 ? "s, each" : ""] named '[name]' and containing "
 
 			while(count--)
 				if((amount_per_pill == 0 || reagents.total_volume == 0) && !href_list["createempty"]) //Don't create empty pills unless "createempty" is 1!

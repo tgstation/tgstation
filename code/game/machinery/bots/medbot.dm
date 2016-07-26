@@ -226,7 +226,7 @@
 		if(user.drop_item(W, src))
 			src.reagent_glass = W
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
-			investigation_log(I_CHEMS, "was loaded with \a [W] by [user] ([user.ckey]), containing [W.reagents.get_reagent_ids(1)]")
+			investigation_log(I_CHEMS, "was loaded with \a [W] by [key_name(user)], containing [W.reagents.get_reagent_ids(1)]")
 			src.updateUsrDialog()
 			return
 

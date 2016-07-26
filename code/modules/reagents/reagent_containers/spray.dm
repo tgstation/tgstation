@@ -83,7 +83,7 @@ var/global/list/logged_sprayed_reagents = list(SACID, PACID, LUBE, FUEL)
 	if (log_reagent_list.len > 0)
 		add_gamelogs(user, "sprayed {[english_list(log_reagent_list, and_text = ", ")]} with \the [src]", admin = TRUE, tp_link = TRUE)
 
-	user.investigation_log(I_CHEMS, "[user.ckey] sprayed [amount_per_transfer_from_this]u from \a [src] \ref[src] containing [reagents.get_reagent_ids(1)] towards [A] ([A.x], [A.y], [A.z]).")
+	user.investigation_log(I_CHEMS, "sprayed [amount_per_transfer_from_this]u from \a [src] \ref[src] containing [reagents.get_reagent_ids(1)] towards [A] ([A.x], [A.y], [A.z]).")
 
 	// Override for your custom puff behaviour
 	make_puff(A, user)

@@ -150,7 +150,7 @@ var/const/INGEST = 2
 
 	if(log_transfer && logged_message.len)
 		var/turf/T = get_turf(my_atom)
-		minimal_investigation_log(I_CHEMS, "[whodunnit ? "[whodunnit] ([whodunnit.ckey])" : "(unknown whodunnit, last whodunnit processed: [usr.ckey])"] \
+		minimal_investigation_log(I_CHEMS, "[whodunnit ? "[key_name(whodunnit)]" : "(N/A, last user processed: [usr.ckey])"] \
 		transferred [english_list(logged_message)] from \a [my_atom] \ref[my_atom] to \a [R.my_atom] \ref[R.my_atom].", prefix=" ([T.x],[T.y],[T.z])")
 		if(adminwarn_message.len)
 			message_admins("[whodunnit ? "[whodunnit] ([whodunnit.ckey]) (<A HREF='?_src_=holder;adminplayeropts=\ref[whodunnit]'>PP</A>) (<A HREF='?_src_=holder;adminmoreinfo=\ref[whodunnit]'>?</A>)" : "(unknown whodunnit, last whodunnit processed: [usr.ckey])"]\

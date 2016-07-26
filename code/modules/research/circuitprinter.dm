@@ -19,6 +19,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 	research_flags = HASOUTPUT | TAKESMATIN | CONSOLECONTROL | LOCKBOXES
 
+	// Don't log reagent transfers.  They're just spammy.
+	log_reagents = 0
+
 	part_sets = list(
 		"Machine Boards" = list(),
 		"Console Boards" = list(),
@@ -46,9 +49,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		/obj/item/weapon/reagent_containers/glass/beaker,
 		/obj/item/weapon/reagent_containers/glass/beaker
 	)
-
-	// Don't log reagent transfers.  They're just spammy.
-	log_reagents=0
 
 	RefreshParts()
 

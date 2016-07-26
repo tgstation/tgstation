@@ -12,6 +12,7 @@
 	machine_flags = SCREWTOGGLE | CROWDESTROY | WRENCHMOVE | EJECTNOTDEL
 	flags = OPENCONTAINER | NOREACT
 	pass_flags = PASSTABLE
+	log_reagents = 0 //transferred 5u of flour from a flour sack [0x20107e8] to Microwave [0x2007fdd]. transferred 5u of flour from a flour sack [0x20107e8] to Microwave [0x2007fdd]. transferred 5u of flour from a flour sack [0x20107e8] to Microwave [0x2007fdd].
 	var/operating = 0 // Is it on?
 	var/opened = 0.0
 	var/dirty = 0 // = {0..100} Does it need cleaning?

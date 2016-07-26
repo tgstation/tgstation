@@ -78,7 +78,7 @@
 		if(user.drop_item(W, src))
 			src.beaker = W
 			to_chat(user, "You attach \the [W] to \the [src].")
-			investigation_log(I_CHEMS, "was loaded with \a [W] by [user] ([user.ckey]), containing [W.reagents.get_reagent_ids(1)]")
+			investigation_log(I_CHEMS, "was loaded with \a [W] by [key_name(user)], containing [W.reagents.get_reagent_ids(1)]")
 			src.update_icon()
 			return
 	else

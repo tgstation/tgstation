@@ -37,9 +37,9 @@
 		investigate_text += "\A [name] reaction ([amt]u total combined) has taken place"
 
 	if(M)
-		investigate_text += " in \a [A] \ref[A], carried by [M.real_name] ([M.key])<br />"
+		investigate_text += " in \a [A], carried by [M.real_name] ([M.key])<br />"
 	else
-		investigate_text += " in \a [A] \ref[A], last touched by [(A.fingerprintslast ? A.fingerprintslast : "N/A (Last user processed: [usr.ckey])")]<br />"
+		investigate_text += " in \a [A], last touched by [(A.fingerprintslast ? A.fingerprintslast : "N/A (Last user processed: [usr.ckey])")]<br />"
 
 	I.write(investigate_text)
 
