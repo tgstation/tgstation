@@ -10,6 +10,7 @@
 	poi_list += src
 
 /obj/structure/clockwork/massive/Destroy()
+	world << 'sound/magic/clockwork/anima_fragment_death.ogg'
 	poi_list -= src
 	return ..()
 
@@ -291,14 +292,12 @@
 			world << "<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "REEEEEEEEE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>" //nar-sie get out
 			world << "<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>"
 			world << 'sound/magic/clockwork/anima_fragment_attack.ogg'
-			world << 'sound/magic/demon_dies.ogg'
 			clashing = FALSE
 			qdel(narsie)
 			return 1
 		if("Nar-Sie")
 			world << "<span class='cult'><font size=5>\"<b>[pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here.")]</b>\"</font></span>" //Broken English
 			world << 'sound/magic/demon_attack1.ogg'
-			world << 'sound/magic/clockwork/anima_fragment_death.ogg'
 			narsie.clashing = FALSE
 			qdel(src)
 			return 1

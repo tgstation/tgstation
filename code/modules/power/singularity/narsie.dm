@@ -38,6 +38,9 @@
 	sleep(70)
 	SSshuttle.emergency.request(null, 0.3) // Cannot recall
 
+/obj/singularity/narsie/Destroy()
+	world << 'sound/magic/demon_dies.ogg'
+	return ..()
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
 	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
