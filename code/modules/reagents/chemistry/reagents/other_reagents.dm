@@ -1231,3 +1231,20 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
+
+/datum/reagent/growthserum
+	name = "growth serum"
+	id = "growthserum"
+	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
+	color = "#ff0000"//strong red. rgb 255, 0, 0
+
+/datum/reagent/growthserum/reaction_mob(mob/H, method=INGEST, reac_volume)
+	if(!H.reagents.has_reagent("growthserum", -1))//so you cant grow infinitely
+		H.resize = 2
+		H.visible_message("<span class='notice'>[H] suddenly doubles in size!</span>", "<span class='notice'>You're a big guy!</span>")
+	..()
+
+/datum/reagent/growthserum/on_mob_delete(mob/M)
+	M.resize = 0.5//doesnt do anythign why
+	M.visible_message("<span class='notice'>[M] suddenly shrinks down to regular size.</span>", "<span class='notice'>You're a regular guy.</span>")
+	..()
