@@ -325,9 +325,7 @@
 		return
 	var/mob/living/carbon/human/H = mymob
 
-	var/mob/screenmob = H
-	if(viewer)
-		screenmob = viewer
+	var/mob/screenmob = viewer || H
 
 	if(screenmob.hud_used.inventory_shown && screenmob.hud_used.hud_shown)
 		if(H.shoes)
@@ -369,9 +367,7 @@
 		return
 	var/mob/living/carbon/human/H = mymob
 
-	var/mob/screenmob = H
-	if(viewer)
-		screenmob = viewer
+	var/mob/screenmob = viewer || H
 
 	if(screenmob.hud_used.hud_shown)
 		if(H.s_store)

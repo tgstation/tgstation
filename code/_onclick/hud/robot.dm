@@ -176,45 +176,40 @@
 /datum/hud/proc/toggle_show_robot_modules()
 	if(!isrobot(mymob)) return
 
-	var/mob/living/silicon/robot/r = mymob
+	var/mob/living/silicon/robot/R = mymob
 
-	r.shown_robot_modules = !r.shown_robot_modules
+	R.shown_robot_modules = !R.shown_robot_modules
 	update_robot_modules_display()
 
 /datum/hud/proc/update_robot_modules_display(mob/viewer)
 	if(!isrobot(mymob)) return
 
-	var/mob/living/silicon/robot/r = mymob
+	var/mob/living/silicon/robot/R = mymob
 
-	var/mob/screenmob = r
-	if(viewer)
-		screenmob = viewer
+	var/mob/screenmob = viewer || R
 
-	if(!r.client)
+	if(!R.module)
 		return
 
-	if(!r.module)
-		return
-
-	if(r.shown_robot_modules && screenmob.hud_used.hud_shown)
+	if(R.shown_robot_modules && screenmob.hud_used.hud_shown)
 		//Modules display is shown
 		screenmob.client.screen += module_store_icon	//"store" icon
 
-		if(!r.module.modules)
+		if(!R.module.modules)
 			usr << "<span class='danger'>Selected module has no modules to select</span>"
 			return
 
-		if(!r.robot_modules_background)
+		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = Ceiling(length(r.module.get_inactive_modules()) / 8)
-		r.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
-		screenmob.client.screen += r.robot_modules_background
+		var/display_rows = Ceiling(length(R.module.get_inactive_modules()) / 8)
+		R.robot_modules_background.screen_loc = "CENTER-4:16,SOUTH+1:7 to CENTER+3:16,SOUTH+[display_rows]:7"
+		screenmob.client.screen += R.robot_modules_background
 
 		var/x = -4	//Start at CENTER-4,SOUTH+1
 		var/y = 1
 
-		for(var/atom/movable/A in r.module.get_inactive_modules())
+		for(var/atom/movable/A in R.module.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen += A
 			if(x < 0)
@@ -232,11 +227,11 @@
 		//Modules display is hidden
 		screenmob.client.screen -= module_store_icon	//"store" icon
 
-		for(var/atom/A in r.module.get_inactive_modules())
+		for(var/atom/A in R.module.get_inactive_modules())
 			//Module is not currently active
 			screenmob.client.screen -= A
-		r.shown_robot_modules = 0
-		screenmob.client.screen -= r.robot_modules_background
+		R.shown_robot_modules = 0
+		screenmob.client.screen -= R.robot_modules_background
 
 /mob/living/silicon/robot/create_mob_hud()
 	if(client && !hud_used)
@@ -248,9 +243,7 @@
 		return
 	var/mob/living/silicon/robot/R = mymob
 
-	var/mob/screenmob = R
-	if(viewer)
-		screenmob = viewer
+	var/mob/screenmob = viewer || R
 
 	if(screenmob.hud_used.hud_shown)
 		if(R.module_state_1)

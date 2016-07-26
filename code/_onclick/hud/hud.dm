@@ -120,10 +120,7 @@
 	if(!mymob.client)
 		return 0
 
-	var/mob/screenmob = mymob
-
-	if(viewmob)
-		screenmob = viewmob
+	var/mob/screenmob = viewmob || mymob
 
 	screenmob.client.screen = list()
 
