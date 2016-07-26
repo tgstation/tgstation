@@ -7,63 +7,68 @@
 	var/list/Lines = list()
 
 	//for admins
-	var/living = 0
-	var/ghosts = 0
-	var/lobby = 0
-	var/livingAntags = 0
+	var/living = 0 //Currently alive and in the round (possibly unconscious, but not officially dead)
+	var/dead = 0 //Have been in the round but are now deceased
+	var/observers = 0 //Have never been in the round (thus observing)
+	var/lobby = 0 //Are currently in the lobby
+	var/living_antags = 0 //Are antagonists, and currently alive
+	var/dead_antags = 0 //Are antagonists, and have finally met their match
 
-	if (holder)
-		for (var/client/C in clients)
+	if(holder)
+		for(var/client/C in clients)
 			var/entry = "\t[C.key]"
 
-			if (C.holder && C.holder.fakekey)
+			if(C.holder && C.holder.fakekey)
 				entry += " <i>(as [C.holder.fakekey])</i>"
 
 			if(C.mob.real_name)
 				entry += " - Playing as [C.mob.real_name]"
 
-			switch (C.mob.stat)
-				if (UNCONSCIOUS)
-					entry += " - <font color='darkgray'><b>Unconscious</b></font>"
+			switch(C.mob.stat)
+				if(UNCONSCIOUS)
+					entry += " - <span style='color:darkgray'><b>Unconscious</b></span>"
 
-				if (DEAD)
-					if (isobserver(C.mob))
-						ghosts++
+				if(DEAD)
+					if(isobserver(C.mob))
 						var/mob/dead/observer/O = C.mob
 
-						if (O.started_as_observer)
-							entry += " - <font color='gray'>Observing</font>"
+						if(O.started_as_observer)
+							entry += " - <span style='color:gray'>Observing</span>"
+							observers++
 						else
-							entry += " - <font color='black'><b>DEAD</b></font>"
+							entry += " - <b>DEAD</b>"
+							dead++
 					else if (isnewplayer(C.mob))
-						entry += " - <font color='gray'><i>Lobby</i></font>"
+						entry += " - <span style='color:gray'><i>Lobby</i></span>"
 						lobby++
 					else
-						entry += " - <font color='black'><b>DEAD</b></font>"
-						ghosts++
+						entry += " - <b>DEAD</b>"
+						dead++
 				else
 					living++
 
-			if (is_special_character(C.mob))
+			if(is_special_character(C.mob))
 				entry += " - <b><span class='red'>Antagonist</span></b>"
 				if(!(C.mob.isDead()))
-					livingAntags++
+					living_antags++
+				else
+					dead_antags++
 
 			entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
 			Lines += entry
 
 		log_admin("[key_name(usr)] used who verb advanced (shows OOC key - IC name, status and if antagonist)")
 	else
-		for (var/client/C in clients)
-			if (C.holder && C.holder.fakekey)
+		for(var/client/C in clients)
+			if(C.holder && C.holder.fakekey)
 				Lines += C.holder.fakekey
 			else
 				Lines += C.key
 
-	for (var/line in sortList(Lines))
+	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 	if(holder)
-		msg += "<b>Living: [living] | Dead/Ghosts: [ghosts] | in Lobby: [lobby] | Living Antags: <span class='red'>[livingAntags]</span> | </b>\n"
+		msg += "<b><span class='notice'>Total Living: [living]</span> | Total Dead: [dead] | <span style='color:gray'>Observing: [observers]</span> | <span style='color:gray'><i>In Lobby: [lobby]</i></span> | <span class='bad'>Living Antags: [living_antags]</span> | <span class='good'>Dead Antags: [dead_antags]</span></b>\n"
 	msg += "<b>Total Players: [length(Lines)]</b>\n"
 	to_chat(src, msg)
 
