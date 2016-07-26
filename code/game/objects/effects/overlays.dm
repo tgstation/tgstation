@@ -23,6 +23,7 @@
 	icon_state = "nothing"
 	anchored = 1
 	layer = ABOVE_MOB_LAYER
+	burn_state = LAVA_PROOF
 	mouse_opacity = 0
 	var/duration = 10 //in deciseconds
 	var/randomdir = TRUE
