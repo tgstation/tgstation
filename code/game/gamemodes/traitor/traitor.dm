@@ -59,9 +59,11 @@
 		if (!possible_traitors.len)
 			break
 		var/datum/mind/traitor = pick(possible_traitors)
+		possible_traitors -= traitor
+		if(traitor.special_role == "traitor")
+			continue
 		traitors += traitor
 		traitor.special_role = "traitor"
-		possible_traitors.Remove(traitor)
 
 	if(!traitors.len)
 		return 0

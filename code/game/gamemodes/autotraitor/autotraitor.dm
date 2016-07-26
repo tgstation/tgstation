@@ -57,11 +57,10 @@
 
 	for(var/i = 0, i < num_traitors, i++)
 		var/datum/mind/traitor = pick(possible_traitors)
+		possible_traitors -= traitor
 		if(traitor.special_role)
-			possible_traitors.Remove(traitor)
 			continue
 		traitors += traitor
-		possible_traitors.Remove(traitor)
 
 	for(var/datum/mind/traitor in traitors)
 		if(!traitor || !istype(traitor))

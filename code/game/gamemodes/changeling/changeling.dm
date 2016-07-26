@@ -69,10 +69,9 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 		for(var/i = 0, i < changeling_amount, i++)
 			if(!possible_changelings.len) break
 			var/datum/mind/changeling = pick(possible_changelings)
-			if(changeling.special_role)
-				possible_changelings.Remove(changeling)
-				continue
 			possible_changelings -= changeling
+			if(changeling.special_role)
+				continue
 			changelings += changeling
 			modePlayer += changelings
 		log_admin("Starting a round of changeling with [changelings.len] changelings.")
