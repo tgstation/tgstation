@@ -546,6 +546,8 @@
 						M.ex_act(2)
 
 			else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
+				if(istype(AM, /obj/singularity) && !istype(AM, /obj/singularity/narsie)) //it's a singularity but not a god, ignore it.
+					continue
 				if(!AM.anchored)
 					step(AM, dir)
 				else
