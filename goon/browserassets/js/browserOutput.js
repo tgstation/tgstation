@@ -113,7 +113,18 @@ function highlightTerms(el) {
 			highlightTerms(el.children[h]);
 		}
 	}
-	if (el.childNodes.length > 0 && typeof el.childNodes[0].data !== 'undefined' && el.childNodes[0].data.length > 0) { //If element actually has text
+
+	var hasTextNode = false;
+	for (var node = 0; node < el.childNodes.length; node++)
+	{
+		if (el.childNodes[node].nodeType === 3)
+		{
+			hasTextNode = true;
+			break;
+		}
+	}
+
+	if (hasTextNode) { //If element actually has text
 		var newText = '';
 		for (var c = 0; c < el.childNodes.length; c++) { //Each child element
 			if (el.childNodes[c].nodeType === 3) { //Is it text only?
@@ -122,11 +133,11 @@ function highlightTerms(el) {
 					var newWord = null;
 					for (var i = 0; i < opts.highlightTerms.length; i++) { //Each highlight term
 						if (opts.highlightTerms[i] && words[w].toLowerCase().indexOf(opts.highlightTerms[i].toLowerCase()) > -1) { //If a match is found
-							newWord = words[w].replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
+							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
 							break;
 						}
 					}
-					newText += (newWord ? newWord : words[w]).replace("<", "&lt;");
+					newText += newWord || words[w];
 					newText += w >= words.length ? '' : ' ';
 				}
 			} else { //Every other type of element
@@ -136,7 +147,6 @@ function highlightTerms(el) {
 		el.innerHTML = newText;
 	}
 }
-
 //Send a message to the client
 function output(message, flag) {
 	if (typeof message === 'undefined') {
