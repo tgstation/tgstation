@@ -1063,3 +1063,33 @@ SYNDICATE BLACK OPS
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+/datum/species/furry_cattebeest_cancer_incarnate
+	name = "Cattebeest"
+	id = "cat"
+	default_color = "FFFFFF"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	skinned_type = /obj/item/stack/sheet/animalhide/human
+
+
+/datum/species/furry_cattebeest_cancer_incarnate/qualifies_for_rank(rank, list/features)
+	//Mutants are not allowed in most roles.
+	if(rank in security_positions) //This list does not include lawyers.
+		return 0
+	if(rank in science_positions)
+		return 0
+	if(rank in medical_positions)
+		return 0
+	if(rank in engineering_positions)
+		return 0
+	if(rank == "Quartermaster") //QM is not contained in command_positions but we still want to bar mutants from it.
+		return 0
+	return ..()
+
+/datum/species/furry_cattebeest_cancer_incarnate/handle_speech(message)
+	if(copytext(message, 1, 2) != "*")
+		message = replacetext(message, "r", "rrr") // c a n c e r
+
+	return message
