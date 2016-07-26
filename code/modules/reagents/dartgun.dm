@@ -56,6 +56,7 @@
 			var/obj/item/weapon/reagent_containers/glass/beaker/B = new(src)
 			B.reagents.add_reagent(chem, 50)
 			beakers += B
+			mixing += B
 	cartridge = new /obj/item/weapon/dart_cartridge(src)
 	update_icon()
 
@@ -101,6 +102,7 @@
 
 		if(user.drop_item(B, src))
 			beakers += B
+			mixing += B
 			to_chat(user, "<span class='notice'>You slot [B] into [src].</span>")
 			src.updateUsrDialog()
 
@@ -217,8 +219,9 @@
 
 		return
 
-/obj/item/weapon/gun/dartgun/afterattack(obj/target, mob/user , flag)
-	if(!isturf(target.loc) || target == user) return
+/obj/item/weapon/gun/dartgun/afterattack(atom/target as mob|obj|turf|area, mob/user , flag)
+	if(/*!isturf(target.loc) || */target == user)
+		return
 	..()
 
 /obj/item/weapon/gun/dartgun/can_hit(var/mob/living/target as mob, var/mob/living/user as mob)

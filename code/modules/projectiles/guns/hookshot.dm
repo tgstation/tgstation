@@ -1,6 +1,6 @@
 /obj/item/weapon/gun/hookshot	//-by Deity Link
 	name = "hookshot"
-	desc = "Used to create tethers! It's a very experimental device, recently developped by Nanotrasen."
+	desc = "Used to create tethers! It's a very experimental device, recently developed by Nanotrasen."
 	icon = 'icons/obj/gun_experimental.dmi'
 	icon_state = "hookshot"
 	item_state = "hookshot"

@@ -2,7 +2,7 @@
 	set name = "Toggle Firerate"
 	set category = "Object"
 	firerate = !firerate
-	if (firerate == 0)
+	if (firerate == 1)
 		to_chat(loc, "You will now continue firing when your target moves.")
 	else
 		to_chat(loc, "You will now only fire once, then lower your aim, when your target moves.")
