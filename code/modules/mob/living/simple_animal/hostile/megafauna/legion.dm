@@ -141,40 +141,44 @@ Difficulty: Medium
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
+	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
 
 /obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
 		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
-	if(user.z != ZLEVEL_LAVALAND)
-		user << "<span class='warning'>You can't seem to control the weather here!</span>"
-		return
 
-	var/datum/weather/ash_storm/A
+	var/area/user_area = get_area(user)
+	var/datum/weather/A
 	for(var/V in SSweather.existing_weather)
 		var/datum/weather/W = V
-		if(W.name == "ash storm")
+		if(W.target_z == user.z && W.area_type == user_area.type)
 			A = W
 			break
-	if(!A)
-		user << "<span class='warning'>How odd! The planet seems to have lost its atmosphere!</span>"
-		return
+	if(A)
 
-	if(A.stage != END_STAGE)
-		if(A.stage == WIND_DOWN_STAGE)
-			user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+		if(A.stage != END_STAGE)
+			if(A.stage == WIND_DOWN_STAGE)
+				user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+				return
+			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
+			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			A.wind_down()
 			return
-		user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
-		"<span class='notice'>You hold [src] skyward, dispelling the ash storm!</span>")
-		playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
-		A.wind_down()
 	else
-		user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
-		"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
-		playsound(user, 'sound/magic/Staff_Chaos.ogg', 200, 0)
-		A.telegraph()
+		A = new storm_type
+		A.name = "staff storm"
+		A.area_type = user_area.type
+		A.target_z = user.z
+		A.telegraph_duration = 100
+		A.end_duration = 100
 
-	storm_cooldown = world.time + 600
+	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	A.telegraph()
+	storm_cooldown = world.time + 200
 
 #undef MEDAL_PREFIX

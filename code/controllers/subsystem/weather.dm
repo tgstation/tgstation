@@ -27,7 +27,7 @@ var/datum/subsystem/weather/SSweather
 			if(WE.target_z == Z && WE.probability) //Another check so that it doesn't run extra weather
 				possible_weather_for_this_z[WE] = WE.probability
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
-		run_weather(W.name)
+		run_weather(W.name, Z)
 		eligible_zlevels -= Z
 		addtimer(src, "make_z_eligible", rand(3000, 6000) + W.weather_duration_upper, TRUE, Z) //Around 5-10 minutes between weathers
 
@@ -37,12 +37,12 @@ var/datum/subsystem/weather/SSweather
 		var/datum/weather/W = V
 		existing_weather |= new W
 
-/datum/subsystem/weather/proc/run_weather(weather_name)
+/datum/subsystem/weather/proc/run_weather(weather_name, Z)
 	if(!weather_name)
 		return
 	for(var/V in existing_weather)
 		var/datum/weather/W = V
-		if(W.name == weather_name)
+		if(W.name == weather_name && W.target_z == Z)
 			W.telegraph()
 
 /datum/subsystem/weather/proc/make_z_eligible(zlevel)
