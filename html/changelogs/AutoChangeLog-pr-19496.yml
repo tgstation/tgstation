@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Striking a Sigil with any damaging item as a non-servant will remove it. Servants still need to be on harm intent with an empty hand to remove Sigils."
