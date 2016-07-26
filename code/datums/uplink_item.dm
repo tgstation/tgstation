@@ -86,7 +86,10 @@ var/list/uplink_items = list()
 			I.tag = null
 		if(ishuman(user))
 			var/mob/living/carbon/human/A = user
-			A.put_in_any_hand_if_possible(I)
+
+			if(istype(I, /obj/item))
+				A.put_in_any_hand_if_possible(I)
+
 			U.purchase_log += {"[user] ([user.ckey]) bought <img src="logo_[tempstate].png"> [name] for [cost]."}
 			stat_collection.uplink_purchase(src, I, user)
 			if(user.mind)
@@ -526,6 +529,12 @@ var/list/uplink_items = list()
 	cost = 20
 	gamemodes = list("nuclear emergency")
 
+/datum/uplink_item/device_tools/popout_cake
+	name = "Pop-Out Cake"
+	desc = "A massive and delicious cake, big enough to store a person inside. It's equipped with a one-use party horn and special effects, and can be cut into edible slices in case of an emergency."
+	item = /obj/structure/popout_cake
+	cost = 3
+	gamemodes = list("nuclear emergency")
 
 // IMPLANTS
 

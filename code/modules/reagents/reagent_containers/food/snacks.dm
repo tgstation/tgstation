@@ -2436,6 +2436,11 @@
 	bitesize = 2
 	food_flags = FOOD_SWEET | FOOD_ANIMAL
 
+/obj/item/weapon/reagent_containers/food/snacks/plaincakeslice/full/New()
+	..()
+
+	reagents.add_reagent("nutriment", 4)
+
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/orangecake
 	name = "orange cake"
 	desc = "A cake with added orange."

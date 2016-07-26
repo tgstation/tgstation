@@ -93,8 +93,12 @@
 
 		return
 
-	if(!isturf(loc) && !is_holder_of(src, A)) // Can't touch anything from inside a locker/sleeper etc, unless it's inside our inventory.
-		return
+	if(!isturf(loc) && !is_holder_of(src, A))
+		if(loc == A) //Can attack_hand our holder (a locked closet, for example) from inside, but can't hit it with a tool
+			if(W)
+				return
+		else
+			return
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	if(A.Adjacent(src, MAX_ITEM_DEPTH)) // see adjacent.dm

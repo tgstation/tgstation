@@ -723,6 +723,24 @@
 		)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/buchedenoel
 
+/datum/recipe/popoutcake
+	reagents = list("milk" = 15, "flour" = 45)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/weapon/reagent_containers/food/snacks/egg,
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/stack/sheet/cardboard,
+		/obj/item/stack/sheet/cardboard
+		)
+	result = /obj/structure/popout_cake
+
 // Pies ////////////////////////////////////////////////////////
 
 /datum/recipe/pie
