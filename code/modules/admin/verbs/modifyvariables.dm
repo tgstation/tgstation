@@ -189,12 +189,16 @@ var/list/VVckey_edit = list("key", "ckey")
 	var/variable
 	var/assoc_key
 	if(assoc)
-		variable = input("Which var?","Var") as null|anything in L + "(ADD VAR)"
+		variable = input("Which var?","Var") as null|anything in L + "(ADD VAR)" + "(CLEAR NULLS)"
 	else
-		variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
+		variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)" + "(CLEAR NULLS)"
 
 	if(variable == "(ADD VAR)")
 		mod_list_add(L, O, original_name, objectvar)
+		return
+
+	if(variable == "(CLEAR NULLS)")
+		listclearnulls(L)
 		return
 
 	if(assoc)
