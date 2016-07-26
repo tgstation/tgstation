@@ -139,10 +139,10 @@
 		var/mob/M = usr //I don't see how this is necessary
 		if (!( istype(over_object, /obj/screen/inventory) ))
 			return ..()
-		if (!M.incapacitated())
+		if (!M.incapacitated() && Adjacent(M))
 			var/obj/screen/inventory/SI = over_object
 
-			if(SI.hand_index)
+			if(SI.hand_index && M.put_in_hand_check(src, SI.hand_index))
 				M.u_equip(src, 0)
 				M.put_in_hand(SI.hand_index, src)
 				src.add_fingerprint(usr)
@@ -282,4 +282,3 @@ var/global/list/bottle_colour_choices = list("Blue" = "#0094FF","Dark Blue" = "#
 		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
 		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
 		new /obj/item/weapon/reagent_containers/pill/creatine_supplement ( src )
-

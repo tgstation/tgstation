@@ -182,7 +182,7 @@
 		else if(istype(over_object, /obj/screen/inventory))
 			var/obj/screen/inventory/OI = over_object
 
-			if(OI.hand_index)
+			if(OI.hand_index && M.put_in_hand_check(src, OI.hand_index))
 				M.u_equip(src, 0)
 				M.put_in_hand(OI.hand_index, src)
 				src.add_fingerprint(usr)

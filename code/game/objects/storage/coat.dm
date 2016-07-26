@@ -165,11 +165,11 @@
 		if (!( istype(over_object, /obj/screen/inventory) ))
 			return ..()
 		playsound(get_turf(src), "rustle", 50, 1, -5)
-		if (M.wear_suit == src && !M.incapacitated())
+		if (M.wear_suit == src && !M.incapacitated() && Adjacent(M))
 			var/obj/screen/inventory/OI = over_object
 
-			if(OI.hand_index)
-				M.u_equip(src, 1)
+			if(OI.hand_index && M.put_in_hand_check(src, OI.hand_index))
+				M.u_equip(src, 0)
 				M.put_in_hand(OI.hand_index, src)
 				M.update_inv_wear_suit()
 				src.add_fingerprint(usr)
