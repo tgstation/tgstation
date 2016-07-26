@@ -46,6 +46,7 @@
 		spawn(0)
 			playsound(my_atom, fire_sound, 50, 1)
 			projone.dumbfire(dir)
+		spawn(0)
 			projtwo.dumbfire(dir)
 		sleep(1)
 	my_atom.next_firetime = world.time + fire_delay
