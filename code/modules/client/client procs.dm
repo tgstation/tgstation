@@ -283,6 +283,9 @@
 
 	if(!isnum(age))
 		age = Query6(sql_ckey, age)
+	if(!isnum(player_age)) //If they've never logged in before
+		player_age = 0
+
 	if(age < 14)
 		message_admins("[ckey(key)]/([src]) is a relatively new player, may consider watching them. AGE = [age]  First seen = [player_age]")
 		log_admin(("[ckey(key)]/([src]) is a relatively new player, may consider watching them. AGE = [age] First seen = [player_age]"))
