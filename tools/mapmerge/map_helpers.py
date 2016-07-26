@@ -1,4 +1,14 @@
 import collections
+import sys
+
+try:
+    version = sys.version_info
+    if version.major < 3 or (version.major == 3 and version.minor < 5):
+        print("ERROR: You are running an incompatible version of Python. The current minimum version required is [3.5].\nYour version: {}".format(sys.version))
+        sys.exit()
+except:
+    print("ERROR: Something went wrong, you might be running an incompatible version of Python. The current minimum version required is [3.5].\nYour version: {}".format(sys.version))
+    sys.exit()
 
 error = {0:"OK", 1:"WARNING: Key lengths are different, all the lines change."}
 
