@@ -22,7 +22,7 @@
 	if(..())
 		if(isliving(target))
 			var/mob/living/M = target
-			if(!hasmatchingsummoner(M) && M != summoner)
+			if(!hasmatchingsummoner(M) && M != summoner && M.fire_stacks < 7)
 				M.fire_stacks = 7
 				M.IgniteMob()
 
