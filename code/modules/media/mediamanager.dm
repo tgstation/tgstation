@@ -62,8 +62,8 @@ window.onerror = noErrorMessages;
 function SetMusic(url, time, volume) {
 	var player = document.getElementById('player');
 	player.URL = url;
-	player.Controls.currentPosition = time;
-	player.Settings.volume = volume;
+	player.Controls.currentPosition = +time;
+	player.Settings.volume = +volume;
 }
 	</script>"}
 
