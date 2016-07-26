@@ -41,7 +41,6 @@
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
-
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 
@@ -231,6 +230,13 @@
 			FindTarget()
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
+
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	target = A
+	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
+		..()
+	else
+		AttackingTarget()
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)

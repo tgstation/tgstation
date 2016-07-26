@@ -225,7 +225,9 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/InCritical()
 	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
 
-/mob/living/ex_act(severity, target)
+/mob/living/ex_act(severity, origin)
+	if(istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+		return
 	..()
 	flash_eyes()
 
@@ -586,13 +588,12 @@ Sorry Giacom. Please don't be mad :(
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
 
-	if (s_active && !(s_active in contents) && !(s_active.loc in contents))
-		// It's ugly. But everything related to inventory/storage is. -- c0
+	if (s_active && !(s_active.ClickAccessible(src, depth=STORAGE_VIEW_DEPTH) || s_active.Adjacent(src)))
 		s_active.close(src)
 
 /mob/living/movement_delay()
 	. = ..()
-	if(isturf(loc, /turf/open))
+	if(istype(loc, /turf/open))
 		var/turf/open/T = loc
 		. += T.slowdown
 	switch(m_intent)
@@ -1043,3 +1044,9 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form!</span>"
+
+/mob/living/proc/fakefireextinguish()
+	return
+
+/mob/living/proc/fakefire()
+	return

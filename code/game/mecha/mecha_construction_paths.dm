@@ -27,7 +27,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -59,7 +59,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(S.get_amount() < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else

@@ -1,9 +1,27 @@
 /datum/personal_crafting
 	var/busy
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
-	var/list/categories = list(CAT_WEAPON,CAT_AMMO,CAT_ROBOT,CAT_FOOD,CAT_MISC,CAT_PRIMAL)
+	var/list/categories = list(CAT_WEAPON,
+				CAT_AMMO,
+				CAT_ROBOT,
+				CAT_MISC,
+				CAT_PRIMAL,
+				CAT_BREAD,
+				CAT_BURGER,
+				CAT_CAKE,
+				CAT_EGG,
+				CAT_MEAT,
+				CAT_MISCFOOD,
+				CAT_PASTRY,
+				CAT_PIE,
+				CAT_PIZZA,
+				CAT_SALAD,
+				CAT_SANDWICH,
+				CAT_SOUP,
+				CAT_SPAGHETTI)
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
+	var/display_compact = FALSE
 
 
 
@@ -239,24 +257,26 @@
 /datum/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 600, 800, master_ui, state)
+		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
 		ui.open()
 
 
 /datum/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
+	var/cur_category = categories[viewing_category]
 	data["busy"] = busy
 	data["prev_cat"] = categories[prev_cat()]
-	data["category"] = categories[viewing_category]
+	data["category"] = cur_category
 	data["next_cat"] = categories[next_cat()]
 	data["display_craftable_only"] = display_craftable_only
+	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
 	var/list/can_craft = list()
 	var/list/cant_craft = list()
 	for(var/rec in crafting_recipes)
 		var/datum/crafting_recipe/R = rec
-		if(R.category != categories[viewing_category])
+		if(R.category != cur_category)
 			continue
 		if(check_contents(R, surroundings))
 			can_craft += list(build_recipe_data(R))
@@ -294,6 +314,10 @@
 			display_craftable_only = !display_craftable_only
 			usr << "<span class='notice'>You will now [display_craftable_only ? "only see recipes you can craft":"see all recipes"].</span>"
 			. = TRUE
+		if("toggle_compact")
+			display_compact = !display_compact
+			usr << "<span class='notice'>Crafting menu is now [display_compact? "compact" : "full size"].</span>"
+			. = TRUE
 
 
 //Next works nicely with modular arithmetic
@@ -318,27 +342,23 @@
 	var/tool_text = ""
 	var/catalyst_text = ""
 
-	for(var/A in R.reqs)
-		if(ispath(A, /obj))
-			var/obj/O = A
-			req_text += " [R.reqs[A]] [initial(O.name)],"
-		else if(ispath(A, /datum/reagent))
-			var/datum/reagent/RE = A
-			req_text += " [R.reqs[A]] [initial(RE.name)],"
+	for(var/a in R.reqs)
+		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
+		//Also these are typepaths so sadly we can't just do "[a]"
+		var/atom/A = a
+		req_text += " [R.reqs[A]] [initial(A.name)],"
 	req_text = replacetext(req_text,",","",-1)
 	data["req_text"] = req_text
 
-	for(var/C in R.chem_catalysts)
-		if(ispath(C, /datum/reagent))
-			var/datum/reagent/RE = C
-			catalyst_text += " [R.chem_catalysts[C]] [initial(RE.name)],"
+	for(var/a in R.chem_catalysts)
+		var/atom/A = a //cheat-typecast
+		catalyst_text += " [R.chem_catalysts[A]] [initial(A.name)],"
 	catalyst_text = replacetext(catalyst_text,",","",-1)
 	data["catalyst_text"] = catalyst_text
 
-	for(var/O in R.tools)
-		if(ispath(O, /obj))
-			var/obj/T = O
-			tool_text += " [R.tools[O]] [initial(T.name)],"
+	for(var/a in R.tools)
+		var/atom/A = a //cheat-typecast
+		tool_text += " [R.tools[A]] [initial(A.name)],"
 	tool_text = replacetext(tool_text,",","",-1)
 	data["tool_text"] = tool_text
 

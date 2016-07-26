@@ -31,39 +31,20 @@
 
 /obj/item/candle/attackby(obj/item/weapon/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.isOn()) //Badasses dont get blinded by lighting their candle with a welding tool
-			light("<span class='danger'>[user] casually lights the [name] with [W], what a badass.</span>")
-	else if(istype(W, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/L = W
-		if(L.lit)
-			light()
-	else if(istype(W, /obj/item/weapon/match))
-		var/obj/item/weapon/match/M = W
-		if(M.lit)
-			light()
-	else if(istype(W, /obj/item/candle))
-		var/obj/item/candle/C = W
-		if(C.lit)
-			light()
-	else if(istype(W, /obj/item/clothing/mask/cigarette))
-		var/obj/item/clothing/mask/cigarette/M = W
-		if(M.lit)
-			light()
+	var/msg = W.ignition_effect(src, user)
+	if(msg)
+		light(msg)
 
 /obj/item/candle/fire_act()
 	if(!src.lit)
 		light() //honk
-	return
 
 /obj/item/candle/proc/light(show_message)
 	if(!src.lit)
 		src.lit = TRUE
 		//src.damtype = "fire"
 		if(show_message)
-			usr.visible_message(
-				"<span class='danger'>[usr] lights the [name].</span>")
+			usr.visible_message(show_message)
 		SetLuminosity(CANDLE_LUMINOSITY)
 		START_PROCESSING(SSobj, src)
 		update_icon()

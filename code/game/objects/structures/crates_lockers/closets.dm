@@ -335,7 +335,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if(iscarbon(usr) || issilicon(usr))
+	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
 		attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"

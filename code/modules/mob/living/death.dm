@@ -54,7 +54,9 @@
 			message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
 		mind.store_memory("Time of death: [tod]", 0)
+	var/list/scripture_states = get_scripture_states()
 	living_mob_list -= src
+	scripture_unlock_alert(scripture_states)
 	if(!gibbed)
 		dead_mob_list += src
 	else if(buckled)

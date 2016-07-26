@@ -1,11 +1,17 @@
 //Blocks an attempt to connect before even creating our client datum thing.
 
+//How many new ckey matches before we revert the stickyban to it's roundstart state
+//These are exclusive, so once it goes over one of these numbers, it reverts the ban
+#define STICKYBAN_MAX_MATCHES 20
+#define STICKYBAN_MAX_EXISTING_USER_MATCHES 5 //ie, users who were connected before the ban triggered
+#define STICKYBAN_MAX_ADMIN_MATCHES 2
+
 /world/IsBanned(key,address,computer_id)
 	if (!key || !address || !computer_id)
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
-	
-	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire 
+
+	if (text2num(computer_id) == 2147483647) //this cid causes stickybans to go haywire
 		log_access("Failed Login (invalid cid): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided an invalid Computer ID.)")
 	var/admin = 0
@@ -99,17 +105,83 @@
 			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["reason"]]")
 			return .
 
-	. = ..()	//default pager ban stuff
-	if (.)
+	var/list/ban = ..()	//default pager ban stuff
+	if (ban)
+		var/bannedckey = "ERROR"
+		if (ban["ckey"])
+			bannedckey = ban["ckey"]
+
+		var/newmatch = FALSE
+		var/client/C = directory[ckey]
+		var/cachedban = SSstickyban.cache[bannedckey]
+
+		//rogue ban in the process of being reverted.
+		if (cachedban && cachedban["reverting"])
+			return null
+
+		if (cachedban && ckey != bannedckey)
+			newmatch = TRUE
+			if (cachedban["keys"])
+				if (cachedban["keys"][ckey])
+					newmatch = FALSE
+			if (cachedban["matches_this_round"][ckey])
+				newmatch = FALSE
+
+		if (newmatch && cachedban)
+			var/list/newmatches = cachedban["matches_this_round"]
+			var/list/newmatches_connected = cachedban["existing_user_matches_this_round"]
+			var/list/newmatches_admin = cachedban["admin_matches_this_round"]
+
+			newmatches[ckey] = ckey
+			if (C)
+				newmatches_connected[ckey] = ckey
+			if (admin)
+				newmatches_admin[ckey] = ckey
+
+			if (\
+				newmatches.len > STICKYBAN_MAX_MATCHES || \
+				newmatches_connected.len > STICKYBAN_MAX_EXISTING_USER_MATCHES || \
+				newmatches_admin.len > STICKYBAN_MAX_ADMIN_MATCHES \
+				)
+				if (cachedban["reverting"])
+					return null
+				cachedban["reverting"] = TRUE
+
+				world.SetConfig("ban", bannedckey, null)
+
+				log_game("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
+				message_admins("Stickyban on [bannedckey] detected as rogue, reverting to it's roundstart state")
+				//do not convert to timer.
+				spawn (5)
+					world.SetConfig("ban", bannedckey, null)
+					sleep(1)
+					world.SetConfig("ban", bannedckey, null)
+					cachedban["matches_this_round"] = list()
+					cachedban["existing_user_matches_this_round"] = list()
+					cachedban["admin_matches_this_round"] = list()
+					cachedban -= "reverting"
+					world.SetConfig("ban", bannedckey, list2stickyban(cachedban))
+				return null
+
 		//byond will not trigger isbanned() for "global" host bans,
 		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)
 		//So it's safe to let admins walk thru host/sticky bans here
 		if (admin)
-			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban")
-			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban</span>")
-			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban</span>")
+			log_admin("The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]")
+			message_admins("<span class='adminnotice'>The admin [key] has been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
+			addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching host/sticky ban on [bannedckey]</span>")
 			return null
-		else
-			log_access("Failed Login: [key] [computer_id] [address] - Banned [.["message"]]")
+
+		if (C) //user is already connected!.
+			C << "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was reversed."
+
+		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
+		. = list("reason" = "Stickyban", "desc" = desc)
+		log_access("Failed Login: [key] [computer_id] [address] - StickyBanned [ban["message"]] Target Username: [bannedckey] Placed by [ban["admin"]]")
 
 	return .
+
+
+#undef STICKYBAN_MAX_MATCHES
+#undef STICKYBAN_MAX_EXISTING_USER_MATCHES
+#undef STICKYBAN_MAX_ADMIN_MATCHES

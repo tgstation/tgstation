@@ -116,19 +116,31 @@
 /turf/open/floor/clockwork
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "clockwork_floor"
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
 
 /turf/open/floor/clockwork/New()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
-	clockwork_construction_value++
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
+	realappearence.linked = src
+	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	clockwork_construction_value--
+	be_removed()
 	return ..()
+
+/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/clockwork/proc/be_removed()
+	STOP_PROCESSING(SSobj, src)
+	change_construction_value(-1)
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -160,11 +172,18 @@
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 20, 1)
 		if(!do_after(user, 70 / I.toolspeed, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] pries up [src]!</span>", "<span class='notice'>You pry up [src], destroying it!</span>")
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		make_plating()
 		return 1
+	return ..()
+
+/turf/open/floor/clockwork/make_plating()
+	new/obj/item/clockwork/alloy_shards/small(src)
+	new/obj/item/clockwork/alloy_shards/medium(src)
 	return ..()
 
 /turf/open/floor/clockwork/ratvar_act()

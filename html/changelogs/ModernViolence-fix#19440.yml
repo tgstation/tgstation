@@ -1,0 +1,4 @@
+author: "ModernViolence"
+delete-after: True
+changes: 
+  - bugfix: "Hulk now has default cooldown for melee attacks against dominator"

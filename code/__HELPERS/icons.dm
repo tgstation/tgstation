@@ -692,7 +692,18 @@ The _flatIcons list is a cache for generated icon files.
 	var/image/copy
 	// Add the atom's icon itself, without pixel_x/y offsets.
 	if(!noIcon)
-		copy = image(icon=curicon, icon_state=curstate, layer=A.layer, dir=curdir)
+		if(curdir == SOUTH)
+			copy = image(curicon, curstate)
+		else
+			var/icon/dirIcon
+			if(curdir == NORTH || curdir == SOUTH || curdir == EAST || curdir == WEST)
+				dirIcon = icon('icons/effects/effects.dmi', "nothing_4way")
+			else
+				dirIcon = icon('icons/effects/effects.dmi', "nothing_8way")
+			var/icon/copyicon = icon(curicon, curstate)
+			dirIcon.Blend(copyicon, ICON_OVERLAY)
+			copy = image(dirIcon)
+		copy.dir = curdir
 		copy.color = A.color
 		copy.alpha = A.alpha
 		copy.blend_mode = curblend

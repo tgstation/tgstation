@@ -29,7 +29,7 @@
 	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
 				/obj/item/weapon/staff)
 
-	var/obj/effect/proc_holder/spell/dumbfire/fireball/fireball = null
+	var/obj/effect/proc_holder/spell/fireball/fireball = null
 	var/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/blink = null
 	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/mm = null
 
@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/wizard/New()
 	..()
-	fireball = new /obj/effect/proc_holder/spell/dumbfire/fireball
+	fireball = new /obj/effect/proc_holder/spell/fireball
 	fireball.clothes_req = 0
 	fireball.human_req = 0
 	fireball.player_lock = 0
@@ -62,7 +62,7 @@
 	if(target && next_cast < world.time)
 		if((get_dir(src,target) in list(SOUTH,EAST,WEST,NORTH)) && fireball.cast_check(0,src)) //Lined up for fireball
 			src.setDir(get_dir(src,target))
-			fireball.choose_targets(src)
+			fireball.perform(list(target), user = src)
 			next_cast = world.time + 10 //One spell per second
 			return .
 		if(mm.cast_check(0,src))

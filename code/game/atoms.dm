@@ -6,6 +6,7 @@
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
 	var/list/blood_DNA
+	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
@@ -27,7 +28,11 @@
 			var/datum/alternate_appearance/AA = alternate_appearances[aakey]
 			qdel(AA)
 		alternate_appearances = null
-
+	if(viewing_alternate_appearances)
+		for(var/aakey in viewing_alternate_appearances)
+			for(var/aa in viewing_alternate_appearances[aakey])
+				var/datum/alternate_appearance/AA = aa
+				AA.hide(list(src))
 	return ..()
 
 
@@ -436,3 +441,7 @@ var/list/blood_splatter_icons = list()
 //Hook for running code when a dir change occurs
 /atom/proc/setDir(newdir)
 	dir = newdir
+
+/atom/on_varedit(modified_var)
+	if(!Debug2)
+		admin_spawned = TRUE

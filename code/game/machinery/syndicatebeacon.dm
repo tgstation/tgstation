@@ -87,13 +87,9 @@
 
 			M << "<B>You have joined the ranks of the Syndicate and become a traitor to the station!</B>"
 
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in M.mind.objectives)
-				M << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+			M.mind.announce_objectives()
 
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()

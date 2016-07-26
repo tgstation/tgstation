@@ -589,7 +589,10 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
 /datum/reagent/toxin/amanitin/on_mob_delete(mob/living/M)
-	M.adjustToxLoss(current_cycle*3*REM)
+	var/toxdamage = current_cycle*3*REM
+	M.adjustToxLoss(toxdamage)
+	if(M)
+		add_logs(M, get_turf(M), "has taken [toxdamage] toxin damage from amanitin toxin")
 	..()
 
 /datum/reagent/toxin/lipolicide
@@ -602,9 +605,9 @@
 	toxpwr = 0.5
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/M)
-	if(!holder.has_reagent("nutriment"))
+	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(0.5*REM, 0)
-	M.nutrition = max( M.nutrition - 5 * REAGENTS_METABOLISM, 0)
+	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
 

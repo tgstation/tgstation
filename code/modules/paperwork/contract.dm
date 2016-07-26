@@ -187,11 +187,9 @@
 			add_logs(user, H, "infernally revived via contract")
 			user.visible_message("<span class='notice'>With a sudden blaze, [H] stands back up.</span>")
 			H.adjust_fire_stacks(20)
-			H.IgniteMob()
+			H.fakefire()
 			FulfillContract(H)
-			sleep(5)
-			H.ExtinguishMob()
-			H.adjustFireLoss(0)
+			addtimer(H, "fakefireextinguish",5,TRUE)
 	else
 		..()
 
@@ -251,7 +249,7 @@
 /obj/item/weapon/paper/contract/infernal/magic/FulfillContract(mob/living/carbon/human/user = target.current)
 	if(!istype(user) || !user.mind)
 		return -1
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/dumbfire/fireball(null))
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/fireball(null))
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	return ..()
 

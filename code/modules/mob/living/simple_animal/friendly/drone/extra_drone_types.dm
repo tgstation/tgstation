@@ -97,8 +97,9 @@
 	picked = TRUE
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
-	health = 60
-	maxHealth = 60
+	pass_flags = PASSTABLE
+	health = 50
+	maxHealth = 50
 	hacked = 1
 	density = TRUE
 	ventcrawler = 0
@@ -134,8 +135,11 @@
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and will be able to utilize almost anything they can, excluding a clockwork slab.</b>"
 
+/mob/living/simple_animal/drone/cogscarab/binarycheck()
+	return FALSE
+
 /mob/living/simple_animal/drone/cogscarab/update_drone_hack()
 	return //we don't get hacked or give a shit about it
 
 /mob/living/simple_animal/drone/cogscarab/drone_chat(msg)
-	send_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES
+	titled_hierophant_message(src, msg, "heavy_alloy") //HIEROPHANT DRONES

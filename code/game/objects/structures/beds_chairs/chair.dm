@@ -32,15 +32,12 @@
 	switch(severity)
 		if(1)
 			qdel(src)
-			return
 		if(2)
 			if(prob(70))
 				deconstruct()
-				return
 		if(3)
 			if(prob(50))
 				deconstruct()
-				return
 
 /obj/structure/chair/narsie_act()
 	if(prob(20))
@@ -71,7 +68,6 @@
 		..()
 	else
 		rotate()
-	return
 
 /obj/structure/chair/proc/handle_rotation(direction)
 	handle_layer()
@@ -204,7 +200,7 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
+		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
 			usr << "<span class='warning'>You can't do that right now!</span>"

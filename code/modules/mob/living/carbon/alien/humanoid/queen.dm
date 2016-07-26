@@ -78,7 +78,7 @@
 
 /obj/effect/proc_holder/alien/royal/queen/promote/fire(mob/living/carbon/alien/user)
 	var/obj/item/queenpromote/prom
-	if(alien_type_present(/mob/living/carbon/alien/humanoid/royal/praetorian/))
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
 		user << "<span class='noticealien'>You already have a Praetorian!</span>"
 		return 0
 	else
@@ -99,14 +99,14 @@
 	name = "\improper royal parasite"
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
 	icon_state = "alien_medal"
-	flags = ABSTRACT|NODROP
+	flags = ABSTRACT|NODROP|DROPDEL
 	icon = 'icons/mob/alien.dmi'
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || istype(M, /mob/living/carbon/alien/humanoid/royal))
 		user << "<span class='noticealien'>You may only use this with your adult, non-royal children!</span>"
 		return
-	if(alien_type_present(/mob/living/carbon/alien/humanoid/royal/praetorian/))
+	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/praetorian/))
 		user << "<span class='noticealien'>You already have a Praetorian!</span>"
 		return
 

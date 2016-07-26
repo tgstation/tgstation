@@ -80,6 +80,10 @@
 /obj/structure/bodycontainer/container_resist()
 	open()
 
+/obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
+	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
+	container_resist()
+
 /obj/structure/bodycontainer/proc/open()
 	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
@@ -124,7 +128,7 @@
 				icon_state = "morgue3"
 				return
 			for(var/mob/living/M in compiled)
-				if(M.client)
+				if(M.client && !M.suiciding)
 					icon_state = "morgue4" // Cloneable
 					break
 

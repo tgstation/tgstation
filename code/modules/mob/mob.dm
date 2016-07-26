@@ -242,7 +242,7 @@ var/next_mob_id = 0
 			slot_ears, slot_glasses,\
 			slot_belt, slot_s_store,\
 			slot_l_store, slot_r_store,\
-			slot_drone_storage\
+			slot_generic_dextrous_storage\
 		)
 
 	for(var/slot in slot_priority)
@@ -949,6 +949,9 @@ var/next_mob_id = 0
 
 /mob/proc/is_literate()
 	return 0
+
+/mob/proc/can_hold_items()
+	return FALSE
 
 /mob/proc/get_idcard()
 	return

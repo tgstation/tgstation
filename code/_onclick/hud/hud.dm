@@ -19,6 +19,7 @@
 	var/obj/screen/blobpwrdisplay
 
 	var/obj/screen/alien_plasma_display
+	var/obj/screen/alien_queen_finder
 
 	var/obj/screen/devil/soul_counter/devilsouldisplay
 
@@ -96,6 +97,7 @@
 	lingstingdisplay = null
 	blobpwrdisplay = null
 	alien_plasma_display = null
+	alien_queen_finder = null
 	deity_power_display = null
 	deity_follower_display = null
 	nightvisionicon = null

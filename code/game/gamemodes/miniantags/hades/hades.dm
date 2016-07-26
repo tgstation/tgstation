@@ -358,73 +358,40 @@
 								var/checkPerson = pick(living_mob_list)
 								if(checkPerson)
 									sinPerson = checkPerson
-						if(!sinPerson.ckey)
+						if(!sinPerson || !sinPerson.ckey)
 							// double check ensure that if the above loop fails to get a ckey target
 							// we don't go and use the last mob checked, causing odd situations
 							return
-						if(sinPerson)
-							if(prob(65)) // moderately high chance for us to go to them, else they come here.
-								Transfer(src,get_turf(pick(oview(1,sinPerson))))
-							else
-								Transfer(sinPerson,get_turf(pick(oview(1,src))))
-							var/sinPersonchoice = pick(validSins)
-							switch(sinPersonchoice)
-								if("Greed")
-									src.say("Your sin, [sinPerson], is Greed.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Greed(sinPerson, TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Greed(sinPerson, FALSE)
-								if("Gluttony")
-									src.say("Your sin, [sinPerson], is Gluttony.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Gluttony(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Gluttony(sinPerson,FALSE)
-								if("Pride")
-									src.say("Your sin, [sinPerson], is Pride.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Pride(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Pride(sinPerson,FALSE)
-								if("Lust")
-									src.say("Your sin, [sinPerson], is Lust.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Lust(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Lust(sinPerson,TRUE)
-								if("Envy")
-									src.say("Your sin, [sinPerson], is Envy.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Envy(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Envy(sinPerson,FALSE)
-								if("Sloth")
-									src.say("Your sin, [sinPerson], is Sloth.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Sloth(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Sloth(sinPerson,FALSE)
-								if("Wrath")
-									src.say("Your sin, [sinPerson], is Wrath.")
-									if(prob(50))
-										src.say("I will indulge your sin, [sinPerson].")
-										sin_Wrath(sinPerson,TRUE)
-									else
-										src.say("Your sin will be punished, [sinPerson]!")
-										sin_Wrath(sinPerson,FALSE)
+
+						if(prob(65)) // moderately high chance for us to go to them, else they come here.
+							Transfer(src,get_turf(pick(oview(1,sinPerson))))
+						else
+							Transfer(sinPerson,get_turf(pick(oview(1,src))))
+
+						var/sinPersonchoice = pick(validSins)
+
+						src.say("Your sin, [sinPerson], is [sinPersonchoice].")
+						var/isIndulged = prob(50)
+						if(isIndulged)
+							src.say("I will indulge your sin, [sinPerson].")
+						else
+							src.say("Your sin will be punished, [sinPerson]!")
+
+						switch(sinPersonchoice)
+							if("Greed")
+								sin_Greed(sinPerson, isIndulged)
+							if("Gluttony")
+								sin_Gluttony(sinPerson, isIndulged)
+							if("Pride")
+								sin_Pride(sinPerson, isIndulged)
+							if("Lust")
+								sin_Lust(sinPerson, isIndulged)
+							if("Envy")
+								sin_Envy(sinPerson, isIndulged)
+							if("Sloth")
+								sin_Sloth(sinPerson, isIndulged)
+							if("Wrath")
+								sin_Wrath(sinPerson, isIndulged)
 
 
 ///Sin related things
@@ -459,28 +426,26 @@
 		sinPerson.reagents.add_reagent("nutriment",1000)
 
 /proc/sin_Pride(var/mob/living/carbon/human/sinPerson, var/isIndulged)
+	var/obj/item/weapon/twohanded/sin_pride/pride_hammer = new(get_turf(sinPerson))
+	pride_hammer.pride_direction = !isIndulged
+
 	if(isIndulged)
 		sinPerson << "<span class='warning'>You feel strong enough to take on the world.</span>"
-		var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-		good.name = "Indulged [good.name]"
-		good.pride_direction = FALSE
+		pride_hammer.name = "Indulged [pride_hammer.name]"
 	else
 		sinPerson << "<span class='warning'>You feel small and weak, like the entire world is against you.</span>"
-		var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
-		bad.name = "Punished [bad.name]"
-		bad.pride_direction = TRUE
+		pride_hammer.name = "Punished [pride_hammer.name]"
 
 /proc/sin_Lust(var/mob/living/carbon/human/sinPerson, var/isIndulged)
+	var/obj/item/lovestone/lovestone = new(get_turf(sinPerson))
+	lovestone.lust_direction = !isIndulged
+
 	if(isIndulged)
 		sinPerson << "<span class='warning'>You feel confident, like everything and everyone is drawn to you.</span>"
-		var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
-		good.name = "Indulged [good.name]"
-		good.lust_direction = FALSE
+		lovestone.name = "Indulged [lovestone.name]"
 	else
 		sinPerson << "<span class='warning'>You feel lonely... the wish for the warmth of another spark through your mind.</span>"
-		var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
-		bad.name = "Punished [bad.name]"
-		bad.lust_direction = TRUE
+		lovestone.name = "Punished [lovestone.name]"
 
 /proc/sin_Envy(var/mob/living/carbon/human/sinPerson, var/isIndulged)
 	if(isIndulged)
@@ -744,9 +709,6 @@
 			if(M.health > 0 && M.maxHealth > 200)
 				// no absorbing super strong creatures unless they're dead
 				user << "<span class='warning'><font size=3>Such power.. Slay this [M] so that I may partake of its being.</font></span>"
-				return
-			if(!M.stat)
-				user << "<span class='warning'><font size=3>[M] is still too tightly bound to the mortal world! You must either kill or knock them unconscious to sacrifice them.</font></span>"
 				return
 			user << "<span class='warning'><font size=3>I accept your offering.</font></span>"
 			absorbedHP += M.maxHealth

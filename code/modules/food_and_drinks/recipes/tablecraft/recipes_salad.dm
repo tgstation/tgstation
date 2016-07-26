@@ -11,7 +11,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/aesirsalad
 	name = "Aesir salad"
@@ -21,7 +21,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple/gold = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/validsalad
 	name = "Valid salad"
@@ -32,7 +32,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/validsalad
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/monkeysdelight
 	name = "Monkeys delight"
@@ -45,7 +45,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/oatmeal
 	name = "Oatmeal"
@@ -55,7 +55,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/oat = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/oatmeal
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/fruitsalad
 	name = "Fruit salad"
@@ -68,7 +68,7 @@
 
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/fruit
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/junglesalad
 	name = "Jungle salad"
@@ -81,7 +81,7 @@
 
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/jungle
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/citrusdelight
 	name = "Citrus delight"
@@ -93,7 +93,7 @@
 
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/citrusdelight
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/ricepork
 	name = "Rice and pork"
@@ -102,7 +102,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 2
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/ricepork
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/eggbowl
 	name = "Egg bowl"
@@ -113,7 +113,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/corn = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
-	category = CAT_FOOD
+	category = CAT_SALAD
 
 /datum/crafting_recipe/food/ricepudding
 	name = "Rice pudding"
@@ -123,4 +123,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/salad/ricepudding
-	category = CAT_FOOD
+	category = CAT_SALAD

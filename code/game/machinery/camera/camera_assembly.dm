@@ -103,11 +103,11 @@
 
 	// Upgrades!
 	if(is_type_in_list(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		if(!user.unEquip(W))
+		if(!user.drop_item(W))
 			return
 		user << "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>"
 		upgrades += W
-		W.loc = src
+		W.forceMove(src)
 		return
 
 	// Taking out upgrades

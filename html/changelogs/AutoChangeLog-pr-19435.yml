@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - experiment: "If the invoker of Nzcrentr is knocked unconscious or killed, they will gib instead of producing a lighting blast."

@@ -11,7 +11,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/margherita
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/meatpizza
 	name = "Meat pizza"
@@ -22,7 +22,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/meat
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/mushroompizza
 	name = "Mushroom pizza"
@@ -31,7 +31,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom = 5
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/mushroom
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/vegetablepizza
 	name = "Vegetable pizza"
@@ -43,7 +43,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/vegetable
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/donpocketpizza
 	name = "Donkpocket pizza"
@@ -54,7 +54,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/donkpocket
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/dankpizza
 	name = "Dank pizza"
@@ -65,7 +65,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/dank
-	category = CAT_FOOD
+	category = CAT_PIZZA
 
 /datum/crafting_recipe/food/sassysagepizza
 	name = "Sassysage pizza"
@@ -76,4 +76,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/pizza/sassysage
-	category = CAT_FOOD
+	category = CAT_PIZZA

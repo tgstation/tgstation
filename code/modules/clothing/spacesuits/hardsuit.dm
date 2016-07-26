@@ -88,6 +88,34 @@
 		jetpack = new jetpack(src)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/tank/jetpack/suit))
+		if(jetpack)
+			user << "<span class='warning'>[src] already has a jetpack installed.</span>"
+			return
+		if(src == user.get_item_by_slot(slot_wear_suit)) //Make sure the player is not wearing the suit before applying the upgrade.
+			user << "<span class='warning'>You cannot install the upgrade to [src] while wearing it.</span>"
+			return
+
+		if(user.unEquip(I))
+			jetpack = I
+			I.loc = src
+			user << "<span class='notice'>You successfully install the jetpack into [src].</span>"
+
+	else if(istype(I, /obj/item/weapon/screwdriver))
+		if(!jetpack)
+			user << "<span class='warning'>[src] has no jetpack installed.</span>"
+			return
+		if(src == user.get_item_by_slot(slot_wear_suit))
+			user << "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>"
+			return
+
+		jetpack.turn_off()
+		jetpack.loc = get_turf(src)
+		jetpack = null
+		user << "<span class='notice'>You successfully remove the jetpack from [src].</span>"
+
+
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
 	if(jetpack)
@@ -123,6 +151,7 @@
 	item_state = "eng_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine
+//	pockets = /obj/item/weapon/storage/internal/pocket
 
 	//Atmospherics
 /obj/item/clothing/head/helmet/space/hardsuit/engine/atmos
@@ -168,6 +197,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/weapon/tank/jetpack/suit
+//	pockets = /obj/item/weapon/storage/internal/pocket/big
 
 
 	//Mining hardsuit
@@ -193,7 +223,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
-
+//	pockets = /obj/item/weapon/storage/internal/pocket
 
 
 	//Syndicate hardsuit

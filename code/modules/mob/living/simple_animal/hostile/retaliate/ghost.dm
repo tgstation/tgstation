@@ -1,4 +1,4 @@
-/mob/living/simple_animal/retaliate/ghost
+/mob/living/simple_animal/hostile/retaliate/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
 	icon = 'icons/mob/mob.dmi'
@@ -38,7 +38,7 @@
 	var/image/ghost_facial_hair = null
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/retaliate/ghost/New()
+/mob/living/simple_animal/hostile/retaliate/ghost/New()
 	..()
 	if(!random)
 		give_hair()
@@ -51,7 +51,7 @@
 		give_hair()
 
 
-/mob/living/simple_animal/retaliate/ghost/proc/give_hair()
+/mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
 	if(ghost_hair_style != null)
 		ghost_hair = image('icons/mob/human_face.dmi', "hair_[ghost_hair_style]_s")
 		ghost_hair.layer = -HAIR_LAYER

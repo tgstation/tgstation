@@ -1,11 +1,12 @@
 // reference: /client/proc/modify_variables(var/atom/O, var/param_var_name = null, var/autodetect_class = 0)
 
+var/global/list/internal_byond_list_vars = list("contents" = TRUE, "verbs" = TRUE, "screen" = TRUE, "images" = TRUE)
+
 /datum
 	var/var_edited = 0 //Warrenty void if seal is broken
 
 /datum/proc/on_varedit(modified_var) //called whenever a var is edited
 	var_edited = 1
-	return
 
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
@@ -343,8 +344,6 @@ body
 
 	usr << browse(html, "window=variables\ref[D];size=475x650")
 
-	return
-
 /client/proc/debug_variable(name, value, level, datum/DA = null)
 	var/html = ""
 
@@ -397,21 +396,27 @@ body
 		html += "[html_encode(name)] = /list ([L.len])"
 
 		if (L.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || L.len > 500))
-			// not sure if this is completely right...
-			if(0)   //(L.vars.len > 0)
-				html += "<ol>"
-				html += "</ol>"
-			else
-				html += "<ul>"
-				var/index = 1
-				for (var/entry in L)
-					if(istext(entry))
-						html += debug_variable(entry, L[entry], level + 1)
-					//html += debug_variable("[index]", L[index], level + 1)
-					else
+			html += "<ul>"
+			var/index = 1
+			for(var/entry in L)
+				var/state = "INDEX"
+				var/val = null
+				if(isnum(entry) || internal_byond_list_vars[name])
+					state = "INDEX"
+				else
+					val = L[entry]
+					if(!isnull(val))
+						state = "ASSOC"
+					if(isnull(L[index]))
+						state = "ASSOC"
+
+				switch(state)
+					if("INDEX")
 						html += debug_variable(index, L[index], level + 1)
-					index++
-				html += "</ul>"
+					if("ASSOC")
+						html += debug_variable(entry, val, level + 1)
+				index++
+			html += "</ul>"
 
 	else
 		html += "[html_encode(name)] = <span class='value'>[html_encode(value)]</span>"
@@ -961,7 +966,3 @@ body
 				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
 				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
-
-
-	return
-

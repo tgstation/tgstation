@@ -127,7 +127,10 @@
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a></center>"
+			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a>"
+			output += " <a href='?_src_=holder;shownoteckey=[target_ckey]'>\[Refresh Page\]</a></center>"
+		else
+			output += " <a href='?_src_=holder;shownoteckeylinkless=[target_ckey]'>\[Refresh Page\]</a></center>"
 		output += ruler
 		while(query_get_notes.NextRow())
 			var/id = query_get_notes.item[1]

@@ -11,6 +11,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 /world/New()
 	check_for_cleanbot_bug()
 	map_ready = 1
+	world.log << "Map is ready."
 
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = file2list("config/external_rsc_urls.txt","\n")
@@ -161,6 +162,14 @@ var/last_irc_status = 0
 				minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 				for(var/obj/machinery/computer/communications/CM in machines)
 					CM.overrideCooldown()
+
+	else if("adminmsg" in input)
+		if(!key_valid)
+			return "Bad Key"
+		else
+			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
+
+
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff

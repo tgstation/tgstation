@@ -78,10 +78,13 @@
 	var/attacked_sound = "punch" //Played when someone punches the creature
 
 	var/dextrous = FALSE //If the creature has, and can use, hands
+	var/dextrous_hud_type = /datum/hud/dextrous
+	var/datum/personal_crafting/handcrafting
 
 
 /mob/living/simple_animal/New()
 	..()
+	handcrafting = new()
 	verbs -= /mob/verb/observe
 	if(!real_name)
 		real_name = name
@@ -423,16 +426,25 @@
 
 /mob/living/simple_animal/ex_act(severity, target)
 	..()
+	var/bomb_armor = getarmor(null, "bomb")
 	switch (severity)
 		if (1)
-			gib()
-			return
-
+			if(prob(bomb_armor))
+				adjustBruteLoss(500)
+			else
+				gib()
+				return
 		if (2)
-			adjustBruteLoss(60)
+			var/bloss = 60
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 		if(3)
-			adjustBruteLoss(30)
+			var/bloss = 30
+			if(prob(bomb_armor))
+				bloss = bloss / 1.5
+			adjustBruteLoss(bloss)
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
@@ -500,16 +512,25 @@
 		return 1
 	return 0
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close = 0, no_dextery = 0)
+	if(incapacitated())
+		return 0
+	if(no_dextery || dextrous)
+		if(be_close && !in_range(M, src))
+			return 0
+	else
 		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		return 0
+	return 1
+
+/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
 
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
-	if(!child_override)
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
+	if(!canUseTopic(who, TRUE))
 		return
 	else
 		..()
@@ -574,8 +595,21 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used && dextrous)
-		hud_used = new /datum/hud/dextrous(src, ui_style2icon(client.prefs.UI_style))
+	if(client && !hud_used)
+		if(dextrous)
+			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+		else
+			..()
+
+/mob/living/simple_animal/OpenCraftingMenu()
+	if(dextrous)
+		handcrafting.ui_interact(src)
+
+/mob/living/simple_animal/can_hold_items()
+	return dextrous
+
+/mob/living/simple_animal/IsAdvancedToolUser()
+	return dextrous
 
 /mob/living/simple_animal/activate_hand(selhand)
 	if(!dextrous)
