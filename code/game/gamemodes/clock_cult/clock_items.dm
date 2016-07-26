@@ -481,18 +481,18 @@
 	var/mob/living/carbon/human/H = loc
 	if(H.glasses != src)
 		return 0
-	H.adjust_eye_damage(1)
-	if(H.eye_damage >= 10)
-		H.adjust_blurriness(2)
-	if(H.eye_damage >= 20)
-		if(H.become_nearsighted())
-			H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
-			H.become_nearsighted()
-	if(H.eye_damage >= 30)
-		if(H.become_blind())
-			H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
-	if(prob(15) && !H.disabilities & BLIND)
-		H << "<span class='warning'>Your eyes continue to burn.</span>"
+	if(!H.disabilities & BLIND)
+		H.adjust_eye_damage(1)
+		if(H.eye_damage >= 15)
+			H.adjust_blurriness(2)
+		if(H.eye_damage >= 30)
+			if(H.become_nearsighted())
+				H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
+		if(H.eye_damage >= 45)
+			if(H.become_blind())
+				H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
+		if(prob(15))
+			H << "<span class='warning'>Your eyes continue to burn.</span>"
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
