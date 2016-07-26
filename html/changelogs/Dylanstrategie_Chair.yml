@@ -1,0 +1,4 @@
+author: Dylanstrategie
+delete-after: True
+changes:
+- tweak: All chairs, wooden and metal, are now worth 1 sheet (both construction and deconstruction), down from 5/3/2/1 (Office, Wooden, Comfy, Normal)

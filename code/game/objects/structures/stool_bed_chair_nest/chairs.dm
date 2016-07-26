@@ -94,11 +94,11 @@
 // Chair types
 /obj/structure/bed/chair/wood
 	autoignition_temperature = AUTOIGNITION_WOOD
-	fire_fuel = 3
+	fire_fuel = 1
 	// TODO:  Special ash subtype that looks like charred chair legs
 
 	sheet_type = /obj/item/stack/sheet/wood
-	sheet_amt = 3
+	sheet_amt = 1
 
 /obj/structure/bed/chair/wood/normal
 	icon_state = "wooden_chair"
@@ -134,7 +134,7 @@
 	icon_state = "comfychair_black"
 
 
-	sheet_amt = 2
+	sheet_amt = 1
 
 
 /obj/structure/bed/chair/comfy/New()
@@ -180,7 +180,7 @@
 
 /obj/structure/bed/chair/office
 	icon_state = "officechair_white"
-	sheet_amt = 5
+	sheet_amt = 1
 
 	anchored = 0
 
@@ -234,7 +234,7 @@
 /obj/structure/bed/chair/comfy/couch
 	name = "couch"
 	desc = "Looks really comfy."
-	sheet_amt = 3
+	sheet_amt = 2
 	anchored = 1
 	overrideghostspin = 1
 	var/image/legs
