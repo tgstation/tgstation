@@ -13,22 +13,33 @@
 
 	autoignition_temperature = AUTOIGNITION_PAPER
 	fire_fuel = 1
-	var/obj/item/unfolded = /obj/item/weapon/paper
+	var/obj/item/weapon/paper/unfolded
 	var/nano = 0
 
+/obj/item/weapon/p_folded/New(loc, var/obj/item/weapon/paper/unfolds_into)
+	..()
+	if(istype(unfolds_into))
+		unfolded = unfolds_into
+	if(!unfolded)
+		unfolded = new(src)
+
+
 /obj/item/weapon/p_folded/Destroy()
-	if (unfolded) qdel(src.unfolded)
+	if (unfolded)
+		qdel(unfolded)
+		unfolded = null
 	return ..()
 
 /obj/item/weapon/p_folded/attack_self(mob/user as mob)
-	if (!canunfold(src, user)) return
-	processunfolding(src, user)
+	if (!canunfold(src, user))
+		return
+	processunfolding(user)
 	return
 
 /obj/item/weapon/p_folded/attackby(obj/item/I, mob/user)
 	if(istype(I,/obj/item/weapon/pen))
-		var/N = copytext(sanitize(input(user, "What would you like to name [src.name]?", "Paper Labelling", null)  as text), 1, MAX_NAME_LEN)
-		if(N && Adjacent(user) && !user.stat)
+		var/N = copytext(sanitize(input(user, "What would you like to name [src.name]?", "Paper Labelling", null) as text), 1, MAX_NAME_LEN)
+		if(N && Adjacent(user) && !user.incapacitated())
 			src.name = N
 	else if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = I
@@ -48,26 +59,27 @@
 	set category = "Object"
 	set name = "Unfold"
 	set src in usr
-	if (!canunfold(src, usr)) return
-	processunfolding(src, usr) //this is a verb so we have to use usr
+	if (!canunfold(src, usr))
+		return
+	processunfolding(usr) //this is a verb so we have to use usr
 	return
 
-/obj/item/weapon/p_folded/proc/processunfolding(var/obj/item/weapon/p_folded/P, mob/user)
-	user.drop_item(P, src, force_drop = 1) //drop the item first to free our hand, but don't delete it yet because it contains the unfolding result.
+/obj/item/weapon/p_folded/proc/processunfolding(mob/user)
+	transfer_fingerprints(src, unfolded)
 
-	if(P.unfolded)
-		user.put_in_hands(P.unfolded)
+	user.drop_item(src, force_drop = 1) //drop the item first to free our hand, but don't delete it yet because it contains the unfolding result.
+
+	if(unfolded)
+		user.put_in_hands(unfolded)
 		user.visible_message("<span class='notice'>[user] unfolds \the [src].</span>", \
 			"<span class='notice'>You unfold \the [src].</span>")
-		P.unfolded.add_fingerprint(user)
-	P.unfolded = null
-	qdel(P) //now we can delete it
-	return 1
+	unfolded = null
+	qdel(src) //goodbye cruel world
 
 /obj/item/weapon/p_folded/proc/canunfold(var/obj/item/weapon/p_folded/P, mob/user)
 	if(!user)
 		return 0
-	if(user.stat || user.restrained())
+	if(user.incapacitated())
 		to_chat(user, "<span class='notice'>You can't do that while restrained.</span>")
 		return 0
 	if(!user.is_holding_item(P))

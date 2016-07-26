@@ -367,15 +367,17 @@ var/global/list/paper_folding_results = list ( \
 	set name = "Fold paper"
 	set src in usr
 
-	if (!canfold(usr)) return
-	. = paper_folding_results[(input("What do you want to make the paper into?", "Paper Folding") as null|anything in paper_folding_results)]
-	if (. == null) return
-	if (!canfold(usr)) return //second check in case some chucklefuck moves the paper or falls down while the menu is open
+	if (!canfold(usr))
+		return
+	var/foldtype = paper_folding_results[input("What do you want to make the paper into?", "Paper Folding") as null|anything in paper_folding_results]
+	if (!foldtype)
+		return
+	if (!canfold(usr))
+		return //second check in case some chucklefuck moves the paper or falls down while the menu is open
 
 	usr.drop_item(src, force_drop = 1)	//Drop the original paper to free our hand and call proper inventory handling code
-	var/obj/item/weapon/p_folded/P = new .(get_turf(usr)) 	//Let's make a new item
-	P.unfolded = src										//that unfolds into the original paper
-	src.loc = P												//and also contains it, for good measure.
+	var/obj/item/weapon/p_folded/P = new foldtype(get_turf(src), unfolds_into = src) //Let's make a new item that unfolds into the original paper
+	src.forceMove(P)	//and also contains it, for good measure.
 	usr.put_in_hands(P)
 	P.pixel_y = src.pixel_y
 	P.pixel_x = src.pixel_x
@@ -383,7 +385,7 @@ var/global/list/paper_folding_results = list ( \
 		P.color = "#9A9A9A"
 		P.nano = 1
 	usr.visible_message("<span class='notice'>[usr] folds \the [src.name] into a [P.name].</span>", "<span class='notice'>You fold \the [src.name] into a [P.name].</span>")
-	P.add_fingerprint(usr)
+	transfer_fingerprints(src, P)
 	return
 
 /obj/item/weapon/paper/proc/canfold(mob/user)
