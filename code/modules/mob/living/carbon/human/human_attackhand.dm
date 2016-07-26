@@ -6,15 +6,8 @@
 //Vampire code
 	if(M.zone_sel && M.zone_sel.selecting == LIMB_HEAD && src != M)
 		if(M.mind && isvampire(M) && !M.mind.vampire.draining)
-			if(src.check_body_part_coverage(MOUTH))
-				to_chat(M, "<span class='warning'>Remove their mask!</span>")
+			if(!M.can_suck(src))
 				return 0
-			if(M.check_body_part_coverage(MOUTH))
-				if(M.species.breath_type == "oxygen")
-					to_chat(M, "<span class='warning'>Remove your mask!</span>")
-					return 0
-				else
-					to_chat(M, "<span class='notice'>With practiced ease, you shift aside your mask for each gulp of blood.</span>")
 			if(mind && mind.vampire && (mind in ticker.mode.vampires))
 				to_chat(M, "<span class='warning'>Your fangs fail to pierce [src.name]'s cold flesh.</span>")
 				return 0
