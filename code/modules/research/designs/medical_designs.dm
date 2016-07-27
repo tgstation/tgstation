@@ -287,6 +287,16 @@
 	build_path = /obj/item/weapon/implantcase
 	category = list("Medical Designs")
 
+/datum/design/implantcase
+	name = "Sad Trombone Implant Case"
+	desc = "Makes death amusing."
+	id = "implant_trombone"
+	req_tech = list("materials" = 2, "biotech" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_BANANIUM = 500)
+	build_path = /obj/item/weapon/implantcase/sad_trombone
+	category = list("Medical Designs")
+
 /datum/design/implant_freedom
 	name = "Freedom Implant Case"
 	desc = "A glass case containing an implant."
