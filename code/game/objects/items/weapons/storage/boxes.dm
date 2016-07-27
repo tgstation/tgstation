@@ -12,7 +12,7 @@
  *		Condiment bottle and silly cup boxes,
  *		Donkpocket and monkeycube boxes,
  *		ID and security PDA cart boxes,
- *		Handcuff, mousetrap, and pillbottle boxes,t
+ *		Handcuff, mousetrap, and pillbottle boxes,
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
  *		Various paper bags.
