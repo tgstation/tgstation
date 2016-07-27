@@ -49,7 +49,6 @@
 	R.speed = 0 // Remove upgrades.
 	R.ionpulse = FALSE
 	R.magpulse = FALSE
-	R.weather_immunities = initial(R.weather_immunities)
 
 	R.status_flags |= CANPUSH
 
