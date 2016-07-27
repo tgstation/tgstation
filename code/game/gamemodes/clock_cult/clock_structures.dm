@@ -571,7 +571,14 @@
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>It has [uses] uses remaining.</span>"
 
+/obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
+	if(linked_gateway)
+		user.forceMove(get_turf(linked_gateway))
+	..()
+
 /obj/effect/clockwork/spatial_gateway/attack_hand(mob/living/user)
+	if(!uses)
+		return 0
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(L.buckled || L.anchored || L.has_buckled_mobs())
@@ -595,10 +602,23 @@
 	if(istype(I, /obj/item/clockwork/slab))
 		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
 		return 1
-	if(user.drop_item())
+	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
 		pass_through_gateway(I)
 	..()
+
+/obj/effect/clockwork/spatial_gateway/ex_act(severity)
+	if(severity == 1 && uses)
+		uses = 0
+		visible_message("<span class='warning'>[src] is disrupted!</span>")
+		animate(src, alpha = 0, transform = matrix()*2, time = 10)
+		QDEL_IN(src, 10)
+		linked_gateway.uses = 0
+		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
+		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10)
+		QDEL_IN(linked_gateway, 10)
+		return TRUE
+	return FALSE
 
 /obj/effect/clockwork/spatial_gateway/Bumped(atom/A)
 	..()
