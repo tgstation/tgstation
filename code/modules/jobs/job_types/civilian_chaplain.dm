@@ -68,6 +68,9 @@ Chaplain
 		if("sun")
 			B.name = "PRAISE THE SUN"
 			B.deity_name = "The Sun"
+			B.force = 0
+			B.throwforce = 0
+			B.SetLuminosity(9)
 	feedback_set_details("religion_name","[new_religion]")
 	ticker.Bible_name = B.name
 
