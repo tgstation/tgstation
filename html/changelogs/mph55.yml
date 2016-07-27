@@ -1,0 +1,4 @@
+author: mph55
+delete-after: True
+changes: 
+- bugfix: "The character preview is no longer blurry."

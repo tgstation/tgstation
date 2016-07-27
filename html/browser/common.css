@@ -320,3 +320,9 @@ div.notice
 	width: 100%;
 	clear: both;
 }
+
+.charPreview{
+	-ms-interpolation-mode: nearest-neighbor; 
+	width: 64px; 
+	height:64px;
+}

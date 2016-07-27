@@ -231,7 +231,7 @@ var/const/MAX_SAVE_SLOTS = 8
 	<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>
 	<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a>
 	</td><td valign='center'>
-	<div class='statusDisplay'><center><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></center></div>
+	<div class='statusDisplay'><center><img src=previewicon.png class="charPreview"><img src=previewicon2.png class="charPreview"></center></div>
 	</td></tr></table>
 	<h2>Body</h2>
 	<a href='?_src_=prefs;preference=all;task=random'>Random Body</A>
