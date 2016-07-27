@@ -23,7 +23,7 @@
 		if(5)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
-			new /obj/item/weapon/reagent_containers/glass/bottle/potion/flight(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/potion/lavaflight(src)
 		if(7)
 			new /obj/item/weapon/pickaxe/diamond(src)
 		if(8)
@@ -430,12 +430,19 @@
 	else
 		icon_state = "potionflask_empty"
 
+/obj/item/weapon/reagent_containers/glass/bottle/potion/lavaflight
+	name = "dark elixir"
+	desc = "A flask with an aura of darkness emanating from it. If you listen closely you can hear something moving inside."
+	list_reagents = list("lavaflightpotion" = 5)
+
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	id = "flightpotion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
+	var/speciestype = /datum/species/angel
+	var/usemessage = "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
@@ -444,14 +451,18 @@
 				M << "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>"
 			return ..()
 
-		M << "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>"
-		M.set_species(/datum/species/angel)
+		M << usemessage
+		M.set_species(speciestype)
 		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
 		M.adjustBruteLoss(20)
 		M.emote("scream")
 	..()
 
-
+/datum/reagent/flightpotion/lava
+	name = "Essence of Flight"
+	id = "lavaflightpotion"
+	speciestype = /datum/species/angel/lava
+	usemessage = "<span class='userdanger'>A terrible pain travels through your body as something forms inside your back!</span>"
 
 
 ///Bosses

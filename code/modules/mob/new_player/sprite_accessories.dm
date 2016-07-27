@@ -1326,6 +1326,16 @@
 	center = TRUE
 	dimension_y = 34
 
+/datum/sprite_accessory/wings_open/lava
+	icon = 'icons/mob/lavawings.dmi'
+	name = "Lava"
+	icon_state = "lava"
+	color_src = 0
+	dimension_x = 54
+	center = TRUE
+	dimension_y = 34
+	locked = TRUE
+
 /datum/sprite_accessory/wings
 	icon = 'icons/mob/wings.dmi'
 
@@ -1337,6 +1347,12 @@
 	center = TRUE
 	dimension_y = 34
 	locked = TRUE
+
+/datum/sprite_accessory/wings/lava
+	icon = 'icons/mob/lavawings.dmi'
+	name = "Lava"
+	icon_state = "null"
+	color_src = 0
 
 /datum/sprite_accessory/frills
 	icon = 'icons/mob/mutant_bodyparts.dmi'
