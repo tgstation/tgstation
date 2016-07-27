@@ -752,3 +752,22 @@
 	if(prob(30))
 		M << "You should sit down and take a rest..."
 	..()
+
+/datum/reagent/toxin/seawater //You get this when you learn that breathing ocean water is a bad idea.
+	name = "Seawater"
+	id = "seawater"
+	description = "Ocean water. Probably not good for breathing."
+	toxpwr = 0
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+
+/datum/reagent/toxin/seawater/on_mob_life(mob/living/M)
+	M.throw_alert("drowning", /obj/screen/alert/drowning)
+	M.adjustOxyLoss(2)
+	M.losebreath = max(1, M.losebreath)
+	if(prob(25) && !M.stat)
+		M.emote(pick("cough", "gasp"))
+	..()
+
+/datum/reagent/toxin/seawater/on_mob_delete(mob/living/M)
+	M.clear_alert("drowning")
+	..()

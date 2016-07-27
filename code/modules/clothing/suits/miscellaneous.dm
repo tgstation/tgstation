@@ -8,6 +8,10 @@
 /*
  * Lasertag
  */
+
+/obj/item/clothing/suit/proc/move_action() //Called whenever the wearer moves
+	return
+
 /obj/item/clothing/suit/bluetag
 	name = "blue laser tag armor"
 	desc = "A piece of plastic armor. It has sensors that react to red light." //Lasers are concentrated light

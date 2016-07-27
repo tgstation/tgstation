@@ -111,6 +111,13 @@ var/list/teleportlocs = list()
 	icon_state = "space_near"
 	lighting_use_dynamic = DYNAMIC_LIGHTING_IFSTARLIGHT
 
+/area/ocean_floor
+	name = "the ocean floor"
+	icon_state = "ocean_floor"
+	valid_territory = 0
+	ambientsounds = list('sound/ambience/ocean_deep.ogg')
+	blob_allowed = 0
+
 //These are shuttle areas; all subtypes are only used as teleportation markers, they have no actual function beyond that.
 
 /area/shuttle
@@ -951,6 +958,9 @@ var/list/teleportlocs = list()
 /area/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"
+
+/area/hydroponics/aquaponics
+	name = "Aquaponics"
 
 //Toxins
 

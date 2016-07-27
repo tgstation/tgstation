@@ -389,6 +389,9 @@ var/list/blood_splatter_icons = list()
 /atom/proc/ratvar_act()
 	return
 
+/atom/proc/water_act() //Note that this is only called when the water is flooding an area
+	return
+
 /atom/proc/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
     return 0
 
