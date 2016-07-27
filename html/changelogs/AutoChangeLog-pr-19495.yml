@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Ghosts can now click Spatial Gateways to teleport to the other gateway."
+  - bugfix: "Spatial Gateways are now properly disrupted by devastating explosions(but not heavy or light explosions)"
