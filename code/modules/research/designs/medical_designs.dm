@@ -287,7 +287,7 @@
 	build_path = /obj/item/weapon/implantcase
 	category = list("Medical Designs")
 
-/datum/design/implantcase
+/datum/design/implant_sadtrombone
 	name = "Sad Trombone Implant Case"
 	desc = "Makes death amusing."
 	id = "implant_trombone"
