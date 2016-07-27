@@ -411,6 +411,16 @@
 	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
 
+/obj/item/weapon/storage/box/testfiringpins
+	name = "box of test-range firing pins"
+	desc = "A box full of test-range firing pins, to allow testing of newly-developed firearms to operate."
+	icon_state = "id"
+	
+/obj/item/weapon/storage/box/testfiringpins/New()
+	..()
+	for(var/i in 1 to 5)
+		new obj/item/device/firing_pin/test_range(src)
+
 /obj/item/weapon/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
