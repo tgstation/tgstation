@@ -68,16 +68,16 @@
 */
 	if(panel_open)
 		icon_state = "cell-o"
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(state_open)
 		icon_state = "cell-open"
-		overlays.Cut()
+		cut_overlays()
 		return
 	if(on)
 		if(occupant)
 			icon_state = "cell-on"
-			overlays.Cut()
+			cut_overlays()
 			var/image/Occ = image(occupant)
 			Occ.dir = dir
 			var/icon/O = getFlatIcon(Occ)
@@ -95,11 +95,11 @@
 			overlays += I
 		else
 			icon_state = "cell-on"
-			overlays.Cut()
+			cut_overlays()
 	else
 		if(occupant)
 			icon_state = "cell-off"
-			overlays.Cut()
+			cut_overlays()
 			var/image/Occ = image(occupant)
 			Occ.dir = dir
 			var/icon/O = getFlatIcon(Occ)
@@ -118,7 +118,7 @@
 			overlays += I
 		else
 			icon_state = "cell-off"
-			overlays.Cut()
+			cut_overlays()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
