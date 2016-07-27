@@ -413,7 +413,7 @@
 
 /obj/item/weapon/storage/box/testfiringpins
 	name = "box of test-range firing pins"
-	desc = "A box full of test-range firing pins, to allow testing of newly-developed firearms to operate."
+	desc = "A box full of test-range firing pins, to allow testing of newly-developed firearms to operate in a safe testing area."
 	icon_state = "id"
 	
 /obj/item/weapon/storage/box/testfiringpins/New()
