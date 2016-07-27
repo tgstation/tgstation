@@ -54,18 +54,6 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-/*	if(panel_open)
-		icon_state = "cell-o"
-	else if(state_open)
-		icon_state = "cell-open"
-	else if(on && is_operational())
-		if(occupant)
-			icon_state = "cell-occupied"
-		else
-			icon_state = "cell-on"
-	else
-		icon_state = "cell-off"
-*/
 	if(panel_open)
 		icon_state = "cell-o"
 		cut_overlays()
