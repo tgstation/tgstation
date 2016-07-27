@@ -1239,7 +1239,7 @@ datum/reagent/romerol
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 
 /datum/reagent/growthserum/reaction_mob(mob/H, method=INGEST, reac_volume)
-	if(!H.reagents.has_reagent("growthserum", -1))//so you cant grow infinitely
+	if(current_cycle == 1)//so you cant grow infinitely
 		H.resize = 2
 		H.visible_message("<span class='notice'>[H] suddenly doubles in size!</span>", "<span class='notice'>You're a big guy!</span>")
 	..()
