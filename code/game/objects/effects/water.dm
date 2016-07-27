@@ -77,6 +77,11 @@
 				remain_active = TRUE*/
 	return remain_active
 
+/obj/effect/water/infinite //Infinite water sources never run out of water
+
+/obj/effect/water/infinite/Destroy()
+	return
+
 /obj/item/water_spawner
 	name = "glass of holding"
 	desc = "This glass never runs out of water."

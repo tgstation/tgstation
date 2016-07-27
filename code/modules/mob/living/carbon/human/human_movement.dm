@@ -28,40 +28,36 @@
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
 		HM.on_move(src, NewLoc)
-	if(shoes)
+	if(wear_suit || shoes)
 		if(!lying && !buckled)
 			if(loc == NewLoc)
 				if(!has_gravity(loc))
 					return
+				var/obj/item/clothing/suit/SU = get_item_by_slot(slot_wear_suit)
+				if(SU)
+					SU.move_action()
 				var/obj/item/clothing/shoes/S = shoes
+				if(S)
+					//Bloody footprints
+					var/turf/T = get_turf(src)
+					if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
+						var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
+						if(oldFP && oldFP.blood_state == S.blood_state)
+							return
+						else
+							//No oldFP or it's a different kind of blood
+							S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
+							var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
+							FP.blood_state = S.blood_state
+							FP.entered_dirs |= dir
+							FP.bloodiness = S.bloody_shoes[S.blood_state]
+							if(S.blood_DNA && S.blood_DNA.len)
+								FP.transfer_blood_dna(S.blood_DNA)
+							FP.update_icon()
+							update_inv_shoes()
+					//End bloody footprints
 
-				//Bloody footprints
-				var/turf/T = get_turf(src)
-				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
-					var/obj/effect/decal/cleanable/blood/footprints/oldFP = locate(/obj/effect/decal/cleanable/blood/footprints) in T
-					if(oldFP && oldFP.blood_state == S.blood_state)
-						return
-					else
-						//No oldFP or it's a different kind of blood
-						S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state]-BLOOD_LOSS_PER_STEP)
-						var/obj/effect/decal/cleanable/blood/footprints/FP = new /obj/effect/decal/cleanable/blood/footprints(T)
-						FP.blood_state = S.blood_state
-						FP.entered_dirs |= dir
-						FP.bloodiness = S.bloody_shoes[S.blood_state]
-						if(S.blood_DNA && S.blood_DNA.len)
-							FP.transfer_blood_dna(S.blood_DNA)
-						FP.update_icon()
-						update_inv_shoes()
-				//End bloody footprints
-
-				S.step_action()
-	if(wear_suit)
-		if(!lying && !buckled)
-			if(loc == NewLoc)
-				if(!has_gravity(loc))
-					return
-		var/obj/item/clothing/suit/S = get_item_by_slot(slot_wear_suit)
-		S.move_action()
+					S.step_action()
 
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.

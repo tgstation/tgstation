@@ -363,3 +363,9 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = 1
+
+/obj/machinery/door/firedoor/floodlock
+	name = "floodlock"
+	desc = "A high-visibility door for stopping water flow."
+	icon = 'icons/obj/doors/floodlock.dmi'
+	heat_proof = FALSE
