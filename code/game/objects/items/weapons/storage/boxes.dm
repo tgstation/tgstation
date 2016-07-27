@@ -12,7 +12,7 @@
  *		Condiment bottle and silly cup boxes,
  *		Donkpocket and monkeycube boxes,
  *		ID and security PDA cart boxes,
- *		Handcuff, mousetrap, and pillbottle boxes,
+ *		Handcuff, mousetrap, and pillbottle boxes,t
  *		Snap-pops and matchboxes,
  *		Replacement light boxes.
  *		Various paper bags.
@@ -410,16 +410,6 @@
 	..()
 	for(var/i in 1 to 5)
 		new /obj/item/device/firing_pin(src)
-
-/obj/item/weapon/storage/box/testfiringpins
-	name = "box of test-range firing pins"
-	desc = "A box full of test-range firing pins, to allow testing of newly-developed firearms to operate in a safe testing area."
-	icon_state = "id"
-	
-/obj/item/weapon/storage/box/testfiringpins/New()
-	..()
-	for(var/i in 1 to 5)
-		new obj/item/device/firing_pin/test_range(src)
 
 /obj/item/weapon/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
