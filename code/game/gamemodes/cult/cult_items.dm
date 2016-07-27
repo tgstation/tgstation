@@ -260,11 +260,11 @@
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
-	if(curselimit > 1)
+	if(curselimit > 3)
 		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
-		var/cursetime = 1500
+		var/cursetime = 1800
 		var/timer = SSshuttle.emergency.timeLeft(1) + cursetime
 		SSshuttle.emergency.setTimer(timer)
 		user << "<span class='danger'>You shatter the orb! A dark essence spirals into the air, then disappears.</span>"
