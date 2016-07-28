@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Clockwork Sigils will now be destroyed by any level of explosion, except for Sigils of Transmission, which will gain a small amount of power if hit by a light explosion instead of breaking."
-  - bugfix: "Clockwork Structures will now properly take damage from explosions instead of variably not taking damage or instantly being destroyed."

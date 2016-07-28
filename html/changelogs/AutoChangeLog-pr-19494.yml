@@ -1,7 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - tweak: "Space wind (movement from pressure differentials (like a hole to space)) has been improved."
-  - tweak: "Space wind's rate of movement now scales with pressure differential amount."
-  - experiment: "Actively moving (as in holding down a move key) reduces chance/rate of getting moved by space wind."
-  - rscadd: "Having a wall or dense anchored object to your left or right will lower the chance/rate of getting moved by space wind for each direction (IE: a wall on both sides of you will be a double reduction)"
