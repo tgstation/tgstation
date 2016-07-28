@@ -2107,6 +2107,10 @@
 /obj/structure/grille,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
+"gH" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/mineral/sandstone,
+/area/awaymission/wwmines)
 "gI" = (
 /turf/closed/wall/mineral/titanium/overspace,
 /area/awaymission/wwrefine)
@@ -44747,7 +44751,7 @@ bj
 bj
 bj
 aT
-bu
+gH
 bD
 bj
 bD
@@ -45273,7 +45277,7 @@ bj
 bj
 db
 bj
-cc
+gH
 aT
 bj
 bj
@@ -45530,7 +45534,7 @@ bj
 bj
 bj
 bj
-dl
+bu
 aT
 bj
 bj
