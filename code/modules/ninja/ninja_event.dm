@@ -14,7 +14,7 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 30000 // 1 hour
-
+	min_players = 15
 
 /datum/round_event/ghost_role/ninja
 	var/success_spawn = 0
