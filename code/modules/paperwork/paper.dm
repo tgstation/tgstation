@@ -348,11 +348,6 @@
 	..()
 	update_icon()
 
-/obj/item/weapon/paper/experience_pressure_difference(pressure_difference, direction)
-	if(last_high_pressure_movement_air_cycle < SSair.times_fired)
-		last_high_pressure_movement_air_cycle = SSair.times_fired
-		step(src, direction)
-
 /*
  * Premade paper
  */
