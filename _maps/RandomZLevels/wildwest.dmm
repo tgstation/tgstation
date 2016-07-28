@@ -570,7 +570,6 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cc" = (
-/obj/structure/sign/maltesefalcon/left,
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wwmines)
 "cd" = (
@@ -950,7 +949,6 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "dl" = (
-/obj/structure/sign/maltesefalcon/right,
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wwmines)
 "dm" = (
