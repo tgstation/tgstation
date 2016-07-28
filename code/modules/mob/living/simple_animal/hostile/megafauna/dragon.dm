@@ -90,6 +90,14 @@ Difficulty: Medium
 			var/mob/living/L = target
 			devour(L)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Goto(target, delay, minimum_distance)
+	if(!swooping)
+		..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
 	return 1
 
@@ -166,16 +174,13 @@ Difficulty: Medium
 			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	if(prob(50))
-		attack_dirs = list(NORTH,WEST,SOUTH,EAST)
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
-	for(var/d in attack_dirs)
+	for(var/d in cardinal)
 		addtimer(src, "fire_wall", 0, FALSE, d)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(d)
-	var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
+	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
 	for(var/turf/open/J in getline(src,E))
 		if(!range)
