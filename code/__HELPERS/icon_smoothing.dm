@@ -165,8 +165,6 @@
 				T = get_step(src, turn(adjacencies, 135))
 				if(T && (T.density || T.smooth))
 					T = get_step(src, turn(adjacencies, 225))
-					if(T && (T.density || T.smooth))
-						T = null
 
 			if(istype(T, /turf/open/space) && !istype(T, /turf/open/space/transit))
 				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
