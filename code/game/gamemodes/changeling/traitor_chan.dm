@@ -46,13 +46,13 @@
 			antag_candidates -= changeling
 			possible_changelings -= changeling
 			changelings += changeling
-			modePlayer += changelings
 			changeling.restricted_roles = restricted_jobs
 		return ..()
 	else
 		return 0
 
 /datum/game_mode/traitor/changeling/post_setup()
+	modePlayer += changelings
 	for(var/datum/mind/changeling in changelings)
 		changeling.current.make_changeling()
 		changeling.special_role = "Changeling"

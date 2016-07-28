@@ -71,13 +71,12 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			antag_candidates -= changeling
 			changelings += changeling
 			changeling.restricted_roles = restricted_jobs
-			modePlayer += changelings
 		return 1
 	else
 		return 0
 
 /datum/game_mode/changeling/post_setup()
-
+	modePlayer += changelings
 	//Decide if it's ok for the lings to have a team objective
 	//And then set it up to be handed out in forge_changeling_objectives
 	var/list/team_objectives = subtypesof(/datum/objective/changeling_team_objective)
