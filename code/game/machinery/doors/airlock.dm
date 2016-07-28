@@ -69,6 +69,7 @@ var/list/airlock_overlays = list()
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
+	var/shuttledocked = 0
 
 	explosion_block = 1
 
@@ -84,8 +85,6 @@ var/list/airlock_overlays = list()
 	if(glass)
 		airlock_material = "glass"
 	update_icon()
-	if(map_ready)
-		initialize()
 
 /obj/machinery/door/airlock/initialize()
 	. = ..()
@@ -93,6 +92,9 @@ var/list/airlock_overlays = list()
 		cyclelinkairlock()
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
+	if (cyclelinkedairlock)
+		cyclelinkedairlock.cyclelinkedairlock = null
+		cyclelinkedairlock = null
 	if (!cyclelinkeddir)
 		return
 	var/limit = world.view
@@ -109,6 +111,12 @@ var/list/airlock_overlays = list()
 		return
 	FoundDoor.cyclelinkedairlock = src
 	cyclelinkedairlock = FoundDoor
+
+/obj/machinery/door/airlock/on_varedit(varname)
+	. = ..()
+	switch (varname)
+		if ("cyclelinkeddir")
+			cyclelinkairlock()
 
 
 /obj/machinery/door/airlock/lock()
@@ -184,7 +192,7 @@ var/list/airlock_overlays = list()
 			user.stunned += 5
 			return
 	if (cyclelinkedairlock)
-		if (!emergency && allowed(user))
+		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			addtimer(cyclelinkedairlock, "close", 0)
 	..()
 
