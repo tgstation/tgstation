@@ -1,6 +1,6 @@
 /*
 
-CLOCKWORK CULT: Based off of the failed pull requests from vgstation
+CLOCKWORK CULT: Based off of the failed pull requests from /vg/
 
 While Nar-Sie is the oldest and most prominent of the elder gods, there are other forces at work in the universe.
 Ratvar, the Clockwork Justiciar, a homage to Nar-Sie granted sentience by its own power, is one such other force.
@@ -8,12 +8,7 @@ Imprisoned within a massive construct known as the Celestial Derelict - or Reebe
 Ratvar, unable to act in the mortal plane, seeks to return and forms covenants with mortals in order to bolster his influence.
 Due to his mechanical nature, Ratvar is also capable of influencing silicon-based lifeforms, unlike Nar-Sie, who can only influence natural life.
 
-This is a team-based gamemode.
-
-There are three possible objectives the Enlightened - Ratvar's minions - can have:
-	1. Ensure X amount of Enlightened escape the station through the shuttle or otherwise.
-	2. Convert all silicon lifeforms on the station to Ratvar's cause.
-	3. Summon Ratvar via construction of a Gateway.
+This is a team-based gamemode, and the team's objective is shared by all cultists. It can include summoning Ratvar, escaping on the shuttle, or converting the AI and its cyborgs.
 
 The clockwork version of an arcane tome is the clockwork slab.
 While it can perform certain actions, it consumes a resource called components.
@@ -23,11 +18,13 @@ Game-wise, clockwork slabs will generate components over time, with more powerfu
 This file's folder contains:
 	__clock_defines.dm: Defined variables
 	clock_cult.dm: Core gamemode files.
+	clock_items.dm: Items (excluding the proselytizer).
+	clock_machines.dm: Machinery like the mending motor.
 	clock_mobs.dm: Hostile and benign clockwork creatures.
-	clock_items.dm: Items
-	clock_structures.dm: Structures and effects
+	clock_proselytizer: The clockwork proselytizer and all of its special interactions.
 	clock_ratvar.dm: The Ark of the Clockwork Justiciar and Ratvar himself. Important enough to have his own file.
 	clock_scripture.dm: Scripture and rites.
+	clock_structures.dm: Structures and effects
 	clock_unsorted.dm: Anything else with no place to be
 
 */
@@ -108,6 +105,12 @@ This file's folder contains:
 			R.UnlinkSelf()
 			R.emagged = 1
 			R << "<span class='boldwarning'>You have been desynced from your master AI. In addition, your onboard camera is no longer active and your safeties have been disabled.</span>"
+		else if(isAI(S))
+			var/mob/living/silicon/ai/A = S
+			for(var/C in A.connected_robots)
+				var/mob/living/silicon/robot/R = C
+				if(R.connected_ai == A)
+					add_servant_of_ratvar(R)
 		S.laws = new/datum/ai_laws/ratvar
 		S.laws.associate(S)
 		S.update_icons()
@@ -176,13 +179,12 @@ This file's folder contains:
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
+	announce_span = "brass"
+	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
+	<span class='brass'>Servants</span>: Take over the station and summon Ratvar.\n\
+	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
 	var/servants_to_serve = list()
-
-/datum/game_mode/clockwork_cult/announce()
-	world << "<b>The game mode is: Clockwork Cult!</b>"
-	world << "<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>"
-	world << "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>"
-	world << "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>"
+	var/roundstart_player_count
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -191,6 +193,7 @@ This file's folder contains:
 		restricted_jobs += "Assistant"
 	var/starter_servants = 3 //Guaranteed three servants
 	var/number_players = num_players()
+	roundstart_player_count = number_players
 	if(number_players > 30) //plus one servant for every additional 15 players
 		number_players -= 30
 		starter_servants += round(number_players/15)
@@ -224,11 +227,10 @@ This file's folder contains:
 	if(silicons_possible)
 		possible_objectives += "silicons"
 	clockwork_objective = pick(possible_objectives)
-	clockwork_objective = "gateway" //TEMPORARY, to be removed before merge
 	switch(clockwork_objective)
 		if("escape")
-			required_escapees = max(1, num_players() / 3) //33% of the player count must be cultists
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]."
+			required_escapees = max(1, roundstart_player_count / 3) //33% of the player count must be cultists
+			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
 		if("gateway")
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 		if("silicons")
@@ -277,20 +279,31 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			if(surviving_servants <= required_escapees)
-				return 1
-			return 0
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. [surviving_servants] managed to escape!"
+			if(surviving_servants >= required_escapees)
+				return TRUE
+			return FALSE
 		if("silicons")
-			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
+			var/total_silicons = 0
+			var/converted_silicons = 0
+			var/successful = TRUE
+			for(var/mob/living/silicon/robot/S in living_mob_list) //Only check robots and AIs
+				total_silicons++
 				if(!is_servant_of_ratvar(S))
-					return 0
-			for(var/mob/living/silicon/ai/A in mob_list)
+					successful = FALSE
+				else
+					converted_silicons++
+			for(var/mob/living/silicon/ai/A in living_mob_list)
+				total_silicons++
 				if(!is_servant_of_ratvar(A))
-					return 0
-			return 1
+					successful = FALSE
+				else
+					converted_silicons++
+			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. [converted_silicons]/[total_silicons] silicons were converted!"
+			return successful
 		if("gateway")
 			return ratvar_awakens
-	return 0 //This shouldn't ever be reached, but just in case it is
+	return FALSE //This shouldn't ever be reached, but just in case it is
 
 /datum/game_mode/clockwork_cult/declare_completion()
 	..()
@@ -301,12 +314,21 @@ This file's folder contains:
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			feedback_set_details("round_end_result", "win - servants summoned ratvar")
+			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
+			feedback_set_details("round_end_result", "win - servants completed their objective ([clockwork_objective])")
 		else
-			text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-			feedback_set_details("round_end_result", "loss - servants did not summon ratvar")
-		text += "<br><b>The goal of the clockwork cult was:</b> [clockwork_explanation]<br>"
+			var/half_victory = FALSE
+			if(clockwork_objective == "gateway")
+				var/obj/structure/clockwork/massive/celestial_gateway/G = locate() in all_clockwork_objects
+				if(G)
+					half_victory = TRUE
+			if(half_victory)
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
+				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
+			else
+				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
+				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
+		text += "<br><b>The servants' objective was:</b> [clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)

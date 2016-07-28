@@ -595,8 +595,11 @@
 
 //Dextrous simple mobs can use hands!
 /mob/living/simple_animal/create_mob_hud()
-	if(client && !hud_used && dextrous)
-		hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+	if(client && !hud_used)
+		if(dextrous)
+			hud_used = new dextrous_hud_type(src, ui_style2icon(client.prefs.UI_style))
+		else
+			..()
 
 /mob/living/simple_animal/OpenCraftingMenu()
 	if(dextrous)

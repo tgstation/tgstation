@@ -204,7 +204,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_PLASTEEL)
 			if(istype(I, /obj/item/stack/sheet/plasteel))
 				var/obj/item/stack/sheet/plasteel/PS = I
-				if(PS.amount >= 10)
+				if(PS.get_amount() >= 10)
 					PS.use(10)
 					user << "<span class='notice'>You add the plating to the framework.</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)

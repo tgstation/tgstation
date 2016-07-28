@@ -66,8 +66,7 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/death(gibbed)
 	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash.</span>", \
 	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
-	..(TRUE)
-	return 1
+	..()
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -81,9 +80,9 @@
 	. = ..()
 	if(!ratvar_awakens && amount > 0) //if ratvar is up we ignore movement delay
 		if(movement_delay_time > world.time)
-			movement_delay_time = movement_delay_time + amount*3
+			movement_delay_time = movement_delay_time + amount*2.5
 		else
-			movement_delay_time = world.time + amount*3
+			movement_delay_time = world.time + amount*2.5
 
 /mob/living/simple_animal/hostile/clockwork/fragment/updatehealth()
 	..()
@@ -188,8 +187,8 @@
 		switch((fatigue/fatigue_recall_threshold) * 100)
 			if(0 to 10) //Bonuses to speed and damage at normal fatigue levels
 				speed = 0
-				melee_damage_lower = 13
-				melee_damage_upper = 13
+				melee_damage_lower = 14
+				melee_damage_upper = 14
 				attacktext = "viciously slashes"
 			if(10 to 25)
 				speed = initial(speed)
@@ -198,18 +197,18 @@
 				attacktext = initial(attacktext)
 			if(25 to 50) //Damage decrease, but not speed
 				speed = initial(speed)
-				melee_damage_lower = 7
-				melee_damage_upper = 7
+				melee_damage_lower = 8
+				melee_damage_upper = 8
 				attacktext = "lightly slashes"
 			if(50 to 75) //Speed decrease
 				speed = 2
-				melee_damage_lower = 7
-				melee_damage_upper = 7
+				melee_damage_lower = 8
+				melee_damage_upper = 8
 				attacktext = "lightly slashes"
 			if(75 to 99) //Massive speed decrease and weak melee attacks
 				speed = 3
-				melee_damage_lower = 4
-				melee_damage_upper = 4
+				melee_damage_lower = 5
+				melee_damage_upper = 5
 				attacktext = "weakly slashes"
 			if(99 to 100) //we are at maximum fatigue, we're either useless or recalling
 				if(host)
@@ -220,8 +219,8 @@
 					return_to_host()
 				else
 					speed = 4
-					melee_damage_lower = 1
-					melee_damage_upper = 1
+					melee_damage_lower = 2
+					melee_damage_upper = 2
 					attacktext = "taps"
 
 
@@ -230,7 +229,6 @@
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
 	..()
-	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Stat()
 	..()
@@ -239,8 +237,9 @@
 		stat(null, "Current True Name: [true_name]")
 		stat(null, "Host: [host ? host : "NONE"]")
 		if(host)
-			var/resulthealth
-			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
+			var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
+			if(iscarbon(host))
+				resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
 			if(ratvar_awakens)
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
@@ -443,8 +442,9 @@
 		src << "<span class='warning'>You don't have a host!</span>"
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/try_emerge
 		return 0
-	var/resulthealth
-	resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
+	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
+	if(iscarbon(host))
+		resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
 		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
 		return

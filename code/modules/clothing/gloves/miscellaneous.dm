@@ -27,7 +27,7 @@
 	name = "combat gloves"
 	desc = "These tactical gloves are fireproof and shock resistant."
 	icon_state = "black"
-	item_state = "bgloves"
+	item_state = "blackgloves"
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	strip_delay = 80

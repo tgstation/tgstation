@@ -49,10 +49,10 @@
 	can_toggle = 1
 	flags = HEADBANGPROTECT
 	armor = list(melee = 41, bullet = 15, laser = 5,energy = 5, bomb = 5, bio = 2, rad = 0)
-	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE
+	flags_inv = HIDEEARS|HIDEFACE
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEMASK|HIDEFACE
+	visor_flags_inv = HIDEFACE
 	toggle_cooldown = 0
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null

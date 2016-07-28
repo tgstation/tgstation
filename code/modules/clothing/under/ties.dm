@@ -214,55 +214,55 @@
 //SCARVES//
 ///////////
 
-/obj/item/clothing/tie/scarf
-	name = "scarf"
-	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	dog_fashion = /datum/dog_fashion/head
-
-/obj/item/clothing/tie/scarf/red
-	name = "red scarf"
-	icon_state = "redscarf"
-	item_color = "redscarf"
-
-/obj/item/clothing/tie/scarf/green
-	name = "green scarf"
-	icon_state = "greenscarf"
-	item_color = "greenscarf"
-
-/obj/item/clothing/tie/scarf/darkblue
-	name = "dark blue scarf"
-	icon_state = "darkbluescarf"
-	item_color = "darkbluescarf"
-
-/obj/item/clothing/tie/scarf/purple
-	name = "purple scarf"
-	icon_state = "purplescarf"
-	item_color = "purplescarf"
-
-/obj/item/clothing/tie/scarf/yellow
-	name = "yellow scarf"
-	icon_state = "yellowscarf"
-	item_color = "yellowscarf"
-
-/obj/item/clothing/tie/scarf/orange
-	name = "orange scarf"
-	icon_state = "orangescarf"
-	item_color = "orangescarf"
-
-/obj/item/clothing/tie/scarf/lightblue
-	name = "light blue scarf"
-	icon_state = "lightbluescarf"
-	item_color = "lightbluescarf"
-
-/obj/item/clothing/tie/scarf/white
+/obj/item/clothing/tie/scarf //Default white color, same functionality as beanies.
 	name = "white scarf"
-	icon_state = "whitescarf"
-	item_color = "whitescarf"
+	icon_state = "scarf"
+	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
+	item_color = "scarf"
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/tie/scarf/black
 	name = "black scarf"
-	icon_state = "blackscarf"
-	item_color = "blackscarf"
+	icon_state = "scarf"
+	color = "#4A4A4B" //Grey but it looks black
+
+/obj/item/clothing/tie/scarf/red
+	name = "red scarf"
+	icon_state = "scarf"
+	color = "#D91414" //Red
+
+/obj/item/clothing/tie/scarf/green
+	name = "green scarf"
+	icon_state = "scarf"
+	color = "#5C9E54" //Green
+
+/obj/item/clothing/tie/scarf/darkblue
+	name = "dark blue scarf"
+	icon_state = "scarf"
+	color = "#1E85BC" //Blue
+
+/obj/item/clothing/tie/scarf/purple
+	name = "purple scarf"
+	icon_state = "scarf"
+	color = "#9557C5" //purple
+
+/obj/item/clothing/tie/scarf/yellow
+	name = "yellow scarf"
+	icon_state = "scarf"
+	color = "#E0C14F" //Yellow
+
+/obj/item/clothing/tie/scarf/orange
+	name = "orange scarf"
+	icon_state = "scarf"
+	color = "#C67A4B" //orange
+
+/obj/item/clothing/tie/scarf/cyan
+	name = "cyan scarf"
+	icon_state = "scarf"
+	color = "#54A3CE" //Cyan
+
+
+//Striped scarves get their own icons
 
 /obj/item/clothing/tie/scarf/zebra
 	name = "zebra scarf"

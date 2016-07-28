@@ -970,6 +970,8 @@
 				H.visible_message("<span class='danger'>[M] has [atk_verb]ed [H]!</span>", \
 								"<span class='userdanger'>[M] has [atk_verb]ed [H]!</span>")
 
+				if(M.limb_destroyer)
+					H.dismembering_strike(M, affecting.body_zone)
 				H.apply_damage(damage, BRUTE, affecting, armor_block)
 				add_logs(M, H, "punched")
 				if((H.stat != DEAD) && damage >= M.dna.species.punchstunthreshold)

@@ -9,7 +9,7 @@
 var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/proc/InterceptClickOn(mob/living/user, params, atom/A)
-	if(user.ranged_ability && user.ranged_ability != src)
+	if(user.ranged_ability != src)
 		user << "<span class='warning'><b>[user.ranged_ability.name]</b> has been disabled."
 		user.ranged_ability.remove_ranged_ability(user)
 		return TRUE //TRUE for failed, FALSE for passed.
@@ -31,7 +31,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	update_icon()
 
 /obj/effect/proc_holder/proc/remove_ranged_ability(mob/living/user, var/msg)
-	if(!user || !user.client ||user.ranged_ability != src) //To avoid removing the wrong ability
+	if(!user || !user.client || (user.ranged_ability && user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
 	user.ranged_ability = null
 	user.client.click_intercept = null

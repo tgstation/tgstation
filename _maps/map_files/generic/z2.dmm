@@ -1182,10 +1182,7 @@
 /turf/closed/indestructible/splashscreen,
 /area/start)
 "ds" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/overspace,
 /area/centcom/evac)
 "dt" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1237,10 +1234,7 @@
 /turf/open/space,
 /area/space)
 "dz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/centcom/evac)
 "dA" = (
 /obj/structure/window/reinforced,
@@ -1294,24 +1288,18 @@
 /area/centcom/evac)
 "dJ" = (
 /turf/open/floor/plating,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "dK" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
+/turf/open/floor/mineral/titanium/blue,
+/turf/closed/wall/mineral/titanium/interior,
 /area/centcom/evac)
 "dL" = (
 /obj/structure/closet/emcloset,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dM" = (
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/centcom/evac)
 "dN" = (
 /obj/structure/table,
@@ -1320,7 +1308,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/firstaid/toxin,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dO" = (
 /obj/structure/table,
@@ -1329,7 +1317,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dP" = (
 /obj/structure/table,
@@ -1341,7 +1329,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dQ" = (
 /turf/open/floor/plasteel/shuttle,
@@ -1365,7 +1353,7 @@
 	},
 /area/centcom/evac)
 "dT" = (
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dU" = (
 /turf/closed/wall/shuttle{
@@ -1394,34 +1382,34 @@
 "dY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "dZ" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/fancy/donut_box,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "ea" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "eb" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "ec" = (
 /obj/machinery/sleeper{
 	icon_state = "sleeper-open";
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "ed" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "ee" = (
 /turf/closed/wall/shuttle{
@@ -1431,44 +1419,44 @@
 /area/centcom/evac)
 "ef" = (
 /obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "eg" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "eh" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "ei" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/stamp,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "ej" = (
 /obj/structure/table,
 /obj/item/device/assembly/flash/handheld,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "ek" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "el" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "em" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/handcuffs,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "en" = (
 /obj/machinery/door/window/northright{
@@ -1478,7 +1466,7 @@
 	name = "Security Desk";
 	req_access_txt = "103"
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/centcom/evac)
 "eo" = (
 /obj/docking_port/stationary{
@@ -1493,7 +1481,7 @@
 /area/space)
 "ep" = (
 /obj/structure/bed,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eq" = (
 /obj/structure/grille,
@@ -1502,7 +1490,7 @@
 /area/centcom/evac)
 "er" = (
 /obj/machinery/door/airlock/shuttle,
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/centcom/evac)
 "es" = (
 /obj/docking_port/stationary{
@@ -1524,17 +1512,17 @@
 "eu" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "ev" = (
 /obj/structure/table,
 /obj/item/weapon/hand_labeler,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "ew" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "ex" = (
 /turf/closed/wall/shuttle{
@@ -1553,51 +1541,51 @@
 	name = "Cockpit";
 	req_access_txt = "109"
 	},
-/turf/open/floor/plasteel/shuttle/yellow,
+/turf/open/floor/mineral/titanium/yellow,
 /area/centcom/evac)
 "eA" = (
 /obj/structure/table,
 /obj/item/device/radio/off,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eB" = (
 /obj/structure/chair{
 	dir = 4;
 	name = "Prosecution"
 	},
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eC" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eD" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/lockbox,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eF" = (
 /obj/structure/table,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eG" = (
 /obj/machinery/computer/shuttle,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eH" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard,
 /obj/item/weapon/pen,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eI" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/turf/open/floor/plasteel/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "eJ" = (
 /turf/closed/indestructible/riveted,
@@ -3041,18 +3029,13 @@
 "jm" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHWEST)";
-	icon_state = "wall3";
-	dir = 9
+/turf/closed/wall/mineral/plastitanium{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "jn" = (
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3";
-	icon_state = "wall3";
-	dir = 2
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "jo" = (
 /obj/machinery/door/airlock/centcom{
@@ -3065,10 +3048,9 @@
 "jp" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (NORTHEAST)";
-	icon_state = "wall3";
-	dir = 5
+/turf/closed/wall/mineral/plastitanium{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "jq" = (
@@ -3175,16 +3157,16 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "jH" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "jI" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "jJ" = (
 /turf/open/floor/plating/airless/warnplate{
@@ -3300,7 +3282,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "ka" = (
 /turf/open/floor/plasteel/red/side{
@@ -3460,7 +3442,7 @@
 /area/syndicate_mothership)
 "kz" = (
 /obj/structure/chair,
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "kA" = (
 /turf/open/floor/grass,
@@ -3537,26 +3519,20 @@
 "kN" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (SOUTHWEST)";
-	icon_state = "wall3";
-	dir = 10
+/turf/closed/wall/mineral/plastitanium{
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "kO" = (
 /turf/open/space,
 /obj/machinery/porta_turret/syndicate/pod,
-/turf/closed/wall/shuttle{
-	tag = "icon-wall3 (SOUTHEAST)";
-	icon_state = "wall3";
-	dir = 6
+/turf/closed/wall/mineral/plastitanium{
+	dir = 4;
+	icon_state = "diagonalWall3"
 	},
 /area/shuttle/assault_pod)
 "kP" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall0";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/wizard_station)
 "kQ" = (
 /turf/closed/indestructible/fakedoor{
@@ -3571,10 +3547,7 @@
 /area/wizard_station)
 "kS" = (
 /turf/open/floor/plasteel/cult,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/wizard_station)
 "kT" = (
 /obj/effect/forcefield,
@@ -5739,7 +5712,7 @@
 /turf/open/space,
 /area/space)
 "rM" = (
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "rN" = (
 /obj/machinery/status_display{
@@ -5750,10 +5723,10 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
 "rO" = (
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "rP" = (
-/turf/open/floor/plasteel/shuttle/red,
+/turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "rQ" = (
 /obj/machinery/door/airlock/shuttle,
@@ -5774,14 +5747,14 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "rS" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper{
 	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologise for the inconvinience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
 	},
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "rT" = (
 /obj/effect/landmark/transit,
@@ -5797,7 +5770,7 @@
 "rV" = (
 /obj/structure/table/wood,
 /obj/item/weapon/book/manual/random,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "rW" = (
 /obj/structure/lattice,
@@ -5805,7 +5778,7 @@
 /area/space)
 "rX" = (
 /obj/machinery/status_display,
-/turf/closed/wall/shuttle/smooth,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "rY" = (
 /turf/open/floor/plasteel/darkwarning{
@@ -11720,7 +11693,7 @@ aa
 aa
 kP
 lj
-kR
+kP
 aa
 jc
 lW
@@ -11977,7 +11950,7 @@ aa
 ju
 kQ
 lk
-lx
+kP
 aa
 jc
 jc
@@ -12232,9 +12205,9 @@ ju
 jc
 jc
 ju
-kR
+kP
 ll
-lx
+kP
 ju
 jc
 lX
@@ -12491,7 +12464,7 @@ jc
 jc
 kS
 lm
-ly
+kS
 lG
 jc
 lY
@@ -14046,10 +14019,10 @@ ju
 nk
 aa
 aa
-mt
-nM
+kS
+kP
 nR
-nS
+kP
 aa
 aa
 aa
@@ -14551,19 +14524,19 @@ lB
 aa
 jc
 mc
-mt
+kS
 mF
-mS
+kS
 mc
 jc
 aa
 aa
 aa
 ju
-nE
-nN
-nN
-nN
+kS
+kP
+kP
+kP
 aa
 aa
 aa
@@ -14808,9 +14781,9 @@ aa
 aa
 aa
 md
-lx
+kP
 mG
-mu
+kP
 mZ
 ju
 aa
@@ -15065,7 +15038,7 @@ aa
 aa
 ju
 kF
-lx
+kP
 mH
 mT
 na
@@ -15322,7 +15295,7 @@ aa
 aa
 aa
 ju
-mu
+kP
 mI
 kP
 aa
@@ -25026,7 +24999,7 @@ ds
 dz
 dz
 dz
-dU
+ds
 ab
 ab
 ab
@@ -25283,8 +25256,8 @@ dt
 dA
 dI
 dI
-dR
-dU
+dI
+ds
 ab
 ab
 ab
@@ -25541,7 +25514,7 @@ dA
 dI
 dI
 dI
-dW
+dz
 ab
 ab
 ab
@@ -25796,19 +25769,19 @@ ab
 dv
 dA
 dJ
-dS
+dz
 dD
-dX
-dz
-dz
-dz
-dB
 dz
 dz
 dz
 dz
 dz
-dU
+dz
+dz
+dz
+dz
+dz
+ds
 ab
 ab
 ab
@@ -26050,8 +26023,8 @@ ab
 ab
 ab
 ab
-dw
-dB
+ds
+dz
 dK
 dT
 dT
@@ -26059,14 +26032,14 @@ dY
 ef
 ej
 em
-dW
+dz
 ep
 ep
 ep
 ep
 ep
-ex
-dU
+dz
+ds
 ab
 ab
 ab
@@ -26308,7 +26281,7 @@ ab
 ab
 ab
 ab
-dC
+dz
 dL
 dT
 dM
@@ -26316,17 +26289,17 @@ dZ
 eg
 ek
 ek
-dW
+dz
 dM
 dM
 dM
 dM
 dM
-ex
-dH
 dz
 dz
-dU
+dz
+dz
+ds
 ab
 ab
 ab
@@ -26573,13 +26546,13 @@ ea
 eh
 ek
 ek
-dW
+dz
 ep
 ep
 dM
 ep
 ep
-dW
+dz
 eA
 ew
 eE
@@ -26822,7 +26795,7 @@ ab
 ab
 ab
 ab
-dE
+dz
 dN
 dT
 dM
@@ -26830,13 +26803,13 @@ eb
 ei
 eb
 en
-dX
 dz
-dS
+dz
+dz
 er
-et
 dz
-ey
+dz
+dz
 ed
 dT
 eF
@@ -27336,7 +27309,7 @@ ab
 ab
 ab
 ab
-dE
+dz
 dP
 dT
 dM
@@ -27350,7 +27323,7 @@ ed
 dM
 dT
 eu
-dG
+dz
 eB
 dT
 eH
@@ -27607,7 +27580,7 @@ el
 dM
 dT
 ev
-dW
+dz
 eC
 eA
 eI
@@ -27850,7 +27823,7 @@ ab
 ab
 ab
 ab
-dG
+dz
 dL
 dT
 dM
@@ -27864,11 +27837,11 @@ dM
 dM
 dT
 ew
-ex
-dB
 dz
 dz
-dV
+dz
+dz
+ds
 ab
 ab
 ab
@@ -28107,8 +28080,8 @@ ab
 ab
 ab
 ds
-dH
-dQ
+dz
+dK
 dT
 dT
 ed
@@ -28121,8 +28094,8 @@ ed
 dM
 dT
 dL
-ex
-dV
+dz
+ds
 ab
 ab
 ab
@@ -28365,20 +28338,20 @@ ab
 ab
 dt
 dA
-dR
-dS
-dD
-ee
+dJ
 dz
-dS
 dD
-dE
+dz
+dz
+dz
+dD
+dz
 eq
-dE
-dD
-et
 dz
-dV
+dD
+dz
+dz
+ds
 ab
 ab
 ab
@@ -28625,7 +28598,7 @@ dA
 dI
 dI
 dI
-dW
+dz
 ab
 ab
 eo
@@ -28881,8 +28854,8 @@ dv
 dA
 dI
 dI
-dJ
-dV
+dI
+ds
 ab
 ab
 ab
@@ -29134,11 +29107,11 @@ ab
 ab
 ab
 ab
-dw
+ds
 dz
 dz
 dz
-dV
+ds
 ab
 ab
 ab

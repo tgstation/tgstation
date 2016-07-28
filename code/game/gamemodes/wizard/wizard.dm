@@ -11,12 +11,12 @@
 	recommended_enemies = 1
 	enemy_minimum_age = 14
 	round_ends_with_antag_death = 1
+	announce_span = "danger"
+	announce_text = "There is a space wizard attacking the station!\n\
+	<span class='danger'>Wizard</span>: Accomplish your objectives and cause mayhem on the station.\n\
+	<span class='notice'>Crew</span>: Eliminate the wizard before they can succeed!"
 	var/use_huds = 0
 	var/finished = 0
-
-/datum/game_mode/wizard/announce()
-	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
 
 /datum/game_mode/wizard/pre_setup()
 

@@ -790,6 +790,13 @@
 
 		jobs += "</tr></table>"
 
+		if(jobban_isbanned(M, "lavaland"))
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'><font color=red>[replacetext("Lavaland", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=lavaland;jobban4=\ref[M]'>[replacetext("Lavaland", " ", "&nbsp")]</a></td>"
+
+		jobs += "</tr></table>"
+
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
@@ -1083,6 +1090,10 @@
 	else if(href_list["shownoteckey"])
 		var/target_ckey = href_list["shownoteckey"]
 		show_note(target_ckey)
+
+	else if(href_list["shownoteckeylinkless"])
+		var/target_ckey = href_list["shownoteckeylinkless"]
+		show_note(target_ckey, null, 1)
 
 	else if(href_list["notessearch"])
 		var/target = href_list["notessearch"]
@@ -1953,6 +1964,7 @@
 					else
 						var/atom/O = new path(target)
 						if(O)
+							O.admin_spawned = TRUE
 							O.setDir(obj_dir)
 							if(obj_name)
 								O.name = obj_name

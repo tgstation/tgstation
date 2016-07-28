@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - rscadd: "Added Lazy airlock cycling. Bump opening an airlock with this system will close its partner. This system has been added to most airlocks that go to space on boxstation, as well as airlocks to secure areas like brig, bridge, engine."
+  - tweak: "This can be overridden by click opening, having a shuttle docked, or setting emergency mode on one of the doors."

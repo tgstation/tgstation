@@ -409,3 +409,15 @@
 	if(target && procname)
 		call(target, procname)(usr)
 	return 1
+
+//Stickmemes
+/datum/action/item_action/stickmen
+	name = "Summon Stick Minions"
+	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	button_icon_state = "art_summon"
+
+//surf_ss13
+/datum/action/item_action/bhop
+	name = "Activate Jump Boots"
+	desc = "Activates the jump boot's internal propulsion system, allowing the user to dash over 4-wide gaps."
+	button_icon_state = "jetboot"

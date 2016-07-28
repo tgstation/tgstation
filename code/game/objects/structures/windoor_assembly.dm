@@ -136,13 +136,13 @@
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
-				if(P.amount < 2)
+				if(P.get_amount() < 2)
 					user << "<span class='warning'>You need more plasteel to do this!</span>"
 					return
 				user << "<span class='notice'>You start to reinforce the windoor with plasteel...</span>"
 
 				if(do_after(user,40, target = src))
-					if(!src || secure)
+					if(!src || secure || P.get_amount() < 2)
 						return
 
 					P.use(2)

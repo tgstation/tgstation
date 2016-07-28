@@ -20,7 +20,7 @@
 /area/awaymission/research/exterior)
 "ag" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
@@ -45,15 +45,13 @@
 /area/awaymission/research/interior/engineering)
 "ak" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 1;
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
 "al" = (
-/turf/closed/wall/shuttle{
-	icon_state = "wall3"
-	},
+/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "am" = (
 /obj/structure/window/reinforced,
@@ -241,7 +239,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
@@ -253,7 +251,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged1"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
@@ -321,7 +319,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	icon_state = "diagonalWall3"
 	},
 /area/awaymission/research/interior/engineering)
@@ -341,7 +339,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged3"
 	},
-/turf/closed/wall/shuttle{
+/turf/closed/wall/mineral/plastitanium{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
@@ -4559,10 +4557,7 @@
 /turf/open/floor/plating/asteroid,
 /area/awaymission/research/exterior)
 "me" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/research/exterior)
 "mf" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -4571,11 +4566,7 @@
 	icon_state = "propulsion";
 	dir = 8
 	},
-/turf/closed/wall/shuttle{
-	dir = 3;
-	icon_state = "swall_f10";
-	layer = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mg" = (
 /obj/structure/closet/emcloset,
@@ -4685,10 +4676,7 @@
 /area/awaymission/research/interior/escapepods)
 "my" = (
 /turf/open/floor/plating/asteroid/airless,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
+/turf/closed/wall/mineral/titanium/interior,
 /area/awaymission/research/exterior)
 "mz" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -33351,7 +33339,7 @@ ad
 ad
 mf
 mt
-mz
+mf
 ae
 ae
 ae

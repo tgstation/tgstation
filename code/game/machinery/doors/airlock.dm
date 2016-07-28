@@ -67,6 +67,10 @@ var/list/airlock_overlays = list()
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
 
+	var/cyclelinkeddir = 0
+	var/obj/machinery/door/airlock/cyclelinkedairlock
+	var/shuttledocked = 0
+
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
@@ -81,6 +85,39 @@ var/list/airlock_overlays = list()
 	if(glass)
 		airlock_material = "glass"
 	update_icon()
+
+/obj/machinery/door/airlock/initialize()
+	. = ..()
+	if (cyclelinkeddir)
+		cyclelinkairlock()
+
+/obj/machinery/door/airlock/proc/cyclelinkairlock()
+	if (cyclelinkedairlock)
+		cyclelinkedairlock.cyclelinkedairlock = null
+		cyclelinkedairlock = null
+	if (!cyclelinkeddir)
+		return
+	var/limit = world.view
+	var/turf/T = get_turf(src)
+	var/obj/machinery/door/airlock/FoundDoor
+	do
+		T = get_step(T, cyclelinkeddir)
+		FoundDoor = locate() in T
+		if (FoundDoor && FoundDoor.cyclelinkeddir != get_dir(FoundDoor, src))
+			FoundDoor = null
+		limit--
+	while(!FoundDoor && limit)
+	if (!FoundDoor)
+		return
+	FoundDoor.cyclelinkedairlock = src
+	cyclelinkedairlock = FoundDoor
+
+/obj/machinery/door/airlock/on_varedit(varname)
+	. = ..()
+	switch (varname)
+		if ("cyclelinkeddir")
+			cyclelinkairlock()
+
 
 /obj/machinery/door/airlock/lock()
 	bolt()
@@ -129,6 +166,10 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/Destroy()
 	qdel(wires)
 	wires = null
+	if (cyclelinkedairlock)
+		if (cyclelinkedairlock.cyclelinkedairlock == src)
+			cyclelinkedairlock.cyclelinkedairlock = null
+		cyclelinkedairlock = null
 	if(id_tag)
 		for(var/obj/machinery/doorButtons/D in machines)
 			D.removeMe(src)
@@ -150,7 +191,11 @@ var/list/airlock_overlays = list()
 			user.staminaloss += 50
 			user.stunned += 5
 			return
+	if (cyclelinkedairlock)
+		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
+			addtimer(cyclelinkedairlock, "close", ( cyclelinkedairlock.operating ? 2 : 0 ))
 	..()
+
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != 0)
@@ -956,11 +1001,11 @@ var/list/airlock_overlays = list()
 		charge.ex_act(1)
 		detonated = 1
 		charge = null
-		for(var/mob/living/carbon/human/H in orange(1,src))
+		for(var/mob/living/carbon/human/H in orange(2,src))
 			H.Paralyse(8)
-			H.adjust_fire_stacks(1)
+			H.adjust_fire_stacks(20)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
-			H.apply_damage(20, BRUTE, "chest")
+			H.apply_damage(40, BRUTE, "chest")
 		return
 	if(forced < 2)
 		if(emagged)

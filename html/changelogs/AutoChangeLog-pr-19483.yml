@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Halves the Interdiction Lens' disrupt cost from 100 per disrupted object to 50 per disrupted object."

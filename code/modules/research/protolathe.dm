@@ -33,7 +33,7 @@ Note: Must be placed west/left of and R&D console to function.
 /obj/machinery/r_n_d/protolathe/New()
 	..()
 	create_reagents(0)
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/protolathe(null)
 	B.apply_default_parts(src)
 

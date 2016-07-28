@@ -135,14 +135,16 @@
 
 
 		var/obj/item/stack/cable_coil/C = I
-		if(C.amount < 10)
+		if(C.get_amount() < 10)
 			user << "<span class='warning'>You need more wires!</span>"
 			return
 
 		user << "<span class='notice'>You start building the power terminal...</span>"
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
+			if(C.get_amount() < 10 || !C)
+				return
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread

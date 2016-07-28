@@ -104,3 +104,25 @@
 		C.forceMove(src)
 		stomach_contents.Add(C)
 		add_logs(src, C, "devoured")
+
+/mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
+	if(!attacker.limb_destroyer || !has_limbs)
+		return dam_zone
+	var/obj/item/bodypart/affecting
+	if(dam_zone && attacker.client)
+		affecting = get_bodypart(ran_zone(dam_zone))
+	else
+		var/list/things_to_ruin = shuffle(bodyparts.Copy())
+		for(var/B in things_to_ruin)
+			var/obj/item/bodypart/bodypart = B
+			if(bodypart.body_zone == "head" || bodypart.body_zone == "chest")
+				continue
+			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
+				affecting = bodypart
+	if(affecting)
+		dam_zone = affecting.body_zone
+		if(affecting.get_damage() >= affecting.max_damage)
+			affecting.dismember()
+			return null
+		return affecting.body_zone
+	return dam_zone

@@ -37,7 +37,7 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM))
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM))
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
 

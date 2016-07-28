@@ -502,9 +502,7 @@
 /turf/closed/wall,
 /area/awaymission/academy/classrooms)
 "bF" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swallc2"
-	},
+/turf/closed/wall/mineral/titanium,
 /area/awaymission/academy/classrooms)
 "bG" = (
 /turf/closed/wall/shuttle{
@@ -11609,9 +11607,9 @@ aa
 aa
 bs
 bF
-bW
-bW
-cs
+bF
+bF
+bF
 cA
 cA
 cP
@@ -11738,7 +11736,7 @@ aa
 aa
 aa
 bs
-bG
+bF
 bX
 bZ
 bZ
@@ -11868,7 +11866,7 @@ aa
 aa
 aP
 bs
-bG
+bF
 bY
 bZ
 bZ
@@ -11998,7 +11996,7 @@ aa
 aP
 aP
 bs
-bG
+bF
 bZ
 bZ
 bZ
@@ -12128,7 +12126,7 @@ aP
 aP
 aa
 bs
-bG
+bF
 bZ
 bX
 bZ
@@ -12258,7 +12256,7 @@ ab
 aP
 aP
 bs
-bG
+bF
 ca
 bZ
 bZ
@@ -12388,7 +12386,7 @@ aP
 aa
 aa
 bs
-bG
+bF
 bZ
 bZ
 bZ
@@ -12518,10 +12516,10 @@ aP
 aa
 aa
 bs
-bH
-bW
-bW
-cs
+bF
+bF
+bF
+bF
 cC
 cC
 cR
