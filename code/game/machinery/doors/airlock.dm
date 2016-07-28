@@ -193,7 +193,7 @@ var/list/airlock_overlays = list()
 			return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
-			addtimer(cyclelinkedairlock, "close", 0)
+			addtimer(cyclelinkedairlock, "close", ( cyclelinkedairlock.operating ? 2 : 0 ))
 	..()
 
 

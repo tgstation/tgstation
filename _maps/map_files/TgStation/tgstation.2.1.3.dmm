@@ -2723,6 +2723,7 @@
 /area/ai_monitored/storage/eva)
 "afP" = (
 /obj/machinery/door/airlock/command{
+	cyclelinkeddir = 2;
 	name = "Command Tool Storage";
 	req_access = null;
 	req_access_txt = "19"
@@ -26224,6 +26225,7 @@
 	})
 "bhB" = (
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 2;
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
@@ -28356,6 +28358,7 @@
 /area/quartermaster/storage)
 "blX" = (
 /obj/machinery/door/airlock/research{
+	cyclelinkeddir = 1;
 	name = "Research Division Access";
 	req_access_txt = "47"
 	},
@@ -58686,15 +58689,13 @@
 	},
 /area/shuttle/transport)
 "cxG" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
-	dir = 4
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 4;
+	name = "Escape Pod Three";
+	req_access_txt = "0"
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s5";
-	dir = 2
-	},
-/area/shuttle/transport)
+/turf/open/floor/plating,
+/area/security/main)
 "cxH" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/titanium/blue,
@@ -58707,12 +58708,12 @@
 /area/shuttle/transport)
 "cxJ" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 4;
-	name = "Escape Pod Three";
-	req_access_txt = "0"
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Airlock";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plating,
-/area/security/main)
+/area/security/processing)
 "cxK" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
@@ -58733,20 +58734,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cxN" = (
-/obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
-	name = "Labor Camp Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating,
-/area/security/processing)
-"cxO" = (
-/obj/machinery/door/airlock/glass{
-	name = "Emergency Shuttle Infirmary"
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
-"cxP" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -58760,6 +58747,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/auxsolarstarboard)
+"cxO" = (
+/obj/machinery/door/airlock/glass{
+	name = "Emergency Shuttle Infirmary"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"cxP" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 8;
+	name = "Labor Camp Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/security/processing)
 "cxQ" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
@@ -58801,11 +58801,13 @@
 /area/shuttle/escape)
 "cxW" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 8;
-	name = "Labor Camp Shuttle Airlock"
+	cyclelinkeddir = 2;
+	name = "External Access";
+	req_access = null;
+	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
-/area/security/processing)
+/area/maintenance/fsmaint2)
 "cxX" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -58815,19 +58817,6 @@
 /area/shuttle/escape)
 "cxY" = (
 /obj/machinery/door/airlock/external{
-	cyclelinkeddir = 2;
-	name = "External Access";
-	req_access = null;
-	req_access_txt = "13"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
-"cxZ" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/open/floor/plating/airless,
-/area/shuttle/escape)
-"cya" = (
-/obj/machinery/door/airlock/external{
 	cyclelinkeddir = 1;
 	name = "External Access";
 	req_access = null;
@@ -58835,13 +58824,24 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
-"cyb" = (
+"cxZ" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"cya" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
 	req_access_txt = "13"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fpmaint)
+"cyb" = (
+/obj/machinery/door/airlock/external{
+	cyclelinkeddir = 1;
+	name = "Escape Pod One"
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/entry)
 "cyc" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
@@ -58884,12 +58884,14 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "cyg" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/command{
 	cyclelinkeddir = 1;
-	name = "Escape Pod One"
+	name = "Command Tool Storage";
+	req_access = null;
+	req_access_txt = "19"
 	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
+/turf/open/floor/plasteel/black,
+/area/ai_monitored/storage/eva)
 "cyh" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8;
@@ -70327,7 +70329,7 @@ cpL
 asG
 atI
 auP
-cyg
+cyb
 awV
 ayl
 azy
@@ -71355,7 +71357,7 @@ czK
 asJ
 atI
 auP
-cyg
+cyb
 awV
 ayl
 ayl
@@ -72637,7 +72639,7 @@ aaa
 aag
 aqJ
 amC
-cya
+cxY
 aAY
 aub
 auV
@@ -83433,7 +83435,7 @@ aaa
 arP
 arP
 arP
-cyb
+cya
 avZ
 axt
 ayG
@@ -84449,11 +84451,11 @@ aiT
 aiT
 aiV
 akG
-cxN
+cxJ
 aiU
 amK
 aiU
-cxW
+cxP
 aoq
 aiV
 aiT
@@ -88840,7 +88842,7 @@ azW
 afP
 aFb
 aEZ
-afP
+cyg
 aJp
 aKE
 aMa
@@ -94975,7 +94977,7 @@ abp
 abp
 adR
 abp
-cxJ
+cxG
 abp
 adR
 ahl
@@ -100390,7 +100392,7 @@ aaa
 aaa
 aaa
 aag
-cxY
+cxW
 anf
 aqv
 anf
@@ -101928,7 +101930,7 @@ alg
 alN
 amv
 ane
-cxP
+cxN
 aog
 aoM
 apz
