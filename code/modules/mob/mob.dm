@@ -497,7 +497,7 @@ var/next_mob_id = 0
 
 	var/list/creatures = getpois()
 
-	client.perspective = EYE_PERSPECTIVE
+	reset_perspective(null)
 
 	var/eye_name = null
 

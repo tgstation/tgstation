@@ -87,7 +87,7 @@
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
-			if(observe.client)
+			if(observe.client && observe.client.eye == src)
 				if(add)
 					observe.client.screen += I
 				else

@@ -622,7 +622,7 @@ var/global/list/limb_icon_cache = list()
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
-			if(observe.client)
+			if(observe.client && observe.client.eye == src)
 				if(observe.hud_used)
 					if(inventory && !observe.hud_used.inventory_shown)
 						continue

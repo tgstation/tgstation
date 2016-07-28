@@ -52,7 +52,7 @@
 			if(observers && observers.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
-					if(observe.client)
+					if(observe.client && observe.client.eye == src)
 						observe.client.screen += r_hand
 					else
 						observers -= observe
@@ -82,7 +82,7 @@
 			if(observers && observers.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
-					if(observe.client)
+					if(observe.client && observe.client.eye == src)
 						observe.client.screen += l_hand
 					else
 						observers -= observe
