@@ -135,7 +135,7 @@
 			hud_shown = 1	//Governs behavior of other procs
 			if(static_inventory.len)
 				screenmob.client.screen += static_inventory
-			if(toggleable_inventory.len && inventory_shown)
+			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
 				screenmob.client.screen += toggleable_inventory
 			if(hotkeybuttons.len && !hotkey_ui_hidden)
 				screenmob.client.screen += hotkeybuttons
