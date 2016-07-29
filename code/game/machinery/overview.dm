@@ -5,14 +5,23 @@
 	set category = "Object"
 	set src in view(1)
 	usr.set_machine(src)
+<<<<<<< HEAD
 	if(!mapping)
 		return
+=======
+	if(!mapping)	return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	log_game("[usr]([usr.key]) used station map L[z] in [src.loc.loc]")
 
 	src.drawmap(usr)
 
+<<<<<<< HEAD
 /obj/machinery/computer/security/proc/drawmap(mob/user)
+=======
+/obj/machinery/computer/security/proc/drawmap(var/mob/user as mob)
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	var/icx = round(world.maxx/16) + 1
 	var/icy = round(world.maxy/16) + 1
@@ -31,7 +40,11 @@
 		imap += icon('icons/misc/imap.dmi', "blank")
 		imap += icon('icons/misc/imap.dmi', "blank")
 
+<<<<<<< HEAD
 	//world << "[icount] images in list"
+=======
+//	to_chat(world, "[icount] images in list")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
@@ -51,6 +64,7 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
+<<<<<<< HEAD
 					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
@@ -58,10 +72,20 @@
 					if("/turf/open/floor")
 						colour = rgb(150,150,150)
 						var/turf/open/floor/TF = T
+=======
+					if("/turf/space")
+						colour = rgb(10,10,10)
+						sense = 0
+
+					if("/turf/simulated/floor")
+						colour = rgb(150,150,150)
+						var/turf/simulated/floor/TF = T
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 						if(TF.burnt == 1)
 							sense = 0
 							colour = rgb(130,130,130)
 
+<<<<<<< HEAD
 					if("/turf/open/floor/engine")
 						colour = rgb(128,128,128)
 
@@ -71,6 +95,23 @@
 					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
+=======
+					if("/turf/simulated/floor/engine")
+						colour = rgb(128,128,128)
+
+					if("/turf/simulated/wall")
+						colour = rgb(96,96,96)
+
+					if("/turf/simulated/wall/r_wall", "/turf/simulated/wall/invulnerable")
+						colour = rgb(128,96,96)
+
+					if("/turf/unsimulated/floor")
+						colour  = rgb(240,240,240)
+
+					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+						colour  = rgb(140,140,140)
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 					else
 						colour = rgb(0,40,0)
 
@@ -88,7 +129,11 @@
 							else
 								colour = rgb(128,192,128)
 
+<<<<<<< HEAD
 						if(istype(AM, /obj/machinery/airalarm))
+=======
+						if(istype(AM, /obj/machinery/alarm))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 							colour = rgb(0,255,0)
 							colour2 = colour
 							if(AM.icon_state=="alarm:1")
@@ -141,12 +186,20 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
+<<<<<<< HEAD
 			//world << "trying [ix],[iy] : [ix+icx*iy]"
+=======
+//			to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
+<<<<<<< HEAD
 			//world << "icon: \icon[I]"
+=======
+//			to_chat(world, "icon: [bicon(I)]")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -159,11 +212,19 @@
 
 
 	for(var/i=0; i<icount;i++)
+<<<<<<< HEAD
 		var/obj/screen/H = new /obj/screen()
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
 		//world<<"\icon[I] at [H.screen_loc]"
+=======
+		var/obj/screen/H = getFromPool(/obj/screen)
+
+		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
+
+//		to_chat(world, "[bicon(I)] at [H.screen_loc]")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -176,9 +237,17 @@
 		HI.Insert(J, frame=2, delay = 5)
 
 		qdel(I)
+<<<<<<< HEAD
 		qdel(J)
 		H.icon = HI
 		H.layer = ABOVE_HUD_LAYER
+=======
+		I = null
+		qdel(J)
+		J = null
+		H.icon = HI
+		H.layer = 25
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		usr.mapobjs += H
 #else
 
@@ -199,11 +268,19 @@
 			else
 				var/sense = 1
 				switch("[T.type]")
+<<<<<<< HEAD
 					if("/turf/open/space")
 						colour = rgb(10,10,10)
 						sense = 0
 
 					if("/turf/open/floor", "/turf/open/floor/engine")
+=======
+					if("/turf/space")
+						colour = rgb(10,10,10)
+						sense = 0
+
+					if("/turf/simulated/floor", "/turf/simulated/floor/engine")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 						var/datum/gas_mixture/environment = T.return_air()
 						var/turf_total = environment.total_moles()
 						var/t1 = turf_total / MOLES_CELLSTANDARD * 175
@@ -214,12 +291,27 @@
 							t1 = min(100, t1-100)
 							colour = rgb( t1*2.55, t1*2.55, 255)
 
+<<<<<<< HEAD
 					if("/turf/closed/wall")
 						colour = rgb(96,96,96)
 
 					if("/turf/closed/wall/r_wall")
 						colour = rgb(128,96,96)
 
+=======
+					if("/turf/simulated/wall")
+						colour = rgb(96,96,96)
+
+					if("/turf/simulated/wall/r_wall")
+						colour = rgb(128,96,96)
+
+					if("/turf/unsimulated/floor")
+						colour  = rgb(240,240,240)
+
+					if("/turf/unsimulated/wall", "/turf/unsimulated/wall/other")
+						colour  = rgb(140,140,140)
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 					else
 						colour = rgb(0,40,0)
 
@@ -234,7 +326,11 @@
 							else
 								colour = rgb(96,192,128)
 
+<<<<<<< HEAD
 						if(istype(AM, /obj/machinery/airalarm))
+=======
+						if(istype(AM, /obj/machinery/alarm))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 							colour = rgb(0,255,0)
 
 							if(AM.icon_state=="alarm:1")
@@ -269,11 +365,19 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
+<<<<<<< HEAD
 			//world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
 			//world << "icon: \icon[I]"
+=======
+//			to_chat(world, "trying [ix],[iy] : [ix+icx*iy]")
+			var/icon/I = imap[1+(ix + icx*iy)]
+
+
+//			to_chat(world, "icon: [bicon(I)]")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -284,11 +388,19 @@
 
 
 	for(var/i=0; i<icount;i++)
+<<<<<<< HEAD
 		var/obj/screen/H = new /obj/screen()
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
 		//world<<"\icon[I] at [H.screen_loc]"
+=======
+		var/obj/screen/H = getFromPool(/obj/screen)
+
+		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
+
+//		to_chat(world, "[bicon(I)] at [H.screen_loc]")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -296,7 +408,12 @@
 
 		H.icon = I
 		qdel(I)
+<<<<<<< HEAD
 		H.layer = ABOVE_HUD_LAYER
+=======
+		I = null
+		H.layer = 25
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		usr.mapobjs += H
 
 #endif
@@ -329,6 +446,7 @@
 
 		return
 
+<<<<<<< HEAD
 /proc/getr(col)
 	return hex2num( copytext(col, 2,4))
 
@@ -336,14 +454,30 @@
 	return hex2num( copytext(col, 4,6))
 
 /proc/getb(col)
+=======
+proc/getr(col)
+	return hex2num( copytext(col, 2,4))
+
+proc/getg(col)
+	return hex2num( copytext(col, 4,6))
+
+proc/getb(col)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	return hex2num( copytext(col, 6))
 
 
 /mob/proc/clearmap()
 	src.client.screen -= src.mapobjs
 	for(var/obj/screen/O in mapobjs)
+<<<<<<< HEAD
 		qdel(O)
 
 	mapobjs = null
 	src.unset_machine()
 
+=======
+		returnToPool(O)
+
+	mapobjs = null
+	src.unset_machine()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

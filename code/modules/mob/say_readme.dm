@@ -33,6 +33,7 @@ global procs
 	get_hear(range, atom/source)
 		Like view(), but ignores luminosity.
 
+<<<<<<< HEAD
 	message_spans_start(spans)
 		Turns each element of spans into a span class.
 
@@ -42,11 +43,14 @@ global procs
 	attach_spans(input, spans)
 		Attaches span classes around input.
 
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /atom/movable
 	flags
 		The HEAR flag determines whether something is a hearer or not.
 		Hear() is only called on procs with this flag.
 
+<<<<<<< HEAD
 	languages_spoken/languages_understood
 		Bitmask variable.
 		What languages this object speaks/understands. If the languages of the speaker don't match the languages
@@ -54,11 +58,33 @@ global procs
 
 	verb_say/verb_ask/verb_exclaim/verb_yell
 		These determine what the verb is for their respective action. Used in say_quote().
+=======
+ *	No longer used
+ *	languages
+ *		Bitmask variable.
+ *		What languages this object speaks/understands. If the languages of the speaker don't match the languages
+ *		of the hearer, the message will be modified in the hearer's lang_treat().
+
+	mob/languages
+		list of languages
+		What language(s) the speaker speaks, and the hearer understands. 
+		If the hearer doesn't understand it will be treated in lang_treat()
+
+	mob/universal_speak
+		Gift of Gab
+		Mainly used in non-human mobs.
+		Regardless of the language spoken this mob can understand it, and other mobs can understand it perfectly.
+
+	mob/universal_understand
+		Mainly used in non-human mobs.
+		Regardless of the language heard this mob understands it.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	say(message)
 		Say() is the "mother-proc". It calls all the other procs required for speaking, but does little itself.
 		At the atom/movable level, say() just calls send_speech.
 
+<<<<<<< HEAD
 	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
 		This proc handles hearing. What it does varies. For mobs, it treats the message with hearer-specific things
 		like language and deafness, then outputs it to the hearer.
@@ -66,10 +92,20 @@ global procs
 		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
 
 	send_speech(message, range, source, bubble_type, spans)
+=======
+	Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+		This proc handles hearing. What it does varies. For mobs, it treats the message with hearer-specific things
+		like language and deafness, then outputs it to the hearer.
+		
+		IMPORTANT NOTE: If radio_freq is not null, the code will assume that the speaker is virtual! (more info on this in the Radios section below)
+
+	send_speech(message, range, datum/language/speaking)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		This proc composes a list of hearers (things with the HEAR flag + dead people) and calls Hear() on them.
 		Message treatment or composition of output are not done by this proc, these are handled by the rest of
 		say() and the hearer respectively.
 
+<<<<<<< HEAD
 	lang_treat(message, atom/movable/speaker, message_langs, raw_message, spans)
 		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
 		Called on the hearer.
@@ -80,12 +116,24 @@ global procs
 	get_spans(input, spans)
 		Returns the list of spans that are always applied to messages of this atom.
 		Always return ..() | + youroutput when overriding this proc!
+=======
+	lang_treat(message, atom/movable/speaker, message_langs, raw_message)
+		Modifies the message by comparing the languages of the speaker with the languages of the hearer.
+		Called on the hearer.
+
+	say_quote(text)
+		Adds a verb and quotes to a message, according to the type of mob. Called on the speaker.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /mob
 	say_dead(message)
 		Sends a message to all dead people. Does not use Hear().
 
+<<<<<<< HEAD
 	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+=======
+	compose_message(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		Composes the message mobs see on their screen when they hear something.
 
 	compose_track_href(message, atom/movable/speaker, message_langs, raw_message, radio_freq)
@@ -134,7 +182,11 @@ global procs
 		Please try to keep things in a logical order (e.g. don't have masks handled before mutations),
 		even if that means you have to call ..() in the middle of the proc.
 
+<<<<<<< HEAD
 	radio(message, message_mode, spans)
+=======
+	radio(message, message_mode, raw_message, datum/language/speaking)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		Handles talking into radios. Uses a switch to determine what radio to speak into and in which manner to do so.
 
 		Return is a bitflag.
@@ -155,7 +207,11 @@ eventually results in broadcast_message() being called.
 Broadcast_message() does NOT call say() on radios, but rather calls Hear() on everyone in range of a radio.
 This is because the system does not like repeating says.
 
+<<<<<<< HEAD
 Furthermore, I changed radios to not be in the SSradio. Instead, they are in a global list called all_radios.
+=======
+Furthermore, I changed radios to not be in the radio_controller. Instead, they are in a global list called all_radios.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 This is an associative list, and the numbers as strings are the keys. The values are lists of radios that can hear said frequency.
 
 To add a radio, simply use add_radio(radio, frequency). To remove a radio, use remove_radio(radio, frequency).

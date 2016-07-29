@@ -1,0 +1,19 @@
+td.column {
+    width: 50px;
+    text-align: center;
+}
+td.clmNever {
+    background: #ffcccc;
+}
+
+td.clmNo {
+    background: #ffeeee;
+}
+
+td.clmYes {
+    background: #eeffee;
+}
+
+td.clmAlways {
+    background: #ccffcc;
+}

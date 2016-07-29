@@ -8,9 +8,20 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
+<<<<<<< HEAD
 	var/obj/machinery/power/master = null
 	anchored = 1
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
+=======
+	layer = TURF_LAYER
+	plane = PLANE_TURF
+	var/obj/machinery/power/master
+	anchored = 1
+	layer = 2.6 // a bit above wires
+
+	holomap = TRUE
+	auto_holomap = TRUE
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 
 /obj/machinery/power/terminal/New()
@@ -19,6 +30,7 @@
 	if(level==1) hide(T.intact)
 	return
 
+<<<<<<< HEAD
 /obj/machinery/power/terminal/Destroy()
 	if(master)
 		master.disconnect_terminal()
@@ -27,11 +39,18 @@
 /obj/machinery/power/terminal/hide(i)
 	if(i)
 		invisibility = INVISIBILITY_MAXIMUM
+=======
+
+/obj/machinery/power/terminal/hide(var/i)
+	if(i)
+		invisibility = 101
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		icon_state = "term-f"
 	else
 		invisibility = 0
 		icon_state = "term"
 
+<<<<<<< HEAD
 
 /obj/machinery/power/proc/can_terminal_dismantle()
 	. = 0
@@ -76,3 +95,52 @@
 		dismantle(user)
 	else
 		return ..()
+=======
+/obj/machinery/power/terminal/Destroy()
+	if (master)
+		master:terminal = null
+		master = null
+
+	..()
+
+/obj/machinery/power/terminal/attackby(obj/item/W, mob/user)
+	if(iswirecutter(W) && !master) //Sanity in the rare case something destroys a machine and leaves a terminal
+		getFromPool(/obj/item/stack/cable_coil, get_turf(src), 10)
+		qdel(src)
+		return
+	..()
+
+/obj/machinery/power/proc/make_terminal(mob/user)
+	if(!can_attach_terminal(user))
+		to_chat(user, "<span class='warning'>You can't wire \the [src] like that!</span>")
+		return 0
+
+	var/turf/T = get_turf(user)
+	if(T.intact)
+		to_chat(user, "<span class='warning'>The floor plating must be removed first.</span>")
+		return 0
+
+	to_chat(user, "<span class='notice'>You start adding cable to \the [src].</span>")
+	playsound(get_turf(src), 'sound/items/zip.ogg', 100, 1)
+	if (do_after(user, src, 100) && !T.intact && can_attach_terminal(user))
+
+		//Shock chance
+		var/obj/structure/cable/N = T.get_cable_node()
+		if (prob(50) && electrocute_mob(user, N, N))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+			s.set_up(5, 1, src)
+			s.start()
+			return 0
+
+		finalise_terminal(get_turf(user))
+		return 1
+	return 0
+
+/obj/machinery/power/proc/finalise_terminal(newloc)
+	terminal = new /obj/machinery/power/terminal(newloc)
+	terminal.dir = get_dir(newloc, src)
+	terminal.master = src
+
+/obj/machinery/power/proc/can_attach_terminal(mob/user)
+	return user.loc != src.loc && (get_dir(user, src) in cardinal) && !terminal
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

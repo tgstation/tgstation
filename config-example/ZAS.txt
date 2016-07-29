@@ -1,0 +1,116 @@
+# Fire - Air Consumption Ratio
+#   Ratio of air removed and combusted per tick.
+/datum/ZAS_Setting/fire_consumption_rate 0.75
+
+# Fire - Firelevel Constant
+#   Multiplied by the equation for firelevel, affects mainly the extingiushing of fires.
+/datum/ZAS_Setting/fire_firelevel_multiplier 25
+
+# Fire - Fuel energy release
+#   The energy in joule released when burning one mol of a burnable substance
+/datum/ZAS_Setting/fire_fuel_energy_release 550000
+
+# Airflow - Small Movement Threshold %
+#   Percent of 1 Atm. at which items with the small weight classes will move.
+/datum/ZAS_Setting/airflow_lightest_pressure 20
+
+# Airflow - Medium Movement Threshold %
+#   Percent of 1 Atm. at which items with the medium weight classes will move.
+/datum/ZAS_Setting/airflow_light_pressure 35
+
+# Airflow - Heavy Movement Threshold %
+#   Percent of 1 Atm. at which items with the largest weight classes will move.
+/datum/ZAS_Setting/airflow_medium_pressure 50
+
+# Airflow - Mob Movement Threshold %
+#   Percent of 1 Atm. at which mobs will move.
+/datum/ZAS_Setting/airflow_heavy_pressure 65
+
+# Airflow - Dense Movement Threshold %
+#   Percent of 1 Atm. at which items with canisters and closets will move.
+/datum/ZAS_Setting/airflow_dense_pressure 85
+
+# Airflow - Mob Stunning Threshold %
+#   Percent of 1 Atm. at which mobs will be stunned by airflow.
+/datum/ZAS_Setting/airflow_stun_pressure 60
+
+# Aiflow Stunning - Cooldown
+#   How long, in tenths of a second, to wait before stunning them again.
+/datum/ZAS_Setting/airflow_stun_cooldown 60
+
+# Airflow Impact - Stunning
+#   How much a mob is stunned when hit by an object.
+/datum/ZAS_Setting/airflow_stun 1
+
+# Airflow Impact - Damage
+#   Damage from airflow impacts.
+/datum/ZAS_Setting/airflow_damage 2
+
+# Airflow Speed Decay
+#   How rapidly the speed gained from airflow decays.
+/datum/ZAS_Setting/airflow_speed_decay 1.5
+
+# Airflow Retrigger Delay
+#   Time in deciseconds before things can be moved by airflow again.
+/datum/ZAS_Setting/airflow_delay 30
+
+# Airflow Slowdown
+#   Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow.
+/datum/ZAS_Setting/airflow_mob_slowdown 1
+
+# Airflow - Push
+#   1=yes please rape my server, 0=no
+/datum/ZAS_Setting/airflow_push 0
+
+# Connections - Insulation
+#   How insulative a connection is, in terms of heat transfer.  1 is perfectly insulative, and 0 is perfectly conductive.
+/datum/ZAS_Setting/connection_insulation 0.4
+
+# Connections - Temperature Difference
+#   The smallest temperature difference which will cause heat to travel through doors.
+/datum/ZAS_Setting/connection_temperature_delta 10
+
+# Airflow - Enable Ice Formation
+#   1=yes, 0=no - Slippin' and slidin' when pressure &gt; 10kPa and temperature &lt; 273K
+/datum/ZAS_Setting/ice_formation 0
+
+# Airflow - Disable Cold Space
+#   1=yes, 0=no - Disables space behaving as being very fucking cold (0K).
+/datum/ZAS_Setting/space_isnt_cold 0
+
+# Plasma Damage Amount
+#   Self Descriptive
+/datum/ZAS_Setting/PLASMA_DMG 3
+
+# Cloth Contamination
+#   If this is on, plasma does damage by getting into cloth.
+/datum/ZAS_Setting/CLOTH_CONTAMINATION 1
+
+# PlasmaGuard Only
+#   If this is on, only biosuits and spacesuits protect against contamination and ill effects.
+/datum/ZAS_Setting/PLASMAGUARD_ONLY 0
+
+# Genetic Corruption Chance
+#   Chance of genetic corruption as well as toxic damage, X in 10,000.
+/datum/ZAS_Setting/GENETIC_CORRUPTION 0
+
+# Skin Burns
+#   Plasma has an effect similar to mustard gas on the un-suited.
+/datum/ZAS_Setting/SKIN_BURNS 0
+
+# Eye Burns
+#   Plasma burns the eyes of anyone not wearing eye protection.
+/datum/ZAS_Setting/EYE_BURNS 1
+
+# Contamination Loss
+#   How much toxin damage is dealt from contaminated clothing
+/datum/ZAS_Setting/CONTAMINATION_LOSS 0.02
+
+# Plasma Hallucination
+#   Does being in plasma cause you to hallucinate?
+/datum/ZAS_Setting/PLASMA_HALLUCINATION 0
+
+# N2O Hallucination
+#   Does being in sleeping gas cause you to hallucinate?
+/datum/ZAS_Setting/N2O_HALLUCINATION 1
+

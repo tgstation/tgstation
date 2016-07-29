@@ -1,7 +1,11 @@
 ################################
 # Example Changelog File
 #
+<<<<<<< HEAD
 # Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read. If you change this file, you will look really dumb.
+=======
+# Note: This file, and files beginning with ".", and files that don't end in ".yml" will not be read.  If you change this file, you will look really dumb.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 #
 # Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
 # When it is, any changes listed below will disappear.
@@ -12,21 +16,35 @@
 #   tweak
 #   soundadd
 #   sounddel
+<<<<<<< HEAD
 #   rscadd (general adding of nice things)
 #   rscdel (general deleting of nice things)
+=======
+#   rscdel (general deleting of nice things)
+#   rscadd (general adding of nice things)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 #   imageadd
 #   imagedel
 #   spellcheck (typo fixes)
 #   experiment
+<<<<<<< HEAD
 #################################
 
 # Your name.  
 author: "
+=======
+#   tgs (TG-ported fixes?)
+#################################
+
+# Your name.
+author: Ghost of N3X15
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
 delete-after: True
 
 # Any changes you've made.  See valid prefix list above.
+<<<<<<< HEAD
 # INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
@@ -34,3 +52,12 @@ delete-after: True
 changes: 
   - rscadd: "Added a changelog editing system that should cause fewer conflicts and more accurate timestamps."
   - rscdel: "Killed innocent kittens."
+=======
+# There needs to be a space after the - and before the prefix. Don't use tabs anywhere in this file.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# If you're using characters such as # ' : - or the like in your changelog, surround the entire change with quotes as shown in the second example. These quotes don't show up on the changelog once it's merged and prevent errors.
+# SCREW ANY OF THIS UP AND IT WON'T WORK.
+changes: 
+- rscadd: Added a changelog editing system that should cause fewer conflicts and more accurate timestamps.
+- rscdel: "Killed innocent kitten #394."
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

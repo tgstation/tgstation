@@ -1,0 +1,71 @@
+"a" = (/turf/space,/area)
+"b" = (/obj/structure/catwalk,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/space,/area)
+"c" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/space,/area)
+"d" = (/turf/simulated/wall,/area)
+"e" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall,/area)
+"f" = (/obj/structure/lattice,/turf/space,/area)
+"g" = (/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area)
+"h" = (/obj/machinery/telecomms/relay/preset/vault,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area)
+"i" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/bluegrid{icon_state = "dark"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area)
+"j" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area)
+"k" = (/obj/structure/window/reinforced{dir = 4},/turf/space,/area)
+"l" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area)
+"m" = (/obj/structure/window/reinforced{dir = 8},/turf/space,/area)
+"n" = (/turf/simulated/floor/plating,/area)
+"o" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area)
+"p" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area)
+"q" = (/turf/simulated/floor/airless{icon_state = "solarpanel"},/area)
+"r" = (/obj/structure/catwalk,/turf/space,/area)
+"s" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/space,/area)
+"t" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/space,/area)
+"u" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/space,/area)
+"v" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area)
+"w" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area)
+"x" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area)
+"y" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area)
+"z" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/space,/area)
+"A" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/space,/area)
+"B" = (/obj/structure/cable,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area)
+"C" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area)
+"D" = (/obj/structure/cable,/obj/machinery/power/terminal,/turf/simulated/floor/plating,/area)
+"E" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/turf/simulated/floor/plating,/area)
+"F" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/battery/smes,/turf/simulated/floor/plating,/area)
+"G" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area)
+"H" = (/turf/simulated/floor/carpet,/area)
+"I" = (/turf/simulated/floor,/area)
+"J" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area)
+"K" = (/obj/structure/window/reinforced,/turf/space,/area)
+"L" = (/obj/structure/table,/turf/simulated/floor,/area)
+"M" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area)
+"N" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area)
+"O" = (/obj/structure/bed/chair{dir = 4},/turf/simulated/floor,/area)
+"P" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area)
+"Q" = (/obj/structure/window/reinforced{dir = 1},/turf/space,/area)
+
+(1,1,1) = {"
+aaaaaaaaaaaabaaaaaaaaaaaa
+aaaaaaaaaaaacaaaaaaaaaaaa
+aaaaaaaaaaddeddaaaaaaaaaa
+aaaaaafaaadghgdaaafaaaaaa
+aaaaafffffdgigdfffffaaaaa
+aaaaaafaaaddjddaaafaaaaaa
+aaaaaafaaafklmfaaafaaaaaa
+aaaaaffffdddjdddffffaaaaa
+aaaaaafaadnnjnndaafaaaaaa
+aoooooooapnnjnnpaqqqqqqqa
+rsttttttuvwwxwyvuzzzzzzAr
+aBBBBBBBaCnnnnDCaqqqqqqqa
+aaafaafaadnnnEFdaafaafaaa
+aafffffffdddndddfffffffaa
+aaafaafaaafkGmfaaafaafaaa
+aaafaafaaafkGmfaaafaafaaa
+aaddddddffddnddffddddddaa
+aadHHHHdaadIIIdaadIIIIdaa
+aaJHHHHdKKdIIIdKKdIILLJaa
+aaMIIIInNNnIIInNNnIIOLMaa
+aaPIIIIdQQdIIIdQQdIILLPaa
+aadIIIIdaadIIIdaadIIIIdaa
+aaddddddffddnddffddddddaa
+aaaaaaaaaaadndaaaaaaaaaaa
+aaaaaaaaaaadndaaaaaaaaaaa
+"}

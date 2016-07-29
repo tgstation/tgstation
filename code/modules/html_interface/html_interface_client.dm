@@ -40,4 +40,8 @@
 	return .
 
 /datum/html_interface_client/proc/getExtraVar(key)
+<<<<<<< HEAD
 	if (src.extra_vars) return src.extra_vars[key]
+=======
+	if (src.extra_vars) return src.extra_vars[key]
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -4,7 +4,11 @@ Usage:
 
 ss13_genchangelog.py - Generate changelog from YAML.
 
+<<<<<<< HEAD
 Copyright 2013 Rob "N3X15" Nelson <nexis@7chan.org>
+=======
+Copyright (C) 2013-2015 Rob "N3X15" Nelson <nexis@7chan.org>
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +30,7 @@ THE SOFTWARE.
 '''
 
 from __future__ import print_function
+<<<<<<< HEAD
 import yaml, os, glob, sys, re, time, argparse
 from datetime import datetime, date, timedelta
 from time import time
@@ -37,6 +42,25 @@ dateformat = "%d %B %Y"
 opt = argparse.ArgumentParser()
 opt.add_argument('-d', '--dry-run', dest='dryRun', default=False, action='store_true', help='Only parse changelogs and, if needed, the targetFile. (A .dry_changelog.yml will be output for debugging purposes.)')
 opt.add_argument('-t', '--time-period', dest='timePeriod', default=9, type=int, help='Define how many weeks back the changelog should display')
+=======
+import yaml
+import os
+import glob
+import sys
+import re
+import time
+import argparse
+from datetime import datetime, date
+from time import time
+
+today = date.today()
+MAX_DATE_ENTRIES = 100  # So changelog isn't 5000 entries long
+
+dateformat = "%Y.%m.%d"
+
+opt = argparse.ArgumentParser()
+opt.add_argument('-d', '--dry-run', dest='dryRun', default=False, action='store_true', help='Only parse changelogs and, if needed, the targetFile. (A .dry_changelog.yml will be output for debugging purposes.)')
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 opt.add_argument('targetFile', help='The HTML changelog we wish to update.')
 opt.add_argument('ymlDir', help='The directory of YAML changelogs we will use.')
 
@@ -59,6 +83,10 @@ validPrefixes = [
     'tgs'
 ]
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 def dictToTuples(inp):
     return [(k, v) for k, v in inp.items()]
 
@@ -70,7 +98,11 @@ if os.path.isfile(changelog_cache):
         with open(changelog_cache) as f:
             (_, all_changelog_entries) = yaml.load_all(f)
             failed_cache_read = False
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
             # Convert old timestamps to newer format.
             new_entries = {}
             for _date in all_changelog_entries.keys():
@@ -86,26 +118,44 @@ if os.path.isfile(changelog_cache):
     except Exception as e:
         print("Failed to read cache:")
         print(e, file=sys.stderr)
+<<<<<<< HEAD
         
 if args.dryRun: 
     changelog_cache = os.path.join(args.ymlDir, '.dry_changelog.yml')
     
+=======
+
+if args.dryRun:
+    changelog_cache = os.path.join(args.ymlDir, '.dry_changelog.yml')
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 if failed_cache_read and os.path.isfile(args.targetFile):
     from bs4 import BeautifulSoup
     from bs4.element import NavigableString
     print(' Generating cache...')
     with open(args.targetFile, 'r') as f:
         soup = BeautifulSoup(f)
+<<<<<<< HEAD
         for e in soup.find_all('div', {'class':'commit'}):
             entry = {}
             date = datetime.strptime(e.h2.string.strip(), dateformat).date()  # key
             for authorT in e.find_all('h3', {'class':'author'}):
+=======
+        for e in soup.find_all('div', {'class': 'commit'}):
+            entry = {}
+            date = datetime.strptime(e.h2.string.strip(), dateformat).date()  # key
+            for authorT in e.find_all('h3', {'class': 'author'}):
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
                 author = authorT.string
                 # Strip suffix
                 if author.endswith('updated:'):
                     author = author[:-8]
                 author = author.strip()
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
                 # Find <ul>
                 ulT = authorT.next_sibling
                 while(ulT.name != 'ul'):
@@ -113,25 +163,45 @@ if failed_cache_read and os.path.isfile(args.targetFile):
                 changes = []
 
                 for changeT in ulT.children:
+<<<<<<< HEAD
                     if changeT.name != 'li': continue
+=======
+                    if changeT.name != 'li':
+                        continue
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
                     val = changeT.decode_contents(formatter="html")
                     newdat = {changeT['class'][0] + '': val + ''}
                     if newdat not in changes:
                         changes += [newdat]
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
                 if len(changes) > 0:
                     entry[author] = changes
             if date in all_changelog_entries:
                 all_changelog_entries[date].update(entry)
             else:
                 all_changelog_entries[date] = entry
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 del_after = []
 print('Reading changelogs...')
 for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
     name, ext = os.path.splitext(os.path.basename(fileName))
+<<<<<<< HEAD
     if name.startswith('.'): continue
     if name == 'example': continue
+=======
+    if name.startswith('.'):
+        continue
+    if name == 'example':
+        continue
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
     fileName = os.path.abspath(fileName)
     print(' Reading {}...'.format(fileName))
     cl = {}
@@ -150,16 +220,24 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
                     print('  {0}: Invalid prefix {1}'.format(fileName, change_type), file=sys.stderr)
                 author_entries += [change]
                 new += 1
+<<<<<<< HEAD
         all_changelog_entries[today][cl['author']] = author_entries 
         if new > 0:
             print('  Added {0} new changelog entries.'.format(new))
         
+=======
+        all_changelog_entries[today][cl['author']] = author_entries
+        if new > 0:
+            print('  Added {0} new changelog entries.'.format(new))
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
     if cl.get('delete-after', False):
         if os.path.isfile(fileName):
             if args.dryRun:
                 print('  Would delete {0} (delete-after set)...'.format(fileName))
             else:
                 del_after += [fileName]
+<<<<<<< HEAD
     
     if args.dryRun: continue
     
@@ -169,31 +247,62 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
         
 targetDir = os.path.dirname(args.targetFile)
 
+=======
+
+    if args.dryRun:
+        continue
+
+    cl['changes'] = []
+    with open(fileName, 'w') as f:
+        yaml.dump(cl, f, default_flow_style=False)
+
+targetDir = os.path.dirname(args.targetFile)
+
+remove_dates = []
+days_written = 0
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.targetFile, 'w') as changelog:
     with open(os.path.join(targetDir, 'templates', 'header.html'), 'r') as h:
         for line in h:
             changelog.write(line)
 
+<<<<<<< HEAD
     weekstoshow = timedelta(weeks=args.timePeriod)
     for _date in reversed(sorted(all_changelog_entries.keys())):
         if not (today - _date < weekstoshow):
             continue
+=======
+    for _date in reversed(sorted(all_changelog_entries.keys())):
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
         entry_htm = '\n'
         entry_htm += '\t\t\t<h2 class="date">{date}</h2>\n'.format(date=_date.strftime(dateformat))
         write_entry = False
         for author in sorted(all_changelog_entries[_date].keys()):
+<<<<<<< HEAD
             if len(all_changelog_entries[_date]) == 0: continue
+=======
+            if len(all_changelog_entries[_date]) == 0:
+                continue
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
             author_htm = '\t\t\t<h3 class="author">{author} updated:</h3>\n'.format(author=author)
             author_htm += '\t\t\t<ul class="changes bgimages16">\n'
             changes_added = []
             for (css_class, change) in (dictToTuples(e)[0] for e in all_changelog_entries[_date][author]):
+<<<<<<< HEAD
                 if change in changes_added: continue
                 write_entry = True
                 changes_added += [change] 
+=======
+                if change in changes_added:
+                    continue
+                write_entry = True
+                changes_added += [change]
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
                 author_htm += '\t\t\t\t<li class="{css_class}">{change}</li>\n'.format(css_class=css_class, change=change.strip())
             author_htm += '\t\t\t</ul>\n'
             if len(changes_added) > 0:
                 entry_htm += author_htm
+<<<<<<< HEAD
         if write_entry:
             changelog.write(entry_htm)
         
@@ -201,6 +310,21 @@ with open(args.targetFile.replace('.htm', '.dry.htm') if args.dryRun else args.t
         for line in h:
             changelog.write(line)
             
+=======
+        if write_entry and days_written <= MAX_DATE_ENTRIES:
+            changelog.write(entry_htm)
+            days_written += 1
+        else:
+            remove_dates.append(_date)
+
+    with open(os.path.join(targetDir, 'templates', 'footer.html'), 'r') as h:
+        for line in h:
+            changelog.write(line)
+
+for _date in remove_dates:
+    del all_changelog_entries[_date]
+    print('Removing {} (old/invalid)'.format(_date))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 with open(changelog_cache, 'w') as f:
     cache_head = 'DO NOT EDIT THIS FILE BY HAND!  AUTOMATICALLY GENERATED BY ss13_genchangelog.py.'

@@ -1,0 +1,77 @@
+asanadas: Book Berner: /obj/item/clothing/glasses/meson/fluff/book_berner_1
+atomicdog92: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/leatherjack
+botanistpower: Walter Brooks: /obj/item/clothing/gloves/fluff/walter_brooks_1
+bountylord13: Norah Briggs: /obj/item/clothing/head/welding/fluff/norah_briggs_1
+chinsky: Victor Kaminski: /obj/item/fluff/victor_kaminsky_1
+chinsky: Summer Springfield: /obj/item/weapon/camera_test/fluff/orange
+compactninja: Al Peterson: /obj/item/clothing/head/flatcap
+compactninja: Lister Black: /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle, /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle
+crazy2455: Murad Hassim: /obj/item/clothing/gloves/fluff/murad_hassim_1
+cubejackal: Barry Sharke: /obj/item/clothing/mask/fluff/electriccig
+daaneesh: Zelda Creedy: /obj/item/weapon/crowbar/fluff/zelda_creedy_1
+deusdactyl: James Girard: /obj/item/clothing/head/secsoft/fluff/swatcap, /obj/item/clothing/suit/armor/vest/fluff/deus_blueshield
+donofnyc3: Oen'g Issek: /obj/item/weapon/melee/baton/fluff/oeng_baton
+eternal248: Maximilian Haynes: /obj/item/weapon/paper/certificate
+executivekill: Hunter Duke: /obj/item/weapon/lighter/zippo/fluff/executivekill_1
+fastler: Fastler Greay: /obj/item/weapon/card/id/fluff/lifetime
+fniff: Sarah Calvera: /obj/item/fluff/sarah_calvera_1
+fniff: Angleo Wilkerson: /obj/item/fluff/angelo_wilkerson_1
+foolamancer: Edvin Telephosphor: /obj/item/clothing/head/fluff/edvin_telephosphor_1
+furohman: Fay Sullivan: /obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1
+furlucis: Chal Appara: /obj/item/clothing/gloves/fluff/chal_appara_1
+gvazdas: Sarah Carbrokes: /obj/item/fluff/sarah_carbrokes_1
+jamini: Edwin Atweeke: /obj/item/clothing/suit/labcoat/fluff/burnt
+jamini: Nasir Khayyam: /obj/item/clothing/tie/fluff/nasir_khayyam_1
+jadepython: Thysse Ezinwa: /obj/item/clothing/glasses/eyepatch/fluff/thysse_1
+kirbyelder: John McKeever: /obj/item/paper/fluff/john_mckeever_1
+leon_the_killer: johnathan Falcian: /obj/item/weapon/clipboard/notebook/fluff/johnathan_falcian_1
+leonheart11:  Johann Erzatz: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/johann_erzatz_1
+lexusjjss: Lexus Langg: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
+lexusjjss: Zachary Tomlinson: /obj/item/weapon/clipboard/fluff/smallnote, /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask
+madmalicemccrea: Alice McCrea: /obj/item/clothing/head/welding/fluff/alice_mccrea_1
+magmaram: Maria Crash: /obj/item/device/camera/fluff/oldcamera
+mangled: Li Matsuda: /obj/item/weapon/lighter/zippo/fluff/li_matsuda_1
+maximumbob: Maurice Bedford: /obj/item/fluff/maurice_bedford_1
+mcgulliver: Wox Derax: /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/lithiumflask
+mindphyre: Arjun Chopra: /obj/item/clothing/glasses/fluff/arjun_chopra_1
+misterbook: Smoke Perkins: /obj/item/clothing/mask/cigarette/pipe
+misterfox: Rashid Siraj: /obj/item/weapon/storage/bible/tajaran
+morrinn: Maye Day: /obj/item/weapon/storage/fluff/maye_daye_1
+naples: Russell Vierson: /obj/item/weapon/lighter/zippo/fluff/naples_1
+nega10: Ty Foster: /obj/item/clothing/mask/mara_kilpatrick_1	
+nerezza: Asher Spock: /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1
+nerezza: Asher Spock: /obj/item/weapon/card/id/fluff/asher_spock_2
+orangebottle: Lillian Levett: /obj/item/weapon/pen/fluff/fancypen
+orangebottle: Lilliana Reade: /obj/item/weapon/pen/fluff/fancypen
+paththegreat: Eli Stevens: /obj/item/weapon/pen/fluff/fountainpen
+phaux: Tian Krieger: /obj/item/clothing/under/fluff/tian_dress
+rawrtaicho: Riley Rohtin: /obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1
+rawrtaicho: Wyatt Engstrom: /obj/item/clothing/under/fluff/wyatt_1
+roaper: Ian Colm: /obj/item/weapon/card/id/fluff/ian_colm_1
+roaper: Ian Colm: /obj/item/clothing/glasses/welding/fluff/ian_colm_2
+rukral: Nashida Bishara: /obj/item/weapon/reagent_containers/glass/beaker/large/fluff/nashida_bishara_1
+searif: Yuki Matsuda: /obj/item/clothing/under/fluff/jumpsuitdown, /obj/item/clothing/head/welding/fluff/yuki_matsuda_1
+searif: Ara Al-Jazari: /obj/item/clothing/under/rank/bartender/fluff/classy
+serithi: Altair An-Nasaqan: /obj/item/clothing/tie/fluff/altair_locket
+sirribbit: /obj/item/weapon/clipboard/fluff/mcreary_journal
+sicktrigger: David Fanning: /obj/item/fluff/david_fanning_1
+silentthunder: Val McNeil: /obj/item/fluff/val_mcneil_1
+sniperyeti: Susan Harris: /obj/item/clothing/shoes/magboots/fluff/susan_harris_1
+spaceman96: Trenna Seber: /obj/item/weapon/pen/fluff/multi, /obj/item/clothing/suit/labcoat/fluff/pink
+sparklysheep: Cado Keppel: /obj/item/weapon/fluff/cado_keppel_1
+sparklysheep: Uzenwa Sissra: /obj/item/clothing/glasses/fluff/uzenwa_sissra_1
+suethecake: Ana Ka'Rimah: /obj/item/weapon/gun/energy/stunrevolver/fluff/ana_peacemaker
+superboredguy: Neil Patterson: /obj/item/clothing/head/hardhat/fluff/neil_patterson_1
+staghorn: Mara Kilpatrick: /obj/item/clothing/mask/mara_kilpatrick_1
+tastyfish: Cindy Robertson: /obj/item/weapon/wrapping_paper
+thatoneguy: Hugo Cinderbatch: /obj/item/weapon/fluff/hugo_cinderbacth_1
+thebreadbocks: Steve Johnson: /obj/item/fluff/steve_johnson_1
+themij: Taryn Keppel: /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+thejesster14: Rosa Wolff: /obj/item/device/flashlight/fluff/thejesster14_1
+tzefa: Wes Solari: /obj/item/fluff/wes_solari_1
+vinceluk: Ashley Rifler: /obj/item/clothing/gloves/fluff/ashley_rifler_1
+vinceluk: Seth Sealis: /obj/item/clothing/suit/det_suit/fluff/graycoat
+whitellama: Ethan Way: /obj/item/fluff/ethan_way_1
+whitewolf41: Jeremy Wolf: /obj/item/clothing/under/rank/security/fluff/jeremy_wolf_1
+zuhayr: Jane Doe: /obj/item/clothing/under/fluff/jane_sidsuit
+mordeth221: Sven Fjeltson: /obj/item/weapon/fluff/sven_fjeltson_1

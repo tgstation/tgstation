@@ -1,0 +1,67 @@
+"a" = (/turf/space,/area)
+"b" = (/obj/structure/catwalk{icon_state = "catwalk4"},/turf/space,/area)
+"c" = (/obj/structure/catwalk{icon_state = "catwalk12"},/turf/space,/area)
+"d" = (/obj/structure/catwalk{icon_state = "catwalk8"},/turf/space,/area)
+"e" = (/turf/simulated/wall/r_wall,/area/vault/ioufort)
+"f" = (/obj/machinery/door/airlock/hatch,/turf/simulated/floor/plating,/area/vault/ioufort)
+"g" = (/turf/simulated/floor{icon_state = "white"},/area/vault/ioufort)
+"h" = (/obj/effect/decal/cleanable/blood/splatter,/turf/simulated/floor{icon_state = "white"},/area/vault/ioufort)
+"i" = (/obj/effect/landmark/corpse{husk = 1},/turf/simulated/floor{icon_state = "white"},/area/vault/ioufort)
+"j" = (/obj/effect/landmark/corpse{husk = 1},/obj/machinery/light{dir = 8},/turf/simulated/floor{icon_state = "white"},/area/vault/ioufort)
+"k" = (/obj/machinery/light{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/vault/ioufort)
+"l" = (/obj/map/spawner/mobs/carp,/turf/space,/area)
+"m" = (/turf/simulated/floor{icon_state = "warnwhite"},/area/vault/ioufort)
+"n" = (/turf/simulated/floor,/area/vault/ioufort)
+"o" = (/obj/machinery/light,/turf/simulated/floor,/area/vault/ioufort)
+"p" = (/obj/structure/sign/securearea,/turf/simulated/wall/r_wall,/area/vault/ioufort)
+"q" = (/obj/structure/sign/poster{dir = 8; icon_state = "poster6"; pixel_x = 0; pixel_y = 30},/turf/simulated/floor{dir = 6; icon_state = "purple"},/area/vault/ioufort)
+"r" = (/mob/living/simple_animal/corgi,/turf/simulated/floor{icon_state = "yellow"; dir = 10},/area/vault/ioufort)
+"s" = (/turf/simulated/floor/plating,/area/vault/ioufort)
+"t" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gibmid1"},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/vault/ioufort)
+"u" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gib1"},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/vault/ioufort)
+"v" = (/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/ioufort)
+"w" = (/obj/machinery/light{dir = 4},/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor{dir = 9; icon_state = "purplefull"},/area/vault/ioufort)
+"x" = (/obj/structure/closet/crate,/obj/machinery/light,/obj/item/weapon/gun/energy/laser/redtag,/turf/simulated/floor/plating,/area/vault/ioufort)
+"y" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gibup1"; layer = 3.1},/obj/structure/closet/crate{icon_state = "crateopen"; layer = 2.99; opened = 1},/obj/machinery/light{dir = 8},/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/vault/ioufort)
+"z" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gib3"},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/vault/ioufort)
+"A" = (/obj/machinery/door/airlock/vault,/turf/simulated/floor/plating,/area/vault/ioufort)
+"B" = (/mob/living/simple_animal/corgi,/turf/simulated/floor{icon_state = "purple"; dir = 5},/area/vault/ioufort)
+"C" = (/turf/simulated/floor{dir = 9; icon_state = "yellow"},/area/vault/ioufort)
+"D" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gib4"},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/vault/ioufort)
+"E" = (/obj/effect/decal/cleanable/blood/gibs{icon_state = "gibmid2"},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/vault/ioufort)
+"F" = (/obj/machinery/light{dir = 8},/turf/simulated/floor,/area/vault/ioufort)
+"G" = (/turf/simulated/wall/invulnerable,/area/vault/ioufort)
+"H" = (/obj/machinery/light{dir = 4},/turf/simulated/floor,/area/vault/ioufort)
+"I" = (/obj/item/weapon/reagent_containers/food/snacks/roburger,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/vault/ioufort)
+"J" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/plating,/area/vault/ioufort)
+"K" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/vodka,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 8; icon_state = "yellow"},/area/vault/ioufort)
+"L" = (/obj/machinery/light{dir = 4},/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/vault/ioufort)
+"M" = (/obj/structure/displaycase/broken,/obj/item/weapon/paper/iou,/turf/simulated/floor/plating,/area/vault/ioufort)
+"N" = (/obj/structure/closet/crate,/obj/machinery/light{dir = 8},/obj/item/weapon/gun/projectile/russian/empty,/turf/simulated/floor{dir = 8; icon_state = "yellow"},/area/vault/ioufort)
+"O" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/vault/ioufort)
+"P" = (/obj/item/weapon/storage/pill_bottle/happy,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 8; icon_state = "yellow"},/area/vault/ioufort)
+"Q" = (/obj/item/weapon/reagent_containers/food/drinks/bottle/customizable/vodka,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 4; icon_state = "yellowcorner"},/area/vault/ioufort)
+"R" = (/obj/item/weapon/storage/fancy/cigarettes,/mob/living/simple_animal/hostile/mimic,/turf/simulated/floor{dir = 1; icon_state = "yellowcorner"},/area/vault/ioufort)
+
+(1,1,1) = {"
+aaaaaabcdaaaaaa
+aaaeeeefeeeeaaa
+aaaeghggghieaaa
+aaaejgggghkeaaa
+aaaeghiggggeaaa
+laaegggmghieaal
+aeeeeeefeeeeeea
+aennonnnnnonnea
+aeneeeefeeeenea
+aenpqresetuenea
+aenfvwexeyzAnea
+aenpBCeeeDEenea
+leFeeGGGGGeeHel
+aennIGsJsGKnnea
+aennLGsMsGNnnea
+aennOGsssGPnnea
+aennQGGAGGRnnea
+aennnnnnnnnnnea
+aeeeeeeeeeeeeea
+laaaaaalaaaaaal
+"}

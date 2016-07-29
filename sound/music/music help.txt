@@ -1,0 +1,1 @@
+To make music work open up maps/Space Station 13 Areas.dm and add music = "music/bla" below an entry and include musicplayer.dm at compiletime

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/structure/closet/secure_closet/bar
 	name = "booze storage"
 	req_access = list(access_bar)
@@ -9,3 +10,43 @@
 	..()
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+=======
+/obj/structure/closet/secure_closet/bar
+	name = "booze storage"
+	desc = "A bit classier than just chucking bottles onto the bar."
+	req_access = list(access_bar)
+	icon_state = "cabinetdetective_locked"
+	icon_closed = "cabinetdetective"
+	icon_locked = "cabinetdetective_locked"
+	icon_opened = "cabinetdetective_open"
+	icon_broken = "cabinetdetective_broken"
+	icon_off = "cabinetdetective_broken"
+
+
+/obj/structure/closet/secure_closet/bar/New()
+	..()
+	//sleep(2) // why
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	new /obj/item/weapon/reagent_containers/food/drinks/beer( src )
+	return
+
+/obj/structure/closet/secure_closet/bar/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

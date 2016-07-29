@@ -1,6 +1,11 @@
 A whole bunch of spiders in a SWAT suit
+<<<<<<< HEAD
 Al "Otta" Gore
 AMERICA
+=======
+AMERICA
+Al "Otta" Gore
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Beat Punchbeef
 Blast Hardcheese
 Blast Thickneck
@@ -15,6 +20,10 @@ Butch Deadlift
 Crud Bonemeal
 Crunch Buttsteak
 Crush McStompbones
+<<<<<<< HEAD
+=======
+Cuttuf Urdick
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Dirk Hardpeck
 Duke Killington
 Evil Bob Marley
@@ -22,12 +31,22 @@ Evil Martin Luther King
 Fist Rockbone
 Flint Ironstag
 Fridge Largemeat
+<<<<<<< HEAD
 George Melons
 Gibbs McLargehuge
 GORE Vidal
 Gristle McThornBody
 Hank Chesthair
 Hans Testosteroneson
+=======
+GORE Vidal
+George Melons
+Gibbs McLargehuge
+Gristle McThornBody
+Hank Chesthair
+Hans Testosteroneson
+Im going to kill you, im not even kidding
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Killiam Shakespeare
 Killing McKillingalot
 Lance Killiam
@@ -49,7 +68,11 @@ Rip Steakface
 Roll Fizzlebeef
 Sarah Pain
 Seamus McTosterone
+<<<<<<< HEAD
 Sgt Slaughter
+=======
+Sgt. Slaughter
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Sir Killaslot
 Slab Bulkhead
 Slab Squatthrust
@@ -62,9 +85,17 @@ Stabby McGee
 Stump Beefgnaw
 Stump Chunkman
 THAT DAMN FAGGOT TRAITOR GEORGE MELONS
+<<<<<<< HEAD
+=======
+The last thing you will ever see
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Theodore Pain
 Thick McRunfast
 Toolboxl Rose
 Touch Rustrod
 Trunk Slamchest
+<<<<<<< HEAD
+=======
+Two migits pretending to be a normal person
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Zombie Gandhi

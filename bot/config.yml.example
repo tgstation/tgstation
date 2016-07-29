@@ -1,0 +1,71 @@
+# INDENTATION IS IMPORTANT. Indent with 2 spaces or you'll break stuff.
+# This is a comment because it has a hashmark in front of it.  YAML doesn't care about comments.
+
+# Names the bot responds to. 
+# List of strings corresponding to whatever horrible nicknames you decide to call it.
+names: [
+  'nt',
+  'vg',
+  'VGTestServer'
+]
+# Currently only supports one server.
+servers:
+  # Hostname or IP of the server
+  irc.yourserver.tld:
+    # Nickname of the bot, automatically gets underscores slapped onto the end if it can't connect with that nick.
+    # Also becomes the realname of the bot.
+    nick: 'NanotrasenBot'
+    
+    # Password of the SERVER.  You probably don't need this.
+    password: null
+    
+    # Port, leave this alone unless you know what you're doing.
+    port: 6667
+    
+    # Channels the bot will join.
+    channels:
+      # Channel to join.
+      "#vgstation":
+        # Channel password (+k). Can be safely omitted.
+        password: null
+        
+        # Flags go here.  This one means non-ahelp nudges will be sent to this channel.
+        nudges: true
+      "#vgstation-admins":
+        # This one means adminhelps will be sent.
+        ahelps: true
+
+# Plugin options, to keep things tidy.
+plugins:
+   # Nudge processing options.  Comment out this block to disable nudge support.
+   nudge:
+     # Hostname to bind to. Blank for 0.0.0.0
+     hostname: ""
+     # Port.  Probably shouldn't change this.
+     port: 45678
+     # Access key.  CHANGE THIS OR GET SPAMMED.
+     key: password
+   # Stuff for redmine. Don't touch if you don't use redmine.
+   redmine:
+     # http://your.redmine.tld[/path]
+     url: 
+     # Enable REST API and get an API Key.  Then put it here.
+     apikey:
+     # Project to watch for new bugs.
+     # Note:  For new bugs to be announced on the channel, you'll need to add a redmine-[projectID] tag.
+     project:
+     # Optional message format stuff.  Uncomment to change the defaults.
+     #bug-info-format:'Redmine #{ID} - {AUTHOR} - {STATUS} - {SUBJECT}{CRLF}{URL}'
+     #new-bug-format: 'NEW ISSUE: {URL} (#{ID}: {SUBJECT})'
+   # Stuff for github. Don't touch if you don't use github.
+   github:
+     # http://github.com/USER_OR_ORG/REPO
+     #url: http://github.com/d3athrow/vgstation13
+     # Generate a login token and slap it here.
+     #apikey:
+     # Optional message format stuff.  Uncomment to change the defaults.
+     #bug-info-format:'GitHub #{ID}: \'{SUBJECT}\' - {URL} ({STATUS})'
+   # Stuff for MediaWiki. Don't touch if you don't use MediaWiki.
+   mediawiki:
+     # http://your.wiki.tld/path/
+     #url: http://tgstation13.org/wiki/ 

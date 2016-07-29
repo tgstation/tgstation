@@ -1,0 +1,45 @@
+<!--
+Title: Disposals Bin UI
+Used In File(s): \code\modules\recycling\disposal.dm
+ -->
+{{if !data.isAI}}
+<div class='item'>
+	<div class='itemLabel'>Disposal handle:</div>
+	<div class='itemContent'>
+		{{:helper.link('Disengage', 'power', {'handle' : 0}, data.flush ? null : 'selected')}}
+		{{:helper.link('Engage', 'power', {'handle' : 1}, data.flush ? 'selected' : null)}}
+	</div>
+</div>
+
+<div class='item'>
+	<div class='itemLabel'>Contents:</div>
+	<div class='itemContent'>
+		{{:helper.link('Eject', 'eject', {'eject' : 1})}}
+	</div>
+</div>
+{{/if}}
+<div class='item'>
+	<div class='itemLabel'>Pump:</div>
+	<div class='itemContent'>
+		{{:helper.link('On', 'power', {'pump' : 1}, data.mode >= 1 ? 'selected' : null)}}
+		{{:helper.link('off', 'power', {'pump' : 0}, data.mode == 0 ? 'selected' : null)}}
+		{{if data.mode == 1}}
+			<span class='average'>(Pressurizing)</span>
+		{{else data.mode == 2}}
+			<span class='good'>(Idle)</span>
+		{{/if}}
+	</div>
+</div>
+
+<div class='item'>
+	<div class='itemLabel'>Pressure:</div>
+	<div class='itemContent'>
+		{{:helper.displayBar(data.pressure, 0, 100, data.pressure == 100 ? 'good' : 'average')}}
+		{{if data.pressure == 100}}
+			<span class='good'>
+		{{else}}
+			<span class='average'>
+		{{/if}}
+		{{:data.pressure}}%</span>
+	</div>
+</div>

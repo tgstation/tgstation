@@ -4,7 +4,10 @@ Miscellaneous traitor devices
 
 BATTERER
 
+<<<<<<< HEAD
 RADIOACTIVE MICROLASER
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 */
 
@@ -20,10 +23,18 @@ effective or pretty fucking useless.
 	desc = "A strange device with twin antennas."
 	icon_state = "batterer"
 	throwforce = 5
+<<<<<<< HEAD
 	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
+=======
+	w_class = W_CLASS_TINY
+	throw_speed = 4
+	throw_range = 10
+	flags = FPRINT
+	siemens_coefficient = 1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	item_state = "electronic"
 	origin_tech = "magnets=3;combat=3;syndicate=3"
 
@@ -31,6 +42,7 @@ effective or pretty fucking useless.
 	var/max_uses = 2
 
 
+<<<<<<< HEAD
 /obj/item/device/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
 	if(!user) 	return
 	if(times_used >= max_uses)
@@ -52,10 +64,39 @@ effective or pretty fucking useless.
 
 	playsound(src.loc, 'sound/misc/interference.ogg', 50, 1)
 	user << "<span class='notice'>You trigger [src].</span>"
+=======
+/obj/item/device/batterer/attack_self(mob/living/carbon/user as mob, flag = 0, emp = 0)
+	if(!user) 	return
+	if(times_used >= max_uses)
+		to_chat(user, "<span class='warning'>The mind batterer has been burnt out!</span>")
+		return
+
+	user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used [src] to knock down people in the area.</font>")
+
+	for(var/mob/living/carbon/human/M in orange(10, user))
+		spawn()
+			if(prob(50))
+
+				M.Weaken(rand(10,20))
+				if(prob(25))
+					M.Stun(rand(5,10))
+				to_chat(M, "<span class='danger'>You feel a tremendous, paralyzing wave flood your mind.</span>")
+				if(!iscarbon(user))
+					M.LAssailant = null
+				else
+					M.LAssailant = user
+
+			else
+				to_chat(M, "<span class='danger'>You feel a sudden, electric jolt travel through your head.</span>")
+
+	playsound(get_turf(src), 'sound/misc/interference.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You trigger [src].</span>")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	times_used += 1
 	if(times_used >= max_uses)
 		icon_state = "battererburnt"
 
+<<<<<<< HEAD
 /*
 		The radioactive microlaser, a device disguised as a health analyzer used to irradiate people.
 
@@ -223,3 +264,8 @@ effective or pretty fucking useless.
 		else
 			charge = min(max_charge,charge + 50) //Charge in the dark
 		animate(user,alpha = Clamp(255 - charge,0,255),time = 10)
+=======
+
+
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -18,7 +18,11 @@
 
 var/cmp_field = "name"
 /proc/cmp_records_asc(datum/data/record/a, datum/data/record/b)
+<<<<<<< HEAD
 	return sorttext(b.fields[cmp_field], a.fields[cmp_field])
+=======
+	return sorttext((b ? b.fields[cmp_field] : ""), (a ? a.fields[cmp_field] : a))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /proc/cmp_records_dsc(datum/data/record/a, datum/data/record/b)
 	return sorttext(a.fields[cmp_field], b.fields[cmp_field])
@@ -27,6 +31,7 @@ var/cmp_field = "name"
 	return sorttext(b.ckey, a.ckey)
 
 /proc/cmp_ckey_dsc(client/a, client/b)
+<<<<<<< HEAD
 	return sorttext(a.ckey, b.ckey)
 
 /proc/cmp_subsystem_init(datum/subsystem/a, datum/subsystem/b)
@@ -42,3 +47,6 @@ var/cmp_field = "name"
 
 /proc/cmp_clientcolour_priority(datum/client_colour/A, datum/client_colour/B)
 	return B.priority - A.priority
+=======
+	return sorttext(a.ckey, b.ckey)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

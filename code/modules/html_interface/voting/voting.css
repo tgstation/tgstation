@@ -1,0 +1,116 @@
+.fixedLeftWidest {
+	white-space: normal;
+	word-wrap: break-word;
+	height:100%;
+	width: 100%;
+}
+a { display: inline;}
+#vote_main{
+	display: block;
+}
+#vote_choices{
+	display: none;
+}
+.displayBar {
+    position: relative;
+    width: 236px;
+    height: 16px;
+    border: 1px solid #666666;
+    float: left;
+    margin: 0 5px 0 0;
+    overflow: hidden;
+    background: #000000;
+}
+
+.displayBarText {
+    position: absolute;
+    top: -2px;
+    left: 5px;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    font-weight: normal;
+}
+
+.displayBarFill {
+    width: 0%;
+    height: 100%;
+    background: #40628a;
+    overflow: hidden;
+    float: left;
+}
+
+.displayBarFill.alignRight {
+    float: right;
+}
+
+.displayBarFill.good {
+    color: #ffffff;
+    background: #4f7529;
+}
+
+.displayBarFill.average {
+    color: #ffffff;
+    background: #cd6500;
+}
+
+.displayBarFill.bad {
+    color: #ffffff;
+    background: #ee0000;
+}
+
+.displayBarFill.highlight {
+    color: #ffffff;
+    background: #8BA5C4;
+}
+.itemGroup {
+    border: 1px solid #e9c183;
+    background: #2c2c2c;
+    padding: 4px;
+    clear: both;
+}
+
+.item {
+    width: 100%;
+    margin: 4px 0 0 0;
+    clear: both;
+}
+
+
+.itemLabel {
+    float: left;
+    width: 30%;
+    color: #e9c183;
+}
+
+.itemContent {
+    float: left;
+    width: 69%;
+}
+
+.itemLabelNarrow {
+    float: left;
+    width: 20%;
+    color: #e9c183;
+}
+
+.itemLabelWide {
+    float: left;
+    width: 45%;
+    color: #e9c183;
+}
+
+.itemContentWide {
+    float: left;
+    width: 79%;
+}
+
+.itemContentSmall {
+    float: left;
+    width: 33%;
+}
+
+.itemContentMedium {
+    float: left;
+    width: 55%;
+}

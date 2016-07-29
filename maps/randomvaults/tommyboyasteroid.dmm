@@ -1,0 +1,59 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/unsimulated/mineral/random/high_chance,/area/vault/tommyboyasteroid)
+"c" = (/turf/unsimulated/mineral/random/high_chance_clown,/area/vault/tommyboyasteroid)
+"d" = (/turf/unsimulated/mineral/random/high_chance,/turf/unsimulated/mineral/gibtonite,/area/vault/tommyboyasteroid)
+"e" = (/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"f" = (/turf/unsimulated/mineral/random/high_chance,/area)
+"g" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/weeds,/mob/living/simple_animal/hostile/alien/sentinel,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"h" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"i" = (/obj/effect/decal/remains/xeno,/obj/effect/decal/cleanable/dirt,/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"j" = (/turf/unsimulated/floor/asteroid/cave,/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/vault/tommyboyasteroid)
+"k" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/resin/wall,/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"l" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall12"; dir = 2},/area/vault/tommyboyasteroid)
+"m" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/weeds/node,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"n" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/vault/tommyboyasteroid)
+"o" = (/obj/effect/decal/cleanable/dirt,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"p" = (/obj/item/weapon/shard{icon_state = "small"},/obj/effect/decal/cleanable/dirt,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"q" = (/obj/effect/decal/cleanable/dirt,/obj/item/clothing/head/helmet/space/ancient{desc = "While still in a servicable condition, nothing on this helmet is readable anymore."},/turf/simulated/shuttle/floor,/area/vault/tommyboyasteroid)
+"r" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/floor,/area/vault/tommyboyasteroid)
+"s" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/vault/tommyboyasteroid)
+"t" = (/obj/effect/decal/cleanable/dirt,/obj/item/clothing/under/color/blue{desc = "A mostly torn label adorns the back. You can read the first and third letters, which are 'N' and 'S' respectively. The front had a nametag at once, now all the remains is the abbreviation 'Maj.'"; name = "ancient blue jumpsuit"},/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"u" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/dirt,/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"v" = (/obj/structure/grille/broken,/obj/item/stack/rods,/obj/item/weapon/shard,/obj/item/weapon/shard{icon_state = "small"},/obj/effect/decal/cleanable/dirt,/obj/effect/alien/resin/wall,/obj/effect/alien/weeds,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"w" = (/obj/machinery/computer/shuttle,/obj/effect/decal/cleanable/dirt,/obj/item/weapon/paper/tommyboy,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"x" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/resin/wall,/turf/unsimulated/floor/asteroid/plating,/area/vault/tommyboyasteroid)
+"y" = (/obj/effect/decal/cleanable/dirt,/obj/effect/alien/resin/wall,/turf/simulated/shuttle/floor,/area/vault/tommyboyasteroid)
+"z" = (/obj/effect/decal/cleanable/dirt,/turf/unsimulated/floor/asteroid/cave,/area/vault/tommyboyasteroid)
+"A" = (/turf/simulated/shuttle/floor,/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/vault/tommyboyasteroid)
+"B" = (/obj/effect/decal/cleanable/dirt,/obj/structure/bed,/obj/item/clothing/suit/space/syndicate/orange{desc = "The labels are faded beyond recognition, except for the second letter on the back logo, 'A'."; name = "ancient orange space suit"},/turf/simulated/shuttle/floor,/area/vault/tommyboyasteroid)
+"C" = (/turf/unsimulated/floor/asteroid/cave,/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/vault/tommyboyasteroid)
+"D" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall13"; dir = 2},/area/vault/tommyboyasteroid)
+"E" = (/turf/unsimulated/floor/asteroid/cave,/obj/effect/decal/cleanable/dirt,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/vault/tommyboyasteroid)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaabbbaaa
+aaaaaaaaaaaaaaaaaabcccbaa
+aaaaaabdbaaaaaaaaabcdccba
+aaaaabbbbbbeeeaaaabcccbba
+aaaaffbcbbbbeeeebaabbbaaa
+aaabbbbbbbbbdcebbbaaaaaaa
+aaaebbdbbbbbbbbbbbbbaaaaa
+aaeecbbbbbbbbbbcbbbbbbaaa
+aaebbbbbbghhhbbbbbdbcbaaa
+aaebbbbchihjklbblbblbbbaa
+abbbbdbbhhmnopdoqpbrsbbaa
+abbbbbbtuhhvwrxroryrxzbba
+abdbbbbhhhhnAByrpdxobzzza
+abbbbbbhhmiCDbllbbllEzbza
+abbbcbbbhhghbbbcbbbdbcbba
+abbbbbbbbbbbbbbbbbbbbbbaa
+abdbeeebbdbcbbbbbbbbbaaaa
+aaaeeeeeebbbbbbbbaaaaaaaa
+aaaaaeeeeeebbbbbaaabbbaaa
+aaaaaaaaaaaaaaaaaabccbaaa
+aaaaaaaaaaaaaaaaaaadcbaaa
+aaaaaaaaaaaaaaaaaaabbaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaa
+"}

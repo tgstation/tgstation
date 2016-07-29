@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/item/weapon/
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
@@ -9,3 +10,13 @@
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
+=======
+/obj/item/weapon
+	name = "weapon"
+	icon = 'icons/obj/weapons.dmi'
+
+/obj/item/weapon/Bump(mob/M as mob)
+	spawn(0)
+		..()
+	return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

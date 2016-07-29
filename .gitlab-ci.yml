@@ -1,0 +1,36 @@
+before_script:
+  - $wololo
+  - BYOND_MAJOR="508"
+  - BYOND_MINOR="1293"
+  - apt-get update
+  - apt-get --yes install build-essential unzip lib32stdc++6 gcc-multilib
+  - curl "http://www.byond.com/download/build/${BYOND_MAJOR}/${BYOND_MAJOR}.${BYOND_MINOR}_byond_linux.zip" -o byond.zip
+  - unzip byond.zip
+  - cd byond
+  - make install
+  - cd ..
+
+# notifications:
+#   irc:
+#     channels:
+#       - "irc.rizon.net#vgstation"
+#     template:
+#       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}"
+#       - "Change view : %{compare_url}"
+#       - "Build details : %{build_url}"
+
+tgstation:
+  type: build
+  script: "bash dm.sh -Mtgstation vgstation13.dme"
+
+metaclub:
+  type: build
+  script: "bash dm.sh -Mmetaclub vgstation13.dme"
+
+defficiency:
+  type: build
+  script: "bash dm.sh -Mdefficiency vgstation13.dme"
+
+taxistation:
+  type: build
+  script: "bash dm.sh -Mtaxistation vgstation13.dme"

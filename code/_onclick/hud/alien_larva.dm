@@ -1,30 +1,68 @@
-/datum/hud/larva/New(mob/owner)
-	..()
+/datum/hud/proc/larva_hud()
+
+
+	src.adding = list()
+	src.other = list()
+
 	var/obj/screen/using
 
-	using = new /obj/screen/act_intent/alien()
-	using.icon_state = mymob.a_intent
-	static_inventory += using
+	using = getFromPool(/obj/screen)
+	using.name = "act_intent"
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == I_HURT ? "harm" : mymob.a_intent)
+	using.screen_loc = ui_acti
+	using.layer = 20
+	src.adding += using
 	action_intent = using
 
-	healths = new /obj/screen/healths/alien()
-	infodisplay += healths
+	using = getFromPool(/obj/screen)
+	using.name = "mov_intent"
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.screen_loc = ui_movi
+	using.layer = 20
+	src.adding += using
+	move_intent = using
 
-	nightvisionicon = new /obj/screen/alien/nightvision()
-	nightvisionicon.screen_loc = ui_alien_nightvision
-	infodisplay += nightvisionicon
-	alien_queen_finder = new /obj/screen/alien/alien_queen_finder()
-	infodisplay += alien_queen_finder
-	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = 'icons/mob/screen_alien.dmi'
-	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
-	hotkeybuttons += pull_icon
+	mymob.oxygen = getFromPool(/obj/screen)
+	mymob.oxygen.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.oxygen.icon_state = "oxy0"
+	mymob.oxygen.name = "oxygen"
+	mymob.oxygen.screen_loc = ui_alien_oxygen
 
-	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon(mymob)
-	static_inventory += zone_select
+	mymob.toxin = getFromPool(/obj/screen)
+	mymob.toxin.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.toxin.icon_state = "tox0"
+	mymob.toxin.name = "toxin"
+	mymob.toxin.screen_loc = ui_alien_toxin
 
-/mob/living/carbon/alien/larva/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/larva(src)
+
+	mymob.fire = getFromPool(/obj/screen)
+	mymob.fire.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.fire.icon_state = "fire0"
+	mymob.fire.name = "fire"
+	mymob.fire.screen_loc = ui_alien_fire
+
+
+	mymob.healths = getFromPool(/obj/screen)
+	mymob.healths.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.healths.icon_state = "health0"
+	mymob.healths.name = "health"
+	mymob.healths.screen_loc = ui_alien_health
+
+	mymob.pullin = getFromPool(/obj/screen)
+	mymob.pullin.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.name = "pull"
+	mymob.pullin.screen_loc = ui_pull_resist
+
+	mymob.zone_sel = getFromPool(/obj/screen/zone_sel)
+	mymob.zone_sel.overlays.len = 0
+	mymob.zone_sel.overlays += image("icon" = 'icons/mob/zone_sel.dmi', "icon_state" = text("[]", mymob.zone_sel.selecting))
+
+	mymob.client.reset_screen()
+
+	mymob.client.screen += list( mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += src.adding + src.other

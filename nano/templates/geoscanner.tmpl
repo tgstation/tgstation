@@ -1,0 +1,185 @@
+<!-- 
+Title: Radiometric Scanner UI 
+Used In File(s): \code\modules\research\xenoarchaeology\machinery\geosample_scanner.dm
+ -->
+ 
+<h3>Machine Status</h3>
+<div class="item">
+	<div class="itemContent" style="width: 20%;">
+		{{:helper.link(data.scanning ? 'Halt Scan' : 'Begin Scan', 'signal-diag', {'scanItem' : 1}, null)}}
+	</div>
+	<div class="itemContent" style="width: 20%;">
+		{{:helper.link('Eject item', 'eject', {'ejectItem' : 1}, (data.scanned_item && !data.scanning) ? null : 'disabled')}}
+	</div>
+</div>
+
+<div class="statusDisplay">
+	<div class="line">
+		<div class="statusLabel">Item:</div>
+		<div class="statusValue">
+			{{if data.scanned_item}}
+				<span class="good">{{:data.scanned_item}}</span>
+			{{else}}
+				<span class="bad">No item inserted</span>
+			{{/if}}
+		</div>
+	</div>
+	<div class="line">
+		<div class="statusLabel">Heuristic analysis:</div>
+		<div class="statusValue">
+			{{if data.scanned_item_desc}}
+				<span class="average">{{:data.scanned_item_desc}}</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
+
+<h3>Scanner</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Scan progress:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.scan_progress, 0, 100, 'good')}}
+		{{:data.scan_progress}} %
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.scan_progress >= 100}}
+			<span class="notice" style="width: 100%;">Scan completed successfully.</span>
+		{{/if}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Vacuum seal integrity:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.scanner_seal_integrity, 0, 100, ((data.scanner_seal_integrity < 66) ? ((data.scanner_seal_integrity < 33) ? 'bad' : 'average') : 'good'))}}
+		{{:data.scanner_seal_integrity}} %
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.scanner_seal_integrity < 25}}
+			<span class="notice">Warning! Vacuum seal breach will result in scan failure!</span>
+		{{/if}}
+	</div>
+</div>
+
+<h3>MASER</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">MASER Efficiency:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.maser_efficiency, 1, 100, ((data.maser_efficiency < 66) ? ((data.maser_efficiency) < 33 ? 'bad' : 'average') : 'good'))}}
+		{{:data.maser_efficiency}} %
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.maser_efficiency < 50}}
+			<span class="notice">Match wavelengths to progress the scan.</span>
+		{{/if}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Optimal Wavelength:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.optimal_wavelength, 1, 10000, 'good')}}
+		{{:data.optimal_wavelength}} MHz
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Current Wavelength:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.maser_wavelength, 1, 10000, 'good')}}
+		{{:data.maser_wavelength}} MHz
+	</div>
+	<div class="itemContent" style="text-align:left; width: 22%;">
+		{{:helper.link('-2 KHz', null, {'maserWavelength' : -2}, null)}}
+		{{:helper.link('-1 KHz', null, {'maserWavelength' : -1}, null)}}
+		{{:helper.link('-0.5 KHz', null, {'maserWavelength' : -0.5}, null)}}
+	</div>
+	<div class="itemContent" style="text-align:right; width: 22%;">
+		{{:helper.link('+0.5 KHz', null, {'maserWavelength' : 0.5}, null)}}
+		{{:helper.link('+1 KHz', null, {'maserWavelength' : 1}, null)}}
+		{{:helper.link('+2 KHz', null, {'maserWavelength' : 2}, null)}}
+	</div>
+</div>
+
+<h3>Environment / Internal</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Centrifuge speed:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.scanner_rpm, 0, 1000, 'good')}}
+		{{:data.scanner_rpm}} RPM
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Internal temperature:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.scanner_temperature, 0, 1273, (data.scanner_temperature > 250 ? (data.scanner_temperature > 1000 ? 'bad' : 'average') : 'good')))}}
+		{{:data.scanner_temperature}} K
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.scanner_temperature > 1000}}
+			<span class="notice" style="width: 100%;">Warning! Exceeding 1200K will result in scan failure!</span>
+		{{/if}}
+	</div>
+</div>
+
+<h3>Radiation</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Ambient radiation:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.radiation, 0, 100, ((data.radiation > 15) ? ((data.radiation > 65) ? 'bad' : 'average') : 'good'))}}
+		{{:data.radiation}} mSv
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{:helper.link(data.rad_shield_on ? 'Disable Radiation Shielding' : 'Enable Radiation Shielding', 'radiation', {'toggle_rad_shield' : 1}, null)}}
+		{{if data.rad_shield_on}}
+			<span class="notice" style="width: 100%;">Shield blocking scanner.</span>
+		{{/if}}
+	</div>
+</div>
+
+<h3>Cooling</h3>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Coolant remaining:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.unused_coolant_per, 0, 100, ((data.unused_coolant_per < 66) ? ((data.unused_coolant_per < 33) ? 'bad' : 'average') : 'good'))}}
+		{{:data.unused_coolant_abs}} u
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.unused_coolant_per < 20}}
+			<span class="notice" style="width: 100%;">Warning! Coolant stocks low!</span>
+		{{/if}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Coolant flow rate:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.coolant_usage_rate, 0, 10, 'good')}}
+		{{:data.coolant_usage_rate}} u/s
+	</div>
+	<div class="itemContent" style="text-align:left; width: 22%;">
+		{{:helper.link('Min u/s', null, {'coolantRate' : -10}, null)}}
+		{{:helper.link('-3 u/s', null, {'coolantRate' : -3}, null)}}
+		{{:helper.link('-1 u/s', null, {'coolantRate' : -1}, null)}}
+	</div>
+	<div class="itemContent" style="text-align:right; width: 22%;">
+		{{:helper.link('+1 u/s', null, {'coolantRate' : 1}, null)}}
+		{{:helper.link('+3 u/s', null, {'coolantRate' : 3}, null)}}
+		{{:helper.link('Max u/s', null, {'coolantRate' : 10}, null)}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel" style="width: 21%;">Coolant purity:</div>
+	<div class="itemContent" style="width: 35%;">
+		{{:helper.displayBar(data.coolant_purity, 0, 100, ((data.coolant_purity < 66) ? ((data.coolant_purity < 33) ? 'bad' : 'average') : 'good'))}}
+		{{:data.coolant_purity}} %
+	</div>
+	<div class="itemContent" style="width: 44%;">
+		{{if data.coolant_purity < 0.5}}
+			<span class="notice" style="width: 100%;">Warning! Check coolant for contaminants!</span>
+		{{/if}}
+	</div>
+</div>
+
+<h3>Latest Results</h3>
+<div class="statusDisplay">
+	<div class="line">
+		<span class="highlight">{{:data.last_scan_data}}</span>
+	</div>
+</div>

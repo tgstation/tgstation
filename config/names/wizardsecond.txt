@@ -4,10 +4,21 @@ Darko
 Gray
 Honko
 Inverse
+<<<<<<< HEAD
 le Fay
 of Void
 Shado
 Smith
+=======
+Shado
+Smith
+Unseen
+Weatherwax
+Whom
+Yagg
+le Fay
+of Void
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 the All Knowing
 the Amazing
 the Bandit Killer
@@ -33,7 +44,11 @@ the Unending
 the Unstoppable
 the Weeping
 the White
+<<<<<<< HEAD
 the Wise
 Unseen
 Weatherwax
 Yagg
+=======
+the Wise
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

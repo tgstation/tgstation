@@ -11,6 +11,7 @@ var/list/adminkeys = list()
 
 proc/gen_configs()
 
+
 	config_stream = dd_file2list("config.txt")
 
 	var/server_gen = 0	// if the stream is looking for servers
@@ -30,14 +31,14 @@ proc/gen_configs()
 		else
 			if(findtext(line, ".") && !findtext(line, "##"))
 				if(server_gen)
-					var/filterline = dd_replacetext(line, " ", "")
+					var/filterline = replacetext(line, " ", "")
 					var/serverlink = copytext(filterline, findtext( filterline, ")") + 1)
 					servers.Add(serverlink)
 					servernames.Add( copytext(line, findtext(line, "("), findtext(line, ")") + 1))
 
 				else if(admin_gen)
 					adminfiles.Add(line)
-					world << line
+					to_chat(world, line)
 
 
 	// Generate the list of admins now

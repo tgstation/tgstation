@@ -1,0 +1,93 @@
+/*Made by N3X15*/
+
+html {
+	font-family:sans-serif;
+	font-size:small;
+}
+a{
+	color:#0066cc;
+	text-decoration:none;
+}
+
+a img {
+	border:1px solid #0066cc;
+	background:#dfdfdf;
+}
+
+a.color {
+	padding: 5px 10px;
+	font-size: large;
+	font-weight: bold;
+	border:1px solid white;
+}
+
+a.selected img,
+a:hover {
+	background: #0066cc;
+	color: #ffffff;
+}
+
+a.no_dec
+{
+	display: inline-block;
+}
+
+a.no_dec:hover
+{
+	background: #FFFFFF;
+	color: #ffffff;
+}
+
+/* RPD layers, YES I SUCK AT CSS */
+
+.layer_holder
+{
+	height: 32px;
+	width: 50px;
+	display: inline-block;
+}
+
+.layer.horizontal
+{
+	left: 0px;
+	background-image: url(RPD_0_4.png);
+	height: 5px;
+	width: 32px;
+	background-position: 0px 19px;
+}
+
+.layer.vertical
+{
+	top: 0px;
+	background-image: url(RPD_0_1.png);
+	width: 5px;
+	height: 32px;
+	right: 0px;
+	background-position: 19px 0px;
+	display: inline-block;
+	position: relative;
+}
+
+.layer.horizontal.selected
+{
+	background-image: url(RPD-layer-blended-4.png);
+}
+
+.layer.vertical.selected
+{
+	background-image: url(RPD-layer-blended-1.png);
+}
+
+.layer.horizontal.one		{margin-top: 0px;}
+.layer.horizontal.two		{margin-top: 6px;}
+.layer.horizontal.three		{margin-top: 6px;}
+.layer.horizontal.four		{margin-top: 6px;}
+.layer.horizontal.five		{margin-top: 6px;}
+
+/* IT WERKS DON'T TOUCH IT */
+
+.layer.vertical.one			{left: 0px;}
+.layer.vertical.two			{left: -2px;}
+.layer.vertical.three		{left: -4px;}
+.layer.vertical.four		{left: -6px;}
+.layer.vertical.five		{left: -8px;}

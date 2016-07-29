@@ -6,15 +6,26 @@
 	icon_living = "pine_1"
 	icon_dead = "pine_1"
 	icon_gib = "pine_1"
+<<<<<<< HEAD
+=======
+
+	size = SIZE_HUGE
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	speak_chance = 0
 	turns_per_move = 5
 	response_help = "brushes"
 	response_disarm = "pushes"
 	response_harm = "hits"
+<<<<<<< HEAD
 	speed = 1
 	maxHealth = 250
 	health = 250
 	mob_size = MOB_SIZE_LARGE
+=======
+	speed = -1
+	maxHealth = 250
+	health = 250
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	pixel_x = -16
 
@@ -23,6 +34,7 @@
 	melee_damage_upper = 12
 	attacktext = "bites"
 	attack_sound = 'sound/weapons/bite.ogg'
+<<<<<<< HEAD
 	speak_emote = list("pines")
 	emote_taunt = list("growls")
 	taunt_chance = 20
@@ -58,6 +70,40 @@
 			C.Weaken(3)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
+=======
+
+	//Space carp aren't affected by atmos.
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+	minbodytemp = 0
+
+	faction = "forest"
+
+/mob/living/simple_animal/hostile/tree/FindTarget()
+	. = ..()
+	if(.)
+		emote("growls at [.]")
+
+/mob/living/simple_animal/hostile/tree/AttackingTarget()
+	. =..()
+	var/mob/living/L = .
+	if(istype(L))
+		if(prob(15))
+			L.Weaken(3)
+			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
+
+/mob/living/simple_animal/hostile/tree/Die()
+	..()
+	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
+	new /obj/item/stack/sheet/wood(loc)
+	qdel(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
@@ -66,5 +112,13 @@
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"
 	icon_gib = "festivus_pole"
+<<<<<<< HEAD
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
+=======
+
+/mob/living/simple_animal/hostile/tree/festivus/Die()
+	visible_message("<span class='warning'><b>[src]</b> is hacked into pieces!</span>")
+	new /obj/item/weapon/nullrod(loc)
+	qdel(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

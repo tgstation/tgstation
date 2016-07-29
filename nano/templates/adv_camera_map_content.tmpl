@@ -1,0 +1,13 @@
+<!--
+Title: advanced camera UI (map content)
+Used In File(s): /code/game/machinery/computer/adv_camera.dm
+ -->
+{{for data.cameras}}
+	{{if value.z == config.mapZLevel}}
+		<div class="linkActive mapIcon mapIcon16 icon-camera {{:helper.statusToClass(value.status)}}" style="left: {{:(value.x)}}px; bottom: {{:(value.y)}}px;" unselectable="on" data-href="{{:NanoUtility.generateHref({"view":value.ID})}}">
+			<div class="tooltip hidden">
+				{{:value.name}} ({{:helper.statusToSpan(value.status)}} {{:value.area}}: {{:value.x}}, {{:value.y}})
+			</div>
+		</div>
+	{{/if}}
+{{/for}}

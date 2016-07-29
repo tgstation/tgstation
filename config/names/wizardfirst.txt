@@ -2,6 +2,10 @@ Alatar
 Archchancellor
 Boccob
 Circe
+<<<<<<< HEAD
+=======
+Doctor
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 Dumbledor
 Elminister
 Gandalf
