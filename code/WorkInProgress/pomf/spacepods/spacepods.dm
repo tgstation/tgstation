@@ -311,21 +311,40 @@
 		return
 	move_inside(M, user)
 
+/obj/spacepod/MouseDrop(atom/over)
+	if(!usr || !over)
+		return
+	if(!occupant == usr)
+		return ..() //Handle mousedrop T
+	var/turf/T = get_turf(over)
+	if(!Adjacent(T) || T.density)
+		return
+	for(var/atom/movable/A in T.contents)
+		if(A.density)
+			if((A == src) || istype(A, /mob))
+				continue
+			return
+	move_outside(usr, T)
+
+/obj/spacepod/proc/move_outside(mob/living/user, turf/exit_loc = src.loc)
+	if(occupant)
+		inertia_dir = 0 // engage reverse thruster and power down pod
+		occupant.forceMove(exit_loc)
+		occupant = null
+		to_chat(usr, "<span class='notice'>You climb out of the pod</span>")
+
 /obj/spacepod/verb/move_inside()
 	set category = "Object"
 	set name = "Enter / Exit Pod"
 	set src in oview(1)
 
-	if (src.occupant) //Before the other two checks in case there's some fuckery going on where nonhumans are inside the pod
-		if(usr != src.occupant)
+	if(occupant)
+		if(occupant == usr)
+			move_outside(usr)
+		else
 			to_chat(usr, "<span class='notice'><B>The [src.name] is already occupied!</B></span>")
 			return
-		else
-			src.inertia_dir = 0 // engage reverse thruster and power down pod
-			src.occupant.forceMove(src.loc)
-			src.occupant = null
-			to_chat(usr, "<span class='notice'>You climb out of the pod</span>")
-			return
+
 	if(usr.incapacitated() || usr.lying) //are you cuffed, dying, lying, stunned or other
 		return
 	if (!ishuman(usr))
