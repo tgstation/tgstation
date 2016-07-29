@@ -260,7 +260,7 @@
 		user.Weaken(5)
 		user << "<span class='warning'>A powerful force shoves you away from [src]!</span>"
 		return
-	if(curselimit > 3)
+	if(curselimit > 2)
 		user << "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>"
 		return
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
@@ -273,12 +273,12 @@
 		sleep(20)
 		var/global/list/curses
 		if(!curses)
-			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by two minutes.",
-			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by two minutes.",
-			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by two minutes.",
-			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by two minutes.",
-			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by two minutes.",
-			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by two minutes.")
+			curses = list("A fuel technician just slit his own throat and begged for death. The shuttle will be delayed by three minutes.",
+			"The shuttle's navigation programming was replaced by a file containing two words, IT COMES. The shuttle will be delayed by three minutes.",
+			"The shuttle's custodian tore out his guts and began painting strange shapes on the floor. The shuttle will be delayed by three minutes.",
+			"A shuttle engineer began screaming 'DEATH IS NOT THE END' and ripped out wires until an arc flash seared off her flesh. The shuttle will be delayed by three minutes.",
+			"A shuttle inspector started laughing madly over the radio and then threw herself into an engine turbine. The shuttle will be delayed by three minutes.",
+			"The shuttle dispatcher was found dead with bloody symbols carved into their flesh. The shuttle will be delayed by three minutes.")
 		var/message = pick_n_take(curses)
 		priority_announce("[message]", "System Failure", 'sound/misc/notice1.ogg')
 		curselimit++
