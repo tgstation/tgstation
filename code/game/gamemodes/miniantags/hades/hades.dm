@@ -116,8 +116,6 @@
 		notransform = TRUE
 		anchored = TRUE
 		src.visible_message("<span class='warning'><font size=4>[src] begins to twist and distort, before snapping backwards with a sickening crunch.</font></span>")
-		spawn(20)
-			src.visible_message("<span class='warning'><font size=4>[src] is being sucked back to their own realm, destabilizing the fabric of time and space itself!</font></span>")
 		playsound(get_turf(src), 'sound/effects/hyperspace_begin.ogg', 100, 1)
 		isDoingDeath = TRUE
 		AIStatus = AI_OFF
@@ -129,18 +127,10 @@
 			SpinAnimation(0,0)
 			explosion(get_turf(src), 0, 2, 4, 6, flame_range = 6)
 			..()
-			var/area/A = locate(/area/hades) in world
-			if(A)
-				var/turf/T = get_turf(locate(/obj/effect/landmark/event_spawn) in A)
-				if(T)
-					src.visible_message("<span class='warning'><font size=4>[src]'s Staff is flung free as their body explodes.</font></span>")
-					var/obj/structure/ladder/unbreakable/hades/churchLadder = new/obj/structure/ladder/unbreakable/hades(T)
-					var/obj/structure/ladder/unbreakable/hades/bodyLadder = new/obj/structure/ladder/unbreakable/hades(get_turf(src))
-					var/obj/item/weapon/hades_staff/HS = new/obj/item/weapon/hades_staff(get_turf(src))
-					HS.throw_at_fast(pick(orange(src,7)),10,1)
-					churchLadder.up = bodyLadder
-					bodyLadder.down = churchLadder
-					qdel(src)
+
+			src.visible_message("<span class='warning'><font size=4>[src]'s Staff is flung free as their body explodes.</font></span>")
+			var/obj/item/weapon/staff/hades/HS = new /obj/item/weapon/staff/hades/imbued(get_turf(src))
+			HS.throw_at_fast(pick(orange(src,7)),10,1)
 
 /mob/living/simple_animal/hostile/hades/attackby(obj/item/I, mob/user, params)
 	..()
@@ -620,7 +610,7 @@
 	attacktext = "strikes at"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	butcher_results = list(/obj/item/clothing/mask/gas/cyborg/hades = 1,/obj/item/clothing/suit/hooded/chaplain_hoodie/hades = 1,/obj/item/weapon/hades_staff/fake = 1)
+	butcher_results = list(/obj/item/clothing/mask/gas/cyborg/hades = 1,/obj/item/clothing/suit/hooded/chaplain_hoodie/hades = 1,/obj/item/weapon/staff/hades/fake = 1)
 
 	unsuitable_atmos_damage = 0
 	del_on_death = 0
