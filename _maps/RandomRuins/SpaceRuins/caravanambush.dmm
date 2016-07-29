@@ -1065,7 +1065,7 @@
 /area/ruin/powered)
 "di" = (
 /obj/machinery/button/door{
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/ruin/unpowered)
@@ -1211,7 +1211,7 @@
 /area/ruin/unpowered)
 "dE" = (
 /obj/machinery/button/door{
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/unpowered)

@@ -65,12 +65,12 @@
 "al" = (
 /obj/structure/table,
 /obj/item/weapon/phone{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/cigbutt/cigarbutt{
-	pixel_x = 5;
-	pixel_y = -1
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -103,7 +103,7 @@
 	dir = 4;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = 27
+	pixel_y = 54
 	},
 /obj/structure/chair,
 /turf/open/floor/mineral/titanium,
@@ -130,59 +130,59 @@
 	name = "emergency lifejacket"
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/tank/internals/emergency_oxygen/double{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/clothing/mask/breath{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/clothing/head/hardhat/orange{
 	name = "protective hat";
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/clothing/head/hardhat/orange{
 	name = "protective hat";
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/clothing/head/hardhat/orange{
 	name = "protective hat";
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/clothing/head/hardhat/orange{
 	name = "protective hat";
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/clothing/head/hardhat/orange{
 	name = "protective hat";
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/structure/closet/crate{
 	name = "lifejackets"
@@ -218,7 +218,7 @@
 "ay" = (
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -229,8 +229,8 @@
 "aA" = (
 /obj/structure/tank_dispenser/oxygen{
 	layer = 2.7;
-	pixel_x = -1;
-	pixel_y = 2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -299,7 +299,7 @@
 "aN" = (
 /obj/machinery/status_display{
 	dir = 8;
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /obj/machinery/hologram/holopad,
@@ -308,7 +308,7 @@
 "aO" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/emergency{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -317,7 +317,7 @@
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
-	pixel_y = 4;
+	pixel_y = 8;
 	use_power = 0
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -325,14 +325,14 @@
 "aQ" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -2;
-	pixel_y = 8
+	pixel_x = -4;
+	pixel_y = 16
 	},
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -31
+	pixel_y = -62
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -342,7 +342,7 @@
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 0;
-	pixel_y = -27
+	pixel_y = -54
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -351,7 +351,7 @@
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -31
+	pixel_y = -62
 	},
 /obj/structure/chair{
 	dir = 1
@@ -510,51 +510,51 @@
 "bu" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6;
+	pixel_x = 12;
 	pixel_y = 0
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
-	pixel_x = -3
+	pixel_x = -6
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = -3;
-	pixel_y = 8
+	pixel_x = -6;
+	pixel_y = 16
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/charcoal{
-	pixel_x = 6;
-	pixel_y = 8
+	pixel_x = 12;
+	pixel_y = 16
 	},
 /obj/item/weapon/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/weapon/reagent_containers/syringe/epinephrine{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/syringe/epinephrine{
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/syringe/epinephrine{
 	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
-	pixel_x = 2;
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bv" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = -3;
-	pixel_y = 1
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
 	pixel_x = 0;
-	pixel_y = -1
+	pixel_y = -2
 	},
 /obj/item/weapon/storage/toolbox/emergency{
-	pixel_x = 3;
-	pixel_y = -5
+	pixel_x = 6;
+	pixel_y = -10
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -594,28 +594,28 @@
 "bD" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/folder/white{
-	pixel_x = -4;
-	pixel_y = 2
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -31
+	pixel_y = -62
 	},
 /obj/item/weapon/book/manual/wiki/security_space_law{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bE" = (
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
@@ -631,29 +631,29 @@
 "bG" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/handcuffs{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium/brig,
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/table,
 /obj/item/weapon/scalpel{
-	pixel_y = 12
+	pixel_y = 24
 	},
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/retractor{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/weapon/hemostat{
-	pixel_x = -4
+	pixel_x = -8
 	},
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/radio/intercom{
 	dir = 2;
 	name = "Station Intercom (General)";
-	pixel_x = -27;
+	pixel_x = -54;
 	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium,
@@ -666,8 +666,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -675,8 +675,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -701,7 +701,7 @@
 /obj/structure/extinguisher_cabinet{
 	dir = 4;
 	pixel_x = 0;
-	pixel_y = -27
+	pixel_y = -54
 	},
 /turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
@@ -712,12 +712,12 @@
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/item/device/flashlight/flare{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/device/flashlight/flare{
-	pixel_x = -6;
-	pixel_y = -2
+	pixel_x = -12;
+	pixel_y = -4
 	},
 /obj/item/weapon/crowbar,
 /obj/item/weapon/wrench,
@@ -730,22 +730,22 @@
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = -4;
-	pixel_y = 3
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /obj/item/device/healthanalyzer{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/lazarus_injector,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
@@ -754,7 +754,7 @@
 	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_x = 0;
-	pixel_y = -31
+	pixel_y = -62
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/bot,

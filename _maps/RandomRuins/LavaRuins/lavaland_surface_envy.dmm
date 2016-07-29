@@ -17,7 +17,7 @@
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
-	pixel_x = -28;
+	pixel_x = -56;
 	shattered = 1
 	},
 /obj/item/clothing/suit/hooded/bloated_human,
@@ -30,7 +30,7 @@
 /obj/structure/mirror{
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
-	pixel_x = 28;
+	pixel_x = 56;
 	shattered = 1
 	},
 /turf/open/floor/plating{
@@ -43,7 +43,7 @@
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
-	pixel_x = -28;
+	pixel_x = -56;
 	shattered = 1
 	},
 /turf/open/floor/plating{
@@ -70,7 +70,7 @@
 "k" = (
 /obj/structure/mirror{
 	icon_state = "mirror_broke";
-	pixel_y = 28;
+	pixel_y = 56;
 	shattered = 1
 	},
 /obj/item/weapon/kitchen/knife/envy,
@@ -82,7 +82,7 @@
 /obj/structure/mirror{
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
-	pixel_x = 28;
+	pixel_x = 56;
 	shattered = 1
 	},
 /turf/open/floor/plating{
@@ -93,7 +93,7 @@
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
-	pixel_x = -28;
+	pixel_x = -56;
 	shattered = 1
 	},
 /turf/open/floor/plating{
@@ -111,7 +111,7 @@
 /obj/structure/mirror{
 	desc = "This mirror has been shattered. It looks like the bad luck energies spilling from it are taking immediate effect on your surroundings!";
 	icon_state = "mirror_broke";
-	pixel_x = -28;
+	pixel_x = -56;
 	shattered = 1
 	},
 /turf/open/floor/plating{

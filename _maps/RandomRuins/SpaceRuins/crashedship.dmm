@@ -494,7 +494,7 @@
 "bE" = (
 /obj/machinery/button/door{
 	id = "packerMed";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
@@ -623,7 +623,7 @@
 "bX" = (
 /obj/machinery/button/door{
 	id = "packerCargo";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plating/warnplate{
@@ -664,7 +664,7 @@
 	environ = 0;
 	equipment = 3;
 	locked = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = ""
 	},
 /turf/open/floor/carpet,
@@ -890,7 +890,7 @@
 /obj/structure/window/reinforced,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/barber,
@@ -913,7 +913,7 @@
 "cU" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -946,7 +946,7 @@
 "da" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /obj/machinery/power/apc{
@@ -954,7 +954,7 @@
 	environ = 0;
 	equipment = 3;
 	locked = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	req_access = ""
 	},
 /turf/open/floor/plating,
@@ -1304,7 +1304,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	locked = 0;
-	pixel_y = 28;
+	pixel_y = 56;
 	req_access = ""
 	},
 /turf/open/floor/plasteel/bar,
@@ -2442,7 +2442,7 @@
 /area/awaymission/BMPship/Aft)
 "gT" = (
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2

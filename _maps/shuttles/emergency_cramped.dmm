@@ -33,7 +33,7 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/book/manual/random,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -107,7 +107,7 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -30
+	pixel_x = -60
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

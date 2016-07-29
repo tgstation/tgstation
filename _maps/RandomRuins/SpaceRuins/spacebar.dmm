@@ -153,7 +153,7 @@
 /obj/machinery/button/door{
 	id = "spacebardock";
 	name = "pod dock door cycle";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/wood,
 /area/ruin/powered{
@@ -338,7 +338,7 @@
 	})
 "bb" = (
 /obj/structure/urinal{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
@@ -353,11 +353,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered{
@@ -476,7 +476,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
-	pixel_x = -22
+	pixel_x = -44
 	},
 /turf/open/floor/wood,
 /area/ruin/powered{
@@ -584,7 +584,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
@@ -683,7 +683,7 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	icon_state = "alarm0";
-	pixel_x = -22
+	pixel_x = -44
 	},
 /turf/open/floor/plasteel/bar,
 /area/ruin/powered{
@@ -691,7 +691,7 @@
 	})
 "bX" = (
 /obj/structure/urinal{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -745,7 +745,7 @@
 /obj/machinery/button/door{
 	id = "spacebardock";
 	name = "Podbay Airlock";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered)
