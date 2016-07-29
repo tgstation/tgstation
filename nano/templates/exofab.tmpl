@@ -1,0 +1,517 @@
+<!-- 
+Title: Mech Fabricator UI 
+Used In File(s): \code\game\mecha\mech_fabricator.dm
+-->
+
+<!-- 
+#define MECH_SCREEN_MAIN		01
+
+#define	MECH_SCREEN_ROBOT			11
+#define MECH_SCREEN_ROBOT_PARTS		12
+#define	MECH_SCREEN_ROBOT_UPGRADES	13
+
+#define	MECH_SCREEN_EXOSUIT_TOOLS	21
+#define	MECH_SCREEN_EXOSUIT_MODULES	22
+#define	MECH_SCREEN_EXOSUIT_WEAPONS	23
+
+#define	MECH_SCREEN_RIPLEY		31
+#define	MECH_SCREEN_ODYSSEUS	32
+#define	MECH_SCREEN_GYGAX		33
+#define	MECH_SCREEN_DURAND		34
+#define	MECH_SCREEN_HONK		35
+#define	MECH_SCREEN_PHAZON		36
+
+#define	MECH_SCREEN_MISC		41
+
+-->
+<style type='text/css'>
+	#cost
+	{
+		width:360px;
+		float:left;
+	}
+	#misc
+	{
+		width:350px;
+		float:left;
+	}
+</style>
+
+<div style="float: right; width: 63%;">
+	<div class="itemLabel">
+		Queue
+	</div>
+	<div class="itemContentWide" style="width: 90%;">
+		<div class="statusDisplay">
+			<div class="line" style="overflow-y: auto; overflow-x: hidden; scrollbar-base-color: #336699; scrollbar-arrow-color: #ffffff; height: 184px">
+				{{for data.queue}}
+				<div class="statusValue">
+					{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+					{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeftWide')}}
+				</div>
+				{{empty}}
+					<i>No parts in memory</i>
+				{{/for}}
+			</div>
+			<br>
+			<div class="line">
+				{{:helper.link('Process Queue', 'circle-arrow-s', {'process_queue':null}, null, null, 'misc')}}
+				{{:helper.link('Clear Queue', 'circle-arrow-s', {'clear_queue':null}, null, 'fixedLeftWide')}}
+			</div>
+		</div>
+	</div>
+</div>
+<div style="float: left; width: 37%;">
+	<div class="itemLabel" style="float: left; width: 117px;">
+		Commands
+	</div>
+	<div class="itemLabel" style="float: left; width: 17px;">
+		{{:helper.link('Sync', 'transferthick-e-w', {'sync':1}, null, 'fixedLeft')}}
+	</div>
+	<br>
+</div>
+<div style="float: left; width: 37%;">
+	<div class="itemLabel", style = "width: 100%">
+		Cyborg
+	</div>
+	<div class="line">
+		{{:helper.link('Robot Parts','gear',{'screen':11},(data.screen==11)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Components', 'gear',{'screen':12},(data.screen==12)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Upgrades',	 'gear',{'screen':13},(data.screen==13)?'linkOn':'', 'fixedLeft')}}
+	</div>
+	<br>
+	<div class="itemLabel">
+		Exosuit
+	</div>
+	<div class="line">
+		{{:helper.link('Tools',		 'gear',{'screen':21},(data.screen==21)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Modules',	 'gear',{'screen':22},(data.screen==22)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Weapons',	 'gear',{'screen':23},(data.screen==23)?'linkOn':'', 'fixedLeft')}}
+	</div>
+	<div class="line">
+		{{:helper.link('Ripley',	 'gear',{'screen':31},(data.screen==31)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Odysseus',	 'gear',{'screen':32},(data.screen==32)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Gygax',		 'gear',{'screen':33},(data.screen==33)?'linkOn':'', 'fixedLeft')}}
+	</div>
+	<div class="line">
+		{{:helper.link('Durand',	 'gear',{'screen':34},(data.screen==34)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('H.O.N.K',	 'gear',{'screen':35},(data.screen==35)?'linkOn':'', 'fixedLeft')}}
+		{{:helper.link('Phazon',	 'gear',{'screen':36},(data.screen==36)?'linkOn':'', 'fixedLeft')}}
+	</div>
+	<br>
+	<div class="itemLabel">
+		Other
+	</div>
+	<div class="line">
+		{{:helper.link('Material Storage', 'gear',{'screen':01},(data.screen==01)?'linkOn':'', 'fixedLeftWide')}}
+		{{:helper.link('Misc',		 'gear',{'screen':41},(data.screen==41)?'linkOn':'', 'fixedLeft')}}
+	</div>
+	<br>
+</div>
+
+
+<!-- This seems really unnecessary -->
+<!--
+{{if data.screen == 1}}
+	<div class="item">
+		<div class="itemLabel">
+			Information
+		</div>
+		<div class="line">
+			{{:helper.link('Materials', 'gear',{'screen':14},(data.screen==14)?'linkOn':'', 'fixedLeft')}}
+			{{:helper.link('Parts', 'gear', {'screen':15},(data.screen==15)?'linkOn':'', 'fixedLeft')}}
+		</div>
+	</div>
+{{/if}}-->
+
+{{if data.screen == 01}}
+	<div class="item">
+		<div class="itemLabel">
+			Material Storage
+		</div>
+	</div>
+	<div class="itemContentWide">
+		<div class="statusDisplay">
+			<div class="line">
+				{{for data.materials}}
+					<div class="line">
+						<div class="statusValue">
+							{{:helper.link(value.name, null, null, null, 'fixedLeft')}}
+							{{:helper.link(value.storage, null, null, null, 'fixedLeft')}}
+							{{:helper.link('Eject', 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
+						</div>
+					</div>
+				{{empty}}
+					<i>No information is available</i>
+				{{/for}}
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+<!-- Did this ever even do anything? -->
+<!--{{if data.screen == 02}}
+	<div class="item">
+		<div class="itemLabel">
+			Information
+		</div>
+		<div class="line">
+			{{:helper.link('Materials', 'gear',{'screen':14},(data.screen==14)?'linkOn':'', 'fixedLeft')}}
+			{{:helper.link('Parts', 'gear', {'screen':15},(data.screen==15)?'linkOn':'', 'fixedLeft')}}			
+		</div>
+	</div>
+	<div class="itemContentWide">
+		<div class="statusDisplay">
+			<div class="line">
+				<i>No information is available</i>
+			</div>
+		</div>
+	</div>
+{{/if}}-->
+
+{{if data.screen == 11}}
+	<div class="item">
+		<div class="itemLabel">
+			Cyborg Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Robot', 'gear', {'queue_part_set':'Robot'}, null, 'fixedLeftWidest')}}
+		</div>
+		<div class="itemContentWide" style="width:100%;">
+			<div class="statusDisplay">
+				<div class="line">
+					{{for data.parts.Robot}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 12}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Cyborg Components</h3>
+		</div>
+		<div class="itemContentWide" style="width:100%;">
+			<div class="statusDisplay">
+				<div class="line">
+					{{for data.parts.Robot_Part}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Build', 'gear', value.command2, null, 'fixedLeft')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 13}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Cyborg Upgrade Parts</h3>
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Robotic_Upgrade_Modules}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 21}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Exosuit Tools</h3>
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Exosuit_Tools}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 22}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Exosuit Modules</h3>
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Exosuit_Modules}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 23}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Exosuit Weapons</h3>
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Exosuit_Weapons}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 31}}
+	<div class="item">
+		<div class="itemLabel">
+			Ripley Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Ripley', 'gear', {'queue_part_set':'Ripley'}, null, 'fixedLeftWidest')}}
+		</div>
+		<div class="itemContentWide" style="width:100%;">
+			<div class="statusDisplay">
+				<div class="line">
+					{{for data.parts.Ripley}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+					</div>
+				</div>
+			</div>
+		</div>
+{{/if}}
+
+{{if data.screen == 32}}
+	<div class="item">
+		<div class="itemLabel">
+			Odysseus Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Odysseus', 'gear', {'queue_part_set':'Odysseus'}, null, 'fixedLeftWidest')}}
+	</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+				{{for data.parts.Odysseus}}
+					<div class="line">
+						<div class="statusValue">
+							{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+							{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+							{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+						</div>
+					</div>
+				{{empty}}
+					<i>No parts in memory</i>
+				{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 33}}
+	<div class="item">
+		<div class="itemLabel">
+			Gygax Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Gygax', 'gear', {'queue_part_set':'Gygax'}, null, 'fixedLeftWidest')}}
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Gygax}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 34}}
+	<div class="item">
+		<div class="itemLabel">
+			Durand Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Durand', 'gear', {'queue_part_set':'Durand'}, null, 'fixedLeftWidest')}}
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Durand}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 35}}
+	<div class="item">
+		<div class="itemLabel">
+			H.O.N.K Parts
+		</div>
+		<div class="line">
+			{{:helper.link('H.O.N.K.', 'gear', {'queue_part_set':'HONK'}, null, 'fixedLeftWidest')}}
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.HONK}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 36}}
+	<div class="item">
+		<div class="itemLabel">
+			Phazon Parts
+		</div>
+		<div class="line">
+			{{:helper.link('Quick Phazon', 'gear', {'queue_part_set':'Phazon'}, null, 'fixedLeftWidest')}}
+		</div>
+	<div class="itemContentWide" style="width:100%;">
+		<div class="statusDisplay">
+			<div class="line">
+					{{for data.parts.Phazon}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}
+
+{{if data.screen == 41}}
+	<div class="item">
+		<div class="itemLabel">
+			<h3>Misc Parts</h3>
+		</div>
+		<div class="itemContentWide" style="width:100%;">
+			<div class="statusDisplay">
+				<div class="line">
+					{{for data.parts.Misc}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+								{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+								{{:helper.link('Queue', 'gear', value.command1, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No parts in memory</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>
+{{/if}}

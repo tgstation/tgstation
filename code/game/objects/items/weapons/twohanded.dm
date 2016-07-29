@@ -4,6 +4,7 @@
  *		Fireaxe
  *		Double-Bladed Energy Swords
  *		Spears
+<<<<<<< HEAD
  *		CHAINSAWS
  *		Bone Axe and Spear
  */
@@ -183,16 +184,114 @@
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
 			G.take_damage(16)
+=======
+ *		High Energy Frequency Blade
+ */
+
+///////////OFFHAND///////////////
+//what the mob gets when wielding something
+/obj/item/offhand
+	w_class = W_CLASS_HUGE
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "offhand"
+	name = "offhand"
+	abstract = 1
+	flags = SLOWDOWN_WHEN_CARRIED
+	var/obj/item/wielding = null
+
+/obj/item/offhand/dropped(user)
+	if(!wielding)
+		returnToPool(src)
+		return null
+	return wielding.unwield(user)
+
+
+/obj/item/offhand/unwield(user)
+	if(!wielding)
+		returnToPool(src)
+		return null
+	return wielding.unwield(user)
+
+/obj/item/offhand/preattack(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag) return
+	if(istype(target, /obj/item/weapon/storage)) //we place automatically
+		return
+	if(wielding)
+		if(!target.attackby(wielding, user))
+			wielding.afterattack(target, user, proximity_flag, click_parameters)
+		return 1
+
+/obj/item/offhand/attack_self(mob/user)
+	if(!wielding)
+		qdel(src)
+		return null
+	return wielding.unwield(user)
+
+/obj/item/offhand/proc/attach_to(var/obj/item/I)
+	I.wielded = src
+	wielding = I
+	name = wielding.name + " offhand"
+	desc = "Your second grip on the [I.name]"
+
+/obj/item/offhand/IsShield()//if the actual twohanded weapon is a shield, we count as a shield too!
+	return wielding.IsShield()
+/*
+ * Fireaxe
+ */
+/obj/item/weapon/fireaxe  // DEM AXES MAN, marker -Agouri
+	icon_state = "fireaxe0"
+	hitsound = "sound/weapons/bloodyslice.ogg"
+	name = "fire axe"
+	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
+	w_class = W_CLASS_LARGE
+	sharpness = 1.2
+	force = 10
+	slot_flags = SLOT_BACK
+	attack_verb = list("attacks", "chops", "cleaves", "tears", "cuts")
+	flags = FPRINT | TWOHANDABLE
+
+/obj/item/weapon/fireaxe/update_wield(mob/user)
+	..()
+	item_state = "fireaxe[wielded ? 1 : 0]"
+	force = wielded ? 40 : initial(force)
+	if(user)
+		user.update_inv_hands()
+
+/obj/item/weapon/fireaxe/suicide_act(mob/user)
+		to_chat(viewers(user), "<span class='danger'>[user] is smashing \himself in the head with the [src.name]! It looks like \he's commit suicide!</span>")
+		return (BRUTELOSS)
+
+/obj/item/weapon/fireaxe/afterattack(atom/A as mob|obj|turf|area, mob/user as mob, proximity)
+	if(!proximity) return
+	..()
+	if(A && wielded && (istype(A,/obj/structure/window))) //destroys windows and grilles in one hit
+		user.delayNextAttack(8)
+		if(istype(A,/obj/structure/window))
+			var/pdiff=performWallPressureCheck(A.loc)
+			if(pdiff>0)
+				message_admins("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([formatPlayerPanel(user,user.ckey)]) at [formatJumpTo(A.loc)]!")
+				log_admin("[A] with pdiff [pdiff] fire-axed by [user.real_name] ([user.ckey]) at [A.loc]!")
+			var/obj/structure/window/W = A
+			W.Destroy(brokenup = 1)
+		else
+			qdel(A)
+			A = null
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 
 /*
  * Double-Bladed Energy Swords - Cheridan
  */
+<<<<<<< HEAD
 /obj/item/weapon/twohanded/dualsaber
+=======
+/obj/item/weapon/dualsaber
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	icon_state = "dualsaber0"
 	name = "double-bladed energy sword"
 	desc = "Handle with care."
 	force = 3
+<<<<<<< HEAD
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -602,3 +701,163 @@
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 		icon_state = "bone_spear[wielded]"
+=======
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = W_CLASS_SMALL
+	flags = FPRINT | TWOHANDABLE
+	origin_tech = "magnets=3;syndicate=4"
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
+
+/obj/item/weapon/dualsaber/update_wield(mob/user)
+	..()
+	icon_state = "dualsaber[wielded ? 1 : 0]"
+	item_state = "dualsaber[wielded ? 1 : 0]"
+	force = wielded ? 30 : 3
+	w_class = wielded ? 5 : 2
+	if(user)
+		user.update_inv_hands()
+	playsound(get_turf(src), wielded ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 50, 1)
+	return
+
+/obj/item/weapon/dualsaber/attack(target as mob, mob/living/user as mob)
+	..()
+	if((M_CLUMSY in user.mutations) && (wielded) &&prob(40))
+		to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
+		user.take_organ_damage(20,25)
+		return
+	if((wielded) && prob(50))
+		spawn for(var/i=1, i<=8, i++)
+			user.dir = turn(user.dir, 45)
+			sleep(1)
+
+/obj/item/weapon/dualsaber/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
+/*
+ * Banana Bunch
+ */
+/obj/item/weapon/dualsaber/bananabunch
+	icon_state = "bananabunch0"
+	name = "banana bunch"
+	desc = "Potential for some serious chaos."
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+	force = 3
+	throwforce = 5.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = W_CLASS_SMALL
+	flags = FPRINT | TWOHANDABLE
+	origin_tech = "magnets=3;syndicate=4"
+	attack_verb = list("attacks", "slashes", "stabs", "slices", "tears", "rips", "dices", "cuts")
+
+/obj/item/weapon/dualsaber/bananabunch/update_wield(mob/user)
+	..()
+	icon_state = "bananabunch[wielded ? 1 : 0]"
+	item_state = "bananabunch[wielded ? 1 : 0]"
+	force = wielded ? 30 : 3
+	w_class = wielded ? 5 : 2
+	if(user)
+		user.update_inv_hands()
+	playsound(get_turf(src), wielded ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 50, 1)
+	return
+
+/obj/item/weapon/dualsaber/bananabunch/attack(target as mob, mob/living/user as mob)
+	if(user.mind && !(user.mind.assigned_role == "Clown"))
+		to_chat(user, "<span class='warning'>Your clumsy hands fumble and you slice yourself open with [src].</span>")
+		user.take_organ_damage(40,50)
+		return
+	if((wielded) && (user.mind.assigned_role == "Clown"))
+		..()
+		spawn for(var/i=1, i<=8, i++)
+			user.dir = turn(user.dir, 45)
+			sleep(1)
+
+/obj/item/weapon/dualsaber/bananabunch/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
+
+/obj/item/weapon/dualsaber/bananabunch/Crossed(AM as mob|obj)
+	if (istype(AM, /mob/living/carbon))
+		var/mob/living/carbon/M = AM
+		if (M.Slip(2, 2, 1))
+			M.simple_message("<span class='notice'>You slipped on [src]!</span>",
+				"<span class='userdanger'>Something is scratching at your feet! Oh god!</span>")
+
+
+/*
+ * High-Frequency Blade
+ */
+/obj/item/weapon/katana/hfrequency
+	icon_state = "hfrequency0"
+	item_state = "hfrequency0"
+	name = "high-frequency blade"
+	desc = "Keep hands off blade at all times."
+	slot_flags = SLOT_BACK
+	throwforce = 35
+	throw_speed = 5
+	throw_range = 10
+	sharpness = 2
+	w_class = W_CLASS_LARGE
+	flags = FPRINT | TWOHANDABLE
+	origin_tech = "magnets=4;combat=5"
+
+/obj/item/weapon/katana/hfrequency/update_wield(mob/user)
+	..()
+	item_state = "hfrequency[wielded ? 1 : 0]"
+	force = wielded ? 200 : 50
+	sharpness = wielded ? 100 : 2
+	if(user)
+		user.update_inv_hands()
+	return
+
+/obj/item/weapon/katana/hfrequency/IsShield()
+	if(wielded)
+		return 1
+	else
+		return 0
+
+
+//spears
+/obj/item/weapon/spear
+	icon_state = "spearglass0"
+	var/base_state = "spearglass"
+
+	name = "spear"
+	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
+	force = 10
+	w_class = W_CLASS_LARGE
+	slot_flags = SLOT_BACK
+	throwforce = 15
+	flags = TWOHANDABLE
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	attack_verb = list("attacks", "pokes", "jabs", "tears", "gores")
+
+	var/base_force = 10
+
+/obj/item/weapon/spear/update_wield(mob/user)
+	icon_state = "[base_state][wielded ? 1 : 0]"
+	item_state = "[base_state][wielded ? 1 : 0]"
+
+	force = base_force
+	if(wielded) force += 8
+
+	if(user)
+		user.update_inv_hands()
+	return
+
+/obj/item/weapon/spear/wooden
+	name = "steel spear"
+	desc = "An ancient weapon of an ancient design, with a smooth wooden handle and a sharp steel blade."
+	icon_state = "spear0"
+	base_state = "spear"
+	inhand_states = list("left_hand" = 'icons/mob/in-hand/left/swords_axes.dmi', "right_hand" = 'icons/mob/in-hand/right/swords_axes.dmi')
+
+	force = 16
+	throwforce = 25
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

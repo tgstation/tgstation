@@ -1,153 +1,214 @@
-/obj/screen/alien
-	icon = 'icons/mob/screen_alien.dmi'
-
-/obj/screen/alien/leap
-	name = "toggle leap"
-	icon_state = "leap_off"
-
-/obj/screen/alien/leap/Click()
-	if(istype(usr, /mob/living/carbon/alien/humanoid/hunter))
-		var/mob/living/carbon/alien/humanoid/hunter/AH = usr
-		AH.toggle_leap()
-
-/obj/screen/alien/nightvision
-	name = "toggle night-vision"
-	icon_state = "nightvision1"
-	screen_loc = ui_alien_nightvision
-
-/obj/screen/alien/nightvision/Click()
-	var/mob/living/carbon/alien/A = usr
-	var/obj/effect/proc_holder/alien/nightvisiontoggle/T = locate() in A.abilities
-	if(T)
-		T.fire(A)
-
-/obj/screen/alien/plasma_display
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "power_display2"
-	name = "plasma stored"
-	screen_loc = ui_alienplasmadisplay
+/datum/hud/proc/alien_hud()
 
 
-/obj/screen/alien/alien_queen_finder
-	icon = 'icons/mob/screen_alien.dmi'
-	icon_state = "queen_finder"
-	name = "queen sense"
-	desc = "Allows you to sense the general direction of your Queen."
-	screen_loc = ui_alien_queen_finder
-
-/datum/hud/alien/New(mob/living/carbon/alien/humanoid/owner)
-	..()
+	src.adding = list(  )
+	src.other = list(  )
 
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-//equippable shit
-
-//hands
-	inv_box = new /obj/screen/inventory/hand()
-	inv_box.name = "right hand"
-	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "hand_r"
-	inv_box.screen_loc = ui_rhand
-	inv_box.slot_id = slot_r_hand
-	static_inventory += inv_box
-
-	inv_box = new /obj/screen/inventory/hand()
-	inv_box.name = "left hand"
-	inv_box.icon = 'icons/mob/screen_alien.dmi'
-	inv_box.icon_state = "hand_l"
-	inv_box.screen_loc = ui_lhand
-	inv_box.slot_id = slot_l_hand
-	static_inventory += inv_box
-
-//begin buttons
-
-	using = new /obj/screen/swap_hand()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = "swap_1"
-	using.screen_loc = ui_swaphand1
-	static_inventory += using
-
-	using = new /obj/screen/swap_hand()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.icon_state = "swap_2"
-	using.screen_loc = ui_swaphand2
-	static_inventory += using
-
-	using = new /obj/screen/act_intent/alien()
-	using.icon_state = mymob.a_intent
-	static_inventory += using
+	using = getFromPool(/obj/screen)
+	using.name = "act_intent"
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = (mymob.a_intent == I_HURT ? "harm" : mymob.a_intent)
+	using.screen_loc = ui_acti
+	using.layer = 20
+	src.adding += using
 	action_intent = using
 
-	if(istype(mymob, /mob/living/carbon/alien/humanoid/hunter))
-		var/mob/living/carbon/alien/humanoid/hunter/H = mymob
-		H.leap_icon = new /obj/screen/alien/leap()
-		H.leap_icon.screen_loc = ui_alien_storage_r
-		static_inventory += H.leap_icon
+//intent small hud objects
+	var/icon/ico
 
-	using = new /obj/screen/drop()
-	using.icon = 'icons/mob/screen_alien.dmi'
+	ico = new('icons/mob/screen1_alien.dmi', "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,ico.Height()/2,ico.Width()/2,ico.Height())
+	using = getFromPool(/obj/screen,src)
+	using.name = "help"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	help_intent = using
+
+	ico = new('icons/mob/screen1_alien.dmi', "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
+	using = getFromPool(/obj/screen,src)
+	using.name = "disarm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	disarm_intent = using
+
+	ico = new('icons/mob/screen1_alien.dmi', "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,1,ico.Width(),ico.Height()/2)
+	using = getFromPool(/obj/screen,src)
+	using.name = "grab"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	grab_intent = using
+
+	ico = new('icons/mob/screen1_alien.dmi', "black")
+	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
+	ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+	using = getFromPool(/obj/screen,src)
+	using.name = "harm"
+	using.icon = ico
+	using.screen_loc = ui_acti
+	using.layer = 21
+	src.adding += using
+	hurt_intent = using
+
+//end intent small hud objects
+
+	using = getFromPool(/obj/screen)
+	using.name = "mov_intent"
+	using.dir = SOUTHWEST
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	using.screen_loc = ui_movi
+	using.layer = 20
+	src.adding += using
+	move_intent = using
+
+	using = getFromPool(/obj/screen)
+	using.name = "drop"
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "act_drop"
 	using.screen_loc = ui_drop_throw
-	static_inventory += using
+	using.layer = 19
+	src.adding += using
 
-	using = new /obj/screen/resist()
-	using.icon = 'icons/mob/screen_alien.dmi'
-	using.screen_loc = ui_pull_resist
-	hotkeybuttons += using
+//equippable shit
+	//suit
+	inv_box = getFromPool(/obj/screen/inventory)
+	inv_box.name = "o_clothing"
+	inv_box.dir = SOUTH
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "equip"
+	inv_box.screen_loc = ui_alien_oclothing
+	inv_box.slot_id = slot_wear_suit
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	throw_icon = new /obj/screen/throw_catch()
-	throw_icon.icon = 'icons/mob/screen_alien.dmi'
-	throw_icon.screen_loc = ui_drop_throw
-	hotkeybuttons += throw_icon
+	init_hand_icons('icons/mob/screen1_alien.dmi')
 
-	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = 'icons/mob/screen_alien.dmi'
-	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
-	static_inventory += pull_icon
+	using = getFromPool(/obj/screen/inventory)
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "hand1"
+	using.screen_loc = ui_swaphand1
+	using.layer = 19
+	src.adding += using
 
-//begin indicators
+	using = getFromPool(/obj/screen/inventory)
+	using.name = "hand"
+	using.dir = SOUTH
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "hand2"
+	using.screen_loc = ui_swaphand2
+	using.layer = 19
+	src.adding += using
 
-	healths = new /obj/screen/healths/alien()
-	infodisplay += healths
+	//pocket 1
+	inv_box = getFromPool(/obj/screen/inventory)
+	inv_box.name = "storage1"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage1
+	inv_box.slot_id = slot_l_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	nightvisionicon = new /obj/screen/alien/nightvision()
-	infodisplay += nightvisionicon
+	//pocket 2
+	inv_box = getFromPool(/obj/screen/inventory)
+	inv_box.name = "storage2"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "pocket"
+	inv_box.screen_loc = ui_storage2
+	inv_box.slot_id = slot_r_store
+	inv_box.layer = 19
+	src.adding += inv_box
 
-	alien_plasma_display = new /obj/screen/alien/plasma_display()
-	infodisplay += alien_plasma_display
+	//head
+	inv_box = getFromPool(/obj/screen/inventory)
+	inv_box.name = "head"
+	inv_box.icon = 'icons/mob/screen1_alien.dmi'
+	inv_box.icon_state = "hair"
+	inv_box.screen_loc = ui_alien_head
+	inv_box.slot_id = slot_head
+	inv_box.layer = 19
+	src.adding += inv_box
+//end of equippable shit
 
-	if(!istype(mymob, /mob/living/carbon/alien/humanoid/royal/queen))
-		alien_queen_finder = new /obj/screen/alien/alien_queen_finder
-		infodisplay += alien_queen_finder
+/*
+	using = getFromPool(/obj/screen)
+	using.name = "resist"
+	using.icon = 'icons/mob/screen1_alien.dmi'
+	using.icon_state = "act_resist"
+	using.screen_loc = ui_resist
+	using.layer = 19
+	src.adding += using
+*/
 
-	zone_select = new /obj/screen/zone_sel/alien()
-	zone_select.update_icon(mymob)
-	static_inventory += zone_select
+	mymob.throw_icon = getFromPool(/obj/screen)
+	mymob.throw_icon.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.throw_icon.icon_state = "act_throw_off"
+	mymob.throw_icon.name = "throw"
+	mymob.throw_icon.screen_loc = ui_drop_throw
 
-	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
-		if(inv.slot_id)
-			inv.hud = src
-			inv_slots[inv.slot_id] = inv
-			inv.update_icon()
+	mymob.oxygen = getFromPool(/obj/screen)
+	mymob.oxygen.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.oxygen.icon_state = "oxy0"
+	mymob.oxygen.name = "oxygen"
+	mymob.oxygen.screen_loc = ui_alien_oxygen
 
-/datum/hud/alien/persistant_inventory_update()
-	if(!mymob)
-		return
-	var/mob/living/carbon/alien/humanoid/H = mymob
-	if(hud_version != HUD_STYLE_NOHUD)
-		if(H.r_hand)
-			H.r_hand.screen_loc = ui_rhand
-			H.client.screen += H.r_hand
-		if(H.l_hand)
-			H.l_hand.screen_loc = ui_lhand
-			H.client.screen += H.l_hand
-	else
-		if(H.r_hand)
-			H.r_hand.screen_loc = null
-		if(H.l_hand)
-			H.l_hand.screen_loc = null
+	mymob.toxin = getFromPool(/obj/screen)
+	mymob.toxin.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.toxin.icon_state = "tox0"
+	mymob.toxin.name = "toxin"
+	mymob.toxin.screen_loc = ui_alien_toxin
 
-/mob/living/carbon/alien/humanoid/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/alien(src)
+	mymob.fire = getFromPool(/obj/screen)
+	mymob.fire.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.fire.icon_state = "fire0"
+	mymob.fire.name = "fire"
+	mymob.fire.screen_loc = ui_alien_fire
+
+	mymob.healths = getFromPool(/obj/screen)
+	mymob.healths.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.healths.icon_state = "health0"
+	mymob.healths.name = "health"
+	mymob.healths.screen_loc = ui_alien_health
+
+	mymob.pullin = getFromPool(/obj/screen)
+	mymob.pullin.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.pullin.icon_state = "pull0"
+	mymob.pullin.name = "pull"
+	mymob.pullin.screen_loc = ui_pull_resist
+
+	mymob.zone_sel = getFromPool(/obj/screen/zone_sel)
+	mymob.zone_sel.icon = 'icons/mob/screen1_alien.dmi'
+	mymob.zone_sel.overlays.len = 0
+	mymob.zone_sel.overlays += image('icons/mob/zone_sel.dmi', "[mymob.zone_sel.selecting]")
+
+	plasma_hud()
+
+	mymob.client.reset_screen()
+
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.oxygen, mymob.toxin, mymob.fire, mymob.healths, mymob.pullin, vampire_blood_display) //, mymob.hands, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += src.adding + src.other
+
+/datum/hud/proc/plasma_hud()
+	// Displaying plasma levels
+	vampire_blood_display = getFromPool(/obj/screen)
+	vampire_blood_display.name = "Alien Plasma"
+	vampire_blood_display.icon_state = "dark128"
+	vampire_blood_display.screen_loc = "14:28,9:15"
+	vampire_blood_display.layer = 20

@@ -1,18 +1,38 @@
+<<<<<<< HEAD
 /obj/effect/overlay
 	name = "overlay"
 	unacidable = 1
 	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
 
+=======
+
+/obj/effect/overlay
+	name = "overlay"
+	unacidable = 1
+	w_type=NOT_RECYCLABLE
+	var/i_attached//Added for possible image attachments to objects. For hallucinations and the like.
+
+/obj/effect/overlay/cultify()
+	return
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /obj/effect/overlay/singularity_act()
 	return
 
 /obj/effect/overlay/singularity_pull()
 	return
 
+<<<<<<< HEAD
+=======
+/obj/effect/overlay/blob_act()
+	return
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
 	name="beam"
 	icon='icons/effects/beam.dmi'
 	icon_state="b_beam"
+<<<<<<< HEAD
 	var/atom/BeamSource
 
 /obj/effect/overlay/beam/New()
@@ -323,13 +343,33 @@
 
 /obj/effect/overlay/temp/sparkle/tailsweep
 	icon_state = "tailsweep"
+=======
+	layer = 13
+	mouse_opacity = 0
+	var/tmp/atom/BeamSource
+
+/obj/effect/overlay/beam/New(turf/loc, var/lifetime = 10, var/fade = 0, var/src_icon = 'icons/effects/beam.dmi')
+	..()
+	icon = src_icon
+	spawn if(fade)
+		animate(src, alpha=0, time=lifetime)
+	spawn(lifetime)
+		returnToPool(src)
+
+/obj/effect/overlay/beam/persist/New()
+	return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm1"
 	density = 1
+<<<<<<< HEAD
 	layer = WALL_OBJ_LAYER
+=======
+	layer = 5
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	anchored = 1
 
 /obj/effect/overlay/palmtree_l
@@ -337,10 +377,24 @@
 	icon = 'icons/misc/beach2.dmi'
 	icon_state = "palm2"
 	density = 1
+<<<<<<< HEAD
 	layer = WALL_OBJ_LAYER
+=======
+	layer = 5
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	anchored = 1
 
 /obj/effect/overlay/coconut
 	name = "Coconuts"
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "coconuts"
+<<<<<<< HEAD
+=======
+
+
+/obj/effect/overlay/bluespacify
+	name = "Bluespace"
+	icon = 'icons/turf/space.dmi'
+	icon_state = "bluespacify"
+	layer = LIGHTING_LAYER
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

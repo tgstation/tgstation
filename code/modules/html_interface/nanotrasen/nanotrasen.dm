@@ -18,22 +18,47 @@ The client is optional and may be a /mob, /client or /html_interface_client obje
 	. = ..()
 
 	// Add appropriate CSS and set the default layout.
+<<<<<<< HEAD
 	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"hi-nanotrasen.css\" />"
 	src.updateLayout("")
 
 /datum/html_interface/nanotrasen/updateLayout(layout)
 	// Wrap the layout in our custom HTML
 	return ..("<div id=\"ntbgcenter\"></div><div id=\"content\">[layout]</div>")
+=======
+	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"nanotrasen.css\" />"
+	src.updateLayout("")
+
+/datum/html_interface/nanotrasen/updateLayout(nlayout)
+	// Wrap the layout in our custom HTML
+	return ..("<div id=\"ntbgcenter\"></div><div id=\"content\">[nlayout]</div>")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /datum/html_interface/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 	// Update the title in our custom header (in addition to default functionality)
 	winset(hclient.client, "browser_\ref[src].uiTitle", list2params(list("text" = "[src.title]")))
 
+<<<<<<< HEAD
 /datum/html_interface/nanotrasen/registerResources(var/list/resources = list())
 	resources["uiBg.png"] = 'uiBg.png'
 	resources["uiBgcenter.png"] = 'uiBgcenter.png'
 	resources["hi-nanotrasen.css"] = 'hi-nanotrasen.css'
 	..(resources)
+=======
+/datum/html_interface/nanotrasen/registerResources()
+	..()
+
+	register_asset("uiBg.png",			'uiBg.png')
+	register_asset("uiBgcenter.png",	'uiBgcenter.png')
+	register_asset("nanotrasen.css",	'nanotrasen.css')
+
+/datum/html_interface/nanotrasen/sendAssets(var/client/client)
+	..()
+
+	send_asset(client, "uiBg.png")
+	send_asset(client, "uiBgcenter.png")
+	send_asset(client, "nanotrasen.css")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /datum/html_interface/nanotrasen/createWindow(datum/html_interface_client/hclient)
 	. = ..() // we want the default window

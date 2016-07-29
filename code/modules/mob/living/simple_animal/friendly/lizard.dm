@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /mob/living/simple_animal/hostile/lizard
 	name = "Lizard"
 	desc = "A cute tiny lizard."
@@ -38,3 +39,22 @@
 		adjustBruteLoss(-2)
 	else
 		..()
+=======
+/mob/living/simple_animal/lizard
+	name = "Lizard"
+	desc = "A cute tiny lizard."
+	icon_state = "lizard"
+	icon_living = "lizard"
+	icon_dead = "lizard_dead"
+	speak_emote = list("hisses")
+	health = 5
+	maxHealth = 5
+	attacktext = "bites"
+	melee_damage_lower = 1
+	melee_damage_upper = 2
+	response_help  = "pets"
+	response_disarm = "shoos"
+	response_harm   = "stomps on"
+
+	size = SIZE_TINY
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

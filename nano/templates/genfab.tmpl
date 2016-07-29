@@ -1,0 +1,90 @@
+<!--
+Title: General Fabricator UI
+Used In File(s): code\modules\research\mechanic\mechanic_fabs.dm
+Used By Machine(s): Flatpack Fabricator, General Fabricator
+-->
+
+<style type='text/css'>
+	#cost
+	{
+		width:360px;
+		float:left;
+	}
+	#misc
+	{
+		width:300px;
+		float:left;
+	}
+</style>
+
+	<div class="item">
+		<div class="itemLabel">
+			Design List
+		</div>
+		<div class="line">
+			<div class="statusDisplay">
+				<div class="line">
+							{{for data.parts.Generic}}
+							<div class="line">
+								<div class="statusValue">
+									{{:helper.link(value.name, 'gear', value.command2, null, null, 'misc')}}
+									{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+									{{:helper.link("Queue", 'gear', value.command1, null, 'fixedLeft')}}
+									{{if data.removableDesigns}}
+										{{:helper.link("Remove", 'circle-arrow-s', value.command3, null, 'fixedLeft')}}
+									{{/if}}
+								</div>
+							</div>
+							{{empty}}
+								<i>No designs loaded!</i>
+							{{/for}}
+				</div>
+			</div>
+		</div>
+		<div class="itemLabel">
+			Queue
+		</div>
+		<div class="line">
+			<div class="statusDisplay">
+				<div class="line">
+							{{for data.queue}}
+							<div class="line">
+								<div class="line">
+										<div class="statusValue">
+											{{:helper.link(value.name, 'gear', null, null, null, 'misc')}}
+											{{:helper.link(value.cost, null, null, null, null, 'cost')}}
+											{{:helper.link("Remove", 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
+										</div>
+								</div>
+							</div>
+							{{empty}}
+								<i>Nothing in the queue.</i>
+							{{/for}}
+				</div>
+				<div class="item">&nbsp;</div>
+				<div class="line">
+					{{:helper.link('Process Queue', 'circle-arrow-s', {'process_queue':null}, null, null, 'misc')}}
+				</div>
+			</div>
+		</div>
+		<div class="itemLabel">
+			Materials
+		</div>
+		<div class="line">
+			<div class="statusDisplay">
+				<div class="line">
+					{{for data.materials}}
+						<div class="line">
+							<div class="statusValue">
+								{{:helper.link(value.name, null, null, null, 'fixedLeft')}}
+								{{:helper.link(value.storage, null, null, null, 'fixedLeft')}}
+								{{:helper.link('Eject', 'circle-arrow-s', value.commands, null, 'fixedLeft')}}
+							</div>
+						</div>
+					{{empty}}
+						<i>No information is available</i>
+					{{/for}}
+				</div>
+			</div>
+		</div>
+	</div>

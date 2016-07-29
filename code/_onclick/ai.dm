@@ -10,9 +10,15 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
+<<<<<<< HEAD
 	if(client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
+=======
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	if(control_disabled || stat) return
 
@@ -23,6 +29,7 @@
 
 
 /mob/living/silicon/ai/ClickOn(var/atom/A, params)
+<<<<<<< HEAD
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1
@@ -30,11 +37,21 @@
 	if(client.click_intercept)
 		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
 			return
+=======
+	if(click_delayer.blocked())
+		return
+	click_delayer.setDelay(1)
+
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
+		return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	if(control_disabled || stat)
 		return
 
 	var/list/modifiers = params2list(params)
+<<<<<<< HEAD
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
 		return
@@ -43,6 +60,10 @@
 			controlled_mech.click_action(A, src, params) //Override AI normal click behavior.
 		return
 
+=======
+	if(modifiers["middle"])
+		MiddleClickOn(A)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		return
 	if(modifiers["shift"])
 		ShiftClickOn(A)
@@ -54,17 +75,24 @@
 		CtrlClickOn(A)
 		return
 
+<<<<<<< HEAD
 	if(world.time <= next_move)
+=======
+	if(attack_delayer.blocked())
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		return
 
 	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
 		aicamera.captureimage(A, usr)
 		return
+<<<<<<< HEAD
 	if(waypoint_mode)
 		set_waypoint(A)
 		waypoint_mode = 0
 		return
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	/*
 		AI restrained() currently does nothing
@@ -72,6 +100,10 @@
 		RestrainedClickOn(A)
 	else
 	*/
+<<<<<<< HEAD
+=======
+	A.add_hiddenprint(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	A.attack_ai(src)
 
 /*
@@ -85,7 +117,11 @@
 /mob/living/silicon/ai/RangedAttack(atom/A)
 	A.attack_ai(src)
 
+<<<<<<< HEAD
 /atom/proc/attack_ai(mob/user)
+=======
+/atom/proc/attack_ai(mob/user as mob)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	return
 
 /*
@@ -93,9 +129,12 @@
 	than anything else in the game, atoms have separate procs
 	for AI shift, ctrl, and alt clicking.
 */
+<<<<<<< HEAD
 
 /mob/living/silicon/ai/CtrlShiftClickOn(var/atom/A)
 	A.AICtrlShiftClick(src)
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /mob/living/silicon/ai/ShiftClickOn(var/atom/A)
 	A.AIShiftClick(src)
 /mob/living/silicon/ai/CtrlClickOn(var/atom/A)
@@ -107,6 +146,7 @@
 	The following criminally helpful code is just the previous code cleaned up;
 	I have no idea why it was in atoms.dm instead of respective files.
 */
+<<<<<<< HEAD
 /* Questions: Instead of an Emag check on every function, can we not add to airlocks onclick if emag return? */
 
 /* Atom Procs */
@@ -124,14 +164,45 @@
 /obj/machinery/door/airlock/AICtrlClick() // Bolts doors
 	if(emagged)
 		return
+=======
+
+/atom/proc/AIShiftClick()
+	return
+
+/obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
+	if(density)
+		Topic("aiEnable=7", list("aiEnable"="7"), 1) // 1 meaning no window (consistency!)
+	else
+		Topic("aiDisable=7", list("aiDisable"="7"), 1)
+	return
+
+
+/atom/proc/AICtrlClick()
+	return
+
+/obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if(locked)
 		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
 	else
 		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+<<<<<<< HEAD
 	return
 /obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
 	if(emagged)
 		return
+=======
+
+/obj/machinery/power/apc/AICtrlClick() // turns off APCs.
+	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
+
+
+/atom/proc/AIAltClick(var/mob/living/silicon/ai/user)
+	AltClick(user)
+	return
+
+/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if(!secondsElectrified)
 		// permenant shock
 		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
@@ -139,6 +210,7 @@
 		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
+<<<<<<< HEAD
 /obj/machinery/door/airlock/AIShiftClick()  // Opens and closes doors!
 	if(emagged)
 		return
@@ -175,3 +247,5 @@
 
 /mob/living/silicon/ai/TurfAdjacent(var/turf/T)
 	return (cameranet && cameranet.checkTurfVis(T))
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

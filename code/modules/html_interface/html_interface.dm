@@ -38,7 +38,11 @@ the same HTML if scripts cause the content to change. In this case set the ignor
 
 	hi.executeJavaScript(jscript, client = null)
 
+<<<<<<< HEAD
 Executes Javascript on the browser.
+=======
+Executes Javascript on the browser. Note: parentheses are needed in the jscript parameter.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 The client is optional and may be a /mob, /client or /html_interface_client object. If not specified the code is executed on all clients.
 
@@ -63,8 +67,11 @@ Closes the interface on all clients.
 When working with byond:// links make sure to reference the HTML interface object and NOT the original object. Topic() will still be called on
 your object, but it will pass through the HTML interface first allowing interception at a higher level.
 
+<<<<<<< HEAD
 If you want to use custom resources(images/css/js) with an existing interface:
 You have to use modules/client/asset_cache to ensure they get sent BEFORE the interface opens
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	** Sample code **
 
@@ -74,8 +81,12 @@ mob/verb/test()
 	if (!hi) hi = new/datum/html_interface(src, "[src.key]")
 
 	hi.updateLayout("<div id=\"content\"></div>")
+<<<<<<< HEAD
 	hi.updateContent("content", "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>")
 
+=======
+	hi.updateContent("content", "<p>Head of Security Announcement: WHY"</p>)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	hi.show(src)
 
 */
@@ -107,9 +118,14 @@ mob/verb/test()
 	// The initial height of the browser control, used when the window is first shown to a client.
 	var/height
 
+<<<<<<< HEAD
 	// A type associated list of assets the interface needs.
 	//Sent to the client when the interface opens on the client for the first time.
 	var/static/list/asset_list
+=======
+	// File which the HTML is copied from onto the browser window on the client.
+	var/default_html_file = 'html_interface.html'
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /datum/html_interface/New(atom/ref, title, width = 700, height = 480, head = "")
 	html_interfaces.Add(src)
@@ -122,7 +138,11 @@ mob/verb/test()
 	src.height         = height
 	src.head           = head
 
+<<<<<<< HEAD
 /datum/html_interface/Destroy()
+=======
+/datum/html_interface/Del()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	src.closeAll()
 
 	html_interfaces.Remove(src)
@@ -132,6 +152,7 @@ mob/verb/test()
 /*                 * Hooks */
 /datum/html_interface/proc/specificRenderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE)
 
+<<<<<<< HEAD
 //if you need to override this, either call ..() or add your resources to asset_list
 /datum/html_interface/proc/registerResources(var/list/resources = list())
 	resources["jquery.min.js"] = 'js/jquery.min.js'
@@ -146,6 +167,15 @@ mob/verb/test()
 	if (!asset_list)
 		asset_list = list()
 	asset_list[type] = assetlist
+=======
+/datum/html_interface/proc/registerResources()
+	register_asset("jquery.min.js",					'jquery.min.js')
+	register_asset("bootstrap.min.js",				'bootstrap.min.js')
+	register_asset("bootstrap.min.css",				'bootstrap.min.css')
+	register_asset("html_interface.css",				'html_interface.css')
+	register_asset("html_interface.js",				'html_interface.js')
+	register_asset("html_interface_icons.css",	'html_interface_icons.css')
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /datum/html_interface/proc/createWindow(datum/html_interface_client/hclient)
 	winclone(hclient.client, "window", "browser_\ref[src]")
@@ -162,8 +192,24 @@ mob/verb/test()
 
 	winset(hclient.client, "browser_\ref[src].browser", list2params(list("parent" = "browser_\ref[src]", "type" = "browser", "pos" = "0,0", "size" = "[width]x[height]", "anchor1" = "0,0", "anchor2" = "100,100", "use-title" = "true", "auto-format" = "false")))
 
+<<<<<<< HEAD
 /*                 * Public API */
 /datum/html_interface/proc/getTitle() return src.title
+=======
+	sendAssets(hclient.client)
+	
+/datum/html_interface/proc/sendAssets(var/client/client)
+	send_asset(client, "jquery.min.js")
+	send_asset(client, "bootstrap.min.js")
+	send_asset(client, "bootstrap.min.css")
+	send_asset(client, "html_interface.css")
+	send_asset(client, "html_interface.js")
+	send_asset(client, "html_interface_icons.css")
+
+/*                 * Public API */
+/datum/html_interface/proc/getTitle()
+	return src.title
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /datum/html_interface/proc/setTitle(title, ignore_cache = FALSE)
 	src.title = title
@@ -186,7 +232,10 @@ mob/verb/test()
 
 /datum/html_interface/proc/callJavaScript(func, list/arguments, datum/html_interface_client/hclient = null)
 	if (!arguments) arguments = new/list()
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if (hclient)
 		hclient = getClient(hclient)
 
@@ -196,8 +245,14 @@ mob/verb/test()
 	else
 		for (var/client in src.clients) if (src.clients[client]) src.callJavaScript(func, arguments, src.clients[client])
 
+<<<<<<< HEAD
 /datum/html_interface/proc/updateLayout(layout)
 	src.layout = layout
+=======
+/datum/html_interface/proc/updateLayout(nlayout)
+	src.layout = nlayout
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	var/datum/html_interface_client/hclient
 
@@ -216,6 +271,7 @@ mob/verb/test()
 
 		if (hclient && hclient.active)
 			spawn (-1) src._renderContent(id, hclient, ignore_cache)
+<<<<<<< HEAD
 
 /datum/html_interface/proc/show(datum/html_interface_client/hclient)
 	hclient = getClient(hclient, TRUE)
@@ -233,6 +289,30 @@ mob/verb/test()
 		hclient.client << output(replacetextEx(replacetextEx(file2text('html_interface.html'), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
 
 		winshow(hclient.client, "browser_\ref[src]", TRUE)
+=======
+/datum/html_interface/proc/show(datum/html_interface_client/hclient, var/datum/html_interface/oldwindow)
+	hclient = getClient(hclient, TRUE)
+
+	if (istype(hclient))
+		// This needs to be commented out due to BYOND bug http://www.byond.com/forum/?post=1487244
+		// /client/proc/send_resources() executes this per client to avoid the bug, but by using it here files may be deleted just as the HTML is loaded,
+		// causing file not found errors.
+//		src.sendResources(hclient.client)
+		if(oldwindow && winexists(hclient.client, "browser_\ref[oldwindow]"))
+			//winshow(hclient.client, "browser_\ref[oldwindow]", FALSE)
+			oldwindow.hide(hclient)
+
+		if (winexists(hclient.client, "browser_\ref[src]"))
+			src._renderTitle(hclient, TRUE)
+			src._renderLayout(hclient)
+			if(winget(hclient.client, "browser_\ref[src]", "is-visible") == "false")
+				winshow(hclient.client, "browser_\ref[src]", TRUE)
+		else
+			src.createWindow(hclient)
+			hclient.is_loaded = FALSE
+			hclient.client << output(replacetextEx(replacetextEx(file2text(default_html_file), "\[hsrc\]", "\ref[src]"), "</head>", "[head]</head>"), "browser_\ref[src].browser")
+			winshow(hclient.client, "browser_\ref[src]", TRUE)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 		while (hclient.client && hclient.active && !hclient.is_loaded) sleep(2)
 
@@ -316,6 +396,10 @@ mob/verb/test()
 
 /datum/html_interface/proc/_renderTitle(datum/html_interface_client/hclient, ignore_cache = FALSE, ignore_loaded = FALSE)
 	if (hclient && (ignore_loaded || hclient.is_loaded))
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		// Only render if we have new content.
 
 		if (ignore_cache || src.title != hclient.title)
@@ -327,8 +411,13 @@ mob/verb/test()
 
 /datum/html_interface/proc/_renderLayout(datum/html_interface_client/hclient, ignore_loaded = FALSE)
 	if (hclient && (ignore_loaded || hclient.is_loaded))
+<<<<<<< HEAD
 		var/html   = src.layout
 
+=======
+
+		var/html   = src.layout
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		// Only render if we have new content.
 		if (html != hclient.layout)
 			hclient.layout = html
@@ -357,12 +446,22 @@ mob/verb/test()
 				if ("onload")
 					hclient.layout = null
 					hclient.content_elements.len = 0
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 					src._renderTitle(hclient, TRUE, TRUE)
 					src._renderLayout(hclient, TRUE)
 
 					hclient.is_loaded = TRUE
 
+<<<<<<< HEAD
 				if ("onclose")
 					src.hide(hclient)
 		else if (src.ref && hclient.active) src.ref.Topic(href, href_list, hclient)
+=======
+
+				if ("onclose")
+					src.hide(hclient)
+		else if (src.ref) src.ref.Topic(href, href_list, hclient, src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

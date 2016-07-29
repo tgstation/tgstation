@@ -1,0 +1,121 @@
+"aa" = (/turf/space,/area)
+"ab" = (/obj/structure/catwalk,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/power/solar/panel/tracker,/turf/space,/area/vault/listening)
+"ac" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/space,/area/vault/listening)
+"ad" = (/turf/simulated/wall/r_wall,/area/vault/listening)
+"ae" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/wall/r_wall,/area/vault/listening)
+"af" = (/obj/structure/lattice,/turf/space,/area)
+"ag" = (/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/vault/listening)
+"ah" = (/obj/machinery/telecomms/relay/preset/vault_listening,/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/light/small{dir = 1},/turf/simulated/floor/bluegrid{name = "Mainframe Base"; nitrogen = 100; oxygen = 0; temperature = 80},/area/vault/listening)
+"ai" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/bluegrid{icon_state = "dark"; name = "Mainframe Floor"; nitrogen = 100; oxygen = 0; temperature = 80},/area/vault/listening)
+"aj" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/machinery/door/airlock/glass_engineering{name = "Telecommunications chamber"},/turf/simulated/floor/plating,/area/vault/listening)
+"ak" = (/obj/structure/window/reinforced{dir = 4},/turf/space,/area)
+"al" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/vault/listening)
+"am" = (/obj/structure/window/reinforced{dir = 8},/turf/space,/area)
+"an" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate/black/red,/obj/item/clothing/head/helmet/space/syndicate/black/red,/obj/item/weapon/tank/jetpack/oxygen,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/vault/listening)
+"ao" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate/black/engie,/obj/item/clothing/head/helmet/space/syndicate/black/engie,/obj/item/weapon/tank/jetpack/oxygen,/obj/effect/decal/warning_stripes{tag = "icon-warning_corner (EAST)"; icon_state = "warning_corner"; dir = 4},/turf/simulated/floor/plating,/area/vault/listening)
+"ap" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/obj/effect/decal/warning_stripes{tag = "icon-warning (NORTH)"; icon_state = "warning"; dir = 1},/turf/simulated/floor/plating,/area/vault/listening)
+"aq" = (/obj/effect/decal/warning_stripes{tag = "icon-warning_corner (NORTH)"; icon_state = "warning_corner"; dir = 1},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/plating,/area/vault/listening)
+"ar" = (/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 0},/obj/machinery/power/solar/control/vault_listening,/obj/machinery/light/small{dir = 1},/turf/simulated/floor/plating,/area/vault/listening)
+"as" = (/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/power/solar/panel{id_tag = "synd_listening_post_solar"},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/vault/listening)
+"at" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area/vault/listening)
+"au" = (/turf/simulated/floor/plating,/area/vault/listening)
+"av" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor/plating,/area/vault/listening)
+"aw" = (/obj/machinery/power/solar/panel{id_tag = "synd_listening_post_solar"},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/vault/listening)
+"ax" = (/obj/structure/catwalk,/turf/space,/area/vault/listening)
+"ay" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/space,/area/vault/listening)
+"az" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"; tag = ""},/turf/space,/area/vault/listening)
+"aA" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/space,/area/vault/listening)
+"aB" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/vault/listening)
+"aC" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor/plating,/area/vault/listening)
+"aD" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/plating,/area/vault/listening)
+"aE" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/vault/listening)
+"aF" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/space,/area/vault/listening)
+"aG" = (/obj/structure/catwalk,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/space,/area/vault/listening)
+"aH" = (/obj/structure/cable,/obj/machinery/power/solar/panel{id_tag = "synd_listening_post_solar"},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/vault/listening)
+"aI" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/grille,/turf/simulated/floor/plating,/area/vault/listening)
+"aJ" = (/mob/living/simple_animal/hostile/humanoid/syndicate,/turf/simulated/floor/plating,/area/vault/listening)
+"aK" = (/obj/structure/cable,/obj/machinery/power/terminal,/turf/simulated/floor/plating,/area/vault/listening)
+"aL" = (/obj/machinery/power/solar/panel{id_tag = "synd_listening_post_solar"},/obj/structure/cable,/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/vault/listening)
+"aM" = (/obj/structure/rack,/obj/item/weapon/storage/belt/utility,/obj/item/device/flashlight,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/machinery/light/small,/turf/simulated/floor/plating,/area/vault/listening)
+"aN" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/syndicate,/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/floor/plating,/area/vault/listening)
+"aO" = (/obj/structure/cable{icon_state = "0-4"; d2 = 4},/obj/machinery/power/apc/no_alerts/vault_listening{pixel_y = -24},/obj/machinery/power/monitor,/turf/simulated/floor/plating,/area/vault/listening)
+"aP" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/battery/smes/vault_listening,/obj/machinery/light/small,/turf/simulated/floor/plating,/area/vault/listening)
+"aQ" = (/obj/machinery/door/airlock/glass_engineering{name = "Engineering"},/turf/simulated/floor/plating,/area/vault/listening)
+"aR" = (/obj/structure/toilet{dir = 4},/obj/machinery/light/small{dir = 1},/turf/simulated/floor{icon_state = "freezerfloor"},/area/vault/listening)
+"aS" = (/obj/structure/sink{dir = 4; pixel_x = 11},/turf/simulated/floor{icon_state = "freezerfloor"},/area/vault/listening)
+"aT" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/vault/listening)
+"aU" = (/obj/machinery/shower{dir = 4},/turf/simulated/floor{icon_state = "freezerfloor"},/area/vault/listening)
+"aV" = (/turf/simulated/floor{icon_state = "freezerfloor"},/area/vault/listening)
+"aW" = (/obj/machinery/door/airlock{id_tag = "rbath"; name = "Bathroom"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/vault/listening)
+"aX" = (/obj/structure/bed,/turf/simulated/floor/carpet,/area/vault/listening)
+"aY" = (/obj/structure/bed,/obj/machinery/light{dir = 1},/turf/simulated/floor/carpet,/area/vault/listening)
+"aZ" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"ba" = (/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bb" = (/turf/simulated/floor,/area/vault/listening)
+"bc" = (/obj/machinery/computer/communications,/turf/simulated/floor,/area/vault/listening)
+"bd" = (/obj/machinery/computer/crew,/obj/machinery/light{dir = 1},/turf/simulated/floor,/area/vault/listening)
+"be" = (/obj/structure/rack,/obj/item/device/encryptionkey/syndicate/hacked/full,/obj/item/device/encryptionkey/syndicate/hacked/full,/obj/item/device/encryptionkey/syndicate/hacked/full,/turf/simulated/floor,/area/vault/listening)
+"bf" = (/obj/structure/table,/obj/item/ammo_storage/box/c9mm,/obj/item/ammo_storage/box/c9mm,/turf/simulated/floor,/area/vault/listening)
+"bg" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/vault/listening)
+"bh" = (/obj/item/weapon/stool,/turf/simulated/floor/carpet,/area/vault/listening)
+"bi" = (/turf/simulated/floor/carpet,/area/vault/listening)
+"bj" = (/obj/structure/disposalpipe/segment,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bk" = (/obj/machinery/vending/wallmed2{dir = 4; pixel_x = 24},/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bl" = (/obj/structure/window/reinforced,/turf/space,/area)
+"bm" = (/obj/item/device/radio/intercom{dir = 4; pixel_x = 30},/turf/simulated/floor,/area/vault/listening)
+"bn" = (/obj/structure/table,/turf/simulated/floor,/area/vault/listening)
+"bo" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/catwalk,/obj/structure/disposaloutlet{dir = 8},/turf/space,/area)
+"bp" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/disposalpipe/segment{dir = 4; step_x = 0; step_y = 0},/turf/simulated/floor/plating,/area/vault/listening)
+"bq" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/fork/plastic,/obj/item/weapon/kitchen/utensil/knife/plastic{pixel_x = 9},/obj/item/weapon/kitchen/utensil/spoon/plastic,/obj/structure/disposalpipe/segment{dir = 4; step_x = 0; step_y = 0},/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"br" = (/obj/item/weapon/stool,/obj/structure/disposalpipe/segment{dir = 4; step_x = 0; step_y = 0},/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bs" = (/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/mob/living/simple_animal/hostile/humanoid/syndicate,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bt" = (/obj/machinery/door/airlock/glass{name = "Living Module"},/turf/simulated/floor/plating,/area/vault/listening)
+"bu" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/vault/listening)
+"bv" = (/obj/machinery/door/airlock/glass{name = "Listening equipment"},/turf/simulated/floor/plating,/area/vault/listening)
+"bw" = (/obj/structure/bed/chair{dir = 4},/obj/item/device/radio/intercom{dir = 4; pixel_x = 30},/mob/living/simple_animal/hostile/humanoid/syndicate/melee,/turf/simulated/floor,/area/vault/listening)
+"bx" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/plating,/area/vault/listening)
+"by" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/vault/listening)
+"bz" = (/obj/item/weapon/stool,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bA" = (/obj/structure/window/reinforced{dir = 1},/turf/space,/area)
+"bB" = (/obj/machinery/light{dir = 8},/turf/simulated/floor,/area/vault/listening)
+"bC" = (/obj/machinery/light{dir = 4},/turf/simulated/floor,/area/vault/listening)
+"bD" = (/obj/structure/table,/obj/item/weapon/storage/box/donkpockets,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bE" = (/obj/structure/table,/obj/machinery/microwave,/obj/machinery/light,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bF" = (/obj/machinery/vending/discount,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bG" = (/obj/machinery/vending/groans,/turf/simulated/floor{icon_state = "bar"},/area/vault/listening)
+"bH" = (/obj/effect/decal/warning_stripes{tag = "icon-warning_corner"; icon_state = "warning_corner"; dir = 2},/obj/structure/sign/vacuum{pixel_y = -32},/turf/simulated/floor,/area/vault/listening)
+"bI" = (/obj/effect/decal/warning_stripes{tag = "icon-warning"; icon_state = "warning"; dir = 2},/turf/simulated/floor,/area/vault/listening)
+"bJ" = (/obj/effect/decal/warning_stripes{tag = "icon-warning_corner (WEST)"; icon_state = "warning_corner"; dir = 8},/turf/simulated/floor,/area/vault/listening)
+"bK" = (/obj/machinery/computer/security/advanced,/turf/simulated/floor,/area/vault/listening)
+"bL" = (/obj/structure/rack,/obj/item/weapon/gun/projectile/pistol,/obj/item/weapon/gun/projectile/pistol,/obj/item/weapon/gun/energy/laser/retro,/obj/machinery/light,/obj/item/weapon/gun/energy/laser/retro,/turf/simulated/floor,/area/vault/listening)
+"bM" = (/obj/structure/rack,/obj/item/ammo_storage/magazine/mc9mm,/obj/item/ammo_storage/magazine/mc9mm,/obj/item/ammo_storage/magazine/mc9mm,/obj/item/ammo_storage/magazine/mc9mm,/turf/simulated/floor,/area/vault/listening)
+"bN" = (/obj/structure/table,/obj/machinery/recharger,/turf/simulated/floor,/area/vault/listening)
+"bO" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/plating,/area/vault/listening)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaacaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaadadaeadadaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaafaaaaaaadagahagadaaaaaaafaaaaaaaaaaaa
+aaaaaaaaaaafafafafafadagaiagadafafafafafaaaaaaaaaa
+aaaaaaaaaaaaafaaaaaaadadajadadaaaaaaafaaaaaaaaaaaa
+aaaaaaaaaaaaafaaaaaaafakalamafaaaaaaafaaaaaaaaaaaa
+aaaaaaaaaaafafafafadadadajadadadafafafafaaaaaaaaaa
+aaaaaaaaaaaaafaaaaadanaoapaqaradaaaaafaaaaaaaaaaaa
+aaasasasasasasasaaatauauavauavataaawawawawawawawaa
+axayazazazazazazaAaBaCaCaDaCaEaBaAaFaFaFaFaFaFaGax
+aaaHaHaHaHaHaHaHaaaIauauaJauaKaIaaaLaLaLaLaLaLaLaa
+aaaaafaaaaaaafaaaaadaMaNauaOaPadaaaaafaaaaafaaaaaa
+aaafafafadadadadafadadadaQadadadafafafafafafafaaaa
+aaaaafaaadaRaSadaaaaafakaTamafaaaaaaafaaaaafaaaaaa
+aaaaafaaadaUaVadaaaaafakaTamafaaaaaaafaaaaafaaaaaa
+aaaaadadadadaWadafafadadaQadadafafadadadadadadaaaa
+aaaaadaXaYaZbaadaaaaadbbbbbbadaaaaadbcbdbebfadaaaa
+aaaabgbhbibjbkadblbladbbbbbbadblbladbbbbbmbnbgaaaa
+aabobpbqbrbsbabtbububtbbbbbbbvbububvbbbbbwbnbxaaaa
+aaaabybzbababaadbAbAadbBbbbCadbAbAadbbbbbmbnbyaaaa
+aaaaadbDbEbFbGadaaaaadbHbIbJadaaaaadbKbLbMbNadaaaa
+aaaaadadadadadadafafadadbOadadafafadadadadadadaaaa
+aaaaaaaaaaaaaaaaaaaaaaadauadaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaadbOadaaaaaaaaaaaaaaaaaaaaaa
+"}

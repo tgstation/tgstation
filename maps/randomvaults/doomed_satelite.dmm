@@ -1,0 +1,45 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/simulated/wall,/area/vault/satelite)
+"c" = (/obj/structure/reagent_dispensers/beerkeg,/turf/simulated/floor/carpet,/area/vault/satelite)
+"d" = (/obj/structure/reagent_dispensers/beerkeg,/obj/structure/window/reinforced/plasma,/turf/simulated/floor/carpet,/area/vault/satelite)
+"e" = (/obj/effect/decal/cleanable/vomit,/mob/living/simple_animal/hostile/humanoid/russian/ranged{name = "Sergei Molotov"},/turf/simulated/floor/carpet,/area/vault/satelite)
+"f" = (/turf/simulated/floor/carpet,/area/vault/satelite)
+"g" = (/obj/structure/lattice,/obj/item/weapon/caution,/turf/space,/area)
+"h" = (/obj/structure/lattice,/turf/space,/area)
+"i" = (/obj/structure/bookcase{name = "bookcase (Communism)"},/turf/simulated/floor/plating,/area/vault/satelite)
+"j" = (/obj/item/weapon/reagent_containers/glass/rag,/obj/item/weapon/crossbow,/turf/simulated/floor/plating,/area/vault/satelite)
+"k" = (/mob/living/simple_animal/hostile/necro/skeleton,/turf/simulated/floor/plating,/area/vault/satelite)
+"l" = (/turf/simulated/floor/plating,/area/vault/satelite)
+"m" = (/obj/item/broken_device,/turf/simulated/floor/plating,/area/vault/satelite)
+"n" = (/obj/machinery/vending/sovietvend,/turf/simulated/floor/plating,/area/vault/satelite)
+"o" = (/obj/item/weapon/paper,/turf/simulated/floor/plating,/area/vault/satelite)
+"p" = (/obj/structure/bed/chair,/obj/item/weapon/dice,/turf/simulated/floor/plating,/area/vault/satelite)
+"q" = (/obj/machinery/vending/sovietsoda,/turf/simulated/floor/plating,/area/vault/satelite)
+"r" = (/obj/structure/table,/obj/item/weapon/paper,/obj/item/weapon/paper_bin,/turf/simulated/floor/plating,/area/vault/satelite)
+"s" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/beetsoup,/obj/item/weapon/coin/adamantine,/obj/item/weapon/coin/adamantine{pixel_x = -4; pixel_y = 2},/obj/item/weapon/coin/phazon{pixel_y = -7},/turf/simulated/floor/plating,/area/vault/satelite)
+"t" = (/obj/structure/bed/chair{dir = 4},/obj/effect/landmark/corpse/russian,/turf/simulated/floor/plating,/area/vault/satelite)
+"u" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/harpoon,/turf/simulated/floor/plating,/area/vault/satelite)
+"v" = (/obj/effect/decal/cleanable/crayon/fuckyou,/obj/machinery/door/airlock/external,/turf/simulated/wall,/area/vault/satelite)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+aaaaaabbbbbbbbbaaaaa
+aaaaaabcccccccbaaaaa
+aaaaaabcccccccbaaaaa
+aaaaaabddddeddbaaaaa
+aaaaaabbbbbfbbbaaaaa
+aaghhhbiiiiiiibhhhha
+aaahaabjklllkmbaahaa
+aahhhhbnlolllpbhhhha
+aaaaaabqllllrsbaaaaa
+aaaaaabbllltubbaaaaa
+aaaaaaabbbvbbbaaaaaa
+aaaaaaaaaaaaaaaaaaaa
+"}

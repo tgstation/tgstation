@@ -1,0 +1,30 @@
+{
+  "name": "ProcessScheduler",
+  "main": "ProcessScheduler.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/goonstation/ProcessScheduler",
+  "authors": [
+    "Volundr <spoogemonster@gmail.com>"
+  ],
+  "description": "BYOND SS13 Process Scheduler",
+  "keywords": [
+    "byond",
+    "ss13",
+    "process",
+    "scheduler"
+  ],
+  "license": "CC-BY-NC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true,
+  "dependencies": {
+    "bootstrap2.3.2": "~2.3.2",
+	"jquery": "1.11.1",
+    "json2": "*"
+  }
+}

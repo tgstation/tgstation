@@ -1,0 +1,80 @@
+"aa" = (/turf/space,/area)
+"ab" = (/turf/simulated/shuttle/wall,/area/vault/brokeufo)
+"ac" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"; dir = 1},/turf/space,/area/vault/brokeufo)
+"ad" = (/obj/structure/shuttle/engine/propulsion,/turf/space,/area/vault/brokeufo)
+"ae" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 1},/turf/space,/area/vault/brokeufo)
+"af" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s6"; icon_state = "swall_s6"},/area/vault/brokeufo)
+"ag" = (/turf/simulated/shuttle/wall{icon_state = "swall12"},/area/vault/brokeufo)
+"ah" = (/turf/simulated/shuttle/wall{icon_state = "swall11"},/area/vault/brokeufo)
+"ai" = (/obj/structure/shuttle/engine/heater{dir = 1},/obj/structure/window/reinforced,/turf/simulated/floor{tag = "icon-old_enginewarn"; icon_state = "old_enginewarn"},/area/vault/brokeufo)
+"aj" = (/turf/simulated/shuttle/wall{icon_state = "swall7"},/area/vault/brokeufo)
+"ak" = (/turf/simulated/shuttle/wall{icon_state = "swall_s10"},/area/vault/brokeufo)
+"al" = (/turf/simulated/shuttle/wall{icon_state = "swall3"},/area/vault/brokeufo)
+"am" = (/obj/structure/dispenser/oxygen,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"an" = (/obj/machinery/light{dir = 8},/obj/machinery/vending/engivend,/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"ao" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/toolbox/electrical,/obj/item/device/flashlight/flare/ever_bright,/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"ap" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/mineral/plastic{amount = 50},/obj/item/stack/sheet/metal{amount = 50},/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"aq" = (/obj/item/weapon/soap/deluxe,/turf/simulated/floor{tag = "icon-whitebluefull"; icon_state = "whitebluefull"},/area/vault/brokeufo)
+"ar" = (/obj/structure/bed,/obj/effect/landmark/corpse/tajaran,/turf/simulated/floor{tag = "icon-whitebluefull"; icon_state = "whitebluefull"},/area/vault/brokeufo)
+"as" = (/obj/machinery/door/unpowered/shuttle,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"at" = (/obj/machinery/light,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"au" = (/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"av" = (/mob/living/simple_animal/hostile/humanoid/grey/space{name = "Klaatu"},/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"aw" = (/obj/item/clothing/gloves/yellow,/turf/simulated/floor{dir = 9; icon_state = "yellowfull"},/area/vault/brokeufo)
+"ax" = (/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-whitebluefull"; icon_state = "whitebluefull"},/area/vault/brokeufo)
+"ay" = (/obj/structure/window/reinforced,/obj/structure/grille,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-whitebluefull"; icon_state = "whitebluefull"},/area/vault/brokeufo)
+"az" = (/turf/simulated/shuttle/wall{icon_state = "swall13"},/area/vault/brokeufo)
+"aA" = (/turf/simulated/shuttle/wall{icon_state = "swall15"},/area/vault/brokeufo)
+"aB" = (/obj/item/device/flashlight/flare/ever_bright,/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aC" = (/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aD" = (/obj/structure/table/reinforced,/obj/item/weapon/bonesetter,/obj/item/weapon/bonegel,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aE" = (/obj/structure/table/reinforced,/obj/item/weapon/switchtool/surgery,/obj/item/organ/lungs/filter,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aF" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/regular,/obj/item/weapon/storage/firstaid/adv,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aG" = (/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aH" = (/obj/machinery/vending/medical,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aI" = (/obj/structure/bed,/obj/item/weapon/bedsheet,/obj/item/weapon/bedsheet/green,/obj/machinery/light{dir = 4},/obj/item/weapon/reagent_containers/food/snacks/nettlesoup,/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aJ" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aK" = (/obj/item/weapon/storage/box/masks,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aL" = (/mob/living/simple_animal/hostile/humanoid/grey/space{name = "Nikto"},/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aM" = (/obj/structure/closet/secure_closet/medical2,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aN" = (/obj/machinery/optable,/obj/machinery/light,/obj/effect/landmark/corpse/tajaran,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aO" = (/obj/machinery/light{dir = 8},/obj/item/device/flashlight/flare/ever_bright,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aP" = (/obj/machinery/light{dir = 4},/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aQ" = (/obj/item/weapon/reagent_containers/glass/beaker/sulphuric{name = "beaker 'sulphuric acid'"},/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aR" = (/obj/structure/bed,/obj/item/weapon/bedsheet/green,/turf/simulated/floor/carpet/floor_tile,/area/vault/brokeufo)
+"aS" = (/turf/simulated/shuttle/wall{icon_state = "swall14"},/area/vault/brokeufo)
+"aT" = (/mob/living/simple_animal/hostile/humanoid/grey/space{name = "Barada"},/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aU" = (/obj/item/stack/cable_coil/random,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aV" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s5"; icon_state = "swall_s5"},/area/vault/brokeufo)
+"aW" = (/obj/structure/table/reinforced,/obj/item/stack/sheet/mineral/diamond{amount = 10},/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aX" = (/obj/structure/bed/chair/comfy,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aY" = (/obj/structure/table/reinforced,/obj/item/weapon/gun/energy/laser/retro,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"aZ" = (/turf/simulated/shuttle/wall{tag = "icon-swall_s9"; icon_state = "swall_s9"},/area/vault/brokeufo)
+"ba" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/fancy/flares,/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"},/area/vault/brokeufo)
+"bb" = (/obj/structure/table/reinforced,/obj/item/weapon/gun/projectile/flare,/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"},/area/vault/brokeufo)
+"bc" = (/obj/structure/table/reinforced,/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"},/area/vault/brokeufo)
+"bd" = (/obj/structure/computerframe,/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"},/area/vault/brokeufo)
+"be" = (/obj/structure/table/reinforced,/obj/item/weapon/circuitboard/communications,/turf/simulated/floor{tag = "icon-whitered"; icon_state = "whitered"},/area/vault/brokeufo)
+"bf" = (/turf/simulated/shuttle/wall{icon_state = "swall_s5"},/area/vault/brokeufo)
+"bg" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"bh" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"bi" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/full/reinforced,/turf/simulated/floor{tag = "icon-white"; icon_state = "white"},/area/vault/brokeufo)
+"bj" = (/obj/item/toy/gasha/wizard,/turf/space,/area)
+
+(1,1,1) = {"
+aaaaaaaaabacadaeabaaaaaaaaaaaa
+aaaaafagahaiaiaiajagagakaaaaaa
+aaaaalamalanaoapalaqaralaaaaaa
+aaaaasatasauavawalaxayalaaaaaa
+aaafazagaAagasagahaBaCalaaaaaa
+aaalaDaEalaFaGaHalaCaIalaaaaaa
+aaaJaKaGasaGaGaGasaLaCalaaaaaa
+aaalaMaNalaOaGaPalaQaRalaaaaaa
+aaajaSagabaGaTaUabagaSahaaaaaa
+aaaVahaWaGaGaXaGaGaYajaZaaaaaa
+aaaaalbabbbcbdbcbcbealaaaaaaaa
+aaaabfagagbgbhbhbiagaZaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaabjaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

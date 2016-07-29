@@ -1,0 +1,78 @@
+"aa" = (/turf/space,/area)
+"ab" = (/turf/simulated/wall,/area/vault/dancedance)
+"ac" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/carpet,/area/vault/dancedance)
+"ad" = (/turf/simulated/floor/carpet,/area/vault/dancedance)
+"ae" = (/obj/structure/coatrack,/turf/simulated/floor/carpet,/area/vault/dancedance)
+"af" = (/obj/machinery/light/small,/turf/space,/area)
+"ag" = (/turf/simulated/wall/r_wall,/area/vault/dancedance)
+"ah" = (/obj/machinery/light{dir = 8},/turf/simulated/floor/carpet,/area/vault/dancedance)
+"ai" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/carpet,/area/vault/dancedance)
+"aj" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/carpet,/area/vault/dancedance)
+"ak" = (/obj/structure/flora/pottedplant,/turf/simulated/floor/carpet,/area/vault/dancedance)
+"al" = (/obj/machinery/light/small{dir = 4},/turf/space,/area)
+"am" = (/obj/machinery/door/airlock/glass,/turf/simulated/floor/carpet,/area/vault/dancedance)
+"an" = (/obj/machinery/light/small{dir = 8},/turf/space,/area)
+"ao" = (/turf/simulated/floor/light,/area/vault/dancedance)
+"ap" = (/obj/item/device/maracas,/turf/simulated/floor/light,/area/vault/dancedance)
+"aq" = (/obj/machinery/light{dir = 1},/turf/simulated/floor/wood,/area/vault/dancedance)
+"ar" = (/turf/simulated/floor/wood,/area/vault/dancedance)
+"as" = (/mob/living/simple_animal/hostile/humanoid/russian{name = "Breakdancin' Boris"},/turf/simulated/floor/light,/area/vault/dancedance)
+"at" = (/mob/living/simple_animal/hostile/humanoid/russian{name = "Polka Pjotr"},/turf/simulated/floor/light,/area/vault/dancedance)
+"au" = (/obj/machinery/light{dir = 8},/turf/simulated/floor/wood,/area/vault/dancedance)
+"av" = (/obj/structure/window/reinforced/plasma,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aw" = (/obj/machinery/light{dir = 4},/turf/simulated/floor/wood,/area/vault/dancedance)
+"ax" = (/obj/structure/window/reinforced/plasma{dir = 4},/turf/simulated/floor/wood,/area/vault/dancedance)
+"ay" = (/turf/simulated/floor,/area/vault/dancedance)
+"az" = (/obj/structure/window/reinforced/plasma{dir = 8},/turf/simulated/floor/wood,/area/vault/dancedance)
+"aA" = (/obj/effect/ddr_direction,/turf/simulated/floor,/area/vault/dancedance)
+"aB" = (/obj/effect/ddr_instruction,/turf/simulated/floor,/area/vault/dancedance)
+"aC" = (/obj/structure/window/reinforced/plasma{dir = 1},/turf/simulated/floor/wood,/area/vault/dancedance)
+"aD" = (/mob/living/simple_animal/hostile/humanoid/russian{name = "Salsa Sergei"},/turf/simulated/floor/light,/area/vault/dancedance)
+"aE" = (/mob/living/simple_animal/hostile/humanoid/russian{name = "Moonwalkin' Mihail"},/turf/simulated/floor/light,/area/vault/dancedance)
+"aF" = (/obj/machinery/media/jukebox/superjuke,/turf/simulated/floor/light,/area/vault/dancedance)
+"aG" = (/obj/structure/dance_dance_revolution,/turf/simulated/floor/light,/area/vault/dancedance)
+"aH" = (/obj/effect/ddr_loot,/turf/simulated/wall,/area/vault/dancedance)
+"aI" = (/obj/structure/painting/narsie{pixel_x = -32},/turf/simulated/floor/wood,/area/vault/dancedance)
+"aJ" = (/obj/structure/mirror{pixel_y = 32},/turf/simulated/floor/wood,/area/vault/dancedance)
+"aK" = (/turf/simulated/wall,/area/vault/dancedance/loot)
+"aL" = (/turf/simulated/wall/invulnerable,/area/vault/dancedance/loot)
+"aM" = (/obj/effect/ddr_loot,/turf/simulated/wall/invulnerable,/area/vault/dancedance/loot)
+"aN" = (/turf/simulated/wall/invulnerable,/area/vault/dancedance)
+"aO" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aP" = (/obj/structure/bed/chair/comfy/brown{dir = 4},/turf/simulated/floor/wood,/area/vault/dancedance)
+"aQ" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/drinks/beer{pixel_x = -6; pixel_y = 12},/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aR" = (/turf/simulated/floor/greengrid,/area/vault/dancedance/loot)
+"aS" = (/obj/structure/rack,/obj/item/clothing/shoes/clown_shoes/advanced,/obj/item/clothing/head/clownpiece,/obj/item/clothing/suit/clownpiece/flying,/turf/simulated/floor/greengrid,/area/vault/dancedance/loot)
+"aT" = (/obj/structure/rack,/obj/item/device/camera/sepia,/obj/item/weapon/staff/broom/horsebroom,/turf/simulated/floor/greengrid,/area/vault/dancedance/loot)
+"aU" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon,/obj/item/weapon/reagent_containers/food/snacks/grown/apple,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aV" = (/obj/structure/table/woodentable,/obj/item/ashtray/glass,/obj/item/weapon/cigbutt,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aW" = (/obj/item/weapon/reagent_containers/food/drinks/golden_cup{desc = "A golden cup."; name = "Dance Dance Revolution champion"},/turf/simulated/floor/greengrid,/area/vault/dancedance/loot)
+"aX" = (/obj/item/weapon/lipstick/random,/turf/simulated/floor/greengrid,/area/vault/dancedance/loot)
+"aY" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,/obj/item/weapon/reagent_containers/food/snacks/grown/lemon,/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,/obj/item/weapon/reagent_containers/food/snacks/grown/apple,/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,/turf/simulated/floor/wood,/area/vault/dancedance)
+"aZ" = (/obj/structure/flora/pottedplant,/turf/simulated/floor/wood,/area/vault/dancedance)
+"ba" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/obj/machinery/light,/turf/simulated/floor/wood,/area/vault/dancedance)
+"bb" = (/obj/machinery/light,/turf/simulated/floor/wood,/area/vault/dancedance)
+"bc" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,/obj/item/weapon/reagent_containers/food/snacks/grown/grapes,/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,/obj/item/weapon/reagent_containers/food/snacks/grown/cherries,/obj/item/weapon/reagent_containers/food/snacks/grown/apple,/obj/item/weapon/reagent_containers/food/snacks/grown/apple,/turf/simulated/floor/wood,/area/vault/dancedance)
+
+(1,1,1) = {"
+aaaaaaaaaaababababababababababaaaaaaaaaa
+aaaaaaaaaaacadacadaeaeadacadacaaaaaaaaaa
+aaaaafaaagabababahadadaiabababagaaafaaaa
+aaagagagagagagabadajakadabagagagagagagaa
+alagababababababamababamababababababagan
+aaagabaoapaqaoaoaraoaoaraoaoaqapaoabagaa
+aaagabapaoarasaoaraoaoarataoaraoapabagaa
+aaagabauararavavararararavavararawabagaa
+aaagabaoaoaxayayazaoaoaxayayazaoaoabagaa
+aaagabaoaoaxaAayazaoaoaxaBayazaoaoabagaa
+aaagabauararaCaCararararaCaCararawabagaa
+alagabapaoaraDaoaraoaoaraEaoaraoapabagan
+aaagabaoaparaoaoaraFaGaraoaoarapaoabagaa
+aaagabababarababaHababaHababarabababagaa
+aaagabaIaJaraKaLaMaLaLaMaNabararaOabagaa
+aaagabaPaQaraKaLaRaSaTaRaNabararaUabagaa
+aaagabaPaVaraKaLaRaWaRaXaNabararaYabagaa
+aaagabaZbaaraKaLaLaLaLaLaNabarbbbcabagaa
+alagababababababababababababababababagan
+aaagagagagagagagagagagagagagagagagagagaa
+"}

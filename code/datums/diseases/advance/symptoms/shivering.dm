@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 //////////////////////////////////////
 
@@ -38,3 +39,40 @@ Bonus
 	var/get_cold = (sqrt(16+A.totalStealth()*2))+(sqrt(21+A.totalResistance()*2))
 	M.bodytemperature = min(M.bodytemperature - (get_cold * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
 	return 1
+=======
+/*
+//////////////////////////////////////
+
+Shivering
+
+	No change to hidden.
+	Increases resistance.
+	Increases stage speed.
+	Little transmittable.
+	Low level.
+
+Bonus
+	Cools down your body.
+
+//////////////////////////////////////
+*/
+
+/datum/symptom/shivering
+
+	name = "Shivering"
+	stealth = 0
+	resistance = 2
+	stage_speed = 2
+	transmittable = 2
+	level = 2
+
+/datum/symptom/shivering/Activate(var/datum/disease/advance/A)
+	..()
+	if(prob(SYMPTOM_ACTIVATION_PROB))
+		var/mob/living/carbon/M = A.affected_mob
+		to_chat(M, "<span class='notice'>[pick("You feel cold.", "You start shaking from the cold.")]</span>")
+		if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			M.bodytemperature = min(M.bodytemperature - (2 * A.stage), BODYTEMP_COLD_DAMAGE_LIMIT + 1)
+
+	return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

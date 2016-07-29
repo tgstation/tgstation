@@ -1,0 +1,5 @@
+*.sav
+*.bdb
+*.ban
+/logs
+/player_saves

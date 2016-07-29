@@ -1,0 +1,22 @@
+; just add the ckey (lowercase) of every moderator on a separate line
+; lines starting with ; are comments and will be ignored
+botanistpower
+bowlsoldier
+cubejackal
+dakonic
+densane
+deusdactyl
+fastler
+fenrisian
+foolamancer
+madmalicemccrea
+mangled
+phaux
+roaper
+searif
+sparklysheep
+themij
+chinsky
+danny220
+; Why u no keep list in alphabetical order?! Lazies! Lazies! -Abi
+; Imma best alphabetiser - Erthilo

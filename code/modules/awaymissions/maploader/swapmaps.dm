@@ -89,7 +89,11 @@
 	swapmap.New()
 		Create a new map datum, but does not allocate space or assign an
 		 ID (used for loading).
+<<<<<<< HEAD
 	swapmap.Del()
+=======
+	swapmap.Destroy()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		Deletes a map but does not save
 	swapmap.Save()
 		Saves to map_[id].sav
@@ -117,7 +121,11 @@
 		Builds a filled rectangle of item from one corner turf to the
 		 other, on multiple z-levels if necessary. The corners may be
 		 specified in any order.
+<<<<<<< HEAD
 		item is a type path like /turf/closed/wall or /obj/barrel{full=1}.
+=======
+		item is a type path like /turf/wall or /obj/barrel{full=1}.
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	swapmap.BuildRectangle(turf/corner1,turf/corner2,item)
 		Builds an unfilled rectangle of item from one corner turf to
 		 the other, on multiple z-levels if necessary.
@@ -156,14 +164,22 @@ swapmap
 			if(z2>swapmaps_compiled_maxz ||\
 			   y2>swapmaps_compiled_maxy ||\
 			   x2>swapmaps_compiled_maxx)
+<<<<<<< HEAD
 				qdel(src)
+=======
+				del(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			return
 		x2=x?(x):world.maxx
 		y2=y?(y):world.maxy
 		z2=z?(z):1
 		AllocateSwapMap()
 
+<<<<<<< HEAD
 	Destroy()
+=======
+	Del()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		// a temporary datum for a chunk can be deleted outright
 		// for others, some cleanup is necessary
 		if(!ischunk)
@@ -174,6 +190,7 @@ swapmap
 			   x2>swapmaps_compiled_maxx)
 				var/list/areas=new
 				for(var/atom/A in block(locate(x1,y1,z1),locate(x2,y2,z2)))
+<<<<<<< HEAD
 					for(var/obj/O in A) qdel(O)
 					for(var/mob/M in A)
 						if(!M.key) qdel(M)
@@ -187,6 +204,20 @@ swapmap
 				qdel(areas)
 		..()
 		return QDEL_HINT_HARDDEL_NOW
+=======
+					for(var/obj/O in A) del(O)
+					for(var/mob/M in A)
+						if(!M.key) del(M)
+						else M.loc=null
+					areas[A.loc]=null
+					del(A)
+				// delete areas that belong only to this map
+				for(var/area/a in areas)
+					if(a && !a.contents.len) del(a)
+				if(x2>=world.maxx || y2>=world.maxy || z2>=world.maxz) CutXYZ()
+				del(areas)
+		..()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	/*
 		Savefile format:
@@ -220,6 +251,7 @@ swapmap
 		areas-=defarea
 		InitializeSwapMaps()
 		locked=1
+<<<<<<< HEAD
 		S["id"] << id
 		S["z"] << z2-z1+1
 		S["y"] << y2-y1+1
@@ -232,6 +264,20 @@ swapmap
 			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
 				for(x in x1 to x2)
+=======
+		S["id"]    << id
+		S["z"]     << z2 - z1 + 1
+		S["y"]     << y2 - y1 + 1
+		S["x"]     << x2 - x1 + 1
+		S["areas"] << areas
+		for(n in 1 to areas.len) areas[areas[n]]=n
+		var/oldcd=S.cd
+		for(z=z1,z<=z2,++z)
+			S.cd="[z-z1+1]"
+			for(y=y1,y<=y2,++y)
+				S.cd="[y-y1+1]"
+				for(x=x1,x<=x2,++x)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 					S.cd="[x-x1+1]"
 					var/turf/T=locate(x,y,z)
 					S["type"] << T.type
@@ -242,7 +288,11 @@ swapmap
 			sleep()
 			S.cd=oldcd
 		locked=0
+<<<<<<< HEAD
 		qdel(areas)
+=======
+		del(areas)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	Read(savefile/S,_id,turf/locorner)
 		var/x
@@ -270,11 +320,19 @@ swapmap
 		locked=1
 		AllocateSwapMap()	// adjust x1,y1,z1 - x2,y2,z2 coords
 		var/oldcd=S.cd
+<<<<<<< HEAD
 		for(z in z1 to z2)
 			S.cd="[z-z1+1]"
 			for(y in y1 to y2)
 				S.cd="[y-y1+1]"
 				for(x in x1 to x2)
+=======
+		for(z=z1,z<=z2,++z)
+			S.cd="[z-z1+1]"
+			for(y=y1,y<=y2,++y)
+				S.cd="[y-y1+1]"
+				for(x=x1,x<=x2,++x)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 					S.cd="[x-x1+1]"
 					var/tp
 					S["type"]>>tp
@@ -287,9 +345,15 @@ swapmap
 						A.contents+=T
 					else defarea.contents+=T
 					// clear the turf
+<<<<<<< HEAD
 					for(var/obj/O in T) qdel(O)
 					for(var/mob/M in T)
 						if(!M.key) qdel(M)
+=======
+					for(var/obj/O in T) del(O)
+					for(var/mob/M in T)
+						if(!M.key) del(M)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 						else M.loc=null
 					// finish the read
 					T.Read(S)
@@ -298,7 +362,11 @@ swapmap
 			sleep()
 			S.cd=oldcd
 		locked=0
+<<<<<<< HEAD
 		qdel(areas)
+=======
+		del(areas)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	/*
 		Find an empty block on the world map in which to load this map.
@@ -322,7 +390,11 @@ swapmap
 				x1=l[1]
 				y1=l[2]
 				z1=l[3]
+<<<<<<< HEAD
 				qdel(l)
+=======
+				del(l)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		x2+=x1-1
 		y2+=y1-1
 		z2+=z1-1
@@ -378,7 +450,11 @@ swapmap
 	// save and delete
 	proc/Unload()
 		Save()
+<<<<<<< HEAD
 		qdel(src)
+=======
+		del(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	proc/Save()
 		if(id==src) return 0
@@ -420,7 +496,11 @@ swapmap
 		Build procs: Take 2 turfs as corners, plus an item type.
 		An item may be like:
 
+<<<<<<< HEAD
 		/turf/closed/wall
+=======
+		/turf/wall
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		/obj/fence{icon_state="iron"}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)
@@ -456,6 +536,7 @@ atom
 	Write(savefile/S)
 		for(var/V in vars-"x"-"y"-"z"-"contents"-"icon"-"overlays"-"underlays")
 			if(issaved(vars[V]))
+<<<<<<< HEAD
 				if(vars[V]!=initial(vars[V])) S[V]<<vars[V]
 				else S.dir.Remove(V)
 		if(icon!=initial(icon))
@@ -467,13 +548,32 @@ atom
 		for(M in src) if(M.key) break
 		if(overlays.len) S["overlays"]<<overlays
 		if(underlays.len) S["underlays"]<<underlays
+=======
+				if(vars[V] != initial(vars[V])) S[V] << vars[V]
+				else S.dir.Remove(V)
+		if(icon != initial(icon))
+			if(swapmaps_iconcache && swapmaps_iconcache[icon])
+				S["icon"] << swapmaps_iconcache[icon]
+		else S["icon"] << icon
+		// do not save mobs with keys; do save other mobs
+		var/mob/M
+		for(M in src) if(M.key) break
+		if(overlays.len)  S["overlays"]  << overlays
+		if(underlays.len) S["underlays"] << underlays
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		if(contents.len && !isarea(src))
 			var/list/l=contents
 			if(M)
 				l=l.Copy()
 				for(M in src) if(M.key) l-=M
+<<<<<<< HEAD
 			if(l.len) S["contents"]<<l
 			if(l!=contents) qdel(l)
+=======
+			if(l.len)
+				S["contents"] << l
+			if(l != contents) del(l)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	Read(savefile/S)
 		var/list/l
 		if(contents.len) l=contents
@@ -486,7 +586,11 @@ atom
 			if(istext(ic)) icon=swapmaps_iconcache[ic]
 		if(l && contents!=l)
 			contents+=l
+<<<<<<< HEAD
 			qdel(l)
+=======
+			del(l)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 
 // set this up (at runtime) as follows:
@@ -626,7 +730,11 @@ proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	S.cd="//.0"
 	M.Read(S,M,locorner)
 	while(M.locked) sleep(1)
+<<<<<<< HEAD
 	qdel(M)
+=======
+	del(M)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	return 1
 
 proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
@@ -647,7 +755,11 @@ proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	M.mode=swapmaps_mode
 	M.Save()
 	while(M.locked) sleep(1)
+<<<<<<< HEAD
 	qdel(M)
+=======
+	del(M)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	return 1
 
 proc/SwapMaps_GetSize(id)

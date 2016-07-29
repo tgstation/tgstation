@@ -1,0 +1,64 @@
+"a" = (/turf/space,/area)
+"b" = (/turf/unsimulated/mineral/random,/area)
+"c" = (/turf/unsimulated/mineral,/area)
+"d" = (/obj/structure/disposalpipe/segment,/turf/unsimulated/mineral,/area)
+"e" = (/obj/structure/disposalpipe/segment,/turf/simulated/wall/mineral/clown,/area/vault/clownbase)
+"f" = (/turf/simulated/wall/mineral/clown,/area/vault/clownbase)
+"g" = (/obj/structure/disposalpipe/segment,/obj/structure/disposalpipe/segment,/turf/simulated/wall/mineral/clown,/area/vault/clownbase)
+"h" = (/turf/simulated/wall/mineral/plastic,/area/vault/clownbase)
+"i" = (/turf/simulated/floor/wood,/area/vault/clownbase)
+"j" = (/obj/structure/bed/chair,/mob/living/simple_animal/hostile/retaliate/clown,/turf/simulated/floor/wood,/area/vault/clownbase)
+"k" = (/obj/structure/table/holotable,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/banana_mortar,/turf/simulated/floor/wood,/area/vault/clownbase)
+"l" = (/obj/machinery/disposal/deliveryChute,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor/grass,/area/vault/clownbase)
+"m" = (/turf/simulated/floor/arcade,/area/vault/clownbase)
+"n" = (/obj/machinery/computer/arcade,/turf/simulated/floor/arcade,/area/vault/clownbase)
+"o" = (/obj/machinery/door/window/plasma/secure{dir = 1},/turf/simulated/floor/wood,/area/vault/clownbase)
+"p" = (/obj/structure/table/holotable,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/mousetrap_mortar,/turf/simulated/floor/wood,/area/vault/clownbase)
+"q" = (/obj/structure/table/holotable,/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/creampie_mortar,/turf/simulated/floor/wood,/area/vault/clownbase)
+"r" = (/obj/machinery/door/airlock/clown,/turf/simulated/floor/wood,/area/vault/clownbase)
+"s" = (/obj/item/weapon/bananapeel/traitorpeel/curse,/turf/simulated/floor/grass,/area/vault/clownbase)
+"t" = (/obj/machinery/door/airlock/clown,/turf/simulated/floor/grass,/area/vault/clownbase)
+"u" = (/obj/effect/gibspawner/human,/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/simulated/floor/arcade,/area/vault/clownbase)
+"v" = (/turf/simulated/floor/grass,/area/vault/clownbase)
+"w" = (/obj/machinery/sweet,/turf/simulated/floor/wood,/area/vault/clownbase)
+"x" = (/obj/machinery/light/small,/turf/simulated/floor/wood,/area/vault/clownbase)
+"y" = (/obj/machinery/vending/autodrobe,/turf/simulated/floor/wood,/area/vault/clownbase)
+"z" = (/obj/machinery/vending/magivend,/turf/simulated/floor/arcade,/area/vault/clownbase)
+"A" = (/obj/machinery/bot/buttbot,/obj/machinery/light/small,/turf/simulated/floor/arcade,/area/vault/clownbase)
+"B" = (/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"C" = (/obj/item/weapon/reagent_containers/food/snacks/assburger,/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"D" = (/obj/item/device/pda/clown{desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings. This one has been stepped on for too many times, and appears to be completely unresponsible."; mode = -12345; name = "Antique Clown PDA"},/turf/unsimulated/mineral/random,/area)
+"E" = (/mob/living/simple_animal/hostile/retaliate/cluwne,/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"F" = (/obj/structure/grille,/obj/structure/window/reinforced/plasma,/obj/structure/window{dir = 4},/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"G" = (/obj/structure/grille,/obj/structure/window/reinforced/plasma{dir = 4},/obj/structure/window/plasma{dir = 1},/obj/structure/window,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"H" = (/obj/item/weapon/reagent_containers/food/snacks/baguette,/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"I" = (/obj/machinery/light/small,/turf/simulated/floor/light/floor_tile,/area/vault/clownbase)
+"J" = (/obj/machinery/door/mineral/gold,/turf/simulated/floor/grass,/area/vault/clownbase)
+"K" = (/turf/unsimulated/mineral/random/high_chance,/area)
+"L" = (/turf/unsimulated/mineral/random/high_chance_clown,/area)
+"M" = (/turf/unsimulated/mineral/cytine,/area)
+
+(1,1,1) = {"
+aaaaabbaacddccaaaaaaaa
+aaabbbbbcceeccaaaabaaa
+aaabbbbbcfegfcccaaaaaa
+aaabaaccffeeffcccaaaaa
+aaaaaccfffeefffccccaaa
+acccccffffeeffffccccca
+acffffffffeeffffffffca
+acfhhhhhhfeefhhhhhhfca
+bcfhijkihfllfhmnnnhfca
+bcfhopqiirsstmmuuuhfcb
+acfhiiiihfvvfhmmmmhfcb
+bcfhwxiyhfssfhzmAmhfca
+bcfhhhhhhfvvfhhhhhhfca
+bcffffffffssffffffffca
+bccccfffffvvfffffcccca
+abbbcfBCBfssfBBBfcDbaa
+abbbcfBEBFvvGBEHfcbbaa
+aaabcfBIBfssfBIBfcbbaa
+aabbbfffffJJfffffcbaaa
+aaabbcKKLLMMLLKKccaaaa
+aaabbbKKLLLLLLKKaaaaaa
+aaaabbbKKLLLLKKaaabaaa
+"}

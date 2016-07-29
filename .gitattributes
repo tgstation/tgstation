@@ -1,4 +1,5 @@
 # dmm map merger hook
+<<<<<<< HEAD
 # needs additional setup, see tools/mapmerge/install.txt
 *.dmm merge=merge-dmm
 
@@ -10,3 +11,11 @@
 html/changelog.html merge=union
 
 
+=======
+# needs additional setup, see maptools/install.txt
+*.dmm merge=merge-dmm
+* text=auto
+
+# force changelog merging to use union
+html/changelog.html merge=union
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -11,6 +11,7 @@
 /*
  * Metal
  */
+<<<<<<< HEAD
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/chair/stool, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("bar stool", /obj/structure/chair/stool/bar, one_per_turf = 1, on_floor = 1), \
@@ -58,8 +59,41 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags = CONDUCT
+=======
+/obj/item/stack/sheet/metal
+	name = "metal"
+	desc = "Sheets made out of metal. It has been dubbed Metal Sheets."
+	singular_name = "metal sheet"
+	icon_state = "sheet-metal"
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL)
+	w_type = RECYK_METAL
+	throwforce = 14.0
+	flags = FPRINT
+	siemens_coefficient = 1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	origin_tech = "materials=1"
+	melt_temperature = MELTPOINT_STEEL
 
+/obj/item/stack/sheet/metal/resetVariables()
+	return ..("recipes", "pixel_x", "pixel_y")
+
+/obj/item/stack/sheet/metal/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			returnToPool(src)
+			return
+		if(2.0)
+			if (prob(50))
+				returnToPool(src)
+				return
+		if(3.0)
+			if (prob(5))
+				returnToPool(src)
+				return
+		else
+	return
+
+<<<<<<< HEAD
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
 		new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -75,6 +109,18 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	materials = list()
 	is_cyborg = 1
 	cost = 500
+=======
+/obj/item/stack/sheet/metal/blob_act()
+	returnToPool(src)
+
+/obj/item/stack/sheet/metal/singularity_act()
+	returnToPool(src)
+	return 2
+
+// Diet metal.
+/obj/item/stack/sheet/metal/cyborg
+	starting_materials = null
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
 	recipes = metal_recipes
@@ -83,21 +129,35 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /*
  * Plasteel
  */
+<<<<<<< HEAD
 var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	new/datum/stack_recipe("AI core", /obj/structure/AIcore, 4, time = 50, one_per_turf = 1), \
 	new/datum/stack_recipe("bomb assembly", /obj/machinery/syndicatebomb/empty, 10, time = 50), \
 )
 
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /obj/item/stack/sheet/plasteel
 	name = "plasteel"
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
+<<<<<<< HEAD
 	item_state = "sheet-metal"
 	materials = list(MAT_METAL=6000, MAT_PLASMA=6000)
 	throwforce = 10
 	flags = CONDUCT
+=======
+	item_state = "sheet-plasteel"
+	starting_materials = list(MAT_IRON = CC_PER_SHEET_METAL, MAT_PLASMA = CC_PER_SHEET_MISC) // Was 7500, which doesn't make any fucking sense
+	perunit = 2875 //average of plasma and metal
+	throwforce = 15.0
+	flags = FPRINT
+	siemens_coefficient = 1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	origin_tech = "materials=2"
+	w_type = RECYK_METAL
+	melt_temperature = MELTPOINT_STEEL+500
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -112,6 +172,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /*
  * Wood
  */
+<<<<<<< HEAD
 var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
 	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
@@ -134,13 +195,37 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/wood
 	name = "wooden plank"
+=======
+/obj/item/stack/sheet/wood
+	name = "wooden planks"
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 	icon = 'icons/obj/items.dmi'
 	origin_tech = "materials=1;biotech=1"
+<<<<<<< HEAD
 	sheettype = "wood"
 	burn_state = FLAMMABLE
+=======
+	autoignition_temperature=AUTOIGNITION_WOOD
+	sheettype = "wood"
+	w_type = RECYK_WOOD
+
+/obj/item/stack/sheet/wood/afterattack(atom/Target, mob/user, adjacent, params)
+	..()
+	if(adjacent)
+		if(isturf(Target) || istype(Target, /obj/structure/lattice))
+			var/turf/T = get_turf(Target)
+			if(T.canBuildLattice(src))
+				if(src.use(1))
+					to_chat(user, "<span class='notice'>Constructing some foundations ...</span>")
+					playsound(get_turf(src), 'sound/weapons/Genhit.ogg', 50, 1)
+					new /obj/structure/lattice/wood(T)
+
+/obj/item/stack/sheet/wood/cultify()
+	return
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -191,6 +276,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 /*
  * Cardboard
  */
+<<<<<<< HEAD
 var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	new/datum/stack_recipe("box", /obj/item/weapon/storage/box), \
 	new/datum/stack_recipe("light tubes", /obj/item/weapon/storage/box/lights/tubes), \
@@ -205,17 +291,28 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 )
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
+=======
+/obj/item/stack/sheet/cardboard	//BubbleWrap
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	name = "cardboard"
 	desc = "Large sheets of card, like boxes folded flat."
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
+<<<<<<< HEAD
 	origin_tech = "materials=1"
 	burn_state = FLAMMABLE
+=======
+	flags = FPRINT
+	origin_tech = "materials=1"
+	starting_materials = list(MAT_CARDBOARD = 3750)
+	w_type=RECYK_MISC
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
 		return ..()
 
+<<<<<<< HEAD
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
@@ -289,3 +386,26 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
+=======
+/obj/item/stack/sheet/cardboard/recycle(var/datum/materials/rec)
+	rec.addAmount(MAT_CARDBOARD, amount)
+	return 1
+
+/*
+ * /vg/ charcoal
+ */
+var/global/list/datum/stack_recipe/charcoal_recipes = list ()
+
+/obj/item/stack/sheet/charcoal	//N3X15
+	name = "charcoal"
+	desc = "Yum."
+	singular_name = "charcoal sheet"
+	icon_state = "sheet-charcoal"
+	flags = FPRINT
+	origin_tech = "materials=1"
+	autoignition_temperature=AUTOIGNITION_WOOD
+
+/obj/item/stack/sheet/charcoal/New(var/loc, var/amount=null)
+		recipes = charcoal_recipes
+		return ..()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -7,7 +7,17 @@
 	src.head = src.head + "<link rel=\"stylesheet\" type=\"text/css\" href=\"cards.css\" />"
 	src.updateLayout("<div id=\"headbar\"></div><div class=\"wrapper\"><table><tr><td style=\"vertical-align: middle;\"><div id=\"hand\"></div></td></tr></table></div>")
 
+<<<<<<< HEAD
 /datum/html_interface/cards/registerResources(var/list/resources = list())
 	resources["cards.css"] = 'cards.css'
 	resources["cards.png"] = 'cards.png'
 	..(resources)
+=======
+/datum/html_interface/cards/registerResources()
+	register_asset("cards.css", 'cards.css')
+
+/datum/html_interface/cards/sendAssets(var/client/client)
+	..()
+
+	send_asset(client, "cards.css")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

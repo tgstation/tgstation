@@ -1,0 +1,45 @@
+
+<!-- 
+Title: Syndicate Uplink, uses some javascript to change nanoUI up a bit.
+Used In File(s): \code\game\objects\items\devices\uplinks.dm
+ -->
+{{:helper.syndicateMode()}}
+<H2><span class="white">{{:data.welcome}}</span></H2>
+<br>
+<div class="item">
+	<div class="itemLabelNarrow">
+		<b>Functions</b>:
+	</div>
+	<div class="itemContent">
+		{{:helper.link('Close', 'gear', {'lock' : "1"}, null, 'fixedLeft')}}
+	</div>
+</div>
+<br>
+<div class="item">
+    <div class="itemLabel">
+        <b>Tele-Crystals</b>:
+    </div>
+    <div class="itemContent">
+        {{:data.crystals}}
+    </div>
+</div>
+<H2><span class="white">Request items:</span></H2><br>
+<span class="white"><i>Each item costs a number of tele-crystals as indicated by the number following their name.</i></span>
+
+<br><br>
+{{for data.nano_items}}
+    <div class="item">
+	    <H3><span class="white">{{:value.Category}}</span></H3>
+    </div>
+	{{for data.items :itemValue:itemIndex}}
+        <div class="item">
+            {{:helper.link( itemValue.Name, 'gear', {'buy_item' : itemValue.obj_path, 'cost' : itemValue.Cost}, itemValue.Cost > data.crystals ? 'disabled' : null, null)}} - <span class="white">{{:itemValue.Cost}}</span>
+        </div>
+	{{/for}}
+    <br>
+{{/for}}
+
+<div class="item">
+    {{:helper.link('Buy Random (??)' , 'gear', {'buy_item' : 'random'}, null, 'fixedLeftWidest')}}
+</div>
+

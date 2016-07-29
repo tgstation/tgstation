@@ -1,0 +1,37 @@
+<!-- 
+Title: Telescience Control UI 
+Used In File(s): \code\modules\telesci\telesci_computer.dm
+ -->
+<div class="item">
+	<div class="itemLabel">Offsets:</div>
+	<div class="itemContent">
+		{{:helper.link('X offset: ' + data.pOffsetX, 'gear', {'setPOffsetX': 1})}}
+		{{:helper.link('Y offset: ' + data.pOffsetY, 'gear', {'setPOffsetY': 1})}}
+	</div>
+	<div class="itemLabel">Coordinates:</div>	
+	<div class="itemContent">
+		{{:helper.link('X: ' + data.coordx, 'gear', {'setx': 1})}}
+		{{:helper.link('Y: ' + data.coordy, 'gear', {'sety': 1})}}
+		{{:helper.link('Z: ' + data.coordz, 'gear', {'setz': 1})}}
+	</div>
+</div>
+<div class="item">
+	<div class="itemLabel">Controls:</div>
+	<div class="itemContent">
+		{{:helper.link('Send', 'gear', {'send': 1}, null, (data.coordx != null && data.coordy != null && data.coordz != null) ? '' : 'disabled')}}
+		{{:helper.link('Receive', 'gear', {'receive': 1}, null, (data.coordx != null && data.coordy != null && data.coordz != null) ? '' : 'disabled')}}
+		{{:helper.link('Recalibrate', 'gear', {'recal': 1})}}
+	</div>
+</div>
+{{if !data.cell}}
+	<div class="notice">No power cell detected.</div>
+{{else}}
+	<div class="statusDisplay">
+		<div class="line">
+			<div class="statusLabel">Charge:</div> 
+			{{:helper.displayBar(data.cell.charge,0,data.cell.maxcharge,(data.cell.charge<1000)?"bad":"good")}}
+			{{:data.cell.charge}}/{{:data.cell.maxcharge}}
+			{{:helper.link("Eject", "eject", {"eject_cell":1},null)}}
+		</div>
+	</div>
+{{/if}}

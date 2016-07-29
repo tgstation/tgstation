@@ -10,7 +10,11 @@
 
 /obj/screen/movable
 	var/snap2grid = FALSE
+<<<<<<< HEAD
 	var/moved = FALSE
+=======
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 //Snap Screen Object
 //Tied to the grid, snaps to the nearest turf
@@ -31,9 +35,16 @@
 
 	//Split X+Pixel_X up into list(X, Pixel_X)
 	var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+<<<<<<< HEAD
 
 	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
 	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+=======
+	screen_loc_X[1] = encode_screen_X(text2num(screen_loc_X[1]))
+	//Split Y+Pixel_Y up into list(Y, Pixel_Y)
+	var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+	screen_loc_Y[1] = encode_screen_Y(text2num(screen_loc_Y[1]))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	if(snap2grid) //Discard Pixel Values
 		screen_loc = "[screen_loc_X[1]],[screen_loc_Y[1]]"
@@ -43,8 +54,73 @@
 		var/pix_Y = text2num(screen_loc_Y[2]) - 16
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
+<<<<<<< HEAD
 	moved = screen_loc
 
+=======
+/obj/screen/movable/proc/get_view_size()
+	if(usr && usr.client)
+		. = usr.client.view
+	else
+		. = world.view
+
+/obj/screen/movable/spell_master/get_view_size()
+	if(spell_holder && spell_holder.client)
+		. = spell_holder.client.view
+	else if(usr && usr.client)
+		. = usr.client.view
+	else
+		. = world.view
+
+/obj/screen/movable/proc/encode_screen_X(X)
+	var/view = get_view_size()
+	if(X > view+1)
+		. = "EAST-[view*2 + 1-X]"
+	else if(X < view+1)
+		. = "WEST+[X-1]"
+	else
+		. = "CENTER"
+
+/obj/screen/movable/proc/decode_screen_X(X)
+	//Find EAST/WEST implementations
+	var/view = get_view_size()
+	if(findtext(X,"EAST-"))
+		var/num = text2num(copytext(X,6)) //Trim EAST-
+		if(!num)
+			num = 0
+		. = view*2 + 1 - num
+	else if(findtext(X,"WEST+"))
+		var/num = text2num(copytext(X,6)) //Trim WEST+
+		if(!num)
+			num = 0
+		. = num+1
+	else if(findtext(X,"CENTER"))
+		. = view+1
+
+/obj/screen/movable/proc/encode_screen_Y(Y)
+	var/view = get_view_size()
+	if(Y > view+1)
+		. = "NORTH-[view*2 + 1-Y]"
+	else if(Y < view+1)
+		. = "SOUTH+[Y-1]"
+	else
+		. = "CENTER"
+
+/obj/screen/movable/proc/decode_screen_Y(Y)
+	var/view = get_view_size()
+	if(findtext(Y,"NORTH-"))
+		var/num = text2num(copytext(Y,7)) //Trim NORTH-
+		if(!num)
+			num = 0
+		. = view*2 + 1 - num
+	else if(findtext(Y,"SOUTH+"))
+		var/num = text2num(copytext(Y,7)) //Time SOUTH+
+		if(!num)
+			num = 0
+		. = num+1
+	else if(findtext(Y,"CENTER"))
+		. = view+1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 //Debug procs
 /client/proc/test_movable_UI()
@@ -82,4 +158,8 @@
 
 	S.screen_loc = screen_l
 
+<<<<<<< HEAD
 	screen += S
+=======
+	screen += S
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

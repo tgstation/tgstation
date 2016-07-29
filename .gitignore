@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ###Files and folders specified here will never be tracked.
 
 #Ignore everything in datafolder and subdirectories
@@ -181,3 +182,61 @@ Temporary Items
 .apdisk
 
 *.before
+=======
+*.log
+*.int
+*.rsc
+*.dmb
+*.lk
+info.json
+
+# WinMerge backups
+*.bak
+
+# String dumps
+*.str
+
+# Compiled Python doohickies
+*.pyc
+
+#ignore any files in config/, except those in subdirectories.
+/config/*
+!/config/*/*
+
+# OpenBYOND-generated crap
+/dmis
+/interface-indented
+/code-indented
+*.new.dmi
+
+.metadata
+/bot/config.yml
+/bot/data
+/analysis
+/code-fixed
+
+# Player preferences
+players2.sqlite
+
+# New CMC Minimap images.
+/data/minimaps/*
+
+# Map rendering
+/maprendering/renderoutput/*
+
+# Backup maps created by maptools
+*.dmm.backup
+
+# Changelog dry runs
+/html/changelog.dry.html
+/html/changelogs/.dry_changelog.yml
+
+# Map player count config
+/maps/voting/*/playercount.txt
+
+# Runtime condenser I/O files.
+/tools/Runtime\ Condenser/*.txt
+
+# Investigate logs that have an annoying tendency to generate during testing
+/data/investigate/*
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -3,6 +3,7 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
+<<<<<<< HEAD
 	w_class = 3
 	throw_speed = 2
 	throw_range = 4
@@ -15,11 +16,26 @@
 /obj/item/device/onetankbomb/examine(mob/user)
 	..()
 	user.examinate(bombtank)
+=======
+	w_class = W_CLASS_MEDIUM
+	throw_speed = 2
+	throw_range = 4
+	flags = FPRINT | PROXMOVE
+	siemens_coefficient = 1
+	var/status = 0   //0 - not readied //1 - bomb finished with welder
+	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
+	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a plasma tank
+
+/obj/item/device/onetankbomb/examine(mob/user)
+	..()
+	user.examination(bombtank)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/item/device/onetankbomb/update_icon()
 	if(bombtank)
 		icon_state = bombtank.icon_state
 	if(bombassembly)
+<<<<<<< HEAD
 		add_overlay(bombassembly.icon_state)
 		add_overlay(bombassembly.overlays)
 		add_overlay("bomb_assembly")
@@ -31,6 +47,19 @@
 	if(istype(W, /obj/item/weapon/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 
 		user << "<span class='notice'>You disassemble [src].</span>"
+=======
+		overlays += bombassembly.icon_state
+		overlays += bombassembly.overlays
+		overlays += image(icon = icon, icon_state = "bomb_assembly")
+
+/obj/item/device/onetankbomb/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(istype(W, /obj/item/device/analyzer))
+		bombtank.attackby(W, user)
+		return
+	if(iswrench(W) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+
+		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 		bombassembly.loc = user.loc
 		bombassembly.master = null
@@ -40,13 +69,18 @@
 		bombtank.master = null
 		bombtank = null
 
+<<<<<<< HEAD
 		qdel(src)
+=======
+		del(src)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		return
 	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
 		if(!status)
 			status = 1
 			bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
+<<<<<<< HEAD
 			user << "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>"
 		else
 			status = 0
@@ -56,16 +90,32 @@
 	..()
 
 /obj/item/device/onetankbomb/attack_self(mob/user) //pressing the bomb accesses its assembly
+=======
+			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
+		else
+			status = 0
+			bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
+			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
+	add_fingerprint(user)
+	..()
+
+/obj/item/device/onetankbomb/attack_self(mob/user as mob) //pressing the bomb accesses its assembly
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	bombassembly.attack_self(user, 1)
 	add_fingerprint(user)
 	return
 
 /obj/item/device/onetankbomb/receive_signal()	//This is mainly called by the sensor through sense() to the holder, and from the holder to here.
+<<<<<<< HEAD
 	visible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+=======
+	visible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	sleep(10)
 	if(!src)
 		return
 	if(status)
+<<<<<<< HEAD
 		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
@@ -79,16 +129,44 @@
 		bombassembly.on_found(finder)
 
 
+=======
+		bombtank.detonate()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
+	else
+		bombtank.release()
+
+/obj/item/device/onetankbomb/HasProximity(atom/movable/AM as mob|obj)
+	if(bombassembly)
+		bombassembly.HasProximity(AM)
+
+/obj/item/device/onetankbomb/Crossed(AM as mob|obj)
+	if(bombassembly)
+		bombassembly.Crossed(AM)
+
+/obj/item/device/onetankbomb/on_found(mob/finder as mob)
+	if(bombassembly)
+		bombassembly.on_found(finder)
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
 /obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
 	var/obj/item/device/assembly_holder/S = W
 	var/mob/M = user
+<<<<<<< HEAD
 	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 		return
 	if(!M.drop_item())			//Remove the assembly from your hands
 		return
 
+=======
+	if(!S.secured)										//Check if the assembly is secured
+		return
+	if(isigniter(S.a_left) == isigniter(S.a_right))		//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
+		return
+
+	if(!M.drop_item(S)) return		//Remove the assembly from your hands
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
 	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
@@ -104,11 +182,16 @@
 	R.update_icon()
 	return
 
+<<<<<<< HEAD
 /obj/item/weapon/tank/proc/ignite()	//This happens when a bomb is told to explode
 	air_contents.assert_gases("plasma", "o2")
 	var/fuel_moles = air_contents.gases["plasma"][MOLES] + air_contents.gases["o2"][MOLES]/6
 	air_contents.garbage_collect()
 
+=======
+/obj/item/weapon/tank/proc/detonate()	//This happens when a bomb is told to explode
+	var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	var/strength = 1
 
 	var/turf/ground_zero = get_turf(loc)
@@ -125,7 +208,11 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
+<<<<<<< HEAD
 			ground_zero.hotspot_expose(1000, 125)
+=======
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	else if(air_contents.temperature > (T0C + 250))
 		strength = (fuel_moles/20)
@@ -136,7 +223,11 @@
 			explosion(ground_zero, -1, 0, 1, 2)
 		else
 			ground_zero.assume_air(air_contents)
+<<<<<<< HEAD
 			ground_zero.hotspot_expose(1000, 125)
+=======
+			ground_zero.hotspot_expose(1000, 125,surfaces=1)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 	else if(air_contents.temperature > (T0C + 100))
 		strength = (fuel_moles/25)
@@ -145,6 +236,7 @@
 			explosion(ground_zero, -1, 0, round(strength,1), round(strength*3,1))
 		else
 			ground_zero.assume_air(air_contents)
+<<<<<<< HEAD
 			ground_zero.hotspot_expose(1000, 125)
 
 	else
@@ -163,3 +255,21 @@
 		return
 	T.assume_air(removed)
 	air_update_turf()
+=======
+			ground_zero.hotspot_expose(1000, 125,1)
+
+	else
+		ground_zero.assume_air(air_contents)
+		ground_zero.hotspot_expose(1000, 125,surfaces=1)
+
+	if(master)
+		del(master)
+	del(src)
+
+/obj/item/weapon/tank/proc/release()	//This happens when the bomb is not welded. Tank contents are just spat out.
+	var/datum/gas_mixture/removed = air_contents.remove(air_contents.total_moles())
+	var/turf/simulated/T = get_turf(src)
+	if(!T)
+		return
+	T.assume_air(removed)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

@@ -1,5 +1,6 @@
 //separate dm since hydro is getting bloated already
 
+<<<<<<< HEAD
 var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/floor/plating/lava,
 	/turf/open/floor/plating/beach/water))
@@ -7,17 +8,27 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 /obj/effect/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
+=======
+/obj/effect/glowshroom
+	name = "glowshroom"
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	anchored = 1
 	opacity = 0
 	density = 0
 	icon = 'icons/obj/lighting.dmi'
+<<<<<<< HEAD
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
+=======
+	icon_state = "glowshroomf"
+	layer = 2.1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
 	var/yield = 3
+<<<<<<< HEAD
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
@@ -37,6 +48,20 @@ obj/effect/glowshroom/glowcap
 	SetLuminosity(round(potency/10))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
+=======
+	var/spreadChance = 40
+	var/spreadIntoAdjacentChance = 60
+	var/evolveChance = 2
+	w_type=NOT_RECYCLABLE
+
+/obj/effect/glowshroom/single
+	spreadChance = 0
+
+/obj/effect/glowshroom/New()
+	..()
+	dir = CalcDir()
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if(!floor)
 		switch(dir) //offset to make it be on the wall rather than on the floor
 			if(NORTH)
@@ -47,6 +72,7 @@ obj/effect/glowshroom/glowcap
 				pixel_x = 32
 			if(WEST)
 				pixel_x = -32
+<<<<<<< HEAD
 		icon_state = "[base_icon_state][rand(1,3)]"
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "[base_icon_state]f"
@@ -95,6 +121,66 @@ obj/effect/glowshroom/glowcap
 			CHECK_TICK
 
 /obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
+=======
+		icon_state = "glowshroom[rand(1,3)]"
+	else //if on the floor, glowshroom on-floor sprite
+		icon_state = "glowshroomf"
+
+	spawn(delay)
+		set_light(round(potency/10))
+		// Spread() - Methinks this is broken - N3X
+
+/obj/effect/glowshroom/proc/Spread()
+	//set background = 1
+	var/spreaded = 1
+
+	while(spreaded)
+		spreaded = 0
+
+		for(var/i=1,i<=yield,i++)
+			if(prob(spreadChance))
+				var/list/possibleLocs = list()
+				var/spreadsIntoAdjacent = 0
+
+				if(prob(spreadIntoAdjacentChance))
+					spreadsIntoAdjacent = 1
+
+				for(var/turf/unsimulated/floor/asteroid/earth in view(3,src))
+					if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
+						possibleLocs += earth
+
+				if(!possibleLocs.len)
+					break
+
+				var/turf/newLoc = pick(possibleLocs)
+
+				var/shroomCount = 0 //hacky
+				var/placeCount = 1
+				for(var/obj/effect/glowshroom/shroom in newLoc)
+					shroomCount++
+				for(var/wallDir in cardinal)
+					var/turf/isWall = get_step(newLoc,wallDir)
+					if(isWall.density)
+						placeCount++
+				if(shroomCount >= placeCount)
+					continue
+
+				var/obj/effect/glowshroom/child = new /obj/effect/glowshroom(newLoc)
+				child.potency = potency
+				child.yield = yield
+				child.delay = delay
+				child.endurance = endurance
+
+				spreaded++
+
+		if(prob(evolveChance)) //very low chance to evolve on its own
+			potency += rand(4,6)
+
+		sleep(delay)
+
+/obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
+	//set background = 1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
@@ -126,6 +212,7 @@ obj/effect/glowshroom/glowcap
 	floor = 1
 	return 1
 
+<<<<<<< HEAD
 /obj/effect/glowshroom/attacked_by(obj/item/I, mob/user)
 	..()
 	if(I.damtype != STAMINA)
@@ -144,6 +231,32 @@ obj/effect/glowshroom/glowcap
 				qdel(src)
 
 /obj/effect/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+=======
+/obj/effect/glowshroom/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	..()
+
+	endurance -= W.force
+
+	CheckEndurance()
+
+/obj/effect/glowshroom/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			qdel(src)
+			return
+		if(2.0)
+			if (prob(50))
+				qdel(src)
+				return
+		if(3.0)
+			if (prob(5))
+				qdel(src)
+				return
+		else
+	return
+
+/obj/effect/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if(exposed_temperature > 300)
 		endurance -= 5
 		CheckEndurance()
@@ -151,9 +264,12 @@ obj/effect/glowshroom/glowcap
 /obj/effect/glowshroom/proc/CheckEndurance()
 	if(endurance <= 0)
 		qdel(src)
+<<<<<<< HEAD
 
 /obj/effect/glowshroom/acid_act(acidpwr, toxpwr, acid_volume)
 	visible_message("<span class='danger'>[src] melts away!</span>")
 	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

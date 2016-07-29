@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /datum/round_event_control/spacevine
 	name = "Spacevine"
 	typepath = /datum/round_event/spacevine
@@ -611,3 +612,16 @@
 		var/mob/living/M = A
 		if(("vines" in M.faction) || ("plants" in M.faction))
 			. = TRUE
+=======
+/var/global/spacevines_spawned = 0
+
+/datum/event/spacevine
+
+/datum/event/spacevine/start()
+	//biomass is basically just a resprited version of space vines
+	if(prob(50))
+		spacevine_infestation()
+	else
+		biomass_infestation()
+	spacevines_spawned = 1
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

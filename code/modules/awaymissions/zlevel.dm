@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // How much "space" we give the edge of the map
 var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
 
@@ -135,3 +136,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 	qdel(src)
 	return TRUE
+=======
+/datum/zLevel/away
+	name = "awaymission"
+	movementJammed = 1 //no drifting here
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488

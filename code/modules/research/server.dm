@@ -15,6 +15,7 @@
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
 /obj/machinery/r_n_d/server/New()
+<<<<<<< HEAD
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
@@ -31,6 +32,23 @@
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
 	return ..()
+=======
+	. = ..()
+
+	component_parts = newlist(
+		/obj/item/weapon/circuitboard/rdserver,
+		/obj/item/weapon/stock_parts/scanning_module,
+		/obj/item/weapon/stock_parts/capacitor,
+		/obj/item/weapon/stock_parts/capacitor
+	)
+
+	RefreshParts()
+	src.initialize(); //Agouri
+
+/obj/machinery/r_n_d/server/Destroy()
+	griefProtection()
+	..()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/machinery/r_n_d/server/RefreshParts()
 	var/tot_rating = 0
@@ -59,6 +77,7 @@
 			health = min(100, health + 1)
 		if(T0C to (T20C + 20))
 			health = Clamp(health, 0, 100)
+<<<<<<< HEAD
 		if((T20C + 20) to (T0C + 70))
 			health = max(0, health - 1)
 	if(health <= 0)
@@ -72,6 +91,19 @@
 				updateRD++
 				T.level--
 		if(updateRD)
+=======
+		if((T20C + 20) to INFINITY)
+			health = max(0, health - 1)
+	if(health <= 0)
+		griefProtection() //I dont like putting this in process() but it's the best I can do without re-writing a chunk of rd servers.
+		files.known_designs = list()
+		var/changed=0
+		for(var/datum/tech/T in files.known_tech)
+			if(prob(1))
+				T.level = 0 // This never happens, so make it dramatic. T.level--
+				changed=1
+		if(changed)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			files.RefreshResearch()
 	if(delay)
 		delay--
@@ -79,23 +111,35 @@
 		produce_heat(heat_gen)
 		delay = initial(delay)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 /obj/machinery/r_n_d/server/emp_act(severity)
 	griefProtection()
 	..()
 
 
+<<<<<<< HEAD
 /obj/machinery/r_n_d/server/ex_act(severity, target)
+=======
+/obj/machinery/r_n_d/server/ex_act(severity)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	griefProtection()
 	..()
 
 
+<<<<<<< HEAD
 /obj/machinery/r_n_d/server/blob_act(obj/effect/blob/B)
+=======
+/obj/machinery/r_n_d/server/blob_act()
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	griefProtection()
 	..()
 
 
 
+<<<<<<< HEAD
 //Backup files to centcom to help admins recover data after greifer attacks
 /obj/machinery/r_n_d/server/proc/griefProtection()
 	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
@@ -104,12 +148,24 @@
 			C.files.AddTech2Known(T)
 		for(var/v in files.known_designs)
 			var/datum/design/D = files.known_designs[v]
+=======
+//Backup files to centcomm to help admins recover data after greifer attacks
+/obj/machinery/r_n_d/server/proc/griefProtection()
+	for(var/obj/machinery/r_n_d/server/centcom/C in machines)
+		for(var/datum/tech/T in files.known_tech)
+			C.files.AddTech2Known(T)
+		for(var/datum/design/D in files.known_designs)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			C.files.AddDesign2Known(D)
 		C.files.RefreshResearch()
 
 /obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+<<<<<<< HEAD
 		var/turf/L = loc
+=======
+		var/turf/simulated/L = loc
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature < (heat_amt+T0C))
@@ -126,6 +182,7 @@
 					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
 
 				env.merge(removed)
+<<<<<<< HEAD
 				air_update_turf()
 
 //called when the server is deconstructed.
@@ -134,11 +191,18 @@
 	..()
 
 /obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
+=======
+
+/obj/machinery/r_n_d/server/attack_hand(mob/user as mob)
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
+<<<<<<< HEAD
 	return
+=======
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Centcom Central R&D Database"
@@ -173,15 +237,24 @@
 
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
+<<<<<<< HEAD
 	desc = "Used to manage access to research and manufacturing databases."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
+=======
+	icon_state = "rdcomp"
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	var/screen = 0
 	var/obj/machinery/r_n_d/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
+<<<<<<< HEAD
 	circuit = /obj/item/weapon/circuitboard/computer/rdservercontrol
+=======
+
+	light_color = LIGHT_COLOR_PINK
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -190,7 +263,11 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 	if(!src.allowed(usr) && !emagged)
+<<<<<<< HEAD
 		usr << "<span class='danger'>You do not have the required access level.</span>"
+=======
+		to_chat(usr, "<span class='warning'>You do not have the required access level</span>")
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		return
 
 	if(href_list["main"])
@@ -233,6 +310,7 @@
 			temp_server.id_with_download += num
 
 	else if(href_list["reset_tech"])
+<<<<<<< HEAD
 		var/choice = alert("Technology Data Reset", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
 			var/datum/tech/T = temp_server.files.known_tech[href_list["reset_tech"]]
@@ -246,13 +324,36 @@
 			var/datum/design/D = temp_server.files.known_designs[href_list["reset_design"]]
 			if(D)
 				temp_server.files.known_designs -= D.id
+=======
+		var/choice = alert("Technology Data Rest", "Are you sure you want to reset this technology to its default data? Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue")
+			for(var/datum/tech/T in temp_server.files.known_tech)
+				if(T.id == href_list["reset_tech"])
+					T.level = 1
+					break
+		temp_server.files.RefreshResearch()
+
+	else if(href_list["reset_design"])
+		var/choice = alert("Design Data Deletion", "Are you sure you want to delete this design? If you still have the prerequisites for the design, it'll reset to its base reliability. Data lost cannot be recovered.", "Continue", "Cancel")
+		if(choice == "Continue")
+			for(var/datum/design/D in temp_server.files.known_designs)
+				if(D.id == href_list["reset_design"])
+					D.reliability_mod = 0
+					temp_server.files.known_designs -= D
+					break
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		temp_server.files.RefreshResearch()
 
 	updateUsrDialog()
 	return
 
+<<<<<<< HEAD
 /obj/machinery/computer/rdservercontrol/attack_hand(mob/user)
 	if(..())
+=======
+/obj/machinery/computer/rdservercontrol/attack_hand(mob/user as mob)
+	if(stat & (BROKEN|NOPOWER))
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 		return
 	user.set_machine(src)
 	var/dat = ""
@@ -264,15 +365,28 @@
 			for(var/obj/machinery/r_n_d/server/S in machines)
 				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
 					continue
+<<<<<<< HEAD
 				dat += "[S.name] || "
 				dat += "<A href='?src=\ref[src];access=[S.server_id]'>Access Rights</A> | "
 				dat += "<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"
+=======
+
+				dat += {"[S.name] ||
+					<A href='?src=\ref[src];access=[S.server_id]'> Access Rights</A> |
+					<A href='?src=\ref[src];data=[S.server_id]'>Data Management</A>"}
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 				if(badmin) dat += " | <A href='?src=\ref[src];transfer=[S.server_id]'>Server-to-Server Transfer</A>"
 				dat += "<BR>"
 
 		if(1) //Access rights menu
+<<<<<<< HEAD
 			dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += "Consoles with Upload Access<BR>"
+=======
+
+			dat += {"[temp_server.name] Access Rights<BR><BR>
+				Consoles with Upload Access<BR>"}
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			for(var/obj/machinery/computer/rdconsole/C in consoles)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
@@ -291,6 +405,7 @@
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 
 		if(2) //Data Management menu
+<<<<<<< HEAD
 			dat += "[temp_server.name] Data ManagementP<BR><BR>"
 			dat += "Known Technologies<BR>"
 			for(var/v in temp_server.files.known_tech)
@@ -311,11 +426,34 @@
 			dat += "Send Data to what server?<BR>"
 			for(var/obj/machinery/r_n_d/server/S in servers)
 				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'>(Transfer)</A><BR>"
+=======
+
+			dat += {"[temp_server.name] Data Management<BR><BR>
+				Known Technologies<BR>"}
+			for(var/datum/tech/T in temp_server.files.known_tech)
+
+				dat += {"* [T.name]
+					<A href='?src=\ref[src];reset_tech=[T.id]'>(Reset)</A><BR>"} //FYI, these are all strings
+			dat += "Known Designs<BR>"
+			for(var/datum/design/D in temp_server.files.known_designs)
+
+				dat += {"* [D.name]
+					<A href='?src=\ref[src];reset_design=[D.id]'>(Delete)</A><BR>"}
+			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
+
+		if(3) //Server Data Transfer
+
+			dat += {"[temp_server.name] Server to Server Transfer<BR><BR>
+				Send Data to what server?<BR>"}
+			for(var/obj/machinery/r_n_d/server/S in servers)
+				dat += "[S.name] <A href='?src=\ref[src];send_to=[S.server_id]'> (Transfer)</A><BR>"
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 			dat += "<HR><A href='?src=\ref[src];main=1'>Main Menu</A>"
 	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
 	onclose(user, "server_control")
 	return
 
+<<<<<<< HEAD
 /obj/machinery/computer/rdservercontrol/attackby(obj/item/weapon/D, mob/user, params)
 	. = ..()
 	src.updateUsrDialog()
@@ -325,11 +463,51 @@
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		user << "<span class='notice'>You you disable the security protocols.</span>"
+=======
+/obj/machinery/computer/rdservercontrol/attackby(var/obj/item/weapon/D as obj, var/mob/user as mob)
+	if(isscrewdriver(D))
+		playsound(get_turf(src), 'sound/items/Screwdriver.ogg', 50, 1)
+		if(do_after(user, src, 20))
+			if (src.stat & BROKEN)
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
+				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+				getFromPool(/obj/item/weapon/shard, loc)
+				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
+				for (var/obj/C in src)
+					C.loc = src.loc
+				A.circuit = M
+				A.state = 3
+				A.icon_state = "3"
+				A.anchored = 1
+				qdel(src)
+			else
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
+				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
+				var/obj/item/weapon/circuitboard/rdservercontrol/M = new /obj/item/weapon/circuitboard/rdservercontrol( A )
+				for (var/obj/C in src)
+					C.loc = src.loc
+				A.circuit = M
+				A.state = 4
+				A.icon_state = "4"
+				A.anchored = 1
+				qdel(src)
+	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
+		playsound(get_turf(src), 'sound/effects/sparks4.ogg', 75, 1)
+		emagged = 1
+		to_chat(user, "<span class='notice'>You you disable the security protocols</span>")
+	src.updateUsrDialog()
+	return
+
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 
 /obj/machinery/r_n_d/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
+<<<<<<< HEAD
 	id_with_download_string = "1;2"
+=======
+	id_with_download_string = "1;2;3;4;5"
+>>>>>>> ccb55b121a3fd5338fc56a602424016009566488
 	server_id = 2
 
 
