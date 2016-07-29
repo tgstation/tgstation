@@ -1,5 +1,5 @@
 /obj/item/projectile/white_only/energy
-	name = "heat_beam"
+	name = "heat beam"
 	icon_state = "heat_beam"
 	icon = 'icons/obj/guns/white_only.dmi'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
@@ -9,7 +9,7 @@
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
-	flag = "heat_beam"
+	flag = "energy"
 	eyeblur = 2
 
 /obj/item/projectile/white_only/energy/heatgun
@@ -33,7 +33,7 @@
 	hitsound_wall = "ricochet"
 
 /obj/item/projectile/white_only/pistol/traumaticbullet //for traumatic pistol, heavy stamina damage
-	damage = 4
+	damage = 1
 	stamina = 50
 
 /obj/item/projectile/white_only/pistol/lethalbullet //for traumatic pistol, heavy brute and stamina damage

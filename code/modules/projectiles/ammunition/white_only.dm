@@ -23,17 +23,18 @@
 /obj/item/ammo_box/magazine/white_only/traumatic
 	name = "pistol magazine (traumatic)"
 	desc = "A gun magazine."
+	icon = 'icons/obj/guns/white_only.dmi'
 	icon_state = "oldrifle"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic
 	caliber = "9mm"
-	max_ammo = 12
+	max_ammo = 10
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/white_only/traumatic/lethal
 	name = "pistol magazine (lethal)"
 	desc = "A gun magazine."
-	origin_tech = "combat=3"
+	origin_tech = "combat=4"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic/lethal
 
 /obj/item/ammo_box/magazine/white_only/traumatic/enhanced
@@ -41,7 +42,7 @@
 	desc = "A gun magazine."
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic
-	max_ammo = 16
+	max_ammo = 15
 
 /datum/design/white_only/traumatic
 	name = "pistol magazine (traumatic)"
@@ -49,6 +50,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 20000)
 	build_path = /obj/item/ammo_box/magazine/white_only/traumatic
+	category = list("initial", "Security")
+
+/datum/design/white_only/traumatic/enhanced
+	name = "enhanced pistol magazine (traumatic)"
+	id = "9mm_traumatic_enhanced"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 80000)
+	build_path = /obj/item/ammo_box/magazine/white_only/traumatic/enhanced
 	category = list("initial", "Security")
 
 /datum/design/white_only/traumatic/lethal
