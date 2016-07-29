@@ -172,8 +172,8 @@
 /obj/item/toy/gun/afterattack(atom/target as mob|obj|turf|area, mob/user, flag)
 	if (flag)
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+	if (!user.IsAdvancedToolUser())
+		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
@@ -239,12 +239,9 @@
 // Copied from /obj/item/weapon/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if(W == src)
-			user << "<span class='warning'>You try to attach the end of the plastic sword to... itself. You're not very smart, are you?</span>"
-			if(ishuman(user))
-				user.adjustBrainLoss(10)
-		else if((W.flags & NODROP) || (flags & NODROP))
+		if((W.flags & NODROP) || (flags & NODROP))
 			user << "<span class='warning'>\the [flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [flags & NODROP ? W : src]!</span>"
+			return
 		else
 			user << "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>"
 			var/obj/item/weapon/twohanded/dualsaber/toy/newSaber = new /obj/item/weapon/twohanded/dualsaber/toy(user.loc)
@@ -333,38 +330,48 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
 	w_class = 1
+	var/ash_type = /obj/effect/decal/cleanable/ash
 
-/obj/item/toy/snappop/proc/pop_burst()
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(3, 1, src)
+/obj/item/toy/snappop/proc/pop_burst(var/n=3, var/c=1)
+	var/datum/effect_system/spark_spread/s = new()
+	s.set_up(n, c, src)
 	s.start()
-	new /obj/effect/decal/cleanable/ash(loc)
-	visible_message("<span class='warning'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
+	new ash_type(loc)
+	visible_message("<span class='warning'>[src] explodes!</span>",
+		"<span class='italics'>You hear a snap!</span>")
 	playsound(src, 'sound/effects/snap.ogg', 50, 1)
 	qdel(src)
 
 /obj/item/toy/snappop/fire_act()
 	pop_burst()
-	return
 
 /obj/item/toy/snappop/throw_impact(atom/hit_atom)
 	if(!..())
 		pop_burst()
 
-
 /obj/item/toy/snappop/Crossed(H as mob|obj)
-	if((ishuman(H))) //i guess carp and shit shouldn't set them off
+	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(M.m_intent == "run")
+		if(issilicon(H) || M.m_intent == "run")
 			M << "<span class='danger'>You step on the snap pop!</span>"
+			pop_burst(2, 0)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-			s.set_up(2, 0, src)
-			s.start()
-			new /obj/effect/decal/cleanable/ash(src.loc)
-			src.visible_message("<span class='danger'>The [src.name] explodes!</span>","<span class='italics'>You hear a snap!</span>")
-			playsound(src, 'sound/effects/snap.ogg', 50, 1)
-			qdel(src)
+/obj/item/toy/snappop/phoenix
+	name = "phoenix snap pop"
+	desc = "Wow! And wow! And wow!"
+	ash_type = /obj/effect/decal/cleanable/ash/snappop_phoenix
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix
+	var/respawn_time = 300
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix/New()
+	. = ..()
+	addtimer(src, "respawn", respawn_time)
+
+/obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
+	new /obj/item/toy/snappop/phoenix(get_turf(src))
+	qdel(src)
+
 
 /*
  * Mech prizes
@@ -372,30 +379,25 @@
 /obj/item/toy/prize
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "ripleytoy"
-	var/cooldown = 0
+	var/timer = 0
+	var/cooldown = 30
 	var/quiet = 0
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
-	if(!cooldown)
+	if(timer < world.time)
 		user << "<span class='notice'>You play with [src].</span>"
-		cooldown = 1
-		spawn(30) cooldown = 0
-		if (!quiet)
+		timer = world.time + cooldown
+		if(!quiet)
 			playsound(user, 'sound/mecha/mechstep.ogg', 20, 1)
-		return
-	..()
+	else
+		. = ..()
 
 /obj/item/toy/prize/attack_hand(mob/user)
 	if(loc == user)
-		if(!cooldown)
-			user << "<span class='notice'>You play with [src].</span>"
-			cooldown = 1
-			spawn(30) cooldown = 0
-			if (!quiet)
-				playsound(user, 'sound/mecha/mechturn.ogg', 20, 1)
-			return
-	..()
+		attack_self(user)
+	else
+		. = ..()
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
@@ -457,50 +459,6 @@
 	icon_state = "reticenceprize"
 	quiet = 1
 
-/*
- * AI core prizes
- */
-/obj/item/toy/AI
-	name = "toy AI"
-	desc = "A little toy model AI core with real law announcing action!"
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "AI"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/AI/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
-		var/message = generate_ion_law()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src] [message]</span>")
-		cooldown = 1
-		spawn(30) cooldown = 0
-		return
-	..()
-
-/obj/item/toy/codex_gigas
-	name = "Toy Codex Gigas"
-	desc = "A tool to help you write fictional devils!"
-	icon = 'icons/obj/library.dmi'
-	icon_state = "demonomicon"
-	w_class = 2
-	var/cooldown = 0
-
-/obj/item/toy/codex_gigas/attack_self(mob/user)
-	if(!cooldown)
-		var/datum/devilinfo/devil = randomDevilInfo()
-		user << "<span class='notice'>You press the button on [src].</span>"
-		cooldown = 1
-		playsound(user, 'sound/machines/click.ogg', 20, 1)
-		src.loc.visible_message("<span class='danger'>\icon[src]Some fun facts about: [devil.truename]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.bane]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.obligation]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.ban]]</span>")
-		src.loc.visible_message("<span class='danger'>[lawlorify[LORE][devil.banish]]</span>")
-		spawn(60) cooldown = 0
-		return
-	..()
 
 /obj/item/toy/talking
 	name = "talking action figure"
@@ -508,37 +466,175 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
 	w_class = 2
-	var/cooldown = 0
+	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
 	var/recharge_time = 30
 
+	var/chattering = FALSE
+	var/phomeme
+
+// Talking toys are language universal, and thus all species can use them
+/obj/item/toy/talking/attack_alien(mob/user)
+	. = attack_hand(user)
+
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
-		var/message = pick(messages)
-		user << "<span class='notice'>You pull the string on the [src].</span>"
-		toy_talk(user, message)
-		cooldown = 1
-		spawn(recharge_time) cooldown = 0
+		var/list/messages = generate_messages()
+		activation_message(user)
+		playsound(loc, 'sound/machines/click.ogg', 20, 1)
+
+		spawn(0)
+			for(var/message in messages)
+				toy_talk(user, message)
+				sleep(10)
+
+		cooldown = TRUE
+		spawn(recharge_time)
+			cooldown = FALSE
 		return
 	..()
 
-/obj/item/toy/talking/proc/toy_talk(user, message)
-	playsound(user, 'sound/machines/click.ogg', 20, 1)
-	src.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+/obj/item/toy/talking/proc/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] pulls the string on \the [src].</span>",
+		"<span class='notice'>You pull the string on \the [src].</span>",
+		"<span class='notice'>You hear a string being pulled.</span>")
+
+/obj/item/toy/talking/proc/generate_messages()
+	return list(pick(messages))
+
+/obj/item/toy/talking/proc/toy_talk(mob/user, message)
+	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	if(chattering)
+		chatter(message, phomeme, user)
+
+/*
+ * AI core prizes
+ */
+/obj/item/toy/talking/AI
+	name = "toy AI"
+	desc = "A little toy model AI core with real law announcing action!"
+	icon_state = "AI"
+
+/obj/item/toy/talking/AI/generate_messages()
+	return list(generate_ion_law())
+
+/obj/item/toy/talking/codex_gigas
+	name = "Toy Codex Gigas"
+	desc = "A tool to help you write fictional devils!"
+	icon = 'icons/obj/library.dmi'
+	icon_state = "demonomicon"
+	w_class = 2
+	recharge_time = 60
+
+/obj/item/toy/talking/codex_gigas/activation_message(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] presses the button on \the [src].</span>",
+		"<span class='notice'>You press the button on \the [src].</span>",
+		"<span class='notice'>You hear a soft click.</span>")
+
+/obj/item/toy/talking/codex_gigas/generate_messages()
+	var/datum/devilinfo/devil = randomDevilInfo()
+	var/list/messages = list()
+	messages += "Some fun facts about: [devil.truename]"
+	messages += "[lawlorify[LORE][devil.bane]]"
+	messages += "[lawlorify[LORE][devil.obligation]]"
+	messages += "[lawlorify[LORE][devil.ban]]"
+	messages += "[lawlorify[LORE][devil.banish]]"
+	return messages
 
 /obj/item/toy/talking/owl
 	name = "owl action figure"
 	desc = "An action figure modeled after 'The Owl', defender of justice."
 	icon_state = "owlprize"
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
+	chattering = TRUE
+	phomeme = "owl"
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
 	desc = "An action figure modeled after 'The Griffin', criminal mastermind."
 	icon_state = "griffinprize"
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
+	chattering = TRUE
+	phomeme = "griffin"
 
+/obj/item/toy/talking/skeleton
+	name = "skeleton action figure"
+	desc = "An action figure modeled after 'Oh-cee', the original content \
+		skeleton.\nNot suitable for infants or assistants under 36 months \
+		of age."
+	icon_state = "skeletonprize"
+	attack_verb = list("boned", "dunked on", "worked down to the bone")
+	chattering = TRUE
+
+	var/list/regular_messages = list(
+		"Why was the skeleton such a bad liar? \
+			Because you can see right through him!",
+		"When does a skeleton laugh? When something tickles his funny bone!",
+		"Why couldn't the skeleton win the beauty contest? \
+			 Because he had no body!",
+		"What do you call a skeleton in the winter? A numbskull!",
+		"What did the skeleton say before eating? Bone appetit!",
+		"What type of art do skeletons like? Skulltures!",
+		"What instrument do skeletons play? The trom-bone!",
+		"Why are skeletons always so calm? \
+			Because nothing gets under their skin!",
+		"How did the skeleton know it was going to rain? \
+			He could feel it in his bones.",
+		"Why did the skeleton go to the hospital? \
+			To get his ghoul stones removed.",
+		"Why can't skeletons play music in churches? \
+			Because they have no organs.",
+		"There's a skeleton inside everyone! Except slime people I guess...",
+		"The birds are too busy to notice me acting in the shadows!",
+		"Giraffes have the same number of bones in their necks as humans. \
+			You should never trust a giraffe.",
+		"When I meet a dog in the street, I always offer it a bone!",
+		"In corsetry, a bone is one of the rigid parts of a corset that \
+			forms its frame and gives it rigidity.",
+		"A person who plays the trombone is called a trombonist or \
+			trombone player.",
+		"Remember, compromise is for those without backbones!",
+		"If you go up to the captain and say the word 'bone' repeatedly, \
+			eventually he'll brig you.",
+		"Yo ho ho, shiver me bones!",
+		"So what you're saying is, you only love me for my legs?",
+		"You will never again find socks that match!",
+		"BONES! BONES! BONES!",
+		"Bones absorb x-rays, which is why radiation gives you superpowers.",
+		"Oh-cee! The ORIGINAL CONTENT SKELETON. Suitable for ages 36 months \
+			and up.",
+		"I just don't have the heart to judge you.",
+		"I don't have the stomach for this.",
+		"I'm a fighter, not a liver.",
+		"How can I see without eyeballs?",
+		"Ask your parents about 'boning', before you get pregnant.",
+		"Remember, a dog is for life, not just for christmas.")
+
+/obj/item/toy/talking/skeleton/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is trying to commit \
+		suicide with \the [src].</span>")
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.set_species(/datum/species/skeleton)
+
+	toy_talk(user, "RATTLE ME BONES")
+
+	user.Stun(5)
+	sleep(20)
+	return OXYLOSS
+
+/obj/item/toy/talking/skeleton/generate_messages()
+	return list(pick(regular_messages))
+
+/obj/item/toy/talking/skeleton/toy_talk(user, message)
+	phomeme = pick("sans", "papyrus")
+
+	span = "danger [phomeme]"
+	..()
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -669,8 +765,8 @@
 		return ..()
 
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
-	var/mob/M = usr
-	if(!ishuman(usr) || usr.incapacitated() || usr.lying)
+	var/mob/living/M = usr
+	if(!istype(M) || usr.incapacitated() || usr.lying)
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)

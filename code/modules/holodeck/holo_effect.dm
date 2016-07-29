@@ -76,7 +76,7 @@
 	mob = new mobtype(loc)
 
 	// these vars are not really standardized but all would theoretically create stuff on death
-	for(var/v in list("butcher_results","corpse","weapon1","weapon2") & mob.vars)
+	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & mob.vars)
 		mob.vars[v] = null
 	return mob
 
@@ -91,3 +91,6 @@
 		/mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten,
 		/mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/pet/dog/corgi/puppy,
 		/mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/pet/fox)
+
+/obj/effect/holodeck_effect/mobspawner/bee
+	mobtype = /mob/living/simple_animal/hostile/poison/bees/toxin

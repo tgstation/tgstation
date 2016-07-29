@@ -65,12 +65,6 @@
 	caliber = "38"
 	max_ammo = 6
 
-/obj/item/ammo_box/magazine/internal/cylinder/rev38/can_load(mob/user)
-	user << "<span class='notice'>You start reloading...</span>"
-	if(!do_after(user, 30, target = user))
-		return 0
-	return 1
-
 /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	name = "grenade launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/a40mm
@@ -91,9 +85,6 @@
 	max_ammo = 4
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shot/lethal
-	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
-
 /obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
 	if (!countempties)
 		var/boolets = 0
@@ -103,6 +94,15 @@
 		return boolets
 	else
 		return ..()
+
+
+/obj/item/ammo_box/magazine/internal/shot/tube
+	name = "dual feed shotgun internal tube"
+	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
+	max_ammo = 4
+
+/obj/item/ammo_box/magazine/internal/shot/lethal
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/internal/shot/com
 	name = "combat shotgun internal magazine"
@@ -156,6 +156,11 @@
 	max_ammo = 5
 	multiload = 1
 
+/obj/item/ammo_box/magazine/internal/boltaction/enchanted
+	max_ammo =1
+	ammo_type = /obj/item/ammo_casing/a762/enchanted
+
+
 /obj/item/ammo_box/magazine/internal/shot/toy
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	caliber = "foam_force"
@@ -163,6 +168,14 @@
 
 /obj/item/ammo_box/magazine/internal/shot/toy/crossbow
 	max_ammo = 5
+
+/obj/item/ammo_box/magazine/internal/minigun
+	name = "gatling gun fusion core"
+	ammo_type = /obj/item/ammo_casing/caseless/laser/gatling
+	caliber = "gatling"
+	max_ammo = 5000
+
+
 
 ///////////EXTERNAL MAGAZINES////////////////
 
@@ -227,6 +240,10 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 21
+
+/obj/item/ammo_box/magazine/smgm9mm/update_icon()
+	..()
+	icon_state = "smg9mm-[ammo_count() ? "42" : "0"]"
 
 /obj/item/ammo_box/magazine/smgm9mm/ap
 	name = "SMG magazine (Armour Piercing 9mm)"
@@ -334,6 +351,87 @@ obj/item/ammo_box/magazine/tommygunm45
 	icon_state = "m12gbc"
 	ammo_type = /obj/item/ammo_casing/shotgun/breaching
 
+
+//// SNIPER MAGAZINES
+
+/obj/item/ammo_box/magazine/sniper_rounds
+	name = "sniper rounds (.50)"
+	icon_state = ".50mag"
+	origin_tech = "combat=6;syndicate=2"
+	ammo_type = /obj/item/ammo_casing/point50
+	max_ammo = 6
+	caliber = ".50"
+
+/obj/item/ammo_box/magazine/sniper_rounds/update_icon()
+	if(ammo_count())
+		icon_state = "[initial(icon_state)]-ammo"
+	else
+		icon_state = "[initial(icon_state)]"
+
+/obj/item/ammo_box/magazine/sniper_rounds/soporific
+	name = "sniper rounds (Zzzzz)"
+	desc = "Soporific sniper rounds, designed for happy days and dead quiet nights..."
+	icon_state = "soporific"
+	origin_tech = "combat=6;syndicate=3"
+	ammo_type = /obj/item/ammo_casing/soporific
+	max_ammo = 3
+	caliber = ".50"
+
+/obj/item/ammo_box/magazine/sniper_rounds/haemorrhage
+	name = "sniper rounds (Bleed)"
+	desc = "Haemorrhage sniper rounds, leaves your target in a pool of crimson pain"
+	icon_state = "haemorrhage"
+	ammo_type = /obj/item/ammo_casing/haemorrhage
+	max_ammo = 5
+	caliber = ".50"
+
+/obj/item/ammo_box/magazine/sniper_rounds/penetrator
+	name = "sniper rounds (penetrator)"
+	desc = "An extremely powerful round capable of passing straight through cover and anyone unfortunate enough to be behind it."
+	ammo_type = /obj/item/ammo_casing/penetrator
+	origin_tech = "combat=6;syndicate=3"
+	max_ammo = 5
+
+
+//// SAW MAGAZINES
+
+/obj/item/ammo_box/magazine/mm556x45
+	name = "box magazine (5.56x45mm)"
+	icon_state = "a762-50"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/mm556x45
+	caliber = "mm55645"
+	max_ammo = 50
+
+/obj/item/ammo_box/magazine/mm556x45/bleeding
+	name = "box magazine (Bleeding 5.56x45mm)"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/mm556x45/bleeding
+
+/obj/item/ammo_box/magazine/mm556x45/hollow
+	name = "box magazine (Hollow-Point 5.56x45mm)"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/mm556x45/hollow
+
+/obj/item/ammo_box/magazine/mm556x45/ap
+	name = "box magazine (Armor Penetrating 5.56x45mm)"
+	origin_tech = "combat=4"
+	ammo_type = /obj/item/ammo_casing/mm556x45/ap
+
+/obj/item/ammo_box/magazine/mm556x45/incen
+	name = "box magazine (Incendiary 5.56x45mm)"
+	origin_tech = "combat=4"
+	ammo_type = /obj/item/ammo_casing/mm556x45/incen
+
+/obj/item/ammo_box/magazine/mm556x45/update_icon()
+	..()
+	icon_state = "a762-[round(ammo_count(),10)]"
+
+
+
+
+////TOY GUN MAGAZINES
+
 /obj/item/ammo_box/magazine/toy
 	name = "foam force META magazine"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
@@ -379,3 +477,23 @@ obj/item/ammo_box/magazine/tommygunm45
 /obj/item/ammo_box/magazine/toy/m762/update_icon()
 	..()
 	icon_state = "a762-[round(ammo_count(),10)]"
+
+
+
+
+//// RECHARGEABLE MAGAZINES
+
+/obj/item/ammo_box/magazine/recharge
+ 	name = "power pack"
+ 	desc = "A rechargeable, detachable battery that serves as a magazine for laser rifles."
+ 	icon_state = "oldrifle-20"
+ 	ammo_type = /obj/item/ammo_casing/caseless/laser
+ 	caliber = "laser"
+ 	max_ammo = 20
+
+/obj/item/ammo_box/magazine/recharge/update_icon()
+	desc = "[initial(desc)] It has [stored_ammo.len] shot\s left."
+	icon_state = "oldrifle-[round(ammo_count(),4)]"
+
+/obj/item/ammo_box/magazine/recharge/attack_self() //No popping out the "bullets"
+ 	return

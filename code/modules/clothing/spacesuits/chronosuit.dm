@@ -9,7 +9,7 @@
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
 	if(suit)
-		suit.deactivate()
+		suit.deactivate(1, 1)
 	..()
 
 /obj/item/clothing/head/helmet/space/chronos/Destroy()
@@ -19,7 +19,7 @@
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
-	desc = "An advanced spacesuit equipped with teleportation and anti-compression technology"
+	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology"
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
@@ -28,12 +28,13 @@
 	var/hands_nodrop_states
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
-	var/atom/movable/overlay/phase_underlay = null
+	var/image/phase_underlay = null
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
 	var/cooldowntime = 50 //deciseconds
 	var/teleporting = 0
+	var/phase_timer_id
 
 /obj/item/clothing/suit/space/chronos/New()
 	..()
@@ -69,12 +70,20 @@
 	switch(severity)
 		if(1)
 			if(activated && user && ishuman(user) && (user.wear_suit == src))
-				user << "<span class='userdanger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
+				user << "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
+				user << "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>"
+				user.emote("scream")
 			deactivate(1, 1)
 
-/obj/item/clothing/suit/space/chronos/proc/finish_chronowalk()
-	var/mob/living/carbon/human/user = src.loc
+/obj/item/clothing/suit/space/chronos/proc/finish_chronowalk(mob/living/carbon/human/user, turf/to_turf)
+	if(!user)
+		user = src.loc
+	if(phase_timer_id)
+		deltimer(phase_timer_id)
+		phase_timer_id = 0
 	if(istype(user))
+		if(to_turf)
+			user.forceMove(to_turf)
 		user.SetStunned(0)
 		user.next_move = 1
 		user.alpha = 255
@@ -88,6 +97,7 @@
 		if(user.r_hand && !(hands_nodrop_states & 2))
 			user.r_hand.flags &= ~NODROP
 		if(phase_underlay && !qdeleted(phase_underlay))
+			user.underlays -= phase_underlay
 			qdel(phase_underlay)
 			phase_underlay = null
 		if(camera)
@@ -116,8 +126,6 @@
 				user << "<span class='notice'>Your [slot_item.name] got left behind.</span>"
 
 		user.ExtinguishMob()
-		if(user.buckled)
-			user.buckled.unbuckle_mob(user,force=1)
 
 		phase_underlay = create_phase_underlay(user)
 
@@ -136,39 +144,37 @@
 		user.Stun(INFINITY)
 
 		animate(user, color = "#00ccee", time = 3)
-		spawn(3)
-			if(teleporting && activated && user && phase_underlay && !qdeleted(phase_underlay))
-				animate(user, alpha = 0, time = 2)
-				animate(phase_underlay, alpha = 255, time = 2)
-				sleep(2)
-				if(teleporting && activated && user && phase_underlay && !qdeleted(phase_underlay))
-					phase_underlay.loc = to_turf
-					user.loc = to_turf
-					animate(user, alpha = 255, time = phase_in_ds)
-					animate(phase_underlay, alpha = 0, time = phase_in_ds)
-					sleep(phase_in_ds)
-					if(teleporting && activated && phase_underlay && !qdeleted(phase_underlay))
-						animate(user, color = "#ffffff", time = 3)
-						sleep(3)
-			if(teleporting && user && !qdeleted(user))
-				user.loc = to_turf //this will cover if bad things happen before the teleport, yes it is redundant
-				finish_chronowalk()
+		phase_timer_id = addtimer(src, "phase_2", 3, FALSE, user, to_turf, phase_in_ds)
+
+/obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
+	if(teleporting && activated && user)
+		animate(user, alpha = 0, time = 2)
+		phase_timer_id = addtimer(src, "phase_3", 2, FALSE, user, to_turf, phase_in_ds)
+	else
+		finish_chronowalk(user, to_turf)
+
+/obj/item/clothing/suit/space/chronos/proc/phase_3(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
+	if(teleporting && activated && user)
+		user.forceMove(to_turf)
+		animate(user, alpha = 255, time = phase_in_ds)
+		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, FALSE, user, to_turf)
+	else
+		finish_chronowalk(user, to_turf)
+
+/obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
+	if(teleporting && activated && user)
+		animate(user, color = "#ffffff", time = 3)
+		phase_timer_id = addtimer(src, "finish_chronowalk", 3, FALSE, user, to_turf)
+	else
+		finish_chronowalk(user, to_turf)
+
 
 /obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = getFlatIcon(user)
-	user_icon.Blend("#ffffff")
-	var/atom/movable/overlay/phase = new(user.loc)
-	phase.icon = user_icon
-	phase.density = 1
-	phase.anchored = 1
-	phase.master = user
-	phase.animate_movement = NO_STEPS
-	phase.alpha = 0
-	phase.mouse_opacity = 0
-	phase.name = user.name
-	phase.transform = user.transform
-	phase.pixel_x = user.pixel_x
-	phase.pixel_y = user.pixel_y
+	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "white")
+	user_icon.AddAlphaMask(getFlatIcon(user))
+	var/image/phase = new(user_icon)
+	phase.appearance_flags = RESET_COLOR|RESET_ALPHA
+	user.underlays += phase
 	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
@@ -185,67 +191,66 @@
 			else
 				new_camera(user)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
-		if(user && ishuman(user))
-			if(user.wear_suit == src)
-				user << "\nChronosuitMK4 login: root"
-				user << "Password:\n"
-				user << "root@ChronosuitMK4# chronowalk4 --start\n"
-				if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helmet"
-					helmet = user.head
-					helmet.flags |= NODROP
-					helmet.suit = src
-					src.flags |= NODROP
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
-					user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
-					new_camera(user)
-					SSobj.processing |= src
-					activated = 1
-				else
-					user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet"
-					user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helmet. <b>Aborting...</b>"
+		if(user && ishuman(user) && user.wear_suit == src)
+			user << "\nChronosuitMK4 login: root"
+			user << "Password:\n"
+			user << "root@ChronosuitMK4# chronowalk4 --start\n"
+			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
+				user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm"
+				helmet = user.head
+				helmet.flags |= NODROP
+				helmet.suit = src
+				src.flags |= NODROP
+				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
+				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
+				user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
+				new_camera(user)
+				START_PROCESSING(SSobj, src)
+				activated = 1
+			else
+				user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm"
+				user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>"
 			teleport_now.Grant(user)
 		cooldown = world.time + cooldowntime
 		activating = 0
-		return 0
 
 /obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
 	if(activated && (!teleporting || force))
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
-		if(user && ishuman(user))
-			if(user.wear_suit == src)
-				if(!silent)
-					user << "\nroot@ChronosuitMK4# chronowalk4 --stop\n"
-				if(camera)
-					if(!silent)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view" //yes I know they aren't a different color when shutting down, but they were too similar at a glance
-					qdel(camera)
-				if(helmet)
-					if(!silent)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
-					helmet.flags &= ~NODROP
-					helmet.suit = null
-					helmet = null
-				if(!silent)
-					user << "logout"
-			teleport_now.Remove(user)
+		var/hard_landing = teleporting && force
 		src.flags &= ~NODROP
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
 		finish_chronowalk()
-		if(teleporting && force)
-			user.electrocute_act(35, src, safety = 1)
+		if(user && ishuman(user))
+			teleport_now.Remove(user)
+			if(user.wear_suit == src)
+				if(hard_landing)
+					user.electrocute_act(35, src, safety = 1)
+					user.Weaken(10)
+				if(!silent)
+					user << "\nroot@ChronosuitMK4# chronowalk4 --stop\n"
+					if(camera)
+						user << "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view"
+					if(helmet)
+						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
+						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
+						user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
+					user << "logout"
+		if(helmet)
+			helmet.flags &= ~NODROP
+			helmet.suit = null
+			helmet = null
+		if(camera)
+			qdel(camera)
 
 /obj/effect/chronos_cam
 	name = "Chronosuit View"

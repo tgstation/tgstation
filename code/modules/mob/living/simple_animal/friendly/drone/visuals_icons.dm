@@ -9,7 +9,7 @@
 /mob/living/simple_animal/drone/proc/apply_overlay(cache_index)
 	var/image/I = drone_overlays[cache_index]
 	if(I)
-		overlays += I
+		add_overlay(I)
 
 
 /mob/living/simple_animal/drone/proc/remove_overlay(cache_index)
@@ -37,7 +37,7 @@
 		hands_overlays += r_hand_image
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			r_hand.layer = 20
+			r_hand.layer = ABOVE_HUD_LAYER
 			r_hand.screen_loc = ui_rhand
 			client.screen |= r_hand
 
@@ -54,7 +54,7 @@
 		hands_overlays += l_hand_image
 
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			l_hand.layer = 20
+			l_hand.layer = ABOVE_HUD_LAYER
 			l_hand.screen_loc = ui_lhand
 			client.screen |= l_hand
 
@@ -142,9 +142,7 @@
 	switch(visualAppearence)
 		if(MAINTDRONE)
 			. = 0
-		if(REPAIRDRONE)
-			. = -6
-		if(SCOUTDRONE)
+		if(REPAIRDRONE,SCOUTDRONE,CLOCKDRONE)
 			. = -6
 
 /mob/living/simple_animal/drone/proc/updateSeeStaticMobs()

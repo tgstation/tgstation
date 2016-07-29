@@ -31,9 +31,9 @@ var/list/freqtospan = list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans)
-	var/rendered = compose_message(src, languages, message, , spans)
+	var/rendered = compose_message(src, languages_spoken, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
-		AM.Hear(rendered, src, languages, message, , spans)
+		AM.Hear(rendered, src, languages_spoken, message, , spans)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -78,7 +78,7 @@ var/list/freqtospan = list(
 	return "[verb_say], \"[input]\""
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, message_langs, raw_message, list/spans)
-	if(languages & message_langs)
+	if(languages_understood & message_langs)
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
 			if(AM.verb_say != speaker.verb_say || AM.verb_ask != speaker.verb_ask || AM.verb_exclaim != speaker.verb_exclaim || AM.verb_yell != speaker.verb_yell) //If the saymod was changed
@@ -86,12 +86,16 @@ var/list/freqtospan = list(
 			return AM.say_quote(raw_message, spans)
 		else
 			return speaker.say_quote(raw_message, spans)
-	else if(message_langs & HUMAN)
+	else if((message_langs & HUMAN) || (message_langs & RATVAR)) //it's human or ratvar language
 		var/atom/movable/AM = speaker.GetSource()
+		if(message_langs & HUMAN)
+			raw_message = stars(raw_message)
+		if(message_langs & RATVAR)
+			raw_message = text2ratvar(raw_message)
 		if(AM)
-			return AM.say_quote(stars(raw_message), spans)
+			return AM.say_quote(raw_message, spans)
 		else
-			return speaker.say_quote(stars(raw_message), spans)
+			return speaker.say_quote(raw_message, spans)
 	else if(message_langs & MONKEY)
 		return "chimpers."
 	else if(message_langs & ALIEN)
@@ -100,6 +104,8 @@ var/list/freqtospan = list(
 		return "beeps rapidly."
 	else if(message_langs & DRONE)
 		return "chitters."
+	else if(message_langs & SWARMER)
+		return "hums."
 	else
 		return "makes a strange sound."
 

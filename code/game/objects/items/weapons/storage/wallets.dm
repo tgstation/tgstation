@@ -51,7 +51,7 @@
 		combined_access |= I.access
 
 /obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = 0)
-	. = ..(W, prevent_warning)
+	. = ..()
 	if(.)
 		if(istype(W, /obj/item/weapon/card/id))
 			refreshID()

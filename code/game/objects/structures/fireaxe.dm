@@ -1,6 +1,6 @@
 /obj/structure/fireaxecabinet
 	name = "fire axe cabinet"
-	desc = "There is small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
+	desc = "There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if."
 	var/obj/item/weapon/twohanded/fireaxe/fireaxe = new/obj/item/weapon/twohanded/fireaxe
 	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "fireaxe"
@@ -123,27 +123,27 @@
 	return
 
 /obj/structure/fireaxecabinet/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(fireaxe)
-		overlays += "axe"
+		add_overlay("axe")
 	if(!open)
 		switch(health)
 			if(-INFINITY to 0)
-				overlays += "glass4"
+				add_overlay("glass4")
 			if(1 to 20)
-				overlays += "glass3"
+				add_overlay("glass3")
 			if(21 to 40)
-				overlays += "glass2"
+				add_overlay("glass2")
 			if(41 to 59)
-				overlays += "glass1"
+				add_overlay("glass1")
 			if(60)
-				overlays += "glass"
+				add_overlay("glass")
 		if(locked)
-			overlays += "locked"
+			add_overlay("locked")
 		else
-			overlays += "unlocked"
+			add_overlay("unlocked")
 	else
-		overlays += "glass_raised"
+		add_overlay("glass_raised")
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	user << "<span class = 'caution'> Resetting circuitry...</span>"

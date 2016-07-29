@@ -1,9 +1,11 @@
 
+/obj/item/bodypart/proc/can_dismember(obj/item/I)
+	. = (get_damage() >= (max_damage - I.armour_penetration/2))
 
 //Dismember a limb
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE)
 	var/mob/living/carbon/human/H = owner
-	if(!istype(H) || !H.dna.species.has_dismemberment) // species don't allow dismemberment
+	if(!istype(H) || (NODISMEMBER in H.dna.species.specflags)) // species don't allow dismemberment
 		return 0
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
@@ -15,6 +17,10 @@
 	if(dam_type == BURN)
 		burn()
 		return 1
+	add_mob_blood(H)
+	var/turf/location = H.loc
+	if(istype(location))
+		H.add_splatter_floor(location)
 	var/direction = pick(cardinal)
 	var/t_range = rand(2,max(throw_range/2, 2))
 	var/turf/target_turf = get_turf(src)
@@ -29,12 +35,12 @@
 
 /obj/item/bodypart/chest/dismember()
 	var/mob/living/carbon/human/H = owner
-	if(!istype(H) || !H.dna.species.has_dismemberment) //human's species don't allow dismemberment
+	if(!istype(H) || (NODISMEMBER in H.dna.species.specflags)) //human's species don't allow dismemberment
 		return 0
 
 	var/organ_spilled = 0
 	var/turf/T = get_turf(H)
-	T.add_blood(H)
+	H.add_splatter_floor(T)
 	playsound(get_turf(owner), 'sound/misc/splort.ogg', 80, 1)
 	for(var/X in owner.internal_organs)
 		var/obj/item/organ/O = X
@@ -288,11 +294,13 @@
 
 
 //Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(noheal)
+/mob/living/proc/regenerate_limbs(noheal, excluded_limbs)
 	return 0
 
-/mob/living/carbon/human/regenerate_limbs(noheal)
+/mob/living/carbon/human/regenerate_limbs(noheal, list/excluded_limbs)
 	var/list/limb_list = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
+	if(excluded_limbs)
+		limb_list -= excluded_limbs
 	for(var/Z in limb_list)
 		. += regenerate_limb(Z, noheal)
 

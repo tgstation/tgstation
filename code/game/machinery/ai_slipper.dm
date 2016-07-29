@@ -2,7 +2,7 @@
 	name = "\improper AI liquid dispenser"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
-	layer = 3
+	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
 	anchored = 1
 	var/uses = 20
 	var/disabled = 1
@@ -95,7 +95,6 @@
 			return
 
 	src.attack_hand(usr)
-	return
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)
@@ -112,4 +111,3 @@
 	if (uses >= 0)
 		cooldown_on = 0
 	src.power_change()
-	return

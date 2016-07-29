@@ -103,16 +103,16 @@
 
 // High-tech tools.
 /datum/export/rcd
-	cost = 1000
+	cost = 100 // 15 metal -> 75 credits, +25 credits for production
 	unit_name = "rapid construction device"
 	export_types = list(/obj/item/weapon/rcd)
 
 /datum/export/rcd_ammo
-	cost = 30
+	cost = 15 // 1.5 metal, 1 glass -> 12.5 credits, +2.5 credits
 	unit_name = "compressed matter cardridge"
 	export_types = list(/datum/design/rcd_ammo)
 
 /datum/export/rpd
-	cost = 1000
+	cost = 350 // 37.5 metal, 18.75 glass -> 281.25 credits, + some
 	unit_name = "rapid piping device"
 	export_types = list(/obj/item/weapon/pipe_dispenser)

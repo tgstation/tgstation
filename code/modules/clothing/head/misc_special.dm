@@ -25,6 +25,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
 /obj/item/clothing/head/welding/attack_self()
@@ -48,6 +49,7 @@
 	icon_state = "hardhat0_cakehat"
 	item_state = "hardhat0_cakehat"
 	item_color = "cakehat"
+	hitsound = 'sound/weapons/tap.ogg'
 	flags_inv = HIDEEARS|HIDEHAIR
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	brightness_on = 2 //luminosity when on
@@ -69,14 +71,16 @@
 	force = 15
 	throwforce = 15
 	damtype = BURN
-	SSobj.processing |= src
+	hitsound = 'sound/items/Welder.ogg'
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
 	..()
 	force = 0
 	throwforce = 0
 	damtype = BRUTE
-	SSobj.processing -= src
+	hitsound = 'sound/weapons/tap.ogg'
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/is_hot()
 	return on * heat

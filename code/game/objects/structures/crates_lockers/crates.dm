@@ -31,9 +31,9 @@
 /obj/structure/closet/crate/update_icon()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	overlays.Cut()
+	cut_overlays()
 	if(manifest)
-		overlays += "manifest"
+		add_overlay("manifest")
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)
@@ -41,11 +41,20 @@
 		return
 	..()
 
+/obj/structure/closet/crate/open(mob/living/user)
+	. = ..()
+	if(. && manifest)
+		user << "<span class='notice'>The manifest is torn off [src].</span>"
+		playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+		manifest.forceMove(get_turf(src))
+		manifest = null
+		update_icon()
+
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	user << "<span class='notice'>You tear the manifest off of [src].</span>"
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
 
-	manifest.loc = loc
+	manifest.forceMove(loc)
 	if(ishuman(user))
 		user.put_in_hands(manifest)
 	manifest = null
@@ -70,6 +79,23 @@
 	desc = "A freezer."
 	name = "freezer"
 	icon_state = "freezer"
+
+/obj/structure/closet/crate/freezer/blood
+	name = "blood freezer"
+	desc = "A freezer containing packs of blood."
+
+/obj/structure/closet/crate/freezer/blood/New()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/empty(src)
+	new /obj/item/weapon/reagent_containers/blood/AMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/BPlus(src)
+	new /obj/item/weapon/reagent_containers/blood/OMinus(src)
+	new /obj/item/weapon/reagent_containers/blood/OPlus(src)
+	new /obj/item/weapon/reagent_containers/blood/lizard(src)
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/blood/random(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

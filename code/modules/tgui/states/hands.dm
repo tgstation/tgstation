@@ -18,3 +18,8 @@
 	if(src_object in get_both_hands(src))
 		return UI_INTERACTIVE
 	return UI_CLOSE
+
+/mob/living/silicon/robot/hands_can_use_topic(src_object)
+	if(activated(src_object))
+		return UI_INTERACTIVE
+	return UI_CLOSE

@@ -8,8 +8,8 @@
 	w_class = 1
 	throw_range = 1
 	throw_speed = 1
-	layer = 4
-	pressure_resistance = 1
+	layer = MOB_LAYER
+	pressure_resistance = 2
 
 /obj/item/documents/nanotrasen
 	desc = "\"Top Secret\" Nanotrasen documents, filled with complex diagrams and lists of names, dates and coordinates."

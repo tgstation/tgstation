@@ -20,7 +20,7 @@
 	opacity = 1 ///opaque. Menacing.
 	anchored = 1 //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
-	layer = MOB_LAYER - 0.2//icon draw layer
+	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
 	flags = HEAR
@@ -36,6 +36,7 @@
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
+	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
@@ -109,13 +110,6 @@
 	var/phase_state = "" //icon_state when phasing
 	var/strafe = FALSE //If we are strafing
 
-	var/static/list/armour_facings = list(
-	"[NORTH]" = list("[SOUTH]" = FRONT_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[NORTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[EAST]" = list("[SOUTH]" = SIDE_ARMOUR, "[WEST]" = FRONT_ARMOUR, "[EAST]" = BACK_ARMOUR, "[NORTH]" = SIDE_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR),
-	"[SOUTH]" = list("[NORTH]" = FRONT_ARMOUR, "[WEST]" = SIDE_ARMOUR, "[EAST]" = SIDE_ARMOUR, "[SOUTH]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR ),
-	"[WEST]" = list("[NORTH]" = SIDE_ARMOUR, "[EAST]" = FRONT_ARMOUR, "[SOUTH]" = SIDE_ARMOUR, "[WEST]" = BACK_ARMOUR, "[SOUTHEAST]" = SIDE_ARMOUR, "[NORTHEAST]" = SIDE_ARMOUR, "[SOUTHWEST]" = SIDE_ARMOUR, "[NORTHWEST]" = SIDE_ARMOUR)
-	)
-
 	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
@@ -133,7 +127,7 @@
 	smoke_system.set_up(3, src)
 	smoke_system.attach(src)
 	add_cell()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	poi_list |= src
 	log_message("[src.name] created.")
 	mechas_list += src //global mech list
@@ -164,7 +158,6 @@
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
 				E.equip_ready = 1
-				E.reliability = round(rand(E.reliability/3,E.reliability))
 			else
 				E.detach(loc)
 				qdel(E)
@@ -183,7 +176,7 @@
 			qdel(cell)
 		if(internal_tank)
 			qdel(internal_tank)
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	poi_list.Remove(src)
 	equipment.Cut()
 	cell = null
@@ -390,14 +383,13 @@
 				speech_bubble_recipients.Add(M.client)
 		spawn(0)
 			flick_overlay(image('icons/mob/talk.dmi', src, "machine[say_test(raw_message)]",MOB_LAYER+1), speech_bubble_recipients, 30)
-	return
 
 ////////////////////////////
 ///// Action processing ////
 ////////////////////////////
 
 
-/obj/mecha/proc/click_action(atom/target,mob/user)
+/obj/mecha/proc/click_action(atom/target,mob/user,params)
 	if(!occupant || occupant != user )
 		return
 	if(!locate(/turf) in list(target,target.loc)) // Prevents inventory from being drilled
@@ -415,7 +407,7 @@
 	if(src == target)
 		return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
+	if(dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = safepick(view(3,target))
@@ -423,10 +415,10 @@
 			return
 	if(!target.Adjacent(src))
 		if(selected && selected.is_ranged())
-			if(selected.action(target))
+			if(selected.action(target,params))
 				selected.start_cooldown()
 	else if(selected && selected.is_melee())
-		if(selected.action(target))
+		if(selected.action(target,params))
 			selected.start_cooldown()
 	else
 		if(internal_damage & MECHA_INT_CONTROL_LOST)
@@ -437,7 +429,6 @@
 		melee_can_hit = 0
 		spawn(melee_cooldown)
 			melee_can_hit = 1
-	return
 
 
 /obj/mecha/proc/range_action(atom/target)
@@ -471,13 +462,13 @@
 /obj/mecha/relaymove(mob/user,direction)
 	if(!direction)
 		return
-	if(user != src.occupant) //While not "realistic", this piece is player friendly.
+	if(user != occupant) //While not "realistic", this piece is player friendly.
 		user.forceMove(get_turf(src))
 		user << "<span class='notice'>You climb out from [src].</span>"
 		return 0
 	if(connected_port)
 		if(world.time - last_message > 20)
-			src.occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
+			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
 		return 0
 	if(state)
@@ -506,7 +497,7 @@
 	var/move_result = 0
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(src.dir!=direction && !strafe)
+	else if(dir != direction && !strafe)
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
@@ -520,16 +511,16 @@
 
 
 /obj/mecha/proc/mechturn(direction)
-	dir = direction
+	setDir(direction)
 	if(turnsound)
 		playsound(src,turnsound,40,1)
 	return 1
 
 /obj/mecha/proc/mechstep(direction)
-	var/current_dir = src.dir
+	var/current_dir = dir
 	var/result = step(src,direction)
 	if(strafe)
-		src.dir = current_dir
+		setDir(current_dir)
 	if(result && stepsound)
 		playsound(src,stepsound,40,1)
 	return result
@@ -585,7 +576,7 @@
 			if(int_dam_flag)
 				setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
+		if(ignore_threshold || health*100/initial(health)<internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/ME = safepick(equipment)
 			if(ME)
 				qdel(ME)
@@ -755,7 +746,7 @@
 		return 0
 
 	//Make sure are close enough for a valid connection
-	if(new_port.loc != src.loc)
+	if(new_port.loc != loc)
 		return 0
 
 	//Perform the connection
@@ -773,7 +764,7 @@
 
 	connected_port.connected_device = null
 	connected_port = null
-	src.log_message("Disconnected from gas port.")
+	log_message("Disconnected from gas port.")
 	return 1
 
 /obj/mecha/portableConnectorReturnAir()
@@ -806,20 +797,20 @@
 		user << "<span class='warning'>You are currently buckled and cannot move.</span>"
 		log_append_to_last("Permission denied.")
 		return
-	if(user.buckled_mobs.len) //mob attached to us
+	if(user.has_buckled_mobs()) //mob attached to us
 		user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		return
 
-	visible_message("[user] starts to climb into [src.name].")
+	visible_message("[user] starts to climb into [name].")
 
 	if(do_after(user, 40, target = src))
 		if(health <= 0)
-			user << "<span class='warning'>You cannot get in the [src.name], it has been destroyed!</span>"
+			user << "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>"
 		else if(occupant)
-			user << "<span class='danger'>[src.occupant] was faster! Try better next time, loser.</span>"
+			user << "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>"
 		else if(user.buckled)
 			user << "<span class='warning'>You can't enter the exosuit while buckled.</span>"
-		else if(user.buckled_mobs.len)
+		else if(user.has_buckled_mobs())
 			user << "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>"
 		else
 			moved_inside(user)
@@ -836,7 +827,7 @@
 		forceMove(loc)
 		log_append_to_last("[H] moved in as pilot.")
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -858,7 +849,7 @@
 		user << "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>"
 		return 0
 
-	visible_message("<span class='notice'>[user] starts to insert an MMI into [src.name].</span>")
+	visible_message("<span class='notice'>[user] starts to insert an MMI into [name].</span>")
 
 	if(do_after(user, 40, target = src))
 		if(!occupant)
@@ -888,7 +879,7 @@
 		mmi_as_oc.loc = src
 		mmi_as_oc.mecha = src
 		icon_state = initial(icon_state)
-		dir = dir_in
+		setDir(dir_in)
 		log_message("[mmi_as_oc] moved in as pilot.")
 		if(!internal_damage)
 			occupant << sound('sound/mecha/nominal.ogg',volume=50)
@@ -940,7 +931,7 @@
 			mmi.update_icon()
 			L.canmove = 0
 		icon_state = initial(icon_state)+"-open"
-		dir = dir_in
+		setDir(dir_in)
 
 	if(L && L.client)
 		L.client.view = world.view
@@ -968,8 +959,8 @@
 
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
-		if(src.occupant && src.occupant.client)
-			src.occupant << "\icon[src] [message]"
+		if(occupant && occupant.client)
+			occupant << "\icon[src] [message]"
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)
@@ -978,7 +969,7 @@
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message as text,red=null)
-	var/list/last_entry = src.log[src.log.len]
+	var/list/last_entry = log[log.len]
 	last_entry["message"] += "<br>[red?"<font color='red'>":null][message][red?"</font>":null]"
 	return
 

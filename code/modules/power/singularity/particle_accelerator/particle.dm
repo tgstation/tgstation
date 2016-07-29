@@ -22,7 +22,7 @@
 
 
 /obj/effect/accelerated_particle/New(loc, dir = 2)
-	src.dir = dir
+	src.setDir(dir)
 
 	spawn(0)
 		move(1)

@@ -2,7 +2,8 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	priority = 5
+	init_order = 5
+	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/unassigned = list()		//Players who need jobs
@@ -13,9 +14,7 @@ var/datum/subsystem/job/SSjob
 	NEW_SS_GLOBAL(SSjob)
 
 
-/datum/subsystem/job/Initialize(timeofday, zlevel)
-	if (zlevel)
-		return ..()
+/datum/subsystem/job/Initialize(timeofday)
 	SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
@@ -329,7 +328,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		else if(player.client.prefs.joblessrole == BERANDOMJOB)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -340,8 +339,15 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		Debug("AC2 Assistant located, Player: [player]")
-		AssignRole(player, "Assistant")
+		if(player.client.prefs.joblessrole == BEASSISTANT)
+			Debug("AC2 Assistant located, Player: [player]")
+			AssignRole(player, "Assistant")
+		else // For those who don't want to play if their preference were filled, back you go.
+			RejectPlayer(player)
+
+	for(var/mob/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
+		GiveRandomJob(player)
+
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -471,7 +477,21 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
-	Debug("Popcap overflow Check observer located, Player: [player]")
+	if(PopcapReached())
+		Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player
 	player.ready = 0
+
+
+/datum/subsystem/job/Recover()
+	var/oldjobs = SSjob.occupations
+	spawn(20)
+		for (var/datum/job/J in oldjobs)
+			spawn(-1)
+				var/datum/job/newjob = GetJob(J.title)
+				if (!istype(newjob))
+					return
+				newjob.total_positions = J.total_positions
+				newjob.spawn_positions = J.spawn_positions
+				newjob.current_positions = J.current_positions

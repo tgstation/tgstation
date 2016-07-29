@@ -16,13 +16,13 @@
 /obj/structure/divine/trap/Crossed(atom/movable/AM)
 	if(last_trigger + time_between_triggers > world.time)
 		return
-	alpha = 30
+	alpha = initial(alpha)
 	if(isliving(AM))
 		var/mob/living/L = AM
 		last_trigger = world.time
 		alpha = 200
 		trap_effect(L)
-		animate(src, alpha = 30, time = time_between_triggers)
+		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 
 /obj/structure/divine/trap/examine(mob/user)
@@ -31,7 +31,7 @@
 		return
 	user << "You reveal a trap!"
 	alpha = 200
-	animate(src, alpha = 30, time = time_between_triggers)
+	animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 
 /obj/structure/divine/trap/proc/trap_effect(mob/living/L)
@@ -106,6 +106,4 @@
 
 /obj/structure/divine/trap/ward/New()
 	..()
-	spawn(time_between_triggers)
-		if(src)
-			qdel(src)
+	QDEL_IN(src, time_between_triggers)

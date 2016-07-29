@@ -11,9 +11,6 @@ Hello and welcome to /tg/station's contributing page. You are here because you a
 But first we want to make it clear how you can contribute, if contributing is a new experience for you, and what powers the team has over your pull request so you do not get any surprises when submitting pull requests, and it is closed for a reason you did not anticipate.
 
 ##Getting Started
-
-####EOF settings of main repo are forbidden territory one must avoid wandering into
-
 At /tg/station we do not have a list of goals and features to add, we instead allow freedom for contributors to suggest and create their ideas for the game. That does not mean we aren't determined to squash bugs, which unfortunately pop up a lot due to the deep complexity of the game. Here are some useful getting started guides, if you want to contribute or if you want to know what challenges you can tackle with zero knowledge about the game's code structure.
 
 If you want to contribute the first thing you'll need to do is [set up Git](http://tgstation13.org/wiki/Setting_up_git) so you can download the source code.
@@ -44,7 +41,7 @@ Maintainers can revert your changes if they feel they are not worth maintaining 
 
 As mentioned before, you are expected to follow these specifications in order to make everyone's lives easier, it will also save you and us time, with having to make the changes and us having to tell you what to change. Thank you for reading this section.
 
-###Object Oriented code 
+###Object Oriented code
 As BYOND's Dream Maker is an object oriented language, code must be object oriented when possible in order to be more flexible when adding content to it. If you are unfamiliar with this concept, it is highly recommended you look it up.
 
 ###All Byond paths must contain the full path.
@@ -66,7 +63,7 @@ datum
 				code
 			proc2()
 				code
-		
+
 		datum2
 			varname1 = 0
 			proc
@@ -102,9 +99,7 @@ The previous code made compliant:
 ```
 
 ###No overriding type safety checks.
-The use of the : operator to override type safety checks is strongly discouraged. You must cast the variable to the proper type.
-
-Exceptions are only made when used in loops that require the performance boost from being called ***extremely*** often. (Rule of thumb: If you aren't messing with the master controller or it's subsystems, this exception probably doesn't apply)
+The use of the : operator to override type safety checks is not allowed. You must cast the variable to the proper type.
 
 ###Type paths must began with a /
 eg: `/datum/thing` not `datum/thing`
@@ -138,9 +133,20 @@ Copying code from one place to another maybe suitable for small short time proje
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
+###Startup/Runtime tradeoffs with lists and the "hidden" init proc
+First, read the comments in this byond thread, starting here:http://www.byond.com/forum/?post=2086980&page=2#comment19776775
+
+There are two key points here:
+
+1) Defining a list in the type definition incurs a hidden proc call - init, if you must define a list at startup, do so in New() and avoid the overhead of a second call (init() and then new())
+
+2)Offsets list creation overhead to the point where the list is actually required (which for many objects, may be never at all). 
+
+Remember, this tradeoff makes sense in many cases but not all, you should think carefully about your implementation before deciding if this is an appropriate thing to do
+
 ###No magic numbers or strings
 Make these #defines with a name that more clearly states what it's for.
-	
+
 ###Control statements:
 (if,while,for,etc)
 
@@ -273,3 +279,12 @@ There is no strict process when it comes to merging pull requests, pull requests
 * If you are proposing multiple changes, which change many different aspects of the code, you are expected to section them off into different pull requests in order to make it easier to review them and to deny/accept the changes that are deemed acceptable.
 
 * If your pull request is accepted, the code you add no longer belongs exclusively to you but to everyone; everyone is free to work on it, but you are also free to object to any changes being made, which will be noted by a Project Lead or Project Manager. It is a shame this has to be explicitly said, but there have been cases where this would've saved some trouble.
+
+## Banned content
+Do not add any of the following in a Pull Request or risk getting the PR closed:
+ - National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
+
+##A word on git
+Yes we know that the files have a tonne of mixed windows and linux line endings, attempts to fix this have been met with less than stellar success and as such we have decided to give up caring until such a time as it matters.
+
+Therefore EOF settings of main repo are forbidden territory one must avoid wandering into

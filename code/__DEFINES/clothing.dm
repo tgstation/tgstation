@@ -33,7 +33,7 @@
 #define slot_s_store		17
 #define slot_in_backpack	18
 #define slot_legcuffed		19
-#define slot_drone_storage	20
+#define slot_generic_dextrous_storage	20
 
 #define slots_amt			20 // Keep this up to date!
 

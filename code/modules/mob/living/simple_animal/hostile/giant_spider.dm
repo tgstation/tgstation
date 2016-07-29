@@ -206,7 +206,7 @@
 				choices += O
 		cocoon_target = input(src,"What do you wish to cocoon?") in null|choices
 
-	if(cocoon_target && busy != SPINNING_COCOON)
+	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		busy = SPINNING_COCOON
 		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
@@ -219,26 +219,26 @@
 					C.pixel_x = cocoon_target.pixel_x
 					C.pixel_y = cocoon_target.pixel_y
 					for(var/obj/item/I in C.loc)
-						I.loc = C
+						I.forceMove(C)
 					for(var/obj/structure/S in C.loc)
 						if(!S.anchored)
-							S.loc = C
+							S.forceMove(C)
 							large_cocoon = 1
 					for(var/obj/machinery/M in C.loc)
 						if(!M.anchored)
-							M.loc = C
+							M.forceMove(C)
 							large_cocoon = 1
 					for(var/mob/living/L in C.loc)
 						if(istype(L, /mob/living/simple_animal/hostile/poison/giant_spider))
 							continue
 						large_cocoon = 1
-						L.loc = C
+						L.forceMove(C)
 						C.pixel_x = L.pixel_x
 						C.pixel_y = L.pixel_y
 						fed++
 						visible_message("<span class='danger'>\the [src] sticks a proboscis into \the [L] and sucks a viscous substance out.</span>")
-
 						break
+
 					if(large_cocoon)
 						C.icon_state = pick("cocoon_large1","cocoon_large2","cocoon_large3")
 		cocoon_target = null

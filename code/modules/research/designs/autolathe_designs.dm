@@ -292,7 +292,7 @@
 	id = "plant_analyzer"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
-	build_path = /obj/item/device/analyzer/plant_analyzer
+	build_path = /obj/item/device/plant_analyzer
 	category = list("initial","Misc")
 
 /datum/design/shovel
@@ -711,3 +711,20 @@
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/wallframe/turret_control
 	category = list("initial", "Construction")
+
+/datum/design/conveyor_belt
+	name = "Conveyor belt"
+	id = "conveyor_belt"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000)
+	build_path = /obj/item/conveyor_construct
+	category = list("initial", "Construction")
+
+/datum/design/conveyor_switch
+	name = "Conveyor belt switch"
+	id = "conveyor_switch"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 450, MAT_GLASS = 190)
+	build_path = /obj/item/conveyor_switch_construct
+	category = list("initial", "Construction")
+

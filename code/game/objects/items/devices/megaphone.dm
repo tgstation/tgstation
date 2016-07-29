@@ -39,12 +39,12 @@
 	if ((src.loc == user && user.stat == 0))
 		if(emagged)
 			if(insults)
-				user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <span class='[voicespan]'>\"[pick(insultmsg)]\"</span>")
+				user.say(pick(insultmsg),"machine", list(voicespan))
 				insults--
 			else
 				user << "<span class='warning'>*BZZZZzzzzzt*</span>"
 		else
-			user.audible_message("<B>[user.GetVoice()]</B> broadcasts, <span class='[voicespan]'>\"[message]\"</span>")
+			user.say(message,"machine", list(voicespan))
 
 		playsound(loc, 'sound/items/megaphone.ogg', 100, 0, 1)
 		spamcheck = world.time + 50

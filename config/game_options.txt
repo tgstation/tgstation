@@ -197,9 +197,12 @@ EVENTS_MIN_PLAYERS_MUL 1
 ALLOW_AI
 
 ### Secborg ###
-## Uncomment to prevent the secborg module from being chosen
+## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
 
+### Peacekeeper Borg ###
+## Uncomment to prevent the peacekeeper cyborg module from being chosen
+#DISABLE_PEACEBORG
 
 ### AWAY MISSIONS ###
 
@@ -309,7 +312,8 @@ ROUNDSTART_RACES plasmaman
 ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
-STARLIGHT
+## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
+#STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS

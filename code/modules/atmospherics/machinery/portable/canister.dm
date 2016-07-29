@@ -28,6 +28,7 @@
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 	)
@@ -56,6 +57,11 @@
 	name = "agent b canister"
 	desc = "Oxygen Agent B. You're not quite sure what it does."
 	gas_type = "agent_b"
+/obj/machinery/portable_atmospherics/canister/bz
+	name = "BZ canister"
+	desc = "BZ, a powerful hallucinogenic nerve agent."
+	icon_state = "purple"
+	gas_type = "bz"
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide
 	name = "n2o canister"
 	desc = "Nitrous oxide gas. Known to cause drowsiness."
@@ -103,7 +109,7 @@
 #define DANGER 32
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
-		overlays.Cut()
+		cut_overlays()
 		icon_state = "[initial(icon_state)]-1"
 		return
 
@@ -127,19 +133,19 @@
 	if(update == last_update)
 		return
 
-	overlays.Cut()
+	cut_overlays()
 	if(update & HOLDING)
-		overlays += "can-open"
+		add_overlay("can-open")
 	if(update & CONNECTED)
-		overlays += "can-connector"
+		add_overlay("can-connector")
 	if(update & EMPTY)
-		overlays += "can-o0"
+		add_overlay("can-o0")
 	else if(update & LOW)
-		overlays += "can-o1"
+		add_overlay("can-o1")
 	else if(update & FULL)
-		overlays += "can-o2"
+		add_overlay("can-o2")
 	else if(update & DANGER)
-		overlays += "can-o3"
+		add_overlay("can-o3")
 #undef HOLDING
 #undef CONNECTED
 #undef EMPTY
@@ -205,6 +211,10 @@
 
 /obj/machinery/portable_atmospherics/canister/blob_act(obj/effect/blob/B)
 	take_damage(100, BRUTE, 0)
+
+/obj/machinery/portable_atmospherics/canister/burn()
+	take_damage(health, BURN, 1)
+	..()
 
 /obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -297,9 +307,10 @@
 				if(!holding)
 					var/plasma = air_contents.gases["plasma"]
 					var/n2o = air_contents.gases["n2o"]
-					if(n2o || plasma)
-						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [x], [y], [z]")
+					var/bz = air_contents.gases["bz"]
+					if(n2o || plasma || bz)
+						message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
+						log_admin("[key_name(usr)] opened a canister that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""][(n2o || plasma) && bz ? " & " : ""][bz ? "BZ" : ""] at [x], [y], [z]")
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, "atmos")

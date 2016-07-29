@@ -12,6 +12,7 @@
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH
 	var/aggressiveness = 2
 	var/cooldown_special
 	var/recent_uses = 0
@@ -23,7 +24,7 @@
 	actions_types = list(/datum/action/item_action/halt)
 	icon_state = "swat"
 	aggressiveness = 3
-	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS
+	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR
 	visor_flags_inv = 0
 
 /obj/item/clothing/mask/gas/sechailer/cyborg
@@ -47,7 +48,7 @@
 				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
 			user << "<span class='danger'>You broke the restrictor!</span>"

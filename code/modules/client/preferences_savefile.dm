@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	8
+#define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	14
+#define SAVEFILE_VERSION_MAX	16
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -31,7 +31,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	return -1
 
 
-/datum/preferences/proc/update_antagchoices(current_version)
+/datum/preferences/proc/update_antagchoices(current_version, savefile/S)
 	if((!islist(be_special) || old_be_special ) && current_version < 12)
 		//Archived values of when antag pref defines were a bitfield+fitflags
 		var/B_traitor = 1
@@ -47,11 +47,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/B_ninja = 1024
 		var/B_monkey = 2048
 		var/B_gang = 4096
-		var/B_shadowling = 8192
 		var/B_abductor = 16384
-		var/B_revenant = 32768
 
-		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_shadowling,B_abductor,B_revenant)
+		var/list/archived = list(B_traitor,B_operative,B_changeling,B_wizard,B_malf,B_rev,B_alien,B_pai,B_cultist,B_blob,B_ninja,B_monkey,B_gang,B_abductor)
 
 		be_special = list()
 
@@ -85,15 +83,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_MONKEY
 					if(4096)
 						be_special += ROLE_GANG
-					if(8192)
-						be_special += ROLE_SHADOWLING
 					if(16384)
 						be_special += ROLE_ABDUCTOR
-					if(32768)
-						be_special += ROLE_REVENANT
 
 
-/datum/preferences/proc/update_preferences(current_version)
+/datum/preferences/proc/update_preferences(current_version, savefile/S)
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
 	if(current_version < 11)
@@ -101,6 +95,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		toggles = TOGGLES_DEFAULT
 	if(current_version < 12)
 		ignoring = list()
+	if(current_version < 15)
+		toggles |= SOUND_ANNOUNCEMENTS
+	
 
 //should this proc get fairly long (say 3 versions long),
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -108,65 +105,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //from this proc.
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
-/datum/preferences/proc/update_character(current_version)
-	if(current_version < 9)		//an example, underwear were an index for a hardcoded list, converting to a string
-		if(gender == MALE)
-			switch(underwear)
-				if(1)
-					underwear = "Mens White"
-				if(2)
-					underwear = "Mens Grey"
-				if(3)
-					underwear = "Mens Green"
-				if(4)
-					underwear = "Mens Blue"
-				if(5)
-					underwear = "Mens Black"
-				if(6)
-					underwear = "Mankini"
-				if(7)
-					underwear = "Mens Hearts Boxer"
-				if(8)
-					underwear = "Mens Black Boxer"
-				if(9)
-					underwear = "Mens Grey Boxer"
-				if(10)
-					underwear = "Mens Striped Boxer"
-				if(11)
-					underwear = "Mens Kinky"
-				if(12)
-					underwear = "Mens Red"
-				if(13)
-					underwear = "Nude"
-		else
-			switch(underwear)
-				if(1)
-					underwear = "Ladies Red"
-				if(2)
-					underwear = "Ladies White"
-				if(3)
-					underwear = "Ladies Yellow"
-				if(4)
-					underwear = "Ladies Blue"
-				if(5)
-					underwear = "Ladies Black"
-				if(6)
-					underwear = "Ladies Thong"
-				if(7)
-					underwear = "Babydoll"
-				if(8)
-					underwear = "Ladies Baby-Blue"
-				if(9)
-					underwear = "Ladies Green"
-				if(10)
-					underwear = "Ladies Pink"
-				if(11)
-					underwear = "Ladies Kinky"
-				if(12)
-					underwear = "Tankini"
-				if(13)
-					underwear = "Nude"
-
+/datum/preferences/proc/update_character(current_version, savefile/S)
 	if(pref_species && !(pref_species.id in roundstart_species))
 		var/rando_race = pick(config.roundstart_races)
 		pref_species = new rando_race()
@@ -177,6 +116,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				backbag = DSATCHEL
 			else
 				backbag = DBACKPACK
+	if(current_version < 16)
+		var/berandom
+		S["userandomjob"] >> berandom
+		if (berandom)
+			joblessrole = BERANDOMJOB
+		else
+			joblessrole = BEASSISTANT
+		
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -223,13 +170,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
-	S["adminmusicvolume"]	>> adminmusicvolume
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
-		update_preferences(needs_update)		//needs_update = savefile_version if we need an update (positive integer)
-		update_antagchoices(needs_update)
+		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
+		update_antagchoices(needs_update, S)
 
 	//Sanitize
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
@@ -275,7 +221,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["preferred_map"]		<< preferred_map
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
-	S["adminmusicvolume"]	<< adminmusicvolume
 	S["inquisitive_ghost"]	<< inquisitive_ghost
 
 	return 1
@@ -352,7 +297,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["deity_name"]			>> custom_names["deity"]
 
 	//Jobs
-	S["userandomjob"]		>> userandomjob
+	S["joblessrole"]		>> joblessrole
 	S["job_civilian_high"]	>> job_civilian_high
 	S["job_civilian_med"]	>> job_civilian_med
 	S["job_civilian_low"]	>> job_civilian_low
@@ -365,7 +310,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
-		update_character(needs_update)		//needs_update == savefile_version if we need an update (positive integer)
+		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -404,7 +349,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 
-	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
+	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
 	job_civilian_low = sanitize_integer(job_civilian_low, 0, 65535, initial(job_civilian_low))
@@ -462,7 +407,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["deity_name"]			<< custom_names["deity"]
 
 	//Jobs
-	S["userandomjob"]		<< userandomjob
+	S["joblessrole"]		<< joblessrole
 	S["job_civilian_high"]	<< job_civilian_high
 	S["job_civilian_med"]	<< job_civilian_med
 	S["job_civilian_low"]	<< job_civilian_low

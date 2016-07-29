@@ -10,7 +10,7 @@
 	unacidable = 1
 	use_power = 0
 	luminosity = 4
-	layer = OBJ_LAYER + 0.1
+	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 

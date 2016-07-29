@@ -26,8 +26,6 @@ var/sound/admin_sound
 		
 	for(var/mob/M in player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			var/vol = M.client.prefs.adminmusicvolume
-			admin_sound.volume = vol
 			M << admin_sound
 			
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

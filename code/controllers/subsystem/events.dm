@@ -2,7 +2,7 @@ var/datum/subsystem/events/SSevent
 
 /datum/subsystem/events
 	name = "Events"
-	priority = 6
+	init_order = 6
 
 	var/list/control = list()	//list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/running = list()	//list of all existing /datum/round_event
@@ -21,8 +21,6 @@ var/datum/subsystem/events/SSevent
 
 
 /datum/subsystem/events/Initialize(time, zlevel)
-	if (zlevel)
-		return ..()
 	for(var/type in typesof(/datum/round_event_control))
 		var/datum/round_event_control/E = new type()
 		if(!E.typepath)
@@ -42,8 +40,8 @@ var/datum/subsystem/events/SSevent
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
 		if(thing)
 			thing.process()
 		else

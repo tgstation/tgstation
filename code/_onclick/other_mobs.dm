@@ -60,10 +60,6 @@
 /mob/living/UnarmedAttack(atom/A)
 	A.attack_animal(src)
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
-	target = A
-	AttackingTarget()
-
 /atom/proc/attack_animal(mob/user)
 	return
 /mob/living/RestrainedClickOn(atom/A)

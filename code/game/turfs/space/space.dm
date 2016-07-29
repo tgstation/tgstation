@@ -19,14 +19,24 @@
 	update_icon()
 	air = space_gas
 
-/turf/open/space/Destroy()
-	return QDEL_HINT_LETMELIVE
+/turf/open/space/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
+/turf/open/space/attack_ghost(mob/dead/observer/user)
+	if(destination_z)
+		var/turf/T = locate(destination_x, destination_y, destination_z)
+		user.forceMove(T)
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return
 
 /turf/open/space/ChangeTurf(path)
 	. = ..()
+
+/turf/open/space/TakeTemperature(temp)
 
 /turf/open/space/AfterChange()
 	..()

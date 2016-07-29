@@ -50,7 +50,7 @@
 	desc = "These cybernetic eye implants will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
 	implant_color = "#000000"
-	origin_tech = "materials=6;programming=4;biotech=6;magnets=5"
+	origin_tech = "materials=4;programming=4;biotech=6;magnets=4"
 	dark_view = 8
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 
@@ -59,7 +59,7 @@
 	desc = "These cybernetic eye implants will give you Thermal vision. Vertical slit pupil included."
 	eye_color = "FC0"
 	implant_color = "#FFCC00"
-	origin_tech = "materials=6;programming=4;biotech=5;magnets=5;syndicate=4"
+	origin_tech = "materials=5;programming=4;biotech=4;magnets=4;syndicate=1"
 	sight_flags = SEE_MOBS
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	flash_protect = -1
@@ -93,7 +93,7 @@
 	desc = "These cybernetic eye implants will display a medical HUD over everything you see."
 	eye_color = "0ff"
 	implant_color = "#00FFFF"
-	origin_tech = "materials=4;programming=3;biotech=4"
+	origin_tech = "materials=4;programming=4;biotech=4"
 	aug_message = "You suddenly see health bars floating above people's heads..."
 	HUD_type = DATA_HUD_MEDICAL_ADVANCED
 
@@ -102,7 +102,7 @@
 	desc = "These cybernetic eye implants will display a security HUD over everything you see."
 	eye_color = "d00"
 	implant_color = "#CC0000"
-	origin_tech = "materials=4;programming=4;biotech=3;combat=1"
+	origin_tech = "materials=4;programming=4;biotech=3;combat=3"
 	aug_message = "Job indicator icons pop up in your vision. That is not a certified surgeon..."
 	HUD_type = DATA_HUD_SECURITY_ADVANCED
 
@@ -112,7 +112,7 @@
 	name = "welding shield implant"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."
 	slot = "eye_shield"
-	origin_tech = "materials=4;biotech=3"
+	origin_tech = "materials=4;biotech=3;engineering=4;plasmatech=3"
 	implant_color = "#101010"
 	flash_protect = 2
 	aug_message = null

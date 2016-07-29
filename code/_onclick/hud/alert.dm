@@ -240,6 +240,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "blobbernaut_nofactory"
 	alerttooltipstyle = "blob"
 
+// CLOCKCULT
+/obj/screen/alert/nocache
+	name = "No Tinkerer's Cache"
+	desc = "In order to share components and unlock higher tier \
+		scripture, a tinkerer's cache must be constructed somewhere \
+		in the world. Try to place it somewhere accessible, yet hidden."
+	icon_state = "nocache"
+
 //GUARDIANS
 
 /obj/screen/alert/cancharge
@@ -297,6 +305,23 @@ so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
 
+/obj/screen/alert/hackingapc
+	name = "Hacking APC"
+	desc = "An Area Power Controller is being hacked. When the process is \
+		complete, you will have exclusive control of it, and you will gain \
+		additional processing time to unlock more malfunction abilities."
+	icon_state = "hackingapc"
+	timeout = 600
+	var/atom/target = null
+
+/obj/screen/alert/hackingapc/Click()
+	if(!usr || !usr.client) return
+	if(!target) return
+	var/mob/living/silicon/ai/AI = usr
+	var/turf/T = get_turf(target)
+	if(T)
+		AI.eyeobj.setLoc(T)
+
 //MECHS
 
 /obj/screen/alert/low_mech_integrity
@@ -318,25 +343,28 @@ so as to remain in compliance with the most up-to-date laws."
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
-/obj/screen/alert/notify_jump
+/obj/screen/alert/notify_action
 	name = "Body created"
 	desc = "A body was created. You can enter it."
 	icon_state = "template"
 	timeout = 300
-	var/atom/jump_target = null
-	var/attack_not_jump = null
+	var/atom/target = null
+	var/action = NOTIFY_JUMP
 
-/obj/screen/alert/notify_jump/Click()
+/obj/screen/alert/notify_action/Click()
 	if(!usr || !usr.client) return
-	if(!jump_target) return
+	if(!target) return
 	var/mob/dead/observer/G = usr
 	if(!istype(G)) return
-	if(attack_not_jump)
-		jump_target.attack_ghost(G)
-	else
-		var/turf/T = get_turf(jump_target)
-		if(T && isturf(T))
-			G.loc = T
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(G)
+		if(NOTIFY_JUMP)
+			var/turf/T = get_turf(target)
+			if(T && isturf(T))
+				G.loc = T
+		if(NOTIFY_ORBIT)
+			G.ManualFollow(target)
 
 //OBJECT-BASED
 

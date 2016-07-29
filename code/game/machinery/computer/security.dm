@@ -60,7 +60,7 @@
 					dat += {"
 
 		<head>
-			<script src="libraries.min.js"></script>
+			<script src="jquery.min.js"></script>
 			<script type='text/javascript'>
 
 				function updateSearch(){
@@ -246,7 +246,7 @@
 					else
 						dat += "Security Record Lost!<br>"
 						dat += text("<A href='?src=\ref[];choice=New Record (Security)'>New Security Record</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=\ref[];choice=Print Record'>Print Record</A><br>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
+					dat += text("<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><br><A href='?src=\ref[];choice=Print Record'>Print Record</A><BR><A href='?src=\ref[];choice=Print Poster'>Print Wanted Poster</A><BR><A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src, src)
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
@@ -417,6 +417,36 @@ What a mess.*/
 						P.name = text("SR-[] '[]'", data_core.securityPrintCount, "Record Lost")
 					P.info += "</TT>"
 					printing = null
+			if("Print Poster")
+				if(!( printing ))
+					var/wanted_name = stripped_input(usr, "Please enter an alias for the criminal:", "Print Wanted Poster", active1.fields["name"])
+					if(wanted_name)
+						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
+						var/list/major_crimes = active2.fields["ma_crim"]
+						var/list/minor_crimes = active2.fields["mi_crim"]
+						if(major_crimes.len + minor_crimes.len)
+							default_description += "\n[wanted_name] is wanted for the following crimes:\n"
+						if(minor_crimes.len)
+							default_description += "\nMinor Crimes:"
+							for(var/datum/data/crime/c in active2.fields["mi_crim"])
+								default_description += "\n[c.crimeName]\n"
+								default_description += "[c.crimeDetails]\n"
+						if(major_crimes.len)
+							default_description += "\nMajor Crimes:"
+							for(var/datum/data/crime/c in active2.fields["ma_crim"])
+								default_description += "\n[c.crimeName]\n"
+								default_description += "[c.crimeDetails]\n"
+
+						var/info = stripped_multiline_input(usr, "Please input a description for the poster:", "Print Wanted Poster", default_description, null)
+						if(info)
+							playsound(loc, 'sound/items/poster_being_created.ogg', 100, 1)
+							printing = 1
+							sleep(30)
+							if((istype(active1, /datum/data/record) && data_core.general.Find(active1)))//make sure the record still exists.
+								var/obj/item/weapon/photo/photo = active1.fields["photo_front"]
+								new /obj/item/weapon/poster/legit/wanted(src.loc, photo.img, wanted_name, info)
+							printing = 0
+
 //RECORD DELETE
 			if("Delete All Records")
 				temp = ""

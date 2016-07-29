@@ -40,6 +40,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/r_n_d/destructive_analyzer/disconnect_console()
+	linked_console.linked_destroy = null
+	..()
+
 /obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != "harm")
 		. = 1
@@ -61,5 +65,5 @@ Note: Must be placed within 3 tiles of the R&D Console
 		user << "<span class='notice'>You add the [O.name] to the [src.name]!</span>"
 		flick("d_analyzer_la", src)
 		spawn(10)
+			icon_state = "d_analyzer_l"
 			busy = 0
-

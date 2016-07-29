@@ -1,7 +1,7 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability) //0 = Summon Guns, 1 = Summon Magic
-	var/list/gunslist 			= list("taser","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
+	var/list/gunslist 			= list("taser","gravgun","egun","laser","revolver","detective","c20r","nuclear","deagle","gyrojet","pulse","suppressed","cannon","doublebarrel","shotgun","combatshotgun","bulldog","mateba","sabr","crossbow","saw","car","boltaction","speargun","arg","uzi","alienpistol","dragnet","turret","pulsecarbine","decloner","mindflayer","hyperkinetic","advplasmacutter","wormhole","wt550","bulldog","grenadelauncher","goldenrevolver","sniper","medibeam","scatterbeam")
 	var/list/magiclist 			= list("fireball","smoke","blind","mindswap","forcewall","knock","horsemask","charge", "summonitem", "wandnothing", "wanddeath", "wandresurrection", "wandpolymorph", "wandteleport", "wanddoor", "wandfireball", "staffchange", "staffhealing", "armor", "scrying","staffdoor","voodoo", "special")
 	var/list/magicspeciallist	= list("staffchange","staffanimation", "wandbelt", "contract", "staffchaos", "necromantic")
 
@@ -24,10 +24,7 @@
 			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
 			H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
-			var/obj_count = 1
-			for(var/datum/objective/OBJ in H.mind.objectives)
-				H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-				obj_count++
+			H.mind.announce_objectives()
 		var/randomizeguns 			= pick(gunslist)
 		var/randomizemagic 			= pick(magiclist)
 		var/randomizemagicspecial 	= pick(magicspeciallist)
@@ -112,11 +109,13 @@
 				if("goldenrevolver")
 					G = new /obj/item/weapon/gun/projectile/revolver/golden(get_turf(H))
 				if("sniper")
-					G = new /obj/item/weapon/gun/projectile/sniper_rifle(get_turf(H))
+					G = new /obj/item/weapon/gun/projectile/automatic/sniper_rifle(get_turf(H))
 				if("medibeam")
 					G = new /obj/item/weapon/gun/medbeam(get_turf(H))
 				if("scatterbeam")
 					G = new /obj/item/weapon/gun/energy/laser/scatter(get_turf(H))
+				if("gravgun")
+					G = new /obj/item/weapon/gun/energy/gravity_gun(get_turf(H))
 			G.unlock()
 			playsound(get_turf(H),'sound/magic/Summon_guns.ogg', 50, 1)
 

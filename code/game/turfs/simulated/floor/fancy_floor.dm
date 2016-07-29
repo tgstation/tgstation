@@ -24,6 +24,9 @@
 /turf/open/floor/wood/cold
 	temperature = 255.37
 
+/turf/open/floor/wood/airless
+	initial_gas_mix = "TEMP=2.7"
+
 /turf/open/floor/grass
 	name = "Grass patch"
 	icon_state = "grass"
@@ -69,6 +72,9 @@
 		if(smooth)
 			queue_smooth_neighbors(src)
 
+/turf/open/floor/carpet/narsie_act()
+	return
+
 /turf/open/floor/carpet/break_tile()
 	broken = 1
 	update_icon()
@@ -77,6 +83,13 @@
 	burnt = 1
 	update_icon()
 
+/turf/open/floor/carpet/carpetsymbol
+	icon_state = "carpetsymbol"
+	smooth = SMOOTH_FALSE
+
+/turf/open/floor/carpet/carpetsymbol2
+	icon_state = "carpetstar"
+	smooth = SMOOTH_FALSE
 
 
 /turf/open/floor/fakespace

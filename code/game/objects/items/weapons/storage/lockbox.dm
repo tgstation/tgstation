@@ -27,6 +27,7 @@
 			if(locked)
 				icon_state = icon_locked
 				user << "<span class='danger'>You lock the [src.name]!</span>"
+				close_all()
 				return
 			else
 				icon_state = icon_closed
@@ -76,14 +77,14 @@
 	return ..()
 
 /obj/item/weapon/storage/lockbox/loyalty
-	name = "lockbox of loyalty implants"
+	name = "lockbox of mindshield implants"
 	req_access = list(access_security)
 
 /obj/item/weapon/storage/lockbox/loyalty/New()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/implantcase/loyalty(src)
-	new /obj/item/weapon/implanter/loyalty(src)
+		new /obj/item/weapon/implantcase/mindshield(src)
+	new /obj/item/weapon/implanter/mindshield(src)
 
 
 /obj/item/weapon/storage/lockbox/clusterbang

@@ -54,7 +54,7 @@
 	return 0
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
-	if(prob(15/severity))
+	if(prob(15/severity) && owner)
 		owner << "<span class='warning'>[src] is hit by EMP!</span>"
 		// give the owner an idea about why his implant is glitching
 		Retract()
@@ -149,7 +149,7 @@
 	name = "arm-mounted laser implant"
 	desc = "A variant of the arm cannon implant that fires lethal laser beams. The cannon emerges from the subject's arm and remains inside when not in use."
 	icon_state = "arm_laser"
-	origin_tech = "materials=5;combat=5;biotech=4;powerstorage=4;syndicate=5"//this is kinda nutty and i might lower it
+	origin_tech = "materials=4;combat=4;biotech=4;powerstorage=4;syndicate=3"
 	holder = /obj/item/weapon/gun/energy/laser/mounted
 
 /obj/item/organ/cyberimp/arm/gun/laser/l/zone = "l_arm"
@@ -168,7 +168,7 @@
 /obj/item/organ/cyberimp/arm/toolset
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all neccessary tools."
-	origin_tech = "materials=5;engineering=5;biotech=4;powerstorage=3"
+	origin_tech = "materials=3;engineering=4;biotech=3;powerstorage=4"
 	contents = newlist(/obj/item/weapon/screwdriver/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/weldingtool/largetank/cyborg,
 		/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
 

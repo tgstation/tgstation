@@ -5,6 +5,7 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	w_class = 1
+	origin_tech = "engineering=2;bluespace=1"
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/syndie = 0
@@ -14,7 +15,7 @@
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"
 	channels = list("Syndicate" = 1)
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=1;engineering=3;bluespace=2"
 	syndie = 1//Signifies that it de-crypts Syndicate transmissions
 
 /obj/item/device/encryptionkey/binary
@@ -22,7 +23,7 @@
 	desc = "An encryption key for a radio headset.  To access the binary channel, use :b."
 	icon_state = "cypherkey"
 	translate_binary = 1
-	origin_tech = "syndicate=3"
+	origin_tech = "syndicate=3;engineering=4;bluespace=3"
 
 /obj/item/device/encryptionkey/headset_sec
 	name = "security radio encryption key"

@@ -141,6 +141,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
+/obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
+	. = ..()
+	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
+		listening_level = T1.z
+
 /obj/machinery/telecomms/initialize()
 	if(autolinkers.len)
 		// Links nearby machines

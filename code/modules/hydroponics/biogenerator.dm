@@ -24,7 +24,7 @@
 /obj/item/weapon/circuitboard/machine/biogenerator
 	name = "circuit board (Biogenerator)"
 	build_path = /obj/machinery/biogenerator
-	origin_tech = "programming=3;biotech=2;materials=3"
+	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1,
@@ -401,4 +401,3 @@
 	else if(href_list["menu"])
 		menustat = "menu"
 		updateUsrDialog()
-
