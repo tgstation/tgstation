@@ -1,310 +1,604 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/template_noop,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "c" = (
-/turf/closed/wall/mineral/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/turf/closed/wall/rust{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/area/ruin/unpowered)
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "d" = (
-/obj/effect/light_emitter,
-/mob/living/simple_animal/hostile/spawner/ash_walker,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/structure/rack,
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -5;
+	pixel_y = 5
 	},
-/area/ruin/unpowered)
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "e" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/human/ash_walker,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/structure/rack,
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -5;
+	pixel_y = 5
 	},
-/area/ruin/unpowered)
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/weapon/twohanded/spear{
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "f" = (
+/obj/structure/closet/crate,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
+/obj/item/device/flashlight/lantern,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "g" = (
-/obj/effect/mob_spawn/human/ash_walker,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
 	},
-/area/ruin/unpowered)
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "h" = (
-/obj/effect/decal/cleanable/blood,
-/obj/item/device/flashlight/lantern,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
 "i" = (
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"j" = (
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/structure/closet/crate/internals,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/box/rxglasses,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"k" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"l" = (
-/obj/structure/closet/crate/radiation,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/lantern,
-/obj/item/device/flashlight/flare,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"m" = (
-/obj/structure/closet/crate/medical,
-/obj/item/device/malf_upgrade,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"n" = (
-/obj/structure/closet/crate/hydroponics,
-/obj/item/weapon/storage/belt,
-/obj/item/weapon/scythe,
-/obj/item/seeds/glowshroom,
-/obj/item/seeds/glowshroom,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"o" = (
-/obj/item/device/flashlight/lantern,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"p" = (
-/obj/item/device/flashlight/seclite,
-/obj/item/device/flashlight,
-/obj/structure/closet/crate,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"q" = (
-/obj/item/device/flashlight/flare,
-/obj/item/device/flashlight/seclite,
-/obj/item/device/flashlight/seclite,
-/obj/item/device/flashlight,
-/obj/structure/closet/crate,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/obj/item/device/flashlight,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"r" = (
-/turf/closed/wall/mineral/iron{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"s" = (
-/obj/item/weapon/twohanded/spear,
-/obj/structure/mineral_door/iron,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"t" = (
-/obj/structure/mineral_door/iron,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"u" = (
-/obj/structure/closet/crate/engineering,
-/obj/item/weapon/rcd/loaded,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"v" = (
-/obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/reagent_containers/blood/random,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"w" = (
-/obj/machinery/the_singularitygen,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"x" = (
-/obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "minibar_left";
-	name = "skeletal minibar"
-	},
-/obj/item/stack/sheet/cloth/ten,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"y" = (
-/obj/structure/rack{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "minibar_right";
-	name = "skeletal minibar"
-	},
-/obj/item/clothing/head/helmet/roman/legionaire,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"z" = (
-/obj/item/weapon/shovel,
-/obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"A" = (
-/obj/structure/closet/crate,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"B" = (
-/obj/structure/table_frame,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"C" = (
-/obj/structure/table/optable,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"D" = (
-/obj/item/device/flashlight,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"E" = (
+/obj/structure/table,
 /obj/item/weapon/storage/toolbox/syndicate,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
-"F" = (
-/obj/structure/closet/crate/miningcar,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"j" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"G" = (
-/obj/item/weapon/twohanded/spear,
-/obj/structure/rack,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
-/obj/item/weapon/twohanded/spear,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"k" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"l" = (
+/obj/item/weapon/ore/silver{
+	pixel_x = -7;
+	pixel_y = 11
 	},
-/area/ruin/unpowered)
-"H" = (
-/obj/item/weapon/twohanded/spear,
-/obj/structure/rack,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"I" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"m" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	blocks_air = 1
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
-"J" = (
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"n" = (
+/obj/item/weapon/shovel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"o" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/pickaxe,
+/obj/item/weapon/rcd/loaded,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/obj/item/weapon/shovel,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"p" = (
+/obj/item/device/flashlight/lantern{
+	icon_state = "lantern-on";
+	item_state = "lantern-on";
+	on = 1
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"q" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = 9;
+	pixel_y = -7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"r" = (
+/obj/structure/closet/crate/miningcar{
+	desc = "A mining car.";
+	name = "Mining car"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"s" = (
 /turf/closed/wall/mineral/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},
-/area/lavaland/surface/outdoors)
-"K" = (
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=13;n2=24;TEMP=300"
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"t" = (
+/obj/item/weapon/bedsheet,
+/obj/item/weapon/bedsheet{
+	pixel_x = 20;
+	pixel_y = 2
 	},
-/area/lavaland/surface/outdoors)
-"L" = (
-/obj/item/weapon/twohanded/spear,
-/obj/structure/table,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/item/weapon/bedsheet{
+	pixel_x = 8;
+	pixel_y = 6
 	},
-/area/ruin/unpowered)
-"M" = (
-/obj/item/weapon/pickaxe,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "o2=13;n2=24;TEMP=300"
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = 9;
+	pixel_y = -3
 	},
-/area/lavaland/surface/outdoors)
-"N" = (
-/obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"R" = (
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -5;
+	pixel_y = 20
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -11;
+	pixel_y = 18
+	},
+/obj/effect/decal/cleanable/pie_smudge{
+	desc = "Those ashwalker eggs have to come from somewhere, after all.";
+	icon_state = "smashed_pie";
+	name = "white stain"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"u" = (
+/obj/item/weapon/bedsheet,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"v" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor3";
+	icon_state = "floor3"
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/sinew,
+/obj/item/stack/sheet/bone,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"w" = (
+/obj/effect/mob_spawn/human/ash_walker,
+/obj/effect/decal/cleanable/blood,
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
-"Q" = (
-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"x" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 12;
+	pixel_y = 20
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -5;
+	pixel_y = 16
+	},
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
-"P" = (
-/obj/machinery/iv_drip,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"y" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
 /turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/ruin/unpowered)
-"O" = (
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"z" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	desc = "A goliath tamed by the ashwalkers by unknown means. It has been trained to fight only hostile non-humanoids.";
+	faction = list("neutral","ashwalker");
+	name = "tamed goliath"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"A" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor6";
+	icon_state = "floor6"
+	},
+/obj/effect/light_emitter,
+/obj/effect/decal/cleanable/cobweb2,
+/mob/living/simple_animal/hostile/spawner/ash_walker,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"B" = (
+/obj/item/weapon/bedsheet{
+	pixel_x = 14;
+	pixel_y = 0
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/weapon/bedsheet{
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -10;
+	pixel_y = 11
+	},
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = -4;
+	pixel_y = -8
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"C" = (
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/glass/bowl{
+	pixel_x = 3;
+	pixel_y = 9
+	},
 /obj/item/weapon/reagent_containers/glass/bowl,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath{
+	pixel_x = 3;
+	pixel_y = 14
 	},
-/area/ruin/unpowered)
+/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath{
+	pixel_y = 3
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"D" = (
+/obj/item/weapon/bedsheet,
+/obj/item/stack/sheet/cloth{
+	layer = 4;
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/weapon/bedsheet{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/glass/rag{
+	layer = 4;
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"E" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor3";
+	icon_state = "floor3"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"F" = (
+/obj/structure/mineral_door/iron,
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor2";
+	icon_state = "floor2"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"G" = (
+/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"H" = (
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor4";
+	icon_state = "floor4"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"I" = (
+/obj/effect/mob_spawn/human/ash_walker,
+/obj/effect/decal/cleanable/blood{
+	tag = "icon-floor2";
+	icon_state = "floor2"
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"J" = (
+/obj/structure/chair{
+	tag = "icon-chair (WEST)";
+	icon_state = "chair";
+	dir = 8
+	},
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"K" = (
+/obj/effect/mob_spawn/human/ash_walker,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"L" = (
+/obj/item/weapon/pickaxe,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"M" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/wirecutters{
+	icon_state = "cutters_red"
+	},
+/obj/item/weapon/weldingtool,
+/obj/item/weapon/kitchen/knife,
+/obj/item/weapon/hatchet,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"N" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/obj/item/weapon/ore/iron,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"O" = (
+/obj/item/weapon/ore/iron{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/weapon/ore/silver{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"P" = (
+/obj/structure/closet/crate,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/weapon/storage/firstaid/regular,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"Q" = (
+/obj/structure/table/optable,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/engine/cult{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaycontent/a2{
+	has_gravity = 1;
+	name = "Ashwalker Nest 1"
+	})
+"R" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 a
@@ -312,18 +606,23 @@ a
 a
 a
 a
-b
-b
-a
-a
 a
 a
 a
 b
-J
-J
 b
-K
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
 a
 "}
 (2,1,1) = {"
@@ -332,239 +631,299 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-F
-K
-K
 b
 b
 b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
 "}
 (3,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 b
 a
 a
 a
-a
-a
-a
-a
-c
-c
-c
-c
-r
-r
-r
-b
-b
-b
 "}
 (4,1,1) = {"
 a
 a
-a
-a
-a
-c
-c
-c
-c
-u
-A
-C
-G
-L
-r
-K
 b
 b
+b
+b
+b
+b
+b
+c
+c
+c
+c
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
 "}
 (5,1,1) = {"
 a
-a
+b
+b
+b
+b
+b
+b
+b
+b
 c
+t
+x
+c
+c
+b
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+c
+c
+c
+c
+b
+b
+c
+u
+h
+B
+c
+b
+b
+j
+b
+b
+b
+b
+a
+a
+"}
+(7,1,1) = {"
+b
+b
+c
+c
+f
+f
+c
+b
+b
+c
+g
+h
+C
+c
+b
+n
+j
+N
+b
+b
+b
+b
+a
+"}
+(8,1,1) = {"
+b
+b
+c
+d
+g
+h
+c
+b
+b
+c
+h
+h
+D
+c
+b
+j
+L
+p
+b
+b
+b
+b
+a
+"}
+(9,1,1) = {"
+b
+b
+c
+e
+h
+h
+c
+b
+b
+c
+m
 c
 c
 c
 j
-m
-r
-v
-P
-R
-f
-L
-r
-b
-b
-b
-"}
-(6,1,1) = {"
-a
-a
-c
-d
-e
-i
-f
-n
-r
-w
-f
-D
-H
-H
-r
-b
-b
-b
-"}
-(7,1,1) = {"
-a
-a
-c
-e
-h
-f
-k
-f
-s
-f
-f
-f
-r
-r
-r
-b
-K
-b
-"}
-(8,1,1) = {"
-a
-a
-c
-f
-i
-f
-f
-o
-t
-f
-k
-f
-I
-K
-b
-b
-b
-b
-"}
-(9,1,1) = {"
-a
-a
-c
-g
-f
+j
+j
 O
-f
-p
-r
-x
-Q
-f
-r
 b
 b
-K
-K
-K
+b
+b
+a
 "}
 (10,1,1) = {"
-a
-a
+b
+b
 c
 c
-c
-c
-l
-q
-r
-y
-f
-f
-r
-K
+i
+h
+m
+j
+b
+b
+j
+b
+b
+j
+j
+j
+b
+b
+b
 b
 b
 b
 b
 "}
 (11,1,1) = {"
-a
-a
-a
-a
-a
+b
+b
+b
 c
 c
 c
 c
-z
-B
-E
-r
-M
+j
+j
+j
+j
+b
+b
+j
+b
+b
+b
+b
+b
 b
 b
 b
 b
 "}
 (12,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-c
-c
-c
-c
-r
-N
 b
-K
+b
+b
+b
+b
+b
+b
+b
+j
+j
+j
+j
+j
+j
+b
+c
+c
+c
+c
+b
+b
 b
 b
 "}
 (13,1,1) = {"
 b
 b
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+b
+b
+b
+b
+b
+o
+j
+j
+j
+b
+j
+j
+b
+c
+M
+P
+c
+c
+b
+b
+b
 "}
 (14,1,1) = {"
 b
@@ -572,11 +931,266 @@ b
 b
 b
 b
+b
+b
+p
+j
+j
+b
+b
+b
+j
+j
+m
+h
+h
+P
+c
+b
+b
+b
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+b
+n
+j
+j
+r
+b
+b
+b
+h
+b
+c
+g
+Q
+c
+c
+b
+b
+b
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+b
+l
+j
+q
+b
+b
+b
+b
+g
+j
+b
+c
+c
+c
+c
+b
+b
+b
+a
+"}
+(17,1,1) = {"
+a
+b
+b
+b
+j
+j
+b
+b
+b
+b
+b
+b
+E
+J
+b
+b
+b
+b
+b
+b
+b
+b
+a
+"}
+(18,1,1) = {"
+a
+b
+b
+b
+j
+b
+b
+b
+b
+s
+s
+s
+F
+s
+s
+b
+b
+b
+b
+b
+b
+R
+a
+"}
+(19,1,1) = {"
+a
+b
+b
+b
+j
+b
+b
+b
+b
+s
+v
+y
+G
+K
+s
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+b
+k
+b
+b
+b
+b
+s
+w
+z
+H
+y
+s
+b
+b
+b
+b
+b
+b
+a
+a
+"}
+(21,1,1) = {"
 a
 a
 a
 a
 a
+b
+b
+b
+b
+s
+s
+A
+I
+s
+s
+b
+b
+b
+b
+b
+a
+a
+a
+"}
+(22,1,1) = {"
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+s
+s
+s
+s
+b
+b
+b
+b
+b
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
 a
 a
 a

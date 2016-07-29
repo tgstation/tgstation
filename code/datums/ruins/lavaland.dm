@@ -51,15 +51,16 @@
 /datum/map_template/ruin/lavaland/seed_vault
 	name = "Seed Vault"
 	id = "seed-vault"
-	description = "The creators of these vaults were a highly advanced and \
-		benevolent race, and launched many into the stars, hoping to aid \
-		fledgling civilizations. However, all the inhabitants seem to do is \
-		grow drugs and guns."
+	description = "The researchers of this outpost discovered the secrets of\
+		unifying flora and fauna on a celular level. By the time they learned\
+		that their work was already affecting them, it was too late. Now that\
+		they have been changed, they wish to spread their miracles to others."
 	suffix = "lavaland_surface_seed_vault.dmm"
 	cost = 10
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/ash_walker
-	name = "Ash Walker Nest"
+	name = "Ash Walker Nest Layout 1"
 	id = "ash-walker"
 	description = "A race of unbreathing lizards live here, that run faster \
 		than a human can, worship a broken dead city, and are capable of \
@@ -68,6 +69,14 @@
 	suffix = "lavaland_surface_ash_walker1.dmm"
 	cost = 20
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/ash_walker/altone
+	name = "Ash Walker Nest Layout 2"
+	suffix = "lavaland_surface_ash_walker2.dmm"
+
+/datum/map_template/ruin/lavaland/ash_walker/alttwo
+	name = "Ash Walker Nest Layout 3"
+	suffix = "lavaland_surface_ash_walker3.dmm"
 
 /datum/map_template/ruin/lavaland/free_golem
 	name = "Free Golem Ship"
