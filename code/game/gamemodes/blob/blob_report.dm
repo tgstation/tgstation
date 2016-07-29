@@ -99,8 +99,10 @@ Message ends."}
 
 			if(istype(O, /obj/structure/window))
 				src.window += 1
-			else if(istype(O, /obj/structure/grille) && (!O:destroyed))
-				src.grille += 1
+			else if(istype(O, /obj/structure/grille))
+				var/obj/structure/grille/G = O
+				if(!G.broken)
+					src.grille += 1
 			else if(istype(O, /obj/machinery/door))
 				src.door += 1
 			else if(istype(O, /obj/machinery))

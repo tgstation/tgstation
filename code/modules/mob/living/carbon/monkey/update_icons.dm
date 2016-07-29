@@ -155,7 +155,7 @@
 		if (handcuffed)
 			drop_item(I)
 	else
-		overlays_standing[M_R_HAND_LAYER]	= null
+		overlays_standing[M_L_HAND_LAYER]	= null
 	if(update_icons)		update_icons()
 
 /mob/living/carbon/monkey/update_inv_back(var/update_icons=1)

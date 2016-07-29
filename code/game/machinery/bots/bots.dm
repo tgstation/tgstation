@@ -105,6 +105,9 @@
 			hud_user_list = med_hud_users
 	var/area/myturf = get_turf(src)
 	for(var/mob/huduser in hud_user_list)
+		if(!huduser.loc)
+			continue
+
 		var/turf/mobturf = get_turf(huduser)
 		if(mobturf.z == myturf.z)
 			huduser.show_message(declare_message,1)
