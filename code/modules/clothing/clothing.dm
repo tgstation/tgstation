@@ -195,6 +195,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	strip_delay = 2 //for cool moments when like the guy deposes the captain and puts his hat on him and he becomes the new captain
 
 
 /obj/item/clothing/head/worn_overlays(var/isinhands = FALSE)
