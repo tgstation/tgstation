@@ -21,6 +21,7 @@
 	storage_slots = 21
 	burn_state = FLAMMABLE
 	burntime = 20
+	slowdown = 1
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	playsound(src.loc, "rustle", 50, 1, -5)
@@ -190,6 +191,9 @@
 	name = "satchel"
 	desc = "A trendy looking satchel."
 	icon_state = "satchel-norm"
+	max_combined_w_class = 15
+	slowdown = 0
+	
 	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/weapon/storage/backpack/satchel/leather
@@ -208,25 +212,25 @@
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
 	burn_state = FIRE_PROOF
-
+	
 /obj/item/weapon/storage/backpack/satchel/med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
 	item_state = "medicalpack"
-
+	
 /obj/item/weapon/storage/backpack/satchel/vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
 	item_state = "satchel-vir"
-
+	
 /obj/item/weapon/storage/backpack/satchel/chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
 	item_state = "satchel-chem"
-
+	
 /obj/item/weapon/storage/backpack/satchel/gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
@@ -239,7 +243,7 @@
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
 	burn_state = FIRE_PROOF
-
+	
 /obj/item/weapon/storage/backpack/satchel/hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
@@ -251,7 +255,7 @@
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
-
+	
 /obj/item/weapon/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
@@ -264,6 +268,7 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 	burn_state = FIRE_PROOF
+	max_combined_w_class = 18
 
 /obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
@@ -294,7 +299,7 @@
 	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
 	item_state = "duffle"
-	slowdown = 1
+	slowdown = 2
 	max_combined_w_class = 30
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
