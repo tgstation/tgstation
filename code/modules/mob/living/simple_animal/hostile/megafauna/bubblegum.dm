@@ -71,7 +71,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp(round((health/maxHealth) * 10), 5, 10)
+	move_to_delay = Clamp(round((health/maxHealth) * 12), 1, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -156,17 +156,23 @@ Difficulty: Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	var/found_bloodpool = FALSE
-	for(var/obj/effect/decal/cleanable/blood/nearby in view(src,2))
-		found_bloodpool = TRUE
-	if(found_bloodpool)
-		for(var/obj/effect/decal/cleanable/blood/H in view(target,2))
+	var/list/invalid_pools = list()
+	var/list/valid_pools = list()
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(target,1))
+		invalid_pools += nearby
+	for(var/obj/effect/decal/cleanable/blood/nearby in view(target,2))
+		valid_pools += nearby
+	if(valid_pools.len)
+		for(var/A in valid_pools)
+			if(A in invalid_pools)
+				valid_pools -= A
+		if(valid_pools.len)
+			shuffle(valid_pools)
 			visible_message("<span class='danger'>[src] sinks into the blood...</span>")
 			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			forceMove(get_turf(H))
+			forceMove(pick(valid_pools))
 			playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			visible_message("<span class='danger'>And springs back out!</span>")
-			break
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
