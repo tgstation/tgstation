@@ -11,6 +11,7 @@ var/global/default_martial_art = new/datum/martial_art
 	//Facial hair colour and style
 	var/facial_hair_color = "000"
 	var/facial_hair_style = "Shaved"
+	var/facial_hair_effect = null
 
 	//Eye colour
 	var/eye_color = "000"

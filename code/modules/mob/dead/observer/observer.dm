@@ -183,7 +183,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 		var/datum/sprite_accessory/S
 		if(facial_hair_style)
 			S = facial_hair_styles_list[facial_hair_style]
-			if(S)
+			if(S && S.icon_state)
 				facial_hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 				if(facial_hair_color)
 					facial_hair_image.color = "#" + facial_hair_color
@@ -192,7 +192,7 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 				ghostimage.overlays += facial_hair_image
 		if(hair_style)
 			S = hair_styles_list[hair_style]
-			if(S)
+			if(S && S.icon_state)
 				hair_image = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER)
 				if(hair_color)
 					hair_image.color = "#" + hair_color

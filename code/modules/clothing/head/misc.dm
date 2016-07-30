@@ -183,7 +183,7 @@
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to be nice to girls.</span>")
 	user.say("M'lady.")
 	sleep(10)
-	H.facial_hair_style = "Neckbeard"
+	H.change_facial_hair("Neckbeard")
 	return(BRUTELOSS)
 
 /obj/item/clothing/head/sombrero

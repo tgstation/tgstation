@@ -247,7 +247,7 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
 	skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+	change_facial_hair(facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)])
 	hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 	if(icon_update)
 		update_body()

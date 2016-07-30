@@ -15,6 +15,14 @@ var/list/preferences_datums = list()
 	var/last_ip
 	var/last_id
 
+	var/beard_level = 0
+	var/beard_level_beard = "Shaved"
+	var/consecutive_rounds_survived = 0
+
+	var/spawn_mob_ref = ""
+	var/list/characters_spawned = list()
+	var/list/consecutive_rounds_buffer = list()
+
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
@@ -55,6 +63,8 @@ var/list/preferences_datums = list()
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
+	var/beard_level_enabled = FALSE		//Enables beard level
+	var/facial_hair_effect = null		//Facial hair effect
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
@@ -173,7 +183,7 @@ var/list/preferences_datums = list()
 
 			dat += "<td valign='center'>"
 
-			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
+			dat += "<div class='statusDisplay'><center>Rounds survived in a row: <b>[consecutive_rounds_survived]</b><BR><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
 			dat += "</td></tr></table>"
 
@@ -221,6 +231,8 @@ var/list/preferences_datums = list()
 				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
 				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
 				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				dat += "<span title='Earn your beard by surviving consecutive rounds, you will start shaven. In order to survive, the same body you spawned with must escape on the shuttle alive. (With exception if the gamemode is designed to end without the shuttle.)'><b>Earn your beard:</b> <a href='?_src_=prefs;preference=beard_level_enabled;task=input'>[beard_level_enabled ? "Yes" : "No"]</a></span><BR>"
+				dat += "<span style='[beard_level_enabled ? "font-weight: bold;" : "color: gray; font-style: oblique;"]'>Beard effect:</span> [beard_level_enabled ? "<a href='?_src_=prefs;preference=facial_hair_effect;task=input'>" : "<span style='color: gray; font-style: italic;'>"][facial_hair_effect ? facial_hair_effect : "None"][beard_level_enabled ? "</a>" : "</span>"]"
 
 				dat += "</td>"
 
@@ -881,6 +893,18 @@ var/list/preferences_datums = list()
 					else
 						facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_female_list)
 
+				if("beard_level_enabled")
+					beard_level_enabled = !beard_level_enabled
+
+				if("facial_hair_effect")
+					if(beard_level_enabled)
+						var/new_facial_hair_effect = input(user, "Choose your \"Earn your beard\" effect:", "Character Preference") as null|anything in facial_hair_effects
+						if(new_facial_hair_effect)
+							if(new_facial_hair_effect in facial_hair_effects)
+								facial_hair_effect = new_facial_hair_effect
+							else
+								facial_hair_effect = null
+
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
@@ -1193,7 +1217,30 @@ var/list/preferences_datums = list()
 
 	character.skin_tone = skin_tone
 	character.hair_style = hair_style
+
 	character.facial_hair_style = facial_hair_style
+
+	if(beard_level_enabled)
+		character.facial_hair_effect = facial_hair_effect
+		var/is_shaven = TRUE
+		load_consecutive_rounds(default_slot)
+		if(beard_level_beard)
+			var/datum/sprite_accessory/facial_hair/B = facial_hair_styles_list[beard_level_beard]
+			if(B)
+				var/datum/sprite_accessory/facial_hair/nB
+				for(var/beard in facial_hair_styles_list)
+					var/datum/sprite_accessory/facial_hair/cB = facial_hair_styles_list[beard]
+					if(cB && cB.grow_beard && cB.beard_level <= beard_level && cB.beard_level > B.beard_level && (!nB || cB.beard_level < nB.beard_level))
+						nB = cB
+				if(nB)
+					beard_level_beard = nB.name
+				character.facial_hair_style = beard_level_beard
+				save_consecutive_rounds(default_slot)
+				is_shaven = FALSE
+		if(is_shaven)
+			beard_level_beard = "Shaved"
+			character.facial_hair_style = beard_level_beard
+
 	character.underwear = underwear
 	character.undershirt = undershirt
 	character.socks = socks

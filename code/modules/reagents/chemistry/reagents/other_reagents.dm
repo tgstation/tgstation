@@ -1124,7 +1124,7 @@
 			var/datum/sprite_accessory/hair/picked_hair = pick(hair_styles_list)
 			var/datum/sprite_accessory/facial_hair/picked_beard = pick(facial_hair_styles_list)
 			H.hair_style = picked_hair
-			H.facial_hair_style = picked_beard
+			H.change_facial_hair(picked_beard)
 			H.update_hair()
 
 /datum/reagent/concentrated_barbers_aid
@@ -1139,7 +1139,7 @@
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.hair_style = "Very Long Hair"
-			H.facial_hair_style = "Very Long Beard"
+			H.change_facial_hair("Very Long Beard")
 			H.update_hair()
 
 /datum/reagent/saltpetre

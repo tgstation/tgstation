@@ -126,7 +126,7 @@
 			//facial hair
 			if(facial_hair_style)
 				S = facial_hair_styles_list[facial_hair_style]
-				if(S)
+				if(S && S.icon_state)
 					var/image/img_facial_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 					img_facial_s.color = "#" + facial_hair_color
 					img_facial_s.alpha = hair_alpha
@@ -138,7 +138,7 @@
 			else
 				if(hair_style)
 					S = hair_styles_list[hair_style]
-					if(S)
+					if(S && S.icon_state)
 						var/image/img_hair_s = image("icon" = S.icon, "icon_state" = "[S.icon_state]_s", "layer" = -HAIR_LAYER, "dir"=SOUTH)
 						img_hair_s.color = "#" + hair_color
 						img_hair_s.alpha = hair_alpha
