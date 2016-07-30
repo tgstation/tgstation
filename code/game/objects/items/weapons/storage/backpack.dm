@@ -16,9 +16,9 @@
 	item_state = "backpack"
 	w_class = 4
 	slot_flags = SLOT_BACK	//ERROOOOO
-	max_w_class = 3
-	max_combined_w_class = 21
-	storage_slots = 21
+	max_w_class = INFINITY
+	max_combined_w_class = INFINITY
+	storage_slots = INFINITY
 	burn_state = FLAMMABLE
 	burntime = 20
 
@@ -35,8 +35,6 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
-	max_w_class = 6
-	max_combined_w_class = 35
 	burn_state = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -92,9 +90,6 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = 4
-	max_w_class = 3
-	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
@@ -270,7 +265,6 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	w_class = 3 //Can fit in backpacks itself.
-	max_combined_w_class = 15
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
@@ -294,8 +288,6 @@
 	desc = "A large dufflebag for holding extra things."
 	icon_state = "duffle"
 	item_state = "duffle"
-	slowdown = 1
-	max_combined_w_class = 30
 
 /obj/item/weapon/storage/backpack/dufflebag/captain
 	name = "captain's dufflebag"
