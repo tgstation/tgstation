@@ -71,7 +71,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = Clamp(round((health/maxHealth) * 12), 1, 10)
+	move_to_delay = Clamp(round((health/maxHealth) * 100) * 10, 1, 10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
