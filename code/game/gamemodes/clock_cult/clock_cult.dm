@@ -234,7 +234,7 @@ This file's folder contains:
 		if("gateway")
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 		if("silicons")
-			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -279,27 +279,26 @@ This file's folder contains:
 			for(var/datum/mind/M in servants_of_ratvar)
 				if(M.current && M.current.stat != DEAD && (M.current.onCentcom() || M.current.onSyndieBase()))
 					surviving_servants++
-			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. [surviving_servants] managed to escape!"
+			clockwork_explanation = "Ensure that [required_escapees] servant(s) of Ratvar escape from [station_name()]. <i><b>[surviving_servants]</b> managed to escape!</i>"
 			if(surviving_servants >= required_escapees)
 				return TRUE
 			return FALSE
 		if("silicons")
 			var/total_silicons = 0
-			var/converted_silicons = 0
+			var/valid_silicons = 0
 			var/successful = TRUE
-			for(var/mob/living/silicon/robot/S in living_mob_list) //Only check robots and AIs
+			for(var/mob/living/silicon/robot/S in mob_list) //Only check robots and AIs
 				total_silicons++
-				if(!is_servant_of_ratvar(S))
-					successful = FALSE
-				else
-					converted_silicons++
-			for(var/mob/living/silicon/ai/A in living_mob_list)
+				if(is_servant_of_ratvar(S) || S.stat == DEAD)
+					valid_silicons++
+			for(var/mob/living/silicon/ai/A in mob_list)
 				total_silicons++
-				if(!is_servant_of_ratvar(A))
-					successful = FALSE
-				else
-					converted_silicons++
-			clockwork_explanation = "Ensure that all silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. [converted_silicons]/[total_silicons] silicons were converted!"
+				if(is_servant_of_ratvar(A) || A.stat == DEAD)
+					valid_silicons++
+			if(valid_silicons < total_silicons)
+				successful = FALSE
+			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift. \
+			<i><b>[valid_silicons]/[total_silicons]</b> silicons were killed or converted!</i>"
 			return successful
 		if("gateway")
 			return ratvar_awakens
@@ -323,12 +322,12 @@ This file's folder contains:
 				if(G)
 					half_victory = TRUE
 			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the station was taken over!</b></span>"
+				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway was successfully constructed!</b></span>"
 				feedback_set_details("round_end_result", "halfwin - round ended before the gateway finished")
 			else
 				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
 				feedback_set_details("round_end_result", "loss - servants failed their objective ([clockwork_objective])")
-		text += "<br><b>The servants' objective was:</b> [clockwork_explanation]<br>"
+		text += "<br><b>The servants' objective was:</b> <br>[clockwork_explanation]<br>"
 	if(servants_of_ratvar.len)
 		text += "<b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
