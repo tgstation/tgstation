@@ -25,7 +25,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/w_class = 3
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 3
+	pressure_resistance = 4
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -55,12 +55,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/put_on_delay = 20
 	var/breakouttime = 0
 	var/list/materials = list()
-	var/reliability = 100	//Used by SOME devices to determine how reliable they are.
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
+	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
 	var/suittoggled = 0
 	var/hooded = 0
@@ -89,23 +88,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-	var/list/slot_equipment_priority = list( \
-			slot_back,\
-			slot_wear_id,\
-			slot_w_uniform,\
-			slot_wear_suit,\
-			slot_wear_mask,\
-			slot_head,\
-			slot_shoes,\
-			slot_gloves,\
-			slot_ears,\
-			slot_glasses,\
-			slot_belt,\
-			slot_s_store,\
-			slot_l_store,\
-			slot_r_store,\
-			slot_drone_storage\
-		)
+	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
 
 	// Needs to be in /obj/item because corgis can wear a lot of
 	// non-clothing items
@@ -202,9 +185,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			var/list/techlvls = params2list(origin_tech)
 			for(var/T in techlvls) //This needs to use the better names.
 				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-			msg += "Research reliability: [reliability]% <BR>"
-			if(crit_fail)
-				msg += "<span class='danger'>Critical failure detected in subject!</span><BR>"
 		else
 			msg += "<span class='danger'>No tech origins detected.</span><BR>"
 
@@ -362,6 +342,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -409,7 +391,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.stat || usr.restrained() || !Adjacent(usr) || usr.stunned || usr.weakened || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
 		return
 
 	if(usr.get_active_hand() == null) // Let me know if this has any problems -Yota
@@ -511,7 +493,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	. = ..()
 	if(.)
 		transfer_blood = 0
-		bloody_hands_mob = null
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
@@ -586,11 +567,24 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	else
 		. = pick('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
-/obj/item/proc/open_flame()
+/obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
 	if(ismob(location))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		var/success = FALSE
+		if(src == M.get_item_by_slot(slot_l_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_r_hand))
+			success = TRUE
+		else if(src == M.get_item_by_slot(slot_wear_mask))
+			success = TRUE
+		if(success)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(700, 5)
+		location.hotspot_expose(flame_heat, 5)
+
+/obj/item/proc/ignition_effect(atom/A, mob/user)
+	if(is_hot())
+		. = "<span class='notice'>[user] lights [A] with [src].</span>"
+	else
+		. = ""

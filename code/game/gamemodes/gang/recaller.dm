@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 7
 	flags = CONDUCT
-	origin_tech = "programming=3;bluespace=2;syndicate=5"
+	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 3
@@ -41,8 +41,8 @@
 		else
 			dat += "This device is not authorized to promote.<br>"
 	else
-		if(isnum(gang.dom_timer))
-			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.dom_timer] seconds remain</B></font></center>"
+		if(gang.is_dominating)
+			dat += "<center><font color='red'>Takeover In Progress:<br><B>[gang.domination_time_remaining()] seconds remain</B></font></center>"
 
 		var/isboss = (user.mind == gang.bosses[1])
 		var/points = gang.points
@@ -157,7 +157,7 @@
 				dat += "<a href='?src=\ref[src];purchase=dominator'><b>Station Dominator</b></a><br>"
 			else
 				dat += "<b>Station Dominator</b><br>"
-			dat += "<i>(Estimated Takeover Time: [round(get_domination_time(gang)/60,0.1)] minutes)</i><br>"
+			dat += "<i>(Estimated Takeover Time: [round(determine_domination_time(gang)/60,0.1)] minutes)</i><br>"
 
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];choice=refresh'>Refresh</a><br>"
@@ -334,7 +334,8 @@
 			if(ganger.current && (ganger.current.z <= 2) && (ganger.current.stat == CONSCIOUS))
 				ganger.current << ping
 		for(var/mob/M in dead_mob_list)
-			M << "<a href='?src=\ref[M];follow=\ref[user]'>(F)</a> [ping]"
+			var/link = FOLLOW_LINK(M, user)
+			M << "[link] [ping]"
 		log_game("[key_name(user)] Messaged [gang.name] Gang: [message].")
 
 

@@ -22,10 +22,10 @@
 /obj/item/device/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		scanning = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return secured
 
@@ -67,9 +67,9 @@
 		return 0
 	scanning = !scanning
 	if(scanning)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	return
 
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
@@ -91,7 +91,7 @@
 
 	var/mob/user = usr
 
-	if(!user.canUseTopic(user))
+	if(!user.canUseTopic(src))
 		usr << browse(null, "window=hscan")
 		onclose(usr, "hscan")
 		return

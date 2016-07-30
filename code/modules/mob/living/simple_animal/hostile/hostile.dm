@@ -13,6 +13,16 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
+//typecache of things this mob will attack in DestroySurroundings() if it has environment_smash
+	var/list/environment_target_typecache = list(
+	/obj/machinery/door/window,
+	/obj/structure/window,
+	/obj/structure/closet,
+	/obj/structure/table,
+	/obj/structure/grille,
+	/obj/structure/rack,
+	/obj/structure/barricade) //turned into a typecache in New()
+
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
@@ -31,7 +41,6 @@
 	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
 	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
 	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
-
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 
@@ -40,6 +49,7 @@
 	..()
 	if(!targets_from)
 		targets_from = src
+	environment_target_typecache = typecacheof(environment_target_typecache)
 
 
 /mob/living/simple_animal/hostile/Life()
@@ -63,8 +73,10 @@
 				AIStatus = AI_IDLE				// otherwise we go idle
 	return 1
 
-
-
+/mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
+	if(!target && AIStatus != AI_OFF && !client)
+		Goto(P.starting, move_to_delay, 3)
+	..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -219,6 +231,13 @@
 		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
 			FindTarget()
 
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+	target = A
+	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
+		..()
+	else
+		AttackingTarget()
+
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
 	target.attack_animal(src)
 
@@ -295,7 +314,7 @@
 		P.firer = src
 		P.yo = targeted_atom.y - startloc.y
 		P.xo = targeted_atom.x - startloc.x
-		if(AIStatus == AI_OFF)//Don't want mindless mobs to have their movement screwed up firing in space
+		if(AIStatus != AI_ON)//Don't want mindless mobs to have their movement screwed up firing in space
 			newtonian_move(get_dir(targeted_atom, targets_from))
 		P.original = targeted_atom
 		P.fire()
@@ -314,7 +333,7 @@
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack))
+				if(is_type_in_typecache(A, environment_target_typecache))
 					A.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()

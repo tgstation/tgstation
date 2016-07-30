@@ -20,12 +20,12 @@ Research Director
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat)
+			            access_tech_storage, access_minisat, access_maint_tunnels)
 	minimal_access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue,
 			            access_tox_storage, access_teleporter, access_sec_doors,
 			            access_research, access_robotics, access_xenobiology, access_ai_upload,
 			            access_RC_announce, access_keycard_auth, access_gateway, access_mineral_storeroom,
-			            access_tech_storage, access_minisat)
+			            access_tech_storage, access_minisat, access_maint_tunnels)
 
 /datum/outfit/job/rd
 	name = "Research Director"
@@ -41,7 +41,7 @@ Research Director
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 /datum/outfit/job/rd/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -80,7 +80,7 @@ Scientist
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 /*
 Roboticist
@@ -111,6 +111,6 @@ Roboticist
 	suit = /obj/item/clothing/suit/toggle/labcoat
 
 	backpack = /obj/item/weapon/storage/backpack/science
-	satchel = /obj/item/weapon/storage/backpack/satchel_tox
+	satchel = /obj/item/weapon/storage/backpack/satchel/tox
 
 	pda_slot = slot_l_store

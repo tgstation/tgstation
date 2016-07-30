@@ -1,8 +1,8 @@
 
 // see _DEFINES/is_helpers.dm for mob type checks
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/loyalty/L in A)
+/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mindshield/L in A)
 		if(L && L.implanted)
 			return 1
 	return 0
@@ -272,9 +272,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			return M
 	return 0
 
-
 /mob/proc/abiotic(full_body = 0)
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+	if(l_hand && !l_hand.flags&NODROP || r_hand && !r_hand.flags&NODROP)
 		return 1
 	return 0
 
@@ -392,51 +391,44 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/attack_not_jump = 0) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
 			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(source)
-				var/obj/screen/alert/notify_jump/A = O.throw_alert("\ref[source]_notify_jump", /obj/screen/alert/notify_jump)
+				var/obj/screen/alert/notify_action/A = O.throw_alert("\ref[source]_notify_action", /obj/screen/alert/notify_action)
 				if(A)
 					if(O.client.prefs && O.client.prefs.UI_style)
 						A.icon = ui_style2icon(O.client.prefs.UI_style)
 					A.desc = message
-					A.attack_not_jump = attack_not_jump
-					A.jump_target = source
+					A.action = action
+					A.target = source
 					if(!alert_overlay)
 						var/old_layer = source.layer
 						source.layer = FLOAT_LAYER
-						A.overlays += source
+						A.add_overlay(source)
 						source.layer = old_layer
 					else
 						alert_overlay.layer = FLOAT_LAYER
-						A.overlays += alert_overlay
+						A.add_overlay(alert_overlay)
 
-/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute, burn)
+/proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-
-	var/dam //changes repair text based on how much brute/burn was supplied
-
-	if(brute > burn)
-		dam = 1
-	else
-		dam = 0
-
 	if(affecting && affecting.status == ORGAN_ROBOTIC)
-		if((brute > 0 && affecting.brute_dam > 0) || (burn > 0 && affecting.burn_dam > 0))
-			affecting.heal_damage(brute,burn,1)
-			H.update_damage_overlays(0)
-			H.updatehealth()
+		var/dam //changes repair text based on how much brute/burn was supplied
+		if(brute_heal > burn_heal)
+			dam = 1
+		else
+			dam = 0
+		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
+			affecting.heal_damage(brute_heal,burn_heal,1)
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].", "<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting].</span>")
-			return
+			return 1 //successful heal
 		else
 			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
-			return
-	else
-		return
+
 
 /proc/IsAdminGhost(var/mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
@@ -450,3 +442,28 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return
 	return TRUE
+
+/proc/offer_control(mob/M)
+	M << "Control of your mob has been offered to dead players."
+	if(usr)
+		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+		message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
+	var/poll_message = "Do you want to play as [M.real_name]?"
+	if(M.mind && M.mind.assigned_role)
+		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+	if(M.mind && M.mind.special_role)
+		poll_message = "[poll_message] Status:[M.mind.special_role]."
+	var/list/mob/dead/observer/candidates = pollCandidates(poll_message, "pAI", null, FALSE, 100)
+	var/mob/dead/observer/theghost = null
+
+	if(candidates.len)
+		theghost = pick(candidates)
+		M << "Your mob has been taken over by a ghost!"
+		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
+		M.ghostize(0)
+		M.key = theghost.key
+		return TRUE
+	else
+		M << "There were no ghosts willing to take control."
+		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
+		return FALSE

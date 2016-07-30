@@ -43,11 +43,11 @@ Bonus
 	return
 
 /datum/symptom/choking/proc/Choke_stage_3_4(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())/2)+(sqrt(16+A.totalStealth())*1)
+	var/get_damage = sqrt(21+A.totalStageSpeed()*0.5)+sqrt(16+A.totalStealth())
 	M.adjustOxyLoss(get_damage)
 	return 1
 
 /datum/symptom/choking/proc/Choke(mob/living/M, datum/disease/advance/A)
-	var/get_damage = (sqrt(20+A.totalStageSpeed())/2)+(sqrt(16+A.totalStealth()*5))
+	var/get_damage = sqrt(21+A.totalStageSpeed()*0.5)+sqrt(16+A.totalStealth()*5)
 	M.adjustOxyLoss(get_damage)
 	return 1

@@ -1,6 +1,6 @@
 /mob
 	density = 1
-	layer = 4
+	layer = MOB_LAYER
 	animate_movement = 2
 	flags = HEAR
 	hud_possible = list(ANTAG_HUD)
@@ -32,7 +32,10 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/disabilities = 0	//Carbon
+
 	var/atom/movable/pulling = null
+	var/grab_state = 0
+
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = null
@@ -85,9 +88,6 @@
 	var/datum/hud/hud_used = null
 
 	var/research_scanner = 0 //For research scanner equipped mobs. Enable to show research data when examining.
-
-	var/list/grabbed_by = list(  )
-	var/list/requests = list(  )
 
 	var/list/mapobjs = list()
 

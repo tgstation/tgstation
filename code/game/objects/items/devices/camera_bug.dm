@@ -14,7 +14,7 @@
 	item_state	= "camera_bug"
 	throw_speed	= 4
 	throw_range	= 20
-	origin_tech = "syndicate=3;engineering=1"
+	origin_tech = "syndicate=1;engineering=3"
 	flags = NOBLUDGEON
 
 	var/obj/machinery/camera/current = null
@@ -34,7 +34,7 @@
 
 /obj/item/device/camera_bug/New()
 	..()
-	SSobj.processing += src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/camera_bug/Destroy()
 	get_cameras()
@@ -60,13 +60,14 @@
 /obj/item/device/camera_bug/check_eye(mob/user)
 	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
 		user.unset_machine()
-		return
+		return 0
 	var/turf/T = get_turf(user.loc)
 	if(T.z != current.z || !current.can_use())
 		user << "<span class='danger'>[src] has lost the signal.</span>"
 		current = null
 		user.unset_machine()
-
+		return 0
+	return 1
 /obj/item/device/camera_bug/on_unset_machine(mob/user)
 	user.reset_perspective(null)
 

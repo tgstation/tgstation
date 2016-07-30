@@ -238,18 +238,24 @@
 		if("securityhud")
 			if(href_list["toggle"])
 				secHUD = !secHUD
-				remove_med_sec_hud()
 				if(secHUD)
 					add_sec_hud()
+				else
+					var/datum/atom_hud/sec = huds[sec_hud]
+					sec.remove_hud_from(src)
 		if("medicalhud")
 			if(href_list["toggle"])
 				medHUD = !medHUD
-				remove_med_sec_hud()
 				if(medHUD)
 					add_med_hud()
+				else
+					var/datum/atom_hud/med = huds[med_hud]
+					med.remove_hud_from(src)
 		if("translator")
 			if(href_list["toggle"])
-				languages = (languages == ALL) ? (HUMAN | ROBOT) : ALL
+				var/on_already = ((languages_understood == ALL) && (languages_spoken == ALL))
+				languages_spoken = on_already ? (HUMAN | ROBOT) : ALL
+				languages_understood = on_already ? (HUMAN | ROBOT) : ALL
 		if("doorjack")
 			if(href_list["jack"])
 				if(src.cable && src.cable.machine)
@@ -307,7 +313,7 @@
 		if(s == "medical HUD")
 			dat += "<a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Medical Analysis Suite</a>[(src.medHUD) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "universal translator")
-			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[(languages == ALL) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
+			dat += "<a href='byond://?src=\ref[src];software=translator;sub=0'>Universal Translator</a>[((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55> On</font>" : "<font color=#FF5555> Off</font>"] <br>"
 		if(s == "projection array")
 			dat += "<a href='byond://?src=\ref[src];software=projectionarray;sub=0'>Projection Array</a> <br>"
 		if(s == "camera jack")
@@ -460,7 +466,7 @@
 /mob/living/silicon/pai/proc/softwareTranslator()
 	. = {"<h3>Universal Translator</h3><br>
 				When enabled, this device will automatically convert all spoken and written language into a format that any known recipient can understand.<br><br>
-				The device is currently [ (languages == ALL) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
+				The device is currently [ ((languages_spoken == ALL) && (languages_understood == ALL)) ? "<font color=#55FF55>en" : "<font color=#FF5555>dis" ]abled.</font><br>
 				<a href='byond://?src=\ref[src];software=translator;sub=0;toggle=1'>Toggle Device</a><br>
 				"}
 	return .
@@ -536,7 +542,7 @@
 		if (total_moles)
 			for(var/id in env_gases)
 				var/gas_level = env_gases[id][MOLES]/total_moles
-				if(id in hardcoded_gases || gas_level > 0.01)
+				if(gas_level > 0.01)
 					dat += "[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_level*100)]%<br>"
 		dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 	dat += "<a href='byond://?src=\ref[src];software=atmosensor;sub=0'>Refresh Reading</a> <br>"

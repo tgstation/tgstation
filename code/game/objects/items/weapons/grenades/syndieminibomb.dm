@@ -4,7 +4,7 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	item_state = "flashbang"
-	origin_tech = "materials=3;magnets=4;syndicate=4"
+	origin_tech = "materials=3;magnets=4;syndicate=3"
 
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	update_mob()

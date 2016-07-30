@@ -26,6 +26,8 @@
 							/obj/item/weapon/stock_parts/capacitor = 2,
 							/obj/item/weapon/stock_parts/cell = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
+	def_components = list(
+		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -36,7 +38,6 @@
 		repairs += M.rating - 1
 	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
-
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())

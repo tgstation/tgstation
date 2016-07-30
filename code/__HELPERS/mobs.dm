@@ -64,9 +64,11 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
 	if(!body_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
+	if(!wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -325,3 +327,36 @@ Proc for attack log creation, because really why not
 		var/mob/living/carbon/human/H = A
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
+
+
+/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	for(var/mob/M in player_list)
+		var/datum/preferences/prefs
+		if(M.client && M.client.prefs)
+			prefs = M.client.prefs
+		else
+			prefs = new
+
+		var/adminoverride = 0
+		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+			adminoverride = 1
+		if(istype(M, /mob/new_player) && !adminoverride)
+			continue
+		if(M.stat != DEAD && !adminoverride)
+			continue
+		if(speaker_key && speaker_key in prefs.ignoring)
+			continue
+
+		switch(message_type)
+			if(DEADCHAT_DEATHRATTLE)
+				if(prefs.toggles & DISABLE_DEATHRATTLE)
+					continue
+			if(DEADCHAT_ARRIVALRATTLE)
+				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+					continue
+
+		if(istype(M, /mob/dead/observer) && follow_target)
+			var/link = FOLLOW_LINK(M, follow_target)
+			M << "[link] [message]"
+		else
+			M << "[message]"

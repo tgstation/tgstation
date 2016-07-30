@@ -1,5 +1,24 @@
+#define MEDAL_PREFIX "Legion"
+/*
+
+LEGION
+
+Legion spawns from the necropolis gate in the far north of lavaland. It is the guardian of the Necropolis and emerges from within whenever an intruder tries to enter through its gate.
+Whenever Legion emerges, everything in lavaland will receive a notice via color, audio, and text. This is because Legion is powerful enough to slaughter the entirety of lavaland with little effort.
+
+It has two attack modes that it constantly rotates between.
+
+In ranged mode, it will behave like a normal legion - retreating when possible and firing legion skulls at the target.
+In charge mode, it will spin and rush its target, attacking with melee whenever possible.
+
+When Legion dies, it drops a staff of storms, which allows its wielder to call and disperse ash storms at will and functions as a powerful melee weapon.
+
+Difficulty: Medium
+
+*/
+
 /mob/living/simple_animal/hostile/megafauna/legion
-	name = "legion"
+	name = "Legion"
 	health = 800
 	maxHealth = 800
 	icon_state = "legion"
@@ -22,10 +41,13 @@
 	ranged_cooldown_time = 20
 	var/size = 10
 	var/charging = 0
+	medal_type = MEDAL_PREFIX
+	score_type = LEGION_SCORE
 	pixel_y = -90
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
+	elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
 
@@ -42,7 +64,7 @@
 			A.faction = faction
 			ranged_cooldown = world.time + ranged_cooldown_time
 		else
-			visible_message("<span class='danger'>[src] charges!</span>")
+			visible_message("<span class='warning'><b>[src] charges!</b></span>")
 			SpinAnimation(speed = 20, loops = 5)
 			ranged = 0
 			retreat_distance = 0
@@ -57,20 +79,31 @@
 				charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
+	if(health > 0)
+		return
 	if(size > 2)
-		for(var/i in 1 to 2)
-			var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
-			L.health = src.maxHealth * 0.6
-			L.maxHealth = L.health
-			L.size = size - 2
-			var/size_multiplier = L.size * 0.08
-			L.resize = size_multiplier
-			L.pixel_y = L.pixel_y * size_multiplier
-			L.pixel_x = L.pixel_x * size_multiplier
+		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
+		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(src.loc)
 
-			L.update_transform()
-		visible_message("<span class='danger'>[src] splits!</span>")
-		qdel(src)
+		L.maxHealth = maxHealth * 0.6
+		maxHealth = L.maxHealth
+
+		L.health = L.maxHealth
+		health = L.health
+
+		L.size = size - 2
+		size = L.size
+
+		var/size_multiplier = L.size * 0.08
+		L.resize = size_multiplier
+		resize = L.resize
+
+		L.update_transform()
+		update_transform()
+
+		L.target = target
+
+		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
 		var/last_legion = TRUE
 		for(var/mob/living/simple_animal/hostile/megafauna/legion/other in mob_list)
@@ -78,7 +111,8 @@
 				last_legion = FALSE
 				break
 		if(last_legion)
-			src.loot = list(/obj/item/weapon/staff_of_storms)
+			src.loot = list(/obj/item/weapon/staff/storm)
+			elimination = 0
 		else if(prob(5))
 			src.loot = list(/obj/structure/closet/crate/necropolis/tendril)
 		..()
@@ -95,7 +129,7 @@
 
 //Loot
 
-/obj/item/weapon/staff_of_storms
+/obj/item/weapon/staff/storm
 	name = "staff of storms"
 	desc = "An ancient staff retrieved from the remains of Legion. The wind stirs as you move it."
 	icon_state = "staffofstorms"
@@ -107,34 +141,44 @@
 	force = 25
 	damtype = BURN
 	hitsound = 'sound/weapons/sear.ogg'
-	var/obj/machinery/lavaland_controller/linked_machine
+	var/storm_type = /datum/weather/ash_storm
 	var/storm_cooldown = 0
 
-/obj/item/weapon/staff_of_storms/attack_self(mob/user)
+/obj/item/weapon/staff/storm/attack_self(mob/user)
 	if(storm_cooldown > world.time)
-		user << "The staff is still recharging."
+		user << "<span class='warning'>The staff is still recharging!</span>"
 		return
 
-	if(!linked_machine || linked_machine.z != user.z)
-		for(var/obj/machinery/lavaland_controller/controller in machines)
-			if(controller.z == user.z)
-				linked_machine = controller
-				break
+	var/area/user_area = get_area(user)
+	var/datum/weather/A
+	for(var/V in SSweather.existing_weather)
+		var/datum/weather/W = V
+		if(W.target_z == user.z && W.area_type == user_area.type)
+			A = W
+			break
+	if(A)
 
-	if(linked_machine && linked_machine.ongoing_weather)
-		if(linked_machine.ongoing_weather.stage == WIND_DOWN_STAGE || linked_machine.ongoing_weather.stage == END_STAGE)
-			user << "The storm is already ending. It would be a waste to use the staff now."
+		if(A.stage != END_STAGE)
+			if(A.stage == WIND_DOWN_STAGE)
+				user << "<span class='warning'>The storm is already ending! It would be a waste to use the staff now.</span>"
+				return
+			user.visible_message("<span class='warning'>[user] holds [src] skywards as an orange beam travels into the sky!</span>", \
+			"<span class='notice'>You hold [src] skyward, dispelling the storm!</span>")
+			playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+			A.wind_down()
 			return
-		linked_machine.ongoing_weather.duration = 0
-		user << "<span class='danger'><B>With an appropriately dramatic flourish, you dispell the storm.</B>"
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
-	else if (linked_machine && !linked_machine.ongoing_weather)
-		user << "<span class='danger'><B>You lift the staff towards the heavens, calling down a terrible storm.</B>"
-		linked_machine.weather_cooldown = 0
-		playsound(get_turf(src),'sound/magic/Staff_Change.ogg', 200, 1)
-		storm_cooldown = world.time + 600
-
 	else
-		user << "You can't seem to control the weather here."
+		A = new storm_type
+		A.name = "staff storm"
+		A.area_type = user_area.type
+		A.target_z = user.z
+		A.telegraph_duration = 100
+		A.end_duration = 100
+
+	user.visible_message("<span class='warning'>[user] holds [src] skywards as red lightning crackles into the sky!</span>", \
+	"<span class='notice'>You hold [src] skyward, calling down a terrible storm!</span>")
+	playsound(user, 'sound/magic/Staff_Change.ogg', 200, 0)
+	A.telegraph()
+	storm_cooldown = world.time + 200
+
+#undef MEDAL_PREFIX

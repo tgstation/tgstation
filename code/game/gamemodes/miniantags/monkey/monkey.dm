@@ -66,7 +66,7 @@
 	..()
 
 /datum/game_mode/monkey/check_finished()
-	if(SSshuttle.emergency.mode >= SHUTTLE_ENDGAME || station_was_nuked)
+	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
 		return 1
 
 	if(!round_converted)

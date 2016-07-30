@@ -15,7 +15,7 @@ This file contains the arcane tome files.
 
 /obj/item/weapon/tome/examine(mob/user)
 	..()
-	if(iscultist(user) || user.stat == DEAD)
+	if(iscultist(user) || isobserver(user))
 		user << "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>"
 		user << "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>"
 		user << "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>"
@@ -70,7 +70,7 @@ This file contains the arcane tome files.
 	If any are found, the user can choose which rune to send to. Upon activation, the rune teleports everything above it to the selected rune.<br><br>"
 
 	text += "<font color='red'><b>Convert</b></font><br>This rune is critical to the success of the cult. It will allow you to convert normal crew members into cultists. \
-	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is loyalty-implanted or a certain assignment, they will \
+	To do this, simply place the crew member upon the rune and invoke it. This rune requires two invokers to use. If the target to be converted is mindshield-implanted or a certain assignment, they will \
 	be unable to be converted. People the Geometer wishes sacrificed will also be ineligible for conversion, and anyone with a shielding presence like the null rod will not be converted.<br> \
 	Successful conversions will produce a tome for the new cultist.<br><br>"
 
@@ -172,9 +172,17 @@ This file contains the arcane tome files.
 	var/entered_rune_name
 	var/list/possible_runes = list()
 	var/list/shields = list()
+	var/area/A = get_area(src)
+
 	if(locate(/obj/effect/rune) in Turf)
 		user << "<span class='cult'>There is already a rune here.</span>"
 		return
+
+	if(Turf.z != ZLEVEL_STATION && Turf.z != ZLEVEL_MINING)
+		user << "<span class='warning'>The veil is not weak enough here."
+		return
+	if(istype(A, /area/shuttle))
+		user << "<span class='warning'>Interference from hyperspace engines disrupts the Geometer's power on shuttles.</span>"
 	for(var/T in subtypesof(/obj/effect/rune) - /obj/effect/rune/malformed)
 		var/obj/effect/rune/R = T
 		if(initial(R.cultist_name))
@@ -183,6 +191,9 @@ This file contains the arcane tome files.
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in possible_runes
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
+		return
+	if(istype(Turf, /turf/open/space))
+		user << "<span class='warning'>You cannot scribe runes in space!</span>"
 		return
 	for(var/T in typesof(/obj/effect/rune))
 		var/obj/effect/rune/R = T
@@ -203,21 +214,38 @@ This file contains the arcane tome files.
 	if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
 		return
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		var/confirm_final = alert(usr, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
-		if(confirm_final == "No")
-			usr << "On second thought, we should prepare further for the final battle..."
+		if(ticker.mode.name == "cult")
+			var/datum/game_mode/cult/cult_mode = ticker.mode
+			if(!("eldergod" in cult_mode.cult_objectives))
+				user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
+				return
+			else if(cult_mode.sacrifice_target && !(cult_mode.sacrifice_target in sacrificed))
+				user << "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>"
+				return
+			else if(!cult_mode.eldergod)
+				user << "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>"
+				return
+			var/locname = initial(A.name)
+			if(loc.z && loc.z != ZLEVEL_STATION)
+				user << "<span class='warning'>The Geometer is not interested \
+					in lesser locations; the station is the prize!</span>"
+				return
+			var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie, it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
+			if(confirm_final == "No")
+				user << "<span class='cult'>You decide to prepare further before scribing the rune.</span>"
+				return
+			priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
+			for(var/B in spiral_range_turfs(1, user, 1))
+				var/turf/T = B
+				var/obj/machinery/shield/N = new(T)
+				N.name = "sanguine barrier"
+				N.desc = "A potent shield summoned by cultists to defend their rites."
+				N.icon_state = "shield-red"
+				N.health = 60
+				shields |= N
+		else
+			user << "<span class='warning'>Nar-Sie does not wish to be summoned!</span>"
 			return
-		var/area/A = get_area(src)
-		var/locname = initial(A.name)
-		priority_announce("Figments from an eldritch god are being summoned by [user] into [locname] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensionsal Affairs", 'sound/AI/spanomalies.ogg')
-		for(var/B in spiral_range_turfs(1, user, 1))
-			var/turf/T = B
-			var/obj/machinery/shield/N = new(T)
-			N.name = "Rune-Scriber's Shield"
-			N.desc = "A potent shield summoned by cultists to protect them while they prepare the final ritual"
-			N.icon_state = "shield-red"
-			N.health = 60
-			shields |= N
 	user.visible_message("<span class='warning'>[user] cuts open their arm and begins writing in their own blood!</span>", \
 						 "<span class='cult'>You slice open your arm and begin drawing a sigil of the Geometer.</span>")
 	user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick("l_arm", "r_arm"))

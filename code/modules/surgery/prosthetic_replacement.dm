@@ -18,6 +18,7 @@
 	name = "add prosthetic"
 	implements = list(/obj/item/robot_parts = 100, /obj/item/bodypart = 100)
 	time = 32
+	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/tool_body_zone
@@ -27,8 +28,9 @@
 	else if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/L = tool
 		if(L.status != ORGAN_ROBOTIC)
-			user << "<span class='warning'>You need a robotic limb for this.</span>"
-			return -1 //fail
+			organ_rejection_dam = 10
+			if(target.dna.species.id != L.species_id)
+				organ_rejection_dam = 30
 		tool_body_zone = L.body_zone
 	if(target_zone == tool_body_zone) //so we can't replace a leg with an arm.
 		user.visible_message("[user] begins to replace [target]'s [parse_zone(target_zone)].", "<span class ='notice'>You begin to replace [target]'s [parse_zone(target_zone)]...</span>")
@@ -43,6 +45,10 @@
 		qdel(tool)
 	else
 		L = tool
+		user.drop_item()
 	L.attach_limb(target)
+	if(organ_rejection_dam)
+		target.adjustToxLoss(organ_rejection_dam)
 	user.visible_message("[user] successfully replaces [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You succeed in replacing [target]'s [parse_zone(target_zone)].</span>")
 	return 1
+

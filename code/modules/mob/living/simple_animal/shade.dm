@@ -28,11 +28,12 @@
 	flying = 1
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1
+	deathmessage = "lets out a contented sigh as their form unwinds."
 
-
-/mob/living/simple_animal/shade/death()
-	deathmessage = "<span class='warning'>[src] lets out a contented sigh as their form unwinds.</span>"
-	..()
+/mob/living/simple_animal/shade/canSuicide()
+	if(istype(loc, /obj/item/device/soulstone)) //do not suicide inside the soulstone
+		return 0
+	return ..()
 
 /mob/living/simple_animal/shade/Process_Spacemove(movement_dir = 0)
 	return TRUE //this doesn't make much sense; you'd thing TRUE would mean it'd process spacemove but it means it doesn't

@@ -2,6 +2,7 @@ import sys
 import os
 import pathlib
 import map_helpers
+import shutil
 
 #main("../../_maps/")
 def main(map_folder, tgm=0):
@@ -46,24 +47,32 @@ def main(map_folder, tgm=0):
     print("\nMerging these maps:")
     for i in valid_indices:
         print(str(list_of_files[i])[len(map_folder):])
-    merge = input("\nPress Enter to merge...")
+    merge = input("\nPress Enter to merge...\n")
     if merge == "abort":
         print("\nAborted map merge.")
         sys.exit()
     else:
         for i in valid_indices:
             path_str = str(list_of_files[i])
+            shutil.copyfile(path_str, path_str + ".before")
             path_str_pretty = path_str[len(map_folder):]
             try:
-                if map_helpers.merge_map(path_str, path_str + ".backup", tgm) != 1:
-                    print("ERROR MERGING: {}".format(path_str_pretty))
+                error = map_helpers.merge_map(path_str, path_str + ".backup", tgm)
+                if error > 1:
+                    print(map_helpers.error[error])
+                    os.remove(path_str + ".before")
                     continue
+                if error == 1:
+                    print(map_helpers.error[1])
                 print("MERGED: {}".format(path_str_pretty))
+                print("  -  ")
             except FileNotFoundError:
-                print("\nERROR: File not found! Make sure you run 'Prepare Maps.bat' before merging.")
-                print(path_str_pretty + " || " + path_str_pretty + ".backup")
+                print("ERROR: File not found! Make sure you run 'Prepare Maps.bat' before merging.")
+                print("MISSING BACKUP FILE: " + path_str_pretty + ".backup")
+                print("  -  ")
 
     print("\nFinished merging.")
+    print("\nNOTICE: A version of the map files from before merging have been created for debug purposes.\nDo not delete these files until it is sure your map edits have no undesirable changes.")
 
 def string_to_num(s):
     try:

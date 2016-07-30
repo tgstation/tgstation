@@ -156,20 +156,22 @@
 		underlays.Cut()
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 			else
-				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
+				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=TURF_LAYER)
 		else
 			var/turf/T = get_step(src, turn(adjacencies, 180))
-			if(T && T.density)
+			if(T && (T.density || T.smooth))
 				T = get_step(src, turn(adjacencies, 135))
-				if(T && T.density)
+				if(T && (T.density || T.smooth))
 					T = get_step(src, turn(adjacencies, 225))
 
-			if(istype(T, /turf/open/space))
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+			if(istype(T, /turf/open/space) && !istype(T, /turf/open/space/transit))
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 			else if(T && !T.density && !T.smooth)
 				underlays += T
+			else if(baseturf && !initial(baseturf.density) && !initial(baseturf.smooth))
+				underlays += image(initial(baseturf.icon), initial(baseturf.icon_state), layer=TURF_LAYER)
 			else
 				underlays += DEFAULT_UNDERLAY_IMAGE
 
@@ -229,22 +231,22 @@
 	if(A.top_left_corner != nw)
 		A.overlays -= A.top_left_corner
 		A.top_left_corner = nw
-		A.overlays += nw
+		A.add_overlay(nw)
 
 	if(A.top_right_corner != ne)
 		A.overlays -= A.top_right_corner
 		A.top_right_corner = ne
-		A.overlays += ne
+		A.add_overlay(ne)
 
 	if(A.bottom_right_corner != sw)
 		A.overlays -= A.bottom_right_corner
 		A.bottom_right_corner = sw
-		A.overlays += sw
+		A.add_overlay(sw)
 
 	if(A.bottom_left_corner != se)
 		A.overlays -= A.bottom_left_corner
 		A.bottom_left_corner = se
-		A.overlays += se
+		A.add_overlay(se)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -306,13 +308,13 @@
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
 	top_left_corner = nw
-	overlays += nw
+	add_overlay(nw)
 	top_right_corner = ne
-	overlays += ne
+	add_overlay(ne)
 	bottom_left_corner = sw
-	overlays += sw
+	add_overlay(sw)
 	bottom_right_corner = se
-	overlays += se
+	add_overlay(se)
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)
@@ -374,7 +376,8 @@
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
 	if(SSicon_smooth)
-		SSicon_smooth.smooth_queue |= A
+		SSicon_smooth.smooth_queue[A] = A
+		SSicon_smooth.can_fire = 1
 	else
 		smooth_icon(A)
 

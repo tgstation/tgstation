@@ -30,7 +30,11 @@
 		if(!M.viewing_alternate_appearances)
 			M.viewing_alternate_appearances = list()
 		viewers |= M
-		M.viewing_alternate_appearances[key] = src
+		var/list/AAsiblings = M.viewing_alternate_appearances[key]
+		if(!AAsiblings)
+			AAsiblings = list()
+			M.viewing_alternate_appearances[key] = AAsiblings
+		AAsiblings |= src
 		if(M.client)
 			M.client.images |= img
 
@@ -48,9 +52,13 @@
 		if(M.client)
 			M.client.images -= img
 		if(M.viewing_alternate_appearances && M.viewing_alternate_appearances.len)
-			M.viewing_alternate_appearances -= key
-			if(!M.viewing_alternate_appearances.len)
-				M.viewing_alternate_appearances = null
+			var/list/AAsiblings = M.viewing_alternate_appearances[key]
+			if(AAsiblings)
+				AAsiblings -= src
+				if(!AAsiblings.len)
+					M.viewing_alternate_appearances -= key
+					if(!M.viewing_alternate_appearances.len)
+						M.viewing_alternate_appearances = null
 		viewers -= M
 
 
@@ -73,8 +81,9 @@
 
 /atom
 	var/list/alternate_appearances //the alternate appearances we own
-	var/list/viewing_alternate_appearances //the alternate appearances we're viewing, stored here to reestablish them after Logout()s
-	//these lists are built/destroyed as necessary, so atoms aren't all lugging around lists full of datums
+	var/list/viewing_alternate_appearances //this is an assoc list of lists, the keys being the AA's key
+	//inside these lists are the AAs themselves, this is to allow the atom to see multiple of the same type of AA
+	//eg: two (or more) people disguised as cardborgs, or two (or more) people disguised as plants
 
 /*
 	Builds an alternate_appearance datum for the supplied args, optionally displaying it straight away

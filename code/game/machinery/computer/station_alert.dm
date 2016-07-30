@@ -80,4 +80,4 @@
 		if(L.len)
 			active_alarms = TRUE
 	if(active_alarms)
-		overlays += "alert:2"
+		add_overlay("alert:2")

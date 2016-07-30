@@ -1,6 +1,11 @@
 /obj/effect/proc_holder/spell/targeted/lichdom
 	name = "Bind Soul"
-	desc = "A dark necromantic pact that can forever bind your soul to an item of your choosing. So long as both your body and the item remain intact and on the same plane you can revive from death, though the time between reincarnations grows steadily with use."
+	desc = "A dark necromantic pact that can forever bind your soul to an \
+	item of your choosing. So long as both your body and the item remain \
+	intact and on the same plane you can revive from death, though the time \
+	between reincarnations grows steadily with use, along with the weakness \
+	that the new skeleton body will experience upon 'birth'. Note that \
+	becoming a lich destroys all internal organs except the brain."
 	school = "necromancy"
 	charge_max = 10
 	clothes_req = 0
@@ -101,32 +106,32 @@
 			for(var/obj/item in hand_items)
 				if(ABSTRACT in item.flags || NODROP in item.flags)
 					continue
-				marked_item = 		item
+				marked_item = item
 				M << "<span class='warning'>You begin to focus your very being into the [item.name]...</span>"
 				break
 
 			if(!marked_item)
 				M << "<span class='caution'>You must hold an item you wish to make your phylactery...</span>"
 				return
-			spawn(50)
-				if(marked_item.loc != M) //I changed my mind I don't want to put my soul in a cheeseburger!
-					M << "<span class='warning'>Your soul snaps back to your body as you drop the [marked_item.name]!</span>"
-					marked_item = null
-					return
-				name = "RISE!"
-				desc = "Rise from the dead! You will reform at the location of your phylactery and your old body will crumble away."
-				charge_max = 1800 //3 minute cooldown, if you rise in sight of someone and killed again, you're probably screwed.
-				charge_counter = 1800
-				stat_allowed = 1
-				marked_item.name = "Ensouled [marked_item.name]"
-				marked_item.desc = "A terrible aura surrounds this item, its very existence is offensive to life itself..."
-				marked_item.color = "#003300"
-				M << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
-				M.set_species(/datum/species/skeleton)
-				current_body = M.mind.current
-				if(ishuman(M))
-					var/mob/living/carbon/human/H = M
-					H.unEquip(H.wear_suit)
-					H.unEquip(H.head)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
-					H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)
+			if(!do_after(M, 50, needhand=FALSE, target=marked_item))
+				M << "<span class='warning'>Your soul snaps back to your body as you stop ensouling [marked_item.name]!</span>"
+				marked_item = null
+				return
+
+			name = "RISE!"
+			desc = "Rise from the dead! You will reform at the location of your phylactery and your old body will crumble away."
+			charge_max = 1800 //3 minute cooldown, if you rise in sight of someone and killed again, you're probably screwed.
+			charge_counter = 1800
+			stat_allowed = 1
+			marked_item.name = "Ensouled [marked_item.name]"
+			marked_item.desc = "A terrible aura surrounds this item, its very existence is offensive to life itself..."
+			marked_item.color = "#003300"
+			M << "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>"
+			M.set_species(/datum/species/skeleton)
+			current_body = M.mind.current
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.unEquip(H.wear_suit)
+				H.unEquip(H.head)
+				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/black(H), slot_wear_suit)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(H), slot_head)

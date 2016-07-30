@@ -3,7 +3,7 @@
 	desc = "It's red and gooey. Perhaps it's the chef's cooking?"
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_NORMAL_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
@@ -38,7 +38,7 @@
 	desc = "Your instincts say you shouldn't be following these."
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	random_icon_states = null
 	var/list/existing_dirs = list()
 	blood_DNA = list()
@@ -53,7 +53,7 @@
 	desc = "They look bloody and gruesome."
 	gender = PLURAL
 	density = 0
-	layer = 2
+	layer = ABOVE_OPEN_TURF_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
@@ -102,16 +102,11 @@
 	name = "drips of blood"
 	desc = "It's red."
 	gender = PLURAL
-	icon = 'icons/effects/drip.dmi'
 	icon_state = "1"
-	random_icon_states = list("1","2","3","4","5")
+	random_icon_states = list("drip1","drip2","drip3","drip4","drip5")
 	bloodiness = 0
-	var/list/drips = list()
+	var/drips = 1
 
-/obj/effect/decal/cleanable/blood/drip/New()
-	..()
-	spawn(1)
-		drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/drip/can_bloodcrawl_in()
 	return 1
@@ -151,7 +146,7 @@
 	update_icon()
 
 /obj/effect/decal/cleanable/blood/footprints/update_icon()
-	overlays.Cut()
+	cut_overlays()
 
 	for(var/Ddir in cardinal)
 		if(entered_dirs & Ddir)
@@ -162,7 +157,7 @@
 				I =  image(icon,"[blood_state]1",dir = Ddir)
 				bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = I
 			if(I)
-				overlays += I
+				add_overlay(I)
 		if(exited_dirs & Ddir)
 			var/image/I
 			if(bloody_footprints_cache["exited-[blood_state]-[Ddir]"])
@@ -171,7 +166,7 @@
 				I = image(icon,"[blood_state]2",dir = Ddir)
 				bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = I
 			if(I)
-				overlays += I
+				add_overlay(I)
 
 	alpha = BLOODY_FOOTPRINT_BASE_ALPHA+bloodiness
 

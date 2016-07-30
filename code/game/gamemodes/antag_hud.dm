@@ -17,6 +17,8 @@
 	M.mind.antag_hud = src
 
 /datum/atom_hud/antag/proc/leave_hud(mob/M)
+	if(!M)
+		return
 	if(!istype(M))
 		CRASH("leave_hud(): [M] ([M.type]) is not a mob!")
 	remove_from_hud(M)

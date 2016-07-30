@@ -41,13 +41,13 @@ field_generator power level display
 	var/clean_up = 0
 
 /obj/machinery/field/generator/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	if(warming_up)
-		overlays += "+a[warming_up]"
+		add_overlay("+a[warming_up]")
 	if(fields.len)
-		overlays += "+on"
+		add_overlay("+on")
 	if(power_level)
-		overlays += "+p[power_level]"
+		add_overlay("+p[power_level]")
 
 
 /obj/machinery/field/generator/New()
@@ -238,7 +238,8 @@ field_generator power level display
 		setup_field(4)
 	spawn(4)
 		setup_field(8)
-	active = FG_ONLINE
+	spawn(5)
+		active = FG_ONLINE
 
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)
@@ -282,7 +283,7 @@ field_generator power level display
 			var/obj/machinery/field/containment/CF = new/obj/machinery/field/containment()
 			CF.set_master(src,G)
 			CF.loc = T
-			CF.dir = field_dir
+			CF.setDir(field_dir)
 			fields += CF
 			G.fields += CF
 			for(var/mob/living/L in T)

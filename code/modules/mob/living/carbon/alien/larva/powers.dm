@@ -9,8 +9,8 @@
 	if(user.stat != CONSCIOUS)
 		return
 
-	if (user.layer != TURF_LAYER+0.2)
-		user.layer = TURF_LAYER+0.2
+	if (user.layer != ABOVE_NORMAL_TURF_LAYER)
+		user.layer = ABOVE_NORMAL_TURF_LAYER
 		user.visible_message("<span class='name'>[user] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
 	else

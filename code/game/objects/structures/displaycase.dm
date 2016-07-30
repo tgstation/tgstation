@@ -99,9 +99,9 @@
 		I = getFlatIcon(A)
 	else
 		var/old_dir = A.dir
-		A.dir = 2
+		A.setDir(2)
 		I = getFlatIcon(A)
-		A.dir = old_dir
+		A.setDir(old_dir)
 	return I
 
 /obj/structure/displaycase/update_icon()
@@ -191,6 +191,9 @@
 		update_icon()
 		return
 	else
+	    //prevents remote "kicks" with TK
+		if (!Adjacent(user))
+			return
 		user.do_attack_animation(src)
 		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", \
 						 "<span class='notice'>You kick the display case.</span>")

@@ -20,6 +20,11 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	round_ends_with_antag_death = 1
 
+	announce_span = "green"
+	announce_text = "Dangerous gelatinous organisms are spreading throughout the station!\n\
+	<span class='green'>Blobs</span>: Consume the station and spread as far as you can.\n\
+	<span class='notice'>Crew</span>: Fight back the blobs and minimize station damage."
+
 	var/burst = 0
 
 	var/cores_to_spawn = 1
@@ -61,11 +66,6 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 				candidates += player
 	return candidates
 
-/datum/game_mode/blob/announce()
-	world << "<B>The current game mode is - <font color='green'>Blob</font>!</B>"
-	world << "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>"
-	world << "You must kill it all while minimizing the damage to the station."
-
 /datum/game_mode/blob/proc/show_message(message)
 	for(var/datum/mind/blob in blob_overminds)
 		blob.current << message
@@ -78,7 +78,7 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 		B.loc = T
 		B.base_point_rate = blob_point_rate
 
-	SSshuttle.emergencyNoEscape = 1
+	SSshuttle.registerHostileEnvironment(src)
 
 	// Disable the blob event for this round.
 	var/datum/round_event_control/blob/B = locate() in SSevent.control

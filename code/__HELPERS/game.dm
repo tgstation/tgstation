@@ -5,11 +5,17 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
+#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+
 /proc/get_area(atom/A)
 	if (!istype(A))
 		return
 	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
 	return A
+
+/proc/get_area_name(atom/X)
+	var/area/Y = get_area(X)
+	return Y.name
 
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
@@ -17,7 +23,7 @@
 		A = A.master
 	return A
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
@@ -401,7 +407,7 @@
 		if(!G.key || !G.client)
 			continue
 		if(be_special_flag)
-			if(!(G.client.prefs.be_special & be_special_flag))
+			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
 				continue
 		if (gametypeCheck)
 			if(!gametypeCheck.age_check(G.client))

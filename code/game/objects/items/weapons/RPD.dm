@@ -32,7 +32,7 @@ RPD
 /datum/pipe_info/New(pid,direction,dt)
 	src.id=pid
 	src.icon_state=pipeID2State["[pid]"]
-	src.dir=direction
+	src.dir = direction
 	src.dirtype=dt
 
 /datum/pipe_info/proc/Render(dispenser,label)
@@ -70,7 +70,7 @@ var/global/list/disposalpipeID2State=list(
 /datum/pipe_info/disposal/New(var/pid,var/dt)
 	src.id=pid
 	src.icon_state=disposalpipeID2State[pid+1]
-	src.dir=2
+	src.dir = SOUTH
 	src.dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"

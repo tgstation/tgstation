@@ -40,7 +40,7 @@
 			if(H.bleedsuppress)
 				user << "<span class='warning'>[H]'s bleeding is already bandaged!</span>"
 				return
-			else if(!H.blood_max)
+			else if(!H.bleed_rate)
 				user << "<span class='warning'>[H] isn't bleeding!</span>"
 				return
 
@@ -105,7 +105,7 @@
 	desc = "A theraputic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
 	heal_brute = 40
-	origin_tech = "biotech=1"
+	origin_tech = "biotech=2"
 	self_delay = 20
 
 /obj/item/stack/medical/gauze
@@ -135,5 +135,5 @@
 	singular_name = "ointment"
 	icon_state = "ointment"
 	heal_burn = 40
-	origin_tech = "biotech=1"
+	origin_tech = "biotech=2"
 	self_delay = 20

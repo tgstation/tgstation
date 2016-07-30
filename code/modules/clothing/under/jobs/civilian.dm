@@ -175,8 +175,9 @@
 
 
 /obj/item/clothing/under/rank/miner/lavaland
-	desc = "A black jumpsuit for operating in hazardous environments."
+	desc = "A green uniform for operating in hazardous environments."
 	name = "shaft miner's jumpsuit"
-	icon_state = "syndicate"
-	item_state = "bl_suit"
-	item_color = "syndicate"
+	icon_state = "explorer"
+	item_state = "explorer"
+	item_color = "explorer"
+	can_adjust = 0

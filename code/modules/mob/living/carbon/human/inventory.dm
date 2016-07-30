@@ -89,6 +89,7 @@
 			if(I.flags_inv & HIDEJUMPSUIT)
 				update_inv_w_uniform()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
+				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
 			update_inv_wear_suit()
 		if(slot_w_uniform)

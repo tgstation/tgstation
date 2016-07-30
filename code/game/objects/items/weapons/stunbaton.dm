@@ -13,6 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/throw_hit_chance = 35
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -23,11 +24,15 @@
 	update_icon()
 	return
 
+/obj/item/weapon/melee/baton/throw_impact(atom/hit_atom)
+	..()
+	if(status && prob(throw_hit_chance))
+		baton_stun(hit_atom)
+
 /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
 	..()
 	bcell = new(src)
 	update_icon()
-	return
 
 /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(bcell)
@@ -141,28 +146,27 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	user.lastattacked = L
-	L.lastattacker = user
-
 	L.Stun(stunforce)
 	L.Weaken(stunforce)
 	L.apply_effect(STUTTER, stunforce)
+	if(user)
+		user.lastattacked = L
+		L.lastattacker = user
+		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+		add_logs(user, L, "stunned")
 
-	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
 	playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(hit_appends)
 
-	add_logs(user, L, "stunned")
+
 	return 1
 
 /obj/item/weapon/melee/baton/emp_act(severity)
-	if(deductcharge(1000 / severity))
-		if(bcell.reliability != 100 && prob(50/severity))
-			bcell.reliability -= 10 / severity
+	deductcharge(1000 / severity)
 	..()
 
 //Makeshift stun baton. Replacement for stun gloves.
@@ -175,6 +179,7 @@
 	throwforce = 5
 	stunforce = 5
 	hitcost = 2500
+	throw_hit_chance = 10
 	slot_flags = null
 	var/obj/item/device/assembly/igniter/sparkler = 0
 

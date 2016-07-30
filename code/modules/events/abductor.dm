@@ -16,7 +16,7 @@
 /datum/round_event/ghost_role/abductor/spawn_role()
 	var/list/mob/dead/observer/candidates = get_candidates("abductor", null, ROLE_ABDUCTOR)
 
-	if(!candidates.len < 2)
+	if(candidates.len < 2)
 		return NOT_ENOUGH_PLAYERS
 	//Oh god why we can't have static functions
 	// I feel your pain, bro

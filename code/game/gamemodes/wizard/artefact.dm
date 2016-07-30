@@ -45,7 +45,7 @@
 	src.spawn_amt_left = spawn_amt
 	src.desc = desc
 	src.spawn_fast = spawn_fast
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/effect/rend/process()
@@ -204,8 +204,8 @@ var/global/list/multiverse = list()
 	name = "multiverse sword"
 	desc = "A weapon capable of conquering the universe and beyond. Activate it to summon copies of yourself from others dimensions to fight by your side."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "energy_katana"
-	item_state = "energy_katana"
+	icon_state = "multiverse"
+	item_state = "multiverse"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -419,7 +419,7 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 			for(var/obj/item/carried_item in M.contents)
 				if(!istype(carried_item, /obj/item/weapon/implant))
-					carried_item.add_blood(M)
+					carried_item.add_mob_blood(M)
 
 		if("pirate")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/pirate(M), slot_w_uniform)
@@ -430,11 +430,11 @@ var/global/list/multiverse = list()
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 
 		if("soviet")
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/hgpiratecap(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/pirate/captain(M), slot_head)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_ears)
-			M.equip_to_slot_or_del(new /obj/item/clothing/suit/hgpirate(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/pirate/captain(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/soviet(M), slot_w_uniform)
 			M.equip_to_slot_or_del(sword, slot_r_hand)
 

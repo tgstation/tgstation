@@ -96,28 +96,25 @@
 		target.updatehealth()
 
 
-
 /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	name = "diamond-tipped exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
-	origin_tech = "materials=4;engineering=3"
+	origin_tech = "materials=4;engineering=4"
 	equip_cooldown = 20
 	force = 15
-
 
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
-	origin_tech = "materials=3;engineering=2"
 	selectable = 0
 	equip_cooldown = 30
 	var/scanning = 0
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
 	..()
@@ -133,7 +130,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	if(scanning)
 		return
@@ -146,5 +143,3 @@
 		mineral_scan_pulse(L,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0
-
-

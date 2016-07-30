@@ -149,16 +149,21 @@
 	target.visible_message("<span class='warning'>A grotesque blade forms around [target.name]\'s arm!</span>", "<span class='userdanger'>Your arm twists and mutates, transforming into a horrific monstrosity!</span>", "<span class='italics'>You hear organic matter ripping and tearing!</span>")
 	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
 
-	spawn(600)
-		playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
-		target.visible_message("<span class='warning'>With a sickening crunch, [target] reforms their [blade.name] into an arm!</span>", "<span class='warning'>[blade] reforms back to normal.</span>", "<span class='italics>You hear organic matter ripping and tearing!</span>")
-		qdel(blade)
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
+	addtimer(src, "remove_fake", 600, target, blade)
 
 	feedback_add_details("changeling_powers","AS")
 	return 1
 
+/obj/effect/proc_holder/changeling/sting/false_armblade/proc/remove_fake(mob/target, obj/item/weapon/melee/arm_blade/false/blade)
+	playsound(target, 'sound/effects/blobattack.ogg', 30, 1)
+	target.visible_message("<span class='warning'>With a sickening crunch, \
+	[target] reforms their [blade.name] into an arm!</span>",
+	"<span class='warning'>[blade] reforms back to normal.</span>",
+	"<span class='italics>You hear organic matter ripping and tearing!</span>")
+
+	qdel(blade)
+	target.update_inv_l_hand()
+	target.update_inv_r_hand()
 
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
@@ -220,11 +225,13 @@
 
 /obj/effect/proc_holder/changeling/sting/LSD/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "LSD sting")
-	spawn(rand(300,600))
-		if(target)
-			target.hallucination = max(400, target.hallucination)
+	addtimer(src, "hallucination_time", rand(300,600), target)
 	feedback_add_details("changeling_powers","HS")
 	return 1
+
+/obj/effect/proc_holder/changeling/sting/LSD/proc/hallucination_time(mob/living/carbon/target)
+	if(target)
+		target.hallucination = max(400, target.hallucination)
 
 /obj/effect/proc_holder/changeling/sting/cryo
 	name = "Cryogenic Sting"

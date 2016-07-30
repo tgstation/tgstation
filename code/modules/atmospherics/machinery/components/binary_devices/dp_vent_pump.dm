@@ -48,9 +48,9 @@ Acts like a normal vent, but has an input AND output.
 	air2.volume = 1000
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
-	overlays.Cut()
+	cut_overlays()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap")
+		add_overlay(getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "dpvent_cap"))
 
 	if(!on || stat & (NOPOWER|BROKEN))
 		icon_state = "vent_off"

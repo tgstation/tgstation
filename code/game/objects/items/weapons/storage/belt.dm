@@ -8,9 +8,9 @@
 	attack_verb = list("whipped", "lashed", "disciplined")
 
 /obj/item/weapon/storage/belt/update_icon()
-	overlays.Cut()
+	cut_overlays()
 	for(var/obj/item/I in contents)
-		overlays += "[I.name]"
+		add_overlay("[I.name]")
 	..()
 
 /obj/item/weapon/storage/belt/utility
@@ -78,7 +78,6 @@
 		/obj/item/device/flashlight/pen,
 		/obj/item/weapon/extinguisher/mini,
 		/obj/item/weapon/reagent_containers/hypospray,
-		/obj/item/device/rad_laser,
 		/obj/item/device/sensor_device,
 		/obj/item/device/radio,
 		/obj/item/clothing/gloves/,
@@ -130,7 +129,8 @@
 		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/melee/classic_baton/telescopic,
 		/obj/item/device/radio,
-		/obj/item/clothing/gloves/
+		/obj/item/clothing/gloves/,
+		/obj/item/weapon/restraints/legcuffs/bola
 		)
 
 /obj/item/weapon/storage/belt/security/full/New()
@@ -143,11 +143,11 @@
 
 
 /obj/item/weapon/storage/belt/mining
-	name = "explorer belt"
-	desc = "A versatile belt, cherised by miners and hunters alike."
-	icon_state = "ebelt" //I'm doing this because I love you, syndicate son.
-	item_state = "ebelt"
-	storage_slots = 5
+	name = "explorer's webbing"
+	desc = "A versatile chest rig, cherished by miners and hunters alike."
+	icon_state = "explorer1"
+	item_state = "explorer1"
+	storage_slots = 6
 	w_class = 4
 	max_w_class = 4 //Pickaxes are big.
 	max_combined_w_class = 20 //Not an issue with this whitelist, probably.
@@ -174,18 +174,31 @@
 		/obj/item/weapon/reagent_containers/food/drinks/bottle,
 		/obj/item/stack/medical,
 		/obj/item/weapon/kitchen/knife,
-		/obj/item/weapon/reagent_containers/hypospray/medipen,
+		/obj/item/weapon/reagent_containers/hypospray,
 		/obj/item/device/gps,
 		/obj/item/weapon/storage/bag/ore,
 		/obj/item/weapon/survivalcapsule,
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/reagent_containers/pill,
-		/obj/item/weapon/ore/bluespace_crystal,
-		/obj/item/weapon/reagent_containers/food/drinks,
-
-
+		/obj/item/weapon/storage/pill_bottle,
+		/obj/item/weapon/ore,
+		/obj/item/weapon/reagent_containers/food/drinks
 		)
 
+
+/obj/item/weapon/storage/belt/mining/vendor
+	contents = newlist(/obj/item/weapon/survivalcapsule)
+
+/obj/item/weapon/storage/belt/mining/alt
+	icon_state = "explorer2"
+	item_state = "explorer2"
+
+/obj/item/weapon/storage/belt/mining/primitive
+	name = "hunter's belt"
+	desc = "A versatile belt, woven from sinew."
+	storage_slots = 5
+	icon_state = "ebelt"
+	item_state = "ebelt"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -401,3 +414,29 @@
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+
+/obj/item/weapon/storage/belt/rapier
+	name = "rapier sheath"
+	desc = "Can hold rapiers."
+	icon_state = "sheath"
+	item_state = "sheath"
+	storage_slots = 1
+	max_w_class = 4
+	can_hold = list(
+		/obj/item/weapon/melee/rapier
+		)
+
+/obj/item/weapon/storage/belt/rapier/update_icon()
+	icon_state = "[initial(icon_state)]"
+	item_state = "[initial(item_state)]"
+	if(contents.len)
+		icon_state = "[initial(icon_state)]-rapier"
+		item_state = "[initial(item_state)]-rapier"
+	if(loc && istype(loc, /mob/living))
+		var/mob/living/L = loc
+		L.regenerate_icons()
+	..()
+
+/obj/item/weapon/storage/belt/rapier/New()
+	..()
+	new /obj/item/weapon/melee/rapier(src)

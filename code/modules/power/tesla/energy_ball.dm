@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
+var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
 										/mob/living/simple_animal,
@@ -15,7 +15,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/machinery/field/containment,
 										/obj/structure/disposalpipe,
 										/obj/structure/sign,
-										/obj/machinery/gateway)
+										/obj/machinery/gateway))
 
 /obj/singularity/energy_ball
 	name = "energy ball"
@@ -30,6 +30,9 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	contained = 0
 	density = 1
 	energy = 0
+	dissipate = 1
+	dissipate_delay = 5
+	dissipate_strength = 1
 	var/list/orbiting_balls = list()
 	var/produced_power
 	var/energy_to_raise = 32
@@ -45,29 +48,28 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/obj/singularity/energy_ball/EB = ball
 		qdel(EB)
 
-	return ..()
+	. = ..()
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
 
-		move_the_basket_ball(4 + orbiting_balls.len * 2)
+		move_the_basket_ball(4 + orbiting_balls.len * 1.5)
 
 		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
 
-		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		setDir(tesla_zap(src, 7, TESLA_DEFAULT_POWER))
 
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
-			tesla_zap(ball, rand(1, Clamp(orbiting_balls.len, 3, 7)), TESLA_MINI_POWER)
+			var/range = rand(1, Clamp(orbiting_balls.len, 3, 7))
+			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
-
-	return
 
 /obj/singularity/energy_ball/examine(mob/user)
 	..()
@@ -85,36 +87,41 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
+			for(var/mob/living/carbon/C in loc)
+				dust_mobs(C)
 
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
 		energy_to_lower = energy_to_raise - 20
-		energy_to_raise = energy_to_raise * 1.5
+		energy_to_raise = energy_to_raise * 1.25
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
-		spawn(100)
-			if (!loc)
-				return
-			var/obj/singularity/energy_ball/EB = new(loc)
-
-			EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
-			var/icon/I = icon(icon,icon_state,dir)
-
-			var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
-			orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
-
-			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+		addtimer(src, "new_mini_ball", 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
-		energy_to_raise = energy_to_raise / 1.5
-		energy_to_lower = (energy_to_raise / 1.5) - 20
+		energy_to_raise = energy_to_raise / 1.25
+		energy_to_lower = (energy_to_raise / 1.25) - 20
 
 		var/Orchiectomy_target = pick(orbiting_balls)
 		qdel(Orchiectomy_target)
 
 	else if(orbiting_balls.len)
-		energy -= orbiting_balls.len * 0.5
+		dissipate() //sing code has a much better system.
+
+/obj/singularity/energy_ball/proc/new_mini_ball()
+	if(!loc)
+		return
+	var/obj/singularity/energy_ball/EB = new(loc)
+
+	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
+	var/icon/I = icon(icon,icon_state,dir)
+
+	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+
+	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -126,11 +133,13 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if (istype(target))
 		target.orbiting_balls += src
 		poi_list -= src
+		target.dissipate_strength = target.orbiting_balls.len
 
 	. = ..()
 
 	if (istype(target))
 		target.orbiting_balls -= src
+		target.dissipate_strength = target.orbiting_balls.len
 	if (!loc)
 		qdel(src)
 
@@ -138,7 +147,6 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	if(istype(A, /mob/living/carbon))
 		var/mob/living/carbon/C = A
 		C.dust()
-	return
 
 /proc/tesla_zap(var/atom/source, zap_range = 3, power)
 	. = source.dir
@@ -154,11 +162,11 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	var/obj/structure/closest_structure
 	var/obj/effect/blob/closest_blob
 
-	for(var/A in oview(source, zap_range))
+	for(var/A in oview(source, zap_range+2))
 		if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
-			if((dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
 				closest_dist = dist
 
 				//we use both of these to save on istype and typecasting overhead later on
@@ -171,19 +179,19 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 			continue //no need checking these other things
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
-			var/dist = get_dist(source, A)
-			if(dist < closest_dist || !closest_grounding_rod)
+			var/dist = get_dist(source, A)-2
+			if(dist <= zap_range && (dist < closest_dist || !closest_grounding_rod))
 				closest_grounding_rod = A
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_grounding_rod || is_type_in_list(A, blacklisted_tesla_types))
+		else if(closest_grounding_rod || is_type_in_typecache(A, blacklisted_tesla_types))
 			continue
 
 		else if(istype(A, /mob/living))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if((dist < closest_dist || !closest_mob) && L.stat != DEAD)
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD)
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -194,7 +202,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/machinery))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_machine) && !M.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !M.being_shocked)
 				closest_machine = M
 				closest_atom = A
 				closest_dist = dist
@@ -205,7 +213,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/effect/blob))
 			var/obj/effect/blob/B = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !B.being_shocked)
 				closest_blob = B
 				closest_atom = A
 				closest_dist = dist
@@ -216,7 +224,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		else if(istype(A, /obj/structure))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
-			if((dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
+			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !S.being_shocked)
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
@@ -254,5 +262,3 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power)
-
-

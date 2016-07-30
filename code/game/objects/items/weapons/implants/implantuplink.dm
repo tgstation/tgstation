@@ -3,7 +3,7 @@
 	desc = "Sneeki breeki."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
-	origin_tech = "materials=2;magnets=4;programming=4;biotech=4;syndicate=8;bluespace=5"
+	origin_tech = "materials=4;magnets=4;programming=4;biotech=4;syndicate=5;bluespace=5"
 
 /obj/item/weapon/implant/uplink/New()
 	hidden_uplink = new(src)

@@ -22,12 +22,37 @@
 		playsound(src.loc, "swing_hit", 25, 1)
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
-		return
 
-	if(cistern && !open)
+	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/mob/living/GM = user.pulling
+		if(user.grab_state >= GRAB_AGGRESSIVE)
+			if(GM.loc != get_turf(src))
+				user << "<span class='warning'>[GM] needs to be on [src]!</span>"
+				return
+			if(!swirlie)
+				if(open)
+					GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
+					swirlie = GM
+					if(do_after(user, 30, 0, target = src))
+						GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
+						if(iscarbon(GM))
+							var/mob/living/carbon/C = GM
+							if(!C.internal)
+								C.adjustOxyLoss(5)
+						else
+							GM.adjustOxyLoss(5)
+					swirlie = null
+				else
+					playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
+					GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
+					GM.adjustBruteLoss(5)
+		else
+			user << "<span class='warning'>You need a tighter grip!</span>"
+
+	else if(cistern && !open)
 		if(!contents.len)
 			user << "<span class='notice'>The cistern is empty.</span>"
-			return
 		else
 			var/obj/item/I = pick(contents)
 			if(ishuman(user))
@@ -36,10 +61,9 @@
 				I.loc = get_turf(src)
 			user << "<span class='notice'>You find [I] in the cistern.</span>"
 			w_items -= I.w_class
-			return
-
-	open = !open
-	update_icon()
+	else
+		open = !open
+		update_icon()
 
 
 /obj/structure/toilet/update_icon()
@@ -54,7 +78,6 @@
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
-			return
 
 	else if(cistern)
 		if(user.a_intent != "harm")
@@ -70,7 +93,6 @@
 			I.loc = src
 			w_items += I.w_class
 			user << "<span class='notice'>You carefully place [I] into the cistern.</span>"
-			return
 
 	else if(istype(I, /obj/item/weapon/reagent_containers))
 		if (!open)
@@ -78,39 +100,6 @@
 		var/obj/item/weapon/reagent_containers/RG = I
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user << "<span class='notice'>You fill [RG] from [src]. Gross.</span>"
-		return
-
-	else if(istype(I, /obj/item/weapon/grab))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/weapon/grab/G = I
-		if(!G.confirm())
-			return
-		if(isliving(G.affecting))
-			var/mob/living/GM = G.affecting
-			if(G.state >= GRAB_AGGRESSIVE)
-				if(GM.loc != get_turf(src))
-					user << "<span class='warning'>[GM] needs to be on [src]!</span>"
-					return
-				if(!swirlie)
-					if(open)
-						GM.visible_message("<span class='danger'>[user] starts to give [GM] a swirlie!</span>", "<span class='userdanger'>[user] starts to give you a swirlie...</span>")
-						swirlie = GM
-						if(do_after(user, 30, 0, target = src))
-							GM.visible_message("<span class='danger'>[user] gives [GM] a swirlie!</span>", "<span class='userdanger'>[user] gives you a swirlie!</span>", "<span class='italics'>You hear a toilet flushing.</span>")
-							if(iscarbon(GM))
-								var/mob/living/carbon/C = GM
-								if(!C.internal)
-									C.adjustOxyLoss(5)
-							else
-								GM.adjustOxyLoss(5)
-						swirlie = null
-					else
-						playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
-						GM.visible_message("<span class='danger'>[user] slams [GM.name] into [src]!</span>", "<span class='userdanger'>[user] slams you into [src]!</span>")
-						GM.adjustBruteLoss(5)
-			else
-				user << "<span class='warning'>You need a tighter grip!</span>"
-
 	else
 		return ..()
 
@@ -125,24 +114,20 @@
 	anchored = 1
 
 
-/obj/structure/urinal/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = I
-		if(!G.confirm())
-			return
-		if(isliving(G.affecting))
-			var/mob/living/GM = G.affecting
-			if(G.state >= GRAB_AGGRESSIVE)
-				if(GM.loc != get_turf(src))
-					user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
-					return
-				user.changeNext_move(CLICK_CD_MELEE)
-				user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
-				GM.adjustBruteLoss(8)
-			else
-				user << "<span class='warning'>You need a tighter grip!</span>"
+/obj/structure/urinal/attack_hand(mob/user)
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
+		var/mob/living/GM = user.pulling
+		if(user.grab_state >= GRAB_AGGRESSIVE)
+			if(GM.loc != get_turf(src))
+				user << "<span class='notice'>[GM.name] needs to be on [src].</span>"
+				return
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.visible_message("<span class='danger'>[user] slams [GM] into [src]!</span>", "<span class='danger'>You slam [GM] into [src]!</span>")
+			GM.adjustBruteLoss(8)
+		else
+			user << "<span class='warning'>You need a tighter grip!</span>"
 	else
-		return ..()
+		..()
 
 /obj/machinery/shower
 	name = "shower"
@@ -162,7 +147,7 @@
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
-	layer = MOB_LAYER + 1
+	layer = FLY_LAYER
 	anchored = 1
 	mouse_opacity = 0
 
@@ -182,7 +167,7 @@
 	else
 		if(istype(loc, /turf/open))
 			var/turf/open/tile = loc
-			tile.MakeSlippery()
+			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
@@ -204,12 +189,12 @@
 
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 
 	if(on)
-		overlays += image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir)
+		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
@@ -493,3 +478,45 @@
 	icon_state = "puddle-splash"
 	. = ..()
 	icon_state = "puddle"
+
+
+//Shower Curtains//
+//Defines used are pre-existing in layers.dm//
+
+
+/obj/structure/curtain
+	name = "curtain"
+	desc = "Contains less than 1% mercury."
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "open"
+	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
+	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
+	layer = WALL_OBJ_LAYER
+	anchored = 1
+	opacity = 0
+	density = 0
+	var/open = TRUE
+
+
+/obj/structure/curtain/proc/toggle()
+	open = !open
+	update_icon()
+
+/obj/structure/curtain/update_icon()
+	if(!open)
+		icon_state = "closed"
+		layer = WALL_OBJ_LAYER
+		density = 1
+		open = FALSE
+
+	else
+		icon_state = "open"
+		layer = SIGN_LAYER
+		density = 0
+		open = TRUE
+
+/obj/structure/curtain/attack_hand(mob/user)
+	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
+	toggle()
+	..()
+

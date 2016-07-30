@@ -164,16 +164,8 @@
 	id = "fountain"
 	description = "The fountain has a warning on the side. DANGER: May have \
 		undeclared side effects that only become obvious when implemented."
-	suffix = "lavaland_fountain_hall.dmm"
+	suffix = "lavaland_surface_fountain_hall.dmm"
 	cost = 5
-
-/datum/map_template/ruin/lavaland/zombie_gym
-	name = "Zombie Gym"
-	id = "zombie-gym"
-	description = "The patrons at this gym are serious about health, and \
-		making sure people work on their cardio."
-	suffix = "lavaland_gym.dmm"
-	cost = 10
 
 /datum/map_template/ruin/lavaland/survivalcapsule
 	name = "Survival Capsule Ruins"
@@ -183,19 +175,44 @@
 	suffix = "lavaland_surface_survivalpod.dmm"
 	cost = 5
 
-/datum/map_template/ruin/lavaland/wwiioutpost
-	name = "Strange Outpost"
-	id = "nazi"
-	description = "The ruins of an outpost, skeletons and empty shell casings litter the interior of \
-		the structure. Some of these uniforms look awfully strange.."
-	suffix = "lavaland_surface_wwiioutpost.dmm"
-	cost = 20
-	allow_duplicates = FALSE
-
 /datum/map_template/ruin/lavaland/tomb
 	name = "Strange Outpost"
 	id = "tomb"
 	description = "A strange tomb, housing the dead of whatever strange civilization \
 		lived here before. You swear you hear rattling coming from the inside."
 	suffix = "lavaland_surface_tomb.dmm"
+	cost = 10
+
+/datum/map_template/ruin/lavaland/pizza
+	name = "Ruined Pizza Party"
+	id = "pizza"
+	description = "Little Timmy's birthday pizza-bash took a turn for the worse \
+		when a bluespace anomaly passed by."
+	suffix = "lavaland_surface_pizzaparty.dmm"
+	allow_duplicates = FALSE
+	cost = 5
+
+/datum/map_template/ruin/lavaland/cultaltar
+	name = "Summoning Ritual"
+	id = "cultaltar"
+	description = "A place of vile worship, the scrawling of blood in the middle glowing eerily.\
+		 A demonic laugh echoes throughout the caverns"
+	suffix = "lavaland_surface_cultaltar.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/hermit
+	name = "Makeshift Shelter"
+	id = "hermitcave"
+	description = "A place of shelter for a lone hermit, scraping by to live another day."
+	suffix = "lavaland_surface_hermit.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/cult_shuttle
+	name = "Crashed Cult Hive"
+	id = "cultshuttle"
+	description = "A once-bustling home for zealots of the blood-worshiping type. Turns out practicing \
+		dark rituals mid-jump isn't the best idea."
+	suffix = "lavaland_surface_cultcrash.dmm"
 	cost = 10

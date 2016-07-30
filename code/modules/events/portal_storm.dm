@@ -11,15 +11,15 @@
 						/mob/living/simple_animal/hostile/syndicate/ranged/space/noloot = 2)
 
 /datum/round_event_control/portal_storm_narsie
-	name = "Portal Storm: Nar-sie"
+	name = "Portal Storm: Constructs"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_narsie
-	boss_types = list(/obj/singularity/narsie/large = 1)
-	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 10,\
-						/mob/living/simple_animal/hostile/construct/wraith/hostile = 10)
+	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)
+	hostile_types = list(/mob/living/simple_animal/hostile/construct/armored/hostile = 8,\
+						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event/portal_storm
 	startWhen = 7

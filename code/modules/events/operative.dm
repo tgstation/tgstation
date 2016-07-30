@@ -9,7 +9,7 @@
 	role_name = "lone operative"
 
 /datum/round_event/ghost_role/operative/spawn_role()
-	var/list/candidates = get_candidates("operative", 3000, ROLE_OPERATIVE)
+	var/list/candidates = get_candidates("operative", null, ROLE_OPERATIVE)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -39,7 +39,7 @@
 	if(nuke)
 		var/nuke_code
 		if(!nuke.r_code || nuke.r_code == "ADMIN")
-			nuke_code = "[rand(10000, 99999)]"
+			nuke_code = random_nukecode()
 			nuke.r_code = nuke_code
 		else
 			nuke_code = nuke.r_code

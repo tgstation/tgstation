@@ -175,7 +175,6 @@
 	var/title			//The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
 
-
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
 		return
@@ -201,8 +200,11 @@
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
+				if (length(newtitle) > 20)
+					usr << "That title won't fit on the cover!"
+					return
 				if(!newtitle)
-					usr << "The title is invalid."
+					usr << "That title is invalid."
 					return
 				else
 					name = newtitle

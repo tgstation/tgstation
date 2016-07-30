@@ -1,7 +1,9 @@
 var/global/default_martial_art = new/datum/martial_art
 /mob/living/carbon/human
-	languages = HUMAN
+	languages_spoken = HUMAN
+	languages_understood = HUMAN
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
+	pressure_resistance = 25
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
@@ -38,13 +40,11 @@ var/global/default_martial_art = new/datum/martial_art
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/icon/base_icon_state = "caucasian1_m"
-
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/gender_ambiguous = 0 //if something goes wrong during gender reassignment this generates a line in examine
 
-	var/blood_max = 0 //how much are we bleeding
+	var/bleed_rate = 0 //how much are we bleeding
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/datum/martial_art/martial_art = null

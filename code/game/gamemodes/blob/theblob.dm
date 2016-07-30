@@ -24,7 +24,7 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
-	src.dir = pick(1, 2, 4, 8)
+	src.setDir(pick(1, 2, 4, 8))
 	src.update_icon()
 	..(loc)
 	ConsumeTile()
@@ -44,6 +44,20 @@
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
+
+/obj/effect/blob/Adjacent(var/atom/neighbour)
+	. = ..()
+	if(.)
+		var/result = 0
+		var/direction = get_dir(src, neighbour)
+		var/list/dirs = list("[NORTHWEST]" = list(NORTH, WEST), "[NORTHEAST]" = list(NORTH, EAST), "[SOUTHEAST]" = list(SOUTH, EAST), "[SOUTHWEST]" = list(SOUTH, WEST))
+		for(var/A in dirs)
+			if(direction == text2num(A))
+				for(var/B in dirs[A])
+					var/C = locate(/obj/effect/blob) in get_step(src, B)
+					if(C)
+						result++
+		. -= result - 1
 
 /obj/effect/blob/CanAtmosPass(turf/T)
 	return !atmosblock

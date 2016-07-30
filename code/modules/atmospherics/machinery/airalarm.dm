@@ -76,6 +76,7 @@
 		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
 /obj/machinery/airalarm/server // No checks here.
@@ -87,6 +88,7 @@
 		"co2"			= new/datum/tlv(-1, -1, -1, -1),
 		"plasma"		= new/datum/tlv(-1, -1, -1, -1),
 		"n2o"			= new/datum/tlv(-1, -1, -1, -1),
+		"bz"			= new/datum/tlv(-1, -1, -1, -1),
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
@@ -98,6 +100,7 @@
 		"co2" 			= new/datum/tlv(-1, -1, 5, 10), // Partial pressure, kpa
 		"plasma"		= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 		"n2o"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
+		"bz"			= new/datum/tlv(-1, -1, 0.2, 0.5), // Partial pressure, kpa
 	)
 
 //all air alarms in area are connected via magic
@@ -111,7 +114,7 @@
 	..()
 	wires = new /datum/wires/airalarm(src)
 	if(ndir)
-		dir = ndir
+		setDir(ndir)
 
 	if(nbuild)
 		buildstage = 0
@@ -229,7 +232,8 @@
 					"widenet"		= info["widenet"],
 					"filter_co2"	= info["filter_co2"],
 					"filter_toxins"	= info["filter_toxins"],
-					"filter_n2o"	= info["filter_n2o"]
+					"filter_n2o"	= info["filter_n2o"],
+					"filter_bz"		= info["filter_bz"]
 				))
 		data["mode"] = mode
 		data["modes"] = list()
@@ -285,7 +289,7 @@
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
 				locked = !locked
 				. = TRUE
-		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "widenet", "scrubbing")
+		if("power", "co2_scrub", "tox_scrub", "n2o_scrub", "bz_scrub", "widenet", "scrubbing")
 			send_signal(device_id, list("[action]" = text2num(params["val"])))
 			. = TRUE
 		if("excheck")
@@ -402,6 +406,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
+					"bz_scrub"	= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -418,6 +423,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 1,
 					"n2o_scrub" = 1,
+					"bz_scrub"	= 1,
 					"scrubbing" = 1,
 					"widenet" = 1,
 				))
@@ -447,6 +453,7 @@
 					"co2_scrub" = 1,
 					"tox_scrub" = 0,
 					"n2o_scrub" = 0,
+					"bz_scrub"	= 0,
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))

@@ -54,6 +54,30 @@
 	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/verb/toggle_deathrattle()
+	set name = "Toggle Deathrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when sentient mobs \
+		die."
+	prefs.toggles ^= DISABLE_DEATHRATTLE
+	prefs.save_preferences()
+	usr << "You will \
+		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
+		messages when a sentient mob dies."
+	feedback_add_details("admin_verb", "TDR") // If you are copy-pasting this, maybe you should spend some time reading the comments.
+
+/client/verb/toggle_arrivalrattle()
+	set name = "Toggle Arrivalrattle"
+	set category = "Preferences"
+	set desc = "Toggle recieving a message in deadchat when someone joins \
+		the station."
+	prefs.toggles ^= DISABLE_ARRIVALRATTLE
+	usr << "You will \
+		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
+		messages when someone joins the station."
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
+
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
 	set category = "Preferences"
@@ -211,7 +235,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 							"ghost_blue","ghost_yellow","ghost_green","ghost_pink", \
 							"ghost_cyan","ghost_dblue","ghost_dred","ghost_dgreen", \
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
-							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire")
+							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")
 /client/proc/pick_form()
 	if(!is_content_unlocked())
 		alert("This setting is for accounts with BYOND premium only.")

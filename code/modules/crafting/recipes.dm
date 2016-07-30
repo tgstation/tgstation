@@ -264,6 +264,15 @@
 	time = 50
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/spear
+	name = "Spear"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/weapon/shard = 1,
+				/obj/item/stack/rods = 1)
+	time = 40
+	category = CAT_WEAPON
+
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
 	result = /obj/item/device/camera/spooky

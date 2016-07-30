@@ -95,7 +95,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	spell_type = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell_type = /obj/effect/proc_holder/spell/fireball
 	log_name = "FB"
 
 /datum/spellbook_entry/magicm
@@ -232,6 +232,13 @@
 	category = "Assistance"
 	cost = 1
 
+/datum/spellbook_entry/spacetime_dist
+	name = "Spacetime Distortion"
+	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
+	log_name = "STD"
+	category = "Defensive"
+	cost = 1
+
 /datum/spellbook_entry/item
 	name = "Buy Item"
 	refundable = 0
@@ -356,6 +363,35 @@
 	limit = 3
 	category = "Assistance"
 
+/datum/spellbook_entry/item/hugbottle
+	name = "Bottle of Tickles"
+	desc = "A bottle of magically infused fun, the smell of which will \
+		attract adorable extradimensional beings when broken. These beings \
+		are similar to slaughter demons, but they do not permamently kill \
+		their victims, instead putting them in an extradimensional hugspace, \
+		to be released on the demon's death. Chaotic, but not ultimately \
+		damaging. The crew's reaction to the other hand could be very \
+		destructive."
+	item_path = /obj/item/weapon/antag_spawner/slaughter_demon/laughter
+	cost = 1 //non-destructive; it's just a jape, sibling!
+	log_name = "HB"
+	limit = 3
+	category = "Assistance"
+
+/datum/spellbook_entry/item/hadesstone
+	name = "Dark Seed"
+	desc = "A small, dark stone that whispers to you menacingly.\
+			The seed calls for the corpses of living beings,\
+			in order to summon an ancient, powerful being.\
+			The power and tenacity of the summoned being directly\
+			correlates to the power of the absorbed beings,\
+			so choose your targets wisely."
+	item_path = /obj/item/hades_summoner
+	cost = 2
+	log_name = "DS"
+	limit = 1
+	category = "Assistance"
+
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
@@ -370,7 +406,10 @@
 
 /datum/spellbook_entry/item/cursed_heart
 	name = "Cursed Heart"
-	desc = "A heart that has been revived by dark magicks, the user must concentrate to ensure the heart beats, but every beat heals them. It must beat every 6 seconds."
+	desc = "A heart that has been revived by dark magicks, the user must \
+	concentrate to ensure the heart beats, but every beat heals them. It \
+	must beat every 6 seconds. The heart is fickle, and will not work for a \
+	lich."
 	item_path = /obj/item/organ/heart/cursed/wizard
 	log_name = "CH"
 	cost = 1
@@ -699,7 +738,7 @@
 	return
 
 /obj/item/weapon/spellbook/oneuse/fireball
-	spell = /obj/effect/proc_holder/spell/dumbfire/fireball
+	spell = /obj/effect/proc_holder/spell/fireball
 	spellname = "fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."

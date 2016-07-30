@@ -3,6 +3,10 @@
 	config_tag = "raginmages"
 	required_players = 20
 	use_huds = 1
+	announce_span = "userdanger"
+	announce_text = "There are many, many wizards attacking the station!\n\
+	<span class='danger'>Wizards</span>: Accomplish your objectives and cause utter catastrophe!\n\
+	<span class='notice'>Crew</span>: Try not to die..."
 	var/max_mages = 0
 	var/making_mage = 0
 	var/mages_made = 1
@@ -11,10 +15,6 @@
 	var/time_check = 1500
 	var/spawn_delay_min = 500
 	var/spawn_delay_max = 700
-
-/datum/game_mode/wizard/announce()
-	world << "<B>The current game mode is - Ragin' Mages!</B>"
-	world << "<B>The <span class='warning'>Space Wizard Federation</span> is pissed, help defeat all the space wizards!</B>"
 
 /datum/game_mode/wizard/raginmages/post_setup()
 	..()
@@ -158,3 +158,5 @@
 	time_check = 250
 	spawn_delay_min = 50
 	spawn_delay_max = 150
+	announce_text = "<span class='userdanger'>CRAAAWLING IIIN MY SKIIIN\n\
+	THESE WOOOUNDS THEY WIIIL NOT HEEEAL</span>"
