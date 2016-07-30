@@ -823,7 +823,7 @@
 				infest(H)
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human)
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
 	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
