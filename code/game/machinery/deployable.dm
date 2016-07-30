@@ -120,8 +120,8 @@
 	desc = "Bags of sand. Self explanatory."
 	icon = 'icons/obj/smooth_structures/sandbags.dmi'
 	icon_state = "sandbags"
-	health = 280
-	maxhealth = 280
+	health = 200
+	maxhealth = 200
 	proj_pass_rate = 20
 	pass_flags = LETPASSTHROW
 	material = SAND
