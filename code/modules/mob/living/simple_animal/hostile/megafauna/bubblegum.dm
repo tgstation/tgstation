@@ -170,7 +170,7 @@ Difficulty: Hard
 			shuffle(valid_pools)
 			visible_message("<span class='danger'>[src] sinks into the blood...</span>")
 			playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			forceMove(pick(valid_pools))
+			forceMove(get_turf(pick(valid_pools)))
 			playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			visible_message("<span class='danger'>And springs back out!</span>")
 
