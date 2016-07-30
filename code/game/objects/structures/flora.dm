@@ -230,8 +230,6 @@
 	icon_state = "plant-01"
 	layer = ABOVE_MOB_LAYER
 	w_class = 5
-	slowdown = 1
-	flags = HANDSLOW
 	force = 10
 	throwforce = 13
 	throw_speed = 2
