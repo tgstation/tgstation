@@ -85,8 +85,8 @@ Difficulty: Hard
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else
-		if(health > maxHealth/2 && !client && !charging)
+	else if(!charging)
+		if(health > maxHealth/2 && !client)
 			charge()
 		else
 			charge()
@@ -114,6 +114,11 @@ Difficulty: Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+	if(charging)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(charging)
 		return
 	..()
