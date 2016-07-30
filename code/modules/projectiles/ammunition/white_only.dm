@@ -22,7 +22,7 @@
 
 /obj/item/ammo_box/magazine/white_only/traumatic
 	name = "pistol magazine (traumatic)"
-	desc = "A gun magazine."
+	desc = "A gun magazine. Contains 10 bullets."
 	icon = 'icons/obj/guns/white_only.dmi'
 	icon_state = "oldrifle"
 	origin_tech = "combat=2"
@@ -33,16 +33,22 @@
 
 /obj/item/ammo_box/magazine/white_only/traumatic/lethal
 	name = "pistol magazine (lethal)"
-	desc = "A gun magazine."
+	desc = "A gun magazine. Contains 10 bullets."
 	origin_tech = "combat=4"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic/lethal
 
 /obj/item/ammo_box/magazine/white_only/traumatic/enhanced
 	name = "enhanced pistol magazine (traumatic)"
-	desc = "A gun magazine."
+	desc = "A gun magazine. Contains 30 bullets."
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/white_only/traumatic
-	max_ammo = 15
+	max_ammo = 30
+
+/obj/item/ammo_box/magazine/white_only/traumatic/enhanced/lethal
+	name = "enhanced pistol magazine (lethal)"
+	desc = "A gun magazine. Contains 30 bullets."
+	origin_tech = "combat=5"
+	ammo_type = /obj/item/ammo_casing/white_only/traumatic/lethal
 
 /datum/design/white_only/traumatic
 	name = "pistol magazine (traumatic)"
@@ -66,4 +72,12 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 40000)
 	build_path = /obj/item/ammo_box/magazine/white_only/traumatic/lethal
+	category = list("hacked", "Security")
+
+/datum/design/white_only/traumatic/enhanced/lethal
+	name = "enhanced pistol magazine (lethal)"
+	id = "9mm_lethal_enhanced"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 10000)
+	build_path = /obj/item/ammo_box/magazine/white_only/traumatic/enhanced/lethal
 	category = list("hacked", "Security")

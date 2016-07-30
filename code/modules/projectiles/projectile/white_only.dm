@@ -33,7 +33,7 @@
 	hitsound_wall = "ricochet"
 
 /obj/item/projectile/white_only/pistol/traumaticbullet //for traumatic pistol, heavy stamina damage
-	damage = 1
+	damage = 2
 	stamina = 50
 
 /obj/item/projectile/white_only/pistol/lethalbullet //for traumatic pistol, heavy brute and stamina damage

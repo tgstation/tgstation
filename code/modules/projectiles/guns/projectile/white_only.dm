@@ -12,7 +12,7 @@
 	actions_types = list()
 
 /obj/item/weapon/gun/projectile/automatic/pistol/white_only/elite
-	name = "submachinegun gun"
+	name = "traumatic submachinegun gun"
 	desc = "A HoS personal submachinegun gun. Can be suppressed."
 	icon_state = "cycler"
 	origin_tech = "combat=5;materials=4"
