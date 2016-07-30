@@ -228,6 +228,7 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	layer = ABOVE_MOB_LAYER
 	w_class = 5
 	force = 10
 	throwforce = 13
