@@ -28,7 +28,7 @@
 
 	id = /obj/item/weapon/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
-	
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	back = /obj/item/weapon/storage/backpack/captain
 	belt = /obj/item/weapon/storage/belt/security/full
 	backpack_contents = list(/obj/item/weapon/storage/box/engineer=1,\
@@ -42,7 +42,6 @@
 
 	if(visualsOnly)
 		return
-	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	var/obj/item/device/radio/R = H.ears
 	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
 	R.recalculateChannels()
