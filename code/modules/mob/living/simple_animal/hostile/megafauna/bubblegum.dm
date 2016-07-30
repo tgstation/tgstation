@@ -131,6 +131,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
 	charging = 1
+	DestroySurroundings()
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	sleep(5)
 	throw_at(T, 7, 1, src, 0)
