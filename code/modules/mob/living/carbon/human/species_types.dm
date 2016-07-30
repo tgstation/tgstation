@@ -928,6 +928,9 @@ SYNDICATE BLACK OPS
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
+	var/wingtype = "Angel"
+	var/flighttext = "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+	var/landtext = "<span class='notice'>You settle gently back onto the ground...</span>"
 	no_equip = list(slot_back)
 	blacklisted = 1
 	limbs_id = "human"
@@ -937,8 +940,8 @@ SYNDICATE BLACK OPS
 
 /datum/species/angel/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
-		H.dna.features["wings"] = "Angel"
+	if(H.dna && H.dna.species &&((H.dna.features["wings"] != wingtype) && ("wings" in H.dna.species.mutant_bodyparts)))
+		H.dna.features["wings"] = wingtype
 		H.update_body()
 	if(ishuman(H)&& !fly)
 		fly = new
@@ -998,11 +1001,11 @@ SYNDICATE BLACK OPS
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
-			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			H << A.landtext
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			H << A.flighttext
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -1062,3 +1065,22 @@ SYNDICATE BLACK OPS
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+/datum/species/angel/lava
+	name = "Lava Angel"
+	id = "lava"
+	wingtype = "Lava"
+	flighttext = "<span class='notice'>You feel a slithering sensation down your spine as your sinewy wings emerge...</span>"
+	landtext = "<span class='notice'>You settle back onto the ground and your wings rustle as they retract back into your body...</span>"
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Lava")
+
+
+/datum/species/angel/lava/ToggleFlight(mob/living/carbon/human/H,flight)
+	if(flight && CanFly(H))
+		if(!H.weather_immunities)
+			H.weather_immunities = list()
+		H.weather_immunities += "lava"
+	else
+		if(H.weather_immunities)
+			H.weather_immunities -= "lava"
+	..()
