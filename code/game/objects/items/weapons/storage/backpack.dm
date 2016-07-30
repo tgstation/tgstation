@@ -193,7 +193,6 @@
 	icon_state = "satchel-norm"
 	max_combined_w_class = 15
 	slowdown = 0
-	
 	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
 
 /obj/item/weapon/storage/backpack/satchel/leather
