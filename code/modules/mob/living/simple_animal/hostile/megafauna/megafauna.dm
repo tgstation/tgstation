@@ -9,6 +9,7 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
+	obj_damage = 75
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
 	stat_attack = 1
