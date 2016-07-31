@@ -202,6 +202,7 @@
 	next_move_modifier = 1.5 //slow-ass attack speed, 3 times higher than how fast the blob can attack
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	obj_damage = 20
 	attacktext = "slams"
 	attack_sound = 'sound/effects/blobattack.ogg'
 	verb_say = "gurgles"

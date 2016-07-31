@@ -112,11 +112,14 @@
 	take_damage(20)
 
 /obj/structure/fireaxecabinet/attack_animal(mob/living/simple_animal/M)
-	if(!M.melee_damage_upper)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='danger'>You smash against [src].</span>")
-	take_damage(M.melee_damage_upper, M.melee_damage_type)
+	if(M.obj_damage)
+		take_damage(M.obj_damage, M.melee_damage_type)
+	else
+		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type)
 
 /obj/structure/fireaxecabinet/attack_ai(mob/user)
 	toggle_lock(user)
