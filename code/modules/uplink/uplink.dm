@@ -30,8 +30,16 @@ var/global/list/uplinks = list()
 /obj/item/device/uplink/attackby(obj/item/I, mob/user, params)
 	for(var/item in subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/UI = item
-		var/path = initial(UI.item)
-		var/cost = initial(UI.cost)
+		var/path = null
+		if(initial(UI.refund_path))
+			path = initial(UI.refund_path)
+		else
+			path = initial(UI.item)
+		var/cost = 0
+		if(initial(UI.refund_amount))
+			cost = initial(UI.refund_amount)
+		else
+			cost = initial(UI.cost)
 		var/refundable = initial(UI.refundable)
 		if(I.type == path && refundable && I.check_uplink_validity())
 			telecrystals += cost
