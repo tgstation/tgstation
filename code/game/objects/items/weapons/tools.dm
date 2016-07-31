@@ -388,15 +388,30 @@
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0
+			user.AddLuminosity(-1)
 	else
 		if(!message)
 			user << "<span class='notice'>You switch [src] off.</span>"
 		else
 			user << "<span class='warning'>[src] shuts off!</span>"
+		user.AddLuminosity(-1)
 		force = 3
 		damtype = "brute"
 		hitsound = "swing_hit"
 		update_icon()
+
+/obj/item/weapon/weldingtool/pickup(mob/user)
+	..()
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(1)
+
+/obj/item/weapon/weldingtool/dropped(mob/user)
+	..()
+	if(welding)
+		if(user)
+			user.AddLuminosity(-1)
+		SetLuminosity(1)
 
 /obj/item/weapon/weldingtool/is_hot()
 	return welding * heat

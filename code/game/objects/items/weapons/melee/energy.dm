@@ -104,6 +104,7 @@
 		throwforce = initial(throwforce)
 		hitsound = initial(hitsound)
 		throw_speed = initial(throw_speed)
+		user.AddLuminosity(-1)
 		if(attack_verb_on.len)
 			attack_verb = list()
 		icon_state = initial(icon_state)
@@ -112,6 +113,19 @@
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 		STOP_PROCESSING(SSobj, src)
 	add_fingerprint(user)
+
+/obj/item/weapon/melee/energy/pickup(mob/user)
+	..()
+	if(active)
+		SetLuminosity(0)
+		user.AddLuminosity(1)
+
+/obj/item/weapon/melee/energy/dropped(mob/user)
+	..()
+	if(active)
+		if(user)
+			user.AddLuminosity(-1)
+		SetLuminosity(1)
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
