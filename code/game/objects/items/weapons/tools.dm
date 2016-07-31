@@ -383,6 +383,8 @@
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)
+			user.AddLuminosity(1)
+
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0

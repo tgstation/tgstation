@@ -88,6 +88,7 @@
 		throwforce = throwforce_on
 		hitsound = 'sound/weapons/blade1.ogg'
 		throw_speed = 4
+		user.AddLuminosity(1)
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
 		if(!item_color)
