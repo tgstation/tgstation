@@ -178,14 +178,14 @@
 		if(ui)
 			ui.close()
 		return 0
-
+/*
 	// If we have an active program switch to it now.
 	if(active_program)
 		if(ui) // This is the main laptop screen. Since we are switching to program's UI close it for now.
 			ui.close()
 		active_program.ui_interact(user)
 		return
-
+*/
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
@@ -207,11 +207,11 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 //		ui = new(user, src, ui_key, "laptop_mainscreen", "NTOS Main Menu", 400, 500)
-		ui = new(user, src, ui_key, "vr_sleeper", "VR Sleeper", 475, 340, master_ui, state)
+		ui = new(user, src, ui_key, "computer_main", "Main menu", 475, 340, master_ui, state)
 		ui.auto_update_layout = 1
-		ui.set_initial_data(data)
+//		ui.set_initial_data(data)
 		ui.open()
-		ui.set_auto_update(1)
+//		ui.set_auto_update(1)
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/item/modular_computer/attack_self(mob/user)
@@ -521,7 +521,7 @@
 		if(components.len)
 			user << "Remove all components from \the [src] before disassembling it."
 			return
-		new /obj/item/stack/material/steel( get_turf(src.loc), steel_sheet_cost )
+		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
 		src.visible_message("\The [src] has been disassembled by [user].")
 		relay_qdel()
 		qdel(src)
@@ -622,7 +622,7 @@
 	if(found)
 		user << "You install \the [H] into \the [src]"
 		H.holder2 = src
-		user.drop_from_inventory(H)
+//		user.drop_from_inventory(H)
 		H.forceMove(src)
 
 // Uninstalls component. Found and Critical vars may be passed by parent types, if they have additional hardware.
@@ -748,7 +748,7 @@
 	amount = round(amount)
 	if(damage_casing)
 		damage += amount
-		damage = between(0, damage, max_damage)
+//		damage = between(0, damage, max_damage)
 
 	if(component_probability)
 		for(var/obj/item/weapon/computer_hardware/H in get_all_components())

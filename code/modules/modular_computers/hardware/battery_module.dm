@@ -8,7 +8,7 @@
 	malfunction_probability = 1
 	origin_tech = list(TECH_POWER = 1, TECH_ENGINEERING = 1)
 	var/battery_rating = 750
-	var/obj/item/weapon/cell/battery = null
+	var/obj/item/weapon/stock_parts/cell/battery = null
 
 /obj/item/weapon/computer_hardware/battery_module/advanced
 	name = "advanced battery"
@@ -61,7 +61,7 @@
 	user << "Internal battery charge: [battery.charge]/[battery.maxcharge] CU"
 
 /obj/item/weapon/computer_hardware/battery_module/New()
-	battery = new/obj/item/weapon/cell(src)
+	battery = new/obj/item/weapon/stock_parts/cell(src)
 	battery.maxcharge = battery_rating
 	battery.charge = 0
 	..()

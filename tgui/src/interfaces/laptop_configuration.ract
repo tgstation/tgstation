@@ -1,0 +1,71 @@
+
+<script>
+  component.exports = {
+    data: {
+	  chargeState(charge) {
+	    let max = this.get('data.battery.max')
+	    if(charge > (max/2)) return 'good'
+		else if(charge > (max/4)) return 'average'
+		else return 'bad'
+	    }
+      }
+    }
+</script>
+
+
+<ui-display>
+	<i>Welcome to computer configuration utility. Please consult your system administrator if you have any questions about your device.</i><hr>
+	<ui-display title='Power Supply'>
+		{{#if data.battery}}
+			<ui-section label='Battery Status'>
+					Active
+			</ui-section>
+			<ui-section label='Battery Rating'>
+				{{data.battery.max}}
+			</ui-section>
+			<ui-section label='Battery Charge'>
+				<ui-bar min='0' max='{{adata.battery.max}}' value='{{adata.battery.charge}}' state='{{chargeState(adata.battery.charge)}}'>{{Math.round(adata.battery.charge)}}/{{adata.battery.max}}</ui-bar>
+			</ui-section>
+		{{else}}
+			<ui-section label='Battery Status'>
+				Not Available
+			</ui-section>
+		{{/if}}
+
+		<ui-section label='Power Usage'>
+			{{data.power_usage}}W
+		</ui-section>
+	</ui-display>
+	
+	<ui-display title='File System'>
+		<ui-section label='Used Capacity'>
+			<ui-bar min='0' max='{{adata.battery.max}}' value='{{adata.battery.charge}}' state='good'>{{Math.round(adata.disk.used)}}GQ/{{adata.disk.size}}GQ</ui-bar>
+		</ui-section>
+	</ui-display>
+	
+	<ui-display title='Computer Components'>
+
+		{{#each data.hardware}}
+			<ui-subdisplay title='{{name}}'>
+
+				<i>{{desc}}</i><br>
+				<ui-section label='State'>
+
+				
+					{{enabled ? "Enabled" : "Disabled"}}
+				</ui-section>
+			
+				<ui-section Label='Power Usage'>
+					{{powerusage}}W
+				</ui-section>
+				{{#if !critical}}
+					<ui-section label='Toggle Component'>
+						<ui-button icon='{{enabled ? "power-off" : "close"}}' action='PC_toggle_component' params='{"name": "{{name}}"}">
+							{{enabled ? "On" : "Off"}}
+						</ui-button>
+					</ui-section>
+				{{/if}}
+			<br><br>
+		{{/each}}
+	</ui-display>
+</ui-display>

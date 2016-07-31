@@ -97,12 +97,14 @@ var/global/datum/ntnet/ntnet_global = new()
 
 // Builds lists that contain downloadable software.
 /datum/ntnet/proc/build_news_list()
+/*
 	available_news = list()
 	for(var/F in typesof(/datum/computer_file/data/news_article/))
 		var/datum/computer_file/data/news_article/news = new F(1)
 		if(news.stored_data)
 			available_news.Add(news)
-
+*/
+	return 1
 
 // Attempts to find a downloadable file according to filename var
 /datum/ntnet/proc/find_ntnet_file_by_name(var/filename)

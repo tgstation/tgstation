@@ -11,17 +11,17 @@
 	return TRUE
 
 /datum/nano_module/program
-	available_to_ai = FALSE
+//	available_to_ai = FALSE
 	var/datum/computer_file/program/program = null	// Program-Based computer program that runs this nano module. Defaults to null.
 
-/datum/nano_module/program/New(var/host, var/topic_manager, var/program)
+/datum/nano_module/program/New(host, topic_manager, program)
 	..()
 	src.program = program
 
 /datum/topic_manager/program
 	var/datum/program
 
-/datum/topic_manager/program/New(var/datum/program)
+/datum/topic_manager/program/New(datum/program)
 	..()
 	src.program = program
 

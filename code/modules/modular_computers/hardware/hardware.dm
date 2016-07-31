@@ -22,7 +22,7 @@
 		return 1
 	// Nanopaste. Repair all damage if present for a single unit.
 	var/obj/item/stack/S = W
-	if(istype(S, /obj/item/stack/nanopaste))
+	if(istype(S, /obj/item/stack/sheet/glass))
 		if(!damage)
 			user << "\The [src] doesn't seem to require repairs."
 			return 1

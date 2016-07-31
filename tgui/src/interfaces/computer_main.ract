@@ -1,0 +1,27 @@
+<link rel='ractive' href='{{data.active_program_template}}'>
+ 
+<script>
+  component.exports = {
+    data: {
+      getActiveProgramTag(template) {
+            let tag = ''; //templates come in the form './airalarm/vents.ract' and from that the tag is <vents/>
+            if(template){
+                tag = template.split('/').pop().split('.')[0]; //'vents'
+            }
+            return tag
+        },
+      getTaskbarContents() {
+            {{!does a thing, probably reads a lot of data.X to load things like active programs, their icons, etc.}}
+        }
+      }
+    }
+</script>
+ 
+<ui-display>
+    <ui-section> {{! Active program}}
+        <{{{getActiveProgramTag(data.active_program_template)}}}/>
+    </ui-section>
+    <ui-section> {{! Taskbar}}
+        {{{getTaskbarContents()}}}
+    </ui-section>
+</ui-display>

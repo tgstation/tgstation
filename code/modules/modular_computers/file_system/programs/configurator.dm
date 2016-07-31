@@ -12,13 +12,16 @@
 	size = 4
 	available_on_ntnet = 0
 	requires_ntnet = 0
-	nanomodule_path = /datum/nano_module/program/computer_configurator/
+//	nanomodule_path = /datum/nano_module/program/computer_configurator/
 
-/datum/nano_module/program/computer_configurator
-	name = "NTOS Computer Configuration Tool"
+//datum/nano_module/program/computer_configurator
+//	name = "NTOS Computer Configuration Tool"
 	var/obj/item/modular_computer/movable = null
 
-/datum/nano_module/program/computer_configurator/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
+
+//obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+
+/datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	if(program)
 		movable = program.computer
 	if(!istype(movable))
