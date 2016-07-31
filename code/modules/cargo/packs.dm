@@ -74,7 +74,7 @@
 	name = "Chaos Crate"
 	hidden = TRUE
 	cost = 2500
-	num_contained = 1
+	var/num_contained = 1
 	contains = list(/obj/item/weapon/grenade/clusterbuster/emp,
 	/obj/item/weapon/grenade/clusterbuster/smoke,
 	/obj/item/weapon/grenade/clusterbuster/metalfoam,
