@@ -1621,7 +1621,8 @@
 		output_ai_laws()
 
 	else if(href_list["admincheckdevilinfo"])
-		output_devil_info()
+		var/mob/M = locate(href_list["admincheckdevilinfo"])
+		output_devil_info(M)
 
 	else if(href_list["adminmoreinfo"])
 		var/mob/M = locate(href_list["adminmoreinfo"])

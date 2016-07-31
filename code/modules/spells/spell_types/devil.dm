@@ -108,12 +108,17 @@
 	if(istype(user))
 		if(istype(user.loc, /obj/effect/dummy/slaughter/))
 			var/continuing = 0
-			for(var/mob/living/C in orange(2, get_turf(user.loc)))
-				if (C.mind && C.mind.soulOwner == C.mind)
-					continuing = 1
-					break
+			if(istype(get_area(user), /area/shuttle/)) // Can always phase in in a shuttle.
+				continuing = 1
+			else
+				for(var/mob/living/C in orange(2, get_turf(user.loc))) //Can also phase in when nearby a potential buyer.
+					if (C.mind && C.mind.soulOwner == C.mind)
+						continuing = 1
+						break
 			if(continuing)
-				addtimer(user,"infernalphasein",150,TRUE)
+				user << "<span class='warning'>You are now phasing in.</span>"
+				if(do_mob(user,user,150))
+					user.infernalphasein()
 			else
 				user << "<span class='warning'>You can only re-appear near a potential signer."
 				revert_cast()
@@ -122,21 +127,22 @@
 			user.notransform = 1
 			user.fakefire()
 			src << "<span class='warning'>You begin to phase back into sinful flames.</span>"
-			addtimer(user, "infernalphaseout",150,TRUE,get_turf(user))
+			if(do_mob(user,user,150))
+				user.infernalphaseout()
+			else
+				user << "<span class='warning'>You must remain still while exiting.</span>"
+				user.ExtinguishMob()
 		start_recharge()
 		return
 	revert_cast()
 
 
-/mob/living/proc/infernalphaseout(var/turf/mobloc)
-	if(get_turf(src) != mobloc)
-		src << "<span class='warning'>You must remain still while exiting."
-		return
+/mob/living/proc/infernalphaseout()
 	dust_animation()
 	spawn_dust()
 	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
-	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
+	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,loc)
 	src.ExtinguishMob()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
