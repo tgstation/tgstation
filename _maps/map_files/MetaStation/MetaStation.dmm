@@ -13240,7 +13240,7 @@
 "axc" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
-/turf/open/floor/plating,
+/turf/open/floor/pod/light,
 /area/shuttle/mining)
 "axd" = (
 /turf/open/space,
@@ -15477,10 +15477,6 @@
 	},
 /area/library)
 "aAR" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "0"
-	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 3;
@@ -15498,7 +15494,8 @@
 	name = "mining shuttle bay";
 	width = 7
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/mining)
 "aAS" = (
 /obj/machinery/door/airlock/external{
@@ -16983,7 +16980,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/pod/light,
 /area/shuttle/mining)
 "aDx" = (
 /obj/structure/ore_box,

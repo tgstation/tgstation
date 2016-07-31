@@ -11919,10 +11919,9 @@
 /area/crew_quarters/sleep)
 "aAc" = (
 /obj/structure/grille,
-/obj/structure/window/fulltile,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/obj/structure/window/shuttle,
+/turf/open/floor/pod/light,
+/area/shuttle/labor)
 "aAd" = (
 /obj/machinery/light_switch{
 	pixel_y = -25
@@ -39628,10 +39627,6 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bJc" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Mining Shuttle Airlock";
-	req_access_txt = "48"
-	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 3;
@@ -39649,7 +39644,8 @@
 	name = "mining shuttle bay";
 	width = 7
 	},
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/labor)
 "bJd" = (
 /obj/machinery/door/airlock/glass_mining{
@@ -40847,7 +40843,7 @@
 /area/shuttle/labor)
 "bLt" = (
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/plating,
+/turf/open/floor/pod/light,
 /area/shuttle/labor)
 "bLu" = (
 /obj/structure/rack{
@@ -80158,9 +80154,9 @@ aaa
 aaa
 akD
 akD
-ajX
+aAc
 akD
-ajX
+aAc
 akD
 akD
 aaa
@@ -80670,7 +80666,7 @@ bxx
 bxu
 bxu
 bDi
-ajX
+aAc
 bGh
 bHx
 amI
@@ -81186,9 +81182,9 @@ bxx
 aaa
 akD
 akD
-ajX
+aAc
 bJc
-ajX
+aAc
 akD
 akD
 aaa
