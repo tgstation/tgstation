@@ -1,5 +1,0 @@
-author: "lordpidey"
-delete-after: True
-changes: 
-  - rscadd: "Added Devil agent gamemode, where multiple devils are each trying to buy more souls than the next in line."
-  - rscadd: "If you've already sold your soul, you can sell it again to a different devil.  You can even go back and forth for INFINITE POWER."

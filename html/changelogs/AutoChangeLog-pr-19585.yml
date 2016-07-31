@@ -1,5 +1,0 @@
-author: "Arctophylax"
-delete-after: True
-changes: 
-  - bugfix: "Birdboat's atmospheric tanks now function normally again."
-  - bugfix: "Birdboat's TEG is now orientated to match the pipe layout."
