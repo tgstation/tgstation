@@ -5982,11 +5982,10 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "amx" = (
-/obj/structure/chair{
-	dir = 1
+/turf/open/floor/plating/warnplate{
+	dir = 5
 	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/area/shuttle/auxillary_base)
 "amy" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -7788,9 +7787,8 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqB" = (
-/obj/effect/decal/cleanable/cobweb2,
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/turf/open/floor/plating/warnplate,
+/area/shuttle/auxillary_base)
 "aqC" = (
 /obj/machinery/computer/slot_machine{
 	balance = 15;
@@ -8628,8 +8626,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "asB" = (
-/turf/closed/wall,
-/area/maintenance/electrical)
+/obj/machinery/door/airlock/research,
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "asC" = (
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
@@ -9010,11 +9009,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "atB" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "atC" = (
 /obj/item/stack/rods{
 	amount = 50
@@ -9492,6 +9489,11 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -11112,12 +11114,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "ayj" = (
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high/plus,
-/obj/item/weapon/stock_parts/cell/high/plus,
+/obj/docking_port/mobile/auxillary_base,
 /turf/open/floor/plating,
-/area/maintenance/electrical)
+/area/shuttle/auxillary_base)
 "ayk" = (
 /turf/open/floor/plasteel/warning,
 /area/hallway/secondary/entry)
@@ -12133,49 +12132,30 @@
 	name = "\improper Garden"
 	})
 "aAy" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/electrical)
+/turf/closed/wall,
+/area/mining_construction)
 "aAz" = (
-/obj/machinery/computer/monitor{
-	name = "backup power monitoring console"
-	},
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/electrical)
-"aAA" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0
 	},
 /turf/closed/wall,
-/area/maintenance/electrical)
-"aAB" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/area/mining_construction)
+"aAA" = (
+/obj/machinery/door/poddoor{
+	id = "mining_base"
 	},
 /turf/open/floor/plating,
-/area/maintenance/electrical)
+/area/mining_construction)
+"aAB" = (
+/obj/machinery/door/poddoor{
+	id = "mining_base"
+	},
+/turf/closed/wall,
+/area/mining_construction)
 "aAC" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
@@ -12655,9 +12635,14 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aBF" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/obj/machinery/button/door{
+	id = "mining_base";
+	name = "blast doors";
+	pixel_x = 4;
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "aBG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -13181,17 +13166,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aCQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+/turf/open/floor/plasteel/warning{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/plasteel/black,
-/area/chapel/main)
+/area/mining_construction)
 "aCR" = (
 /turf/closed/wall,
 /area/chapel/main)
@@ -13199,8 +13183,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "aCT" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/arrival)
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 "aCU" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrivals Shuttle Airlock"
@@ -13213,19 +13197,13 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "aCW" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
+/turf/open/floor/plasteel/warning{
+	dir = 8
 	},
-/area/shuttle/arrival)
+/area/mining_construction)
 "aCX" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
-	},
-/area/shuttle/arrival)
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "aCY" = (
 /obj/machinery/computer/security,
 /obj/structure/reagent_dispensers/peppertank{
@@ -13887,11 +13865,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aEp" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall11";
-	dir = 2
+/obj/machinery/light{
+	dir = 8
 	},
-/area/shuttle/arrival)
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "aEq" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/blue,
@@ -14445,11 +14423,14 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aFD" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall1";
-	dir = 2
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
 	},
-/area/shuttle/arrival)
+/turf/open/floor/plasteel/warning{
+	dir = 8
+	},
+/area/mining_construction)
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
@@ -15965,11 +15946,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aIH" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall2";
-	dir = 2
+/turf/open/floor/plating/warnplate{
+	dir = 9
 	},
-/area/shuttle/arrival)
+/area/shuttle/auxillary_base)
 "aII" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -16583,12 +16563,10 @@
 	},
 /area/chapel/main)
 "aKf" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
+/turf/open/floor/plating/warnplate{
+	dir = 1
 	},
-/area/shuttle/arrival)
+/area/shuttle/auxillary_base)
 "aKg" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
@@ -17123,18 +17101,14 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "aLt" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/shuttle/arrival)
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plating,
+/area/shuttle/auxillary_base)
 "aLu" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
+/turf/open/floor/plating/warnplate{
+	dir = 8
 	},
-/area/shuttle/arrival)
+/area/shuttle/auxillary_base)
 "aLv" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -37492,11 +37466,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bEJ" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
+/turf/open/floor/plating/warnplate{
+	dir = 4
 	},
-/area/shuttle/labor)
+/area/shuttle/auxillary_base)
 "bEK" = (
 /obj/machinery/computer/security/mining,
 /obj/machinery/camera{
@@ -52315,12 +52288,20 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "ckq" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
+/obj/docking_port/stationary{
+	area_type = /area/shuttle/auxillary_base;
 	dir = 8;
-	icon_state = "diagonalWall3"
+	dwidth = 3;
+	height = 5;
+	id = "mining_base";
+	name = "auxillary mining base";
+	turf_type = /turf/open/floor/plating;
+	width = 7
 	},
-/area/shuttle/syndicate)
+/turf/open/floor/plating/warnplate{
+	dir = 4
+	},
+/area/shuttle/auxillary_base)
 "ckr" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -52882,11 +52863,10 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "clB" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
+/obj/item/device/assault_pod/mining,
+/obj/structure/table,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/shuttle/auxillary_base)
 "clC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54610,8 +54590,9 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
 "cpe" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/pod_4)
+/obj/machinery/computer/shuttle/auxillary_base,
+/turf/closed/wall,
+/area/shuttle/auxillary_base)
 "cpf" = (
 /obj/machinery/telecomms/allinone{
 	intercept = 1
@@ -55221,22 +55202,15 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqq" = (
-/turf/open/floor/plating,
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
+/turf/open/floor/plating/warnplate{
+	dir = 10
 	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/shuttle/pod_4)
+/area/shuttle/auxillary_base)
 "cqr" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
+/turf/open/floor/plating/warnplate{
+	dir = 6
 	},
-/area/shuttle/pod_4)
+/area/shuttle/auxillary_base)
 "cqs" = (
 /obj/structure/sign/fire{
 	pixel_x = 0;
@@ -55704,14 +55678,26 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cry" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
-"crz" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_s10";
-	dir = 2
+/obj/structure/cable{
+	icon_state = "0-2";
+	pixel_y = 1;
+	d2 = 2
 	},
-/area/shuttle/escape)
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Base Construction APC";
+	pixel_x = -25;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel,
+/area/mining_construction)
+"crz" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Construction Area";
+	req_access_txt = "32"
+	},
+/turf/open/floor/plating,
+/area/mining_construction)
 "crA" = (
 /obj/structure/transit_tube/station{
 	dir = 8;
@@ -58367,11 +58353,14 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwH" = (
-/turf/open/floor/plasteel/shuttle/white,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f5"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/area/shuttle/escape)
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "cwI" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -58442,23 +58431,46 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwT" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall13";
-	dir = 2
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
 	},
-/area/shuttle/escape)
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "cwU" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
 	},
-/area/shuttle/escape)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "cwV" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall14";
-	dir = 2
+/obj/machinery/door/airlock/engineering{
+	name = "Construction Area";
+	req_access_txt = "32"
 	},
-/area/shuttle/escape)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0;
+	tag = ""
+	},
+/turf/open/floor/plating,
+/area/mining_construction)
 "cwW" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
@@ -58558,11 +58570,13 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "cxl" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall7";
-	dir = 2
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/area/shuttle/escape)
+/turf/open/floor/plasteel,
+/area/mining_construction)
 "cxm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -58632,8 +58646,10 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cxx" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/turf/closed/wall,
+/area/maintenance/fsmaint2)
 "cxy" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
@@ -58683,11 +58699,10 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxF" = (
-/turf/open/floor/plasteel/shuttle,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f10"
+/turf/open/floor/plasteel/warning{
+	dir = 1
 	},
-/area/shuttle/transport)
+/area/mining_construction)
 "cxG" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -103994,7 +104009,7 @@ aqz
 aru
 alP
 anf
-anf
+cwT
 avE
 anf
 anf
@@ -104235,7 +104250,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaf
@@ -104251,7 +104266,7 @@ anf
 anf
 asy
 anf
-anf
+cwU
 alP
 alP
 anf
@@ -104491,7 +104506,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -104508,11 +104523,11 @@ aqA
 anf
 alP
 atz
-anf
+cwT
 alP
 awJ
 anf
-alP
+cxx
 aAv
 anf
 aCE
@@ -104745,31 +104760,31 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaa
-aaa
-aaa
-alP
-alP
-alP
-alP
-alP
-anf
-anf
-alP
-anf
-anf
-apE
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+crz
+cwV
+aAy
+aAy
+aAy
+aAy
 anf
 anf
 aCE
@@ -105002,33 +105017,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaa
-aaa
-alO
-apD
-aEl
-anf
-arx
-anf
-anf
-alP
-alP
+aAy
+aBF
+aCX
+aEp
+aCX
+aCX
+aCX
+aCX
+aCX
+aEp
+aCX
+aCX
+aCX
+aCX
+aCX
+aCX
+aEp
+aCX
+cry
+cwH
+cxl
+aCX
+aCX
 atB
-alP
-alP
-alP
+aAy
+aAy
+aAy
 aCF
 aDZ
 aFw
@@ -105259,33 +105274,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaa
-alP
-anf
-anf
-arw
-asA
-asA
-anf
-alP
-awL
-anf
-anf
-apE
-aBF
+aAz
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCQ
+aCX
+aCX
+aAy
 aCH
 aED
 aFy
@@ -105516,33 +105531,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-alO
-aoQ
-anf
-arv
-asz
-atA
-anf
-alP
-awK
-anf
-awD
-apE
-anf
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aIH
+aLu
+aLu
+aLu
+aLu
+aLu
+cqq
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCk
 aEC
 aFx
@@ -105773,33 +105788,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alP
-alP
-alP
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aKf
+aCT
+aCT
+aCT
+aCT
+aCT
 aqB
-arx
-anf
-anf
-anf
-alP
-awM
-ayg
-ayg
-ayg
-ayg
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCl
 aEe
 aFw
@@ -106030,33 +106045,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alP
-aoP
-alP
-alP
-apE
-alP
-atB
-alP
-alP
-awx
-aye
-ayd
-aAc
-ayd
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aKf
+aCT
+aCT
+aCT
+aCT
+aCT
+aqB
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCI
 aEd
 aFw
@@ -106287,33 +106302,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-alP
-alP
-alP
-alP
-alP
-anf
-anf
-anf
-anf
-anf
-anf
-aty
-anf
-awx
-avI
-asA
-apE
-arx
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aKf
+aCT
+aCT
+aCT
+aCT
+aCT
+aqB
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+atB
+aAy
 aCo
 aEf
 aFw
@@ -106544,33 +106559,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alO
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
 amx
-anf
-anf
-anf
-anf
-alP
-alP
-alP
-asB
-asB
-asB
-avo
-awx
-avH
-asB
-asB
-asB
+bEJ
+bEJ
+ckq
+bEJ
+bEJ
+cqr
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCK
 aEf
 aFw
@@ -106801,33 +106816,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-alP
-alP
-alP
-alP
-alP
-anf
-alP
-aqD
-arz
-asB
-atD
-auJ
-asB
-awQ
-avK
-azt
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aLt
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
 aAy
-asB
 aCN
 aEf
 aFw
@@ -107058,33 +107073,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-aaf
-aaf
-aaf
-alP
-anf
-alP
-aqC
-ary
-asB
-atC
-auI
-auI
-awP
-avJ
-awO
-awO
-asB
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCM
 aEg
 aFw
@@ -107315,33 +107330,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-alP
-anf
-alP
-alP
-alP
-asB
-atE
-auI
-auI
-awT
-avM
-azv
 aAA
-asB
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCE
 aEi
 aFw
@@ -107572,32 +107587,32 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
-alP
-anf
-apE
-anf
-anf
-asB
-asB
-asB
-avL
-awR
-auI
-azu
-aAz
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
 asB
 aCO
 aEh
@@ -107829,34 +107844,34 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-alP
-aoQ
-alP
-aqE
-arA
-asB
-atG
-auL
-avN
-axa
-auI
-azw
 aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
 asB
-aCQ
+aCO
 aEk
 aFB
 aHn
@@ -108086,32 +108101,32 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-alP
-alP
-alP
-alP
-alP
-asB
-atF
-auK
-auJ
-awS
-auI
-awO
-awO
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+clB
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
 asB
 aCP
 aEj
@@ -108343,33 +108358,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aae
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaf
-aaa
-aaa
-asB
-atH
-auM
-avO
-awU
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cpe
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
 ayj
-azx
-aAB
-asB
+cxF
+aCX
+aAy
 aCR
 aEm
 aCR
@@ -108600,33 +108615,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaa
-aaa
-asB
-asB
-asB
-asB
-asB
-asB
-asB
-asB
-asB
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCR
 bfb
 aCR
@@ -108857,33 +108872,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaf
-aaa
-aaa
-atS
-apQ
-aoV
-aoV
-atS
-apQ
-apQ
-apQ
-atS
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aCR
 aEn
 aCR
@@ -109114,33 +109129,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-atS
-aoV
-aoV
-aoV
-atS
-aoV
-aoV
-apQ
-atS
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -109371,33 +109386,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-atS
-aoV
-aoV
-aoV
-aaH
-aoV
-aoV
-apQ
-atS
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+atB
+aAy
 aaf
 aaa
 aaf
@@ -109628,33 +109643,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-atS
-aoV
-aoV
-aoV
-aaH
-aoV
-aoV
-aoV
-atS
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -109885,33 +109900,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaH
-aoV
-aoV
-aoV
-atS
-aoV
-aoV
-aoV
-atS
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -110142,33 +110157,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-atS
-aoV
-aoV
-aoV
-atS
-aoV
-aoV
-aoV
-apQ
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -110399,33 +110414,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aae
-aaa
-atS
-aoV
-aoV
-aoV
-atS
-aoV
-aoV
-aoV
-aoV
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -110656,33 +110671,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-apQ
-aoV
-aoV
-aoV
-atS
-aoV
-aoV
-aoV
-aoV
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaf
 aaa
 aaf
@@ -110912,34 +110927,34 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-apQ
-aoV
-aoV
-aoV
-apQ
-aoV
-aoV
-aoV
-aoV
+aae
+aAA
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+atB
+aAy
 aaf
 aaa
 aaf
@@ -111170,33 +111185,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aoV
-aoV
-aoV
-aoV
-apQ
-aoV
-aoV
-aoV
-aoV
+aAB
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+aCT
+cxF
+aCX
+aAy
 aaa
 aaa
 aaf
@@ -111427,33 +111442,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aAz
+aCW
+aCW
+aFD
+aCW
+aCW
+aCW
+aCW
+aCW
+aFD
+aCW
+aCW
+aCW
+aCW
+aCW
+aCW
+aFD
+aCW
+aCW
+aCW
+aCW
+aCW
+aCW
+aCW
+aCX
+aCX
+aAy
 aaa
 aaa
 aaf
@@ -111684,33 +111699,33 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
+aAy
 aaa
 aaa
 aaa
@@ -111944,23 +111959,23 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaf
+aaa
+aaa
+aaa
+aaf
+aaf
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
+aaf
+aaf
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -112200,23 +112215,23 @@ aaa
 aaa
 aaa
 aaa
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
+aaf
 aaa
 aaa
 aaa
+aaf
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -112457,22 +112472,22 @@ aaa
 aaa
 aaa
 aaa
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
+aaf
+aaa
+aaa
+aaf
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -112721,15 +112736,15 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaf
+aaf
+aaf
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -112978,16 +112993,16 @@ aaa
 aaa
 aaa
 aaa
+aaf
+aaa
+aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -113235,7 +113250,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -113492,7 +113507,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -113749,9 +113764,9 @@ aaa
 aaa
 aaa
 aaa
+aaf
 aaa
-aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -114005,9 +114020,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+aaf
+aaf
+aaf
 aaa
 aaa
 aaa
@@ -114262,7 +114277,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa
@@ -114519,7 +114534,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aaf
 aaa
 aaa
 aaa

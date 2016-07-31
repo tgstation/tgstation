@@ -55,7 +55,7 @@
 	desc = "Used to call and send the mining shuttle."
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
-	possible_destinations = "mining_home;mining_away"
+	possible_destinations = "mining_home;mining_away;mining_base"
 	no_destination_swap = 1
 	var/global/list/dumb_rev_heads = list()
 
@@ -500,3 +500,71 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
+
+///Mining Base////
+
+/area/shuttle/auxillary_base
+	name = "Auxillary Base"
+
+
+/obj/machinery/computer/shuttle/auxillary_base
+	name = "auxillary base launch control"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "dorm_available"
+	shuttleId = "colony_drop"
+	possible_destinations = null
+	clockwork = TRUE
+
+/obj/machinery/computer/shuttle/auxillary_base/Topic(href, href_list)
+	if(href_list["move"])
+		if(z != ZLEVEL_STATION)
+			usr << "<span class='warning'>You can't move the base again!</span>"
+			return 0
+	..()
+
+/obj/item/device/assault_pod/mining
+	name = "Landing Field Designator"
+	icon_state = "gangtool-purple"
+	item_state = "electronic"
+	icon = 'icons/obj/device.dmi'
+	desc = "Deploy to designate the landing zone of the auxillary base."
+	shuttle_id = "colony_drop"
+	dwidth = 11
+	dheight = 0
+	width = 23
+	height = 23
+	lz_dir = 1
+
+/obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+	var/turf/T = get_turf(user)
+	if(T.z != ZLEVEL_MINING)
+		user << "Wouldn't do much good dropping a mining base away from the mining area!"
+		return
+
+	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
+	landing_zone.id = "colony_drop(\ref[src])"
+	landing_zone.name = "Landing Zone"
+	landing_zone.dwidth = dwidth
+	landing_zone.dheight = dheight
+	landing_zone.width = width
+	landing_zone.height = height
+	landing_zone.setDir(lz_dir)
+
+	for(var/obj/machinery/computer/shuttle/S in machines)
+		if(S.shuttleId == shuttle_id)
+			S.possible_destinations = "[landing_zone.id]"
+
+	user << "Landing zone set."
+
+	qdel(src)
+
+
+/area/shuttle/auxillary_base
+	name = "Auxillary Base"
+
+/obj/docking_port/mobile/auxillary_base
+	name = "auxillary base"
+	id = "colony_drop"
+	dwidth = 11
+	width = 23
+	height = 23
