@@ -85,8 +85,8 @@ Difficulty: Hard
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else
-		if(health > maxHealth/2 && !client && !charging)
+	else if(!charging)
+		if(health > maxHealth/2 && !client)
 			charge()
 		else
 			charge()
@@ -108,7 +108,17 @@ Difficulty: Hard
 		bloodspell.phased = 1
 	new/obj/item/device/gps/internal/bubblegum(src)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A)
+	if(charging)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/AttackingTarget()
+	if(charging)
+		return
+	..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(charging)
 		return
 	..()
@@ -118,13 +128,15 @@ Difficulty: Hard
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
-		for(var/turf/T in range(src, 1))
-			T.singularity_pull(src, 7)
+		DestroySurroundings()
 	. = ..()
+	if(charging)
+		DestroySurroundings()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
 	charging = 1
+	DestroySurroundings()
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, T)
 	sleep(5)
 	throw_at(T, 7, 1, src, 0)
@@ -135,7 +147,8 @@ Difficulty: Hard
 	if(charging)
 		if(istype(A, /turf) || istype(A, /obj) && A.density)
 			A.ex_act(2)
-		..()
+		DestroySurroundings()
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
 	if(!charging)
