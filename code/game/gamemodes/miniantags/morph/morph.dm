@@ -53,14 +53,14 @@
 	return
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_status()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[STATUS_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
@@ -180,17 +180,17 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
-	if(isliving(target)) // Eat Corpses to regen health
+	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
 				if(eat(L))
 					adjustHealth(-50)
 			return
-	else if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) //Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
-			if(do_after(src,20, target = I))
+			if(do_after(src, 20, target = I))
 				eat(I)
 			return
 	target.attack_animal(src)
