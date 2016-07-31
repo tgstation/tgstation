@@ -121,11 +121,11 @@
 		myseed.loc = src
 
 	if(self_sustaining)
-		adjustNutri(2 / rating)
-		adjustWater(rand(8, 10) / rating)
-		adjustWeeds(-5 / rating)
-		adjustPests(-5 / rating)
-		adjustToxic(-5 / rating)
+		adjustNutri(2 * rating)
+		adjustWater(rand(8, 10) * rating)
+		adjustWeeds(-5 * rating)
+		adjustPests(-5 * rating)
+		adjustToxic(-5 * rating)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
