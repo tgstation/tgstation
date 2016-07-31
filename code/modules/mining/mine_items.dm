@@ -512,6 +512,7 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	shuttleId = "colony_drop"
+	req_access = list(access_heads)
 	possible_destinations = null
 	clockwork = TRUE
 
