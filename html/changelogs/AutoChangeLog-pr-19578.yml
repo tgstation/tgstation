@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Megafauna will now seek and consume corpses of enemies to heal or otherwise."
