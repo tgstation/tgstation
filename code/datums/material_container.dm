@@ -137,6 +137,8 @@
 
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
+	if(!M.sheet_type)
+		return 0
 	if(sheet_amt > 0)
 		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
@@ -268,3 +270,7 @@
 	name = "Titanium"
 	id = MAT_TITANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
+
+/datum/material/biomass
+	name = "Biomass"
+	id = MAT_BIOMASS
