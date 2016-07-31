@@ -174,8 +174,8 @@ Difficulty: Hard
 	spawn(0)
 		var/turf/E = get_edge_target_turf(src, src.dir)
 		var/range = 10
-		for(var/turf/open/J in getline(src,E))
-			if(!range)
+		for(var/turf/J in getline(src,E))
+			if(!range || J.density)
 				break
 			playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
 			new /obj/effect/decal/cleanable/blood(J)

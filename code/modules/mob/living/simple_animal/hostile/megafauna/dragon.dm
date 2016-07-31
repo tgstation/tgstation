@@ -182,8 +182,8 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
-	for(var/turf/open/J in getline(src,E))
-		if(!range)
+	for(var/turf/J in getline(src,E))
+		if(!range || J.density)
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
