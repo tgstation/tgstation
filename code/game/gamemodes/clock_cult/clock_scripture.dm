@@ -707,8 +707,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("vanguard_cogwheel" = 1, "guvax_capacitor" = 1)
 	whispered = TRUE
 	object_path = /obj/item/device/mmi/posibrain/soul_vessel
-	creator_message = "<span class='brass'>You form a soul vessel, which immediately begins drawing in the damned.</span>"
-	usage_tip = "The vessel functions as a servant for tier unlocking but not for invocation."
+	creator_message = "<span class='brass'>You form a soul vessel, which can be used in-hand to attract spirits, or used on an unconscious or dead human to extract their consciousness.</span>"
+	usage_tip = "The vessel can be used in-hand, to draw in random spirits, or on an unconscious or dead human to extract their consciousness."
 	tier = SCRIPTURE_SCRIPT
 
 
