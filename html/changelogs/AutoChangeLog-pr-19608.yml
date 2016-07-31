@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - tweak: "Vanguard now only stuns for 25% of absorbed stuns, from 50%."
