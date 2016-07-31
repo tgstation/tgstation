@@ -49,7 +49,7 @@
 	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0)
+	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
