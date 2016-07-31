@@ -1158,6 +1158,10 @@ var/list/teleportlocs = list()
 	name = "Construction Area"
 	icon_state = "yellow"
 
+/area/mining_construction
+	name = "Auxillary Base Construction"
+	icon_state = "yellow"
+
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
 	icon_state = "yellow"
