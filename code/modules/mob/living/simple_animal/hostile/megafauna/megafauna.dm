@@ -44,6 +44,11 @@
 	else
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	..()
+	if(ranged && prob(50))
+		OpenFire()
+
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
 	. = ..()
