@@ -22,6 +22,10 @@
 	//overlays that should remain on top and not normally be removed, like c4.
 	var/list/priority_overlays
 
+/atom/New()
+	if(vars.len > 6)
+		qdel(src)
+
 /atom/Destroy()
 	if(alternate_appearances)
 		for(var/aakey in alternate_appearances)
