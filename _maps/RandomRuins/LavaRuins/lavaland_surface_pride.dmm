@@ -15,7 +15,7 @@
 /area/ruin/powered)
 "e" = (
 /obj/structure/mirror{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth
@@ -23,7 +23,7 @@
 /area/ruin/powered)
 "f" = (
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/mineral/silver{
 	baseturf = /turf/open/floor/plating/lava/smooth

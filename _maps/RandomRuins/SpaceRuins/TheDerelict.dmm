@@ -363,7 +363,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Starboard Solar APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /obj/structure/cable,
@@ -646,8 +646,8 @@
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/machine/autolathe,
 /obj/item/weapon/circuitboard/machine/protolathe{
-	pixel_x = -5;
-	pixel_y = -3
+	pixel_x = -10;
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/ai_upload)
@@ -660,7 +660,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
@@ -890,7 +890,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge/access)
@@ -1120,12 +1120,12 @@
 	dir = 4
 	},
 /obj/item/weapon/stock_parts/matter_bin{
-	pixel_x = -10;
-	pixel_y = 5
+	pixel_x = -20;
+	pixel_y = 10
 	},
 /obj/item/weapon/stock_parts/matter_bin{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/stock_parts/matter_bin,
 /turf/open/floor/plating/airless,
@@ -1202,8 +1202,8 @@
 "df" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
@@ -1217,8 +1217,8 @@
 "dh" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+	pixel_x = -6;
+	pixel_y = 14
 	},
 /turf/open/floor/plasteel,
 /area/derelict/bridge)
@@ -1317,7 +1317,7 @@
 	desc = "A warning sign which reads 'RADIOACTIVE AREA'";
 	icon_state = "radiation";
 	name = "RADIOACTIVE AREA";
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel,
@@ -1565,7 +1565,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -1690,8 +1690,8 @@
 "ex" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
+	pixel_x = 6;
+	pixel_y = -14
 	},
 /obj/item/weapon/stock_parts/matter_bin,
 /turf/open/floor/plasteel/airless,
@@ -1716,8 +1716,8 @@
 /area/space)
 "eB" = (
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_x = 1;
-	pixel_y = -1
+	pixel_x = 2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
@@ -2008,7 +2008,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/bridge/access)
@@ -2190,7 +2190,7 @@
 /obj/structure/table,
 /obj/machinery/computer/pod/old{
 	name = "ProComp IIe";
-	pixel_y = 7;
+	pixel_y = 14;
 	id = "derelict_gun"
 	},
 /turf/open/floor/plasteel/chapel,
@@ -2705,7 +2705,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Worn-out APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/structure/cable{
@@ -2718,7 +2718,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/white,
@@ -2935,8 +2935,8 @@
 /area/derelict/hallway/primary)
 "hS" = (
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -3214,8 +3214,8 @@
 /area/derelict/arrival)
 "iE" = (
 /obj/item/weapon/stock_parts/manipulator{
-	pixel_x = -15;
-	pixel_y = 10
+	pixel_x = -30;
+	pixel_y = 20
 	},
 /obj/item/weapon/stock_parts/manipulator,
 /turf/open/floor/plating/airless,
@@ -3391,11 +3391,11 @@
 /area/space)
 "jf" = (
 /obj/item/ammo_casing/a357{
-	pixel_x = -5
+	pixel_x = -10
 	},
 /obj/item/ammo_casing/a357{
-	pixel_x = 5;
-	pixel_y = 6
+	pixel_x = 10;
+	pixel_y = 12
 	},
 /obj/item/ammo_casing/a357,
 /turf/open/floor/plasteel/airless,
@@ -3518,7 +3518,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Worn-out APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/airless,
@@ -3541,7 +3541,7 @@
 	dir = 1;
 	name = "Worn-out APC";
 	pixel_x = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -3821,7 +3821,7 @@
 	lighting = 0;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /turf/open/floor/plating/airless,
@@ -4719,7 +4719,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/derelict/arrival)
@@ -4783,7 +4783,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)

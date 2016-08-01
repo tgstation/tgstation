@@ -242,7 +242,7 @@
 
 /obj/item/weapon/ore/New()
 	..()
-	pixel_x = rand(0,16)-8
+	pixel_x = rand(0,32)-16
 	pixel_y = rand(0,8)-8
 
 /obj/item/weapon/ore/ex_act()
@@ -269,7 +269,7 @@
 
 /obj/item/weapon/coin/New()
 	..()
-	pixel_x = rand(0,16)-8
+	pixel_x = rand(0,32)-16
 	pixel_y = rand(0,8)-8
 
 	icon_state = "coin_[cmineral]_heads"

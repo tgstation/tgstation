@@ -17,8 +17,8 @@
 
 /obj/item/weapon/a_gift/New()
 	..()
-	pixel_x = rand(-10,10)
-	pixel_y = rand(-10,10)
+	pixel_x = rand(-20,20)
+	pixel_y = rand(-20,20)
 	icon_state = "giftdeliverypackage[rand(1,5)]"
 
 /obj/item/weapon/a_gift/suicide_act(mob/user)

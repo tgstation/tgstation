@@ -75,8 +75,8 @@
 	var/list/faction = list("spiders")
 
 /obj/effect/spider/eggcluster/New()
-	pixel_x = rand(3,-3)
-	pixel_y = rand(3,-3)
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
@@ -109,8 +109,8 @@
 	var/list/faction = list("spiders")
 
 /obj/effect/spider/spiderling/New()
-	pixel_x = rand(6,-6)
-	pixel_y = rand(6,-6)
+	pixel_x = rand(12,-12)
+	pixel_y = rand(12,-12)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/spiderling/Bump(atom/user)

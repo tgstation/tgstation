@@ -222,8 +222,8 @@
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
 					P.name = trim("[name] pill")
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
+					P.pixel_x = rand(-14, 14) //random position
+					P.pixel_y = rand(-14, 14)
 					reagents.trans_to(P,vol_each)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
@@ -255,8 +255,8 @@
 			for(var/i = 0; i < amount; i++)
 				P = new/obj/item/weapon/reagent_containers/pill/patch(src.loc)
 				P.name = trim("[name] patch")
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
+				P.pixel_x = rand(-14, 14) //random position
+				P.pixel_y = rand(-14, 14)
 				reagents.trans_to(P,vol_each)
 			. = TRUE
 
@@ -272,8 +272,8 @@
 			else
 				P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
 
-			P.pixel_x = rand(-7, 7) //random position
-			P.pixel_y = rand(-7, 7)
+			P.pixel_x = rand(-14, 14) //random position
+			P.pixel_y = rand(-14, 14)
 			P.name = trim("[name] bottle")
 			reagents.trans_to(P, P.volume)
 			. = TRUE

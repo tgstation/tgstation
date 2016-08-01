@@ -508,11 +508,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -523,7 +523,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -548,7 +548,7 @@
 /obj/machinery/button/door{
 	id = "a3";
 	name = "privacy button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -557,7 +557,7 @@
 	})
 "bw" = (
 /obj/machinery/light_switch{
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -574,11 +574,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -589,7 +589,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -614,7 +614,7 @@
 /obj/machinery/button/door{
 	id = "a4";
 	name = "privacy button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -623,7 +623,7 @@
 	})
 "bC" = (
 /obj/machinery/light_switch{
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -640,11 +640,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -655,7 +655,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -680,7 +680,7 @@
 /obj/machinery/button/door{
 	id = "a5";
 	name = "privacy button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -689,7 +689,7 @@
 	})
 "bI" = (
 /obj/machinery/light_switch{
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -706,11 +706,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -721,7 +721,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Guest Room APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -746,7 +746,7 @@
 /obj/machinery/button/door{
 	id = "a6";
 	name = "privacy button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -755,7 +755,7 @@
 	})
 "bO" = (
 /obj/machinery/light_switch{
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/guestroom{
@@ -1036,11 +1036,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -1052,7 +1052,7 @@
 	dir = 1;
 	name = "Guest Room APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -1077,7 +1077,7 @@
 /obj/machinery/button/door{
 	id = "a2";
 	name = "privacy button";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -1117,11 +1117,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/guestroom{
@@ -1133,7 +1133,7 @@
 	dir = 1;
 	name = "Guest Room APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -1158,7 +1158,7 @@
 /obj/machinery/button/door{
 	id = "a1";
 	name = "privacy button";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
@@ -1397,7 +1397,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Laundry APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -1552,7 +1552,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Kitchen APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1643,8 +1643,8 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/bar)
@@ -1880,7 +1880,7 @@
 /area/ruin/hotel/workroom)
 "eH" = (
 /obj/structure/noticeboard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/paper{
 	info = "<bold>!NOTICE!</bold><br><br><center>We are expecting arriving guests soon from a nearby station! Stay sharp and make sure guests enjoy their time spent here. Don't think you can sneak off while they're here, either.</center>";
@@ -1901,7 +1901,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
 /obj/structure/sign/nosmoking_1{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
@@ -1956,10 +1956,10 @@
 "eU" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -4
+	pixel_x = -8
 	},
 /turf/open/floor/plasteel/bar,
 /area/ruin/hotel/bar)
@@ -1971,7 +1971,7 @@
 /area/ruin/hotel/bar)
 "eW" = (
 /obj/machinery/vending/wallmed{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
@@ -2096,10 +2096,10 @@
 /area/ruin/hotel/bar)
 "fi" = (
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = -4
+	pixel_x = -8
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel/cafeteria,
@@ -2114,7 +2114,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Staff Room APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /mob/living/simple_animal/bot/medbot{
 	name = "Accidents Happen"
@@ -2123,14 +2123,14 @@
 /area/ruin/hotel/workroom)
 "fl" = (
 /obj/structure/mirror{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
 "fm" = (
 /obj/structure/closet/crate/bin,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/plasteel/black,
 /area/ruin/hotel/workroom)
@@ -2370,7 +2370,7 @@
 	icon_state = "safety";
 	name = "Safety Poster";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTH)";
@@ -2384,7 +2384,7 @@
 	dir = 1;
 	name = "Power Storage APC";
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -2412,7 +2412,7 @@
 /area/ruin/hotel/bar)
 "fP" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -2528,7 +2528,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Security APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2569,7 +2569,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Pool APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2621,7 +2621,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Dock APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -2867,7 +2867,7 @@
 	icon_state = "0-8"
 	},
 /obj/structure/sign/electricshock{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/ruin/hotel/power)
@@ -2908,7 +2908,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/sign/vacuum{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/yellow/side,
 /area/ruin/hotel/power)
@@ -3040,7 +3040,7 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/sign/goldenplaque{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (WEST)";
@@ -3113,10 +3113,10 @@
 /area/ruin/hotel/pool)
 "hw" = (
 /obj/structure/mirror{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/sink{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/ruin/hotel/pool)
@@ -3241,7 +3241,7 @@
 /area/ruin/hotel/security)
 "hL" = (
 /obj/structure/mirror{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plasteel/darkred,
 /area/ruin/hotel/security)
@@ -3464,7 +3464,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Custodial APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/neutral,
@@ -3761,7 +3761,7 @@
 	dir = 4;
 	icon_state = "roomnum";
 	name = "Room Number 3";
-	pixel_y = 24;
+	pixel_y = 48;
 	tag = "icon-roomnum (EAST)"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -3773,7 +3773,7 @@
 	dir = 8;
 	icon_state = "roomnum";
 	name = "Room Number 4";
-	pixel_y = 24;
+	pixel_y = 48;
 	tag = "icon-roomnum (WEST)"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -3791,7 +3791,7 @@
 	dir = 6;
 	icon_state = "roomnum";
 	name = "Room Number 5";
-	pixel_y = 24;
+	pixel_y = 48;
 	tag = "icon-roomnum (SOUTHEAST)"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -3803,7 +3803,7 @@
 	dir = 10;
 	icon_state = "roomnum";
 	name = "Room Number 6";
-	pixel_y = 24;
+	pixel_y = 48;
 	tag = "icon-roomnum (SOUTHWEST)"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3870,7 +3870,7 @@
 	dir = 1;
 	icon_state = "roomnum";
 	name = "Room Number 2";
-	pixel_y = -24;
+	pixel_y = -48;
 	tag = "icon-roomnum (NORTH)"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -3881,7 +3881,7 @@
 	desc = "A sign that states the labeled room's number.";
 	icon_state = "roomnum";
 	name = "Room Number 1";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/carpet,
@@ -3961,7 +3961,7 @@
 	})
 "jx" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -4041,7 +4041,7 @@
 "jH" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/plasteel/white,
 /area/ruin/hotel/workroom)
@@ -4107,7 +4107,7 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -24;
+	pixel_y = -48;
 	tag = "icon-alarm0 (NORTH)"
 	},
 /turf/open/floor/plating,
@@ -4116,7 +4116,7 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -24;
+	pixel_y = -48;
 	tag = "icon-alarm0 (NORTH)"
 	},
 /turf/open/floor/plating,
@@ -4124,13 +4124,13 @@
 "jR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel)
 "jS" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
@@ -4232,7 +4232,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel/dock)
@@ -4252,7 +4252,7 @@
 "kk" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
@@ -4457,7 +4457,7 @@
 	tag = ""
 	},
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTH)";
@@ -4532,7 +4532,7 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -24;
+	pixel_y = -48;
 	tag = "icon-alarm0 (NORTH)"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4678,7 +4678,7 @@
 /area/ruin/hotel/power)
 "lq" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (NORTHEAST)";
@@ -4711,7 +4711,7 @@
 /area/ruin/hotel/security)
 "lu" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTH)";
@@ -4721,7 +4721,7 @@
 /area/ruin/hotel/security)
 "lv" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel/red/side{
 	tag = "icon-red (NORTHEAST)";
@@ -4735,7 +4735,7 @@
 /area/ruin/hotel/security)
 "lx" = (
 /obj/machinery/firealarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/pool)
@@ -4745,7 +4745,7 @@
 /area/ruin/hotel/pool)
 "lz" = (
 /obj/structure/sign/nosmoking_2{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel,
 /area/ruin/hotel/pool)
@@ -4868,7 +4868,7 @@
 	dir = 1
 	},
 /obj/structure/sign/atmosplaque{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plating,
 /area/ruin/hotel/power)
@@ -4892,10 +4892,10 @@
 /area/ruin/hotel/security)
 "lW" = (
 /obj/structure/mirror{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/sink{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/hotel/pool)
@@ -5084,25 +5084,25 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
 "mz" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/carpet,
 /area/ruin/hotel)
 "mA" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/wood,
 /area/ruin/hotel/dock)
 "mB" = (
 /obj/structure/sink/kitchen{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)
@@ -5192,7 +5192,7 @@
 /area/ruin/hotel/bar)
 "mR" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/ruin/hotel/bar)

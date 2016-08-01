@@ -25,8 +25,8 @@
 	var/defer_change = 0
 
 /turf/closed/mineral/New()
-	pixel_y = -4
-	pixel_x = -4
+	pixel_y = -8
+	pixel_x = -8
 	icon = smooth_icon
 	..()
 	if (mineralType && mineralAmt && spread && spreadChance)
@@ -794,8 +794,8 @@
 	planetary_atmos = TRUE
 
 /turf/open/floor/plating/ash/New()
-	pixel_y = -4
-	pixel_x = -4
+	pixel_y = -8
+	pixel_x = -8
 	icon = smooth_icon
 	..()
 

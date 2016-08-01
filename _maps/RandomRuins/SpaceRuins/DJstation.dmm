@@ -45,8 +45,8 @@
 /area/djstation)
 "al" = (
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /turf/open/floor/plating,
 /area/djstation)
@@ -81,7 +81,7 @@
 /obj/machinery/power/apc{
 	dir = 0;
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plating,
 /area/djstation)
@@ -97,7 +97,7 @@
 	icon_state = "shock";
 	name = "HIGH VOLTAGE";
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plating,
 /area/djstation)
@@ -136,13 +136,13 @@
 /area/djstation)
 "ax" = (
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "ay" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
@@ -160,7 +160,7 @@
 /area/djstation)
 "aC" = (
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/grimy,
 /area/djstation)
@@ -177,7 +177,7 @@
 "aF" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/bar,
 /area/djstation)
@@ -327,23 +327,23 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/freezer,
 /area/djstation)
 "bf" = (
 /obj/structure/toilet{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/freezer,
 /area/djstation)
 "bg" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/cafeteria,
@@ -355,7 +355,7 @@
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)

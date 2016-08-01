@@ -39,8 +39,8 @@
 		screen_loc = "[screen_loc_X[1]],[screen_loc_Y[1]]"
 
 	else //Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
-		var/pix_X = text2num(screen_loc_X[2]) - 16
-		var/pix_Y = text2num(screen_loc_Y[2]) - 16
+		var/pix_X = text2num(screen_loc_X[2]) - 32
+		var/pix_Y = text2num(screen_loc_Y[2]) - 32
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
 	moved = screen_loc
@@ -55,7 +55,7 @@
 	M.name = "Movable UI Object"
 	M.icon_state = "block"
 	M.maptext = "Movable"
-	M.maptext_width = 64
+	M.maptext_width = 128
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Movable UI Object") as text
 	if(!screen_l)
@@ -74,7 +74,7 @@
 	S.name = "Snap UI Object"
 	S.icon_state = "block"
 	S.maptext = "Snap"
-	S.maptext_width = 64
+	S.maptext_width = 128
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text
 	if(!screen_l)

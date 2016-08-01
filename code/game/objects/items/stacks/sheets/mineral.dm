@@ -49,7 +49,7 @@ var/global/list/datum/stack_recipe/sandstone_recipes = list ( \
 /obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
 	..()
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
@@ -73,8 +73,8 @@ var/global/list/datum/stack_recipe/sandbag_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/sandbags/New(var/loc, var/amount=null)
 	recipes = sandbag_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -98,8 +98,8 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/diamond/New(var/loc, var/amount=null)
 	recipes = diamond_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -122,8 +122,8 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/uranium/New(var/loc, var/amount=null)
 	recipes = uranium_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -147,8 +147,8 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/plasma/New(var/loc, var/amount=null)
 	recipes = plasma_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /obj/item/stack/sheet/mineral/plasma/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -187,8 +187,8 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/gold/New(var/loc, var/amount=null)
 	recipes = gold_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -214,8 +214,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/silver/New(var/loc, var/amount=null)
 	recipes = silver_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -236,8 +236,8 @@ var/global/list/datum/stack_recipe/clown_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/bananium/New(var/loc, var/amount=null)
 	recipes = clown_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /*
@@ -262,8 +262,8 @@ var/global/list/datum/stack_recipe/titanium_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/titanium/New(var/loc, var/amount=null)
 	recipes = titanium_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 
@@ -289,8 +289,8 @@ var/global/list/datum/stack_recipe/plastitanium_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/plastitanium/New(var/loc, var/amount=null)
 	recipes = plastitanium_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 
@@ -314,8 +314,8 @@ var/global/list/datum/stack_recipe/snow_recipes = list ( \
 
 /obj/item/stack/sheet/mineral/snow/New(var/loc, var/amount=null)
 	recipes = snow_recipes
-	pixel_x = rand(0,4)-4
-	pixel_y = rand(0,4)-4
+	pixel_y = rand(0,8)-8
+	pixel_y = rand(0,8)-8
 	..()
 
 /****************************** Others ****************************/

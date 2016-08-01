@@ -181,8 +181,8 @@
 
 /mob/living/simple_animal/chick/New()
 	..()
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(0, 20)
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -242,8 +242,8 @@ var/global/chicken_count = 0
 	icon_state = "[icon_prefix]_[body_color]"
 	icon_living = "[icon_prefix]_[body_color]"
 	icon_dead = "[icon_prefix]_[body_color]_dead"
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(0, 10)
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(0, 20)
 	chicken_count += 1
 
 /mob/living/simple_animal/chicken/death(gibbed)
@@ -272,8 +272,8 @@ var/global/chicken_count = 0
 		visible_message("[src] [pick(layMessage)]")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
-		E.pixel_x = rand(-6,6)
-		E.pixel_y = rand(-6,6)
+		E.pixel_x = rand(-12,12)
+		E.pixel_y = rand(-12,12)
 		if(eggsFertile)
 			if(chicken_count < MAX_CHICKENS && prob(25))
 				START_PROCESSING(SSobj, E)

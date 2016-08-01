@@ -48,7 +48,7 @@ Difficulty: Medium
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -16
+	pixel_x = -32
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	loot = list(/obj/structure/closet/crate/necropolis/dragon)
@@ -109,7 +109,7 @@ Difficulty: Medium
 	layer = FLY_LAYER
 	randomdir = 0
 	duration = 12
-	pixel_z = 500
+	pixel_z = 1000
 
 /obj/effect/overlay/temp/fireball/New(loc)
 	..()
@@ -128,8 +128,8 @@ Difficulty: Medium
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "landing"
 	layer = BELOW_MOB_LAYER
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	color = "#FF0000"
 	duration = 10
 
@@ -209,9 +209,9 @@ Difficulty: Medium
 	icon_state = "swoop"
 	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 	if(prob(50))
-		animate(src, pixel_x = 500, pixel_z = 500, time = 10)
+		animate(src, pixel_x = 1000, pixel_z = 1000, time = 10)
 	else
-		animate(src, pixel_x = -500, pixel_z = 500, time = 10)
+		animate(src, pixel_x = -1000, pixel_z = 1000, time = 10)
 	sleep(30)
 
 	var/turf/tturf

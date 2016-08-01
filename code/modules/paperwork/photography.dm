@@ -213,8 +213,8 @@
 		if(istype(A, /mob/living) && A:lying)
 			img.Turn(A:lying)
 
-		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
-		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
+		var/offX = 64 * (A.x - center.x) + A.pixel_x + 66
+		var/offY = 64 * (A.y - center.y) + A.pixel_y + 66
 		if(istype(A, /atom/movable))
 			offX += A:step_x
 			offY += A:step_y
@@ -225,7 +225,7 @@
 			blueprints = 1
 
 	for(var/turf/T in turfs)
-		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 32 * (T.x - center.x) + 33, 32 * (T.y - center.y) + 33)
+		res.Blend(getFlatIcon(T.loc), blendMode2iconMode(T.blend_mode), 64 * (T.x - center.x) + 66, 64 * (T.y - center.y) + 66)
 
 	return res
 
@@ -310,8 +310,8 @@
 	P.icon = ic
 	P.img = temp
 	P.desc = mobs
-	P.pixel_x = rand(-10, 10)
-	P.pixel_y = rand(-10, 10)
+	P.pixel_x = rand(-20, 20)
+	P.pixel_y = rand(-20, 20)
 
 	if(blueprints)
 		P.blueprints = 1
@@ -477,8 +477,8 @@
 			break
 	var/obj/item/weapon/photo/p = new /obj/item/weapon/photo(C.loc)
 	p.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"], selection.fields["blueprints"])
-	p.pixel_x = rand(-10, 10)
-	p.pixel_y = rand(-10, 10)
+	p.pixel_x = rand(-20, 20)
+	p.pixel_y = rand(-20, 20)
 	C.toner -= 20	 //Cyborgs are very ineffeicient at printing an image
 	visible_message("[C.name] spits out a photograph from a narrow slot on its chassis.")
 	usr << "<span class='notice'>You print a photograph.</span>"

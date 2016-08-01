@@ -102,8 +102,8 @@
 "ar" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/kitchen/rollingpin,
 /turf/open/floor/plasteel/green{
@@ -199,7 +199,7 @@
 /area/awaymission/centcomAway/cafe)
 "aI" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
@@ -231,8 +231,8 @@
 "aM" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/green{
 	dir = 1
@@ -320,7 +320,7 @@
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_x = 0;
-	pixel_y = 10
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel/green{
 	dir = 1
@@ -601,8 +601,8 @@
 "bW" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/mineral/titanium/blue,
@@ -611,20 +611,20 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
 "bY" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
+	pixel_x = 4;
 	pixel_y = 0
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
@@ -687,7 +687,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/spray/plantbgone{
 	pixel_x = 0;
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/hydrofloor,
 /area/awaymission/centcomAway/cafe)
@@ -1094,7 +1094,7 @@
 /area/awaymission/centcomAway/cafe)
 "dE" = (
 /obj/structure/sink/kitchen{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
@@ -1102,7 +1102,7 @@
 /obj/structure/table,
 /obj/machinery/processor{
 	pixel_x = 0;
-	pixel_y = 10
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
@@ -1113,8 +1113,8 @@
 "dH" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/red,
 /area/awaymission/centcomAway/cafe)
@@ -1320,8 +1320,8 @@
 "eo" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/kitchen/rollingpin,
 /turf/open/floor/plasteel/red,
@@ -1991,7 +1991,7 @@
 "gu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floor"
@@ -2198,7 +2198,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	pixel_y = 25
+	pixel_y = 50
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/centcomAway/hangar)
@@ -2352,7 +2352,7 @@
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/weapon/storage/toolbox/electrical{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
@@ -2367,11 +2367,11 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/general)
@@ -2431,8 +2431,8 @@
 /obj/machinery/button/door{
 	id = "XCCHangar1";
 	name = "Hangar Bay Blast Doors";
-	pixel_x = -28;
-	pixel_y = 7;
+	pixel_x = -56;
+	pixel_y = 14;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating/warnplate{
@@ -2446,8 +2446,8 @@
 "hM" = (
 /obj/structure/rack,
 /obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/open/floor/plating/warnplate{
 	dir = 8
@@ -2456,8 +2456,8 @@
 "hN" = (
 /obj/structure/rack,
 /obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/hangar)
@@ -2506,7 +2506,7 @@
 "hX" = (
 /obj/machinery/button/crematorium{
 	pixel_x = 0;
-	pixel_y = 25
+	pixel_y = 50
 	},
 /turf/open/floor/engine,
 /area/awaymission/centcomAway/general)
@@ -2840,7 +2840,7 @@
 /obj/machinery/button/massdriver{
 	id = "XCCMechs";
 	name = "XCC Mechbay Mass Driver";
-	pixel_x = 25
+	pixel_x = 50
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 1
@@ -3227,8 +3227,8 @@
 /obj/machinery/button/door{
 	id = "XCCFerry";
 	name = "Hangar Bay Shutters";
-	pixel_x = -28;
-	pixel_y = 7;
+	pixel_x = -56;
+	pixel_y = 14;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plating/warnplate{
@@ -3739,11 +3739,11 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/structure/mirror{
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
@@ -3769,7 +3769,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lI" = (
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/thunderdome)
@@ -3806,12 +3806,12 @@
 /area/awaymission/centcomAway/general)
 "lN" = (
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white,
@@ -3851,7 +3851,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "lU" = (
 /obj/structure/urinal{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/white,
 /area/awaymission/centcomAway/thunderdome)
@@ -3964,7 +3964,7 @@
 "mm" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/redyellow{
 	dir = 5
@@ -4192,7 +4192,7 @@
 /area/awaymission/centcomAway/thunderdome)
 "mW" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/redyellow{
 	dir = 5

@@ -115,8 +115,8 @@
 
 /obj/item/weapon/paperslip/New()
 	..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 
 /obj/item/weapon/hatchet/cutterblade

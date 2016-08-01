@@ -119,8 +119,8 @@
 	if(nbuild)
 		buildstage = 0
 		panel_open = 1
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir == 1 ? -48 : 48) : 0
 
 	var/area/A = get_area_master(src)
 	if(name == initial(name))

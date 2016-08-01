@@ -201,8 +201,8 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	..()
 	if(building)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -64 : 64)
+		pixel_y = (dir & 3)? (dir ==1 ? -64 : 64) : 0
 
 	allCasters += src
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters)

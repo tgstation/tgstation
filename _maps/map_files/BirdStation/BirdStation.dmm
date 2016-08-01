@@ -37,8 +37,8 @@
 "aag" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -48,7 +48,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_y = -32;
+	pixel_y = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -57,8 +57,8 @@
 "aai" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
-	pixel_x = 4;
-	pixel_y = 1
+	pixel_x = 8;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
@@ -112,7 +112,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_y = -32;
+	pixel_y = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -203,24 +203,24 @@
 "aaF" = (
 /obj/structure/table,
 /obj/item/weapon/c4{
-	pixel_x = 2;
-	pixel_y = -5
+	pixel_x = 4;
+	pixel_y = -10
 	},
 /obj/item/weapon/c4{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/c4{
-	pixel_x = 2;
-	pixel_y = -3
+	pixel_x = 4;
+	pixel_y = -6
 	},
 /obj/item/weapon/c4{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/weapon/c4{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -233,7 +233,7 @@
 /obj/machinery/button/door{
 	id = "smindicate";
 	name = "external door control";
-	pixel_x = -26;
+	pixel_x = -52;
 	pixel_y = 0;
 	req_access_txt = "150"
 	},
@@ -285,8 +285,8 @@
 "aaK" = (
 /obj/structure/table,
 /obj/item/weapon/c4{
-	pixel_x = 2;
-	pixel_y = 1
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
@@ -343,7 +343,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = -32;
+	pixel_x = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -378,8 +378,8 @@
 "aaY" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell/high{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/plasteel/shuttle/red,
@@ -387,10 +387,10 @@
 "aaZ" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/device/assembly/voice{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
@@ -405,12 +405,12 @@
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/shuttle/red,
 /area/shuttle/syndicate)
@@ -474,26 +474,26 @@
 	dir = 8
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/firstaid/brute,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "abk" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
@@ -517,7 +517,7 @@
 "abn" = (
 /obj/structure/table,
 /obj/item/device/sbeacondrop/bomb{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/device/sbeacondrop/bomb,
 /turf/open/floor/mineral/plastitanium,
@@ -525,11 +525,11 @@
 "abo" = (
 /obj/structure/table,
 /obj/item/weapon/grenade/syndieminibomb{
-	pixel_x = 4;
-	pixel_y = 2
+	pixel_x = 8;
+	pixel_y = 4
 	},
 /obj/item/weapon/grenade/syndieminibomb{
-	pixel_x = -1
+	pixel_x = -2
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -537,11 +537,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
@@ -1087,7 +1087,7 @@
 /obj/machinery/button/door{
 	id = "heater vent";
 	name = "heating chamber venting switch";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	name = "waste pipe";
@@ -1286,7 +1286,7 @@
 /obj/machinery/meter,
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -1517,7 +1517,7 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plating,
@@ -1629,7 +1629,7 @@
 	icon_state = "2-4"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1969,7 +1969,7 @@
 "afa" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -2234,7 +2234,7 @@
 	desc = "Used for watching the heating area.";
 	name = "Heating chamber monitor";
 	network = list("heating");
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -2869,7 +2869,7 @@
 "ahn" = (
 /obj/machinery/turretid{
 	control_area = "AI Core Lobby";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
@@ -2882,8 +2882,8 @@
 "aho" = (
 /obj/structure/table,
 /obj/item/weapon/paper/monitorkey{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel,
@@ -3187,7 +3187,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Telecommunications Chamber APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -3219,7 +3219,7 @@
 "aig" = (
 /obj/machinery/power/apc{
 	name = "AI Core Lobby APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan,
 /turf/open/floor/plasteel/black,
@@ -3230,7 +3230,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Vault APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -3620,7 +3620,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Engineering APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan,
 /obj/machinery/atmospherics/pipe/simple/supply/visible,
@@ -3857,7 +3857,7 @@
 /obj/machinery/button/door{
 	id = "secure storage";
 	name = "secure storage button";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -3886,7 +3886,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Command Hallway APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -3972,28 +3972,28 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/plasteel{
 	amount = 10
@@ -4244,7 +4244,7 @@
 "akz" = (
 /obj/machinery/turretid{
 	control_area = "AI Upload Chamber";
-	pixel_x = 28;
+	pixel_x = 56;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
@@ -4557,7 +4557,7 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/effect/landmark{
 	name = "xeno_spawn";
-	pixel_x = -1
+	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore{
@@ -4725,7 +4725,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "AI Upload APC";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /obj/structure/cable/cyan{
@@ -4980,7 +4980,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Gateway APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -5171,7 +5171,7 @@
 /obj/machinery/button/door{
 	id = "hallway shutter";
 	name = "hallway shutter button";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/captain{
@@ -5275,7 +5275,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Teleporter Room APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -5302,7 +5302,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Captain's Quarters APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/item/weapon/gun/energy/laser/captain,
 /obj/structure/cable/cyan{
@@ -5335,8 +5335,8 @@
 /obj/structure/table/wood,
 /obj/item/weapon/hand_tele,
 /obj/item/weapon/bikehorn/rubberducky{
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/toy/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
@@ -5695,7 +5695,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Northwest Hallway APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -5729,11 +5729,11 @@
 	},
 /obj/machinery/turretid{
 	control_area = "AI Core";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/item/device/radio/intercom{
 	name = "AI Intercom";
-	pixel_y = -29
+	pixel_y = -58
 	},
 /turf/open/floor/plasteel/black,
 /area/turret_protected/ai{
@@ -5899,23 +5899,23 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/plasteel{
 	amount = 10
@@ -5944,18 +5944,18 @@
 "aoH" = (
 /obj/structure/table,
 /obj/item/clothing/shoes/magboots{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots{
-	pixel_x = -5;
-	pixel_y = -5
+	pixel_x = -10;
+	pixel_y = -10
 	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "E.V.A. APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -5999,7 +5999,7 @@
 /area/bridge)
 "aoN" = (
 /obj/machinery/keycard_auth{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -6392,7 +6392,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Emergency Air Pumps APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -6679,8 +6679,8 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva{
@@ -6717,13 +6717,13 @@
 "aqt" = (
 /obj/structure/table,
 /obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/storage/eva{
@@ -6770,8 +6770,8 @@
 	icon_state = "tube1"
 	},
 /obj/item/weapon/paper/monitorkey{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/phone{
 	force = 1
@@ -6899,7 +6899,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port{
@@ -7000,13 +7000,13 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary{
@@ -7049,8 +7049,8 @@
 "aro" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/silver_ids{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/ids,
 /turf/open/floor/wood,
@@ -7079,10 +7079,10 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "HoP Office APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/keycard_auth{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -7218,7 +7218,7 @@
 	},
 /obj/machinery/status_display{
 	name = "cargo status display";
-	pixel_x = -32;
+	pixel_x = -64;
 	supply_display = 1
 	},
 /turf/open/floor/plasteel,
@@ -7253,13 +7253,13 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/machinery/light{
 	dir = 8
@@ -7272,7 +7272,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Tool Storage APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -7592,7 +7592,7 @@
 /obj/machinery/button/door{
 	id = "hop shutter";
 	name = "HoP office shutter button";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads)
@@ -7621,7 +7621,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "AI Core APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/bluegrid,
 /area/turret_protected/ai{
@@ -7638,7 +7638,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Bridge APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -7671,7 +7671,7 @@
 /area/bridge)
 "asL" = (
 /obj/machinery/keycard_auth{
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
@@ -7689,7 +7689,7 @@
 	dir = 10
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
@@ -7893,7 +7893,7 @@
 	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
-	pixel_x = -1
+	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
 /area/atmos{
@@ -8092,8 +8092,8 @@
 "atP" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
@@ -8257,14 +8257,14 @@
 	dir = 2;
 	id = "QMLoaddoor2";
 	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = 8
+	pixel_x = 48;
+	pixel_y = 16
 	},
 /obj/machinery/button/door{
 	id = "QMLoaddoor";
 	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = -8
+	pixel_x = 48;
+	pixel_y = -16
 	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoshuttle"
@@ -8275,7 +8275,7 @@
 /obj/machinery/button/door{
 	id = "cargo blast";
 	name = "cargo blast door button";
-	pixel_x = -24;
+	pixel_x = -48;
 	pixel_y = 0
 	},
 /obj/machinery/light{
@@ -8340,11 +8340,11 @@
 /obj/machinery/status_display{
 	name = "cargo status display";
 	pixel_x = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	supply_display = 1
 	},
 /obj/item/weapon/paper_bin{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -8458,7 +8458,7 @@
 	level = 4.1
 	},
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
@@ -8466,7 +8466,7 @@
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/sleep)
@@ -8501,7 +8501,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Dormitory Maintenance APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
@@ -8603,7 +8603,7 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/black,
@@ -8673,7 +8673,7 @@
 /area/hallway/primary/central)
 "avl" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -8868,7 +8868,7 @@
 /area/hallway/primary/central)
 "avL" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
@@ -8995,7 +8995,7 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	icon_state = "intact";
@@ -9263,8 +9263,8 @@
 "awP" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/pill_bottle/dice{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/pill_bottle/dice,
 /turf/open/floor/wood,
@@ -9308,7 +9308,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cargo Bay APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -9350,15 +9350,15 @@
 "axc" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "axd" = (
 /obj/structure/table,
 /obj/item/weapon/stamp/denied{
-	pixel_x = 6;
-	pixel_y = 6
+	pixel_x = 12;
+	pixel_y = 12
 	},
 /obj/item/weapon/stamp,
 /turf/open/floor/plasteel,
@@ -9522,8 +9522,8 @@
 	icon_state = "pointybush_3";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -4;
-	pixel_y = 10
+	pixel_x = -8;
+	pixel_y = 20
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -9558,7 +9558,7 @@
 	},
 /obj/machinery/status_display{
 	name = "cargo status display";
-	pixel_x = -32;
+	pixel_x = -64;
 	supply_display = 1
 	},
 /turf/open/floor/plasteel,
@@ -9611,7 +9611,7 @@
 /obj/machinery/status_display{
 	name = "cargo status display";
 	pixel_x = 0;
-	pixel_y = -32;
+	pixel_y = -64;
 	supply_display = 1
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -9687,7 +9687,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Theatre APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -9719,7 +9719,7 @@
 /area/maintenance/disposal)
 "ayg" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
@@ -9731,7 +9731,7 @@
 "ayi" = (
 /obj/effect/landmark{
 	name = "xeno_spawn";
-	pixel_x = -1
+	pixel_x = -2
 	},
 /turf/open/floor/wood,
 /area/maintenance/fsmaint)
@@ -9809,7 +9809,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Office APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -9879,7 +9879,7 @@
 "ayw" = (
 /obj/machinery/status_display{
 	name = "cargo status display";
-	pixel_x = -32;
+	pixel_x = -64;
 	supply_display = 1
 	},
 /turf/open/floor/plasteel,
@@ -10020,7 +10020,7 @@
 	dir = 4
 	},
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
@@ -10197,7 +10197,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Library APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -10230,7 +10230,7 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
@@ -10267,7 +10267,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Waste Disposal APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -10387,11 +10387,11 @@
 "azQ" = (
 /obj/structure/table,
 /obj/item/weapon/twohanded/spear{
-	pixel_x = -7;
-	pixel_y = 7
+	pixel_x = -14;
+	pixel_y = 14
 	},
 /obj/item/weapon/twohanded/spear{
-	pixel_x = -5;
+	pixel_x = -10;
 	pixel_y = 0
 	},
 /obj/item/stack/medical/ointment,
@@ -10433,7 +10433,7 @@
 	dir = 10
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -10651,15 +10651,15 @@
 /obj/structure/table,
 /obj/item/device/geiger_counter,
 /obj/item/device/geiger_counter{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aAz" = (
 /obj/item/weapon/shard,
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint2)
@@ -10667,8 +10667,8 @@
 /obj/structure/table,
 /obj/item/weapon/hatchet,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint2)
@@ -10762,7 +10762,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Central Maintenance APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -10824,7 +10824,7 @@
 /obj/machinery/button/door{
 	id = "crusherdoor";
 	name = "crusher blast door button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
@@ -10852,7 +10852,7 @@
 "aAX" = (
 /obj/machinery/mineral/stacking_unit_console{
 	machinedir = 10;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /mob/living/simple_animal/bot/cleanbot{
 	on = 0
@@ -10947,27 +10947,27 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -4;
-	pixel_y = 10
+	pixel_x = -8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 20;
+	pixel_y = 12
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -1;
-	pixel_y = -3
+	pixel_x = -2;
+	pixel_y = -6
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -10977,14 +10977,14 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -10994,20 +10994,20 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -8;
-	pixel_y = 11
+	pixel_x = -16;
+	pixel_y = 22
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 20;
+	pixel_y = 12
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11017,8 +11017,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
@@ -11043,14 +11043,14 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -2;
-	pixel_y = 5
+	pixel_x = -4;
+	pixel_y = 10
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11060,8 +11060,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11079,7 +11079,7 @@
 "aBu" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
-	pixel_y = 12
+	pixel_y = 24
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 1
@@ -11319,15 +11319,15 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -6;
-	pixel_y = 11
+	pixel_x = -12;
+	pixel_y = 22
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_3";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 20;
+	pixel_y = 12
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_4";
@@ -11356,7 +11356,7 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
@@ -11369,7 +11369,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -11537,21 +11537,21 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11559,7 +11559,7 @@
 /area/hallway/secondary/exit)
 "aCC" = (
 /obj/structure/flora/ausbushes/reedbush{
-	pixel_x = 6
+	pixel_x = 12
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11576,8 +11576,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -11609,7 +11609,7 @@
 /area/hydroponics)
 "aCI" = (
 /obj/machinery/newscaster{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 4
@@ -11649,7 +11649,7 @@
 "aCN" = (
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo";
-	pixel_x = -4
+	pixel_x = -8
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "kitchen shutter";
@@ -11776,7 +11776,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Dormitories APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -11805,7 +11805,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	icon_state = "manifold";
@@ -11906,7 +11906,7 @@
 	})
 "aDs" = (
 /obj/structure/flora/ausbushes/lavendergrass{
-	pixel_x = 6
+	pixel_x = 12
 	},
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -11920,8 +11920,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/machinery/camera/autoname{
 	dir = 8
@@ -12186,7 +12186,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white,
@@ -12196,7 +12196,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -12244,15 +12244,15 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12263,15 +12263,15 @@
 	icon_state = "pointybush_3";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12286,7 +12286,7 @@
 	layer = 4.1;
 	name = "tree";
 	pixel_x = 0;
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12375,7 +12375,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel,
@@ -12567,14 +12567,14 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -4;
-	pixel_y = 10
+	pixel_x = -8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 20;
+	pixel_y = 12
 	},
 /obj/machinery/light{
 	dir = 8
@@ -12587,8 +12587,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 10;
-	pixel_y = 6
+	pixel_x = 20;
+	pixel_y = 12
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12598,8 +12598,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -12652,12 +12652,12 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/condiment/sugar,
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 10;
 	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+	pixel_x = 20;
+	pixel_y = 20
 	},
 /obj/item/weapon/reagent_containers/food/condiment/enzyme{
 	layer = 5
@@ -12669,11 +12669,11 @@
 "aFj" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_x = -2
+	pixel_x = -4
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_x = 2;
-	pixel_y = 4
+	pixel_x = 4;
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/bar{
@@ -12732,11 +12732,11 @@
 "aFr" = (
 /obj/structure/table,
 /obj/item/clothing/under/suit_jacket/female{
-	pixel_x = -5
+	pixel_x = -10
 	},
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/sundress{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /obj/item/clothing/under/rank/det/grey,
 /turf/open/floor/plasteel/white,
@@ -12834,7 +12834,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Gravity Generator APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -12884,14 +12884,14 @@
 	icon_state = "pointybush_3";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -3;
-	pixel_y = -10
+	pixel_x = -6;
+	pixel_y = -20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12901,22 +12901,22 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -1;
-	pixel_y = -3
+	pixel_x = -2;
+	pixel_y = -6
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12926,15 +12926,15 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12997,7 +12997,7 @@
 /obj/structure/sink/kitchen{
 	dir = 8;
 	icon_state = "sink_alt";
-	pixel_x = 12
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/bar{
@@ -13095,7 +13095,7 @@
 /area/maintenance/asmaint2)
 "aGs" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/escape)
@@ -13104,7 +13104,7 @@
 /obj/machinery/recharger{
 	active_power_usage = 0;
 	idle_power_usage = 0;
-	pixel_y = 4;
+	pixel_y = 8;
 	use_power = 0
 	},
 /turf/open/floor/plasteel/shuttle/red,
@@ -13140,7 +13140,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Hydroponics APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -13163,7 +13163,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -13175,7 +13175,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -13213,7 +13213,7 @@
 "aGI" = (
 /obj/machinery/power/apc{
 	name = "Bar and Kitchen APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -13227,7 +13227,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/newscaster{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/bar{
@@ -13408,8 +13408,8 @@
 	icon_state = "pointybush_3";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -4;
-	pixel_y = 10
+	pixel_x = -8;
+	pixel_y = 20
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -13429,7 +13429,7 @@
 "aHn" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/matches{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar{
@@ -13591,7 +13591,7 @@
 	id = "xenozoo shutter";
 	name = "xeno zoo shutter button";
 	pixel_x = 0;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/warnwhite,
 /area/toxins/xenobiology)
@@ -13763,7 +13763,7 @@
 "aIm" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/camera/autoname,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
@@ -13815,7 +13815,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Central Primary Hallway APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -14013,8 +14013,8 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti{
 	name = "pasghetti";
-	pixel_x = 4;
-	pixel_y = 7
+	pixel_x = 8;
+	pixel_y = 14
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
@@ -14141,7 +14141,7 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/hallway/secondary/exit)
@@ -14277,7 +14277,7 @@
 	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -14339,7 +14339,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
@@ -14359,7 +14359,7 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12
+	pixel_x = -24
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
@@ -14699,13 +14699,13 @@
 /obj/structure/chair,
 /obj/structure/window/reinforced{
 	dir = 1;
-	pixel_y = 2
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/shuttle/escape)
 "aKA" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
@@ -14741,7 +14741,7 @@
 	name = "heavy potted plant"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel/black,
 /area/hallway/secondary/exit)
@@ -14863,7 +14863,7 @@
 "aKT" = (
 /obj/machinery/camera/autoname,
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics_cloning)
@@ -14875,12 +14875,12 @@
 /area/medical/genetics_cloning)
 "aKV" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white,
@@ -14889,7 +14889,7 @@
 /obj/machinery/button/door{
 	id = "chem shutter";
 	name = "chemistry shutter button";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -14913,7 +14913,7 @@
 "aLb" = (
 /obj/machinery/power/apc{
 	name = "Fitness APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan,
 /turf/open/floor/plasteel,
@@ -14947,7 +14947,7 @@
 /obj/item/weapon/storage/box/syringes,
 /obj/machinery/reagentgrinder{
 	pixel_x = 0;
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 5
@@ -14967,7 +14967,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_x = 0;
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint2)
@@ -15022,8 +15022,8 @@
 "aLp" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
@@ -15049,7 +15049,7 @@
 	},
 /obj/machinery/power/apc{
 	name = "Escape Shuttle Hallway APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan,
 /turf/open/floor/plasteel/black,
@@ -15103,7 +15103,7 @@
 	},
 /obj/machinery/flasher{
 	id = "Cell 1";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -15140,7 +15140,7 @@
 	},
 /obj/machinery/flasher{
 	id = "Cell 2";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -15163,8 +15163,8 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
@@ -15194,8 +15194,8 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -15205,7 +15205,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cloning Lab APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -15307,8 +15307,8 @@
 "aLV" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/monkeycubes{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/monkeycubes,
 /turf/open/floor/plasteel/black,
@@ -15388,8 +15388,8 @@
 "aMi" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/white,
@@ -15465,8 +15465,8 @@
 "aMt" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/monkeycubes{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/monkeycubes,
 /turf/open/floor/plasteel/white,
@@ -15536,7 +15536,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Robotics APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -15547,38 +15547,38 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel,
 /area/medical/robotics)
@@ -15609,8 +15609,8 @@
 "aMK" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
@@ -15806,7 +15806,7 @@
 /area/toxins/xenobiology)
 "aNc" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/escape)
@@ -15830,14 +15830,14 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 14;
-	pixel_y = -8
+	pixel_x = 28;
+	pixel_y = -16
 	},
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 8;
+	pixel_y = 20
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -15895,7 +15895,7 @@
 	id = "Cell 1";
 	name = "cell 1 door timer";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/bot,
 /area/security/brig)
@@ -15912,7 +15912,7 @@
 	id = "Cell 2";
 	name = "cell 2 door timer";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/bot,
 /area/security/brig)
@@ -15946,7 +15946,7 @@
 	id = "geneticsdoor";
 	name = "cloning door button";
 	normaldoorcontrol = 1;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics_cloning)
@@ -15954,7 +15954,7 @@
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
 	pixel_x = 0;
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/machinery/light{
 	dir = 8
@@ -15964,14 +15964,14 @@
 "aNx" = (
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_x = 2;
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/glass/beaker/large{
 	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/glass/beaker/large{
-	pixel_x = -2
+	pixel_x = -4
 	},
 /obj/item/weapon/reagent_containers/dropper,
 /obj/machinery/camera/autoname{
@@ -16118,7 +16118,7 @@
 "aNT" = (
 /obj/machinery/power/apc{
 	name = "Xenobiology APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -16174,8 +16174,8 @@
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -1;
-	pixel_y = -3
+	pixel_x = -2;
+	pixel_y = -6
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -16186,8 +16186,8 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -5;
-	pixel_y = -1
+	pixel_x = -10;
+	pixel_y = -2
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -16531,8 +16531,8 @@
 "aOZ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/brute,
 /turf/open/floor/plasteel/white,
@@ -16592,7 +16592,7 @@
 /obj/machinery/button/door{
 	id = "rnd shutter";
 	name = "R&D shutter button";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /turf/open/floor/plasteel/warnwhite/corner{
 	dir = 8
@@ -16636,7 +16636,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /obj/structure/window/reinforced{
@@ -16694,8 +16694,8 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50
@@ -16708,8 +16708,8 @@
 "aPv" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/weapon/grenade/chem_grenade,
 /obj/item/weapon/grenade/chem_grenade,
@@ -16775,7 +16775,7 @@
 /obj/machinery/microwave{
 	desc = "It looks really dirty.";
 	name = "maint microwave";
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plating,
 /area/toxins/xenobiology)
@@ -16802,7 +16802,7 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
@@ -16883,8 +16883,8 @@
 "aPS" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/prisoner{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/hug,
 /turf/open/floor/plasteel,
@@ -16892,8 +16892,8 @@
 "aPT" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
@@ -16926,7 +16926,7 @@
 /area/medical/medbay)
 "aPY" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel,
@@ -16936,8 +16936,8 @@
 "aPZ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/machinery/camera/autoname{
@@ -16950,13 +16950,13 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/stack/sheet/glass{
 	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/stock_parts/console_screen,
 /obj/item/weapon/stock_parts/console_screen,
@@ -16982,7 +16982,7 @@
 "aQd" = (
 /obj/machinery/power/apc{
 	name = "R&D APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -17001,7 +17001,7 @@
 /obj/machinery/button/door{
 	id = "robotics shutter";
 	name = "robotics shutter button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/medical/robotics)
@@ -17013,7 +17013,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -17158,8 +17158,8 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/gun/advtaser,
 /obj/item/weapon/gun/energy/gun/advtaser{
-	pixel_x = 5;
-	pixel_y = -5
+	pixel_x = 10;
+	pixel_y = -10
 	},
 /obj/machinery/light{
 	dir = 1
@@ -17172,8 +17172,8 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/laser,
 /obj/item/weapon/gun/energy/laser{
-	pixel_x = 5;
-	pixel_y = -5
+	pixel_x = 10;
+	pixel_y = -10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -17229,8 +17229,8 @@
 "aQI" = (
 /obj/structure/table,
 /obj/item/device/electropack{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/device/electropack,
 /obj/item/device/assembly/signaler,
@@ -17240,8 +17240,8 @@
 "aQJ" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/white,
@@ -17403,7 +17403,7 @@
 /area/toxins/misc_lab)
 "aRe" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/vehicle/secway,
 /obj/structure/window/reinforced{
@@ -17429,7 +17429,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white,
@@ -17525,8 +17525,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/teargas,
 /obj/item/weapon/storage/box/teargas{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -17592,8 +17592,8 @@
 "aRB" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
@@ -17610,8 +17610,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/gloves,
 /obj/item/weapon/storage/box/masks{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -17743,14 +17743,14 @@
 /obj/structure/sign/directions/medical{
 	dir = 4;
 	icon_state = "direction_med";
-	pixel_x = -32;
-	pixel_y = 32
+	pixel_x = -64;
+	pixel_y = 64
 	},
 /obj/structure/sign/directions/science{
 	dir = 4;
 	icon_state = "direction_sci";
-	pixel_x = -32;
-	pixel_y = 40
+	pixel_x = -64;
+	pixel_y = 80
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -17767,17 +17767,17 @@
 /obj/structure/sign/directions/engineering{
 	dir = 1;
 	icon_state = "direction_eng";
-	pixel_x = 32;
-	pixel_y = -40;
+	pixel_x = 64;
+	pixel_y = -80;
 	tag = "icon-direction_eng (NORTH)"
 	},
 /obj/structure/sign/directions/security{
-	pixel_x = 32;
-	pixel_y = -32
+	pixel_x = 64;
+	pixel_y = -64
 	},
 /obj/structure/sign/directions/evac{
-	pixel_x = 32;
-	pixel_y = -24
+	pixel_x = 64;
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -17796,17 +17796,17 @@
 /obj/structure/sign/directions/engineering{
 	dir = 8;
 	icon_state = "direction_eng";
-	pixel_x = -32;
-	pixel_y = -24;
+	pixel_x = -64;
+	pixel_y = -48;
 	tag = "icon-direction_eng (WEST)"
 	},
 /obj/structure/sign/directions/medical{
-	pixel_x = -32;
-	pixel_y = -32
+	pixel_x = -64;
+	pixel_y = -64
 	},
 /obj/structure/sign/directions/science{
-	pixel_x = -32;
-	pixel_y = -40
+	pixel_x = -64;
+	pixel_y = -80
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -17845,7 +17845,7 @@
 /obj/machinery/button/door{
 	id = "charge shutter";
 	name = "recharger room shutter button";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -17888,7 +17888,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Testing Lab APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan,
 /turf/open/floor/plasteel,
@@ -17933,7 +17933,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
@@ -17963,8 +17963,8 @@
 "aSl" = (
 /obj/structure/tank_dispenser/oxygen{
 	layer = 2.9;
-	pixel_x = -1;
-	pixel_y = 2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -18033,10 +18033,10 @@
 "aSv" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_x = -5
+	pixel_x = -10
 	},
 /obj/machinery/recharger{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -18051,7 +18051,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/flasher{
 	id = "permaflash";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -18085,7 +18085,7 @@
 "aSA" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone{
-	pixel_y = 7
+	pixel_y = 14
 	},
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
 /obj/structure/cable/cyan{
@@ -18454,7 +18454,7 @@
 /obj/machinery/button/door{
 	id = "security lockdown";
 	name = "brig blast door button";
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -18680,10 +18680,10 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/disabler{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/gun/energy/disabler{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -18755,8 +18755,8 @@
 	name = "security temperature gun";
 	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1";
 	pin = /obj/item/device/firing_pin;
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/weapon/gun/energy/temperature{
 	name = "security temperature gun";
@@ -18771,12 +18771,12 @@
 /obj/structure/table,
 /obj/item/weapon/storage/lockbox/loyalty,
 /obj/item/weapon/storage/box/firingpins{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/weapon/storage/box/firingpins{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/warning{
@@ -18803,7 +18803,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/newscaster/security_unit{
-	pixel_x = -28
+	pixel_x = -56
 	},
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -18859,7 +18859,7 @@
 "aUo" = (
 /obj/machinery/power/apc{
 	name = "Medbay APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -18973,7 +18973,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Science Maintenance APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -19176,7 +19176,7 @@
 	name = "Scientist"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
@@ -19275,8 +19275,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/brute,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/security/warden)
@@ -19338,7 +19338,7 @@
 	id = "permaflash";
 	name = "perma flasher button";
 	pixel_x = 0;
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -19492,7 +19492,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /obj/machinery/light{
@@ -19536,7 +19536,7 @@
 /obj/machinery/button/door{
 	id = "perma shutter";
 	name = "perma window button";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
@@ -19572,8 +19572,8 @@
 /obj/structure/flora/ausbushes/pointybush{
 	layer = 4.1;
 	name = "tree";
-	pixel_x = -8;
-	pixel_y = 11
+	pixel_x = -16;
+	pixel_y = 22
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -19664,7 +19664,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Security Maintenance APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
@@ -19677,7 +19677,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/white,
 /area/security/warden)
@@ -19694,7 +19694,7 @@
 "aWr" = (
 /obj/machinery/power/apc{
 	name = "Brig Control APC";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/structure/cable/cyan,
 /mob/living/simple_animal/pet/dog/pug{
@@ -19732,7 +19732,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Brig APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -19771,7 +19771,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 4
@@ -19781,22 +19781,22 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/blood/AMinus,
 /obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/blood/OMinus,
 /obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
@@ -20045,8 +20045,8 @@
 "aXj" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 6;
+	pixel_y = -6
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/arrival)
@@ -20146,8 +20146,8 @@
 "aXB" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/white,
@@ -20291,7 +20291,7 @@
 /obj/item/weapon/scalpel,
 /obj/item/weapon/retractor{
 	pixel_x = 0;
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/hemostat,
 /turf/open/floor/plasteel/white,
@@ -20383,7 +20383,7 @@
 /obj/machinery/button/door{
 	id = "interro shutter";
 	name = "interrogation shutter button";
-	pixel_y = -24
+	pixel_y = -48
 	},
 /turf/open/floor/plasteel/black,
 /area/security/warden)
@@ -20416,7 +20416,7 @@
 /obj/machinery/button/door{
 	id = "viro shutter";
 	name = "virology shutter button";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -20424,7 +20424,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Virology APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -20461,7 +20461,7 @@
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/circular_saw{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -20474,7 +20474,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -54
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft{
@@ -20774,7 +20774,7 @@
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /turf/open/floor/plasteel/white,
@@ -20818,14 +20818,14 @@
 "aZj" = (
 /obj/machinery/computer/pandemic{
 	layer = 2.5;
-	pixel_x = -4
+	pixel_x = -8
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "aZk" = (
 /obj/structure/reagent_dispensers/virusfood{
 	density = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
@@ -20833,7 +20833,7 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_x = 0;
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/machinery/camera/autoname{
 	dir = 1;
@@ -20851,7 +20851,7 @@
 /obj/machinery/button/door{
 	id = "kitchen shutter";
 	name = "kitchen shutter button";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -20866,12 +20866,12 @@
 	})
 "aZo" = (
 /obj/machinery/newscaster{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/white,
@@ -20914,7 +20914,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "South Hallway APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -21237,7 +21237,7 @@
 	},
 /obj/machinery/hologram/holopad,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/bar{
@@ -21288,7 +21288,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medbay Maintenance APC";
-	pixel_x = -24
+	pixel_x = -48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
@@ -21360,29 +21360,29 @@
 /obj/structure/sign/directions/engineering{
 	dir = 1;
 	icon_state = "direction_eng";
-	pixel_x = -32;
-	pixel_y = 40;
+	pixel_x = -64;
+	pixel_y = 80;
 	tag = "icon-direction_eng (NORTH)"
 	},
 /obj/structure/sign/directions/medical{
 	dir = 4;
 	icon_state = "direction_med";
-	pixel_x = -32;
-	pixel_y = 32
+	pixel_x = -64;
+	pixel_y = 64
 	},
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
-	pixel_x = -32;
-	pixel_y = 24;
+	pixel_x = -64;
+	pixel_y = 48;
 	tag = "icon-direction_evac (NORTH)"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bay" = (
 /obj/structure/sign/directions/science{
-	pixel_x = 32;
-	pixel_y = 32
+	pixel_x = 64;
+	pixel_y = 64
 	},
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	icon_state = "manifold";
@@ -21591,7 +21591,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Morgue APC";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
@@ -21604,8 +21604,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /obj/structure/sign/directions/medical{
-	pixel_x = 32;
-	pixel_y = -32
+	pixel_x = 64;
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -21659,22 +21659,22 @@
 /obj/structure/sign/directions/evac{
 	dir = 1;
 	icon_state = "direction_evac";
-	pixel_x = -32;
-	pixel_y = -40;
+	pixel_x = -64;
+	pixel_y = -80;
 	tag = "icon-direction_evac (NORTH)"
 	},
 /obj/structure/sign/directions/security{
 	dir = 8;
 	icon_state = "direction_sec";
-	pixel_x = -32;
-	pixel_y = -32;
+	pixel_x = -64;
+	pixel_y = -64;
 	tag = "icon-direction_sec (WEST)"
 	},
 /obj/structure/sign/directions/engineering{
 	dir = 8;
 	icon_state = "direction_eng";
-	pixel_x = -32;
-	pixel_y = -24;
+	pixel_x = -64;
+	pixel_y = -48;
 	tag = "icon-direction_eng (WEST)"
 	},
 /turf/open/floor/plasteel,
@@ -22230,7 +22230,7 @@
 	},
 /obj/effect/landmark{
 	name = "xeno_spawn";
-	pixel_x = -1
+	pixel_x = -2
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/asmaint2)
@@ -22536,7 +22536,7 @@
 "bdm" = (
 /obj/item/weapon/watertank/janitor,
 /obj/structure/mirror{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/white,
@@ -22608,8 +22608,8 @@
 /obj/structure/table,
 /obj/item/weapon/storage/box/masks,
 /obj/item/weapon/storage/box/mousetraps{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/asmaint)
@@ -22784,8 +22784,8 @@
 "bdQ" = (
 /obj/structure/table,
 /obj/item/clothing/glasses/welding{
-	pixel_x = 5;
-	pixel_y = 5
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/clothing/glasses/welding,
 /obj/item/device/mmi,
@@ -22841,21 +22841,21 @@
 /obj/structure/sign/directions/engineering{
 	dir = 1;
 	icon_state = "direction_eng";
-	pixel_x = 32;
-	pixel_y = 40;
+	pixel_x = 64;
+	pixel_y = 80;
 	tag = "icon-direction_eng (NORTH)"
 	},
 /obj/structure/sign/directions/security{
 	dir = 1;
 	icon_state = "direction_sec";
-	pixel_x = 32;
-	pixel_y = 32
+	pixel_x = 64;
+	pixel_y = 64
 	},
 /obj/structure/sign/directions/evac{
 	dir = 8;
 	icon_state = "direction_evac";
-	pixel_x = 32;
-	pixel_y = 24;
+	pixel_x = 64;
+	pixel_y = 48;
 	tag = "icon-direction_evac (WEST)"
 	},
 /turf/open/floor/plasteel,
@@ -23188,8 +23188,8 @@
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/storage/box/rubbershot,
 /obj/item/weapon/gun/projectile/shotgun/riot{
-	pixel_x = -5;
-	pixel_y = 5
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/weapon/gun/projectile/shotgun/riot,
 /turf/open/floor/plasteel/bot,
@@ -23305,8 +23305,8 @@
 "Zze" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
-	pixel_x = 4;
-	pixel_y = 1
+	pixel_x = 8;
+	pixel_y = 2
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -23360,8 +23360,8 @@
 "Zzn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/zipties{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -23381,7 +23381,7 @@
 /area/shuttle/syndicate)
 "Zzr" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -23394,7 +23394,7 @@
 /obj/machinery/button/door{
 	id = "smindicate";
 	name = "external door control";
-	pixel_x = -26;
+	pixel_x = -52;
 	pixel_y = 0;
 	req_access_txt = "150"
 	},
@@ -23465,7 +23465,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = -32;
+	pixel_x = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -23493,16 +23493,16 @@
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/bruise_pack,
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "ZzE" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell/high{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/stock_parts/cell/high,
 /turf/open/floor/mineral/plastitanium,
@@ -23510,10 +23510,10 @@
 "ZzF" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /obj/item/device/assembly/voice{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -23528,19 +23528,19 @@
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/signaler,
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
+	pixel_x = -16;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "ZzI" = (
 /obj/structure/table,
 /obj/item/weapon/weldingtool/largetank{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /obj/item/device/multitool,
 /turf/open/floor/mineral/plastitanium,

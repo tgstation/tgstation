@@ -58,27 +58,27 @@
 	var/target_pixel_y = 0
 	switch(set_dir)
 		if(NORTH)
-			target_pixel_y = 16
+			target_pixel_y = 32
 		if(SOUTH)
-			target_pixel_y = -16
+			target_pixel_y = -32
 			layer = ABOVE_MOB_LAYER
 		if(EAST)
-			target_pixel_x = 16
+			target_pixel_x = 32
 		if(WEST)
-			target_pixel_x = -16
+			target_pixel_x = -32
 		if(NORTHEAST)
-			target_pixel_x = 16
-			target_pixel_y = 16
+			target_pixel_x = 32
+			target_pixel_y = 32
 		if(NORTHWEST)
-			target_pixel_x = -16
-			target_pixel_y = 16
+			target_pixel_x = -32
+			target_pixel_y = 32
 		if(SOUTHEAST)
-			target_pixel_x = 16
-			target_pixel_y = -16
+			target_pixel_x = 32
+			target_pixel_y = -32
 			layer = ABOVE_MOB_LAYER
 		if(SOUTHWEST)
-			target_pixel_x = -16
-			target_pixel_y = -16
+			target_pixel_x = -32
+			target_pixel_y = -32
 			layer = ABOVE_MOB_LAYER
 	setDir(set_dir)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
@@ -91,8 +91,8 @@
 
 /obj/effect/overlay/temp/heal/New(loc, colour)
 	..()
-	pixel_x = rand(-12, 12)
-	pixel_y = rand(-9, 0)
+	pixel_x = rand(-24, 24)
+	pixel_y = rand(-18, 0)
 	if(colour)
 		color = colour
 
@@ -100,8 +100,8 @@
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explosion"
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	duration = 8
 
 /obj/effect/overlay/temp/blob
@@ -227,8 +227,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "ratvarspearbreak"
 	layer = BELOW_MOB_LAYER
-	pixel_y = -16
-	pixel_x = -16
+	pixel_y = -32
+	pixel_x = -32
 
 /obj/effect/overlay/temp/ratvar/sigil
 	name = "glowing circle"

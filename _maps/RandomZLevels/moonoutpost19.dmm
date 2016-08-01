@@ -672,8 +672,8 @@
 	})
 "aS" = (
 /obj/item/weapon/ore/iron{
-	pixel_x = 7;
-	pixel_y = -6
+	pixel_x = 14;
+	pixel_y = -12
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -694,7 +694,7 @@
 /mob/living/simple_animal/hostile/alien/queen/large{
 	desc = "A gigantic alien who is in charge of the hive and all of its loyal servants.";
 	name = "alien queen";
-	pixel_x = -16;
+	pixel_x = -32;
 	plants_off = 1
 	},
 /turf/open/floor/plating/asteroid{
@@ -835,7 +835,7 @@
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster{
 	icon_state = "poster7";
-	pixel_y = 32;
+	pixel_y = 64;
 	serial_number = 7
 	},
 /turf/open/floor/plasteel/black,
@@ -944,7 +944,7 @@
 	},
 /obj/structure/sign/poster{
 	icon_state = "poster17";
-	pixel_x = -32;
+	pixel_x = -64;
 	pixel_y = 0;
 	serial_number = 17
 	},
@@ -969,7 +969,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 1;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = "150"
 	},
 /turf/open/floor/plasteel/bar{
@@ -982,8 +982,8 @@
 "bp" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -1001,11 +1001,11 @@
 	},
 /obj/structure/table,
 /obj/item/device/radio/off{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/device/radio/off{
-	pixel_x = 2
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel/warning{
 	heat_capacity = 1e+006
@@ -1020,8 +1020,8 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /obj/item/weapon/paper{
@@ -1077,7 +1077,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/warning{
@@ -1089,7 +1089,7 @@
 	})
 "bv" = (
 /obj/structure/sink{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -1135,7 +1135,7 @@
 "bz" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /obj/item/trash/plate,
@@ -1200,7 +1200,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 1;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = "150"
 	},
@@ -1349,8 +1349,8 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/device/multitool,
@@ -1404,7 +1404,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 1;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = "150"
 	},
 /turf/open/floor/plating/warnplate{
@@ -1481,7 +1481,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster5";
 	pixel_x = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	serial_number = 5
 	},
 /turf/open/floor/plasteel/loadingarea{
@@ -1536,7 +1536,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = "150"
 	},
 /turf/open/floor/plasteel{
@@ -1553,7 +1553,7 @@
 	})
 "ce" = (
 /obj/structure/sign/biohazard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plasteel/warning/corner{
@@ -1587,7 +1587,7 @@
 "cg" = (
 /obj/structure/sign/securearea{
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/warning/corner{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -1686,7 +1686,7 @@
 	},
 /obj/structure/sign/poster{
 	icon_state = "poster10";
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0;
 	serial_number = 10
 	},
@@ -2027,7 +2027,7 @@
 	locked = 1;
 	name = "Worn-out APC";
 	pixel_x = 0;
-	pixel_y = -25;
+	pixel_y = -50;
 	req_access = "150";
 	start_charge = 0
 	},
@@ -2138,7 +2138,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 1;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = "150"
 	},
@@ -2252,7 +2252,7 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 0;
-	pixel_y = 25;
+	pixel_y = 50;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -2290,7 +2290,7 @@
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
 	pixel_x = 0;
-	pixel_y = 25;
+	pixel_y = 50;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
@@ -2368,7 +2368,7 @@
 	dir = 4;
 	frequency = 1439;
 	locked = 1;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0;
 	req_access = "150"
 	},
@@ -2409,7 +2409,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 1;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = "150"
 	},
@@ -2493,7 +2493,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster24";
 	pixel_x = 0;
-	pixel_y = -32;
+	pixel_y = -64;
 	serial_number = 24
 	},
 /obj/item/weapon/pen,
@@ -2579,8 +2579,8 @@
 "dv" = (
 /obj/item/weapon/ore/iron,
 /obj/item/weapon/ore/iron{
-	pixel_x = -7;
-	pixel_y = -4
+	pixel_x = -14;
+	pixel_y = -8
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2644,8 +2644,8 @@
 	})
 "dz" = (
 /obj/item/weapon/ore/iron{
-	pixel_x = -3;
-	pixel_y = 9
+	pixel_x = -6;
+	pixel_y = 18
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -2678,7 +2678,7 @@
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating/warnplate{
@@ -2884,8 +2884,8 @@
 	})
 "dN" = (
 /obj/item/weapon/ore/iron{
-	pixel_x = -7;
-	pixel_y = -4
+	pixel_x = -14;
+	pixel_y = -8
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -3306,7 +3306,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = 25;
+	pixel_y = 50;
 	unacidable = 1
 	},
 /obj/structure/alien/weeds{
@@ -3603,14 +3603,14 @@
 /obj/machinery/button/door{
 	id = "Awaylab";
 	name = "Containment Chamber Blast Doors";
-	pixel_x = 4;
-	pixel_y = -2;
+	pixel_x = 8;
+	pixel_y = -4;
 	req_access_txt = "201"
 	},
 /obj/machinery/button/ignition{
 	id = "awayxenobio";
-	pixel_x = 4;
-	pixel_y = 8
+	pixel_x = 8;
+	pixel_y = 16
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -3699,7 +3699,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster5_legit";
 	pixel_x = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	serial_number = 21
 	},
 /turf/open/floor/plating{
@@ -3720,7 +3720,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /turf/open/floor/plating{
@@ -3871,7 +3871,7 @@
 	})
 "fe" = (
 /obj/structure/sign/securearea{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3917,7 +3917,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /obj/structure/alien/weeds{
@@ -3933,12 +3933,12 @@
 "fh" = (
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/structure/table,
 /obj/item/weapon/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /obj/item/weapon/storage/box/syringes,
 /obj/structure/alien/weeds,
@@ -4142,7 +4142,7 @@
 	})
 "fv" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -26
+	pixel_x = -52
 	},
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -4543,13 +4543,13 @@
 /obj/item/weapon/grenade/flashbang,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/reagent_containers/food/drinks/beer{
-	pixel_x = -3;
-	pixel_y = -2
+	pixel_x = -6;
+	pixel_y = -4
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /turf/open/floor/plasteel/red/side{
@@ -4563,12 +4563,12 @@
 "fU" = (
 /obj/structure/sign/poster{
 	icon_state = "poster21_legit";
-	pixel_y = 32;
+	pixel_y = 64;
 	serial_number = 21
 	},
 /obj/item/device/radio/off,
 /obj/item/weapon/screwdriver{
-	pixel_y = 10
+	pixel_y = 20
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 5;
@@ -4602,7 +4602,7 @@
 	})
 "fX" = (
 /obj/structure/sign/biohazard{
-	pixel_x = 32
+	pixel_x = 64
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -4634,7 +4634,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = -29
+	pixel_y = -58
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4;
@@ -4754,7 +4754,7 @@
 	})
 "gi" = (
 /obj/structure/reagent_dispensers/peppertank{
-	pixel_x = -30;
+	pixel_x = -60;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/red/side{
@@ -4808,7 +4808,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/whitepurple/corner{
@@ -4822,11 +4822,11 @@
 "gn" = (
 /obj/structure/table,
 /obj/item/weapon/scalpel{
-	pixel_y = 12
+	pixel_y = 24
 	},
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/razor{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -4876,8 +4876,8 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/awaycontent/a2{
@@ -5021,7 +5021,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/security_unit{
-	pixel_x = -30;
+	pixel_x = -60;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/red/side{
@@ -5096,7 +5096,7 @@
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = 25;
+	pixel_x = 50;
 	req_access = null;
 	start_charge = 100
 	},
@@ -5177,8 +5177,8 @@
 	icon_state = "weeds1"
 	},
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /obj/item/device/radio/off,
@@ -5246,7 +5246,7 @@
 /obj/machinery/button/door{
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0;
 	req_access_txt = "201"
 	},
@@ -5277,7 +5277,7 @@
 "gQ" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4;
@@ -5307,7 +5307,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -5465,7 +5465,7 @@
 	id = "awayxenobio";
 	name = "Acid-Proof mounted igniter";
 	pixel_x = 0;
-	pixel_y = -25;
+	pixel_y = -50;
 	unacidable = 1
 	},
 /obj/structure/alien/weeds{
@@ -5524,7 +5524,7 @@
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32;
+	pixel_x = -64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/red/side{
@@ -5548,8 +5548,8 @@
 "hi" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/red/side{
@@ -5684,12 +5684,12 @@
 /obj/structure/table,
 /obj/item/weapon/cartridge/signal/toxins,
 /obj/item/weapon/cartridge/signal/toxins{
-	pixel_x = -4;
-	pixel_y = 2
+	pixel_x = -8;
+	pixel_y = 4
 	},
 /obj/machinery/firealarm{
 	dir = 2;
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -5709,7 +5709,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /obj/item/weapon/paper{
@@ -5803,12 +5803,12 @@
 	name = "First-Aid (empty)"
 	},
 /obj/item/device/healthanalyzer{
-	pixel_x = 6;
-	pixel_y = -5
+	pixel_x = 12;
+	pixel_y = -10
 	},
 /obj/item/device/assembly/prox_sensor{
-	pixel_x = -5;
-	pixel_y = -2
+	pixel_x = -10;
+	pixel_y = -4
 	},
 /obj/item/robot_parts/l_arm,
 /turf/open/floor/plasteel/white{
@@ -5826,7 +5826,7 @@
 	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 8;
@@ -5875,7 +5875,7 @@
 "hE" = (
 /obj/structure/noticeboard{
 	dir = 1;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light/small{
 	active_power_usage = 0;
@@ -5932,7 +5932,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -6042,7 +6042,7 @@
 	})
 "hR" = (
 /obj/structure/urinal{
-	pixel_y = 29
+	pixel_y = 58
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -6055,14 +6055,14 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/urinal{
-	pixel_y = 29
+	pixel_y = 58
 	},
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer{
@@ -6074,7 +6074,7 @@
 	})
 "hT" = (
 /obj/machinery/shower{
-	pixel_y = 16
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/freezer{
 	heat_capacity = 1e+006
@@ -6085,7 +6085,7 @@
 	})
 "hU" = (
 /obj/machinery/shower{
-	pixel_y = 16
+	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer{
@@ -6131,8 +6131,8 @@
 	},
 /obj/item/weapon/folder/white,
 /obj/item/weapon/stamp/rd{
-	pixel_x = 3;
-	pixel_y = -2
+	pixel_x = 6;
+	pixel_y = -4
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -6144,8 +6144,8 @@
 "hY" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -6200,7 +6200,7 @@
 "ic" = (
 /obj/structure/rack,
 /obj/item/device/paicard{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 1;
@@ -6269,7 +6269,7 @@
 /obj/item/clothing/glasses/hud/health,
 /obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1;
@@ -6294,7 +6294,7 @@
 	dir = 4;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -6312,13 +6312,13 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
 	desc = "Oh no, seven years of bad luck!";
 	icon_state = "mirror_broke";
-	pixel_x = 28;
+	pixel_x = 56;
 	shattered = 1
 	},
 /turf/open/floor/plasteel/freezer{
@@ -6378,14 +6378,14 @@
 	id = "Awaybiohazard";
 	name = "Biohazard Shutter Control";
 	pixel_x = 0;
-	pixel_y = 8;
+	pixel_y = 16;
 	req_access_txt = "201"
 	},
 /obj/machinery/button/door{
 	id = "AwayRD";
 	name = "Privacy Shutter Control";
 	pixel_x = 0;
-	pixel_y = -2;
+	pixel_y = -4;
 	req_access_txt = "201"
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -6398,7 +6398,7 @@
 "iq" = (
 /obj/structure/chair/office/light{
 	dir = 1;
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -6431,7 +6431,7 @@
 	})
 "it" = (
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /obj/effect/decal/cleanable/blood/splatter,
@@ -6450,7 +6450,7 @@
 	})
 "iu" = (
 /obj/structure/sign/securearea{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/machinery/shower{
 	dir = 4;
@@ -6579,7 +6579,7 @@
 	})
 "iF" = (
 /obj/structure/sink{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/light/small{
 	dir = 8
@@ -6605,7 +6605,7 @@
 "iH" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/light/small{
 	active_power_usage = 0;
@@ -6628,7 +6628,7 @@
 "iI" = (
 /obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -6674,7 +6674,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/secure/briefcase,
 /obj/item/device/taperecorder{
-	pixel_x = -3
+	pixel_x = -6
 	},
 /turf/open/floor/plasteel/warnwhite{
 	dir = 6;
@@ -6688,8 +6688,8 @@
 /obj/structure/sink{
 	dir = 8;
 	icon_state = "sink";
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/warnwhite{
@@ -6784,8 +6784,8 @@
 "iV" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -6800,8 +6800,8 @@
 "iW" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -6974,10 +6974,10 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+	pixel_x = 6
 	},
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
+	pixel_x = -6;
 	pixel_y = 0
 	},
 /obj/machinery/door/poddoor/shutters{
@@ -7003,7 +7003,7 @@
 "jo" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -7033,7 +7033,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -7088,7 +7088,7 @@
 "jv" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel{
 	burnt = 1;
@@ -7105,7 +7105,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster14";
 	pixel_x = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	serial_number = 14
 	},
 /turf/open/floor/plasteel{
@@ -7121,7 +7121,7 @@
 "jx" = (
 /obj/structure/sign/science{
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/purple/side{
@@ -7234,7 +7234,7 @@
 	locked = 0;
 	name = "Worn-out APC";
 	pixel_x = 0;
-	pixel_y = 25;
+	pixel_y = 50;
 	req_access = null;
 	start_charge = 100
 	},
@@ -7249,7 +7249,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /turf/open/floor/plasteel{
@@ -7262,7 +7262,7 @@
 "jJ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -7286,7 +7286,7 @@
 	})
 "jL" = (
 /obj/structure/noticeboard{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/item/weapon/paper{
 	info = "<b><h2>I Can't Believe It's Not Pasta: Half off on Wednesdays</h2></b><br><br><b><h2><font color=blue>Burger night every Friday 6PM-10PM, free drinks with purchase of meal!</font></h2></b><br><br><b><h2><font color=red>Premiering Tonight: The comedy stylings of Shoe Snatching Willy! 11AM-7PM</font></h2></b>";
@@ -7338,7 +7338,7 @@
 "jP" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/barman_recipes{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/cafeteria{
@@ -7351,8 +7351,8 @@
 "jQ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
@@ -7476,7 +7476,7 @@
 /obj/machinery/airalarm{
 	frequency = 1439;
 	locked = 0;
-	pixel_y = 23;
+	pixel_y = 46;
 	req_access = null
 	},
 /turf/open/floor/plasteel/purple/corner{
@@ -7736,7 +7736,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/reagent_containers/glass/rag{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "awaykitchen";
@@ -7772,8 +7772,8 @@
 "kq" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 4;
+	pixel_y = 12
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/cafeteria{
@@ -7802,7 +7802,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -7848,7 +7848,7 @@
 /obj/machinery/light/small,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 0;
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/machinery/camera{
 	c_tag = "Arrivals North";
@@ -7867,7 +7867,7 @@
 /obj/structure/sign/poster{
 	icon_state = "poster2_legit";
 	pixel_x = 0;
-	pixel_y = -32;
+	pixel_y = -64;
 	serial_number = 2
 	},
 /turf/open/floor/plasteel/arrival{
@@ -8012,7 +8012,7 @@
 "kJ" = (
 /obj/machinery/firealarm{
 	dir = 1;
-	pixel_y = -24
+	pixel_y = -48
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -8067,7 +8067,7 @@
 "kO" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
@@ -8147,7 +8147,7 @@
 	id = "awaydorm1";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -8200,8 +8200,8 @@
 "kX" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/device/multitool,
 /turf/open/floor/plasteel/blue/side{
@@ -8249,7 +8249,7 @@
 	})
 "lb" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 26;
+	pixel_x = 52;
 	pixel_y = 0
 	},
 /obj/machinery/camera{
@@ -8412,7 +8412,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -8443,7 +8443,7 @@
 	dir = 4;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -8468,7 +8468,7 @@
 "ls" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
@@ -8487,7 +8487,7 @@
 /obj/machinery/button/door{
 	id = "awaykitchen";
 	name = "Kitchen Shutters Control";
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0;
 	req_access_txt = "0"
 	},
@@ -8524,7 +8524,7 @@
 /obj/structure/sink/kitchen{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink";
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/showroomfloor{
 	heat_capacity = 1e+006;
@@ -8687,7 +8687,7 @@
 /obj/structure/table/wood,
 /obj/item/weapon/lighter,
 /obj/machinery/newscaster{
-	pixel_x = 30;
+	pixel_x = 60;
 	pixel_y = 0
 	},
 /turf/open/floor/carpet{
@@ -8816,7 +8816,7 @@
 	})
 "lZ" = (
 /obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32;
+	pixel_x = -64;
 	pixel_y = 0
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -8854,7 +8854,7 @@
 "md" = (
 /obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -9103,14 +9103,14 @@
 	id = "awaydorm2";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
 /obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -9151,7 +9151,7 @@
 /obj/machinery/vending/cigarette,
 /obj/structure/sign/poster{
 	icon_state = "poster7";
-	pixel_y = -32;
+	pixel_y = -64;
 	serial_number = 7
 	},
 /turf/open/floor/plasteel/black,
@@ -9172,15 +9172,15 @@
 "mE" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
-	pixel_x = -6;
-	pixel_y = 6
+	pixel_x = -12;
+	pixel_y = 12
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 12;
+	pixel_y = 16
 	},
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 3;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/black,
@@ -9270,7 +9270,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/noticeboard{
 	dir = 8;
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /obj/item/weapon/paper{
@@ -9377,7 +9377,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -9531,7 +9531,7 @@
 "nh" = (
 /obj/machinery/newscaster{
 	pixel_x = 0;
-	pixel_y = -30
+	pixel_y = -60
 	},
 /obj/machinery/light/small,
 /turf/open/floor/mineral/titanium/blue,
@@ -9555,7 +9555,7 @@
 "nj" = (
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel{
 	broken = 1;
@@ -9593,7 +9593,7 @@
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -9753,7 +9753,7 @@
 	dir = 8;
 	frequency = 1439;
 	locked = 0;
-	pixel_x = 23;
+	pixel_x = 46;
 	pixel_y = 0;
 	req_access = null
 	},
@@ -9903,7 +9903,7 @@
 	id = "awaydorm3";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = -25;
+	pixel_x = -50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -9947,7 +9947,7 @@
 /obj/structure/sign/vacuum{
 	desc = "A warning sign which reads 'HOSTILE ATMOSPHERE AHEAD'";
 	name = "\improper HOSTILE ATMOSPHERE AHEAD";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -10008,7 +10008,7 @@
 "nP" = (
 /obj/item/weapon/pen,
 /obj/item/weapon/storage/pill_bottle{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
@@ -10070,7 +10070,7 @@
 	})
 "nU" = (
 /obj/machinery/newscaster{
-	pixel_x = 30;
+	pixel_x = 60;
 	pixel_y = 0
 	},
 /turf/open/floor/carpet{
@@ -10170,7 +10170,7 @@
 /obj/item/weapon/twohanded/required/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/neutral/side{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";

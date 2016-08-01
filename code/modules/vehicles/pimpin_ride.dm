@@ -16,16 +16,16 @@
 			switch(buckled_mob.dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
+					buckled_mob.pixel_y = 8
 				if(EAST)
-					buckled_mob.pixel_x = -12
-					buckled_mob.pixel_y = 7
+					buckled_mob.pixel_x = -24
+					buckled_mob.pixel_y = 14
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 7
+					buckled_mob.pixel_y = 14
 				if(WEST)
-					buckled_mob.pixel_x = 12
-					buckled_mob.pixel_y = 7
+					buckled_mob.pixel_x = 24
+					buckled_mob.pixel_y = 14
 
 
 /obj/item/key/janitor

@@ -297,7 +297,7 @@
 "ba" = (
 /obj/structure/table/glass,
 /obj/item/weapon/scalpel{
-	pixel_y = 10
+	pixel_y = 20
 	},
 /obj/item/weapon/circular_saw,
 /turf/open/floor/holofloor{
@@ -1304,8 +1304,8 @@
 "dN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/weapon/storage/firstaid/toxin,
 /turf/open/floor/mineral/titanium/blue,
@@ -1314,20 +1314,20 @@
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/fire,
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "dP" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
+	pixel_x = 4;
 	pixel_y = 0
 	},
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
@@ -1656,7 +1656,7 @@
 /area/centcom/ferry)
 "eW" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
@@ -1676,7 +1676,7 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/c4,
 /obj/item/weapon/c4{
-	pixel_x = 7
+	pixel_x = 14
 	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
@@ -1687,7 +1687,7 @@
 /obj/item/weapon/storage/box/syringes,
 /obj/item/weapon/gun/syringe/rapidsyringe,
 /obj/structure/extinguisher_cabinet{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
@@ -1704,10 +1704,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
-	pixel_x = -5
+	pixel_x = -10
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey{
-	pixel_x = 5
+	pixel_x = 10
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
@@ -1807,8 +1807,8 @@
 "fr" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 5
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /obj/item/weapon/pen/blue,
 /turf/open/floor/vault,
@@ -1884,7 +1884,7 @@
 /obj/machinery/button/door{
 	id = "adminshut";
 	name = "Administrative Shutter-Control";
-	pixel_y = 26
+	pixel_y = 52
 	},
 /turf/open/floor/carpet,
 /area/centcom/ferry)
@@ -1980,7 +1980,7 @@
 /area/centcom/ferry)
 "fT" = (
 /obj/structure/mirror{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -2044,7 +2044,7 @@
 "gf" = (
 /obj/structure/table/wood,
 /obj/item/weapon/paper_bin{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/wood,
@@ -2387,7 +2387,7 @@
 	icon_state = "doorctrl0";
 	id = "CentComPort";
 	name = "Security Doors";
-	pixel_y = 28;
+	pixel_y = 56;
 	req_access_txt = "101"
 	},
 /obj/structure/showcase/fakeid,
@@ -2402,12 +2402,12 @@
 "hq" = (
 /obj/structure/table,
 /obj/item/weapon/stamp{
-	pixel_x = -3;
-	pixel_y = 3
+	pixel_x = -6;
+	pixel_y = 6
 	},
 /obj/item/weapon/stamp/denied{
-	pixel_x = 4;
-	pixel_y = -2
+	pixel_x = 8;
+	pixel_y = -4
 	},
 /obj/item/weapon/paper/centcom,
 /turf/open/floor/plasteel/black,
@@ -2663,7 +2663,7 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'FOURTH WALL'.";
 	name = "\improper FOURTH WALL";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/syndicate_mothership)
@@ -2779,13 +2779,13 @@
 "ix" = (
 /obj/structure/table,
 /obj/item/weapon/pen/blue{
-	pixel_x = 4;
-	pixel_y = 4
+	pixel_x = 8;
+	pixel_y = 8
 	},
 /obj/item/weapon/pen/red,
 /obj/item/weapon/pen{
-	pixel_x = 8;
-	pixel_y = 8
+	pixel_x = 16;
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supply)
@@ -2999,7 +2999,7 @@
 /area/syndicate_mothership)
 "ji" = (
 /obj/structure/urinal{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
@@ -3014,7 +3014,7 @@
 /area/syndicate_mothership)
 "jk" = (
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /obj/item/weapon/mop,
 /turf/open/floor/plasteel/freezer{
@@ -3106,7 +3106,7 @@
 	name = "memo"
 	},
 /obj/structure/noticeboard{
-	pixel_x = -32;
+	pixel_x = -64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/bar{
@@ -3142,7 +3142,7 @@
 /area/syndicate_mothership)
 "jE" = (
 /obj/structure/mirror{
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
@@ -3372,13 +3372,13 @@
 "kp" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/beer{
-	pixel_x = 5;
-	pixel_y = -2
+	pixel_x = 10;
+	pixel_y = -4
 	},
 /obj/item/toy/cards/deck/syndicate{
 	icon_state = "deck_syndicate_full";
-	pixel_x = -6;
-	pixel_y = 6
+	pixel_x = -12;
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
@@ -3490,7 +3490,7 @@
 /obj/machinery/button/door{
 	id = "nukeop_ready";
 	name = "mission launch control";
-	pixel_x = -26;
+	pixel_x = -52;
 	pixel_y = 0;
 	req_access_txt = "151"
 	},
@@ -3748,7 +3748,7 @@
 /area/syndicate_mothership)
 "lD" = (
 /obj/structure/sign/map/left{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -3760,7 +3760,7 @@
 /area/syndicate_mothership)
 "lE" = (
 /obj/structure/sign/map/right{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /obj/structure/rack{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -3870,7 +3870,7 @@
 /obj/item/clothing/head/wizard/magus,
 /obj/item/weapon/staff,
 /obj/structure/mirror/magic{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
@@ -4025,7 +4025,7 @@
 /area/syndicate_mothership)
 "mx" = (
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/effect/landmark{
 	name = "tdome2"
@@ -4034,7 +4034,7 @@
 /area/tdome/tdome2)
 "my" = (
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /obj/effect/landmark{
 	name = "tdome1"
@@ -4107,8 +4107,8 @@
 /area/wizard_station)
 "mK" = (
 /obj/machinery/camera{
-	pixel_x = 11;
-	pixel_y = -9;
+	pixel_x = 22;
+	pixel_y = -18;
 	network = list("thunder");
 	c_tag = "Red Team"
 	},
@@ -4129,8 +4129,8 @@
 /area/tdome/arena)
 "mN" = (
 /obj/machinery/camera{
-	pixel_x = 12;
-	pixel_y = -10;
+	pixel_x = 24;
+	pixel_y = -20;
 	network = list("thunder");
 	c_tag = "Green Team"
 	},
@@ -4181,7 +4181,7 @@
 /area/wizard_station)
 "mU" = (
 /obj/machinery/camera{
-	pixel_x = 10;
+	pixel_x = 20;
 	network = list("thunder");
 	c_tag = "Arena"
 	},
@@ -4367,7 +4367,7 @@
 /area/tdome/tdomeadmin)
 "nA" = (
 /obj/machinery/computer/security/telescreen{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/redyellow,
 /area/tdome/tdomeadmin)
@@ -4538,20 +4538,20 @@
 "oc" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/freezer{
 	dir = 2
@@ -4603,7 +4603,7 @@
 /area/centcom/holding)
 "om" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
@@ -4655,17 +4655,17 @@
 /area/centcom/holding)
 "ou" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /obj/item/clothing/head/bandana{
-	pixel_y = -10
+	pixel_y = -20
 	},
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
 "ov" = (
 /obj/structure/chair/stool{
-	pixel_y = 8
+	pixel_y = 16
 	},
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
@@ -4726,8 +4726,8 @@
 /obj/item/clothing/under/suit_jacket/female{
 	desc = "A black trouser suit for women. Very formal.";
 	name = "black suit";
-	pixel_x = 3;
-	pixel_y = 1
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
@@ -5717,7 +5717,7 @@
 "rN" = (
 /obj/machinery/status_display{
 	density = 0;
-	pixel_y = 32;
+	pixel_y = 64;
 	supply_display = 1
 	},
 /turf/open/floor/plasteel/black,
@@ -5763,7 +5763,7 @@
 "rU" = (
 /obj/item/weapon/twohanded/required/kirbyplants,
 /obj/machinery/status_display{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)

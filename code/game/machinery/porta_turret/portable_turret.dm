@@ -711,8 +711,8 @@
 	if(built)
 		setDir(ndir)
 		locked = 0
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
-		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -48 : 48)
+		pixel_y = (dir & 3)? (dir ==1 ? -48 : 48) : 0
 	power_change() //Checks power and initial settings
 
 /obj/machinery/turretid/initialize() //map-placed turrets autolink turrets

@@ -26,8 +26,8 @@
 	..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(built)
 		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -56 : 56)
+		pixel_y = (dir & 3)? (dir ==1 ? -56 : 56) : 0
 	else
 		bulb = new /obj/item/device/assembly/flash/handheld(src)
 

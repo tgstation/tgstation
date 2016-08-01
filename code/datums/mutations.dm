@@ -325,8 +325,8 @@
 				owner.say("[prob(50) ? ";" : ""][pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER", "TITS")]")
 		var/x_offset_old = owner.pixel_x
 		var/y_offset_old = owner.pixel_y
-		var/x_offset = owner.pixel_x + rand(-2,2)
-		var/y_offset = owner.pixel_y + rand(-1,1)
+		var/x_offset = owner.pixel_x + rand(-4,4)
+		var/y_offset = owner.pixel_y + rand(-4,4)
 		animate(owner, pixel_x = x_offset, pixel_y = y_offset, time = 1)
 		animate(owner, pixel_x = x_offset_old, pixel_y = y_offset_old, time = 1)
 

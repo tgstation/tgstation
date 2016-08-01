@@ -209,8 +209,8 @@
 
 	for (var/i = 0, i < 3, i++)
 		if (A && D)
-			A.pixel_y += 3
-			D.pixel_y += 3
+			A.pixel_y += 6
+			D.pixel_y += 6
 			A.setDir(turn(A.dir, 90))
 			D.setDir(turn(D.dir, 90))
 
@@ -220,9 +220,9 @@
 				if (SOUTH)
 					D.pixel_x = A.pixel_x
 				if (EAST)
-					D.pixel_x = A.pixel_x - 8
+					D.pixel_x = A.pixel_x - 16
 				if (WEST)
-					D.pixel_x = A.pixel_x + 8
+					D.pixel_x = A.pixel_x + 16
 
 			if (get_dist(A, D) > 1)
 				A << "[D] is too far away!"
@@ -358,7 +358,7 @@
 	if (surface && (ST && isturf(ST)))
 		A.forceMove(ST)
 		A.visible_message("<span class = 'danger'><B>[A] climbs onto [surface]!</b></span>")
-		A.pixel_y = 10
+		A.pixel_y = 20
 		falling = 1
 		sleep(10)
 

@@ -25,8 +25,8 @@
 	icon_state = null
 	mouse_opacity = 0
 	screen_loc = "CENTER-7,CENTER-7"
-	maptext_height = 480
-	maptext_width = 480
+	maptext_height = 960
+	maptext_width = 960
 
 /obj/screen/swap_hand
 	layer = HUD_LAYER

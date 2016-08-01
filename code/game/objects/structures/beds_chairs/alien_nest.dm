@@ -72,7 +72,7 @@
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	if(M in buckled_mobs)
 		M.pixel_y = 0
-		M.pixel_x = initial(M.pixel_x) + 2
+		M.pixel_x = initial(M.pixel_x) + 4
 		M.layer = BELOW_MOB_LAYER
 		add_overlay(nest_overlay)
 	else

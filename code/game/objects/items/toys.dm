@@ -893,7 +893,7 @@
 	w_class = 1
 	var/cardname = null
 	var/flipped = 0
-	pixel_x = -5
+	pixel_x = -10
 
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
@@ -919,12 +919,12 @@
 		else
 			src.icon_state = "sc_Ace of Spades_[deckstyle]"
 			src.name = "What Card"
-		src.pixel_x = 5
+		src.pixel_x = 10
 	else if(flipped)
 		src.flipped = 0
 		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
-		src.pixel_x = -5
+		src.pixel_x = -10
 
 /obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/cards/singlecard/))

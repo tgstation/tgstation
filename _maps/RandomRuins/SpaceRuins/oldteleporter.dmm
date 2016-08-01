@@ -11,7 +11,7 @@
 "k" = (/obj/machinery/light_construct/small{dir = 4},/turf/open/floor/plating/airless,/area/ruin/unpowered/no_grav)
 "l" = (/obj/structure/table,/obj/item/weapon/stock_parts/cell{charge = 100;maxcharge = 15000},/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
 "m" = (/turf/open/floor/plasteel/airless{icon_state = "damaged4"},/area/ruin/unpowered/no_grav)
-"n" = (/obj/machinery/power/apc{dir = 0;name = "Worn-out APC";pixel_y = -24},/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
+"n" = (/obj/machinery/power/apc{dir = 0;name = "Worn-out APC";pixel_y = -48},/turf/open/floor/plasteel/airless,/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
 aaaaaaaaaababbbbbaaba

@@ -17,8 +17,8 @@
 /obj/effect/decal/cleanable/ash/New()
 	..()
 	reagents.add_reagent("ash", 30)
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -156,8 +156,8 @@
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/effect/decal/cleanable/shreds/New()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
 	..()
 
 /obj/effect/decal/cleanable/salt

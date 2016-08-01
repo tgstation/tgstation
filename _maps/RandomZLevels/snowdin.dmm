@@ -154,7 +154,7 @@
 /obj/machinery/button/door{
 	id = "garagesnow";
 	name = "garage door button";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -220,7 +220,7 @@
 "aE" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /obj/structure/grille,
@@ -488,7 +488,7 @@
 /obj/machinery/gateway,
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel/bot{
@@ -546,7 +546,7 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel{
@@ -789,7 +789,7 @@
 /area/awaymission/snowdin/base)
 "bS" = (
 /obj/structure/fireaxecabinet{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -1791,7 +1791,7 @@
 /obj/machinery/button/door{
 	id = "garagesnow2";
 	name = "garage door button";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
@@ -1829,10 +1829,10 @@
 /obj/item/weapon/surgicaldrill,
 /obj/item/weapon/hemostat,
 /obj/item/weapon/scalpel{
-	pixel_y = 12
+	pixel_y = 24
 	},
 /obj/item/weapon/cautery{
-	pixel_x = 4
+	pixel_x = 8
 	},
 /turf/open/floor/plasteel/whiteblue{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -2265,7 +2265,7 @@
 /obj/machinery/button/door{
 	id = "sekret";
 	name = "shutter control";
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/darkred{
@@ -2308,7 +2308,7 @@
 /obj/machinery/button/door{
 	id = "garagesnow3";
 	name = "garage door button";
-	pixel_x = 32
+	pixel_x = 64
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
@@ -3315,7 +3315,7 @@
 /area/awaymission/snowdin/sekret)
 "iW" = (
 /obj/structure/sign/bluecross{
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -3511,8 +3511,8 @@
 /area/awaymission/snowdin)
 "jy" = (
 /obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -3532,7 +3532,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_y = -32;
+	pixel_y = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -3826,7 +3826,7 @@
 "kk" = (
 /obj/structure/mirror/magic/lesser{
 	desc = "A collab of the Wizard Federation and the Syndicate, a specialized mirror to help our operatives personalize themselves while stuck in this icy hell-hole.";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/carpet{
 	baseturf = /turf/open/floor/plating/asteroid/snow
@@ -3957,8 +3957,8 @@
 /area/awaymission/snowdin)
 "kB" = (
 /obj/item/weapon/c4{
-	pixel_x = 2;
-	pixel_y = 1
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
@@ -4120,8 +4120,8 @@
 /area/awaymission/snowdin)
 "kW" = (
 /obj/item/weapon/storage/box/zipties{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4510,7 +4510,7 @@
 	freerange = 1;
 	frequency = 1213;
 	name = "Syndicate Intercom";
-	pixel_x = -32;
+	pixel_x = -64;
 	subspace_transmission = 1;
 	syndie = 1
 	},
@@ -4625,7 +4625,7 @@
 /area/awaymission/snowdin)
 "mh" = (
 /obj/item/device/assembly/voice{
-	pixel_y = 3
+	pixel_y = 6
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin)
@@ -4637,7 +4637,7 @@
 /area/awaymission/snowdin)
 "mj" = (
 /obj/item/weapon/reagent_containers/syringe/charcoal{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4658,7 +4658,7 @@
 	req_access_txt = "150"
 	},
 /obj/item/weapon/reagent_containers/syringe/charcoal{
-	pixel_y = 4
+	pixel_y = 8
 	},
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4720,7 +4720,7 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'WEAPONS HOT'.";
 	name = "WEAPONS HOT";
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4835,7 +4835,7 @@
 /area/awaymission/snowdin)
 "mE" = (
 /obj/item/weapon/screwdriver{
-	pixel_y = 9
+	pixel_y = 18
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4958,8 +4958,8 @@
 /area/awaymission/snowdin/sekret)
 "mT" = (
 /obj/item/weapon/gun/syringe{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -4971,11 +4971,11 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
+	pixel_x = 22;
 	pixel_y = 0
 	},
 /obj/structure/mirror{
-	pixel_x = 30
+	pixel_x = 60
 	},
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/asteroid/snow;
@@ -5167,7 +5167,7 @@
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'WEAPONS HOT'.";
 	name = "WEAPONS HOT";
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;

@@ -377,7 +377,7 @@
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
 	anchored = 1
 	density = 1
-	pixel_y = -32
+	pixel_y = -64
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -407,7 +407,7 @@
 	icon_off = "donkvendor"
 	luminosity = 8
 	max_n_of_items = 10
-	pixel_y = -4
+	pixel_y = -8
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"

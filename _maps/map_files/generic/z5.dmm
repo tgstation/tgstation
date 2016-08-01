@@ -434,7 +434,7 @@
 /area/mine/abandoned)
 "bt" = (
 /obj/structure/sink{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/mine/abandoned)
@@ -781,7 +781,7 @@
 	desc = "A large tool for digging and moving dirt. Was modified with extra safety, making it ineffective as a weapon.";
 	force = 1;
 	name = "safety shovel";
-	pixel_x = -5;
+	pixel_x = -10;
 	throwforce = 1
 	},
 /obj/item/weapon/pickaxe{
@@ -789,7 +789,7 @@
 	desc = "A pickaxe designed to be only effective at digging rock and ore, very ineffective as a weapon.";
 	force = 1;
 	name = "safety pickaxe";
-	pixel_x = 5;
+	pixel_x = 10;
 	throwforce = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -809,7 +809,7 @@
 	desc = "A large tool for digging and moving dirt. Was modified with extra safety, making it ineffective as a weapon.";
 	force = 1;
 	name = "safety shovel";
-	pixel_x = -5;
+	pixel_x = -10;
 	throwforce = 1
 	},
 /obj/item/weapon/pickaxe{
@@ -817,7 +817,7 @@
 	desc = "A pickaxe designed to be only effective at digging rock and ore, very ineffective as a weapon.";
 	force = 1;
 	name = "safety pickaxe";
-	pixel_x = 5;
+	pixel_x = 10;
 	throwforce = 1
 	},
 /obj/machinery/camera{
@@ -837,8 +837,8 @@
 "cA" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 4;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
@@ -850,7 +850,7 @@
 /area/mine/laborcamp)
 "cC" = (
 /obj/structure/sign/bluecross_2{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/chair,
 /turf/open/floor/plasteel/white,
@@ -923,8 +923,8 @@
 /obj/structure/sink{
 	icon_state = "sink";
 	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
+	pixel_x = -24;
+	pixel_y = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 2
@@ -1106,7 +1106,7 @@
 	density = 0;
 	layer = 4;
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/mine/laborcamp)
@@ -1117,7 +1117,7 @@
 	dir = 2;
 	name = "Prison Intercom (General)";
 	pixel_x = 0;
-	pixel_y = 24;
+	pixel_y = 48;
 	prison_radio = 1
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1291,7 +1291,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1356,7 +1356,7 @@
 /area/mine/north_outpost)
 "dY" = (
 /obj/machinery/light_switch{
-	pixel_x = -27;
+	pixel_x = -54;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1452,7 +1452,7 @@
 	id = "Labor";
 	name = "Labor Camp Lockdown";
 	pixel_x = 0;
-	pixel_y = 28;
+	pixel_y = 56;
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1520,7 +1520,7 @@
 /area/mine/north_outpost)
 "ev" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel,
 /area/mine/north_outpost)
@@ -1541,7 +1541,7 @@
 "ey" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/light{
 	dir = 1
@@ -1550,8 +1550,8 @@
 /area/mine/north_outpost)
 "ez" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel,
 /area/mine/north_outpost)
@@ -1645,7 +1645,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Mining North Outpost APC";
-	pixel_x = 26;
+	pixel_x = 52;
 	pixel_y = 0
 	},
 /obj/machinery/conveyor_switch{
@@ -1751,7 +1751,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel,
 /area/mine/north_outpost)
@@ -1797,7 +1797,7 @@
 	},
 /obj/machinery/disposal/deliveryChute{
 	dir = 8;
-	pixel_x = 8;
+	pixel_x = 16;
 	pixel_y = 0
 	},
 /obj/structure/window/reinforced{
@@ -1977,7 +1977,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Labor Camp APC";
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
@@ -2073,13 +2073,13 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/machinery/status_display{
 	density = 0;
 	layer = 4;
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -2104,7 +2104,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Labor Camp Security APC";
-	pixel_x = 24;
+	pixel_x = 48;
 	pixel_y = 0
 	},
 /obj/machinery/atmospherics/pipe/simple,
@@ -2113,7 +2113,7 @@
 	network = list("Labor")
 	},
 /obj/machinery/light_switch{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
@@ -2259,14 +2259,14 @@
 /obj/machinery/button/door{
 	id = "Labor";
 	name = "Labor Camp Lockdown";
-	pixel_x = 28;
-	pixel_y = 7;
+	pixel_x = 56;
+	pixel_y = 14;
 	req_access_txt = "2"
 	},
 /obj/machinery/button/flasher{
 	id = "Labor";
-	pixel_x = 26;
-	pixel_y = -3
+	pixel_x = 52;
+	pixel_y = -6
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
@@ -2310,7 +2310,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = -32
+	pixel_x = -64
 	},
 /turf/open/floor/plasteel/warning,
 /area/mine/north_outpost)
@@ -2361,15 +2361,15 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -22
+	pixel_y = -44
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp/security)
 "gC" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
+	pixel_x = 2;
+	pixel_y = 18
 	},
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel,
@@ -2548,14 +2548,14 @@
 "hd" = (
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Communications APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /turf/open/floor/plasteel/black,
 /area/mine/maintenance)
@@ -2570,7 +2570,7 @@
 /area/mine/maintenance)
 "hf" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	on = 1
@@ -2601,7 +2601,7 @@
 	dir = 9
 	},
 /obj/machinery/light_switch{
-	pixel_y = -25
+	pixel_y = -50
 	},
 /turf/open/floor/bluegrid,
 /area/mine/maintenance)
@@ -2683,7 +2683,7 @@
 	id = "miningdorm1";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -2734,7 +2734,7 @@
 /area/mine/west_outpost)
 "hF" = (
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel,
 /area/mine/west_outpost)
@@ -2775,7 +2775,7 @@
 	name = "Pneumatic Tube Access"
 	},
 /obj/machinery/disposal/deliveryChute{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/bot,
 /area/mine/west_outpost)
@@ -2795,7 +2795,7 @@
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
@@ -2876,7 +2876,7 @@
 	id = "miningdorm2";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -2898,7 +2898,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel,
 /area/mine/west_outpost)
@@ -3001,8 +3001,8 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Mining West Outpost APC";
-	pixel_x = 1;
-	pixel_y = -23
+	pixel_x = 2;
+	pixel_y = -46
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -3037,7 +3037,7 @@
 /obj/machinery/airalarm{
 	dir = 1;
 	icon_state = "alarm0";
-	pixel_y = -22
+	pixel_y = -44
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -3113,14 +3113,14 @@
 "iF" = (
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_y = 6
+	pixel_y = 12
 	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "iG" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
@@ -3138,7 +3138,7 @@
 "iJ" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
@@ -3154,7 +3154,7 @@
 	id = "miningdorm3";
 	name = "Door Bolt Control";
 	normaldoorcontrol = 1;
-	pixel_x = 25;
+	pixel_x = 50;
 	pixel_y = 0;
 	req_access_txt = "0";
 	specialfunctions = 4
@@ -3222,7 +3222,7 @@
 /obj/item/device/radio/intercom{
 	dir = 4;
 	name = "Station Intercom (General)";
-	pixel_x = 31
+	pixel_x = 62
 	},
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
@@ -3294,8 +3294,8 @@
 	icon_state = "2-8"
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/item/weapon/storage/box/lights/bulbs,
 /turf/open/floor/plating,
@@ -3434,7 +3434,7 @@
 /area/mine/living_quarters)
 "jB" = (
 /obj/machinery/airalarm{
-	pixel_y = 24
+	pixel_y = 48
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -3503,7 +3503,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
+	pixel_x = -46;
 	pixel_y = 0
 	},
 /obj/machinery/light{
@@ -3536,7 +3536,7 @@
 	on = 1
 	},
 /obj/machinery/light_switch{
-	pixel_x = 27
+	pixel_x = 54
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -3585,7 +3585,7 @@
 	name = "Pneumatic Tube Access"
 	},
 /obj/machinery/disposal/deliveryChute{
-	pixel_y = 5
+	pixel_y = 10
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -3619,8 +3619,8 @@
 /area/mine/eva)
 "jX" = (
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -3652,7 +3652,7 @@
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
 	pixel_x = 0;
-	pixel_y = 32
+	pixel_y = 64
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -3671,11 +3671,11 @@
 /area/mine/living_quarters)
 "kf" = (
 /obj/structure/sink{
-	pixel_y = 30
+	pixel_y = 60
 	},
 /obj/machinery/light/small,
 /obj/structure/mirror{
-	pixel_y = -32
+	pixel_y = -64
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/mine/living_quarters)
@@ -3697,12 +3697,12 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining Station Port Wing APC";
-	pixel_x = 1;
-	pixel_y = 25
+	pixel_x = 2;
+	pixel_y = 50
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
+	pixel_y = 2;
 	d2 = 2
 	},
 /turf/open/floor/plasteel,
@@ -3713,8 +3713,8 @@
 	network = list("MINE")
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
@@ -4012,8 +4012,8 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Mining EVA APC";
-	pixel_x = 1;
-	pixel_y = -23
+	pixel_x = 2;
+	pixel_y = -46
 	},
 /obj/structure/cable,
 /obj/structure/table,
@@ -4183,7 +4183,7 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
-	pixel_x = 24
+	pixel_x = 48
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -4370,7 +4370,7 @@
 	},
 /obj/machinery/airalarm{
 	frequency = 1439;
-	pixel_y = 23
+	pixel_y = 46
 	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
@@ -4432,8 +4432,8 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/open/floor/plating,
 /area/mine/living_quarters)
@@ -4458,7 +4458,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = -28
+	pixel_x = -56
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 8
@@ -4478,7 +4478,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/status_display{
 	layer = 4;
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/warning{
@@ -4496,22 +4496,22 @@
 /obj/structure/closet/crate/freezer,
 /obj/item/weapon/reagent_containers/blood/empty,
 /obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /obj/item/weapon/reagent_containers/blood/AMinus,
 /obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /obj/item/weapon/reagent_containers/blood/OMinus,
 /obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/weapon/reagent_containers/blood/random,
 /obj/item/weapon/reagent_containers/blood/random,
@@ -4537,8 +4537,8 @@
 "mb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/firstaid/brute{
-	pixel_x = 3;
-	pixel_y = 3
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/weapon/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side{
@@ -4585,7 +4585,7 @@
 	icon_state = "space";
 	layer = 4;
 	name = "EXTERNAL AIRLOCK";
-	pixel_x = 32;
+	pixel_x = 64;
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/warning,
@@ -4594,8 +4594,8 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+	pixel_x = -54;
+	pixel_y = 4
 	},
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -4642,7 +4642,7 @@
 /area/mine/production)
 "mp" = (
 /obj/machinery/airalarm{
-	pixel_y = 28
+	pixel_y = 56
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/bot{
@@ -4651,8 +4651,8 @@
 /area/mine/production)
 "mq" = (
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+	pixel_x = -10;
+	pixel_y = 60
 	},
 /obj/structure/table,
 /obj/item/weapon/paper{
@@ -4800,8 +4800,8 @@
 	network = list("MINE")
 	},
 /obj/machinery/newscaster{
-	pixel_x = 30;
-	pixel_y = 1
+	pixel_x = 60;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/delivery{
 	name = "floor"
@@ -4832,7 +4832,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	name = "Station Intercom (General)";
-	pixel_x = 28
+	pixel_x = 56
 	},
 /turf/open/floor/plasteel/warning{
 	dir = 4
@@ -5158,7 +5158,7 @@
 	},
 /obj/machinery/disposal/deliveryChute{
 	dir = 1;
-	pixel_y = -1
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/bot{
 	dir = 1

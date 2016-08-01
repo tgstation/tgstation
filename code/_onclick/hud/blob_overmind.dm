@@ -132,7 +132,7 @@
 	infodisplay += healths
 
 	using = new /obj/screen/blob/BlobHelp()
-	using.screen_loc = "WEST:6,NORTH:-3"
+	using.screen_loc = "WEST:12,NORTH:-6"
 	static_inventory += using
 
 	using = new /obj/screen/blob/JumpToNode()
