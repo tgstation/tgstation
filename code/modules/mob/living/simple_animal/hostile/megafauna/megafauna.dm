@@ -51,6 +51,8 @@
 		if(L.stat != DEAD)
 			if(ranged && ranged_cooldown <= world.time)
 				OpenFire()
+		else
+			devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
@@ -64,12 +66,11 @@
 		([newloc.x],[newloc.y],[newloc.z])")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(L.stat == DEAD)
-		src.visible_message(
-			"<span class='danger'>[src] devours [L]!</span>",
-			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-		adjustBruteLoss(-L.maxHealth/2)
-		L.gib()
+	src.visible_message(
+		"<span class='danger'>[src] devours [L]!</span>",
+		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+	adjustBruteLoss(-L.maxHealth/2)
+	L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
