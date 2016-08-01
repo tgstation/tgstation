@@ -28,7 +28,7 @@ var/next_mob_id = 0
 	hud_list = list()
 	for(var/hud in hud_possible)
 		var/image/I = image('icons/mob/hud.dmi', src, "")
-		I.appearance_flags = RESET_COLOR
+		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 		hud_list[hud] = I
 
 /mob/proc/Cell()

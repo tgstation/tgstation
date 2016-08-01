@@ -86,7 +86,13 @@
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
-		for(var/M in mechas_list)
+
+		var/hostile_machines = list()
+		for(var/mecha in mechas_list)
+			hostile_machines += mecha
+		for(var/obj/machinery/porta_turret/P in machines)
+			hostile_machines += P
+		for(var/M in hostile_machines)
 			if(get_dist(M, targets_from) <= vision_range && can_see(targets_from, M, vision_range))
 				. += M
 	else
@@ -147,11 +153,6 @@
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
 	if(search_objects < 2)
-		if(istype(the_target, /obj/mecha))
-			var/obj/mecha/M = the_target
-			if(M.occupant)//Just so we don't attack empty mechs
-				if(CanAttack(M.occupant))
-					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check(L)
@@ -168,6 +169,24 @@
 				if(faction_check && !attack_same)
 					return 0
 			return 1
+
+		if(istype(the_target, /obj/mecha))
+			var/obj/mecha/M = the_target
+			if(M.occupant)//Just so we don't attack empty mechs
+				if(CanAttack(M.occupant))
+					return 1
+
+		if(istype(the_target, /obj/machinery/porta_turret))
+			var/obj/machinery/porta_turret/P = the_target
+			if(P.faction in faction)
+				return 0
+			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
+				return 0
+			if(P.stat & BROKEN) //Or turrets that are already broken
+				return 0
+			return 1
+
+
 	if(isobj(the_target))
 		if(is_type_in_list(the_target, wanted_objects))
 			return 1

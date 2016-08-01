@@ -370,6 +370,14 @@
 	else
 		qdel(src)
 
+/obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(user.melee_damage_upper == 0)
+		user.emote("[user.friendly] [src]")
+	else
+		user.do_attack_animation(src)
+		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+		take_damage(damage)
 
 /obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
 	switch(damage_type)

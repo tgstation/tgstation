@@ -121,11 +121,11 @@
 		myseed.loc = src
 
 	if(self_sustaining)
-		adjustNutri(2 / rating)
-		adjustWater(rand(8, 10) / rating)
-		adjustWeeds(-5 / rating)
-		adjustPests(-5 / rating)
-		adjustToxic(-5 / rating)
+		adjustNutri(2 * rating)
+		adjustWater(rand(8, 10) * rating)
+		adjustWeeds(-5 * rating)
+		adjustPests(-5 * rating)
+		adjustToxic(-5 * rating)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -619,7 +619,7 @@
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
-			myseed.adjust_potency(round(salt*0.15))
+			myseed.adjust_potency(round(salt*0.50))
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
 		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))

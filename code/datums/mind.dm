@@ -1197,7 +1197,9 @@
 				ticker.mode.devils += src
 				special_role = "devil"
 				ticker.mode.finalize_devil(src)
+				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
+				announce_objectives()
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src

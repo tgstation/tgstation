@@ -81,8 +81,10 @@
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
 		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			dmg_dealt = 100
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
@@ -536,13 +538,16 @@
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	if(user.melee_damage_upper)
+	if(user.melee_damage_upper || user.obj_damage)
+		var/dmg_dealt = user.melee_damage_upper
+		if(user.obj_damage)
+			dmg_dealt = user.obj_damage
 		if(user.environment_smash)
 			playsound(src, 'sound/effects/meteorimpact.ogg', 100, 1)
 			visible_message("<span class='warning'>[user] smashes [src] apart.</span>")
 			rack_destroy()
 		else
-			take_damage(user.melee_damage_upper, user.melee_damage_type)
+			take_damage(dmg_dealt, user.melee_damage_type)
 
 
 /obj/structure/rack/attack_tk() // no telehulk sorry

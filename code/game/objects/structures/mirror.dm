@@ -110,7 +110,7 @@
 	attack_generic(user)
 
 /obj/structure/mirror/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper <= 0)
+	if(!M.melee_damage_upper && !M.obj_damage)
 		return
 	attack_generic(M)
 

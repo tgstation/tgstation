@@ -1,0 +1,5 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Soul Vessels can now be used on unconscious or dead humans to extract their consciousness, much like a soulstone."
+  - tweak: "Soul Vessels no longer automatically ping ghosts when created, though they can still be used in-hand to ping ghosts."

@@ -1062,12 +1062,7 @@
 			O = new /datum/objective/sintouched/pride
 	ticker.mode.sintouched += src.mind
 	src.mind.objectives += O
-	var/obj_count = 1
-	src << "<span class='notice'>Your current objectives:</span>"
-	for(O in src.mind.objectives)
-		var/datum/objective/objective = O
-		src << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
-		obj_count++
+	src.mind.announce_objectives()
 
 /mob/living/carbon/human/check_weakness(obj/item/weapon, mob/living/attacker)
 	. = ..()
