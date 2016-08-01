@@ -46,8 +46,11 @@
 
 /mob/living/simple_animal/hostile/megafauna/AttackingTarget()
 	..()
-	if(ranged && prob(50))
-		OpenFire()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != DEAD)
+			if(ranged && ranged_cooldown <= world.time)
+				OpenFire()
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
