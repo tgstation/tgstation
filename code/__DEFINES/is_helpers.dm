@@ -63,7 +63,7 @@
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
-#define iscyborg(A) (istype(A, /mov/living/silicon/robot))
+#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
 
 #define isliving(A) (istype(A, /mob/living))
 
