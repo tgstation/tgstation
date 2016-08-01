@@ -15,7 +15,7 @@
 	var/inertia_dir = 0
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	glide_size = 8
+	glide_size = 16
 	appearance_flags = TILE_BOUND
 
 
