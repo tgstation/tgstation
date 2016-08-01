@@ -67,9 +67,12 @@ Difficulty: Very Hard
 	..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.stat == DEAD)
-			src.visible_message("<span class='danger'>[src] disintegrates [L]!</span>")
-			L.dust()
+		devour(L)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
+	if(L.stat == DEAD)
+		visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+		L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -81,7 +84,7 @@ Difficulty: Very Hard
 		if(health < maxHealth/3)
 			double_spiral()
 		else
-			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
 			if(prob(50))
 				spiral_shoot()
 			else
@@ -140,7 +143,7 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
+	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
 	addtimer(src, "spiral_shoot", 0)
@@ -257,7 +260,7 @@ Difficulty: Very Hard
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(istype(target,/turf/)||istype(target,/obj/structure/))
+	if(isturf(target) || isobj(target))
 		target.ex_act(2)
 
 
