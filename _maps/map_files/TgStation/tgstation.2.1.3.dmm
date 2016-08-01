@@ -5982,10 +5982,11 @@
 /turf/open/floor/plating,
 /area/maintenance/auxsolarstarboard)
 "amx" = (
-/turf/open/floor/plating/warnplate{
-	dir = 5
+/obj/structure/chair{
+	dir = 1
 	},
-/area/shuttle/auxillary_base)
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "amy" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -7787,8 +7788,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aqB" = (
-/turf/open/floor/plating/warnplate,
-/area/shuttle/auxillary_base)
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "aqC" = (
 /obj/machinery/computer/slot_machine{
 	balance = 15;
@@ -8626,9 +8628,8 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "asB" = (
-/obj/machinery/door/airlock/research,
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/turf/closed/wall,
+/area/maintenance/electrical)
 "asC" = (
 /turf/open/floor/plasteel/airless,
 /area/space/nearstation)
@@ -9009,9 +9010,11 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "atB" = (
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "atC" = (
 /obj/item/stack/rods{
 	amount = 50
@@ -9489,11 +9492,6 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
@@ -11114,9 +11112,12 @@
 /turf/open/floor/plating,
 /area/maintenance/fpmaint2)
 "ayj" = (
-/obj/docking_port/mobile/auxillary_base,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/weapon/stock_parts/cell/high/plus,
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/maintenance/electrical)
 "ayk" = (
 /turf/open/floor/plasteel/warning,
 /area/hallway/secondary/entry)
@@ -11919,9 +11920,10 @@
 /area/crew_quarters/sleep)
 "aAc" = (
 /obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/pod/light,
-/area/shuttle/labor)
+/obj/structure/window/fulltile,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "aAd" = (
 /obj/machinery/light_switch{
 	pixel_y = -25
@@ -12131,30 +12133,49 @@
 	name = "\improper Garden"
 	})
 "aAy" = (
-/turf/closed/wall,
-/area/mining_construction)
+/obj/machinery/power/smes{
+	charge = 0
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/electrical)
 "aAz" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
+/obj/machinery/computer/monitor{
+	name = "backup power monitoring console"
+	},
+/obj/structure/cable{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/electrical)
+"aAA" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
 	pixel_x = 0
 	},
 /turf/closed/wall,
-/area/mining_construction)
-"aAA" = (
-/obj/machinery/door/poddoor{
-	id = "mining_base"
+/area/maintenance/electrical)
+"aAB" = (
+/obj/machinery/power/smes{
+	charge = 0
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/mining_construction)
-"aAB" = (
-/obj/machinery/door/poddoor{
-	id = "mining_base"
-	},
-/turf/closed/wall,
-/area/mining_construction)
+/area/maintenance/electrical)
 "aAC" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
@@ -12634,14 +12655,9 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint2)
 "aBF" = (
-/obj/machinery/button/door{
-	id = "mining_base";
-	name = "blast doors";
-	pixel_x = 4;
-	pixel_y = 28
-	},
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/maintenance/fsmaint2)
 "aBG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
@@ -13165,16 +13181,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/open/floor/plasteel/black,
 /area/chapel/main)
 "aCQ" = (
-/turf/open/floor/plasteel/warning{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/area/mining_construction)
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/black,
+/area/chapel/main)
 "aCR" = (
 /turf/closed/wall,
 /area/chapel/main)
@@ -13182,8 +13199,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "aCT" = (
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/arrival)
 "aCU" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Arrivals Shuttle Airlock"
@@ -13196,13 +13213,19 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "aCW" = (
-/turf/open/floor/plasteel/warning{
-	dir = 8
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
 	},
-/area/mining_construction)
+/area/shuttle/arrival)
 "aCX" = (
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
+	},
+/area/shuttle/arrival)
 "aCY" = (
 /obj/machinery/computer/security,
 /obj/structure/reagent_dispensers/peppertank{
@@ -13864,11 +13887,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aEp" = (
-/obj/machinery/light{
-	dir = 8
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
 	},
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/area/shuttle/arrival)
 "aEq" = (
 /obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/blue,
@@ -14422,14 +14445,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aFD" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/turf/closed/wall/shuttle{
+	icon_state = "swall1";
+	dir = 2
 	},
-/turf/open/floor/plasteel/warning{
-	dir = 8
-	},
-/area/mining_construction)
+/area/shuttle/arrival)
 "aFE" = (
 /obj/structure/chair{
 	dir = 8
@@ -15945,10 +15965,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aIH" = (
-/turf/open/floor/plating/warnplate{
-	dir = 9
+/turf/closed/wall/shuttle{
+	icon_state = "swall2";
+	dir = 2
 	},
-/area/shuttle/auxillary_base)
+/area/shuttle/arrival)
 "aII" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1;
@@ -16562,10 +16583,12 @@
 	},
 /area/chapel/main)
 "aKf" = (
-/turf/open/floor/plating/warnplate{
-	dir = 1
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
 	},
-/area/shuttle/auxillary_base)
+/area/shuttle/arrival)
 "aKg" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
@@ -17100,14 +17123,18 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "aLt" = (
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plating,
-/area/shuttle/auxillary_base)
-"aLu" = (
-/turf/open/floor/plating/warnplate{
-	dir = 8
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
 	},
-/area/shuttle/auxillary_base)
+/area/shuttle/arrival)
+"aLu" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall13";
+	dir = 2
+	},
+/area/shuttle/arrival)
 "aLv" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -37465,10 +37492,11 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bEJ" = (
-/turf/open/floor/plating/warnplate{
-	dir = 4
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
-/area/shuttle/auxillary_base)
+/area/shuttle/labor)
 "bEK" = (
 /obj/machinery/computer/security/mining,
 /obj/machinery/camera{
@@ -39627,6 +39655,10 @@
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "bJc" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "48"
+	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 3;
@@ -39644,8 +39676,7 @@
 	name = "mining shuttle bay";
 	width = 7
 	},
-/obj/machinery/door/airlock/shuttle,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plating,
 /area/shuttle/labor)
 "bJd" = (
 /obj/machinery/door/airlock/glass_mining{
@@ -40843,7 +40874,7 @@
 /area/shuttle/labor)
 "bLt" = (
 /obj/structure/shuttle/engine/heater,
-/turf/open/floor/pod/light,
+/turf/open/floor/plating,
 /area/shuttle/labor)
 "bLu" = (
 /obj/structure/rack{
@@ -52284,20 +52315,12 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "ckq" = (
-/obj/docking_port/stationary{
-	area_type = /area/shuttle/auxillary_base;
+/turf/open/space,
+/turf/closed/wall/shuttle{
 	dir = 8;
-	dwidth = 3;
-	height = 5;
-	id = "mining_base";
-	name = "auxillary mining base";
-	turf_type = /turf/open/floor/plating;
-	width = 7
+	icon_state = "diagonalWall3"
 	},
-/turf/open/floor/plating/warnplate{
-	dir = 4
-	},
-/area/shuttle/auxillary_base)
+/area/shuttle/syndicate)
 "ckr" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -52859,10 +52882,11 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "clB" = (
-/obj/item/device/assault_pod/mining,
-/obj/structure/table,
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
 /turf/open/floor/plating,
-/area/shuttle/auxillary_base)
+/area/maintenance/aft)
 "clC" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54586,9 +54610,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_4)
 "cpe" = (
-/obj/machinery/computer/shuttle/auxillary_base,
-/turf/closed/wall,
-/area/shuttle/auxillary_base)
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/pod_4)
 "cpf" = (
 /obj/machinery/telecomms/allinone{
 	intercept = 1
@@ -55198,15 +55221,22 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cqq" = (
-/turf/open/floor/plating/warnplate{
-	dir = 10
+/turf/open/floor/plating,
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
 	},
-/area/shuttle/auxillary_base)
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
+	},
+/area/shuttle/pod_4)
 "cqr" = (
-/turf/open/floor/plating/warnplate{
-	dir = 6
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
 	},
-/area/shuttle/auxillary_base)
+/area/shuttle/pod_4)
 "cqs" = (
 /obj/structure/sign/fire{
 	pixel_x = 0;
@@ -55674,26 +55704,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cry" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1;
-	d2 = 2
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Base Construction APC";
-	pixel_x = -25;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/escape)
 "crz" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Construction Area";
-	req_access_txt = "32"
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
 	},
-/turf/open/floor/plating,
-/area/mining_construction)
+/area/shuttle/escape)
 "crA" = (
 /obj/structure/transit_tube/station{
 	dir = 8;
@@ -58349,14 +58367,11 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwH" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+/turf/open/floor/plasteel/shuttle/white,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f5"
 	},
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/area/shuttle/escape)
 "cwI" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
@@ -58427,46 +58442,23 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+/turf/closed/wall/shuttle{
+	icon_state = "swall13";
+	dir = 2
 	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/area/shuttle/escape)
 "cwU" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
+/area/shuttle/escape)
 "cwV" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Construction Area";
-	req_access_txt = "32"
+/turf/closed/wall/shuttle{
+	icon_state = "swall14";
+	dir = 2
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plating,
-/area/mining_construction)
+/area/shuttle/escape)
 "cwW" = (
 /obj/machinery/status_display,
 /turf/closed/wall/mineral/titanium,
@@ -58566,13 +58558,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "cxl" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
 	},
-/turf/open/floor/plasteel,
-/area/mining_construction)
+/area/shuttle/escape)
 "cxm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
@@ -58642,10 +58632,8 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "cxx" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/turf/closed/wall,
-/area/maintenance/fsmaint2)
+/turf/closed/wall/mineral/titanium/overspace,
+/area/shuttle/transport)
 "cxy" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
@@ -58695,10 +58683,11 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "cxF" = (
-/turf/open/floor/plasteel/warning{
-	dir = 1
+/turf/open/floor/plasteel/shuttle,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f10"
 	},
-/area/mining_construction)
+/area/shuttle/transport)
 "cxG" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -80154,9 +80143,9 @@ aaa
 aaa
 akD
 akD
-aAc
+ajX
 akD
-aAc
+ajX
 akD
 akD
 aaa
@@ -80666,7 +80655,7 @@ bxx
 bxu
 bxu
 bDi
-aAc
+ajX
 bGh
 bHx
 amI
@@ -81182,9 +81171,9 @@ bxx
 aaa
 akD
 akD
-aAc
+ajX
 bJc
-aAc
+ajX
 akD
 akD
 aaa
@@ -104005,7 +103994,7 @@ aqz
 aru
 alP
 anf
-cwT
+anf
 avE
 anf
 anf
@@ -104246,7 +104235,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaf
@@ -104262,7 +104251,7 @@ anf
 anf
 asy
 anf
-cwU
+anf
 alP
 alP
 anf
@@ -104502,7 +104491,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -104519,11 +104508,11 @@ aqA
 anf
 alP
 atz
-cwT
+anf
 alP
 awJ
 anf
-cxx
+alP
 aAv
 anf
 aCE
@@ -104756,31 +104745,31 @@ aaa
 aaa
 aaa
 aaa
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-crz
-cwV
-aAy
-aAy
-aAy
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaa
+aaa
+aaa
+alP
+alP
+alP
+alP
+alP
+anf
+anf
+alP
+anf
+anf
+apE
 anf
 anf
 aCE
@@ -105013,33 +105002,33 @@ aaa
 aaa
 aaa
 aaa
-aAy
-aBF
-aCX
-aEp
-aCX
-aCX
-aCX
-aCX
-aCX
-aEp
-aCX
-aCX
-aCX
-aCX
-aCX
-aCX
-aEp
-aCX
-cry
-cwH
-cxl
-aCX
-aCX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaa
+aaa
+alO
+apD
+aEl
+anf
+arx
+anf
+anf
+alP
+alP
 atB
-aAy
-aAy
-aAy
+alP
+alP
+alP
 aCF
 aDZ
 aFw
@@ -105270,33 +105259,33 @@ aaa
 aaa
 aaa
 aaa
-aAz
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCQ
-aCX
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaa
+alP
+anf
+anf
+arw
+asA
+asA
+anf
+alP
+awL
+anf
+anf
+apE
+aBF
 aCH
 aED
 aFy
@@ -105527,33 +105516,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aIH
-aLu
-aLu
-aLu
-aLu
-aLu
-cqq
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+alO
+aoQ
+anf
+arv
+asz
+atA
+anf
+alP
+awK
+anf
+awD
+apE
+anf
 aCk
 aEC
 aFx
@@ -105784,33 +105773,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aKf
-aCT
-aCT
-aCT
-aCT
-aCT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+alP
+alP
+alP
 aqB
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+arx
+anf
+anf
+anf
+alP
+awM
+ayg
+ayg
+ayg
+ayg
 aCl
 aEe
 aFw
@@ -106041,33 +106030,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aKf
-aCT
-aCT
-aCT
-aCT
-aCT
-aqB
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+alP
+aoP
+alP
+alP
+apE
+alP
+atB
+alP
+alP
+awx
+aye
+ayd
+aAc
+ayd
 aCI
 aEd
 aFw
@@ -106298,33 +106287,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aKf
-aCT
-aCT
-aCT
-aCT
-aCT
-aqB
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-atB
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaf
+aaf
+alP
+alP
+alP
+alP
+alP
+anf
+anf
+anf
+anf
+anf
+anf
+aty
+anf
+awx
+avI
+asA
+apE
+arx
 aCo
 aEf
 aFw
@@ -106555,33 +106544,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+alO
 amx
-bEJ
-bEJ
-ckq
-bEJ
-bEJ
-cqr
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+anf
+anf
+anf
+anf
+alP
+alP
+alP
+asB
+asB
+asB
+avo
+awx
+avH
+asB
+asB
+asB
 aCK
 aEf
 aFw
@@ -106812,33 +106801,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aLt
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+alP
+alP
+alP
+alP
+alP
+anf
+alP
+aqD
+arz
+asB
+atD
+auJ
+asB
+awQ
+avK
+azt
 aAy
+asB
 aCN
 aEf
 aFw
@@ -107069,33 +107058,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaf
+aaf
+aaf
+aaf
+alP
+anf
+alP
+aqC
+ary
+asB
+atC
+auI
+auI
+awP
+avJ
+awO
+awO
+asB
 aCM
 aEg
 aFw
@@ -107326,33 +107315,33 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+alP
+anf
+alP
+alP
+alP
+asB
+atE
+auI
+auI
+awT
+avM
+azv
 aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+asB
 aCE
 aEi
 aFw
@@ -107583,32 +107572,32 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaf
+alP
+anf
+apE
+anf
+anf
+asB
+asB
+asB
+avL
+awR
+auI
+azu
+aAz
 asB
 aCO
 aEh
@@ -107840,34 +107829,34 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+alP
+aoQ
+alP
+aqE
+arA
 asB
-aCO
+atG
+auL
+avN
+axa
+auI
+azw
+aAA
+asB
+aCQ
 aEk
 aFB
 aHn
@@ -108097,32 +108086,32 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-clB
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+alP
+alP
+alP
+alP
+alP
+asB
+atF
+auK
+auJ
+awS
+auI
+awO
+awO
 asB
 aCP
 aEj
@@ -108354,33 +108343,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cpe
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aae
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaf
+aaa
+aaa
+asB
+atH
+auM
+avO
+awU
 ayj
-cxF
-aCX
-aAy
+azx
+aAB
+asB
 aCR
 aEm
 aCR
@@ -108611,33 +108600,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaa
+aaa
+asB
+asB
+asB
+asB
+asB
+asB
+asB
+asB
+asB
 aCR
 bfb
 aCR
@@ -108868,33 +108857,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaf
+aaa
+aaa
+atS
+apQ
+aoV
+aoV
+atS
+apQ
+apQ
+apQ
+atS
 aCR
 aEn
 aCR
@@ -109125,33 +109114,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+atS
+aoV
+aoV
+aoV
+atS
+aoV
+aoV
+apQ
+atS
 aaf
 aaa
 aaf
@@ -109382,33 +109371,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-atB
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+atS
+aoV
+aoV
+aoV
+aaH
+aoV
+aoV
+apQ
+atS
 aaf
 aaa
 aaf
@@ -109639,33 +109628,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+atS
+aoV
+aoV
+aoV
+aaH
+aoV
+aoV
+aoV
+atS
 aaf
 aaa
 aaf
@@ -109896,33 +109885,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaH
+aoV
+aoV
+aoV
+atS
+aoV
+aoV
+aoV
+atS
 aaf
 aaa
 aaf
@@ -110153,33 +110142,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+atS
+aoV
+aoV
+aoV
+atS
+aoV
+aoV
+aoV
+apQ
 aaf
 aaa
 aaf
@@ -110410,33 +110399,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aae
+aaa
+atS
+aoV
+aoV
+aoV
+atS
+aoV
+aoV
+aoV
+aoV
 aaf
 aaa
 aaf
@@ -110667,33 +110656,33 @@ aaa
 aaa
 aaa
 aaa
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+apQ
+aoV
+aoV
+aoV
+atS
+aoV
+aoV
+aoV
+aoV
 aaf
 aaa
 aaf
@@ -110923,34 +110912,34 @@ aaa
 aaa
 aaa
 aaa
-aae
-aAA
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-atB
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+apQ
+aoV
+aoV
+aoV
+apQ
+aoV
+aoV
+aoV
+aoV
 aaf
 aaa
 aaf
@@ -111181,33 +111170,33 @@ aaa
 aaa
 aaa
 aaa
-aAB
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-aCT
-cxF
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aoV
+aoV
+aoV
+aoV
+apQ
+aoV
+aoV
+aoV
+aoV
 aaa
 aaa
 aaf
@@ -111438,33 +111427,33 @@ aaa
 aaa
 aaa
 aaa
-aAz
-aCW
-aCW
-aFD
-aCW
-aCW
-aCW
-aCW
-aCW
-aFD
-aCW
-aCW
-aCW
-aCW
-aCW
-aCW
-aFD
-aCW
-aCW
-aCW
-aCW
-aCW
-aCW
-aCW
-aCX
-aCX
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaf
@@ -111695,33 +111684,33 @@ aaa
 aaa
 aaa
 aaa
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
-aAy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -111955,23 +111944,23 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaa
-aaa
-aaa
-aaf
-aaf
-aaf
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
-aaf
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -112211,23 +112200,23 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
 aaa
 aaa
 aaa
-aaf
 aaa
 aaa
 aaa
-aaf
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -112468,22 +112457,22 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
-aaa
-aaa
-aaf
 aaa
 aaa
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -112732,15 +112721,15 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
-aaf
 aaa
 aaa
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -112989,16 +112978,16 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaa
-aaf
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaf
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -113246,7 +113235,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -113503,7 +113492,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -113760,9 +113749,9 @@ aaa
 aaa
 aaa
 aaa
-aaf
 aaa
-aaf
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -114016,9 +114005,9 @@ aaa
 aaa
 aaa
 aaa
-aaf
-aaf
-aaf
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -114273,7 +114262,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
@@ -114530,7 +114519,7 @@ aaa
 aaa
 aaa
 aaa
-aaf
+aaa
 aaa
 aaa
 aaa
