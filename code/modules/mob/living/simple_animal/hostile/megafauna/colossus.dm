@@ -38,7 +38,6 @@ Difficulty: Very Hard
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40

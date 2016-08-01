@@ -10,6 +10,7 @@
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
 	obj_damage = 75
+	luminosity = 3
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
 	stat_attack = 2
