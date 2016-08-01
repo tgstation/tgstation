@@ -51,7 +51,7 @@
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/carp/megacarp
-	icon = 'icons/mob/64x32.dmi'
+	icon = 'icons/mob/64x32mobs.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
 	icon_state = "megacarp"
