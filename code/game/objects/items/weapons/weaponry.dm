@@ -51,7 +51,7 @@
 	armour_penetration = 15
 	sharpness = IS_SHARP
 	
-	/obj/item/weapon/melee/claymore(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	/obj/item/weapon/melee/claymore/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 
@@ -74,7 +74,7 @@
 	block_chance = 50
 	sharpness = IS_SHARP
 	
-	/obj/item/weapon/melee/katana(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	/obj/item/weapon/melee/katana/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == PROJECTILE_ATTACK)
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 
