@@ -159,6 +159,7 @@
 	pixel_x = -235
 	pixel_y = -248
 	takes_damage = FALSE
+	appearance_flags = 0
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
