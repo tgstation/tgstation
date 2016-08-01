@@ -1,4 +1,0 @@
-author: "Fox McCloud"
-delete-after: True
-changes: 
-  - rscadd: "Adds in generic uplink refund system that potentially allows for even regular traitors to refund uplink items"
