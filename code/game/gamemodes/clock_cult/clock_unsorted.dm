@@ -28,6 +28,8 @@
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
 	var/title = "Servant"
+	var/span_for_name = "heavy_brass"
+	var/span_for_message = "brass"
 
 /datum/action/innate/hierophant/IsAvailable()
 	if(!is_servant_of_ratvar(owner))
@@ -39,7 +41,7 @@
 	if(!input || !IsAvailable())
 		return
 
-	titled_hierophant_message(owner, input, "heavy_brass", "brass", title)
+	titled_hierophant_message(owner, input, span_for_name, span_for_message, title)
 
 //Function Call action: Calls forth a Ratvarian spear once every 5 minutes
 /datum/action/innate/function_call
