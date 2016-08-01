@@ -38,8 +38,8 @@
 
 	var/friendc = 0      // track if Friend Computer mode
 
-	maptext_height = 26
-	maptext_width = 32
+	maptext_height = 52
+	maptext_width = 64
 
 	// new display
 	// register for radio system
