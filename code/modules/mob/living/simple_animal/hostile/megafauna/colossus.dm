@@ -193,12 +193,12 @@ Difficulty: Very Hard
 		if(counter < 0)
 			counter = 16
 		shoot_projectile(marker)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 100, 1)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
@@ -208,15 +208,18 @@ Difficulty: Very Hard
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(5))
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/turf/turf in range(1, target))
 		shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	var/turf/T = locate(x + 2, y + 2, z)
 	shoot_projectile(T)
 	T = locate(x + 2, y  -2, z)
@@ -228,6 +231,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/cardinals()
 	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/d in attack_dirs)
 		var/turf/E = get_edge_target_turf(src, d)
 		shoot_projectile(E)
