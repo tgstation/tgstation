@@ -57,16 +57,11 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	..()
-	if(isliving(target))
+	if(ishuman(target))
 		var/mob/living/L = target
-		devour(L)
-
-/mob/living/simple_animal/hostile/megafauna/legion/devour(mob/living/L)
-	if(ishuman(L) && L.stat == DEAD)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-		A.infest(L)
-	else
-		..()
+		if(L.stat == UNCONSCIOUS)
+			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
+			A.infest(L)
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
 	if(world.time >= ranged_cooldown && !charging)
