@@ -14,6 +14,7 @@ var/global/posibrain_notif_cooldown = 0
 	req_access = list(access_robotics)
 	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 	braintype = "Android"
+	var/autoping = TRUE //if it pings on creation immediately
 	var/begin_activation_message = "<span class='notice'>You carefully locate the manual activation switch and start the positronic brain's boot process.</span>"
 	var/success_message = "<span class='notice'>The positronic brain pings, and its lights start flashing. Success!</span>"
 	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
@@ -148,7 +149,8 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.real_name = brainmob.name
 	brainmob.loc = src
 	brainmob.container = src
-	ping_ghosts("created", TRUE)
+	if(autoping)
+		ping_ghosts("created", TRUE)
 	..()
 
 
