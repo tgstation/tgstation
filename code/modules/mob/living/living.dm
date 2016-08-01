@@ -747,7 +747,7 @@ Sorry Giacom. Please don't be mad :(
 	if(anchored || (buckled && buckled.anchored))
 		fixed = 1
 	if(on && !floating && !fixed)
-		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
+		animate(src, pixel_y = pixel_y + 4, time = 10, loop = -1)
 		floating = 1
 	else if(((!on || fixed) && floating))
 		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
@@ -844,14 +844,14 @@ Sorry Giacom. Please don't be mad :(
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
-		pixel_y_diff = 8
+		pixel_y_diff = 16
 	else if(direction & SOUTH)
-		pixel_y_diff = -8
+		pixel_y_diff = -16
 
 	if(direction & EAST)
-		pixel_x_diff = 8
+		pixel_x_diff = 16
 	else if(direction & WEST)
-		pixel_x_diff = -8
+		pixel_x_diff = -16
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
 	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
@@ -886,17 +886,17 @@ Sorry Giacom. Please don't be mad :(
 	// Set the direction of the icon animation.
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
-		I.pixel_y = -16
+		I.pixel_y = -32
 	else if(direction & SOUTH)
-		I.pixel_y = 16
+		I.pixel_y = 32
 
 	if(direction & EAST)
-		I.pixel_x = -16
+		I.pixel_x = -32
 	else if(direction & WEST)
-		I.pixel_x = 16
+		I.pixel_x = 32
 
 	if(!direction) // Attacked self?!
-		I.pixel_z = 16
+		I.pixel_z = 32
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)

@@ -46,7 +46,7 @@ Difficulty: Hard
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -32
+	pixel_x = -64
 	del_on_death = 1
 	aggro_vision_range = 18
 	idle_vision_range = 5

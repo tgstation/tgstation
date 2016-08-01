@@ -113,7 +113,7 @@
 	else
 		add_overlay("[icon_state]_open")
 		for(var/c = contents.len, c >= 1, c--)
-			add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1)))
+			add_overlay(image(icon = src.icon, icon_state = "cigarette", pixel_x = 2 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
@@ -235,7 +235,7 @@
 	cut_overlays()
 	add_overlay("[icon_state]_open")
 	for(var/c = contents.len, c >= 1, c--)
-		add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1)))
+		add_overlay(image(icon = src.icon, icon_state = icon_type, pixel_x = 8 * (c -1)))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

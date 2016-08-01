@@ -410,8 +410,8 @@
 	desc = "This boat moves where you will it, without the need for an oar."
 	keytype = null
 	icon_state = "dragon_boat"
-	generic_pixel_y = 2
-	generic_pixel_x = 1
+	generic_pixel_y = 4
+	generic_pixel_x = 2
 	vehicle_move_delay = 1
 
 //Potion of Flight

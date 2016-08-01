@@ -516,8 +516,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		var/turf/T = get_turf(src)
 		if(T)
 			var/obj/effect/decal/cleanable/molten_item/I = new (T)
-			I.pixel_x = rand(-16,16)
-			I.pixel_y = rand(-16,16)
+			I.pixel_x = rand(-32,32)
+			I.pixel_y = rand(-32,32)
 			I.desc = "Looks like this was \an [src] some time ago."
 		if(istype(src,/obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = src

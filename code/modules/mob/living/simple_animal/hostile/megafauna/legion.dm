@@ -43,8 +43,8 @@ Difficulty: Medium
 	var/charging = 0
 	medal_type = MEDAL_PREFIX
 	score_type = LEGION_SCORE
-	pixel_y = -90
-	pixel_x = -75
+	pixel_y = -180
+	pixel_x = -150
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	elimination = 1

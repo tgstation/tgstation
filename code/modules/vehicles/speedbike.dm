@@ -33,10 +33,10 @@
 /obj/vehicle/space/speedbike/handle_vehicle_layer()
 	switch(dir)
 		if(NORTH,SOUTH)
-			pixel_x = -16
-			pixel_y = -16
+			pixel_x = -32
+			pixel_y = -32
 		if(EAST,WEST)
-			pixel_x = -18
+			pixel_x = -36
 			pixel_y = 0
 
 /obj/vehicle/space/speedbike/handle_vehicle_offsets()
@@ -47,16 +47,16 @@
 			switch(dir)
 				if(NORTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = -8
+					buckled_mob.pixel_y = -16
 				if(SOUTH)
 					buckled_mob.pixel_x = 0
-					buckled_mob.pixel_y = 4
+					buckled_mob.pixel_y = 8
 				if(EAST)
-					buckled_mob.pixel_x = -10
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = -20
+					buckled_mob.pixel_y = 10
 				if(WEST)
-					buckled_mob.pixel_x = 10
-					buckled_mob.pixel_y = 5
+					buckled_mob.pixel_x = 20
+					buckled_mob.pixel_y = 10
 
 /obj/vehicle/space/speedbike/red
 	icon_state = "speedbike_red"

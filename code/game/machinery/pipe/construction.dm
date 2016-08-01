@@ -76,8 +76,8 @@ Buildable meters
 		is_bent = 1
 
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	src.pixel_x = rand(-10, 10)
+	src.pixel_y = rand(-10, 10)
 
 //update the name and icon of the pipe item depending on the type
 var/global/list/pipeID2State = list(

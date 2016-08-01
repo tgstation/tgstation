@@ -145,8 +145,8 @@
 /obj/effect/clockwork/overlay/gateway_glow //the actual appearance of the Gateway to the Celestial Derelict; an object so the edges of the gate can be clicked through.
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "clockwork_gateway_charging"
-	pixel_x = -32
-	pixel_y = -32
+	pixel_x = -64
+	pixel_y = -64
 	layer = MASSIVE_OBJ_LAYER
 
 
@@ -156,8 +156,8 @@
 	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
-	pixel_x = -235
-	pixel_y = -248
+	pixel_x = -470
+	pixel_y = -496
 	takes_damage = FALSE
 	var/atom/prey //Whatever Ratvar is chasing
 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE

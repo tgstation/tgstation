@@ -5,7 +5,7 @@
 	icon_state = "secway"
 	keytype = /obj/item/key/security
 	generic_pixel_x = 0
-	generic_pixel_y = 4
+	generic_pixel_y = 8
 
 
 /obj/item/key/security

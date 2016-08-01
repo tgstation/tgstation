@@ -62,7 +62,7 @@
 	desc = "A towering basalt sculpture of a proud and regal drake. Its eyes are six glowing gemstones."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
-	pixel_x = -16
+	pixel_x = -32
 	density = TRUE
 	deconstructible = FALSE
 
@@ -94,7 +94,7 @@
 	name = "seat"
 	desc = "Buckle up! ...What do you mean, there's no seatbelts?!"
 	icon_state = "backseat"
-	pixel_y = 17
+	pixel_y = 34
 	layer = OBJ_LAYER
 
 

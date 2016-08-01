@@ -419,8 +419,8 @@ BLIND     // can't see anything
 			if(user && notifyAttach)
 				user << "<span class='notice'>You attach [I] to [src].</span>"
 			I.transform *= 0.5	//halve the size so it doesn't overpower the under
-			I.pixel_x += 8
-			I.pixel_y -= 8
+			I.pixel_x += 16
+			I.pixel_y -= 16
 			I.layer = FLOAT_LAYER
 			add_overlay(I)
 
@@ -552,8 +552,8 @@ BLIND     // can't see anything
 
 	if(hastie)
 		hastie.transform *= 2
-		hastie.pixel_x -= 8
-		hastie.pixel_y += 8
+		hastie.pixel_x -= 16
+		hastie.pixel_y += 16
 		hastie.layer = initial(hastie.layer)
 		overlays = null
 		if(user.put_in_hands(hastie))

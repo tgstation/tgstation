@@ -101,7 +101,7 @@
 	power_gen = 20000 // 280 000 at T1, 400 000 at T4. Starts at T4.
 	irradiate = FALSE // Green energy!
 	can_buckle = FALSE
-	pixel_y = 7
+	pixel_y = 14
 	var/going_kaboom = FALSE // Is it about to explode?
 
 /obj/item/weapon/circuitboard/machine/abductor/core

@@ -1121,8 +1121,8 @@
 		desc = "A broken shard of some oddly malleable metal. It occasionally moves and seems to glow."
 		clockwork_desc = "A broken shard of replicant alloy. Could probably be proselytized into replicant alloy, though there's not much left."
 		icon_state = "[icon_state][rand(1, randomspritemax)]"
-		pixel_x = rand(-9, 9)
-		pixel_y = rand(-9, 9)
+		pixel_x = rand(-18, 18)
+		pixel_y = rand(-18, 18)
 
 /obj/item/clockwork/alloy_shards/large
 	randomsinglesprite = TRUE

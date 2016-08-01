@@ -15,8 +15,8 @@
 
 /obj/item/stack/tile/New(loc, amount)
 	..()
-	pixel_x = rand(-3, 3)
-	pixel_y = rand(-3, 3) //randomize a little
+	pixel_x = rand(-6, 6)
+	pixel_y = rand(-6, 6) //randomize a little
 
 /obj/item/stack/tile/Destroy()
 	..()

@@ -9,7 +9,7 @@
 	icon_state = "fireplace"
 	density = FALSE
 	anchored = TRUE
-	pixel_x = -16
+	pixel_x = -32
 	burn_state = FIRE_PROOF
 	var/lit = FALSE
 

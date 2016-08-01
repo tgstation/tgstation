@@ -47,7 +47,7 @@ Difficulty: Very Hard
 	ranged = 1
 	flying = 1
 	mob_size = MOB_SIZE_LARGE
-	pixel_x = -32
+	pixel_x = -64
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	del_on_death = 1
@@ -275,7 +275,7 @@ Difficulty: Very Hard
 	icon_off = "blackbox"
 	luminosity = 8
 	max_n_of_items = 200
-	pixel_y = -4
+	pixel_y = -8
 	use_power = 0
 	var/duplicate = FALSE
 	var/memory_saved = FALSE

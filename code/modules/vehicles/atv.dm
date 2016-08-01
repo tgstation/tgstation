@@ -5,7 +5,7 @@
 	icon_state = "atv"
 	keytype = /obj/item/key
 	generic_pixel_x = 0
-	generic_pixel_y = 4
+	generic_pixel_y = 8
 	vehicle_move_delay = 1
 	var/static/image/atvcover = null
 
@@ -69,14 +69,14 @@ obj/vehicle/atv/post_buckle_mob(mob/living/M)
 		switch(dir)
 			if(NORTH)
 				turret.pixel_x = 0
-				turret.pixel_y = 4
+				turret.pixel_y = 8
 			if(EAST)
-				turret.pixel_x = -12
-				turret.pixel_y = 4
+				turret.pixel_x = -24
+				turret.pixel_y = 8
 			if(SOUTH)
 				turret.pixel_x = 0
-				turret.pixel_y = 4
+				turret.pixel_y = 8
 			if(WEST)
-				turret.pixel_x = 12
-				turret.pixel_y = 4
+				turret.pixel_x = 24
+				turret.pixel_y = 8
 

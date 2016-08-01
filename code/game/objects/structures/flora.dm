@@ -7,7 +7,7 @@
 /obj/structure/flora/tree
 	name = "tree"
 	density = 1
-	pixel_x = -16
+	pixel_x = -32
 	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
