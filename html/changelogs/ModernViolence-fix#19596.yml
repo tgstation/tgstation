@@ -1,0 +1,4 @@
+author: "ModernViolence"
+delete-after: True
+changes: 
+  - bugfix: "Photocopier fixes: proper sprites for not empty copies; removing originals now does not delete them"
