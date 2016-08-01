@@ -217,6 +217,8 @@
 	throw_range = 5
 	w_class = 2
 
+
+
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	origin_tech = "engineering=1;plasmatech=1"
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -234,6 +236,7 @@
 	reagents.add_reagent("welding_fuel", max_fuel)
 	update_icon()
 	return
+
 
 /obj/item/weapon/weldingtool/proc/update_torch()
 	cut_overlays()
@@ -305,7 +308,6 @@
 				remove_fuel(1)
 			update_icon()
 
-
 	//This is to start fires. process() is only called if the welder is on.
 	open_flame()
 
@@ -317,6 +319,8 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			user.AddLuminosity(-light_intensity)
 
 		if(isliving(O))
 			var/mob/living/L = O
@@ -326,7 +330,13 @@
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	toggle(user)
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
+	else
+		user.AddLuminosity(-light_intensity)
 	update_icon()
+
 
 //Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
@@ -352,6 +362,20 @@
 //Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
 	return welding
+
+/obj/item/weapon/weldingtool/pickup(mob/user)
+	..()
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(light_intensity)
+
+
+/obj/item/weapon/weldingtool/dropped(mob/user)
+	..()
+	if(welding)
+		if(user)
+			user.AddLuminosity(-light_intensity)
+		SetLuminosity(light_intensity)
 
 
 //Turns off the welder if there is no more fuel (does this really need to be its own proc?)
@@ -386,10 +410,15 @@
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0
+
 	else
 		if(!message)
 			user << "<span class='notice'>You switch [src] off.</span>"
 		else
+			if(ismob(loc))
+				var/mob/M = loc
+				M.AddLuminosity(-light_intensity)
+			SetLuminosity(0)
 			user << "<span class='warning'>[src] shuts off!</span>"
 		force = 3
 		damtype = "brute"
