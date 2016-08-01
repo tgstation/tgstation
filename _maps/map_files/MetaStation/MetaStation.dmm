@@ -53303,7 +53303,7 @@
 /area/bridge)
 "bOg" = (
 /obj/structure/rack,
-/obj/machinery/telecomms/bus,
+/obj/item/weapon/circuitboard/machine/telecomms/bus,
 /obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
