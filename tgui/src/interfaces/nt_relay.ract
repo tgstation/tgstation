@@ -1,6 +1,4 @@
-
-
-<ui-display>
+<ui-display title='Relay'>
 	{{#if data.dos_crashed}}
 		<h2>NETWORK BUFFERS OVERLOADED</h2>
 		<h3>Overload Recovery Mode</h3>

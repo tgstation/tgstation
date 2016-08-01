@@ -7,7 +7,7 @@
 
 	var/enabled = 0											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
-	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
+	var/datum/computer_file/program/active_program = new /datum/computer_file/program/computerconfig	// A currently active program running on the computer.
 	var/hardware_flag = 0									// A flag that describes this device type
 	var/last_power_usage = 0
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
@@ -100,7 +100,7 @@
 
 	card_slot.stored_card.forceMove(get_turf(src))
 	card_slot.stored_card = null
-	update_uis()
+//	update_uis()
 	user << "You remove the card from \the [src]"
 
 /obj/item/modular_computer/proc/proc_eject_usb(mob/user)
@@ -112,7 +112,7 @@
 		return
 
 	uninstall_component(user, portable_drive)
-	update_uis()
+//	update_uis()
 
 /obj/item/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(enabled)
@@ -139,13 +139,15 @@
 		user << "It is damaged."
 
 /obj/item/modular_computer/New()
-	processing_objects.Add(src)
+	machines += src
+	START_PROCESSING(SSmachine, src)
 	update_icon()
 	..()
 
 /obj/item/modular_computer/Destroy()
 	kill_program(1)
-	processing_objects.Remove(src)
+	machines.Remove(src)
+	STOP_PROCESSING(SSmachine, src)
 	for(var/obj/item/weapon/computer_hardware/CH in src.get_all_components())
 		uninstall_component(null, CH)
 		qdel(CH)
@@ -169,15 +171,15 @@
 	return 0
 
 // Operates NanoUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 1, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-	if(!screen_on || !enabled)
-		if(ui)
-			ui.close()
-		return 0
-	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
-		if(ui)
-			ui.close()
-		return 0
+/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 1, datum/tgui/master_ui = null, datum/ui_state/state = contained_state)
+//	if(!screen_on || !enabled)
+//		if(ui)
+//			ui.close()
+//		return 0
+//	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
+//		if(ui)
+//			ui.close()
+//		return 0
 /*
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -190,28 +192,39 @@
 	// This screen simply lists available programs and user may select them.
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
 		visible_message("\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.")
-		return // No HDD, No HDD files list or no stored files. Something is very broken.
+	//	return // No HDD, No HDD files list or no stored files. Something is very broken.
 
+
+
+//	data["programs"] = programs
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+//		ui = new(user, src, ui_key, "laptop_mainscreen", "NTOS Main Menu", 400, 500)
+		ui = new(user, src, ui_key, "computer_main", "Main menu", 475, 340, master_ui, state)
+//		ui.set_initial_data(data)
+		ui.open()
+		ui.set_autoupdate(state = 1)
+
+
+/obj/item/modular_computer/ui_data(mob/user)
+	var/list/data = list()
+	data["active_program_template"] = active_program
+
+	return data
+/*
 	var/list/data = get_header_data()
 
 	var/list/programs = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
 		var/list/program = list()
+
 		program["name"] = P.filename
 		program["desc"] = P.filedesc
 		if(P in idle_threads)
 			program["running"] = 1
 		programs.Add(list(program))
+*/
 
-	data["programs"] = programs
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-//		ui = new(user, src, ui_key, "laptop_mainscreen", "NTOS Main Menu", 400, 500)
-		ui = new(user, src, ui_key, "computer_main", "Main menu", 475, 340, master_ui, state)
-		ui.auto_update_layout = 1
-//		ui.set_initial_data(data)
-		ui.open()
-//		ui.set_auto_update(1)
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/item/modular_computer/attack_self(mob/user)
@@ -223,7 +236,7 @@
 /obj/item/modular_computer/proc/break_apart()
 	visible_message("\The [src] breaks apart!")
 	var/turf/newloc = get_turf(src)
-	new /obj/item/stack/material/steel(newloc, round(steel_sheet_cost/2))
+	new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
 	for(var/obj/item/weapon/computer_hardware/H in get_all_components())
 		uninstall_component(null, H)
 		H.forceMove(newloc)
@@ -288,7 +301,7 @@
 			idle_threads.Remove(P)
 
 	handle_power() // Handles all computer power interaction
-	check_update_ui_need()
+	//check_update_ui_need()
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -336,7 +349,7 @@
 
 		data["PC_programheaders"] = program_headers
 
-	data["PC_stationtime"] = stationtime2text()
+	data["PC_stationtime"] = worldtime2text()
 	data["PC_hasheader"] = 1
 	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
 	return data
@@ -401,7 +414,8 @@
 
 		idle_threads.Add(active_program)
 		active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
-		nanomanager.close_uis(active_program.NM ? active_program.NM : active_program)
+//		nanomanager.close_uis(active_program.NM ? active_program.NM : active_program)
+
 		active_program = null
 		update_icon()
 		if(user && istype(user))
@@ -418,7 +432,7 @@
 			return
 
 		P.kill_program(1)
-		update_uis()
+//		update_uis()
 		user << "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>"
 
 	if( href_list["PC_runprogram"] )
@@ -458,7 +472,8 @@
 			update_icon()
 		return 1
 	if(.)
-		update_uis()
+		return
+//		update_uis()
 
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure(var/malfunction = 0)
@@ -500,10 +515,11 @@
 		if(card_slot.stored_card)
 			user << "You try to insert \the [I] into \the [src], but it's ID card slot is occupied."
 			return
-		user.drop_from_inventory(I)
+		if(!user.drop_item(I))
+			return
 		card_slot.stored_card = I
 		I.forceMove(src)
-		update_uis()
+//		update_uis()
 		user << "You insert \the [I] into \the [src]."
 		return
 	if(istype(W, /obj/item/weapon/paper))
@@ -622,7 +638,8 @@
 	if(found)
 		user << "You install \the [H] into \the [src]"
 		H.holder2 = src
-//		user.drop_from_inventory(H)
+		if(!user.drop_item(H))
+			return
 		H.forceMove(src)
 
 // Uninstalls component. Found and Critical vars may be passed by parent types, if they have additional hardware.
@@ -699,6 +716,8 @@
 		all_components.Add(processor_unit)
 	return all_components
 
+/*
+
 /obj/item/modular_computer/proc/update_uis()
 	if(active_program) //Should we update program ui or computer ui?
 		nanomanager.update_uis(active_program)
@@ -740,6 +759,9 @@
 
 	if(ui_update_needed)
 		update_uis()
+
+*/
+
 
 /obj/item/modular_computer/proc/take_damage(var/amount, var/component_probability, var/damage_casing = 1, var/randomize = 1)
 	if(randomize)

@@ -29,8 +29,8 @@
 	computer = null
 	. = ..()
 
-/datum/computer_file/program/nano_host()
-	return computer.nano_host()
+//datum/computer_file/program/nano_host()
+//	return computer.nano_host()
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -79,7 +79,8 @@
 		access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
 		return 1
-
+	return 1
+/*
 	var/obj/item/weapon/card/id/I = user.GetIdCard()
 	if(!I)
 		if(loud)
@@ -90,7 +91,7 @@
 		return 1
 	else if(loud)
 		user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
-
+*/
 // This attempts to retrieve header data for NanoUIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
 /datum/computer_file/program/proc/get_header_data()

@@ -34,12 +34,13 @@ var/list/global_modular_computers = list()
 
 	var/obj/item/modular_computer/processor/cpu = null				// CPU that handles most logic while this type only handles power and other specific things.
 
-/obj/machinery/modular_computer/attack_ghost(var/mob/observer/ghost/user)
+/obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(cpu)
 		cpu.attack_ghost(user)
 
-/obj/machinery/modular_computer/emag_act(var/remaining_charges, var/mob/user)
-	return cpu ? cpu.emag_act(remaining_charges, user) : NO_EMAG_ACT
+/obj/machinery/modular_computer/emag_act(remaining_charges, mob/user)
+//	return cpu ? cpu.emag_act(remaining_charges, user) : NO_EMAG_ACT
+	return 1
 
 /obj/machinery/modular_computer/update_icon()
 	icon_state = icon_state_unpowered
@@ -48,9 +49,9 @@ var/list/global_modular_computers = list()
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) || battery_powered)
 			overlays.Add(screen_icon_screensaver)
-		set_light(0)
+//		set_light(0)
 		return
-	set_light(light_strength)
+//	set_light(light_strength)
 	if(cpu.active_program)
 		overlays.Add(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 	else

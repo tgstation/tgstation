@@ -16,8 +16,8 @@
 		machinery_computer.cpu = null
 	machinery_computer = null
 
-/obj/item/modular_computer/processor/nano_host()
-	return machinery_computer.nano_host()
+//obj/item/modular_computer/processor/nano_host()
+//	return machinery_computer.nano_host()
 
 // Due to how processes work, we'd receive two process calls - one from machinery type and one from our own type.
 // Since we want this to be in-sync with machinery (as it's hidden type for machinery-based computers) we'll ignore
@@ -81,10 +81,11 @@
 	return machinery_computer.powered()
 
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
-/obj/item/modular_computer/processor/CanUseTopic(user, state)
-	if(!machinery_computer)
-		return 0
-	return machinery_computer.CanUseTopic(user, state)
+//obj/item/modular_computer/processor/canUseTopic(user, state)
+//	if(!machinery_computer)
+//		return 0
+
+//	return machinery_computer.canUseTopic(user, state)
 
 /obj/item/modular_computer/processor/shutdown_computer()
 	if(!machinery_computer)

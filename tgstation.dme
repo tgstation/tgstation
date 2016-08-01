@@ -1519,6 +1519,7 @@
 #include "code\modules\modular_computers\computers\item\processor.dm"
 #include "code\modules\modular_computers\computers\item\tablet.dm"
 #include "code\modules\modular_computers\computers\item\tablet_presets.dm"
+#include "code\modules\modular_computers\computers\machinery\console_presets.dm"
 #include "code\modules\modular_computers\computers\machinery\modular_computer.dm"
 #include "code\modules\modular_computers\computers\machinery\modular_console.dm"
 #include "code\modules\modular_computers\computers\machinery\modular_laptop.dm"
