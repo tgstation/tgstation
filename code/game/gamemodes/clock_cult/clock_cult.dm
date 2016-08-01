@@ -41,7 +41,7 @@ This file's folder contains:
 		return 0
 	if(!M.mind)
 		return 0
-	if(M.mind.enslaved_to)
+	if(M.mind.enslaved_to && !is_servant_of_ratvar(M.mind.enslaved_to))
 		return 0
 	if(iscultist(M) || isconstruct(M))
 		return 0
