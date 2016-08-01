@@ -6,6 +6,7 @@
 	var/list/supplied = list()
 	var/list/ion = list()
 	var/mob/living/silicon/owner
+	var/list/devillaws = null
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
@@ -189,6 +190,9 @@
 			add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 			WARNING("Invalid custom AI laws, check silicon_laws.txt")
 
+/datum/ai_laws/proc/set_law_sixsixsix(laws)
+	devillaws = laws
+
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = null)
 	src.zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO
@@ -218,6 +222,10 @@
 	src.ion = list()
 
 /datum/ai_laws/proc/show_laws(who)
+
+	if (src.devillaws && src.devillaws.len) //Yes, devil laws go in FRONT of zeroth laws, as the devil must still obey it's ban/obligation.
+		for(var/i in src.devillaws)
+			who << "666. [i]"
 
 	if (src.zeroth)
 		who << "0. [src.zeroth]"
@@ -254,12 +262,20 @@
 			src.zeroth_borg = null
 			return
 
+/datum/ai_laws/proc/clear_law_sixsixsix(force)
+	if(force || !(owner && owner.mind.devilinfo))
+		src.devillaws = null
+
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
 		owner = M
 
 /datum/ai_laws/proc/get_law_list(include_zeroth = 0, show_numbers = 1)
 	var/list/data = list()
+
+	if (include_zeroth && src.devillaws && src.devillaws.len)
+		for(var/i in src.devillaws)
+			data += "[show_numbers ? "666:" : ""] [i]"
 
 	if (include_zeroth && zeroth)
 		data += "[show_numbers ? "0:" : ""] [zeroth]"
