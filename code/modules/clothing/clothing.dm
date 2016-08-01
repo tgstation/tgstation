@@ -23,7 +23,6 @@
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
 	var/list/user_vars_remembered = list() //Auto built by the above + dropped() + equipped()
-
 	var/obj/item/weapon/storage/internal/pocket/pockets = null
 
 /obj/item/clothing/New()
