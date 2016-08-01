@@ -317,6 +317,8 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			user.AddLuminosity(-1)
 
 		if(isliving(O))
 			var/mob/living/L = O
