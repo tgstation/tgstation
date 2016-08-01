@@ -55,8 +55,14 @@ Difficulty: Medium
 	..()
 	new/obj/item/device/gps/internal/legion(src)
 
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		devour(L)
+
 /mob/living/simple_animal/hostile/megafauna/legion/devour(mob/living/L)
-	if(ishuman(L))
+	if(ishuman(L) && L.stat == DEAD)
 		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
 		A.infest(L)
 	else
