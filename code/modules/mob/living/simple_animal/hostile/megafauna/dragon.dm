@@ -81,15 +81,14 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
-	if(swooping)
-		return
-	else
+	if(!swooping)
 		..()
-		if(isliving(target))
-			var/mob/living/L = target
-			devour(L)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/DestroySurroundings()
+	if(!swooping)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Move()
 	if(!swooping)
 		..()
 
@@ -224,7 +223,7 @@ Difficulty: Medium
 		tturf = get_turf(src)
 	forceMove(tturf)
 	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
-	animate(src, pixel_x = 0, pixel_z = 0, time = 10)
+	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in orange(1, src))

@@ -61,17 +61,9 @@ Difficulty: Very Hard
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 
-
-/mob/living/simple_animal/hostile/megafauna/colossus/AttackingTarget()
-	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		devour(L)
-
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
-	if(L.stat == DEAD)
-		visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
-		L.dust()
+	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
