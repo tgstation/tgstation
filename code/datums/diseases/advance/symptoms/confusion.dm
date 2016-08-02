@@ -9,6 +9,15 @@ Confusion
 	Not very transmittable.
 	Intense Level.
 
+Old stats
+	name = "Confusion"
+	stealth = 1
+	resistance = -1
+	stage_speed = -3
+	transmittable = 0
+	level = 4
+	severity = 2
+
 Bonus
 	Makes the affected mob be confused for short periods of time.
 
@@ -18,10 +27,10 @@ Bonus
 /datum/symptom/confusion
 
 	name = "Confusion"
-	stealth = 1
-	resistance = -1
-	stage_speed = -3
-	transmittable = 0
+	stealth = 2
+	resistance = 0
+	stage_speed = -2
+	transmittable = 1
 	level = 4
 	severity = 2
 
