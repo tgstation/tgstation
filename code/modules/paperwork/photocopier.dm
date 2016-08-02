@@ -84,6 +84,7 @@
 							c.info += "</font>"
 							c.name = copy.name
 							c.fields = copy.fields
+							c.update_icon()
 							c.updateinfolinks()
 							toner--
 					busy = 1
@@ -174,13 +175,13 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			remove_photocopy(copy)
+			remove_photocopy(copy, usr)
 			copy = null
 		else if(photocopy)
-			remove_photocopy(photocopy)
+			remove_photocopy(photocopy, usr)
 			photocopy = null
 		else if(doccopy)
-			remove_photocopy(doccopy)
+			remove_photocopy(doccopy, usr)
 			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
@@ -255,7 +256,7 @@
 				if(!user.drop_item())
 					return
 				copy = O
-				do_insertion(O)
+				do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -264,7 +265,7 @@
 			if(!user.drop_item())
 				return
 			photocopy = O
-			do_insertion(O)
+			do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -273,7 +274,7 @@
 			if(!user.drop_item())
 				return
 			doccopy = O
-			do_insertion(O)
+			do_insertion(O, user)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
