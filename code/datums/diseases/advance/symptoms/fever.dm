@@ -9,6 +9,14 @@ Fever
 	Little transmittable.
 	Low level.
 
+Old stats
+	name = "Fever"
+	stealth = 0
+	resistance = 3
+	stage_speed = 3
+	transmittable = 2
+	level = 2
+	severity = 2
 Bonus
 	Heats up your body.
 
@@ -18,10 +26,10 @@ Bonus
 /datum/symptom/fever
 
 	name = "Fever"
-	stealth = 0
-	resistance = 3
-	stage_speed = 3
-	transmittable = 2
+	stealth = 1
+	resistance = 4
+	stage_speed = 4
+	transmittable = 3
 	level = 2
 	severity = 2
 
