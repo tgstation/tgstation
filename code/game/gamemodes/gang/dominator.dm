@@ -185,7 +185,7 @@
 			return 0
 
 		var/area/A = get_area(loc)
-		var/locname = initial(A.name)
+		var/locname = A.map_name
 
 		gang = tempgang
 		gang.dom_attempts --
