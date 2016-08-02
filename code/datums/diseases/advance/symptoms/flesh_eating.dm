@@ -8,7 +8,14 @@ Necrotizing Fasciitis (AKA Flesh-Eating Disease)
 	No changes to stage speed.
 	Decreases transmittablity temrendously.
 	Fatal Level.
-
+Old stats
+	name = "Necrotizing Fasciitis"
+	stealth = -3
+	resistance = -4
+	stage_speed = 0
+	transmittable = -4
+	level = 6
+	severity = 5
 Bonus
 	Deals brute damage over time.
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/flesh_eating
 
 	name = "Necrotizing Fasciitis"
-	stealth = -3
-	resistance = -4
-	stage_speed = 0
-	transmittable = -4
+	stealth = -2
+	resistance = -3
+	stage_speed = 1
+	transmittable = -3
 	level = 6
 	severity = 5
 
