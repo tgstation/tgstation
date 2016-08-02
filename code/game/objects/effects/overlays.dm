@@ -134,6 +134,11 @@
 		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/overlay/cult/floor
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "cult"
+	layer = TURF_LAYER
+
 /obj/effect/overlay/temp/cult
 	randomdir = 0
 	duration = 10
