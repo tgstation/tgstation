@@ -6,6 +6,7 @@
 	var/active = null
 	canSmoothWith = null
 	smooth = SMOOTH_TRUE
+	cliff_icon_state = ""
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"

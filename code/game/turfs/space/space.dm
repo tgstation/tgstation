@@ -8,6 +8,8 @@
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
 
+	draw_cliff = TRUE
+
 	var/destination_z
 	var/destination_x
 	var/destination_y
@@ -167,3 +169,4 @@
 
 /turf/open/space/proc/update_icon()
 	icon_state = SPACE_ICON_STATE
+

@@ -24,6 +24,7 @@
 	/turf/closed/wall/r_wall/rust,
 	/turf/closed/wall/clockwork)
 	smooth = SMOOTH_TRUE
+	cliff_icon_state = "metal"
 
 /turf/closed/wall/New()
 	..()
