@@ -31,7 +31,7 @@
 
 
 /datum/game_mode/proc/finalize_devil(datum/mind/devil_mind)
-	var/mob/living/carbon/human/S = devil_mind.current
+	
 	var/trueName= randomDevilName()
 
 	devil_mind.devilinfo = devilInfo(trueName, 1)
@@ -40,9 +40,12 @@
 	devil_mind.devilinfo.give_base_spells(1)
 	spawn(10)
 		devil_mind.devilinfo.update_hud()
-		if(devil_mind.assigned_role == "Clown")
+		if(devil_mind.assigned_role == "Clown" && ishuman(devil_mind.current))
+			var/mob/living/carbon/human/S = devil_mind.current
 			S << "<span class='notice'>Your infernal nature has allowed you to overcome your clownishness.</span>"
 			S.dna.remove_mutation(CLOWNMUT)
+	if(issilicon(devil_mind.current))
+		add_law_sixsixsix(devil_mind.current)
 
 /datum/game_mode/proc/add_devil_objectives(datum/mind/devil_mind, quantity)
 	var/list/validtypes = list(/datum/objective/devil/soulquantity, /datum/objective/devil/soulquality, /datum/objective/devil/sintouch, /datum/objective/devil/buy_target)
