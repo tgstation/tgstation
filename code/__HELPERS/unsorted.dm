@@ -31,8 +31,8 @@
 		return 0
 	var/dy
 	var/dx
-	dy=(32*end.y+end.pixel_y)-(64*start.y+start.pixel_y)
-	dx=(32*end.x+end.pixel_x)-(64*start.x+start.pixel_x)
+	dy=(64*end.y+end.pixel_y)-(64*start.y+start.pixel_y)
+	dx=(64*end.x+end.pixel_x)-(64*start.x+start.pixel_x)
 	if(!dy)
 		return (dx>=0)?90:270
 	.=arctan(dx/dy)
