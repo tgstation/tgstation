@@ -8,7 +8,14 @@ Weakness
 	Decreases stage speed moderately.
 	Decreases transmittablity moderately.
 	Moderate Level.
-
+Old stats
+	name = "Weakness"
+	stealth = -1
+	resistance = -1
+	stage_speed = -2
+	transmittable = -2
+	level = 3
+	severity = 3
 Bonus
 	Deals stamina damage to the host
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/weakness
 
 	name = "Weakness"
-	stealth = -1
-	resistance = -1
-	stage_speed = -2
-	transmittable = -2
+	stealth = 0
+	resistance = 0
+	stage_speed = -1
+	transmittable = -1
 	level = 3
 	severity = 3
 
