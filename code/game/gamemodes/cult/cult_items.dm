@@ -358,7 +358,7 @@
 
 	else
 		C << "<span class='danger'>The veil cannot be torn here!</span>"
-	/*
+
 /obj/item/device/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
@@ -372,16 +372,28 @@
 	on = 1
 	var/charges = 3
 	
-/obj/item/device/flashlight/flare/culttorch(atom/movable/A, mob/user, proximity)
+/obj/item/device/flashlight/flare/culttorch
+	name = "void torch"
+	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
+	w_class = 2
+	brightness_on = 1
+	icon_state = "torch-on"
+	item_state = "torch-on"
+	color = "#ff0000"
+	on_damage = 15
+	slot_flags = null
+	on = 1
+	var/charges = 3
+
+/obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
 		return
 
-	if(istype(A, obj/item))
-			
-		var/mob/living/user = invokers[1]
+	if(istype(A, /obj/item))
+
 		var/list/cultists = list()
 		for(var/datum/mind/M in ticker.mode.cult)
-			if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
+			if(!(user) && M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 		if(!Adjacent(user) || !src || qdeleted(src) || user.incapacitated())
@@ -398,14 +410,15 @@
 			user << "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>"
 			log_game("Void torch failed - target was deconverted")
 			return
-		user << "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		user << "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!"
 		user << "\The [src] now has [charges] charge\s."
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		if(charges == 0)
 			qdel(src)
+
 	else
+		..()
 		user << "<span class='warning'>\The [src] can only transport items!</span>"
-return
-*/
+		return
 
