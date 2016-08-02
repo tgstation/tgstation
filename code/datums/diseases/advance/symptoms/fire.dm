@@ -9,6 +9,14 @@ Spontaneous Combustion
 	Decreases transmittablity tremendously.
 	Fatal Level.
 
+Old stats
+	name = "Spontaneous Combustion"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
+	severity = 5
 Bonus
 	Ignites infected mob.
 
@@ -18,10 +26,10 @@ Bonus
 /datum/symptom/fire
 
 	name = "Spontaneous Combustion"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -4
+	stealth = 2
+	resistance = -3
+	stage_speed = -3
+	transmittable = -3
 	level = 6
 	severity = 5
 
