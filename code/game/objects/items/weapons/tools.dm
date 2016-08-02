@@ -257,9 +257,27 @@
 	update_torch()
 	return
 
-/obj/item/weapon/weldingtool/examine(mob/user)
-	..()
-	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+
+/obj/item/weapon/weldingtool/process()
+	switch(welding)
+		if(0)
+			force = 3
+			damtype = "brute"
+			update_icon()
+			if(!can_off_process)
+				STOP_PROCESSING(SSobj, src)
+			return
+	//Welders left on now use up fuel, but lets not have them run out quite that fast
+		if(1)
+			force = 15
+			damtype = "fire"
+			if(prob(5))
+				remove_fuel(1)
+			update_icon()
+
+	//This is to start fires. process() is only called if the welder is on.
+	open_flame()
+
 
 /obj/item/weapon/weldingtool/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] welds \his every orifice closed! It looks like \he's trying to commit suicide..</span>")
@@ -291,26 +309,6 @@
 	else
 		return ..()
 
-/obj/item/weapon/weldingtool/process()
-	switch(welding)
-		if(0)
-			force = 3
-			damtype = "brute"
-			update_icon()
-			if(!can_off_process)
-				STOP_PROCESSING(SSobj, src)
-			return
-	//Welders left on now use up fuel, but lets not have them run out quite that fast
-		if(1)
-			force = 15
-			damtype = "fire"
-			if(prob(5))
-				remove_fuel(1)
-			update_icon()
-
-	//This is to start fires. process() is only called if the welder is on.
-	open_flame()
-
 
 /obj/item/weapon/weldingtool/afterattack(atom/O, mob/user, proximity)
 	if(!proximity) return
@@ -328,8 +326,9 @@
 				message_admins("[key_name_admin(user)] set [key_name_admin(L)] on fire")
 				log_game("[key_name(user)] set [key_name(L)] on fire")
 
+
 /obj/item/weapon/weldingtool/attack_self(mob/user)
-	toggle(user)
+	switched_on(user)
 	if(welding)
 		SetLuminosity(0)
 		user.AddLuminosity(light_intensity)
@@ -359,9 +358,56 @@
 		return FALSE
 
 
-//Returns whether or not the welding tool is currently on.
-/obj/item/weapon/weldingtool/proc/isOn()
-	return welding
+//Turns off the welder if there is no more fuel (does this really need to be its own proc?)
+/obj/item/weapon/weldingtool/proc/check_fuel(mob/user)
+	if(get_fuel() <= 0 && welding)
+		switched_on(user)
+		update_icon()
+		//mob icon update
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_inv_r_hand(0)
+			M.update_inv_l_hand(0)
+
+		return 0
+	return 1
+
+//Switches the welder on
+obj/item/weapon/weldingtool/proc/switched_on(mob/user)
+	if(!status)
+		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
+		return
+	welding = !welding
+	if(welding)
+		if(get_fuel() >= 1)
+			user << "<span class='notice'>You switch [src] on.</span>"
+			force = 15
+			damtype = "fire"
+			hitsound = 'sound/items/welder.ogg'
+			update_icon()
+			START_PROCESSING(SSobj, src)
+		else
+			user << "<span class='warning'>You need more fuel!</span>"
+			switched_off(user)
+	else
+		user << "<span class='notice'>You switch [src] off.</span>"
+		switched_off(user)
+
+//Switches the welder off
+obj/item/weapon/weldingtool/proc/switched_off(mob/user)
+	welding = 0
+	var/mob/Player = loc
+	if(ismob(loc)) //If player is holding the welder
+		Player.AddLuminosity(-light_intensity)
+		SetLuminosity(0)
+	else
+		SetLuminosity(0)
+
+	force = 3
+	damtype = "brute"
+	hitsound = "swing_hit"
+	update_icon()
+
 
 /obj/item/weapon/weldingtool/pickup(mob/user)
 	..()
@@ -378,55 +424,17 @@
 		SetLuminosity(light_intensity)
 
 
-//Turns off the welder if there is no more fuel (does this really need to be its own proc?)
-/obj/item/weapon/weldingtool/proc/check_fuel(mob/user)
-	if(get_fuel() <= 0 && welding)
-		toggle(user, 1)
-		update_icon()
-		//mob icon update
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_r_hand(0)
-			M.update_inv_l_hand(0)
-
-		return 0
-	return 1
-
-
-//Toggles the welder off and on
-/obj/item/weapon/weldingtool/proc/toggle(mob/user, message = 0)
-	if(!status)
-		user << "<span class='warning'>[src] can't be turned on while unsecured!</span>"
-		return
-	welding = !welding
-	if(welding)
-		if(get_fuel() >= 1)
-			user << "<span class='notice'>You switch [src] on.</span>"
-			force = 15
-			damtype = "fire"
-			hitsound = 'sound/items/welder.ogg'
-			update_icon()
-			START_PROCESSING(SSobj, src)
-		else
-			user << "<span class='warning'>You need more fuel!</span>"
-			welding = 0
-
-	else
-		if(!message)
-			user << "<span class='notice'>You switch [src] off.</span>"
-		else
-			if(ismob(loc))
-				var/mob/M = loc
-				M.AddLuminosity(-light_intensity)
-			SetLuminosity(0)
-			user << "<span class='warning'>[src] shuts off!</span>"
-		force = 3
-		damtype = "brute"
-		hitsound = "swing_hit"
-		update_icon()
+/obj/item/weapon/weldingtool/examine(mob/user)
+	..()
+	user << "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
 
 /obj/item/weapon/weldingtool/is_hot()
 	return welding * heat
+
+//Returns whether or not the welding tool is currently on.
+/obj/item/weapon/weldingtool/proc/isOn()
+	return welding
+
 
 /obj/item/weapon/weldingtool/proc/flamethrower_screwdriver(obj/item/I, mob/user)
 	if(welding)
