@@ -134,6 +134,23 @@
 		setDir(mimiced_atom.dir)
 	animate(src, alpha = 0, time = duration)
 
+/obj/effect/overlay/cult
+	mouse_opacity = 0
+	var/atom/linked
+
+/obj/effect/overlay/cult(mob/user)
+	if(linked)
+		linked.examine(user)
+
+/obj/effect/overlay/cult/ex_act()
+	return FALSE
+
+/obj/effect/overlay/cult/Destroy()
+	if(linked)
+		linked = null
+	..()
+	return QDEL_HINT_PUTINPOOL
+
 /obj/effect/overlay/cult/floor
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "cult"
