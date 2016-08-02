@@ -8,7 +8,14 @@ Weight Gain
 	Decreases stage speed.
 	Reduced transmittable.
 	Intense Level.
-
+Old stats
+	name = "Weight Gain"
+	stealth = -3
+	resistance = -3
+	stage_speed = -2
+	transmittable = -2
+	level = 4
+	severity = 1
 Bonus
 	Increases the weight gain of the mob,
 	forcing it to eventually turn fat.
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/weight_gain
 
 	name = "Weight Gain"
-	stealth = -3
-	resistance = -3
-	stage_speed = -2
-	transmittable = -2
+	stealth = -2
+	resistance = -2
+	stage_speed = -1
+	transmittable = -1
 	level = 4
 	severity = 1
 
