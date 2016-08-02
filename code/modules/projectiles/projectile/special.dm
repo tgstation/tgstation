@@ -166,17 +166,16 @@
 	if(!target_turf)
 		target_turf = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/explosion, target_turf)
-	for(var/T in RANGE_TURFS(1, target_turf))
-		if(istype(T, /turf/closed/mineral) && T != target)
+	for(var/T in RANGE_TURFS(1, target_turf) - target)
+		if(istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
 			M.gets_drilled(firer)
 
-	for(var/mob/living/L in range(1, target_turf))
-		if(L != firer)
-			var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
-			L.apply_damage(damage*0.5, damage_type, def_zone, armor)
-			if(L != target)
-				L << "<span class='userdanger'>You're struck by a [name]!</span>"
+	for(var/mob/living/L in range(1, target_turf) - firer)
+		var/armor = L.run_armor_check(def_zone, flag, "", "", armour_penetration)
+		L.apply_damage(damage*0.5, damage_type, def_zone, armor)
+		if(L != target)
+			L << "<span class='userdanger'>You're struck by a [name]!</span>"
 
 /obj/item/projectile/kinetic/hyper/on_range()
 	aoe_blast()
