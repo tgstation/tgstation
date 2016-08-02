@@ -8,7 +8,14 @@ Hallucigen
 	Decreases stage speed.
 	Reduced transmittable.
 	Critical Level.
-
+Old stats
+	name = "Hallucigen"
+	stealth = -2
+	resistance = -3
+	stage_speed = -3
+	transmittable = -1
+	level = 5
+	severity = 3
 Bonus
 	Makes the affected mob be hallucinated for short periods of time.
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/hallucigen
 
 	name = "Hallucigen"
-	stealth = -2
-	resistance = -3
-	stage_speed = -3
-	transmittable = -1
+	stealth = -1
+	resistance = -2
+	stage_speed = -2
+	transmittable = 0
 	level = 5
 	severity = 3
 
