@@ -1239,7 +1239,7 @@ datum/reagent/romerol
 	color = "#ff0000"//strong red. rgb 255, 0, 0
 	var/current_size = 1
 
-/datum/reagent/growthserum/on_mob_life(mob/living/carbon/human/H)
+/datum/reagent/growthserum/on_mob_life(mob/living/carbon/H)
 	if(volume >= 20 && current_size != 2)
 		H.resize = 2/current_size
 		current_size = 2
