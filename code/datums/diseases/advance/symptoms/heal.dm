@@ -8,7 +8,13 @@ Healing
 	Decreases stage speed tremendously.
 	Decreases transmittablity temrendously.
 	Fatal Level.
-
+Old stats
+	name = "Toxic Filter"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -4
+	level = 6
 Bonus
 	Heals toxins in the affected mob's blood stream.
 
@@ -18,10 +24,10 @@ Bonus
 /datum/symptom/heal
 
 	name = "Toxic Filter"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -4
+	stealth = 2
+	resistance = -3
+	stage_speed = -3
+	transmittable = -3
 	level = 6
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
