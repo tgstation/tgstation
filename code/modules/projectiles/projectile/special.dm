@@ -166,7 +166,7 @@
 	if(!target_turf)
 		target_turf = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/explosion, target_turf)
-	for(var/turf/T in range(1, target_turf))
+	for(var/T in RANGE_TURFS(1, target_turf))
 		if(istype(T, /turf/closed/mineral) && T != target)
 			var/turf/closed/mineral/M = T
 			M.gets_drilled(firer)
