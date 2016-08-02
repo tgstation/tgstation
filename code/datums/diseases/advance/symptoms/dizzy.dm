@@ -9,6 +9,15 @@ Dizziness
 	Reduced transmittability
 	Intense Level.
 
+Old stats
+	name = "Dizziness"
+	stealth = 2
+	resistance = -2
+	stage_speed = -3
+	transmittable = -1
+	level = 4
+	severity = 2
+
 Bonus
 	Shakes the affected mob's screen for short periods.
 
@@ -18,10 +27,10 @@ Bonus
 /datum/symptom/dizzy // Not the egg
 
 	name = "Dizziness"
-	stealth = 2
-	resistance = -2
-	stage_speed = -3
-	transmittable = -1
+	stealth = 3
+	resistance = -1
+	stage_speed = -2
+	transmittable = 0
 	level = 4
 	severity = 2
 
