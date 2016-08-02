@@ -1233,18 +1233,24 @@ datum/reagent/romerol
 	..()
 
 /datum/reagent/growthserum
-	name = "growth serum"
+	name = "Growth serum"
 	id = "growthserum"
 	description = "A commercial chemical designed to help older men in the bedroom."//not really it just makes you a giant
 	color = "#ff0000"//strong red. rgb 255, 0, 0
+	var/current_size = 1
 
-/datum/reagent/growthserum/reaction_mob(mob/H, method=INGEST, reac_volume)
-	if(current_cycle == 1)//so you cant grow infinitely
-		H.resize = 2
-		H.visible_message("<span class='notice'>[H] suddenly doubles in size!</span>", "<span class='notice'>You're a big guy!</span>")
+/datum/reagent/growthserum/on_mob_life(mob/living/carbon/human/H)
+	if(volume >= 20 && current_size != 2)
+		H.resize = 2/current_size
+		current_size = 2
+		H.update_transform()
+	else if (current_size != 1.5)
+		H.resize = 1.5/current_size
+		current_size = 1.5
+		H.update_transform()
 	..()
 
-/datum/reagent/growthserum/on_mob_delete(mob/M)
-	M.resize = 0.5//doesnt do anythign why
-	M.visible_message("<span class='notice'>[M] suddenly shrinks down to regular size.</span>", "<span class='notice'>You're a regular guy.</span>")
+/datum/reagent/growthserum/on_mob_delete(mob/living/M)
+	M.resize = 1/current_size
+	M.update_transform()
 	..()
