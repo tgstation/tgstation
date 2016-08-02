@@ -317,6 +317,8 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		location.hotspot_expose(700, 50, 1)
+		if(get_fuel() <= 0)
+			user.AddLuminosity(-1)
 
 		if(isliving(O))
 			var/mob/living/L = O
@@ -383,18 +385,35 @@
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)
+			user.AddLuminosity(1)
+
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			welding = 0
+			user.AddLuminosity(-1)
 	else
 		if(!message)
 			user << "<span class='notice'>You switch [src] off.</span>"
 		else
 			user << "<span class='warning'>[src] shuts off!</span>"
+		user.AddLuminosity(-1)
 		force = 3
 		damtype = "brute"
 		hitsound = "swing_hit"
 		update_icon()
+
+/obj/item/weapon/weldingtool/pickup(mob/user)
+	..()
+	if(welding)
+		SetLuminosity(0)
+		user.AddLuminosity(1)
+
+/obj/item/weapon/weldingtool/dropped(mob/user)
+	..()
+	if(welding)
+		if(user)
+			user.AddLuminosity(-1)
+		SetLuminosity(1)
 
 /obj/item/weapon/weldingtool/is_hot()
 	return welding * heat
