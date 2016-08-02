@@ -50,6 +50,7 @@ Difficulty: Medium
 	elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
+	appearance_flags = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
