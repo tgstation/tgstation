@@ -8,7 +8,14 @@ Hyphema (Eye bleeding)
 	Decreases stage speed tremendously.
 	Decreases transmittablity.
 	Critical Level.
-
+Old stats
+	name = "Hyphema"
+	stealth = -1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -3
+	level = 5
+	severity = 4
 Bonus
 	Causes blindness.
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/visionloss
 
 	name = "Hyphema"
-	stealth = -1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -3
+	stealth = 0
+	resistance = -3
+	stage_speed = -3
+	transmittable = -2
 	level = 5
 	severity = 4
 
