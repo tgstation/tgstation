@@ -77,7 +77,10 @@
 				if("newtome")
 					var/obj/item/weapon/tome/T = new(usr)
 					usr.put_in_hands(T)
-				if("newtome")
+				if("metal")
+					if(istype(src, /obj/item/weapon/paper/talisman/supply/weak))
+						usr.visible_message("<span class='cultitalic'>Lesser supply talismans lack the strength to materialize runed metal!</span>")
+						return
 					new /obj/item/stack/sheet/runed_metal(get_turf(usr),5)
 				if("teleport")
 					var/obj/item/weapon/paper/talisman/teleport/T = new(usr)
@@ -105,7 +108,7 @@
 				qdel(src)
 
 /obj/item/weapon/paper/talisman/supply/weak
-	dat += "<A href='?src=\ref[src];rune=metal'>Ar'Tee ess!</A> - Provides 5 runed metal.<BR>"
+	cultist_name = "Lesser Supply Talisman"
 	uses = 2
 
 //Rite of Translocation: Same as rune
