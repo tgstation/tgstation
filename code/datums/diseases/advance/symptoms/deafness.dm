@@ -8,6 +8,14 @@ Deafness
 	Decreases stage speed slightly.
 	Decreases transmittablity.
 	Intense Level.
+	
+	name = "Deafness"
+	stealth = -1
+	resistance = -2
+	stage_speed = -1
+	transmittable = -3
+	level = 4
+	severity = 3
 
 Bonus
 	Causes intermittent loss of hearing.
@@ -18,10 +26,10 @@ Bonus
 /datum/symptom/deafness
 
 	name = "Deafness"
-	stealth = -1
-	resistance = -2
-	stage_speed = -1
-	transmittable = -3
+	stealth = 0
+	resistance = -1
+	stage_speed = 0
+	transmittable = -2
 	level = 4
 	severity = 3
 
