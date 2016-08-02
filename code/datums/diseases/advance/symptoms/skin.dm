@@ -7,7 +7,14 @@ Vitiligo
 	Reduces stage speed slightly.
 	Reduces transmission.
 	Critical Level.
-
+Old stats
+	name = "Vitiligo"
+	stealth = -3
+	resistance = -1
+	stage_speed = -1
+	transmittable = -2
+	level = 4
+	severity = 1
 BONUS
 	Makes the mob lose skin pigmentation.
 
@@ -17,10 +24,10 @@ BONUS
 /datum/symptom/vitiligo
 
 	name = "Vitiligo"
-	stealth = -3
-	resistance = -1
-	stage_speed = -1
-	transmittable = -2
+	stealth = -2
+	resistance = 0
+	stage_speed = 0
+	transmittable = -1
 	level = 4
 	severity = 1
 
