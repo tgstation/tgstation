@@ -992,7 +992,7 @@
 				PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>", \
 						"<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
-				dust()
+				L.dust()
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
