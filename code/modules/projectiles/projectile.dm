@@ -146,7 +146,7 @@
 				next_run = world.time
 				sleep(1)
 				continue
-			
+
 			if((!( current ) || loc == current))
 				current = locate(Clamp(x+xo,1,world.maxx),Clamp(y+yo,1,world.maxy),z)
 
@@ -158,8 +158,8 @@
 			M.Turn(Angle)
 			transform = M
 
-			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*4)
-			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*4)
+			var/Pixel_x=round(sin(Angle)+32*sin(Angle)*2)
+			var/Pixel_y=round(cos(Angle)+32*cos(Angle)*2)
 			var/pixel_x_offset = pixel_x + Pixel_x
 			var/pixel_y_offset = pixel_y + Pixel_y
 			var/new_x = x
@@ -199,7 +199,7 @@
 			Range()
 			if (delay > 0)
 				sleep(delay)
-			
+
 	else //old projectile system
 		set waitfor = 0
 		while(loc)
