@@ -5,6 +5,7 @@
 	force = 3
 	throwforce = 3
 	icon_state = ""
+	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	var/mob/living/carbon/human/owner = null
 	var/status = ORGAN_ORGANIC
 	var/body_zone //"chest", "l_arm", etc , used for def_zone
@@ -38,6 +39,8 @@
 	if(burn_dam > 0)
 		user << "<span class='warning'>This limb has [burn_dam > 30 ? "severe" : "minor"] burns.</span>"
 
+/obj/item/bodypart/blob_act()
+	take_damage(max_damage)
 
 /obj/item/bodypart/Destroy()
 	if(owner)

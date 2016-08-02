@@ -4,7 +4,6 @@
 	max_damage = 200
 	body_zone = "head"
 	body_part = HEAD
-	layer = ABOVE_MOB_LAYER //so it isn't hidden behind some objects when on the floor
 	w_class = 4 //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
