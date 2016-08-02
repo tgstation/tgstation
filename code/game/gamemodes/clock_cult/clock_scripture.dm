@@ -182,30 +182,6 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 // DRIVERS //
 /////////////
 
-/datum/clockwork_scripture/channeled/belligerent //Belligerent: Channeled for up to fiteen times over thirty seconds. Forces non-servants that can hear the chant to walk. Nar-Sian cultists are burned.
-	descname = "Channeled, Area Slowdown"
-	name = "Belligerent"
-	desc = "Forces all nearby non-servants to walk rather than run. Chanted every two seconds for up to thirty seconds."
-	chant_invocations = list("Punish their blindness!", "Take time, make slow!")
-	chant_amount = 15
-	chant_interval = 20
-	required_components = list("belligerent_eye" = 1)
-	usage_tip = "Useful for crowd control in a populated area and disrupting mass movement."
-	tier = SCRIPTURE_DRIVER
-
-/datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && L.m_intent != "walk" && !L.null_rod_check())
-			if(!iscultist(L))
-				L << "<span class='warning'>Your legs feel heavy and weak!</span>"
-			else //Cultists take extra burn damage
-				L << "<span class='warning'>Your legs burn with pain!</span>"
-				L.apply_damage(5, BURN, "l_leg")
-				L.apply_damage(5, BURN, "r_leg")
-			L.m_intent = "walk"
-
-
-
 /datum/clockwork_scripture/create_object/judicial_visor //Judicial Visor: Creates a judicial visor.
 	descname = "Delayed Area Stun Glasses"
 	name = "Judicial Visor"
@@ -450,7 +426,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/create_object/sigil_of_transgression //Sigil of Transgression: Creates a sigil of transgression.
-	descname = "Stun Trap"
+	descname = "Stun Trap (DOES NOT CONVERT)"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil. The next person to cross the sigil will be smitten and unable to move. Nar-Sian cultists are stunned altogether."
 	invocations = list("Divinity, dazzle...", "...those who tresspass here!")
@@ -492,14 +468,14 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/channeled/volt_void //Volt Void: Channeled for up to thirty times over thirty seconds. Consumes power from most power storages and deals slight burn damage to the invoker.
 	descname = "Channeled, Area Power Drain"
-	name = "Volt Void" //Alternative name: "On all levels but physical, I am a power sink"
+	name = "Volt Void" //Alternative name: "On all levels including physical, I am a power sink"
 	desc = "Drains energy from nearby power sources, dealing burn damage if the total power consumed is above a threshhold. Channeled every second for a maximum of thirty seconds."
 	chant_invocations = list("Draw charge to this shell!")
 	chant_amount = 30
 	chant_interval = 10
 	required_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 2)
 	consumed_components = list("guvax_capacitor" = 1, "hierophant_ansible" = 1)
-	usage_tip = "If standing on a Sigil of Transmission, will transfer power to it. Augumented limbs will also be healed unless above a very high threshhold."
+	usage_tip = "Drained power is lost by default, but a sigil of transmission below you can absorb it. Augumented limbs will also be healed unless above a very high threshhold."
 	tier = SCRIPTURE_SCRIPT
 	var/total_power_drained = 0
 	var/power_damage_threshhold = 3000
@@ -654,8 +630,9 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 
+
 /datum/clockwork_scripture/spatial_gateway
-	descname = "Teleport Gate"
+	descname = "One-Way Teleport"
 	name = "Spatial Gateway"
 	desc = "Tears open a miniaturized gateway in spacetime to any conscious servant that can transport objects or creatures to its destination. \
 	Each servant assisting in the invocation adds one additional use and four additional seconds to the gateway's uses and duration."
@@ -670,7 +647,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/spatial_gateway/check_special_requirements()
 	if(!isturf(invoker.loc))
-		invoker << "<span class='warning'>You must not be inside an object to use this scripture!</span>"
+		invoker << "<span class='warning'>You need to be in an open space to use this scripture!</span>"
 		return 0
 	var/other_servants = 0
 	for(var/mob/living/L in living_mob_list)
@@ -730,7 +707,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/create_object/sigil_of_submission //Sigil of Submission: Creates a sigil of submission.
-	descname = "Conversion Trap"
+	descname = "Conversion Trap (DOES NOT STUN)"
 	name = "Sigil of Submission"
 	desc = "Places a luminous sigil that will enslave any valid beings standing on it after a time."
 	invocations = list("Divinity, enlighten...", "...those who trespass here!")
@@ -767,7 +744,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/create_object/sigil_of_accession //Sigil of Accession: Creates a sigil of accession.
-	descname = "Permenant Conversion Trap"
+	descname = "Permenant Conversion Trap (DOES NOT STUN)"
 	name = "Sigil of Accession"
 	desc = "Places a luminous sigil much like a Sigil of Submission, but it will remain even after successfully converting a non-implanted target. \
 	It will penetrate mindshield implants once before disappearing."
@@ -802,25 +779,8 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 
-/datum/clockwork_scripture/create_object/vitality_matrix
-	descname = "Damage Trap"
-	name = "Vitality Matrix"
-	desc = "Scribes a sigil beneath the invoker which drains life from any living non-servants that cross it. Servants that cross it, however, will be healed based on how much it drained from non-servants. \
-	Dead servants can be revived by this sigil if it has enough stored vitality."
-	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
-	channel_time = 70
-	required_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 3, "hierophant_ansible" = 1)
-	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 2, "hierophant_ansible" = 1)
-	whispered = TRUE
-	object_path = /obj/effect/clockwork/sigil/vitality
-	creator_message = "<span class='brass'>A vitality matrix appears below you. It will drain life from non-servants and heal servants that cross it.</span>"
-	usage_tip = "To revive a servant, the sigil must have 20 vitality plus the target servant's non-oxygen damage. It will still heal dead servants if it lacks the vitality to outright revive them."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-
-
 /datum/clockwork_scripture/memory_allocation //Memory Allocation: Finds a willing ghost and makes them into a clockwork marauders for the invoker.
-	descname = "Guardian"
+	descname = "Personal Guardian"
 	name = "Memory Allocation"
 	desc = "Allocates part of your consciousness to a Clockwork Marauder, a vigilent fighter similar to the alien holoparasites employed by the Syndicate; It lives within you, able to be \
 	called forth by Speaking its True Name or if you become exceptionally low on health.<br> \
@@ -887,7 +847,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 
 /datum/clockwork_scripture/create_object/interdiction_lens //Interdiction Lens: Creates a powerful totem that disables radios and cameras and drains power into nearby sigils.
-	descname = "Structure, Disables Machinery"
+	descname = "Structure, Energy Drain"
 	name = "Interdiction Lens"
 	desc = "Creates a clockwork totem that sabotages nearby machinery and funnels drained power into nearby Sigils of Transmission."
 	invocations = list("May this totem...", "...shroud the false suns!")
@@ -934,29 +894,10 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	consumed_components = list("vanguard_cogwheel" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 3)
 	object_path = /obj/structure/clockwork/powered/clockwork_obelisk
 	creator_message = "<span class='brass'>You form a clockwork obelisk which can broadcast messages or produce Spatial Gateways.</span>"
-	observer_message = "<span class='warning'>A brass obelisk appears handing in midair!</span>"
+	observer_message = "<span class='warning'>A brass obelisk appears, suspended in the air!</span>"
 	invokers_required = 2
 	multiple_invokers_used = TRUE
 	usage_tip = "Producing a gateway has a high power cost. Gateways to or between clockwork obelisks recieve double duration and uses."
-	tier = SCRIPTURE_APPLICATION
-	one_per_tile = TRUE
-
-
-
-/datum/clockwork_scripture/create_object/mania_motor //Mania Motor: Creates a powerful obelisk that can be used to broadcast messages or open a gateway to any servant or clockwork obelisk.
-	descname = "Structure, Area Denial"
-	name = "Mania Motor"
-	desc = "Creates a mania motor which will cause brain damage and hallucinations in nearby non-servant humans. It will also try to convert humans directly adjecent to the motor."
-	invocations = list("May this transmitter...", "...break the will of all who oppose us!")
-	channel_time = 80
-	required_components = list("guvax_capacitor" = 4, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	consumed_components = list("guvax_capacitor" = 3, "replicant_alloy" = 1, "hierophant_ansible" = 1)
-	object_path = /obj/structure/clockwork/powered/mania_motor
-	creator_message = "<span class='brass'>You form a mania motor which will cause brain damage and hallucinations in nearby humans while active.</span>"
-	observer_message = "<span class='warning'>A two-pronged machine rises from the ground!</span>"
-	invokers_required = 2
-	multiple_invokers_used = TRUE
-	usage_tip = "Eligible human servants next to the motor will be converted at an additional power cost. It will also cure hallucinations and brain damage in nearby servants."
 	tier = SCRIPTURE_APPLICATION
 	one_per_tile = TRUE
 
@@ -966,7 +907,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	descname = "Component Generator"
 	name = "Tinkerer's Daemon"
 	desc = "Forms a daemon shell that can be attached to a tinkerer's cache to add new components at a healthy rate. It will only function if it is outnumbered by servants in a ratio of 5:1."
-	invocations = list("Collect Engine parts...", "...that yet hold greatness!")
+	invocations = list("Collect Engine's parts...", "...that yet hold greatness!")
 	channel_time = 80
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 3, "hierophant_ansible" = 3)
 	consumed_components = list("belligerent_eye" = 1, "vanguard_cogwheel" = 1, "guvax_capacitor" = 1, "replicant_alloy" = 1, "hierophant_ansible" = 1)
@@ -981,17 +922,17 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 		if(is_servant_of_ratvar(L))
 			servants++
 	if(servants * 0.2 < clockwork_daemons)
-		invoker << "<span class='nezbere'>\"Daemons are already disabled, making more of them would be a waste.\"</span>"
+		invoker << "<span class='nezbere'>\"Daemons aren't working. Can't give you another one.\"</span>"
 		return 0
-	if(servants * 0.2 < clockwork_daemons+1)
-		invoker << "<span class='nezbere'>\"This daemon would be useless, friend.\"</span>"
+	if(servants * 0.2 < clockwork_daemons + 1)
+		invoker << "<span class='nezbere'>\"Wouldn't do anything. They're useless right now.\"</span>"
 		return 0
 	return ..()
 
 //////////////
 // REVENANT //
 //////////////
-//Revenant scriptures are different than any others. They are all very powerful, but also very costly and have drawbacks. This might be a very long invocation time or a very high component cost.
+//Revenant scriptures are different than any others. They are all very powerful, but also very costly.
 
 /datum/clockwork_scripture/invoke_nezbere //Invoke Nezbere, the Brass Eidolon: Invokes Nezbere, bolstering the strength of many clockwork items for one minute.
 	descname = "Structure Buff"
@@ -1003,23 +944,23 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	required_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	consumed_components = list("belligerent_eye" = 3, "vanguard_cogwheel" = 3, "guvax_capacitor" = 3, "replicant_alloy" = 6)
 	usage_tip = "Ocular wardens will become empowered, clockwork proselytizers will require no alloy, tinkerer's daemons will produce twice as quickly, \
-	and interdiction lenses, mending motors, mania motors, and clockwork obelisks will all require no power."
+	and interdiction lenses, mending motors, and clockwork obelisks will all require no power."
 	tier = SCRIPTURE_REVENANT
 
 /datum/clockwork_scripture/invoke_nezbere/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nezbere"] > world.time)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Not just yet, friend. Patience is a virtue.")]\"</span>\n\
+		invoker << "<span class='nezbere'>\"[text2ratvar("Too weak right now. Patience is a virtue.")]\"</span>\n\
 		<span class='warning'>Nezbere has already been invoked recently! You must wait several minutes before calling upon the Brass Eidolon.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
+		invoker << "<span class='nezbere'>\"[text2ratvar("Don't need <i>my</i> help!")]\"</span>\n\
 		<span class='warning'>Nezbere will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return 1
 
 /datum/clockwork_scripture/invoke_nezbere/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nezbere(get_turf(invoker))
-	hierophant_message("<span class='nezbere'>[text2ratvar("Armorer: \"I heed your call, champions. May your artifacts bring ruin upon the heathens that oppose our master!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nezbere'>[text2ratvar("Armorer: \"Very well! We bring ruin upon them!")]\"</span>", FALSE, invoker)
 	clockwork_generals_invoked["nezbere"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	for(var/obj/structure/clockwork/ocular_warden/W in all_clockwork_objects) //Ocular wardens have increased damage and radius
@@ -1064,11 +1005,11 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_sevtug/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["sevtug"] > world.time)
-		invoker << "<span class='sevtug'>\"[text2ratvar("Is it really so hard - even for a simpleton like you - to grasp the concept-of waiting?")]\"</span>\n\
+		invoker << "<span class='sevtug'>\"[text2ratvar("Hey, buddy, what starts with W and ends with AITING?")]\"</span>\n\
 		<span class='warning'>Sevtug has already been invoked recently! You must wait several minutes before calling upon the Formless Pariah.</span>"
 		return 0
 	if(!slab.no_cost && ratvar_awakens)
-		invoker << "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
+		invoker << "<span class='sevtug'>\"[text2ratvar("Oh, sure, I'm more powerful than Engine. Push off.")]\"</span>\n\
 		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>"
 		return 0
 	return ..()
@@ -1129,7 +1070,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 
 /datum/clockwork_scripture/invoke_nzcrentr/check_special_requirements()
 	if(!slab.no_cost && clockwork_generals_invoked["nzcrentr"] > world.time)
-		invoker << "<span class='nzcrentr'>\"[text2ratvar("The boss says you have to wait. Hey, do you think he would mind if I killed you? ...He would? Ok.")]\"</span>\n\
+		invoker << "<span class='nzcrentr'>\"[text2ratvar("The boss says you have to wait. Hey, do you think he would mind if I killed you? ...He would? Okay.")]\"</span>\n\
 		<span class='warning'>Nzcrentr has already been invoked recently! You must wait several minutes before calling upon the Forgotten Arbiter.</span>"
 		return 0
 	return 1
@@ -1137,7 +1078,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/invoke_nzcrentr/scripture_effects()
 	new/obj/effect/clockwork/general_marker/nzcrentr(get_turf(invoker))
 	clockwork_generals_invoked["nzcrentr"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
-	hierophant_message("<span class='nzcrentr'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope they do not shatter under it!")]\"</span>", FALSE, invoker)
+	hierophant_message("<span class='nzcrentr'>[text2ratvar("Amperage: \"[invoker.real_name] has called forth my power. Hope they can take it!")]\"</span>", FALSE, invoker)
 	invoker.visible_message("<span class='warning'>[invoker] begins to radiate a blinding light!</span>", \
 	"<span class='nzcrentr'>\"[text2ratvar("The boss says it's okay to do this. Don't blame me if you die from it.")]\"</span>\n \
 	<span class='userdanger'>You feel limitless power surging through you!</span>")
@@ -1169,7 +1110,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 				L.Weaken(8)
 				playsound(L, 'sound/magic/LightningShock.ogg', 50, 1)
 		else
-			playsound(invoker, 'sound/magic/Disintegrate.ogg', 50, 1)
+			playsound(invoker, 'sound/magic/Disintegrate.ogg', 100, 1)
 			invoker.gib()
 		return 1
 	else
@@ -1202,7 +1143,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	clockwork_generals_invoked["inath-neq"] = world.time + CLOCKWORK_GENERAL_COOLDOWN
 	playsound(invoker, 'sound/magic/clockwork/invoke_general.ogg', 50, 0)
 	if(invoker.real_name == "Lucio")
-		clockwork_say(invoker, text2ratvar("Aww, let's break it DOWN!!"))
+		clockwork_say(invoker, text2ratvar("Oh, let's break it DOWN!!"))
 	var/list/affected_servants = list()
 	for(var/mob/living/L in range(7, invoker))
 		if(!is_servant_of_ratvar(L) || L.stat == DEAD)
@@ -1259,7 +1200,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 /datum/clockwork_scripture/ark_of_the_clockwork_justiciar/scripture_effects()
 	var/turf/T = get_turf(invoker)
 	new/obj/effect/clockwork/general_marker/inathneq(T)
-	T.visible_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and show your servants your mercy!")]\"</span>")
+	T.visible_message("<span class='inathneq'>\"[text2ratvar("Engine, come forth and defend your champions!")]\"</span>")
 	playsound(T, 'sound/magic/clockwork/invoke_general.ogg', 30, 0)
 	sleep(10)
 	if(!check_special_requirements())

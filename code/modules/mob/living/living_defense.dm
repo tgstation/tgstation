@@ -377,6 +377,10 @@
 	else
 		stun_absorption[key] = list("end_time" = world.time + duration, "priority" = priority, "stuns_absorbed" = 0, \
 		"visible_message" = message, "self_message" = self_message, "examine_message" = examine_message)
+	addtimer(src, "remove_stun_absorption", duration)
+
+/mob/living/proc/remove_stun_absorption()
+	stun_absorption = null
 
 /mob/living/Stun(amount, updating = 1, ignore_canstun = 0)
 	if(!stat && islist(stun_absorption))
