@@ -231,8 +231,9 @@
 	if(environment)
 		var/pressure = environment.return_pressure()
 		if(pressure < 60)
-			name = "full strength plasma blast"
+			name = "full strength [name]"
 			damage *= 4
+			range *= 2
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
