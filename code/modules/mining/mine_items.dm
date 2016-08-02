@@ -530,6 +530,7 @@
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	shuttle_id = "colony_drop"
+	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
 	dwidth = 11
 	dheight = 0
 	width = 23
@@ -538,9 +539,15 @@
 
 /obj/item/device/assault_pod/mining/attack_self(mob/living/user)
 	var/turf/T = get_turf(user)
-	if(T.z != ZLEVEL_MINING)
-		user << "Wouldn't do much good dropping a mining base away from the mining area!"
-		return
+	if(!no_restrictions)
+		if(T.z != ZLEVEL_MINING)
+			user << "Wouldn't do much good dropping a mining base away from the mining area!"
+			return
+		var/colony_radius = max(width, height)/2
+		var/list/area_counter = get_areas_in_range(colony_radius, T)
+		if(area_counter.len > 2) //Avoid smashing ruins unless you are inside a really big one
+			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
+			return
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
@@ -558,6 +565,11 @@
 	user << "Landing zone set."
 
 	qdel(src)
+
+/obj/item/device/assault_pod/mining/unrestricted
+	name = "omni-locational landing field designator"
+	desc = "Allows the deployment of the mining base ANYWHERE. Use with caution."
+	no_restrictions = TRUE
 
 
 /area/shuttle/auxillary_base
