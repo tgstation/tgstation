@@ -400,6 +400,7 @@
 	icon_state = "chainsaw_off"
 	flags = CONDUCT
 	force = 13
+	var/force_on = 21
 	w_class = 5
 	throwforce = 13
 	throw_speed = 2
@@ -415,8 +416,8 @@
 /obj/item/weapon/twohanded/required/chainsaw/attack_self(mob/user)
 	on = !on
 	user << "As you pull the starting cord dangling from \the [src], [on ? "it begins to whirr." : "the chain stops moving."]"
-	force = on ? 21 : 13
-	throwforce = on ? 21 : 13
+	force = on ? force_on : initial(force)
+	throwforce = on ? force_on : initial(force)
 	icon_state = "chainsaw_[on ? "on" : "off"]"
 
 	if(hitsound == "swing_hit")
@@ -435,11 +436,18 @@
 	if(wielded)
 		. = ..()
 
-
 /obj/item/weapon/twohanded/required/chainsaw/doomslayer
 	name = "OOOH BABY"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
 	armour_penetration = 100
+	force_on = 30
+
+/obj/item/weapon/twohanded/required/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
+	if(attack_type == PROJECTILE_ATTACK)
+		owner.visible_message("<span class='danger'>Ranged attacks just make [owner] angrier!</span>")
+		playsound(src, pick("sound/weapons/bulletflyby.ogg","sound/weapons/bulletflyby2.ogg","sound/weapons/bulletflyby3.ogg"), 75, 1)
+		return 1
+	return 0
 
 //GREY TIDE
 /obj/item/weapon/twohanded/spear/grey_tide

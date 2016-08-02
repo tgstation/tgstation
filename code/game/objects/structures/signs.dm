@@ -201,15 +201,10 @@
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 	icon_state = "atmosplaque"
 
-/obj/structure/sign/maltesefalcon	//The sign is 64x32, so it needs two tiles. ;3
-	name = "The Maltese Falcon"
-	desc = "The Maltese Falcon, Space Bar and Grill."
-
-/obj/structure/sign/maltesefalcon/left
-	icon_state = "maltesefalcon-left"
-
-/obj/structure/sign/maltesefalcon/right
-	icon_state = "maltesefalcon-right"
+/obj/structure/sign/nanotrasen
+	name = "\improper NanoTrasen Logo "
+	desc = "A sign with the Nanotrasen Logo on it.  Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
 
 /obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
 	name = "\improper SCIENCE"
@@ -255,3 +250,5 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+

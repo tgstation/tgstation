@@ -42,7 +42,6 @@
 		var/message_len = length(message)
 		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
 		message = Ellipsis(message, 10, 1)
-		whispers = "whispers in their final breath"
 
 	message = treat_message(message)
 
@@ -60,12 +59,13 @@
 	watching  -= eavesdropping
 
 	var/rendered
-
-	rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something in their final breath.</span>"
+	whispers = critical ? "whispers something in their final breath." : "whispers something."
+	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers]</span>"
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 
 	var/spans = list(SPAN_ITALICS)
+	whispers = critical ? "whispers in their final breath" : "whispers"
 	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
 
 	for(var/atom/movable/AM in listening)

@@ -156,20 +156,22 @@
 		underlays.Cut()
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 			else
-				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
+				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=TURF_LAYER)
 		else
 			var/turf/T = get_step(src, turn(adjacencies, 180))
-			if(T && T.density)
+			if(T && (T.density || T.smooth))
 				T = get_step(src, turn(adjacencies, 135))
-				if(T && T.density)
+				if(T && (T.density || T.smooth))
 					T = get_step(src, turn(adjacencies, 225))
 
-			if(istype(T, /turf/open/space))
-				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
+			if(istype(T, /turf/open/space) && !istype(T, /turf/open/space/transit))
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 			else if(T && !T.density && !T.smooth)
 				underlays += T
+			else if(baseturf && !initial(baseturf.density) && !initial(baseturf.smooth))
+				underlays += image(initial(baseturf.icon), initial(baseturf.icon_state), layer=TURF_LAYER)
 			else
 				underlays += DEFAULT_UNDERLAY_IMAGE
 

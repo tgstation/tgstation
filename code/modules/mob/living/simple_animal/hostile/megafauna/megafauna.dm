@@ -9,9 +9,10 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
+	obj_damage = 75
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
-	stat_attack = 1
+	stat_attack = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -42,6 +43,14 @@
 		return
 	else
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != DEAD)
+			if(ranged && ranged_cooldown <= world.time)
+				OpenFire()
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc

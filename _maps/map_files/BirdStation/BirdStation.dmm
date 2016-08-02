@@ -1599,7 +1599,7 @@
 "aeh" = (
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aei" = (
@@ -1608,7 +1608,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aej" = (
@@ -1705,14 +1705,14 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aet" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aeu" = (
@@ -1727,7 +1727,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aev" = (
@@ -1799,7 +1799,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "high pressure o2 floor";
-	initial_gas_mix = "o2=500000"
+	initial_gas_mix = "o2=500000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aeE" = (
@@ -2570,7 +2570,7 @@
 "agD" = (
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "agE" = (
@@ -2579,7 +2579,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "agF" = (
@@ -2739,14 +2739,14 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "agX" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "agY" = (
@@ -2761,7 +2761,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "agZ" = (
@@ -2808,8 +2808,8 @@
 "ahf" = (
 /obj/structure/cable,
 /obj/machinery/power/generator{
-	cold_dir = 8;
-	hot_dir = 4
+	cold_dir = 4;
+	hot_dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -2972,7 +2972,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "high pressure plasma floor";
-	initial_gas_mix = "plasma=240000"
+	initial_gas_mix = "plasma=240000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ahB" = (
@@ -3271,7 +3271,7 @@
 "ain" = (
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aio" = (
@@ -3280,7 +3280,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aip" = (
@@ -3395,14 +3395,14 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aiD" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aiE" = (
@@ -3417,7 +3417,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aiF" = (
@@ -3537,7 +3537,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "high pressure co2 floor";
-	initial_gas_mix = "co2=200000"
+	initial_gas_mix = "co2=200000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "aiW" = (
@@ -3644,7 +3644,7 @@
 "aji" = (
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajj" = (
@@ -3659,7 +3659,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajk" = (
@@ -3767,14 +3767,14 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajx" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajy" = (
@@ -3783,7 +3783,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajz" = (
@@ -3844,7 +3844,7 @@
 /obj/machinery/light/small,
 /turf/open/floor/engine{
 	name = "high pressure n2 floor";
-	initial_gas_mix = "n2=400000"
+	initial_gas_mix = "n2=400000;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ajI" = (
@@ -4089,7 +4089,7 @@
 "akd" = (
 /turf/open/floor/engine{
 	name = "high pressure air floor";
-	initial_gas_mix = "o2=10000;n2=40015"
+	initial_gas_mix = "o2=10000;n2=40015;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ake" = (
@@ -4133,14 +4133,14 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure air floor";
-	initial_gas_mix = "o2=10000;n2=40015"
+	initial_gas_mix = "o2=10000;n2=40015;TEMP=293.15"
 	},
 /area/engine/engineering)
 "akm" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine{
 	name = "high pressure air floor";
-	initial_gas_mix = "o2=10000;n2=40015"
+	initial_gas_mix = "o2=10000;n2=40015;TEMP=293.15"
 	},
 /area/engine/engineering)
 "akn" = (
@@ -4155,7 +4155,7 @@
 	},
 /turf/open/floor/engine{
 	name = "high pressure air floor";
-	initial_gas_mix = "o2=10000;n2=40015"
+	initial_gas_mix = "o2=10000;n2=40015;TEMP=293.15"
 	},
 /area/engine/engineering)
 "ako" = (

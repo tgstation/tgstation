@@ -1,5 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - tweak: "Anima Fragments slow down for slightly less time when hit."
-  - tweak: "Clockwork Marauders do 1 more damage on every attack."

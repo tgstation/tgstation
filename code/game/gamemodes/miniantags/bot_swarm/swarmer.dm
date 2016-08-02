@@ -462,7 +462,9 @@
 /obj/effect/swarmer/destructible/attack_animal(mob/living/simple_animal/S)
 	S.do_attack_animation(src)
 	S.changeNext_move(CLICK_CD_MELEE)
-	if(S.melee_damage_upper)
+	if(S.obj_damage)
+		take_damage(S.obj_damage, S.melee_damage_type, 1)
+	else if(S.melee_damage_upper)
 		take_damage(rand(S.melee_damage_lower, S.melee_damage_upper), S.melee_damage_type)
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()

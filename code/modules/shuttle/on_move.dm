@@ -21,6 +21,14 @@
 	for(var/obj/machinery/door/D in orange(1, src))
 		addtimer(src, "close", 0, TRUE)
 
+/obj/machinery/door/airlock/onShuttleMove()
+	shuttledocked = 0
+	for(var/obj/machinery/door/airlock/A in orange(1, src))
+		A.shuttledocked = 0
+	. = ..()
+	shuttledocked =  1
+	for(var/obj/machinery/door/airlock/A in orange(1, src))
+		A.shuttledocked = 1
 /mob/onShuttleMove()
 	if(!move_on_shuttle)
 		return 0

@@ -535,10 +535,10 @@
 	height = 5;
 	id = "laborcamp_away";
 	name = "labor camp";
-	turf_type = /turf/open/floor/plating/lava/smooth;
+	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
 	width = 9
 	},
-/turf/open/floor/plating/lava/smooth/lava_land_surface,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bm" = (
 /obj/machinery/door/airlock/glass_security{
@@ -5844,7 +5844,7 @@ af
 bA
 bA
 bA
-bA
+dq
 bA
 bA
 bA
@@ -5853,7 +5853,7 @@ bA
 dq
 bA
 bA
-bA
+dq
 bA
 bA
 bA
@@ -6102,15 +6102,15 @@ af
 bA
 bA
 bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 bA
 af
 af
@@ -6359,15 +6359,15 @@ bA
 bA
 bA
 bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 bA
 bA
 ab
@@ -6616,15 +6616,15 @@ bA
 bA
 bA
 bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 bA
 bA
 bA
@@ -6873,15 +6873,15 @@ af
 bA
 bA
 bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 bA
 af
 af
@@ -7129,17 +7129,17 @@ af
 af
 bA
 bA
-bA
-bA
-bA
-bA
-bA
-bA
-bA
+dq
+dq
+dq
+dq
+dq
+dq
+dq
 bl
-bA
-bA
-bA
+dq
+dq
+dq
 af
 af
 af
@@ -7391,7 +7391,7 @@ an
 an
 aO
 an
-fI
+an
 an
 bm
 an

@@ -98,7 +98,7 @@ Class Procs:
 	icon = 'icons/obj/stationobjs.dmi'
 	verb_say = "beeps"
 	verb_yell = "blares"
-	pressure_resistance = 10
+	pressure_resistance = 15
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -276,10 +276,13 @@ Class Procs:
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0)
+	if(M.melee_damage_upper || M.obj_damage)
 		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
 		"<span class='danger'>You smash against the [src.name].</span>")
-		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
+		if(M.obj_damage)
+			take_damage(M.obj_damage, M.melee_damage_type, 1)
+		else
+			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/machinery/attack_paw(mob/living/user)

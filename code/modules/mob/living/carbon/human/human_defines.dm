@@ -3,6 +3,7 @@ var/global/default_martial_art = new/datum/martial_art
 	languages_spoken = HUMAN
 	languages_understood = HUMAN
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPCHEM_HUD,IMPTRACK_HUD,ANTAG_HUD)
+	pressure_resistance = 25
 	//Hair colour and style
 	var/hair_color = "000"
 	var/hair_style = "Bald"
