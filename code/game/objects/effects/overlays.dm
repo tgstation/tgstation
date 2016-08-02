@@ -138,10 +138,6 @@
 	mouse_opacity = 0
 	var/atom/linked
 
-/obj/effect/overlay/cult(mob/user)
-	if(linked)
-		linked.examine(user)
-
 /obj/effect/overlay/cult/ex_act()
 	return FALSE
 
