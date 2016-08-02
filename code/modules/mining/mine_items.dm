@@ -545,7 +545,7 @@
 			return
 		var/colony_radius = max(width, height)/2
 		var/list/area_counter = get_areas_in_range(colony_radius, T)
-		if(area_counter.len > 2) //Avoid smashing ruins unless you are inside a really big one
+		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
 			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
 			return
 
