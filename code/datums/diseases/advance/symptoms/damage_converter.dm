@@ -8,7 +8,14 @@ Damage Converter
 	Decreases stage speed tremendously.
 	Reduced transmittablity
 	Intense Level.
-
+	
+Old stats
+	name = "Toxic Compensation"
+	stealth = 1
+	resistance = -4
+	stage_speed = -4
+	transmittable = -2
+	level = 4
 Bonus
 	Slowly converts brute/fire damage to toxin.
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/damage_converter
 
 	name = "Toxic Compensation"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -2
+	stealth = 2
+	resistance = -3
+	stage_speed = -3
+	transmittable = -1
 	level = 4
 
 /datum/symptom/damage_converter/Activate(datum/disease/advance/A)
