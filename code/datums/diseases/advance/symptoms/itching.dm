@@ -8,7 +8,14 @@ Itching
 	Increases stage speed.
 	Little transmittable.
 	Low Level.
-
+Old stats
+	name = "Itching"
+	stealth = 0
+	resistance = 3
+	stage_speed = 3
+	transmittable = 1
+	level = 1
+	severity = 1
 BONUS
 	Displays an annoying message!
 	Should be used for buffing your disease.
@@ -19,10 +26,10 @@ BONUS
 /datum/symptom/itching
 
 	name = "Itching"
-	stealth = 0
-	resistance = 3
-	stage_speed = 3
-	transmittable = 1
+	stealth = 1
+	resistance = 4
+	stage_speed = 4
+	transmittable = 2
 	level = 1
 	severity = 1
 
