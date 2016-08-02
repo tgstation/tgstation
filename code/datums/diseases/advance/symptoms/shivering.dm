@@ -8,7 +8,14 @@ Shivering
 	Increases stage speed.
 	Little transmittable.
 	Low level.
-
+Old stats
+	name = "Shivering"
+	stealth = 0
+	resistance = 2
+	stage_speed = 2
+	transmittable = 2
+	level = 2
+	severity = 2
 Bonus
 	Cools down your body.
 
@@ -18,10 +25,10 @@ Bonus
 /datum/symptom/shivering
 
 	name = "Shivering"
-	stealth = 0
-	resistance = 2
-	stage_speed = 2
-	transmittable = 2
+	stealth = 1
+	resistance = 3
+	stage_speed = 3
+	transmittable = 3
 	level = 2
 	severity = 2
 
