@@ -8,14 +8,7 @@ Vomiting
 	Doesn't increase stage speed.
 	Little transmittable.
 	Medium Level.
-Old stats
-	name = "Vomiting"
-	stealth = -2
-	resistance = -1
-	stage_speed = 0
-	transmittable = 1
-	level = 3
-	severity = 4
+
 Bonus
 	Forces the affected mob to vomit!
 	Meaning your disease can spread via
