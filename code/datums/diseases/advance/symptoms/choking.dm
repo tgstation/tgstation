@@ -9,15 +9,6 @@ Choking
 	Decreases transmittablity tremendously.
 	Moderate Level.
 
-Old stats
-	name = "Choking"
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -4
-	level = 3
-	severity = 3
-
 Bonus
 	Inflicts spikes of oxyloss
 
