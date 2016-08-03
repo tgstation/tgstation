@@ -218,7 +218,10 @@ Difficulty: Very Hard
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
-	P.original = marker
+	if(target)
+		P.original = target
+	else
+		P.original = marker
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
