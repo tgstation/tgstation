@@ -60,7 +60,8 @@ Difficulty: Very Hard
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/anger_modifier = 0
-	var/minor_cooldown = 25 //time, in deciseconds, a minor attack causes it to cool down for
+	var/minor_cooldown = 20 //time, in deciseconds, a minor attack causes it to cool down for
+	var/medium_cooldown = 40 //time, in deciseconds, a medium attack causes it to cool down for
 	var/major_cooldown = 120 //time, in deciseconds, a minor attack causes it to cool down for
 	var/obj/item/device/gps/internal
 
@@ -82,13 +83,15 @@ Difficulty: Very Hard
 			spiral_shoot(rand(0, 1), rand(1, 16))
 
 	else //Minor attack
-		ranged_cooldown = world.time + minor_cooldown
 		if(prob(20 + anger_modifier))
+			ranged_cooldown = world.time + medium_cooldown
 			random_shots()
 		else
 			if(prob(70))
+				ranged_cooldown = world.time + minor_cooldown
 				blast()
 			else
+				ranged_cooldown = world.time + medium_cooldown
 				if(prob(10 + anger_modifier))
 					dir_shots(alldirs)
 					sleep(8)
