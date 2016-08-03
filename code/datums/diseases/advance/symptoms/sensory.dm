@@ -74,10 +74,10 @@ Bonus
 */
 /datum/symptom/sensory_destruction
 	name = "Sensory destruction"
-	stealth = -1
-	resistance = -2
-	stage_speed = -3
-	transmittable = -4
+	stealth = 0
+	resistance = -1
+	stage_speed = -2
+	transmittable = -3
 	level = 6
 	severity = 5
 
