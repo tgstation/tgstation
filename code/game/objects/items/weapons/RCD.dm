@@ -437,12 +437,14 @@ RCD
 		if (4)
 			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
-					for(var/obj/structure/grille/GRILLE in A)
+					if(locate(/obj/structure/grille) in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
+						if(locate(/obj/structure/grille) in A)
+							return 0
 						if(!useResource(grillecost, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
