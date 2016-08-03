@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Clockwork Constructs, including anima fragments, marauders, and reclaimers, can now communicate over the Hierophant Network."
