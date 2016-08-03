@@ -8,15 +8,6 @@ Facial Hypertrichosis
 	Reduced transmittability
 	Intense Level.
 
-Old stats
-	name = "Facial Hypertrichosis"
-	stealth = -3
-	resistance = -1
-	stage_speed = -3
-	transmittable = -1
-	level = 4
-	severity = 1
-
 BONUS
 	Makes the mob grow a massive beard, regardless of gender.
 
