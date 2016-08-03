@@ -11,10 +11,11 @@ It acts as a melee creature, chasing down and attacking its target while also us
 
 The colossus' true danger lies in its ranged capabilities. It fires immensely damaging death bolts that penetrate all armor in a variety of ways:
  1. The colossus fires death bolts in alternating patterns: the cardinal directions and the diagonal directions.
+   1.2 If hurt, may fire at both cardinal and diagonal directions at once.
  2. The colossus fires death bolts in a shotgun-like pattern, instantly downing anything unfortunate enough to be hit by all of them.
  3. The colossus fires a spiral of death bolts.
 At 33% health, the colossus gains an additional attack:
- 4. The colossus fires two spirals of death bolts, spinning in opposite directions.
+ 4. The colossus fires two spirals of death bolts, spinning in either opposite directions or the same direction.
 
 When a colossus dies, it leaves behind a chunk of glowing crystal known as a black box. Anything placed inside will carry over into future rounds.
 For instance, you could place a bag of holding into the black box, and then kill another colossus next round and retrieve the bag of holding from inside.
@@ -59,6 +60,9 @@ Difficulty: Very Hard
 	death_sound = 'sound/magic/demon_dies.ogg'
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	var/anger_modifier = 0
+	var/minor_cooldown = 20 //time, in deciseconds, a minor attack causes it to cool down for
+	var/medium_cooldown = 40 //time, in deciseconds, a medium attack causes it to cool down for
+	var/major_cooldown = 120 //time, in deciseconds, a minor attack causes it to cool down for
 	var/obj/item/device/gps/internal
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
@@ -67,36 +71,39 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
-	ranged_cooldown = world.time + 120
 
-	if(prob(20+anger_modifier)) //Major attack
+	if(prob(20 + anger_modifier)) //Major attack
+		ranged_cooldown = world.time + major_cooldown
 		telegraph()
 
 		if(health < maxHealth/3)
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			if(prob(50))
-				spiral_shoot()
-			else
-				spiral_shoot(1)
+			spiral_shoot(rand(0, 1), rand(1, 16))
 
-	else if(prob(20))
-		ranged_cooldown = world.time + 30
-		random_shots()
-	else
-		if(prob(70))
-			ranged_cooldown = world.time + 20
-			blast()
+	else //Minor attack
+		if(prob(20))
+			ranged_cooldown = world.time + medium_cooldown
+			random_shots()
 		else
-			ranged_cooldown = world.time + 40
-			diagonals()
-			sleep(10)
-			cardinals()
-			sleep(10)
-			diagonals()
-			sleep(10)
-			cardinals()
+			if(prob(70))
+				ranged_cooldown = world.time + minor_cooldown
+				blast()
+			else
+				ranged_cooldown = world.time + medium_cooldown
+				if(prob(10 + anger_modifier))
+					dir_shots(alldirs)
+					sleep(8)
+					dir_shots(alldirs)
+				else
+					dir_shots(diagonals)
+					sleep(8)
+					dir_shots(cardinal)
+					sleep(8)
+					dir_shots(diagonals)
+					sleep(8)
+					dir_shots(cardinal)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -137,46 +144,57 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	addtimer(src, "spiral_shoot", 0)
-	addtimer(src, "spiral_shoot", 0, FALSE, 1)
+	switch(rand(1, 4))
+		if(1) //start east and west
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 13) //east
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 5) //west
+		if(2) //start north and south
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 9) //north
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 1) //south
+		if(3) //start northeast and southwest
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 11) //northeast
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 3) //southwest
+		if(4) //start northwest and southeast
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 7) //northwest
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 15) //southeast
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
-	var/counter = 1
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
+	var/counter = counter_start
 	var/turf/marker
 	for(var/i in 1 to 80)
 		switch(counter)
 			if(1)
-				marker = locate(x,y - 2,z)
+				marker = locate(x, y - 2, z)
 			if(2)
-				marker = locate(x - 1,y - 2,z)
+				marker = locate(x - 1, y - 2, z)
 			if(3)
-				marker = locate(x - 2, y - 2,z)
+				marker = locate(x - 2, y - 2, z)
 			if(4)
-				marker = locate(x - 2,y - 1,z)
+				marker = locate(x - 2, y - 1, z)
 			if(5)
-				marker = locate (x -2 ,y,z)
+				marker = locate(x - 2, y, z)
 			if(6)
-				marker = locate(x - 2, y+1,z)
+				marker = locate(x - 2, y + 1, z)
 			if(7)
 				marker = locate(x - 2, y + 2, z)
 			if(8)
-				marker = locate(x - 1, y + 2,z)
+				marker = locate(x - 1, y + 2, z)
 			if(9)
-				marker = locate(x, y + 2,z)
+				marker = locate(x, y + 2, z)
 			if(10)
-				marker = locate(x + 1, y+2,z)
+				marker = locate(x + 1, y + 2, z)
 			if(11)
-				marker = locate(x+ 2, y + 2,z)
+				marker = locate(x + 2, y + 2, z)
 			if(12)
-				marker = locate(x+2,y+1,z)
+				marker = locate(x + 2, y + 1, z)
 			if(13)
-				marker = locate(x+2,y,z)
+				marker = locate(x + 2, y, z)
 			if(14)
-				marker = locate(x+2, y - 1, z)
+				marker = locate(x + 2, y - 1, z)
 			if(15)
-				marker = locate(x+2, y - 2, z)
+				marker = locate(x + 2, y - 2, z)
 			if(16)
-				marker = locate(x+1, y -2, z)
+				marker = locate(x + 1, y - 2, z)
 
 		if(negative)
 			counter--
@@ -191,6 +209,8 @@ Difficulty: Very Hard
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
+	if(!marker)
+		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
 	P.current = startloc
@@ -198,36 +218,29 @@ Difficulty: Very Hard
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
-	P.original = marker
+	if(target)
+		P.original = target
+	else
+		P.original = marker
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 5)
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(5))
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 150, 1, 2)
 	for(var/turf/turf in range(1, target))
 		shoot_projectile(turf)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	var/turf/T = locate(x + 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x + 2, y  -2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y - 2, z)
-	shoot_projectile(T)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/cardinals()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
-	for(var/d in attack_dirs)
-		var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
+	if(!islist(dirs))
+		dirs = alldirs.Copy()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 150, 1, 2)
+	for(var/d in dirs)
+		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
