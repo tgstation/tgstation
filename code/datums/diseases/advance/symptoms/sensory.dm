@@ -6,14 +6,7 @@ Sensory-Restoration
 	Decreases stage speed tremendously.
 	Decreases transmittablity tremendously.
 	Fatal.
-Old stats
-	name = "Sensory Restoration"
-	stealth = -1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -3
-	level = 5
-	severity = 0
+
 Bonus
 	The body generates Sensory restorational chemicals.
 	inacusiate for ears
