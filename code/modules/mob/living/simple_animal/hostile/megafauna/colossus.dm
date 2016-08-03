@@ -83,7 +83,7 @@ Difficulty: Very Hard
 			spiral_shoot(rand(0, 1), rand(1, 16))
 
 	else //Minor attack
-		if(prob(20 + anger_modifier))
+		if(prob(20))
 			ranged_cooldown = world.time + medium_cooldown
 			random_shots()
 		else
