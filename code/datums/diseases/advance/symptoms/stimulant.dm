@@ -8,13 +8,7 @@ Stimulant //gotta go fast
 	Decreases stage speed moderately..
 	Decreases transmittablity tremendously.
 	Moderate Level.
-Old stats
-	name = "Stimulant"
-	stealth = -1
-	resistance = -3
-	stage_speed = -2
-	transmittable = -4
-	level = 3
+
 Bonus
 	The body generates Ephedrine.
 
