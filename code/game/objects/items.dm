@@ -556,10 +556,13 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/is_sharp()
 	return sharpness
 
+/obj/item/proc/is_heavy()
+	return heavy
+
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if((sharpness || damtype == BURN) && w_class >= 3)
-			. = force*(w_class-1)
+		if(heavy || damtype == BURN)
+			. = force
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
