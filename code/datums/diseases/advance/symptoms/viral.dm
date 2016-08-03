@@ -54,10 +54,10 @@ BONUS
 */
 /datum/symptom/viralevolution
 	name = "Viral evolutionary acceleration"
-	stealth = -2
-	resistance = -3
-	stage_speed = 5
-	transmittable = 3
+	stealth = -1
+	resistance = -2
+	stage_speed = 6
+	transmittable = 4
 	level = 3
 
 /datum/symptom/viraladaptation/Activate(datum/disease/advance/A)
