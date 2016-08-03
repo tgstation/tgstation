@@ -149,12 +149,12 @@
 	..()
 
 /obj/item/projectile/kinetic/on_hit(atom/target)
-	. = ..()
 	var/turf/target_turf= get_turf(target)
 	if(istype(target_turf, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
 	PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target_turf)
+	. = ..()
 
 /obj/item/projectile/kinetic/hyper
 	name = "kinetic explosion"
@@ -166,7 +166,7 @@
 	if(!target_turf)
 		target_turf = get_turf(src)
 	PoolOrNew(/obj/effect/overlay/temp/explosion, target_turf)
-	for(var/T in RANGE_TURFS(1, target_turf) - target)
+	for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 		if(istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
 			M.gets_drilled(firer)
