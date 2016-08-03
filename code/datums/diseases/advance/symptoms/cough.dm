@@ -9,15 +9,6 @@ Coughing
 	Transmittable.
 	Low Level.
 
-Old stats
-	name = "Cough"
-	stealth = -1
-	resistance = 3
-	stage_speed = 1
-	transmittable = 2
-	level = 1
-	severity = 1
-
 BONUS
 	Will force the affected mob to drop small items!
 
