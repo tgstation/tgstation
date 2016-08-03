@@ -74,10 +74,10 @@ Bonus
 /datum/symptom/vomit/blood
 
 	name = "Blood Vomiting"
-	stealth = -2
-	resistance = -1
-	stage_speed = -1
-	transmittable = 1
+	stealth = -1
+	resistance = 0
+	stage_speed = 0
+	transmittable = 2
 	level = 4
 	severity = 5
 
@@ -106,7 +106,7 @@ Bonus
 /datum/symptom/vomit/projectile
 
 	name = "Projectile Vomiting"
-	stealth = -2
+	stealth = -1
 	level = 4
 
 /datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
