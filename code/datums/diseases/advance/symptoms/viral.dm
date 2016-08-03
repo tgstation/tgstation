@@ -7,13 +7,7 @@ Viral adaptation
 	Reduces stage speed.
 	No change to transmission
 	Critical Level.
-Old stats
-	name = "Viral self-adaptation"
-	stealth = 3
-	resistance = 5
-	stage_speed = -3
-	transmittable = 0
-	level = 3
+
 BONUS
 	Extremely useful for buffing viruses
 
