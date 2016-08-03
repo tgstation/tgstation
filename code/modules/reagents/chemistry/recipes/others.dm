@@ -175,6 +175,20 @@
 	required_reagents = list("salglu_solution" = 1, "mutagenvirusfood" = 1)
 	result_amount = 2
 
+/datum/chemical_reaction/virus_food_uranium
+	name = "Decaying uranium gel"
+	id = "uraniumvirusfood"
+	result = "uraniumvirusfood"
+	required_reagents = list("uranium" = 10, "virusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood"
+	result = "uraniumplasmavirusfood"
+	required_reagents = list("uranium" = 10, "plasmavirusfood" = 10)
+	result_amount = 1
+
 /datum/chemical_reaction/mix_virus
 	name = "Mix Virus"
 	id = "mixvirus"
@@ -256,6 +270,22 @@
 	required_reagents = list("synaptizinevirusfood" = 1)
 	level_min = 1
 	level_max = 1
+
+/datum/chemical_reaction/mix_virus/mix_virus_10
+
+	name = "Mix Virus 10"
+	id = "mixvirus10"
+	required_reagents = list("uraniumvirusfood" = 10)
+	level_min = 6
+	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_11
+
+	name = "Mix Virus 11"
+	id = "mixvirus11"
+	required_reagents = list("uraniumplasmavirusfood" = 10)
+	level_min = 7
+	level_max = 7
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
