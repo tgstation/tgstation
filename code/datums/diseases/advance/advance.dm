@@ -199,9 +199,9 @@ var/list/advance_cures = 	list(
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2)
+			if(3)
 				visibility_flags = HIDDEN_SCANNER
-			if(3 to INFINITY)
+			if(8 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
