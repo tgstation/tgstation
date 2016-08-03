@@ -8,14 +8,7 @@ Headache
 	Increases stage speed.
 	Not transmittable.
 	Low Level.
-Old stats
-	name = "Headache"
-	stealth = -1
-	resistance = 4
-	stage_speed = 2
-	transmittable = 0
-	level = 1
-	severity = 1
+
 BONUS
 	Displays an annoying message!
 	Should be used for buffing your disease.
