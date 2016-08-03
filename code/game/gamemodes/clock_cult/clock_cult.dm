@@ -126,6 +126,12 @@ This file's folder contains:
 		H.span_for_name = "nezbere"
 		H.span_for_message = "alloy"
 		M << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
+	else if(isclockmob(M))
+		var/datum/action/innate/hierophant/H = new()
+		H.Grant(M)
+		H.title = "Construct"
+		H.span_for_name = "nezbere"
+		M << "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>"
 	if(istype(ticker.mode, /datum/game_mode/clockwork_cult))
 		var/datum/game_mode/clockwork_cult/C = ticker.mode
 		C.present_tasks(M) //Memorize the objectives
