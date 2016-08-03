@@ -192,7 +192,7 @@
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection")
+	var/action = alert(user, "Among the swathes of information, you see...", "[src]", "Recital", "Recollection", "Records")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
