@@ -569,20 +569,20 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		
 	
 /obj/item/proc/get_knockout_chance()
-			switch(hit_area)
-			if("head")	//Harder to score a stun but if you do it lasts a bit longerswitch(hit_area)
-				if(H.stat == CONSCIOUS && armor_block < 50)
-					if(prob(Knockout))
-						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
-										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
-						H.apply_effect(20, PARALYZE, armor_block)
+	switch(hit_area)
+		if("head")	//Harder to score a stun but if you do it lasts a bit longerswitch(hit_area)
+			if(H.stat == CONSCIOUS && armor_block < 50)
+				if(prob(Knockout))
+					H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
+						"<span class='userdanger'>[H] has been knocked unconscious!</span>")
+					H.apply_effect(20, PARALYZE, armor_block)
 
-			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && I.force && prob(Knockout + 10))
-					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
-									"<span class='userdanger'>[H] has been knocked down!</span>")
-					H.apply_effect(5, WEAKEN, armor_block)
-		return TRUE
+		if("chest")	//Easier to score a stun but lasts less time
+			if(H.stat == CONSCIOUS && I.force && prob(Knockout + 10))
+				H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
+					"<span class='userdanger'>[H] has been knocked down!</span>")
+				H.apply_effect(5, WEAKEN, armor_block)
+	return TRUE
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
