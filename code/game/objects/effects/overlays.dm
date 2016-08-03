@@ -96,6 +96,13 @@
 	if(colour)
 		color = colour
 
+/obj/effect/overlay/temp/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+	duration = 4
+
 /obj/effect/overlay/temp/explosion
 	name = "explosion"
 	icon = 'icons/effects/96x96.dmi'

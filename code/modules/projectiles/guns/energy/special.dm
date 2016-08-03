@@ -134,15 +134,15 @@
 	desc = "An upgraded, superior version of the proto-kinetic accelerator."
 	icon_state = "kineticgun_u"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
-	overheat_time = 15
+	overheat_time = 14
 	origin_tech = "materials=5;powerstorage=3;engineering=4;magnets=3;combat=3"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/hyper
 	name = "hyper-kinetic accelerator"
-	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
+	desc = "A high-power upgraded version of the proto-kinetic accelerator. It affects a much larger area than the standard accelerator at the cost of firing much slower."
 	icon_state = "kineticgun_h"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
-	overheat_time = 14
+	overheat_time = 16
 	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
