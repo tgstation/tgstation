@@ -9,13 +9,6 @@ Damage Converter
 	Reduced transmittablity
 	Intense Level.
 	
-Old stats
-	name = "Toxic Compensation"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -2
-	level = 4
 Bonus
 	Slowly converts brute/fire damage to toxin.
 
