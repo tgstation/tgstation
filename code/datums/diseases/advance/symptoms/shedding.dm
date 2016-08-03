@@ -7,14 +7,7 @@ Alopecia
 	Reduces stage speed slightly.
 	Transmittable.
 	Intense Level.
-Old stats
-	name = "Alopecia"
-	stealth = -1
-	resistance = -1
-	stage_speed = -1
-	transmittable = 2
-	level = 4
-	severity = 1
+
 BONUS
 	Makes the mob lose hair.
 
