@@ -28,6 +28,7 @@
 	force = 2
 	throwforce = 1
 	w_class = 3
+	knockout = 100
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -46,6 +47,7 @@
 	force = 40
 	throwforce = 10
 	w_class = 3
+	knockout = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
 	sharpness = IS_SHARP
