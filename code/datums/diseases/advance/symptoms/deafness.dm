@@ -9,14 +9,6 @@ Deafness
 	Decreases transmittablity.
 	Intense Level.
 	
-	name = "Deafness"
-	stealth = -1
-	resistance = -2
-	stage_speed = -1
-	transmittable = -3
-	level = 4
-	severity = 3
-
 Bonus
 	Causes intermittent loss of hearing.
 
