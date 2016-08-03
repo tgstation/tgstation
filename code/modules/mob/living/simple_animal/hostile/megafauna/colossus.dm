@@ -144,58 +144,19 @@ Difficulty: Very Hard
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
-	if(prob(50)) //overlapping spirals
-		switch(rand(1, 8))
-			if(1) //start east and west, east goes counterclockwise, west goes clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 13) //east
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 5) //west
-			if(2) //start east and west, east goes clockwise, west goes counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 13) //east
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 5) //west
-			if(3) //start north and south, north goes counterclockwise, south goes clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 9) //north
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 1) //south
-			if(4) //start north and south, north goes clockwise, south goes counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 9) //north
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 1) //south
-			if(5) //start northeast and southwest, northeast goes counterclockwise, southwest goes clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 11) //northeast
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 3) //southwest
-			if(6) //start northeast and southwest, northeast goes clockwise, southwest goes counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 11) //northeast
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 3) //southwest
-			if(7) //start northwest and southeast, northwest goes counterclockwise, southeast goes clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 7) //northwest
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 15) //southeast
-			if(8) //start northwest and southeast, northwest goes clockwise, southeast goes counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 7) //northwest
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 15) //southeast
-	else //non-overlapping spirals
-		switch(rand(1, 8))
-			if(1) //start east and west, both clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 13) //east
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 5) //west
-			if(2) //start east and west, both counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 13) //east
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 5) //west
-			if(3) //start north and south, both clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 9) //north
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 1) //south
-			if(4) //start north and south, both counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 9) //north
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 1) //south
-			if(5) //start northeast and southwest, both clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 11) //northeast
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 3) //southwest
-			if(6) //start northeast and southwest, both counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 11) //northeast
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 3) //southwest
-			if(7) //start northwest and southeast, both clockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 7) //northwest
-				addtimer(src, "spiral_shoot", 0, FALSE, 0, 15) //southeast
-			if(8) //start northwest and southeast, both counterclockwise
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 7) //northwest
-				addtimer(src, "spiral_shoot", 0, FALSE, 1, 15) //southeast
+	switch(rand(1, 4))
+		if(1) //start east and west
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 13) //east
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 5) //west
+		if(2) //start north and south
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 9) //north
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 1) //south
+		if(3) //start northeast and southwest
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 11) //northeast
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 3) //southwest
+		if(4) //start northwest and southeast
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 7) //northwest
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1), 15) //southeast
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
 	var/counter = counter_start
