@@ -71,7 +71,7 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 
-	if(prob(20+anger_modifier)) //Major attack
+	if(prob(20 + anger_modifier)) //Major attack
 		ranged_cooldown = world.time + major_cooldown
 		telegraph()
 
@@ -83,13 +83,13 @@ Difficulty: Very Hard
 
 	else //Minor attack
 		ranged_cooldown = world.time + minor_cooldown
-		if(prob(20+anger_modifier))
+		if(prob(20 + anger_modifier))
 			random_shots()
 		else
 			if(prob(70))
 				blast()
 			else
-				if(prob(anger_modifier))
+				if(prob(10 + anger_modifier))
 					dir_shots(alldirs)
 					sleep(8)
 					dir_shots(alldirs)
