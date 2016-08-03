@@ -8,13 +8,7 @@ Self-Respiration
 	Decreases stage speed significantly.
 	Decreases transmittablity tremendously.
 	Fatal Level.
-Old stats
-	name = "Self-Respiration"
-	stealth = 1
-	resistance = -3
-	stage_speed = -3
-	transmittable = -4
-	level = 6
+
 Bonus
 	The body generates salbutamol.
 
