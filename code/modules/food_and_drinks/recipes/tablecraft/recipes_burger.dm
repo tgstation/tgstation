@@ -254,7 +254,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat
 	category = CAT_BURGER
 
-/datum/crafting_recipe/food/ratburger
+/datum/crafting_recipe/food/baseballburger
 	name = "Home run baseball burger"
 	reqs = list(
 			/obj/item/weapon/melee/baseball_bat = 1,
