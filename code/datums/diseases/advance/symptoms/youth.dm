@@ -7,13 +7,7 @@ Eternal Youth
 	Increases stage speed tremendously.
 	Reduces transmission tremendously.
 	Critical Level.
-Old stats
-	name = "Eternal Youth"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = -4
-	level = 5
+
 BONUS
 	Gives you immortality and eternal youth!!!
 	Can be used to buff your virus
