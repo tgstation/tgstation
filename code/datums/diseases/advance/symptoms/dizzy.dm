@@ -9,15 +9,6 @@ Dizziness
 	Reduced transmittability
 	Intense Level.
 
-Old stats
-	name = "Dizziness"
-	stealth = 2
-	resistance = -2
-	stage_speed = -3
-	transmittable = -1
-	level = 4
-	severity = 2
-
 Bonus
 	Shakes the affected mob's screen for short periods.
 
