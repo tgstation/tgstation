@@ -974,20 +974,26 @@
 		user << "<span class='inathneq_small'>It requires at least [base_revive_cost] units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
-	if(L.suiciding || sigil_active || !is_servant_of_ratvar(L) && L.stat == DEAD)
+	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return 0
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
 	animate(src, alpha = 255, time = 10)
 	sleep(10)
 	sigil_active = TRUE
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
-	while(L && (!is_servant_of_ratvar(L) && L.stat != DEAD || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
+	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && vitality)) && get_turf(L) == get_turf(src))
 		if(animation_number >= 4)
 			PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
 			var/vitality_drained = L.adjustToxLoss(1.5)
+			if(L.stat == DEAD)
+				vitality_drained = L.maxHealth
+				PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>", \
+						"<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
+				L.dust()
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
