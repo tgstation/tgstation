@@ -23,9 +23,11 @@
 				pitchfork = new pitchfork_type
 				C.put_in_hands(pitchfork)
 
-/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Del()
+/obj/effect/proc_holder/spell/targeted/summon_pitchfork/Destroy()
 	if(pitchfork)
 		qdel(pitchfork)
+		pitchfork = null
+	return ..()
 
 /obj/effect/proc_holder/spell/targeted/summon_pitchfork/greater
 	pitchfork_type = /obj/item/weapon/twohanded/pitchfork/demonic/greater
