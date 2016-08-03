@@ -437,9 +437,9 @@ BLIND     // can't see anything
 		var/obj/item/clothing/tie/T = hastie
 		hastie.detach(src, user)
 		if(user.put_in_hands(T))
-			user << "You deattach [T] from [src]."
+			user << "<span class='notice'>You detach [T] from [src].</span>"
 		else
-			user << "You deattach [T] from [src] and it falls on the floor."
+			user << "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>"
 
 		if(istype(loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = loc
