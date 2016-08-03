@@ -1,0 +1,4 @@
+author: "Joan"
+delete-after: True
+changes: 
+  - rscadd: "Vitality Matrices will consume dead non-servant mobs to gain a large amount of Vitality. This doesn't work on mobs that did not have a mind at some point."
