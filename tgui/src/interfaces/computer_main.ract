@@ -6,23 +6,23 @@
       getActiveProgramTag(template) {
             let tag = ''; //templates come in the form './airalarm/vents.ract' and from that the tag is <vents/>
             if(template){
-                tag = template.split('/').pop().split('.')[0]; //'vents'
+                tag = "<" + template.split('/').pop().split('.')[0] + "/>";
             }
             return tag
         },
       getTaskbarContents() {
             {{!does a thing, probably reads a lot of data.X to load things like active programs, their icons, etc.}}
         }
-      }
-    }
+	}
+	}
 </script>
  
 <ui-display>
-    <ui-section> {{! Active program}}
-        <{{{getActiveProgramTag(data.active_program_template)}}}/>
-    </ui-section>
-    <ui-section> {{! Taskbar}}
-        {{{getTaskbarContents()}}}
+	<ui-section> {{! Active program}}
+		{{{getActiveProgramTag(data.active_program_template)}}}
+	</ui-section>
+	<ui-section> {{! Taskbar}}
+		{{{getTaskbarContents()}}}
 		butt
-    </ui-section>
+	</ui-section>
 </ui-display>

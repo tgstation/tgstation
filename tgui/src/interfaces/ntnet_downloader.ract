@@ -1,0 +1,79 @@
+
+<ui-display>
+	<i>Welcome to software download utility. Please select which software you wish to download.</i><hr>
+	{{#if data.error}}
+		<ui-display title='Download Error'>
+			<ui-section label='Information'>
+				{{data.error}}
+			</ui-section>
+			<ui-section label='Reset Program'>
+				<ui-button icon='times' action='PRG_reseterror'>
+				RESET
+				</ui-button>
+			</ui-section>
+		</ui-display>
+	{{else data.downloadname}}
+		<ui-display title='Download Running'>
+			<i>Please wait...</i>
+			<ui-section label='File name'>
+				{{data.downloadname}}
+			</ui-section>
+			<ui-section label='File description'>
+				{{data.downloaddesc}}
+			</ui-section>
+			<ui-section label='File size'>
+				{{data.downloadcompletion}}GQ / {{data.downloadsize}}GQ
+			</ui-section>
+			<ui-section label='Transfer Rate'>
+				{{data.downloadspeed}} GQ/s
+			</ui-section>
+			<ui-section label='Download progress'>
+				<ui-bar min='0' max='{{adata.downloadsize}}' value='{{adata.downloadcompletion}}' state='good'>{{Math.round(adata.downloadcompletion)}}/{{adata.downloadsize}}</ui-bar>
+			</ui-section>
+		</ui-display>
+	{{else}}
+		<ui-display title='Primary software repository'>
+			<ui-section label='Hard drive'>
+				<ui-bar min='0' max='{{adata.disk_size}}' value='{{adata.disk_used}}' state='good'>{{Math.round(adata.disk_used)}}GQ/{{adata.disk_size}}GQ</ui-bar>
+			</ui-section>
+			{{#each data.downloadable_programs}}
+				<ui-section label='File name'>
+					{{value.filename}} ({{size}} GQ)
+				</ui-section>
+				<ui-section label='Program name'>
+					{{filedesc}}
+				</ui-section>	
+				<ui-section label='Description'>
+					{{fileinfo}}
+				</ui-section>
+				<ui-section label='File controls'>
+					<ui-button icon='signal' action='PRG_downloadfile' params='{"filename": "{{filename}}"}'>
+						DOWNLOAD
+					</ui-button>
+				</ui-section>
+			{{/each}}
+		</ui-display>
+		{{#if data.hackedavailable}}
+			<ui-display title='UNKNOWN software repository'>
+				<i>Please note that NanoTrasen does not recommend download of software from non-official servers.</i>
+				{{#each data.hacked_programs}}
+					<ui-section label='File name'>
+						{{filename}} ({{size}} GQ)
+					</ui-section>
+					<ui-section label='Program name'>
+						{{filedesc}}
+					</ui-section>	
+					<ui-section label='Description'>
+						{{fileinfo}}
+					</ui-section>
+					<ui-section label='File controls'>
+						<ui-button icon='signal' action='PRG_downloadfile' params='{"filename": "{{filename}}"}'>
+							DOWNLOAD
+						</ui-button>
+					</ui-section>	
+				{{/each}}
+			</ui-display>
+		{{/if}}
+	{{/if}}
+	<br><br><hr><i>NTOS v2.0.4b Copyright NanoTrasen 2557 - 2559</i>
+</ui-display>
