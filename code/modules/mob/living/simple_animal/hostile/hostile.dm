@@ -75,8 +75,11 @@
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
 	if(!target && AIStatus != AI_OFF && !client)
+		if(P.firer)
+			var/list/shooter = list(P.firer)
+			FindTarget(shooter, 1)
 		Goto(P.starting, move_to_delay, 3)
-	..()
+	return ..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
