@@ -75,7 +75,7 @@
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
 	if(!target && AIStatus != AI_OFF && !client)
-		if(P.firer)
+		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
 			var/list/shooter = list(P.firer)
 			FindTarget(shooter, 1)
 		Goto(P.starting, move_to_delay, 3)
