@@ -371,19 +371,6 @@
 	slot_flags = null
 	on = 1
 	var/charges = 3
-	
-/obj/item/device/flashlight/flare/culttorch
-	name = "void torch"
-	desc = "Used by veteran cultists to instantly transport items to their needful bretheren."
-	w_class = 2
-	brightness_on = 1
-	icon_state = "torch-on"
-	item_state = "torch-on"
-	color = "#ff0000"
-	on_damage = 15
-	slot_flags = null
-	on = 1
-	var/charges = 3
 
 /obj/item/device/flashlight/flare/culttorch/afterattack(atom/movable/A, mob/user, proximity)
 	if(!proximity)
