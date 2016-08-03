@@ -530,14 +530,17 @@
 	icon = 'icons/obj/device.dmi'
 	desc = "Deploy to designate the landing zone of the auxillary base."
 	shuttle_id = "colony_drop"
+	var/setting = FALSE
 	var/no_restrictions = FALSE //Badmin variable to let you drop the colony ANYWHERE.
-	dwidth = 11
+	dwidth = 11 //These dimensions are to be set by the mappers for their respective maps.
 	dheight = 0
 	width = 23
 	height = 23
 	lz_dir = 1
 
 /obj/item/device/assault_pod/mining/attack_self(mob/living/user)
+	if(setting)
+		return
 	var/turf/T = get_turf(user)
 	if(!no_restrictions)
 		if(T.z != ZLEVEL_MINING)
@@ -548,6 +551,12 @@
 		if(area_counter.len > 1) //Avoid smashing ruins unless you are inside a really big one
 			user << "Unable to acquire a targeting lock. Find an area clear of stuctures or entirely within one."
 			return
+
+	user << "<span class='notice'>You begin setting the landing zone parameters...</span>"
+	setting = TRUE
+	if(!do_after(user, 50, target = src)) //You get a few seconds to cancel if you do not want to drop there.
+		setting = FALSE
+		return
 
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "colony_drop(\ref[src])"
@@ -562,7 +571,9 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	user << "Landing zone set."
+//Serves as a nice mechanic to people get ready for the launch.
+	minor_announce("Auxiliary base landing zone coordinates locked in for [get_area(user)]. Launch command now available!")
+	user << "<span class='notice'>Landing zone set.</span>"
 
 	qdel(src)
 
