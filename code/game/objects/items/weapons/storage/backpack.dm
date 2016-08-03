@@ -289,6 +289,13 @@
 	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
 
+/obj/item/weapon/storage/backpack/satchel/flat/rngjesus/New()
+	..()
+	var/obj/item/weapon/gun/energy/pulse/P = new (src)
+	P.unlock()
+	if(istype(loc,/turf/open/floor) && !istype(loc,/turf/open/floor/plating/))
+		hide(1)
+
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"
 	desc = "A large dufflebag for holding extra things."
