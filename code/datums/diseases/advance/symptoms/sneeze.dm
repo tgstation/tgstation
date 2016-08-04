@@ -36,5 +36,6 @@ Bonus
 			else
 				M.emote("sneeze")
 				A.spread(A.holder, 5)
-				M.drop_item()
+				M.Stun(1)
+				M.blur_eyes(5)
 	return
