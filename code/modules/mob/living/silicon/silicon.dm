@@ -516,3 +516,6 @@
 
 /mob/living/silicon/is_literate()
 	return 1
+
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+	return 0
