@@ -1602,6 +1602,7 @@
 #include "code\modules\procedural_mapping\mapGeneratorModules\nature.dm"
 #include "code\modules\procedural_mapping\mapGenerators\asteroid.dm"
 #include "code\modules\procedural_mapping\mapGenerators\cellular.dm"
+#include "code\modules\procedural_mapping\mapGenerators\cult.dm"
 #include "code\modules\procedural_mapping\mapGenerators\lava_river.dm"
 #include "code\modules\procedural_mapping\mapGenerators\nature.dm"
 #include "code\modules\procedural_mapping\mapGenerators\shuttle.dm"
