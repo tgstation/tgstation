@@ -287,10 +287,11 @@ Difficulty: Very Hard
 	return TRUE
 
 /obj/machinery/smartfridge/black_box/New()
-	var/static/obj/machinery/smartfridge/black_box/current = src
-	if (current && current != src)
+	var/static/obj/machinery/smartfridge/black_box/current
+	if(current && current != src)
 		qdel(src, force=TRUE)
 		return
+	current = src
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
