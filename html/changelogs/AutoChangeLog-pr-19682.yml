@@ -1,0 +1,6 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "RCDs can no longer place multiple grilles on the same tile."
+  - bugfix: "RCDs will no longer use all their ammo if you try to build a wall on the same turf multiple times."
+  - tweak: "RCDs will now inform their user if they do not have enough ammo to complete an operation."
