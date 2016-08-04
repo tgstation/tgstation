@@ -221,7 +221,7 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 5
+	range = 3.5 //works as 4, but doubles to 7
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
@@ -231,8 +231,9 @@
 	if(environment)
 		var/pressure = environment.return_pressure()
 		if(pressure < 60)
-			name = "full strength plasma blast"
+			name = "full strength [name]"
 			damage *= 4
+			range *= 2
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
@@ -246,11 +247,11 @@
 
 /obj/item/projectile/plasma/adv
 	damage = 7
-	range = 7
+	range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 8
+	range = 6
 
 
 /obj/item/projectile/gravityrepulse
