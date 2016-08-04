@@ -75,7 +75,7 @@ Difficulty: Very Hard
 			if(move_to_delay == initial(move_to_delay))
 				visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
 			telegraph()
-			move_to_delay = 4
+			move_to_delay = 3
 			return
 		else
 			move_to_delay = initial(move_to_delay)
