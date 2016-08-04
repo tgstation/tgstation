@@ -1072,7 +1072,7 @@
 		switch(hit_area)
 			if("head")	//Harder to score a stun but if you do it lasts a bit longer
 				if(H.stat == CONSCIOUS && armor_block < 50)
-					if(prob(knockout))
+					if(prob(I.knockout))
 						H.visible_message("<span class='danger'>[H] has been knocked unconscious!</span>", \
 										"<span class='userdanger'>[H] has been knocked unconscious!</span>")
 						H.apply_effect(20, PARALYZE, armor_block)
@@ -1091,7 +1091,7 @@
 						H.update_inv_glasses()
 
 			if("chest")	//Easier to score a stun but lasts less time
-				if(H.stat == CONSCIOUS && knockout && prob(knockout + 10))
+				if(H.stat == CONSCIOUS && knockout && prob(I.knockout + 10))
 					H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
 					H.apply_effect(5, WEAKEN, armor_block)
