@@ -35,6 +35,9 @@
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = 3
 
+/obj/item/weapon/storage/internal/pocket/wide
+	storage_slots = 4
+
 /obj/item/weapon/storage/internal/pocket/small
 	storage_slots = 1
 	priority = FALSE
@@ -43,6 +46,13 @@
 	storage_slots = 1
 	max_w_class = 1
 	priority = FALSE
+
+/obj/item/weapon/storage/internal/pocket/holster
+	storage_slots = 1
+	max_w_class = 3
+	quickdraw = TRUE
+	can_hold = list(/obj/item/weapon/gun)
+
 
 /obj/item/weapon/storage/internal/pocket/shoes
 	can_hold = list(
@@ -56,6 +66,7 @@
 	priority = FALSE
 	quickdraw = TRUE
 	silent = TRUE
+
 
 /obj/item/weapon/storage/internal/pocket/shoes/clown
 	can_hold = list(
