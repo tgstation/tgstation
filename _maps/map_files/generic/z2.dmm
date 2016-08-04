@@ -5810,7 +5810,7 @@
 /area/holodeck/rec_center/winterwonderland)
 "se" = (
 /turf/open/floor/holofloor/snow/cold,
-/area/holodeck/rec_center/medical)
+/area/holodeck/rec_center/winterwonderland)
 "sf" = (
 /obj/structure/flora/bush,
 /turf/open/floor/holofloor/snow/cold,
