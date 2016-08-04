@@ -65,7 +65,7 @@
 	name = "tricordrazine auto-injector"
 	desc = "A non-refillable basic healing injector filled with tricordrazine."
 	volume = 80
-	flags = NONE
+	flags = FALSE
 	list_reagents = list("tricordrazine" = 80)
 
 //MediPens
