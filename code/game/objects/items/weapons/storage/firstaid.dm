@@ -99,6 +99,43 @@
 	new /obj/item/device/healthanalyzer(src)
 	return
 
+/obj/item/weapon/storage/firstaid/emergency
+	name = "emergency first-aid kit"
+	desc = "Has a tag: 'Only for emergencies!'. Yeah right."
+	icon_state = "redfirstaid"
+	item_state = "redfirstaid"
+
+/obj/item/weapon/storage/firstaid/emergency/New()
+	..()
+	if(empty) return
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/emergency(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/emergency(src)
+	new /obj/item/weapon/reagent_containers/pill/salbutamol(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/device/healthanalyzer(src)
+	return
+
+/obj/item/weapon/storage/firstaid/purple
+	name = "specialist treatment kit"
+	desc = "A first-aid kit holding moderate treatment supplies."
+	icon_state = "purplefirstaid"
+	item_state = "purplefirstaid"
+
+/obj/item/weapon/storage/firstaid/purple/New()
+	..()
+	if(empty) return
+	new /obj/item/weapon/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/weapon/reagent_containers/pill/patch/silver_sulf(src)
+	new /obj/item/weapon/reagent_containers/hypospray/medipen/morphine(src)
+	new /obj/item/weapon/reagent_containers/syringe/charcoal(src)
+	new /obj/item/weapon/reagent_containers/syringe/antiviral(src)
+	new /obj/item/stack/medical/gauze(src)
+	new /obj/item/device/healthanalyzer(src)
+	return
+
 /obj/item/weapon/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."

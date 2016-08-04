@@ -32,7 +32,7 @@ Chief Medical Officer
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/weapon/storage/firstaid/purple
 	suit_store = /obj/item/device/flashlight/pen
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
@@ -75,7 +75,7 @@ Medical Doctor
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit =  /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/weapon/storage/firstaid/regular
+	l_hand = /obj/item/weapon/storage/firstaid/purple
 	suit_store = /obj/item/device/flashlight/pen
 
 	backpack = /obj/item/weapon/storage/backpack/medic
