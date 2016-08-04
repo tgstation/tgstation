@@ -46,10 +46,9 @@ Apoptosis
 	Lowers resistance.
 	Decreases stage speed.
 	Decreases transmittablity.
-	Fatal Level.
 
 Bonus
-	Heals toxins in the affected mob's blood stream.
+	Heals toxins in the affected mob's blood stream faster.
 
 //////////////////////////////////////
 */

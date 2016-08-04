@@ -179,14 +179,28 @@
 	name = "Decaying uranium gel"
 	id = "uraniumvirusfood"
 	result = "uraniumvirusfood"
-	required_reagents = list("uranium" = 10, "virusfood" = 1)
+	required_reagents = list("uranium" = 1, "virusfood" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/virus_food_uranium_plasma
+	name = "Unstable uranium gel"
+	id = "uraniumvirusfood_plasma"
+	result = "uraniumplasmavirusfood_unstable"
+	required_reagents = list("uranium" = 5, "plasmavirusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma_gold
 	name = "Stable uranium gel"
-	id = "uraniumvirusfood"
-	result = "uraniumplasmavirusfood"
-	required_reagents = list("uranium" = 10, "plasmavirusfood" = 10)
+	id = "uraniumvirusfood_gold"
+	result = "uraniumplasmavirusfood_stable"
+	required_reagents = list("uranium" = 10, "gold" = 10, "plasmavirusfood" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/virus_food_uranium_plasma_silver
+	name = "Stable uranium gel"
+	id = "uraniumvirusfood_silver"
+	result = "uraniumplasmavirusfood_stable"
+	required_reagents = list("uranium" = 10, "silver" = 10, "plasmavirusfood" = 1)
 	result_amount = 1
 
 /datum/chemical_reaction/mix_virus
@@ -275,7 +289,7 @@
 
 	name = "Mix Virus 10"
 	id = "mixvirus10"
-	required_reagents = list("uraniumvirusfood" = 10)
+	required_reagents = list("uraniumvirusfood" = 5)
 	level_min = 6
 	level_max = 7
 
@@ -283,9 +297,17 @@
 
 	name = "Mix Virus 11"
 	id = "mixvirus11"
-	required_reagents = list("uraniumplasmavirusfood" = 10)
+	required_reagents = list("uraniumplasmavirusfood_unstable" = 5)
 	level_min = 7
 	level_max = 7
+
+/datum/chemical_reaction/mix_virus/mix_virus_11
+
+	name = "Mix Virus 11"
+	id = "mixvirus11"
+	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
+	level_min = 8
+	level_max = 8
 
 /datum/chemical_reaction/mix_virus/rem_virus
 
