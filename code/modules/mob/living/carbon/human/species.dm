@@ -67,7 +67,7 @@
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
 	var/sound/miss_sound = 'sound/weapons/punchmiss.ogg'
 	
-	var/knockout = /obj/items
+	var/knockout = /obj/item
 
 	var/mob/living/list/ignored_by = list()	// list of mobs that will ignore this species
 
