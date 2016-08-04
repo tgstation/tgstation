@@ -220,7 +220,7 @@
 		else
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
-			if(isturf(targets_from.loc) && target_adjacent)) //If they're next to us, attack
+			if(isturf(targets_from.loc) && target_adjacent) //If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
