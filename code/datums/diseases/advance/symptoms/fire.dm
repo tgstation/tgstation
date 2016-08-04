@@ -102,6 +102,7 @@ Bonus
 				M << "<span class='userdanger'>Your skin erupts into an inferno!</span>"
 				M.emote("scream")
 				if(M.fire_stacks < 0)
+					M.visible_message("<span class='warning'>[M]'s sweat sizzles and pops on contact with water!</span>")
 					explosion(M.loc,0,0,3)
 					Alkali_fire_stage_5(M, A)
 	return

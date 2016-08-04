@@ -301,10 +301,10 @@
 	level_min = 7
 	level_max = 7
 
-/datum/chemical_reaction/mix_virus/mix_virus_11
+/datum/chemical_reaction/mix_virus/mix_virus_12
 
-	name = "Mix Virus 11"
-	id = "mixvirus11"
+	name = "Mix Virus 12"
+	id = "mixvirus12"
 	required_reagents = list("uraniumplasmavirusfood_stable" = 5)
 	level_min = 8
 	level_max = 8

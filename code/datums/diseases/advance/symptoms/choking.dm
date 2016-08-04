@@ -92,7 +92,7 @@ Bonus
 				M << "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breath!")]</span>"
 				Asphyxiate(M, A)
 				M.emote("gasp")
-				if(M.getStaminaLoss() >= 100)
+				if(M.getOxyLoss() >= 120)
 					M.visible_message("<span class='warning'>[M] stops breathing, as if their lung has totally collapsed!</span>")
 					Asphyxiate_death(M, A)
 	return
