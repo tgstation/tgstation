@@ -1,0 +1,10 @@
+author: "Robustin"
+delete-after: True
+changes: 
+  - rscadd: "The initial supply talisman can now be used to create runed metal, 5 per use"
+  - rscadd: "The void torch is now available from the altar, use it to transport any item instantly to any cultist! It appears alongside the veil shifter as part of the \"Veil Walker\" set."
+  - rscadd: "Cult floors no longer appear on mesons!"
+  - tweak: "Flagellant's Robes now increases damage taken by 50%, down from 100%"
+  - tweak: "Veil Shifter has 4 uses, up from 2"
+  - tweak: "Shuttle curse now delays shuttle 3 minutes, up from 2.5 minutes"
+  - tweak: "Cult forges, archives, and airlocks have had their cost reduced by 1 runed metal each"
