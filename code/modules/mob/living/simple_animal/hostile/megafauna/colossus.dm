@@ -275,38 +275,36 @@ Difficulty: Very Hard
 	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
-	var/duplicate = FALSE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/list/blacklist = (/obj/item/weapon/spellbook)
+	var/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
-	if(O.type in blacklist)
-		return
-	if(istype(O, /obj/item))
-		return 1
-	return 0
+	if(!istype(O))
+		return FALSE
+	if(is_type_in_typecache(O, blacklist))
+		return FALSE
+	return TRUE
 
 /obj/machinery/smartfridge/black_box/New()
-	..()
-	for(var/obj/machinery/smartfridge/black_box/B in machines)
-		if(B != src)
-			duplicate = 1
-			qdel(src)
+	var/static/obj/machinery/smartfridge/black_box/current = src
+	if (current && current != src)
+		qdel(src, force=TRUE)
+		return
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!memory_saved && ticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 	stored_items = list()
-	for(var/obj/I in component_parts)
-		qdel(I)
-	for(var/obj/O in contents)
+
+	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
+	
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -318,11 +316,17 @@ Difficulty: Very Hard
 		stored_items = list()
 
 	for(var/item in stored_items)
-		new item(src)
+		create_item(item)
 
+//in it's own proc to avoid issues with items that nolonger exist in the code base.
+//try catch doesn't always prevent byond runtimes from halting a proc, 
+/obj/machinery/smartfridge/black_box/proc/create_item(item_type)
+	new item_type(src)
 
-/obj/machinery/smartfridge/black_box/Destroy()
-	if(duplicate)
+/obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
+	if(force)
+		for(var/thing in src)
+			qdel(thing)
 		return ..()
 	else
 		return QDEL_HINT_LETMELIVE
