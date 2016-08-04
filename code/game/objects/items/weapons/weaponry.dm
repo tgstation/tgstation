@@ -25,7 +25,7 @@
 	icon_state = "sord"
 	item_state = "sord"
 	slot_flags = SLOT_BELT
-	force = 2
+	force = 12
 	knockout = 100
 	throwforce = 1
 	w_class = 3
@@ -44,7 +44,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
-	force = 4
+	force = 12
 	knockout = 50
 	throwforce = 10
 	w_class = 3
