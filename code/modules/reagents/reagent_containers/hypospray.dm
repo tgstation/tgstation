@@ -11,7 +11,6 @@
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
-	var/refillable = TRUE
 
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return attack_hand(user)
