@@ -277,7 +277,7 @@ Difficulty: Very Hard
 	use_power = 0
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
+	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
