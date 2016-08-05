@@ -716,7 +716,6 @@
 		if(!(lying))
 			M.do_attack_animation(src)
 			if (prob(85))
-				Stun(2)
 				step(src,get_dir(M,src))
 				addtimer(src, "step", 5, FALSE, src, get_dir(M, src))
 				add_logs(M, src, "pushed")
