@@ -326,6 +326,55 @@
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, rand(1,2), 7, user)
 
+/obj/item/weapon/melee/baseball_bat/ablative
+	name = "metal baseball bat"
+	desc = "This bat is made of highly reflective, highly armored material."
+	icon_state = "baseball_bat_metal"
+	item_state = "baseball_bat_metal"
+	force = 12
+	throwforce = 15
+	var/hyper = 0
+	var/homerun = 0
+
+/obj/item/weapon/melee/baseball_bat/ablative/hyper
+	hyper = 1
+	desc = "Makes you wanna hit a home run."
+
+/obj/item/weapon/melee/baseball_bat/ablative/attack_self(mob/user)
+	if(!hyper)
+		if(homerun)
+			user << "<span class='notice'>You're already ready to do a home run!</span>"
+		..()
+		return
+	user << "<span class='warning'>You begin gathering strength...</span>"
+	playsound(get_turf(src), 'sound/magic/lightning_chargeup.ogg', 65, 1)
+	if(do_after(user, 90, target = src))
+		user << "<span class='userdanger'>You gather power! Time for a home run!</span>"
+		homerun = 1
+	..()
+
+/obj/item/weapon/melee/baseball_bat/ablative/IsReflect()
+	var/picksound = rand(1,2)
+	var/turf = get_turf(src)
+	if(picksound == 1)
+		playsound(turf, 'sound/weapons/effects/batreflect1.ogg', 50, 1)
+	if(picksound == 2)
+		playsound(turf, 'sound/weapons/effects/batreflect2.ogg', 50, 1)
+	return 1
+
+/obj/item/weapon/melee/baseball_bat/ablative/attack(mob/living/target, mob/living/user)
+	if(homerun)
+		user.visible_message("<span class='userdanger'>It's a home run!</span>")
+		var/atom/throw_target = get_edge_target_turf(target, user.dir)
+		target.throw_at(throw_target, rand(8,10), 14, user)
+		target.ex_act(2)
+		playsound(get_turf(src), 'sound/magic/lightningbolt.ogg', 100, 1)
+		homerun = 0
+		return
+	else
+		..()
+
+
 /obj/item/weapon/melee/flyswatter
 	name = "Flyswatter"
 	desc = "Useful for killing insects of all sizes."
