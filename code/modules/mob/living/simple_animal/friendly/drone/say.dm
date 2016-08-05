@@ -41,7 +41,7 @@
 	var/rendered = "<i>Drone Chat: \
 		<span class='name'>[name]</span>: \
 		<span class='message'>[say_quote(msg, get_spans())]</span></i>"
-	alert_drones(rendered, 1, src)
+	alert_drones(rendered, 1)
 
 /mob/living/simple_animal/drone/binarycheck()
 	return TRUE
