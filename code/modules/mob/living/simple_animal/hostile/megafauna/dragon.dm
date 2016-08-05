@@ -180,8 +180,9 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/turf/E = get_edge_target_turf(src, dir)
 	var/range = 10
+	var/turf/previousturf = get_turf(src)
 	for(var/turf/J in getline(src,E))
-		if(!range || J.density)
+		if(!range || !previousturf.CanAtmosPass(J))
 			break
 		range--
 		PoolOrNew(/obj/effect/hotspot,J)
@@ -190,6 +191,7 @@ Difficulty: Medium
 			if(L != src)
 				L.adjustFireLoss(20)
 				L << "<span class='userdanger'>You're hit by the drake's fire breath!</span>"
+		previousturf = J
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
