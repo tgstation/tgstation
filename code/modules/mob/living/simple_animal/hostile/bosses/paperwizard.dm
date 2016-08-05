@@ -31,7 +31,7 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
-	var/summoned_minions = 0
+	var/static/summoned_minions = 0
 
 /datum/action/boss/wizard_summon_minions/Trigger()
 	if(summoned_minions < 9 && ..())

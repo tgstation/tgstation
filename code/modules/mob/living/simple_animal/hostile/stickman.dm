@@ -27,6 +27,7 @@
 	faction = list("hostile","stickman")
 	check_friendly_fire = 1
 	status_flags = CANPUSH
+	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions/
 
 /mob/living/simple_animal/hostile/stickman/ranged
 	ranged = 1
@@ -49,3 +50,7 @@
 /mob/living/simple_animal/hostile/stickman/New()
 	..()
 	new /obj/effect/overlay/temp/paper_scatter(src)
+
+/mob/living/simple_animal/hostile/stickman/death()
+	..()
+	changesummons.summoned_minions --
