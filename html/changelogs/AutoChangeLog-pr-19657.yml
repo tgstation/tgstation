@@ -1,4 +1,0 @@
-author: "Joan"
-delete-after: True
-changes: 
-  - rscadd: "Plasma cutters(normal, advanced, and mech) now have double range in low pressure areas, but slightly lower range in high pressure areas."
