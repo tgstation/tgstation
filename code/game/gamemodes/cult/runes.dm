@@ -746,10 +746,22 @@ var/list/teleport_runes = list()
 	if(density)
 		user << "<span class='cultitalic'>There is a barely perceptible shimmering of the air above [src].</span>"
 
+/obj/effect/rune/wall/Destroy()
+	density = 0
+	air_update_turf(1)
+	return ..()
+
+/obj/effect/rune/wall/CanAtmosPass(turf/T)
+	return !density
+
+/obj/effect/rune/wall/BlockSuperconductivity()
+	return density
+
 /obj/effect/rune/wall/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	density = !density
+	air_update_turf(1)
 	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places their hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
 						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "preventing" : "allowing"] passage above it.</span>")
 	if(density)
