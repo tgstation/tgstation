@@ -61,6 +61,13 @@
 	volume = 100
 	list_reagents = list("nanites" = 80, "synaptizine" = 20)
 
+/obj/item/weapon/reagent_containers/hypospray/combat/tricord
+	name = "tricordrazine auto-injector"
+	desc = "A non-refillable basic healing injector filled with tricordrazine."
+	volume = 80
+	flags = FALSE
+	list_reagents = list("tricordrazine" = 80)
+
 //MediPens
 
 /obj/item/weapon/reagent_containers/hypospray/medipen
@@ -117,6 +124,12 @@
 	name = "morphine medipen"
 	desc = "A rapid way to get you out of a tight situation and fast! You'll feel rather drowsy, though."
 	list_reagents = list("morphine" = 10)
+
+/obj/item/weapon/reagent_containers/hypospray/medipen/emergency
+	name = "emergency medipen"
+	icon_state = "lepopen"
+	desc = "A speed-injection medi-pen for quick emergency healing."
+	list_reagents = list("tricordrazine" = 10, "epinephrine" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
