@@ -84,9 +84,7 @@ Difficulty: Hard
 		if(health > maxHealth/2 && !client)
 			addtimer(src, "charge", 0)
 		else
-			addtimer(src, "charge", 0)
-			addtimer(src, "charge", 10)
-			addtimer(src, "charge", 20)
+			addtimer(src, "triple_charge", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -125,6 +123,13 @@ Difficulty: Hard
 	. = ..()
 	if(charging)
 		DestroySurroundings()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
+	charge()
+	sleep(10)
+	charge()
+	sleep(10)
+	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
