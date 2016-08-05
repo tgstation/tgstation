@@ -194,7 +194,10 @@ Difficulty: Hard
 	var/range = 10
 	var/turf/previousturf = get_turf(src)
 	for(var/turf/J in getline(src,E))
-		if(!range || !previousturf.CanAtmosPass(J))
+		if(!range)
+			break
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
+		if(!previousturf.CanAtmosPass(J))
 			break
 		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
 		new /obj/effect/decal/cleanable/blood(J)
