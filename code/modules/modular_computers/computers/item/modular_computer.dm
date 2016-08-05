@@ -7,7 +7,7 @@
 
 	var/enabled = 0											// Whether the computer is turned on.
 	var/screen_on = 1										// Whether the computer is active/opened/it's screen is on.
-	var/datum/computer_file/program/active_program = new /datum/computer_file/program/computerconfig	// A currently active program running on the computer.
+	var/datum/computer_file/program/active_program = null	// A currently active program running on the computer.
 	var/hardware_flag = 0									// A flag that describes this device type
 	var/last_power_usage = 0
 	var/last_battery_percent = 0							// Used for deciding if battery percentage has chandged
@@ -46,6 +46,7 @@
 	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
 	var/list/idle_threads = list()							// Idle programs on background. They still receive process calls but can't be interacted with.
+	var/activetemplate = "computer_main"
 
 
 // Eject ID card from computer, if it has ID slot with card inside.
@@ -171,7 +172,7 @@
 	return 0
 
 // Operates NanoUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 1, datum/tgui/master_ui = null, datum/ui_state/state = contained_state)
+/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
 //	if(!screen_on || !enabled)
 //		if(ui)
 //			ui.close()
@@ -180,50 +181,50 @@
 //		if(ui)
 //			ui.close()
 //		return 0
-/*
+
 	// If we have an active program switch to it now.
 	if(active_program)
 		if(ui) // This is the main laptop screen. Since we are switching to program's UI close it for now.
 			ui.close()
 		active_program.ui_interact(user)
 		return
-*/
+
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
 		visible_message("\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.")
-	//	return // No HDD, No HDD files list or no stored files. Something is very broken.
+		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
-
-
-//	data["programs"] = programs
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 //		ui = new(user, src, ui_key, "laptop_mainscreen", "NTOS Main Menu", 400, 500)
-		ui = new(user, src, ui_key, "computer_main", "Main menu", 475, 340, master_ui, state)
+		ui = new(user, src, ui_key, activetemplate, "Main menu", 400, 500, master_ui, state)
 //		ui.set_initial_data(data)
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
 
 /obj/item/modular_computer/ui_data(mob/user)
-	var/list/data = list()
-	data["active_program_template"] = active_program
+//	var/list/data = list()
+//	data["active_program_template"] = active_program
 
-	return data
-/*
+//	return data
+
 	var/list/data = get_header_data()
-
-	var/list/programs = list()
+	data["programs"] = list()
+//	var/list/programs = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
-		var/list/program = list()
 
-		program["name"] = P.filename
-		program["desc"] = P.filedesc
-		if(P in idle_threads)
-			program["running"] = 1
-		programs.Add(list(program))
-*/
+		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc))
+
+//		var/list/program = list()
+
+//		program["name"] = P.filename
+//		program["desc"] = P.filedesc
+//		if(P in idle_threads)
+//			program["running"] = 1
+//		programs.Add(list(program))
+	return data
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -388,92 +389,80 @@
 	return
 
 // Handles user's GUI input
-/obj/item/modular_computer/Topic(href, href_list)
+/obj/item/modular_computer/ui_act(action, params)
 	if(..())
-		return 1
-	if( href_list["PC_exit"] )
-		kill_program()
-		return 1
-	if( href_list["PC_enable_component"] )
-		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(href_list["PC_enable_component"])
-		if(H && istype(H) && !H.enabled)
-			H.enabled = 1
-		. = 1
-	if( href_list["PC_disable_component"] )
-		var/obj/item/weapon/computer_hardware/H = find_hardware_by_name(href_list["PC_disable_component"])
-		if(H && istype(H) && H.enabled)
-			H.enabled = 0
-		. = 1
-	if( href_list["PC_shutdown"] )
-		shutdown_computer()
-		return 1
-	if( href_list["PC_minimize"] )
-		var/mob/user = usr
-		if(!active_program || !processor_unit)
-			return
-
-		idle_threads.Add(active_program)
-		active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
-//		nanomanager.close_uis(active_program.NM ? active_program.NM : active_program)
-
-		active_program = null
-		update_icon()
-		if(user && istype(user))
-			ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
-	if( href_list["PC_killprogram"] )
-		var/prog = href_list["PC_killprogram"]
-		var/datum/computer_file/program/P = null
-		var/mob/user = usr
-		if(hard_drive)
-			P = hard_drive.find_file_by_name(prog)
-
-		if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
-			return
-
-		P.kill_program(1)
-//		update_uis()
-		user << "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>"
-
-	if( href_list["PC_runprogram"] )
-		var/prog = href_list["PC_runprogram"]
-		var/datum/computer_file/program/P = null
-		var/mob/user = usr
-		if(hard_drive)
-			P = hard_drive.find_file_by_name(prog)
-
-		if(!P || !istype(P)) // Program not found or it's not executable program.
-			user << "<span class='danger'>\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning.</span>"
-			return
-
-		P.computer = src
-
-		if(!P.is_supported_by_hardware(hardware_flag, 1, user))
-			return
-
-		// The program is already running. Resume it.
-		if(P in idle_threads)
-			P.program_state = PROGRAM_STATE_ACTIVE
-			active_program = P
-			idle_threads.Remove(P)
-			update_icon()
-			return
-
-		if(idle_threads.len >= processor_unit.max_idle_programs+1)
-			user << "<span class='notice'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error</span>"
-			return
-
-		if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-			user << "<span class='danger'>\The [src]'s screen shows \"NETWORK ERROR - Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
-			return
-
-		if(P.run_program(user))
-			active_program = P
-			update_icon()
-		return 1
-	if(.)
 		return
-//		update_uis()
+	switch(action)
+		if("PC_exit")
+			kill_program()
+			return 1
+		if("PC_shutdown")
+			shutdown_computer()
+			return 1
+		if("PC_minimize")
+			var/mob/user = usr
+			if(!active_program || !processor_unit)
+				return
+
+			idle_threads.Add(active_program)
+			active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
+
+			active_program = null
+			update_icon()
+			if(user && istype(user))
+				ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
+
+		if("PC_killprogram")
+			var/prog = params["name"]
+			var/datum/computer_file/program/P = null
+			var/mob/user = usr
+			if(hard_drive)
+				P = hard_drive.find_file_by_name(prog)
+
+			if(!istype(P) || P.program_state == PROGRAM_STATE_KILLED)
+				return
+
+			P.kill_program(1)
+			user << "<span class='notice'>Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed.</span>"
+
+		if("PC_runprogram")
+			var/prog = params["name"]
+			var/datum/computer_file/program/P = null
+			var/mob/user = usr
+			if(hard_drive)
+				P = hard_drive.find_file_by_name(prog)
+
+			if(!P || !istype(P)) // Program not found or it's not executable program.
+				user << "<span class='danger'>\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning.</span>"
+				return
+
+			P.computer = src
+
+			if(!P.is_supported_by_hardware(hardware_flag, 1, user))
+				return
+
+			// The program is already running. Resume it.
+			if(P in idle_threads)
+				P.program_state = PROGRAM_STATE_ACTIVE
+				active_program = P
+				idle_threads.Remove(P)
+				update_icon()
+				return
+
+			if(idle_threads.len >= processor_unit.max_idle_programs+1)
+				user << "<span class='notice'>\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error</span>"
+				return
+
+			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
+				user << "<span class='danger'>\The [src]'s screen shows \"NETWORK ERROR - Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
+				return
+
+			if(P.run_program(user))
+				active_program = P
+				update_icon()
+			return 1
+		else
+			return
 
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure(var/malfunction = 0)
@@ -681,6 +670,8 @@
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/modular_computer/proc/find_hardware_by_name(var/name)
+	world <<"ran"
+	world << name
 	if(portable_drive && (portable_drive.name == name))
 		return portable_drive
 	if(hard_drive && (hard_drive.name == name))

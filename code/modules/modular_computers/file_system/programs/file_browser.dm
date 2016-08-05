@@ -11,7 +11,7 @@
 	var/open_file
 	var/error
 
-/datum/computer_file/program/filemanager/Topic(href, href_list)
+/datum/computer_file/program/filemanager/ui_act(href, href_list)
 	if(..())
 		return 1
 

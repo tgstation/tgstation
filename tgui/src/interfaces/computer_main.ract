@@ -1,28 +1,48 @@
-<link rel='ractive' href='{{data.active_program_template}}'>
- 
-<script>
-  component.exports = {
-    data: {
-      getActiveProgramTag(template) {
-            let tag = ''; //templates come in the form './airalarm/vents.ract' and from that the tag is <vents/>
-            if(template){
-                tag = "<" + template.split('/').pop().split('.')[0] + "/>";
-            }
-            return tag
-        },
-      getTaskbarContents() {
-            {{!does a thing, probably reads a lot of data.X to load things like active programs, their icons, etc.}}
-        }
-	}
-	}
-</script>
- 
+
 <ui-display>
-	<ui-section> {{! Active program}}
-		{{{getActiveProgramTag(data.active_program_template)}}}
-	</ui-section>
-	<ui-section> {{! Taskbar}}
-		{{{getTaskbarContents()}}}
-		butt
-	</ui-section>
+
+	<div style="float: left">
+		<div class='item'>
+			<table><tr>
+			{{#if data.PC_batteryicon && data.PC_showbatteryicon}}
+				<td><img src='{{data.PC_batteryicon}}'>
+			{{/if}}
+			{{#if data.PC_batterypercent && data.PC_showbatteryicon}}
+				<td><b>{{data.PC_batterypercent}}</b>
+			{{/if}}
+			{{#if data.PC_ntneticon}}
+				<td><img src='{{data.PC_ntneticon}}'>
+			{{/if}}
+			{{#if data.PC_apclinkicon}}
+				<td><img src='{{data.PC_apclinkicon}}'>
+			{{/if}}
+			{{#if data.PC_stationtime}}
+				<td><b>{{data.PC_stationtime}}<b>
+			{{/if}}
+			{{#each data.PC_programheaders}}
+				<td><img src='{{icon}}'>
+			{{/each}}
+			</table>
+		</div>
+	</div>
+	<div style="float: right">
+		<table><tr>
+			<td><ui-button action='PC_shutdown'>Shutdown</ui-button>
+			{{#if data.PC_showexitprogram}}
+				<td><ui-button action='PC_exit'>EXIT PROGRAM</ui-button>
+				<td><ui-button action='PC_minimize'>Minimize Program</ui-button>
+			{{/if}}
+		</table>
+	</div>
+	<div style="clear: both">
+
+	<i>No program loaded. Please select program from list below.</i>
+	<table>
+		{{#each data.programs}}
+			<tr><td><ui-button action='PC_runprogram' params='{"name": "{{name}}"}'>
+				{{name}}
+			</ui-button>
+			<td><ui-button icon='close' action='PC_killprogram' params='{"name": "{{name}}"}'></ui-button>
+		{{/each}}
+	</table>
 </ui-display>

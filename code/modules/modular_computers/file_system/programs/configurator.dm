@@ -12,27 +12,22 @@
 	size = 4
 	available_on_ntnet = 0
 	requires_ntnet = 0
-//	nanomodule_path = /datum/nano_module/program/computer_configurator/
-
-//datum/nano_module/program/computer_configurator
-//	name = "NTOS Computer Configuration Tool"
 	var/obj/item/modular_computer/movable = null
 
 
 //obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
-/datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "laptop_configuration", "NTOS Configuration Utility", 575, 700, state = state)
-//		ui.auto_update_layout = 1
-//		ui.set_initial_data(data)
 		ui.open()
+		ui.set_autoupdate(state = 1)
 
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
-	if(program)
-		movable = program.computer
+
+	movable = computer
 	if(!istype(movable))
 		movable = null
 
@@ -42,8 +37,8 @@
 
 	var/list/data = list()
 
-	if(program)
-		data = program.get_header_data()
+
+	data = program.get_header_data()
 
 	var/list/hardware = movable.get_all_components()
 
@@ -54,6 +49,9 @@
 	if(movable.battery_module)
 		data["battery_rating"] = movable.battery_module.battery.maxcharge
 		data["battery_percent"] = round(movable.battery_module.battery.percent())
+
+	if(movable.battery_module)
+		data["battery"] = list("max" = movable.battery_module.battery.maxcharge, "charge" = round(movable.battery_module.battery.charge))
 
 	var/list/all_entries[0]
 	for(var/obj/item/weapon/computer_hardware/H in hardware)
@@ -67,3 +65,17 @@
 
 	data["hardware"] = all_entries
 	return data
+
+
+/datum/computer_file/program/computerconfig/ui_act(action,params)
+	world << "test"
+	if(..())
+		return
+	world << action
+	world <<params["name"]
+	switch(action)
+		if("PC_toggle_component")
+			var/obj/item/weapon/computer_hardware/H = movable.find_hardware_by_name(params["name"])
+			if(H && istype(H))
+				H.enabled = !H.enabled
+			. = TRUE
