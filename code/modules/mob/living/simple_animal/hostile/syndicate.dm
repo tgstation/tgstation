@@ -150,8 +150,8 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
-	health = 15
-	maxHealth = 15
+	health = 25
+	maxHealth = 25
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "cuts"
