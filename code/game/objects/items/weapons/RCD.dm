@@ -61,6 +61,12 @@ RCD
 	var/deconwindowdelay = 50
 	var/deconairlockdelay = 50
 
+	var/no_ammo_message = ""
+
+/obj/item/weapon/rcd/New()
+	..()
+	no_ammo_message = "<span class='warning'>The \'Low Ammo\' light on \the [src] blinks yellow.</span>"
+
 /obj/item/weapon/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down \his throat! It looks like \he's trying to commit suicide..</span>")
 	return (BRUTELOSS)
@@ -316,6 +322,7 @@ RCD
 					user << "<span class='notice'>You start building wall...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
+						if(!istype(F)) return 0
 						if(!useResource(wallcost, user)) return 0
 						activate()
 						F.ChangeTurf(/turf/closed/wall)
@@ -430,12 +437,14 @@ RCD
 		if (4)
 			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
-					for(var/obj/structure/grille/GRILLE in A)
+					if(locate(/obj/structure/grille) in A)
 						user << "<span class='warning'>There is already a grille there!</span>"
 						return 0
 					user << "<span class='notice'>You start building a grille...</span>"
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
+						if(locate(/obj/structure/grille) in A)
+							return 0
 						if(!useResource(grillecost, user)) return 0
 						activate()
 						var/obj/structure/grille/G = new/obj/structure/grille(A)
@@ -463,13 +472,18 @@ RCD
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
+		if(user)
+			user << no_ammo_message
 		return 0
 	matter -= amount
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
 	return 1
 
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
-	return matter >= amount
+	. = matter >= amount
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
 /obj/item/weapon/rcd/proc/detonate_pulse()
 	audible_message("<span class='danger'><b>[src] begins to vibrate and \
@@ -483,26 +497,37 @@ RCD
 	qdel(src)
 
 
+/obj/item/weapon/rcd/borg/New()
+	..()
+	no_ammo_message = "<span class='warning'>Insufficient charge.</span>"
+	desc = "A device used to rapidly build walls and floors."
+	canRturf = 1
+
 /obj/item/weapon/rcd/borg/useResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
+		if(user)
+			user << no_ammo_message
 		return 0
-	return borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	. = borgy.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
 	if(!isrobot(user))
 		return 0
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
+		if(user)
+			user << no_ammo_message
 		return 0
-	return borgy.cell.charge >= (amount * 72)
-
-/obj/item/weapon/rcd/borg/New()
-	..()
-	desc = "A device used to rapidly build walls and floors."
-	canRturf = 1
+	. = borgy.cell.charge >= (amount * 72)
+	if(!. && user)
+		user << no_ammo_message
+	return .
 
 /obj/item/weapon/rcd/loaded
 	matter = 160

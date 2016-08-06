@@ -67,7 +67,6 @@
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)
-			L.buckled = src
 			L.setDir(2)
 			buckle_mob(L, force=1)
 			var/matrix/m180 = matrix(L.transform)

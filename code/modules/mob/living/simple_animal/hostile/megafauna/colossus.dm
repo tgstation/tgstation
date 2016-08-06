@@ -38,7 +38,6 @@ Difficulty: Very Hard
 	faction = list("mining")
 	weather_immunities = list("lava","ash")
 	speak_emote = list("roars")
-	luminosity = 3
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
@@ -62,14 +61,9 @@ Difficulty: Very Hard
 	var/anger_modifier = 0
 	var/obj/item/device/gps/internal
 
-
-/mob/living/simple_animal/hostile/megafauna/colossus/AttackingTarget()
-	..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.stat == DEAD)
-			src.visible_message("<span class='danger'>[src] disintegrates [L]!</span>")
-			L.dust()
+/mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
+	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
+	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
@@ -81,11 +75,8 @@ Difficulty: Very Hard
 		if(health < maxHealth/3)
 			double_spiral()
 		else
-			visible_message("<span class='cult'><font size=5>\"<b>Judgement.</b>\"</font></span>")
-			if(prob(50))
-				spiral_shoot()
-			else
-				spiral_shoot(1)
+			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
+			spiral_shoot(rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -96,13 +87,13 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			diagonals()
+			dir_shots(diagonals)
 			sleep(10)
-			cardinals()
+			dir_shots(cardinal)
 			sleep(10)
-			diagonals()
+			dir_shots(diagonals)
 			sleep(10)
-			cardinals()
+			dir_shots(cardinal)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -140,49 +131,49 @@ Difficulty: Very Hard
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message("<span class='cult'><font size=5>\"<b>Die.</b>\"</font></span>")
+	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
 
 	sleep(10)
 	addtimer(src, "spiral_shoot", 0)
 	addtimer(src, "spiral_shoot", 0, FALSE, 1)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0)
-	var/counter = 1
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = 0, counter_start = 1)
+	var/counter = counter_start
 	var/turf/marker
 	for(var/i in 1 to 80)
 		switch(counter)
 			if(1)
-				marker = locate(x,y - 2,z)
+				marker = locate(x, y - 2, z)
 			if(2)
-				marker = locate(x - 1,y - 2,z)
+				marker = locate(x - 1, y - 2, z)
 			if(3)
-				marker = locate(x - 2, y - 2,z)
+				marker = locate(x - 2, y - 2, z)
 			if(4)
-				marker = locate(x - 2,y - 1,z)
+				marker = locate(x - 2, y - 1, z)
 			if(5)
-				marker = locate (x -2 ,y,z)
+				marker = locate(x - 2, y, z)
 			if(6)
-				marker = locate(x - 2, y+1,z)
+				marker = locate(x - 2, y + 1, z)
 			if(7)
 				marker = locate(x - 2, y + 2, z)
 			if(8)
-				marker = locate(x - 1, y + 2,z)
+				marker = locate(x - 1, y + 2, z)
 			if(9)
-				marker = locate(x, y + 2,z)
+				marker = locate(x, y + 2, z)
 			if(10)
-				marker = locate(x + 1, y+2,z)
+				marker = locate(x + 1, y + 2, z)
 			if(11)
-				marker = locate(x+ 2, y + 2,z)
+				marker = locate(x + 2, y + 2, z)
 			if(12)
-				marker = locate(x+2,y+1,z)
+				marker = locate(x + 2, y + 1, z)
 			if(13)
-				marker = locate(x+2,y,z)
+				marker = locate(x + 2, y, z)
 			if(14)
-				marker = locate(x+2, y - 1, z)
+				marker = locate(x + 2, y - 1, z)
 			if(15)
-				marker = locate(x+2, y - 2, z)
+				marker = locate(x + 2, y - 2, z)
 			if(16)
-				marker = locate(x+1, y -2, z)
+				marker = locate(x + 1, y - 2, z)
 
 		if(negative)
 			counter--
@@ -193,43 +184,42 @@ Difficulty: Very Hard
 		if(counter < 0)
 			counter = 16
 		shoot_projectile(marker)
+		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
 		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker)
+	if(!marker)
+		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 100, 1)
 	P.current = startloc
 	P.starting = startloc
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
-	P.original = marker
+	if(target)
+		P.original = target
+	else
+		P.original = marker
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(5))
 			shoot_projectile(turf)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
 	for(var/turf/turf in range(1, target))
 		shoot_projectile(turf)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/diagonals()
-	var/turf/T = locate(x + 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x + 2, y  -2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y + 2, z)
-	shoot_projectile(T)
-	T = locate(x - 2, y - 2, z)
-	shoot_projectile(T)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/cardinals()
-	var/list/attack_dirs = list(NORTH,EAST,SOUTH,WEST)
-	for(var/d in attack_dirs)
-		var/turf/E = get_edge_target_turf(src, d)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
+	if(!islist(dirs))
+		dirs = alldirs.Copy()
+	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
+	for(var/d in dirs)
+		var/turf/E = get_step(src, d)
 		shoot_projectile(E)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
@@ -253,7 +243,7 @@ Difficulty: Very Hard
 
 /obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)
 	. = ..()
-	if(istype(target,/turf/)||istype(target,/obj/structure/))
+	if(isturf(target) || isobj(target))
 		target.ex_act(2)
 
 
@@ -277,38 +267,37 @@ Difficulty: Very Hard
 	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
-	var/duplicate = FALSE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/list/blacklist = (/obj/item/weapon/spellbook)
+	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
-	if(O.type in blacklist)
-		return
-	if(istype(O, /obj/item))
-		return 1
-	return 0
+	if(!istype(O))
+		return FALSE
+	if(is_type_in_typecache(O, blacklist))
+		return FALSE
+	return TRUE
 
 /obj/machinery/smartfridge/black_box/New()
-	..()
-	for(var/obj/machinery/smartfridge/black_box/B in machines)
-		if(B != src)
-			duplicate = 1
-			qdel(src)
+	var/static/obj/machinery/smartfridge/black_box/current
+	if(current && current != src)
+		qdel(src, force=TRUE)
+		return
+	current = src
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!memory_saved && ticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 	stored_items = list()
-	for(var/obj/I in component_parts)
-		qdel(I)
-	for(var/obj/O in contents)
+
+	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
+	
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -320,11 +309,17 @@ Difficulty: Very Hard
 		stored_items = list()
 
 	for(var/item in stored_items)
-		new item(src)
+		create_item(item)
 
+//in it's own proc to avoid issues with items that nolonger exist in the code base.
+//try catch doesn't always prevent byond runtimes from halting a proc, 
+/obj/machinery/smartfridge/black_box/proc/create_item(item_type)
+	new item_type(src)
 
-/obj/machinery/smartfridge/black_box/Destroy()
-	if(duplicate)
+/obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
+	if(force)
+		for(var/thing in src)
+			qdel(thing)
 		return ..()
 	else
 		return QDEL_HINT_LETMELIVE

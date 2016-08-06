@@ -192,7 +192,7 @@
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = input(user, "Among the swathes of information, you see...", "[src]") as null|anything in list("Recital", "Records", "Recollection")
+	var/action = alert(user, "Among the swathes of information, you see...", "[src]", "Recital", "Recollection", "Records")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
@@ -883,7 +883,9 @@
 
 /obj/item/device/mmi/posibrain/soul_vessel //Soul vessel: An ancient positronic brain with a lawset catered to serving Ratvar.
 	name = "soul vessel"
-	desc = "A heavy brass cube with a single protruding cogwheel."
+	desc = "A heavy brass cube, three inches to a side, with a single protruding cogwheel."
+	var/clockwork_desc = "A soul vessel, an ancient relic that can attract the souls of the damned or simply rip a mind from an unconscious or dead human.\n\
+	<span class='brass'>If active, can serve as a positronic brain, placable in cyborg shells or clockwork construct shells.</span>"
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "soul_vessel"
 	req_access = list()
@@ -900,6 +902,7 @@
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
 	fluff_names = list("Servant")
 	clockwork = TRUE
+	autoping = FALSE
 
 /obj/item/device/mmi/posibrain/soul_vessel/New()
 	..()
@@ -909,11 +912,64 @@
 	all_clockwork_objects -= src
 	return ..()
 
+/obj/item/device/mmi/posibrain/soul_vessel/examine(mob/user)
+	if((is_servant_of_ratvar(user) || isobserver(user)) && clockwork_desc)
+		desc = clockwork_desc
+	..()
+	desc = initial(desc)
+
+
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
 		return 0
 	..()
+
+/obj/item/device/mmi/posibrain/soul_vessel/attack(mob/living/target, mob/living/carbon/human/user)
+	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
+		..()
+	if(is_servant_of_ratvar(target))
+		user << "<span class='heavy_alloy'>\"It would be more wise to revive your allies, friend.\"</span>"
+		return
+	var/mob/living/carbon/human/H = target
+	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
+	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
+	if(!HE)
+		user << "<span class='warning'>[H] has no head, and thus no mind!</span>"
+		return
+	if(H.stat == CONSCIOUS)
+		user << "<span class='warning'>[H] must be dead or unconscious to claim their mind!</span>"
+		return
+	if(H.head)
+		var/obj/item/I = H.head
+		if(I.flags_inv & HIDEHAIR)
+			user << "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>"
+			return
+	if(H.wear_mask)
+		var/obj/item/I = H.wear_mask
+		if(I.flags_inv & HIDEHAIR)
+			user << "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>"
+			return
+	if(!B)
+		user << "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>"
+		return
+	if(!H.key)
+		user << "<span class='warning'>[H] has no mind to claim!</span>"
+		return
+	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
+	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
+	H.status_flags |= FAKEDEATH //we want to make sure they don't deathgasp and maybe possibly explode
+	H.death()
+	H.status_flags &= ~FAKEDEATH
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.timeofhostdeath = H.timeofdeath
+	user.visible_message("<span class='warning'>[user] presses [src] to [H]'s head, ripping through the skull and carefully extracting the brain!</span>", \
+	"<span class='brass'>You extract [H]'s consciousness from their body, trapping it in the soul vessel.</span>")
+	transfer_personality(H)
+	B.Remove(H)
+	qdel(B)
+	H.update_hair()
 
 /obj/item/clockwork/daemon_shell
 	name = "daemon shell"

@@ -106,10 +106,13 @@
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	if(M.melee_damage_upper > 0)
+	if(M.melee_damage_upper > 0 || M.obj_damage)
 		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
 		"<span class='danger'>You smash against the [src.name].</span>")
-		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
+		if(M.obj_damage)
+			take_damage(M.obj_damage, M.melee_damage_type, 1)
+		else
+			take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
 /obj/structure/divine/proc/assign_deity(mob/camera/god/new_deity, alert_old_deity = TRUE)

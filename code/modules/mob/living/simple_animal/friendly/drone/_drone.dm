@@ -98,10 +98,14 @@
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/simple_animal/drone/med_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddead2"
 	else if(incapacitated())
@@ -259,3 +263,6 @@
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
+
+/mob/living/simple_animal/drone/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
+	return 0 //So they don't die trying to fix wiring

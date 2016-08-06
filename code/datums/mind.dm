@@ -1185,19 +1185,24 @@
 						RemoveSpell(/obj/effect/proc_holder/spell/targeted/summon_pitchfork)
 						message_admins("[key_name_admin(usr)] has de-devil'ed [current].")
 						devilinfo = null
+						if(issilicon(current))
+							var/mob/living/silicon/S = current
+							S.clear_law_sixsixsix(current)
 						log_admin("[key_name(usr)] has de-devil'ed [current].")
 				else if(src in ticker.mode.sintouched)
 					ticker.mode.sintouched -= src
 					message_admins("[key_name_admin(usr)] has de-sintouch'ed [current].")
 					log_admin("[key_name(usr)] has de-sintouch'ed [current].")
 			if("devil")
-				if(!ishuman(current))
+				if(!ishuman(current) && !iscyborg(current))
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.devils += src
 				special_role = "devil"
 				ticker.mode.finalize_devil(src)
+				ticker.mode.add_devil_objectives(src, 2)
 				announceDevilLaws()
+				announce_objectives()
 			if("sintouched")
 				if(ishuman(current))
 					ticker.mode.sintouched += src

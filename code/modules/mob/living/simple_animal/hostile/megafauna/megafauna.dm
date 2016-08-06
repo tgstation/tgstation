@@ -9,9 +9,11 @@
 	a_intent = "harm"
 	sentience_type = SENTIENCE_BOSS
 	environment_smash = 3
+	obj_damage = 75
+	luminosity = 3
 	weather_immunities = list("lava","ash")
 	robust_searching = 1
-	stat_attack = 1
+	stat_attack = 2
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
@@ -43,6 +45,16 @@
 	else
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/AttackingTarget()
+	..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.stat != DEAD)
+			if(ranged && ranged_cooldown <= world.time)
+				OpenFire()
+		else
+			devour(L)
+
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove()
 	var/turf/oldloc = loc
 	. = ..()
@@ -55,12 +67,11 @@
 		([newloc.x],[newloc.y],[newloc.z])")
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
-	if(L.stat == DEAD)
-		src.visible_message(
-			"<span class='danger'>[src] devours [L]!</span>",
-			"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-		adjustBruteLoss(-L.maxHealth/2)
-		L.gib()
+	visible_message(
+		"<span class='danger'>[src] devours [L]!</span>",
+		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+	adjustBruteLoss(-L.maxHealth/2)
+	L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)

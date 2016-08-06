@@ -29,7 +29,7 @@
 			return 0 //can't convert it unless the owner is converted
 	if(is_sacrifice_target(mind))
 		return 0
-	if(mind.enslaved_to)
+	if(mind.enslaved_to && !iscultist(mind.enslaved_to))
 		return 0
 	if(is_servant_of_ratvar(mind.current))
 		return 0

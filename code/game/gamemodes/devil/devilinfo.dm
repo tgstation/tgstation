@@ -7,6 +7,8 @@
 #define TRUE_DEVIL 2
 #define ARCH_DEVIL 3
 
+#define LOSS_PER_DEATH 2
+
 #define SOULVALUE soulsOwned.len-reviveNumber
 
 #define DEVILRESURRECTTIME 600
@@ -162,16 +164,16 @@ var/global/list/lawlorify = list (
 		update_hud()
 
 /datum/devilinfo/proc/check_regression()
-	if (form == ARCH_DEVIL)
+	if(form == ARCH_DEVIL)
 		return //arch devil can't regress
-	switch(SOULVALUE)
-		if(-1)
-			remove_spells()
-			owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
-		if(BLOOD_THRESHOLD-1)
-			regress_humanoid()
-		if(TRUE_THRESHOLD-1)
-			regress_blood_lizard()
+	//Yes, fallthrough behavior is intended, so I can't use a switch statement.
+	if(form == TRUE_DEVIL && SOULVALUE < TRUE_THRESHOLD)
+		regress_blood_lizard()
+	if(form == BLOOD_LIZARD && SOULVALUE < BLOOD_THRESHOLD)
+		regress_humanoid()
+	if(SOULVALUE < 0)
+		remove_spells()
+		owner.current << "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked."
 
 /datum/devilinfo/proc/increase_form()
 	switch(form)
@@ -386,7 +388,7 @@ var/global/list/lawlorify = list (
 /datum/devilinfo/proc/hellish_resurrection(mob/living/body)
 	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE <= ARCH_THRESHOLD) // once ascended, arch devils do not go down in power by any means.
-		reviveNumber++
+		reviveNumber += LOSS_PER_DEATH
 		update_hud()
 	if(body)
 		body.revive(1,0)

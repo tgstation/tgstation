@@ -219,3 +219,6 @@
 
 /obj/proc/CanAStarPass()
 	. = !density
+
+/obj/proc/check_uplink_validity()
+	return 1

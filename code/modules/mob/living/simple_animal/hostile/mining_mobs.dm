@@ -817,18 +817,21 @@
 	robust_searching = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(src.loc))
+	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == UNCONSCIOUS)
-				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
-				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
-				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
-				H.death()
-				H.adjustBruteLoss(1000)
-				L.stored_mob = H
-				H.forceMove(L)
-				qdel(src)
+				infest(H)
 	..()
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
+	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
+	visible_message("<span class='warning'>[L] staggers to their feet!</span>")
+	H.death()
+	H.adjustBruteLoss(1000)
+	L.stored_mob = H
+	H.forceMove(L)
+	qdel(src)
 
 /obj/item/organ/hivelord_core/legion
 	name = "legion's soul"

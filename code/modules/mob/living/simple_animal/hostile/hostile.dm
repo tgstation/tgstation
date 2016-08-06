@@ -75,8 +75,10 @@
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
 	if(!target && AIStatus != AI_OFF && !client)
+		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
+			FindTarget(list(P.firer), 1)
 		Goto(P.starting, move_to_delay, 3)
-	..()
+	return ..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 
@@ -86,7 +88,13 @@
 	if(!search_objects)
 		var/list/Mobs = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
 		. += Mobs
-		for(var/M in mechas_list)
+
+		var/hostile_machines = list()
+		for(var/mecha in mechas_list)
+			hostile_machines += mecha
+		for(var/obj/machinery/porta_turret/P in machines)
+			hostile_machines += P
+		for(var/M in hostile_machines)
 			if(get_dist(M, targets_from) <= vision_range && can_see(targets_from, M, vision_range))
 				. += M
 	else
@@ -147,11 +155,6 @@
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0
 	if(search_objects < 2)
-		if(istype(the_target, /obj/mecha))
-			var/obj/mecha/M = the_target
-			if(M.occupant)//Just so we don't attack empty mechs
-				if(CanAttack(M.occupant))
-					return 1
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check(L)
@@ -168,6 +171,24 @@
 				if(faction_check && !attack_same)
 					return 0
 			return 1
+
+		if(istype(the_target, /obj/mecha))
+			var/obj/mecha/M = the_target
+			if(M.occupant)//Just so we don't attack empty mechs
+				if(CanAttack(M.occupant))
+					return 1
+
+		if(istype(the_target, /obj/machinery/porta_turret))
+			var/obj/machinery/porta_turret/P = the_target
+			if(P.faction in faction)
+				return 0
+			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
+				return 0
+			if(P.stat & BROKEN) //Or turrets that are already broken
+				return 0
+			return 1
+
+
 	if(isobj(the_target))
 		if(is_type_in_list(the_target, wanted_objects))
 			return 1
@@ -186,27 +207,28 @@
 		return 0
 	if(target in possible_targets)
 		var/target_distance = get_dist(targets_from,target)
-		if(ranged)//We ranged? Shoot at em
-			if(target_distance >= 2 && ranged_cooldown <= world.time)//But make sure they're a tile away at least, and our range attack is off cooldown
+		var/target_adjacent = target.Adjacent(targets_from)
+		if(ranged) //We ranged? Shoot at em
+			if(!target_adjacent && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
-		if(!Process_Spacemove()) // Drifting
+		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
-		if(retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
+			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
 				walk_away(src,target,retreat_distance,move_to_delay)
 			else
-				Goto(target,move_to_delay,minimum_distance)//Otherwise, get to our minimum distance so we chase them
+				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
 		else
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
-			if(isturf(targets_from.loc) && target.Adjacent(targets_from))	//If they're next to us, attack
+			if(isturf(targets_from.loc) && target_adjacent) //If they're next to us, attack
 				AttackingTarget()
 			return 1
 		return 0
 	if(environment_smash)
-		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
-			if(environment_smash >= 2)//If we're capable of smashing through walls, forget about vision completely after finding our target
+		if(target.loc != null && get_dist(targets_from, target.loc) <= vision_range) //We can't see our target, but he's in our vision range still
+			if(environment_smash >= 2) //If we're capable of smashing through walls, forget about vision completely after finding our target
 				Goto(target,move_to_delay,minimum_distance)
 				FindHidden()
 				return 1

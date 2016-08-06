@@ -303,6 +303,7 @@
 	..()
 
 /datum/action/item_action/toggle_research_scanner/ApplyIcon(obj/screen/movable/action_button/current_button)
+	current_button.cut_overlays()
 	if(button_icon && button_icon_state)
 		var/image/img = image(button_icon, current_button, "scan_mode")
 		current_button.add_overlay(img)

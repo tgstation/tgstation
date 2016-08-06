@@ -258,7 +258,10 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	add_overlay("ribbonoverlay")
+	//Lets not add infinite amounts of overlays when our fireact is called
+	//repeatedly
+	if(!ruined)
+		add_overlay("ribbonoverlay")
 	ruined = 1
 
 

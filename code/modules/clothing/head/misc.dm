@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'Ã©rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -260,3 +260,14 @@
 	desc = "A paper sack with crude holes cut out for eyes and a sketchy smile drawn on the front. Not creepy at all."
 	icon_state = "papersack_smile"
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/head/crown
+	name = "crown"
+	desc = "A crown fit for a king, a petty king maybe."
+	icon_state = "crown"
+	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0) //for a warrior king //energy cause gold is reflective //worse than sec helm overall
+
+/obj/item/clothing/head/crown/fancy
+	name = "magnificent crown"
+	desc = "A crown worn by only the highest emperors of the land."
+	icon_state = "fancycrown"

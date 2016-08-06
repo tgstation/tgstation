@@ -437,7 +437,13 @@ Sorry Giacom. Please don't be mad :(
 
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0)
-	  return 0 //only carbon liveforms have this proc
+	adjustFireLoss(shock_damage)
+	visible_message(
+		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
+		"<span class='italics'>You hear a heavy electrical crack.</span>" \
+	)
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	var/list/L = src.get_contents()
@@ -1030,7 +1036,10 @@ Sorry Giacom. Please don't be mad :(
 	return 1
 
 /mob/living/proc/return_soul()
+	hellbound = 0
 	if(mind)
+		if(mind.soulOwner.devilinfo)//Not sure how this could happen, but whatever.
+			mind.soulOwner.devilinfo.remove_soul(mind)
 		mind.soulOwner = mind
 
 /mob/living/proc/has_bane(banetype)

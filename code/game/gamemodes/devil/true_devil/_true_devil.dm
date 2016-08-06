@@ -12,7 +12,7 @@
 	health = 350
 	maxHealth = 350
 	ventcrawler = 0
-	density = 0
+	density = 1
 	pass_flags =  0
 	var/ascended = 0
 	sight = (SEE_TURFS | SEE_OBJS)
@@ -45,6 +45,7 @@
 /mob/living/carbon/true_devil/Login()
 	..()
 	mind.announceDevilLaws()
+	mind.announce_objectives()
 
 
 /mob/living/carbon/true_devil/death(gibbed)
