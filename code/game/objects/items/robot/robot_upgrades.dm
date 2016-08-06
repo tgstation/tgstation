@@ -237,6 +237,7 @@
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to mining cyborg tracks, enabling them to withstand exposure to molten rock."
 	icon_state = "ash_plating"
 	require_module = 1
+	burn_state = LAVA_PROOF
 	module_type = /obj/item/weapon/robot_module/miner
 	origin_tech = "engineering=4;materials=4;plasmatech=4"
 

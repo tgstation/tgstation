@@ -267,6 +267,7 @@ Difficulty: Very Hard
 	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
+	burn_state = LAVA_PROOF
 	var/duplicate = FALSE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
