@@ -272,9 +272,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			else if(isAI(L))
 				unconverted_ai_exists = TRUE
 		if(servants > 1)
-			desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
+			desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which count towards scripture":"none of which count towards scripture."].<br>"
 		else
-			desc = "<b>[servants]</b> Servant, <b>[validservants]</b> of which counts toward scripture.<br>"
+			desc = "<b>[servants]</b> Servant, [validservants ? "<b>[validservants]</b> of which counts toward scripture":"none of which count towards scripture."].<br>"
 		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches":"No Tinkerer's Caches, construct one!</b>"]<br>\
 		<b>[clockwork_construction_value]</b> Construction Value.<br>\
 		[unconverted_ai_exists ? "<b>An unconverted AI exists!</b><br>":""]"
