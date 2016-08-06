@@ -165,8 +165,6 @@
 	clockwork_caches++
 	scripture_unlock_alert(scripture_states)
 	SetLuminosity(2,1)
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 
 /obj/structure/clockwork/cache/Destroy()
 	var/list/scripture_states = get_scripture_states()
@@ -176,8 +174,6 @@
 	if(linkedwall)
 		linkedwall.linkedcache = null
 		linkedwall = null
-	for(var/i in all_clockwork_mobs)
-		cache_check(i)
 	return ..()
 
 /obj/structure/clockwork/cache/destroyed()
