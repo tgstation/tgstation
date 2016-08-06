@@ -69,18 +69,8 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.martial_art && prob(H.martial_art.deflection_chance))
-			if(move_to_delay == initial(move_to_delay))
-				visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
-			ranged_cooldown = world.time + 30
-			telegraph()
-			dir_shots(alldirs)
-			move_to_delay = 3
-			return
-		else
-			move_to_delay = initial(move_to_delay)
+	if(enrage(target))
+		return
 	else
 		move_to_delay = initial(move_to_delay)
 
@@ -144,6 +134,21 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
+	var/enraged = FALSE
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.martial_art && prob(H.martial_art.deflection_chance))
+			enraged = TRUE
+
+	if(enraged)
+		if(move_to_delay == initial(move_to_delay))
+			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+		ranged_cooldown = world.time + 30
+		telegraph()
+		dir_shots(alldirs)
+		move_to_delay = 3
+	return enraged
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
