@@ -256,7 +256,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
 	icon_state = "clockinfo"
 
-/obj/screen/alert/clockwork_infodump/MouseEntered(location,control,params)
+/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
 		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
 	else
@@ -272,23 +272,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			else if(isAI(L))
 				unconverted_ai_exists = TRUE
 		if(servants > 1)
-			desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which count towards scripture":"none of which count towards scripture."].<br>"
+			if(validservants > 1)
+				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
+			else
+				desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>"
 		else
 			desc = "<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>"
-		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches":"No Tinkerer's Caches, construct one!</b>"]<br>\
-		<b>[clockwork_construction_value]</b> Construction Value.<br>\
-		[unconverted_ai_exists ? "<b>An unconverted AI exists!</b><br>":""]"
+		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+		<b>[clockwork_construction_value]</b> Construction Value.<br>"
 		if(clockwork_daemons)
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
+		if(unconverted_ai_exists)
+			desc += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states["Revenant"])
 			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
 			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
 			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
 			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
 			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
-				desc += "Generals available:<br><b>[inathneq_available ? "Inath-neq<br>":""][sevtug_available ? "Sevtug<br>":""][nezbere_available ? "Nezbere<br>":""][nezcrentr_available ? "Nzcrentr":""]</b><br>"
+				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
+				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
 			else
 				desc += "Generals available: <b>NONE</b><br>"
 		else
