@@ -76,9 +76,7 @@ Difficulty: Very Hard
 				visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
 			ranged_cooldown = world.time + 30
 			telegraph()
-			var/turf/U = get_turf(src)
-			for(var/T in RANGE_TURFS(2, U) - U)
-				shoot_projectile(T)
+			dir_shots(alldirs)
 			move_to_delay = 3
 			return
 		else
