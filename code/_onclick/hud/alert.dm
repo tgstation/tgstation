@@ -249,7 +249,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork_infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
-		desc = "<font size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font>"
+		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
 	else
 		var/servants = 0
 		var/validservants = 0
