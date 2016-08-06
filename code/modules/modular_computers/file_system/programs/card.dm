@@ -1,12 +1,14 @@
 /datum/computer_file/program/card_mod
 	filename = "cardmod"
 	filedesc = "ID card modification program"
-	nanomodule_path = /datum/nano_module/program/card_mod
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	required_access = access_change_ids
 	requires_ntnet = 0
 	size = 8
+	var/mod_mode = 1
+	var/is_centcom = 0
+	var/show_assignments = 0
 
 /datum/nano_module/program/card_mod
 	name = "ID card modification program"
@@ -15,7 +17,7 @@
 	var/show_assignments = 0
 
 /datum/nano_module/program/card_mod/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
-	var/list/data = host.initial_data()
+	var/list/data = get_header_data()
 
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()
@@ -87,7 +89,7 @@
 		ui.set_initial_data(data)
 		ui.open()
 
-/datum/nano_module/program/card_mod/proc/format_jobs(list/jobs)
+/datum/computer_file/program/card_mod/proc/format_jobs(list/jobs)
 	var/obj/item/weapon/card/id/id_card = program.computer.card_slot.stored_card
 	var/list/formatted = list()
 	for(var/job in jobs)
@@ -98,11 +100,11 @@
 
 	return formatted
 
-/datum/nano_module/program/card_mod/proc/get_accesses(var/is_centcom = 0)
+/datum/computer_file/program/card_mod/proc/get_accesses(var/is_centcom = 0)
 	return null
 
 
-/datum/computer_file/program/card_mod/Topic(href, href_list)
+/datum/computer_file/program/card_mod/ui_act(action params)
 	if(..())
 		return 1
 

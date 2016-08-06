@@ -22,6 +22,7 @@
 	return
 
 
+
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/console/preset/engineering
 	 console_department = "Engineering"
@@ -40,6 +41,18 @@
 	cpu.hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
 	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
+
+
+// ===== COMMAND CONSOLE =====
+/obj/machinery/modular_computer/console/preset/command
+	 console_department = "Command"
+	 desc = "A stationary computer. This one comes preloaded with command programs."
+	 _has_id_slot = 1
+	 _has_printer = 1
+
+/obj/machinery/modular_computer/console/preset/command/install_programs()
+	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
+//	cpu.hard_drive.store_file(new/datum/computer_file/program/card_mod())
 
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian

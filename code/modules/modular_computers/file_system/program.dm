@@ -19,7 +19,7 @@
 	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/computer_emagged = 0				// Set to 1 if computer that's running us was emagged. Computer updates this every Process() tick
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /nano/images/status_icons. Be careful not to use too large images!
-	var/datum/computer_file/program/program = null
+
 /datum/computer_file/program/New(var/obj/item/modular_computer/comp = null)
 	..()
 	if(comp && istype(comp))
@@ -68,7 +68,7 @@
 	return 1
 
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
-// User has to wear their ID or have it inhand for ID Scan to work.
+// User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
 /datum/computer_file/program/proc/can_run(mob/living/user, loud = 0, access_to_check)
 	// Defaults to required_access
@@ -77,19 +77,24 @@
 	if(!access_to_check) // No required_access, allow it.
 		return 1
 
-
-	var/obj/item/weapon/card/id/I = user.GetID()
-	if(!I)
-		if(loud)
-			user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
-		return 0
-
-	if(access_to_check in I.GetAccess)
+	if(issilicon(user))
 		return 1
-	else if(loud)
-		user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
 
-// This attempts to retrieve header data for NanoUIs. If implementing completely new device of different type than existing ones
+	if(ishuman(user))
+		var/mob/living/carbon/human/h = user
+		var/obj/item/weapon/card/id/I = h.get_idcard()
+		if(!I)
+			if(loud)
+				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
+			return 0
+
+		if(access_to_check in I.GetAccess())
+			return 1
+		else if(loud)
+			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
+	return 0
+
+// This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
 /datum/computer_file/program/proc/get_header_data()
 	if(computer)
@@ -114,7 +119,7 @@
 	return 1
 
 // This is called every tick when the program is enabled. Ensure you do parent call if you override it. If parent returns 1 continue with UI initialisation.
-// It returns 0 if it can't run or if NanoModule was used instead. I suggest using NanoModules where applicable.
+
 /datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
 		return computer.ui_interact(user)
