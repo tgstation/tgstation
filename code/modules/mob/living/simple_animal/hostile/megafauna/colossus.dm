@@ -70,6 +70,12 @@ Difficulty: Very Hard
 	ranged_cooldown = world.time + 120
 
 	if(enrage(target))
+		if(move_to_delay == initial(move_to_delay))
+			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+		ranged_cooldown = world.time + 30
+		telegraph()
+		dir_shots(alldirs)
+		move_to_delay = 3
 		return
 	else
 		move_to_delay = initial(move_to_delay)
@@ -141,13 +147,6 @@ Difficulty: Very Hard
 		if(H.martial_art && prob(H.martial_art.deflection_chance))
 			enraged = TRUE
 
-	if(enraged)
-		if(move_to_delay == initial(move_to_delay))
-			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
-		ranged_cooldown = world.time + 30
-		telegraph()
-		dir_shots(alldirs)
-		move_to_delay = 3
 	return enraged
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
@@ -225,7 +224,7 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
 	var/turf/U = get_turf(src)
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
 	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
 			shoot_projectile(T)
