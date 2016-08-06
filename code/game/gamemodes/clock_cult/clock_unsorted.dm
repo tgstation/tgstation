@@ -255,6 +255,12 @@
 		AM.say(message)
 	AM.languages_spoken = old_languages_spoken
 
+/proc/cache_check(mob/M)
+	if(!clockwork_caches)
+		M.throw_alert("nocache", /obj/screen/alert/clockwork/nocache)
+	else
+		M.clear_alert("nocache")
+
 /*
 The Ratvarian Language
 	In the lore of the Servants of Ratvar, the Ratvarian tongue is a timeless language and full of power. It sounds like gibberish, much like Nar-Sie's language, but is in fact derived from

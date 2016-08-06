@@ -241,11 +241,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "blob"
 
 // CLOCKCULT
-/obj/screen/alert/clockwork_infodump
+/obj/screen/alert/clockwork
+	alerttooltipstyle = "clockcult"
+
+/obj/screen/alert/clockwork/nocache
+	name = "No Tinkerer's Cache"
+	desc = "In order to share components and unlock higher tier \
+		scripture, a tinkerer's cache must be constructed somewhere \
+		in the world. Try to place it somewhere accessible, yet hidden."
+	icon_state = "nocache"
+
+/obj/screen/alert/clockwork/infodump
 	name = "Global Records"
 	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
 	icon_state = "clockinfo"
-	alerttooltipstyle = "clockcult"
 
 /obj/screen/alert/clockwork_infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
