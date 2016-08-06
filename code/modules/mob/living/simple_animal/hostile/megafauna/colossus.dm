@@ -264,7 +264,8 @@ Difficulty: Very Hard
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 200
+	max_n_of_items = INFINITY
+	burn_state = LAVA_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
@@ -297,7 +298,7 @@ Difficulty: Very Hard
 
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
-	
+
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -312,7 +313,7 @@ Difficulty: Very Hard
 		create_item(item)
 
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
-//try catch doesn't always prevent byond runtimes from halting a proc, 
+//try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
 	new item_type(src)
 
