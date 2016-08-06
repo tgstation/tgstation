@@ -69,6 +69,20 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.martial_art && prob(H.martial_art.deflection_chance))
+			if(move_to_delay == initial(move_to_delay))
+				visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+			ranged_cooldown = world.time + 40
+			telegraph()
+			move_to_delay = 3
+			return
+		else
+			move_to_delay = initial(move_to_delay)
+	else
+		move_to_delay = initial(move_to_delay)
+
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
 
