@@ -21,7 +21,6 @@
 /obj/machinery/modular_computer/console/preset/proc/install_programs()
 	return
 
-/*
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/console/preset/engineering
@@ -31,18 +30,6 @@
 /obj/machinery/modular_computer/console/preset/engineering/install_programs()
 	cpu.hard_drive.store_file(new/datum/computer_file/program/power_monitor())
 	cpu.hard_drive.store_file(new/datum/computer_file/program/alarm_monitor())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/atmos_control())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/rcon_console())
-
-
-// ===== MEDICAL CONSOLE =====
-/obj/machinery/modular_computer/console/preset/medical
-	 console_department = "Medical"
-	 desc = "A stationary computer. This one comes preloaded with medical programs."
-
-/obj/machinery/modular_computer/console/preset/medical/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/suit_sensors())
-
 
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/console/preset/research
@@ -54,34 +41,6 @@
 	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
 	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
 
-
-// ===== COMMAND CONSOLE =====
-/obj/machinery/modular_computer/console/preset/command
-	 console_department = "Command"
-	 desc = "A stationary computer. This one comes preloaded with command programs."
-	 _has_id_slot = 1
-	 _has_printer = 1
-
-/obj/machinery/modular_computer/console/preset/command/install_programs()
-	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/card_mod())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/comm())
-
-/obj/machinery/modular_computer/console/preset/command/main
-	 console_department = "Command"
-	 desc = "A stationary computer. This one comes preloaded with essential command programs."
-	 _has_id_slot = 1
-	 _has_printer = 1
-
-// ===== SECURITY CONSOLE =====
-/obj/machinery/modular_computer/console/preset/security
-	 console_department = "Security"
-	 desc = "A stationary computer. This one comes preloaded with security programs."
-
-/obj/machinery/modular_computer/console/preset/security/install_programs()
-	return // No security programs exist, yet, but the preset is ready so it may be mapped in.
-
-
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian
 	 console_department = "Civilian"
@@ -90,5 +49,4 @@
 /obj/machinery/modular_computer/console/preset/civilian/install_programs()
 	cpu.hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	cpu.hard_drive.store_file(new/datum/computer_file/program/nttransfer())
-	cpu.hard_drive.store_file(new/datum/computer_file/program/newsbrowser())
-*/
+

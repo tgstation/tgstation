@@ -33,26 +33,28 @@
 	</table>
 </div>
 <div style="clear: both">
+
 <ui-display>
-	{{#if data.error}}
-		##SYSTEM ERROR: {{data.error}}<ui-button action='PRG_reset'>RESET</ui-button>
-	{{elseif data.target}}
-		##DoS traffic generator active. Tx: {{data.speed}}GQ/s<br>
-		{{#each data.dos_strings}}
-			{{nums}}<br>
-		{{/each}}
-		<ui-button action='PRG_reset'>ABORT</ui-button>
-	{{else}}
-		##DoS traffic generator ready. Select target device.<br>
-		{{#if data.focus}}
-			Targeted device ID: {{data.focus}}
-		{{else}}
-			Targeted device ID: None
-		{{/if}}
-		<ui-button action='PRG_execute'>EXECUTE</ui-button><div style="clear:both"></div>
-		Detected devices on network:<br>
-		{{#each data.relays}}
-			<ui-button action='PRG_target_relay' params='{"targid": "{{id}}"}'>{{id}}</ui-button>
-		{{/each}}
-	{{/if}}
+	<div class='item'>
+		<div class='itemLabel'>
+			Payload status:
+		</div>
+		<div class='itemContent'>
+			{{#if data.armed}}
+				ARMED
+			{{else}}
+				DISARMED
+			{{/if}}
+		</div>
+		<div class='itemLabel'>
+			Controls:
+		</div>
+		<div class='itemContent'>
+			<table>
+			<tr><td><ui-button action='PRG_obfuscate'>OBFUSCATE PROGRAM NAME</ui-button>
+			<tr><td><ui-button action='PRG_arm'>{{data.armed ? "DISARM" : "ARM"}}</ui-button>
+			<ui-button icon='radiation' state='{{data.armed ? null : "disabled"}}' action='PRG_activate'>ACTIVATE</ui-button>
+			</table>
+		</div>
+	</div>
 </ui-display>

@@ -7,5 +7,4 @@
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
 	w_class = 2
-	light_strength = 2					// Same as PDAs
-	var/use_power = 1
+	var/use_power = 0

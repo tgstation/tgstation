@@ -28,7 +28,6 @@
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/max_hardware_size = 0								// Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
-	var/light_strength = 0
 
 	// Damage of the chassis. If the chassis takes too much damage it will break apart.
 	var/damage = 0				// Current damage level
@@ -47,6 +46,8 @@
 
 	var/list/idle_threads = list()							// Idle programs on background. They still receive process calls but can't be interacted with.
 	var/activetemplate = "computer_main"
+	var/obj/physical = null
+
 
 
 // Eject ID card from computer, if it has ID slot with card inside.
@@ -123,7 +124,7 @@
 		if(response == "Yes")
 			turn_on(user)
 
-/obj/item/modular_computer/emag_act(remaining_charges, mob/user)
+/obj/item/modular_computer/emag_act(mob/user)
 	if(computer_emagged)
 		user << "\The [src] was already emagged."
 		return 0
@@ -143,6 +144,8 @@
 	machines += src
 	START_PROCESSING(SSmachine, src)
 	update_icon()
+	if(!physical)
+		physical = src
 	..()
 
 /obj/item/modular_computer/Destroy()
@@ -172,11 +175,13 @@
 	return 0
 
 // Operates NanoUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
-//	if(!screen_on || !enabled)
-//		if(ui)
-//			ui.close()
-//		return 0
+/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+
+
+	if(!screen_on || !enabled)
+		if(ui)
+			ui.close()
+		return 0
 //	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
 //		if(ui)
 //			ui.close()
@@ -192,7 +197,7 @@
 	// We are still here, that means there is no program loaded. Load the BIOS/ROM/OS/whatever you want to call it.
 	// This screen simply lists available programs and user may select them.
 	if(!hard_drive || !hard_drive.stored_files || !hard_drive.stored_files.len)
-		visible_message("\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.")
+		physical.visible_message("\The [src] beeps three times, it's screen displaying \"DISK ERROR\" warning.")
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -214,8 +219,11 @@
 	data["programs"] = list()
 //	var/list/programs = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
+		var/running = 0
+		if(P in idle_threads)
+			running = 1
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc))
+		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
 
 //		var/list/program = list()
 
@@ -235,7 +243,7 @@
 		turn_on(user)
 
 /obj/item/modular_computer/proc/break_apart()
-	visible_message("\The [src] breaks apart!")
+	physical.visible_message("\The [src] breaks apart!")
 	var/turf/newloc = get_turf(src)
 	new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
 	for(var/obj/item/weapon/computer_hardware/H in get_all_components())
@@ -383,7 +391,7 @@
 		P.kill_program(1)
 		idle_threads.Remove(P)
 	if(loud)
-		visible_message("\The [src] shuts down.")
+		physical.visible_message("\The [src] shuts down.")
 	enabled = 0
 	update_icon()
 	return
@@ -467,7 +475,7 @@
 // Used in following function to reduce copypaste
 /obj/item/modular_computer/proc/power_failure(var/malfunction = 0)
 	if(enabled) // Shut down the computer
-		visible_message("<span class='danger'>\The [src]'s screen flickers \"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\" warning as it shuts down unexpectedly.</span>")
+		physical.visible_message("<span class='danger'>\The [src]'s screen flickers \"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\" warning as it shuts down unexpectedly.</span>")
 		if(active_program)
 			active_program.event_powerfailure(0)
 		for(var/datum/computer_file/program/PRG in idle_threads)
@@ -527,7 +535,7 @@
 			user << "Remove all components from \the [src] before disassembling it."
 			return
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
-		src.visible_message("\The [src] has been disassembled by [user].")
+		physical.visible_message("\The [src] has been disassembled by [user].")
 		relay_qdel()
 		qdel(src)
 		return
@@ -670,8 +678,6 @@
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
 /obj/item/modular_computer/proc/find_hardware_by_name(var/name)
-	world <<"ran"
-	world << name
 	if(portable_drive && (portable_drive.name == name))
 		return portable_drive
 	if(hard_drive && (hard_drive.name == name))
@@ -791,3 +797,9 @@
 		//	take_damage(Proj.damage, Proj.damage / 3, 0)
 		if(BURN)
 			take_damage(Proj.damage, Proj.damage / 1.5)
+
+/obj/item/modular_computer/ui_host()
+	if(physical)
+		return physical
+	else
+		return src

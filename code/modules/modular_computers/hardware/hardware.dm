@@ -22,6 +22,7 @@
 		return 1
 	// Nanopaste. Repair all damage if present for a single unit.
 	var/obj/item/stack/S = W
+/*
 	if(istype(S, /obj/item/stack/sheet/glass))
 		if(!damage)
 			user << "\The [src] doesn't seem to require repairs."
@@ -30,6 +31,7 @@
 			user << "You apply a bit of \the [W] to \the [src]. It immediately repairs all damage."
 			damage = 0
 		return 1
+*/
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(S, /obj/item/stack/cable_coil))
 		if(!damage)

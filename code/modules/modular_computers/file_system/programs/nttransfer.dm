@@ -10,7 +10,6 @@ var/global/nttransfer_uid = 0
 	requires_ntnet_feature = NTNET_PEERTOPEER
 	network_destination = "other device via P2P tunnel"
 	available_on_ntnet = 1
-	nanomodule_path = /datum/nano_module/program/computer_nttransfer/
 
 	var/error = ""										// Error screen
 	var/server_password = ""							// Optional password to download the file.
@@ -55,8 +54,6 @@ var/global/nttransfer_uid = 0
 		downloaded_file = null
 	..(forced)
 
-
-
 /datum/computer_file/program/nttransfer/proc/update_netspeed()
 	download_netspeed = 0
 	switch(ntnet_status)
@@ -87,35 +84,88 @@ var/global/nttransfer_uid = 0
 	download_completion = 0
 
 
-/datum/nano_module/program/computer_nttransfer
-	name = "NTNet P2P Transfer Client"
+/datum/computer_file/program/nttransfer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
-/datum/nano_module/program/computer_nttransfer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/datum/topic_state/state = default_state)
-	if(!program)
-		return
-	var/datum/computer_file/program/nttransfer/PRG = program
-	if(!istype(PRG))
-		return
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "ntnet_transfer", "NTNet P2P Transfer Client", 575, 700, state = state)
+		ui.open()
+		ui.set_autoupdate(state = 1)
 
-	var/list/data = program.get_header_data()
+/datum/computer_file/program/nttransfer/ui_act(action, params)
+	if(..())
+		return 1
+	switch(action)
+		if("PRG_downloadfile")
+			for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
+				if("[P.unique_token]" == params["id"])
+					remote = P
+					break
+			if(!remote || !remote.provided_file)
+				return
+			if(remote.server_password)
+				var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
+				if(pass != remote.server_password)
+					error = "Incorrect Password"
+					return
+			downloaded_file = remote.provided_file.clone()
+			remote.connected_clients.Add(src)
+			return 1
+		if("PRG_reset")
+			error = ""
+			upload_menu = 0
+			finalize_download()
+			if(src in ntnet_global.fileservers)
+				ntnet_global.fileservers.Remove(src)
+			for(var/datum/computer_file/program/nttransfer/T in connected_clients)
+				T.crash_download("Remote server has forcibly closed the connection")
+			provided_file = null
+			return 1
+		if("PRG_setpassword")
+			var/pass = sanitize(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
+			if(!pass)
+				return
+			if(pass == "none")
+				server_password = ""
+				return
+			server_password = pass
+			return 1
+		if("PRG_uploadfile")
+			for(var/datum/computer_file/F in computer.hard_drive.stored_files)
+				if("[F.uid]" == params["id"])
+					if(F.unsendable)
+						error = "I/O Error: File locked."
+						return
+					provided_file = F
+					ntnet_global.fileservers.Add(src)
+					return
+			error = "I/O Error: Unable to locate file on hard drive."
+			return 1
+		if("PRG_uploadmenu")
+			upload_menu = 1
 
-	if(PRG.error)
-		data["error"] = PRG.error
-	else if(PRG.downloaded_file)
+
+/datum/computer_file/program/nttransfer/ui_data(mob/user)
+
+	var/list/data = get_header_data()
+
+	if(error)
+		data["error"] = error
+	else if(downloaded_file)
 		data["downloading"] = 1
-		data["download_size"] = PRG.downloaded_file.size
-		data["download_progress"] = PRG.download_completion
-		data["download_netspeed"] = PRG.actual_netspeed
-		data["download_name"] = "[PRG.downloaded_file.filename].[PRG.downloaded_file.filetype]"
-	else if (PRG.provided_file)
+		data["download_size"] = downloaded_file.size
+		data["download_progress"] = download_completion
+		data["download_netspeed"] = actual_netspeed
+		data["download_name"] = "[downloaded_file.filename].[downloaded_file.filetype]"
+	else if (provided_file)
 		data["uploading"] = 1
-		data["upload_uid"] = PRG.unique_token
-		data["upload_clients"] = PRG.connected_clients.len
-		data["upload_haspassword"] = PRG.server_password ? 1 : 0
-		data["upload_filename"] = "[PRG.provided_file.filename].[PRG.provided_file.filetype]"
-	else if (PRG.upload_menu)
+		data["upload_uid"] = unique_token
+		data["upload_clients"] = connected_clients.len
+		data["upload_haspassword"] = server_password ? 1 : 0
+		data["upload_filename"] = "[provided_file.filename].[provided_file.filetype]"
+	else if (upload_menu)
 		var/list/all_files[0]
-		for(var/datum/computer_file/F in PRG.computer.hard_drive.stored_files)
+		for(var/datum/computer_file/F in computer.hard_drive.stored_files)
 			all_files.Add(list(list(
 			"uid" = F.uid,
 			"filename" = "[F.filename].[F.filetype]",
@@ -133,62 +183,4 @@ var/global/nttransfer_uid = 0
 			)))
 		data["servers"] = all_servers
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "ntnet_transfer.tmpl", "NTNet P2P Transfer Client", 575, 700, state = state)
-		ui.auto_update_layout = 1
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-
-/datum/computer_file/program/nttransfer/Topic(href, href_list)
-	if(..())
-		return 1
-	if(href_list["PRG_downloadfile"])
-		for(var/datum/computer_file/program/nttransfer/P in ntnet_global.fileservers)
-			if("[P.unique_token]" == href_list["PRG_downloadfile"])
-				remote = P
-				break
-		if(!remote || !remote.provided_file)
-			return
-		if(remote.server_password)
-			var/pass = sanitize(input(usr, "Code 401 Unauthorized. Please enter password:", "Password required"))
-			if(pass != remote.server_password)
-				error = "Incorrect Password"
-				return
-		downloaded_file = remote.provided_file.clone()
-		remote.connected_clients.Add(src)
-		return 1
-	if(href_list["PRG_reset"])
-		error = ""
-		upload_menu = 0
-		finalize_download()
-		if(src in ntnet_global.fileservers)
-			ntnet_global.fileservers.Remove(src)
-		for(var/datum/computer_file/program/nttransfer/T in connected_clients)
-			T.crash_download("Remote server has forcibly closed the connection")
-		provided_file = null
-		return 1
-	if(href_list["PRG_setpassword"])
-		var/pass = sanitize(input(usr, "Enter new server password. Leave blank to cancel, input 'none' to disable password.", "Server security", "none"))
-		if(!pass)
-			return
-		if(pass == "none")
-			server_password = ""
-			return
-		server_password = pass
-		return 1
-	if(href_list["PRG_uploadfile"])
-		for(var/datum/computer_file/F in computer.hard_drive.stored_files)
-			if("[F.uid]" == href_list["PRG_uploadfile"])
-				if(F.unsendable)
-					error = "I/O Error: File locked."
-					return
-				provided_file = F
-				ntnet_global.fileservers.Add(src)
-				return
-		error = "I/O Error: Unable to locate file on hard drive."
-		return 1
-	if(href_list["PRG_uploadmenu"])
-		upload_menu = 1
-	return 0
+	return data

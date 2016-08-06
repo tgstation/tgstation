@@ -38,9 +38,8 @@ var/list/global_modular_computers = list()
 	if(cpu)
 		cpu.attack_ghost(user)
 
-/obj/machinery/modular_computer/emag_act(remaining_charges, mob/user)
-//	return cpu ? cpu.emag_act(remaining_charges, user) : NO_EMAG_ACT
-	return 1
+/obj/machinery/modular_computer/emag_act(mob/user)
+	return cpu ? cpu.emag_act(user) : 1
 
 /obj/machinery/modular_computer/update_icon()
 	icon_state = icon_state_unpowered
@@ -78,6 +77,7 @@ var/list/global_modular_computers = list()
 /obj/machinery/modular_computer/New()
 	..()
 	cpu = new(src)
+	cpu.physical = src
 	global_modular_computers.Add(src)
 
 /obj/machinery/modular_computer/Destroy()

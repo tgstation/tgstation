@@ -57,12 +57,12 @@
 		ntnet_global.add_log("Quantum relay switched from overload recovery mode to normal operation mode.")
 	..()
 
-/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 1, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/obj/machinery/ntnet_relay/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "nt_relay", name, 300, 150, master_ui, state)
+		ui = new(user, src, ui_key, "ntnet_relay", "NTNet Quantum Relay", 500, 300, master_ui, state)
 		ui.open()
 
 
@@ -137,11 +137,11 @@
 		ntnet_global.relays.Remove(src)
 		ntnet_global.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
 		NTNet = null
-/*
+
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)
 		D.target = null
 		D.error = "Connection to quantum relay severed"
-*/
+
 	..()
 
 /obj/machinery/ntnet_relay/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
@@ -159,7 +159,7 @@
 
 		for(var/atom/movable/A in component_parts)
 			A.forceMove(src.loc)
-//		new/obj/machinery/constructable_frame/machine_frame(src.loc)
+		new/obj/structure/frame/machine(src.loc)
 		qdel(src)
 		return
 	..()

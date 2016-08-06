@@ -29,9 +29,6 @@
 	computer = null
 	. = ..()
 
-//datum/computer_file/program/nano_host()
-//	return computer.nano_host()
-
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
 	temp.required_access = required_access
@@ -79,19 +76,19 @@
 		access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
 		return 1
-	return 1
-/*
-	var/obj/item/weapon/card/id/I = user.GetIdCard()
+
+
+	var/obj/item/weapon/card/id/I = user.GetID()
 	if(!I)
 		if(loud)
 			user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
 		return 0
 
-	if(access_to_check in I.access)
+	if(access_to_check in I.GetAccess)
 		return 1
 	else if(loud)
 		user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
-*/
+
 // This attempts to retrieve header data for NanoUIs. If implementing completely new device of different type than existing ones
 // always include the device here in this proc. This proc basically relays the request to whatever is running the program.
 /datum/computer_file/program/proc/get_header_data()
@@ -103,8 +100,6 @@
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
-		if(nanomodule_path)
-			NM = new nanomodule_path(src, new /datum/topic_manager/program(src), src)
 		if(requires_ntnet && network_destination)
 			generate_network_log("Connection opened to [network_destination].")
 		program_state = PROGRAM_STATE_ACTIVE
@@ -116,19 +111,12 @@
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
-	if(NM)
-		qdel(NM)
-		NM = null
 	return 1
 
 // This is called every tick when the program is enabled. Ensure you do parent call if you override it. If parent returns 1 continue with UI initialisation.
 // It returns 0 if it can't run or if NanoModule was used instead. I suggest using NanoModules where applicable.
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 1, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
-		if(!ui)
-			ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-		if(ui)
-			ui.close()
 		return computer.ui_interact(user)
 	return 1
 
@@ -138,16 +126,18 @@
 // Calls beginning with "PRG_" are reserved for programs handling.
 // Calls beginning with "PC_" are reserved for computer handling (by whatever runs the program)
 // ALWAYS INCLUDE PARENT CALL ..() OR DIE IN FIRE.
-/datum/computer_file/program/ui_act(action,params)
+/datum/computer_file/program/ui_act(action,params,datum/tgui/ui)
 	if(..())
 		return 1
 	if(computer)
 		switch(action)
 			if("PC_exit")
 				computer.kill_program()
+				ui.close()
 				return 1
 			if("PC_shutdown")
 				computer.shutdown_computer()
+				ui.close()
 				return 1
 			if("PC_minimize")
 				var/mob/user = usr
@@ -159,11 +149,19 @@
 
 				computer.active_program = null
 				computer.update_icon()
+				ui.close()
+
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 
 
+/datum/computer_file/program/ui_host()
+	if(computer.physical)
+		return computer.physical
+	else
+		return computer
 
-
-	//if(computer)
-	//	return computer.ui_act(action,params)
+/datum/computer_file/program/ui_status(mob/user)
+	if(program_state != PROGRAM_STATE_ACTIVE) // Our program was closed. Close the ui if it exists.
+		return UI_CLOSE
+	return ..()

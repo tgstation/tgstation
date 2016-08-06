@@ -8,11 +8,7 @@
 	required_access = access_network
 	available_on_ntnet = 1
 
-//datum/nano_module/computer_ntnetmonitor
-//	name = "NTNet Diagnostics and Monitoring"
-//	available_to_ai = TRUE
-
-/datum/computer_file/program/ntnetmonitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+/datum/computer_file/program/ntnetmonitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -67,12 +63,12 @@
 			. = 1
 			if(!ntnet_global)
 				return 1
-			ntnet_global.toggle_function(params)
+			ntnet_global.toggle_function(text2num(params["id"]))
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
 	if(!ntnet_global)
 		return
-	var/list/data = list()
+	var/list/data = get_header_data()
 
 	data["ntnetstatus"] = ntnet_global.check_function()
 	data["ntnetrelays"] = ntnet_global.relays.len
@@ -84,7 +80,10 @@
 	data["config_communication"] = ntnet_global.setting_communication
 	data["config_systemcontrol"] = ntnet_global.setting_systemcontrol
 
-	data["ntnetlogs"] = ntnet_global.logs
+	data["ntnetlogs"] = list()
+
+	for(var/i in ntnet_global.logs)
+		data["ntnetlogs"] += list(list("entry" = i))
 	data["ntnetmaxlogs"] = ntnet_global.setting_maxlogcount
 
 	return data

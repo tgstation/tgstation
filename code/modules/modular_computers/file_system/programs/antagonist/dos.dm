@@ -29,14 +29,15 @@
 			error = "Connection to destination relay lost."
 
 /datum/computer_file/program/ntnet_dos/kill_program(var/forced)
-	target.dos_sources.Remove(src)
+	if(target)
+		target.dos_sources.Remove(src)
 	target = null
 	executed = 0
 
 	..(forced)
 
 
-/datum/computer_file/program/ntnet_dos/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = always_state)
+/datum/computer_file/program/ntnet_dos/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
@@ -50,10 +51,11 @@
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
 	if(..())
 		return 1
+	world << params
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/R in ntnet_global.relays)
-				if("[R.uid]" == params)
+				if("[R.uid]" == params["targid"])
 					target = R
 			return 1
 		if("PRG_reset")
@@ -90,18 +92,16 @@
 		// Probability of 1 is equal of completion percentage of DoS attack on this relay.
 		// Combined with UI updates this adds quite nice effect to the UI
 		var/percentage = target.dos_overload * 100 / target.dos_capacity
-		var/list/strings[0]
+		data["dos_strings"] = list()
 		for(var/j, j<10, j++)
 			var/string = ""
 			for(var/i, i<20, i++)
 				string = "[string][prob(percentage)]"
-			strings.Add(string)
-		data["dos_strings"] = strings
+			data["dos_strings"] += list(list("nums" = string))
 	else
-		var/list/relays[0]
+		data["relays"] = list()
 		for(var/obj/machinery/ntnet_relay/R in ntnet_global.relays)
-			relays.Add(R.uid)
-		data["relays"] = relays
+			data["relays"] += list(list("id" = R.uid))
 		data["focus"] = target ? target.uid : null
 
 	return data
