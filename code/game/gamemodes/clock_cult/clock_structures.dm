@@ -987,7 +987,7 @@
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(1.5)
+			var/vitality_drained = 0
 			if(L.stat == DEAD)
 				vitality_drained = L.maxHealth
 				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
@@ -998,6 +998,8 @@
 				for(var/obj/item/W in L)
 					L.unEquip(W)
 				L.dust()
+			else
+				vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else
