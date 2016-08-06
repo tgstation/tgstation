@@ -76,6 +76,9 @@ Difficulty: Very Hard
 				visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
 			ranged_cooldown = world.time + 30
 			telegraph()
+			var/turf/U = get_turf(src)
+			for(var/T in RANGE_TURFS(2, U) - U)
+				shoot_projectile(T)
 			move_to_delay = 3
 			return
 		else
@@ -218,8 +221,9 @@ Difficulty: Very Hard
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
+	var/turf/U = get_turf(src)
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
-	for(var/turf/turf in range(12,get_turf(src)))
+	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
 			shoot_projectile(turf)
 
