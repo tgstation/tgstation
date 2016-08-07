@@ -69,25 +69,22 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	var/anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	if(charging)
+		return
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(!charging)
-		blood_warp()
+	blood_warp()
 
 	if(prob(25))
-		blood_spray()
+		addtimer(src, "blood_spray", 0)
 
 	else if(prob(5+anger_modifier/2))
 		slaughterlings()
-	else if(!charging)
+	else
 		if(health > maxHealth/2 && !client)
-			charge()
+			addtimer(src, "charge", 0)
 		else
-			charge()
-			sleep(10)
-			charge()
-			sleep(10)
-			charge()
+			addtimer(src, "triple_charge", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/New()
@@ -126,6 +123,13 @@ Difficulty: Hard
 	. = ..()
 	if(charging)
 		DestroySurroundings()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
+	charge()
+	sleep(10)
+	charge()
+	sleep(10)
+	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_step_away(target, src)
@@ -186,16 +190,20 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
-	spawn(0)
-		var/turf/E = get_edge_target_turf(src, src.dir)
-		var/range = 10
-		for(var/turf/J in getline(src,E))
-			if(!range || J.density)
-				break
-			playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
-			new /obj/effect/decal/cleanable/blood(J)
-			range--
-			sleep(1)
+	var/turf/E = get_edge_target_turf(src, src.dir)
+	var/range = 10
+	var/turf/previousturf = get_turf(src)
+	for(var/turf/J in getline(src,E))
+		if(!range)
+			break
+		PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(previousturf, get_dir(previousturf, J)))
+		if(!previousturf.CanAtmosPass(J))
+			break
+		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
+		new /obj/effect/decal/cleanable/blood(J)
+		range--
+		previousturf = J
+		sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()
 	visible_message("<span class='danger'>[src] summons a shoal of slaughterlings!</span>")

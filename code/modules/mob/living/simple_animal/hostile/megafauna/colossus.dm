@@ -76,7 +76,7 @@ Difficulty: Very Hard
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			spiral_shoot(rand(0, 1))
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -87,13 +87,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
-			sleep(10)
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
+			addtimer(src, "alternating_dir_shots", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -129,6 +123,14 @@ Difficulty: Very Hard
 		AT.pixel_y += random_y
 	..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
+	sleep(10)
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
