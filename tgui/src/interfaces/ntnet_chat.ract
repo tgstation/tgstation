@@ -96,7 +96,7 @@
 		<b>Available channels:</b>
 		<table>
 		{{#each data.all_channels}}		
-			<tr><td><ui-button action='PRG_joinchannel' params='{"id": "{{id}}"}'>{{id}}</ui-button><br>
+			<tr><td><ui-button action='PRG_joinchannel' params='{"id": "{{id}}"}'>{{chan}}</ui-button><br>
 		{{/each}}
 		</table>
 	{{/if}}
