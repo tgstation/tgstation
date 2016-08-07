@@ -135,6 +135,7 @@ Librarian
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/weapon/barcodescanner
 	l_pocket = /obj/item/device/laser_pointer
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced = 1)
 
 /*
 Lawyer
