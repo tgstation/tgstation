@@ -91,7 +91,7 @@ var/list/global_modular_computers = list()
 	if(cpu)
 		cpu.attack_self(user) // CPU is an item, that's why we route attack_hand to attack_self
 
-/obj/machinery/modular_computer/examine(var/mob/user)
+/obj/machinery/modular_computer/examine(mob/user)
 	. = ..()
 	if(cpu)
 		cpu.examine(user)
@@ -104,13 +104,13 @@ var/list/global_modular_computers = list()
 		cpu.process(1)
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
-/obj/machinery/modular_computer/proc/find_hardware_by_name(var/N)
+/obj/machinery/modular_computer/proc/find_hardware_by_name(N)
 	if(tesla_link && (tesla_link.name == N))
 		return tesla_link
 	return null
 
 // Used in following function to reduce copypaste
-/obj/machinery/modular_computer/proc/power_failure(var/malfunction = 0)
+/obj/machinery/modular_computer/proc/power_failure(malfunction = 0)
 	if(cpu && cpu.enabled) // Shut down the computer
 		visible_message("<span class='danger'>\The [src]'s screen flickers [cpu.battery_module ? "\"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\"" : "\"EXTERNAL POWER LOSS\""] warning as it shuts down unexpectedly.</span>")
 		if(cpu)
@@ -136,7 +136,8 @@ var/list/global_modular_computers = list()
 		battery_powered = 0
 
 	var/power_usage = cpu.screen_on ? base_active_power_usage : base_idle_power_usage
-	for(var/obj/item/weapon/computer_hardware/CH in src.cpu.get_all_components())
+	for(var/C in src.cpu.get_all_components())
+		var/obj/item/weapon/computer_hardware/CH = C
 		if(CH.enabled)
 			power_usage += CH.power_usage
 
@@ -169,7 +170,7 @@ var/list/global_modular_computers = list()
 		return
 	..()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/modular_computer/attackby(var/obj/item/weapon/W as obj, mob/user)
 	if(cpu)
 		return cpu.attackby(W, user)
 	return ..()
@@ -177,19 +178,19 @@ var/list/global_modular_computers = list()
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
-/obj/machinery/modular_computer/ex_act(var/severity)
+/obj/machinery/modular_computer/ex_act(severity)
 	if(cpu)
 		cpu.ex_act(severity)
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
-/obj/machinery/modular_computer/emp_act(var/severity)
+/obj/machinery/modular_computer/emp_act(severity)
 	if(cpu)
 		cpu.emp_act(severity)
 
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/machinery/modular_computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
 	if(cpu)
 		cpu.bullet_act(Proj)
 

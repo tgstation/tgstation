@@ -15,12 +15,14 @@
 	var/obj/item/modular_computer/movable = null
 
 
-//obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
-
 /datum/computer_file/program/computerconfig/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "laptop_configuration", "NTOS Configuration Utility", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
@@ -54,7 +56,8 @@
 		data["battery"] = list("max" = movable.battery_module.battery.maxcharge, "charge" = round(movable.battery_module.battery.charge))
 
 	var/list/all_entries[0]
-	for(var/obj/item/weapon/computer_hardware/H in hardware)
+	for(var/I in hardware)
+		var/obj/item/weapon/computer_hardware/H = I
 		all_entries.Add(list(list(
 		"name" = H.name,
 		"desc" = H.desc,
@@ -68,11 +71,8 @@
 
 
 /datum/computer_file/program/computerconfig/ui_act(action,params)
-	world << "test"
 	if(..())
 		return
-	world << action
-	world <<params["name"]
 	switch(action)
 		if("PC_toggle_component")
 			var/obj/item/weapon/computer_hardware/H = movable.find_hardware_by_name(params["name"])

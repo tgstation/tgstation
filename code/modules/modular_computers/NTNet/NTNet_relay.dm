@@ -91,34 +91,9 @@
 
 
 
-/*
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if (!ui)
-		ui = new(user, src, ui_key, "ntnet_relay.tmpl", "NTNet Quantum Relay", 500, 300, state = state)
-		ui.set_initial_data(data)
-		ui.open()
-		ui.set_auto_update(1)
-
-*/
-
-/obj/machinery/ntnet_relay/attack_hand(var/mob/living/user)
+/obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
 
-/*
-/obj/machinery/ntnet_relay/Topic(href, href_list)
-	if(..())
-		return 1
-	if(href_list["restart"])
-		dos_overload = 0
-		dos_failure = 0
-		update_icon()
-		ntnet_global.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
-	else if(href_list["toggle"])
-		enabled = !enabled
-		ntnet_global.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
-		update_icon()
-*/
 /obj/machinery/ntnet_relay/New()
 	uid = gl_uid
 	gl_uid++

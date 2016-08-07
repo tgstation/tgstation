@@ -12,6 +12,11 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
+
 		ui = new(user, src, ui_key, "ntnet_monitor", "NTNet Diagnostics and Monitoring Tool", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)

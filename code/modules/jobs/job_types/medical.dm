@@ -34,7 +34,7 @@ Chief Medical Officer
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	l_hand = /obj/item/weapon/storage/firstaid/regular
 	suit_store = /obj/item/device/flashlight/pen
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
@@ -81,6 +81,7 @@ Medical Doctor
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /*
 Chemist
@@ -114,6 +115,7 @@ Chemist
 	backpack = /obj/item/weapon/storage/backpack/chemistry
 	satchel = /obj/item/weapon/storage/backpack/satchel/chem
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /*
 Geneticist
@@ -147,6 +149,7 @@ Geneticist
 	backpack = /obj/item/weapon/storage/backpack/genetics
 	satchel = /obj/item/weapon/storage/backpack/satchel/gen
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /*
 Virologist
@@ -181,3 +184,4 @@ Virologist
 	backpack = /obj/item/weapon/storage/backpack/virology
 	satchel = /obj/item/weapon/storage/backpack/satchel/vir
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)

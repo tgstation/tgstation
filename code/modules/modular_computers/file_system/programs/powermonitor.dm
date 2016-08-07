@@ -56,6 +56,11 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
+
 		ui = new(user, src, ui_key, "power_monitor_prog", "Power Monitoring", 1200, 1000, master_ui, state)
 		ui.open()
 

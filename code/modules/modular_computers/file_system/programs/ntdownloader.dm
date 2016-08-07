@@ -17,7 +17,7 @@
 	var/downloaderror = ""
 	var/obj/item/modular_computer/my_computer = null
 
-/datum/computer_file/program/ntnetdownload/proc/begin_file_download(var/filename)
+/datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
 		return 0
 
@@ -100,18 +100,17 @@
 			return 1
 	return 0
 
-//datum/nano_module/program/computer_ntnetdownload
-//	name = "Network Downloader"
-
 /datum/computer_file/program/ntnetdownload/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = default_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "ntnet_downloader", "NTNet Download Program", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
-
-
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 
@@ -120,10 +119,7 @@
 	if(!istype(my_computer))
 		return
 
-	var/list/data = list()
-
-
-	data = get_header_data()
+	var/list/data = get_header_data()
 
 	// This IF cuts on data transferred to client, so i guess it's worth it.
 	if(downloaderror) // Download errored. Wait until user resets the program.
@@ -138,7 +134,8 @@
 		data["disk_size"] = my_computer.hard_drive.max_capacity
 		data["disk_used"] = my_computer.hard_drive.used_capacity
 		var/list/all_entries[0]
-		for(var/datum/computer_file/program/P in ntnet_global.available_station_software)
+		for(var/A in ntnet_global.available_station_software)
+			var/datum/computer_file/program/P = A
 			// Only those programs our user can run will show in the list
 			if(!P.can_run(user))
 				continue
@@ -151,7 +148,8 @@
 		data["hackedavailable"] = 0
 		if(computer_emagged) // If we are running on emagged computer we have access to some "bonus" software
 			var/list/hacked_programs[0]
-			for(var/datum/computer_file/program/P in ntnet_global.available_antag_software)
+			for(var/S in ntnet_global.available_antag_software)
+				var/datum/computer_file/program/P = S
 				data["hackedavailable"] = 1
 				hacked_programs.Add(list(list(
 				"filename" = P.filename,

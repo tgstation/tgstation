@@ -26,6 +26,7 @@ Quartermaster
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/weapon/clipboard
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 /*
 Cargo Technician
@@ -52,6 +53,7 @@ Cargo Technician
 	belt = /obj/item/device/pda/cargo
 	ears = /obj/item/device/radio/headset/headset_cargo
 	uniform = /obj/item/clothing/under/rank/cargotech
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 
 /*
@@ -92,6 +94,7 @@ Shaft Miner
 	satchel = /obj/item/weapon/storage/backpack/satchel/explorer
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag
 	box = /obj/item/weapon/storage/box/survival_mining
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 /*
 Bartender
@@ -121,7 +124,7 @@ Bartender
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1)
+	backpack_contents = list(/obj/item/weapon/storage/box/beanbag=1,/obj/item/modular_computer/tablet/preset/cheap=1)
 	shoes = /obj/item/clothing/shoes/laceup
 
 /*
@@ -152,6 +155,7 @@ Cook
 	uniform = /obj/item/clothing/under/rank/chef
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -200,6 +204,7 @@ Botanist
 
 	backpack = /obj/item/weapon/storage/backpack/botany
 	satchel = /obj/item/weapon/storage/backpack/satchel/hyd
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 
 /*
@@ -228,3 +233,4 @@ Janitor
 	belt = /obj/item/device/pda/janitor
 	ears = /obj/item/device/radio/headset/headset_srv
 	uniform = /obj/item/clothing/under/rank/janitor
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)

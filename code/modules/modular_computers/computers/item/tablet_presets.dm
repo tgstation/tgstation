@@ -1,6 +1,6 @@
 
 // Available as custom loadout item, this is literally the worst possible cheap tablet
-/obj/item/modular_computer/tablet/preset/custom_loadout/cheap/New()
+/obj/item/modular_computer/tablet/preset/cheap/New()
 	. = ..()
 	desc = "A low-end tablet often seen among low ranked station personnel."
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
@@ -10,7 +10,7 @@
 	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
 
 // Alternative version, an average one, for higher ranked positions mostly
-/obj/item/modular_computer/tablet/preset/custom_loadout/advanced/New()
+/obj/item/modular_computer/tablet/preset/advanced/New()
 	. = ..()
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
 	battery_module = new/obj/item/weapon/computer_hardware/battery_module(src)

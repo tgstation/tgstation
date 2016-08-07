@@ -36,7 +36,7 @@
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge))
+	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/ammo_box/magazine/recharge) || istype(G, /obj/item/weapon/computer_hardware/battery_module))
 		if(anchored)
 			if(charging || panel_open)
 				return 1
@@ -126,6 +126,14 @@
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
 				using_power = 1
+
+		if(istype(charging, /obj/item/weapon/gun/energy))
+			var/obj/item/weapon/computer_hardware/battery_module/B = charging
+			if(B.battery)
+				if(B.battery.charge < B.battery.maxcharge)
+					B.battery.give(B.battery.chargerate * recharge_coeff)
+					use_power(200 * recharge_coeff)
+					using_power = 1
 
 	update_icon(using_power)
 

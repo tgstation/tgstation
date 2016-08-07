@@ -51,7 +51,6 @@
 /datum/computer_file/program/ntnet_dos/ui_act(action, params)
 	if(..())
 		return 1
-	world << params
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/R in ntnet_global.relays)

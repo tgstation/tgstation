@@ -182,6 +182,12 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
+
 		ui = new(user, src, ui_key, "ntnet_chat", "NTNet Relay Chat Client", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
@@ -206,7 +212,8 @@
 			)))
 		data["messages"] = messages
 		var/list/clients[0]
-		for(var/datum/computer_file/program/chatclient/cl in channel.clients)
+		for(var/C in channel.clients)
+			var/datum/computer_file/program/chatclient/cl = C
 			clients.Add(list(list(
 				"name" = cl.username
 			)))
@@ -216,7 +223,8 @@
 
 	else // Channel selection screen
 		var/list/all_channels[0]
-		for(var/datum/ntnet_conversation/conv in ntnet_global.chat_channels)
+		for(var/C in ntnet_global.chat_channels)
+			var/datum/ntnet_conversation/conv = C
 			if(conv && conv.title)
 				all_channels.Add(list(list(
 					"chan" = conv.title,

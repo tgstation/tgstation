@@ -14,6 +14,7 @@ Assistant
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
 
+
 /datum/job/assistant/get_access()
 	if((config.jobs_have_maint_access & ASSISTANTS_HAVE_MAINT_ACCESS) || !config.jobs_have_minimal_access) //Config has assistant maint access set
 		. = ..()
@@ -31,6 +32,7 @@ Assistant
 
 /datum/outfit/job/assistant
 	name = "Assistant"
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

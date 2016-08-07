@@ -35,7 +35,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	add_log("NTNet logging system activated.")
 
 // Simplified logging: Adds a log. log_string is mandatory parameter, source is optional.
-/datum/ntnet/proc/add_log(var/log_string, var/obj/item/weapon/computer_hardware/network_card/source = null)
+/datum/ntnet/proc/add_log(log_string, obj/item/weapon/computer_hardware/network_card/source = null)
 	var/log_text = "[worldtime2text()] - "
 	if(source)
 		log_text += "[source.get_network_tag()] - "
@@ -44,23 +44,22 @@ var/global/datum/ntnet/ntnet_global = new()
 	log_text += log_string
 	logs.Add(log_text)
 
+
+	// We have too many logs, remove the oldest entries until we get into the limit
 	if(logs.len > setting_maxlogcount)
-		// We have too many logs, remove the oldest entries until we get into the limit
-		for(var/L in logs)
-			if(logs.len > setting_maxlogcount)
-				logs.Remove(L)
-			else
-				break
+		logs = logs.Copy(logs.len-setting_maxlogcount,0)
+
 
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
-/datum/ntnet/proc/check_function(var/specific_action = 0)
+/datum/ntnet/proc/check_function(specific_action = 0)
 	if(!relays || !relays.len) // No relays found. NTNet is down
 		return 0
 
 	var/operating = 0
 
 	// Check all relays. If we have at least one working relay, network is up.
-	for(var/obj/machinery/ntnet_relay/R in relays)
+	for(var/M in relays)
+		var/obj/machinery/ntnet_relay/R = M
 		if(R.is_operational())
 			operating = 1
 			break
@@ -68,14 +67,15 @@ var/global/datum/ntnet/ntnet_global = new()
 	if(setting_disabled)
 		return 0
 
-	if(specific_action == NTNET_SOFTWAREDOWNLOAD)
-		return (operating && setting_softwaredownload)
-	if(specific_action == NTNET_PEERTOPEER)
-		return (operating && setting_peertopeer)
-	if(specific_action == NTNET_COMMUNICATION)
-		return (operating && setting_communication)
-	if(specific_action == NTNET_SYSTEMCONTROL)
-		return (operating && setting_systemcontrol)
+	switch(specific_action)
+		if(NTNET_SOFTWAREDOWNLOAD)
+			return (operating && setting_softwaredownload)
+		if(NTNET_PEERTOPEER)
+			return (operating && setting_peertopeer)
+		if(NTNET_COMMUNICATION)
+			return (operating && setting_communication)
+		if(NTNET_SYSTEMCONTROL)
+			return (operating && setting_systemcontrol)
 	return operating
 
 // Builds lists that contain downloadable software.
@@ -94,11 +94,13 @@ var/global/datum/ntnet/ntnet_global = new()
 			available_antag_software.Add(prog)
 
 // Attempts to find a downloadable file according to filename var
-/datum/ntnet/proc/find_ntnet_file_by_name(var/filename)
-	for(var/datum/computer_file/program/P in available_station_software)
+/datum/ntnet/proc/find_ntnet_file_by_name(filename)
+	for(var/N in available_station_software)
+		var/datum/computer_file/program/P = N
 		if(filename == P.filename)
 			return P
-	for(var/datum/computer_file/program/P in available_antag_software)
+	for(var/N in available_antag_software)
+		var/datum/computer_file/program/P = N
 		if(filename == P.filename)
 			return P
 
@@ -116,7 +118,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	add_log("-!- LOGS DELETED BY SYSTEM OPERATOR -!-")
 
 // Updates maximal amount of stored logs. Use this instead of setting the number, it performs required checks.
-/datum/ntnet/proc/update_max_log_count(var/lognumber)
+/datum/ntnet/proc/update_max_log_count(lognumber)
 	if(!lognumber)
 		return 0
 	// Trim the value if necessary
@@ -124,7 +126,7 @@ var/global/datum/ntnet/ntnet_global = new()
 	setting_maxlogcount = lognumber
 	add_log("Configuration Updated. Now keeping [setting_maxlogcount] logs in system memory.")
 
-/datum/ntnet/proc/toggle_function(var/function)
+/datum/ntnet/proc/toggle_function(function)
 	if(!function)
 		return
 	function = text2num(function)

@@ -16,13 +16,10 @@
 		machinery_computer.cpu = null
 	machinery_computer = null
 
-//obj/item/modular_computer/processor/nano_host()
-//	return machinery_computer.nano_host()
-
 // Due to how processes work, we'd receive two process calls - one from machinery type and one from our own type.
 // Since we want this to be in-sync with machinery (as it's hidden type for machinery-based computers) we'll ignore
 // non-relayed process calls.
-/obj/item/modular_computer/processor/process(var/relayed = 0)
+/obj/item/modular_computer/processor/process(relayed = 0)
 	if(relayed)
 		..()
 	else
@@ -39,7 +36,7 @@
 	if(machinery_computer)
 		machinery_computer.handle_power()
 
-/obj/item/modular_computer/processor/New(var/comp)
+/obj/item/modular_computer/processor/New(comp)
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))
 		CRASH("Inapropriate type passed to obj/item/modular_computer/processor/New()! Aborting.")
 		return
@@ -55,7 +52,7 @@
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
 
-/obj/item/modular_computer/processor/find_hardware_by_name(var/N)
+/obj/item/modular_computer/processor/find_hardware_by_name(N)
 	var/obj/item/weapon/computer_hardware/H = machinery_computer.find_hardware_by_name(N)
 	if(H)
 		return H
@@ -96,7 +93,7 @@
 	return
 
 // Tesla links only work on machinery types, so we'll override the default try_install_component() proc
-/obj/item/modular_computer/processor/try_install_component(var/mob/living/user, var/obj/item/weapon/computer_hardware/H, var/found = 0)
+/obj/item/modular_computer/processor/try_install_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0)
 	if(istype(H, /obj/item/weapon/computer_hardware/tesla_link))
 		if(machinery_computer.tesla_link)
 			user << "This computer's tesla link slot is already occupied by \the [machinery_computer.tesla_link]."
@@ -107,7 +104,7 @@
 		found = 1
 	..(user, H, found)
 
-/obj/item/modular_computer/processor/uninstall_component(var/mob/living/user, var/obj/item/weapon/computer_hardware/H, var/found = 0, var/critical = 0)
+/obj/item/modular_computer/processor/uninstall_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0, critical = 0)
 	if(machinery_computer.tesla_link == H)
 		machinery_computer.tesla_link = null
 		var/obj/item/weapon/computer_hardware/tesla_link/L = H
@@ -122,12 +119,12 @@
 	return all_components
 
 // Perform adjacency checks on our machinery counterpart, rather than on ourselves.
-/obj/item/modular_computer/processor/Adjacent(var/atom/neighbor)
+/obj/item/modular_computer/processor/Adjacent(atom/neighbor)
 	if(!machinery_computer)
 		return 0
 	return machinery_computer.Adjacent(neighbor)
 
-/obj/item/modular_computer/processor/turn_on(var/mob/user)
+/obj/item/modular_computer/processor/turn_on(mob/user)
 	// If we have a tesla link on our machinery counterpart, enable it automatically. Lets computer without a battery work.
 	if(machinery_computer && machinery_computer.tesla_link)
 		machinery_computer.tesla_link.enabled = 1

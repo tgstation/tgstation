@@ -44,7 +44,7 @@ var/global/nttransfer_uid = 0
 		if(!remote)
 			crash_download("Connection to remote server lost")
 
-/datum/computer_file/program/nttransfer/kill_program(var/forced = 0)
+/datum/computer_file/program/nttransfer/kill_program(forced = 0)
 	if(downloaded_file) // Client mode, clean up variables for next use
 		finalize_download()
 
@@ -88,6 +88,11 @@ var/global/nttransfer_uid = 0
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
+
 		ui = new(user, src, ui_key, "ntnet_transfer", "NTNet P2P Transfer Client", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)

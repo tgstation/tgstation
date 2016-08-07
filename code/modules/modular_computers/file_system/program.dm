@@ -20,7 +20,7 @@
 	var/computer_emagged = 0				// Set to 1 if computer that's running us was emagged. Computer updates this every Process() tick
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /nano/images/status_icons. Be careful not to use too large images!
 
-/datum/computer_file/program/New(var/obj/item/modular_computer/comp = null)
+/datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
 	if(comp && istype(comp))
 		computer = comp
@@ -46,19 +46,19 @@
 		computer.update_icon()
 
 // Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
-/datum/computer_file/program/proc/generate_network_log(var/text)
+/datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
 		return computer.add_log(text)
 	return 0
 
-/datum/computer_file/program/proc/is_supported_by_hardware(var/hardware_flag = 0, var/loud = 0, var/mob/user = null)
+/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			user << "<span class='danger'>\The [computer] flashes an \"Hardware Error - Incompatible software\" warning.</span>"
 		return 0
 	return 1
 
-/datum/computer_file/program/proc/get_signal(var/specific_action = 0)
+/datum/computer_file/program/proc/get_signal(specific_action = 0)
 	if(computer)
 		return computer.get_ntnet_status(specific_action)
 	return 0
@@ -112,7 +112,7 @@
 	return 0
 
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
-/datum/computer_file/program/proc/kill_program(var/forced = 0)
+/datum/computer_file/program/proc/kill_program(forced = 0)
 	program_state = PROGRAM_STATE_KILLED
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")

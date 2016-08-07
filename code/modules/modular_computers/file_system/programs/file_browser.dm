@@ -140,7 +140,7 @@
 			HDD.store_file(C)
 
 
-/datum/computer_file/program/filemanager/proc/parse_tags(var/t)
+/datum/computer_file/program/filemanager/proc/parse_tags(t)
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
 	t = replacetext(t, "\[br\]", "<BR>")
@@ -182,6 +182,10 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "file_manager", "NTOS File Manage", 575, 700, state = state)
 		ui.open()
 		ui.set_autoupdate(state = 1)

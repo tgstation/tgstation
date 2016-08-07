@@ -38,7 +38,7 @@ Research Director
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/weapon/clipboard
 	l_pocket = /obj/item/device/laser_pointer
-	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
+	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1,/obj/item/modular_computer/tablet/preset/advanced=1)
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
@@ -81,6 +81,7 @@ Scientist
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /*
 Roboticist
@@ -112,5 +113,6 @@ Roboticist
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
+	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 	pda_slot = slot_l_store

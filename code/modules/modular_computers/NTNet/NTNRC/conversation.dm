@@ -1,4 +1,4 @@
-var/global/ntnrc_uid = 0
+var/global/static/ntnrc_uid = 0
 
 /datum/ntnet_conversation/
 	var/id = null
@@ -27,10 +27,7 @@ var/global/ntnrc_uid = 0
 /datum/ntnet_conversation/proc/trim_message_list()
 	if(messages.len <= 50)
 		return
-	for(var/message in messages)
-		messages -= message
-		if(messages <= 50)
-			return
+	messages = messages.Copy(messages.len-50 ,0)
 
 /datum/ntnet_conversation/proc/add_client(var/datum/computer_file/program/chatclient/C)
 	if(!istype(C))

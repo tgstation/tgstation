@@ -45,7 +45,6 @@
 	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
 	var/list/idle_threads = list()							// Idle programs on background. They still receive process calls but can't be interacted with.
-	var/activetemplate = "computer_main"
 	var/obj/physical = null
 
 
@@ -97,7 +96,8 @@
 	if(active_program)
 		active_program.event_idremoved(0)
 
-	for(var/datum/computer_file/program/P in idle_threads)
+	for(var/I in idle_threads)
+		var/datum/computer_file/program/P = I
 		P.event_idremoved(1)
 
 	card_slot.stored_card.forceMove(get_turf(src))
@@ -152,7 +152,8 @@
 	kill_program(1)
 	machines.Remove(src)
 	STOP_PROCESSING(SSmachine, src)
-	for(var/obj/item/weapon/computer_hardware/CH in src.get_all_components())
+	for(var/H in src.get_all_components())
+		var/obj/item/weapon/computer_hardware/CH = H
 		uninstall_component(null, CH)
 		qdel(CH)
 	return ..()
@@ -162,9 +163,7 @@
 
 	overlays.Cut()
 	if(!enabled)
-		//set_light(0)
 		return
-	//set_light(light_strength)
 	if(active_program)
 		overlays.Add(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
 	else
@@ -182,10 +181,10 @@
 		if(ui)
 			ui.close()
 		return 0
-//	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
-//		if(ui)
-//			ui.close()
-//		return 0
+	if((!battery_module || !battery_module.battery.charge) && !check_power_override())
+		if(ui)
+			ui.close()
+		return 0
 
 	// If we have an active program switch to it now.
 	if(active_program)
@@ -202,9 +201,11 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-//		ui = new(user, src, ui_key, "laptop_mainscreen", "NTOS Main Menu", 400, 500)
-		ui = new(user, src, ui_key, activetemplate, "Main menu", 400, 500, master_ui, state)
-//		ui.set_initial_data(data)
+
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
+		assets.send(user)
+
+		ui = new(user, src, ui_key, "computer_main", "NTOS Main menu", 400, 500, master_ui, state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
@@ -246,7 +247,8 @@
 	physical.visible_message("\The [src] breaks apart!")
 	var/turf/newloc = get_turf(src)
 	new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
-	for(var/obj/item/weapon/computer_hardware/H in get_all_components())
+	for(var/C in get_all_components())
+		var/obj/item/weapon/computer_hardware/H = C
 		uninstall_component(null, H)
 		H.forceMove(newloc)
 		if(prob(25))
@@ -289,7 +291,8 @@
 	if(active_program && active_program.requires_ntnet && !get_ntnet_status(active_program.requires_ntnet_feature)) // Active program requires NTNet to run but we've just lost connection. Crash.
 		active_program.event_networkfailure(0)
 
-	for(var/datum/computer_file/program/P in idle_threads)
+	for(var/I in idle_threads)
+		var/datum/computer_file/program/P = I
 		if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature))
 			P.event_networkfailure(1)
 
@@ -301,7 +304,8 @@
 		else
 			active_program = null
 
-	for(var/datum/computer_file/program/P in idle_threads)
+	for(var/I in idle_threads)
+		var/datum/computer_file/program/P = I
 		if(P.program_state != PROGRAM_STATE_KILLED)
 			P.process_tick()
 			P.ntnet_status = get_ntnet_status()
@@ -349,7 +353,8 @@
 
 	if(idle_threads.len)
 		var/list/program_headers = list()
-		for(var/datum/computer_file/program/P in idle_threads)
+		for(var/I in idle_threads)
+			var/datum/computer_file/program/P = I
 			if(!P.ui_header)
 				continue
 			program_headers.Add(list(list(
@@ -364,7 +369,7 @@
 	return data
 
 // Relays kill program request to currently active program. Use this to quit current program.
-/obj/item/modular_computer/proc/kill_program(var/forced = 0)
+/obj/item/modular_computer/proc/kill_program(forced = 0)
 	if(active_program)
 		active_program.kill_program(forced)
 		active_program = null
@@ -374,18 +379,18 @@
 	update_icon()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/obj/item/modular_computer/proc/get_ntnet_status(var/specific_action = 0)
+/obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
 	if(network_card)
 		return network_card.get_signal(specific_action)
 	else
 		return 0
 
-/obj/item/modular_computer/proc/add_log(var/text)
+/obj/item/modular_computer/proc/add_log(text)
 	if(!get_ntnet_status())
 		return 0
 	return ntnet_global.add_log(text, network_card)
 
-/obj/item/modular_computer/proc/shutdown_computer(var/loud = 1)
+/obj/item/modular_computer/proc/shutdown_computer(loud = 1)
 	kill_program(1)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(1)
@@ -473,12 +478,13 @@
 			return
 
 // Used in following function to reduce copypaste
-/obj/item/modular_computer/proc/power_failure(var/malfunction = 0)
+/obj/item/modular_computer/proc/power_failure(malfunction = 0)
 	if(enabled) // Shut down the computer
 		physical.visible_message("<span class='danger'>\The [src]'s screen flickers \"BATTERY [malfunction ? "MALFUNCTION" : "CRITICAL"]\" warning as it shuts down unexpectedly.</span>")
 		if(active_program)
 			active_program.event_powerfailure(0)
-		for(var/datum/computer_file/program/PRG in idle_threads)
+		for(var/I in idle_threads)
+			var/datum/computer_file/program/PRG = I
 			PRG.event_powerfailure(1)
 		shutdown_computer(0)
 
@@ -502,7 +508,7 @@
 
 	last_power_usage = power_usage
 
-/obj/item/modular_computer/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/item/modular_computer/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/id)) // ID Card, try to insert it.
 		var/obj/item/weapon/card/id/I = W
 		if(!card_slot)
@@ -588,7 +594,7 @@
 	return
 
 // Attempts to install the hardware into apropriate slot.
-/obj/item/modular_computer/proc/try_install_component(var/mob/living/user, var/obj/item/weapon/computer_hardware/H, var/found = 0)
+/obj/item/modular_computer/proc/try_install_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0)
 	// "USB" flash drive.
 	if(istype(H, /obj/item/weapon/computer_hardware/hard_drive/portable))
 		if(portable_drive)
@@ -640,7 +646,7 @@
 		H.forceMove(src)
 
 // Uninstalls component. Found and Critical vars may be passed by parent types, if they have additional hardware.
-/obj/item/modular_computer/proc/uninstall_component(var/mob/living/user, var/obj/item/weapon/computer_hardware/H, var/found = 0, var/critical = 0)
+/obj/item/modular_computer/proc/uninstall_component(mob/living/user, obj/item/weapon/computer_hardware/H, found = 0, critical = 0)
 	if(portable_drive == H)
 		portable_drive = null
 		found = 1
@@ -677,7 +683,7 @@
 
 
 // Checks all hardware pieces to determine if name matches, if yes, returns the hardware piece, otherwise returns null
-/obj/item/modular_computer/proc/find_hardware_by_name(var/name)
+/obj/item/modular_computer/proc/find_hardware_by_name(name)
 	if(portable_drive && (portable_drive.name == name))
 		return portable_drive
 	if(hard_drive && (hard_drive.name == name))
@@ -760,17 +766,19 @@
 */
 
 
-/obj/item/modular_computer/proc/take_damage(var/amount, var/component_probability, var/damage_casing = 1, var/randomize = 1)
+/obj/item/modular_computer/proc/take_damage(amount, component_probability, damage_casing = 1, randomize = 1)
 	if(randomize)
 		// 75%-125%, rand() works with integers, apparently.
 		amount *= (rand(75, 125) / 100.0)
 	amount = round(amount)
 	if(damage_casing)
 		damage += amount
+		damage = max(0,min(max_damage,damage))
 //		damage = between(0, damage, max_damage)
 
 	if(component_probability)
-		for(var/obj/item/weapon/computer_hardware/H in get_all_components())
+		for(var/I in get_all_components())
+			var/obj/item/weapon/computer_hardware/H = I
 			if(prob(component_probability))
 				H.take_damage(round(amount / 2))
 
@@ -779,17 +787,17 @@
 
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
-/obj/item/modular_computer/ex_act(var/severity)
+/obj/item/modular_computer/ex_act(severity)
 	take_damage(rand(100,200) / severity, 30 / severity)
 
 // EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
-/obj/item/modular_computer/emp_act(var/severity)
+/obj/item/modular_computer/emp_act(severity)
 	take_damage(rand(100,200) / severity, 50 / severity, 0)
 
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing
 // "Brute" damage mostly damages the casing.
-/obj/item/modular_computer/bullet_act(var/obj/item/projectile/Proj)
+/obj/item/modular_computer/bullet_act(obj/item/projectile/Proj)
 	switch(Proj.damage_type)
 		if(BRUTE)
 			take_damage(Proj.damage, Proj.damage / 2)
