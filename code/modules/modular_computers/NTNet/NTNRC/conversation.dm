@@ -15,12 +15,12 @@ var/global/static/ntnrc_uid = 0
 		ntnet_global.chat_channels.Add(src)
 	..()
 
-/datum/ntnet_conversation/proc/add_message(var/message, var/username)
+/datum/ntnet_conversation/proc/add_message(message, username)
 	message = "[worldtime2text()] [username]: [message]"
 	messages.Add(message)
 	trim_message_list()
 
-/datum/ntnet_conversation/proc/add_status_message(var/message)
+/datum/ntnet_conversation/proc/add_status_message(message)
 	messages.Add("[worldtime2text()] -!- [message]")
 	trim_message_list()
 
@@ -29,7 +29,7 @@ var/global/static/ntnrc_uid = 0
 		return
 	messages = messages.Copy(messages.len-50 ,0)
 
-/datum/ntnet_conversation/proc/add_client(var/datum/computer_file/program/chatclient/C)
+/datum/ntnet_conversation/proc/add_client(datum/computer_file/program/chatclient/C)
 	if(!istype(C))
 		return
 	clients.Add(C)
@@ -38,7 +38,7 @@ var/global/static/ntnrc_uid = 0
 	if(!operator)
 		changeop(C)
 
-/datum/ntnet_conversation/proc/remove_client(var/datum/computer_file/program/chatclient/C)
+/datum/ntnet_conversation/proc/remove_client(datum/computer_file/program/chatclient/C)
 	if(!istype(C) || !(C in clients))
 		return
 	clients.Remove(C)
@@ -57,7 +57,7 @@ var/global/static/ntnrc_uid = 0
 		operator = newop
 		add_status_message("Channel operator status transferred to [newop.username].")
 
-/datum/ntnet_conversation/proc/change_title(var/newtitle, var/datum/computer_file/program/chatclient/client)
+/datum/ntnet_conversation/proc/change_title(newtitle, datum/computer_file/program/chatclient/client)
 	if(operator != client)
 		return 0 // Not Authorised
 
