@@ -134,8 +134,7 @@
 	for(var/mob/living/M in living_mob_list)
 		if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
 			servants++
-	for(var/mob/living/silicon/ai/ai in living_mob_list)
-		if(!is_servant_of_ratvar(ai) && ai.client)
+		else if(isAI(M))
 			unconverted_ai_exists = TRUE
 	switch(scripture_tier)
 		if(SCRIPTURE_DRIVER)
@@ -258,7 +257,7 @@
 
 /proc/cache_check(mob/M)
 	if(!clockwork_caches)
-		M.throw_alert("nocache", /obj/screen/alert/nocache)
+		M.throw_alert("nocache", /obj/screen/alert/clockwork/nocache)
 	else
 		M.clear_alert("nocache")
 

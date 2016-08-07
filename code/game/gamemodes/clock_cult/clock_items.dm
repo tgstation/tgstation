@@ -185,14 +185,14 @@
 		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
 		return 0
 	if(!nonhuman_usable && !ishuman(user))
-		show_stats(user) //if it's not human, show it stats
+		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
 		return 0
 	access_display(user)
 
 /obj/item/clockwork/slab/proc/access_display(mob/living/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/action = alert(user, "Among the swathes of information, you see...", "[src]", "Recital", "Recollection", "Records")
+	var/action = alert(user, "Among the swathes of information, you see...", "[src]", "Recital", "Recollection", "Cancel")
 	if(!action || !user.canUseTopic(src))
 		return 0
 	switch(action)
@@ -201,10 +201,10 @@
 				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
 				return
 			recite_scripture(user)
-		if("Records")
-			show_stats(user)
 		if("Recollection")
 			show_guide(user)
+		if("Cancel")
+			return
 	return 1
 
 /obj/item/clockwork/slab/proc/recite_scripture(mob/living/user)
@@ -256,25 +256,6 @@
 	scripture_to_recite.run_scripture()
 	return 1
 
-/obj/item/clockwork/slab/proc/show_stats(mob/living/user) //A bit barebones, but there really isn't any more needed
-	var/servants = 0
-	var/validservants = 0
-	for(var/mob/living/L in living_mob_list)
-		if(is_servant_of_ratvar(L))
-			servants++
-			if(ishuman(L) || issilicon(L))
-				validservants++
-	user << "<b>State of the Enlightened</b>"
-	user << "<i>Total servants: </i>[servants]"
-	user << "<i>Servants valid for scripture unlock: </i>[validservants]"
-	user << "<i>Total construction value: </i>[clockwork_construction_value]"
-	user << "<i>Total tinkerer's caches: </i>[clockwork_caches]"
-	user << "<i>Total tinkerer's daemons: </i>[clockwork_daemons] ([servants / 5 < clockwork_daemons ? "<span class='boldannounce'>DISABLED: Too few servants (5 servants per daemon)!</span>" : "<font color='green'><b>Functioning Normally</b></font>"])"
-	user << "<i>Nezbere: </i>[clockwork_generals_invoked["nezbere"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
-	user << "<i>Sevtug: </i>[clockwork_generals_invoked["sevtug"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
-	user << "<i>Nzcrentr: </i>[clockwork_generals_invoked["nzcrentr"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
-	user << "<i>Inath-neq: </i>[clockwork_generals_invoked["inath-neq"] <= world.time ? "<font color='green'><b>Ready</b></font>" : "<span class='boldannounce'>Invoked</span>"]"
-
 /obj/item/clockwork/slab/proc/show_guide(mob/living/user)
 	var/text = "<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br><br>\
 	\
@@ -297,10 +278,12 @@
 	effects usually considered magical in nature. Effects vary considerably - you might drain the power of nearby APCs, cause mass confusion, or force people to walk. Nevertheless, scripture \
 	is extremely important to a successful takeover.<br><br>\
 	\
-	The second functionality of the clockwork slab is Records. The slab is not a one-way link and can also feed information into the stream that it draws from. Records will allow many \
-	important statistics to be displayed, such as the amount of people converted and total construction value. You should check it often.<br><br>\
+	The second functionality of the clockwork slab is Recollection, which will display this guide.<br><br>\
 	\
-	The third and final functionality is Recollection, which will display this guide. Recollection will automatically be initiated if you have not used a slab before.<br><br>\
+	The third to fifth functionalities are several buttons in the top left while holding the slab, from left to right, they are:<br>\
+	Hierophant Network, which allows communication to other servants.<br>\
+	Guvax, which simply allows you to quickly invoke the Guvax scripture.<br>\
+	Vanguard, which, like Guvax, simply allows you to quickly invoke the Vanguard scripture.<br><br>\
 	\
 	Examine the slab for component amount information.<br><br>\
 	\
