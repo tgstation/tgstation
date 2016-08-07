@@ -69,6 +69,9 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
+	if(prob(20+anger_modifier)) //Major attack
+		telegraph()
+
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
@@ -80,14 +83,11 @@ Difficulty: Very Hard
 	else
 		move_to_delay = initial(move_to_delay)
 
-	if(prob(20+anger_modifier)) //Major attack
-		telegraph()
-
 		if(health < maxHealth/3)
 			double_spiral()
 		else
 			visible_message("<span class='colossus'>\"<b>Judgement.</b>\"</span>")
-			spiral_shoot(rand(0, 1))
+			addtimer(src, "spiral_shoot", 0, FALSE, rand(0, 1))
 
 	else if(prob(20))
 		ranged_cooldown = world.time + 30
@@ -98,13 +98,7 @@ Difficulty: Very Hard
 			blast()
 		else
 			ranged_cooldown = world.time + 40
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
-			sleep(10)
-			dir_shots(diagonals)
-			sleep(10)
-			dir_shots(cardinal)
+			addtimer(src, "alternating_dir_shots", 0)
 
 
 /mob/living/simple_animal/hostile/megafauna/colossus/New()
@@ -148,6 +142,15 @@ Difficulty: Very Hard
 			enraged = TRUE
 
 	return enraged
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
+	sleep(10)
+	dir_shots(diagonals)
+	sleep(10)
+	dir_shots(cardinal)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
@@ -287,38 +290,37 @@ Difficulty: Very Hard
 	max_n_of_items = 200
 	pixel_y = -4
 	use_power = 0
-	var/duplicate = FALSE
 	var/memory_saved = FALSE
 	var/list/stored_items = list()
-	var/list/blacklist = (/obj/item/weapon/spellbook)
+	var/static/list/blacklist = typecacheof(list(/obj/item/weapon/spellbook))
 
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
-	if(O.type in blacklist)
-		return
-	if(istype(O, /obj/item))
-		return 1
-	return 0
+	if(!istype(O))
+		return FALSE
+	if(is_type_in_typecache(O, blacklist))
+		return FALSE
+	return TRUE
 
 /obj/machinery/smartfridge/black_box/New()
-	..()
-	for(var/obj/machinery/smartfridge/black_box/B in machines)
-		if(B != src)
-			duplicate = 1
-			qdel(src)
+	var/static/obj/machinery/smartfridge/black_box/current
+	if(current && current != src)
+		qdel(src, force=TRUE)
+		return
+	current = src
 	ReadMemory()
 
 /obj/machinery/smartfridge/black_box/process()
 	..()
-	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!memory_saved && ticker.current_state == GAME_STATE_FINISHED)
 		WriteMemory()
 
 /obj/machinery/smartfridge/black_box/proc/WriteMemory()
 	var/savefile/S = new /savefile("data/npc_saves/Blackbox.sav")
 	stored_items = list()
-	for(var/obj/I in component_parts)
-		qdel(I)
-	for(var/obj/O in contents)
+
+	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
+
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -330,11 +332,17 @@ Difficulty: Very Hard
 		stored_items = list()
 
 	for(var/item in stored_items)
-		new item(src)
+		create_item(item)
 
+//in it's own proc to avoid issues with items that nolonger exist in the code base.
+//try catch doesn't always prevent byond runtimes from halting a proc,
+/obj/machinery/smartfridge/black_box/proc/create_item(item_type)
+	new item_type(src)
 
-/obj/machinery/smartfridge/black_box/Destroy()
-	if(duplicate)
+/obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
+	if(force)
+		for(var/thing in src)
+			qdel(thing)
 		return ..()
 	else
 		return QDEL_HINT_LETMELIVE

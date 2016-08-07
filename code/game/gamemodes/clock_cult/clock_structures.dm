@@ -987,13 +987,19 @@
 			animation_number = 0
 		animation_number++
 		if(!is_servant_of_ratvar(L))
-			var/vitality_drained = L.adjustToxLoss(1.5)
+			var/vitality_drained = 0
 			if(L.stat == DEAD)
 				vitality_drained = L.maxHealth
-				PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
-				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>", \
-						"<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
+				var/obj/effect/overlay/temp/ratvar/sigil/vitality/V = PoolOrNew(/obj/effect/overlay/temp/ratvar/sigil/vitality, get_turf(src))
+				animate(V, alpha = 0, transform = matrix()*2, time = 8)
+				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
+				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
+				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
+				for(var/obj/item/W in L)
+					L.unEquip(W)
 				L.dust()
+			else
+				vitality_drained = L.adjustToxLoss(1.5)
 			if(vitality_drained)
 				vitality += vitality_drained
 			else

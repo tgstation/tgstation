@@ -472,6 +472,7 @@ var/list/teleport_runes = list()
 	scribe_delay = 450 //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	var/used
+	var/ignore_gamemode = FALSE
 
 /obj/effect/rune/narsie/New()
 	. = ..()
@@ -489,28 +490,34 @@ var/list/teleport_runes = list()
 		return
 	if(z != ZLEVEL_STATION)
 		return
+
+	var/datum/game_mode/cult/cult_mode
+	
 	if(ticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = ticker.mode
-		if(!cult_mode.eldergod)
-			for(var/M in invokers)
-				M << "<span class='warning'>Nar-Sie is already on this plane!</span>"
-			log_game("Summon Nar-Sie rune failed - already summoned")
-			return
-		//BEGIN THE SUMMONING
-		used = 1
-		..()
-		world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
-		var/turf/T = get_turf(src)
-		sleep(40)
-		if(src)
-			color = rgb(255, 0, 0)
-		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
-		cult_mode.eldergod = 0
-	else
+		cult_mode = ticker.mode
+
+	if(!cult_mode && !ignore_gamemode)
 		for(var/M in invokers)
 			M << "<span class='warning'>Nar-Sie does not respond!</span>"
 		fail_invoke()
 		log_game("Summon Nar-Sie rune failed - gametype is not cult")
+
+	if(locate(/obj/singularity/narsie) in poi_list)
+		for(var/M in invokers)
+			M << "<span class='warning'>Nar-Sie is already on this plane!</span>"
+		log_game("Summon Nar-Sie rune failed - already summoned")
+		return
+	//BEGIN THE SUMMONING
+	used = 1
+	..()
+	world << 'sound/effects/dimensional_rend.ogg' //There used to be a message for this but every time it was changed it got edgier so I removed it
+	var/turf/T = get_turf(src)
+	sleep(40)
+	if(src)
+		color = rgb(255, 0, 0)
+	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	if(cult_mode)
+		cult_mode.eldergod = 0
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -746,10 +753,22 @@ var/list/teleport_runes = list()
 	if(density)
 		user << "<span class='cultitalic'>There is a barely perceptible shimmering of the air above [src].</span>"
 
+/obj/effect/rune/wall/Destroy()
+	density = 0
+	air_update_turf(1)
+	return ..()
+
+/obj/effect/rune/wall/CanAtmosPass(turf/T)
+	return !density
+
+/obj/effect/rune/wall/BlockSuperconductivity()
+	return density
+
 /obj/effect/rune/wall/invoke(var/list/invokers)
 	var/mob/living/user = invokers[1]
 	..()
 	density = !density
+	air_update_turf(1)
 	user.visible_message("<span class='warning'>[user] [iscarbon(user) ? "places their hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
 						 "<span class='cultitalic'>You channel your life energy into [src], [density ? "preventing" : "allowing"] passage above it.</span>")
 	if(density)
