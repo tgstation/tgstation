@@ -31,10 +31,10 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	needs_target = FALSE
 	say_when_triggered = "Rise, my creations! Jump off your pages and into this realm!"
-	var/summoned_minions = 0
+	var/static/summoned_minions = 0
 
 /datum/action/boss/wizard_summon_minions/Trigger()
-	if(summoned_minions < 9 && ..())
+	if(summoned_minions <= 6 && ..())
 		var/list/minions = list(
 		/mob/living/simple_animal/hostile/stickman,
 		/mob/living/simple_animal/hostile/stickman/ranged,
@@ -42,7 +42,7 @@
 		var/list/directions = cardinal.Copy()
 		for(var/i in 1 to 3)
 			var/minions_chosen = pick_n_take(minions)
-			new minions_chosen (get_step(boss,pick_n_take(directions)))
+			new minions_chosen (get_step(boss,pick_n_take(directions)), 1)
 		summoned_minions += 3;
 
 
