@@ -69,9 +69,6 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
-	if(prob(20+anger_modifier)) //Major attack
-		telegraph()
-
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
@@ -82,6 +79,9 @@ Difficulty: Very Hard
 		return
 	else
 		move_to_delay = initial(move_to_delay)
+
+	if(prob(20+anger_modifier)) //Major attack
+		telegraph()
 
 		if(health < maxHealth/3)
 			double_spiral()
