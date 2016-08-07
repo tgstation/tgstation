@@ -1,4 +1,0 @@
-author: "frtbngll"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Paper Wizard summoning only 9 minions in its lifespan by making the dead stickman decrease it's summoned_minions variable"
