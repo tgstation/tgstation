@@ -274,7 +274,7 @@
 /obj/effect/overlay/temp/ratvar/sigil/vitality
 	color = "#1E8CE1"
 	icon_state = "sigilactivepulse"
-	layer = BELOW_MOB_LAYER
+	layer = ABOVE_MOB_LAYER
 
 /obj/effect/overlay/temp/ratvar/sigil/accession
 	color = "#AF0AAF"
