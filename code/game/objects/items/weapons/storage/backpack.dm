@@ -289,10 +289,19 @@
 	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
 
-/obj/item/weapon/storage/backpack/satchel/flat/rngjesus/New()
+/obj/item/weapon/storage/backpack/satchel/flat/secret/
+	var/list/reward_one_of_these = list() //Intended for map editing
+	var/list/reward_all_of_these = list() //use paths!
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/New()
 	..()
-	var/obj/item/weapon/gun/energy/pulse/P = new (src)
-	P.unlock()
+	if(reward_one_of_these.len > 0)
+		var/reward = pick(reward_one_of_these)
+		new reward(src)
+	for(var/R in reward_all_of_these)
+		new R(src)
+	for(var/obj/item/weapon/gun/G in src)
+		G.unlock()
 	if(istype(loc,/turf/open/floor) && !istype(loc,/turf/open/floor/plating/))
 		hide(1)
 
