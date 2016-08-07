@@ -69,6 +69,17 @@ Difficulty: Very Hard
 	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + 120
 
+	if(enrage(target))
+		if(move_to_delay == initial(move_to_delay))
+			visible_message("<span class='colossus'>\"<b>You can't dodge.</b>\"</span>")
+		ranged_cooldown = world.time + 30
+		telegraph()
+		dir_shots(alldirs)
+		move_to_delay = 3
+		return
+	else
+		move_to_delay = initial(move_to_delay)
+
 	if(prob(20+anger_modifier)) //Major attack
 		telegraph()
 
@@ -122,6 +133,15 @@ Difficulty: Very Hard
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
 	..()
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
+	var/enraged = FALSE
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.martial_art && prob(H.martial_art.deflection_chance))
+			enraged = TRUE
+
+	return enraged
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(diagonals)
@@ -206,10 +226,11 @@ Difficulty: Very Hard
 	P.fire()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
-	for(var/turf/turf in range(12,get_turf(src)))
+	var/turf/U = get_turf(src)
+	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, 1, 5)
+	for(var/T in RANGE_TURFS(12, U) - U)
 		if(prob(5))
-			shoot_projectile(turf)
+			shoot_projectile(T)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/blast()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 200, 1, 2)
@@ -299,7 +320,7 @@ Difficulty: Very Hard
 
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
-	
+
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -314,7 +335,7 @@ Difficulty: Very Hard
 		create_item(item)
 
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
-//try catch doesn't always prevent byond runtimes from halting a proc, 
+//try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
 	new item_type(src)
 
