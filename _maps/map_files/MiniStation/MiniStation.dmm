@@ -8474,7 +8474,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "sF" = (
-/obj/machinery/telecomms/receiver/preset_left/ministation,
+/obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
