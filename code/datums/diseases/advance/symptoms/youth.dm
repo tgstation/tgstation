@@ -18,10 +18,10 @@ BONUS
 /datum/symptom/youth
 
 	name = "Eternal Youth"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = -4
+	stealth = 4
+	resistance = 5
+	stage_speed = 5
+	transmittable = -3
 	level = 5
 
 /datum/symptom/youth/Activate(datum/disease/advance/A)

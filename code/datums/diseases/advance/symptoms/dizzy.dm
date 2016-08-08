@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/dizzy // Not the egg
 
 	name = "Dizziness"
-	stealth = 2
-	resistance = -2
-	stage_speed = -3
-	transmittable = -1
+	stealth = 3
+	resistance = -1
+	stage_speed = -2
+	transmittable = 0
 	level = 4
 	severity = 2
 

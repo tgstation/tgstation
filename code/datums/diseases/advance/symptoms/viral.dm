@@ -15,9 +15,9 @@ BONUS
 */
 /datum/symptom/viraladaptation
 	name = "Viral self-adaptation"
-	stealth = 3
-	resistance = 5
-	stage_speed = -3
+	stealth = 4
+	resistance = 6
+	stage_speed = -2
 	transmittable = 0
 	level = 3
 
@@ -48,10 +48,10 @@ BONUS
 */
 /datum/symptom/viralevolution
 	name = "Viral evolutionary acceleration"
-	stealth = -2
-	resistance = -3
-	stage_speed = 5
-	transmittable = 3
+	stealth = -1
+	resistance = -2
+	stage_speed = 6
+	transmittable = 4
 	level = 3
 
 /datum/symptom/viraladaptation/Activate(datum/disease/advance/A)

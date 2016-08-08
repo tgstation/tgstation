@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/genetic_mutation
 
 	name = "Deoxyribonucleic Acid Saboteur"
-	stealth = -2
-	resistance = -3
-	stage_speed = 0
-	transmittable = -3
+	stealth = -1
+	resistance = -2
+	stage_speed = 1
+	transmittable = -2
 	level = 6
 	severity = 3
 	var/list/possible_mutations

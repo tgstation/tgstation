@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/weight_gain
 
 	name = "Weight Gain"
-	stealth = -3
-	resistance = -3
-	stage_speed = -2
-	transmittable = -2
+	stealth = -2
+	resistance = -2
+	stage_speed = -1
+	transmittable = -1
 	level = 4
 	severity = 1
 
@@ -60,10 +60,10 @@ Bonus
 /datum/symptom/weight_loss
 
 	name = "Weight Loss"
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -2
+	stealth = -2
+	resistance = -1
+	stage_speed = -1
+	transmittable = -1
 	level = 3
 	severity = 1
 
@@ -103,10 +103,10 @@ Bonus
 /datum/symptom/weight_even
 
 	name = "Weight Even"
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -2
+	stealth = -2
+	resistance = -1
+	stage_speed = -1
+	transmittable = -1
 	level = 4
 
 /datum/symptom/weight_even/Activate(datum/disease/advance/A)

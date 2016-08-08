@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/stimulant
 
 	name = "Stimulant"
-	stealth = -1
-	resistance = -3
-	stage_speed = -2
-	transmittable = -4
+	stealth = 0
+	resistance = -2
+	stage_speed = -1
+	transmittable = -3
 	level = 3
 
 /datum/symptom/stimulant/Activate(datum/disease/advance/A)

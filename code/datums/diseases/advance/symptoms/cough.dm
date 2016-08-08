@@ -18,10 +18,10 @@ BONUS
 /datum/symptom/cough
 
 	name = "Cough"
-	stealth = -1
-	resistance = 3
-	stage_speed = 1
-	transmittable = 2
+	stealth = 0
+	resistance = 4
+	stage_speed = 2
+	transmittable = 3
 	level = 1
 	severity = 1
 

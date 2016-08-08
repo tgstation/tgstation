@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/voice_change
 
 	name = "Voice Change"
-	stealth = -2
-	resistance = -3
-	stage_speed = -3
-	transmittable = -1
+	stealth = -1
+	resistance = -2
+	stage_speed = -2
+	transmittable = 0
 	level = 6
 	severity = 2
 

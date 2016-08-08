@@ -19,10 +19,10 @@ BONUS
 /datum/symptom/headache
 
 	name = "Headache"
-	stealth = -1
-	resistance = 4
-	stage_speed = 2
-	transmittable = 0
+	stealth = 0
+	resistance = 5
+	stage_speed = 3
+	transmittable = 1
 	level = 1
 	severity = 1
 

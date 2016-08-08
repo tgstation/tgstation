@@ -17,10 +17,10 @@ BONUS
 /datum/symptom/beard
 
 	name = "Facial Hypertrichosis"
-	stealth = -3
-	resistance = -1
-	stage_speed = -3
-	transmittable = -1
+	stealth = -2
+	resistance = 0
+	stage_speed = -2
+	transmittable = 0
 	level = 4
 	severity = 1
 

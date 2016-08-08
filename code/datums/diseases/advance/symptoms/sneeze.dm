@@ -8,7 +8,7 @@ Sneezing
 	Doesn't increase stage speed.
 	Very transmittable.
 	Low Level.
-
+	
 Bonus
 	Forces a spread type of AIRBORNE
 	with extra range!
@@ -19,10 +19,10 @@ Bonus
 /datum/symptom/sneeze
 
 	name = "Sneezing"
-	stealth = -2
-	resistance = 3
-	stage_speed = 0
-	transmittable = 4
+	stealth = -1
+	resistance = 4
+	stage_speed = 1
+	transmittable = 5
 	level = 1
 	severity = 1
 

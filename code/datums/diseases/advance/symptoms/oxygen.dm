@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/oxygen
 
 	name = "Self-Respiration"
-	stealth = 1
-	resistance = -3
-	stage_speed = -3
-	transmittable = -4
+	stealth = 2
+	resistance = -2
+	stage_speed = -2
+	transmittable = -3
 	level = 6
 
 /datum/symptom/oxygen/Activate(datum/disease/advance/A)

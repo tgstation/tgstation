@@ -18,10 +18,10 @@ Bonus
 /datum/symptom/heal
 
 	name = "Toxic Filter"
-	stealth = 1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -4
+	stealth = 2
+	resistance = -3
+	stage_speed = -3
+	transmittable = -3
 	level = 6
 
 /datum/symptom/heal/Activate(datum/disease/advance/A)
@@ -58,10 +58,10 @@ Bonus
 /datum/symptom/heal/metabolism
 
 	name = "Anti-Bodies Metabolism"
-	stealth = -1
-	resistance = -1
-	stage_speed = -1
-	transmittable = -4
+	stealth = 0
+	resistance = 0
+	stage_speed = 0
+	transmittable = -3
 	level = 3
 	var/list/cured_diseases = list()
 
@@ -105,10 +105,10 @@ Bonus
 /datum/symptom/heal/longevity
 
 	name = "Longevity"
-	stealth = 3
-	resistance = 4
-	stage_speed = 4
-	transmittable = 4
+	stealth = 4
+	resistance = 5
+	stage_speed = 5
+	transmittable = 5
 	level = 3
 	var/longevity = 30
 
@@ -140,10 +140,10 @@ Bonus
 /datum/symptom/heal/dna
 
 	name = "Deoxyribonucleic Acid Restoration"
-	stealth = -1
-	resistance = -1
-	stage_speed = 0
-	transmittable = -3
+	stealth = 0
+	resistance = 0
+	stage_speed = 1
+	transmittable = -2
 	level = 5
 
 /datum/symptom/heal/dna/Heal(mob/living/carbon/M, datum/disease/advance/A)
