@@ -41906,6 +41906,9 @@
 	pixel_x = 0;
 	tag = ""
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel/black,
 /area/security/main)
 "bFQ" = (
@@ -43441,6 +43444,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel/black,
 /area/security/main)
