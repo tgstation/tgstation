@@ -287,7 +287,8 @@ Difficulty: Very Hard
 	icon_on = "blackbox"
 	icon_off = "blackbox"
 	luminosity = 8
-	max_n_of_items = 200
+	max_n_of_items = INFINITY
+	burn_state = LAVA_PROOF
 	pixel_y = -4
 	use_power = 0
 	var/memory_saved = FALSE
