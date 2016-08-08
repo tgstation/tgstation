@@ -1039,7 +1039,6 @@
 	if(last_tendril && !admin_spawned)
 		for(var/mob/living/L in view(7,src))
 			if(!L.stat && L.client)
-				world << "Found [L]"
 				UnlockMedal(MEDAL_TENDRIL_CLEANER, L.client)
 				SetScore(TENDRIL_CLEAR_SCORE, L.client, 1)
 	..()
