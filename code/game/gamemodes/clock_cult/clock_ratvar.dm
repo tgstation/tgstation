@@ -255,7 +255,7 @@
 		N.clashing = TRUE
 		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
 		for(var/mob/living/L in player_list)
-			UnlockMedal(L.client, MEDAL_GOD_CLASH)
+			UnlockMedal(MEDAL_GOD_CLASH, L.client)
 		break
 	return 1
 

@@ -20,4 +20,3 @@
 //These medals are games of chance, either through extreme luck or extreme bravery.
 #define MEDAL_ARCADE_RNG "Jackpot" //Hit the one-in-a-million and win a pulse rifle from an arcade machine.
 #define MEDAL_GOD_CLASH "Witness to Doomsday" //Witness a clash between Nar-Sie and Ratvar.
-#define MEDAL_TWO_BAGS "Not Our Finest Moment" //Put a bag of holding into another bag of holding.
