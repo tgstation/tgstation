@@ -567,10 +567,16 @@ var/list/teleport_runes = list()
 		log_game("Raise Dead rune failed - no corpses to revive")
 		fail_invoke()
 		return
-	mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
+	if(potential_sacrifice_mobs.len > 1)
+		mob_to_sacrifice = input(user, "Choose a corpse to sacrifice.", "Corpse to Sacrifice") as null|anything in potential_sacrifice_mobs
+	else
+		mob_to_sacrifice = potential_sacrifice_mobs[1]
 	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
 		return
-	mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
+	if(potential_revive_mobs.len > 1)
+		mob_to_revive = input(user, "Choose a corpse to revive.", "Corpse to Revive") as null|anything in potential_revive_mobs
+	else
+		mob_to_sacrifice = potential_revive_mobs[1]
 	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_sacrifice, user, 1))
 		return
 	if(!validness_checks(mob_to_revive, user, 0))
