@@ -248,6 +248,7 @@
 
 			if(M.clockwork)
 				add_servant_of_ratvar(O)
+				addtimer(ticker.mode, "update_servant_icons_added", 4, FALSE, O.mind)
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
