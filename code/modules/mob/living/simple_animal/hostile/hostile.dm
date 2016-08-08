@@ -206,6 +206,9 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
+		if(target.z != z)
+			LoseTarget()
+			return 0
 		var/target_distance = get_dist(targets_from,target)
 		var/target_adjacent = target.Adjacent(targets_from)
 		if(ranged) //We ranged? Shoot at em
