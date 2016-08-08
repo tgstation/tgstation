@@ -96,7 +96,3 @@
 /area/holodeck/rec_center/bunker
 	name = "Holodeck - Holdout Bunker"
 	restricted = 1
-
-/area/holodeck/rec_center/anthophila
-	name = "Holodeck - Anthophila"
-	restricted = 1
