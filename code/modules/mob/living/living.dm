@@ -797,7 +797,7 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what)
-		if(!what.mob_can_equip(who, where, 1))
+		if(!what.mob_can_equip(who, src, where, 1))
 			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
 			return
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
