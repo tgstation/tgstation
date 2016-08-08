@@ -32,7 +32,14 @@
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
 
-	I.screen_loc = null // will get moved if inventory is visible
+	I.screen_loc = null
+	if(client)
+		client.screen -= I
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			if(observe.client)
+				observe.client.screen -= I
 	I.loc = src
 	I.equipped(src, slot)
 	I.layer = ABOVE_HUD_LAYER

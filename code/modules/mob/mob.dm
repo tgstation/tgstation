@@ -2,6 +2,10 @@
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
+	if(observers && observers.len)
+		for(var/M in observers)
+			var/mob/dead/observe = M
+			observe.reset_perspective(null)
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
@@ -275,6 +279,19 @@ var/next_mob_id = 0
 			clear_fullscreen("remote_view", 0)
 		update_pipe_vision()
 
+/mob/dead/reset_perspective(atom/A)
+	if(client)
+		if(ismob(client.eye) && (client.eye != src))
+			var/mob/target = client.eye
+			if(target.observers)
+				target.observers -= src
+				var/list/L = target.observers
+				if(!L.len)
+					target.observers = null
+	if(..())
+		if(hud_used)
+			client.screen = list()
+			hud_used.show_hud(hud_used.hud_version)
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -473,25 +490,18 @@ var/next_mob_id = 0
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
-	var/is_admin = 0
 
-	if(check_rights_for(client,R_ADMIN))
-		is_admin = 1
-	else if(stat != DEAD || istype(src, /mob/new_player))
+	if(stat != DEAD || istype(src, /mob/new_player))
 		usr << "<span class='notice'>You must be observing to use this!</span>"
 		return
 
-	if(is_admin && stat == DEAD)
-		is_admin = 0
-
 	var/list/creatures = getpois()
 
-	client.perspective = EYE_PERSPECTIVE
+	reset_perspective(null)
 
 	var/eye_name = null
 
-	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a player!", "Observe", null, null) as null|anything in creatures
 
 	if (!eye_name)
 		return
@@ -500,6 +510,13 @@ var/next_mob_id = 0
 
 	if(client && mob_eye)
 		client.eye = mob_eye
+		if(isobserver(src))
+			src.client.screen = list()
+			if(mob_eye.hud_used)
+				if(!mob_eye.observers)
+					mob_eye.observers = list()
+				mob_eye.observers |= src
+				mob_eye.hud_used.show_hud(1,src)
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
