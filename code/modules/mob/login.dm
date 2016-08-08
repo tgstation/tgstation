@@ -68,5 +68,7 @@
 				var/datum/alternate_appearance/AA = aa
 				AA.display_to(list(src))
 
+	UnlockMedal(MEDAL_NEW_PLAYER, client, ANNOUNCE_TO_EVERYONE)
+
 	update_client_colour()
 	client.click_intercept = null

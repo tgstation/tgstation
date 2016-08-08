@@ -50,15 +50,14 @@
 		new CB.build_path(loc, CB)
 		qdel(src)
 
-#define PULSE_MEDAL "Jackpot"
-
 /obj/machinery/computer/arcade/proc/prizevend()
-	if(prob(0.0001)) //1 in a million
-		new /obj/item/weapon/gun/energy/pulse/prize(src)
-		UnlockMedal(PULSE_MEDAL,usr.client)
 
 	if(!contents.len)
 		var/prizeselect = pickweight(prizes)
+		if(prob(0.0001))
+			prizeselect = /obj/item/weapon/gun/energy/pulse/prize
+			UnlockMedal(MEDAL_ARCADE_RNG, usr.client)
+			playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0) //Dramatic sounds woaoaoh
 		new prizeselect(src)
 
 	var/atom/movable/prize = pick(contents)

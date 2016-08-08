@@ -1,5 +1,3 @@
-
-#define MEDAL_PREFIX "Colossus"
 /*
 
 COLOSSUS
@@ -50,7 +48,7 @@ Difficulty: Very Hard
 	aggro_vision_range = 18
 	idle_vision_range = 5
 	del_on_death = 1
-	medal_type = MEDAL_PREFIX
+	medal_type = MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	loot = list(/obj/machinery/smartfridge/black_box)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
@@ -297,7 +295,7 @@ Difficulty: Very Hard
 
 	for(var/obj/O in (contents-component_parts))
 		stored_items += O.type
-	
+
 	S["stored_items"]				<< stored_items
 	memory_saved = TRUE
 
@@ -312,7 +310,7 @@ Difficulty: Very Hard
 		create_item(item)
 
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
-//try catch doesn't always prevent byond runtimes from halting a proc, 
+//try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
 	new item_type(src)
 
@@ -343,5 +341,3 @@ Difficulty: Very Hard
 
 /obj/machinery/smartfridge/black_box/default_deconstruction_crowbar()
 	return
-
-#undef MEDAL_PREFIX

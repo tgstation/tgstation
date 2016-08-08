@@ -1,4 +1,3 @@
-#define MEDAL_PREFIX "Drake"
 /*
 
 ASH DRAKE
@@ -56,7 +55,7 @@ Difficulty: Medium
 	var/obj/item/device/gps/internal
 	var/swooping = 0
 	var/swoop_cooldown = 0
-	medal_type = MEDAL_PREFIX
+	medal_type = MEDAL_ASH_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
@@ -265,6 +264,5 @@ Difficulty: Medium
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	medal_type = TEST_MEDAL //No achievement for lessers
 	loot = list()
-
-#undef MEDAL_PREFIX

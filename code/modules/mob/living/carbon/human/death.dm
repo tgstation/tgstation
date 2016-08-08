@@ -27,6 +27,7 @@
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 	dna.species.spec_death(gibbed, src)
+	UnlockMedal(MEDAL_FIRST_DEATH, client)
 
 	if(ticker && ticker.mode)
 		sql_report_death(src)

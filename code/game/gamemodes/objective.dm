@@ -234,6 +234,7 @@
 					var/location = get_turf(player.mind.current)
 					if(!player.mind.special_role && !istype(location, /turf/open/floor/plasteel/shuttle/red) && !istype(location, /turf/open/floor/mineral/plastitanium/brig))
 						return 0
+	UnlockMedal(MEDAL_HIJACK, owner.current.client, ANNOUNCE_TO_EVERYONE)
 	return 1
 
 /datum/objective/hijackclone
