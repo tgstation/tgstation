@@ -90,7 +90,6 @@
 			update_icon()
 
 
-
 /obj/machinery/ntnet_relay/attack_hand(mob/living/user)
 	ui_interact(user)
 
@@ -98,8 +97,8 @@
 	uid = gl_uid
 	gl_uid++
 	component_parts = list()
-	component_parts += new /obj/item/stack/cable_coil(src,15)
-//	component_parts += new /obj/item/weapon/circuitboard/ntnet_relay(src)
+	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/ntnet_relay(null)
+	B.apply_default_parts(src)
 
 	if(ntnet_global)
 		ntnet_global.relays.Add(src)
@@ -119,22 +118,10 @@
 
 	..()
 
-/obj/machinery/ntnet_relay/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
-	if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		panel_open = !panel_open
-		user << "You [panel_open ? "open" : "close"] the maintenance hatch"
-		return
-	if(istype(W, /obj/item/weapon/crowbar))
-		if(!panel_open)
-			user << "Open the maintenance panel first."
-			return
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-		user << "You disassemble \the [src]!"
-
-		for(var/atom/movable/A in component_parts)
-			A.forceMove(src.loc)
-		new/obj/structure/frame/machine(src.loc)
-		qdel(src)
-		return
-	..()
+/obj/item/weapon/circuitboard/machine/ntnet_relay
+	name = "circuit board (NTNet Relay)"
+	build_path = /obj/machinery/ntnet_relay
+	origin_tech = "programming=3;bluespace=3;magnets=2"
+	req_components = list(
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/subspace/filter = 1)

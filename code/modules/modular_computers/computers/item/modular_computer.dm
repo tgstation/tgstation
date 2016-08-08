@@ -141,7 +141,6 @@
 		user << "It is damaged."
 
 /obj/item/modular_computer/New()
-	machines += src
 	START_PROCESSING(SSmachine, src)
 	update_icon()
 	if(!physical)
@@ -150,9 +149,8 @@
 
 /obj/item/modular_computer/Destroy()
 	kill_program(1)
-	machines.Remove(src)
 	STOP_PROCESSING(SSmachine, src)
-	for(var/H in src.get_all_components())
+	for(var/H in get_all_components())
 		var/obj/item/weapon/computer_hardware/CH = H
 		uninstall_component(null, CH)
 		qdel(CH)

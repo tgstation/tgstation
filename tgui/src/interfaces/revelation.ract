@@ -52,7 +52,7 @@
 		<div class='itemContent'>
 			<table>
 			<tr><td><ui-button action='PRG_obfuscate'>OBFUSCATE PROGRAM NAME</ui-button>
-			<tr><td><ui-button action='PRG_arm'>{{data.armed ? "DISARM" : "ARM"}}</ui-button>
+			<tr><td><ui-button action='PRG_arm' state='{{data.armed ? "danger" : null}}'>{{data.armed ? "DISARM" : "ARM"}}</ui-button>
 			<ui-button icon='radiation' state='{{data.armed ? null : "disabled"}}' action='PRG_activate'>ACTIVATE</ui-button>
 			</table>
 		</div>

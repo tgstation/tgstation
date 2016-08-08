@@ -1533,6 +1533,7 @@
 #include "code\modules\modular_computers\file_system\program.dm"
 #include "code\modules\modular_computers\file_system\program_events.dm"
 #include "code\modules\modular_computers\file_system\programs\alarm.dm"
+#include "code\modules\modular_computers\file_system\programs\card.dm"
 #include "code\modules\modular_computers\file_system\programs\configurator.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"
 #include "code\modules\modular_computers\file_system\programs\ntdownloader.dm"
