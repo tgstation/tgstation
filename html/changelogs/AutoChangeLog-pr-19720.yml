@@ -1,0 +1,11 @@
+author: "WJohnston, Gun Hog"
+delete-after: True
+changes: 
+  - tweak: "Xenos are now considered female."
+  - tweak: "Hunter pounce are now always blocked by shields, and may be blocked more often by other protective items."
+  - tweak: "Alien Queen is now somewhat faster."
+  - tweak: "Adjusted larva growth sprites."
+  - tweak: "Removed 20% facehugger failure chance for masks."
+  - tweak: "Disarm now always forces a person to drop an item in the active hand, and if a person's hand is empty/undroppable, Disarm will always result in a tackle."
+  - tweak: "Cyborgs disarmed by a Xeno will first disable their selected module, and if there is none selected, the cyborg will be pushed back and stunned."
+  - tweak: "Tail Sweep now has a slightly longer stun."
