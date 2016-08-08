@@ -8201,6 +8201,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/telecomms/server/presets/common/birdstation,
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -8473,7 +8474,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "sF" = (
-/obj/machinery/telecomms/receiver/preset_left/ministation,
+/obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -14358,7 +14359,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "GP" = (
-/obj/machinery/telecomms/processor/preset_one,
+/obj/machinery/telecomms/processor/preset_one/birdstation,
 /turf/open/floor/plasteel/black{
 	name = "Mainframe Floor";
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -14577,8 +14578,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Ht" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/escape)
+/obj/machinery/telecomms/broadcaster/preset_left/birdstation,
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/computer)
 "Hu" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/titanium,
@@ -14681,9 +14686,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "HJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/escape)
+/obj/machinery/telecomms/bus/preset_one/birdstation,
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/computer)
 "HK" = (
 /obj/machinery/door/airlock/glass_medical{
 	id_tag = null;
@@ -14924,8 +14932,12 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "Iw" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/transport)
+/obj/machinery/telecomms/receiver/preset_left/birdstation,
+/turf/open/floor/plasteel/black{
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/computer)
 "Ix" = (
 /turf/open/floor/mineral/titanium/blue,
 /turf/closed/wall/mineral/titanium/interior,
@@ -59249,11 +59261,11 @@ Eg
 Ea
 Eh
 Ew
-EV
+Ht
 Fk
 Fy
 FN
-EV
+Iw
 Gr
 Eh
 Ea
@@ -60020,7 +60032,7 @@ Eh
 Eu
 Eh
 Ew
-EV
+HJ
 EV
 EV
 EV
