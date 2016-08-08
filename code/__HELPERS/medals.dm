@@ -44,6 +44,7 @@
 						message_admins("Player [player.ckey] unlocked medal [medal]!")
 					if(ANNOUNCE_TO_EVERYONE)
 						player << "<span class='noticealien'>[player.ckey] has earned the</span> <span class='alertalien'>[medal]</span> <span class='noticealien'>achievement!</span>"
+	world << "[medal] for [player.ckey]!"
 
 
 /proc/LockMedal(medal, client/player, announce = ANNOUNCE_TO_ADMINS) //Removes a medal from the player

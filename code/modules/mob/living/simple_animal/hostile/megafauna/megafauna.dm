@@ -16,7 +16,6 @@
 	maxbodytemp = INFINITY
 	var/medal_type = TEST_MEDAL
 	var/score_type = BOSS_SCORE
-	var/elimination = 0
 	anchored = TRUE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 
@@ -26,8 +25,7 @@
 	else
 		if(!admin_spawned)
 			feedback_set_details("megafauna_kills","[initial(name)]")
-			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement()
+			grant_achievement()
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/gib()
@@ -86,12 +84,12 @@
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement()
 	if(medal_type == TEST_MEDAL || admin_spawned)
 		return
-	if(global.medal_hub && global.medal_pass && global.medals_enabled)
-		for(var/mob/living/L in view(7,src))
-			if(L.stat)
-				continue
-			if(L.client)
-				var/client/C = L.client
-				UnlockMedal(medal_type, C)
-				SetScore(BOSS_SCORE,C,1)
-				SetScore(score_type,C,1)
+	for(var/mob/living/L in view(7,src))
+		if(L.stat)
+			continue
+		if(L.client)
+			var/client/C = L.client
+			UnlockMedal(MEDAL_BOSS_KILL, C) //Unlock the medal for killing a boss at all
+			UnlockMedal(medal_type, C) //Unlock the medal for killing THIS kind of boss
+			SetScore(BOSS_SCORE,C,1) //Add to how many bosses the player has killed
+			SetScore(score_type,C,1) //Add to how many bosses OF THIS TYPE the player has killed

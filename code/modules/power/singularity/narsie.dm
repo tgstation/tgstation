@@ -36,8 +36,9 @@
 	narsie_spawn_animation()
 	for(var/datum/mind/M in ticker.mode.cult)
 		var/mob/living/L = M.current
-		if(!L.stat && L.z == z && L.client)
-			UnlockMedal(MEDAL_SUMMON_NARSIE, L.client)
+		if(!admin_spawned)
+			if(!L.stat && L.z == z && L.client)
+				UnlockMedal(MEDAL_SUMMON_NARSIE, L.client)
 
 	sleep(70)
 	SSshuttle.emergency.request(null, 0.1) // Cannot recall

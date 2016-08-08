@@ -46,7 +46,7 @@ Difficulty: Medium
 	pixel_x = -75
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
-	elimination = 1
+	var/elimination = 1
 	aggro_vision_range = 18
 	idle_vision_range = 13
 	appearance_flags = 0
@@ -123,6 +123,10 @@ Difficulty: Medium
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
+		..()
+
+/mob/living/simple_animal/hostile/megafauna/legion/grant_achievement()
+	if(!elimination)
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/Process_Spacemove(movement_dir = 0)

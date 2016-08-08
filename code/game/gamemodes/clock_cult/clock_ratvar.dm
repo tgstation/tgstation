@@ -175,9 +175,10 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	for(var/mob/living/L in all_clockwork_mobs)
-		if(!L.stat && L.z == z && L.client)
-			UnlockMedal(MEDAL_SUMMON_RATVAR, L.client)
+	if(!admin_spawned)
+		for(var/mob/living/L in all_clockwork_mobs)
+			if(!L.stat && L.z == z && L.client)
+				UnlockMedal(MEDAL_SUMMON_RATVAR, L.client)
 	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
 
 
@@ -254,8 +255,9 @@
 			continue
 		N.clashing = TRUE
 		clash_of_the_titans(N) //IT'S TIME FOR THE BATTLE OF THE AGES
-		for(var/mob/living/L in player_list)
-			UnlockMedal(MEDAL_GOD_CLASH, L.client)
+		if(!admin_spawned)
+			for(var/mob/living/L in player_list)
+				UnlockMedal(MEDAL_GOD_CLASH, L.client)
 		break
 	return 1
 

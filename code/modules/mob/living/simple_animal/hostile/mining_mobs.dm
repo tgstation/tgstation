@@ -15,6 +15,7 @@
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	var/extermination_achievement = TEST_MEDAL //Awarded when the last monster of a type is slain
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -45,7 +46,18 @@
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
 	feedback_add_details("mobs_killed_mining","[src.type]")
+	check_for_achievement()
 	..(gibbed)
+
+/mob/living/simple_animal/hostile/asteroid/proc/check_for_achievement()
+	for(var/mob/living/simple_animal/hostile/asteroid/A in living_mob_list)
+		if(A.type == type && A != src)
+			return 0
+	for(var/mob/living/L in view(7, src))
+		if(L.stat)
+			continue
+		UnlockMedal(extermination_achievement, L.client) //UnlockMedal already checks for the client
+	return 1
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
 	name = "basilisk"
@@ -736,6 +748,7 @@
 	robust_searching = 1
 	loot = list()
 	butcher_results = list(/obj/item/weapon/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+	extermination_achievement = MEDAL_WATCHER_CLEANER
 
 //Goliath
 
@@ -753,6 +766,7 @@
 	loot = list()
 	stat_attack = 1
 	robust_searching = 1
+	extermination_achievement = MEDAL_GOLIATH_CLEANER
 
 
 
@@ -778,6 +792,7 @@
 	del_on_death = 1
 	stat_attack = 1
 	robust_searching = 1
+	extermination_achievement = MEDAL_LEGION_CLEANER
 	var/mob/living/carbon/human/stored_mob
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/death(gibbed)
@@ -1015,26 +1030,19 @@
 	qdel(gps)
 	. = ..()
 
-#define MEDAL_PREFIX "Tendril"
 /mob/living/simple_animal/hostile/spawner/lavaland/death()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in mob_list)
+	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in living_mob_list)
 		if(other != src)
 			last_tendril = FALSE
 			break
 	if(last_tendril && !admin_spawned)
-		if(global.medal_hub && global.medal_pass && global.medals_enabled)
-			for(var/mob/living/L in view(7,src))
-				if(L.stat)
-					continue
-				if(L.client)
-					var/client/C = L.client
-					var/suffixm = ALL_KILL_MEDAL
-					var/prefix = MEDAL_PREFIX
-					UnlockMedal("[prefix] [suffixm]",C)
-					SetScore(TENDRIL_CLEAR_SCORE,C,1)
+		for(var/mob/living/L in view(7,src))
+			if(!L.stat && L.client)
+				world << "Found [L]"
+				UnlockMedal(MEDAL_TENDRIL_CLEANER, L.client)
+				SetScore(TENDRIL_CLEAR_SCORE, L.client, 1)
 	..()
-#undef MEDAL_PREFIX
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"

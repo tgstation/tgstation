@@ -56,7 +56,8 @@
 		var/prizeselect = pickweight(prizes)
 		if(prob(0.0001))
 			prizeselect = /obj/item/weapon/gun/energy/pulse/prize
-			UnlockMedal(MEDAL_ARCADE_RNG, usr.client)
+			for(var/mob/living/L in range(1, src))
+				UnlockMedal(MEDAL_ARCADE_RNG, L.client)
 			playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 50, 0) //Dramatic sounds woaoaoh
 		new prizeselect(src)
 
