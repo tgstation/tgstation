@@ -17,6 +17,8 @@
 #define MEDAL_SUMMON_NARSIE "Darkness Falling" //As a cultist, summon Nar-Sie.
 #define MEDAL_NUCLEAR "Radioactive, Radioactive" //As a nuclear operative, survive from start to finish and nuke the station.
 
+#define MEDAL_CLOWN_IN_HONKER "For the Honkmother" //Enter a HONK mech as a clown..
+
 //These medals are games of chance, either through extreme luck or extreme bravery.
 #define MEDAL_ARCADE_RNG "Jackpot" //Hit the one-in-a-million and win a pulse rifle from an arcade machine.
 #define MEDAL_GOD_CLASH "Witness to Doomsday" //Witness a clash between Nar-Sie and Ratvar.
