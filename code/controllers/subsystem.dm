@@ -140,7 +140,7 @@
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	if(can_fire)
-		msg = "[round(cost*ticks,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
+		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
 
