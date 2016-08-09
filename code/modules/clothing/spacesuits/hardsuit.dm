@@ -522,8 +522,6 @@
 		return FALSE
 
 
-
-
 /////////////SHIELDED//////////////////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded
