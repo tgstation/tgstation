@@ -66,7 +66,7 @@
 		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
 		H.mind.announce_objectives()
 
-		var/datum/gang/G = new(src, "nothing", "[H.real_name]")
+		var/datum/gang/multiverse/G = new(src, "[H.real_name]")
 		ticker.mode.gangs += G
 		G.fighting_style = "multiverse"
 		G.bosses += H.mind

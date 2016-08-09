@@ -242,12 +242,11 @@ var/global/list/multiverse = list()
 			user.faction = list("[user.real_name]")
 			user << "You bind the sword to yourself. You can now use it to summon help."
 			if(!is_gangster(user))
-				var/datum/gang/G = new(src, "nothing", "[usr.real_name]")
+				var/datum/gang/multiverse/G = new(src, "[usr.real_name]")
 				ticker.mode.gangs += G
 				G.bosses += user.mind
 				G.add_gang_hud(user.mind)
 				user.mind.gang_datum = G
-				G.fighting_style = "multiverse"
 				user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
 				var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 				hijack_objective.owner = usr.mind

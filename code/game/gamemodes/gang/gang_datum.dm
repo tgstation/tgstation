@@ -20,12 +20,7 @@
 	var/domination_timer
 	var/is_dominating
 
-/datum/gang/New(loc,gangname, multiverse_override)
-	if(multiverse_override)
-		fighting_style = "multiverse"
-		name = multiverse_override
-		ganghud = new()
-		return
+/datum/gang/New(loc,gangname)
 	if(!gang_colors_pool.len)
 		message_admins("WARNING: Maximum number of gangs have been exceeded!")
 		throw EXCEPTION("Maximum number of gangs has been exceeded")
@@ -139,8 +134,6 @@
 /datum/gang/proc/income()
 	if(!bosses.len)
 		return
-	if(fighting_style == "multiverse")
-		return
 	var/added_names = ""
 	var/lost_names = ""
 
@@ -219,3 +212,18 @@
 	//Increase outfit stock
 	for(var/obj/item/device/gangtool/tool in gangtools)
 		tool.outfits = min(tool.outfits+1,5)
+
+
+//Multiverse
+
+/datum/gang/multiverse
+	dom_attempts = 0
+	points = 0
+	fighting_style = "multiverse"
+
+/datum/gang/multiverse/New(loc, multiverse_override)
+	name = multiverse_override
+	ganghud = new()
+
+/datum/gang/multiverse/income()
+	return
