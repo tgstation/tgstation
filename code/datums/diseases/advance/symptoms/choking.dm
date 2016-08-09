@@ -89,11 +89,11 @@ Bonus
 				Asphyxiate_stage_3_4(M, A)
 				M.emote("gasp")
 			else
-				M << "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breath!")]</span>"
+				M << "<span class='userdanger'>[pick("Your lungs hurt!", "It hurts to breathe!")]</span>"
 				Asphyxiate(M, A)
 				M.emote("gasp")
 				if(M.getOxyLoss() >= 120)
-					M.visible_message("<span class='warning'>[M] stops breathing, as if their lung has totally collapsed!</span>")
+					M.visible_message("<span class='warning'>[M] stops breathing, as if their lungs have totally collapsed!</span>")
 					Asphyxiate_death(M, A)
 	return
 
@@ -105,7 +105,7 @@ Bonus
 /datum/symptom/asphyxiation/proc/Asphyxiate(mob/living/M, datum/disease/advance/A)
 	var/get_damage = sqrt(21+A.totalStageSpeed())+sqrt(16+A.totalStealth()*5)
 	M.adjustOxyLoss(get_damage)
-	M.reagents.add_reagent_list(list("pancuronium" = 5, "sodium_thiopental" = 5))
+	M.reagents.add_reagent_list(list("pancuronium" = 2, "sodium_thiopental" = 2))
 	return 1
 
 /datum/symptom/asphyxiation/proc/Asphyxiate_death(mob/living/M, datum/disease/advance/A)
