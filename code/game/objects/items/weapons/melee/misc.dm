@@ -22,8 +22,8 @@
 
 
 /obj/item/weapon/melee/rapier
-	name = "captain's rapier"
-	desc = "An elegant weapon, for a more civilized age."
+	name = "officer's sabre"
+	desc = "An elegant weapon, it's monomolecular edge is capable of cutting through flesh and bone with ease."
 	icon_state = "rapier"
 	item_state = "rapier"
 	flags = CONDUCT

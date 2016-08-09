@@ -416,10 +416,10 @@
 	item_state = "fannypack_yellow"
 
 /obj/item/weapon/storage/belt/rapier
-	name = "rapier sheath"
-	desc = "Can hold rapiers."
-	icon_state = "sheath"
-	item_state = "sheath"
+	name = "sabre sheath"
+	desc = "An orante sheath designed to hold an officer's blade."
+	icon_state = "sheath-rapier"
+	item_state = "sheath-rapier"
 	storage_slots = 1
 	max_w_class = 4
 	can_hold = list(
