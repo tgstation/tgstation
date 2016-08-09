@@ -5,6 +5,7 @@
 
 #define MEDAL_NEW_PLAYER "Fresh Meat" //Log in for the first time.
 #define MEDAL_FIRST_DEATH "Remember This Moment" //Die for the first time.
+#define MEDAL_FAILED_MARTYR "One Job..." //Fail your objective to die a glorious death.
 
 //These medals are feats of strength, awarded through difficult tasks or incredible endurance.
 #define MEDAL_WATCHER_CLEANER "You'll Shoot Your Eye Out" //Kill every watcher on the map.

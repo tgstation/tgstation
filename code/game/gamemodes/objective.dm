@@ -431,6 +431,7 @@
 		return 1
 	if(owner.current && owner.current.stat == DEAD) //You're dead! Yay!
 		return 1
+	UnlockMedal(MEDAL_FAILED_MARYTR, owner.current.client, ANNOUNCE_TO_EVERYONE) //ONE JOB.
 	return 0
 
 
