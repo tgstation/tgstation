@@ -74,7 +74,7 @@
 	return 1
 
 /mob/living/simple_animal/hostile/bullet_act(obj/item/projectile/P)
-	if(!target && AIStatus != AI_OFF && !client)
+	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
 			FindTarget(list(P.firer), 1)
 		Goto(P.starting, move_to_delay, 3)
@@ -206,6 +206,9 @@
 		LoseTarget()
 		return 0
 	if(target in possible_targets)
+		if(target.z != z)
+			LoseTarget()
+			return 0
 		var/target_distance = get_dist(targets_from,target)
 		var/target_adjacent = target.Adjacent(targets_from)
 		if(ranged) //We ranged? Shoot at em

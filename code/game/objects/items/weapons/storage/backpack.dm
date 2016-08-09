@@ -289,6 +289,27 @@
 	PoolOrNew(/obj/item/stack/tile/plasteel, src)
 	new /obj/item/weapon/crowbar(src)
 
+/obj/item/weapon/storage/backpack/satchel/flat/secret/
+	var/list/reward_one_of_these = list() //Intended for map editing
+	var/list/reward_all_of_these = list() //use paths!
+	var/revealed = 0
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/New()
+	..()
+
+	if(istype(loc,/turf/open/floor) && !istype(loc,/turf/open/floor/plating/))
+		hide(1)
+
+/obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
+	..()
+	if(!intact && !revealed)
+		if(reward_one_of_these.len > 0)
+			var/reward = pick(reward_one_of_these)
+			new reward(src)
+		for(var/R in reward_all_of_these)
+			new R(src)
+		revealed = 1
+
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"
 	desc = "A large dufflebag for holding extra things."

@@ -83,7 +83,7 @@
 	user.put_in_inactive_hand(O)
 	return
 
-/obj/item/weapon/twohanded/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	//Cannot equip wielded items.
 	if(wielded)
 		M << "<span class='warning'>Unwield the [name] first!</span>"
@@ -130,7 +130,7 @@
 /obj/item/weapon/twohanded/required/attack_self()
 	return
 
-/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, slot)
+/obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded)
 		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0

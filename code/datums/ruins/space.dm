@@ -296,3 +296,11 @@
 		seems to be filled with a strange mix. Anyway, it looks like \
 		some people tried to fix it up for a long time \
 		but didn't really get anywhere..."
+
+
+/datum/map_template/ruin/space/miracle
+	id = "miracle"
+	suffix = "miracle.dmm"
+	name = "Ordinary Space Tile"
+	description = "Absolutely nothing strange going on here please \
+		move along, plenty more space to see right this way!"

@@ -320,6 +320,11 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin)
+	if(!..())
+		return
+	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
+
 /obj/item/weapon/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort

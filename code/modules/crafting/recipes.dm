@@ -413,3 +413,10 @@
 	reqs = list(/obj/item/stack/sheet/bone = 6,
 				 /obj/item/stack/sheet/sinew = 3)
 	category = CAT_PRIMAL
+
+/datum/crafting_recipe/bonfire
+	name = "Bonfire"
+	time = 60
+	reqs = list(/obj/item/weapon/grown/log = 5)
+	result = /obj/structure/bonfire
+	category = CAT_PRIMAL
