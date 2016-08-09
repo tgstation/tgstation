@@ -279,6 +279,12 @@
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
 
+/datum/spellbook_entry/item/spellblade
+	name = "Spellblade"
+	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
+	item_path = /obj/item/weapon/gun/magic/staff/spellblade
+	log_name = "SB"
+
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
