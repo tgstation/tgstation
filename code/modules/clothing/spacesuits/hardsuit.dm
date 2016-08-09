@@ -514,12 +514,12 @@
 
 /obj/item/clothing/suit/space/hardsuit/clown/mob_can_equip(mob/M, slot)
 	if(!..() || !ishuman(M))
-		return 0
+		return FALSE
 	var/mob/living/carbon/human/H = M
 	if(istype(H.shoes,/obj/item/clothing/shoes/clown_shoes))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 
