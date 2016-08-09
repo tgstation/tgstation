@@ -417,7 +417,7 @@
 
 /obj/item/weapon/storage/belt/rapier
 	name = "sabre sheath"
-	desc = "An orante sheath designed to hold an officer's blade."
+	desc = "An ornate sheath designed to hold an officer's blade."
 	icon_state = "sheath-rapier"
 	item_state = "sheath-rapier"
 	storage_slots = 1
