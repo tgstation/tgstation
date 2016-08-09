@@ -243,24 +243,12 @@
 /obj/structure/clockwork/cache/attack_hand(mob/user)
 	if(!is_servant_of_ratvar(user))
 		return 0
-	var/list/possible_components = list()
-	for(var/i in clockwork_component_cache)
-		if(clockwork_component_cache[i])
-			possible_components += get_component_name(i)
-	if(!possible_components.len)
-		user << "<span class='warning'>[src] is empty!</span>"
+	if(!clockwork_component_cache["replicant_alloy"])
+		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
 		return 0
-	var/componentid = get_component_id(input(user, "Choose a component to withdraw.", name) as null|anything in possible_components)
-	if(!user || !user.canUseTopic(src) || !componentid)
-		return 0
-	var/obj/item/clockwork/component/the_component
-	var/component_path = text2path("/obj/item/clockwork/component/[componentid]")
-	if(clockwork_component_cache[componentid])
-		the_component = new component_path(get_turf(src))
-		clockwork_component_cache[componentid]--
-	if(the_component)
-		user.visible_message("<span class='notice'>[user] withdraws [the_component] from [src].</span>", "<span class='notice'>You withdraw [the_component] from [src].</span>")
-		user.put_in_hands(the_component)
+	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
+	user.visible_message("<span class='notice'>[user] withdraws [A] from [src].</span>", "<span class='notice'>You withdraw [A] from [src].</span>")
+	user.put_in_hands(A)
 	return 1
 
 /obj/structure/clockwork/cache/examine(mob/user)

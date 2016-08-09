@@ -244,7 +244,7 @@ This file's folder contains:
 	clockwork_objective = pick(possible_objectives)
 	switch(clockwork_objective)
 		if("escape")
-			required_escapees = max(1, roundstart_player_count / 3) //33% of the player count must be cultists
+			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
 			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
 		if("gateway")
 			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."

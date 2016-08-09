@@ -242,7 +242,7 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	return 1
 
 /datum/clockwork_scripture/vanguard/scripture_effects()
-	invoker.add_stun_absorption("vanguard", world.time + total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
+	invoker.add_stun_absorption("vanguard", total_duration, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " is radiating with a soft yellow light!")
 	invoker.visible_message("<span class='warning'>[invoker] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	spawn(total_duration)
 		if(!invoker)
