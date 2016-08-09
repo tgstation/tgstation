@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes: 
+  - bugfix: "The cooldown on wizard lightning will no longer break if you ethereal jaunt or RISE! after the initial cast."
