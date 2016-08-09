@@ -460,3 +460,9 @@
 	C.preserved()
 	user << "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>"
 	qdel(src)
+
+/*********************Mining Hammer****************/
+/obj/item/weapon/twohanded/required/mining_hammer
+	force = 20 //As much as a bone spear but inconvenient as fuck to lug around
+	throwforce = 5 //It's heavy as hell. You're not throwing this.
+
