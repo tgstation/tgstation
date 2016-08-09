@@ -241,12 +241,66 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	alerttooltipstyle = "blob"
 
 // CLOCKCULT
-/obj/screen/alert/nocache
+/obj/screen/alert/clockwork
+	alerttooltipstyle = "clockcult"
+
+/obj/screen/alert/clockwork/nocache
 	name = "No Tinkerer's Cache"
 	desc = "In order to share components and unlock higher tier \
 		scripture, a tinkerer's cache must be constructed somewhere \
 		in the world. Try to place it somewhere accessible, yet hidden."
 	icon_state = "nocache"
+
+/obj/screen/alert/clockwork/infodump
+	name = "Global Records"
+	desc = "You shouldn't be seeing this description, because it should be dynamically generated."
+	icon_state = "clockinfo"
+
+/obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
+	if(ratvar_awakens)
+		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
+	else
+		var/servants = 0
+		var/validservants = 0
+		var/unconverted_ai_exists = FALSE
+		var/list/scripture_states = get_scripture_states()
+		for(var/mob/living/L in living_mob_list)
+			if(is_servant_of_ratvar(L))
+				servants++
+				if(ishuman(L) || issilicon(L))
+					validservants++
+			else if(isAI(L))
+				unconverted_ai_exists = TRUE
+		if(servants > 1)
+			if(validservants > 1)
+				desc = "<b>[servants]</b> Servants, <b>[validservants]</b> of which count towards scripture.<br>"
+			else
+				desc = "<b>[servants]</b> Servants, [validservants ? "<b>[validservants]</b> of which counts":"none of which count"] towards scripture.<br>"
+		else
+			desc = "<b>[servants]</b> Servant, who [validservants ? "counts":"does not count"] towards scripture.<br>"
+		desc += "<b>[clockwork_caches ? "[clockwork_caches]</b> Tinkerer's Caches.":"No Tinkerer's Caches, construct one!</b>"]<br>\
+		<b>[clockwork_construction_value]</b> Construction Value.<br>"
+		if(clockwork_daemons)
+			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
+		else
+			desc += "No Tinkerer's Daemons.<br>"
+		if(unconverted_ai_exists)
+			desc += "<b>An unconverted AI exists!</b><br>"
+		if(scripture_states["Revenant"])
+			var/inathneq_available = clockwork_generals_invoked["inath-neq"] <= world.time
+			var/sevtug_available = clockwork_generals_invoked["sevtug"] <= world.time
+			var/nezbere_available = clockwork_generals_invoked["nezbere"] <= world.time
+			var/nezcrentr_available = clockwork_generals_invoked["nzcrentr"] <= world.time
+			if(inathneq_available || sevtug_available || nezbere_available || nezcrentr_available)
+				desc += "Generals available:<br><b>[inathneq_available ? "<font color=#1E8CE1>INATH-NEQ</font><br>":""][sevtug_available ? "<font color=#AF0AAF>SEVTUG</font><br>":""]\
+				[nezbere_available ? "<font color=#5A6068>NEZBERE</font><br>":""][nezcrentr_available ? "<font color=#DAAA18>NZCRENTR</font>":""]</b><br>"
+			else
+				desc += "Generals available: <b>NONE</b><br>"
+		else
+			desc += "Generals available: <b>NONE</b><br>"
+		for(var/i in scripture_states)
+			desc += "[i] Scripture: <b>[scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+	..()
 
 //GUARDIANS
 

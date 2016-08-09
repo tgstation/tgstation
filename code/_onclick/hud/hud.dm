@@ -9,7 +9,7 @@
 
 	var/hud_shown = 1			//Used for the HUD toggle (F12)
 	var/hud_version = 1			//Current displayed version of the HUD
-	var/inventory_shown = 1		//the inventory
+	var/inventory_shown = 0		//Equipped item inventory
 	var/show_intent_icons = 0
 	var/hotkey_ui_hidden = 0	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
@@ -114,13 +114,15 @@
 		hud_used = new /datum/hud(src)
 
 //Version denotes which style should be displayed. blank or 0 means "next version"
-/datum/hud/proc/show_hud(version = 0)
+/datum/hud/proc/show_hud(version = 0,mob/viewmob)
 	if(!ismob(mymob))
 		return 0
 	if(!mymob.client)
 		return 0
 
-	mymob.client.screen = list()
+	var/mob/screenmob = viewmob || mymob
+
+	screenmob.client.screen = list()
 
 	var/display_hud_version = version
 	if(!display_hud_version)	//If 0 or blank, display the next hud version
@@ -132,13 +134,13 @@
 		if(HUD_STYLE_STANDARD)	//Default HUD
 			hud_shown = 1	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen += static_inventory
-			if(toggleable_inventory.len && inventory_shown)
-				mymob.client.screen += toggleable_inventory
+				screenmob.client.screen += static_inventory
+			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
+				screenmob.client.screen += toggleable_inventory
 			if(hotkeybuttons.len && !hotkey_ui_hidden)
-				mymob.client.screen += hotkeybuttons
+				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen += infodisplay
+				screenmob.client.screen += infodisplay
 
 			mymob.client.screen += hide_actions_toggle
 
@@ -148,44 +150,44 @@
 		if(HUD_STYLE_REDUCED)	//Reduced HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen -= static_inventory
+				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
-				mymob.client.screen -= toggleable_inventory
+				screenmob.client.screen -= toggleable_inventory
 			if(hotkeybuttons.len)
-				mymob.client.screen -= hotkeybuttons
+				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen += infodisplay
+				screenmob.client.screen += infodisplay
 
 			//These ones are a part of 'static_inventory', 'toggleable_inventory' or 'hotkeybuttons' but we want them to stay
 			if(inv_slots[slot_l_hand])
-				mymob.client.screen += inv_slots[slot_l_hand]	//we want the hands to be visible
+				screenmob.client.screen += inv_slots[slot_l_hand]	//we want the hands to be visible
 			if(inv_slots[slot_r_hand])
-				mymob.client.screen += inv_slots[slot_r_hand]	//we want the hands to be visible
+				screenmob.client.screen += inv_slots[slot_r_hand]	//we want the hands to be visible
 			if(action_intent)
-				mymob.client.screen += action_intent		//we want the intent switcher visible
+				screenmob.client.screen += action_intent		//we want the intent switcher visible
 				action_intent.screen_loc = ui_acti_alt	//move this to the alternative position, where zone_select usually is.
 
 		if(HUD_STYLE_NOHUD)	//No HUD
 			hud_shown = 0	//Governs behavior of other procs
 			if(static_inventory.len)
-				mymob.client.screen -= static_inventory
+				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
-				mymob.client.screen -= toggleable_inventory
+				screenmob.client.screen -= toggleable_inventory
 			if(hotkeybuttons.len)
-				mymob.client.screen -= hotkeybuttons
+				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
-				mymob.client.screen -= infodisplay
+				screenmob.client.screen -= infodisplay
 
 	hud_version = display_hud_version
-	persistant_inventory_update()
+	persistant_inventory_update(screenmob)
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
 
 
-/datum/hud/human/show_hud(version = 0)
+/datum/hud/human/show_hud(version = 0,mob/viewmob)
 	..()
-	hidden_inventory_update()
+	hidden_inventory_update(viewmob)
 
 /datum/hud/robot/show_hud(version = 0)
 	..()
@@ -194,7 +196,7 @@
 /datum/hud/proc/hidden_inventory_update()
 	return
 
-/datum/hud/proc/persistant_inventory_update()
+/datum/hud/proc/persistant_inventory_update(mob/viewer)
 	return
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)

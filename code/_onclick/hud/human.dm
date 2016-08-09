@@ -6,14 +6,22 @@
 	icon_state = "toggle"
 
 /obj/screen/human/toggle/Click()
-	if(usr.hud_used.inventory_shown)
+
+	var/mob/targetmob = usr
+
+	if(isobserver(usr))
+		if(ishuman(usr.client.eye) && (usr.client.eye != usr))
+			var/mob/M = usr.client.eye
+			targetmob = M
+
+	if(usr.hud_used.inventory_shown && targetmob.hud_used)
 		usr.hud_used.inventory_shown = 0
-		usr.client.screen -= usr.hud_used.toggleable_inventory
+		usr.client.screen -= targetmob.hud_used.toggleable_inventory
 	else
 		usr.hud_used.inventory_shown = 1
-		usr.client.screen += usr.hud_used.toggleable_inventory
+		usr.client.screen += targetmob.hud_used.toggleable_inventory
 
-	usr.hud_used.hidden_inventory_update()
+	targetmob.hud_used.hidden_inventory_update(usr)
 
 /obj/screen/human/equip
 	name = "equip"
@@ -62,6 +70,8 @@
 	screen_loc = ui_lingstingdisplay
 
 /obj/screen/ling/sting/Click()
+	if(isobserver(usr))
+		return
 	var/mob/living/carbon/U = usr
 	U.unset_sting()
 
@@ -304,102 +314,106 @@
 	zone_select.update_icon(mymob)
 	static_inventory += zone_select
 
-	inventory_shown = 0
-
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
 			inv_slots[inv.slot_id] = inv
 			inv.update_icon()
 
-/datum/hud/human/hidden_inventory_update()
+/datum/hud/human/hidden_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
-	if(inventory_shown && hud_shown)
+
+	var/mob/screenmob = viewer || H
+
+	if(screenmob.hud_used.inventory_shown && screenmob.hud_used.hud_shown)
 		if(H.shoes)
 			H.shoes.screen_loc = ui_shoes
-			H.client.screen += H.shoes
+			screenmob.client.screen += H.shoes
 		if(H.gloves)
 			H.gloves.screen_loc = ui_gloves
-			H.client.screen += H.gloves
+			screenmob.client.screen += H.gloves
 		if(H.ears)
 			H.ears.screen_loc = ui_ears
-			H.client.screen += H.ears
+			screenmob.client.screen += H.ears
 		if(H.glasses)
 			H.glasses.screen_loc = ui_glasses
-			H.client.screen += H.glasses
+			screenmob.client.screen += H.glasses
 		if(H.w_uniform)
 			H.w_uniform.screen_loc = ui_iclothing
-			H.client.screen += H.w_uniform
+			screenmob.client.screen += H.w_uniform
 		if(H.wear_suit)
 			H.wear_suit.screen_loc = ui_oclothing
-			H.client.screen += H.wear_suit
+			screenmob.client.screen += H.wear_suit
 		if(H.wear_mask)
 			H.wear_mask.screen_loc = ui_mask
-			H.client.screen += H.wear_mask
+			screenmob.client.screen += H.wear_mask
 		if(H.head)
 			H.head.screen_loc = ui_head
-			H.client.screen += H.head
+			screenmob.client.screen += H.head
 	else
-		if(H.shoes)		H.shoes.screen_loc = null
-		if(H.gloves)	H.gloves.screen_loc = null
-		if(H.ears)		H.ears.screen_loc = null
-		if(H.glasses)	H.glasses.screen_loc = null
-		if(H.w_uniform)	H.w_uniform.screen_loc = null
-		if(H.wear_suit)	H.wear_suit.screen_loc = null
-		if(H.wear_mask)	H.wear_mask.screen_loc = null
-		if(H.head)		H.head.screen_loc = null
+		if(H.shoes)		screenmob.client.screen -= H.shoes
+		if(H.gloves)	screenmob.client.screen -= H.gloves
+		if(H.ears)		screenmob.client.screen -= H.ears
+		if(H.glasses)	screenmob.client.screen -= H.glasses
+		if(H.w_uniform)	screenmob.client.screen -= H.w_uniform
+		if(H.wear_suit)	screenmob.client.screen -= H.wear_suit
+		if(H.wear_mask)	screenmob.client.screen -= H.wear_mask
+		if(H.head)		screenmob.client.screen -= H.head
 
-/datum/hud/human/persistant_inventory_update()
+/datum/hud/human/persistant_inventory_update(mob/viewer)
 	if(!mymob)
 		return
 	var/mob/living/carbon/human/H = mymob
-	if(hud_shown)
+
+	var/mob/screenmob = viewer || H
+
+	if(screenmob.hud_used.hud_shown)
 		if(H.s_store)
 			H.s_store.screen_loc = ui_sstore1
-			H.client.screen += H.s_store
+			screenmob.client.screen += H.s_store
 		if(H.wear_id)
 			H.wear_id.screen_loc = ui_id
-			H.client.screen += H.wear_id
+			screenmob.client.screen += H.wear_id
 		if(H.belt)
 			H.belt.screen_loc = ui_belt
-			H.client.screen += H.belt
+			screenmob.client.screen += H.belt
 		if(H.back)
 			H.back.screen_loc = ui_back
-			H.client.screen += H.back
+			screenmob.client.screen += H.back
 		if(H.l_store)
 			H.l_store.screen_loc = ui_storage1
-			H.client.screen += H.l_store
+			screenmob.client.screen += H.l_store
 		if(H.r_store)
 			H.r_store.screen_loc = ui_storage2
-			H.client.screen += H.r_store
+			screenmob.client.screen += H.r_store
 	else
 		if(H.s_store)
-			H.s_store.screen_loc = null
+			screenmob.client.screen -= H.s_store
 		if(H.wear_id)
-			H.wear_id.screen_loc = null
+			screenmob.client.screen -= H.wear_id
 		if(H.belt)
-			H.belt.screen_loc = null
+			screenmob.client.screen -= H.belt
 		if(H.back)
-			H.back.screen_loc = null
+			screenmob.client.screen -= H.back
 		if(H.l_store)
-			H.l_store.screen_loc = null
+			screenmob.client.screen -= H.l_store
 		if(H.r_store)
-			H.r_store.screen_loc = null
+			screenmob.client.screen -= H.r_store
 
 	if(hud_version != HUD_STYLE_NOHUD)
 		if(H.r_hand)
 			H.r_hand.screen_loc = ui_rhand
-			H.client.screen += H.r_hand
+			screenmob.client.screen += H.r_hand
 		if(H.l_hand)
 			H.l_hand.screen_loc = ui_lhand
-			H.client.screen += H.l_hand
+			screenmob.client.screen += H.l_hand
 	else
 		if(H.r_hand)
-			H.r_hand.screen_loc = null
+			screenmob.client.screen -= H.r_hand
 		if(H.l_hand)
-			H.l_hand.screen_loc = null
+			screenmob.client.screen -= H.l_hand
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"
