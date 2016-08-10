@@ -1,0 +1,10 @@
+author: "LanCartwright"
+delete-after: True
+changes: 
+  - rscadd: "Acute respiratory distress syndrom symptom."
+  - rscadd: "Toxic metabolism."
+  - rscadd: "Alkali perspiration"
+  - rscadd: "Autophagocytosis Necrosis"
+  - rscadd: "Apoptoxin filter"
+  - rscadd: "3 different lategame/Non-roundstart virus reagents"
+  - rscadd: "4 different lategame/Non-roundstart virus recipes"
