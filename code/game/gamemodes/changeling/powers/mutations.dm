@@ -180,12 +180,13 @@
 		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
-		if(A.hasPower())
+		if(A.hasPower() || A.welded)
 			if(A.locked)
 				user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 				return
 			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
 			if(do_after(user, 100, target = A))
+				A.welded = FALSE
 				A.open(2)
 			return
 
