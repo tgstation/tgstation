@@ -258,7 +258,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
 	if(ratvar_awakens)
-		desc = "<font size=3><b>Chetr nyy hagehguf-naq-ubabe Ratvar.</b></font>"
+		desc = "<b>CHETR NYY HAGEHUGF-NAQ-UBABE RATVAR.</b>"
 	else
 		var/servants = 0
 		var/validservants = 0
@@ -284,6 +284,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			desc += "<b>[clockwork_daemons]</b> Tinkerer's Daemons: <b>[servants * 0.2 < clockwork_daemons ? "DISABLED":"ACTIVE"]</b><br>"
 		else
 			desc += "No Tinkerer's Daemons.<br>"
+		for(var/obj/structure/clockwork/massive/celestial_gateway/G in all_clockwork_objects)
+			var/area/gate_area = get_area(G)
+			desc += "Ark Location: <b>[uppertext(gate_area.map_name)]</b><br>"
+			desc += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 		if(unconverted_ai_exists)
 			desc += "<b>An unconverted AI exists!</b><br>"
 		if(scripture_states["Revenant"])

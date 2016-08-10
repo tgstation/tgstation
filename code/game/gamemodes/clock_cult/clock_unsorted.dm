@@ -27,6 +27,7 @@
 	button_icon_state = "hierophant"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
 	var/title = "Servant"
 	var/span_for_name = "heavy_brass"
 	var/span_for_message = "brass"
@@ -50,6 +51,7 @@
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
 	var/base_cooldown = 3000
 
@@ -158,6 +160,7 @@
 	for(var/i in states)
 		if(states[i] != previous_states[i])
 			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [states[i] ? "un":""]locked.</b></span>")
+	return states
 
 /proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
 	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
@@ -166,9 +169,7 @@
 	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
 
 /proc/change_construction_value(amount)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_construction_value += amount
-	scripture_unlock_alert(scripture_states)
 
 /proc/get_component_name(id) //returns a component name from a component id
 	switch(id)

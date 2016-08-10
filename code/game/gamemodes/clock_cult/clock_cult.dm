@@ -88,9 +88,7 @@ This file's folder contains:
 		M.visible_message("<span class='heavy_brass'>[M]'s eyes glow a blazing yellow!</span>", \
 		"<span class='heavy_brass'>Assist your new companions in their righteous efforts. Your goal is theirs, and theirs yours. You serve the Clockwork Justiciar above all else. Perform his every \
 		whim without hesitation.</span>")
-	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar += M.mind
-	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_added(M.mind)
 	M.mind.special_role = "Servant of Ratvar"
 	M.languages_spoken |= RATVAR
@@ -145,9 +143,7 @@ This file's folder contains:
 	if(!silent)
 		M.visible_message("<span class='big'>[M] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	var/list/scripture_states = get_scripture_states()
 	ticker.mode.servants_of_ratvar -= M.mind
-	scripture_unlock_alert(scripture_states)
 	ticker.mode.update_servant_icons_removed(M.mind)
 	all_clockwork_mobs -= M
 	M.mind.memory = "" //Not sure if there's a better way to do this
