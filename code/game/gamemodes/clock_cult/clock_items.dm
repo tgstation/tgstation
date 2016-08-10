@@ -625,15 +625,6 @@
 	w_class = 3
 	armor = list(melee = 80, bullet = 50, laser = -15, energy = 5, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/head/helmet/clockwork/reclaimer //Used when a reclaimer mindjacks someone
-	name = "clockwork reclaimer"
-	desc = "A clockwork spider, hitchhiking like a horrible mechanical parasite."
-	icon_state = "reclaimer"
-	flags = NODROP
-	unacidable = TRUE
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
-	flags_cover = HEADCOVERSEYES
-
 /obj/item/clothing/head/helmet/clockwork/equipped(mob/living/user, slot)
 	..()
 	if(slot == slot_head && !is_servant_of_ratvar(user))
