@@ -1,0 +1,5 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - tweak: "Tweaked space wind, it should now only trigger at higher pressure differences, but be quicker to become aggressive as the pressure difference gets higher. This should alleviate issues where small differences was still moving a lot of things."
+  - tweak: "Paper still moves with any pressure difference."
