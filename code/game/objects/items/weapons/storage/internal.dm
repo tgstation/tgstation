@@ -35,9 +35,6 @@
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = 3
 
-/obj/item/weapon/storage/internal/pocket/wide
-	storage_slots = 4
-
 /obj/item/weapon/storage/internal/pocket/small
 	storage_slots = 1
 	priority = FALSE
@@ -46,13 +43,6 @@
 	storage_slots = 1
 	max_w_class = 1
 	priority = FALSE
-
-/obj/item/weapon/storage/internal/pocket/holster
-	storage_slots = 1
-	max_w_class = 3
-	quickdraw = TRUE
-	can_hold = list(/obj/item/weapon/gun)
-
 
 /obj/item/weapon/storage/internal/pocket/shoes
 	can_hold = list(
@@ -82,12 +72,3 @@
 /obj/item/weapon/storage/internal/pocket/small/detective/New()
 	..()
 	new /obj/item/weapon/reagent_containers/food/drinks/flask/det(src)
-
-/*
-/proc/isstorage(var/atom/A)
-	if(istype(A, /obj/item/weapon/storage))
-		return 1
-
-	if(istype(A, /obj/item/clothing))
-		var/obj/item/clothing/C = A
-		if(C.pockets) return 1*/
