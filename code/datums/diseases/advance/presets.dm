@@ -57,3 +57,11 @@
 		name = "Reality Destruction"
 		symptoms = list(new/datum/symptom/sensory_destruction)
 	..(process, D, copy)
+
+//Inert Virus
+
+/datum/disease/advance/inert/New(var/process = 1, var/datum/disease/advance/D, var/copy = 0)
+	if(!D)
+		name = "Inert Virus"
+		symptoms = list(new/datum/symptom/inert)
+	..(process, D, copy)
