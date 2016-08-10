@@ -35,6 +35,10 @@
 /obj/item/weapon/storage/internal/pocket/big
 	max_w_class = 3
 
+/obj/item/weapon/storage/internal/pocket/bluespace
+	max_w_class = 6
+	storage_slots = 10
+
 /obj/item/weapon/storage/internal/pocket/small
 	storage_slots = 1
 	priority = FALSE
