@@ -9126,9 +9126,6 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "aqh" = (
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
 	pixel_y = 0
@@ -9847,6 +9844,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "arw" = (
@@ -9861,6 +9861,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
@@ -92815,11 +92818,22 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "ddO" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall15";
-	dir = 2
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/shuttle/escape)
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/security/main)
 "ddP" = (
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs{
@@ -92959,10 +92973,17 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "dem" = (
-/turf/closed/wall/shuttle{
-	icon_state = "diagonalWall3"
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/chair{
+	dir = 8
 	},
-/area/shuttle/escape)
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 4
+	},
+/area/security/main)
 "den" = (
 /obj/structure/table,
 /obj/item/weapon/folder/red{
@@ -123074,9 +123095,9 @@ aed
 ajI
 akS
 ame
-anC
-anC
-anC
+ddO
+ddO
+ddO
 aru
 asM
 auf
@@ -124362,7 +124383,7 @@ amq
 boY
 aoN
 aqe
-arz
+arx
 asR
 aui
 avi
@@ -124876,7 +124897,7 @@ ams
 anI
 aoP
 aqg
-arz
+arx
 asT
 ajJ
 avi
@@ -125130,9 +125151,9 @@ aed
 ajP
 ala
 amt
-anJ
-anJ
-anJ
+dem
+dem
+dem
 arB
 asU
 auk

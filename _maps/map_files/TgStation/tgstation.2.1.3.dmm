@@ -3702,6 +3702,9 @@
 	},
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/start{
+	name = "Security Officer"
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "ahL" = (
@@ -91638,8 +91641,8 @@ abO
 abO
 afb
 abo
-agv
-afU
+afg
+ahb
 ahG
 aik
 cBV
