@@ -207,6 +207,12 @@
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock/, /turf/closed/wall/shuttle, /obj/structure/window/shuttle, /obj/structure/shuttle/engine, /obj/structure/shuttle/engine/heater, )
 
+/turf/closed/wall/mineral/titanium/pod
+	icon = 'icons/turf/walls/white_pod_wall.dmi'
+	icon_state = "smooth"
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod, /obj/structure/shuttle/engine)
+
+
 /turf/closed/wall/mineral/titanium/nodiagonal
 	smooth = SMOOTH_MORE
 	icon_state = "map-shuttle_nd"

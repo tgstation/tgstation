@@ -324,6 +324,10 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/closed/wall/shuttle/survival, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
 
+/obj/structure/window/shuttle/survival_pod/white
+	icon = 'icons/obj/smooth_structures/pod_window_white.dmi'
+	canSmoothWith = list(/turf/closed/wall/mineral/titanium/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod)
+
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "airlock"
@@ -333,10 +337,22 @@
 	opacity = 0
 	glass = 1
 
+/obj/machinery/door/airlock/survival_pod/white
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/white.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/white
+	opacity = 1
+	glass = 0
+
 /obj/machinery/door/airlock/survival_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical
+
+/obj/machinery/door/airlock/survival_pod/vertical/white
+	icon = 'icons/obj/doors/airlocks/survival/vertical/white.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_pod/vertical/white
+	opacity = 1
+	glass = 0
 
 /obj/structure/door_assembly/door_assembly_pod
 	name = "pod airlock assembly"
@@ -348,10 +364,22 @@
 	mineral = "glass"
 	material = "glass"
 
+/obj/structure/door_assembly/door_assembly_pod/white
+	icon = 'icons/obj/doors/airlocks/survival/horizontal/white.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod/white
+	mineral = null
+	material = null
+
 /obj/structure/door_assembly/door_assembly_pod/vertical
 	icon = 'icons/obj/doors/airlocks/survival/vertical/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/vertical/survival_overlays.dmi'
 	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical
+
+/obj/structure/door_assembly/door_assembly_pod/vertical/white
+	icon = 'icons/obj/doors/airlocks/survival/vertical/white.dmi'
+	airlock_type = /obj/machinery/door/airlock/survival_pod/vertical/white
+	mineral = null
+	material = null
 
 //Table
 /obj/structure/table/survival_pod
