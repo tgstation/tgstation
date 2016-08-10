@@ -1200,6 +1200,23 @@
 	id = "weakplasmavirusfood"
 	color = "#CEC3C6" // rgb: 206,195,198
 
+/datum/reagent/toxin/plasma/uraniumvirusfood
+	name = "decaying uranium gel"
+	id = "uraniumvirusfood"
+	description = "mutates blood"
+	color = "#006600" // rgb: 0,102,0
+
+/datum/reagent/toxin/plasma/uraniumvirusfood/unstable
+	name = "unstable uranium gel"
+	id = "uraniumplasmavirusfood_unstable"
+	color = "#009900" // rgb: 0,153,0
+
+/datum/reagent/toxin/plasma/uraniumvirusfood/stable
+	name = "stable uranium gel"
+	id = "uraniumplasmavirusfood_stable"
+	color = "#00cc00" // rgb: 0,204,0
+
+
 /datum/reagent/royal_bee_jelly
 	name = "royal bee jelly"
 	id = "royal_bee_jelly"
