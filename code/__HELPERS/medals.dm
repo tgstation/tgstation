@@ -34,7 +34,7 @@
 				global.medals_enabled = FALSE
 				log_game("MEDAL ERROR: Could not contact hub to award medal:[medal] player:[player.ckey]")
 				message_admins("Error! Failed to contact hub to award [medal] medal to [player.ckey]!")
-			else
+			else if(result)
 				log_game("Player [player.ckey] unlocked medal [medal].")
 				switch(announce)
 					if(ANNOUNCE_TO_PLAYER)
@@ -56,9 +56,7 @@
 			log_game("MEDAL ERROR: Could not contact hub to clear medal:[medal] player:[player.ckey]")
 			message_admins("Error! Failed to contact hub to clear [medal] medal for [player.ckey]!")
 		else if(result)
-			message_admins("Medal: [medal] removed for [player.ckey]")
-		else
-			log_game("Player [player.ckey] unlocked medal [medal].")
+			log_game("Player [player.ckey] lost medal [medal].")
 			switch(announce)
 				if(ANNOUNCE_TO_PLAYER)
 					player << "<span class='danger'>Achievement locked:</span> <span class='boldannounce'>[medal]</span><span class='danger'>!</span>"
