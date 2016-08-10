@@ -19399,7 +19399,7 @@
 	},
 /area/bridge)
 "aRo" = (
-/obj/machinery/computer/card,
+/obj/machinery/modular_computer/console/preset/command,
 /turf/open/floor/plasteel/green/side{
 	dir = 10
 	},
