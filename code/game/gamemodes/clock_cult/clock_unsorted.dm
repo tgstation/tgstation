@@ -156,11 +156,10 @@
 	return 0
 
 /proc/scripture_unlock_alert(list/previous_states) //reports to servants when scripture is locked or unlocked
-	var/list/states = get_scripture_states()
-	for(var/i in states)
+	. = get_scripture_states()
+	for(var/i in .)
 		if(states[i] != previous_states[i])
 			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [states[i] ? "un":""]locked.</b></span>")
-	return states
 
 /proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
 	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
