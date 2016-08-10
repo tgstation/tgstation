@@ -1,7 +1,0 @@
-author: "Cruix"
-delete-after: True
-changes: 
-  - rscadd: "Sentient minebots can now toggle meson vision, a flashlight, their mode, and dump their stored ore."
-  - bugfix: "Sentient minebots can now be repaired if they were made sentient while the AI was active."
-  - bugfix: "Healing minebots will no longer switch them to attack mode."
-  - tweak: "Sentient minebots can now shoot at humans."
