@@ -101,7 +101,6 @@
 	pass_flags = PASSTABLE
 	health = 50
 	maxHealth = 50
-	hacked = 1
 	density = TRUE
 	ventcrawler = 0
 	faction = list("ratvar")

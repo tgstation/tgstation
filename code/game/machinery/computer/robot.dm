@@ -74,12 +74,12 @@
 	for(var/mob/living/simple_animal/drone/D in mob_list)
 		if(D.hacked)
 			continue
+		drones++
 		dat += "[D.name] |"
 		if(D.stat)
 			dat += " Not Responding |"
-		else
-			dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
-			dat += "<BR>"
+		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<BR>"
 
 	if(!drones)
 		dat += "No Drone Units detected within access parameters."
