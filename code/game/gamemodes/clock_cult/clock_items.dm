@@ -972,6 +972,14 @@
 	icon_state = "daemon_shell"
 	w_class = 3
 
+/obj/item/clockwork/daemon_shell/New()
+	..()
+	clockwork_daemons++
+
+/obj/item/clockwork/daemon_shell/Destroy()
+	clockwork_daemons--
+	return ..()
+
 /obj/item/clockwork/tinkerers_daemon //Shouldn't ever appear on its own
 	name = "tinkerer's daemon"
 	desc = "An arachnoid shell with a single spinning cogwheel in its center."
