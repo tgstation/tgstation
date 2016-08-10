@@ -70,7 +70,7 @@
 	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
 
 	if(wait)
-		overlays.Cut()
+		cut_overlays()
 	else
 		overlays += "waitlight"
 
@@ -273,7 +273,7 @@
 	src.add_fingerprint(usr)
 	return
 
-/obj/machinery/computer/pandemic/attack_hand(mob/user as mob)
+/obj/machinery/computer/pandemic/attack_hand(mob/user)
 	if(..())
 		return
 	user.set_machine(src)
