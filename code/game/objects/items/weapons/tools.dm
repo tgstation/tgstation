@@ -329,11 +329,6 @@
 
 /obj/item/weapon/weldingtool/attack_self(mob/user)
 	switched_on(user)
-	if(welding)
-		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
-	else
-		user.AddLuminosity(-light_intensity)
 	update_icon()
 
 
@@ -386,6 +381,8 @@ obj/item/weapon/weldingtool/proc/switched_on(mob/user)
 			hitsound = 'sound/items/welder.ogg'
 			update_icon()
 			START_PROCESSING(SSobj, src)
+			user.AddLuminosity(light_intensity)
+			SetLuminosity(0)
 		else
 			user << "<span class='warning'>You need more fuel!</span>"
 			switched_off(user)
@@ -399,10 +396,7 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 	var/mob/Player = loc
 	if(ismob(loc)) //If player is holding the welder
 		Player.AddLuminosity(-light_intensity)
-		SetLuminosity(0)
-	else
-		SetLuminosity(0)
-
+	SetLuminosity(0)
 	force = 3
 	damtype = "brute"
 	hitsound = "swing_hit"
@@ -412,15 +406,13 @@ obj/item/weapon/weldingtool/proc/switched_off(mob/user)
 /obj/item/weapon/weldingtool/pickup(mob/user)
 	..()
 	if(welding)
+//		user.AddLuminosity(light_intensity)
 		SetLuminosity(0)
-		user.AddLuminosity(light_intensity)
-
 
 /obj/item/weapon/weldingtool/dropped(mob/user)
 	..()
 	if(welding)
-		if(user)
-			user.AddLuminosity(-light_intensity)
+		user.AddLuminosity(-light_intensity)
 		SetLuminosity(light_intensity)
 
 

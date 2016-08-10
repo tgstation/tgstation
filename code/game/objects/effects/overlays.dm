@@ -135,6 +135,7 @@
 /obj/effect/overlay/temp/decoy
 	desc = "It's a decoy!"
 	duration = 15
+	mouse_opacity = 0
 
 /obj/effect/overlay/temp/decoy/New(loc, atom/mimiced_atom)
 	..()

@@ -15,6 +15,7 @@
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -452,7 +453,6 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	anchored = 1 //Stays anchored until death as to be unpullable
-	mob_size = MOB_SIZE_LARGE
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)

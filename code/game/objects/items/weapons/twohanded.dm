@@ -85,9 +85,9 @@
 
 /obj/item/weapon/twohanded/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	//Cannot equip wielded items.
-	if(wielded)
+/*	if(wielded)
 		M << "<span class='warning'>Unwield the [name] first!</span>"
-		return 0
+		return 0*/
 	return ..()
 
 /obj/item/weapon/twohanded/dropped(mob/user)
@@ -109,12 +109,17 @@
 	else //Trying to wield it
 		wield(user)
 
+/obj/item/weapon/twohanded/equip_to_best_slot(mob/M)
+	if(..())
+		unwield(M)
+		return
+
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
 	name = "offhand"
 	icon_state = "offhand"
 	w_class = 5
-	flags = ABSTRACT
+	flags = ABSTRACT|NODROP
 
 /obj/item/weapon/twohanded/offhand/unwield()
 	qdel(src)
@@ -131,7 +136,7 @@
 	return
 
 /obj/item/weapon/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
-	if(wielded)
+	if(wielded && !slot_flags)
 		M << "<span class='warning'>\The [src] is too cumbersome to carry with anything but your hands!</span>"
 		return 0
 	return ..()
@@ -143,8 +148,16 @@
 	if(H != null)
 		user << "<span class='notice'>\The [src] is too cumbersome to carry in one hand!</span>"
 		return
-	wield(user)
+	if(src.loc != user)
+		wield(user)
 	..()
+
+/obj/item/weapon/twohanded/required/equipped(mob/user, slot)
+	..()
+	if(slot == slot_l_hand || slot == slot_r_hand)
+		wield(user)
+	else
+		unwield(user)
 
 
 /obj/item/weapon/twohanded/
