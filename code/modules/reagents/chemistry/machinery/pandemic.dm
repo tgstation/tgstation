@@ -90,12 +90,12 @@
 						var/list/viruses = BL.data["viruses"]
 						for(var/datum/disease/advance/D in viruses)
 							D.AddSymptom(new_symptoms[text2num(href_list["symptom"])])
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
 	if (href_list["cure"])
 		if(!src.wait)
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle
 			if(B)
 				B.pixel_x = rand(-3, 3)
 				B.pixel_y = rand(-3, 3)
@@ -125,7 +125,7 @@
 			var/name = stripped_input(usr,"Name:","Name the culture",D.name,MAX_NAME_LEN)
 			if(name == null || wait)
 				return
-			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
+			var/obj/item/weapon/reagent_containers/glass/bottle/B = new/obj/item/weapon/reagent_containers/glass/bottle
 			B.icon_state = "bottle3"
 			B.pixel_x = rand(-3, 3)
 			B.pixel_y = rand(-3, 3)
@@ -136,8 +136,8 @@
 			B.reagents.add_reagent("blood",20,data)
 			src.updateUsrDialog()
 		else
-			src.temp_html = "The replicator is not ready yet."
-		src.updateUsrDialog()
+			temp_html = "The replicator is not ready yet."
+		updateUsrDialog()
 		return
 
 	else if(href_list["name_disease"])
@@ -152,7 +152,7 @@
 			A.AssignName(new_name)
 			for(var/datum/disease/advance/AD in SSdisease.processing)
 				AD.Refresh()
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 	else if (href_list["eject"])
 		if(beaker)
@@ -160,12 +160,12 @@
 			B.loc = loc
 			beaker = null
 			icon_state = "mixer0"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 
 	else if (href_list["tab_open"])
 		tab_open = text2num(href_list["tab_open"]) //fucking text
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
 	else if(href_list["chem_choice"])
@@ -204,7 +204,7 @@
 				var/list/data = list("viruses"=list(AD))
 				beaker.reagents.add_reagent("blood",20,data)
 				usr << "Viral strain reset!."
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
 	else if(href_list["update_virus"])
@@ -263,20 +263,19 @@
 				usr << "Beaker is empty!"
 		else
 			usr << "No beaker found!"
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 	else
 		usr << browse(null, "window=pandemic")
-		src.updateUsrDialog()
+		updateUsrDialog()
 		return
 
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return
 
 /obj/machinery/computer/pandemic/attack_hand(mob/user)
 	if(..())
 		return
-	user.set_machine(src)
 	var/dat = ""
 	dat += "<A href='?src=\ref[src];tab_open=1'>Analysis</a>"
 	dat += "<A href='?src=\ref[src];tab_open=2'>Experiment</a>"
@@ -441,7 +440,7 @@
 
 	var/datum/browser/popup = new(user, "pandemic", "PanD.E.M.I.C 2200")
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open(1)
 	return
 
@@ -455,25 +454,25 @@
 				virusfood_ammount += R.volume
 				I.reagents.remove_reagent("virusfood",R.volume)
 				user << "You add the Virus Food into the machine!"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 			if(R.id == "mutagen")
 				mutagen_ammount += R.volume
 				I.reagents.remove_reagent("mutagen",R.volume)
 				user << "You add the Unstable Mutagen into the machine!"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 			if(R.id == "plasma")
 				plasma_ammount += R.volume
 				I.reagents.remove_reagent("plasma",R.volume)
 				user << "You add the Plasma into the machine!"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 			if(R.id == "synaptizine")
 				synaptizine_ammount += R.volume
 				I.reagents.remove_reagent("synaptizine",R.volume)
 				user << "You add the Synaptizine into the machine!"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 
 		if(src.beaker)
