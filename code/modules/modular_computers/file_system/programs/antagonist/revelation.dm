@@ -20,6 +20,7 @@
 		computer.enabled = 0
 		computer.update_icon()
 		qdel(computer.hard_drive)
+		computer.take_damage(25, 10, 1, 1)
 		if(computer.battery_module && prob(25))
 			qdel(computer.battery_module)
 			computer.visible_message("<span class='notice'>\The [computer]'s battery explodes in rain of sparks.</span>")

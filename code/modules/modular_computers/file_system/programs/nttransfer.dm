@@ -141,6 +141,10 @@ var/global/nttransfer_uid = 0
 					if(F.unsendable)
 						error = "I/O Error: File locked."
 						return
+					if(istype(F, /datum/computer_file/program))
+						var/datum/computer_file/program/P = F
+						if(!P.can_run(usr,transfer = 1))
+							error = "Access Error: Insufficient rights to upload file."
 					provided_file = F
 					ntnet_global.fileservers.Add(src)
 					return

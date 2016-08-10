@@ -43,16 +43,16 @@ var/list/global_modular_computers = list()
 
 /obj/machinery/modular_computer/update_icon()
 	icon_state = icon_state_unpowered
-	overlays.Cut()
+	cut_overlays()
 
 	if(!cpu || !cpu.enabled)
 		if (!(stat & NOPOWER) || battery_powered)
-			overlays.Add(screen_icon_screensaver)
-//		set_light(0)
+			add_overlay(screen_icon_screensaver)
+		SetLuminosity(0)
 		return
-//	set_light(light_strength)
+	SetLuminosity(light_strength)
 	if(cpu.active_program)
-		overlays.Add(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
+		add_overlay(cpu.active_program.program_icon_state ? cpu.active_program.program_icon_state : screen_icon_state_menu)
 	else
 		overlays.Add(screen_icon_state_menu)
 

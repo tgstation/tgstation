@@ -3,8 +3,7 @@
 	filetype = "PRG"
 	filename = "UnknownProgram"				// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
 	var/required_access = null				// List of required accesses to *run* the program.
-	var/datum/nano_module/NM = null			// If the program uses NanoModule, put it here and it will be automagically opened. Otherwise implement ui_interact.
-	var/nanomodule_path = null				// Path to nanomodule, make sure to set this if implementing new program.
+	var/transfer_access = null				// List of required access to download or file host the program
 	var/program_state = PROGRAM_STATE_KILLED// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
 	var/obj/item/modular_computer/computer	// Device that runs this program.
 	var/filedesc = "Unknown Program"		// User-friendly name of this program.
@@ -18,7 +17,7 @@
 	var/available_on_ntnet = 1				// Whether the program can be downloaded from NTNet. Set to 0 to disable.
 	var/available_on_syndinet = 0			// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
 	var/computer_emagged = 0				// Set to 1 if computer that's running us was emagged. Computer updates this every Process() tick
-	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /nano/images/status_icons. Be careful not to use too large images!
+	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -32,7 +31,6 @@
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
 	temp.required_access = required_access
-	temp.nanomodule_path = nanomodule_path
 	temp.filedesc = filedesc
 	temp.program_icon_state = program_icon_state
 	temp.requires_ntnet = requires_ntnet
@@ -70,11 +68,17 @@
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/living/user, loud = 0, access_to_check)
+/datum/computer_file/program/proc/can_run(mob/living/user, loud = 0, access_to_check, transfer = 0)
 	// Defaults to required_access
 	if(!access_to_check)
-		access_to_check = required_access
+		if(transfer && transfer_access)
+			access_to_check = transfer_access
+		else
+			access_to_check = required_access
 	if(!access_to_check) // No required_access, allow it.
+		return 1
+
+	if(computer_emagged && !transfer)	//emags can bypass the execution locks but not the download ones.
 		return 1
 
 	if(issilicon(user))
@@ -83,14 +87,25 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/h = user
 		var/obj/item/weapon/card/id/I = h.get_idcard()
-		if(!I)
+		var/obj/item/weapon/card/id/C = h.get_active_hand()
+		if (istype(C, /obj/item/device/pda))
+			var/obj/item/device/pda/pda = C
+			C = pda.id
+		if(!(C && istype(C)))
+			C = null
+
+		if(!I && !C)
 			if(loud)
 				user << "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>"
 			return 0
 
-		if(access_to_check in I.GetAccess())
-			return 1
-		else if(loud)
+		if(I)
+			if(access_to_check in I.GetAccess())
+				return 1
+		else if(C)
+			if(access_to_check in C.GetAccess())
+				return 1
+		if(loud)
 			user << "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>"
 	return 0
 

@@ -32,7 +32,6 @@ Assistant
 
 /datum/outfit/job/assistant
 	name = "Assistant"
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

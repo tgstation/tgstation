@@ -23,7 +23,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Hydroponics Machinery",
 								"Subspace Telecomms",
 								"Research Machinery",
-								"Misc. Machinery"
+								"Misc. Machinery",
+								"Computer Parts"
 								)
 
 /obj/machinery/r_n_d/circuit_imprinter/New()

@@ -81,7 +81,6 @@ Scientist
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /*
 Roboticist
@@ -113,6 +112,5 @@ Roboticist
 
 	backpack = /obj/item/weapon/storage/backpack/science
 	satchel = /obj/item/weapon/storage/backpack/satchel/tox
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 	pda_slot = slot_l_store

@@ -26,7 +26,6 @@ Quartermaster
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/weapon/clipboard
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap=1)
 
 /*
 Cargo Technician

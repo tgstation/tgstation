@@ -1,22 +1,73 @@
-
-
-
+<div style="float: left">
+	<div class='item'>
+		<table><tr>
+		{{#if data.PC_batteryicon && data.PC_showbatteryicon}}
+			<td><img src='{{data.PC_batteryicon}}'>
+		{{/if}}
+		{{#if data.PC_batterypercent && data.PC_showbatteryicon}}
+			<td><b>{{data.PC_batterypercent}}</b>
+		{{/if}}
+		{{#if data.PC_ntneticon}}
+			<td><img src='{{data.PC_ntneticon}}'>
+		{{/if}}
+		{{#if data.PC_apclinkicon}}
+			<td><img src='{{data.PC_apclinkicon}}'>
+		{{/if}}
+		{{#if data.PC_stationtime}}
+			<td><b>{{data.PC_stationtime}}<b>
+		{{/if}}
+		{{#each data.PC_programheaders}}
+			<td><img src='{{icon}}'>
+		{{/each}}
+		</table>
+	</div>
+</div>
+<div style="float: right">
+	<table><tr>
+		<td><ui-button action='PC_shutdown'>Shutdown</ui-button>
+		{{#if data.PC_showexitprogram}}
+			<td><ui-button action='PC_exit'>EXIT PROGRAM</ui-button>
+			<td><ui-button action='PC_minimize'>Minimize Program</ui-button>
+		{{/if}}
+	</table>
+</div>
+<div style="clear: both">
 
 {{#if data.have_id_slot}}
-<ui-button action='PRG_switchm' icon='home' params='{"target" : "mod"}' state='{{data.mmode ? "disabled" : null}}'>Access Modification</ui-button>
+<ui-button action='PRG_switchm' icon='home' params='{"target" : "mod"}' state='{{data.mmode == 1 ? "disabled" : null}}'>Access Modification</ui-button>
 {{/if}}
+<ui-button action='PRG_switchm' icon='folder-open' params='{"target" : "manage"}' state='{{data.mmode == 2 ? "disabled" : null}}'>Job Management</ui-button>
 <ui-button action='PRG_switchm' icon='folder-open' params='{"target" : "manifest"}' state='{{!data.mmode ? "disabled" : null}}'>Crew Manifest</ui-button>
 {{#if data.have_printer}}
-<ui-button action='PRG_print' icon='print' state='{{!data.mmode || data.has_id ? null : "disabled"}}'>Print</ui-button>
+<ui-button action='PRG_print' icon='print' state='{{!data.mmode || data.has_id && data.mmode == 1  ? null : "disabled"}}'>Print</ui-button>
 {{/if}}
 
 {{#if !data.mmode}}
 <div class='item'>
   <h2>Crew Manifest</h2>
+  <br>Please use security record computer to modify entries.<br><br>
 </div>
+{{#each data.manifest}}
+	<div class='item'>
+	{{name}} - {{rank}}
+	</div>
+{{/each}}
+
+{{elseif data.mmode == 2}}
 <div class='item'>
-  {{data.manifest}}
+  <h2>Job Management</h2>
 </div>
+<table>
+<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>
+{{#each data.slots}}
+
+	<tr><td>{{title}}</td><td>{{current}}/{{total}}</td><td><ui-button action='PRG_open_job' params='{"target" : "{{title}}"}' state='{{status_open ? null : "disabled"}}'>{{desc_open}}</ui-button><br></td><td><ui-button action='PRG_close_job' params='{"target" : "{{title}}"}' state='{{status_close ? null : "disabled"}}'>{{desc_close}}</ui-button>
+	</td></tr>
+
+{{/each}}
+</table>
+
+
 {{else}}
 <div class='item'>
   <h2>Access Modification</h2>
@@ -31,7 +82,15 @@
 	Target Identity:
   </div>
   <div class='itemContent'>
-	<ui-button icon='eject' action='PRG_eject'>{{data.id_name}}</ui-button>
+	<ui-button icon='eject' action='PRG_eject' params='{"target" : "id"}'>{{data.id_name}}</ui-button>
+  </div>
+</div>
+<div class='item'>
+  <div class='itemLabel'>
+	Auth Identity:
+  </div>
+  <div class='itemContent'>
+	<ui-button icon='eject' action='PRG_eject' params='{"target" : "auth"}'>{{data.auth_name}}</ui-button>
   </div>
 </div>
 <hr>
@@ -42,6 +101,33 @@
 	  <h2>Details</h2>
 	</div>
 
+	{{#if data.minor}}
+	<div class='item'>
+	  <div class='itemLabel'>
+		Registered Name:
+	  </div>
+	  <div class='itemContent'>
+		{{data.id_owner}}
+	  </div>
+	</div>
+	<div class='item'>
+	  <div class='itemLabel'>
+		Rank:
+	  </div>
+	  <div class='itemContent'>
+		{{data.id_rank}}
+	  </div>
+	</div>
+	<div class='item'>
+	  <div class='itemLabel'>
+		Demote:
+	  </div>
+	  <div class='itemContent'>
+		<ui-button action='PRG_terminate' icon='gear' state='{{data.id_rank == "Unassigned" ? "disabled" : null}}'>Demote {{data.id_owner}}</ui-button>
+	  </div>
+	</div>
+	{{else}}
+
 	<div class='item'>
 	  <div class='itemLabel'>
 		Registered Name:
@@ -51,17 +137,6 @@
 	  </div>
 	</div>
 
-	{{#if data.demote}}
-	<div class='item'>
-	  <div class='itemLabel'>
-		Terminations:
-	  </div>
-	  <div class='itemContent'>
-		<ui-button action='PRG_terminate' icon='gear' state='{{data.id_rank == "Unassigned" ? "disabled" : null}}'>Demote {{data.id_owner}}</ui-button>
-	  </div>
-	</div>
-	{{/if}}
-	
 	<div class='item'>
 	  <h2>Assignment</h2>
 	</div>
@@ -148,7 +223,7 @@
 	  </div>
 	  {{/if}}
 	</div>
-
+	{{/if}}
 	{{#if data.centcom_access}}
 	  <div class='item'>
 		<h2>Central Command</h2>
@@ -156,7 +231,7 @@
 	  <div class='item' style='width: 100%'>
 		{{#each data.all_centcom_access}}
 		  <div class='itemContentWide'>
-		  <ui-button action='PRG_access' params='{"access_target" : "{{ref}}", "allowed" : "{{allowed}}"}' state='{{allowed ? "selected" : null}}'>{{desc}}</ui-button>
+		  <ui-button action='PRG_access' params='{"access_target" : "{{ref}}", "allowed" : "{{allowed}}"}' state='{{allowed ? "toggle" : null}}'>{{desc}}</ui-button>
 		  </div>
 		{{/each}}
 	  </div>

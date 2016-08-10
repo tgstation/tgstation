@@ -4,7 +4,7 @@
 	. = ..()
 	desc = "A low-end tablet often seen among low ranked station personnel."
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
-	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
+	battery_module = new/obj/item/weapon/computer_hardware/battery_module/micro(src)
 	battery_module.charge_to_full()
 	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/micro(src)
 	network_card = new/obj/item/weapon/computer_hardware/network_card(src)
@@ -13,7 +13,7 @@
 /obj/item/modular_computer/tablet/preset/advanced/New()
 	. = ..()
 	processor_unit = new/obj/item/weapon/computer_hardware/processor_unit/small(src)
-	battery_module = new/obj/item/weapon/computer_hardware/battery_module/super(src)
+	battery_module = new/obj/item/weapon/computer_hardware/battery_module(src)
 	battery_module.charge_to_full()
 	hard_drive = new/obj/item/weapon/computer_hardware/hard_drive/small(src)
 	network_card = new/obj/item/weapon/computer_hardware/network_card(src)

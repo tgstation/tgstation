@@ -26,7 +26,6 @@ Chaplain
 	backpack_contents = list(/obj/item/device/camera/spooky = 1)
 	backpack = /obj/item/weapon/storage/backpack/cultpack
 	satchel = /obj/item/weapon/storage/backpack/cultpack
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 
 /datum/outfit/job/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

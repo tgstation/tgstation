@@ -6,7 +6,7 @@
 	program_icon_state = "power_monitor"
 	extended_desc = "This program connects to sensors around the station to provide information about electrical systems"
 	ui_header = "power_norm.gif"
-	required_access = access_engine
+	transfer_access = access_engine
 	usage_flags = PROGRAM_CONSOLE
 	requires_ntnet = 0
 	network_destination = "power monitoring system"

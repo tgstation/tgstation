@@ -1739,6 +1739,7 @@
 #include "code\modules\research\designs\autolathe_designs.dm"
 #include "code\modules\research\designs\biogenerator_designs.dm"
 #include "code\modules\research\designs\comp_board_designs.dm"
+#include "code\modules\research\designs\computer_part_designs.dm"
 #include "code\modules\research\designs\machine_designs.dm"
 #include "code\modules\research\designs\mecha_designs.dm"
 #include "code\modules\research\designs\mechfabricator_designs.dm"

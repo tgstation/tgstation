@@ -46,7 +46,7 @@ Head of Security
 	suit_store = /obj/item/weapon/gun/energy/gun
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
@@ -104,7 +104,7 @@ Warden
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1,/obj/item/modular_computer/tablet/preset/advanced=1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec
@@ -158,7 +158,7 @@ Detective
 	backpack_contents = list(/obj/item/weapon/storage/box/evidence=1,\
 		/obj/item/device/detective_scanner=1,\
 		/obj/item/weapon/melee/classic_baton=1,\
-		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1,/obj/item/modular_computer/tablet/preset/cheap=1)
+		/obj/item/weapon/reagent_containers/food/drinks/flask/det=1)
 	mask = /obj/item/clothing/mask/cigarette
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -214,7 +214,7 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	l_pocket = /obj/item/weapon/restraints/handcuffs
 	r_pocket = /obj/item/device/assembly/flash/handheld
 	suit_store = /obj/item/weapon/gun/energy/gun/advtaser
-	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1,/obj/item/modular_computer/tablet/preset/advanced = 1)
+	backpack_contents = list(/obj/item/weapon/melee/baton/loaded=1)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel/sec

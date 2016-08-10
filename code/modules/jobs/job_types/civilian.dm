@@ -31,8 +31,7 @@ Clown
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/device/megaphone/clown = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1,
-		/obj/item/modular_computer/tablet/preset/advanced = 1
+		/obj/item/weapon/reagent_containers/food/drinks/soda_cans/canned_laughter = 1
 		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
@@ -89,7 +88,7 @@ Mime
 	head = /obj/item/clothing/head/beret
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing=1,\
-		/obj/item/toy/crayon/mime=1,/obj/item/modular_computer/tablet/preset/cheap = 1)
+		/obj/item/toy/crayon/mime=1)
 
 	backpack = /obj/item/weapon/storage/backpack/mime
 	satchel = /obj/item/weapon/storage/backpack/mime
@@ -135,7 +134,6 @@ Librarian
 	l_hand = /obj/item/weapon/storage/bag/books
 	r_pocket = /obj/item/weapon/barcodescanner
 	l_pocket = /obj/item/device/laser_pointer
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced = 1)
 
 /*
 Lawyer
@@ -167,7 +165,6 @@ Lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/weapon/storage/briefcase/lawyer
 	l_pocket = /obj/item/device/laser_pointer
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cheap = 1)
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

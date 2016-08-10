@@ -5,7 +5,7 @@
 	enabled = 1
 	icon_state = "teslalink"
 	hardware_size = 2		// Can't be installed into tablets
-	origin_tech = list(TECH_DATA = 2, TECH_POWER = 3, TECH_ENGINEERING = 2)
+	origin_tech = list("programming" = 2, "powerstorage" = 3, "engineering" = 2)
 	var/obj/machinery/modular_computer/holder
 
 /obj/item/weapon/computer_hardware/tesla_link/New(var/obj/L)

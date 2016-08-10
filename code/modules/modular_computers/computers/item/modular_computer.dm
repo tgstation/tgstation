@@ -41,6 +41,7 @@
 	var/obj/item/weapon/computer_hardware/battery_module/battery_module				// An internal power source for this computer. Can be recharged.
 	// Optional hardware (improves functionality, but is not critical for computer to work)
 	var/obj/item/weapon/computer_hardware/card_slot/card_slot						// ID Card slot component of this computer. Mostly for HoP modification console that needs ID slot for modification.
+	var/obj/item/weapon/computer_hardware/card_slot/card_slot2						// second slot. popular demand requested the hop need to insert 2 ids.
 	var/obj/item/weapon/computer_hardware/nano_printer/nano_printer					// Nano Printer component of this computer, for your everyday paperwork needs.
 	var/obj/item/weapon/computer_hardware/hard_drive/portable/portable_drive		// Portable data storage
 
@@ -81,7 +82,7 @@
 
 	proc_eject_usb(usr)
 
-/obj/item/modular_computer/proc/proc_eject_id(mob/user)
+/obj/item/modular_computer/proc/proc_eject_id(mob/user, slot)
 	if(!user)
 		user = usr
 
@@ -89,21 +90,23 @@
 		user << "\The [src] does not have an ID card slot"
 		return
 
-	if(!card_slot.stored_card)
+	if(!card_slot.stored_card && !card_slot.stored_card2)
 		user << "There is no card in \the [src]"
 		return
 
 	if(active_program)
-		active_program.event_idremoved(0)
+		active_program.event_idremoved(0, slot)
 
 	for(var/I in idle_threads)
 		var/datum/computer_file/program/P = I
-		P.event_idremoved(1)
-
-	card_slot.stored_card.forceMove(get_turf(src))
-	card_slot.stored_card = null
-//	update_uis()
-	user << "You remove the card from \the [src]"
+		P.event_idremoved(1, slot)
+	if(card_slot.stored_card && (!slot || slot == 1))
+		card_slot.stored_card.forceMove(get_turf(src))
+		card_slot.stored_card = null
+	if(card_slot.stored_card2 && (!slot || slot == 2))
+		card_slot.stored_card2.forceMove(get_turf(src))
+		card_slot.stored_card2 = null
+	user << "You remove the card[card_slot.stored_card && card_slot.stored_card2 && !slot ? "s" : ""] from \the [src]"
 
 /obj/item/modular_computer/proc/proc_eject_usb(mob/user)
 	if(!user)
@@ -114,7 +117,6 @@
 		return
 
 	uninstall_component(user, portable_drive)
-//	update_uis()
 
 /obj/item/modular_computer/attack_ghost(mob/dead/observer/user)
 	if(enabled)
@@ -158,14 +160,13 @@
 
 /obj/item/modular_computer/update_icon()
 	icon_state = icon_state_unpowered
-
-	overlays.Cut()
+	cut_overlays()
 	if(!enabled)
 		return
 	if(active_program)
-		overlays.Add(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
+		add_overlay(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
 	else
-		overlays.Add(icon_state_menu)
+		add_overlay(icon_state_menu)
 
 // Used by child types if they have other power source than battery
 /obj/item/modular_computer/proc/check_power_override()
@@ -209,14 +210,9 @@
 
 
 /obj/item/modular_computer/ui_data(mob/user)
-//	var/list/data = list()
-//	data["active_program_template"] = active_program
-
-//	return data
 
 	var/list/data = get_header_data()
 	data["programs"] = list()
-//	var/list/programs = list()
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
 		var/running = 0
 		if(P in idle_threads)
@@ -224,13 +220,6 @@
 
 		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running))
 
-//		var/list/program = list()
-
-//		program["name"] = P.filename
-//		program["desc"] = P.filedesc
-//		if(P in idle_threads)
-//			program["running"] = 1
-//		programs.Add(list(program))
 	return data
 
 
@@ -467,7 +456,7 @@
 			if(P.requires_ntnet && !get_ntnet_status(P.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
 				user << "<span class='danger'>\The [src]'s screen shows \"NETWORK ERROR - Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning.</span>"
 				return
-
+			P.computer_emagged = computer_emagged
 			if(P.run_program(user))
 				active_program = P
 				update_icon()
@@ -513,12 +502,15 @@
 			user << "You try to insert \the [I] into \the [src], but it does not have an ID card slot installed."
 			return
 
-		if(card_slot.stored_card)
-			user << "You try to insert \the [I] into \the [src], but it's ID card slot is occupied."
+		if(card_slot.stored_card && card_slot.stored_card2)
+			user << "You try to insert \the [I] into \the [src], but it's ID card slots are occupied."
 			return
 		if(!user.drop_item(I))
 			return
-		card_slot.stored_card = I
+		if(!card_slot.stored_card)
+			card_slot.stored_card = I
+		else
+			card_slot.stored_card2 = I
 		I.forceMove(src)
 //		update_uis()
 		user << "You insert \the [I] into \the [src]."
@@ -717,53 +709,6 @@
 		all_components.Add(processor_unit)
 	return all_components
 
-/*
-
-/obj/item/modular_computer/proc/update_uis()
-	if(active_program) //Should we update program ui or computer ui?
-		nanomanager.update_uis(active_program)
-		if(active_program.NM)
-			nanomanager.update_uis(active_program.NM)
-	else
-		nanomanager.update_uis(src)
-
-/obj/item/modular_computer/proc/check_update_ui_need()
-	var/ui_update_needed = 0
-	if(battery_module)
-		var/batery_percent = battery_module.battery.percent()
-		if(last_battery_percent != batery_percent) //Let's update UI on percent change
-			ui_update_needed = 1
-			last_battery_percent = batery_percent
-
-	if(stationtime2text() != last_world_time)
-		last_world_time = stationtime2text()
-		ui_update_needed = 1
-
-	if(idle_threads.len)
-		var/list/current_header_icons = list()
-		for(var/datum/computer_file/program/P in idle_threads)
-			if(!P.ui_header)
-				continue
-			current_header_icons[P.type] = P.ui_header
-		if(!last_header_icons)
-			last_header_icons = current_header_icons
-
-		else if(!listequal(last_header_icons, current_header_icons))
-			last_header_icons = current_header_icons
-			ui_update_needed = 1
-		else
-			for(var/x in last_header_icons|current_header_icons)
-				if(last_header_icons[x]!=current_header_icons[x])
-					last_header_icons = current_header_icons
-					ui_update_needed = 1
-					break
-
-	if(ui_update_needed)
-		update_uis()
-
-*/
-
-
 /obj/item/modular_computer/proc/take_damage(amount, component_probability, damage_casing = 1, randomize = 1)
 	if(randomize)
 		// 75%-125%, rand() works with integers, apparently.
@@ -772,7 +717,6 @@
 	if(damage_casing)
 		damage += amount
 		damage = max(0,min(max_damage,damage))
-//		damage = between(0, damage, max_damage)
 
 	if(component_probability)
 		for(var/I in get_all_components())
@@ -799,8 +743,6 @@
 	switch(Proj.damage_type)
 		if(BRUTE)
 			take_damage(Proj.damage, Proj.damage / 2)
-		//if(HALLOSS)
-		//	take_damage(Proj.damage, Proj.damage / 3, 0)
 		if(BURN)
 			take_damage(Proj.damage, Proj.damage / 1.5)
 
