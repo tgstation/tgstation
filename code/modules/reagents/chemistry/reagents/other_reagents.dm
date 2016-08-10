@@ -1198,7 +1198,26 @@
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
 	name = "weakened virus plasma"
 	id = "weakplasmavirusfood"
+	id = "mutates blood"
 	color = "#CEC3C6" // rgb: 206,195,198
+
+/datum/reagent/uranium/uraniumvirusfood
+	name = "decaying uranium gel"
+	id = "uraniumvirusfood"
+	description = "mutates blood"
+	color = "#67ADBA" // rgb: 103,173,186
+
+/datum/reagent/uranium/uraniumvirusfood/unstable
+	name = "unstable uranium gel"
+	id = "uraniumplasmavirusfood_unstable"
+	color = "#2FF2CB" // rgb: 47,242,203
+
+/datum/reagent/uranium/uraniumvirusfood/stable
+	name = "stable uranium gel"
+	id = "uraniumplasmavirusfood_stable"
+	color = "#04506C" // rgb: 4,80,108
+
+// Bee chemicals
 
 /datum/reagent/royal_bee_jelly
 	name = "royal bee jelly"
@@ -1210,6 +1229,8 @@
 	if(prob(2))
 		M.say(pick("Bzzz...","BZZ BZZ","Bzzzzzzzzzzz..."))
 	..()
+
+//Misc reagents
 
 datum/reagent/romerol
 	name = "romerol"
