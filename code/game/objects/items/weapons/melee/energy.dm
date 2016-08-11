@@ -1,6 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
 	var/force_on = 30 //force when active
+	var/dismemberment_chance_on = 0 //dismemberment chance when active
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -16,8 +17,8 @@
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/energy/is_sharp()
-	return active * sharpness
+/obj/item/weapon/melee/energy/dismemberment_chance()
+ +	return active * dismemberment_chance_on
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -30,6 +31,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
+	dismemberment_chance = 40
+	dismemberment_chance_on = 100 //100% chance wew
 	w_class = 3
 	w_class_on = 5
 	flags = CONDUCT
@@ -51,7 +54,8 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	dismemberment_chance = 0
+	dismemberment_chance_on = 30
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
@@ -156,6 +160,8 @@
 	item_color = null
 	w_class = 3
 	sharpness = IS_SHARP
+	dismemberment_chance = 18
+	dismemberment_chance_on = 30
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
 	..()
