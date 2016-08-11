@@ -17158,8 +17158,8 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/gun/advtaser,
 /obj/item/weapon/gun/energy/gun/advtaser{
-	pixel_x = 0;
-	pixel_y = 0
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /obj/machinery/light{
 	dir = 1
@@ -18751,10 +18751,11 @@
 /area/security/warden)
 "aUf" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/weapon/gun/energy/temperature/security{
-	pixel_y = -5
+	pixel_x = -5;
+	pixel_y = 5
 	},
+/obj/item/weapon/gun/energy/temperature/security,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
