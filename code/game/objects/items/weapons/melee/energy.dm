@@ -1,6 +1,7 @@
 /obj/item/weapon/melee/energy
 	var/active = 0
 	var/force_on = 30 //force when active
+	var/dismemberment_chance_on = 0 //dismemberment chance when active
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -16,8 +17,8 @@
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/energy/is_sharp()
-	return active * sharpness
+/obj/item/weapon/melee/energy/dismemberment_chance()
+	return active * dismemberment_chance_on
 
 /obj/item/weapon/melee/energy/axe
 	name = "energy axe"
@@ -27,6 +28,8 @@
 	force_on = 150
 	throwforce = 25
 	throwforce_on = 30
+	dismemberment_chance = 40
+	dismemberment_chance_on = 100 //100% chance wew
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
@@ -51,7 +54,8 @@
 	hitsound = "swing_hit" //it starts deactivated
 	throw_speed = 3
 	throw_range = 5
-	sharpness = IS_SHARP
+	dismemberment_chance = 0
+	dismemberment_chance_on = 30
 	embed_chance = 75
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 35
@@ -148,6 +152,8 @@
 	icon_state = "esaw"
 	force_on = 30
 	force = 18 //About as much as a spear
+	dismemberment_chance = 18
+	dismemberment_chance_on = 30
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "esaw_0"
@@ -227,6 +233,7 @@
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
 	force = 30	//Normal attacks deal esword damage
+	dismemberment_chance = 30
 	hitsound = 'sound/weapons/blade1.ogg'
 	active = 1
 	throwforce = 1//Throwing or dropping the item deletes it.
