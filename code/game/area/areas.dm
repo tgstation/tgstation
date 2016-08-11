@@ -5,7 +5,7 @@
 // the same logical /area have the parent /area object... well, you would be mistaken.  If you
 // want to find machines, mobs, etc, in the same logical area, you will need to check all the
 // related areas.  This returns a master contents list to assist in that.
-/proc/area_contents(area/A)
+/proc/area_contents(var/area/A)
 	if(!istype(A)) return null
 	var/list/contents = list()
 	for(var/area/LSA in A.related)
@@ -47,6 +47,8 @@
 	power_change()		// all machines set to current power level, also updates icon
 
 	blend_mode = BLEND_MULTIPLY // Putting this in the constructor so that it stops the icons being screwed up in the map editor.
+
+
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)

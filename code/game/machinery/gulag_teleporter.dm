@@ -132,15 +132,7 @@ The console is located at computer/gulag_teleporter.dm
 			if(istype(W, /obj/item/weapon/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
-			if(istype(W, /obj/item/weapon/implant))
-				continue
-			if(istype(W, /obj/item/clothing/suit/space/eva/plasmaman))
-				continue
-			if(istype(W, /obj/item/clothing/head/helmet/space/plasmaman))
-				continue
-			if(istype(W, /obj/item/weapon/tank/internals/plasmaman))
-				continue
-			if(istype(W, /obj/item/clothing/under/plasmaman))
+			if(istype(W, /obj/item/weapon/implant/storage))
 				continue
 			if(linked_reclaimer)
 				linked_reclaimer.stored_items[occupant] += W
