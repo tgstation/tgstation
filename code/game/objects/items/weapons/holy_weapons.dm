@@ -85,6 +85,8 @@
 	w_class = 5
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
+	dismemberment_chance = 15
+	piercing = 15
 	sharpness = IS_SHARP
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -170,6 +172,7 @@
 	desc = "Ask not for whom the bell tolls..."
 	w_class = 4
 	armour_penetration = 35
+	dismemberment_chance = 30 //Heads will roll
 	slot_flags = SLOT_BACK
 	sharpness = IS_SHARP
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -249,6 +252,7 @@
 	item_state = "mounted_chainsaw"
 	w_class = 5
 	flags = NODROP | ABSTRACT
+	dismemberment_chance = 20
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
@@ -260,6 +264,8 @@
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
+	dismemberment_chance = 6.66
+	piercing = 6.66
 	sharpness = IS_SHARP
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -269,6 +275,7 @@
 	icon_state = "chain"
 	item_state = "chain"
 	slot_flags = SLOT_BELT
+	piercing = 10
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/chainhit.ogg'
 
@@ -292,6 +299,7 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
+	dismemberment_chance = 20
 	w_class = 5
 	sharpness = IS_SHARP
 
@@ -336,6 +344,8 @@
 	w_class = 5
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharpness = IS_SHARP
+	dismemberment_chance = 2
+	piercing = 15
 	slot_flags = null
 	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -346,6 +356,7 @@
 	name = "unholy pitchfork"
 	w_class = 3
 	desc = "Holding this makes you look absolutely devilish."
+	piercing = 25 //3, pronged, pitchfork
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
