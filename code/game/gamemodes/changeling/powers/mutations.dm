@@ -183,22 +183,24 @@
 			user << "<span class='warning'>The airlock's bolts prevent it from being forced!</span>"
 			return
 
-		if(A.hasPower() || A.welded)
-			var/time_to_open = 0
-			if(A.welded)
-				time_to_open += 100
-			if(A.hasPower())
-				time_to_open += 100
-			user << "<span class='warning'>The airlock's motors are resisting, this may take time...</span>"
-			if(do_after(user, time_to_open, target = A))
-				A.welded = FALSE
-				A.open(2)
-			return
+		if(A.welded)
+			user.visible_message("<span class='warning'>[user] starts breaking the weld on the airlock with [src]!</span>", "<span class='warning'>We start weld on the airlock.</span>", \
+			"<span class='italics'>You hear a ferocious clanging.</span>")
+			if(!do_after(user, 100, target = A))
+				return
+			A.welded = FALSE
+			A.update_icon()
 
-		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='italics'>You hear a metal screeching sound.</span>")
-			A.open(1)
+		if(A.hasPower())
+			user.visible_message("<span class='warning'>[user] jams [src] into the airlock and starts prying it open!</span>", "<span class='warning'>We start forcing the airlock open.</span>", \
+			"<span class='italics'>You hear a metal screeching sound.</span>")
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+			if(!do_after(user, 100, target = A))
+				return
+		//user.say("Heeeeeeeeeerrre's Johnny!")
+		user.visible_message("<span class='warning'>[user] forces the airlock to open with their [src]!</span>", "<span class='warning'>We force the airlock to open.</span>", \
+		"<span class='italics'>You hear a metal screeching sound.</span>")
+		A.open(2)
 
 
 /***************************************\
