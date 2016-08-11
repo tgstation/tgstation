@@ -731,6 +731,7 @@
 	pixel_y = 23
 	},
 /obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/plasteel/vault{
 	dir = 8

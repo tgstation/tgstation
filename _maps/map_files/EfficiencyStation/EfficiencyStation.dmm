@@ -45891,6 +45891,7 @@
 "bMY" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /turf/open/floor/plasteel/black,
 /area/security/warden)
