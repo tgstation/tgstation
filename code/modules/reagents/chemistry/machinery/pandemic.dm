@@ -210,7 +210,7 @@ var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
 	else if(href_list["update_virus"])
 		if(is_valid_beaker(beaker))
 			if(BL.data && BL.data["viruses"])
-				var/list/viruses = BL.data["viruses"]
+			var/list/viruses = BL.data["viruses"]
 				for(var/datum/disease/D in viruses)
 					var/d_test = 1
 					for(var/datum/disease/DT in new_diseases) //we scan for the desease itself to add to the list
@@ -428,11 +428,11 @@ var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open(1)
-	return
 
 /obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(stat & (NOPOWER|BROKEN)) return
+		if(stat & (NOPOWER|BROKEN))
+		return
 
 		for(var/datum/reagent/R in I.reagents.reagent_list)
 			switch(R.id)
