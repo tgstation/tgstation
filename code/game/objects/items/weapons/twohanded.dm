@@ -26,6 +26,10 @@
 	var/wielded = 0
 	var/force_unwielded = 0
 	var/force_wielded = 0
+	var/dismemberment_chance_unwielded = 0
+	var/dismemberment_chance_wielded = 0
+	var/piercing_unwielded = 0
+	var/piercing_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
 
@@ -35,6 +39,8 @@
 	wielded = 0
 	if(force_unwielded)
 		force = force_unwielded
+		dismemberment_chance = dismemberment_chance_unwielded
+		piercing = piercing_unwielded
 	var/sf = findtext(name," (Wielded)")
 	if(sf)
 		name = copytext(name,1,sf)
@@ -69,6 +75,8 @@
 	wielded = 1
 	if(force_wielded)
 		force = force_wielded
+		dismemberment_chance = dismemberment_chance_wielded
+		piercing = piercing_wielded
 	name = "[name] (Wielded)"
 	update_icon()
 	if(isrobot(user))
@@ -164,7 +172,8 @@
 	force_wielded = 24 // Was 18, Buffed - RobRichards/RR
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	dismemberment_chance_unwielded = 5
+	dismemberment_chance_wielded = 24
 
 /obj/item/weapon/twohanded/fireaxe/update_icon()  //Currently only here to fuck with the on-mob icons.
 	icon_state = "fireaxe[wielded]"
@@ -200,6 +209,8 @@
 	var/w_class_on = 4
 	force_unwielded = 3
 	force_wielded = 34
+	dismemberment_chance_unwielded = 0 //The sword is fucking off to somewhere, meaning you can't cut people with it
+	dismemberment_chance_wielded = 34
 	wieldsound = 'sound/weapons/saberon.ogg'
 	unwieldsound = 'sound/weapons/saberoff.ogg'
 	hitsound = "swing_hit"
@@ -267,7 +278,6 @@
 		if(M.dna.check_mutation(HULK))
 			M << "<span class='warning'>You lack the grace to wield this!</span>"
 			return
-	sharpness = IS_SHARP
 	w_class = w_class_on
 	..()
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -334,6 +344,8 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
+	piercing_unwielded = 5
+	piercing_wielded = 12
 	throwforce = 20
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
@@ -341,7 +353,6 @@
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 	var/obj/item/weapon/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
@@ -401,6 +412,7 @@
 	flags = CONDUCT
 	force = 13
 	var/force_on = 21
+	dismemberment_chance = 21
 	w_class = 5
 	throwforce = 13
 	throw_speed = 2
@@ -409,7 +421,6 @@
 	origin_tech = "materials=3;engineering=4;combat=2"
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "swing_hit"
-	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	var/on = 0
 
@@ -456,6 +467,8 @@
 	desc = "Recovered from the aftermath of a revolt aboard Defense Outpost Theta Aegis, in which a seemingly endless tide of Assistants caused heavy casualities among Nanotrasen military forces."
 	force_unwielded = 15
 	force_wielded = 25
+	piercing_unwielded = 10
+	piercing_wielded = 18
 	throwforce = 20
 	throw_speed = 4
 	attack_verb = list("gored")
@@ -484,9 +497,10 @@
 	w_class = 4
 	force_unwielded = 7
 	force_wielded = 15
+	piercing_unwielded = 4
+	piercing_wielded = 10
 	attack_verb = list("attacked", "impaled", "pierced")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/pitchfork/demonic
 	name = "demonic pitchfork"
@@ -495,18 +509,24 @@
 	throwforce = 24
 	force_unwielded = 19
 	force_wielded = 25
+	piercing_unwielded = 5
+	piercing_wielded = 12
 
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
 	force = 24
 	throwforce = 50
 	force_unwielded = 24
 	force_wielded = 34
+	piercing_unwielded = 16
+	piercing_wielded = 21
 
 /obj/item/weapon/twohanded/pitchfork/demonic/ascended
 	force = 100
 	throwforce = 100
 	force_unwielded = 100
 	force_wielded = 500000 // Kills you DEAD.
+	piercing_unwielded = 33
+	piercing_wielded = 300000
 
 /obj/item/weapon/twohanded/pitchfork/update_icon()
 	icon_state = "pitchfork[wielded]"
@@ -545,7 +565,6 @@
 	block_chance = 40
 	throwforce = 20
 	throw_speed = 4
-	sharpness = IS_SHARP
 	attack_verb = list("cut", "sliced", "diced")
 	w_class = 4
 	slot_flags = SLOT_BACK
@@ -591,14 +610,15 @@
 	w_class = 4
 	slot_flags = SLOT_BACK
 	force_unwielded = 11
-	force_wielded = 20					//I have no idea how to balance
+	force_wielded = 20 //I have no idea how to balance
+	piercing_unwielded = 6
+	piercing_wielded = 13
 	throwforce = 22
 	throw_speed = 4
 	embedded_impact_pain_multiplier = 3
 	armour_penetration = 15				//Enhanced armor piercing
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
-	sharpness = IS_SHARP
 
 /obj/item/weapon/twohanded/bonespear/update_icon()
 		icon_state = "bone_spear[wielded]"
