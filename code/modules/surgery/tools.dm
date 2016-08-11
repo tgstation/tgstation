@@ -18,7 +18,6 @@
 	flags = CONDUCT
 	w_class = 1
 	origin_tech = "materials=1;biotech=1"
-	attack_verb = list("attacked", "pinched")
 
 
 /obj/item/weapon/cautery
@@ -81,7 +80,7 @@
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
 	force = 15
-	dismemberment = 30 //It's a saw.
+	dismemberment_chance = 30 //It's a saw.
 	w_class = 3
 	throwforce = 9
 	throw_speed = 2
