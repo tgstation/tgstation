@@ -11,6 +11,7 @@
 	var/show_assignments = 0
 	var/minor = 0
 	var/authenticated = 0
+	var/list/reg_ids = list()
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
@@ -266,6 +267,14 @@
 				time_last_changed_position = world.time / 10
 			j.total_positions--
 			opened_positions[edit_job_target]--
+		if("PRG_regsel")
+			if(!reg_ids)
+				reg_ids = list()
+			var/regsel = text2num(params["region"])
+			if(regsel in reg_ids)
+				reg_ids -= regsel
+			else
+				reg_ids += regsel
 
 	if(id_card)
 		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
@@ -351,13 +360,15 @@
 			data["id_owner"] = id_card && id_card.registered_name ? html_encode(id_card.registered_name) : "-----"
 			data["id_name"] = id_card ? strip_html_simple(id_card.name) : "-----"
 
-			data["engineering_jobs"] = format_jobs(engineering_positions)
-			data["medical_jobs"] = format_jobs(medical_positions)
-			data["science_jobs"] = format_jobs(science_positions)
-			data["security_jobs"] = format_jobs(security_positions)
-			data["cargo_jobs"] = format_jobs(supply_positions)
-			data["civilian_jobs"] = format_jobs(civilian_positions)
-			data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+			if(show_assignments)
+				data["engineering_jobs"] = format_jobs(engineering_positions)
+				data["medical_jobs"] = format_jobs(medical_positions)
+				data["science_jobs"] = format_jobs(science_positions)
+				data["security_jobs"] = format_jobs(security_positions)
+				data["cargo_jobs"] = format_jobs(supply_positions)
+				data["civilian_jobs"] = format_jobs(civilian_positions)
+				data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+
 
 		if(computer.card_slot.stored_card)
 			var/obj/item/weapon/card/id/id_card = computer.card_slot.stored_card
@@ -374,16 +385,20 @@
 				for(var/i = 1; i <= 7; i++)
 					if((minor || target_dept) && !(i in region_access))
 						continue
+
 					var/list/accesses = list()
-					for(var/access in get_region_accesses(i))
-						if (get_access_desc(access))
-							accesses.Add(list(list(
+					if(i in reg_ids)
+						for(var/access in get_region_accesses(i))
+							if (get_access_desc(access))
+								accesses.Add(list(list(
 								"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
 								"ref" = access,
 								"allowed" = (access in id_card.access) ? 1 : 0)))
 
 					regions.Add(list(list(
 						"name" = get_region_accesses_name(i),
+						"regid" = i,
+						"selected" = (i in reg_ids) ? 1 : null,
 						"accesses" = accesses)))
 				data["regions"] = regions
 

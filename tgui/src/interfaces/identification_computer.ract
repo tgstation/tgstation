@@ -224,6 +224,7 @@
 	  {{/if}}
 	</div>
 	{{/if}}
+
 	{{#if data.centcom_access}}
 	  <div class='item'>
 		<h2>Central Command</h2>
@@ -242,8 +243,9 @@
 	  <div class='item' style='width: 100%'>
 		{{#each data.regions}}
 		  <div style='float: left; width: 175px; min-height: 250px'>
-			<div class='average'><b>{{name}}</b></div>
-			{{#each accesses}}
+			<div class='average'><ui-button action='PRG_regsel' state='{{selected ? "toggle" : null}}' params='{"region" : "{{regid}}"}'><b>{{name}}</b></ui-button></div>
+			<br>
+		  	{{#each accesses}}
 			  <div class='itemContentWide'>
 				<ui-button action='PRG_access' params='{"access_target" : "{{ref}}", "allowed" : "{{allowed}}"}' state='{{allowed ? "toggle" : null}}'>{{desc}}</ui-button>
 			  </div>

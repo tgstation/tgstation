@@ -491,7 +491,10 @@
 		if(!battery_module.check_functionality())
 			power_failure(1)
 			return
-		battery_module.battery.use(power_usage * CELLRATE)
+		if(!battery_module.battery.use(power_usage * CELLRATE))
+			battery_module.battery.charge = 0
+			power_failure()
+			return 0
 
 	last_power_usage = power_usage
 

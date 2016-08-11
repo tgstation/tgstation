@@ -68,7 +68,7 @@
 // Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
 // User has to wear their ID for ID Scan to work.
 // Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/living/user, loud = 0, access_to_check, transfer = 0)
+/datum/computer_file/program/proc/can_run(mob/user, loud = 0, access_to_check, transfer = 0)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -79,6 +79,9 @@
 		return 1
 
 	if(computer_emagged && !transfer)	//emags can bypass the execution locks but not the download ones.
+		return 1
+
+	if(IsAdminGhost(user))
 		return 1
 
 	if(issilicon(user))

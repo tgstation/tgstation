@@ -121,12 +121,13 @@ var/list/global_modular_computers = list()
 
 // Called by cpu item's process() automatically, handles our power interaction.
 /obj/machinery/modular_computer/proc/handle_power()
-	if(cpu.battery_module && cpu.battery_module.battery.charge <= 0) // Battery-run but battery is depleted.
-		power_failure()
-		return 0
-	else if(!cpu.battery_module && (!powered() || !tesla_link || !tesla_link.enabled || !tesla_link.check_functionality())) // Not battery run, but lacking APC connection.
-		power_failure()
-		return 0
+	if(!check_external_power())
+		if(cpu.battery_module && cpu.battery_module.battery.charge <= 0)// Battery-run but battery is depleted.
+			power_failure()
+			return 0
+		else if(!cpu.battery_module) // Not battery run, but lacking APC connection.
+			power_failure()
+			return 0
 	else if(stat & NOPOWER)
 		stat &= ~NOPOWER
 
@@ -153,7 +154,9 @@ var/list/global_modular_computers = list()
 		if(cpu.battery_module && powered() && (use_power == 2)) // Battery charging itself
 			cpu.battery_module.battery.give(100 * CELLRATE)
 		else if(cpu.battery_module && !powered()) // Unpowered, but battery covers the usage.
-			cpu.battery_module.battery.use(idle_power_usage * CELLRATE)
+			if(!cpu.battery_module.battery.use(idle_power_usage * CELLRATE))
+				cpu.battery_module.battery.charge = 0
+				power_failure()
 
 	else	// No wireless connection run only on battery.
 		use_power = 0
@@ -161,7 +164,9 @@ var/list/global_modular_computers = list()
 			if(!cpu.battery_module.check_functionality())
 				power_failure(1)
 				return
-			cpu.battery_module.battery.use(power_usage * CELLRATE)
+			if(!cpu.battery_module.battery.use(power_usage * CELLRATE))
+				cpu.battery_module.battery.charge = 0
+				power_failure()
 	cpu.last_power_usage = power_usage
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
@@ -195,4 +200,8 @@ var/list/global_modular_computers = list()
 		cpu.bullet_act(Proj)
 
 
-
+/obj/machinery/modular_computer/proc/check_external_power()
+	if((!powered() || !tesla_link || !tesla_link.enabled || !tesla_link.check_functionality()))
+		return 0
+	else
+		return 1
