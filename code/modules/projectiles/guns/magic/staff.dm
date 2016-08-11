@@ -71,7 +71,7 @@
 	force = 20
 	armour_penetration = 75
 	block_chance = 50
-	sharpness = IS_SHARP
+	dismemberment_chance = 20
 	max_charges = 4
 
 /obj/item/weapon/gun/magic/staff/spellblade/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
