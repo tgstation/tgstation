@@ -562,7 +562,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
 		if(cutting|| damtype == BURN)
-			. = dismemberment chance
+			. = cutting chance
 
 /obj/item/proc/get_bleeding_chance(mob/living/M)
 	if(piercing >= 1|| damtype == BURN) //Because a pocket knife can make you bleed
