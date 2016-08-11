@@ -31,7 +31,11 @@ var/datum/subsystem/ticker/ticker
 	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
 	var/list/factions = list()				//list of all factions
 	var/list/availablefactions = list()		//list of factions with openings
-	var/list/scripture_states = list("Script" = 0, "Application" = 0, "Revenant" = 0, "Judgement" = 0) //list of clockcult scripture states for announcements
+	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
+	SCRIPTURE_SCRIPT = FALSE, \
+	SCRIPTURE_APPLICATION = FALSE, \
+	SCRIPTURE_REVENANT = FALSE, \
+	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
 
