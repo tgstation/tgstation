@@ -42,6 +42,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	flags = CONDUCT
 	force = 15
+	piercing = 15
 	w_class = 3
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("drilled")
@@ -53,6 +54,7 @@
 	icon_state = "scalpel"
 	flags = CONDUCT
 	force = 10
+	piercing = 10
 	w_class = 1
 	throwforce = 5
 	throw_speed = 3
@@ -79,6 +81,7 @@
 	throwhitsound =  'sound/weapons/pierce.ogg'
 	flags = CONDUCT
 	force = 15
+	dismemberment = 30 //It's a saw.
 	w_class = 3
 	throwforce = 9
 	throw_speed = 2
