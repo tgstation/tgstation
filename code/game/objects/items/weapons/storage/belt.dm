@@ -426,7 +426,7 @@
 		/obj/item/weapon/melee/rapier
 		)
 
-/obj/item/weapon/storage/belt/sabre/update_icon()
+/obj/item/weapon/storage/belt/rapier/update_icon()
 	icon_state = "[initial(icon_state)]"
 	item_state = "[initial(item_state)]"
 	if(contents.len)
@@ -437,6 +437,6 @@
 		L.regenerate_icons()
 	..()
 
-/obj/item/weapon/storage/belt/sabre/New()
+/obj/item/weapon/storage/belt/rapier/New()
 	..()
-	new /obj/item/weapon/melee/sabre(src)
+	new /obj/item/weapon/melee/rapier(src)
