@@ -54,5 +54,5 @@
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (is_sharp(W) || W.is_hot() || is_pointed(W))
+	if (dismemberment_chance > 0 || piercing > 0 || W.is_hot() || is_pointed(W))
 		burst()
