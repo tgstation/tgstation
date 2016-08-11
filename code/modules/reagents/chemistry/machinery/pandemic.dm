@@ -54,7 +54,7 @@
 		return D.GetDiseaseID()
 	return null
 
-/obj/machinery/computer/pandemic/proc/replicator_cooldown(var/waittime)
+/obj/machinery/computer/pandemic/proc/replicator_cooldown(waittime)
 	wait = 1
 	update_icon()
 	spawn(waittime)
@@ -64,7 +64,7 @@
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)
-		icon_state = (src.beaker?"mixer1_b":"mixer0_b")
+		icon_state = (beaker ? "mixer1_b" : "mixer0_b")
 		return
 
 	icon_state = "mixer[(beaker)?"1":"0"][(powered()) ? "" : "_nopower"]"
@@ -72,7 +72,7 @@
 	if(wait)
 		cut_overlays()
 	else
-		overlays += "waitlight"
+		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/Topic(href, href_list)
 	if(..())
@@ -82,14 +82,13 @@
 	if(!beaker) return
 
 	if (href_list["symptom"])
-		if(beaker && beaker.reagents)
-			if(beaker.reagents.reagent_list.len)
-				var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
-				if(BL)
-					if(BL.data && BL.data["viruses"])
-						var/list/viruses = BL.data["viruses"]
-						for(var/datum/disease/advance/D in viruses)
-							D.AddSymptom(new_symptoms[text2num(href_list["symptom"])])
+		if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
+			var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
+			if(BL)
+				if(BL.data && BL.data["viruses"])
+					var/list/viruses = BL.data["viruses"]
+					for(var/datum/disease/advance/D in viruses)
+						D.AddSymptom(new_symptoms[text2num(href_list["symptom"])])
 		updateUsrDialog()
 		return
 
@@ -207,64 +206,51 @@
 		updateUsrDialog()
 		return
 
+var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
 	else if(href_list["update_virus"])
-		if(beaker && beaker.reagents)
-			if(beaker.reagents.reagent_list.len)
-				var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
-				if(BL)
-					if(BL.data && BL.data["viruses"])
-						var/list/viruses = BL.data["viruses"]
-						for(var/datum/disease/D in viruses)
-							var/d_test = 1
-							for(var/datum/disease/DT in new_diseases) //we scan for the desease itself to add to the list
-								if(D.IsSame(DT))
-									d_test = 0
-							if(d_test)
-								new_diseases += D
-								usr << "New disease added to the database!"
+		if(is_valid_beaker(beaker))
+			if(BL.data && BL.data["viruses"])
+				var/list/viruses = BL.data["viruses"]
+				for(var/datum/disease/D in viruses)
+					var/d_test = 1
+					for(var/datum/disease/DT in new_diseases) //we scan for the desease itself to add to the list
+						if(D.IsSame(DT))
+							d_test = 0
+					if(d_test)
+						new_diseases += D
+						usr << "New disease added to the database!"
 	else if(href_list["update_symptom"])
-		if(beaker && beaker.reagents)
-			if(beaker.reagents.reagent_list.len)
-				var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
-				if(BL)
-					if(BL.data && BL.data["viruses"])
-						var/list/viruses = BL.data["viruses"]
-						for(var/datum/disease/D in viruses)
-							if(istype(D,/datum/disease/advance)) //advanced deseases, we scan for symptoms
-								var/datum/disease/advance/AD = D //inheritance failed me today
-								for(var/datum/symptom/S in AD.symptoms)
-									var/s_test = 1
-									for(var/datum/symptom/ST in new_symptoms ) //this is awfull, I know.
-										if(S.name == ST.name) //I really hoped there was another way of doing this.
-											s_test = 0
-									if(s_test)
-										new_symptoms += S
-										usr << "New symptom added to the database!"
+		if(BL.data && BL.data["viruses"])
+			var/list/viruses = BL.data["viruses"]
+			for(var/datum/disease/D in viruses)
+				if(istype(D,/datum/disease/advance)) //advanced deseases, we scan for symptoms
+					var/datum/disease/advance/AD = D //inheritance failed me today
+					for(var/datum/symptom/S in AD.symptoms)
+						var/s_test = 1
+						for(var/datum/symptom/ST in new_symptoms ) //this is awfull, I know.
+							if(S.name == ST.name) //I really hoped there was another way of doing this.
+								s_test = 0
+						if(s_test)
+							new_symptoms += S
+							usr << "New symptom added to the database!"
 	else if(href_list["update_cure"])
 		if(beaker && beaker.reagents)
-			if(beaker.reagents.reagent_list.len)
-				var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
-				if(BL)
-					if(BL.data && BL.data["resistances"])
-						var/v_test = 1
-						for(var/resistance in BL.data["resistances"])
-							for(var/res in new_cures)
-								if(resistance == res)
-									v_test = 0
-							if(v_test)
-								new_cures += list(resistance)
-								if(!istype(resistance, /datum/disease))
-									new_cures[resistance] = resistance
-								usr << "New vaccine added to the database!"
-					usr << "No virus found!"
-				else
-					usr << "No blood found!"
-			else
-				usr << "Beaker is empty!"
+			if(BL.data && BL.data["resistances"])
+				var/v_test = 1
+				for(var/resistance in BL.data["resistances"])
+					for(var/res in new_cures)
+						if(resistance == res)
+							v_test = 0
+					if(v_test)
+						new_cures += list(resistance)
+						if(!istype(resistance, /datum/disease))
+							new_cures[resistance] = resistance
+						usr << "New vaccine added to the database!"
+			usr << "No virus found!"
 		else
-			usr << "No beaker found!"
-		updateUsrDialog()
-		return
+			usr << "No blood found!"
+	else
+		usr << "Beaker is empty!"
 	else
 		usr << browse(null, "window=pandemic")
 		updateUsrDialog()
@@ -444,55 +430,61 @@
 	popup.open(1)
 	return
 
-
-/obj/machinery/computer/pandemic/attackby(var/obj/I as obj, var/mob/user as mob, params)
+/obj/machinery/computer/pandemic/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(stat & (NOPOWER|BROKEN)) return
 
 		for(var/datum/reagent/R in I.reagents.reagent_list)
-			if(R.id == "virusfood")
-				virusfood_ammount += R.volume
-				I.reagents.remove_reagent("virusfood",R.volume)
-				user << "You add the Virus Food into the machine!"
-				updateUsrDialog()
-				return
-			if(R.id == "mutagen")
-				mutagen_ammount += R.volume
-				I.reagents.remove_reagent("mutagen",R.volume)
-				user << "You add the Unstable Mutagen into the machine!"
-				updateUsrDialog()
-				return
-			if(R.id == "plasma")
-				plasma_ammount += R.volume
-				I.reagents.remove_reagent("plasma",R.volume)
-				user << "You add the Plasma into the machine!"
-				updateUsrDialog()
-				return
-			if(R.id == "synaptizine")
-				synaptizine_ammount += R.volume
-				I.reagents.remove_reagent("synaptizine",R.volume)
-				user << "You add the Synaptizine into the machine!"
-				updateUsrDialog()
-				return
+			switch(R.id)
+				if(R.id == "virusfood")
+					virusfood_ammount += R.volume
+					I.reagents.remove_reagent("virusfood",R.volume)
+					user << "You add the Virus Food into the machine!"
+					updateUsrDialog()
+				if(R.id == "mutagen")
+					mutagen_ammount += R.volume
+					I.reagents.remove_reagent("mutagen",R.volume)
+					user << "You add the Unstable Mutagen into the machine!"
+					updateUsrDialog()
+				if(R.id == "plasma")
+					plasma_ammount += R.volume
+					I.reagents.remove_reagent("plasma",R.volume)
+					user << "You add the Plasma into the machine!"
+					updateUsrDialog()
+				if(R.id == "synaptizine")
+					synaptizine_ammount += R.volume
+					I.reagents.remove_reagent("synaptizine",R.volume)
+					user << "You add the Synaptizine into the machine!"
+					updateUsrDialog()
 
 		if(src.beaker)
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker =  I
 		user.drop_item()
-		I.loc = src
+		I.loc = forceMove(src)
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
 		icon_state = "mixer1"
 
 	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(src.beaker)
-			beaker.loc = get_turf(src)
+			beaker.loc = forceMove(src)
 		..()
 		return
 	else
 		..()
 	return
+
+/obj/machinery/computer/pandemic/proc/is_valid_beaker(var/index)
+	if(beaker && beaker.reagents)
+		if(beaker.reagents.reagent_list.len)
+			var/datum/reagent/blood/BL = locate() in beaker.reagents.reagent_list
+			if(BL)
+	else
+		usr << "No beaker found!"
+		updateUsrDialog()
+		return
 
 #undef TAB_ANALYSIS
 #undef TAB_EXPERIMENT
