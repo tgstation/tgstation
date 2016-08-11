@@ -24,8 +24,8 @@
 /obj/item/weapon/melee/sabre
 	name = "officer's sabre"
 	desc = "An elegant weapon, its monomolecular edge is capable of cutting through flesh and bone with ease."
-	icon_state = "rapier"
-	item_state = "rapier"
+	icon_state = "sabre"
+	item_state = "sabre"
 	flags = CONDUCT
 	force = 15
 	throwforce = 10
