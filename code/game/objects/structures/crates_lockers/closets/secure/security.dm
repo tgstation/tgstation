@@ -102,7 +102,7 @@
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/weapon/storage/belt/security/full(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/gloves/krav_maga/sec(src)
+	new /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube(src)
 	new /obj/item/weapon/door_remote/head_of_security(src)
 
 /obj/structure/closet/secure_closet/security
