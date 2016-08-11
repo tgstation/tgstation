@@ -93,6 +93,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	cable_list -= src							//remove it from global cable list
 	return ..()									// then go ahead and delete the cable
 
+/obj/structure/cable/blob_act(obj/effect/blob/B)
+	if(invisibility != INVISIBILITY_MAXIMUM)
+		qdel(src)
+
 /obj/structure/cable/Deconstruct()
 	var/turf/T = loc
 	stored.loc = T

@@ -190,11 +190,15 @@
 	if(!B)
 		src << "<span class='warning'>You must be on a blob node!</span>"
 		return
+	var/area/A = get_area(T)
+	if(istype(T, /turf/open/space) || A && !A.blob_allowed)
+		src << "<span class='warning'>You cannot relocate your core here!</span>"
+		return
 	if(!can_buy(80))
 		return
 	var/turf/old_turf = blob_core.loc
-	blob_core.loc = T
-	B.loc = old_turf
+	blob_core.forceMove(T)
+	B.forceMove(old_turf)
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
@@ -308,6 +312,8 @@
 		BM << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.shortdesc ? "[blob_reagent_datum.shortdesc]" : "[blob_reagent_datum.description]"]"
 	src << "Your reagent is now: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
+	if(blob_reagent_datum.effectdesc)
+		src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.effectdesc]"
 
 /mob/camera/blob/verb/blob_help()
 	set category = "Blob"
@@ -316,6 +322,8 @@
 	src << "<b>As the overmind, you can control the blob!</b>"
 	src << "Your blob reagent is: <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font>!"
 	src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.description]"
+	if(blob_reagent_datum.effectdesc)
+		src << "The <b><font color=\"[blob_reagent_datum.color]\">[blob_reagent_datum.name]</b></font> reagent [blob_reagent_datum.effectdesc]"
 	src << "<b>You can expand, which will attack people, damage objects, or place a Normal Blob if the tile is clear.</b>"
 	src << "<i>Normal Blobs</i> will expand your reach and can be upgraded into special blobs that perform certain functions."
 	src << "<b>You can upgrade normal blobs into the following types of blob:</b>"

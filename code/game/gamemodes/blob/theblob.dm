@@ -7,12 +7,13 @@
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
 	anchored = 1
-	explosion_block = 1
+	layer = BELOW_MOB_LAYER
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	var/health = 30
 	var/maxhealth = 30
 	var/health_regen = 2 //how much health this blob regens when pulsed
-	var/pulse_timestamp = 0 //we got pulsed/healed when?
+	var/pulse_timestamp = 0 //we got pulsed when?
+	var/heal_timestamp = 0 //we got healed when?
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
 	var/atmosblock = 0 //if the blob blocks atmos and heat spread
@@ -84,46 +85,45 @@
 		if(overmind)
 			overmind.blob_reagent_datum.death_reaction(src, cause)
 		qdel(src) //we dead now
-		return
-	return
 
 /obj/effect/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	if(overmind)
 		color = overmind.blob_reagent_datum.color
 	else
 		color = null
-	return
-
 
 /obj/effect/blob/process()
 	Life()
-	return
 
 /obj/effect/blob/proc/Life()
 	return
 
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	src.Be_Pulsed()
-	if(claim_range)
-		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
-			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
-				B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
-				B.update_icon()
-	if(pulse_range)
-		for(var/obj/effect/blob/B in orange(pulse_range, src))
+	var/expanded = FALSE
+	if(prob(85) && expand())
+		expanded = TRUE
+	for(var/obj/effect/blob/B in urange(claim_range, src, 1))
+		var/distance = get_dist(get_turf(src), get_turf(B))
+		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
+			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
+			B.update_icon()
+		if(distance <= pulse_range)
 			B.Be_Pulsed()
-	if(expand_range)
-		if(prob(85))
-			src.expand()
-		for(var/obj/effect/blob/B in orange(expand_range, src))
-			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 4, 1))) //expand falls off with range but is faster near the blob causing the expansion
-				B.expand()
-	return
+		if(distance <= expand_range)
+			if(prob(max(20 - distance * 6, 1))) //expand falls off with range but is faster near the blob causing the expansion
+				var/obj/effect/blob/newB = B.expand()
+				if(newB)
+					if(expanded)
+						qdel(newB)
+					expanded = TRUE
 
 /obj/effect/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
-		health = min(maxhealth, health+health_regen)
+		if(heal_timestamp <= world.time)
+			health = min(maxhealth, health+health_regen)
+			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
 		return 1 //we did it, we were pulsed!
