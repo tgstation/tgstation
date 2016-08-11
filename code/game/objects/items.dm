@@ -81,7 +81,6 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
-	var/hascutting = IS_DULL
 	var/piercing = 0
 	var/dismemberchance = 0
 	var/toolspeed = 1
@@ -561,8 +560,8 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
-		if(cutting|| damtype == BURN)
-			. = cutting chance
+		if(dismember chance >= 1)
+			. = dismember chance
 
 /obj/item/proc/get_bleeding_chance(mob/living/M)
 	if(piercing >= 1|| damtype == BURN) //Because a pocket knife can make you bleed
