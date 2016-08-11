@@ -415,18 +415,18 @@
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
 
-/obj/item/weapon/storage/belt/rapier
-	name = "rapier sheath"
-	desc = "Can hold rapiers."
-	icon_state = "sheath"
-	item_state = "sheath"
+/obj/item/weapon/storage/belt/sabre
+	name = "sabre sheath"
+	desc = "An ornate sheath designed to hold an officer's blade."
+	icon_state = "sheath-rapier"
+	item_state = "sheath-rapier"
 	storage_slots = 1
 	max_w_class = 4
 	can_hold = list(
-		/obj/item/weapon/melee/rapier
+		/obj/item/weapon/melee/sabre
 		)
 
-/obj/item/weapon/storage/belt/rapier/update_icon()
+/obj/item/weapon/storage/belt/sabre/update_icon()
 	icon_state = "[initial(icon_state)]"
 	item_state = "[initial(item_state)]"
 	if(contents.len)
@@ -437,6 +437,6 @@
 		L.regenerate_icons()
 	..()
 
-/obj/item/weapon/storage/belt/rapier/New()
+/obj/item/weapon/storage/belt/sabre/New()
 	..()
-	new /obj/item/weapon/melee/rapier(src)
+	new /obj/item/weapon/melee/sabre(src)
