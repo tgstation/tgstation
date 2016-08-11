@@ -140,6 +140,7 @@
 	new /obj/item/weapon/grenade/flashbang(src)
 	new /obj/item/device/assembly/flash/handheld(src)
 	new /obj/item/weapon/melee/baton/loaded(src)
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/mining
