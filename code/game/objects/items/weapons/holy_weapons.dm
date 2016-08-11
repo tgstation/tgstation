@@ -180,7 +180,15 @@
 	name = "high frequency blade"
 	desc = "Bad references are the DNA of the soul."
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
+
+
+/obj/item/weapon/nullrod/scythe/spellblade
+	icon_state = "spellblade"
+	item_state = "spellblade"
+	name = "dormant spellblade"
+	desc = "The blade grants the wielder nearly limitless power...if they can figure out how to turn it on, that is."
+	hitsound = 'sound/weapons/rapierhit.ogg'
 
 /obj/item/weapon/nullrod/scythe/talking
 	icon_state = "talking_sword"
@@ -188,7 +196,7 @@
 	name = "possessed blade"
 	desc = "When the station falls into chaos, it's nice to have a friend by your side."
 	attack_verb = list("chopped", "sliced", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/attack_self(mob/living/user)
@@ -262,6 +270,7 @@
 	item_state = "chain"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
+	hitsound = 'sound/weapons/chainhit.ogg'
 
 /obj/item/weapon/nullrod/fedora
 	name = "atheist's fedora"
