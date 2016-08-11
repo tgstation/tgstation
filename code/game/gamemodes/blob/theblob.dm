@@ -108,15 +108,15 @@
 		if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
 			B.overmind = pulsing_overmind //reclaim unclaimed, non-core blobs.
 			B.update_icon()
-		if(distance <= pulse_range)
-			B.Be_Pulsed()
-		if(distance <= expand_range)
+		if(B.pulse_timestamp <= world.time && distance <= expand_range)
 			if(prob(max(20 - distance * 8, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				var/obj/effect/blob/newB = B.expand()
 				if(newB)
 					if(expanded)
 						qdel(newB)
 					expanded = TRUE
+		if(distance <= pulse_range)
+			B.Be_Pulsed()
 
 /obj/effect/blob/proc/Be_Pulsed()
 	if(pulse_timestamp <= world.time)
