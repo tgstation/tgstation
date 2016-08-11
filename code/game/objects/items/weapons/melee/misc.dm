@@ -33,7 +33,6 @@
 	w_class = 4
 	block_chance = 50
 	armour_penetration = 75
-	sharpness = IS_SHARP
 	origin_tech = "combat=5"
 	attack_verb = list("lunged at", "stabbed")
 	hitsound = 'sound/weapons/rapierhit.ogg'
