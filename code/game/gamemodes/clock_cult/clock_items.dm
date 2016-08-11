@@ -768,6 +768,7 @@
 	item_state = "ratvarian_spear"
 	force = 17 //Extra damage is dealt to silicons in attack()
 	throwforce = 40
+	piercing = 14
 	sharpness = IS_SHARP_ACCURATE
 	attack_verb = list("stabbed", "poked", "slashed")
 	hitsound = 'sound/weapons/bladeslice.ogg'

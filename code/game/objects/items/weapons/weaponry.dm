@@ -44,6 +44,8 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
+	piercing = 15
+	dismemberment_chance = 40
 	throwforce = 10
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -63,6 +65,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
+	dismemberment_chance = 35
 	w_class = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
@@ -153,6 +156,7 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
+		piercing = 20
 		w_class = 3
 		throwforce = 23
 		icon_state = "switchblade_ext"
@@ -161,6 +165,7 @@
 		sharpness = IS_SHARP
 	else
 		force = 3
+		piercing = 0
 		w_class = 2
 		throwforce = 5
 		icon_state = "switchblade"
@@ -256,6 +261,7 @@
 	flags = NODROP | ABSTRACT
 	w_class = 5.0
 	force = 21
+	dismemberment chance = 20
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0

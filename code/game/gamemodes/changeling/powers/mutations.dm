@@ -153,6 +153,7 @@
 	flags = ABSTRACT | NODROP | DROPDEL
 	w_class = 5.0
 	force = 25
+	dismemberment_chance = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
