@@ -194,18 +194,18 @@ Judgement: 10 servants, 100 CV, and any existing AIs are converted or destroyed
 	tier = SCRIPTURE_DRIVER
 
 /datum/clockwork_scripture/channeled/belligerent/chant_effects(chant_number)
-	for(var/mob/living/L in hearers(7, invoker))
-		if(!is_servant_of_ratvar(L) && iscarbon(L) && !L.null_rod_check() && L.get_num_legs()) //you have legs right
-			L.apply_damage(1, BURN, "l_leg")
-			L.apply_damage(1, BURN, "r_leg")
-			if(L.m_intent != "walk")
-				if(!iscultist(L))
-					L << "<span class='warning'>Your legs shiver with pain!</span>"
+	for(var/mob/living/carbon/C in hearers(7, invoker))
+		if(!is_servant_of_ratvar(C) && !C.null_rod_check() && C.get_num_legs()) //you have legs right
+			C.apply_damage(1, BURN, "l_leg")
+			C.apply_damage(1, BURN, "r_leg")
+			if(C.m_intent != "walk")
+				if(!iscultist(C))
+					C << "<span class='warning'>Your legs shiver with pain!</span>"
 				else //Cultists take extra burn damage
-					L << "<span class='warning'>Your legs burn with pain!</span>"
-					L.apply_damage(4, BURN, "l_leg")
-					L.apply_damage(4, BURN, "r_leg")
-				L.m_intent = "walk"
+					C << "<span class='warning'>Your legs burn with pain!</span>"
+					C.apply_damage(4, BURN, "l_leg")
+					C.apply_damage(4, BURN, "r_leg")
+				C.m_intent = "walk"
 
 
 
