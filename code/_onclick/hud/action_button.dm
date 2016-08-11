@@ -1,6 +1,7 @@
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
+	var/actiontooltipstyle = ""
 	screen_loc = null
 
 /obj/screen/movable/action_button/Click(location,control,params)
@@ -51,7 +52,7 @@
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc)
+	openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
 
 
 /obj/screen/movable/action_button/MouseExited()

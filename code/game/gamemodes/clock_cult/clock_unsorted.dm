@@ -27,6 +27,7 @@
 	button_icon_state = "hierophant"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
 	var/title = "Servant"
 	var/span_for_name = "heavy_brass"
 	var/span_for_message = "brass"
@@ -50,6 +51,7 @@
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	buttontooltipstyle = "clockcult"
 	var/cooldown = 0
 	var/base_cooldown = 3000
 
@@ -128,7 +130,7 @@
 	S2.visible_message("<span class='warning'>The air in front of [target] ripples before suddenly tearing open!</span>")
 	return 1
 
-/proc/scripture_unlock_check(scripture_tier) //check if the selected scripture tier is unlocked
+/proc/scripture_unlock_check() //returns a list of scriptures and if they're unlocked or not
 	var/servants = 0
 	var/unconverted_ai_exists = FALSE
 	for(var/mob/living/M in living_mob_list)
@@ -136,39 +138,25 @@
 			servants++
 		else if(isAI(M))
 			unconverted_ai_exists = TRUE
-	switch(scripture_tier)
-		if(SCRIPTURE_DRIVER)
-			return 1
-		if(SCRIPTURE_SCRIPT)
-			if(servants >= 5 && clockwork_caches)
-				return 1 //5 or more non-brain servants and any number of clockwork caches
-		if(SCRIPTURE_APPLICATION)
-			if(servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
-				return 1 //8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
-		if(SCRIPTURE_REVENANT)
-			if(servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
-				return 1 //10 or more non-brain servants, 4+ clockwork caches, and at least 200 CV
-		if(SCRIPTURE_JUDGEMENT)
-			if(servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 300 && !unconverted_ai_exists)
-				return 1 //12 or more non-brain servants, 5+ clockwork caches, at least 300 CV, and there are no living, non-servant ais
-	return 0
+	. = list(SCRIPTURE_DRIVER = TRUE, SCRIPTURE_SCRIPT = FALSE, SCRIPTURE_APPLICATION = FALSE, SCRIPTURE_REVENANT = FALSE, SCRIPTURE_JUDGEMENT = FALSE)
+	//Drivers: always unlocked
+	.[SCRIPTURE_SCRIPT] = (servants >= 5 && clockwork_caches)
+	//Script: 5 or more non-brain servants and any number of clockwork caches
+	.[SCRIPTURE_APPLICATION] = (servants >= 8 && clockwork_caches >= 3 && clockwork_construction_value >= 100)
+	//Application: 8 or more non-brain servants, 3+ clockwork caches, and at least 100 CV
+	.[SCRIPTURE_REVENANT] = (servants >= 10 && clockwork_caches >= 4 && clockwork_construction_value >= 200)
+	//Revenant: 10 or more non-brain servants, 4+ clockwork caches, and at least 200 CV
+	.[SCRIPTURE_JUDGEMENT] = (servants >= 12 && clockwork_caches >= 5 && clockwork_construction_value >= 300 && !unconverted_ai_exists)
+	//Judgement: 12 or more non-brain servants, 5+ clockwork caches, at least 300 CV, and there are no living, non-servant ais
 
 /proc/scripture_unlock_alert(list/previous_states) //reports to servants when scripture is locked or unlocked
-	var/list/states = get_scripture_states()
-	for(var/i in states)
-		if(states[i] != previous_states[i])
-			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [states[i] ? "un":""]locked.</b></span>")
-
-/proc/get_scripture_states() //returns the current unlock states of each unlockable scripture tier
-	. = list("Script" = scripture_unlock_check(SCRIPTURE_SCRIPT), \
-	"Application" = scripture_unlock_check(SCRIPTURE_APPLICATION), \
-	"Revenant" = scripture_unlock_check(SCRIPTURE_REVENANT), \
-	"Judgement" = scripture_unlock_check(SCRIPTURE_JUDGEMENT))
+	. = scripture_unlock_check()
+	for(var/i in .)
+		if(.[i] != previous_states[i])
+			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>")
 
 /proc/change_construction_value(amount)
-	var/list/scripture_states = get_scripture_states()
 	clockwork_construction_value += amount
-	scripture_unlock_alert(scripture_states)
 
 /proc/get_component_name(id) //returns a component name from a component id
 	switch(id)
