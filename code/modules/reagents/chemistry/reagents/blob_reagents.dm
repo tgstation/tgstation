@@ -56,7 +56,7 @@
 
 /datum/reagent/blob/sporing_pods/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.2*reac_volume, TOX)
+	M.apply_damage(0.4*reac_volume, TOX)
 
 /datum/reagent/blob/sporing_pods/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(!isnull(cause) && damage <= 20 && original_health - damage <= 0 && prob(40)) //if the cause isn't fire or a bomb, the damage is less than 21, we're going to die from that damage, 40% chance of a shitty spore.
@@ -88,7 +88,7 @@
 
 /datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.5*reac_volume, BRUTE)
+	M.apply_damage(0.6*reac_volume, BRUTE)
 
 /datum/reagent/blob/replicating_foam/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	var/effectivedamage = damage
@@ -189,7 +189,7 @@
 	M.adjust_drugginess(reac_volume)
 	if(M.reagents)
 		M.reagents.add_reagent("regenerative_materia", 0.2*reac_volume)
-	M.apply_damage(0.5*reac_volume, TOX)
+	M.apply_damage(0.6*reac_volume, TOX)
 
 /datum/reagent/blob/regenerative_materia/on_mob_life(mob/living/M)
 	M.adjustToxLoss(1*REM)
@@ -228,7 +228,7 @@
 		O.add_points(points)
 		O << "<span class='notice'>Gained [points] resources from the zombification of [M].</span>"
 	if(M)
-		M.apply_damage(0.4*reac_volume, TOX)
+		M.apply_damage(0.5*reac_volume, TOX)
 
 //does brute, fire, and toxin over a few seconds
 /datum/reagent/blob/poisonous_strands
@@ -332,13 +332,13 @@
 		M.reagents.add_reagent("ice", 0.3*reac_volume)
 	M.apply_damage(0.4*reac_volume, BURN)
 	if(M)
-		M.adjustStaminaLoss(0.3*reac_volume)
+		M.adjustStaminaLoss(0.4*reac_volume)
 
 //does burn damage and EMPs, slightly fragile
 /datum/reagent/blob/electromagnetic_web
 	name = "Electromagnetic Web"
 	id = "electromagnetic_web"
-	description = "will do low burn damage and EMP targets."
+	description = "will do high burn damage and EMP targets."
 	effectdesc = "will also take massively increased damage and release an EMP when killed."
 	analyzerdescdamage = "Does low burn damage and EMPs targets."
 	analyzerdesceffect = "Is fragile to all types of damage, but takes massive damage from brute. In addition, releases a small EMP when killed."
@@ -353,7 +353,7 @@
 	if(prob(reac_volume*2))
 		M.emp_act(2)
 	if(M)
-		M.apply_damage(0.6*reac_volume, BURN)
+		M.apply_damage(0.8*reac_volume, BURN)
 
 /datum/reagent/blob/electromagnetic_web/damage_reaction(obj/effect/blob/B, original_health, damage, damage_type, cause)
 	if(damage_type == BRUTE) //take full brute
@@ -385,9 +385,9 @@
 
 /datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
-	M.apply_damage(0.1*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M && reac_volume)
-		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.5*reac_volume
+		for(var/obj/effect/blob/B in range(1, M)) //if the target is completely surrounded, this is 2.4*reac_volume bonus damage, total of 2.6*reac_volume
 			if(M)
 				B.blob_attack_animation(M) //show them they're getting a bad time
 				M.apply_damage(0.3*reac_volume, BRUTE)
@@ -452,7 +452,7 @@
 		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
-	M.apply_damage(0.1*reac_volume, BRUTE)
+	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M)
 		M.apply_damage(0.3*reac_volume, OXY)
 	if(M)
