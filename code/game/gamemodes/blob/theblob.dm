@@ -111,7 +111,7 @@
 		if(distance <= pulse_range)
 			B.Be_Pulsed()
 		if(distance <= expand_range)
-			if(prob(max(20 - distance * 6, 1))) //expand falls off with range but is faster near the blob causing the expansion
+			if(prob(max(20 - distance * 8, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				var/obj/effect/blob/newB = B.expand()
 				if(newB)
 					if(expanded)

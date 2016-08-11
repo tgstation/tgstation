@@ -148,7 +148,7 @@
 	analyzerdescdamage = "Does medium burn damage and sets targets on fire."
 	analyzerdesceffect = "Releases fire when burnt, but takes damage from water and other extinguishing liquids."
 	color = "#B68D00"
-	complementary_color = "#0029B6"
+	complementary_color = "#BE5532"
 	blobbernaut_message = "splashes"
 	message = "The blob splashes you with burning oil"
 	message_living = ", and you feel your skin char and melt"
@@ -212,7 +212,7 @@
 	shortdesc = "will do low toxin damage and harvest sleeping targets, gaining additional resources for your overmind and a blob zombie."
 	analyzerdescdamage = "Does low toxin damage and kills unconscious humans, turning them into blob zombies."
 	color = "#828264"
-	complementary_color = "#646482"
+	complementary_color = "#4A64C0"
 	message_living = ", and you feel tired"
 
 /datum/reagent/blob/zombifying_feelers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -236,8 +236,8 @@
 	id = "poisonous_strands"
 	description = "will inject targets with poison."
 	analyzerdescdamage = "Injects a highly lethal poison that will gradually liquify the target's internal organs."
-	color = "#7D6EB4"
-	complementary_color = "#A5B46E"
+	color = "#9BCD9B"
+	complementary_color = "#CD9BCD"
 	blobbernaut_message = "injects"
 	message_living = ", and you feel like your insides are melting"
 
@@ -260,8 +260,8 @@
 	effectdesc = "will also conduct electricity, but takes damage from EMPs."
 	analyzerdescdamage = "Does low stamina damage, high oxygen damage, and prevents targets from breathing."
 	analyzerdesceffect = "Is immune to electricity and will easily conduct it, but is weak to EMPs."
-	color = "#00E5B1"
-	complementary_color = "#E50034"
+	color = "#EFD65A"
+	complementary_color = "#00E5B1"
 	message_living = ", and your lungs feel heavy and weak"
 
 /datum/reagent/blob/energized_jelly/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
@@ -413,8 +413,8 @@
 	effectdesc = "will also react when attacked with brute damage, attacking all near the attacked blob."
 	analyzerdescdamage = "Does medium brute damage, ignoring armor and bio resistance."
 	analyzerdesceffect = "When attacked with brute damage, will lash out, attacking everything near it."
-	color = "#6E4664"
-	complementary_color = "#466E50"
+	color = "#9ACD32"
+	complementary_color = "#FFA500"
 	blobbernaut_message = "stabs"
 	message = "The blob stabs you"
 
