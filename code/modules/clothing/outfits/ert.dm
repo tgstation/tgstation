@@ -95,7 +95,7 @@
 	name = "ERT Medic"
 
 	id = /obj/item/weapon/card/id/ert/Medical
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
+	back = /obj/item/weapon/storage/backpack/satchel/med
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/weapon/storage/backpack/medic
 	belt = /obj/item/weapon/storage/belt/medical
