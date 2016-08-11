@@ -17,7 +17,7 @@
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
 	return 0
 
-/obj/item/weapon/melee/energy/dismemberment_chance()
+/obj/item/weapon/melee/energy/decapitation_chance()
 	return active * dismemberment_chance_on
 
 /obj/item/weapon/melee/energy/axe
