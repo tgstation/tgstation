@@ -261,7 +261,7 @@
 	flags = NODROP | ABSTRACT
 	w_class = 5.0
 	force = 21
-	dismemberment chance = 20
+	dismemberment_chance = 20
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
