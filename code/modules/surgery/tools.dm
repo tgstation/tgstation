@@ -61,7 +61,7 @@
 	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	dismemberment_chance = 10
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting \his wrists with [src]! It looks like \he's trying to commit suicide.</span>", \
@@ -86,7 +86,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
 	origin_tech = "biotech=1;combat=1"
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	dismemberment_chance = 15
 
 /obj/item/weapon/surgical_drapes
 	name = "surgical drapes"

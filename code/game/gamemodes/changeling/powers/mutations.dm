@@ -139,6 +139,7 @@
 	chemical_cost = 20
 	dna_cost = 2
 	genetic_damage = 10
+	dismemberment_chance = 30
 	req_human = 1
 	max_genetic_damage = 20
 	weapon_type = /obj/item/weapon/melee/arm_blade
@@ -156,7 +157,7 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
-	sharpness = IS_SHARP
+	dismemberment_chance = 25
 
 /obj/item/weapon/melee/arm_blade/New(location,silent)
 	..()

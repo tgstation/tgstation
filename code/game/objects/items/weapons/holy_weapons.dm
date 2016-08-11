@@ -85,7 +85,7 @@
 	w_class = 5
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
-	sharpness = IS_SHARP
+	dismemberment_chance = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -171,7 +171,7 @@
 	w_class = 4
 	armour_penetration = 35
 	slot_flags = SLOT_BACK
-	sharpness = IS_SHARP
+	dismemberment_chance = 30
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 
 /obj/item/weapon/nullrod/scythe/vibro
@@ -249,7 +249,7 @@
 	item_state = "mounted_chainsaw"
 	w_class = 5
 	flags = NODROP | ABSTRACT
-	sharpness = IS_SHARP
+	dismemberment_chance = 25
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
 
@@ -260,7 +260,8 @@
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
-	sharpness = IS_SHARP
+	dismemberment_chance = 10
+	piercing = 10
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
 /obj/item/weapon/nullrod/whip
@@ -283,7 +284,6 @@
 	throw_speed = 4
 	throw_range = 7
 	throwforce = 30
-	sharpness = IS_SHARP
 	attack_verb = list("enlightened", "redpilled")
 
 /obj/item/weapon/nullrod/armblade
@@ -293,7 +293,7 @@
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
 	w_class = 5
-	sharpness = IS_SHARP
+	dismemberment_chance = 18
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
@@ -335,7 +335,7 @@
 	name = "arrhythmic knife"
 	w_class = 5
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
-	sharpness = IS_SHARP
+	dismemberment_chance = 18
 	slot_flags = null
 	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -348,7 +348,7 @@
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
+	piercing = 25 //BLEED FOR THE DEVIL
 
 /obj/item/weapon/nullrod/tribal_knife/New()
 	..()

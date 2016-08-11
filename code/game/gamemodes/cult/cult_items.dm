@@ -4,7 +4,7 @@
 	icon_state = "cultblade"
 	item_state = "cultblade"
 	flags = CONDUCT
-	sharpness = IS_SHARP
+	dismemberment_chance = 30
 	w_class = 4
 	force = 30
 	throwforce = 10

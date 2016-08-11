@@ -268,7 +268,7 @@
 	flags = CONDUCT | OPENCONTAINER
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
-	sharpness = IS_SHARP
+	dismemberment_chance = 12
 	can_charge = 0
 	heat = 3800
 

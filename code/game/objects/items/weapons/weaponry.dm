@@ -48,7 +48,7 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
-	sharpness = IS_SHARP
+	dismemberment_chance = 40
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -67,7 +67,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
-	sharpness = IS_SHARP
+	dismemberment_chance = 40
 
 /obj/item/weapon/katana/cursed
 	slot_flags = null
@@ -128,7 +128,6 @@
 	w_class = 2
 	embed_chance = 100
 	embedded_fall_chance = 0 //Hahaha!
-	sharpness = IS_SHARP
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 
 
@@ -155,10 +154,10 @@
 		force = 20
 		w_class = 3
 		throwforce = 23
+		piercing = 15
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = 'sound/weapons/bladeslice.ogg'
-		sharpness = IS_SHARP
 	else
 		force = 3
 		w_class = 2
@@ -166,7 +165,7 @@
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = 'sound/weapons/Genhit.ogg'
-		sharpness = IS_BLUNT
+		piercing = 0
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -259,7 +258,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	sharpness = IS_SHARP
+	dismemberment_chance = 20
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = "sound/weapons/chainsawhit.ogg"
 

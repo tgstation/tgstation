@@ -169,7 +169,7 @@ var/global/list/datum/stack_recipe/sinew_recipes = list ( \
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user, params)
-	if(is_sharp(W))
+	if(dismemberment_chance > 0) //FUCK
 		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user,50, target = src))

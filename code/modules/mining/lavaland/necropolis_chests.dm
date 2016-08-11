@@ -484,7 +484,6 @@
 	icon_state = "spectral"
 	item_state = "spectral"
 	flags = CONDUCT
-	sharpness = IS_SHARP
 	w_class = 4
 	force = 1
 	throwforce = 1
@@ -551,6 +550,7 @@
 	var/ghost_counter = ghost_check()
 
 	force = Clamp((ghost_counter * 4), 0, 75)
+	dismemberment_chance = Clamp((ghost_counter * 4), 0, 75)
 	user.visible_message("<span class='danger'>[user] strikes with the force of [ghost_counter] vengeful spirits!</span>")
 	..()
 

@@ -62,7 +62,8 @@
 	throw_range = 6
 	materials = list(MAT_METAL=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	sharpness = IS_SHARP_ACCURATE
+	dismemberment_chance = 2 // It takes a lot of stabs to actually take someone's limb off
+	piercing = 7
 
 /obj/item/weapon/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
@@ -91,6 +92,7 @@
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
 	flags = CONDUCT
 	force = 15
+	dismemberment_chance = 60 // It's job is to fuck up meat and bones
 	throwforce = 10
 	materials = list(MAT_METAL=18000)
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
