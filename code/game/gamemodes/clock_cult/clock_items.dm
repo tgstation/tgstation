@@ -208,12 +208,11 @@
 	return 1
 
 /obj/item/clockwork/slab/proc/recite_scripture(mob/living/user)
-	var/list/tiers_of_scripture = list(SCRIPTURE_DRIVER)
-	var/list/scripture_states = scripture_unlock_check()
-	tiers_of_scripture += "[SCRIPTURE_SCRIPT][ratvar_awakens || scripture_states["Script"] || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "[SCRIPTURE_APPLICATION][ratvar_awakens || scripture_states["Application"] || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "[SCRIPTURE_REVENANT][ratvar_awakens || scripture_states["Revenant"] || no_cost ? "" : " \[LOCKED\]"]"
-	tiers_of_scripture += "[SCRIPTURE_JUDGEMENT][ratvar_awakens || scripture_states[SCRIPTURE_JUDGEMENT] || no_cost ? "" : " \[LOCKED\]"]"
+	var/list/tiers_of_scripture = scripture_unlock_check()
+	for(var/i in tiers_of_scripture)
+		if(!tiers_of_scripture[i] && !ratvar_awakens && !no_cost)
+			tiers_of_scripture["[i] \[LOCKED\]"] = TRUE
+			tiers_of_scripture -= i
 	var/scripture_tier = input(user, "Choose a category of scripture to recite.", "[src]") as null|anything in tiers_of_scripture
 	if(!scripture_tier || !user.canUseTopic(src))
 		return 0
@@ -239,8 +238,8 @@
 			scripture_to_recite = new C
 	if(!scripture_to_recite || user.get_active_hand() != src)
 		return 0
-	scripture_states = scripture_unlock_check()
-	if(!ratvar_awakens && !no_cost && !scripture_states[scripture_to_recite.tier])
+	tiers_of_scripture = scripture_unlock_check()
+	if(!ratvar_awakens && !no_cost && !tiers_of_scripture[scripture_to_recite.tier])
 		user << "<span class='warning'>That scripture is no longer unlocked, and cannot be recited!</span>"
 		return 0
 	scripture_to_recite.slab = src
