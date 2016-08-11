@@ -555,9 +555,6 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 /obj/item/proc/is_hot()
 	return heat
 
-/obj/item/proc/is_cutting()
-	return cutting
-
 /obj/item/proc/get_dismemberment_chance(obj/item/bodypart/affecting)
 	if(affecting.can_dismember(src))
 		if(dismemberment_chance >= 1)
